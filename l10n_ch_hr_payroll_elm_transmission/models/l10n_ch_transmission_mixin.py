@@ -21,7 +21,7 @@ class L10nCHSwissdecTransmitter(models.AbstractModel):
         now = fields.Datetime.now()
         month = now.month
         year = now.year
-        return _("Declaration %(month)s/%(year)s", month=f"{month:02}", year=year)
+        return _("Declaration %(month)s/%(year)s", month=month, year=year)
 
     active = fields.Boolean(default=True)
     name = fields.Char(required=True, default=_get_default_name)

@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_be_hr_payroll_sd_worx
-#
+# 
 # Translators:
-# Jolien De Paepe, 2024
-#
+# Tiffany Chang, 2025
+# Manon Rondou, 2025
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-31 12:52+0000\n"
-"PO-Revision-Date: 2024-01-30 08:20+0000\n"
-"Last-Translator: Jolien De Paepe, 2024\n"
+"PO-Revision-Date: 2025-02-07 17:07+0000\n"
+"Last-Translator: Manon Rondou, 2025\n"
 "Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_be_hr_payroll_sd_worx
@@ -215,13 +216,13 @@ msgstr "De SDWorx-code moet uit 7 tekens bestaan of moet leeg blijven!"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_sd_worx/models/hr_work_entry_type.py:0
 msgid "The code should have 4 characters!"
-msgstr "De code moet uit 4 karakters bestaan!"
+msgstr "De code moet uit 4 tekens bestaan!"
 
 #. module: l10n_be_hr_payroll_sd_worx
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_sd_worx/models/res_company.py:0
 msgid "The code should have 7 characters!"
-msgstr "De code moet uit 7 karakters bestaan!"
+msgstr "De code moet uit 7 tekens bestaan!"
 
 #. module: l10n_be_hr_payroll_sd_worx
 #. odoo-python

@@ -1,24 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_be_hr_payroll_sd_worx
-#
+# 
 # Translators:
-# Jolien De Paepe, 2024
-#
+# Tiffany Chang, 2025
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-31 12:52+0000\n"
-"PO-Revision-Date: 2024-01-30 08:20+0000\n"
-"Last-Translator: Jolien De Paepe, 2024\n"
+"PO-Revision-Date: 2025-02-07 17:07+0000\n"
+"Last-Translator: Tiffany Chang, 2025\n"
 "Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: l10n_be_hr_payroll_sd_worx
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_sd_worx.res_config_settings_view_form
@@ -235,7 +234,8 @@ msgstr "Il n'y a pas de code SDWorx défini pour les employés suivants :\n"
 #: code:addons/l10n_be_hr_payroll_sd_worx/wizard/l10n_be_export_sdworx_leaves_wizard.py:0
 msgid "There is no SDWorx code defined for the following work entry types:\n"
 msgstr ""
-"Il n'y a pas de code SDWorx défini pour les types de prestations suivants :\n"
+"Il n'y a pas de code SDWorx défini pour les types de prestations suivants "
+":\n"
 
 #. module: l10n_be_hr_payroll_sd_worx
 #. odoo-python

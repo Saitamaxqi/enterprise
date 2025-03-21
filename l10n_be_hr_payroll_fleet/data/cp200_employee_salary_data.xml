@@ -25,9 +25,6 @@ result = -result_rules['ATN.CAR']['amount']
         <record id="cp200_employees_salary_co2_fee" model="hr.salary.rule">
             <field name="category_id" ref="hr_salary_rule_category_co2_fee"/>
             <field name="name">Accounting: CO2 Fee (Employer)</field>
-            <field name="name@nl">Boekhouding: CO2-vergoeding (Werkgever)</field>
-            <field name="name@fr">Comptabilité : Taxe CO2 (Employeur)</field>
-            <field name="name@de">Buchhaltung: CO2-Gebühren (Mitarbeiter)</field>
             <field name="code">CO2FEE</field>
             <field name="sequence">505</field>
             <field name="condition_select">python</field>

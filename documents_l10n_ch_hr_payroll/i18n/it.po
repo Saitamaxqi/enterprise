@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * documents_l10n_ch_hr_payroll
-#
+# 	* documents_l10n_ch_hr_payroll
+# 
+# Translators:
+# Marianna Ciofani, 2025
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.4alpha1+e\n"
+"Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-31 12:52+0000\n"
-"PO-Revision-Date: 2024-06-24 12:27+0000\n"
+"PO-Revision-Date: 2025-02-07 17:07+0000\n"
+"Last-Translator: Marianna Ciofani, 2025\n"
 "Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
-"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Language: it\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: documents_l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:documents_l10n_ch_hr_payroll.l10n_ch_individual_account_view_form
 msgid "\"Documents\" app settings"
-msgstr ""
+msgstr "Impostazioni app \"Documenti\""
 
 #. module: documents_l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:documents_l10n_ch_hr_payroll.l10n_ch_individual_account_view_form
@@ -27,3 +30,5 @@ msgid ""
 "<strong>Warning: </strong>In order to post the individual account sheets in "
 "the employee portal, you have to Enable \"Human Resources\" in the"
 msgstr ""
+"<strong>Avviso: </strong>per registrare le singole schede contabili nel "
+"portale dipendenti, devi attivare \"Risorse umane\" in"

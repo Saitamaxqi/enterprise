@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_be_hr_payroll_partena
-#
+# 
+# Translators:
+# Tiffany Chang, 2025
+# Manon Rondou, 2025
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-20 10:47+0000\n"
-"PO-Revision-Date: 2024-09-25 09:44+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2024\n"
+"PO-Revision-Date: 2025-02-12 11:36+0000\n"
+"Last-Translator: Manon Rondou, 2025\n"
 "Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_be_hr_payroll_partena
@@ -156,7 +160,7 @@ msgstr "Volgnummer Partena"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_employee__partena_code
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_work_entry_type__partena_code
 msgid "Partena code"
-msgstr "Code Partena"
+msgstr "Partena-code"
 
 #. module: l10n_be_hr_payroll_partena
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__period_start

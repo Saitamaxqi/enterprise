@@ -3,7 +3,6 @@
     <record id="l10n_ch_employees_as_days" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_as_days"/>
         <field name="name">AS Days</field>
-        <field name="name@fr">Jours AS</field>
         <field name="code">ASDAYS</field>
         <field name="sequence">1</field>
         <field name="condition_select">none</field>
@@ -21,7 +20,6 @@ else:
     <record id="l10n_ch_employees_worked_days" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_worked_days"/>
         <field name="name">Worked Days Total</field>
-        <field name="name@fr">Total des jours prestés</field>
         <field name="code">ISWORKEDDAYS</field>
         <field name="sequence">1</field>
         <field name="condition_select">none</field>
@@ -37,7 +35,6 @@ result_rate = (categories['ASDAYS'] / 30) * 100
     <record id="l10n_ch_employees_ch_days" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_ch_days"/>
         <field name="name">Worked Days in CH</field>
-        <field name="name@fr">Jours prestés en Suisse</field>
         <field name="code">ISWORKEDDAYSINCH</field>
         <field name="sequence">1</field>
         <field name="condition_select">none</field>
@@ -81,7 +78,6 @@ else:
     <record id="l10n_ch_employees_basic_correction" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.BASIC"/>
         <field name="name">Salary Correction</field>
-        <field name="name@fr">Corrections de Salaire</field>
         <field name="code">BASICCORRECTION</field>
         <field name="l10n_ch_code">1001</field>
         <field name="sequence">1</field>
@@ -109,7 +105,6 @@ else:
     <record id="l10n_ch_employees_basic_hourly" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.BASIC"/>
         <field name="name">Basic Hourly Salary</field>
-        <field name="name@fr">Salaire Horaire de base</field>
         <field name="code">BASICHOURLY</field>
         <field name="l10n_ch_code">1005</field>
         <field name="sequence">1</field>
@@ -142,7 +137,6 @@ result_name = inputs['BASICHOURLY'].name
     <record id="l10n_ch_employees_basic_lesson" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.BASIC"/>
         <field name="name">Salary per Lesson</field>
-        <field name="name@fr">Salaire par leçon</field>
         <field name="code">BASICLESSON</field>
         <field name="l10n_ch_code">1006</field>
         <field name="sequence">3</field>
@@ -174,7 +168,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_fee" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">FEE</field>
-        <field name="name@fr">FRAIS</field>
         <field name="code">FEE</field>
         <field name="l10n_ch_code">1010</field>
         <field name="sequence">10</field>
@@ -201,7 +194,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_func_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Functional allowance</field>
-        <field name="name@fr">Allocation fonctionnelle</field>
         <field name="code">FUNALW</field>
         <field name="l10n_ch_code">1031</field>
         <field name="sequence">10</field>
@@ -228,7 +220,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_house_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">House Allowance</field>
-        <field name="name@fr">Allocation de logement</field>
         <field name="code">HOUSEALW</field>
         <field name="l10n_ch_code">1033</field>
         <field name="sequence">10</field>
@@ -255,7 +246,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_overtime_after_departure" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Overtime after departure</field>
-        <field name="name@fr">Heures supplémentaires après le départ</field>
         <field name="code">OVERTIMEAFTER</field>
         <field name="l10n_ch_code">1067</field>
         <field name="sequence">10</field>
@@ -283,7 +273,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_overtime_100" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Overtime 100%</field>
-        <field name="name@fr">Heures supplémentaires 100 %</field>
         <field name="code">OVERTIME100</field>
         <field name="l10n_ch_code">1065</field>
         <field name="sequence">10</field>
@@ -311,7 +300,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_overtime_125" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Overtime 125%</field>
-        <field name="name@fr">Heures supplémentaires 125 %</field>
         <field name="code">OVERTIME125</field>
         <field name="l10n_ch_code">1061</field>
         <field name="sequence">10</field>
@@ -339,7 +327,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_team_work" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Team Work</field>
-        <field name="name@fr">Travail en équipe</field>
         <field name="code">TEAMWORK</field>
         <field name="l10n_ch_code">1070</field>
         <field name="sequence">10</field>
@@ -366,7 +353,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_on_call_alw" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">On-call service allowance</field>
-        <field name="name@fr">Indemnité de garde</field>
         <field name="code">ONCALLALW</field>
         <field name="l10n_ch_code">1071</field>
         <field name="sequence">10</field>
@@ -393,7 +379,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_sunday_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Sunday Allowance</field>
-        <field name="name@fr">Allocation du dimanche</field>
         <field name="code">SUNDAYALW</field>
         <field name="l10n_ch_code">1073</field>
         <field name="sequence">10</field>
@@ -420,7 +405,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_night_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Night Allowance</field>
-        <field name="name@fr">Allocation de nuit</field>
         <field name="code">NIGHTALW</field>
         <field name="l10n_ch_code">1076</field>
         <field name="sequence">10</field>
@@ -447,7 +431,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_advance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Advance</field>
-        <field name="name@fr">Avance</field>
         <field name="code">ADVANCE</field>
         <field name="l10n_ch_code">1110</field>
         <field name="sequence">10</field>
@@ -471,7 +454,6 @@ result_name = inputs['BASICLESSON'].name
     <record id="l10n_ch_employees_holiday_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Holidays allowance</field>
-        <field name="name@fr">Allocations de Vacances</field>
         <field name="code">HOLALW</field>
         <field name="l10n_ch_code">1160</field>
         <field name="sequence">10</field>
@@ -502,7 +484,6 @@ result = categories['BASIC']
     <record id="l10n_ch_employees_public_holiday_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Public holiday allowance</field>
-        <field name="name@fr">Indemnité de jour férié</field>
         <field name="code">PUBHOLALW</field>
         <field name="l10n_ch_code">1161</field>
         <field name="sequence">10</field>
@@ -533,7 +514,6 @@ result = categories['BASIC']
     <record id="l10n_ch_employees_vacation_payment" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Vacation Payment</field>
-        <field name="name@fr">Paiement de vacances</field>
         <field name="code">VACALW</field>
         <field name="l10n_ch_code">1162</field>
         <field name="sequence">10</field>
@@ -562,7 +542,6 @@ result = categories['BASIC']
     <record id="l10n_ch_employees_departure_time_off" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Holidays payment after departure</field>
-        <field name="name@fr">Paiement des congés après le départ</field>
         <field name="code">HOLDEP</field>
         <field name="l10n_ch_code">1163</field>
         <field name="sequence">10</field>
@@ -590,7 +569,6 @@ result = categories['BASIC']
     <record id="l10n_ch_employees_thirteen_month_provision" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_thirteen_month"/>
         <field name="name">Thirteen Month Provision</field>
-        <field name="name@fr">Provision au treizième mois</field>
         <field name="code">13THMONTHPROVISION</field>
         <field name="l10n_ch_code"></field>
         <field name="sequence">14</field>
@@ -618,7 +596,6 @@ else:
     <record id="l10n_ch_employees_thirteen_month" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Thirteen Month</field>
-        <field name="name@fr">Treizième mois</field>
         <field name="code">13THMONTH</field>
         <field name="l10n_ch_code">1200</field>
         <field name="sequence">15</field>
@@ -676,7 +653,6 @@ else:
     <record id="l10n_ch_employees_gratification" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Gratification</field>
-        <field name="name@fr">Gratification</field>
         <field name="code">GRAT</field>
         <field name="l10n_ch_code">1201</field>
         <field name="sequence">20</field>
@@ -704,7 +680,6 @@ else:
     <record id="l10n_ch_employees_previous_year_bonus" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Previous Year Bonus</field>
-        <field name="name@fr">Bonus de l'année précédente</field>
         <field name="code">PREVYBONUS</field>
         <field name="l10n_ch_code">1209</field>
         <field name="sequence">20</field>
@@ -732,7 +707,6 @@ else:
     <record id="l10n_ch_employees_14th_month" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">14th Month</field>
-        <field name="name@fr">14ème mois</field>
         <field name="code">14THMONTH</field>
         <field name="l10n_ch_code">1205</field>
         <field name="sequence">20</field>
@@ -759,8 +733,6 @@ else:
     <record id="l10n_ch_employees_bonus" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Bonus</field>
-        <field name="name@fr">Bonus</field>
-        <field name="name@de">Bonus</field>
         <field name="code">BONUS</field>
         <field name="l10n_ch_code">1210</field>
         <field name="sequence">20</field>
@@ -788,7 +760,6 @@ else:
     <record id="l10n_ch_employees_special_indemnity" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Special Indemnity</field>
-        <field name="name@fr">Indemnité Spéciale</field>
         <field name="code">SPEIND</field>
         <field name="l10n_ch_code">1212</field>
         <field name="sequence">20</field>
@@ -816,7 +787,6 @@ else:
     <record id="l10n_ch_employees_imp_bonus" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Bonus for improvement proposal</field>
-        <field name="name@fr">Bonus pour proposition d'amélioration</field>
         <field name="code">IMPBONUS</field>
         <field name="l10n_ch_code">1216</field>
         <field name="sequence">20</field>
@@ -844,7 +814,6 @@ else:
     <record id="l10n_ch_employees_commission" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Commission</field>
-        <field name="name@fr">Commissions</field>
         <field name="code">COMMISSION</field>
         <field name="l10n_ch_code">1218</field>
         <field name="sequence">20</field>
@@ -872,7 +841,6 @@ else:
     <record id="l10n_ch_employees_jubilee_gift" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Seniority Gift</field>
-        <field name="name@fr">Cadeau d'ancienneté</field>
         <field name="code">JUBILEE</field>
         <field name="l10n_ch_code">1230</field>
         <field name="sequence">20</field>
@@ -900,7 +868,6 @@ else:
     <record id="l10n_ch_employees_sev_pay" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Severance pay (subject to AVS)</field>
-        <field name="name@fr">Indemnité de départ (assujettie à l'AVS)</field>
         <field name="code">SEVPAY</field>
         <field name="l10n_ch_code">1401</field>
         <field name="sequence">20</field>
@@ -928,7 +895,6 @@ else:
     <record id="l10n_ch_employees_sick_wage" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Salary in case of illness</field>
-        <field name="name@fr">Salaire en cas de maladie</field>
         <field name="code">SICKWAGE</field>
         <field name="l10n_ch_code">1300</field>
         <field name="sequence">20</field>
@@ -952,7 +918,6 @@ else:
     <record id="l10n_ch_employees_accident_wage" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Salary in case of accident</field>
-        <field name="name@fr">Salaire en cas d'accident</field>
         <field name="code">ACCIDENTWAGE</field>
         <field name="l10n_ch_code">1301</field>
         <field name="sequence">20</field>
@@ -976,7 +941,6 @@ else:
     <record id="l10n_ch_employees_pension_capital" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Capital benefit of a pension nature</field>
-        <field name="name@fr">Avantage en capital à caractère de pension</field>
         <field name="code">PENSIONCAPITAL</field>
         <field name="l10n_ch_code">1410</field>
         <field name="sequence">20</field>
@@ -1004,7 +968,6 @@ else:
     <record id="l10n_ch_employees_ca_fee" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">CA Fee</field>
-        <field name="name@fr">Frais CA</field>
         <field name="code">CAFEE</field>
         <field name="l10n_ch_code">1500</field>
         <field name="sequence">20</field>
@@ -1032,7 +995,6 @@ else:
     <record id="l10n_ch_employees_free_meals" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Free Meals</field>
-        <field name="name@fr">Repas Gratuits</field>
         <field name="code">MEALS</field>
         <field name="l10n_ch_code">1900</field>
         <field name="sequence">20</field>
@@ -1060,7 +1022,6 @@ else:
     <record id="l10n_ch_employees_free_room" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Free Room</field>
-        <field name="name@fr">Chambre Gratuite</field>
         <field name="code">ROOM</field>
         <field name="l10n_ch_code">1901</field>
         <field name="sequence">20</field>
@@ -1084,7 +1045,6 @@ else:
     <record id="l10n_ch_employees_free_housing" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Free Housing</field>
-        <field name="name@fr">Logement Gratuit</field>
         <field name="code">HOUSING</field>
         <field name="l10n_ch_code">1902</field>
         <field name="sequence">20</field>
@@ -1112,7 +1072,6 @@ else:
     <record id="l10n_ch_employees_company_car_employee" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Company Car (Employee Part)</field>
-        <field name="name@fr">Voiture de société (Partie employeur)</field>
         <field name="code">COMPCAR</field>
         <field name="l10n_ch_code">1910</field>
         <field name="sequence">20</field>
@@ -1140,7 +1099,6 @@ else:
     <record id="l10n_ch_employees_rental_housing" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Rental housing rent reduction</field>
-        <field name="name@fr">Réduction du loyer des logements locatifs</field>
         <field name="code">HOUSERENT</field>
         <field name="l10n_ch_code">1950</field>
         <field name="sequence">20</field>
@@ -1168,7 +1126,6 @@ else:
     <record id="l10n_ch_employees_tax_part_fees" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Taxable participation fees</field>
-        <field name="name@fr">Frais de participation taxables</field>
         <field name="code">TAXPFEE</field>
         <field name="l10n_ch_code">1960</field>
         <field name="sequence">20</field>
@@ -1196,8 +1153,6 @@ else:
     <record id="l10n_ch_employees_action_collab" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Actions de collaborateurs</field>
-        <field name="name@fr">Actions de collaborateurs</field>
-        <field name="name@de">Actions de collaborateurs</field>
         <field name="code">ACTIONCOLLAB</field>
         <field name="l10n_ch_code">1961</field>
         <field name="sequence">20</field>
@@ -1225,7 +1180,6 @@ else:
     <record id="l10n_ch_employees_option_collab" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Options de collaborateurs</field>
-        <field name="name@fr">Options de collaborateurs</field>
         <field name="code">OPTCOLLAB</field>
         <field name="l10n_ch_code">1962</field>
         <field name="sequence">20</field>
@@ -1253,8 +1207,6 @@ else:
     <record id="l10n_ch_employees_optional_lpp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Optional employer part LPP</field>
-        <field name="name@fr">Partie employeur facultative LPP</field>
-        <field name="name@de">Optionales BVG von Arbeitgeberseite</field>
         <field name="code">OPTLPP</field>
         <field name="l10n_ch_code">1972</field>
         <field name="sequence">20</field>
@@ -1282,8 +1234,6 @@ else:
     <record id="l10n_ch_employees_optional_lpp_redemption" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Optional employer part LPP Redemption</field>
-        <field name="name@fr">Partie employeur facultative Rachat LPP</field>
-        <field name="name@de">Optionale BVG-Rückzahlung von Arbeitgeberseite</field>
         <field name="code">OPTLPPRED</field>
         <field name="l10n_ch_code">1973</field>
         <field name="sequence">20</field>
@@ -1311,7 +1261,6 @@ else:
     <record id="l10n_ch_employees_optional_cm" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Optional employer part CM</field>
-        <field name="name@fr">Partie employeur facultative CM</field>
         <field name="code">OPTCM</field>
         <field name="l10n_ch_code">1974</field>
         <field name="sequence">20</field>
@@ -1335,7 +1284,6 @@ else:
     <record id="l10n_ch_employees_third_pill_b" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Third pillar B paid by employer</field>
-        <field name="name@fr">Troisième pilier B payé par l'employeur</field>
         <field name="code">THIRDPILLB</field>
         <field name="l10n_ch_code">1977</field>
         <field name="sequence">20</field>
@@ -1363,7 +1311,6 @@ else:
     <record id="l10n_ch_employees_third_pill_a" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Third pillar A paid by employer</field>
-        <field name="name@fr">Troisième pilier A payé par l'employeur</field>
         <field name="code">THIRDPILLA</field>
         <field name="l10n_ch_code">1978</field>
         <field name="sequence">20</field>
@@ -1391,7 +1338,6 @@ else:
     <record id="l10n_ch_employees_perfecting" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Improvement</field>
-        <field name="name@fr">Amélioration</field>
         <field name="code">IMPROV</field>
         <field name="l10n_ch_code">1980</field>
         <field name="sequence">20</field>
@@ -1419,7 +1365,6 @@ else:
     <record id="l10n_ch_employees_indemnity_apg" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Indemnity APG</field>
-        <field name="name@fr">Indemnité APG</field>
         <field name="code">INDAPG</field>
         <field name="l10n_ch_code">2000</field>
         <field name="sequence">20</field>
@@ -1447,7 +1392,6 @@ else:
     <record id="l10n_ch_employees_military_wage" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Military compensation benefit (CCM)</field>
-        <field name="name@fr">Caisse de compensation militaire (CCM)</field>
         <field name="code">MILITARYWAGE</field>
         <field name="l10n_ch_code">2005</field>
         <field name="sequence">20</field>
@@ -1475,7 +1419,6 @@ else:
     <record id="l10n_ch_employees_indemnity_ai" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Indemnity AI</field>
-        <field name="name@fr">Indemnité AI</field>
         <field name="code">INDAI</field>
         <field name="l10n_ch_code">2025</field>
         <field name="sequence">20</field>
@@ -1499,7 +1442,6 @@ else:
     <record id="l10n_ch_employees_annuities_ai" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Annuities AI</field>
-        <field name="name@fr">Rentes AI</field>
         <field name="code">ANNAI</field>
         <field name="l10n_ch_code">2026</field>
         <field name="sequence">20</field>
@@ -1523,8 +1465,6 @@ else:
     <record id="l10n_ch_employees_indemnity_accident" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Accident Indemnity</field>
-        <field name="name@fr">Indemnité d'accident</field>
-        <field name="name@de">Unfallentschädigung</field>
         <field name="code">INDACC</field>
         <field name="l10n_ch_code">2030</field>
         <field name="sequence">20</field>
@@ -1552,7 +1492,6 @@ else:
     <record id="l10n_ch_employees_indemnity_illness" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Illness Indemnity</field>
-        <field name="name@fr">Indemnité de maladie</field>
         <field name="code">INDSICK</field>
         <field name="l10n_ch_code">2035</field>
         <field name="sequence">20</field>
@@ -1580,7 +1519,6 @@ else:
     <record id="l10n_ch_employees_third_party_correction" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Correction of third party compensation</field>
-        <field name="name@fr">Correction de l'indemnisation des tiers</field>
         <field name="code">THIRDPARTYCOR</field>
         <field name="l10n_ch_code">2050</field>
         <field name="sequence">20</field>
@@ -1608,7 +1546,6 @@ else:
     <record id="l10n_ch_employees_indemnity_maternity" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Maternity Indemnity</field>
-        <field name="name@fr">Indemnité de maternité</field>
         <field name="code">INDMAT</field>
         <field name="l10n_ch_code">2040</field>
         <field name="sequence">20</field>
@@ -1631,7 +1568,6 @@ else:
     <record id="l10n_ch_employees_indemnite_perte_gain" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_indemnite_perte_gain"/>
         <field name="name">Perte de gain RHT/ITP (SH)</field>
-        <field name="name@fr">Perte de gain RHT/ITP (SH)</field>
         <field name="code">RHTITP</field>
         <field name="l10n_ch_code">2065</field>
         <field name="sequence">20</field>
@@ -1658,7 +1594,6 @@ else:
     <record id="l10n_ch_employees_rht_itp_ded" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Déduction RHT/ITP (SM)</field>
-        <field name="name@fr">Déduction RHT/ITP (SM)</field>
         <field name="code">SMRHTITPDED</field>
         <field name="l10n_ch_code">2060</field>
         <field name="sequence">20</field>
@@ -1684,7 +1619,6 @@ else:
     <record id="l10n_ch_employees_death_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Death Allowance</field>
-        <field name="name@fr">Allocation de décès</field>
         <field name="code">DEATHALW</field>
         <field name="l10n_ch_code">1420</field>
         <field name="sequence">20</field>
@@ -1711,7 +1645,6 @@ else:
     <record id="l10n_ch_employees_indemnite_chomage" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Indemnité de chômage</field>
-        <field name="name@fr">Indemnité de chômage</field>
         <field name="code">CHOMALW</field>
         <field name="l10n_ch_code">2070</field>
         <field name="sequence">20</field>
@@ -1738,7 +1671,6 @@ else:
     <record id="l10n_ch_employees_carence_rht_itp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Délai de carence RHT/ITP</field>
-        <field name="name@fr">Délai de carence RHT/ITP</field>
         <field name="code">CRHTITP</field>
         <field name="l10n_ch_code">2075</field>
         <field name="sequence">20</field>
@@ -1765,7 +1697,6 @@ else:
     <record id="l10n_ch_employees_child_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Child Allowance</field>
-        <field name="name@fr">Allocations familiales</field>
         <field name="code">CHILDALW</field>
         <field name="l10n_ch_code">3000</field>
         <field name="sequence">20</field>
@@ -1793,7 +1724,6 @@ else:
     <record id="l10n_ch_employees_child_allowance_payment" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Child Allowance Payment</field>
-        <field name="name@fr">Paiement des allocations familiales</field>
         <field name="code">CHILDALWPAY</field>
         <field name="l10n_ch_code">3001</field>
         <field name="sequence">20</field>
@@ -1821,7 +1751,6 @@ else:
     <record id="l10n_ch_employees_professional_training_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Professional Training Allowance</field>
-        <field name="name@fr">Allocation de formation professionnelle</field>
         <field name="code">TRAININGALW</field>
         <field name="l10n_ch_code">3010</field>
         <field name="sequence">20</field>
@@ -1845,8 +1774,6 @@ else:
     <record id="l10n_ch_employees_birth_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Birth Allowance</field>
-        <field name="name@fr">Allocation de naissance</field>
-        <field name="name@de">Geburtszulage</field>
         <field name="code">BIRTHALW</field>
         <field name="l10n_ch_code">3034</field>
         <field name="sequence">20</field>
@@ -1874,7 +1801,6 @@ else:
     <record id="l10n_ch_employees_marriage_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Marriage Allowance</field>
-        <field name="name@fr">Allocation de mariage</field>
         <field name="code">MARRIAGEALW</field>
         <field name="l10n_ch_code">3035</field>
         <field name="sequence">20</field>
@@ -1902,7 +1828,6 @@ else:
     <record id="l10n_ch_employees_gross_comp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Gross Compensation</field>
-        <field name="name@fr">Compensation Brute</field>
         <field name="code">GROSSCOMP</field>
         <field name="l10n_ch_code">4900</field>
         <field name="sequence">20</field>
@@ -1932,7 +1857,6 @@ else:
     <record id="l10n_ch_employees_avs_base" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_avs_base"/>
         <field name="name">AVS Base</field>
-        <field name="name@fr">Base AVS</field>
         <field name="code">AVSBASE</field>
         <field name="l10n_ch_code">9010</field>
         <field name="sequence">103</field>
@@ -1948,7 +1872,6 @@ result = sum(result_rules[rule.code]['total'] for rule in payslip.struct_id.rule
     <record id="l10n_ch_employees_avs_franchise" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_avs_franchise"/>
         <field name="name">AVS Franchise IMPUTEE</field>
-        <field name="name@fr">AVS Franchise IMPUTEE</field>
         <field name="code">AVSFRANCHISE</field>
         <field name="sequence">104</field>
         <field name="condition_select">python</field>
@@ -1977,7 +1900,6 @@ else:
     <record id="l10n_ch_employees_avs_franchise_non_imp" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_avs_franchise_non_imp"/>
         <field name="name">Abattement Non Imputé (Cumul)</field>
-        <field name="name@fr">Abattement Non Imputé (Cumul)</field>
         <field name="code">AVSFRANCHISENONIMP</field>
         <field name="l10n_ch_code">9012</field>
         <field name="sequence">105</field>
@@ -2002,7 +1924,6 @@ result = max(0, franchise + non_imput_franchise_left - categories['AVSFRANCHISE'
     <record id="l10n_ch_employees_avs_open" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_avs_open"/>
         <field name="name">AVS OPEN</field>
-        <field name="name@fr">AVS Ouvert</field>
         <field name="code">AVSOPEN</field>
         <field name="sequence">106</field>
         <field name="condition_select">python</field>
@@ -2023,8 +1944,6 @@ elif payslip.l10n_ch_avs_status == "retired":
     <record id="l10n_ch_employees_avs_salary" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_avs_salary"/>
         <field name="name">AVS Salary</field>
-        <field name="name@fr">Salaire AVS</field>
-        <field name="name@de">AHV: Gehalt</field>
         <field name="code">AVSSALARY</field>
         <field name="l10n_ch_code">9011</field>
         <field name="sequence">107</field>
@@ -2040,7 +1959,6 @@ result = categories['AVSBASE'] - categories['AVSOPEN']
     <record id="l10n_ch_employees_avs_salary_retired" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_avs_salary_retired"/>
         <field name="name">AVS Salary Retired</field>
-        <field name="name@fr">Salaire AVS retraité</field>
         <field name="code">AVSSALARYRET</field>
         <field name="sequence">108</field>
         <field name="condition_select">python</field>
@@ -2058,8 +1976,6 @@ result = categories['AVSBASE'] - categories['AVSOPEN']
     <record id="l10n_ch_employees_avs" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">AVS</field>
-        <field name="name@fr">AVS</field>
-        <field name="name@de">AHV</field>
         <field name="code">AVS</field>
         <field name="l10n_ch_code">5010</field>
         <field name="sequence">109</field>
@@ -2085,8 +2001,6 @@ result_rate = -contract.l10n_ch_social_insurance_id._get_avs_rates(payslip.date_
     <record id="l10n_ch_employees_avs_comp" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">AVS (Comp. Part.)</field>
-        <field name="name@fr">AVS (Partie Employeur)</field>
-        <field name="name@de">AHV (Comp. Part.)</field>
         <field name="code">AVS.COMP</field>
         <field name="sequence">109</field>
         <field name="condition_select">python</field>
@@ -2121,7 +2035,6 @@ result_rate = contract.l10n_ch_social_insurance_id._get_avs_rates(payslip.date_f
     <record id="l10n_ch_employees_ac_base" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ac_base"/>
         <field name="name">AC Base</field>
-        <field name="name@fr">Base AC</field>
         <field name="code">ACBASE</field>
         <field name="l10n_ch_code">9020</field>
         <field name="sequence">110</field>
@@ -2137,7 +2050,6 @@ result = categories['AVSBASE']
     <record id="l10n_ch_employees_ac_salary_max" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ac_threshold"/>
         <field name="name">AC Salary Threshold</field>
-        <field name="name@fr">Seuil Salaire AC</field>
         <field name="code">ACSALARYMAX</field>
         <field name="sequence">110</field>
         <field name="condition_select">none</field>
@@ -2157,8 +2069,6 @@ else:
     <record id="l10n_ch_employees_ac_salary" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_ac_salary"/>
         <field name="name">AC Salary</field>
-        <field name="name@fr">Salaire AC</field>
-        <field name="name@de">ALV: Gehalt</field>
         <field name="code">ACSALARY</field>
         <field name="l10n_ch_code">9021</field>
         <field name="sequence">111</field>
@@ -2183,7 +2093,6 @@ else:
     <record id="l10n_ch_employees_ac" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">AC</field>
-        <field name="name@fr">AC</field>
         <field name="code">AC</field>
         <field name="l10n_ch_code">5020</field>
         <field name="sequence">111</field>
@@ -2214,7 +2123,6 @@ Source: https://www.cvcicaisseavs.ch/en/employer/unemployment-insurance-ac.html
     <record id="l10n_ch_employees_ac_comp" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">AC (Comp. Part.)</field>
-        <field name="name@fr">AC (Partie Employeur)</field>
         <field name="code">AC.COMP</field>
         <field name="sequence">111</field>
         <field name="condition_select">python</field>
@@ -2242,7 +2150,6 @@ Source: https://www.cvcicaisseavs.ch/en/employer/unemployment-insurance-ac.html
     <record id="l10n_ch_employees_acc_salary_max" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_acc_threshold"/>
         <field name="name">ACC Salary Maximum</field>
-        <field name="name@fr">Salaire ACC Maximum</field>
         <field name="code">ACCSALARYMAX</field>
         <field name="l10n_ch_code">9022</field>
         <field name="sequence">110</field>
@@ -2262,8 +2169,6 @@ else:
     <record id="l10n_ch_employees_acc_salary" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_acc_salary"/>
         <field name="name">ACC Salary</field>
-        <field name="name@fr">Salaire ACC</field>
-        <field name="name@de">UVG: Gehalt</field>
         <field name="code">ACCSALARY</field>
         <field name="sequence">112</field>
         <field name="condition_select">python</field>
@@ -2290,7 +2195,6 @@ result = max(min(trimmed_base, max_cum_acc_possible), 0) - acc_salary_cum
     <record id="l10n_ch_employees_compl_ac" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">ACC</field>
-        <field name="name@fr">ACC</field>
         <field name="code">ACC</field>
         <field name="l10n_ch_code">5030</field>
         <field name="sequence">112</field>
@@ -2318,7 +2222,6 @@ result_rate = - contract.l10n_ch_social_insurance_id._get_additional_ac_rates(pa
     <record id="l10n_ch_employees_compl_ac_comp" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">Compl. AC (Comp. Part.)</field>
-        <field name="name@fr">AC Compl. (Partie Employeur)</field>
         <field name="code">ACC.COMP</field>
         <field name="sequence">113</field>
         <field name="condition_select">python</field>
@@ -2343,7 +2246,6 @@ result_rate = contract.l10n_ch_social_insurance_id._get_additional_ac_rates(pays
     <record id="l10n_ch_employees_ac_open" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ac_open"/>
         <field name="name">AC OPEN</field>
-        <field name="name@fr">AC OUVERT</field>
         <field name="code">ACOPEN</field>
         <field name="sequence">114</field>
         <field name="condition_select">none</field>
@@ -2365,7 +2267,6 @@ result = categories['ACBASE'] - categories['ACSALARY'] - categories['ACCSALARY']
     <record id="l10n_ch_employees_laa_base" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laa_base"/>
         <field name="name">LAA Base</field>
-        <field name="name@fr">Base LAA</field>
         <field name="code">LAABASE</field>
         <field name="l10n_ch_code">9030</field>
         <field name="sequence">115</field>
@@ -2381,7 +2282,6 @@ result =  sum(result_rules[rule.code]['total'] for rule in payslip.struct_id.rul
     <record id="l10n_ch_employees_laa_salary_max" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laa_threshold"/>
         <field name="name">LAA Salary Maximum</field>
-        <field name="name@fr">Salaire Maximum LAA</field>
         <field name="code">LAASALARYMAX</field>
         <field name="sequence">118</field>
         <field name="condition_select">none</field>
@@ -2400,7 +2300,6 @@ else:
     <record id="l10n_ch_employees_laa_salary_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laa_salary"/>
         <field name="name">LAA Salary</field>
-        <field name="name@fr">Salaire LAA</field>
         <field name="code">LAASALARY</field>
         <field name="l10n_ch_code">9031</field>
         <field name="sequence">119</field>
@@ -2427,7 +2326,6 @@ result = max(min(current_laa_base, laa_threshold), 0) - previous_laa_salary
     <record id="l10n_ch_employees_aanp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">AANP</field>
-        <field name="name@fr">AANP</field>
         <field name="code">AANP</field>
         <field name="l10n_ch_code">5040</field>
         <field name="sequence">120</field>
@@ -2461,7 +2359,6 @@ result = categories['LAASALARY']
     <record id="l10n_ch_employees_aap_comp" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">AAP (Comp. Part.)</field>
-        <field name="name@fr">AAP (Partie Employeur)</field>
         <field name="code">AAP.COMP</field>
         <field name="sequence">121</field>
         <field name="condition_select">none</field>
@@ -2492,7 +2389,6 @@ result = categories['LAASALARY']
     <record id="l10n_ch_employees_aanp_comp" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">AANP (Comp. Part.)</field>
-        <field name="name@fr">AANP (Partie Employeur)</field>
         <field name="code">AANP.COMP</field>
         <field name="sequence">121</field>
         <field name="condition_select">none</field>
@@ -2523,7 +2419,6 @@ result = categories['LAASALARY']
     <record id="l10n_ch_employees_optional_aanp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Optional employer part AANP</field>
-        <field name="name@fr">Partie employeur facultative AANP</field>
         <field name="code">OPTAANP</field>
         <field name="l10n_ch_code">1975</field>
         <field name="sequence">20</field>
@@ -2547,7 +2442,6 @@ result = categories['LAASALARY']
     <record id="l10n_ch_employees_laac_base" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_base"/>
         <field name="name">LAAC Base</field>
-        <field name="name@fr">Base LAAC</field>
         <field name="code">LAACBASE</field>
         <field name="l10n_ch_code">9040</field>
         <field name="sequence">122</field>
@@ -2563,7 +2457,6 @@ result = sum(result_rules[rule.code]['total'] for rule in payslip.struct_id.rule
     <record id="l10n_ch_employees_laac_salary_max_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_salary_max_1"/>
         <field name="name">LAAC Salary Maximum Main Insurance</field>
-        <field name="name@fr">Salaire LAAC Maximum Assurance Principale</field>
         <field name="code">LAACSALARYMAX1</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2587,7 +2480,6 @@ result_rate = categories['ASDAYS'] / 30.0 * 100.0
     <record id="l10n_ch_employees_laac_salary_max_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_salary_max_2"/>
         <field name="name">LAAC Salary Maximum Second Insurance</field>
-        <field name="name@fr">Salaire LAAC Maximum Assurance Secondaire</field>
         <field name="code">LAACSALARYMAX2</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2611,7 +2503,6 @@ result_rate = categories['ASDAYS'] / 30.0 * 100.0
     <record id="l10n_ch_employees_laac_salary_min_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_salary_min_1"/>
         <field name="name">LAAC Salary Minimum Main Insurance</field>
-        <field name="name@fr">Salaire LAAC Minimum Assurance Principale</field>
         <field name="code">LAACSALARYMIN1</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2636,7 +2527,6 @@ result_rate = categories['ASDAYS'] / 30.0 * 100.0
     <record id="l10n_ch_employees_laac_salary_min_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_salary_min_2"/>
         <field name="name">LAAC Salary Minimum Second Insurance</field>
-        <field name="name@fr">Salaire LAAC Minimum Assurance Secondaire</field>
         <field name="code">LAACSALARYMIN2</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2660,7 +2550,6 @@ result_rate = categories['ASDAYS'] / 30.0 * 100.0
     <record id="l10n_ch_employees_laac_salary_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_salary_1"/>
         <field name="name">LAAC Salary Main Insurance</field>
-        <field name="name@fr">Salaire LAAC Assurance Principale</field>
         <field name="code">LAACSALARY1</field>
         <field name="l10n_ch_code">9041</field>
         <field name="sequence">123</field>
@@ -2701,7 +2590,6 @@ result = max(min(trimmed_laac_base, laac_1_threshold), 0) - previous_laac_1_sala
     <record id="l10n_ch_employees_laac_salary_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_laac_salary_2"/>
         <field name="name">LAAC Salary Second Insurance</field>
-        <field name="name@fr">Salaire LAAC Assurance Secondaire</field>
         <field name="code">LAACSALARY2</field>
         <field name="l10n_ch_code">9043</field>
         <field name="sequence">123</field>
@@ -2742,8 +2630,6 @@ result = max(min(trimmed_laac_base, laac_1_threshold), 0) - previous_laac_1_sala
     <record id="l10n_ch_employees_laac" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">LAAC1</field>
-        <field name="name@fr">LAAC1</field>
-        <field name="name@de">UVGZ1</field>
         <field name="code">LAAC1</field>
         <field name="l10n_ch_code">5041</field>
         <field name="sequence">124</field>
@@ -2773,7 +2659,6 @@ result_rate = -rate * (100 - employer_rate)/100
     <record id="l10n_ch_employees_laac_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">LAAC2</field>
-        <field name="name@fr">LAAC2</field>
         <field name="code">LAAC2</field>
         <field name="l10n_ch_code">5043</field>
         <field name="sequence">124</field>
@@ -2803,7 +2688,6 @@ result_rate = -rate * (100 - employer_rate) / 100
     <record id="l10n_ch_employees_laac_comp_1" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">LAAC1 (Comp. Part.)</field>
-        <field name="name@fr">LAAC1 (Partie Employeur)</field>
         <field name="code">LAAC1.COMP</field>
         <field name="sequence">124</field>
         <field name="condition_select">python</field>
@@ -2831,7 +2715,6 @@ result_rate = rate * (employer_rate) / 100
     <record id="l10n_ch_employees_laac_comp_2" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">LAAC2 (Comp. Part.)</field>
-        <field name="name@fr">LAAC2 (Partie Employeur)</field>
         <field name="code">LAAC2.COMP</field>
         <field name="sequence">124</field>
         <field name="condition_select">python</field>
@@ -2859,8 +2742,6 @@ result_rate = rate * (employer_rate) / 100
     <record id="l10n_ch_employees_optional_laac" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Optional employer part LAAC</field>
-        <field name="name@fr">Partie employeur facultative LAAC</field>
-        <field name="name@de">Optionale UVGZ von Arbeitgeberseite</field>
         <field name="code">OPTLAAC</field>
         <field name="l10n_ch_code">1976</field>
         <field name="sequence">20</field>
@@ -2884,7 +2765,6 @@ result_rate = rate * (employer_rate) / 100
     <record id="l10n_ch_employees_ijm_base" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_base"/>
         <field name="name">IJM Base</field>
-        <field name="name@fr">Base IJM</field>
         <field name="code">IJMBASE</field>
         <field name="l10n_ch_code">9050</field>
         <field name="sequence">125</field>
@@ -2900,7 +2780,6 @@ result = sum(result_rules[rule.code]['total'] for rule in payslip.struct_id.rule
     <record id="l10n_ch_employees_ijm_salary_max_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_salary_max_1"/>
         <field name="name">IJM Salary Maximum Main Insurance</field>
-        <field name="name@fr">Salaire IJM Maximum Assurance Principale</field>
         <field name="code">IJMSALARYMAX1</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2924,7 +2803,6 @@ result_rate = categories['ASDAYS'] / 30.0 * 100.0
     <record id="l10n_ch_employees_ijm_salary_max_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_salary_max_2"/>
         <field name="name">IJM Salary Maximum Second Insurance</field>
-        <field name="name@fr">Salaire IJM Maxium Assurance Secondaire</field>
         <field name="code">IJMSALARYMAX2</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2948,7 +2826,6 @@ result_rate = categories['ASDAYS'] / 30.0 * 100.0
     <record id="l10n_ch_employees_ijm_salary_min_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_salary_min_1"/>
         <field name="name">IJM Salary Minimum Main Insurance</field>
-        <field name="name@fr">Salaire IJM Minimum Assurance Principale</field>
         <field name="code">IJMSALARYMIN1</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2972,7 +2849,6 @@ else:
     <record id="l10n_ch_employees_ijm_salary_min_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_salary_min_2"/>
         <field name="name">IJM Salary Maximum Second Insurance</field>
-        <field name="name@fr">Salaire IJM Maxium Assurance Secondaire</field>
         <field name="code">IJMSALARYMIN2</field>
         <field name="sequence">122</field>
         <field name="condition_select">python</field>
@@ -2998,7 +2874,6 @@ else:
     <record id="l10n_ch_employees_ijm_salary_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_salary_1"/>
         <field name="name">IJM Salary Main Insurance</field>
-        <field name="name@fr">Salaire IJM Assurance Principale</field>
         <field name="code">IJMSALARY1</field>
         <field name="l10n_ch_code">9051</field>
         <field name="sequence">125</field>
@@ -3041,7 +2916,6 @@ result = max(min(trimmed_ijm_base, ijm_1_threshold), 0) - previous_ijm_1_salary
     <record id="l10n_ch_employees_ijm_salary_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_ijm_salary_2"/>
         <field name="name">IJM Salary Second Insurance</field>
-        <field name="name@fr">Salaire IJM Assurance Secondaire</field>
         <field name="code">IJMSALARY2</field>
         <field name="l10n_ch_code">9053</field>
         <field name="sequence">125</field>
@@ -3083,7 +2957,6 @@ result = max(min(trimmed_ijm_base, ijm_1_threshold), 0) - previous_ijm_1_salary
     <record id="l10n_ch_employees_ijm_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">IJM1</field>
-        <field name="name@fr">IJM1</field>
         <field name="code">IJM1</field>
         <field name="l10n_ch_code">5045</field>
         <field name="sequence">126</field>
@@ -3111,7 +2984,6 @@ result_rate = - rate * (100 - employer_part) / 100
     <record id="l10n_ch_employees_ijm_2" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">IJM2</field>
-        <field name="name@fr">IJM2</field>
         <field name="code">IJM2</field>
         <field name="l10n_ch_code">5047</field>
         <field name="sequence">126</field>
@@ -3139,7 +3011,6 @@ result_rate = - rate * (100 - employer_part) / 100
     <record id="l10n_ch_employees_ijm_comp_1" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">IJM1 (Comp. Part.)</field>
-        <field name="name@fr">IJM1 (Partie Employeur)</field>
         <field name="code">IJM1.COMP</field>
         <field name="sequence">127</field>
         <field name="condition_select">python</field>
@@ -3167,7 +3038,6 @@ result_rate = rate * (employer_part / 100)
     <record id="l10n_ch_employees_ijm_comp_2" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">IJM2 (Comp. Part.)</field>
-        <field name="name@fr">IJM2 (Partie Employeur)</field>
         <field name="code">IJM2.COMP</field>
         <field name="sequence">127</field>
         <field name="condition_select">python</field>
@@ -3195,8 +3065,6 @@ result_rate = rate * (employer_part / 100)
     <record id="l10n_ch_employees_optional_ijm" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Optional employer part IJM</field>
-        <field name="name@fr">Partie employeur facultative IJM</field>
-        <field name="name@de">Optionaler KTG von Arbeitgeberseite</field>
         <field name="code">OPTIJM</field>
         <field name="l10n_ch_code">1971</field>
         <field name="sequence">20</field>
@@ -3224,7 +3092,6 @@ result_rate = rate * (employer_part / 100)
     <record id="l10n_ch_employees_lpp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">LPP</field>
-        <field name="name@fr">LPP</field>
         <field name="code">LPP</field>
         <field name="l10n_ch_code">5050</field>
         <field name="sequence">130</field>
@@ -3257,8 +3124,6 @@ Source:
     <record id="l10n_ch_employees_lpp_redemption" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">LPP: Redemption</field>
-        <field name="name@fr">LPP: rachat</field>
-        <field name="name@de">BVG: Rückzahlung</field>
         <field name="code">LPPRED</field>
         <field name="l10n_ch_code">5051</field>
         <field name="sequence">130</field>
@@ -3282,7 +3147,6 @@ Source:
     <record id="l10n_ch_employees_lpp_comp" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">LPP (Comp. Part.)</field>
-        <field name="name@fr">LPP (Partie Employeur)</field>
         <field name="code">LPP.COMP</field>
         <field name="sequence">130</field>
         <field name="condition_select">none</field>
@@ -3319,7 +3183,6 @@ Source:
     <record id="l10n_ch_employees_is_base" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_base"/>
         <field name="name">IS Base</field>
-        <field name="name@fr">Base IS</field>
         <field name="code">ISBASE</field>
         <field name="l10n_ch_code">9065</field>
         <field name="sequence">132</field>
@@ -3344,7 +3207,6 @@ result = sum(result_rules[rule.code]['total'] for rule in payslip.struct_id.rule
     <record id="l10n_ch_employees_is_salary_dt_p" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_salary_dt_p"/>
         <field name="name">IS Salary DT P</field>
-        <field name="name@fr">Salaire IS DT P</field>
         <field name="code">ISSALARYDTP</field>
         <field name="sequence">133</field>
         <field name="condition_select">python</field>
@@ -3372,7 +3234,6 @@ result = sum(result_rules[rule.code]['total'] for rule in periodic_rules)
     <record id="l10n_ch_employees_is_salary_dt_ap" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_salary_dt_ap"/>
         <field name="name">IS Salary DT AP</field>
-        <field name="name@fr">Salaire IS DT AP</field>
         <field name="code">ISSALARYDTAP</field>
         <field name="sequence">133</field>
         <field name="condition_select">python</field>
@@ -3400,7 +3261,6 @@ result = sum(result_rules[rule.code]['total'] for rule in periodic_rules)
     <record id="l10n_ch_employees_is_salary" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_salary"/>
         <field name="name">IS Salary</field>
-        <field name="name@fr">Salaire IS</field>
         <field name="code">ISSALARY</field>
         <field name="l10n_ch_code">9070</field>
         <field name="sequence">140</field>
@@ -3442,7 +3302,6 @@ else:
     <record id="l10n_ch_employees_is_salary_dt_aperiodic" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_dt_aperiodic_salary"/>
         <field name="name">IS DT Aperiodic Salary</field>
-        <field name="name@fr">IS DT Salaire Apériodique</field>
         <field name="code">ISDTSALARYAPERIODIC</field>
         <field name="l10n_ch_code">9072</field>
         <field name="sequence">180</field>
@@ -3467,7 +3326,6 @@ result = categories['ISSALARYDTAP']
     <record id="l10n_ch_employees_is_salary_dt_periodic" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_dt_periodic_salary"/>
         <field name="name">IS DT Periodic Salary</field>
-        <field name="name@fr">IS DT Salaire Périodique</field>
         <field name="code">ISDTSALARYPERIODIC</field>
         <field name="l10n_ch_code">9071</field>
         <field name="sequence">210</field>
@@ -3496,7 +3354,6 @@ result = periodic_salary
     <record id="l10n_ch_employees_is_salary_dt" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_dt_salary"/>
         <field name="name">IS DT Salary</field>
-        <field name="name@fr">Salaire IS DT</field>
         <field name="code">ISDTSALARY</field>
         <field name="l10n_ch_code">9073</field>
         <field name="sequence">220</field>
@@ -3549,7 +3406,6 @@ else:
     <record id="l10n_ch_employees_is_rate" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_is_rate"/>
         <field name="name">IS Rate</field>
-        <field name="name@fr">Taux IS</field>
         <field name="code">ISRATE</field>
         <field name="l10n_ch_code">9075</field>
         <field name="sequence">230</field>
@@ -3599,8 +3455,6 @@ else:
     <record id="l10n_ch_employees_is_correction" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">IS: Correction</field>
-        <field name="name@fr">IS: Correction</field>
-        <field name="name@de">SV: Korrektur</field>
         <field name="code">ISCOR</field>
         <field name="l10n_ch_code">5061</field>
         <field name="sequence">234</field>
@@ -3670,7 +3524,6 @@ result = - total_compensation
     <record id="l10n_ch_employees_withholding_tax" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">IS</field>
-        <field name="name@fr">IS</field>
         <field name="code">IS</field>
         <field name="l10n_ch_code">5060</field>
         <field name="sequence">236</field>
@@ -3724,7 +3577,6 @@ See: https://www.estv.admin.ch/estv/fr/accueil/impot-federal-direct/impot-a-la-s
     <record id="l10n_ch_employees_fak" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_caf"/>
         <field name="name">CAF</field>
-        <field name="name@fr">CAF</field>
         <field name="code">CAF</field>
         <field name="l10n_ch_code">5070</field>
         <field name="sequence">260</field>
@@ -3753,7 +3605,6 @@ result_rate = - contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.dat
     <record id="l10n_ch_employees_fak_company" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll.hr_salary_rule_category_comp_part"/>
         <field name="name">CAF (Comp. Part.)</field>
-        <field name="name@fr">CAF (Partie Employeur)</field>
         <field name="code">CAF.COMP</field>
         <field name="sequence">270</field>
         <field name="condition_select">python</field>
@@ -3780,7 +3631,6 @@ result_rate = contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date_
     <record id="l10n_ch_employees_restreint_private_share_service_car" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Restraint Private share service car</field>
-        <field name="name@fr">Voiture de service de partage privé de retenue</field>
         <field name="code">SERVICECAR</field>
         <field name="l10n_ch_code">5080</field>
         <field name="sequence">280</field>
@@ -3801,7 +3651,6 @@ result_rate = contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date_
     <record id="l10n_ch_employees_benefits_in_kind_correction" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Correction of benefits in kind</field>
-        <field name="name@fr">Correction des avantages en nature</field>
         <field name="code">BIKCORRECTION</field>
         <field name="l10n_ch_code">5100</field>
         <field name="sequence">280</field>
@@ -3822,7 +3671,6 @@ result_rate = contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date_
     <record id="l10n_ch_employees_cash_advantage_correction" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Cash Advantage Correction</field>
-        <field name="name@fr">Correction de l'avantage de trésorerie</field>
         <field name="code">CASHCORRECTION</field>
         <field name="l10n_ch_code">5110</field>
         <field name="sequence">280</field>
@@ -3843,7 +3691,6 @@ result_rate = contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date_
     <record id="l10n_ch_employees_employer_lpp_compensation" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Compensation for employer LPP contributions</field>
-        <field name="name@fr">Compensation des cotisations patronales LPP</field>
         <field name="code">COMPLPP</field>
         <field name="l10n_ch_code">5111</field>
         <field name="sequence">280</field>
@@ -3869,7 +3716,6 @@ result = - result_rules['OPTLPP']['total']
     <record id="l10n_ch_employees_employer_lpp_compensation_rachat" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Compensation rachat LPP employeur</field>
-        <field name="name@fr">Compensation rachat LPP employeur</field>
         <field name="code">COMPRLPP</field>
         <field name="l10n_ch_code">5112</field>
         <field name="sequence">280</field>
@@ -3895,7 +3741,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_travel_expense" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Travel Expense</field>
-        <field name="name@fr">Frais de déplacement</field>
         <field name="code">TRAVEXP</field>
         <field name="l10n_ch_code">6000</field>
         <field name="sequence">280</field>
@@ -3919,7 +3764,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_effective_expatriate_costs" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Effective expatriate costs</field>
-        <field name="name@fr">Coûts effectifs de l'expatrié</field>
         <field name="code">EFFECTIVEEXPAT</field>
         <field name="l10n_ch_code">6020</field>
         <field name="sequence">280</field>
@@ -3943,7 +3787,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_flat_expatriate_costs" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Flat rate fees for expatriates</field>
-        <field name="name@fr">Honoraires forfaitaires pour les expatriés</field>
         <field name="code">FLATEXPAT</field>
         <field name="l10n_ch_code">6035</field>
         <field name="sequence">280</field>
@@ -3967,8 +3810,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_family_allowance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Family Allowance</field>
-        <field name="name@fr">Allocations Familiales</field>
-        <field name="name@de">Familienzulage</field>
         <field name="code">FAMILYALW</field>
         <field name="l10n_ch_code">3030</field>
         <field name="sequence">280</field>
@@ -3991,7 +3832,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_car_expense" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Car Expense</field>
-        <field name="name@fr">Dépense de voiture</field>
         <field name="code">CAREXP</field>
         <field name="l10n_ch_code">6001</field>
         <field name="sequence">280</field>
@@ -4013,7 +3853,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_lunch_expense" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Lunch Expense</field>
-        <field name="name@fr">Frais de repas</field>
         <field name="code">LUNCHEXP</field>
         <field name="l10n_ch_code">6002</field>
         <field name="sequence">280</field>
@@ -4035,7 +3874,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_nightly_expense" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Nightly Expense</field>
-        <field name="name@fr">Dépense de nuit</field>
         <field name="code">NIGHTEXP</field>
         <field name="l10n_ch_code">6010</field>
         <field name="sequence">280</field>
@@ -4057,7 +3895,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_other_expense" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Other Expense</field>
-        <field name="name@fr">Autres dépenses</field>
         <field name="code">OTHEREXP</field>
         <field name="l10n_ch_code">6030</field>
         <field name="sequence">280</field>
@@ -4079,7 +3916,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_representation_fees" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Representation Fees</field>
-        <field name="name@fr">Frais de représentation</field>
         <field name="code">REPFEES</field>
         <field name="l10n_ch_code">6040</field>
         <field name="sequence">280</field>
@@ -4103,7 +3939,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_car_fees" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Car Fees</field>
-        <field name="name@fr">Frais de voiture</field>
         <field name="code">CARFEES</field>
         <field name="l10n_ch_code">6050</field>
         <field name="sequence">280</field>
@@ -4127,7 +3962,6 @@ result = - result_rules['OPTLPPRED']['total']
     <record id="l10n_ch_employees_other_fees" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Other Fees</field>
-        <field name="name@fr">Autres Frais</field>
         <field name="code">OTHERFEES</field>
         <field name="l10n_ch_code">6070</field>
         <field name="sequence">280</field>

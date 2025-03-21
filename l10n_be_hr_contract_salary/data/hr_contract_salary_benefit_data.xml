@@ -3,8 +3,6 @@
     <data noupdate="1">
     <record id="l10n_be_transport_company_car" model="hr.contract.salary.benefit">
         <field name="name">Transportation</field>
-        <field name="name@nl">Vervoer</field>
-        <field name="name@fr">Moyen de transport</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'company_car_total_depreciated_cost')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'company_car_total_depreciated_cost')])"/>
         <field name="sequence">5</field>
@@ -20,8 +18,6 @@
 
     <record id="l10n_be_transport_new_car" model="hr.contract.salary.benefit">
         <field name="name">Wishlist Car</field>
-        <field name="name@nl">Autowenslijst</field>
-        <field name="name@fr">Voiture sur liste de souhaits</field>
         <field name="show_name">False</field>
         <field name="sequence">10</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'wishlist_car_total_depreciated_cost')])"/>
@@ -35,8 +31,6 @@
 
     <record id="l10n_be_transport_public" model="hr.contract.salary.benefit">
         <field name="name">Public Transport</field>
-        <field name="name@nl">Openbaar vervoer</field>
-        <field name="name@fr">Transport en commun</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'public_transport_reimbursed_amount')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'public_transport_reimbursed_amount')])"/>
@@ -53,8 +47,6 @@
 
     <record id="l10n_be_transport_train" model="hr.contract.salary.benefit">
         <field name="name">Train Transport</field>
-        <field name="name@nl">Treinvervoer</field>
-        <field name="name@fr">Transport en train</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'train_transport_reimbursed_amount')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'train_transport_reimbursed_amount')])"/>
@@ -71,8 +63,6 @@
 
     <record id="l10n_be_transport_private_car" model="hr.contract.salary.benefit">
         <field name="name">Private Car</field>
-        <field name="name@nl">Eigen auto</field>
-        <field name="name@fr">Voiture privée</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'private_car_reimbursed_amount')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'private_car_reimbursed_amount')])"/>
@@ -89,8 +79,6 @@
 
     <record id="l10n_be_transport_private_bike" model="hr.contract.salary.benefit">
         <field name="name">Bicyle Cost</field>
-        <field name="name@nl">Eigen fiets</field>
-        <field name="name@fr">Vélo privé</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_bicyle_cost')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_bicyle_cost')])"/>
@@ -107,8 +95,6 @@
 
     <record id="l10n_be_transport_company_bike" model="hr.contract.salary.benefit">
         <field name="name">Company Bike</field>
-        <field name="name@nl">Bedrijfsfiets</field>
-        <field name="name@fr">Vélo de société</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'company_bike_depreciated_cost')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'company_bike_depreciated_cost')])"/>
@@ -124,9 +110,6 @@
 
     <record id="l10n_be_internet" model="hr.contract.salary.benefit">
         <field name="name">Internet Subscription</field>
-        <field name="name@nl">Internetabonnement</field>
-        <field name="name@fr">Abonnement Internet</field>
-        <field name="name@de">Internet-Abo</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'internet')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'internet')])"/>
         <field name="manual_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'internet')])"/>
@@ -142,9 +125,6 @@
 
     <record id="l10n_be_mobile" model="hr.contract.salary.benefit">
         <field name="name">Phone Subscription</field>
-        <field name="name@nl">Telefoonabonnement</field>
-        <field name="name@fr">Abonnement téléphonique</field>
-        <field name="name@de">Telefon-Abo</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'mobile')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'mobile')])"/>
         <field name="sequence">30</field>
@@ -163,9 +143,6 @@
         <field name="benefit_id" ref="l10n_be_mobile"/>
         <field name="value">0</field>
         <field name="name">No</field>
-        <field name="name@nl">Nee</field>
-        <field name="name@fr">Non</field>
-        <field name="name@de">Nein</field>
         <field name="selector_highlight">red</field>
         <field name="always_show_description" eval="False"/>
     </record>
@@ -175,16 +152,10 @@
         <field name="benefit_id" ref="l10n_be_mobile"/>
         <field name="value">30.0</field>
         <field name="name">30.0 €</field>
-    <field name="name@nl">€ 30</field>
-    <field name="name@fr">30,0 €</field>
-    <field name="name@de">30,00 €</field>
     </record>
 
     <record id="l10n_be_extra_time_off" model="hr.contract.salary.benefit">
         <field name="name">Extra Time Off</field>
-        <field name="name@nl">Extra verlof</field>
-        <field name="name@fr">Jours de congé supplémentaires</field>
-        <field name="name@de">Zusätzliche Urlaubszeit</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'holidays')])"/>
         <field name="sequence">35</field>
         <field name="benefit_type_id" ref="hr_contract_salary.l10n_be_monthly_benefit"/>
@@ -199,9 +170,6 @@
 
     <record id="l10n_be_intellectual_property" model="hr.contract.salary.benefit">
         <field name="name">Intellectual Property</field>
-        <field name="name@nl">Intellectuele eigendom</field>
-        <field name="name@fr">Propriété intellectuelle</field>
-        <field name="name@de">Geistiges Eigentum</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'ip_value')])"/>
         <field name="sequence">40</field>
         <field name="benefit_type_id" ref="hr_contract_salary.l10n_be_monthly_net"/>
@@ -215,9 +183,6 @@
     <record id="l10n_be_intellectual_property_value_0" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_intellectual_property"/>
         <field name="name">No</field>
-        <field name="name@nl">Nee</field>
-        <field name="name@fr">Non</field>
-        <field name="name@de">Nein</field>
         <field name="value">0</field>
         <field name="selector_highlight">red</field>
         <field name="always_show_description" eval="False"/>
@@ -226,17 +191,11 @@
     <record id="l10n_be_intellectual_property_value_1" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_intellectual_property"/>
         <field name="name">Yes</field>
-        <field name="name@nl">Ja</field>
-        <field name="name@fr">Oui</field>
-        <field name="name@de">Ja</field>
         <field name="value">1</field>
     </record>
 
     <record id="l10n_be_representation_fees" model="hr.contract.salary.benefit">
         <field name="name">Representation Fees</field>
-        <field name="name@nl">Representatiekosten</field>
-        <field name="name@fr">Frais de représentation</field>
-        <field name="name@de">Repräsentationsgebühren</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'representation_fees')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'representation_fees')])"/>
         <field name="sequence">45</field>
@@ -256,17 +215,11 @@
     <record id="l10n_be_representation_fees_value_2" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_representation_fees"/>
         <field name="name">150 €</field>
-        <field name="name@nl">€ 150</field>
-        <field name="name@fr">150 €</field>
-        <field name="name@de">150 €</field>
         <field name="value">150</field>
     </record>
 
     <record id="l10n_be_fuel_card" model="hr.contract.salary.benefit">
         <field name="name">Fuel Card</field>
-        <field name="name@nl">Brandstofkaart</field>
-        <field name="name@fr">Carte essence</field>
-        <field name="name@de">Tankkarte</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'fuel_card')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'fuel_card')])"/>
         <field name="sequence">22</field>
@@ -282,9 +235,6 @@
 
     <record id="l10n_be_yearly_commission" model="hr.contract.salary.benefit">
         <field name="name">Commissions</field>
-        <field name="name@nl">Commissies</field>
-        <field name="name@fr">Commissions</field>
-        <field name="name@de">Provisionen</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'commission_on_target')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'yearly_commission_cost')])"/>
         <field name="sequence">53</field>
@@ -296,9 +246,6 @@
 
     <record id="l10n_be_meal_vouchers" model="hr.contract.salary.benefit">
         <field name="name">Meal Vouchers</field>
-        <field name="name@nl">Maaltijdcheques</field>
-        <field name="name@fr">Chèques-repas</field>
-        <field name="name@de">Essensschecks</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'meal_voucher_average_monthly_amount')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'meal_voucher_paid_monthly_by_employer')])"/>
         <field name="sequence">55</field>
@@ -311,9 +258,6 @@
 
     <record id="l10n_be_eco_voucher" model="hr.contract.salary.benefit">
         <field name="name">Eco Vouchers</field>
-        <field name="name@nl">Ecocheques</field>
-        <field name="name@fr">Eco-chèques</field>
-        <field name="name@de">Ökoschecks</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'eco_checks')])"/>
         <field name="sequence">60</field>
         <field name="benefit_type_id" ref="hr_contract_salary.l10n_be_yearly_cash"/>
@@ -325,9 +269,6 @@
 
     <record id="l10n_be_thirteen_month" model="hr.contract.salary.benefit">
         <field name="name">13th Month</field>
-        <field name="name@nl">13de maand</field>
-        <field name="name@fr">13ème mois</field>
-        <field name="name@de">13. Monat</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'wage_with_holidays')])"/>
         <field name="sequence">65</field>
         <field name="benefit_type_id" ref="hr_contract_salary.l10n_be_yearly_cash"/>
@@ -339,9 +280,6 @@
 
     <record id="l10n_be_double_holiday" model="hr.contract.salary.benefit">
         <field name="name">Double Holiday Pay</field>
-        <field name="name@nl">Dubbel vakantiegeld</field>
-        <field name="name@fr">Double pécule de vacances</field>
-        <field name="name@de">Doppeltes Urlaubsgeld</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'double_holiday_wage')])"/>
         <field name="sequence">70</field>
         <field name="benefit_type_id" ref="hr_contract_salary.l10n_be_yearly_cash"/>
@@ -353,9 +291,6 @@
 
     <record id="l10n_be_hospital_insurance" model="hr.contract.salary.benefit">
         <field name="name">Hospital Insurance</field>
-        <field name="name@nl">Hospitalisatieverzekering</field>
-        <field name="name@fr">Assurance hospitalisation</field>
-        <field name="name@de">Krankenhausversicherung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'has_hospital_insurance')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'insurance_amount')])"/>
         <field name="sequence">40</field>
@@ -368,9 +303,6 @@
     <record id="l10n_be_hospital_insurance_value_0" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_hospital_insurance"/>
         <field name="name">No</field>
-        <field name="name@nl">Nee</field>
-        <field name="name@fr">Non</field>
-        <field name="name@de">Nein</field>
         <field name="value">0</field>
         <field name="selector_highlight">red</field>
         <field name="always_show_description" eval="False"/>
@@ -380,17 +312,12 @@
     <record id="l10n_be_hospital_insurance_value_1" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_hospital_insurance"/>
         <field name="name">Yes</field>
-        <field name="name@nl">Ja</field>
-        <field name="name@fr">Oui</field>
-        <field name="name@de">Ja</field>
         <field name="value">1</field>
         <field name="sequence">10</field>
     </record>
 
     <record id="l10n_be_insured_spouse" model="hr.contract.salary.benefit">
         <field name="name">Insured Spouse</field>
-        <field name="name@nl">Verzekerde echtgeno(o)t(e)</field>
-        <field name="name@fr">Conjoint assuré</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'insured_relative_spouse')])"/>
         <field name="sequence">41</field>
@@ -404,8 +331,6 @@
 
     <record id="l10n_be_insured_children" model="hr.contract.salary.benefit">
         <field name="name">Insured Children (&lt; 19 y/o)</field>
-        <field name="name@nl">Verzekerde kinderen (&lt; 19 jaar)</field>
-        <field name="name@fr">Enfants assurés (&lt; 19 ans)</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'insured_relative_children')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="False"/>
@@ -418,8 +343,6 @@
 
     <record id="l10n_be_insured_adults" model="hr.contract.salary.benefit">
         <field name="name">Insured Children (&gt;= 19 y/o)</field>
-        <field name="name@nl">Verzekerde kinderen (&gt;= 19 jaar)</field>
-        <field name="name@fr">Enfants assurés (&gt;= 19 ans)</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'insured_relative_adults')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="False"/>
@@ -433,8 +356,6 @@
 
     <record id="l10n_be_hospital_insurance_note" model="hr.contract.salary.benefit">
         <field name="name">Hospital insurance (info)</field>
-        <field name="name@nl">Hospitalisatieverzekering (info)</field>
-        <field name="name@fr">Assurance hospitalisation (info)</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_hospital_insurance_notes')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="False"/>
@@ -449,9 +370,6 @@
 
     <record id="l10n_be_group_insurance" model="hr.contract.salary.benefit">
         <field name="name">Group Insurance</field>
-        <field name="name@nl">Groepsverzekering</field>
-        <field name="name@fr">Assurance groupe</field>
-        <field name="name@de">Gruppenversicherung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_group_insurance_rate')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_group_insurance_cost')])"/>
         <field name="sequence">50</field>
@@ -467,9 +385,6 @@
         <field name="benefit_id" ref="l10n_be_group_insurance"/>
         <field name="value">0</field>
         <field name="name">No</field>
-        <field name="name@nl">Nee</field>
-        <field name="name@fr">Non</field>
-        <field name="name@de">Nein</field>
         <field name="sequence">5</field>
     </record>
 
@@ -489,9 +404,6 @@
 
     <record id="l10n_be_ambulatory_insurance" model="hr.contract.salary.benefit">
         <field name="name">Ambulatory Insurance</field>
-        <field name="name@nl">Ambulante verzekering</field>
-        <field name="name@fr">Assurance ambulatoire</field>
-        <field name="name@de">Ambulante Versicherung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_has_ambulatory_insurance')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_ambulatory_insurance_amount')])"/>
         <field name="sequence">45</field>
@@ -504,9 +416,6 @@
     <record id="l10n_be_ambulatory_insurance_value_0" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_ambulatory_insurance"/>
         <field name="name">No</field>
-        <field name="name@nl">Nee</field>
-        <field name="name@fr">Non</field>
-        <field name="name@de">Nein</field>
         <field name="value">0</field>
         <field name="selector_highlight">red</field>
         <field name="sequence">1</field>
@@ -516,17 +425,12 @@
     <record id="l10n_be_ambulatory_insurance_value_1" model="hr.contract.salary.benefit.value">
         <field name="benefit_id" ref="l10n_be_ambulatory_insurance"/>
         <field name="name">Yes</field>
-        <field name="name@nl">Ja</field>
-        <field name="name@fr">Oui</field>
-        <field name="name@de">Ja</field>
         <field name="value">1</field>
         <field name="sequence">10</field>
     </record>
 
     <record id="l10n_be_ambulatory_insured_spouse" model="hr.contract.salary.benefit">
         <field name="name">Ambulatory (spouse)</field>
-        <field name="name@nl">Verzekerde echtgeno(o)t(e)</field>
-        <field name="name@fr">Conjoint assuré</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_ambulatory_insured_spouse')])"/>
         <field name="sequence">46</field>
@@ -540,8 +444,6 @@
 
     <record id="l10n_be_ambulatory_insured_children" model="hr.contract.salary.benefit">
         <field name="name">Ambulatory Children (&lt;19 y/o)</field>
-        <field name="name@nl">Ambulante Kinderen (&lt;19 jaar)</field>
-        <field name="name@fr">Ambulatoire Enfants (&lt;19 ans)</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_ambulatory_insured_children')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="False"/>
@@ -554,8 +456,6 @@
 
     <record id="l10n_be_ambulatory_insured_adults" model="hr.contract.salary.benefit">
         <field name="name">Ambulatory Children (&gt;= 19 y/o)</field>
-        <field name="name@nl">Ambulante Kinderen (&gt;= 19 jaar)</field>
-        <field name="name@fr">Ambulatoire Enfants (&gt;= 19 ans)</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_ambulatory_insured_adults')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="False"/>
@@ -569,8 +469,6 @@
 
     <record id="l10n_be_ambulatory_insurance_note" model="hr.contract.salary.benefit">
         <field name="name">Ambulatory Insurance (info)</field>
-        <field name="name@nl">Ambulante verzekering (info)</field>
-        <field name="name@fr">Assurance Ambulatoire (info)</field>
         <field name="show_name">False</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'l10n_be_ambulatory_insurance_notes')])"/>
         <field name="cost_res_field_id" model="ir.model.fields" eval="False"/>

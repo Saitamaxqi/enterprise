@@ -4,9 +4,6 @@
 
         <record id="hr_payroll_dashboard_warning_ip_eligible_contract" model="hr.payroll.dashboard.warning">
             <field name="name">Employees without Intellectual Property</field>
-            <field name="name@nl">Werknemers zonder intellectuele eigendom</field>
-            <field name="name@fr">Employés sans propriété intellectuelle</field>
-            <field name="name@de">Mitarbeiter ohne intellektuelles Eigentum</field>
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')
@@ -24,9 +21,6 @@ if ip_eligible_contract:
 
         <record id="hr_payroll_dashboard_warning_employee_without_exemption" model="hr.payroll.dashboard.warning">
             <field name="name">Employees without Withholding Taxes Exemption</field>
-            <field name="name@nl">Werknemers zonder vrijstelling van bronbelasting</field>
-            <field name="name@fr">Employés sans exonération du précompte professionnel</field>
-            <field name="name@de">Mitarbeiter ohne Quellensteuerbefreiung</field>
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')

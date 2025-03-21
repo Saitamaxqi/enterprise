@@ -3,9 +3,6 @@
     <data noupdate="1">
     <record id="hr_contract_salary_personal_info_km_home_work" model="hr.contract.salary.personal.info">
         <field name="name">Km Home/Work</field>
-        <field name="name@nl">Km Woonplaats/Werkplek</field>
-        <field name="name@fr">Km Domicile/Lieu de travail</field>
-        <field name="name@de">Entfernung Zuhause/Arbeit</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'km_home_work')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
@@ -16,9 +13,6 @@
 
     <record id="hr_contract_salary_personal_info_id_card" model="hr.contract.salary.personal.info">
         <field name="name">ID card copy (Both Sides)</field>
-        <field name="name@nl">Kopie identiteitskaart (beide kanten)</field>
-        <field name="name@fr">Copie de la carte d'identité (recto-verso)</field>
-        <field name="name@de">Ausweiskopie (beidseitig)</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'id_card')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
@@ -28,9 +22,6 @@
 
     <record id="hr_contract_salary_personal_info_driving_license" model="hr.contract.salary.personal.info">
         <field name="name">Driving License</field>
-        <field name="name@nl">Rijbewijs</field>
-        <field name="name@fr">Permis de conduire</field>
-        <field name="name@de">Fahrerlaubnis</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'driving_license')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
@@ -40,9 +31,6 @@
 
     <record id="hr_contract_salary_personal_info_mobile_invoice" model="hr.contract.salary.personal.info">
         <field name="name">Mobile Subscription Invoice</field>
-        <field name="name@nl">Factuur GSM abonnement</field>
-        <field name="name@fr">Facture d'abonnement téléphonique</field>
-        <field name="name@de">Mobiles Abo Rechnung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'mobile_invoice')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
@@ -52,9 +40,6 @@
 
     <record id="hr_contract_salary_personal_info_sim_card" model="hr.contract.salary.personal.info">
         <field name="name">Sim Card Copy</field>
-        <field name="name@nl">SIM kaart kopie</field>
-        <field name="name@fr">Copie de la carte SIM</field>
-        <field name="name@de">SIM-Karte Kopie</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'sim_card')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
@@ -64,9 +49,6 @@
 
     <record id="hr_contract_salary_personal_info_internet_invoice" model="hr.contract.salary.personal.info">
         <field name="name">Internet Subscription Invoice</field>
-        <field name="name@nl">Factuur internetabonnement</field>
-        <field name="name@fr">Facture d'abonnement internet</field>
-        <field name="name@de">Internet-Abo Rechnung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'internet_invoice')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
@@ -76,9 +58,6 @@
 
     <record id="hr_contract_salary_personal_info_disabled" model="hr.contract.salary.personal.info">
         <field name="name">Disabled</field>
-        <field name="name@nl">Gehandicapt</field>
-        <field name="name@fr">Handicapé</field>
-        <field name="name@de">Deaktiviert</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'disabled')])"/>
         <field name="applies_on">employee</field>
         <field name="position">left</field>
@@ -91,8 +70,6 @@
 
     <record id="hr_contract_salary_personal_info_marital" model="hr.contract.salary.personal.info">
         <field name="name">Marital Status</field>
-        <field name="name@nl">Kies een status</field>
-        <field name="name@fr">Sélectionnez un statut</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'marital')])"/>
         <field name="placeholder">Select a status</field>
         <field name="display_type">dropdown</field>
@@ -135,9 +112,6 @@
 
     <record id="hr_contract_salary_personal_info_disabled_spouse_bool" model="hr.contract.salary.personal.info">
         <field name="name">Disabled Spouse</field>
-        <field name="name@nl">Gehandicapte echtgeno(o)t(e)</field>
-        <field name="name@fr">Conjoint(e) handicapé(e)</field>
-        <field name="name@de">Ehepartner mit Behinderung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'disabled_spouse_bool')])"/>
         <field name="applies_on">employee</field>
         <field name="position">left</field>
@@ -151,9 +125,6 @@
 
     <record id="hr_contract_salary_personal_info_spouse_fiscal_status" model="hr.contract.salary.personal.info">
         <field name="name">Spouse Professional Situation</field>
-        <field name="name@nl">Professionele situatie partner</field>
-        <field name="name@fr">Situation professionnelle du (de la) conjoint(e)</field>
-        <field name="name@de">Ehepartner Berufsstand</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'spouse_fiscal_status')])"/>
         <field name="placeholder">Select a Situation</field>
         <field name="display_type">dropdown</field>
@@ -194,9 +165,6 @@
 
     <record id="hr_contract_salary_personal_info_spouse_complete_name" model="hr.contract.salary.personal.info">
         <field name="name">Spouse Name and First Name</field>
-        <field name="name@nl">Naam en voornaam partner</field>
-        <field name="name@fr">Nom et prénom du (de la) conjoint(e)</field>
-        <field name="name@de">Vor- und Nachname Ehepartner</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'spouse_complete_name')])"/>
         <field name="applies_on">employee</field>
         <field name="position">left</field>
@@ -208,9 +176,6 @@
 
     <record id="hr_contract_salary_personal_info_spouse_birthdate" model="hr.contract.salary.personal.info">
         <field name="name">Spouse Birthdate</field>
-        <field name="name@nl">Geboortedatum partner</field>
-        <field name="name@fr">Date de naissance du (de la) conjoint(e)</field>
-        <field name="name@de">Geburtsdatum Ehepartner</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'spouse_birthdate')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">date</field>
@@ -223,9 +188,6 @@
 
     <record id="hr_contract_salary_personal_info_children" model="hr.contract.salary.personal.info">
         <field name="name">Number of Dependent Children</field>
-        <field name="name@nl">Aantal kinderen ten laste</field>
-        <field name="name@fr">Nombre d'enfants à charge</field>
-        <field name="name@de">Anzahl abhängiger Kinder</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'children')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
@@ -239,9 +201,6 @@
 
     <record id="hr_contract_salary_personal_info_disabled_children_bool" model="hr.contract.salary.personal.info">
         <field name="name">Disabled Children</field>
-        <field name="name@nl">Gehandicapte kinderen</field>
-        <field name="name@fr">Enfants handicapés</field>
-        <field name="name@de">Kinder mit Behinderung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'disabled_children_bool')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">checkbox</field>
@@ -254,9 +213,6 @@
 
     <record id="hr_contract_salary_personal_info_disabled_children_number" model="hr.contract.salary.personal.info">
         <field name="name">Number of Disabled Children</field>
-        <field name="name@nl">Aantal gehandicapte kinderen</field>
-        <field name="name@fr">Nombre d'enfants handicapés</field>
-        <field name="name@de">Anzahl Kinder mit Behinderung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'disabled_children_number')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
@@ -271,9 +227,6 @@
 
     <record id="hr_contract_salary_personal_info_other_dependent_people" model="hr.contract.salary.personal.info">
         <field name="name">Other Dependent People</field>
-        <field name="name@nl">Andere personen ten laste</field>
-        <field name="name@fr">Autres personnes à charge</field>
-        <field name="name@de">Andere abhängige Personen</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_dependent_people')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">checkbox</field>
@@ -286,9 +239,6 @@
 
     <record id="hr_contract_salary_personal_info_other_senior_dependent" model="hr.contract.salary.personal.info">
         <field name="name">Seniors</field>
-        <field name="name@nl">Senioren</field>
-        <field name="name@fr">Séniors</field>
-        <field name="name@de">Senioren</field>
         <field name="helper">&gt;= 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_senior_dependent')])"/>
         <field name="applies_on">employee</field>
@@ -304,9 +254,6 @@
 
     <record id="hr_contract_salary_personal_info_other_disabled_senior_dependent" model="hr.contract.salary.personal.info">
         <field name="name">Disabled seniors</field>
-        <field name="name@nl">Gehandicapte seniors</field>
-        <field name="name@fr">Séniors handicapés</field>
-        <field name="name@de">Senioren mit Behinderung</field>
         <field name="helper">&gt;= 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_disabled_senior_dependent')])"/>
         <field name="applies_on">employee</field>
@@ -322,9 +269,6 @@
 
     <record id="hr_contract_salary_personal_info_other_juniors_dependent" model="hr.contract.salary.personal.info">
         <field name="name">People</field>
-        <field name="name@nl">Personen</field>
-        <field name="name@fr">Personne</field>
-        <field name="name@de">Menschen</field>
         <field name="helper">&lt; 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_juniors_dependent')])"/>
         <field name="applies_on">employee</field>
@@ -340,9 +284,6 @@
 
     <record id="hr_contract_salary_personal_info_other_disabled_juniors_dependant" model="hr.contract.salary.personal.info">
         <field name="name">Disabled people</field>
-        <field name="name@nl">Gehandicapte mensen</field>
-        <field name="name@fr">Personnes handicapées</field>
-        <field name="name@de">Personen mit Behinderung</field>
         <field name="helper">&lt; 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_disabled_juniors_dependent')])"/>
         <field name="applies_on">employee</field>
@@ -358,9 +299,6 @@
 
     <record id="hr_contract_salary_personal_info_lang" model="hr.contract.salary.personal.info">
         <field name="name">Payroll Language</field>
-        <field name="name@nl">Taal loonadministratie</field>
-        <field name="name@fr">Langue de la paie</field>
-        <field name="name@de">Lohnbuchhaltung Sprache</field>
         <field name="helper"></field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'lang')])"/>
         <field name="applies_on">employee</field>
@@ -379,9 +317,6 @@
 
     <record id="hr_contract_salary_personal_info_seniority" model="hr.contract.salary.personal.info">
         <field name="name">Seniority at Hiring</field>
-        <field name="name@nl">Anciënniteit bij aanwerving</field>
-        <field name="name@fr">Ancienneté à l'embauche</field>
-        <field name="name@de">Dienstalter bei Einstellung</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'l10n_be_scale_seniority')])"/>
         <field name="display_type">integer</field>
         <field name="applies_on">employee</field>

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 14:31+0000\n"
-"PO-Revision-Date: 2025-02-08 14:31+0000\n"
+"POT-Creation-Date: 2025-03-24 12:13+0000\n"
+"PO-Revision-Date: 2025-03-24 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -466,9 +466,13 @@ msgid "<span>9001</span>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_contract_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
 msgid "<span>CFH / Month</span>"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_contract_view_form
+msgid "<span>CHF / Month</span>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -509,6 +513,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_report_payslip
 msgid "<strong>Activity Rate: </strong>"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_report_payslip
+msgid "<strong>Address: </strong>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -559,6 +568,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.report_company_master_data_document
 msgid "<strong>Insurance Number:</strong>"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_report_payslip
+msgid "<strong>Job Position: </strong>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -1128,6 +1142,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_payslip_view_form_inherit
 msgid "After Departure Payment"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.res_config_settings_view_form
+msgid "Agricole Company"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -1765,6 +1784,11 @@ msgid "Check Interoperability"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.res_config_settings_view_form
+msgid "Check this box if your company is in the agricole sector."
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_salary_certificate_profile__l10n_ch_child_allowance_indirect
 msgid "Child Allowances paid by FCF"
 msgstr ""
@@ -1848,6 +1872,72 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.report_individual_account
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.report_wage_types_document
 msgid "Code"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,help:l10n_ch_hr_payroll_elm_transmission.field_hr_salary_rule__l10n_ch_wage_statement
+msgid ""
+"Code meaning:\n"
+"- I: Gross base salary and regular allowances\n"
+"    - Ordinary salary paid, such as monthly, hourly, piece rate, working from home, etc.\n"
+"    - Regular allowances paid, such as allowances for position or for length of service,\n"
+"      residence, housing, travel or cost of living allowances.\n"
+"    - Tips paid subject to AVS contributions.\n"
+"    - Regular payments (at each pay) of a commission, turnover contribution or other bonus\n"
+"      paid regularly.\n"
+"- J: Gross amount of compensation for shift work, Sunday or night work and other arduousness\n"
+"     bonuses (compensation for on-call duty, dirty work, etc.).\n"
+"- K: Total amount of family allowances paid by the employer in the form of child allowances,\n"
+"     vocational training allowances, household allowances or care allowances.\n"
+"- Y: Benefits provided by insurance or similar institutions and which have an impact on\n"
+"     employee contributions\n"
+"- L: Amount of AVS/AI/APG/AC/ (1st pillar) and AANP (employee’s share) contributions.\n"
+"     Not included:\n"
+"        - the employer’s share,\n"
+"        - the Parifonds,\n"
+"        - daily allowance insurance in the event of IJM illness,\n"
+"        - LAAC supplementary accident insurance\n"
+"        - Social contributions must in principle be transmitted in the form of negative values.\n"
+"- M: Amount of ordinary contributions (employee's share) to LPP professional pension provision or\n"
+"     the 2nd pillar, in accordance with legal, statutory or regulatory provisions.\n"
+"     The amount indicated should not include redemption contributions.\n"
+"     Regular BVG-LPP contributions must in principle be transmitted as negative values."
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,help:l10n_ch_hr_payroll_elm_transmission.field_hr_salary_rule__l10n_ch_yearly_statement
+msgid ""
+"Code meaning:\n"
+"- O: 13th salary paid (with the 14th and following) provided that it is not in the form of a bonus\n"
+"- P: Overtime pay\n"
+"- Q: Sporadic Benefits, e.g.\n"
+"        - bonuses,\n"
+"        - merit-based rewards,\n"
+"        - participation in profit or turnover,\n"
+"        - engagement bonuses and severance pay,\n"
+"        - loyalty bonuses, bonuses and gifts for length of service,\n"
+"        - fixed moving compensation,\n"
+"        - Christmas bonuses,\n"
+"        - compensation for members of the board of directors (attendance fees, fees, etc.).\n"
+"- R: Fringe Benefits\n"
+"        - board and lodging (section 2.1 of the salary certificate);\n"
+"      - the private share of the company car (section 2.2 of the salary certificate);\n"
+"      - other ancillary salary benefits (section 2.3 of the salary certificate);\n"
+"      - participation rights (section 5 of the salary certificate).\n"
+"- S: Capital Payment: Capital benefits of a pension nature paid by the employer directly to the\n"
+"     employee and likely to be taxed at a reduced rate.\n"
+"      - severance pay of a provident nature;\n"
+"      - capital benefits of a pension nature;\n"
+"      - salary payments after death.\n"
+"- T: Other Benefits: All other services covered on an optional basis by the employer, although\n"
+"     they are generally due by the employee.\n"
+"        - partial or total coverage of contributions owed by the employee to LPP professional\n"
+"          insurance, including executive insurance;\n"
+"        - payments to occupational pension institutions (2nd pillar) made by the employer in\n"
+"          favor of the employee (purchase contributions);\n"
+"        - payment of insurance contributions in favor of the employee and members of his family\n"
+"          (health insurance, optional 3rd pillar b insurance, life insurance, etc.);\n"
+"        - payment of contributions to recognized forms of linked individual pension provision (3rd pillar a)."
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -2473,8 +2563,15 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_swissdec_declaration_result.py:0
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_job_result__declaration_id
 msgid "Declaration"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
+msgid "Declaration %(month)s/%(year)s"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -2518,8 +2615,21 @@ msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
 #. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
+msgid "Declaration_%s_request.xml"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
 #: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_swissdec_declaration.py:0
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
 msgid "Declaration_%s_response.xml"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
+msgid "Declarations"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -2700,31 +2810,61 @@ msgid "Disability %"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_ch_yearly_report__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_contract__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee_is_line__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee_is_line_correction__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_leave__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_leave_type__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_payslip__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_payslip_is_log_line__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_salary_rule__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_accident_group__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_accident_insurance__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_accident_insurance_line_rate__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_additional_accident_insurance__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_additional_accident_insurance_line__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_avs_split_lines__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_avs_splits__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_compensation_fund__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_dialog_message__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_dialog_message_field__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_ema_declaration__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_employee_monthly_values__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_employee_yearly_values__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_contract_wage__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_employee_children__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payroll_employee_gender_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payroll_employee_gender_wizard_line__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payslip_montlhy_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_individual_account__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_is_mutation__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_is_report__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_location_unit__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_basis_report__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_basis_report_line__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_insurance__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_insurance_line__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_mutation__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_master_data_report__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_monthly_summary__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_salary_certificate__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_salary_certificate_profile__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_sickness_insurance__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_sickness_insurance_line__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_social_insurance__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_social_insurance_avs_line__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_source_tax_institution__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_statistic_report__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swiss_wage_component__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_declaration__display_name
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_job_result__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_transmitter__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_tax_rate_import_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -2900,7 +3040,7 @@ msgid "Employee Snapshot"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
-#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_salary_certificate_profile_ch_certificate_unique
+#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_salary_certificate_profile_check_unique
 msgid "Employee can only have one wage statement running at the same time."
 msgstr ""
 
@@ -3741,31 +3881,61 @@ msgid "Husband of the owner"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_ch_yearly_report__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_contract__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee_is_line__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee_is_line_correction__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_leave__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_leave_type__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_payslip__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_payslip_is_log_line__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_salary_rule__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_accident_group__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_accident_insurance__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_accident_insurance_line_rate__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_additional_accident_insurance__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_additional_accident_insurance_line__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_avs_split_lines__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_avs_splits__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_compensation_fund__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_dialog_message__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_dialog_message_field__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_ema_declaration__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_employee_monthly_values__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_employee_yearly_values__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_contract_wage__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_employee_children__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payroll_employee_gender_wizard__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payroll_employee_gender_wizard_line__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payslip_montlhy_wizard__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_individual_account__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_is_mutation__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_is_report__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_location_unit__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_basis_report__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_basis_report_line__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_insurance__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_insurance_line__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_lpp_mutation__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_master_data_report__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_monthly_summary__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_salary_certificate__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_salary_certificate_profile__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_sickness_insurance__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_sickness_insurance_line__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_social_insurance__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_social_insurance_avs_line__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_source_tax_institution__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_statistic_report__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swiss_wage_component__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_declaration__id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_job_result__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_swissdec_transmitter__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_tax_rate_import_wizard__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
@@ -5997,11 +6167,6 @@ msgid "One-Time Wages Calendar"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
-#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_source_tax_institution_ch_qst_canton_unique
-msgid "Only one Source-Tax Institution per Canton is possible."
-msgstr ""
-
-#. module: l10n_ch_hr_payroll_elm_transmission
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_declaration_source_tax.py:0
 msgid "Only the last Source-Tax Declaration can be substituted."
@@ -6814,6 +6979,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_ch_hr_payroll_elm_transmission/static/src/fields/salary_declaration/declare_salary_renderer.js:0
 msgid "Salary Data"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
+msgid "Salary Declaration Archive"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -8067,8 +8238,8 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
-#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_employee_monthly_values_ch_month_constraint
-msgid "The month must be between 1 and 12."
+#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_employee_monthly_values_check_month
+msgid "The month must be between 1 and 12"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -8178,6 +8349,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll_elm_transmission.selection__l10n_ch_salary_certificate_profile__l10n_ch_cs_car_policy__toclarify
 msgid "To be clarified"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_report_payslip
+msgid "To pay on"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -9024,7 +9200,7 @@ msgid "Yearly Values"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
-#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_employee_yearly_values_ch_yearly_snapshot_unique
+#: model:ir.model.constraint,message:l10n_ch_hr_payroll_elm_transmission.constraint_l10n_ch_employee_yearly_values_check_unique
 msgid "Yearly values for this employee already exists for the year."
 msgstr ""
 
@@ -9053,6 +9229,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll_elm_transmission.selection__l10n_ch_dialog_message_field__swissdec_answer_value_type__yesnounknown
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll_elm_transmission.selection__l10n_ch_dialog_message_field__swissdec_value_type__yesnounknown
 msgid "YesNoUnknown"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_transmission_mixin.py:0
+msgid "You can only transmit data for the current or previous year."
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission

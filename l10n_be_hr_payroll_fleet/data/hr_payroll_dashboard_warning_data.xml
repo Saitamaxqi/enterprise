@@ -4,8 +4,6 @@
 
         <record id="hr_payroll_dashboard_warning_car_mismatch" model="hr.payroll.dashboard.warning">
             <field name="name">Payslips with car different than on employee's contract</field>
-            <field name="name@nl">Loonstroken met andere auto's dan op de werknemersovereenkomst</field>
-            <field name="name@fr">Fiches de paie avec une voiture différente que sur le contrat de l'employé</field>
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 self.env.cr.execute("""
