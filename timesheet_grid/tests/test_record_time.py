@@ -23,13 +23,16 @@ class TestRecordTime(TestCommonTimesheet, HttpCase):
 
     def test_timesheet_overtime(self):
         self.empl_employee.resource_calendar_id.flexible_hours = True
-        last_monday = date.today() - timedelta(days=(date.today().weekday() % 7))
+        # Get this week's Monday (or next Monday if today is Sunday)
+        relevant_monday = date.today() + timedelta(
+            days=-date.today().weekday() + (7 if date.today().weekday() == 6 else 0)
+        )
         timesheets = self.env['account.analytic.line'].create([
             {
                 'name': f"Test Timesheet {i+1}",
                 'project_id': self.project_customer.id,
                 'task_id': self.task1.id,
-                'date': last_monday - timedelta(days=i),
+                'date': relevant_monday - timedelta(days=i),
                 'unit_amount': 3.0 + i,
                 'employee_id': self.empl_employee.id,
             }
