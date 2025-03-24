@@ -104,9 +104,9 @@
                     <filter name="closed_on_last_365_days" string="Last 365 Days" domain="[('close_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=365), datetime.time(23, 59, 59)).to_utc())]"/>
                 </filter>
                 <separator />
-                <filter name="rating_satisfied" string="Satisfied" domain="[('rating_avg', '&gt;', 3.66)]" groups="helpdesk.group_use_rating"/>
-                <filter name="rating_okay" string="Okay" domain="[('rating_avg', '&lt;', 3.66), ('rating_avg', '&gt;=', 2.33)]" groups="helpdesk.group_use_rating"/>
-                <filter name="dissatisfied" string="Dissatisfied" domain="[('rating_avg', '&lt;', 2.33), ('rating_last_value', '!=', 0.0)]" groups="helpdesk.group_use_rating"/>
+                <filter name="rating_satisfied" string="Happy" domain="[('rating_avg', '&gt;', 3.66)]" groups="helpdesk.group_use_rating"/>
+                <filter name="rating_okay" string="Neutral" domain="[('rating_avg', '&lt;', 3.66), ('rating_avg', '&gt;=', 2.33)]" groups="helpdesk.group_use_rating"/>
+                <filter name="dissatisfied" string="Unhappy" domain="[('rating_avg', '&lt;', 2.33), ('rating_last_value', '!=', 0.0)]" groups="helpdesk.group_use_rating"/>
                 <separator/>
                 <filter string="Creation Date" date="create_date" name="creation_date">
                     <filter name="create_date_today" string="Today" domain="[('create_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
@@ -321,9 +321,9 @@
                                 <field name="priority" widget="priority"/>
                                 <field name="activity_ids" widget="kanban_activity" class="ms-2"/>
                                 <b t-if="record.use_rating.raw_value and record.rating_count.raw_value &gt; 0" groups="helpdesk.group_use_rating" class="ms-2">
-                                    <strong class="fa fa-fw fa-smile-o fa-lg text-success fw-bolder" t-if="record.rating_avg.raw_value &gt;= 3.66" title="Average Rating: Satisfied" role="img" aria-label="Happy face"/>
-                                    <strong class="fa fa-fw fa-meh-o fa-lg text-warning fw-bolder" t-elif="record.rating_avg.raw_value &gt;= 2.33" title="Average Rating: Okay" role="img" aria-label="Neutral face"/>
-                                    <strong class="fa fa-fw fa-frown-o fa-lg text-danger fw-bolder" t-else="" title="Average Rating: Dissatisfied" role="img" aria-label="Sad face"/>
+                                    <strong class="fa fa-fw fa-smile-o fa-lg text-success fw-bolder" t-if="record.rating_avg.raw_value &gt;= 3.66" title="Average Rating: Happy" role="img" aria-label="Happy face"/>
+                                    <strong class="fa fa-fw fa-meh-o fa-lg text-warning fw-bolder" t-elif="record.rating_avg.raw_value &gt;= 2.33" title="Average Rating: Neutral" role="img" aria-label="Neutral face"/>
+                                    <strong class="fa fa-fw fa-frown-o fa-lg text-danger fw-bolder" t-else="" title="Average Rating: Unhappy" role="img" aria-label="Unhappy face"/>
                                 </b>
                             </div>
                             <div class="d-flex align-items-center ms-auto">
@@ -356,9 +356,9 @@
                     <field name="team_privacy_visibility" invisible="1"/>
                     <div class="oe_button_box" name="button_box" groups="base.group_user">
                         <button name="action_open_ratings" type="object" class="oe_stat_button" icon="" invisible="not use_rating or rating_count == 0" groups="helpdesk.group_use_rating">
-                            <i class="fa fa-fw o_button_icon fa-smile-o text-success" invisible="rating_avg &lt; 3.66" title="Satisfied"/>
-                            <i class="fa fa-fw o_button_icon fa-meh-o text-warning" invisible="rating_avg &lt; 2.33 or rating_avg &gt;= 3.66" title="Okay"/>
-                            <i class="fa fa-fw o_button_icon fa-frown-o text-danger" invisible="rating_avg &gt;= 2.33" title="Dissatisfied"/>
+                            <i class="fa fa-fw o_button_icon fa-smile-o text-success" invisible="rating_avg &lt; 3.66" title="Happy"/>
+                            <i class="fa fa-fw o_button_icon fa-meh-o text-warning" invisible="rating_avg &lt; 2.33 or rating_avg &gt;= 3.66" title="Neutral"/>
+                            <i class="fa fa-fw o_button_icon fa-frown-o text-danger" invisible="rating_avg &gt;= 2.33" title="Unhappy"/>
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value"><field name="rating_avg_text" nolabel="1"/></span>
                                 <span class="o_stat_text">Rating</span>

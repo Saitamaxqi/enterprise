@@ -54,9 +54,9 @@
                         </button>
                         <field name="rating_count" invisible="1"/>
                         <button name="action_view_team_rating" type="object" class="oe_stat_button" icon="" invisible="not use_rating or rating_count == 0" groups="helpdesk.group_use_rating" title="Average Rating">
-                            <i class="fa fa-fw o_button_icon fa-smile-o text-success" invisible="rating_avg &lt; 3.66" title="Satisfied"/>
-                            <i class="fa fa-fw o_button_icon fa-meh-o text-warning" invisible="rating_avg &lt; 2.33 or rating_avg &gt;= 3.66" title="Okay"/>
-                            <i class="fa fa-fw o_button_icon fa-frown-o text-danger" invisible="rating_avg &gt;= 2.33" title="Dissatisfied"/>
+                            <i class="fa fa-fw o_button_icon fa-smile-o text-success" invisible="rating_avg &lt; 3.66" title="Happy"/>
+                            <i class="fa fa-fw o_button_icon fa-meh-o text-warning" invisible="rating_avg &lt; 2.33 or rating_avg &gt;= 3.66" title="Neutral"/>
+                            <i class="fa fa-fw o_button_icon fa-frown-o text-danger" invisible="rating_avg &gt;= 2.33" title="Unhappy"/>
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value">
                                     <field name="rating_avg" nolabel="1" widget="float" digits="[1, 1]"/> / 5
@@ -350,9 +350,9 @@
                                 <a name="action_view_customer_satisfaction" type="object" t-if="record.use_rating.raw_value and record.rating_count.raw_value &gt; 0" groups="helpdesk.group_use_rating" title="Average rating for the last 7 days" class="justify-content-between flex-nowrap d-inline-flex w-100 mb4">
                                     <span>Average Rating</span>
                                     <span class="d-flex ms-3 text-nowrap">
-                                        <strong class="fa fa-fw mt4 fa-smile-o text-success fw-bolder" t-if="record.rating_avg.raw_value &gt;= 3.66" title="Average Rating: Satisfied" role="img" aria-label="Happy face"/>
-                                        <strong class="fa fa-fw mt4 fa-meh-o text-warning fw-bolder" t-elif="record.rating_avg.raw_value &gt;= 2.33" title="Average Rating: Okay" role="img" aria-label="Neutral face"/>
-                                        <strong class="fa fa-fw mt4 fa-frown-o text-danger fw-bolder" t-else="" title="Average Rating: Dissatisfied" role="img" aria-label="Sad face"/>
+                                        <strong class="fa fa-fw mt4 fa-smile-o text-success fw-bolder" t-if="record.rating_avg.raw_value &gt;= 3.66" title="Average Rating: Happy" role="img" aria-label="Happy face"/>
+                                        <strong class="fa fa-fw mt4 fa-meh-o text-warning fw-bolder" t-elif="record.rating_avg.raw_value &gt;= 2.33" title="Average Rating: Neutral" role="img" aria-label="Neutral face"/>
+                                        <strong class="fa fa-fw mt4 fa-frown-o text-danger fw-bolder" t-else="" title="Average Rating: Unhappy" role="img" aria-label="Unhappy face"/>
                                         <field name="rating_avg" nolabel="1" widget="float" digits="[1, 1]" class="me-1"/> / 5
                                     </span>
                                 </a>
