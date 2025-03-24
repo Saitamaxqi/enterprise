@@ -177,9 +177,9 @@ achievement AS (
 SELECT
     a.*,
     CASE
-        WHEN tc.before IS NULL THEN a.achieved * cr.rate
-        WHEN tc.rate_high IS NULL THEN tc.before * a.ct * cr.rate
-        ELSE (tc.before + (tc.amount - tc.before) * (a.achieved_rate - tc.rate_low) / (tc.rate_high - tc.rate_low)) * a.ct * cr.rate
+        WHEN tc.before IS NULL THEN a.achieved
+        WHEN tc.rate_high IS NULL THEN tc.before * a.ct
+        ELSE (tc.before + (tc.amount - tc.before) * (a.achieved_rate - tc.rate_low) / (tc.rate_high - tc.rate_low)) * a.ct
     END AS commission
  FROM achievement_target a
     LEFT JOIN target_com tc ON (
@@ -187,8 +187,5 @@ SELECT
         tc.rate_low <= a.achieved_rate AND
         (tc.rate_high IS NULL OR tc.rate_high > a.achieved_rate)
     )
-    LEFT JOIN currency_rate cr
-        ON cr.company_id = a.company_id
-
 """
         return res
