@@ -436,3 +436,34 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)
         self.assertBudgetLine(plan_b_line, committed=2000, achieved=0)
         self.assertBudgetLine(plan_b_admin_line, committed=1000, achieved=0)
+
+    def test_budget_analytic_purchase_order_last_budget_day(self):
+        """
+        Test that the committed amount is well computed when a PO is created on the last day of the budget range.
+        """
+        plan_a_line, plan_b_line, plan_b_admin_line = self.budget_analytic_expense.budget_line_ids
+        self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)
+
+        # Create a PO on the last day of the budget range
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-12-31 21:00:00',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 10,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ],
+        })
+        purchase_order.button_confirm()
+
+        self.assertBudgetLine(plan_a_line, committed=3000, achieved=0)
+
+        # Ensure that PO from next day does not impact the budget
+        purchase_order.button_cancel()
+        purchase_order.button_draft()
+        purchase_order.date_order = '2020-01-01 00:00:00'
+        purchase_order.button_confirm()
+
+        self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)

@@ -152,7 +152,7 @@ class BudgetReport(models.Model):
         CROSS JOIN JSONB_TO_RECORDSET(pol.analytic_json) AS a(rate FLOAT, %(field_cast)s)
          LEFT JOIN budget_line bl ON po.company_id = bl.company_id
                                  AND po.date_order >= bl.date_from
-                                 AND po.date_order <= bl.date_to
+                                 AND date_trunc('day', po.date_order) <= bl.date_to
                                  AND %(condition)s
          LEFT JOIN budget_analytic ba ON ba.id = bl.budget_analytic_id
              WHERE pol.product_qty > COALESCE(qty_invoiced_table.qty_invoiced, 0)
