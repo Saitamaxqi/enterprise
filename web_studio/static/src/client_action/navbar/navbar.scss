@@ -1,7 +1,7 @@
 .o_studio_navbar {
   --NavBar-brand-color: #{rgba($o-web-studio-text-light, .9)};
   --NavBar-entry-color: #{rgba($o-web-studio-text-light, .9)};
-  --NavBar-entry-backgroundColor: $o-web-studio-bg-dark;
+  --NavBar-entry-backgroundColor: #{$o-web-studio-bg-dark};
   --NavBar-entry-backgroundColor--hover: #{$o-web-studio-bg-medium};
   --NavBar-entry-backgroundColor--focus: #{$o-web-studio-bg-medium};
   --NavBar-menuToggle-color: #{rgba($o-web-studio-text-light, .9)};
