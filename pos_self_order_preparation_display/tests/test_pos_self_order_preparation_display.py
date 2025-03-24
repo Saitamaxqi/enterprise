@@ -16,8 +16,7 @@ class TestPosSelfOrderPreparationDisplay(SelfOrderCommonTest):
         self.pos_self_ordering_pay_after = 'each'
 
         with odoo.tests.Form(self.env['res.config.settings']) as form:
-            with self.assertLogs(level="WARNING"):
-                form.module_pos_preparation_display = False
+            form.module_pos_preparation_display = False
 
             form.pos_self_ordering_mode = "nothing"
             self.assertEqual(form.module_pos_preparation_display, False)

@@ -13,12 +13,12 @@ class BaseModuleUninstall(models.TransientModel):
     custom_models = fields.Integer(compute='_compute_custom_models')
     custom_fields = fields.Integer(compute='_compute_custom_fields')
 
-    @api.depends('module_ids')
+    @api.depends('impacted_module_ids')
     def _compute_is_studio(self):
         for wizard in self:
-            wizard.is_studio = 'web_studio' in wizard.module_ids.mapped('name')
+            wizard.is_studio = 'web_studio' in wizard.impacted_module_ids.mapped('name')
 
-    @api.depends('module_ids')
+    @api.depends('impacted_module_ids')
     def _compute_custom_views(self):
         for wizard in self:
             view_ids = self.env['ir.model.data'].search([
@@ -30,7 +30,7 @@ class BaseModuleUninstall(models.TransientModel):
                 ('type', '!=', 'qweb'),
             ])
 
-    @api.depends('module_ids')
+    @api.depends('impacted_module_ids')
     def _compute_custom_reports(self):
         for wizard in self:
             wizard.custom_reports = self.env['ir.model.data'].search_count([
@@ -53,7 +53,7 @@ class BaseModuleUninstall(models.TransientModel):
         for wizard in self:
             wizard.custom_models = len(wizard.model_ids.filtered(lambda x: x.state == 'manual'))
 
-    @api.depends('module_ids')
+    @api.depends('impacted_module_ids')
     def _compute_custom_fields(self):
         for wizard in self:
             wizard.custom_fields = self.env['ir.model.fields'].search_count([
