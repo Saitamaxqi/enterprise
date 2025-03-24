@@ -158,7 +158,7 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
         },
         {
             content: "Save the new partner",
-            trigger: ".modal .o_form_button_save:contains(save & close)",
+            trigger: ".modal .o_form_button_save:contains(save)",
             run: "click",
         },
         {

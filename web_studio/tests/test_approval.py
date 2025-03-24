@@ -405,7 +405,7 @@ class TestStudioApproval(TransactionCase):
         self.assertTrue(approval_result.get('approved'),
                         "The approval should have been granted upon validation of the activity")
         self.assertFalse(approval_request.exists(),
-                         "The approval request should have been deleted upon the activity's confirmation")
+                        "The approval request should have been deleted upon the activity's confirmation")
 
     def test_12_approval_activity_spoof(self):
         """Test that validating an approval activity as another user will not leak approval rights"""
@@ -431,7 +431,7 @@ class TestStudioApproval(TransactionCase):
         self.assertFalse(approval_result.get('approved'),
                          "The approval should not have been granted upon validation of the activity by anohter user")
         self.assertFalse(approval_request.exists(),
-                         "The approval request should have been deleted upon the activity's confirmation")
+                        "The approval request should have been deleted upon the activity's confirmation")
 
     def test_13_approval_activity_dismissal(self):
         """Test that granting approval unlinks the activity that was created for that purpose"""
