@@ -146,11 +146,8 @@ export class KnowledgePublic extends Component {
     }
 
     addFoldHandlers(el = undefined) {
-        if (el) {
-            el.querySelector(".o_article_caret")?.addEventListener("click", this.boundFoldArticle);
-            return;
-        }
-        for (const loadMoreEl of this.treeRef.el?.querySelectorAll(".o_article_caret") || []) {
+        const targetEl = el || this.treeRef.el;
+        for (const loadMoreEl of targetEl?.querySelectorAll(".o_article_caret") || []) {
             loadMoreEl.addEventListener("click", this.boundFoldArticle);
         }
     }
