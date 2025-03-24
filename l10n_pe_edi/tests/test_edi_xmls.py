@@ -664,3 +664,106 @@ class TestEdiXmls(TestPeEdiCommon):
         '''
         expected_etree = self.get_xml_tree_from_string(expected_invoice_xml_values)
         self.assertXmlTreeEqual(current_etree, expected_etree)
+
+    def test_low_unit_price_with_higher_decimal_precision(self):
+        """ Invoice with a decimal precition of 4 digits for the product price
+            and a non-zero unit price that is rounded to 0.00 in the decimal
+            precision of the currency.
+        """
+        self.env.ref('product.decimal_price').digits = 4
+        self.currency.rounding = 0.01
+        with freeze_time(self.frozen_today), \
+             patch('odoo.addons.l10n_pe_edi.models.account_edi_format.AccountEdiFormat._l10n_pe_edi_post_invoice_web_service',
+                   new=mocked_l10n_pe_edi_post_invoice_web_service):
+            invoice_line_vals = {
+                'invoice_line_ids': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_id': self.env.ref('uom.product_uom_kgm').id,
+                        'price_unit': 0.0045,
+                        'quantity': 100,
+                        'tax_ids': [Command.set(self.tax_18.ids)],
+                    })
+                ],
+            }
+            move = self._create_invoice(**invoice_line_vals)
+            move.action_post()
+
+            generated_files = self._process_documents_web_services(move, {'pe_ubl_2_1'})
+            zip_edi_str = generated_files[0]
+            edi_xml = self.edi_format._l10n_pe_edi_unzip_edi_document(zip_edi_str)
+
+            current_etree = self.get_xml_tree_from_string(edi_xml)
+            expected_etree = self.get_xml_tree_from_string(self.expected_invoice_xml_values)
+            expected_etree = self.with_applied_xpath(
+                expected_etree,
+                '''
+                    <xpath expr="//Note" position="replace">
+                        <Note languageLocaleID="1000">CERO Y 53/100 DOLLARS</Note>
+                    </xpath>
+                    <xpath expr="/Invoice/TaxTotal" position="replace">
+                        <TaxTotal>
+                            <TaxAmount currencyID="USD">0.08</TaxAmount>
+                            <TaxSubtotal>
+                                <TaxableAmount currencyID="USD">0.45</TaxableAmount>
+                                <TaxAmount currencyID="USD">0.08</TaxAmount>
+                                <TaxCategory>
+                                    <TaxScheme>
+                                        <ID>1000</ID>
+                                        <Name>IGV</Name>
+                                        <TaxTypeCode>VAT</TaxTypeCode>
+                                    </TaxScheme>
+                                </TaxCategory>
+                            </TaxSubtotal>
+                        </TaxTotal>
+                    </xpath>
+                    <xpath expr="//LegalMonetaryTotal" position="replace">
+                        <LegalMonetaryTotal>
+                            <LineExtensionAmount currencyID="USD">0.45</LineExtensionAmount>
+                            <TaxExclusiveAmount currencyID="USD">0.45</TaxExclusiveAmount>
+                            <TaxInclusiveAmount currencyID="USD">0.53</TaxInclusiveAmount>
+                            <PrepaidAmount currencyID="USD">0.00</PrepaidAmount>
+                            <PayableAmount currencyID="USD">0.53</PayableAmount>
+                        </LegalMonetaryTotal>
+                    </xpath>
+                    <xpath expr="//InvoiceLine" position="replace">
+                        <InvoiceLine>
+                            <ID>1</ID>
+                            <InvoicedQuantity unitCode="KGM">100.0</InvoicedQuantity>
+                            <LineExtensionAmount currencyID="USD">0.45</LineExtensionAmount>
+                            <PricingReference>
+                                <AlternativeConditionPrice>
+                                    <PriceAmount currencyID="USD">0.0100</PriceAmount>
+                                    <PriceTypeCode>01</PriceTypeCode>
+                                </AlternativeConditionPrice>
+                            </PricingReference>
+                            <TaxTotal>
+                                <TaxAmount currencyID="USD">0.08</TaxAmount>
+                                <TaxSubtotal>
+                                    <TaxableAmount currencyID="USD">0.45</TaxableAmount>
+                                    <TaxAmount currencyID="USD">0.08</TaxAmount>
+                                    <TaxCategory>
+                                        <Percent>18.0</Percent>
+                                        <TaxExemptionReasonCode>10</TaxExemptionReasonCode>
+                                        <TaxScheme>
+                                            <ID>1000</ID>
+                                            <Name>IGV</Name>
+                                            <TaxTypeCode>VAT</TaxTypeCode>
+                                        </TaxScheme>
+                                    </TaxCategory>
+                                </TaxSubtotal>
+                            </TaxTotal>
+                            <Item>
+                                <Description>product_pe</Description>
+                                <Name>product_pe</Name>
+                                <CommodityClassification>
+                                    <ItemClassificationCode>01010101</ItemClassificationCode>
+                                </CommodityClassification>
+                            </Item>
+                            <Price>
+                                <PriceAmount currencyID="USD">0.0045</PriceAmount>
+                            </Price>
+                        </InvoiceLine>
+                    </xpath>
+                ''')
+            self.assertXmlTreeEqual(current_etree, expected_etree)

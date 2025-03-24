@@ -240,7 +240,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                     if line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS
                     else line_vals['price_total_unit']),
                 'price_amount_dp': self.env['decimal.precision'].precision_get('Product Price'),
-                'price_type_code': '02' if line.currency_id.is_zero(line_vals['price_unit_after_discount']) or line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS else '01'
+                'price_type_code': '02' if line.currency_id.is_zero(line_vals['price_subtotal_before_discount']) or line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS else '01'
             }]
         }
         return vals
