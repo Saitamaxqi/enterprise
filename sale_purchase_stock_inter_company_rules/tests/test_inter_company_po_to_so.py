@@ -509,11 +509,10 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.assertEqual(purchase_from_a.picking_ids.location_id, interco_location)
 
     def test_09_dropship_inter_company_other_company_to_customer(self):
-        try:
-            dropship_type = self.env['stock.picking.type'].search([('code', '=', 'dropship'), ('company_id', '=', self.company_b.id)])
-        except ValueError:
+        if self.env['ir.module.module']._get('stock_dropshipping').state != 'installed':
             self.skipTest('This test requires the following module: stock_dropshipping')
 
+        dropship_type = self.env['stock.picking.type'].search([('code', '=', 'dropship'), ('company_id', '=', self.company_b.id)])
         (self.company_a | self.company_b).write({
             'intercompany_generate_sales_orders': True,
             'intercompany_generate_purchase_orders': True,
