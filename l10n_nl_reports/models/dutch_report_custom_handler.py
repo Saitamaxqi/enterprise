@@ -1,5 +1,5 @@
-from odoo import models, _
-from odoo.exceptions import UserError
+from odoo import fields, models, _
+from odoo.exceptions import UserError, RedirectWarning
 
 import datetime
 from lxml import etree
@@ -50,7 +50,28 @@ class L10n_Nl_ReportsTaxReportHandler(models.AbstractModel):
         lines = report._get_lines(options)
         data = self._generate_codes_values(lines, options.get('codes_values'))
 
-        xbrl = self.env['ir.qweb']._render('l10n_nl_reports.tax_report_sbr', data)
+        date_to = fields.Date.to_date(options['date']['date_to'])
+        template_xmlid = 'l10n_nl_reports.tax_report_sbr'
+        if date_to.year == 2024:
+            # We still need to support the NT18 taxonomy for 2024 until that declaration period is over.
+            template_xmlid = 'l10n_nl_reports.tax_report_sbr_nt18'
+
+        report_template = self.env.ref(template_xmlid, raise_if_not_found=False)
+        if not report_template:
+            raise RedirectWarning(
+                message=_(
+                    "We couldn't find the correct export template for the year %(year)s. Please upgrade your module 'Netherlands - Accounting Reports' and try again.",
+                    year=date_to.year,
+                ),
+                action=self.env.ref('base.open_module_tree').id,
+                button_text=_("Go to Apps"),
+                additional_context={
+                    'search_default_name': 'l10n_nl_reports',
+                    'search_default_extra': True,
+                },
+            )
+
+        xbrl = self.env['ir.qweb']._render(report_template.id, data)
         xbrl_element = etree.fromstring(xbrl)
         xbrl_file = etree.tostring(xbrl_element, xml_declaration=True, encoding='utf-8')
         return {

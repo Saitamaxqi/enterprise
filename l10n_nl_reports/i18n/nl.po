@@ -77,9 +77,8 @@ msgid ""
 "BPL: if the taxpayer files a turnover tax return as an individual "
 "entrepreneur.INT: if the turnover tax return is made by an intermediary."
 msgstr ""
-"BPL: Als de belastingplichtige een omzetbelastingaangifte indient als  "
-"eenmanszaak. INT: Als de omzetbelastingaangifte wordt ingediend door een "
-"tussenpersoon."
+"BPL: Als de belastingplichtige zelf de aangifte omzetbelasting indient. INT:"
+" Als de aangifte omzetbelasting wordt ingediend door een intermediair."
 
 #. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_icp_wizard__can_report_be_sent
@@ -236,7 +235,7 @@ msgstr "Aangepaste handler voor Nederlandse ICP-aangifte"
 #: model:ir.model,name:l10n_nl_reports.model_l10n_nl_reports_tax_report_handler
 #: model:ir.model,name:l10n_nl_reports.model_l10n_nl_tax_report_handler
 msgid "Dutch Report Custom Handler"
-msgstr "Aangepaste handler voor Nederlandse rapportage"
+msgstr "Aangepaste handler voor Nederlandse btw-aangifte"
 
 #. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_config_settings__l10n_nl_rounding_difference_loss_account_id
@@ -261,6 +260,8 @@ msgstr "Aangepaste grootboekhandler"
 
 #. module: l10n_nl_reports
 #. odoo-python
+#: code:addons/l10n_nl_reports/models/account_sales_report.py:0
+#: code:addons/l10n_nl_reports/models/dutch_report_custom_handler.py:0
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_reports_sbr_tax_report_wizard.py:0
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_sbr_icp_wizard.py:0
 msgid "Go to Apps"
@@ -296,7 +297,7 @@ msgstr "ID"
 #: model:ir.model.fields.selection,name:l10n_nl_reports.selection__l10n_nl_reports_sbr_icp_wizard__contact_type__int
 #: model:ir.model.fields.selection,name:l10n_nl_reports.selection__l10n_nl_reports_sbr_tax_report_wizard__contact_type__int
 msgid "Intermediary (INT)"
-msgstr "Tussenpersoon (INT)"
+msgstr "Intermediair (INT)"
 
 #. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_icp_wizard__is_test
@@ -322,12 +323,12 @@ msgstr "L10N Nl Rrapport XAF-gebruikers-ID"
 #. module: l10n_nl_reports
 #: model:ir.model,name:l10n_nl_reports.model_l10n_nl_reports_sbr_icp_wizard
 msgid "L10n NL Intra-Communautaire Prestaties for SBR Wizard"
-msgstr "L10n NL Intra-Communautaire Prestaties voor SBR-wizard"
+msgstr "Nederlandse ICP-aangifte voor SBR-wizard"
 
 #. module: l10n_nl_reports
 #: model:ir.model,name:l10n_nl_reports.model_l10n_nl_reports_sbr_tax_report_wizard
 msgid "L10n NL Tax Report for SBR Wizard"
-msgstr "L10n NL btw-aangifte voor SBR-wizard"
+msgstr "Nederlandse btw-aangifte voor SBR-wizard"
 
 #. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_company__l10n_nl_reports_sbr_last_sent_date_to
@@ -520,7 +521,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_icp_wizard__tax_consultant_number
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_tax_report_wizard__tax_consultant_number
 msgid "Tax Consultant Number"
-msgstr "Belastingconsulentennummer"
+msgstr "Beconnummer"
 
 #. module: l10n_nl_reports
 #. odoo-python
@@ -560,8 +561,8 @@ msgid ""
 "make the connection library trust the server."
 msgstr ""
 "Het SBR-certificaat voor de Belastingdienst wordt gebruikt om de verbinding "
-"met de server van de Belastingdienst via SBR te verifiëren. Het zorgt  "
-"ervoor dat de verbindingsbibliotheek de server vertrouwt."
+"met de server van de Belastingdienst via SBR te verifiëren. Het zorgt ervoor"
+" dat de verbindingsbibliotheek de server vertrouwt."
 
 #. module: l10n_nl_reports
 #. odoo-python
@@ -602,7 +603,7 @@ msgid ""
 "The server root certificate is not accessible at the moment. Please try "
 "again later."
 msgstr ""
-"Het certificaat van de hoofdserver is momenteel niet toegankelijk. Probeer "
+"Het rootcertificaat van de server is momenteel niet toegankelijk. Probeer "
 "het later nog eens."
 
 #. module: l10n_nl_reports
@@ -649,8 +650,8 @@ msgstr ""
 msgid ""
 "The tax consultant number of the office aware of the content of this report."
 msgstr ""
-"Het nummer van de belastingadviseur die als gemachtigde van de "
-"belastingplichtige/aangever is aangesteld."
+"Het beconnummer van het administratiekantoor dat op de hoogte is van de "
+"inhoud van deze aangifte."
 
 #. module: l10n_nl_reports
 #. odoo-python
@@ -679,6 +680,17 @@ msgstr "Gebruiker"
 #: code:addons/l10n_nl_reports/models/account_sales_report.py:0
 msgid "View Partner"
 msgstr "Bekijk partner"
+
+#. module: l10n_nl_reports
+#. odoo-python
+#: code:addons/l10n_nl_reports/models/account_sales_report.py:0
+#: code:addons/l10n_nl_reports/models/dutch_report_custom_handler.py:0
+msgid ""
+"We couldn't find the correct export template for the year %(year)s. Please "
+"upgrade your module 'Netherlands - Accounting Reports' and try again."
+msgstr ""
+"We konden het juiste exportsjabloon voor het jaar %(year)s niet vinden. "
+"Upgrade je module 'Nederland - Boekhoudrapporten' en probeer het opnieuw."
 
 #. module: l10n_nl_reports
 #. odoo-python
@@ -722,6 +734,8 @@ msgstr ""
 
 #. module: l10n_nl_reports
 #: model_terms:ir.ui.view,arch_db:l10n_nl_reports.icp_report_sbr
+#: model_terms:ir.ui.view,arch_db:l10n_nl_reports.icp_report_sbr_nt18
 #: model_terms:ir.ui.view,arch_db:l10n_nl_reports.tax_report_sbr
+#: model_terms:ir.ui.view,arch_db:l10n_nl_reports.tax_report_sbr_nt18
 msgid "iso4217:EUR"
 msgstr "iso4217:EUR"

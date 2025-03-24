@@ -249,6 +249,8 @@ msgstr ""
 
 #. module: l10n_nl_reports
 #. odoo-python
+#: code:addons/l10n_nl_reports/models/account_sales_report.py:0
+#: code:addons/l10n_nl_reports/models/dutch_report_custom_handler.py:0
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_reports_sbr_tax_report_wizard.py:0
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_sbr_icp_wizard.py:0
 msgid "Go to Apps"
@@ -623,6 +625,15 @@ msgstr ""
 
 #. module: l10n_nl_reports
 #. odoo-python
+#: code:addons/l10n_nl_reports/models/account_sales_report.py:0
+#: code:addons/l10n_nl_reports/models/dutch_report_custom_handler.py:0
+msgid ""
+"We couldn't find the correct export template for the year %(year)s. Please "
+"upgrade your module 'Netherlands - Accounting Reports' and try again."
+msgstr ""
+
+#. module: l10n_nl_reports
+#. odoo-python
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_sbr_icp_wizard.py:0
 msgid ""
 "Your ICP report is being sent to Digipoort. Check its status in the closing "
@@ -655,6 +666,8 @@ msgstr ""
 
 #. module: l10n_nl_reports
 #: model_terms:ir.ui.view,arch_db:l10n_nl_reports.icp_report_sbr
+#: model_terms:ir.ui.view,arch_db:l10n_nl_reports.icp_report_sbr_nt18
 #: model_terms:ir.ui.view,arch_db:l10n_nl_reports.tax_report_sbr
+#: model_terms:ir.ui.view,arch_db:l10n_nl_reports.tax_report_sbr_nt18
 msgid "iso4217:EUR"
 msgstr ""
