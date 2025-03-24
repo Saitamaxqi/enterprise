@@ -148,7 +148,12 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2,
                 },
                 lock: {
-                    isAvailable: () => userIsInternal && singleSelection && !isInTrash && editMode,
+                    isAvailable: () =>
+                        userIsInternal &&
+                        singleSelection &&
+                        singleSelection.data.type !== "folder" &&
+                        !isInTrash &&
+                        editMode,
                     sequence: 90,
                     description: singleSelection?.data?.lock_uid ? _t("Unlock") : _t("Lock"),
                     icon: "fa fa-lock",

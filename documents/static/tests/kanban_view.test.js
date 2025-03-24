@@ -300,6 +300,41 @@ test("Drag and Drop - Dropping in 'My Drive' should create a shortcut", async fu
     expect(queryAll(".o_notification_content").at(-1)).toHaveText("A shortcut has been created.");
 });
 
+test("Lock action availability and check", async function () {
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "Binary", { folder_id: 1 }),
+    ]);
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+
+    const folder = queryFirst(".o_kanban_record[data-value-id='1']");
+
+    // Folder should not be lockable
+    await contains(folder).click({ ctrlKey: true });
+    await contains(".o_cp_action_menus button").click();
+    await waitForNone(".o-dropdown--menu .o-dropdown-item:contains('Lock')");
+
+    // Binary should be lockable
+    await contains(".o_kanban_record:contains('Binary')").click();
+    await contains(".o_cp_action_menus button").click();
+    await contains(".o-dropdown--menu .o-dropdown-item:contains('Lock')").click();
+    await waitFor(".o_kanban_record i.fa-lock");
+
+    // Unlock the binary record
+    await contains(".o_cp_action_menus button").click();
+    await contains(".o-dropdown--menu .o-dropdown-item:contains('Unlock')").click();
+    expect(".modal-body").toHaveText(
+        "This document is locked by OdooBot.\nAre you sure you want to unlock it?"
+    );
+    await contains(".modal .modal-footer .btn-primary").click();
+    await waitForNone(".o_kanban_record i.fa-lock");
+
+    // Multiple documents cannot be locked
+    await contains(folder).click({ ctrlKey: true });
+    await contains(".o_cp_action_menus button").click();
+    await waitForNone(".o-dropdown--menu .o-dropdown-item:contains('Lock')");
+});
+
 test("only show common available actions", async function () {
     await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
     await mountDocumentsKanbanView();

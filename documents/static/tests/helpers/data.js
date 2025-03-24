@@ -203,6 +203,11 @@ export class DocumentsDocument extends models.Model {
         ];
         return result;
     }
+
+    toggle_lock(id) {
+        const record = this.env["documents.document"].filter((doc) => doc.id === id)[0];
+        record.lock_uid = record.lock_uid ? false : serverState.odoobotId;
+    }
 }
 
 export class DocumentsTag extends models.Model {
