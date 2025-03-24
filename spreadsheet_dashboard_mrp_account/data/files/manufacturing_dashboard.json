@@ -183,33 +183,15 @@
         "A8:G8": 2,
         "A24:G24": 2,
         "E40:G40": 2,
-        "A41": 3,
-        "A54": 3,
-        "E41": 3,
-        "A42:A49": 4,
-        "A55:A62": 4,
-        "E42:E49": 4,
-        "A50": 5,
-        "A63": 5,
-        "E50": 5,
-        "B41": 6,
-        "B54": 6,
-        "F41": 6,
-        "B42:B49": 7,
-        "B55:B62": 7,
-        "F42:F49": 7,
-        "B50": 8,
-        "B63": 8,
-        "F50": 8,
-        "C41": 9,
-        "C54": 9,
-        "G41": 9,
-        "C42:C49": 10,
-        "C55:C62": 10,
-        "G42:G49": 10,
-        "C50": 11,
-        "C63": 11,
-        "G50": 11
+        "A41:C41": 3,
+        "A54:C54": 3,
+        "E41:G41": 3,
+        "A42:C49": 4,
+        "A55:C62": 4,
+        "E42:G49": 4,
+        "A50:C50": 5,
+        "A63:C63": 5,
+        "E50:G50": 5
       },
       "conditionalFormats": [
         {
@@ -494,45 +476,13 @@
       "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "4": {
       "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "5": {
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "6": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "7": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "8": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "9": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "10": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "11": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
       "top": { "style": "thick", "color": "#FFFFFF" }
     }
   },

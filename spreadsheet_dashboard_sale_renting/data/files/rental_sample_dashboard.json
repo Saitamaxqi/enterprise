@@ -89,42 +89,18 @@
         "A8:G8": 2,
         "E24:G24": 2,
         "E37:G37": 2,
-        "A25": 3,
-        "A38": 3,
-        "E25": 3,
-        "E38": 3,
-        "A26:A34": 4,
-        "A39:A45": 4,
-        "A47": 4,
-        "E26:E34": 4,
-        "E39:E45": 4,
-        "E47": 4,
+        "A25:C25": 3,
+        "A38:C38": 3,
+        "E25:G25": 3,
+        "E38:G38": 3,
+        "A26:C34": 4,
+        "A39:C47": 4,
+        "E26:G34": 4,
+        "E39:G47": 4,
         "A35:C35": 5,
         "A48:C48": 5,
         "E35:G35": 5,
-        "E48:G48": 5,
-        "A46:C46": 6,
-        "E46:G46": 6,
-        "B25": 7,
-        "B38": 7,
-        "F25": 7,
-        "F38": 7,
-        "B26:B34": 8,
-        "B39:B45": 8,
-        "B47": 8,
-        "F26:F34": 8,
-        "F39:F45": 8,
-        "F47": 8,
-        "C25": 9,
-        "C38": 9,
-        "G25": 9,
-        "G38": 9,
-        "C26:C34": 10,
-        "C39:C45": 10,
-        "C47": 10,
-        "G26:G34": 10,
-        "G39:G45": 10,
-        "G47": 10
+        "E48:G48": 5
       },
       "conditionalFormats": [],
       "dataValidationRules": [],
@@ -325,40 +301,14 @@
       "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
-      "right": { "style": "thin", "color": "#FFFFFF" },
       "bottom": { "style": "thin", "color": "#FFFFFF" }
     },
     "4": {
       "top": { "style": "thin", "color": "#FFFFFF" },
-      "right": { "style": "thin", "color": "#FFFFFF" },
       "bottom": { "style": "thin", "color": "#FFFFFF" }
     },
     "5": {
       "top": { "style": "thin", "color": "#FFFFFF" }
-    },
-    "6": {
-      "top": { "style": "thin", "color": "#FFFFFF" },
-      "bottom": { "style": "thin", "color": "#FFFFFF" }
-    },
-    "7": {
-      "left": { "style": "thin", "color": "#FFFFFF" },
-      "right": { "style": "thin", "color": "#FFFFFF" },
-      "bottom": { "style": "thin", "color": "#FFFFFF" }
-    },
-    "8": {
-      "left": { "style": "thin", "color": "#FFFFFF" },
-      "top": { "style": "thin", "color": "#FFFFFF" },
-      "right": { "style": "thin", "color": "#FFFFFF" },
-      "bottom": { "style": "thin", "color": "#FFFFFF" }
-    },
-    "9": {
-      "left": { "style": "thin", "color": "#FFFFFF" },
-      "bottom": { "style": "thin", "color": "#FFFFFF" }
-    },
-    "10": {
-      "left": { "style": "thin", "color": "#FFFFFF" },
-      "top": { "style": "thin", "color": "#FFFFFF" },
-      "bottom": { "style": "thin", "color": "#FFFFFF" }
     }
   },
   "revisionId": "START_REVISION",

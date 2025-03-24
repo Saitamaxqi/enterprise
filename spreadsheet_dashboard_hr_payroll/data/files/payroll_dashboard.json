@@ -60,11 +60,9 @@
         "A12:F12": 1,
         "A30:B30": 2,
         "A13:F13": 2,
-        "A31": 3,
-        "A32:A40": 4,
-        "A41:B41": 5,
-        "B31": 6,
-        "B32:B40": 7
+        "A31:B31": 3,
+        "A32:B40": 4,
+        "A41:B41": 5
       },
       "conditionalFormats": [
         {
@@ -359,25 +357,14 @@
       "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "4": {
       "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "5": {
       "top": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "6": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "7": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
     }
   },
   "revisionId": "START_REVISION",

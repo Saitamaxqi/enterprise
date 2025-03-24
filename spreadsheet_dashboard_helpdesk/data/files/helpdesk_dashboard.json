@@ -211,41 +211,26 @@
         "D8:E8": 2,
         "D24:E24": 2,
         "D37:E37": 2,
-        "A25": 3,
-        "A38": 3,
-        "A50": 3,
-        "D25": 3,
-        "D38": 3,
-        "A26:A33": 4,
-        "A39:A45": 4,
-        "A51:A57": 4,
-        "D26:D33": 4,
-        "D39:D45": 4,
-        "A34": 5,
-        "A46": 5,
-        "A58": 5,
-        "D34": 5,
-        "D46": 5,
+        "A25:B25": 3,
+        "A38:B38": 3,
+        "A50:B50": 3,
+        "D25:E25": 3,
+        "D38:E38": 3,
+        "A26:B33": 4,
+        "A39:B45": 4,
+        "A51:B57": 4,
+        "D26:E33": 4,
+        "D39:E45": 4,
+        "A34:B34": 5,
+        "A46:B46": 5,
+        "A58:B58": 5,
+        "D34:E34": 5,
+        "D46:E46": 5,
         "A35:B35": 6,
         "A47:B47": 6,
         "A59:B59": 6,
         "D35:E35": 6,
-        "D47:E47": 6,
-        "B25": 7,
-        "B38": 7,
-        "B50": 7,
-        "E25": 7,
-        "E38": 7,
-        "B26:B33": 8,
-        "B39:B45": 8,
-        "B51:B57": 8,
-        "E26:E33": 8,
-        "E39:E45": 8,
-        "B34": 9,
-        "B46": 9,
-        "B58": 9,
-        "E34": 9,
-        "E46": 9
+        "D47:E47": 6
       },
       "conditionalFormats": [
         {
@@ -543,35 +528,18 @@
       "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "4": {
       "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "5": {
       "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thin", "color": "#FFFFFF" }
     },
     "6": {
       "top": { "style": "thin", "color": "#FFFFFF" }
-    },
-    "7": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "8": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "9": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thin", "color": "#FFFFFF" }
     }
   },
   "revisionId": "START_REVISION",

@@ -178,27 +178,15 @@
         "A8:G8": 2,
         "A24:G24": 2,
         "E40:G40": 2,
-        "A41": 3,
-        "A54": 3,
-        "E41": 3,
-        "A42:A50": 4,
-        "A55:A63": 4,
-        "E42:E50": 4,
+        "A41:C41": 3,
+        "A54:C54": 3,
+        "E41:G41": 3,
+        "A42:C50": 4,
+        "A55:C63": 4,
+        "E42:G50": 4,
         "A51:C51": 5,
         "A64:C64": 5,
-        "E51:G51": 5,
-        "B41": 6,
-        "B54": 6,
-        "F41": 6,
-        "B42:B50": 7,
-        "B55:B63": 7,
-        "F42:F50": 7,
-        "C41": 8,
-        "C54": 8,
-        "G41": 8,
-        "C42:C50": 9,
-        "C55:C63": 9,
-        "G42:G50": 9
+        "E51:G51": 5
       },
       "conditionalFormats": [
         {
@@ -868,36 +856,14 @@
       "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "4": {
       "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "5": {
       "top": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "6": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "7": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "right": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "8": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
-    },
-    "9": {
-      "left": { "style": "thick", "color": "#FFFFFF" },
-      "top": { "style": "thick", "color": "#FFFFFF" },
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
     }
   },
   "revisionId": "START_REVISION",
