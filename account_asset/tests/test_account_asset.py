@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-import time
-
 from dateutil.relativedelta import relativedelta
 from odoo import fields, Command
 from odoo.exceptions import UserError, MissingError
@@ -31,7 +27,13 @@ class TestAccountAsset(TestAccountReportsCommon):
             'method': 'linear',
         })
         cls.truck.validate()
-        cls.env['account.move']._autopost_draft_entries()
+        # post draft entries manually
+        moves_to_post = cls.env['account.move'].search([
+            ('state', '=', 'draft'),
+            ('auto_post', '!=', 'no'),
+            '|', ('checked', '=', True), ('journal_id.autocheck_on_post', '=', True),
+        ])
+        moves_to_post._post()
 
         cls.account_asset_model_fixedassets = cls.env['account.asset'].create({
             'account_depreciation_id': cls.company_data['default_account_assets'].copy().id,
@@ -2312,7 +2314,6 @@ class TestAccountAsset(TestAccountReportsCommon):
                 },
             ])
 
-
     def test_asset_analytic_filter(self):
         """
         Test that the analytic filter works correctly.
@@ -2321,7 +2322,9 @@ class TestAccountAsset(TestAccountReportsCommon):
         truck_b.acquisition_date = self.truck.acquisition_date
         truck_b.validate()
         self.truck.analytic_distribution = {self.analytic_account.id: 100}
-        self.env['account.move']._autopost_draft_entries()
+
+        with self.enter_registry_test_mode():
+            self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
 
         self.env.company.totals_below_sections = False
         report = self.env.ref('account_asset.assets_report')
@@ -2364,7 +2367,8 @@ class TestAccountAsset(TestAccountReportsCommon):
         truck_b.acquisition_date = self.truck.acquisition_date
         truck_b.validate()
         self.truck.analytic_distribution = {self.analytic_account.id: 100}
-        self.env['account.move']._autopost_draft_entries()
+        with self.enter_registry_test_mode():
+            self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
 
         self.env.company.totals_below_sections = False
         report = self.env.ref('account_asset.assets_report')
@@ -2458,7 +2462,8 @@ class TestAccountAsset(TestAccountReportsCommon):
             })
             asset.validate()
 
-        self.env['account.move']._autopost_draft_entries()
+        with self.enter_registry_test_mode():
+            self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
 
         self.env.company.totals_below_sections = False
         report = self.env.ref('account_asset.assets_report')
