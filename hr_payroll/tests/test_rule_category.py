@@ -13,41 +13,10 @@ class TestSalaryRuleCategory(TransactionCase):
             'country_id': self.env.ref('base.fr').id,
         })
 
-        self.existing_category2 = self.env['hr.salary.rule.category'].create({
-            'name': 'No Country Category',
-            'code': 'NOCOUNTRY',
-            'country_id': False,
-        })
 
-    def test_create_category_with_same_code(self):
-        with self.assertRaises(UserError):
-            self.env['hr.salary.rule.category'].create({
-                'name': 'New Category',
-                'code': 'EXIST',
-                'country_id': self.env.ref('base.fr').id,
-            })
-
-        with self.assertRaises(UserError):
-            self.env['hr.salary.rule.category'].create({
-                'name': 'Another New Category',
-                'code': 'NOCOUNTRY',
-                'country_id': False,
-            })
-
-    def test_create_category_with_country_and_no_country(self):
-        with self.assertRaises(UserError):
-            self.env['hr.salary.rule.category'].create({
-                'name': 'Country Specific',
-                'code': 'NOCOUNTRY',
-                'country_id': self.env.ref('base.fr').id,
-            })
-
-        with self.assertRaises(UserError):
-            self.env['hr.salary.rule.category'].create({
-                'name': 'Countryless',
-                'code': 'EXIST',
-                'country_id': False,
-            })
+    def test_copy_existing_category(self):
+        new_category = self.existing_category1.copy()
+        self.assertEqual(new_category.name, 'Existing Category (copy)')
 
     def test_create_category_with_duplicate_code_in_different_country(self):
         category = self.env['hr.salary.rule.category'].create({

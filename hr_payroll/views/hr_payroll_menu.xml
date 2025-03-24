@@ -158,7 +158,7 @@
         name="Rule Categories"
         parent="menu_hr_salary_configuration"
         sequence="35"
-        groups="base.group_no_one"/>
+    />
 
     <menuitem
         id="menu_hr_payroll_structure_view"
