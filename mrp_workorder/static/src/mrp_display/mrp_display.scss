@@ -36,6 +36,10 @@ body:has(.o_mrp_display) {
         height: 2rem;
         width: 2rem;
     }
+
+    .o_tag, .badge {
+        font-size: var(--btn-font-size, var(--small-font-size));
+    }
 }
 
 .o_mrp_display {

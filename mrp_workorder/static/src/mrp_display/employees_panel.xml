@@ -21,6 +21,7 @@
                         </div>
                         <div t-foreach="employee.workcenters" t-as="wc" t-key="wc.id" class="d-flex justify-content-between">
                             <span t-attf-class="rounded-1 fw-bold py-0 px-2 o_workcenter_item_color_{{wc.id % 11}}" t-esc="wc.name"/>
+                            <span t-attf-class="o_tag o_tag_color_{{wc.id % 11}} badge rounded" t-esc="wc.name"/>
                             <span class="o_minutes fw-bold" t-esc="Math.round(wc.duration) + '\''"/>
                         </div>
                         <div t-if="!employee.workcenters.length" class="d-flex justify-content-between">
