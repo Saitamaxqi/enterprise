@@ -36,7 +36,7 @@
                         <t t-foreach="state.data.budget_items.data" t-as="budget_item" t-key="budget_item.id">
                             <tr>
                                 <td>
-                                    <a t-if="budget_item.action" class="o_rightpanel_button"
+                                    <a t-if="budget_item.action" href="#"
                                         t-on-click="() => this.onProjectActionClick(budget_item.action)"
                                     >
                                         <t t-call="project_account_budget.BudgetName"/>
