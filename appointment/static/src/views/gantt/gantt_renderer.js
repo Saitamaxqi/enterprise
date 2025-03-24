@@ -35,7 +35,7 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
         let { stop } = this.getSubColumnFromColNumber(columnStop);
         ({ start, stop } = this.normalizeTimeRange(start, stop));
         const context = this.model.getDialogContext({rowId, start, stop, withDefault: true});
-        if (columnStart != columnStop){
+        if (columnStop != columnStart + this.model.metaData.scale.cellPart - 1){
             delete context['default_duration'];
         }
         this.props.create(context);
