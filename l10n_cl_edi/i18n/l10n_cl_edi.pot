@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.3alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.3a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-01 01:02+0000\n"
-"PO-Revision-Date: 2024-05-01 01:02+0000\n"
+"POT-Creation-Date: 2025-03-25 08:14+0000\n"
+"PO-Revision-Date: 2025-03-25 08:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -104,6 +104,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_cl_edi/models/account_move.py:0
 msgid " in DEMO mode."
+msgstr ""
+
+#. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+msgid "%s COPY"
 msgstr ""
 
 #. module: l10n_cl_edi
@@ -503,6 +509,11 @@ msgid "CAFs"
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "CEDIBLE"
+msgstr ""
+
+#. module: l10n_cl_edi
 #. odoo-python
 #: code:addons/l10n_cl_edi/models/l10n_cl_dte_caf.py:0
 msgid "Caf vat %s should be the same that assigned company's vat: %s!"
@@ -829,6 +840,11 @@ msgstr ""
 #. module: l10n_cl_edi
 #: model:ir.model.fields.selection,name:l10n_cl_edi.selection__res_company__l10n_cl_sii_regional_office__ur_cur
 msgid "Curicó"
+msgstr ""
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "DATE:"
 msgstr ""
 
 #. module: l10n_cl_edi
@@ -1201,6 +1217,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model:ir.actions.report,name:l10n_cl_edi.account_invoices_cedible
+msgid "Invoice PDF copy (Chile)"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields.selection,name:l10n_cl_edi.selection__res_company__l10n_cl_sii_regional_office__ur_iqu
 msgid "Iquique"
 msgstr ""
@@ -1380,6 +1401,11 @@ msgid "Name"
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "Name:"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_account_debit_note__l10n_cl_corrected_text
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_account_move_reversal__l10n_cl_corrected_text
 msgid "New Corrected Text"
@@ -1555,6 +1581,11 @@ msgid "Porvenir"
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "Premises:"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_l10n_cl_certificate__private_key
 msgid "Private Key"
 msgstr ""
@@ -1601,6 +1632,11 @@ msgstr ""
 #: code:addons/l10n_cl_edi/models/l10n_cl_edi_util.py:0
 #: code:addons/l10n_cl_edi/models/l10n_cl_edi_util.py:0
 msgid "RUT validation error"
+msgstr ""
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "RUT:"
 msgstr ""
 
 #. module: l10n_cl_edi
@@ -1904,6 +1940,11 @@ msgid "Signature Certificates"
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "Signature:"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_l10n_cl_certificate__signature_filename
 msgid "Signature File Name"
 msgstr ""
@@ -2034,6 +2075,14 @@ msgstr ""
 msgid ""
 "The VAT of your company has not been configured. Please go to your company "
 "data and add it."
+msgstr ""
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid ""
+"The acknowledgement of receipt declared in this act, in accordance with the\n"
+"                                    provisions of Art. 4 letter b) and Art. 5 letter c) of Law 19.983, certifies\n"
+"                                    that the delivery of goods or service(s) rendered has/have been received."
 msgstr ""
 
 #. module: l10n_cl_edi
@@ -2523,6 +2572,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_cl_edi/models/account_move.py:0
 msgid "failed due to:"
+msgstr ""
+
+#. module: l10n_cl_edi
+#: model:ir.actions.report,print_report_name:l10n_cl_edi.account_invoices_cedible
+msgid "object._l10n_cl_get_report_base_filename()"
 msgstr ""
 
 #. module: l10n_cl_edi

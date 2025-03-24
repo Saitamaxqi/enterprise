@@ -65,6 +65,7 @@ For detailed guidance, refer to the [SII Guide](https://www.sii.cl/factura_elect
         'views/l10n_latam_document_type_view.xml',
         'views/dte_caf_view.xml',
         'views/fetchmail_server.xml',
+        'views/account_report.xml',
         'views/report_invoice.xml',
         'views/account_move_view.xml',
         'views/account_payment_term_view.xml',

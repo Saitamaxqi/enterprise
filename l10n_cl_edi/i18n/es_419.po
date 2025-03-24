@@ -162,6 +162,12 @@ msgstr " en modo DEMO"
 
 #. module: l10n_cl_edi
 #. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+msgid "%s COPY"
+msgstr "%s COPIA"
+
+#. module: l10n_cl_edi
+#. odoo-python
 #: code:addons/l10n_cl_edi/models/l10n_cl_edi_util.py:0
 msgid "- It was not possible to get a response after %s retries."
 msgstr "- No fue posible obtener una semilla después de %s reintentos."
@@ -619,6 +625,11 @@ msgid "CAFs"
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "CEDIBLE"
+msgstr ""
+
+#. module: l10n_cl_edi
 #. odoo-python
 #: code:addons/l10n_cl_edi/models/l10n_cl_dte_caf.py:0
 msgid "Caf vat %s should be the same that assigned company's vat: %s!"
@@ -942,6 +953,11 @@ msgstr "Referencias Cruzadas de Documentos"
 #: model:ir.model.fields.selection,name:l10n_cl_edi.selection__res_company__l10n_cl_sii_regional_office__ur_cur
 msgid "Curicó"
 msgstr ""
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "DATE:"
+msgstr "FECHA:"
 
 #. module: l10n_cl_edi
 #. odoo-python
@@ -1335,6 +1351,11 @@ msgstr ""
 "nuevamente."
 
 #. module: l10n_cl_edi
+#: model:ir.actions.report,name:l10n_cl_edi.account_invoices_cedible
+msgid "Invoice PDF copy (Chile)"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields.selection,name:l10n_cl_edi.selection__res_company__l10n_cl_sii_regional_office__ur_iqu
 msgid "Iquique"
 msgstr ""
@@ -1517,6 +1538,11 @@ msgstr ""
 #, python-format
 msgid "Name"
 msgstr ""
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "Name:"
+msgstr "Nombre:"
 
 #. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_account_debit_note__l10n_cl_corrected_text
@@ -1703,6 +1729,11 @@ msgid "Porvenir"
 msgstr ""
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "Premises:"
+msgstr "Recinto:"
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_l10n_cl_certificate__private_key
 msgid "Private Key"
 msgstr "Clave Privada"
@@ -1750,6 +1781,11 @@ msgstr ""
 #: code:addons/l10n_cl_edi/models/l10n_cl_edi_util.py:0
 msgid "RUT validation error"
 msgstr "Error de validación de RUT"
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "RUT:"
+msgstr ""
 
 #. module: l10n_cl_edi
 #: model:ir.model.fields.selection,name:l10n_cl_edi.selection__res_company__l10n_cl_sii_regional_office__ur_ran
@@ -2054,6 +2090,11 @@ msgid "Signature Certificates"
 msgstr "Certificados de firma"
 
 #. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid "Signature:"
+msgstr "FIRMA:"
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_l10n_cl_certificate__signature_filename
 msgid "Signature File Name"
 msgstr "Archivo de Firma"
@@ -2197,6 +2238,17 @@ msgid ""
 msgstr ""
 "El RUT de su compañía no ha sido configurado. Por favor vaya a los datos de "
 "su compañía y agréguelo."
+
+#. module: l10n_cl_edi
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
+msgid ""
+"The acknowledgement of receipt declared in this act, in accordance with the\n"
+"                                    provisions of Art. 4 letter b) and Art. 5 letter c) of Law 19.983, certifies\n"
+"                                    that the delivery of goods or service(s) rendered has/have been received."
+msgstr ""
+"El acuse de recibo que se declara en este acto, de acuerdo a lo dispueso en la\n"
+"letra b) del Art.4° y la letra c) del Art.5° de la Ley 19.983, acredita que la\n"
+"entrega de mercadería(s) o servicio(s) prestado(s) ha(n) sido recibido(s)."
 
 #. module: l10n_cl_edi
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi.barcode_stamp_footer
@@ -2774,6 +2826,11 @@ msgstr ""
 #: code:addons/l10n_cl_edi/models/account_move.py:0
 msgid "failed due to:"
 msgstr "falló debido a:"
+
+#. module: l10n_cl_edi
+#: model:ir.actions.report,print_report_name:l10n_cl_edi.account_invoices_cedible
+msgid "object._l10n_cl_get_report_base_filename()"
+msgstr ""
 
 #. module: l10n_cl_edi
 #. odoo-python

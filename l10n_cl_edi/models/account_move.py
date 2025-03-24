@@ -912,6 +912,9 @@ services reception has been received as well.
         set_dte_attrb = set_dte and set_dte.attrib or {}
         return set_dte_attrb.get('ID', '')
 
+    def _l10n_cl_get_report_base_filename(self):
+        return _("%s COPY", self._get_report_base_filename())
+
     # Cron methods
 
     def _l10n_cl_ask_dte_status(self):
