@@ -27,6 +27,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         domain="[('id', 'in', l10n_in_valid_bank_accounts_ids)]")
     l10n_in_neft = fields.Boolean(string="NEFT Transaction", help="Tick this box if your company use online transfer for salary")
     l10n_in_cheque_number = fields.Char(string="Cheque Number")
+    l10n_in_cheque_date = fields.Date(string="Cheque Date")
     l10n_in_state_pdf = fields.Boolean()
     l10n_in_state_xlsx = fields.Boolean()
     l10n_in_effective_from = fields.Date(string="Effective From", default=fields.Date.today)

@@ -9,8 +9,9 @@
                 <field name="l10n_in_reference" invisible="export_format != 'advice'"/>
                 <field name="l10n_in_company_bank_id" invisible="export_format != 'advice' or l10n_in_neft"/>
                 <field name="l10n_in_cheque_number" invisible="export_format != 'advice' or l10n_in_neft"/>
+                <field name="l10n_in_cheque_date" invisible="export_format != 'advice' or l10n_in_neft"/>
                 <field name="l10n_in_neft" invisible="export_format != 'advice'"/>
-                <field name="l10n_in_effective_from" invisible="export_format != 'advice'"/>
+                <field name="l10n_in_effective_from" string="Payment date" invisible="export_format != 'advice'"/>
                 <!-- this field will be used in the name of the pdf -->
                 <field name="l10n_in_payment_advice_filename_pdf" invisible="1"/>
                 <field name="l10n_in_payment_advice_pdf" filename="l10n_in_payment_advice_filename_pdf"

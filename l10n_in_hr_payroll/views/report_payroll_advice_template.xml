@@ -5,28 +5,33 @@
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
+                        <h2 class="text-center"><strong>Payment Advice</strong></h2>
                         <p class="text-end my-0"> Made on <span t-out="time.strftime('%d-%m-%Y')"/></p>
-                        <p class="text-end my-0"> Effective From <span t-out="o.l10n_in_effective_from.strftime('%d-%m-%Y')"/></p>
+                        <p class="text-end my-0"> Payment date <span t-out="o.l10n_in_effective_from.strftime('%d-%m-%Y')"/></p>
                         <p class="m-0">To,</p>
                         <p>The Manager,</p>
                         <p><strong><span t-out="o.l10n_in_company_bank_id.bank_name"/></strong></p>
                         <p>Dear Sir/Madam,</p>
-                        <p class="text-start">
+                        <p class="text-center text-decoration-underline">
                             <strong>Payment Advice from 
                                 <span t-out="o.company_id.name"/>
                                 <t t-if="o.l10n_in_neft">with NEFT</t>
                                 <t t-else="">with Cheque No. 
                                     <span t-if="o.l10n_in_cheque_number" t-out="o.l10n_in_cheque_number"/>
                                     <span t-else="">XXXXXXXX</span>
+                                    <span t-if="o.l10n_in_cheque_date">
+                                        (<span t-out="o.l10n_in_cheque_date.strftime('%d-%m-%Y')"/>)
+                                    </span>
                                 </t> from <span t-out="get_month(current_date)['from_name']"/> to 
                                 <span t-out="get_month(current_date)['to_name']"/>
                             </strong>
                         </p>
                     <p class="text-start">
                         <span>
-                            Please proceed with transfer from account 
+                            Please initiate a payroll transfer from account number
                             <span t-if="o.l10n_in_company_bank_id" t-out="o.l10n_in_company_bank_id.acc_number"/>
-                            <span t-else="">XXXXXXXXX</span> for the employees listed in this document:
+                            <span t-else="">XXXXXXXXX</span>
+                            to the below mentioned account numbers towards employees salaries:
                         </span>
                     </p>
                         <table class="o_ignore_layout_styling table table-sm">
@@ -62,17 +67,18 @@
                                         <span t-out="l['bysal']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                                     </td>
                                 </tr>
-                                <tr class="border-black" style="border-bottom: 1px solid black">
-                                    <td colspan="4"/>
-                                    <td>
-                                        <strong>Total:</strong>
-                                    </td>
+                                <tr>
+                                    <td class="text-end" colspan="5"><strong>Total</strong></td>
                                     <td class="text-end">
                                         <strong><span t-out="report_details['total_bysal']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></strong>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <p>
+                            Total Amount: <span t-out="o.company_id.currency_id.with_context(lang='en_US')
+                            .amount_to_text(report_details['total_bysal'])"/>
+                        </p>
                         <p class="m-0">Yours Sincerely</p>
                         <p>For <span t-out="o.company_id.name"/></p>
                         <p class="mt-5">Authorized Signature</p>
