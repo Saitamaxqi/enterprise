@@ -1,6 +1,7 @@
 import {
     DocumentsDocument,
     defineDocumentSpreadsheetModels,
+    getBasicServerData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import {
     createSpreadsheet,
@@ -11,7 +12,6 @@ import { press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { setCellContent } from "@spreadsheet/../tests/helpers/commands";
-import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { getCellContent, getCellValue } from "@spreadsheet/../tests/helpers/getters";
 import { doMenuAction } from "@spreadsheet/../tests/helpers/ui";
 import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";

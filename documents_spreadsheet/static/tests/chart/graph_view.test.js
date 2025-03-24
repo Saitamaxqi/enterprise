@@ -2,10 +2,12 @@ import {
     createSpreadsheetFromGraphView,
     spawnGraphViewForSpreadsheet,
 } from "@documents_spreadsheet/../tests/helpers/chart_helpers";
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    defineDocumentSpreadsheetModels,
+    getBasicServerData,
+} from "@documents_spreadsheet/../tests/helpers/data";
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
 import {

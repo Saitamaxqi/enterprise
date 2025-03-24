@@ -1,21 +1,31 @@
-import { SpreadsheetModels, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
-import { defineActions, fields, models, onRpc, serverState } from "@web/../tests/web_test_helpers";
+import {
+    getBasicData as getBasicSpreadsheetData,
+    getBasicServerData as getBasicSpreadsheetServerData,
+    SpreadsheetModels,
+    defineSpreadsheetModels,
+} from "@spreadsheet/../tests/helpers/data";
+import {
+    defineActions,
+    fields,
+    models,
+    onRpc,
+    serverState,
+    webModels,
+} from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
+import { getBasicPermissionPanelData, DocumentsModels } from "@documents/../tests/helpers/data";
 
-export class DocumentsDocument extends models.Model {
-    _name = "documents.document";
+const ACCESS_TOKEN_MY_SPREADSHEET = "accessTokenMyspreadsheet";
+const {
+    MailActivityType,
+    MailAlias,
+    MailAliasDomain,
+    DocumentsTag,
+    DocumentsDocument: Documents,
+} = DocumentsModels;
 
-    id = fields.Integer({ string: "ID" });
-    name = fields.Char({ string: "Name" });
+export class DocumentsDocument extends Documents {
     spreadsheet_data = fields.Binary({ string: "Data" });
-    thumbnail = fields.Binary({ string: "Thumbnail" });
-    favorited_ids = fields.Many2many({ string: "Name", relation: "res.users" });
-    is_favorited = fields.Boolean({ string: "Name" });
-    is_multipage = fields.Boolean({ string: "Is multipage" });
-    is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
-    mimetype = fields.Char({ string: "Mimetype" });
-    partner_id = fields.Many2one({ string: "Related partner", relation: "res.partner" });
-    owner_id = fields.Many2one({ string: "Owner", relation: "res.users" });
     handler = fields.Selection({
         string: "Handler",
         selection: [
@@ -23,51 +33,6 @@ export class DocumentsDocument extends models.Model {
             ["frozen_spreadsheet", "Frozen Spreadsheet"],
             ["frozen_folder", "Frozen Folder"],
         ],
-    });
-    previous_attachment_ids = fields.Many2many({
-        string: "History",
-        relation: "ir.attachment",
-    });
-    tag_ids = fields.Many2many({ string: "Tags", relation: "documents.tag" });
-    folder_id = fields.Many2one({ string: "Folder", relation: "documents.document" });
-    res_model = fields.Char({ string: "Model (technical)" });
-    attachment_id = fields.Many2one({ relation: "ir.attachment" });
-    active = fields.Boolean({ default: true, string: "Active" });
-    activity_ids = fields.One2many({ relation: "mail.activity" });
-    checksum = fields.Char({ string: "Checksum" });
-    file_extension = fields.Char({ string: "File extension" });
-    thumbnail_status = fields.Selection({
-        string: "Thumbnail status",
-        selection: [["none", "None"]],
-    });
-    lock_uid = fields.Many2one({ relation: "res.users" });
-    message_attachment_count = fields.Integer({ string: "Message attachment count" });
-    message_follower_ids = fields.One2many({ relation: "mail.followers" });
-    message_ids = fields.One2many({ relation: "mail.message" });
-    res_id = fields.Integer({ string: "Resource ID" });
-    res_name = fields.Char({ string: "Resource Name" });
-    res_model_name = fields.Char({ string: "Resource Model Name" });
-    type = fields.Selection({ string: "Type", selection: [["binary", "File", "folder"]] });
-    url = fields.Char({ string: "URL" });
-    url_preview_image = fields.Char({ string: "URL preview image" });
-    file_size = fields.Integer({ string: "File size" });
-    raw = fields.Char({ string: "Raw" });
-    access_token = fields.Char({ string: "Access token" });
-    available_embedded_actions_ids = fields.Many2many({
-        string: "Available Actions",
-        // relation: "ir.actions.server",
-        relation: "res.partner",
-    });
-    alias_id = fields.Many2one({ relation: "mail.alias" });
-    alias_domain_id = fields.Many2one({ relation: "mail.alias.domain" });
-    alias_name = fields.Char({ string: "Alias name" });
-    alias_tag_ids = fields.Many2many({ relation: "documents.tag" });
-    create_activity_type_id = fields.Many2one({ relation: "mail.activity.type" });
-    create_activity_user_id = fields.Many2one({ relation: "res.users" });
-    description = fields.Char({ string: "Attachment description" });
-    last_access_date_group = fields.Selection({
-        string: "Last Accessed On",
-        selection: [["0_older", "1_mont", "2_week", "3_day"]],
     });
 
     get_spreadsheets(domain = [], args) {
@@ -116,43 +81,13 @@ export class DocumentsDocument extends models.Model {
         };
     }
 
-    get_deletion_delay() {
-        return 30;
-    }
-
-    get_document_max_upload_limit() {
-        return 67000000;
-    }
-
-    /**
-     * @override
-     */
-    search_panel_select_range(fieldName) {
-        const result = super.search_panel_select_range(...arguments);
-        if (fieldName === "folder_id") {
-            const coModel = this.env[this._fields[fieldName].relation];
-            for (const recordValues of result.values || []) {
-                const [record] = coModel.browse(recordValues.id);
-                for (const fName of [
-                    "display_name",
-                    "description",
-                    "parent_folder_id",
-                    "has_write_access",
-                    "company_id",
-                ]) {
-                    recordValues[fName] ??= record[fName];
-                }
-            }
-        }
-        return result;
-    }
-
     _records = [
         {
             id: 1,
             name: "Workspace1",
             description: "Workspace",
             folder_id: false,
+            handler: false,
             available_embedded_actions_ids: [],
             type: "folder",
             access_token: "accessTokenWorkspace1",
@@ -165,7 +100,8 @@ export class DocumentsDocument extends models.Model {
             folder_id: 1,
             handler: "spreadsheet",
             active: true,
-            access_token: "accessTokenMyspreadsheet",
+            access_token: ACCESS_TOKEN_MY_SPREADSHEET,
+            available_embedded_actions_ids: [],
         },
         {
             id: 3,
@@ -176,32 +112,9 @@ export class DocumentsDocument extends models.Model {
             handler: "spreadsheet",
             active: true,
             access_token: "accessToken",
+            available_embedded_actions_ids: [],
         },
     ];
-}
-
-export class DocumentsTag extends models.Model {
-    _name = "documents.tag";
-
-    facet_id = fields.Many2one({ relation: "documents.facet" });
-    get_tags() {
-        return [];
-    }
-}
-
-export class TagsCategories extends models.Model {
-    _name = "documents.facet";
-}
-
-export class DocumentsWorkflowRule extends models.Model {
-    _name = "documents.workflow.rule";
-
-    note = fields.Char({ string: "Tooltip" });
-    limited_to_single_record = fields.Boolean({ string: "Limited to single record" });
-    create_model = fields.Selection({
-        selection: [["link.to.record", "Link to record"]],
-        string: "Create",
-    });
 }
 
 export class SpreadsheetTemplate extends models.Model {
@@ -246,22 +159,11 @@ export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
     };
 }
 
-export class MailActivityType extends models.Model {
-    _name = "mail.activity.type";
-
-    name = fields.Char({ string: "Activity Type" });
-}
-
-export class MailAlias extends models.Model {
-    _name = "mail.alias";
-
-    alias_name = fields.Char({ string: "Alias Name" });
-}
-
-export class MailAliasDomain extends models.Model {
-    _name = "mail.alias.domain";
-
-    name = fields.Char({ string: "Alias Domain Name" });
+export class ResCompany extends webModels.ResCompany {
+    document_spreadsheet_folder_id = fields.Many2one({
+        relation: "documents.document",
+        default: 1,
+    });
 }
 
 export class ResCountries extends models.Model {
@@ -313,9 +215,7 @@ export function defineDocumentSpreadsheetModels() {
         MailAlias,
         MailAliasDomain,
         DocumentsDocument,
-        TagsCategories,
         DocumentsTag,
-        DocumentsWorkflowRule,
         SpreadsheetTemplate,
         IrUIMenu,
         ResCountries,
@@ -343,44 +243,66 @@ export function defineDocumentSpreadsheetTestAction() {
     ]);
 }
 
-export function getBasicPermissionPanelData(recordExtra) {
-    const record = {
-        access_internal: "view",
-        access_via_link: "view",
-        access_url: "http://localhost:8069/share/url/132465",
-        access_ids: [],
-        active: true,
-        owner_id: {
-            id: serverState.userId,
-            partner_id: {
-                id: serverState.partner_id,
-                mail: "user@mock.example.com",
-                name: "User Mock",
-                user_id: serverState.userId,
-                partner_share: false,
+export function getMySpreadsheetPermissionPanelData() {
+    return getBasicPermissionPanelData({
+        access_url: `https://localhost:8069/odoo/documents/${ACCESS_TOKEN_MY_SPREADSHEET}`,
+        display_name: "My Spreadsheet",
+        handler: "spreadsheet",
+    });
+}
+
+/**
+ * @override to add necessary users
+ */
+export const getBasicData = () => {
+    const res = getBasicSpreadsheetData();
+    res["res.users"] = getDocumentBasicData().models["res.users"];
+    return res;
+};
+
+/**
+ * @override to add necessary users
+ */
+export const getBasicServerData = () => {
+    const res = getBasicSpreadsheetServerData();
+    res.models["res.users"] = getDocumentBasicData().models["res.users"];
+    return res;
+};
+
+export function getDocumentBasicData(views = {}) {
+    const models = {};
+    models["mail.alias"] = { records: [{ alias_name: "hazard@rmcf.es", id: 1 }] };
+    models["res.users"] = {
+        records: [
+            { name: "OdooBot", id: serverState.odoobotId },
+            {
+                name: "Test User",
+                id: serverState.userId,
+                active: true,
+                partner_id: serverState.partnerId,
             },
-        },
-        ...recordExtra,
-    };
-    const selections = {
-        access_via_link: [
-            ["view", "Viewer"],
-            ["edit", "Editor"],
-            ["none", "None"],
-        ],
-        access_via_link_options: [
-            ["1", "Must have the link to access"],
-            ["0", "Discoverable"],
-        ],
-        access_internal: [
-            ["view", "Viewer"],
-            ["edit", "Editor"],
-            ["none", "None"],
-        ],
-        doc_access_roles: [
-            ["view", "Viewer"],
-            ["edit", "Editor"],
         ],
     };
-    return { record, selections };
+    models["documents.document"] = {
+        records: [
+            {
+                name: "Folder 1",
+                alias_id: 1,
+                description: "Folder",
+                type: "folder",
+                id: 1,
+                available_embedded_actions_ids: [],
+            },
+        ],
+    };
+    models["spreadsheet.template"] = {
+        records: [
+            { id: 1, name: "Template 1", spreadsheet_data: "{}" },
+            { id: 2, name: "Template 2", spreadsheet_data: "{}" },
+        ],
+    };
+    return {
+        models,
+        views,
+    };
 }

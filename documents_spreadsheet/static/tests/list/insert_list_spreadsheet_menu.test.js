@@ -1,4 +1,7 @@
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    defineDocumentSpreadsheetModels,
+    getBasicServerData,
+} from "@documents_spreadsheet/../tests/helpers/data";
 import {
     invokeInsertListInSpreadsheetDialog,
     spawnListViewForSpreadsheet,
@@ -7,7 +10,7 @@ import {
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
-import { Partner, getBasicServerData } from "@spreadsheet/../tests/helpers/data";
+import { Partner } from "@spreadsheet/../tests/helpers/data";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import {
@@ -131,10 +134,10 @@ test("Sheet is created when list name contains invalid characters", async () => 
 
     let spreadsheetAction;
     patchWithCleanup(SpreadsheetAction.prototype, {
-    setup() {
-        super.setup();
-        spreadsheetAction = this;
-    },
+        setup() {
+            super.setup();
+            spreadsheetAction = this;
+        },
     });
     await invokeInsertListInSpreadsheetDialog(env);
     const listName = "Do not keep Unsupported characters: '-:-*-?-\\-[-]-/";

@@ -2,7 +2,7 @@ import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { waitFor } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
+import { getBasicServerData } from "@documents_spreadsheet/../tests/helpers/data";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import {
     getSpreadsheetActionEnv,

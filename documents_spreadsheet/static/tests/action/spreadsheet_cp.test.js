@@ -1,14 +1,15 @@
 import {
     defineDocumentSpreadsheetModels,
     DocumentsDocument,
-    getBasicPermissionPanelData,
+    getMySpreadsheetPermissionPanelData,
+    getBasicData,
+    getBasicServerData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
-import { getBasicData, getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { contains, getService, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 
@@ -147,8 +148,8 @@ test("Freeze&Share spreadsheet from control panel", async function () {
     ];
     patchWithCleanup(browser.navigator.clipboard, {
         writeText: async (url) => {
-            expect.step("share url copied");
-            expect(url).toBe("http://localhost:8069/share/url/132465");
+            expect.step("Document url copied");
+            expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenMyspreadsheet");
         },
     });
     await createSpreadsheet({
@@ -168,7 +169,7 @@ test("Freeze&Share spreadsheet from control panel", async function () {
             if (args.method === "permission_panel_data") {
                 expect(args.args[0]).toEqual(frozenSpreadsheetId);
                 expect.step("permission_panel_data");
-                return getBasicPermissionPanelData({ handler: "spreadsheet" });
+                return getMySpreadsheetPermissionPanelData();
             }
             if (args.method === "can_upload_traceback") {
                 return false;
@@ -179,7 +180,7 @@ test("Freeze&Share spreadsheet from control panel", async function () {
     await contains("button:contains(Freeze and share)").click();
 
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["spreadsheet_shared", "permission_panel_data", "share url copied"]);
+    expect.verifySteps(["spreadsheet_shared", "permission_panel_data", "Document url copied"]);
 });
 
 test("Share spreadsheet from control panel", async function () {
@@ -198,8 +199,8 @@ test("Share spreadsheet from control panel", async function () {
     ];
     patchWithCleanup(browser.navigator.clipboard, {
         writeText: async (url) => {
-            expect.step("share url copied");
-            expect(url).toBe("http://localhost:8069/share/url/132465");
+            expect.step("Document url copied");
+            expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenMyspreadsheet");
         },
     });
     await createSpreadsheet({
@@ -209,7 +210,7 @@ test("Share spreadsheet from control panel", async function () {
             if (args.method === "permission_panel_data") {
                 expect(args.args[0]).toEqual(spreadsheetId);
                 expect.step("permission_panel_data");
-                return getBasicPermissionPanelData({ handler: "spreadsheet" });
+                return getMySpreadsheetPermissionPanelData();
             }
             if (args.method === "can_upload_traceback") {
                 return false;
@@ -220,7 +221,7 @@ test("Share spreadsheet from control panel", async function () {
     await contains("button:contains(Share)").click();
 
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["permission_panel_data", "share url copied"]);
+    expect.verifySteps(["permission_panel_data", "Document url copied"]);
 });
 
 test("toggle favorite", async function () {

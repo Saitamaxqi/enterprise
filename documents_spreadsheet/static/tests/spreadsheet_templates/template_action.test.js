@@ -1,6 +1,8 @@
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    defineDocumentSpreadsheetModels,
+    getBasicServerData,
+} from "@documents_spreadsheet/../tests/helpers/data";
 import { expect, test } from "@odoo/hoot";
-import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { createSpreadsheetTemplate } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { Model } from "@odoo/o-spreadsheet";
 import { setCellContent } from "@spreadsheet/../tests/helpers/commands";

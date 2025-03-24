@@ -1,6 +1,9 @@
 import {
     defineDocumentSpreadsheetModels,
     defineDocumentSpreadsheetTestAction,
+    getBasicData,
+    getBasicServerData,
+    getDocumentBasicData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import {
     createSpreadsheetFromListView,
@@ -16,12 +19,7 @@ import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { onMounted } from "@odoo/owl";
 import { selectCell, setCellContent } from "@spreadsheet/../tests/helpers/commands";
-import {
-    Partner,
-    Product,
-    getBasicData,
-    getBasicServerData,
-} from "@spreadsheet/../tests/helpers/data";
+import { Partner, Product, ResUsers } from "@spreadsheet/../tests/helpers/data";
 import {
     getCellFormula,
     getCellValue,
@@ -402,6 +400,7 @@ test("Re-insert a list also applies a table", async function () {
 });
 
 test("user related context is not saved in the spreadsheet", async function () {
+    ResUsers._records = getDocumentBasicData().models["res.users"].records;
     registry.category("favoriteMenu").add(
         "insert-in-spreadsheet-menu",
         {

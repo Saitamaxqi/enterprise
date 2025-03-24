@@ -9,16 +9,13 @@ import {
 import { describe, test, expect } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { defineModels } from "@web/../tests/web_test_helpers";
-import {
-    DocumentsDocument,
-    DocumentsTag,
-    MailAlias,
-    TagsCategories,
-    MailAliasDomain,
-} from "../helpers/data";
+import { DocumentsDocument } from "../helpers/data";
+import { DocumentsModels } from "@documents/../tests/helpers/data";
+
+const { MailAlias, MailAliasDomain, DocumentsTag } = DocumentsModels;
 
 defineMailModels();
-defineModels({ DocumentsDocument, DocumentsTag, MailAlias, TagsCategories, MailAliasDomain });
+defineModels({ DocumentsDocument, DocumentsTag, MailAlias, MailAliasDomain });
 describe.current.tags("desktop");
 
 test("open spreadsheet attachment in spreadsheet when clicking on it from a discuss channel", async () => {

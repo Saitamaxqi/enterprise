@@ -1,6 +1,8 @@
 import {
     DocumentsDocument,
     defineDocumentSpreadsheetModels,
+    getBasicData,
+    getBasicServerData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, getFixture, test } from "@odoo/hoot";
@@ -8,7 +10,6 @@ import { dblclick } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { selectCell, setCellContent, setSelection } from "@spreadsheet/../tests/helpers/commands";
-import { getBasicData, getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { getCell, getCellValue } from "@spreadsheet/../tests/helpers/getters";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { doMenuAction } from "@spreadsheet/../tests/helpers/ui";
@@ -126,14 +127,12 @@ test("breadcrumb is rendered the navbar", async function () {
 test("Can open a spreadsheet in readonly", async function () {
     onRpc(
         "/spreadsheet/data/documents.document/*",
-        () => {
-            return {
-                data: {},
-                name: "name",
-                revisions: [],
-                isReadonly: true,
-            };
-        },
+        () => ({
+            data: {},
+            name: "name",
+            revisions: [],
+            isReadonly: true,
+        }),
         { pure: true }
     );
     const { model } = await createSpreadsheet();
@@ -143,19 +142,17 @@ test("Can open a spreadsheet in readonly", async function () {
 test("format menu with default currency", async function () {
     onRpc(
         "/spreadsheet/data/documents.document/*",
-        () => {
-            return {
-                data: {},
-                name: "name",
-                revisions: [],
-                default_currency: {
-                    code: "θdoo",
-                    symbol: "θ",
-                    position: "after",
-                    decimalPlaces: 2,
-                },
-            };
-        },
+        () => ({
+            data: {},
+            name: "name",
+            revisions: [],
+            default_currency: {
+                code: "θdoo",
+                symbol: "θ",
+                position: "after",
+                decimalPlaces: 2,
+            },
+        }),
         { pure: true }
     );
     const { model, env } = await createSpreadsheet();

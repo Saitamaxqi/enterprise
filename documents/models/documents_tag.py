@@ -27,6 +27,7 @@ class DocumentsTag(models.Model):
         "Tag name already used",
     )
 
+    # todo: unused, remove in master
     @api.model
     def _get_tags(self, domain):
         """

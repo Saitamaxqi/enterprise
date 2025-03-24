@@ -2,7 +2,7 @@ import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests
 import { describe, expect, test } from "@odoo/hoot";
 import { stores } from "@odoo/o-spreadsheet";
 import { Partner } from "@spreadsheet/../tests/helpers/data";
-import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
+import { createSpreadsheetWithPivot } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { makeStoreWithModel } from "@spreadsheet/../tests/helpers/stores";
 import { fields } from "@web/../tests/web_test_helpers";
 

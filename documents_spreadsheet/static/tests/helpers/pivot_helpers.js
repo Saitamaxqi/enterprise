@@ -2,9 +2,13 @@ import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreads
 import { getFixture } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { onMounted } from "@odoo/owl";
-import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
-import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
+import { getBasicServerData } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    ensureDocumentsRequiredRecords,
+    makeDocumentsSpreadsheetMockEnv,
+} from "@documents_spreadsheet/../tests/helpers/model";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
+import { createSpreadsheetWithPivot as createSpreadsheetWithPivotSpreadsheet } from "@spreadsheet/../tests/helpers/pivot";
 import {
     getSpreadsheetActionEnv,
     getSpreadsheetActionModel,
@@ -120,3 +124,9 @@ export async function createSpreadsheetFromPivotView(params = {}) {
         pivotId,
     };
 }
+
+export const createSpreadsheetWithPivot = (params = {}) => {
+    const extendedParams = { ...params };
+    extendedParams.serverData = ensureDocumentsRequiredRecords(params.serverData);
+    return createSpreadsheetWithPivotSpreadsheet(extendedParams);
+};

@@ -1,15 +1,14 @@
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    defineDocumentSpreadsheetModels,
+    getBasicData,
+    getBasicServerData,
+} from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { getHighlightsFromStore } from "@documents_spreadsheet/../tests/helpers/store_helpers";
 import { describe, expect, getFixture, test, beforeEach } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries } from "@odoo/o-spreadsheet";
-import {
-    Partner,
-    getBasicData,
-    getBasicPivotArch,
-    getBasicServerData,
-} from "@spreadsheet/../tests/helpers/data";
+import { Partner, getBasicPivotArch } from "@spreadsheet/../tests/helpers/data";
 import {
     getZoneOfInsertedDataSource,
     insertPivotInSpreadsheet,

@@ -5,7 +5,7 @@ import { animationFrame } from "@odoo/hoot-mock";
 import { components, registries } from "@odoo/o-spreadsheet";
 import { setCellContent, setSelection } from "@spreadsheet/../tests/helpers/commands";
 import { getCell } from "@spreadsheet/../tests/helpers/getters";
-import { getMenuServerData } from "@spreadsheet/../tests/links/menu_data_utils";
+import { getMenuServerData } from "@documents_spreadsheet/../tests/links/menu_data_utils";
 import { contains, patchWithCleanup } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");

@@ -1,4 +1,7 @@
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    defineDocumentSpreadsheetModels,
+    getBasicData,
+} from "@documents_spreadsheet/../tests/helpers/data";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { contains, serverState } from "@web/../tests/web_test_helpers";
@@ -8,7 +11,6 @@ import {
     createGaugeChart,
     createScorecardChart,
 } from "@spreadsheet/../tests/helpers/commands";
-import { getBasicData } from "@spreadsheet/../tests/helpers/data";
 import { manuallyDispatchProgrammaticEvent } from "@odoo/hoot-dom";
 
 defineDocumentSpreadsheetModels();
@@ -107,6 +109,7 @@ beforeEach(() => {
                     partner_id: serverState.partnerId,
                     active: true,
                 },
+                { id: serverState.odoobotId, name: "OdooBot" },
             ],
         },
         "ir.actions": {

@@ -2,7 +2,7 @@ import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { SpreadsheetTemplateAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_template/spreadsheet_template_action";
 import { animationFrame, queryFirst, queryText } from "@odoo/hoot-dom";
-import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
+import { getBasicServerData } from "@documents_spreadsheet/../tests/helpers/data";
 import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";
 import {
     getSpreadsheetActionEnv,
