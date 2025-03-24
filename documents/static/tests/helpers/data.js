@@ -126,7 +126,7 @@ export class DocumentsDocument extends models.Model {
                 .map((record) => {
                     const recordValues = {};
                     if (!record.folder_id) {
-                        recordValues.folder_id = record.owner_id[0] === serverState.odoobotId
+                        recordValues.folder_id = !record.owner_id
                             ? "COMPANY"
                             : record.owner_id[0] === serverState.userId
                                 ? "MY"
