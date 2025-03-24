@@ -386,7 +386,7 @@ export class DocumentService {
                     this.observer.disconnect();
                     return;
                 }
-                const view = this.action.currentController.props.type;
+                const view = this.action.currentController?.props.type;
                 if (
                     chatterContainer &&
                     ["kanban", "list"].includes(view)
