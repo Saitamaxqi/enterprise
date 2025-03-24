@@ -96,7 +96,7 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
         },
         {
     trigger: "button.o-mail-Chatter-logNote",
-    content: markup(_t("<b>Log notes</b> for internal communications (you will only notify the persons you specifically tag). Use <b>@ mentions</b> to ping a colleague or <b># mentions</b> to contact a group of people.")),
+    content: markup(_t("<b>Log internal notes</b> and use @<b>mentions</b> to notify your colleagues.")),
     tooltipPosition: "bottom",
             run: "click",
         },
