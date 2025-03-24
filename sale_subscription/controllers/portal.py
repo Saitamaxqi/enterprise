@@ -400,7 +400,8 @@ class PaymentPortal(payment_portal.PaymentPortal):
         kwargs.update(partner_id=partner_sudo.id)
         if not is_validation:  # Renewal transaction
             invoice_to_pay = None
-            amount = kwargs.get('amount', 0)
+            # When amount value is set and equal to None, fallback to zero
+            amount = kwargs.get('amount') or 0
             if not subscription_anticipate:
                 for invoice in order_sudo.invoice_ids:
                     if (invoice.state == 'posted' and
