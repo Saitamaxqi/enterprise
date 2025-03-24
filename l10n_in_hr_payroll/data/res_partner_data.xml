@@ -16,10 +16,6 @@
         <field name="name">Register for Food Coupen</field>
     </record>
 
-    <record id="hr_tds_register" model="res.partner">
-        <field name="name">Register for TDS</field>
-    </record>
-
     <record id="hr_nps_contribution_register" model="res.partner">
         <field name="name">Register for NPS Contribution</field>
     </record>
