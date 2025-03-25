@@ -399,3 +399,12 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_pe_reports.field_res_config_test__l10n_pe_chart_of_accounts
 msgid "Value used on PLE 5.3 report to indicate the chart of accounts used."
 msgstr ""
+
+#. module: l10n_pe_reports
+#. odoo-python
+#: code:addons/l10n_pe_reports/models/account_ple_reports.py:0
+#, python-format
+msgid ""
+"When branches are used, it is necessary to access from the main company to "
+"generate the reports."
+msgstr ""

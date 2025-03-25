@@ -141,6 +141,9 @@ class L10n_PeTaxPleReportHandler(models.AbstractModel):
 
             return result
 
+        if self.env.company.parent_id:
+            raise UserError(
+                _("When branches are used, it is necessary to access from the main company to generate the reports."))
         report = self.env["account.report"].browse(options["report_id"])
         query = report._get_report_query(options, 'strict_range')
         if self.env.company.chart_template != 'pe':

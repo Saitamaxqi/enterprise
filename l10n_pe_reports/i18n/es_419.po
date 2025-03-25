@@ -425,3 +425,14 @@ msgid "Value used on PLE 5.3 report to indicate the chart of accounts used."
 msgstr ""
 "Valor utilizado en el reporte PLE 5.3 para indicar el catalogo de cuentas "
 "utilizado."
+
+#. module: l10n_pe_reports
+#. odoo-python
+#: code:addons/l10n_pe_reports/models/account_ple_reports.py:0
+#, python-format
+msgid ""
+"When branches are used, it is necessary to access from the main company to "
+"generate the reports."
+msgstr ""
+"Cuando se utilizan sucursales, es necesario acceder desde la empresa principal para "
+"generar los reportes."
