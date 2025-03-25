@@ -29,8 +29,13 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
             run: "click",
         },
         { // Select the first day of the next month, this ensures that the daterange is always valid.
-            content:  "Select Date field",
-            trigger:  ".o_date_picker:nth-child(2) > .o_date_item_cell:not(.o_out_of_range)",
+            content:  "Select next month",
+            trigger:  ".o_datetime_picker .o_next",
+            run: "click",
+        },
+        {
+            content:  "Select Date",
+            trigger:  ".o_date_picker > .o_date_item_cell:not(.o_out_of_range)",
             run: "click",
         },
         {
