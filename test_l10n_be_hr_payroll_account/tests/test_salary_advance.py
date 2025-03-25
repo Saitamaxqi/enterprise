@@ -14,6 +14,13 @@ class TestSalaryAdvance(TestPayslipBase):
         self.contract = self.create_contract(date(2024, 9, 1))
         self.saladv_struct = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_salary_advance')
         self.monthly_struct = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
+        self.journal = self.env['account.journal'].create({
+            'name' : 'MISC',
+            'code' : 'MSC',
+            'type' : 'general',
+        })
+        self.monthly_struct.journal_id = self.journal
+        self.saladv_struct.journal_id = self.journal
 
     def _get_input_line_amount(self, payslip, code):
         input_lines = payslip.input_line_ids.filtered(lambda line: line.code == code)
