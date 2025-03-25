@@ -2,7 +2,7 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 
-import { Component, onWillStart, useState, useSubEnv } from "@odoo/owl";
+import { Component, onWillStart, useRef, useState, useSubEnv } from "@odoo/owl";
 
 import { AccountReportController } from "@account_reports/components/account_report/controller";
 import { AccountReportButtonsBar } from "@account_reports/components/account_report/buttons_bar/buttons_bar";
@@ -39,7 +39,9 @@ export class AccountReport extends Component {
     static defaultComponentsMap = [];
 
     setup() {
+        this.rootRef = useRef("root");
         useSetupAction({
+            rootRef: this.rootRef,
             getLocalState: () => {
                 return {
                     keep_journal_groups_options: true,  // used when using the breadcrumb

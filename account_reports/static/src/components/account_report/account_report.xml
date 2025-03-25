@@ -5,7 +5,7 @@
     </t>
 
     <t t-name="account_reports.AccountReportCustomizable">
-        <div class="o_action account_report" t-att-class="cssCustomClass">
+        <div class="o_action account_report" t-att-class="cssCustomClass" t-ref="root">
             <ControlPanel>
                 <!-- Buttons bar -->
                 <t t-set-slot="control-panel-create-button">
