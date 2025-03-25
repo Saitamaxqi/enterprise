@@ -76,15 +76,13 @@ class PosPrepOrder(models.Model):
         super()._compute_order_name()
         for order in self:
             if order.pos_order_id.session_id.config_id.module_pos_restaurant:
+                course_name = f" - {_('Course')[0]}{order.pos_course_id.index}" if order.pos_course_id else ''
                 if order.pos_order_id.table_id:
-                    name = self._get_table_name(order.pos_order_id.table_id)
-                    if order.pos_course_id:
-                        name += f" - C{order.pos_course_id.index}"
-                    order.order_name = name
+                    order.order_name = self._get_table_name(order.pos_order_id.table_id) + course_name
                 elif order.pos_order_id.floating_order_name:
-                    order.order_name = order.pos_order_id.floating_order_name
+                    order.order_name = order.pos_order_id.floating_order_name + course_name
                 else:
-                    order.order_name = "Direct Sale"
+                    order.order_name = _("Direct Sale")
 
     @api.model
     def _get_table_name(self, table):

@@ -12,4 +12,4 @@ class PosPreset(models.Model):
 
     @api.model
     def _load_pos_preparation_data_fields(self):
-        return ['name', 'use_timing', 'identification', 'slots_per_interval', 'interval_time', 'attendance_ids']
+        return ['name', 'use_timing', 'identification', 'slots_per_interval', 'interval_time', 'attendance_ids', 'color']

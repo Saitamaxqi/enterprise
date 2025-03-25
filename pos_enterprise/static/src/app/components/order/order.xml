@@ -6,28 +6,26 @@
             t-attf-class="{{this.state.changeStageTimeout ? 'o_pdis_stage--animation' : ''}} {{this.cardColor}}">
             <div class="o_pdis_order_card_header" t-on-click="clickOrder">
                 <div
-                    class="o_pdis_order_card_header_top d-flex flex-nowrap align-items-center justify-content-between px-2 pb-1 fw-bold gap-2"
+                    class="o_pdis_order_card_header_top d-flex flex-nowrap align-items-center justify-content-between px-1 pb-1 fw-bold gap-1"
                     t-att-class="this.cardColor">
-                    <div class="o_pdis_tracking_number d-flex align-items-center justify-content-start pe-3 flex-grow-1 text-truncate">
-                        <div class="o_pdis_tracker">
+                    <div class="o_pdis_tracking_number ">
+                        <div class="o_pdis_tracker text-break" style="max-width: 150px;">
                             <t t-esc="this.order.order_name"/>
                         </div>
                     </div>
-                    <div t-if="this.order.pos_order_id.preset_id?.name" class="flex-shrink-0">
-                        <t t-if="this.order.pos_order_id.preset_time">
-                            <span t-esc="presetTime"/>
-                            <span class="ps-1" t-esc="presetDate"/>
-                        </t>
-                        <i class="fa fa-info pe-1" aria-hidden="true"/>
-                        <span t-esc="this.order.pos_order_id.preset_id?.name"/>
+                    <div t-if="this.order.pos_order_id.preset_time">
+                        <span t-esc="presetTime"/>
+                        <span class="ps-1" t-esc="presetDate"/>
                     </div>
                 </div>
                 <div class="o_pdis_order_card_header_bottom d-grid p-2 bg-100">
                     <div class="o_pdis_table-info d-flex justify-content-between align-items-center">
                         <div t-esc="this.props.order.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill"
                             t-att-style="`background-color: ${this.props.order.stage.color} !important; color: ${this.fontColor}`"/>
-                        <div t-if="this.order.pos_order_id.preset_time">
-                            <span t-esc="presetTime"/>
+                        <div t-if="this.order.pos_order_id.preset_id?.name" class="d-flex gap-0 align-items-center justify-content-center">
+                            <span
+                            class="px-2 py-1 rounded-pill" t-attf-class="o_colorlist_item_color_${this.order.pos_order_id.preset_id.color}"
+                            t-esc="this.order.pos_order_id.preset_id?.name"/>
                         </div>
                         <t t-set="isLastStage" t-value="this.prepDisplay.lastStage.id === this.props.order.stage.id"/>
                         <t t-set="displayAlert" t-value="this.isAlert and !isLastStage"/>
