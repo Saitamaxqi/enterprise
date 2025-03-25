@@ -73,6 +73,9 @@ export class TaskGanttRenderer extends GanttRenderer {
             ) {
                 pill.className += " opacity-25";
             }
+            if (enrichedPill.record.is_closed) {
+                pill.className += " opacity-50";
+            }
         }
         return enrichedPill;
     }
@@ -336,4 +339,16 @@ export class TaskGanttRenderer extends GanttRenderer {
         const { criticalTaskIds } = this.model;
         return criticalTaskIds && !criticalTaskIds.includes(pill.record.id);
     }
+
+    //--------------------------------------------------------------------------
+    //Task Connectors
+    //--------------------------------------------------------------------------
+
+    shouldConnectorBeDashed(sourcePill) {
+        if (sourcePill.record.is_closed) {
+            return true;
+        }
+        return super.shouldConnectorBeDashed(sourcePill);
+    }
+
 }

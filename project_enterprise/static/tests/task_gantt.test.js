@@ -842,3 +842,14 @@ test("template dropdown in gantt view of a project with one template", async () 
         message: "There should be a button named after the task template",
     });
 });
+
+test("Closed tasks in gantt view have lower opacity than open tasks", async () => {
+    Task._records = [{ ...Task._records[0], is_closed: true }];
+
+    await mountGanttView({
+        ...ganttViewParams,
+        groupBy: ["user_ids"],
+    });
+
+    expect(".o_gantt_pill").toHaveClass("opacity-50");
+});

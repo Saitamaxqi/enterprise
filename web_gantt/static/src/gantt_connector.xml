@@ -100,6 +100,7 @@
             t-att-class="class"
             t-att-marker-end="markerEnd ? `url(#${markerEnd})` : false"
             t-att-pointer-events="isNew ? 'none' : 'stroke'"
+            t-att-stroke-dasharray="isDashed ? '10 5' : ''"
         />
     </t>
 

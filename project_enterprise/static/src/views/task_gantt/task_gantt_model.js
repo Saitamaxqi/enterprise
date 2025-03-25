@@ -257,4 +257,11 @@ export class TaskGanttModel extends GanttModel {
             this.searchParams.domain,
         ]);
     }
+
+    _getFields(metaData) {
+        const result = super._getFields(...arguments);
+        // Field data required for muted gantt dependencies
+        result.push("is_closed");
+        return result;
+     }
 }

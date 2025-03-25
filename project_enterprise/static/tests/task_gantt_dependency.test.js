@@ -248,3 +248,26 @@ test("Connector buttons: reschedule task forward date.", async () => {
         ],
     ]);
 });
+
+test("Connector dotted/dashed when depended task in closed state.", async () => {
+    mockDate("2021-10-10 7:00:00");
+    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
+
+    // Taking only records for easier finding of dashed connecter
+    projectModels.ProjectTask._records.length = 2;
+    projectModels.ProjectTask._records[0].is_closed = true;
+
+    await mountGanttView({
+        ...ganttViewParams,
+    });
+
+    expect(".o_gantt_connector .o_connector_stroke_hover_ease").toHaveAttribute(
+        "stroke-dasharray",
+        "10 5"
+    );
+    expect(".o_gantt_connector .o_connector_stroke_outline").toHaveAttribute(
+        "stroke-dasharray",
+        "10 5"
+    );
+    expect(".o_gantt_connector .o_connector_stroke").toHaveAttribute("stroke-dasharray", "10 5");
+});

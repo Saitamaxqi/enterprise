@@ -69,6 +69,7 @@ export class GanttConnector extends Component {
                     Function,
                     { type: Object, shape: { left: Number, top: Number } },
                 ],
+                dashed: { type: Boolean, optional: true },
             },
         },
         onLeftButtonClick: { type: Function, optional: true },
@@ -115,6 +116,10 @@ export class GanttConnector extends Component {
 
     get targetPoint() {
         return this.props.reactive.targetPoint;
+    }
+
+    get isDashed() {
+        return this.props.reactive.dashed;
     }
 
     setup() {

@@ -1349,18 +1349,29 @@ export class GanttRenderer extends Component {
                                     slaveId in this.mappingRowToPillsByRecord[rowId]
                             )
                         ) {
-                            const masterRecord = sourcePill.record;
-                            const slaveRecord = targetPill.record;
-                            this.setConnector(
-                                { alert: this.getConnectorAlert(masterRecord, slaveRecord) },
-                                sourcePill.id,
-                                targetPill.id
-                            );
+                            this.setConnector(...this.getConnecterValues(sourcePill, targetPill));
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * @param {Pill} sourcePill
+     * @param {Pill} targetPill
+     */
+    getConnecterValues(sourcePill, targetPill) {
+        return [
+            { alert: this.getConnectorAlert(sourcePill.record, targetPill.record) },
+            sourcePill.id,
+            targetPill.id,
+            this.shouldConnectorBeDashed(sourcePill),
+        ];
+    }
+
+    shouldConnectorBeDashed(sourcePill) {
+        return false;
     }
 
     /**
@@ -2398,7 +2409,7 @@ export class GanttRenderer extends Component {
      * @param {PillId | null} [sourceId=null]
      * @param {PillId | null} [targetId=null]
      */
-    setConnector(params, sourceId = null, targetId = null) {
+    setConnector(params, sourceId = null, targetId = null, dashed = null) {
         const connectorParams = { ...params };
         const connectorId = params.id || `__connector__${this.nextConnectorId++}`;
 
@@ -2408,6 +2419,10 @@ export class GanttRenderer extends Component {
 
         if (targetId) {
             connectorParams.targetPoint = () => this.getPoint(targetId, false);
+        }
+
+        if (dashed) {
+            connectorParams.dashed = true;
         }
 
         if (this.connectors[connectorId]) {
