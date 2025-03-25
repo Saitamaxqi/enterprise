@@ -261,8 +261,7 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.state != 'posted':
             return
-        if self.is_entry():
-            raise UserError(_("You cannot generate deferred entries for a miscellaneous journal entry."))
+
         deferred_type = "expense" if self.is_purchase_document() else "revenue"
         deferred_account = self.company_id.deferred_expense_account_id if deferred_type == "expense" else self.company_id.deferred_revenue_account_id
         deferred_journal = self.company_id.deferred_expense_journal_id if deferred_type == "expense" else self.company_id.deferred_revenue_journal_id
@@ -512,11 +511,15 @@ class AccountMoveLine(models.Model):
         return (
             self.move_id.is_purchase_document()
             and
-            self.account_id.account_type in ('expense', 'expense_depreciation', 'expense_direct_cost')
+            self.account_id.internal_group == 'expense'
         ) or (
             self.move_id.is_sale_document()
             and
-            self.account_id.account_type in ('income', 'income_other')
+            self.account_id.internal_group == 'income'
+        ) or (
+            self.move_id.is_entry()
+            and
+            self.account_id.internal_group in ('expense', 'income')
         )
 
     @api.onchange('deferred_start_date')
