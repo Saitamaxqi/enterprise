@@ -1647,6 +1647,26 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
                 fname, idx = (fname_a, 0) if al[fname_a] else (fname_b, 1)
                 self.assertAlmostEqual(al.amount, -expected_analytic_amount[index][al[fname].id][idx])
 
+    def test_deferred_revenue_manual_generation_analytic_distribution(self):
+        """
+        Test if deferred revenues have the right analytic distribution when manually generated.
+        """
+        self.company.generate_deferred_expense_entries_method = 'manual'
+        move = self.create_invoice(self.revenue_lines)
+        analytic_plan = self.env['account.analytic.plan'].create({'name': 'Plan'})
+        analytic_account = self.env['account.analytic.account'].create({
+            'name': 'Account',
+            'plan_id': analytic_plan.id,
+        })
+        move.invoice_line_ids[0]['analytic_distribution'] = {analytic_account.id: 100}
+        options = self.get_options('2023-02-01', '2023-02-28', report=self.deferred_revenue_report)
+        options['analytic_accounts'] = [analytic_account.id]
+        revenue_handler = self.env['account.deferred.revenue.report.handler']
+        deferral_move = self.generate_deferral_entries(options, report_handler=revenue_handler)[0]
+        analytic_distributions = deferral_move.line_ids.mapped('analytic_distribution')
+        expected_distributions = [{str(analytic_account.id): 100}] * 3
+        self.assertEqual(analytic_distributions, expected_distributions)
+
     def test_deferred_expense_report_invalid_period(self):
         """
         Only periods that start on the first day of a month and end on the last day of a month are allowed.

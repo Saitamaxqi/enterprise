@@ -559,9 +559,11 @@ class AccountDeferredReportHandler(models.AbstractModel):
         """
         if not deferred_account:
             raise UserError(_("Please set the deferred accounts in the accounting settings."))
+
         deferred_amounts_by_line = self.env['account.move']._get_deferred_amounts_by_line(lines, [period], is_reverse)
         deferred_amounts_by_key, deferred_amounts_totals = self._group_deferred_amounts_by_grouping_field(deferred_amounts_by_line, [period], is_reverse, filter_already_generated=True)
-        if deferred_amounts_totals['totals_aggregated'] == deferred_amounts_totals[period]:
+        totals_aggregated = deferred_amounts_totals['totals_aggregated']
+        if totals_aggregated == deferred_amounts_totals[period]:
             return [], set()
 
         # compute analytic distribution to populate on deferred lines
@@ -577,9 +579,11 @@ class AccountDeferredReportHandler(models.AbstractModel):
                 continue
             # Analytic distribution should be computed from the lines with the same _get_grouping_keys_deferred_lines(), except for
             # the deferred line with the deferral account which will use _get_grouping_fields_deferral_lines()
-            full_ratio = (line['balance'] / deferred_amounts_totals['totals_aggregated']) if deferred_amounts_totals['totals_aggregated'] else 0
+            sign = 1 if is_reverse else -1
             key_amount = deferred_amounts_by_key.get(self._group_by_deferred_fields(line, True))
-            key_ratio = (line['balance'] / key_amount['amount_total']) if key_amount and key_amount['amount_total'] else 0
+            total_amount = key_amount.get('amount_total')
+            key_ratio = sign * line['balance'] / total_amount if total_amount else 0
+            full_ratio = sign * line['balance'] / totals_aggregated if totals_aggregated else 0
 
             for account_id, distribution in line['analytic_distribution'].items():
                 anal_dist_by_key[self._group_by_deferred_fields(line, True)][account_id] += distribution * key_ratio
