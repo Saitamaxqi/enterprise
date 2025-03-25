@@ -42,7 +42,8 @@ class HrAttendance(models.Model):
            date() method is explicitely used to avoid having issue with daylight saving time (DST) when computing the number of days.
         3) if fixed working hours, we compute the work hours based on their expected attendances.
         """
-        num_days = (stop.date() - start.date()).days
+        # number of days between the start and stop and take the stop into account.
+        num_days = (stop.date() - start.date()).days + 1
         if employee.is_fully_flexible:
             return num_days * 24
         if not employee.is_flexible:

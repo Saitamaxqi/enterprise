@@ -103,3 +103,41 @@ class TestHrAttendanceGantt(TransactionCase):
             self.assertEqual(interval_2[contract_emp.id]['max_value'], 12)
         else:
             self.assertEqual(interval_2[contract_emp.id]['max_value'], 10)
+
+    def test_gantt_progress_with_flexible_employees(self):
+        flexible_calendar, calendar = self.env['resource.calendar'].create([
+            {
+                'name': 'Calendar 8h',
+                'tz': 'UTC',
+                'full_time_required_hours': 8.0,
+                'hours_per_day': 8.0,
+                'flexible_hours': True,
+            }, {
+                'name': 'Calendar 8h',
+                'tz': 'UTC',
+                'full_time_required_hours': 8.0,
+                'hours_per_day': 8.0,
+                'attendance_ids': [
+                    (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 9, 'hour_to': 12, 'day_period': 'morning'}),
+                    (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 12, 'hour_to': 17, 'day_period': 'afternoon'}),
+                ],
+            },
+        ])
+
+        emp1, emp2 = self.env['hr.employee'].create([
+            {'name': 'freelance1', 'employee_type': 'freelance', 'resource_calendar_id': flexible_calendar.id},
+            {'name': 'freelance2', 'employee_type': 'freelance', 'resource_calendar_id': calendar.id},
+        ])
+        self.assertTrue(emp1.is_flexible)
+        self.assertFalse(emp2.is_flexible)
+        calendar.flexible_hours = True  # emp2 should now have a flexible hours as well
+
+        interval = self.env['hr.attendance']._gantt_progress_bar(
+            'employee_id',
+            [emp1.id, emp2.id],
+            datetime(2024, 1, 8),
+            datetime(2024, 1, 14),
+        )
+
+        self.assertEqual(interval[emp1.id]['max_value'], 8)
+        self.assertEqual(interval[emp2.id]['max_value'], 8)
