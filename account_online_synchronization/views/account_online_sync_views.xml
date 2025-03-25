@@ -42,7 +42,7 @@
                                     <field name="journal_ids"
                                         widget="many2many_tags"
                                         options="{'no_quick_create': True}"
-                                        domain="[('type', 'in', ('bank', 'credit')), ('account_online_account_id', '=', False)]"
+                                        domain="[('type', 'in', ('bank', 'credit')), ('account_online_account_id', '=', False), ('company_id', '=', company_id)]"
                                         context="{'default_type': 'bank', 'default_bank_statements_source': 'online_sync', 'default_account_online_account_id': id}"/>
                                     <field name="last_sync"/>
                                     <field name="balance" readonly="1"/>
@@ -50,6 +50,7 @@
                                     <field name="inverse_balance_sign" groups="base.group_no_one" optional="hide"/>
                                     <field name="inverse_transaction_sign" groups="base.group_no_one" optional="hide"/>
                                     <button name="action_reset_fetching_status" type="object" string="Reset" help="This button will reset the fetching status"/>
+                                    <field name="company_id" invisible="1"/>
                                 </list>
                             </field>
                         </group>
@@ -72,7 +73,8 @@
                         <group>
                             <group>
                                 <field name="account_number" readonly="1"/>
-                                <field name="journal_ids" widget="many2many_tags" domain="[('type', 'in', ('bank', 'credit')), ('account_online_account_id', '=', False)]"/>
+                                <field name="journal_ids" widget="many2many_tags" domain="[('type', 'in', ('bank', 'credit')), ('account_online_account_id', '=', False), ('company_id', '=', company_id)]"/>
+                                <field name="company_id" invisible="1"/>
                             </group>
                             <group>
                                 <field name="last_sync"/>
