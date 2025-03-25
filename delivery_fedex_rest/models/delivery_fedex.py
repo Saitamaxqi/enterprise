@@ -192,7 +192,11 @@ class ProviderFedex(models.Model):
             if response.get('invoice'):
                 attachments.append(('%s.pdf' % self._get_delivery_doc_prefix(), base64.b64decode(response.get('invoice'))))
 
-            for pick in (picking.sale_id.picking_ids if picking.sale_id else picking):
+            lognote_pickings = picking
+            if picking.sale_id:
+                lognote_pickings |= picking.sale_id.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
+
+            for pick in lognote_pickings:
                 pick.message_post(body=logmessage, attachments=attachments)
 
             res.append({'exact_price': response.get('price'), 'tracking_number': response.get('tracking_numbers')})
