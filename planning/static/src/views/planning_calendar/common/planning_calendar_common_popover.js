@@ -45,6 +45,10 @@ export class PlanningCalendarCommonPopover extends CalendarCommonPopover {
         return this.props.model.isManager && super.isEventEditable;
     }
 
+    get isEventViewable() {
+        return this.props.model.isManager;
+    }
+
     get data() {
         return this.props.record.rawRecord;
     }
@@ -55,13 +59,6 @@ export class PlanningCalendarCommonPopover extends CalendarCommonPopover {
 
     get allocatedPercentageFormatted() {
         return this.data.allocated_percentage && formatFloat(this.data.allocated_percentage);
-    }
-
-    /**
-     * @override
-     */
-    get hasFooter() {
-        return this.props.model.isManager && super.hasFooter;
     }
 
     isSet(fieldName) {
