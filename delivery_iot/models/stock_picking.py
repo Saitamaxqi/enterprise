@@ -28,19 +28,23 @@ class StockPicking(models.Model):
 
     def message_post(self, **kwargs):
         message = super(StockPicking, self).message_post(**kwargs)
-        if message.attachment_ids:
-            attachments_names = ''.join(message.attachment_ids.mapped('name'))
-            report = self.env['ir.actions.report']
-            # should only be 1 shipping attachment per message
-            if self.picking_type_id.auto_print_carrier_labels and 'Label' in attachments_names:
-                report = self.env['ir.actions.report']._get_report_from_name('delivery_iot.report_shipping_labels')
-            elif self.picking_type_id.auto_print_export_documents and 'ShippingDoc' in attachments_names:
-                report = self.env['ir.actions.report']._get_report_from_name('delivery_iot.report_shipping_docs')
-            if report.device_ids:
-                self.env['iot.channel'].send_message({
-                    'iot_identifiers': [report.device_ids[0].iot_id.identifier],
-                    'device_identifiers': [report.device_ids[0].identifier],
-                    'print_id': 0,
-                    'documents': message.attachment_ids.mapped('datas'),
-                })
+        report = self.env['ir.actions.report']
+
+        for attachment in message.attachment_ids:
+            if self.picking_type_id.auto_print_carrier_labels and 'Label' in attachment.name:
+                print_report = report._get_report_from_name('delivery_iot.report_shipping_labels')
+            elif self.picking_type_id.auto_print_export_documents and 'ShippingDoc' in attachment.name:
+                print_report = report._get_report_from_name('delivery_iot.report_shipping_docs')
+            else:
+                continue
+            self.print_attachment(print_report, attachment)
         return message
+
+    def print_attachment(self, report, attachments):
+        if report.device_ids:
+            self.env['iot.channel'].send_message({
+                'iot_identifiers': [report.device_ids[0].iot_id.identifier],
+                'device_identifiers': [report.device_ids[0].identifier],
+                'print_id': 0,
+                'document': attachments.datas,
+            })
