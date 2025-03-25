@@ -353,6 +353,8 @@ class TestAccountReports(TestAccountReportsCommon):
         )
 
     def test_cash_basis_general_ledger_load_more_lines(self):
+        if 'accountant' not in self.env["ir.module.module"]._installed():
+            self.skipTest("'accountant' module not installed")
         self.env['account.account'].search([('code', '=', 'OSTR00')]).code = '101403'
         invoice_date = fields.Date.from_string('2023-01-01')
         invoice = self.init_invoice('out_invoice', amounts=[3000.0], taxes=[], partner=self.partner_a, invoice_date=invoice_date, post=True)
@@ -363,9 +365,8 @@ class TestAccountReports(TestAccountReportsCommon):
         report.load_more_limit = 2
         options = self._generate_options(report, invoice_date, invoice_date)
         options['report_cash_basis'] = True
-        lines = report._get_lines(options)
-        lines_to_unfold_id = lines[5]['id']  # Mark the '101200 Account Receivable' line to be unfolded.
-        options['unfolded_lines'] = [lines_to_unfold_id]
+        options['ignore_totals_below_sections'] = True
+        options['unfolded_lines'] = [report._get_generic_line_id('account.account', self.company_data['default_account_revenue'].id)]
         lines = report._get_lines(options)
         self.assertLinesValues(
             lines,
@@ -380,7 +381,6 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('400000 Product Sales',                0,          3000.0,     -3000.0),
                 ('INV/2023/00001',                      0,          2000.0,     -2000.0),  # The 2 first payments are grouped
                 ('Load more...',                        '',         '',          ''),
-                ('Total 400000 Product Sales',          0,          3000.0,     -3000.0),
                 ('999999 Undistributed Profits/Losses', 0,          460.0,      -460.0),
                 # Report Total.
                 ('Total',                               6920.0,     6920.0,     0),
@@ -390,11 +390,11 @@ class TestAccountReports(TestAccountReportsCommon):
 
         load_more_1 = report.get_expanded_lines(
             options,
-            lines[5]['id'],
-            lines[7]['groupby'],
+            lines[3]['id'],
+            lines[5]['groupby'],
             '_report_expand_unfoldable_line_general_ledger',
-            lines[7]['progress'],
-            lines[7]['offset'],
+            lines[5]['progress'],
+            lines[5]['offset'],
             None,
         )
 
