@@ -283,6 +283,23 @@ class TestHelpdeskFlow(HelpdeskCommon):
         ticket.write({'tag_ids': [Command.link(tags[0].id)]})
         self.assertFalse(ticket.user_id, "The ticket should still not get assigned if the tag is added while it's in a folded stage.")
 
+        # Same tests but with SET command
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+            'tag_ids': [Command.set((tags[0] + tags[1]).ids)],
+        })
+        self.assertIn(ticket.user_id, self.helpdesk_user + self.helpdesk_manager, "The ticket should be assigned to one of the users of the mapping.")
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+        })
+        ticket.tag_ids = tags[1]
+        self.assertEqual(ticket.user_id, self.helpdesk_manager)
+        ticket.tag_ids = False
+        self.assertEqual(ticket.user_id, self.helpdesk_manager, "Removing the tag should have no effect.")
+
     def test_team_assignation_tags_multiple_teams(self):
         self.test_team.update({'assign_method': 'tags', 'auto_assignment': True})
         other_team = self.env['helpdesk.team'].with_user(self.helpdesk_manager).create({

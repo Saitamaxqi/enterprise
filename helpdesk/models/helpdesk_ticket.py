@@ -529,7 +529,8 @@ class HelpdeskTicket(models.Model):
                 continue
             if team.assign_method == 'tags':
                 if tag_ids := vals.get('tag_ids'):
-                    tickets_to_assign_by_tags.append((team.id, list(zip(*tag_ids))[1], vals))
+                    tag_ids = self._fields['tag_ids'].convert_to_cache(tag_ids, self)
+                    tickets_to_assign_by_tags.append((team.id, tag_ids, vals))
             else:
                 ticket_amount_per_team[team] += 1
 
@@ -637,6 +638,10 @@ class HelpdeskTicket(models.Model):
             if 'kanban_state' not in vals:
                 vals['kanban_state'] = 'normal'
 
+        old_tag_ids_per_ticket_id = {}
+        if 'tag_ids' in vals:
+            old_tag_ids_per_ticket_id = {t.id: set(t.tag_ids.ids) for t in self}
+
         res = super(HelpdeskTicket, self - assigned_tickets - closed_tickets).write(vals)
         res &= super(HelpdeskTicket, assigned_tickets - closed_tickets).write(dict(vals, **{
             'assign_date': now,
@@ -669,8 +674,7 @@ class HelpdeskTicket(models.Model):
                     message = _("This ticket was successfully closed %s hours before its SLA deadline.", round(abs(min_hours))) if min_hours < 0 \
                         else _("This ticket was closed %s hours after its SLA deadline.", round(min_hours))
                     ticket.message_post(body=message, subtype_xmlid="mail.mt_note", author_id=odoobot_partner_id)
-        elif 'tag_ids' in vals:
-            added_tags = [tag[1] for tag in vals['tag_ids'] if tag[0] == 4]
+        elif old_tag_ids_per_ticket_id:
             unassigned_tickets_to_assign = self.filtered(
                 lambda t: not t.user_id
                     and t.team_id.auto_assignment
@@ -678,7 +682,11 @@ class HelpdeskTicket(models.Model):
                     and not t.stage_id.fold
             )
             if unassigned_tickets_to_assign:
-                vals_list = [(ticket.team_id.id, added_tags, {}) for ticket in unassigned_tickets_to_assign]
+                vals_list = [
+                    (ticket.team_id.id, list(added_tags), {})
+                    for ticket in unassigned_tickets_to_assign
+                    if (added_tags := set(ticket.tag_ids.ids) - old_tag_ids_per_ticket_id[ticket.id])
+                ]
                 self._assign_vals_by_tags(vals_list)
                 for ticket, vals_dict in zip(unassigned_tickets_to_assign, list(zip(*vals_list))[2]):
                     if vals_dict:
