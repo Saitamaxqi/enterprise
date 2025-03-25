@@ -1208,8 +1208,6 @@ class SaleOrder(models.Model):
         date_from = self.env.context.get('invoiceable_date_from', fields.Date.today())
         res = super()._get_invoiceable_lines(final=final)
         res = res.filtered(lambda l: not l.recurring_invoice or l.order_id.subscription_state == '7_upsell')
-        automatic_invoice = self.env.context.get('recurring_automatic')
-
         invoiceable_line_ids = []
         downpayment_line_ids = []
         pending_section = None

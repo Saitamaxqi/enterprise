@@ -259,7 +259,7 @@
                 <div t-if="company_mismatch">
                     <t t-call="payment.company_mismatch_warning"/>
                 </div>
-                <div class="clearfix" t-elif="(providers_sudo or tokens_sudo) and sale_order.amount_total> 0">
+                <div class="clearfix" t-elif="(providers_sudo or tokens_sudo) and next_billing_details.get('next_invoice_amount')> 0">
                     <p id="wc_warning_closed" t-if="sale_order.subscription_state == '6_churn'">
                         <h3 class="mb-1">Reopen your subscription</h3>
                         Your subscription is closed.
