@@ -92,3 +92,20 @@ test("Can search whatsapp conversations on mobile", async () => {
     await click("a", { text: "slytherins" });
     await contains(".o-mail-ChatWindow-header div[title='slytherins']");
 });
+
+test("open whatsapp user's partner profile", async () => {
+    const pyEnv = await startServer();
+    const whatasspUser = pyEnv["res.partner"].create({ name: "Branden Freeman" });
+    const channel = pyEnv["discuss.channel"].create({
+        channel_member_ids: [
+            Command.create({ partner_id: serverState.partnerId }),
+            Command.create({ partner_id: whatasspUser }),
+        ],
+        channel_type: "whatsapp",
+        whatsapp_partner_id: whatasspUser,
+    });
+    await start();
+    await openDiscuss(channel);
+    await click("button[title='View Contact']");
+    await contains("div.o_field_widget > input:value(Branden Freeman)");
+});
