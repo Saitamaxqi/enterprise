@@ -128,6 +128,7 @@ class PurchaseOrder(models.Model):
             'product_id': line.product_id and line.product_id.id or False,
             'product_uom_id': line.product_id and line.product_id.uom_id.id or line.product_uom_id.id,
             'price_unit': price,
+            'discount': line.discount or 0.0,
             'company_id': company.id,
             'display_type': line.display_type,
         }
