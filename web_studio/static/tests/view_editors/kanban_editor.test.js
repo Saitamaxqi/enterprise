@@ -630,7 +630,7 @@ test("grouped kanban editor cannot add columns or load more", async () => {
             </kanban>`,
     });
     expect(".o_kanban_load_more").toHaveCount(0);
-    expect(".o_kanban_add_column").toHaveCount(0);
+    expect(".o_column_quick_create").toHaveCount(0);
 });
 
 test("kanban editor can group by only one field", async () => {

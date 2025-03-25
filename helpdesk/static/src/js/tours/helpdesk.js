@@ -130,7 +130,7 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
             run: "drag_and_drop(.o_kanban_group:eq(2))",
         },
         {
-    trigger: ".o_column_quick_create .o_quick_create_folded",
+    trigger: ".o_column_quick_create.o_quick_create_folded div",
     content: markup(_t('Adapt your <b>pipeline</b> to your workflow by adding <b>stages</b> <i>(e.g. Awaiting Customer Feedback, etc.).</i>')),
     tooltipPosition: 'bottom',
     run: "click",
