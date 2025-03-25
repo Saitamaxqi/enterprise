@@ -3,7 +3,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 import { ListRenderer } from "@web/views/list/list_renderer";
-import { PromoteStudioDialog } from "@web_enterprise/webclient/promote_studio_dialog/promote_studio_dialog";
+import { PromoteStudioDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { onWillDestroy, useState } from "@odoo/owl";
 

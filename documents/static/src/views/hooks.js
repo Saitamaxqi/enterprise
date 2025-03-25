@@ -1,5 +1,5 @@
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio_dialog/promote_studio_dialog";
+import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";

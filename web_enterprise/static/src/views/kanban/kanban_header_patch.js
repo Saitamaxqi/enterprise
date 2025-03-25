@@ -1,7 +1,7 @@
 import { registry } from "@web/core/registry";
 import { patch } from "@web/core/utils/patch";
 import { KanbanHeader } from "@web/views/kanban/kanban_header";
-import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio_dialog/promote_studio_dialog";
+import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 

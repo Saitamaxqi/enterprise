@@ -61,7 +61,7 @@ Bridge module for project and enterprise
             'web_enterprise/static/src/views/list/*',
             'web_enterprise/static/src/webclient/settings_form_view/*',
             'web_enterprise/static/src/webclient/navbar/*',
-            'web_enterprise/static/src/webclient/promote_studio_dialog/*',
+            'web_enterprise/static/src/webclient/promote_studio/*',
             'web_enterprise/static/src/webclient/webclient.js',
 
             ('remove', 'project/static/src/project_sharing/main.js'),

@@ -767,3 +767,20 @@ test("Navigate to an application from the HomeMenu should generate only one push
     expect(".o_home_menu").toHaveCount(1);
     expect.verifySteps(["/odoo", "/odoo/action-1002", "/odoo", "/odoo/action-1001", "/odoo"]);
 });
+
+test("display studio icon when studio module is not installed", async () => {
+    await mountWebClient({ WebClient: WebClientEnterprise });
+
+    expect(`.o_menu_systray .o_nav_entry i`).toHaveClass("oi oi-studio");
+    await contains(".o_menu_systray .o_nav_entry").click();
+    expect(`.modal-content`).toHaveCount(1);
+    expect(queryFirst(".modal-header").textContent).toBe(
+        "Odoo Studio - Add new fields to any view"
+    );
+});
+
+test("studio icon should not be visible for non-admin users", async () => {
+    user.isSystem = false;
+    await mountWebClient({ WebClient: WebClientEnterprise });
+    expect(".o_menu_systray .o_nav_entry i").not.toBeVisible();
+});
