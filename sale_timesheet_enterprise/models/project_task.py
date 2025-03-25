@@ -56,7 +56,7 @@ class ProjectTask(models.Model):
                 total_hours_spent = task.total_hours_spent
                 subtask_effective_hours = task.subtask_effective_hours
                 progress = task.progress
-            elif timesheets_per_task:
+            else:
                 effective_hours = timesheets_per_task.get(task.id, 0.0)
                 subtask_effective_hours = sum(timesheets_per_task.get(subtask_id, 0.0) for subtask_id in subtask_ids_per_task_id.get(task.id, []))
                 total_hours_spent = effective_hours + subtask_effective_hours

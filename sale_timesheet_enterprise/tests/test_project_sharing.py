@@ -107,3 +107,14 @@ class TestProjectSharing(TestProjectSharingCommon):
         # 7) Check if the portal user can see the validated timesheet(s) into that task.
         task_read_with_portal_user = task.with_user(self.user_portal).read(['timesheet_ids'])
         self.assertEqual(len(task_read_with_portal_user[0]['timesheet_ids']), 1, 'The external collaborator should only see the timesheet validated into that task and not all timesheets.')
+
+    def test_project_sharing_remaining_hours(self):
+        project_shared = self.project_portal
+        task = self.env['project.task'] \
+            .with_context({'tracking_disable': True, 'default_project_id': project_shared.id}) \
+            .create({
+                'name': 'test project ',
+                'allocated_hours': 10.0
+            })
+        task_read_with_portal_user = task.with_user(self.user_portal).read(['portal_remaining_hours'])[0]['portal_remaining_hours']
+        self.assertEqual(task_read_with_portal_user, 10.0, 'The portal user portal_remaining_hours should equal allocated_hours when there is no timesheet linked to the task')
