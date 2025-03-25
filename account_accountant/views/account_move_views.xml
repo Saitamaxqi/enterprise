@@ -54,6 +54,10 @@
                 <field name="deferred_start_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
                 <field name="deferred_end_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
             </xpath>
+            <xpath expr="//page[@id='aml_tab']//list/field[@name='analytic_distribution']" position="after">
+                <field name="deferred_start_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+                <field name="deferred_end_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+            </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_bank_reconciliation_widget_statement"
                         class="oe_stat_button"

@@ -10,6 +10,7 @@ from odoo.tests import tagged, HttpCase, Form
 
 @tagged('post_install', '-at_install')
 class TestDeferredReports(TestAccountReportsCommon, HttpCase):
+    # ruff: noqa: E226
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -116,13 +117,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before   Current              Later
-            [    0,                  1,             2,            3,       4,                   5                       ],
+            #    Name                Total          Not Started   Before   Current              Recognized         Later
+            [    0,                  1,             2,            3,       4,                   5,                 6                       ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       250 + 150,           750 + 900               ),
-                ('EXP1 Expense 1',   1225,          0,            0,       350,                 875                     ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          0,       600 * (10/30) + 0,   600 * (2 + 14/30) + 225 ),
-                ('Total',            5180,          225,          0,       950,                 4230                    ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       250 + 150,           400,               750 + 900               ),
+                ('EXP1 Expense 1',   1225,          0,            0,       350,                 350,               875                     ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          0,       600 * (10/30) + 0,   600 * (10/30),     600 * (2 + 14/30) + 225 ),
+                ('Total',            5180,          225,          0,       950,                 950,               4230                    ),
             ],
             options,
         )
@@ -132,13 +133,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before               Current      Later
-            [    0,                  1,             2,            3,                   4,           5                       ],
+            #    Name                Total          Not Started   Before               Current      Recognized                Later
+            [    0,                  1,             2,            3,                   4,           5,                        6                       ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            250 + 150,           250 + 300,   500 + 600               ),
-                ('EXP1 Expense 1',   1225,          0,            350,                 350,         525                     ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          600 * (10/30) + 0,   600 + 0,     600 * (1 + 14/30) + 225 ),
-                ('Total',            5180,          225,          950,                 1500,        2730                    ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            250 + 150,           250 + 300,   950,                      500 + 600               ),
+                ('EXP1 Expense 1',   1225,          0,            350,                 350,         700,                      525                     ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          600 * (10/30) + 0,   600 + 0,     600 * (10/30) + 600,      600 * (1 + 14/30) + 225 ),
+                ('Total',            5180,          225,          950,                 1500,        950 + 1500,               2730                    ),
             ],
             options,
         )
@@ -148,13 +149,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before               Current               Later
-            [    0,                  1,             2,            3,                   4,                    5     ],
+            #    Name                Total          Not Started   Before               Current               Recognized                                      Later
+            [    0,                  1,             2,            3,                   4,                    5,                                              6     ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            0     ),
-                ('EXP1 Expense 1',   1225,          0,            1050,                175,                  0     ),
-                ('EXP2 Expense 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   0     ),
-                ('Total',            5180,          0,            3950,                1230,                 0     ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            2050,                                           0     ),
+                ('EXP1 Expense 1',   1225,          0,            1050,                175,                  1225,                                           0     ),
+                ('EXP2 Expense 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   600 * (2 + 10 / 30) + 600 * (14 / 30) + 225,    0     ),
+                ('Total',            5180,          0,            3950,                1230,                 3950 + 1230,                                    0     ),
             ],
             options,
         )
@@ -164,8 +165,8 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name   Total   Not Started   Before   Current   Later
-            [    0,     1,      2,            3,       4,        5     ],
+            #    Name   Total   Not Started   Before   Current   Recognized   Later
+            [    0,     1,      2,            3,       4,        5,           6     ],
             [],
             options,
         )
@@ -175,13 +176,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before   Current                  Later
-            [    0,                  1,             2,            3,       4,                       5         ],
+            #    Name                Total          Not Started   Before   Current                  Recognized          Later
+            [    0,                  1,             2,            3,       4,                       5,                  6         ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       750 + 750,               550       ),
-                ('EXP1 Expense 1',   1225,          0,            0,       1050,                    175       ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          0,       600 * (2 + 10/30) + 0,   280 + 225 ),
-                ('Total',            5180,          225,          0,       3950,                    1230      ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       750 + 750,               750 + 750,          550       ),
+                ('EXP1 Expense 1',   1225,          0,            0,       1050,                    1050,               175       ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          0,       600 * (2 + 10/30) + 0,   600 * (2 + 10/30),  280 + 225 ),
+                ('Total',            5180,          225,          0,       3950,                    3950,               1230      ),
             ],
             options,
         )
@@ -191,13 +192,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before               Current               Later
-            [    0,                  1,             2,            3,                   4,                    5     ],
+            #    Name                Total          Not Started   Before               Current               Recognized                                    Later
+            [    0,                  1,             2,            3,                   4,                    5,                                            6     ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            0     ),
-                ('EXP1 Expense 1',   1225,          0,            1050,                175,                  0     ),
-                ('EXP2 Expense 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   0     ),
-                ('Total',            5180,          0,            3950,                1230,                 0     ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            750 + 750 + 250 + 300,                        0     ),
+                ('EXP1 Expense 1',   1225,          0,            1050,                175,                  1050 + 175,                                   0     ),
+                ('EXP2 Expense 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   600 * (2 + 10 / 30) + 600 * (14 / 30) + 225,  0     ),
+                ('Total',            5180,          0,            3950,                1230,                 3950 + 1230,                                  0     ),
             ],
             options,
         )
@@ -248,13 +249,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options, self.deferred_revenue_report)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before   Current              Later
-            [    0,                  1,             2,            3,       4,                   5                       ],
+            #    Name                Total          Not Started   Before   Current              Recognized        Later
+            [    0,                  1,             2,            3,       4,                   5,                6                       ],
             [
-                ('REV0 Revenue 0',   1000 + 1050,   0,            0,       250 + 150,           750 + 900               ),
-                ('REV1 Revenue 1',   1225,          0,            0,       350,                 875                     ),
-                ('REV2 Revenue 2',   1680 + 225,    225,          0,       600 * (10/30) + 0,   600 * (2 + 14/30) + 225 ),
-                ('Total',            5180,          225,          0,       950,                 4230                    ),
+                ('REV0 Revenue 0',   1000 + 1050,   0,            0,       250 + 150,           250 + 150,        750 + 900               ),
+                ('REV1 Revenue 1',   1225,          0,            0,       350,                 350,              875                     ),
+                ('REV2 Revenue 2',   1680 + 225,    225,          0,       600 * (10/30) + 0,   600 * (10/30),    600 * (2 + 14/30) + 225 ),
+                ('Total',            5180,          225,          0,       950,                 950,              4230                    ),
             ],
             options,
         )
@@ -264,13 +265,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options, self.deferred_revenue_report)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before               Current      Later
-            [    0,                  1,             2,            3,                   4,           5                       ],
+            #    Name                Total          Not Started   Before               Current      Recognized                     Later
+            [    0,                  1,             2,            3,                   4,           5,                             6                       ],
             [
-                ('REV0 Revenue 0',   1000 + 1050,   0,            250 + 150,           250 + 300,   500 + 600               ),
-                ('REV1 Revenue 1',   1225,          0,            350,                 350,         525                     ),
-                ('REV2 Revenue 2',   1680 + 225,    225,          600 * (10/30) + 0,   600 + 0,     600 * (1 + 14/30) + 225 ),
-                ('Total',            5180,          225,          950,                 1500,        2730                    ),
+                ('REV0 Revenue 0',   1000 + 1050,   0,            250 + 150,           250 + 300,   250 + 150 + 250 + 300,         500 + 600               ),
+                ('REV1 Revenue 1',   1225,          0,            350,                 350,         350 + 350,                     525                     ),
+                ('REV2 Revenue 2',   1680 + 225,    225,          600 * (10/30) + 0,   600,         600 * (10/30) + 0 + 600 + 0,   600 * (1 + 14/30) + 225 ),
+                ('Total',            5180,          225,          950,                 1500,        950 + 1500,                    2730                    ),
             ],
             options,
         )
@@ -280,13 +281,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options, self.deferred_revenue_report)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before               Current               Later
-            [    0,                  1,             2,            3,                   4,                    5     ],
+            #    Name                Total          Not Started   Before               Current               Recognized                                  Later
+            [    0,                  1,             2,            3,                   4,                    5,                                          6     ],
             [
-                ('REV0 Revenue 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            0     ),
-                ('REV1 Revenue 1',   1225,          0,            1050,                175,                  0     ),
-                ('REV2 Revenue 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   0     ),
-                ('Total',            5180,          0,            3950,                1230,                 0     ),
+                ('REV0 Revenue 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            750 + 750 + 250 + 300,                      0     ),
+                ('REV1 Revenue 1',   1225,          0,            1050,                175,                  1050 + 175,                                 0     ),
+                ('REV2 Revenue 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   600 * (2 + 10/30) + 600 * (14/30) + 225,    0     ),
+                ('Total',            5180,          0,            3950,                1230,                 3950 + 1230,                                0     ),
             ],
             options,
         )
@@ -307,13 +308,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options, self.deferred_revenue_report)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before   Current                  Later
-            [    0,                  1,             2,            3,       4,                       5         ],
+            #    Name                Total          Not Started   Before   Current                  Recognized               Later
+            [    0,                  1,             2,            3,       4,                       5,                       6         ],
             [
-                ('REV0 Revenue 0',   1000 + 1050,   0,            0,       750 + 750,               550       ),
-                ('REV1 Revenue 1',   1225,          0,            0,       1050,                    175       ),
-                ('REV2 Revenue 2',   1680 + 225,    225,          0,       600 * (2 + 10/30) + 0,   280 + 225 ),
-                ('Total',            5180,          225,          0,       3950,                    1230      ),
+                ('REV0 Revenue 0',   1000 + 1050,   0,            0,       750 + 750,               750 + 750,               550       ),
+                ('REV1 Revenue 1',   1225,          0,            0,       1050,                    1050,                    175       ),
+                ('REV2 Revenue 2',   1680 + 225,    225,          0,       600 * (2 + 10/30) + 0,   600 * (2 + 10/30) + 0,   280 + 225 ),
+                ('Total',            5180,          225,          0,       3950,                    3950,                    1230      ),
             ],
             options,
         )
@@ -323,13 +324,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options, self.deferred_revenue_report)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before               Current               Later
-            [    0,                  1,             2,            3,                   4,                    5     ],
+            #    Name                Total          Not Started   Before               Current               Recognized                                  Later
+            [    0,                  1,             2,            3,                   4,                    5,                                          6     ],
             [
-                ('REV0 Revenue 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            0     ),
-                ('REV1 Revenue 1',   1225,          0,            1050,                175,                  0     ),
-                ('REV2 Revenue 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   0     ),
-                ('Total',            5180,          0,            3950,                1230,                 0     ),
+                ('REV0 Revenue 0',   1000 + 1050,   0,            750 + 750,           250 + 300,            750 + 750 + 250 + 300,                      0     ),
+                ('REV1 Revenue 1',   1225,          0,            1050,                175,                  1050 + 175,                                 0     ),
+                ('REV2 Revenue 2',   1680 + 225,    0,            600 * (2 + 10/30),   600 * (14/30)+ 225,   600 * (2 + 10/30) + 600 * (14/30) + 225,    0     ),
+                ('Total',            5180,          0,            3950,                1230,                 3950 + 1230,                                0     ),
             ],
             options,
         )
@@ -380,13 +381,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before   Current   Later
-            [    0,                  1,             2,            3,       4,        5          ],
+            #    Name                Total          Not Started   Before   Current   Recognized    Later
+            [    0,                  1,             2,            3,       4,        5,            6          ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       418.33,   1631.67    ),
-                ('EXP1 Expense 1',   1225,          0,            0,       361.67,   863.33     ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          0,       220,      1460 + 225 ),
-                ('Total',            5180,          225,          0,       1000,     4180       ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       418.33,   418.33,       1631.67    ),
+                ('EXP1 Expense 1',   1225,          0,            0,       361.67,   361.67,       863.33     ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          0,       220,      220,          1460 + 225 ),
+                ('Total',            5180,          225,          0,       1000,     1000,         4180       ),
             ],
             options,
         )
@@ -396,13 +397,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before    Current   Later
-            [    0,                  1,             2,            3,        4,        5         ],
+            #    Name                Total          Not Started   Before    Current   Recognized         Later
+            [    0,                  1,             2,            3,        4,        5,                 6         ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            418.33,   513.33,   1118.33   ),
-                ('EXP1 Expense 1',   1225,          0,            361.67,   326.67,   536.67    ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          220,      560,      900 + 225 ),
-                ('Total',            5180,          225,          1000,     1400,     2780      ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            418.33,   513.33,   418.33 + 513.34,   1118.33   ),
+                ('EXP1 Expense 1',   1225,          0,            361.67,   326.67,   361.67 + 326.66,   536.67    ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          220,      560,      220 + 560,         900 + 225 ),
+                ('Total',            5180,          225,          1000,     1400,     1000 + 1400,       2780      ),
             ],
             options,
         )
@@ -415,13 +416,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             # ruff: noqa: E202
 
             lines,
-            #    Name                Total          Not Started   Before    Current   Later
-            [    0,                  1,             2,            3,        4,        5         ],
+            #    Name                Total          Not Started   Before    Current   Recognized    Later
+            [    0,                  1,             2,            3,        4,        5,            6         ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            1500,     550,      0         ),
-                ('EXP1 Expense 1',   1225,          0,            1050,     175,      0         ),
-                ('EXP2 Expense 2',   1680 + 225,    0,            1400,     505,      0         ),
-                ('Total',            5180,          0,            3950,     1230,     0         ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            1500,     550,      1500 + 550,   0         ),
+                ('EXP1 Expense 1',   1225,          0,            1050,     175,      1050 + 175,   0         ),
+                ('EXP2 Expense 2',   1680 + 225,    0,            1400,     505,      1400 + 505,   0         ),
+                ('Total',            5180,          0,            3950,     1230,     3950 + 1230,  0         ),
             ],
             options,
         )
@@ -431,13 +432,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before   Current   Later
-            [    0,                  1,             2,            3,       4,        5         ],
+            #    Name                Total          Not Started   Before   Current  Recognized   Later
+            [    0,                  1,             2,            3,       4,        5,          6         ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       1500,     550       ),
-                ('EXP1 Expense 1',   1225,          0,            0,       1050,     175       ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          0,       1400,     280 + 225 ),
-                ('Total',            5180,          225,          0,       3950,     1230      ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            0,       1500,     1500,       550       ),
+                ('EXP1 Expense 1',   1225,          0,            0,       1050,     1050,       175       ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          0,       1400,     1400,       280 + 225 ),
+                ('Total',            5180,          225,          0,       3950,     3950,       1230      ),
             ],
             options,
         )
@@ -455,13 +456,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before    Current   Later
-            [    0,                  1,             2,            3,        4,        5         ],
+            #    Name                Total          Not Started   Before    Current   Recognized         Later
+            [    0,                  1,             2,            3,        4,        5,                 6         ],
             [
-                ('EXP0 Expense 0',   1000 + 1050,   0,            418.33,   513.33,   1118.33   ),
-                ('EXP1 Expense 1',   1225,          0,            361.67,   326.67,   536.67    ),
-                ('EXP2 Expense 2',   1680 + 225,    225,          220,      560,      900 + 225 ),
-                ('Total',            5180,          225,          1000,     1400,     2780      ),
+                ('EXP0 Expense 0',   1000 + 1050,   0,            418.33,   513.33,   418.33 + 513.34,   1118.33   ),
+                ('EXP1 Expense 1',   1225,          0,            361.67,   326.67,   361.67 + 326.66,   536.67    ),
+                ('EXP2 Expense 2',   1680 + 225,    225,          220,      560,      220 + 560,         900 + 225 ),
+                ('Total',            5180,          225,          1000,     1400,     1000 + 1400,       2780      ),
             ],
             options,
         )
@@ -473,13 +474,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total          Not Started   Before    Current    Later
-            [    0,                  1,             2,            3,        4,         5          ],
+            #    Name                Total          Not Started   Before    Current    Recognized          Later
+            [    0,                  1,             2,            3,        4,         5,                  6          ],
             [
-                ('EXP0 Expense 0',   2000 + 2100,   0,            836.67,   1026.67,   2236.67    ),
-                ('EXP1 Expense 1',   2450,          0,            723.33,   653.33,    1073.33    ),
-                ('EXP2 Expense 2',   3360 + 450,    450,          440,      1120,      1800 + 450 ),
-                ('Total',            10360,         450,          2000,     2800,      5560       ),
+                ('EXP0 Expense 0',   2000 + 2100,   0,            836.67,   1026.67,   836.67 + 1026.66,   2236.67    ),
+                ('EXP1 Expense 1',   2450,          0,            723.33,   653.33,    723.33 + 653.34,    1073.33    ),
+                ('EXP2 Expense 2',   3360 + 450,    450,          440,      1120,      440 + 1120,         1800 + 450 ),
+                ('Total',            10360,         450,          2000,     2800,      2000 + 2800,        5560       ),
             ],
             options,
         )
@@ -497,13 +498,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Dec 2022   Jan 2023   Feb 2023   Mar 2023   Apr 2023 (Current)   Later
-            [    0,                  1,      2,            3,       4,         5,         6,         7,         8,                   9     ],
+            #    Name                Total   Not Started   Before   Dec 2022   Jan 2023   Feb 2023   Mar 2023   Apr 2023 (Current)   Recognized             Later
+            [    0,                  1,      2,            3,       4,         5,         6,         7,         8,                   9,                     10    ],
             [
-                ('EXP0 Expense 0',   2050,   0,            0,       0,         400,       550,       550,       550,                 0     ),
-                ('EXP1 Expense 1',   1225,   0,            0,       0,         350,       350,       350,       175,                 0     ),
-                ('EXP2 Expense 2',   1905,   0,            0,       0,         200,       600,       600,       505,                 0     ),
-                ('Total',            5180,   0,            0,       0,         950,       1500,      1500,      1230,                0     ),
+                ('EXP0 Expense 0',   2050,   0,            0,       0,         400,       550,       550,       550,                 2050,                  0     ),
+                ('EXP1 Expense 1',   1225,   0,            0,       0,         350,       350,       350,       175,                 1225,                  0     ),
+                ('EXP2 Expense 2',   1905,   0,            0,       0,         200,       600,       600,       505,                 1905,                  0     ),
+                ('Total',            5180,   0,            0,       0,         950,       1500,      1500,      1230,                5180,                  0     ),
             ],
             options,
         )
@@ -582,11 +583,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   2400,   0,            800,     800,      800   ),
-                ('Total',            2400,   0,            800,     800,      800   ),
+                ('EXP0 Expense 0',   2400,   0,            800,     800,      1600,        800   ),
+                ('Total',            2400,   0,            800,     800,      1600,        800   ),
             ],
             options,
         )
@@ -602,13 +603,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total           Not Started   Before     Current    Later
-            [    0,                  1,              2,            3,         4,         5          ],
+            #    Name                Total           Not Started   Before     Current    Recognized      Later
+            [    0,                  1,              2,            3,         4,         5,              6          ],
             [
-                ('EXP0 Expense 0',   -1000 - 1050,   0,            -418.33,   -513.33,   -1118.33   ),
-                ('EXP1 Expense 1',   -1225,          0,            -361.67,   -326.67,   -536.67    ),
-                ('EXP2 Expense 2',   -1680 - 225,    -225,         -220,      -560,      -900 - 225 ),
-                ('Total',            -5180,          -225,         -1000,     -1400,     -2780      ),
+                ('EXP0 Expense 0',   -1000 - 1050,   0,            -418.33,   -513.33,   -931.67,        -1118.33   ),
+                ('EXP1 Expense 1',   -1225,          0,            -361.67,   -326.67,   -688.33,        -536.67    ),
+                ('EXP2 Expense 2',   -1680 - 225,    -225,         -220,      -560,      -220 - 560,     -900 - 225 ),
+                ('Total',            -5180,          -225,         -1000,     -1400,     -1000 - 1400,   -2780      ),
             ],
             options,
         )
@@ -636,25 +637,25 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             total = line['columns'][0]['no_format']
             before = line['columns'][2]['no_format']  # 1 is "Not Started"
             current = line['columns'][3]['no_format']
-            later = line['columns'][4]['no_format']
+            later = line['columns'][5]['no_format']
             self.assertAlmostEqual(total, before + current + later, 3)
 
         self.assertLinesValues(
             lines,
-            #         Name          Total   Not Started   Before     Current   Later
-            [0,                         1,            2,       3,         4,      5],
+            #         Name          Total   Not Started   Before     Current  Recognized   Later
+            [0,                         1,            2,       3,         4,           5,      6],
             [
-                ('EXP0 Expense 0',   1200,            0,     200,       100,    900),
-                ('EXP1 Expense 1',   1200,            0,     600,       600,      0),
-                ('EXP2 Expense 2',   1200,            0,    1200,         0,      0),
-                ('EXP3 Expense 3',   1200,            0,    1200,         0,      0),
-                ('EXP4 Expense 4',   1200,            0,     600,       600,      0),
-                ('EXP5 Expense 5',   1200,            0,     400,       400,    400),
-                ('EXP6 Expense 6',   1200,            0,       0,       400,    800),
-                ('EXP7 Expense 7',   1200,            0,       0,       300,    900),
-                ('EXP8 Expense 8',   1200,            0,       0,       100,   1100),
-                ('EXP9 Expense 9',   1200,            0,       0,      1200,      0),
-                ('Total',           12000,            0,    4200,      3700,   4100),
+                ('EXP0 Expense 0',   1200,            0,     200,       100,         300,    900),
+                ('EXP1 Expense 1',   1200,            0,     600,       600,        1200,      0),
+                ('EXP2 Expense 2',   1200,            0,    1200,         0,        1200,      0),
+                ('EXP3 Expense 3',   1200,            0,    1200,         0,        1200,      0),
+                ('EXP4 Expense 4',   1200,            0,     600,       600,        1200,      0),
+                ('EXP5 Expense 5',   1200,            0,     400,       400,         800,    400),
+                ('EXP6 Expense 6',   1200,            0,       0,       400,         400,    800),
+                ('EXP7 Expense 7',   1200,            0,       0,       300,         300,    900),
+                ('EXP8 Expense 8',   1200,            0,       0,       100,         100,   1100),
+                ('EXP9 Expense 9',   1200,            0,       0,      1200,        1200,      0),
+                ('Total',           12000,            0,    4200,      3700,        7900,   4100),
             ],
             options,
         )
@@ -694,11 +695,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   0,            250,     250,      500   ),
-                ('Total',            1000,   0,            250,     250,      500   ),
+                ('EXP0 Expense 0',   1000,   0,            250,     250,      500,         500   ),
+                ('Total',            1000,   0,            250,     250,      500,         500   ),
             ],
             options,
         )
@@ -708,11 +709,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   0,            500,     250,      250   ),
-                ('Total',            1000,   0,            500,     250,      250   ),
+                ('EXP0 Expense 0',   1000,   0,            500,     250,      750,         250   ),
+                ('Total',            1000,   0,            500,     250,      750,         250   ),
             ],
             options,
         )
@@ -722,11 +723,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   0,            750,     250,      0     ),
-                ('Total',            1000,   0,            750,     250,      0     ),
+                ('EXP0 Expense 0',   1000,   0,            750,     250,      1000,        0     ),
+                ('Total',            1000,   0,            750,     250,      1000,        0     ),
             ],
             options,
         )
@@ -1156,11 +1157,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options_january)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   1000,         0,       0,        1000  ),
-                ('Total',            1000,   1000,         0,       0,        1000  ),
+                ('EXP0 Expense 0',   1000,   1000,         0,       0,        0,           1000  ),
+                ('Total',            1000,   1000,         0,       0,        0,           1000  ),
             ],
             options_january,
         )
@@ -1182,11 +1183,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options_february)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   0,            0,       1000,     0     ),
-                ('Total',            1000,   0,            0,       1000,     0     ),
+                ('EXP0 Expense 0',   1000,   0,            0,       1000,     1000,        0     ),
+                ('Total',            1000,   0,            0,       1000,     1000,        0     ),
             ],
             options_february,
         )
@@ -1209,11 +1210,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options_sept)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   1000,         0,       0,        1000  ),
-                ('Total',            1000,   1000,         0,       0,        1000  ),
+                ('EXP0 Expense 0',   1000,   1000,         0,       0,        0,           1000  ),
+                ('Total',            1000,   1000,         0,       0,        0,           1000  ),
             ],
             options_sept,
         )
@@ -1333,11 +1334,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1200,   0,            200,     100,      900   ),
-                ('Total',            1200,   0,            200,     100,      900   ),
+                ('EXP0 Expense 0',   1200,   0,            200,     100,      300,         900   ),
+                ('Total',            1200,   0,            200,     100,      300,         900   ),
             ],
             options,
         )
@@ -1363,11 +1364,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   0,            500,     250,      250   ),
-                ('Total',            1000,   0,            500,     250,      250   ),
+                ('EXP0 Expense 0',   1000,   0,            500,     250,      750,         250   ),
+                ('Total',            1000,   0,            500,     250,      750,         250   ),
             ],
             options,
         )
@@ -1690,11 +1691,11 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         lines = self.get_lines(options)
         self.assertLinesValues(
             lines,
-            #    Name                Total   Not Started   Before   Current   Later
-            [    0,                  1,      2,            3,       4,        5     ],
+            #    Name                Total   Not Started   Before   Current   Recognized   Later
+            [    0,                  1,      2,            3,       4,        5,           6     ],
             [
-                ('EXP0 Expense 0',   1000,   0,            500,     125,      375   ),
-                ('Total',            1000,   0,            500,     125,      375   ),
+                ('EXP0 Expense 0',   1000,   0,            500,     125,      625,         375   ),
+                ('Total',            1000,   0,            500,     125,      625,         375   ),
             ],
             options,
         )

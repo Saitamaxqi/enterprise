@@ -238,7 +238,14 @@ class AccountDeferredReportHandler(models.AbstractModel):
             'date_from': str(fields.Date.to_date(options['columns'][-1]['date_to']) + relativedelta(days=1)),
             'date_to': DEFERRED_DATE_MAX,
         }]
-        options['columns'] = total_column + not_started_column + before_column + options['columns'] + later_column
+        recognized_column = [{
+            **options['columns'][0],
+            'name': _('Recognized'),
+            'expression_label': 'recognized',
+            'date_from': DEFERRED_DATE_MIN,
+            'date_to': options['columns'][-1]['date_to'],  # Covers up to end of current period
+        }]
+        options['columns'] = total_column + not_started_column + before_column + options['columns'] + recognized_column + later_column
         options['column_headers'] = []
         options['deferred_report_type'] = self._get_deferred_report_type()
         options['deferred_grouping_field'] = previous_options.get('deferred_grouping_field') or 'account_id'
