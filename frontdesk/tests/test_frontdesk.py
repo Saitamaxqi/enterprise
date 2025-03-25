@@ -85,6 +85,69 @@ class TestFrontDesk(MailCase, SMSCase):
         host_name = self.visitor_1.host_ids.user_id.name
         self.assert_discuss_notification(host_name)
 
+    def test_host_with_no_user_email_fallback(self):
+        '''Test that host without user, notify fallback to email inted of discuss even if notify_email is False'''
+
+        host = self.env['hr.employee'].create({
+            'name': 'Host with Email',
+            'work_email': 'host_email@example.com',
+        })
+        self.station.notify_discuss = True
+        self.station.notify_email = False
+        self.station.notify_sms = False
+        visitor = self.env['frontdesk.visitor'].create({
+            'name': 'Visitor_4',
+            'station_id': self.station.id,
+            'host_ids': [(4, host.id)],
+        })
+        with self.mock_mail_gateway():
+            visitor.state = 'checked_in'
+        self.assertSentEmail('"OdooBot" <odoobot@example.com>', ['"Host with Email" <host_email@example.com>'])
+
+    def test_host_with_no_user_sms_fallback(self):
+        '''Test that host without user, notify fallback to sms inted of discuss even if notify_sms is False'''
+
+        host = self.env['hr.employee'].create({
+            'name': 'Host with SMS',
+            'work_phone': '7778889999',
+        })
+        self.station.notify_discuss = True
+        self.station.notify_email = False
+        self.station.notify_sms = False
+        visitor = self.env['frontdesk.visitor'].create({
+            'name': 'Visitor_5',
+            'station_id': self.station.id,
+            'host_ids': [(4, host.id)],
+        })
+        with self.mockSMSGateway():
+            visitor.state = 'checked_in'
+        partner_id = host.work_contact_id.id
+        sms_count = self.env['sms.sms'].search_count([('partner_id', '=', partner_id)])
+        self.assertEqual(sms_count, 1, "Exactly one SMS message should be sent to the host's partner.")
+
+    def test_host_with_all_notify_true_send_email_and_sms(self):
+        '''If all notify settings are enabled, host without user_id but with email and phone gets both email and SMS posted to visitor chatter.'''
+
+        host = self.env['hr.employee'].create({
+            'name': 'Host All Channels',
+            'work_email': 'host_all@example.com',
+            'work_phone': '5551112222',
+        })
+        self.station.notify_discuss = True
+        self.station.notify_email = True
+        self.station.notify_sms = True
+        visitor = self.env['frontdesk.visitor'].create({
+            'name': 'Visitor_7',
+            'station_id': self.station.id,
+            'host_ids': [(4, host.id)],
+        })
+        with self.mock_mail_gateway(), self.mockSMSGateway():
+            visitor.state = 'checked_in'
+        self.assertSentEmail('"OdooBot" <odoobot@example.com>', ['"Host All Channels" <host_all@example.com>'])
+        partner_id = host.work_contact_id.id
+        sms_count = self.env['sms.sms'].search_count([('partner_id', '=', partner_id)])
+        self.assertEqual(sms_count, 1, "Exactly one SMS message should be sent to the host's partner.")
+
     def test_host_notify_mail(self):
         '''Test that the host gets the nofication through email when visitor checks in'''
 

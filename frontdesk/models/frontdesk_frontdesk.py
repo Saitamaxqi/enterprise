@@ -23,11 +23,24 @@ class FrontdeskFrontdesk(models.Model):
     _order = 'is_favorite desc'
 
     name = fields.Char('Frontdesk Name', required=True)
-    responsible_ids = fields.Many2many('res.users', string='Responsibles', required=True)
+    responsible_ids = fields.Many2many(
+        'res.users',
+        string='Responsibles',
+        required=True, help="Responsibles are people who will welcome the client and handle their drinks, etc."
+    )
+    host_ids = fields.Many2many(
+        'hr.employee',
+        string='Hosts',
+        domain="[('company_id', '=', company_id), '|', ('work_email', '!=', False), ('work_phone', '!=', False)]"
+    )
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
     theme = fields.Selection(selection=[("light", "Light"), ("dark", "Dark")], default='light')
     image = fields.Image("Image")
-    host_selection = fields.Boolean('Host Selection', groups='frontdesk.frontdesk_group_user')
+    host_selection = fields.Boolean(
+        'Host Selection',
+        groups='frontdesk.frontdesk_group_user',
+        help="Restrict the hosts available from the client to choose from."
+    )
     authenticate_guest = fields.Boolean('Authenticate Guest', default=True, groups='frontdesk.frontdesk_group_user')
     ask_phone = fields.Selection(string='Phone', selection=ASK_FIELDS_SELECTION, default='required', required=True)
     ask_company = fields.Selection(string='Organization', selection=ASK_FIELDS_SELECTION, default='optional', required=True)
@@ -57,6 +70,15 @@ class FrontdeskFrontdesk(models.Model):
     kiosk_url = fields.Char('Kiosk URL', compute='_compute_kiosk_url', groups='frontdesk.frontdesk_group_user')
     is_favorite = fields.Boolean()
     active = fields.Boolean(default=True)
+    notify_warning = fields.Char(compute="_compute_notify_warning")
+
+    @api.depends('host_ids.user_id', 'host_ids.work_email', 'host_ids.work_phone')
+    def _compute_notify_warning(self):
+        for frontdesk in self:
+            fallback_hosts = frontdesk.host_ids.filtered(
+                lambda host: not host.user_id and bool(host.work_email or host.work_phone)
+            )
+            frontdesk.notify_warning = ', '.join(fallback_hosts.mapped('name'))
 
     def _compute_dashboard_data(self):
         """ This method computes the number of guests currently on site, the number of pending visitors, the number

@@ -21,7 +21,10 @@ class FrontdeskVisitor(models.Model):
     email = fields.Char('Email')
     company = fields.Char('Visitor Company')
     message = fields.Html()
-    host_ids = fields.Many2many('hr.employee', string='Host Name', domain=lambda self : [('user_id', '!=', False), ('company_id', 'in', self.env.companies.ids)])
+    host_ids = fields.Many2many(
+        'hr.employee', string='Host Name',
+        domain="[('company_id', '=', company_id), '|', ('work_email', '!=', False), ('work_phone', '!=', False)]"
+    )
     drink_ids = fields.Many2many('frontdesk.drink', string='Drinks')
     check_in = fields.Datetime(string='Check In')
     check_out = fields.Datetime(string='Check Out')
@@ -98,7 +101,13 @@ class FrontdeskVisitor(models.Model):
             if visitor.station_id.host_selection and visitor.host_ids:
                 if visitor.station_id.notify_discuss:
                     msg = _("%s just checked-in.", visitor_name)
-                    visitor._notify_by_discuss(visitor.host_ids, msg, True)
+                    for host in visitor.host_ids:
+                        if host.user_id:
+                            visitor._notify_by_discuss([host], msg, True)
+                        elif not visitor.station_id.notify_email and host.work_email:
+                            visitor._notify_by_email()
+                        elif not visitor.station_id.notify_sms and host.work_phone:
+                            visitor._notify_by_sms()
                 if visitor.station_id.notify_email:
                     visitor._notify_by_email()
                 if visitor.station_id.notify_sms:
@@ -120,6 +129,8 @@ class FrontdeskVisitor(models.Model):
 
     def _notify_by_discuss(self, recipients, msg, is_host=False):
         for recipient in recipients:
+            if is_host and (not recipient.user_id or not recipient.user_id.partner_id):
+                continue
             odoobot_id = self.env.ref("base.partner_root").id
             partners_to = [recipient.user_partner_id.id] if is_host else [recipient.partner_id.id]
             channel = self.env["discuss.channel"].with_user(SUPERUSER_ID)._get_or_create_chat(partners_to)
@@ -131,27 +142,24 @@ class FrontdeskVisitor(models.Model):
                 odoobot = self.env.ref('base.partner_root')
                 values = {'host_name': host.name, 'object': self}
                 body = self.env['ir.qweb']._render('frontdesk.frontdesk_mail_template', values, lang=host.user_partner_id.lang)
-                host.message_notify(
+                self.message_post(
                     email_from=odoobot.email_formatted,
                     author_id=self.env.user.partner_id.id,
                     body=body,
                     subject=_('Your Visitor %(name)s Requested To Meet You', name=self.name),
-                    partner_ids=host.user_partner_id.ids,
+                    partner_ids=host.work_contact_id.ids,
+                    message_type='email',
+                    subtype_xmlid='mail.mt_comment',
                     email_layout_xmlid='mail.mail_notification_light',
                     force_send=True,
                 )
 
     def _notify_by_sms(self):
-        for host in self.host_ids:
-            if host.work_phone:
-                odoobot_id = self.env['ir.model.data']._xmlid_to_res_id("base.partner_root")
-                sms_template = self.station_id.sms_template_id
-                body = sms_template._render_field('body', self.ids, compute_lang=True)[self.id]
-                host._message_sms(
-                    author_id=odoobot_id,
-                    body=body,
-                    partner_ids=host.user_partner_id.ids,
-                )
+        self.ensure_one()
+        self._message_sms_with_template(
+                template=self.station_id.sms_template_id,
+                partner_ids=self.host_ids.filtered('work_phone').work_contact_id.ids,
+        )
 
     def _get_host_name(self):
         return ", ".join(self.host_ids.mapped('name'))

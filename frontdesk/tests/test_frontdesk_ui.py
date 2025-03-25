@@ -29,7 +29,12 @@ class TestFrontDeskURL(HttpCase):
             'state': 'planned',
             'station_id': station.id,
         })
-        self.env.ref('base.user_admin').name = 'Mitchell Admin'
+        self.env['hr.employee'].create({
+            'name': 'Test Host Employee',
+            'work_email': 'host@example.com',
+            'work_phone': '9876543210',
+            'company_id': station.company_id.id,
+        })
         kiosk_values = station.action_open_kiosk()
         access_url = kiosk_values.get('url')
 

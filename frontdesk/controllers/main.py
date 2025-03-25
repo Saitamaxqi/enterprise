@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import http, fields
+from odoo.fields import Domain
 from odoo.http import request
 from odoo.tools import consteq
 
@@ -75,7 +76,15 @@ class Frontdesk(http.Controller):
         frontdesk = request.env['frontdesk.frontdesk'].sudo().browse(frontdesk_id)
         if not frontdesk.exists() or not self._verify_token(frontdesk, token):
             return request.not_found()
-        return request.env['hr.employee'].sudo().name_search(name, [('user_id', '!=', False), ('company_id', '=', frontdesk.company_id.id)])
+        domain = Domain([
+            ('company_id', '=', frontdesk.company_id.id),
+            '|',
+                ('work_email', '!=', False),
+                ('work_phone', '!=', False)
+        ])
+        if frontdesk.host_ids:
+            domain = Domain.AND([domain, [('id', 'in', frontdesk.host_ids.ids)]])
+        return request.env['hr.employee'].sudo().name_search(name, domain)
 
     @http.route('/frontdesk/<int:frontdesk_id>/<string:token>/prepare_visitor_data', type='jsonrpc', auth='public', methods=['POST'])
     def prepare_visitor_data(self, frontdesk_id, token, visitor_id=None, **kwargs):

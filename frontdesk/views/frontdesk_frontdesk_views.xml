@@ -18,6 +18,11 @@
                 </header>
                 <sheet>
                     <field name="active" invisible="1"/>
+                    <field name="notify_warning" invisible="1"/>
+                    <div class="alert alert-warning text-center mt-2 mb-3" role="alert" invisible="not notify_warning">
+                        Some employees (<span><field name="notify_warning" readonly="1"/></span>)
+                        will be notified via email/SMS only, as they are not available on Discuss.
+                    </div>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <field name="image" class="oe_avatar m-0" widget="image"/>
                     <div class="oe_title">
@@ -26,7 +31,8 @@
                     </div>
                     <group class="gx-0">
                         <group>
-                            <field name="responsible_ids" widget="many2many_avatar_user"/>
+                            <field name="responsible_ids" widget="many2many_avatar_user" domain="[('company_ids', 'in', company_id)]"/>
+                            <field name="host_ids" widget="many2many_avatar_employee" placeholder="All Employees" invisible="not host_selection"/>
                             <field name="company_id"  groups="base.group_multi_company"/>
                             <field name="access_token" groups="base.group_no_one"/>
                             <field name="kiosk_url" widget="CopyClipboardChar"/>
