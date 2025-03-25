@@ -20,6 +20,8 @@ class TestApprovalsCommon(TransactionCase):
             'login': 'yesman',
             'email': 'yesman@example.com',
             'name': 'Carl Allen',
+            # TODO: Check why this is necessary
+            'group_ids': cls.env.ref('purchase.group_purchase_manager'),
         })
         cls.payment_terms = cls.env.ref("account.account_payment_term_end_following_month")
         # Create partners to use as seller.

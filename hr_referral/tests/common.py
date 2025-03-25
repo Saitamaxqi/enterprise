@@ -27,13 +27,15 @@ class TestHrReferralBase(TransactionCase):
         # I create a new user "Richard"
         cls.richard_user = cls.env['res.users'].create({
             'name': 'Richard',
-            'login': 'ric'
+            'login': 'ric',
+            'group_ids': cls.env.ref('hr_referral.group_hr_recruitment_referral_user'),
         })
 
         # I create a new user "Steve"
         cls.steve_user = cls.env['res.users'].create({
             'name': 'Steve',
-            'login': 'stv'
+            'login': 'stv',
+            'group_ids': cls.env.ref('hr_referral.group_hr_recruitment_referral_user'),
         })
 
         cls.job_dev = cls.env['hr.job'].create({
