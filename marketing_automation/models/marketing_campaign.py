@@ -424,6 +424,7 @@ class MarketingCampaign(models.Model):
             'values': {
                 'name': _('Add Hot Category'),
                 'model_id': self.env['ir.model']._get_id('res.partner'),
+                'state': 'object_write',
                 'update_field_id': self.env["ir.model.fields"]._get_ids('res.partner')['category_id'],
                 'update_path': 'category_id',
                 'evaluation_type': 'value',
