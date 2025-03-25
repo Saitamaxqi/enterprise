@@ -113,7 +113,7 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
      */
     getDailyOvertime(column) {
         let overtime = 0;
-        if (this.props.model.workingHoursData.daily.hasOwnProperty(column.value)) {
+        if (column.value in this.props.model.workingHoursData.daily) {
             const workingHours = this.props.model.workingHoursData.daily[column.value];
             overtime = column.grandTotal - workingHours;
         }
@@ -127,7 +127,9 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
      * @returns {string|string}
      */
     formatWeeklyOvertime(weeklyOvertime) {
-        return weeklyOvertime ? `${weeklyOvertime > 0 ? "+" : ""}${this.formatValue(weeklyOvertime)}` : "";
+        return weeklyOvertime
+            ? `${weeklyOvertime > 0 ? "+" : ""}${this.formatValue(weeklyOvertime)}`
+            : "";
     }
 
     /**
@@ -139,11 +141,17 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
         if (!Object.keys(this.props.model.workingHoursData.daily).length) {
             return null;
         }
-        if ('full_time_required_hours' in this.props.model.workingHoursData.daily) {
-            const grandTotal = this.props.model.columnsArray.reduce((total, column) => total + column.grandTotal, 0);
+        if ("full_time_required_hours" in this.props.model.workingHoursData.daily) {
+            const grandTotal = this.props.model.columnsArray.reduce(
+                (total, column) => total + column.grandTotal,
+                0
+            );
             return grandTotal - this.props.model.workingHoursData.daily.full_time_required_hours;
         }
-        return this.props.model.columnsArray.reduce((overtime, column) => overtime + this.getDailyOvertime(column), 0);
+        return this.props.model.columnsArray.reduce(
+            (overtime, column) => overtime + this.getDailyOvertime(column),
+            0
+        );
     }
 
     getFooterTotalCellClasses(grandTotal) {
@@ -164,7 +172,10 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
      * @param {KeyboardEvent} ev
      */
     onKeyDown(ev) {
-        if (ev.target.closest(".modal") || ['input', 'textarea'].includes(ev.target.tagName.toLowerCase())) {
+        if (
+            ev.target.closest(".modal") ||
+            ["input", "textarea"].includes(ev.target.tagName.toLowerCase())
+        ) {
             return;
         }
         if (
@@ -178,7 +189,11 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
                 this.timerState.addTimeMode = true;
             }
         } else if (!ev.altKey && !ev.ctrlKey && !ev.metaKey && this.showTimerButton) {
-            if (ev.key === "Escape" && this.timerState.timerRunning && !this.timerState.otherCompany) {
+            if (
+                ev.key === "Escape" &&
+                this.timerState.timerRunning &&
+                !this.timerState.otherCompany
+            ) {
                 this.onTimerUnlinked();
                 return;
             }
@@ -300,9 +315,7 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
     }
 
     async onTimerUnlinked() {
-        if (this.timerState.timesheet.id) {
-            await this.props.model.deleteTimer();
-        }
+        await this.props.model.deleteTimer();
         this._stopTimer();
     }
 
@@ -332,15 +345,18 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
     }
 
     async _getLastValidatedTimesheetDate(props = this.props) {
-        const res = await props.model.orm.call(
-            "res.users",
-            "get_last_validated_timesheet_date",
-            [session.user_id],
-        );
+        const res = await props.model.orm.call("res.users", "get_last_validated_timesheet_date", [
+            session.user_id,
+        ]);
         this.lastValidatedTimesheetDate = res && deserializeDate(res);
     }
 
     get displayAddLine() {
-        return super.displayAddLine && (!this.lastValidatedTimesheetDate || this.lastValidatedTimesheetDate.startOf("day") < this.props.model.navigationInfo.periodEnd.startOf("day"));
+        return (
+            super.displayAddLine &&
+            (!this.lastValidatedTimesheetDate ||
+                this.lastValidatedTimesheetDate.startOf("day") <
+                    this.props.model.navigationInfo.periodEnd.startOf("day"))
+        );
     }
 }

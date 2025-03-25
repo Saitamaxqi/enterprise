@@ -10,22 +10,24 @@ patch(TaskWithHours.prototype, {
         super.setup();
     },
 
-    canCreate() {
+    get m2oProps() {
+        const m2oProps = super.m2oProps;
         const projectIds = this.createEditProjectIdsService.projectIds;
-        if (projectIds !== undefined) {
-            return (
-                Boolean(this.props.context.default_project_id) &&
-                !projectIds.includes(this.props.record.data.project_id.id)
-            );
+        if (projectIds !== undefined && m2oProps.canCreate) {
+            m2oProps.canQuickCreate =
+                m2oProps.canQuickCreate &&
+                !projectIds.includes(this.props.record.data.project_id.id);
         }
-        return super.canCreate();
+        return m2oProps;
     },
 });
 
 export class FsmTaskWithHours extends TaskWithHours {
     async onWillStart() {
-        super.onWillStart();
-        await this.createEditProjectIdsService.fetchProjectIds();
+        await Promise.all([
+            super.onWillStart(),
+            this.createEditProjectIdsService.fetchProjectIds(),
+        ]);
     }
 }
 

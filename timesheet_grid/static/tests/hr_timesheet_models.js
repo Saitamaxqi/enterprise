@@ -1,7 +1,10 @@
 import { fields, models, onRpc } from "@web/../tests/web_test_helpers";
 
 import { projectModels } from "@project/../tests/project_models";
-import { defineTimesheetModels as defineHRTimesheetModels, hrTimesheetModels } from "@hr_timesheet/../tests/hr_timesheet_models";
+import {
+    defineTimesheetModels as defineHRTimesheetModels,
+    hrTimesheetModels,
+} from "@hr_timesheet/../tests/hr_timesheet_models";
 import { timerModels } from "@timer/../tests/timer_models";
 
 export class ProjectProject extends projectModels.ProjectProject {
@@ -51,8 +54,11 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
         ],
     });
 
-    action_start_new_timesheet_timer() {
-        const timesheetId = this.create({ project_id: 2 });
+    action_start_new_timesheet_timer(vals = {}) {
+        if (!vals.project_id) {
+            vals.project_id = this.env["project.project"].search([], null, 1)[0];
+        }
+        const timesheetId = this.create(vals);
 
         // Creating a timer to run usally done "timer.mixin"
         const timer = this.env["timer.timer"].create({
@@ -63,17 +69,19 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             res_id: timesheetId,
             user_id: this.env.user.id,
         });
-        this.env["timer.timer"].action_timer_start(timer);
-
-        return { id: timer };
+        const Timer = this.env["timer.timer"];
+        Timer.action_timer_start(timer);
+        const timerData = Timer.read(timer, ["timer_start"])[0];
+        this.write(timesheetId, { timer_start: timerData.timer_start }); // should be computed instead
+        return this.read(timesheetId, this._get_timesheet_timer_field_names())[0];
     }
 
     grid_unavailability(dateStart, dateEnd) {
         const { res_ids: employeeIds } = arguments[2];
         const unavailabilityDates = Object.fromEntries(
-            employeeIds.map((employee) => [ employee, [ dateStart, dateEnd ] ])
+            employeeIds.map((employee) => [employee, [dateStart, dateEnd]])
         );
-        unavailabilityDates.false = [ dateStart, dateEnd ];
+        unavailabilityDates.false = [dateStart, dateEnd];
         return unavailabilityDates;
     }
 
@@ -86,21 +94,61 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
         return false;
     }
 
-    action_timer_unlink() {
-        return false;
+    action_timer_unlink(timesheetId) {
+        const timerId = this.env["timer.timer"].search([
+            ["res_model", "=", this._name],
+            ["res_id", "=", timesheetId],
+        ])[0];
+        if (timerId) {
+            this.env["timer.timer"].unlink(timerId);
+        }
+        const timesheetData = this.read(timesheetId)[0];
+        if (!timesheetData.unit_amount) {
+            this.unlink(timesheetId);
+        }
     }
 
-    action_timer_stop() {
-        return false;
+    action_timer_stop(timesheetId) {
+        const timerId = this.env["timer.timer"].search([
+            ["res_model", "=", this._name],
+            ["res_id", "=", timesheetId],
+        ])[0];
+        if (timerId) {
+            let duration = this.env["timer.timer"].action_timer_stop(timerId);
+            if (duration < 0.25) {
+                duration = 0.25;
+            }
+            this.write(timesheetId, { unit_amount: duration, timer_start: false });
+            this.env["timer.timer"].unlink(timerId);
+            return duration;
+        }
+        return 0;
     }
 
     get_running_timer() {
-        return { step_timer: 30 };
+        const result = { step_timer: 30 };
+        const timesheetId = this.env["timer.timer"].search_read(
+            [
+                ["res_model", "=", this._name],
+                ["user_id", "=", this.env.user.id],
+            ],
+            ["res_id"]
+        )[0];
+        if (timesheetId) {
+            Object.assign(result, {
+                ...this.read(timesheetId, this._get_timesheet_timer_field_names()),
+            });
+        }
+        return result;
+    }
+
+    _get_timesheet_timer_field_names() {
+        return ["date", "name", "project_id", "task_id", "unit_amount", "timer_start"];
     }
 
     _records = [
         {
-            name: 'youpi',
+            name: "youpi",
             id: 1,
             project_id: 1,
             employee_id: 2,
@@ -109,7 +157,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             display_timer: true,
         },
         {
-            name: 'bop',
+            name: "bop",
             id: 2,
             project_id: 1,
             task_id: 1,
@@ -118,7 +166,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: 25,
         },
         {
-            name: 'Sabaton',
+            name: "Sabaton",
             id: 3,
             project_id: 1,
             task_id: 1,
@@ -127,7 +175,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: 5.5,
         },
         {
-            name: 'chaos',
+            name: "chaos",
             id: 4,
             project_id: 2,
             task_id: 3,
@@ -136,7 +184,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: 10,
         },
         {
-            name: 'sakamoto',
+            name: "sakamoto",
             id: 5,
             project_id: 2,
             task_id: 2,
@@ -145,7 +193,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: -3.5,
         },
         {
-            name: 'frieren',
+            name: "frieren",
             id: 6,
             project_id: 2,
             task_id: 1,
@@ -170,6 +218,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
         `,
         list: `
             <list js_class="timesheet_timer_list">
+                <field name="timer_start" column_invisible="1"/>
                 <field name="name" />
                 <field name="date" />
                 <field name="project_id" />
@@ -182,6 +231,8 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             <kanban js_class="timesheet_timer_kanban">
                 <templates>
                     <field name="name"/>
+                    <field name="timer_start"/>
+                    <field name="unit_amount"/>
                     <t t-name="card">
                         <div>
                             <field name="employee_id"/>
@@ -242,7 +293,7 @@ export function defineTimesheetModels() {
     onRpc(({ method, model, args }) => {
         if (
             method === "get_planned_and_worked_hours" &&
-            [ "project.project", "project.task" ].includes(model)
+            ["project.project", "project.task"].includes(model)
         ) {
             const result = {};
             for (const id of args) {
@@ -255,11 +306,11 @@ export function defineTimesheetModels() {
             return result;
         } else if (method === "get_timesheet_ranking_data") {
             return {
-                "leaderboard": [],
-                "employee_id": false,
-                "billing_rate_target": false,
-                "total_time_target": false,
-                "show_leaderboard": true,
+                leaderboard: [],
+                employee_id: false,
+                billing_rate_target: false,
+                total_time_target: false,
+                show_leaderboard: true,
             };
         } else if (method === "get_daily_working_hours") {
             return {
@@ -281,7 +332,7 @@ export function defineTimesheetModels() {
                 },
             };
         } else if (method === "get_timesheet_and_working_hours_for_employees") {
-            const [ employeeIds ] = args;
+            const [employeeIds] = args;
             const result = {};
             for (const employeeId of employeeIds) {
                 if (employeeId === 1) {
@@ -314,12 +365,13 @@ export function defineTimesheetModels() {
                 }
             }
             return result;
-        } else if (method === "get_last_validated_timesheet_date")
+        } else if (method === "get_last_validated_timesheet_date") {
             return {
                 1: false,
                 2: "2017-01-30",
                 3: "2017-01-29",
             };
+        }
     });
     defineHRTimesheetModels();
 }

@@ -32,6 +32,7 @@ import { WebClient } from "@web/webclient/webclient";
 
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 import { defineTimesheetModels, HRTimesheet, ProjectProject } from "./hr_timesheet_models";
+import { clickTimerButton, timerHeaderSelectors } from "./timesheet_grid_timer_helpers";
 
 defineTimesheetModels();
 beforeEach(() => {
@@ -44,7 +45,6 @@ beforeEach(() => {
         .replace('widget="float_time"', 'widget="timesheet_uom"');
 });
 onRpc("get_last_validated_timesheet_date", () => "2017-01-25");
-onRpc("action_start_new_timesheet_timer", () => false);
 
 test("hr.timesheet (grid)(timer): sample data", async () => {
     await mountView({
@@ -108,6 +108,11 @@ test("hr.timesheet (grid)(timer): 'Add a line' should be displayed when display_
 });
 
 test("hr.timesheet (grid)(timer): basics", async () => {
+    onRpc(({ method }) => {
+        if (method === "action_start_new_timesheet_timer") {
+            return false;
+        }
+    });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
@@ -117,7 +122,7 @@ test("hr.timesheet (grid)(timer): basics", async () => {
     expect(".timesheet-timer").toHaveCount(1, {
         message: "The timer header should be rendered",
     });
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "The start timer button should be rendered",
     });
     expect(".o_grid_row_title").toHaveCount(5, {
@@ -139,18 +144,17 @@ test("hr.timesheet (grid)(timer): basics", async () => {
         message: "There shouln't be a running timer on any row",
     });
 
-    await click(".btn_start_timer");
-    await animationFrame();
-    expect(".btn_start_timer").toHaveCount(0, {
+    await clickTimerButton("start");
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "The start button should no longer rendered since a timer will be running",
     });
-    expect(".btn_stop_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message: "A stop button should be rendered instead of the start one",
     });
-    expect(".btn_stop_timer").toBeFocused({
+    expect(timerHeaderSelectors.stop).toBeFocused({
         message: "The stop button should be focused",
     });
-    expect(".o_timer_discard button.stop-timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.discard).toHaveCount(1, {
         message: "Cancel button should be rendered to be able to unlink the timer",
     });
     expect(".timesheet-timer .o_field_widget[name=project_id]").toHaveCount(1, {
@@ -163,9 +167,8 @@ test("hr.timesheet (grid)(timer): basics", async () => {
         message: "The name field should be rendered inside the timer header",
     });
 
-    await click(".btn_stop_timer");
-    await animationFrame();
-    expect(".btn_stop_timer").toHaveCount(1, {
+    await clickTimerButton("stop");
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message:
             "A stop button should be still there since the project_id is invalid because it is required and empty",
     });
@@ -173,9 +176,8 @@ test("hr.timesheet (grid)(timer): basics", async () => {
         message: "The project_id field should be invalid since it is required and empty",
     });
 
-    await click(".o_timer_discard button");
-    await animationFrame();
-    expect(".btn_start_timer").toHaveCount(1, {
+    await clickTimerButton("discard");
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "The start button should be rendered since a timer has been dropped",
     });
     expect(".o_grid_add_line .btn-link").toHaveCount(1, {
@@ -206,10 +208,10 @@ test("hr.timesheet (grid)(timer): timer already running", async () => {
     });
     onRpc("get_running_timer", () => ({
         id: 10,
-        start: 5740, // 01:35:40
-        project_id: 1,
-        task_id: 1,
-        description: "Description",
+        unit_amount: 5740 / 3600, // 01:35:40
+        project_id: [1, "P1"],
+        task_id: [1, "BS task"],
+        name: "Description",
         step_timer: 30,
     }));
     await mountView({
@@ -218,7 +220,7 @@ test("hr.timesheet (grid)(timer): timer already running", async () => {
         groupBy: ["project_id", "task_id"],
     });
 
-    expect(".btn_stop_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message: "should have rendered the stop timer button",
     });
     expect(".o_grid_row_timer .fa-stop").toHaveCount(1, {
@@ -247,10 +249,10 @@ test("hr.timesheet (grid)(timer): stop running timer then restart new one", asyn
             return {
                 step_timer: 30,
                 id: 10,
-                start: 5740, // 01:35:40
-                project_id: 1,
-                task_id: 1,
-                description: "Description",
+                unit_amount: 5740 / 3600, // 01:35:40
+                project_id: [1, "P1"],
+                task_id: [1, "BS task"],
+                name: "Description",
             };
         }
     });
@@ -263,27 +265,26 @@ test("hr.timesheet (grid)(timer): stop running timer then restart new one", asyn
             expect.step("Reload");
         }
     });
+    onRpc("action_start_new_timesheet_timer", () => false);
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
         groupBy: ["project_id", "task_id"],
     });
 
-    expect(".timesheet-timer .btn_stop_timer").toHaveCount(1, {
+    expect(".timesheet-timer .o_stop_timer_button").toHaveCount(1, {
         message: "The stop button should be rendered since a timer is running",
     });
 
-    await click(".timesheet-timer .btn_stop_timer");
-    await animationFrame();
+    await clickTimerButton("stop");
     expect(".o_grid_row_timer .fa-stop").toHaveCount(0, {
         message: "No row should have a timer running",
     });
     // When stopping the timer, a reload of the view should not be triggered since there was an active row for the current timesheet
     expect.verifySteps([]);
 
-    await click(".btn_start_timer");
-    await animationFrame();
-    expect(".btn_stop_timer").toHaveCount(1, {
+    await clickTimerButton("start");
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message: "The button should still be displayed",
     });
     expect(".o_grid_row_timer .fa-stop").toHaveCount(0, {
@@ -324,6 +325,7 @@ test("hr.timesheet (grid)(timer): drop running timer then restart new one", asyn
         timerRunning = false;
         return false;
     });
+    onRpc("action_start_new_timesheet_timer", () => false);
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
@@ -335,13 +337,12 @@ test("hr.timesheet (grid)(timer): drop running timer then restart new one", asyn
     expect(".o_grid_row_timer .fa-stop").toHaveCount(0, {
         message: "No row should have a timer running",
     });
-    expect(".btn_start_timer").toBeFocused({
+    expect(timerHeaderSelectors.start).toBeFocused({
         message: "Start button should be focused",
     });
 
-    await click(".btn_start_timer");
-    await animationFrame();
-    expect(".btn_stop_timer").toHaveCount(1, {
+    await clickTimerButton("start");
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message: "The button to stop the timer should be displayed",
     });
     expect(".o_grid_row_timer .fa-stop").toHaveCount(0, {
@@ -404,6 +405,7 @@ test("hr.timesheet (grid)(timer): start button with shift", async () => {
             unit_amount: 0.5,
         });
     });
+    onRpc("action_start_new_timesheet_timer", () => false);
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
@@ -411,7 +413,7 @@ test("hr.timesheet (grid)(timer): start button with shift", async () => {
     });
 
     const checkHeaderText = () =>
-        expect(".timesheet-timer > div > div").toHaveText(
+        expect(".timesheet-timer > div:last-child").toHaveText(
             "Press Enter or [a] to launch the timer\nPress Shift + [A] to add 30 min",
             { message: "The text displayed next to Start button should be the default one" }
         );
@@ -450,8 +452,7 @@ test("hr.timesheet (grid)(timer): start button with shift", async () => {
         message: "The character on the button displayed in each row should be in lowercase",
     });
 
-    await click(".timesheet-timer .btn_start_timer");
-    await animationFrame();
+    await clickTimerButton("start");
     await keyDown("shift");
     await animationFrame();
     expect("button.btn_timer_line .text-lowercase").toHaveCount(5, {
@@ -489,10 +490,10 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
         groupBy: ["task_id", "project_id"],
     });
 
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "No timer running so start button should be displayed",
     });
-    expect(".btn_stop_timer").toHaveCount(0, {
+    expect(timerHeaderSelectors.stop).toHaveCount(0, {
         message: "No timer running so stop button should not be displayed",
     });
     expect(".o_grid_row_title").toHaveCount(5, {
@@ -504,10 +505,10 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
 
     await click("button.btn_timer_line");
     await animationFrame();
-    expect(".btn_start_timer").toHaveCount(0, {
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "A timer should be running and so the start button should not be displayed",
     });
-    expect(".btn_stop_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message:
             "A timer should be running and so the stop button should be displayed instead of start one",
     });
@@ -541,7 +542,7 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
     expect(".btn_start_timer").toHaveCount(0, {
         message: "A timer should be running and so the start button should not be displayed",
     });
-    expect(".btn_stop_timer").toHaveCount(1, {
+    expect(".o_stop_timer_button").toHaveCount(1, {
         message:
             "A timer should be running and so the stop button should be displayed instead of start one",
     });
@@ -680,10 +681,10 @@ test("hr.timesheet (grid)(timer): check that individual and total overtime are p
 test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
     let containerRowTimerButton, rowTitle;
     onRpc("action_start_new_timesheet_timer", () => ({
-        start: 0,
+        unit_amount: 0,
         project_id: false,
         task_id: false,
-        description: "",
+        name: "",
     }));
     onRpc("project.project", "name_search", ({ kwargs }) => {
         kwargs.domain = [["allow_timesheets", "=", true]];
@@ -697,19 +698,18 @@ test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
         groupBy: ["project_id", "task_id"],
     });
 
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "The timer should be running",
     });
 
-    await click(".btn_start_timer");
-    await animationFrame();
-    expect(".btn_start_timer").toHaveCount(0, {
+    await clickTimerButton("start");
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "The timer should be running",
     });
-    expect(".btn_stop_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.stop).toHaveCount(1, {
         message: "The stop button should be displayed",
     });
-    expect(".o_timer_discard button").toHaveCount(1, {
+    expect(timerHeaderSelectors.discard).toHaveCount(1, {
         message: "The cancel button should be displayed",
     });
 
@@ -750,18 +750,17 @@ test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
         message: "The row title with the timer running should contain a task name",
     });
 
-    await click(".o_timer_discard button");
-    await animationFrame();
+    await clickTimerButton("discard");
     expect(".btn_timer_line.btn-danger").toHaveCount(0, {
         message: "The timer should be cancelled",
     });
-    expect(".btn_stop_timer").toHaveCount(0, {
+    expect(timerHeaderSelectors.stop).toHaveCount(0, {
         message: "The stop button should no longer be displayed",
     });
-    expect(".o_timer_discard button").toHaveCount(0, {
+    expect(timerHeaderSelectors.discard).toHaveCount(0, {
         message: "The cancel button should no longer be displayed",
     });
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "The timer should no longer be running",
     });
 });
@@ -784,9 +783,10 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
+        groupBy: ["project_id", "task_id"],
     });
 
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "No timer should be running",
     });
     const gridTimerButtonContainer =
@@ -797,7 +797,7 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
 
     await press("a");
     await animationFrame();
-    expect(".btn_start_timer").toHaveCount(0, {
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "A timer should be running",
     });
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
@@ -811,7 +811,7 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
 
     await press("a");
     await animationFrame();
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "The timer should be stopped",
     });
     expect(".btn_timer_line.fa-stop-danger").toHaveCount(0, {
@@ -843,9 +843,10 @@ test("hr.timesheet (grid)(timer): start timer and then another with GridTimerBut
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
+        groupBy: ["project_id", "task_id"],
     });
 
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "No timer should be running",
     });
     const gridTimerButtonContainer =
@@ -856,7 +857,7 @@ test("hr.timesheet (grid)(timer): start timer and then another with GridTimerBut
 
     await press("a");
     await animationFrame();
-    expect(".btn_start_timer").toHaveCount(0, {
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "A timer should be running",
     });
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
@@ -870,7 +871,7 @@ test("hr.timesheet (grid)(timer): start timer and then another with GridTimerBut
 
     await press("b");
     await animationFrame();
-    expect(".btn_start_timer").toHaveCount(0, {
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "A timer should be running",
     });
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
@@ -911,7 +912,7 @@ test("hr.timesheet (grid)(timer): GridTimerButton when there are 26+ rows", asyn
     expect(".o_grid_row_title").toHaveCount(32, {
         message: "The view should have 32 total rows rendered",
     });
-    expect(".btn_start_timer").toHaveCount(1, {
+    expect(timerHeaderSelectors.start).toHaveCount(1, {
         message: "No timer should be running",
     });
 
@@ -931,10 +932,10 @@ test("hr.timesheet (grid)(timer): GridTimerButton when there are 26+ rows", asyn
 test("hr.timesheet (grid)(timer): start timer and create a new project and a new task", async () => {
     let reload = false;
     onRpc("action_start_new_timesheet_timer", () => ({
-        rate: 0,
+        unit_amount: 0,
         project_id: false,
         task_id: false,
-        description: "",
+        name: "",
     }));
     onRpc("action_timer_stop", function ({ args }) {
         // The newly created timesheet need to be pushed on the mockserver model otherwise it will not be fetched
@@ -970,14 +971,12 @@ test("hr.timesheet (grid)(timer): start timer and create a new project and a new
     expect(".o_grid_row_title").toHaveCount(5, {
         message: "The view should have 5 rows rendered",
     });
-    await click(".btn_start_timer");
-    await animationFrame();
+    await clickTimerButton("start");
     await clickFieldDropdown("project_id");
     await edit("a new project");
     await runAllTimers();
     await click(".o_m2o_dropdown_option_create");
-    await click(".btn_stop_timer");
-    await animationFrame();
+    await clickTimerButton("stop");
     expect(".o_grid_row_title").toHaveCount(6, {
         message: "The view should have 6 rows rendered",
     });
@@ -985,15 +984,13 @@ test("hr.timesheet (grid)(timer): start timer and create a new project and a new
     expect.verifySteps(["Reload"]);
 
     // Create a new timesheet with a new task in an existing project.
-    await click(".btn_start_timer");
-    await animationFrame();
+    await clickTimerButton("start");
     await selectFieldDropdownItem("project_id", "P1");
     await clickFieldDropdown("task_id");
     await edit("a new task");
     await runAllTimers();
     await click(".o_m2o_dropdown_option_create");
-    await click(".btn_stop_timer");
-    await animationFrame();
+    await clickTimerButton("stop");
     expect(".o_grid_row_title").toHaveCount(7, {
         message: "The view should have 7 rows rendered",
     });
@@ -1015,9 +1012,8 @@ test("hr.timesheet (grid)(timer): switch view with GroupBy and start the timer",
 
     await click(".o_switch_view.o_kanban");
     await animationFrame();
-    await click(".btn_start_timer");
-    await animationFrame();
-    expect("button.btn_start_timer").not.toHaveCount(null, {
+    await clickTimerButton("start");
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "Timer should be running",
     });
 });
@@ -1076,8 +1072,8 @@ test("hr.timesheet (grid)(timer): start button is always in focus", async () => 
     });
 
     // At each mount and patch Start Button should be in focus
-    expect(".btn_start_timer").toHaveCount(1);
-    expect(".btn_start_timer").toBeFocused();
+    expect(timerHeaderSelectors.start).toHaveCount(1);
+    expect(timerHeaderSelectors.start).toBeFocused();
 
     // Click on a clickable button/action should be accessible and should not be disturbed
     // Force focus must not disturb other clicks
@@ -1086,14 +1082,14 @@ test("hr.timesheet (grid)(timer): start button is always in focus", async () => 
 
     // Click on body which doesn't have any fields/actions must make Start button to come in focus
     await click(document.body);
-    expect(".btn_start_timer").toBeFocused();
+    expect(timerHeaderSelectors.start).toBeFocused();
 
     // Check click on select in search popover doesn't focus Start button to avoid unintended effects (e.g. closing an
     // opened dropdown)
     await click("button.o_searchview_dropdown_toggler");
     await animationFrame();
     await click("button.o_menu_item");
-    expect(".btn_start_timer").not.toBeFocused();
+    expect(timerHeaderSelectors.start).not.toBeFocused();
 });
 
 describe.current.tags("desktop");
@@ -1112,11 +1108,10 @@ test("hr.timesheet (grid)(timer): stop button is always in focus", async () => {
         resModel: "account.analytic.line",
     });
 
-    await click(".btn_start_timer");
-    await animationFrame();
+    await clickTimerButton("start");
     // At each mount and patch Stop Button should be in focus
-    expect(".btn_stop_timer").toHaveCount(1);
-    expect(".btn_stop_timer").toBeFocused();
+    expect(timerHeaderSelectors.stop).toHaveCount(1);
+    expect(timerHeaderSelectors.stop).toBeFocused();
 
     // Click on a clickable button/input should be accessible and should not be disturbed
     // Force focus must not disturb other clicks/inputs
@@ -1125,5 +1120,5 @@ test("hr.timesheet (grid)(timer): stop button is always in focus", async () => {
 
     // Click on body which doesn't have any fields/actions must make Stop button to come in focus
     await click(document.body);
-    expect(".btn_stop_timer").toBeFocused();
+    expect(timerHeaderSelectors.stop).toBeFocused();
 });

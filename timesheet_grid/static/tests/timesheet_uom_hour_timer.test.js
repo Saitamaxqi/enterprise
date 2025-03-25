@@ -108,6 +108,14 @@ test("hr.timesheet (list)(timer): correct rpc calls are performed (click play)",
 });
 
 test("hr.timesheet (list)(timer): correct rpc calls are performed (click stop)", async () => {
+    onRpc("get_running_timer", ({ method }) => ({
+        id: 3,
+        unit_amount: 1,
+        timer_start: "2017-01-24 00:00:00",
+        timer_pause: false,
+        display_timer: true,
+        is_timer_running: true,
+    }));
     onRpc("action_timer_stop", ({ method }) => {
         expect.step(method);
         return true;

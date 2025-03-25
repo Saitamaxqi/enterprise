@@ -1,23 +1,19 @@
-import { Field, getPropertyFieldInfo } from "@web/views/fields/field";
-import { TimesheetDisplayTimer } from "../timesheet_display_timer/timesheet_display_timer";
-import { useService, useAutofocus } from "@web/core/utils/hooks";
-import { user } from "@web/core/user";
-import { Component, onWillStart, useRef, useExternalListener } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
+
+import { useService } from "@web/core/utils/hooks";
+import { TimesheetTimerHeaderButtons } from "./timesheet_timer_header_buttons";
+import { TimesheetTimerHeaderRecord } from "./timesheet_timer_header_record";
 
 export class TimesheetTimerHeader extends Component {
     static template = "timesheet_grid.TimesheetTimerHeader";
     static components = {
-        TimesheetDisplayTimer,
-        Field,
+        TimesheetTimerHeaderButtons,
+        TimesheetTimerHeaderRecord,
     };
     static props = {
+        slots: { type: Object, optional: true },
         timesheet: { type: Object, optional: true },
-        stepTimer: Number,
-        timerRunning: Boolean,
-        addTimeMode: Boolean,
         fields: { type: Object, optional: true },
-        otherCompany: { type: Boolean, optional: true },
-        timerReactive: { type: Object, optional: true },
         onTimerStarted: Function,
         onTimerStopped: Function,
         onTimerUnlinked: Function,
@@ -29,109 +25,29 @@ export class TimesheetTimerHeader extends Component {
     };
 
     setup() {
-        this.orm = useService("orm");
-        this.startButton = useRef("startButton");
-        this.stopButton = useRef("stopButton");
-        onWillStart(async () => await this.onWillStart());
-        useAutofocus({ refName: "startButton" });
-        useAutofocus({ refName: "stopButton" });
-        useExternalListener(document.body, "click", (ev) => {
-            if (
-                ev.target.closest(".modal, .popover") ||
-                ["input", "textarea"].includes(ev.target.tagName.toLowerCase())
-            ) {
-                return;
-            }
-            this.startButton.el ? this.startButton.el.focus() : this.stopButton.el.focus();
-        });
+        this.timerService = useService("timesheet_timer");
+        this.timerState = useState(this.timerService.timerState);
     }
 
-    async onWillStart() {
-        this.isProjectManager = await user.hasGroup('project.group_project_manager');
-    }
-
-    // deprecated
-    onWillUpdateProps(nextProps) {
-        if (nextProps.timesheet && nextProps.timesheet.data.name === "/") {
-            this._clearTimesheetName(nextProps.timesheet);
+    get classNames() {
+        const displayFlex = this.isMobile && !this.timerState.isRunning;
+        const classNames = {
+            "d-flex": displayFlex,
+            "d-grid": !displayFlex,
+        };
+        if (this.props.className) {
+            classNames[this.props.className] = true;
         }
-    }
-
-    getIsProjectManager() {
-        return this.isProjectManager;
-    }
-
-    //----------------------------------------------------------------------
-    // Getters
-    //----------------------------------------------------------------------
-
-    get _addTimeMode() {
-        return this.props.addTimeMode;
-    }
-
-    get _timerIsRunning() {
-        return this.props.timerRunning;
-    }
-
-    get otherCompany() {
-        return this.props.otherCompany;
+        return classNames;
     }
 
     get isMobile() {
         return this.env.isSmall;
     }
 
-    get viewType() {
-        return this.env.config.viewType;
-    }
-
-    getFieldType(fieldName) {
-        return this.props.fields[fieldName].type;
-    }
-
-    get fieldsInfo() {
-        return {
-            task_id: {
-                ...getPropertyFieldInfo({
-                    name: "task_id",
-                    type: this.getFieldType("task_id"),
-                    widget: "task_with_hours",
-                }),
-                viewType: this.viewType,
-                context: this.props.fields.task_id.context,
-            },
-        };
-    }
-
-    //--------------------------------------------------------------------------
-    // Business Methods
-    //--------------------------------------------------------------------------
-    // deprecated
-    _clearTimesheetName(timesheet = null) {
-        (timesheet || this.props.timesheet).update({ name: "" }, { silent: true });
-    }
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
-    async _onClickStartTimer(ev) {
-        await this.props.onTimerStarted();
-    }
-
-    async _onClickStopTimer(ev) {
-        if (await this.props.timesheet?.save()) {
-            await this.props.onTimerStopped();
-        }
-    }
-
-    async _onClickUnlinkTimer(ev) {
-        await this.props.onTimerUnlinked();
-    }
-
-    _onKeyDown(ev) {
-        if (ev.key === 'Enter') {
-            this._onClickStopTimer();
+    async stopTimer(ev) {
+        if (await this.props.timesheet.save()) {
+            this.props.onTimerStopped();
         }
     }
 }

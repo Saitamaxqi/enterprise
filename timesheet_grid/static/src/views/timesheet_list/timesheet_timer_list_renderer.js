@@ -1,6 +1,6 @@
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { TimesheetTimerHeader } from "@timesheet_grid/components/timesheet_timer_header/timesheet_timer_header";
-import { useTimesheetTimerRendererHook } from "@timesheet_grid/hooks/timesheet_timer_hooks";
+import { useTimesheetTimer } from "@timesheet_grid/hooks/use_timesheet_timer";
 
 export class TimesheetTimerListRenderer extends ListRenderer {
     static template = "timesheet_grid.TimesheetTimerListRenderer";
@@ -12,7 +12,8 @@ export class TimesheetTimerListRenderer extends ListRenderer {
 
     setup() {
         super.setup();
-        this.timesheetTimerRendererHook = useTimesheetTimerRendererHook();
+        this.timesheetTimerHook = useTimesheetTimer(true);
+        this.timesheetTimerService = this.timesheetTimerHook.timesheetTimerService;
     }
 
     onGlobalClick(ev) {

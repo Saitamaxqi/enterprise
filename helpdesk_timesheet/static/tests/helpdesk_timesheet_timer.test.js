@@ -43,7 +43,10 @@ onRpc("get_running_timer", () => ({
     id: 10,
     start: 5740, // 01:35:40
     project_id: 1,
-    description: "Description",
+    name: "Description",
+    has_helpdesk_team: true,
+    helpdesk_ticket_id: false,
+    task_id: false,
     step_timer: 30,
 }));
 
@@ -62,5 +65,5 @@ test("Timer already running with helpdesk ticket", async () => {
         message: "a ticket field should be rendered",
     });
     await contains('div[name="helpdesk_ticket_id"] input').edit("Ticket 4");
-    await click(".btn_stop_timer");
+    await click(".o_stop_timer_button");
 });

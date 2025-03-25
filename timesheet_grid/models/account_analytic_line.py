@@ -453,6 +453,7 @@ class AccountAnalyticLine(models.Model):
         """
         if self.validated:
             raise UserError(_('You cannot use the timer on validated timesheets.'))
+        timesheet = self
         if self.employee_id.sudo().last_validated_timesheet_date and self.date < self.employee_id.sudo().last_validated_timesheet_date:
             timesheet = self.create(self._get_new_timesheet_timer_vals())
             timesheet.action_timer_start()
@@ -462,6 +463,7 @@ class AccountAnalyticLine(models.Model):
                 timesheet.with_context(_from_action_timer=True).action_timer_start()
             else:
                 super().action_timer_start()
+        return timesheet._get_timesheet_timer_data()
 
     def _get_last_timesheet_domain(self):
         self.ensure_one()
@@ -546,14 +548,22 @@ class AccountAnalyticLine(models.Model):
     def _action_interrupt_user_timers(self):
         self.action_timer_stop()
 
-    def _get_timesheet_timer_data(self, timer=None):
+    def _get_timesheet_timer_field_names(self):
+        return ['date', 'name', 'company_id', 'project_id', 'task_id', 'unit_amount', 'timer_start']
+
+    def _get_timesheet_timer_data(self):
+        """ Get timesheet timer data needed to correctly run the timer
+
+            :return Dictionary containing timer data
+            :rtype {'field_name': field_value}
+        """
+        self.ensure_one()
+        timesheet_data = {'other_company': True}
         if self.company_id in self.env.companies:
-            return {
-                'id': (timer or self.user_timer_id).res_id,
-                'project_id': self.project_id.id,
-                'task_id': self.task_id.id,
-            }
-        return {'other_company': True}
+            timesheet_data = self._read_format(self._get_timesheet_timer_field_names())[0]
+            if timesheet_data['name'] == '/':
+                timesheet_data['name'] = ''
+        return timesheet_data
 
     @api.model
     def get_running_timer(self):
@@ -566,7 +576,7 @@ class AccountAnalyticLine(models.Model):
         ], limit=1)
         if timer:
             # sudo as we can have a timesheet related to a company other than the current one.
-            res.update(self.sudo().browse(timer.res_id)._get_timesheet_timer_data(timer))
+            res.update(self.sudo().browse(timer.res_id)._get_timesheet_timer_data())
         return res
 
     @api.model
@@ -687,11 +697,11 @@ class AccountAnalyticLine(models.Model):
         }
 
     def action_timer_increase(self):
-        min_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
+        min_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 15))
         self.update({'unit_amount': self.unit_amount + (min_duration / 60)})
 
     def action_timer_decrease(self):
-        min_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
+        min_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 15))
         duration = self.unit_amount - (min_duration / 60)
         self.update({'unit_amount': duration if duration > 0 else 0 })
 

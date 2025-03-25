@@ -44,12 +44,13 @@ export class TimerGridRow extends GridRow {
 }
 
 export class TimerTimesheetGridModel extends TimesheetGridModel {
-    static services = [...TimesheetGridModel.services, "timesheet_uom"];
+    static services = [...TimesheetGridModel.services, "timesheet_uom", "timesheet_timer"];
     static Row = TimerGridRow;
 
     setup(params, services) {
         super.setup(params, services);
         this.timesheetUOMService = services.timesheet_uom;
+        this.timerService = services.timesheet_timer;
         this.fieldsInfo.project_id.required = "True";
     }
 
@@ -114,7 +115,7 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
     }
 
     _updateTimer(timerData, metaData) {
-        const { data } = metaData
+        const { data } = metaData;
         if (!data.timer) {
             data.timer = timerData;
         } else {
@@ -122,7 +123,7 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
                 data.timer[key] = value;
             }
         }
-        if (!timerData.row && data.timer.id) {
+        if (data.timer.id) {
             // if the id linked to the timer changed then search the row associated
             this._searchRowWithTimer(metaData);
         }
@@ -132,8 +133,13 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
         let rowKey = `${sectionField ? data.timer[sectionField.name] : "false"}@|@`;
         for (const row of rowFields) {
             let value = data.timer[row.name];
-            if (!value && this.fieldsInfo[row.name].type) {
-                value = false;
+            const fieldType = this.fieldsInfo[row.name].type;
+            if (value && fieldType === "many2one") {
+                if (value instanceof Array) {
+                    value = value[0];
+                } else {
+                    value = value.id;
+                }
             }
             rowKey += `${value}\\|/`;
         }
@@ -156,10 +162,8 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
         if (!this.showTimer) {
             return;
         }
-        const { step_timer: stepTimer, ...timesheetWithTimerData } = await this.orm.call(
-            this.resModel,
-            "get_running_timer"
-        );
+        const { step_timer: stepTimer, ...timesheetWithTimerData } =
+            await this.timerService.getRunningTimer();
         if (timesheetWithTimerData.id || timesheetWithTimerData.other_company) {
             this._updateTimer(timesheetWithTimerData, metaData);
         } else if (data.timer) {
@@ -173,9 +177,7 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
     }
 
     async startTimer(vals = {}, row = undefined) {
-        const result = await this.orm.call(this.resModel, "action_start_new_timesheet_timer", [
-            vals,
-        ]);
+        const result = await this.timerService.startTimer(vals);
         const timesheetTimer = result || {};
         if (row) {
             timesheetTimer.row = row;
@@ -202,14 +204,11 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
     }
 
     async stopTimer() {
-        const value = await this.orm.call(this.resModel, "action_timer_stop", [
-            this.data.timer.id,
-            true,
-        ]);
+        const value = await this.timerService.stopTimer([true]);
         if (value) {
             const column = this.columnsArray.find((col) => col.isToday);
             if (column) {
-                if (this.data.timer.row){
+                if (this.data.timer.row) {
                     const newValue = this.data.timer.row.cells[column.id].value + value;
                     this.data.timer.row.updateCell(column, newValue, this.data);
                     this.data.timer.row.timerRunning = false;
@@ -222,7 +221,7 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
     }
 
     async deleteTimer() {
-        await this.orm.call(this.resModel, "action_timer_unlink", [this.data.timer.id]);
+        await this.timerService.deleteTimer();
         if (this.data.timer.row) {
             this.data.timer.row.timerRunning = false;
         }
@@ -233,10 +232,5 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
         const timesheetId = this.data.timer && this.data.timer.id;
         await this.orm.call(this.resModel, "action_add_time_to_timesheet", [timesheetId, data]);
         await this.reload();
-    }
-
-    async fetchTimerHeaderFields(fieldNames) {
-        this.timerFieldsInfo = await this.orm.call(this.resModel, "fields_get", [fieldNames]);
-        return this.timerFieldsInfo;
     }
 }

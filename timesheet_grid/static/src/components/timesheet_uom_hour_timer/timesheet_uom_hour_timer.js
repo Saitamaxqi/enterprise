@@ -16,7 +16,8 @@ export class TimesheetUOMHourTimer extends Component {
 
     setup() {
         this.ormService = useService("orm");
-        this.state = useState(this.env.timerState || {});
+        this.timesheetTimerService = useService("timesheet_timer");
+        this.state = useState(this.timesheetTimerService.timerState);
     }
 
     get displayButton() {
@@ -44,13 +45,19 @@ export class TimesheetUOMHourTimer extends Component {
     async onClick(ev) {
         ev.preventDefault();
         const action = this.addTimeMode ? "increase" : this.isTimerRunning ? "stop" : "start";
-        await this.ormService.call(
-            this.props.record.resModel,
-            `action_timer_${action}`,
-            [[this.props.record.resId]],
-            { context: this.props.context }
-        );
-        await this.props.record.model.load();
+        if (action === "start") {
+            await this.timesheetTimerService.startTimer({ id: this.props.record.resId }, true);
+        } else if (action === "stop") {
+            await this.timesheetTimerService.stopTimer([], {}, true);
+        } else {
+            await this.ormService.call(
+                this.props.record.resModel,
+                `action_timer_${action}`,
+                [[this.props.record.resId]],
+                { context: this.props.context }
+            );
+            await this.props.record.model.load();
+        }
     }
 }
 

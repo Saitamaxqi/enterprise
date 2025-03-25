@@ -23,6 +23,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
     helpdesk_ticket_id = fields.Many2one({
         relation: "helpdesk.ticket",
     });
+    has_helpdesk_team = fields.Boolean();
 }
 
 hrTimesheetModels.HRTimesheet = HRTimesheet;

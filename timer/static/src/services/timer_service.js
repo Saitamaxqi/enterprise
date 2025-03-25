@@ -2,12 +2,18 @@ import { registry } from "@web/core/registry";
 import { TimerReactive } from "../models/timer_reactive";
 
 export const timerService = {
+    async: ["getServerOffset"],
     start(env) {
         let serverOffset = null;
         let timer;
         return {
+            get timer() {
+                return timer;
+            },
             createTimer() {
-                timer = new TimerReactive(env);
+                if (!timer) {
+                    timer = new TimerReactive(env);
+                }
                 return timer;
             },
             async getServerOffset() {

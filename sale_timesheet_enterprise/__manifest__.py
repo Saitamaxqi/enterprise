@@ -48,7 +48,6 @@ linked to an SO, or only the validated timesheets
         ],
         'web.assets_backend_lazy': [
             'sale_timesheet_enterprise/static/src/components/**',
-            'sale_timesheet_enterprise/static/src/services/**',
             'sale_timesheet_enterprise/static/src/views/timesheet_analysis_pivot/**',
             'sale_timesheet_enterprise/static/src/views/timesheet_grid/**',
             'sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_timer_grid/**',

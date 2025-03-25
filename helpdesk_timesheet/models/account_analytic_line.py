@@ -179,10 +179,11 @@ class AccountAnalyticLine(models.Model):
             [('helpdesk_ticket_id', '=', self.helpdesk_ticket_id.id)],
         ])
 
-    def _get_timesheet_timer_data(self, timer=None):
-        timesheet_timer_data = super()._get_timesheet_timer_data(timer)
+    def _get_timesheet_timer_data(self):
+        timesheet_timer_data = super()._get_timesheet_timer_data()
         if 'other_company' not in timesheet_timer_data:
             timesheet_timer_data['helpdesk_ticket_id'] = self.helpdesk_ticket_id.id
+            timesheet_timer_data['has_helpdesk_team'] = self.has_helpdesk_team
         return timesheet_timer_data
 
     def _get_timer_vals(self):

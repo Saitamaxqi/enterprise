@@ -1,5 +1,6 @@
 import { useState, useSubEnv } from "@odoo/owl";
 
+import { useService } from "@web/core/utils/hooks";
 import { ListController } from "@web/views/list/list_controller";
 
 export class TimesheetTimerListController extends ListController {
@@ -14,6 +15,7 @@ export class TimesheetTimerListController extends ListController {
             },
         });
         this.timerState = useState({ reload: false });
+        this.timerService = useService("timesheet_timer");
     }
 
     get deleteConfirmationDialogProps() {
@@ -23,8 +25,36 @@ export class TimesheetTimerListController extends ListController {
             dialogProps.confirm = async () => {
                 await this.model.root.deleteRecords();
                 this.timerState.reload = true;
-            }
+            };
         }
         return dialogProps;
+    }
+
+    async _processTimerTimesheetUrgentSave() {
+        const timesheet = this.timerService.timerState.timesheet;
+        if (!timesheet) {
+            return;
+        }
+        let updateTimerState = true;
+        if (this.model.root.isGrouped) {
+            updateTimerState = await timesheet?.urgentSave();
+        }
+        if (updateTimerState) {
+            this.timerService.updateTimerState(timesheet);
+        }
+    }
+
+    async beforeUnload() {
+        return Promise.all([
+            super.beforeUnload(...arguments),
+            this._processTimerTimesheetUrgentSave(),
+        ]);
+    }
+
+    async beforeLeave() {
+        return Promise.all([
+            super.beforeLeave(...arguments),
+            this._processTimerTimesheetUrgentSave(),
+        ]);
     }
 }

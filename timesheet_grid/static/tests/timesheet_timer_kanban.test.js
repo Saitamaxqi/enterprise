@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test, getFixture } from "@odoo/hoot";
-import { click } from "@odoo/hoot-dom";
+import { click, waitFor } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
     fieldInput,
@@ -9,12 +9,15 @@ import {
     onRpc,
     selectFieldDropdownItem,
     contains,
+    mountView,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 import { serializeDateTime } from "@web/core/l10n/dates";
 
 import { defineTimesheetModels, HRTimesheet } from "./hr_timesheet_models";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
+
+import { clickTimerButton, timerHeaderSelectors } from "./timesheet_grid_timer_helpers";
 
 const now = luxon.DateTime.utc();
 defineTimesheetModels();
@@ -41,6 +44,88 @@ beforeEach(() => {
 });
 describe.current.tags("desktop");
 
+test("timesheet.grid (kanban)(timer): start & stop", async () => {
+    await mountView({
+        type: "kanban",
+        resModel: "account.analytic.line",
+    });
+    await waitFor(timerHeaderSelectors.start);
+    await clickTimerButton("start");
+    await waitFor(timerHeaderSelectors.stop);
+    expect("div.pinned_header input").toHaveCount(3, {
+        message:
+            "When the timer is running in the kanban view, the timesheet in the header should be editable.",
+    });
+
+    await clickTimerButton("stop");
+    await waitFor(timerHeaderSelectors.start);
+    expect("div.pinned_header input").toHaveCount(0);
+});
+
+test("timesheet.grid (kanban)(timer): start & stop, view is grouped", async () => {
+    await mountView({
+        type: "kanban",
+        resModel: "account.analytic.line",
+        groupBy: ["project_id"],
+    });
+    await waitFor(timerHeaderSelectors.start);
+    await clickTimerButton("start");
+    await waitFor(timerHeaderSelectors.stop);
+    expect("div.pinned_header input").toHaveCount(3, {
+        message:
+            "When the timer is running in the kanban view, the timesheet in the header should be editable.",
+    });
+
+    await clickTimerButton("stop");
+    await waitFor(timerHeaderSelectors.start);
+    expect("div.pinned_header input").toHaveCount(0);
+});
+
+test("timesheet.grid (kanban)(timer): start & stop, view is grouped multiple times", async () => {
+    await mountView({
+        type: "kanban",
+        resModel: "account.analytic.line",
+        groupBy: ["project_id", "task_id", "name"],
+    });
+    await waitFor(timerHeaderSelectors.start);
+    await clickTimerButton("start");
+    await waitFor(timerHeaderSelectors.stop);
+    expect("div.pinned_header input").toHaveCount(3, {
+        message:
+            "When the timer is running in the kanban view, the timesheet in the header should be editable.",
+    });
+
+    await clickTimerButton("stop");
+    await waitFor(timerHeaderSelectors.start);
+    expect("div.pinned_header input").toHaveCount(0);
+});
+
+test("timesheet.grid (kanban)(timer): start the timer with no valid project", async () => {
+    onRpc(({ method }) => {
+        if (method === "action_start_new_timesheet_timer") {
+            return false;
+        }
+    });
+    await mountView({
+        type: "kanban",
+        resModel: "account.analytic.line",
+    });
+    await waitFor(timerHeaderSelectors.start);
+    await clickTimerButton("start");
+    await waitFor(timerHeaderSelectors.stop);
+    expect("div.pinned_header input").toHaveCount(3, {
+        message:
+            "When the timer is running in the kanban view, the timesheet in the header should be editable.",
+    });
+
+    await clickTimerButton("stop");
+    await waitFor("div.o_notification_manager h5:contains(Invalid fields:)");
+    expect("div.o_notification_manager h5:contains(Invalid fields:)").toHaveCount(1, {
+        message:
+            "The default notification of 'required fields' of a Many2one relation should be raised.",
+    });
+});
+
 test("hr.timesheet (kanban)(timer): switch view with GroupBy and start the timer", async () => {
     await mountWithCleanup(WebClient);
     await getService("action").doAction({
@@ -55,33 +140,13 @@ test("hr.timesheet (kanban)(timer): switch view with GroupBy and start the timer
 
     await click(".o_switch_view.o_kanban");
     await animationFrame();
-    await click(".btn_start_timer");
-    await animationFrame();
-    expect("button.btn_start_timer").toHaveCount(0, {
+    await clickTimerButton("start");
+    expect(timerHeaderSelectors.start).toHaveCount(0, {
         message: "Timer should be running",
     });
 });
 
 test("hr.timesheet (kanban)(timer): start timer, set fields and switch view", async () => {
-    HRTimesheet._fields.is_timer_running = fields.Boolean();
-    HRTimesheet._views.kanban = HRTimesheet._views.kanban.replace(
-        '<field name="unit_amount"/>',
-        '<field name="unit_amount" widget="timesheet_uom_timer"/><field name="is_timer_running" invisible="1"/>'
-    );
-    let timerRunning = false;
-    onRpc("get_running_timer", () => {
-        if (timerRunning) {
-            return {
-                step_timer: 30,
-                id: 4,
-            };
-        }
-    });
-    onRpc("action_start_new_timesheet_timer", function ({ model }) {
-        timerRunning = true;
-        this.env[model].write(4, { is_timer_running: true });
-        return { id: 4 };
-    });
     await mountWithCleanup(WebClient);
     await getService("action").doAction({
         res_model: "account.analytic.line",
@@ -92,8 +157,8 @@ test("hr.timesheet (kanban)(timer): start timer, set fields and switch view", as
         ],
     });
 
-    await click(".btn_start_timer");
-    await fieldInput("name").edit("Test");
+    await clickTimerButton("start");
+    await fieldInput("name").edit("Test", { confirm: false });
     await selectFieldDropdownItem("task_id", "BS task");
 
     await click(".o_switch_view.o_grid");
@@ -190,6 +255,6 @@ test("Timer should not start when adding new record", async () => {
     await click(".o_switch_view.o_kanban");
     await animationFrame();
 
-    expect(".btn_start_timer").toHaveCount(1);
+    expect(timerHeaderSelectors.start).toHaveCount(1);
     expect(timerStarted).toBe(false);
 });

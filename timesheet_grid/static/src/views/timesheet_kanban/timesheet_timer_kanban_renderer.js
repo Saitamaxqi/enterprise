@@ -1,6 +1,6 @@
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { TimesheetTimerHeader } from "@timesheet_grid/components/timesheet_timer_header/timesheet_timer_header";
-import { useTimesheetTimerRendererHook } from "@timesheet_grid/hooks/timesheet_timer_hooks";
+import { useTimesheetTimer } from "@timesheet_grid/hooks/use_timesheet_timer";
 
 export class TimesheetTimerKanbanRenderer extends KanbanRenderer {
     static template = "timesheet_grid.TimesheetTimerKanbanRenderer";
@@ -10,6 +10,6 @@ export class TimesheetTimerKanbanRenderer extends KanbanRenderer {
     };
     setup() {
         super.setup();
-        this.timesheetTimerRendererHook = useTimesheetTimerRendererHook();
+        this.timesheetTimerHook = useTimesheetTimer();
     }
 }

@@ -124,6 +124,9 @@
                             decoration-muted="unit_amount == 0" readonly="1"/>
                     </div>
                  </xpath>
+                <xpath expr="//field[@name='task_id']" position="attributes">
+                    <attribute name="context">{'default_project_id': project_id, 'search_default_my_tasks': True, 'search_default_open_tasks': True}</attribute>
+                </xpath>
             </field>
         </record>
         <!-- add timer to My Timesheet kanban view -->

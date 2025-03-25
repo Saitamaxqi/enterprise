@@ -48,7 +48,7 @@ registry.category("web_tour.tours").add('timesheet_record_time_new_helpdesk_tick
         }
     },
     {
-        trigger: '.btn_stop_timer',
+        trigger: '.o_stop_timer_button',
         content: "Stop the timer when you are done.",
         run: "click"
     }

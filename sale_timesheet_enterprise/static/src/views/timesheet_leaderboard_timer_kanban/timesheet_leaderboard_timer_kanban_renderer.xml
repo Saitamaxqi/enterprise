@@ -6,12 +6,12 @@
             <attribute name="t-if" add="or timesheetLeaderboardService.showIndicators" separator=" "/>
         </xpath>
         <xpath expr="//div[hasclass('pinned_header')]" position="inside">
-            <div t-if="timesheetLeaderboardService.showIndicators and !timesheetTimerRendererHook.timerState.timerRunning" class="position-relative pe-3 py-2 d-flex justify-content-end">
+            <div t-if="timesheetLeaderboardService.showIndicators and !timesheetTimerHook.timerState.isRunning" class="position-relative w-100 pe-3 py-2 py-sm-1 d-flex justify-content-end">
                 <TimesheetLeaderboard/>
             </div>
         </xpath>
         <xpath expr="//div[hasclass('pinned_header')]/div" position="attributes">
-            <attribute name="t-if">timesheetTimerRendererHook.showTimer</attribute>
+            <attribute name="t-if">timesheetTimerHook.showTimer</attribute>
         </xpath>
     </t>
 

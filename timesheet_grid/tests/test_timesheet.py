@@ -550,11 +550,7 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         self.assertTrue(timesheet.is_timer_running)
         self.assertDictEqual(
             timesheet._get_timesheet_timer_data(),
-            {
-                'id': timesheet.id,
-                'project_id': timesheet.project_id.id,
-                'task_id': timesheet.task_id.id,
-            },
+            timesheet._read_format(timesheet._get_timesheet_timer_field_names())[0],
         )
 
         project_with_no_company, project_other_company = self.env['project.project'].create([
@@ -573,11 +569,10 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
             'project_id': project_with_no_company.id,
             'task_id': False,
         })
-        self.assertDictEqual(timesheet._get_timesheet_timer_data(), {
-            'id': timesheet.id,
-            'project_id': timesheet.project_id.id,
-            'task_id': timesheet.task_id.id,
-        })
+        self.assertDictEqual(
+            timesheet._get_timesheet_timer_data(),
+            timesheet._read_format(timesheet._get_timesheet_timer_field_names())[0]
+        )
 
         timesheet.write({
             'project_id': project_other_company.id,

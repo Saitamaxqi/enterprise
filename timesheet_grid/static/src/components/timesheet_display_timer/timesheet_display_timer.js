@@ -41,7 +41,6 @@ export class TimesheetDisplayTimer extends Component {
         timerRunning: { type: Boolean, optional: true },
         context: { type: Object, optional: true },
         displayRed: { type: Boolean, optional: true },
-        timerReactive: { type: Object, optional: true },
     };
 
     static defaultProps = { displayRed: true };
@@ -52,8 +51,8 @@ export class TimesheetDisplayTimer extends Component {
     };
 
     setup() {
-        this.timerService = useService("timer");
-        this.timerReactive = this.props.timerReactive || this.timerService.createTimer();
+        this.timerService = useService("timesheet_timer");
+        this.timerReactive = this.timerService.timer;
         this.state = useState({
             timerStart: this.props.record.data.timer_start,
             timerRunning:
@@ -71,10 +70,13 @@ export class TimesheetDisplayTimer extends Component {
         this.state.timerRunning =
             Boolean(nextProps.record.data.timer_start || nextProps.timerRunning) &&
             !nextProps.record.data.timer_pause;
+        if (this.state.timerRunning !== this.timerService.timerState.isRunning) {
+            this.timerService.updateTimer(this.state.timerRunning ? nextProps.record.data : null);
+        }
         const shouldReloadTimer =
             this.props.record.data.timer_start !== nextProps.record.data.timer_start ||
             this.props.record.data.timer_pause !== nextProps.record.data.timer_pause ||
-            this.props.value !== nextProps.value;
+            this.props.record.data[this.props.name] !== nextProps.record.data[nextProps.name];
         if (this.state.timerRunning && shouldReloadTimer) {
             this._stopTimeRefresh();
             this.timerReactive.resetTimer();
@@ -91,6 +93,9 @@ export class TimesheetDisplayTimer extends Component {
 
     async onWillStart() {
         if (this.state.timerRunning) {
+            if (!this.timerService.timerState.isRunning) {
+                this.timerService.updateTimer(this.props.record.data);
+            }
             await this.timerService.getServerOffset();
             if (!this.state.timerStart) {
                 this.state.timerStart = this.timerReactive.getCurrentTime();
@@ -119,9 +124,8 @@ export class TimesheetDisplayTimer extends Component {
     }
 
     get TimesheetTimerFloatTimerFieldProps() {
-        const { timerRunning, value } = this.state;
         const props = { ...this.props };
         delete props.timerReactive;
-        return { ...props, timerRunning, value };
+        return { ...props, timerRunning: this.state.timerRunning, value: this.state.value };
     }
 }

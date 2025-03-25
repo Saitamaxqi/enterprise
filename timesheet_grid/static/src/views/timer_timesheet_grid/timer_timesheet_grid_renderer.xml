@@ -2,14 +2,9 @@
 <templates>
     <t t-name="timesheet_grid.TimerGridRenderer" t-inherit="web_grid.Renderer">
         <xpath expr="//div[hasclass('o_grid_renderer')]" position="before">
-            <div t-if="showTimer" class="d-flex flex-wrap justify-content-end bg-view border-bottom position-sticky z-1 start-0">
+            <div t-if="showTimer" class="d-flex justify-content-between bg-view border-bottom position-sticky z-1 start-0">
                 <GridTimesheetTimerHeader
                     model="props.model"
-                    resId="timerState.timesheet?.id"
-                    addTimeMode="timerState.addTimeMode"
-                    timerRunning="timerState.timerRunning"
-                    otherCompany="timerState.otherCompany"
-                    stepTimer="props.model.data.stepTimer"
                     updateTimesheet.bind="updateTimesheet"
                     onTimerStarted.bind="onTimerStarted"
                     onTimerStopped.bind="onTimerStopped"

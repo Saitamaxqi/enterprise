@@ -7,7 +7,7 @@ class AccountAnalyticLine(models.Model):
     _inherit = "account.analytic.line"
 
     def action_timer_start(self):
-        super().action_timer_start()
+        res = super().action_timer_start()
         if self.task_id.is_fsm and self.timer_start:
             time = fields.Datetime.context_timestamp(self, self.timer_start)
             self.task_id.message_post(
@@ -17,6 +17,7 @@ class AccountAnalyticLine(models.Model):
                     time=time.strftime(get_lang(self.env).time_format),
                 ),
             )
+        return res
 
     def action_timer_stop(self, try_to_match=False):
         should_log_note = False
