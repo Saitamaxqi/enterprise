@@ -18,7 +18,7 @@
                         <t t-else="">Dear <t t-out="object.name or ''"/>,</t>
                     </p>
                     <p>
-                        We would like to inform you that your account shows an outstanding balance of <b><t t-out="format_amount(object.total_overdue, object.currency_id) or ''"/></b>.
+                        We would like to inform you that your account shows an outstanding balance of <b><t t-out="format_amount(object.total_overdue_followup, object.currency_id) or ''"/></b>.
                         We kindly ask that you settle this amount within the next <b>8 days</b>.
                     </p>
                     <p t-if="object._show_pay_now_button()">

@@ -7,6 +7,12 @@ class AccountFollowupCustomHandler(models.AbstractModel):
     _inherit = 'account.partner.ledger.report.handler'
     _description = 'Follow-Up Report Custom Handler'
 
+    def _get_custom_display_config(self):
+        config = super()._get_custom_display_config()
+        config['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
+        config['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
+        return config
+
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
 
@@ -22,6 +28,10 @@ class AccountFollowupCustomHandler(models.AbstractModel):
                 journal['selected'] = journal.get('type') != 'general'  # dividers don't get a type
             # Since we forced the selection of some journal, we need to recompute the filter label
             report._init_options_journals_names(options, previous_options=previous_options)
+
+        if options['export_mode'] == 'print':
+            # When printing the report, we don't want to include `no_followup` lines.
+            options['forced_domain'] = options.get('forced_domain', []) + [('no_followup', '=', False)]
 
     def _get_partner_aml_report_lines(self, report, options, partner_line_id, aml_results, progress, offset=0, level_shift=0):
 
@@ -65,8 +75,8 @@ class AccountFollowupCustomHandler(models.AbstractModel):
         today = fields.Date.today()
         due_line_id, overdue_line_id = self._get_unfolded_partner_status_lines(report, options, partner_line_id)
 
-        overdue_aml_values = list(filter(lambda aml: aml['date_maturity'] < today, aml_results))
-        due_aml_values = list(filter(lambda aml: aml['date_maturity'] >= today, aml_results))
+        overdue_aml_values = list(filter(lambda aml: aml['date_maturity'] and aml['date_maturity'] < today, aml_results))
+        due_aml_values = list(filter(lambda aml: not aml['date_maturity'] or aml['date_maturity'] >= today, aml_results))
 
         if overdue_aml_values:
             overdue_lines, next_progress, treated_results_count, has_more = get_aml_lines_with_status_line(_('Overdue'), overdue_line_id, overdue_aml_values, treated_results_count, next_progress)

@@ -46,6 +46,9 @@ class ResPartner(models.Model):
     total_overdue = fields.Monetary(
         compute='_compute_total_due',
         groups='account.group_account_readonly,account.group_account_invoice')
+    total_overdue_followup = fields.Monetary(
+        compute='_compute_total_due',
+        groups='account.group_account_readonly,account.group_account_invoice')
     followup_status = fields.Selection(
         [('in_need_of_action', 'In need of action'), ('with_overdue_invoices', 'With overdue invoices'), ('no_action_needed', 'No action needed')],
         compute='_compute_followup_status',
@@ -153,7 +156,7 @@ class ResPartner(models.Model):
             'name': _("Overdue Invoices"),
             'res_model': 'account.move',
             'domain': [('commercial_partner_id', '=', self.id), ('move_type', 'in', ('out_invoice', 'out_refund'))],
-            'view_mode': 'list,form',
+            'views': [(self.env.ref('account_followup.view_followup_invoice_list').id, 'list'), (None, 'form')],
             'context': {'search_default_late': True},
         }
 
@@ -164,17 +167,18 @@ class ResPartner(models.Model):
         action_values['domain'] = domain
         return action_values
 
-    @api.depends('invoice_ids')
+    @api.depends('invoice_ids.line_ids.no_followup')
     @api.depends_context('company', 'allowed_company_ids')
     def _compute_total_due(self):
         due_data = defaultdict(float)
         overdue_data = defaultdict(float)
         receivable_due_data = defaultdict(float)
         receivable_overdue_data = defaultdict(float)
+        receivable_overdue_followup_data = defaultdict(float)
         unreconciled_aml_ids = defaultdict(list)
-        for account_type, overdue, partner, amount_residual_sum, aml_ids in self.env['account.move.line']._read_group(
+        for account_type, overdue, partner, no_followup, amount_residual_sum, aml_ids in self.env['account.move.line']._read_group(
             domain=self._get_unreconciled_aml_domain(),
-            groupby=['account_type', 'followup_overdue', 'partner_id'],
+            groupby=['account_type', 'followup_overdue', 'partner_id', 'no_followup'],
             aggregates=['amount_residual:sum', 'id:array_agg'],
         ):
             if account_type == 'asset_receivable':
@@ -182,6 +186,9 @@ class ResPartner(models.Model):
                 receivable_due_data[partner] += amount_residual_sum
                 if overdue:
                     receivable_overdue_data[partner] += amount_residual_sum
+                    if not no_followup:
+                        receivable_overdue_followup_data[partner] += amount_residual_sum
+
             due_data[partner] += amount_residual_sum
             if overdue:
                 overdue_data[partner] += amount_residual_sum
@@ -191,6 +198,7 @@ class ResPartner(models.Model):
             partner.total_all_overdue = overdue_data.get(partner, 0.0)
             partner.total_due = receivable_due_data.get(partner, 0.0)
             partner.total_overdue = receivable_overdue_data.get(partner, 0.0)
+            partner.total_overdue_followup = receivable_overdue_followup_data.get(partner, 0.0)
             partner.unreconciled_aml_ids = self.env['account.move.line'].browse(unreconciled_aml_ids.get(partner, []))
 
     def _set_followup_line_on_unreconciled_amls(self):
@@ -202,13 +210,13 @@ class ResPartner(models.Model):
                 unreconciled_aml.followup_line_id = previous_followup_line
 
     def _get_unreconciled_aml_domain(self):
-        return [
-            ('reconciled', '=', False),
-            ('account_id.account_type', 'in', ('asset_receivable', 'liability_payable')),
-            ('parent_state', '=', 'posted'),
-            ('partner_id', 'in', self.ids),
-            ('company_id', 'child_of', self.env.company.id),
-        ]
+        return Domain.AND([
+            Domain('reconciled', '=', False),
+            Domain('account_id.account_type', 'in', ('asset_receivable', 'liability_payable')),
+            Domain('parent_state', '=', 'posted'),
+            Domain('partner_id', 'in', self.ids),
+            Domain('company_id', 'child_of', self.env.company.id),
+        ])
 
     def _get_followup_responsible(self, multiple_responsible=False):
         self.ensure_one()
@@ -404,6 +412,7 @@ class ResPartner(models.Model):
                  WHERE line.partner_id = partner.id
                    AND account.account_type = 'asset_receivable'
                    AND account.active
+                   AND line.no_followup IS NOT TRUE
                    AND line.parent_state = 'posted'
                    AND line.reconciled IS NOT TRUE
                    AND line.balance > 0
@@ -420,6 +429,7 @@ class ResPartner(models.Model):
                  WHERE line.partner_id = partner.id
                    AND account.account_type = 'asset_receivable'
                    AND account.active
+                   AND line.no_followup IS NOT TRUE
                    AND line.parent_state = 'posted'
                    AND line.reconciled IS NOT TRUE
                    AND line.balance > 0

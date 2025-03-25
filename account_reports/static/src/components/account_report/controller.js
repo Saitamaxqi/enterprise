@@ -449,6 +449,13 @@ export class AccountReportController {
         this.lines.splice(lineIndex, deleteCount, ...newLines);
     }
 
+    updateLines(lineIds, key, value) {
+        for (const lineId of lineIds) {
+            const lineIndex = this.lines.findIndex((line) => line.id === lineId);
+            this.lines.splice(lineIndex, 1, { ...this.lines[lineIndex], [key]: value });
+        }
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     // Unfolded/Folded lines
     //------------------------------------------------------------------------------------------------------------------

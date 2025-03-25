@@ -179,6 +179,40 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'target': 'current',
         }
 
+    @api.model
+    def action_toggle_no_followup(self, line_id, all_line_ids):
+        """Toggle the `no_followup` field on the journal item corresponding to the given `line_id`.
+
+        Toggling this field may result in other journal items of the same report having their field toggled as well.
+        This function will return all impacted lines, so the report can be updated dynamically.
+
+        :param line_id: The report line ID.
+        :param all_line_ids: A list containing all the report's line IDs.
+        :return: A dict containing:
+            - `updated_value`: the updated `no_followup` value (`True` or `False`)
+            - `updated_line_ids`: a list of the impacted report lines
+        """
+        model, aml_id = self.env['account.report']._get_model_info_from_id(line_id)
+        if model != 'account.move.line':
+            return None
+        aml = self.env['account.move.line'].browse(aml_id)
+        aml.no_followup = not aml.no_followup
+
+        aml_id_to_line_id = {}
+        for cur_line_id in all_line_ids:
+            model, record_id = self.env['account.report']._get_model_info_from_id(cur_line_id)
+            if model == 'account.move.line':
+                aml_id_to_line_id[record_id] = cur_line_id
+
+        res = {'updated_value': aml.no_followup, 'updated_line_ids': [aml_id_to_line_id[aml.id]]}
+        move = aml.move_id
+        if move.is_invoice():
+            # For invoices, the `no_followup` toggle will impact all its receivable/payable lines.
+            res['updated_line_ids'] = move.line_ids.filtered(
+                lambda line: line.account_type in ('asset_receivable', 'liability_payable'),
+            ).mapped(lambda line: aml_id_to_line_id[line.id])
+        return res
+
     def _query_partners(self, report, options):
         """ Executes the queries and performs all the computation.
         :return:        A list of tuple (partner, column_group_values) sorted by the table's model _order:
@@ -519,7 +553,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 '''
                 SELECT
                     account_move_line.id,
-                    COALESCE(account_move_line.date_maturity, account_move_line.date) AS date_maturity,
+                    account_move_line.date_maturity,
                     account_move_line.name,
                     account_move_line.ref,
                     account_move_line.parent_state,
@@ -530,6 +564,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     account_move_line.currency_id,
                     account_move_line.amount_currency,
                     account_move_line.matching_number,
+                    account_move_line.no_followup,
                     %(additional_columns)s
                     COALESCE(account_move_line.invoice_date, account_move_line.date) AS invoice_date,
                     %(debit_select)s                                                 AS debit,
@@ -585,6 +620,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     account_move_line.currency_id,
                     account_move_line.amount_currency,
                     account_move_line.matching_number,
+                    account_move_line.no_followup,
                     %(additional_columns)s
                     COALESCE(account_move_line.invoice_date, account_move_line.date) AS invoice_date,
                     %(debit_select)s                                                 AS debit,
@@ -751,6 +787,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'caret_options': caret_type,
             'level': 3 + level_shift,
             'is_draft': aml_query_result['parent_state'] == 'draft',
+            'no_followup': aml_query_result['no_followup'],
         }
 
     def _get_report_line_total(self, options, totals_by_column_group):

@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-from odoo import models, fields
-from odoo.tools import Query, SQL
+from odoo import fields, models
+from odoo.tools import SQL, Query
 
 
 class AccountMoveLine(models.Model):
@@ -15,9 +12,9 @@ class AccountMoveLine(models.Model):
         if groupby_spec != 'followup_overdue':
             return super()._read_group_groupby(alias, groupby_spec, query)
         return SQL(
-            """%s < %s""",
-            self._field_to_sql(self._table, 'date_maturity', query),
-            fields.Date.context_today(self),
+            "%(date_maturity)s IS NOT NULL AND %(date_maturity)s < %(current_date)s",
+            date_maturity=self._field_to_sql(self._table, 'date_maturity', query),
+            current_date=fields.Date.context_today(self),
         )
 
     def _read_group_empty_value(self, spec):

@@ -9,6 +9,8 @@ class CustomerStatementCustomHandler(models.AbstractModel):
     def _get_custom_display_config(self):
         display_config = super()._get_custom_display_config()
         display_config['css_custom_class'] += ' customer_statement'
+        display_config['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
+        display_config['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
         return display_config
 
     def _custom_options_initializer(self, report, options, previous_options):

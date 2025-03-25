@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from unittest.mock import patch
 from freezegun import freeze_time
 from odoo import Command, fields
@@ -162,6 +161,17 @@ class TestAccountFollowupReports(TestAccountFollowupCommon, MailCommon):
 
         with freeze_time('2022-02-03'):
             # followup_next_action_date exceeded and invoice not reconciled yet
+            self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', self.second_followup_line)
+
+            aml_ids = self.partner_a.unreconciled_aml_ids
+
+            # Exclude every unreconciled invoice line.
+            aml_ids.no_followup = True
+            # Every unreconciled invoice line is excluded, so the result should be `no_action_needed`.
+            self.assertPartnerFollowup(self.partner_a, 'no_action_needed', self.second_followup_line)
+
+            # It resets if we don't exclude them anymore.
+            aml_ids.no_followup = False
             self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', self.second_followup_line)
 
             self.env['account.payment.register'].create({

@@ -970,6 +970,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
                         'account_id': self.company_data['default_account_receivable'].id,
                         'debit': 500.0,
                         'credit': 0.0,
+                        'no_followup': False,
                     }),
                     Command.create({
                         'name': 'counterpart line',
