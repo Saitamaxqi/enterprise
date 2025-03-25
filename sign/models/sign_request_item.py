@@ -440,7 +440,7 @@ class SignRequestItem(models.Model):
         else:
             linked_record = self.sign_request_id.reference_doc
             model = linked_record and self.env['ir.model']._get(linked_record._name)
-            if not model or not model.is_mail_thread:
+            if not model or not model.is_mail_thread or linked_record._name != item_type_sudo.model_id.model:
                 return ''
             record = linked_record
         try:
