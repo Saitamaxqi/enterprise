@@ -146,6 +146,9 @@ class ProductTemplate(models.Model):
             'base_unit_price': 0,
             'base_unit_name': False,
             'pricing_table': pricing_table,
+            'prevent_zero_price_sale': website.prevent_zero_price_sale and currency.is_zero(
+                current_price,
+            ),
         }
 
     @api.model

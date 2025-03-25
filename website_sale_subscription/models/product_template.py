@@ -116,15 +116,19 @@ class ProductTemplate(models.Model):
             })
             return res
 
+        unit_price = default_pricing['price_value'] if default_pricing else 0
         return {
             **res,
             'is_subscription': True,
             'pricings': pricings,
             'is_plan_possible': possible_pricing_count > 0,
-            'price': default_pricing['price_value'] if default_pricing else 0,
+            'price': unit_price,
             'subscription_default_pricing_price': default_pricing['price'] if default_pricing else '',
             'subscription_default_pricing_plan_id': default_pricing['plan_id'] if default_pricing else False,
             'subscription_pricing_select': possible_pricing_count > 1,
+            'prevent_zero_price_sale': website.prevent_zero_price_sale and currency.is_zero(
+                unit_price,
+            ),
         }
 
     # Search bar
