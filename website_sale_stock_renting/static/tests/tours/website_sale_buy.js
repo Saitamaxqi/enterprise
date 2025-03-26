@@ -44,6 +44,11 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
             run: "edit 12:00",
         },
         {
+            content: 'Apply change',
+            trigger: 'input[name=renting_start_date]',
+            run: 'press Enter',
+        },
+        {
             content: "Add one quantity",
             trigger: '.css_quantity a.js_add_cart_json i.fa-plus',
             run: "click",
