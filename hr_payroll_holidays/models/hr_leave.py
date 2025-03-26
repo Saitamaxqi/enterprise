@@ -92,10 +92,10 @@ class HrLeave(models.Model):
                 user_id=leave.employee_id.company_id.deferred_time_off_manager.id or self.env.ref('base.user_admin').id)
         return super(HrLeave, self - leaves_to_defer)._cancel_work_entry_conflict()
 
-    def activity_feedback(self, act_type_xmlids, user_id=None, feedback=None):
+    def activity_feedback(self, act_type_xmlids, user_id=None, feedback=None, attachment_ids=None, only_automated=True):
         if 'hr_payroll_holidays.mail_activity_data_hr_leave_to_defer' in act_type_xmlids:
             self.write({'payslip_state': 'done'})
-        return super().activity_feedback(act_type_xmlids, user_id=user_id, feedback=feedback)
+        return super().activity_feedback(act_type_xmlids, user_id=user_id, feedback=feedback, attachment_ids=attachment_ids, only_automated=only_automated)
 
     def action_report_to_next_month(self):
         for leave in self:

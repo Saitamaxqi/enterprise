@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    def _cart_add(self, product_id, quantity=1.0, plan_id=None, **kwargs):
+    def _cart_add(self, product_id, quantity=1.0, *, plan_id=None, **kwargs):
         product = self.env['product.product'].browse(product_id)
         if product.recurring_invoice:
             if plan_id and self.plan_id and self.plan_id.id != plan_id:

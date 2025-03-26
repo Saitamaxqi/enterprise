@@ -8,7 +8,7 @@ from odoo.fields import Datetime
 class MailingTrace(models.Model):
     _inherit = 'mailing.trace'
 
-    def set_failed(self, domain=None, failure_type=None):
+    def set_failed(self, domain=None, failure_type=False):
         traces = super(MailingTrace, self).set_failed(domain=domain, failure_type=failure_type)
         traces.marketing_trace_id.write({
             'state': 'error',

@@ -1,14 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime
+from odoo import models
 
-from odoo import api, models, fields, _
-from odoo.addons.resource.models.utils import filter_domain_leaf
 
 class SaleCommissionReport(models.Model):
     _inherit = 'sale.commission.report'
 
-    def _query(self, where_sales=None, where_invoices=None):
+    def _query(self):
         users = self.env.context.get('commission_user_ids', [])
         if users:
             users = self.env['res.users'].browse(users).exists()

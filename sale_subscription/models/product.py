@@ -98,7 +98,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_configurator_price(
-        self, product_or_template, quantity, date, currency, pricelist, plan_id=None, **kwargs
+        self, product_or_template, quantity, date, currency, pricelist, *, plan_id=None, **kwargs
     ):
         """ Override of `sale` to compute the subscription price.
 
@@ -132,7 +132,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_additional_configurator_data(
-        self, product_or_template, date, currency, pricelist, plan_id=None, **kwargs
+        self, product_or_template, date, currency, pricelist, *, plan_id=None, **kwargs
     ):
         """ Override of `sale` to append subscription data.
 

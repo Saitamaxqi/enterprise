@@ -24,7 +24,7 @@ class ProductPricelist(models.Model):
                 ))
 
     def _compute_price_rule(
-        self, products, quantity, currency=None, date=False, start_date=None, end_date=None,
+        self, products, quantity, *, currency=None, date=False, start_date=None, end_date=None,
         **kwargs
     ):
         """ Override to handle the rental product price

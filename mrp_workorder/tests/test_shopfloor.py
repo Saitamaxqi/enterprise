@@ -270,7 +270,7 @@ class TestShopFloor(HttpCase):
         mo.picking_ids.button_validate()
         # Simulate "Add Component" from the Shop Floor.
         kwargs = {'from_shop_floor': True}
-        mo._update_order_line_info(product_comp2.id, 1, 'move_raw_ids', **kwargs)
+        mo._update_order_line_info(product_comp2.id, 1, child_field='move_raw_ids', **kwargs)
         self.assertEqual(len(mo.picking_ids), 2, "A second picking should have been created for the MO")
         self.assertEqual(mo.components_availability_state, 'available', "MO should still be ready nevertheless")
         second_picking = mo.picking_ids.filtered(lambda p: p.state == 'assigned')
@@ -282,7 +282,7 @@ class TestShopFloor(HttpCase):
             {'product_id': product_comp2.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': False},
         ])
         # Simulate adding more quantity from the Shop Floor.
-        mo._update_order_line_info(product_comp2.id, 2, 'move_raw_ids', **kwargs)
+        mo._update_order_line_info(product_comp2.id, 2, child_field='move_raw_ids', **kwargs)
         self.assertEqual(len(mo.picking_ids), 2, "No other picking should have been created")
         self.assertEqual(mo.components_availability_state, 'available', "MO should still be ready")
         self.assertRecordValues(second_picking.move_ids, [
@@ -295,7 +295,7 @@ class TestShopFloor(HttpCase):
         # starts the MO and simulate adding more quantity from the Shop Floor.
         mo.action_start()
         self.assertEqual(mo.state, 'progress')
-        mo._update_order_line_info(product_comp2.id, 3, 'move_raw_ids', **kwargs)
+        mo._update_order_line_info(product_comp2.id, 3, child_field='move_raw_ids', **kwargs)
         self.assertEqual(len(mo.picking_ids), 2, "No other picking should have been created")
         self.assertEqual(mo.components_availability_state, 'available', "MO should still be ready")
         self.assertRecordValues(second_picking.move_ids, [

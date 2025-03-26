@@ -42,7 +42,7 @@ class Pos_Preparation_DisplayDisplay(models.Model):
         orders = self._get_pos_orders()
         self._notify("NEW_ORDERS", orders)
 
-    def _send_load_orders_message(self, sound=False, notification=False):
+    def _send_load_orders_message(self, sound=False, notification=None):
         super()._send_load_orders_message(sound, notification)
         self._send_orders_to_customer_display()
 

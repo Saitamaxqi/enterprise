@@ -75,7 +75,7 @@ class AccountJournal(models.Model):
                 Cdtr.append(self._get_PstlAdr(partner, payment_method_code))
         return CdtTrfTxInf
 
-    def _get_RmtInf_content(self, ref, reference_type):
+    def _get_RmtInf_content(self, ref, reference_type=''):
         if reference_type == 'be':
             return self.get_strd_tree(ref, cd='SCOR', issr='BBA')
         elif reference_type == 'ch':

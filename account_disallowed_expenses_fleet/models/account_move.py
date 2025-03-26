@@ -13,7 +13,7 @@ class AccountMoveLine(models.Model):
             record.need_vehicle = record.account_id.disallowed_expenses_category_id.sudo().car_category and record.move_id.move_type == 'in_invoice'
 
     @api.model
-    def _get_deferred_lines_values(self, account_id, balance, ref, analytic_distribution, line):
+    def _get_deferred_lines_values(self, account_id, balance, ref, analytic_distribution, line=None):
         deferred_lines_values = super()._get_deferred_lines_values(account_id, balance, ref, analytic_distribution, line)
         return {
             **deferred_lines_values,

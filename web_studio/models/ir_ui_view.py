@@ -573,7 +573,8 @@ class IrUiView(models.Model):
                     pass
         return source
 
-    def apply_inheritance_specs(self, source, specs_tree):
+    @api.model
+    def apply_inheritance_specs(self, source, specs_tree, pre_locate=None):
         # Add branding for groups if studio mode is on
         if self._context.get('studio'):
             self._groups_branding(specs_tree)
@@ -583,9 +584,10 @@ class IrUiView(models.Model):
             return self._apply_studio_specs(source, specs_tree)
         else:
             # Remove branding added by '_groups_branding' before locating a node
-            pre_locate = lambda arch: arch.attrib.pop("studio-view-group-ids", None)
-            return super().apply_inheritance_specs(source, specs_tree,
-                                                                pre_locate=pre_locate)
+            def pre_locate_studio(arch):
+                arch.attrib.pop("studio-view-group-ids", None)
+                return not pre_locate or pre_locate(arch)
+            return super().apply_inheritance_specs(source, specs_tree, pre_locate=pre_locate_studio)
 
     def _generate_trees_with_diff_key(self, parser, old_view):
         old_view_arch = etree.fromstring(old_view, parser)

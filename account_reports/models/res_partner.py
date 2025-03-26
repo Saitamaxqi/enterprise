@@ -9,7 +9,7 @@ class ResPartner(models.Model):
 
     account_represented_company_ids = fields.One2many('res.company', 'account_representative_id')
 
-    def _get_followup_responsible(self):
+    def _get_followup_responsible(self, multiple_responsible=False):
         return self.env.user
 
     def open_customer_statement(self):

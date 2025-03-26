@@ -180,6 +180,7 @@ class ProductTemplate(models.Model):
         date,
         currency,
         pricelist,
+        *,
         start_date=None,
         end_date=None,
         **kwargs,

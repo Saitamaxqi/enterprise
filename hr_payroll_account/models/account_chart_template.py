@@ -91,7 +91,7 @@ class AccountChartTemplate(models.AbstractModel):
             },
         }
 
-    def _get_demo_data(self, company):
+    def _get_demo_data(self, company=False):
         demo_data = super()._get_demo_data(company)
         if not self.env['account.account'].search_count(
             [

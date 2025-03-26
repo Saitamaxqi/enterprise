@@ -31,7 +31,7 @@ class ReportMrpReport_Bom_Structure(models.AbstractModel):
             res['ecos'] = self.env['mrp.eco'].search_count([('product_tmpl_id', '=', res['product'].product_tmpl_id.id), ('state', '!=', 'done')]) or ''
         return res
 
-    def _get_bom_array_lines(self, data, level, unfolded_ids, unfolded, parent_unfolded):
+    def _get_bom_array_lines(self, data, level, unfolded_ids, unfolded, parent_unfolded=True):
         lines = super()._get_bom_array_lines(data, level, unfolded_ids, unfolded, parent_unfolded)
         if not self.env.user.has_group('mrp_plm.group_plm_user'):
             return lines

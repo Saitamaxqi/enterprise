@@ -76,7 +76,7 @@ class SaleOrder(models.Model):
             and self._get_renting_duration() >= self.company_id.renting_minimal_time_duration
         )
 
-    def _cart_add(self, product_id, quantity=1.0, start_date=None, end_date=None, **kwargs):
+    def _cart_add(self, product_id, quantity=1.0, *, start_date=None, end_date=None, **kwargs):
         product = self.env['product.product'].browse(product_id)
         if product.rent_ok:
             if start_date and end_date:
