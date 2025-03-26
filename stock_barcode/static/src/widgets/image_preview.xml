@@ -8,7 +8,7 @@
     </t>
 
     <t t-name="stock_barcode.FullScreenImage">
-        <div class="d-flex justify-content-center modal fixed-top bottom-0">
+        <div class="d-flex justify-content-center modal modal-fullscreen">
             <div class="o-FileViewer flex-column align-items-center d-flex w-100 h-100" tabindex="0">
                 <div class="o-FileViewer-header position-absolute top-0 w-100 bg-black-75">
                     <div class="text-end p-3 h2 text-white" role="button">
