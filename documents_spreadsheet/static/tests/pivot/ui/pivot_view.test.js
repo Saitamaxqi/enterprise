@@ -599,9 +599,11 @@ test("Add pivot sheet at the end of existing sheets", async () => {
 
 test("Add pivot in spreadsheet with already the same sheet name", async () => {
     const model = new Model();
+    const activeSheetId = model.getters.getActiveSheetId();
     model.dispatch("RENAME_SHEET", {
         sheetId: model.getters.getActiveSheetId(),
-        name: "Partners by Foo (Pivot #1)",
+        oldName: model.getters.getSheetName(activeSheetId),
+        newName: "Partners by Foo (Pivot #1)",
     });
     const models = getBasicData();
     models["documents.document"].records = [

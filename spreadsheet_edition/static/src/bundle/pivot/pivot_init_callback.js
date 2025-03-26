@@ -99,9 +99,11 @@ export function insertPivot(pivotData) {
             });
             model.dispatch("ACTIVATE_SHEET", { sheetIdFrom, sheetIdTo: sheetId });
         } else {
+            const sheetId = model.getters.getActiveSheetId()
             model.dispatch("RENAME_SHEET", {
-                sheetId: model.getters.getActiveSheetId(),
-                name: sheetName,
+                sheetId,
+                oldName: model.getters.getSheetName(sheetId),
+                newName: sheetName,
             });
         }
         const sheetId = model.getters.getActiveSheetId();
