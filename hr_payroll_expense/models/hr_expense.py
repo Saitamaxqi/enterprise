@@ -126,7 +126,7 @@ class HrExpense(models.Model):
                 vals.get('refund_in_payslip')
                 and not self.env.user.has_groups(
                     'account.group_account_invoice,'
-                    'hr_contract.group_hr_payroll_user,'
+                    'hr_payroll.group_hr_payroll_user,'
                 )
                 and not self.env.su
         ):
