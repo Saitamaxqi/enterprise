@@ -316,6 +316,13 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         )
 
         # Ensure the amount remains correct after recomputation
-        self.assertEqual(batch_payment.amount_residual, 0)
-        self.assertEqual(batch_payment.amount_residual_currency, 0)
+        # When accountant is not installed, payments with paid state
+        # should be counted when recomputing amount_residual 
+        if self.env['ir.module.module']._get('accountant').state == 'installed':
+            self.assertEqual(batch_payment.amount_residual, 0)
+            self.assertEqual(batch_payment.amount_residual_currency, 0)
+        else:
+            self.assertEqual(batch_payment.amount_residual, 200)
+            self.assertEqual(batch_payment.amount_residual_currency, 200)
         self.assertEqual(batch_payment.amount, 200)
+
