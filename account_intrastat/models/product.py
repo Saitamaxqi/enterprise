@@ -29,11 +29,27 @@ class ProductTemplate(models.Model):
         string='Country of Origin',
         readonly=False,
     )
+    # remove in master
     valid_intrastat_code_ids = fields.Many2many(
         string="Intrastat Code IDs",
         comodel_name='account.intrastat.code',
         compute="_compute_valid_intrastat_code_ids",
     )
+    intrastat_code_domain = fields.Char(
+        compute='_compute_intrastat_code_domain',
+    )
+
+    @api.depends('type')
+    def _compute_intrastat_code_domain(self):
+        """Dynamically compute the domain for intrastat_code_id."""
+        country_id = self.env.company.account_fiscal_country_id.id
+        for product in self:
+            domain = [('country_id', 'in', (country_id, False))]
+            if product.type == 'service' and self.env["account.intrastat.code"].search_count([("country_id", "in", (country_id, False)), ("type", "=", "service")], limit=1):
+                domain.append(('type', '=', 'service'))
+            else:
+                domain.append(('type', '=', 'commodity'))
+            product.intrastat_code_domain = str(domain)
 
     @api.depends('product_variant_ids')
     def _compute_intrastat_values(self):
@@ -44,6 +60,7 @@ class ProductTemplate(models.Model):
             product_template.intrastat_supplementary_unit_amount = variant.intrastat_supplementary_unit_amount
             product_template.intrastat_origin_country_id = variant.intrastat_origin_country_id
 
+    # remove in master
     @api.depends('type')
     def _compute_valid_intrastat_code_ids(self):
         valid_intrastat_code = dict(self.env['account.intrastat.code']._read_group(

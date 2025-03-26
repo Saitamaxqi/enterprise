@@ -10,11 +10,11 @@
                     <group name="intrastat" string="Intrastat" invisible="product_variant_count &gt; 1 and not is_product_variant" >
                         <label class="o_form_label" for="intrastat_code_id" invisible="type != 'consu'" string="Commodity Code"/>
                         <div class="o_row" invisible="type != 'consu'">
-                            <field name="intrastat_code_id" nolabel="1" domain="[('id', 'in', valid_intrastat_code_ids)]"/>
+                            <field name="intrastat_code_id" nolabel="1" domain="intrastat_code_domain"/>
                         </div>
                         <label class="o_form_label" for="intrastat_code_id" invisible="type != 'service'" string="Service Code"/>
                         <div class="o_row" invisible="type != 'service'">
-                            <field name="intrastat_code_id" nolabel="1" domain="[('id', 'in', valid_intrastat_code_ids)]"/>
+                            <field name="intrastat_code_id" nolabel="1" domain="intrastat_code_domain"/>
                         </div>
                         <label for="intrastat_supplementary_unit_amount" invisible="not intrastat_code_id or not intrastat_supplementary_unit"/>
                         <div class="o_row" invisible="not intrastat_code_id or not intrastat_supplementary_unit">
