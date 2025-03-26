@@ -2,17 +2,19 @@ import { describe, expect, test } from "@odoo/hoot";
 import { click, drag, keyDown, pointerDown, queryFirst } from "@odoo/hoot-dom";
 import { advanceTime, animationFrame, mockDate, mockTouch } from "@odoo/hoot-mock";
 import {
+    defineMenus,
     getService,
     mockService,
     mountWithCleanup,
+    mountWebClient,
     onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 
-import { reactive } from "@odoo/owl";
 import { session } from "@web/session";
 import { HomeMenu } from "@web_enterprise/webclient/home_menu/home_menu";
 import { reorderApps } from "@web/webclient/menus/menu_helpers";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 
 async function walkOn(path) {
     for (const step of path) {
@@ -229,23 +231,22 @@ test("Navigation and open an app in the home menu", async () => {
 });
 
 test("Reorder apps in home menu using drag and drop", async () => {
-    const homeMenuProps = {
-        apps: reactive(
-            new Array(8).fill().map((x, i) => {
-                return {
-                    actionID: 121,
-                    href: "/odoo/action-121",
-                    appID: i + 1,
-                    id: i + 1,
-                    label: `0${i}`,
-                    parents: "",
-                    webIcon: false,
-                    xmlid: `app.${i}`,
-                };
-            })
-        ),
-        reorderApps: (order) => reorderApps(homeMenuProps.apps, order),
-    };
+
+    const apps = [];
+    for (let i = 0; i < 8; i++) {
+        apps.push({
+            actionID: 121,
+            href: "/odoo/action-121",
+            appID: i + 1,
+            id: i + 1,
+            label: `0${i}`,
+            parents: "",
+            webIcon: false,
+            xmlid: `app.${i}`,
+        });
+    }
+    defineMenus(apps);
+
     onRpc("set_res_users_settings", () => {
         expect.step(`set_res_users_settings`);
         return {
@@ -253,10 +254,7 @@ test("Reorder apps in home menu using drag and drop", async () => {
             homemenu_config: '["app.1","app.2","app.3","app.0","app.4","app.5","app.6","app.7"]',
         };
     });
-    await mountWithCleanup(HomeMenu, {
-        props: homeMenuProps,
-    });
-
+    await mountWebClient({ WebClient: WebClientEnterprise });
     const { moveTo, drop } = await drag(".o_draggable:first-child");
     await advanceTime(250);
     expect(".o_draggable:first-child a").not.toHaveClass("o_dragged_app");
