@@ -412,6 +412,7 @@ class TestShopFloor(HttpCase):
             'product_qty': 1,
             'bom_id': bom.id,
         })
+        mo.picking_type_id.prefill_shop_floor_lots = True
         mo.action_confirm()
         mo.action_assign()
         mo.button_plan()
@@ -419,6 +420,7 @@ class TestShopFloor(HttpCase):
         action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.action_mrp_display")
         url = f"/odoo/action-{action['id']}"
         self.start_tour(url, "test_generate_serials_in_shopfloor", login='admin')
+        self.assertEqual(mo.move_byproduct_ids.lot_ids.name, "00001")
 
     def test_canceled_wo(self):
         finished = self.env['product.product'].create({
