@@ -70,6 +70,7 @@ class AccountReport(models.AbstractModel):
                 'forced_options': {
                     'analytic_groupby_option': True,
                     'analytic_accounts_list': tuple(account_list),  # Analytic accounts used in the domain to filter the lines.
+                    'analytic_plan_id': plan.id,
                 }
             })
 

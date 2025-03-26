@@ -641,3 +641,39 @@ class TestAnalyticReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_analytic_groupby_plans_without_analytic_accounts(self):
+        """
+        Ensure that grouping on several analytic plans without any analytic accounts works as expected
+        """
+        analytic_plans_without_accounts = self.env['account.analytic.plan'].create([
+            {'name': 'Plan 1'},
+            {'name': 'Plan 2'},
+        ])
+
+        options = self._generate_options(
+            self.report, '2019-01-01', '2019-12-31',
+            default_options={'analytic_plans_groupby': analytic_plans_without_accounts.ids}
+        )
+
+        self.assertEqual(
+            len(options['column_groups']), 3,
+            "the number of column groups should be 3, despite the 2 analytic plans having the exact same analytic accounts list"
+        )
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #                                     Plan 1        Plan 2         Total
+            [   0,                                     1,          2,             3],
+            [
+                ('Revenue',                         0.00,       0.00,          0.00),
+                ('Less Costs of Revenue',           0.00,       0.00,          0.00),
+                ('Gross Profit',                    0.00,       0.00,          0.00),
+                ('Less Operating Expenses',         0.00,       0.00,          0.00),
+                ('Operating Income (or Loss)',      0.00,       0.00,          0.00),
+                ('Plus Other Income',               0.00,       0.00,          0.00),
+                ('Less Other Expenses',             0.00,       0.00,          0.00),
+                ('Net Profit',                      0.00,       0.00,          0.00),
+            ],
+            options,
+        )
