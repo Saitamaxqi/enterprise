@@ -13,15 +13,17 @@ import {
 } from "@odoo/hoot-dom";
 import { Deferred, advanceTime, animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import {
+    asyncStep,
     contains,
     defineParams,
     fields,
     mockService,
     onRpc,
     patchWithCleanup,
-    validateSearch,
     toggleMenuItem,
     toggleSearchBarMenu,
+    validateSearch,
+    waitForSteps,
 } from "@web/../tests/web_test_helpers";
 import { ResUsers, Tasks, defineGanttModels } from "./gantt_mock_models";
 import {
@@ -43,8 +45,8 @@ import {
     selectRange,
 } from "./web_gantt_test_helpers";
 
-import { omit, pick } from "@web/core/utils/objects";
 import { deserializeDate } from "@web/core/l10n/dates";
+import { omit, pick } from "@web/core/utils/objects";
 
 // Hard-coded daylight saving dates from 2019
 const DST_DATES = {
@@ -2569,14 +2571,14 @@ test("Select a range via the range menu", async () => {
 
 test("Select range with left/rigth arrows", async () => {
     onRpc("get_gantt_data", ({ kwargs }) => {
-        expect.step(kwargs.domain);
+        asyncStep(kwargs.domain);
     });
 
     await mountGanttView({
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop" default_range="month"/>',
     });
-    expect.verifySteps([
+    await waitForSteps([
         ["&", ["start", "<", "2019-01-31 23:00:00"], ["stop", ">", "2018-10-31 23:00:00"]],
     ]);
 
@@ -2589,7 +2591,7 @@ test("Select range with left/rigth arrows", async () => {
     await click(SELECTORS.previousButton);
     await ganttControlsChanges();
 
-    expect.verifySteps([
+    await waitForSteps([
         ["&", ["start", "<", "2019-03-31 23:00:00"], ["stop", ">", "2018-12-31 23:00:00"]],
     ]);
     content = getGridContent();
@@ -2597,7 +2599,7 @@ test("Select range with left/rigth arrows", async () => {
 
     await press("alt+n");
     await ganttControlsChanges();
-    expect.verifySteps([
+    await waitForSteps([
         ["&", ["start", "<", "2019-04-30 23:00:00"], ["stop", ">", "2019-01-31 23:00:00"]],
     ]);
     content = getGridContent();
