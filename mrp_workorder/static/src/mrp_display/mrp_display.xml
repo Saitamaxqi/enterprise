@@ -65,7 +65,7 @@
             <div t-if="state.firstLoad" class="h-100 w-100 bg-cover d-flex justify-content-around align-items-end" style="background: no-repeat center / contain url('/mrp_workorder/static/img/drawing.svg')">
                 <button class="btn btn-lg btn-primary mb-5" t-on-click="() => this.toggleWorkcenterDialog()">Configure Station</button>
             </div>
-            <main t-else="" class="o_content o_component_with_search_panel">
+            <main t-else="" class="o_mrp_display_content o_content o_component_with_search_panel">
                 <MrpDisplayEmployeesPanel t-if="groups.workorders" employees="useEmployee.employees"
                     setSessionOwner.bind="useEmployee.toggleSessionOwner"
                     popupAddEmployee.bind="popupAddEmployee"/>
