@@ -2202,6 +2202,11 @@ covered for the company (teleworking costs, mobile phone, internet, etc., namely
             <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_s0"/>
             <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_cp200_occupation_deduction_3000_s0_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">11233.89</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_s0"/>
+            <field name="date_from" eval="datetime(2025, 7, 1).date()"/> <!-- Applied from April for Q2 (declared in July) -->
+        </record>
 
         <record id="rule_parameter_cp200_occupation_deduction_3000_gamma" model="hr.rule.parameter">
             <field name="name">CP200: Occupation deduction 3000 Gamma (reduction structurelle)</field>
@@ -2223,6 +2228,11 @@ covered for the company (teleworking costs, mobile phone, internet, etc., namely
             <field name="parameter_value">6943.32</field>
             <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_s2"/>
             <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_cp200_occupation_deduction_3000_s2_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">7082.19</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_s2"/>
+            <field name="date_from" eval="datetime(2025, 7, 1).date()"/>
         </record>
 
         <record id="rule_parameter_l10n_be_mobility_budget_max_amount" model="hr.rule.parameter">
