@@ -1,6 +1,7 @@
 import { StudioNavbar } from "@web_studio/client_action/navbar/navbar";
 import { patch } from "@web/core/utils/patch";
 import { resetViewCompilerCache } from "@web/views/view_compiler";
+import { rpcBus } from "@web/core/network/rpc";
 
 patch(StudioNavbar.prototype, {
     /**
@@ -18,7 +19,7 @@ patch(StudioNavbar.prototype, {
                     stackPosition: "replacePreviousAction",
                 });
                 resetViewCompilerCache();
-                this.env.bus.trigger("CLEAR-CACHES");
+                rpcBus.trigger("CLEAR-CACHES");
                 return;
             }
         }

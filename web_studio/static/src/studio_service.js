@@ -7,6 +7,7 @@ import { useService } from "@web/core/utils/hooks";
 import { router, routerBus } from "@web/core/browser/router";
 import { Cache } from "@web/core/utils/cache";
 import { user } from "@web/core/user";
+import { rpcBus } from "@web/core/network/rpc";
 
 const URL_VIEW_KEY = "_view_type";
 const URL_TAB_KEY = "_tab";
@@ -325,7 +326,7 @@ export const studioService = {
             if (!inStudio) {
                 throw new Error("leave when not in studio???");
             }
-            env.bus.trigger("CLEAR-CACHES");
+            rpcBus.trigger("CLEAR-CACHES");
             IrModelInfo.invalidate();
             // since odoo/odoo@2e891626b071a04d1a5dd3d3c40cc24a12dcb1fb
             // template cache key is composed with the name of the compiler
@@ -383,7 +384,7 @@ export const studioService = {
 
         async function reload(params = {}, reset = true) {
             resetViewCompilerCache();
-            env.bus.trigger("CLEAR-CACHES");
+            rpcBus.trigger("CLEAR-CACHES");
             const actionContext = state.editedAction.context;
             let additionalContext;
             if (actionContext.active_id) {

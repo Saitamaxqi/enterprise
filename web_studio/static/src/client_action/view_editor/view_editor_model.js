@@ -1,4 +1,4 @@
-import { rpc } from "@web/core/network/rpc";
+import { rpc, rpcBus } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { SearchModel } from "@web/search/search_model";
 import {
@@ -117,11 +117,10 @@ export class ViewEditorModel extends Reactive {
                 this._services.ui.unblock();
             }
         };
-        this._decorateFunction = (callback) => {
-            return async (...args) => {
-                return this._decorateCall(callback, ...args);
-            };
-        };
+        this._decorateFunction =
+            (callback) =>
+            async (...args) =>
+                this._decorateCall(callback, ...args);
 
         this._decoratedRpc = this._decorateFunction(rpc);
 
@@ -285,9 +284,7 @@ export class ViewEditorModel extends Reactive {
         // to the interactive editor.
         this._currentSidebarTab = undefined;
 
-        this._getFieldsAllowedRename = memoizeOnce(() => {
-            return new Set();
-        });
+        this._getFieldsAllowedRename = memoizeOnce(() => new Set());
     }
 
     //-----------------------------------------------------------------
@@ -424,7 +421,7 @@ export class ViewEditorModel extends Reactive {
 
     async editX2ManyView({ viewType, fieldName, record, xpath, fieldContext }) {
         const staticList = record.data[fieldName];
-        const resIds = staticList.records.map((r) => r.resId).filter(id => !!id);
+        const resIds = staticList.records.map((r) => r.resId).filter((id) => !!id);
         const resModel = staticList.resModel;
         const archTag = viewType;
 
@@ -460,9 +457,9 @@ export class ViewEditorModel extends Reactive {
         await this._decorateCall(() => this.fieldsGet(resModel));
 
         const context = Object.fromEntries(
-            Object.entries(fieldContext).filter(([key, val]) => {
-                return !key.startsWith("default_") && !key.endsWith("_view_ref");
-            })
+            Object.entries(fieldContext).filter(
+                ([key, val]) => !key.startsWith("default_") && !key.endsWith("_view_ref")
+            )
         );
 
         const x2ManyEditionInfo = {
@@ -475,9 +472,9 @@ export class ViewEditorModel extends Reactive {
             parentRecord: record,
             xpath: `${xpath}/${archTag}[${position}]`, // /form[x]/field[y]/list[z]
             fieldName,
-            getArch: memoizeOnce((mainArch) => {
-                return getSubArch(mainArch, xpathToField, archTag, position);
-            }),
+            getArch: memoizeOnce((mainArch) =>
+                getSubArch(mainArch, xpathToField, archTag, position)
+            ),
         };
         this._editionFlow.pushBreadcrumb(x2ManyEditionInfo);
     }
@@ -511,7 +508,7 @@ export class ViewEditorModel extends Reactive {
         if (!this.mainView.id) {
             // the call to getStudioViewArch has created the view in DB (before that, it was the default_view)
             // Clear the caches, in particular the one of the viewService to aknowledge that.
-            this.env.bus.trigger("CLEAR-CACHES");
+            rpcBus.trigger("CLEAR-CACHES");
             this.mainView.id = mainViewId;
         }
     }
@@ -690,7 +687,7 @@ export class ViewEditorModel extends Reactive {
             subview_xpath: fullXpath,
             context,
         });
-        this.env.bus.trigger("CLEAR-CACHES");
+        rpcBus.trigger("CLEAR-CACHES");
         return studioViewArch;
     }
 
@@ -755,7 +752,7 @@ export class ViewEditorModel extends Reactive {
     }
 
     _handleDone({ mode, pending, pendingUndone, result }) {
-        this.env.bus.trigger("CLEAR-CACHES");
+        rpcBus.trigger("CLEAR-CACHES");
         if (this.mainViewType === "kanban") {
             // the cache is on a by-template basis
             // kanban may have multiple t-name templates

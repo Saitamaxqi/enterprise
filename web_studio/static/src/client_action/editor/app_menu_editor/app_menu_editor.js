@@ -1,5 +1,5 @@
 import { Component, useRef, useState } from "@odoo/owl";
-import { rpc } from "@web/core/network/rpc";
+import { rpc, rpcBus } from "@web/core/network/rpc";
 import { useBus, useService, useOwnedDialogs } from "@web/core/utils/hooks";
 import { Dialog } from "@web/core/dialog/dialog";
 import { user } from "@web/core/user";
@@ -165,7 +165,7 @@ class EditMenuDialog extends Component {
                     parent_menu_id: this.mainItem.id,
                     context: user.context,
                 });
-                this.env.bus.trigger("CLEAR-CACHES");
+                rpcBus.trigger("CLEAR-CACHES");
                 this.menus.reload();
             },
         });

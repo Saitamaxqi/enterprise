@@ -8,11 +8,11 @@ import { useApproval } from "@web_studio/approval/approval_hook";
 import { StudioApproval } from "@web_studio/approval/studio_approval";
 
 registry.category("services").add("clear_caches_on_approval_rules_change", {
-    start(env) {
+    start() {
         rpcBus.addEventListener("RPC:RESPONSE", (ev) => {
             const { model, method } = ev.detail.data.params;
             if (["studio.approval.rule"].includes(model) && UPDATE_METHODS.includes(method)) {
-                env.bus.trigger("CLEAR-CACHES");
+                rpcBus.trigger("CLEAR-CACHES");
             }
         });
     },

@@ -81,7 +81,6 @@ export class Editor extends Component {
         useBus(globalBus, "MENUS:APP-CHANGED", (ev) =>
             newBus.trigger("MENUS:APP-CHANGED", ev.detail)
         );
-        newBus.addEventListener("CLEAR-CACHES", () => globalBus.trigger("CLEAR-CACHES"));
 
         useSubEnv({
             bus: newBus,
