@@ -29,7 +29,7 @@ class TestUi(TestFrontend):
         })
 
         cls.pos_config.write({
-            'module_pos_restaurant_appointment': True,
+            'module_pos_appointment': True,
             'appointment_type_id': cls.appointment_type.id,
         })
 

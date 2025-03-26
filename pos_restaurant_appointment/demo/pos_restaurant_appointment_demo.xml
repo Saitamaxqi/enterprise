@@ -49,7 +49,7 @@
 
     <!-- Pos Config override -->
     <record id="pos_restaurant.pos_config_main_restaurant" model="pos.config">
-        <field name="module_pos_restaurant_appointment">True</field>
+        <field name="module_pos_appointment">True</field>
         <field name="appointment_type_id" ref="appointment_type_restaurant_table"/>
     </record>
 

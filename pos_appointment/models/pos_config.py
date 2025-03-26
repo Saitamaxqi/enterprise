@@ -1,7 +1,6 @@
-  # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import  api, fields, models
+from odoo import api, fields, models
 
 
 class PosConfig(models.Model):
@@ -11,4 +10,4 @@ class PosConfig(models.Model):
 
     @api.depends('appointment_type_id')
     def _compute_local_data_integrity(self):
-       super()._compute_local_data_integrity()
+        super()._compute_local_data_integrity()
