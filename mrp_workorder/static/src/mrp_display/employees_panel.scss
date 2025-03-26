@@ -1,20 +1,15 @@
 .o_mrp_employees_panel {
-    --SearchPanel-width: 100%;
-
     @include media-breakpoint-up(md) {
-        --SearchPanel-width: 250px;
+        min-width: 18rem;
+        --SearchPanel-width: 18rem;
     }
 
     .o_admin_user {
-        background-color: $list-group-active-bg !important;
-        border-left: 5px solid $list-group-active-border-color;
+        background-color: $list-group-active-bg;
+        box-shadow: inset map-get($spacers, 1) 0 0 $list-group-active-border-color;
     }
 
     .o_previous_admin_user {
-        border-left: 5px solid $orange;
-    }
-
-    .o_minutes {
-        color: $list-group-active-border-color;
+        box-shadow: inset map-get($spacers, 1) 0 0 $warning;
     }
 }

@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpDisplayEmployeesPanel">
-        <div class="o_search_panel o_mrp_employees_panel position-relative position-md-sticky top-0 z-1 bottom-0 flex-grow-0 flex-shrink-0 h-md-100 bg-view border-end"
+        <div class="o_search_panel o_mrp_employees_panel d-flex flex-column border-end h-100 bg-view"
              t-att-class="env.searchModel.searchPanelInfo.className" t-ref="root">
-            <ul class="list-group h-100 overflow-auto pb-5">
+            <ul class="list-group h-100 overflow-y-auto">
                 <li t-foreach="props.employees.connected" t-as="employee" t-key="employee.id"
-                    class="list-group-item py-3 cursor-pointer d-flex border-end-0 border-top-0"
+                    class="list-group-item d-flex gap-2 py-2 cursor-pointer border-end-0 border-top-0"
                     t-on-click="() => props.setSessionOwner(employee.id,pin)"
-                    t-att-class="{'bg-view': !employee.workcenters.length, 'o_admin_user': employee.id === props.employees.admin.id, 'o_previous_admin_user': employee.isPreviousAdmin}">
+                    t-att-class="{'o_admin_user': employee.id === props.employees.admin.id, 'o_previous_admin_user': employee.isPreviousAdmin}">
                     <img t-attf-src="/web/image/hr.employee/{{employee.id}}/avatar_128"
-                        class="rounded-circle o_avatar_connected"
+                        class="o_avatar_connected rounded-circle"
                         t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}"/>
-                    <div class="d-flex flex-column ps-3 w-100 gap-1">
-                        <div class="d-flex justify-content-between">
-                            <div class="fw-bold"
-                             t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}"
-                             t-esc="employee.name"/>
-                            <i class="fa fa-unlock-alt" t-if="employee.id === props.employees.admin.id"/>
-                            <i class="fa fa-lock" t-if="employee.isPreviousAdmin"/>
+                    <div class="d-flex flex-column flex-grow-1 gap-1 overflow-auto">
+                        <div class="d-flex justify-content-between align-items-center gap-2">
+                            <span class="fw-bold text-truncate"
+                             t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}" t-esc="employee.name"/>
+                            <i class="fa fa-unlock-alt" t-if="employee.id === props.employees.admin.id" role="img"/>
+                            <i class="fa fa-lock" t-if="employee.isPreviousAdmin" role="img"/>
                         </div>
                         <div t-foreach="employee.workcenters" t-as="wc" t-key="wc.id" class="d-flex justify-content-between">
-                            <span t-attf-class="rounded-1 fw-bold py-0 px-2 o_workcenter_item_color_{{wc.id % 11}}" t-esc="wc.name"/>
                             <span t-attf-class="o_tag o_tag_color_{{wc.id % 11}} badge rounded" t-esc="wc.name"/>
-                            <span class="o_minutes fw-bold" t-esc="Math.round(wc.duration) + '\''"/>
+                            <span class="o_tabular_nums fw-bold text-action" t-esc="Math.round(wc.duration) + '\''"/>
                         </div>
                         <div t-if="!employee.workcenters.length" class="d-flex justify-content-between">
                             <span class="text-muted">Inactive</span>
@@ -30,8 +28,8 @@
                     </div>
                 </li>
             </ul>
-            <div class="position-absolute bottom-0 p-3 w-100">
-                <button class="o_edit_operators btn btn-secondary text-center w-100 py-2"
+            <div class="p-3 w-100">
+                <button class="o_edit_operators btn btn-secondary w-100"
                 t-on-click="props.popupAddEmployee">
                 Edit Operators
             </button>
