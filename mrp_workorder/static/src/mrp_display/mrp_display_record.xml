@@ -34,8 +34,8 @@
                     </div>
                 </div>
                 <h5 t-if="record.name != record.display_name" class="mb-0 text-truncate fw-normal" t-out="record.name"/>
-                <div class="d-flex justify-content-between align-items-center gap-1">
-                    <span class="o_finished_product text-truncate me-1" t-esc="record.product_id.display_name"/>
+                <div class="d-flex justify-content-between align-items-end gap-1">
+                    <span class="o_finished_product me-1" t-esc="record.product_id.display_name"/>
                     <div class="o_quantity">
                         <span class="text-nowrap fw-bolder"
                             t-att-class="{'text-danger': quantityProducing > quantityToProduce}">
