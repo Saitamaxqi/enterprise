@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.ControlPanelButtons">
-    <div class="o_work_centers_container position-relative d-flex align-items-center mw-100 overflow-x-auto">
+    <div class="o_work_centers_container d-flex align-items-center flex-grow-1 overflow-x-auto">
         <div class="d-flex gap-1">
             <t t-foreach="workcenterButtons" t-as="workcenter" t-key="workcenter[0]">
                 <t t-set="id" t-value="workcenter[0]"/>
                 <t t-set="name" t-value="workcenter[1].name"/>
                 <t t-set="count" t-value="workcenter[1].count"/>
-                <button class="btn btn-light text-nowrap d-flex align-items-center" t-att-class="this.props.activeWorkcenter.toString() === id ? 'active' : ''"
+                <button class="btn btn-light text-nowrap d-flex align-items-center p-2" t-att-class="this.props.activeWorkcenter.toString() === id ? 'active' : ''"
                         t-on-click="() => this.props.selectWorkcenter(id)">
                     <t t-esc="name"/>
-                    <span class="o_tabular_nums badge position-static rounded ms-2 lh-1" t-out="count"
+                    <span class="o_tabular_nums badge position-static rounded ms-2 lh-1 px-2" t-out="count"
                           t-attf-class="o_tag o_tag_color_{{id > 0 ? id % 11 : 'default text-bg-300'}}"/>
                 </button>
             </t>

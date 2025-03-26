@@ -1,4 +1,8 @@
 .o_mrp_display {
+    .o_cp_searchview {
+        min-height: var(--interaction-min-size);
+        width: 26rem;
+    }
 
     .o_search_bar_menu {
         max-width: MIN($o-search-bar-menu-max-width, 65%);
