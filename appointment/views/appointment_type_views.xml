@@ -302,7 +302,6 @@
                                     <field name="canceled_mail_template_id"
                                         placeholder="If empty, Odoo will not send emails"
                                         context="{'default_model': 'calendar.event', 'default_subject': name}"/>
-                                    <field name="message_partner_ids" widget="many2many_tags_email"/>
                                     <field name="country_ids" widget="many2many_tags" groups="base.group_no_one"/>
                                     <field name="allow_guests"/>
                                 </group>
@@ -371,7 +370,6 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="replace"/>
             <xpath expr="//div[hasclass('oe_button_box')]" position="replace"/>
-            <xpath expr="//field[@name='message_partner_ids']" position="replace"/>
         </field>
     </record>
 

@@ -172,10 +172,6 @@ class AppointmentType(models.Model):
     connectors_displayed = fields.Boolean(compute="_compute_connectors_displayed")
     # Technical field for backward compatibility with previous default published appointment type
     is_published = fields.Boolean('Is Published')
-    # override mail.thread for better string/help
-    message_partner_ids = fields.Many2many(string='CC to',
-                                           help="Contacts that need to be notified whenever a new appointment is booked or cancelled, \
-                                                 regardless of whether they attend or not")
 
     _check_resource_manual_confirmation_percentage = models.Constraint(
         'check(resource_manual_confirmation_percentage >= 0 and resource_manual_confirmation_percentage <= 1)',
