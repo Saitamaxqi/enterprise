@@ -17,7 +17,7 @@
                 <button
                     string="Worksheet"
                     class="oe_stat_button"
-                    name="action_quality_worksheet"
+                    name="action_open_quality_check_wizard"
                     icon="fa-pencil" type="object"
                     groups="quality.group_quality_user"
                     invisible="not worksheet_template_id or worksheet_count != 0">
@@ -25,7 +25,7 @@
                 <button
                     string="Worksheet Completed"
                     class="oe_stat_button text-success"
-                    name="action_quality_worksheet"
+                    name="action_open_quality_check_wizard"
                     icon="fa-check" type="object"
                     groups="quality.group_quality_user"
                     invisible="not worksheet_template_id or worksheet_count == 0">
