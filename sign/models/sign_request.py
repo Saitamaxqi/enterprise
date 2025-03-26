@@ -395,7 +395,7 @@ class SignRequest(models.Model):
         self._message_send_mail(
             body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
-            {'model_description': 'signature',
+            {'model_description': _('Signature'),
              'company': self.communication_company_id or self.create_uid.company_id,
              'partner': partner},
             {'email_from': self.create_uid.email_formatted,
@@ -537,7 +537,7 @@ class SignRequest(models.Model):
         self.env['sign.request']._message_send_mail(
             body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
-            {'model_description': 'signature',
+            {'model_description': _('Signature'),
              'company': self.communication_company_id or self.create_uid.company_id,
              'partner': partner},
             {'email_from': self.create_uid.email_formatted,
