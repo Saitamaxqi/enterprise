@@ -826,10 +826,11 @@ class HrPayslip(models.Model):
         self.ensure_one()
         # Check for multiple inputs of the same type and keep a copy of
         # them because otherwise they are lost when building the dict
-        input_list = [line.code for line in self.input_line_ids if line.code]
-        cnt = Counter(input_list)
-        multi_input_lines = [k for k, v in cnt.items() if v > 1]
-        same_type_input_lines = {line_code: [line for line in self.input_line_ids if line.code == line_code] for line_code in multi_input_lines}
+        same_type_input_lines = defaultdict(lambda x: self.env['hr.payslip.input'])
+        input_line_ids_by_code = self.input_line_ids.grouped('code') 
+        for code, input_lines in input_line_ids_by_code.items():
+            if len(input_lines) > 1:
+                same_type_input_lines[code] = input_lines
 
         localdict = {
             **self._get_base_local_dict(),
@@ -971,6 +972,10 @@ class HrPayslip(models.Model):
                                 'ytd': line_values[rule.code][last_ytd_payslips[payslip].id]
                                     ['ytd'] + tot_rule,
                             })
+                        input_line_ids = localdict['same_type_input_lines'][rule.code].ids
+                        localdict['inputs'][rule.code] = self.__get_aggregator_hr_payslip_input_model()(
+                            env=self.env, ids=input_line_ids, prefetch_ids=input_line_ids,
+                        )
                     else:
                         amount, qty, rate = rule._compute_rule(localdict)
                         #check if there is already a rule computed with that code
@@ -1454,6 +1459,64 @@ class HrPayslip(models.Model):
                 self.env.ref('hr_payroll.ir_cron_generate_payslip_pdfs')._trigger()
                 return True
         return False
+
+    @api.model
+    def __get_aggregator_hr_payslip_input_model(self):
+        """this method return an aggregator version of hr.payslip.input Model.
+        this method is also meant to be overriden in case other modules adds new fields
+        to hr.payslip.input model. In case it can be extended as such:
+        ```py
+        def __get_aggregator_hr_payslip_input_model(self):
+            class ProxyHrPayslipInput(super().__get_aggregator_hr_payslip_input_model()):
+                ... # your modifications
+        return ProxyHrPayslipInput
+        ```
+
+        Note: -this method use the normal python class inheritance instead of odoo's
+              -the aggregation assumes that the code are the same for all the inputs
+        Warning: Do not reproduce elsewhere it's quite a specific case here
+        return: Aggregator version of hr.payslip.input model
+        """
+
+        class ProxyHrPayslipInput(self.env['hr.payslip.input'].__class__):
+            _name = self.env['hr.payslip.input']._name
+            _register = False  # invisible to the ORM
+
+            # All the fields that are not overridden are considered as equal to
+            # self[0]['field']
+
+            def __getitem__(self, key_or_slice):
+                if not self or len(self) == 1:
+                    return super().__getitem__(key_or_slice)
+                if key_or_slice == 'name':
+                    return self.name
+                if key_or_slice == 'sequence':
+                    return self.sequence
+                if key_or_slice == 'amount':
+                    return self.amount
+                return super().__getitem__(key_or_slice)
+
+            @property
+            def name(self):
+                if not self or len(self) == 1:
+                    return super().name
+                if len(set(self.mapped('name'))) == 1:
+                    return super(self[0], ProxyHrPayslipInput).name
+                return ', '.join(self.mapped('name'))
+
+            @property
+            def sequence(self):
+                if not self or len(self) == 1:
+                    return super().sequence
+                return min(self.mapped('sequence'))
+
+            @property
+            def amount(self):
+                if not self or len(self) == 1:
+                    return super().amount
+                return sum([payslip_input.amount for payslip_input in self])
+
+        return ProxyHrPayslipInput
 
     # Payroll Dashboard
     @api.model

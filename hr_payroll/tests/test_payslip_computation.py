@@ -366,6 +366,62 @@ class TestPayslipComputation(TestPayslipContractBase):
         lines = payslip.line_ids
         self.assertEqual(len(lines.filtered(lambda r: r.code == 'BASIC')), 1)
 
+    def test_payslip_with_multiple_input_same_type_aggregations(self):
+        payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip of Richard',
+            'employee_id': self.richard_emp.id,
+            'contract_id': self.contract_cdi.id,
+            'date_from': date(2016, 1, 1),
+            'date_to': date(2016, 1, 31)
+        })
+        self.env['hr.payslip.input'].create([
+            {
+                'payslip_id': payslip.id,
+                'sequence': 1,
+                'input_type_id': self.env.ref("hr_payroll.BASIC").id,
+                'amount': 300,
+                'contract_id': self.contract_cdi.id,
+                'code': 'DED'
+            },
+            {
+                'payslip_id': payslip.id,
+                'sequence': 1,
+                'input_type_id': self.env.ref("hr_payroll.BASIC").id,
+                'amount': 200,
+                'contract_id': self.contract_cdi.id,
+                'code': 'DED'
+            },
+        ])
+        self.developer_pay_structure.write({
+            'rule_ids': [
+            (0, 0, {
+                'name': 'Test 1',
+                'sequence': 1000000,
+                'code': 'TEST1',
+                'category_id': self.env.ref('hr_payroll.ALW').id,
+                'amount_select': 'code',
+                'amount_python_compute': 'result = inputs["DEDUCTION"].amount',
+            }), (0, 0, {
+                'name': 'Test 2',
+                'sequence': 1000000,
+                'code': 'TEST2',
+                'category_id': self.env.ref('hr_payroll.ALW').id,
+                'amount_select': 'code',
+                'amount_python_compute': 'result = inputs["DEDUCTION"][0].amount + inputs["DEDUCTION"][1].amount',
+            }), (0, 0, {
+                'name': 'Test 3',
+                'sequence': 1000000,
+                'code': 'TEST3',
+                'category_id': self.env.ref('hr_payroll.ALW').id,
+                'amount_select': 'code',
+                'amount_python_compute': 'result = inputs["DEDUCTION"][0].amount',
+            }),
+        ]})
+        payslip.compute_sheet()
+        assert(payslip.line_ids.filtered(lambda r: r.code == 'TEST1').total == 500.00)
+        assert(payslip.line_ids.filtered(lambda r: r.code == 'TEST2').total == 500.00)
+        assert(payslip.line_ids.filtered(lambda r: r.code == 'TEST3').total == 300.00)
+
     def test_payslip_multiple_inputs_and_attachments_same_type(self):
         self.env['hr.salary.attachment'].create([
             {
