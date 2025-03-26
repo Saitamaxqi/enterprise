@@ -1276,7 +1276,7 @@ class IrUiView(models.Model):
         self = self.with_context(cloned_templates=cloned_templates)
         cloned_templates[new.key] = new_key
 
-        arch_tree = etree.fromstring(self._read_template(self.id))
+        arch_tree = self._get_view_etrees()[0]
 
         for node in arch_tree.findall(".//t[@t-call]"):
             tcall = node.get('t-call')
@@ -1304,7 +1304,7 @@ class IrUiView(models.Model):
             if not root.inherit_id:
                 break
             root = root.inherit_id
-        combined_views = self.browse(view_ids).with_context(check_view_ids=[])._get_inheriting_views()
+        combined_views = self.browse(view_ids)._get_inheriting_views()
 
         new.write({
             'name': '%s copy(%s)' % (new.name, copy_no),
@@ -1326,13 +1326,6 @@ class IrUiView(models.Model):
             self._raise_view_error(_("studio_approval attribute can only be set in form views"), node)
         if studio_approval and studio_approval not in ['True', 'False']:
             self._raise_view_error(_("Invalid studio_approval %s in button", studio_approval), node)
-
-    # REPORT STUFF
-    def _render_template(self, template, values=None):
-        if self._context.get("studio"):
-            # Force inherit branding from report rendering
-            self = self.with_context(inherit_branding=True)
-        return super()._render_template(template, values)
 
     def _contains_branded(self, node):
         if not self._context.get("studio"):

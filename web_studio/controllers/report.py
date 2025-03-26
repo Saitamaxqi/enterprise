@@ -614,7 +614,7 @@ class WebStudioReportController(main.WebStudioController):
                     external_layout = request.env.company.external_report_layout_id.sudo().key
                 return load_arch(external_layout, variables, recursive_set)
             else:
-                view = IrView._get(view_name)
+                view = IrView._get_template_view(view_name)
                 with deactivate_studio_view(view) as studio_view:
                     tree = view._get_combined_arch()
                     KeyedXmlDiffer.assign_node_ids_for_diff(tree)
@@ -637,7 +637,7 @@ class WebStudioReportController(main.WebStudioController):
             render_context['report_type'] = "pdf"
             main_qweb = _guess_qweb_variables(main_qweb, report_safe_cr, render_context)
 
-        html_container = request.env["ir.ui.view"]._render_template("web.html_container", {"studio": True})
+        html_container = IrQweb._render("web.html_container", {"studio": True})
         html_container = html.fromstring(html_container)
         main_qweb.xpath("//*[@id='wrapwrap']")[0]
         wrap = html_container.xpath("//*[@id='wrapwrap']")[0]
@@ -779,7 +779,8 @@ class WebStudioReportController(main.WebStudioController):
     @http.route("/web_studio/reset_report_archs", type="jsonrpc", auth="user")
     def reset_report_archs(self, report_id, include_web_layout=True):
         report = request.env["ir.actions.report"].browse(report_id)
-        views = request.env["ir.ui.view"].with_context(no_primary_children=True, __views_get_original_hierarchy=[], no_cow=True).get_related_views(report.report_name, bundles=False)
+        View = request.env["ir.ui.view"].with_context(no_primary_children=True, __views_get_original_hierarchy=[], no_cow=True, active_test=True)
+        views = View.get_related_views(report.report_name, bundles=False)
         if not include_web_layout:
             views = views.filtered(lambda v: not v.key.startswith("web.") or "layout" not in v.key)
 

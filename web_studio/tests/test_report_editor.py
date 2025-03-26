@@ -196,7 +196,7 @@ class TestReportEditor(TransactionCase):
             view.update_field_translations('arch_db', {'fr_FR': {term: '%s in fr' % term for term in terms}})
 
         combined_arch = '<div>a_<div>ab</div><div>a_</div>aba<div>ab</div></div>'
-        self.assertEqual(target._read_template(target.id), combined_arch)
+        self.assertEqual(etree.tostring(target._get_view_etrees()[0], encoding='unicode'), combined_arch)
 
         # duplicate original report, views will be combined into one
         report.copy_report_and_template()
@@ -1018,7 +1018,7 @@ class TestReportEditorUIUnit(HttpCase):
 
     def test_formalize_qweb_client_t_call_structure(self):
         self.authenticate("admin", "admin")
-        html_container = self.env["ir.ui.view"]._get("web.html_container")
+        html_container = self.env["ir.ui.view"]._get_template_view("web.html_container")
 
         tcalled_0 = self.env["ir.ui.view"].create({
             'type': 'qweb',
@@ -1425,7 +1425,7 @@ class TestReportEditorUIUnit(HttpCase):
         """)
 
     def test_edit_header_only_company(self):
-        external_layout = self.env["ir.ui.view"]._get("web.external_layout_standard")
+        external_layout = self.env["ir.ui.view"]._get_template_view("web.external_layout_standard")
         with self.with_user("admin"):
             self.env.user.company_id.external_report_layout_id = external_layout
         self.main_view_document.arch = '''

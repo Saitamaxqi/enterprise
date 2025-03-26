@@ -268,7 +268,8 @@ class TestUi(odoo.tests.HttpCase):
                     </div>
                 </t>
             </t>""",
-            "type": "qweb"
+            "type": "qweb",
+            "key": "website.website-studio-page",
         })
         self.env["website.page"].create({
             "url": "/website-studio-page",

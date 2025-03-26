@@ -29,7 +29,7 @@ class HrReferralSendMail(models.TransientModel):
     @api.depends('job_id', 'url')
     def _compute_body_html(self):
         for wizard in self:
-            wizard.body_html = self.env["ir.ui.view"]._render_template(
+            wizard.body_html = self.env['ir.qweb']._render(
                 'hr_referral.referral_email_body_template',
                 {
                     'job_id': wizard.job_id,
