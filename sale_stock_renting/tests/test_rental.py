@@ -3,6 +3,7 @@
 from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
 from odoo.fields import Command, Date, Datetime
 from odoo.tests import Form, tagged
@@ -381,6 +382,7 @@ class TestRentalWizard(TestRentalCommon):
             1
         )
 
+    @freeze_time('2025-01-01 09:10:15')
     def test_rental_forecast_with_rental_transfers(self):
         """
             With rental transfers enable, we check if the forecast rentable quantity takes
@@ -396,14 +398,14 @@ class TestRentalWizard(TestRentalCommon):
             'rent_ok': True,
         })
         # Put 100 units in stock
-        self.env['stock.quant']._update_available_quantity(product, self.warehouse_id.lot_stock_id, 100)
+        self.env['stock.quant']._update_available_quantity(product, self.warehouse_id.lot_stock_id, 101)
 
         delivery = self.env['stock.picking'].create({
             'name': "Lovely Delivery",
             'location_id': self.warehouse_id.lot_stock_id.id,
             'location_dest_id': self.ref('stock.stock_location_customers'),
             'picking_type_id': self.warehouse_id.out_type_id.id,
-            'scheduled_date': Datetime.today() + timedelta(days=3),
+            'scheduled_date': Datetime.today() + timedelta(days=2),
             'move_ids': [Command.create({
                 'location_id': self.warehouse_id.lot_stock_id.id,
                 'location_dest_id':  self.ref('stock.stock_location_customers'),
@@ -414,20 +416,20 @@ class TestRentalWizard(TestRentalCommon):
         })
         delivery.action_confirm()
         # Create 2 rental orders: one to confirmed
-        so1, so2 = self.env['sale.order'].create([
+        sale_orders = self.env['sale.order'].create([
             {
                 'partner_id': self.cust1.id,
                 'rental_start_date': Datetime.today() + timedelta(days=1),
                 'rental_return_date': Datetime.today() + timedelta(days=2),
                 'order_line': [Command.create({
                     'product_id': product.id,
-                    'product_uom_qty': 5.0,
+                    'product_uom_qty': 8.0,
                     'is_rental': True,
                 })],
             },
             {
                 'partner_id': self.cust1.id,
-                'rental_start_date': Datetime.today() + timedelta(days=5),
+                'rental_start_date': Datetime.today() + timedelta(days=4),
                 'rental_return_date': Datetime.today() + timedelta(days=6),
                 'order_line': [Command.create({
                     'product_id': product.id,
@@ -435,33 +437,96 @@ class TestRentalWizard(TestRentalCommon):
                     'is_rental': True,
                 })],
             },
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=5),
+                'rental_return_date': Datetime.today() + timedelta(days=7),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 20.0,
+                    'is_rental': True,
+                })],
+            },
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=6),
+                'rental_return_date': Datetime.today() + timedelta(days=8),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 30.0,
+                    'is_rental': True,
+                })],
+            },
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=1),
+                'rental_return_date': Datetime.today() + timedelta(days=10),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 1.0,
+                    'is_rental': True,
+                })],
+            },
         ])
 
-        so2.action_confirm()
-        self.assertEqual(so1.order_line.virtual_available_at_date, 100)
-        so1.write({
+        """
+        The last SO is here to create a rental order covering the entire renting periods.
+        In a picture the delivery and the other rental orders are intertwined as follows:
+
+        |    1    |    2    |    3    |    4    |    5    |    6    |    7    |    8    |    9    |    10    |
+
+                   -20[-----------------------------------------------------------------------------------
+
+                                       -10[-----------------]
+
+                                                -20[------------------]
+
+                                                            -30[----------------]
+
+        """
+
+        so = sale_orders[0]
+        (sale_orders - so).action_confirm()
+        self.assertEqual(so.order_line.virtual_available_at_date, 100)
+        so.write({
             'rental_start_date': Datetime.today() + timedelta(days=3),
             'rental_return_date': Datetime.today() + timedelta(days=4),
         })
         # We need to invalidate the cache after each change since the qty_in_rent does not have
         # any dependence and hence will only be recomputed if it was not already set in cache
         product.invalidate_recordset()
-        self.assertEqual(so1.order_line.virtual_available_at_date, 80)
-        so1.write({
+        self.assertEqual(so.order_line.virtual_available_at_date, 80)
+        so.write({
+            'rental_start_date': Datetime.today() + timedelta(days=3),
+            'rental_return_date': Datetime.today() + timedelta(days=4) + timedelta(hours=1),
+        })
+        product.invalidate_recordset()
+        self.assertEqual(so.order_line.virtual_available_at_date, 70)
+        so.write({
+            'rental_start_date': Datetime.today() + timedelta(days=3),
+            'rental_return_date': Datetime.today() + timedelta(days=5),
+        })
+        product.invalidate_recordset()
+
+        self.assertEqual(so.order_line.virtual_available_at_date, 70)
+        so.write({
             'rental_start_date': Datetime.today() + timedelta(days=5),
             'rental_return_date': Datetime.today() + timedelta(days=6),
         })
         product.invalidate_recordset()
-        self.assertEqual(so1.order_line.virtual_available_at_date, 70)
-        so2.picking_ids.filtered(lambda p: p.picking_type_id== self.warehouse_id.out_type_id).button_validate()
-        product.invalidate_recordset()
-        self.assertEqual(so1.order_line.virtual_available_at_date, 70)
-        so1.write({
-            'rental_start_date': Datetime.today() + timedelta(days=7),
+        self.assertEqual(so.order_line.virtual_available_at_date, 50)
+        so.write({
+            'rental_start_date': Datetime.today() + timedelta(days=6),
             'rental_return_date': Datetime.today() + timedelta(days=8),
         })
         product.invalidate_recordset()
-        self.assertEqual(so1.order_line.virtual_available_at_date, 80)
+        self.assertEqual(so.order_line.virtual_available_at_date, 30)
+        so.action_confirm()
+        product.invalidate_recordset()
+        self.assertEqual(so.order_line.virtual_available_at_date, 30)
+        so.picking_ids.filtered(lambda p: p.picking_type_id == self.warehouse_id.out_type_id).button_validate()
+        product.invalidate_recordset()
+        self.assertEqual(so.order_line.virtual_available_at_date, 30)
 
     def test_rental_forecast_without_rental_transfers(self):
         """

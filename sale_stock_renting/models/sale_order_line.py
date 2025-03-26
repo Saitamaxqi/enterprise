@@ -116,7 +116,6 @@ class SaleOrderLine(models.Model):
         for (from_date, to_date, warehouse_id), line_ids in rented_product_lines._partition_so_lines_by_rental_period():
             lines = self.env['sale.order.line'].browse(line_ids)
             for line in lines:
-                ignore_rented_qty_during_period = False
                 if from_date <= fields.Datetime.now():
                     rentable_qty = line.product_id.with_context(
                         from_date=from_date,
@@ -131,10 +130,14 @@ class SaleOrderLine(models.Model):
                         to_date=from_date,
                         warehouse_id=warehouse_id).virtual_available
                     if self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
-                        # If rental transfers are enabled, the rented_qty_during_period is already taken
-                        # into account the virtual_available qty by the planed incoming/outgoing moves
-                        ignore_rented_qty_during_period = True
-                rented_qty_during_period = 0 if ignore_rented_qty_during_period else line.product_id._get_unavailable_qty(
+                        # If rental transfers are enabled, the rented_qty_during_period will overlap with
+                        # planned incoming taken into account by the virtual_available qty
+                        rentable_qty += line.product_id._get_virtual_unavailable_qty_in_rent(
+                            pivot_date=from_date,
+                            ignored_soline_id=line and line.state == 'draft' and line.id,
+                            warehouse_id=line.order_id.warehouse_id.id,
+                        )
+                rented_qty_during_period = line.product_id._get_unavailable_qty(
                     from_date, to_date,
                     ignored_soline_id=line and line.id,
                     warehouse_id=line.order_id.warehouse_id.id,

@@ -111,12 +111,26 @@ class ProductProduct(models.Model):
 
         include_bounds = to_date == from_date
         domain += [
-            ('return_date', '>=' if include_bounds else '>', from_date),
+            ('return_date', '>' if kwargs.get('rental_pivot_date') else ">=", from_date),
             '|', ('reservation_begin', '<=' if include_bounds else '<', to_date),
                  ('qty_delivered', '>', 0),
         ]
 
         return self.env['sale.order.line'].search(domain)
+
+    def _get_virtual_unavailable_qty_in_rent(self, pivot_date, **kwargs):
+        """
+        Return the quantity taken into account by the virtual available quantity
+        prior to the pivot date but that will still be in rent past that date.
+
+        :param datetime pivot_date:
+        :param dict kwargs: search domain restrictions (ignored_soline_id, warehouse_id):
+        """
+        kwargs['rental_pivot_date'] = True
+        active_lines = self._get_active_rental_lines(
+            from_date=pivot_date, to_date=pivot_date, **kwargs
+        )
+        return sum(active_lines.mapped('product_uom_qty'))
 
     """
         Products with tracking (by serial number)
