@@ -129,6 +129,8 @@ class FsmStockTracking(models.TransientModel):
                 'task_id': self.task_id.id,
                 'fsm_lot_id': line.lot_id.id,
             }
+            if self.task_id.under_warranty:
+                vals['price_unit'] = 0
             move_line_qty_per_lot_id[line.lot_id] += qty
             SaleOrderLine.with_context(industry_fsm_stock_tracking=True).create(vals)
 
@@ -176,11 +178,13 @@ class FsmStockTracking(models.TransientModel):
                         self._remove_qty_from_intermediate_delivery(dict_moves_per_picking, sol.fsm_lot_id, 0-(sol.product_uom_qty - sol.qty_delivered))
                 if sol.fsm_lot_id != line.lot_id: # update the lot_id of the deliveries linked to the sale_order_line
                     self._update_lot_id(sol, line)
-                line.sale_order_line_id.with_context(industry_fsm_stock_tracking=True).write(
-                    {
-                        'fsm_lot_id': line.lot_id,
-                        'product_uom_qty': qty + line.sale_order_line_id.qty_delivered,
-                    })
+                vals = {
+                    'fsm_lot_id': line.lot_id,
+                    'product_uom_qty': qty + line.sale_order_line_id.qty_delivered,
+                }
+                if self.task_id.under_warranty:
+                    vals['price_unit'] = 0
+                line.sale_order_line_id.with_context(industry_fsm_stock_tracking=True).write(vals)
 
 
 class FsmStockTrackingLine(models.TransientModel):

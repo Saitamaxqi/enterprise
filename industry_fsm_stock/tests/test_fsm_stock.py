@@ -1763,3 +1763,37 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         picking.write({'priority': "1"})
         self.task.with_user(self.project_user).action_fsm_validate()
         self.assertEqual(self.task.fsm_done, True)
+
+    def test_fsm_under_warranty_task(self):
+        self.task.write({
+            'under_warranty': True,
+        })
+        self.task.write({'partner_id': self.partner_1.id})
+        so = self.task._fsm_ensure_sale_order()
+        action_stock_tracking = self.product_lot.with_context({'fsm_task_id': self.task.id}).action_assign_serial()
+        wizard = self.env['fsm.stock.tracking'].browse(action_stock_tracking['res_id'])
+        wizard.write({
+            'tracking_line_ids': [
+                Command.create({
+                    'product_id': self.product_lot.id,
+                    'quantity': 3,
+                    'lot_id': self.lot_id3.id,
+                })
+            ]
+        })
+        wizard.generate_lot()
+        self.assertEqual(so.amount_total, 0)
+        so.order_line.price_unit = 500
+        self.assertEqual(so.amount_total, 1500)
+        wizard = self.env['fsm.stock.tracking'].browse(action_stock_tracking['res_id'])
+        wizard.write({
+            'tracking_line_ids': [
+                Command.create({
+                    'product_id': self.product_lot.id,
+                    'quantity': 8,
+                    'lot_id': self.lot_id3.id,
+                })
+            ]
+        })
+        wizard.generate_lot()
+        self.assertEqual(so.amount_total, 0)
