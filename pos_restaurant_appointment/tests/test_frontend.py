@@ -15,6 +15,8 @@ class TestUi(TestFrontend):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids += cls.quick_ref('appointment.group_appointment_manager')
+
         cls.appointment_type = cls.env['appointment.type'].create({
             'appointment_manual_confirmation': True,
             'appointment_tz': 'US/Eastern',

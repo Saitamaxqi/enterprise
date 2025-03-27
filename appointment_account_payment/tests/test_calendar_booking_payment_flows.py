@@ -26,6 +26,9 @@ class AppointmentAccountPaymentFlowsCommon(AccountPaymentCommon, AppointmentAcco
         })
         cls.booking_invoice = cls.calendar_booking._make_invoice_from_booking()
 
+    @classmethod
+    def get_default_groups(cls):
+        return super().get_default_groups() | cls.quick_ref('appointment.group_appointment_manager')
 
 @tagged('-at_install', 'post_install')
 class AppointmentAccountPaymentFlowsTest(AppointmentAccountPaymentFlowsCommon):
