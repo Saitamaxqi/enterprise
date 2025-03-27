@@ -386,12 +386,9 @@ test("Panel has collapsible section with field matching in new filters", async f
     const { model, env } = await createSpreadsheetWithPivot();
     await openSidePanelForCreation(model, env, "date");
     await animationFrame();
-    const collapsible = target.querySelector(".collapsible_section");
+    const collapsible = target.querySelector(".os-collapse");
     expect(".o_spreadsheet_field_matching").toHaveCount(1);
-    expect(collapsible).toHaveClass("show");
-
-    await contains(".collapsor").click();
-    expect(collapsible).not.toHaveClass("show");
+    expect(collapsible).not.toHaveClass("d-none");
 });
 
 test("Collapsible section with field matching is collapsed for existing filter", async function () {
@@ -400,8 +397,8 @@ test("Collapsible section with field matching is collapsed for existing filter",
         pivot: { [pivotId]: { type: "date", chain: "date" } },
     });
     await openSidePanel(model, env, THIS_YEAR_GLOBAL_FILTER.id);
-    const collapsible = target.querySelector(".collapsible_section");
-    expect(collapsible).not.toHaveClass("show");
+    const collapsible = target.querySelector(".os-collapse");
+    expect(collapsible).toHaveClass("d-none");
 });
 
 test("Creating a date filter without a data source does not display Field Matching", async function () {
