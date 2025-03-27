@@ -9,6 +9,12 @@ from odoo.tests import tagged
 @tagged('post_install', '-at_install')
 class TestInvoices(AccountTestInvoicingCommon):
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.env.user.group_ids += cls.quick_ref('documents.group_documents_manager')
+
     def test_suspense_statement_line_id(self):
         reconcile_activity_type = self.env['mail.activity.type'].create({
             "name": "Reconciliation request",

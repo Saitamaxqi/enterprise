@@ -19,6 +19,9 @@ class TestCaseDocumentsBridgeAccount(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        cls.env.user.group_ids += cls.quick_ref('documents.group_documents_manager')
+
         cls.folder_a = cls.env['documents.document'].create({
             'name': 'folder A',
             'type': 'folder',
