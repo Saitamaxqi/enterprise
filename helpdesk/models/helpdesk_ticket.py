@@ -135,7 +135,7 @@ class HelpdeskTicket(models.Model):
     is_partner_email_update = fields.Boolean(compute='_compute_is_partner_email_update', export_string_translation=False)
     is_partner_phone_update = fields.Boolean(compute='_compute_is_partner_phone_update', export_string_translation=False)
     # customer portal: include comment and (incoming/outgoing) emails in communication history
-    website_message_ids = fields.One2many(domain=lambda self: [('model', '=', self._name), ('message_type', 'in', ['email', 'comment', 'email_outgoing'])], export_string_translation=False)
+    website_message_ids = fields.One2many(domain=lambda self: [('model', '=', self._name), ('message_type', 'in', ['email', 'comment', 'email_outgoing', 'auto_comment'])], export_string_translation=False)
 
     first_response_hours = fields.Float("Hours to First Response", aggregator="avg", copy=False)
     avg_response_hours = fields.Float("Average Hours to Respond", aggregator="avg", copy=False)
