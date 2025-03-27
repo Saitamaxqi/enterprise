@@ -13,5 +13,6 @@ export const basicDocumentsListArch = /* xml */ `
     <field name="tag_ids" />
     <field name="alias_tag_ids"/>
     <field name="user_permission"/>
+    <field name="display_name"/>
 </list>
 `;

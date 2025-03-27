@@ -93,6 +93,17 @@ export class DocumentsDocument extends models.Model {
         return 67000000;
     }
 
+    action_create_shortcut() {
+        return;
+    }
+
+    action_move_documents(recordIds, folderId) {
+        const records = this.filter((r) => recordIds.includes(r.id));
+        for (const record of records) {
+            record.folder_id = folderId;
+        }
+    }
+
     /**
      * @override to avoid super() not working for us.
      */

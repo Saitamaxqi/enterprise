@@ -15,6 +15,7 @@ export const basicDocumentsKanbanArch = /* xml */ `
         <field name="active"/>
         <field name="type"/>
         <field name="attachment_id"/>
+        <field name="display_name"/>
         <t t-name="card">
             <div>
                 <div name="document_preview" class="o_kanban_image_wrapper">a thumbnail</div>

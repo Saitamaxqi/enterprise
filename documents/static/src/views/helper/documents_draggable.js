@@ -104,9 +104,9 @@ export const useDraggableDocuments = makeDraggableHook({
                     parseInt(valueEl.dataset.valueId) || valueEl.dataset.valueId,
                 );
                 this._checkTargetValidity(targetFolder, model, current.dragMessage, current.dragMessageText, true);
-                if (targetFolder.rootId === "MY") {
+                if (!ev.ctrlKey && targetFolder.rootId === "MY") {
                     ref.el.classList.add("o_documents_dnd_shortcut");
-                } else {
+                } else if (!ev.ctrlKey) {
                     ref.el.classList.remove("o_documents_dnd_shortcut");
                 }
 
