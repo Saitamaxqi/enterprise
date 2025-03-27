@@ -1850,3 +1850,77 @@ class TestReportEngines(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_subformula_rounding(self):
+        """ Test the round subformula in a variety of settings. """
+        self.env.company.account_fiscal_country_id = self.fake_country
+
+        # Round to the nearest integer, using the default HALF-DOWN
+        test_1 = self._prepare_test_report_line(
+            self._prepare_test_expression_external('sum', [self._prepare_test_external_values(98745.50, '2020-01-01')], label='external_decimal'),
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(0)'),
+            name='test_1', code='test_1',
+        )
+        # Round to the nearest integer, using HALF-UP
+        test_2 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(0, HALF-UP)'),
+            name='test_2', code='test_2',
+        )
+        # Round to the nearest integer, using HALF-EVEN
+        test_3 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(0, HALF-EVEN)'),
+            name='test_3', code='test_3',
+        )
+        # Round to the nearest integer, using UP
+        test_4 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(0, UP)'),
+            name='test_4', code='test_4',
+        )
+        # Round to the nearest integer, using DOWN
+        test_5 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(0, DOWN)'),
+            name='test_5', code='test_5',
+        )
+        # Round to the tenth, using HALF-DOWN
+        test_6 = self._prepare_test_report_line(
+            self._prepare_test_expression_external('sum', [self._prepare_test_external_values(98745.00, '2020-01-01')], label='external_decimal'),
+            self._prepare_test_expression_aggregation('test_6.external_decimal', subformula='round(-1)'),
+            name='test_6', code='test_6',
+        )
+        # Round to the tenth, using HALF-UP
+        test_7 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(-1, HALF-UP)'),
+            name='test_7', code='test_7',
+        )
+        # Round to the hundredth
+        test_8 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.external_decimal', subformula='round(-2)'),
+            name='test_8', code='test_8',
+        )
+
+        report = self._create_report(
+            [
+                test_1, test_2, test_3, test_4, test_5, test_6, test_7, test_8,
+            ],
+            country_id=self.fake_country.id,
+        )
+
+        # Check the values.
+        options = self._generate_options(report, '2020-01-01', '2020-01-01')
+        report_lines = report._get_lines(options)
+        self.assertLinesValues(
+            # pylint: disable=bad-whitespace
+            report_lines,
+            [   0,                    1],
+            [
+                ('test_1',            98745.00),
+                ('test_2',            98746.00),
+                ('test_3',            98746.00),
+                ('test_4',            98746.00),
+                ('test_5',            98745.00),
+                ('test_6',            98740.00),
+                ('test_7',            98750.00),
+                ('test_8',            98700.00),
+            ],
+            options,
+        )

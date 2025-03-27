@@ -3610,8 +3610,18 @@ class AccountReport(models.Model):
         # So an expression can't have bounds and be cross_reports, for simplicity.
         # To do that, just split the expression in two parts.
         if subformula and subformula.startswith('round'):
-            precision_string = re.match(r"round\((?P<precision>\d+)\)", subformula)['precision']
-            return round(unbound_value, int(precision_string))
+            matches = re.match(r"round\((?P<precision>-?\d+)(,\s*(?P<rounding_method>(HALF-UP|HALF-DOWN|HALF-EVEN|UP|DOWN)))?\)", subformula)
+            precision_string = int(matches['precision'])
+            rounding_method = matches['rounding_method'] or 'HALF-DOWN'
+            # We support rounding with a negative amount, similarly to how it works with python's round method.
+            # As we also want to support using a rounding method, we will play a bit with the number and round using float_round
+            if precision_string < 0:
+                precision_power = abs(precision_string)
+                unbound_value /= 10 ** precision_power
+                unbound_value = float_round(unbound_value, precision_digits=0, rounding_method=rounding_method)
+                return unbound_value * (10 ** precision_power)
+            else:
+                return float_round(unbound_value, precision_digits=precision_string, rounding_method=rounding_method)
 
         if subformula != 'ignore_zero_division' and not subformula.startswith('cross_report'):
             company_currency = self.env.company.currency_id
