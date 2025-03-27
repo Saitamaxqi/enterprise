@@ -269,9 +269,28 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 suggested_all = ticket.with_user(self.helpdesk_user)._message_get_suggested_recipients(
                     reply_discussion=True, no_create=False,
                 )
-                expected_all = [
-                    # ticket creates partners and followers for everyone, hence no suggested people :()
-                ]
+                # ticket creates partners and followers for everyone, hence no suggested people :()
+                # except customer if shared, even if already follower
+                if test_user == self.helpdesk_portal:
+                    expected_all = [
+                        {
+                            'create_values': {},
+                            'email': self.helpdesk_portal.email_normalized,
+                            'name': self.helpdesk_portal.name,
+                            'partner_id': self.helpdesk_portal.partner_id.id,
+                        },
+                    ]
+                elif not test_user:
+                    expected_all = [
+                        {
+                            'create_values': {},
+                            'email': author.email_normalized,
+                            'name': author.name,
+                            'partner_id': author.id,
+                        },
+                    ]
+                else:
+                    expected_all = []
                 self.assertEqual(suggested_all, expected_all)
 
                 # finally post the message with recipients
