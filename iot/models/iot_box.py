@@ -2,7 +2,7 @@ from datetime import timedelta
 import logging
 import secrets
 
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.addons.iot_base.tools.payload_signature import hmac_sign
 
 _logger = logging.getLogger(__name__)
@@ -68,6 +68,12 @@ class IotBox(models.Model):
     def _compute_device_count(self):
         for box in self:
             box.device_count = len(box.device_ids)
+
+    @api.ondelete(at_uninstall=True)
+    def _unlink_iot_box(self):
+        self.env['iot.channel']._send_message({
+            "iotIdentifiers": self.mapped('identifier')
+        }, 'server_clear')
 
     def open_homepage(self):
         self.ensure_one()
