@@ -1766,6 +1766,35 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(new_user_2, self.subscription.partner_id.user_id, "Subscription's salesperson should be updated on partner's salesperson")
         self.assertNotIn(new_user.partner_id.id, self.subscription.message_follower_ids.partner_id.ids, "Old salesperson should removed from message followers")
 
+    def test_recurring_invoice_cron_trigger(self):
+        """
+        Test that the cron job to create recurring invoices is triggered only
+        when count of subscriptions to invoice is greater than batch size.
+        """
+        SaleOrder = self.env['sale.order']
+        with freeze_time("2024-05-01"):
+            subscriptions = []
+            for i in range (4):
+                subscriptions.append(SaleOrder.create({
+                    'name': 'require payment %s' % str(i),
+                    'is_subscription': True,
+                    'partner_id': self.user_portal.partner_id.id,
+                    'plan_id': self.plan_month.id,
+                    'order_line': [
+                        Command.create({
+                            'product_id': self.product.id,
+                            'product_uom_qty': 1
+                        }),
+                    ],
+                    'require_payment': True,
+                }))
+                subscriptions[-1].action_confirm()
+
+            # no subscription should be invoiced which means we should not trigger cron job
+            all_subscriptions, need_cron_trigger = SaleOrder._recurring_invoice_get_subscriptions(batch_size=3)
+            self.assertFalse(need_cron_trigger)
+            self.assertFalse(all_subscriptions)
+
     def test_amount_to_invoice_with_subscription(self):
         one_shot_product_tmpl = self.env['product.template'].create({
             'name': 'One shot product',

@@ -1456,9 +1456,8 @@ class SaleOrder(models.Model):
             # we call the '_get_subscriptions_to_invoice' method to process them.
             all_subscriptions = [subscriptions._get_subscriptions_to_invoice() for *__, subscriptions in all_subscriptions]
         else:
-            all_subscriptions = self.search(domain, limit=limit)
+            all_subscriptions = self.search(domain, limit=limit)._get_subscriptions_to_invoice()
             need_cron_trigger = batch_size and len(all_subscriptions) > batch_size
-            all_subscriptions = all_subscriptions._get_subscriptions_to_invoice()
 
         if batch_size:
             all_subscriptions = all_subscriptions[:batch_size]
