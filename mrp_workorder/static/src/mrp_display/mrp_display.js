@@ -61,10 +61,6 @@ export class MrpDisplay extends Component {
         this.overlayService = useService("overlay");
         this.menu = useService("menu");
 
-        this.display = {
-            ...this.props.display,
-        };
-
         this.adminId = false;
         this.barcodeTargetRecordId = false;
         if (
@@ -140,7 +136,6 @@ export class MrpDisplay extends Component {
                 timer: await user.hasGroup("mrp_workorder.group_mrp_wo_tablet_timer"),
             };
             this.env.searchModel.workorders = this.groups.workorders;
-            this.group_mrp_routings = await user.hasGroup("mrp.group_mrp_routings");
             this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
             await this.useEmployee.getConnectedEmployees(true);
             // select the workcenter received in the context

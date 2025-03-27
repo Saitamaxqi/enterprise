@@ -2,12 +2,9 @@
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpDisplay">
         <div class="o_action o_mrp_display h-100 overflow-auto">
-            <Layout display="display" className="'d-flex' + state.showEmployeesPanel ? 'o_component_with_search_panel' : ''">
-                <t t-if="group_mrp_routings" t-set-slot="control-panel-top-middle">
-                    <t t-call="{{ constructor.buttonTemplate }}"/>
-                </t>
+            <Layout display="props.display" className="'d-flex o_component_with_search_panel'">
                 <t t-set-slot="layout-actions">
-                    <t t-if="group_mrp_routings">
+                    <t t-if="groups.workorders">
                         <ControlPanelButtons
                             productionCount="productions.length"
                             workorders="filteredWorkorders"
@@ -69,7 +66,7 @@
                         </ul>
                     </div>
                 </t>
-                <MrpDisplayEmployeesPanel t-if="this.group_mrp_routings" employees="useEmployee.employees"
+                <MrpDisplayEmployeesPanel t-if="groups.workorders" employees="useEmployee.employees"
                     setSessionOwner.bind="changeAdmin"
                     popupAddEmployee.bind="login"
                     logout.bind="logout"/>
