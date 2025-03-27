@@ -5911,6 +5911,19 @@ class AccountReport(models.Model):
         return rslt
 
     def export_to_xlsx(self, options, response=None):
+        def add_worksheet_unique_name(workbook, sheet_name):
+            existing_names = set(workbook.sheetnames.keys())
+            count = 1
+            max_length = 31
+            new_sheet_name = sheet_name[:max_length]
+
+            while new_sheet_name in existing_names:
+                suffix = f" ({count})"
+                truncated_name = sheet_name[:max_length - len(suffix)]
+                new_sheet_name = f"{truncated_name}{suffix}"
+                count += 1
+            return workbook.add_worksheet(new_sheet_name)
+
         self.ensure_one()
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {
@@ -5928,7 +5941,7 @@ class AccountReport(models.Model):
         for report in reports_to_print:
             report_options = report.get_options(previous_options={**print_options, 'selected_section_id': report.id})
             reports_options.append(report_options)
-            report._inject_report_into_xlsx_sheet(report_options, workbook, workbook.add_worksheet(report.name[:31]))
+            report._inject_report_into_xlsx_sheet(report_options, workbook, add_worksheet_unique_name(workbook, report.name))
 
         self._add_options_xlsx_sheet(workbook, reports_options)
 

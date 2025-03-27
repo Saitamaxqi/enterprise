@@ -134,3 +134,15 @@ class TestReportSections(AccountTestInvoicingHttpCommon):
 
         with patch.object(type(self.env['account.report']), '_init_options_custom', patched_init_options_custom):
             self.start_tour("/odoo", 'account_reports_sections', login=self.env.user.login)
+
+    def test_exported_xlsx_unique_names(self):
+        composite_report = self.env['account.report'].create({
+            'name': "Composite",
+        })
+        for i in range(1, 13):
+            self.env['account.report'].create({
+                'name': "Comprehensive Monthly Analysis Report Q%d" % i,
+                'section_main_report_ids': [Command.set([composite_report.id])],
+            })
+
+        composite_report.export_to_xlsx(composite_report.get_options({}))
