@@ -81,6 +81,85 @@
     background: $red-100;
 }
 
+.o_record_temporary {
+    position: absolute;
+    overflow: hidden;
+    width: 260px;
+    padding: 3px;
+    opacity: 0.5;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    z-index: 9000;
+    transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
+}
+
+.o_documents_dnd {
+    padding: 5px;
+    border-radius: 3px;
+    position: fixed !important;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.15s step-end;
+
+    &.o_documents_dnd_info {
+        color: $o-enterprise-action-color;
+        font-weight: bold;
+        background-color: $component-active-bg;
+        border: 1px solid $o-enterprise-action-color;
+    }
+
+    & .o_documents_dnd_pill {
+        color: white;
+        height: 24px;
+        width: 24px;
+        line-height: 14px;
+
+        &.o_documents_dnd_modifier {
+            display: none;
+            margin-right: -6px;
+            z-index: 1;
+        }
+    }
+
+    &.alert .o_documents_dnd_pill,
+    &.alert .o_documents_mimetype_icon {
+        display: none;
+    }
+}
+
+.o_kanban_renderer, .o_list_renderer {
+    &.o_documents_dnd_shortcut {
+        .o_documents_dnd_info .o_documents_dnd_modifier {
+            display: flex;
+        }
+    }
+
+    &.o_documents_dragging {
+        &.o_documents_dnd_shortcut {
+            .o_drag_hover > div, .table-success > td {
+                cursor: copy !important;
+            }
+        }
+        .o_drag_hover > div {
+            border-color: $o-success !important;
+            background-color: mix($o-success, $o-white, 10%) !important;
+            cursor: move !important;
+        }
+        .o_drag_invalid > div {
+            border-color: $o-danger !important;
+            background-color: mix($o-danger, $o-white, 10%) !important;
+            cursor: not-allowed !important;
+        }
+        .table-success > td {
+            cursor: move !important;
+        }
+        .table-danger > td {
+            cursor: not-allowed !important;
+        }
+    }
+}
+
 ////// ========== Progress Bars =============
 ////// ======================================
 

@@ -1,18 +1,6 @@
 
 ////// ======  Dashboard Kanban View ==========
 ////// ========================================
-
-.o_documents_drag_icon {
-    padding: 0px 3px;
-    color: white;
-    font-weight: bold;
-    background-color: $o-brand-primary;
-    border: 1px solid $o-brand-primary;
-    border-radius: 3px;
-    @include o-position-absolute($top: 0, $right: 0);
-    z-index: -9999;
-}
-
 .o_documents_kanban_view  .o_content {
     .o_kanban_renderer {
         --KanbanRecord-padding-v: 0;
@@ -39,22 +27,6 @@
 
             > div:nth-of-type(1) {
                 border: $border-width solid var(--border-color);
-            }
-
-            &.o_drag_hover {
-                & > div {
-                    --border-color: #{$o-success};
-
-                    background-color: mix($o-success, $o-view-background-color, 10%);
-                }
-            }
-
-            &.o_drag_invalid {
-                & > div {
-                    --border-color: #{$o-danger} !important;
-
-                    background-color: mix($o-danger, $o-view-background-color, 10%) !important;
-                }
             }
 
             &.o_kanban_ghost {
@@ -125,6 +97,8 @@
                 img {
                     max-width: 100%;
                     max-height: 100%;
+                    -webkit-user-drag: none;
+                    user-drag: none;
                 }
 
                 .fa-star,.fa-star-o {

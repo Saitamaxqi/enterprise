@@ -1,6 +1,6 @@
 import { Document } from "./document_model";
 import { DocumentsManageVersions } from "@documents/components/documents_manage_versions_panel/documents_manage_versions_panel";
-import { EventBus, reactive } from "@odoo/owl";
+import { EventBus, markup, reactive } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { parseSearchQuery, router } from "@web/core/browser/router";
 import { _t } from "@web/core/l10n/translation";
@@ -231,31 +231,63 @@ export class DocumentService {
         await this.orm.call("documents.document", "action_create_shortcut", documentIds);
     }
 
-    async moveOrCreateShortcut(data, targetFolderId, forceShortcut) {
+    async moveOrCreateShortcut(records, targetFolderId, forceShortcut) {
         let message = "";
         if (forceShortcut) {
             await this.orm.call("documents.document", "action_create_shortcut", [
-                data.recordIds,
+                records.all,
                 targetFolderId,
             ]);
             message =
-                data.recordIds.length == 1
+                records.all.length == 1
                     ? _t("A shortcut has been created.")
-                    : _t("%s shortcuts have been created.", data.recordIds.length);
+                    : _t("%s shortcuts have been created.", records.all.length);
         } else {
-            if (data.movableRecordIds.length) {
-                await this.orm.call("documents.document", "action_move_documents", [data.movableRecordIds, targetFolderId]);
+            if (records.movableRecordIds.length) {
+                await this.orm.call("documents.document", "action_move_documents", [
+                    records.movableRecordIds,
+                    targetFolderId,
+                ]);
                 message =
-                    data.movableRecordIds.length == 1
+                    records.movableRecordIds.length == 1
                         ? _t("The document has been moved.")
-                        : _t("%s documents have been moved.", data.movableRecordIds.length);
+                        : _t("%s documents have been moved.", records.movableRecordIds.length);
             }
-            if (data.nonMovableRecordIds.length) {
-                await this.orm.call("documents.document", "action_create_shortcut", [data.nonMovableRecordIds, targetFolderId]);
-                message = _t("At least one document couldn't be moved due to access rights. Shortcuts have been created.");
+            if (records.nonMovableRecordIds.length) {
+                this.notification.add(
+                    _t("At least one document could not be moved due to access rights."),
+                    { type: "warning" },
+                );
             }
         }
-        this.notification.add(message, { type: "success" });
+        if (message) {
+            this.notification.add(message, { type: "success" });
+        }
+    }
+
+    async moveToCompanyRoot(records) {
+        if (!records.movableRecordIds.length) {
+            return this.notification.add(
+                _t("You can't move this/those folder(s) to the Company root."),
+                { type: "warning" },
+            );
+        }
+        await this.orm.call("documents.document", "action_set_as_company_root", [
+            records.movableRecordIds,
+        ]);
+        let message =
+            records.movableRecordIds.length === 1
+                ? _t("The document/folder has been moved to the Company root.")
+                : _t(
+                      "%s documents/folders have been moved to the Company root.",
+                      records.movableRecordIds.length,
+                  );
+        if (records.nonMovableRecordIds.length) {
+            message += _t("<br/>At least one document hasn't been moved.");
+        }
+        this.notification.add(markup(message), {
+            type: records.nonMovableRecordIds.length ? "warning" : "success",
+        });
     }
 
     async toggleFavorite(document) {

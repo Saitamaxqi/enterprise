@@ -10,8 +10,9 @@ import { DocumentsKanbanRecord } from "./documents_kanban_record";
 import { DocumentsActionHelper } from "../helper/documents_action_helper";
 import { DocumentsFileViewer } from "../helper/documents_file_viewer";
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
+import { useDraggableDocuments } from "../helper/documents_draggable";
 import { useCommand } from "@web/core/commands/command_hook";
-import { useRef } from "@odoo/owl";
+import { useExternalListener, useRef } from "@odoo/owl";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 
 export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRenderer) {
@@ -62,6 +63,23 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
                 hotkey: "alt+t",
             }
         );
+
+        useDraggableDocuments({
+            ref: this.root,
+            model: this.env.model,
+            targetSelector: ".o_kanban_record.o_folder_record",
+            elements: ".o_kanban_record",
+            preventDrag: () => this.env.searchModel.getSelectedFolderId() === "TRASH",
+            onTargetPointerEnter: ({ addClass, target, isInvalid }) => {
+                addClass(target, isInvalid ? "o_drag_invalid" : "o_drag_hover");
+            },
+            onTargetPointerLeave: ({ removeClass, target }) => {
+                removeClass(target, "o_drag_invalid", "o_drag_hover");
+            },
+        });
+
+        useExternalListener(window, "keydown", (ev) => this.onKeyDown(ev));
+        useExternalListener(window, "keyup", (ev) => this.onKeyUp(ev));
     }
 
     /**
@@ -203,5 +221,17 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
                 r.toggleSelection(!record.selected);
             }
         });
+    }
+
+    onKeyDown(ev) {
+        if (ev.key === "Control") {
+            this.root.el.classList.add("o_documents_dnd_shortcut");
+        }
+    }
+
+    onKeyUp(ev) {
+        if (ev.key === "Control") {
+            this.root.el.classList.remove("o_documents_dnd_shortcut");
+        }
     }
 }

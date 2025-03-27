@@ -41,12 +41,7 @@
 
     <t t-name="documents.DocumentsListRenderer.RecordRow" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
         <xpath expr="//tr[hasclass('o_data_row')]" position="attributes">
-            <attribute name="draggable">true</attribute>
-            <attribute name="t-on-dragstart.stop">(ev) => record.onDragStart(ev)</attribute>
-            <attribute name="t-on-dragenter.stop">onDragEnter</attribute>
-            <attribute name="t-on-dragleave.stop">onDragLeave</attribute>
-            <attribute name="t-on-dragover.stop.prevent">onDragOver</attribute>
-            <attribute name="t-on-drop.stop">onDrop</attribute>
+            <attribute name="t-att-data-value-id">record.data.id</attribute>
         </xpath>
     </t>
 </templates>

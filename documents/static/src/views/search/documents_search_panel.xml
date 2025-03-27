@@ -25,10 +25,6 @@
             </attribute>
             <attribute name="t-att-title">value.display_name</attribute>
             <attribute name="t-att-data-value-id">valueId</attribute>
-            <attribute name="t-on-dragenter.stop.prevent">(ev) => this.onDragEnter(section, value, ev)</attribute>
-            <attribute name="t-on-dragleave.stop.prevent">(ev) => this.onDragLeave(section, ev)</attribute>
-            <attribute name="t-on-dragover.stop.prevent">(ev) => this.onDragOver(section, value, ev)</attribute>
-            <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, value, ev)</attribute>
         </xpath>
         <xpath expr="//header" position="attributes">
             <attribute name="t-on-click"/>
@@ -65,10 +61,6 @@
 
     <t t-name="documents.SearchPanel.FiltersGroup" t-inherit="web.SearchPanel.FiltersGroup" t-inherit-mode="primary">
         <xpath expr="//li[hasclass('o_search_panel_filter_value')]" position="attributes">
-            <attribute name="t-on-dragenter.stop.prevent">(ev) => this.onDragEnter(section, values.get(valueId), ev)</attribute>
-            <attribute name="t-on-dragleave.stop.prevent">(ev) => this.onDragLeave(section, ev)</attribute>
-            <attribute name="t-on-dragover.stop.prevent"> </attribute>
-            <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, values.get(valueId), ev)</attribute>
             <attribute name="class">o_documents_search_panel_editable</attribute>
         </xpath>
         <xpath expr="//div//label//span[hasclass('o_search_panel_counter')]" position="replace"/>
