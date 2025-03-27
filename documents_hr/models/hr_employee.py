@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, api, fields, models, tools
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import ValidationError
 
 
 class HrEmployee(models.Model):
@@ -57,23 +57,6 @@ class HrEmployee(models.Model):
             'default_res_model': 'hr.employee',
         }
         return action
-
-    def action_send_documents_share_link(self):
-        if not self.env.user.has_group('hr.group_hr_user'):
-            raise UserError(_('You can not send the documents link to the employee.'))
-        invalid_employees = self.filtered(lambda e: not (e.private_email and e.user_id))
-        if invalid_employees:
-            raise UserError(_('Employee\'s related user and private email must be set to use \"Send Access Link\" function:\n%s', '\n'.join(invalid_employees.mapped('name'))))
-        if not self.company_id.documents_hr_folder:
-            raise UserError(_('You must set a Human Resources Documents Workspace in your Settings to use this feature.'))
-        template = self.env.ref('documents_hr.mail_template_document_folder_link', raise_if_not_found=False)
-        for employee in self:
-            if template:
-                template.send_mail(
-                    employee.id, force_send=True,
-                    email_values={'model': False, 'res_id': False},
-                    email_layout_xmlid='mail.mail_notification_light')
-                employee.message_post(body=_('The access link has been sent to the employee.'))
 
     def _generate_employee_documents_subfolders(self):
         """ Employee document folder is meant to be used by HR only to store all the documents they need regarding the
