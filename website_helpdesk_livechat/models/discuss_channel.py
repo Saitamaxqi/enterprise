@@ -38,7 +38,7 @@ class DiscussChannel(models.Model):
         if key[0].lower() == ticket_command:
             if len(key) == 1:
                 msg = _(
-                    "Create a new helpdesk ticket by typing: "
+                    "Create a new helpdesk ticket with: "
                     "%(pre_start)s%(ticket_command)s %(i_start)sticket title%(i_end)s%(pre_end)s",
                     ticket_command=ticket_command,
                     pre_start=Markup("<pre>"),
