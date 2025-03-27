@@ -11,4 +11,19 @@
                 t-key="state.key"/>
         </div>
     </t>
+
+    <t t-name="ai_server_actions.AiPromptDialog">
+        <Dialog size="md" bodyClass="'o_ai_prompt_dialog'" title.translate="Edit Field Prompt">
+            <h5 class="mb-3">Prompt</h5>
+            <AiPrompt t-props="aiPromptProps"/>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="confirm">
+                    Save &amp; Generate
+                </button>
+                <button class="btn btn-secondary" t-on-click="props.close">
+                    Discard
+                </button>
+            </t>
+        </Dialog>
+    </t>
 </templates>

@@ -221,3 +221,30 @@ export class AiPrompt extends Component {
         return (name || "").replaceAll("{", "").replaceAll("}", "");
     }
 }
+
+export class AiPromptDialog extends Component {
+    static template = "ai_server_actions.AiPromptDialog";
+    static components = { Dialog, AiPrompt };
+    static props = {
+        aiPromptProps: { type: Object },
+        close: { type: Function },
+        confirm: { type: Function },
+    };
+
+    setup() {
+        super.setup();
+        this.confirmVals = { prompt: this.props.aiPromptProps.prompt };
+    }
+
+    get aiPromptProps() {
+        return {
+            ...this.props.aiPromptProps,
+            onChange: (prompt) => (this.confirmVals.prompt = prompt),
+        };
+    }
+
+    confirm() {
+        this.props.confirm(this.confirmVals.prompt);
+        this.props.close();
+    }
+}

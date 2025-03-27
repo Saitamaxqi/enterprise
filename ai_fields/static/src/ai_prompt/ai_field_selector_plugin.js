@@ -5,6 +5,7 @@ import { _t } from "@web/core/l10n/translation";
 export class AIFieldSelectorPlugin extends Plugin {
     static id = "AIFieldSelector";
     static dependencies = ["overlay", "selection", "history", "dom"];
+    static shared = ["open"];
     resources = {
         user_commands: [
             {

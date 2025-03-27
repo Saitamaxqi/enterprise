@@ -6,6 +6,7 @@ import { _t } from "@web/core/l10n/translation";
 export class AIRecordsSelectorPlugin extends Plugin {
     static id = "AIRecordsSelector";
     static dependencies = ["overlay", "selection", "history", "dom"];
+    static shared = ["open"];
     resources = {
         user_commands: [
             {
