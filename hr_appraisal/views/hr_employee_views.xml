@@ -90,6 +90,7 @@
         <field name="name">hr.employee.view.list.inherit</field>
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <button name="%(action_open_appraisal_campaign_wizard)d"
@@ -103,5 +104,9 @@
                 <field name="next_appraisal_date" optional="hide"/>
             </xpath>
         </field>
+    </record>
+
+    <record id="hr.act_hr_employee_tree_view" model="ir.actions.act_window.view">
+        <field name="view_id" ref="hr_appraisal.view_employee_tree"/>
     </record>
 </odoo>
