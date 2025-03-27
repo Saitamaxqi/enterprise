@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.StockMove">
-        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center">
+        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+            t-on-click="onClick">
             <span class="text-truncate" t-att-class="isComplete ? 'text-decoration-line-through opacity-25' : ''" t-out="label"/>
             <div>
                 <span class="me-1 fw-bold" t-att-class="{
@@ -14,14 +15,14 @@
                 </span>
                 <button t-if="hasInstruction" t-on-click.stop="showWorksheet" class="btn btn-lg btn-outline-secondary fa fa-info me-1"
                         t-att-class="{'d-none': !props.clickable}"/>
-                <button class="btn" t-on-click="onClick" t-attf-class="{{props.isCurrent ? 'btn-primary' : 'btn-outline-secondary'}}"
+                <button class="btn" t-attf-class="{{props.isCurrent ? 'btn-primary' : 'btn-outline-secondary'}}"
                         t-att-class="{'d-none': !props.clickable}">
                     <i class="fa fa-plus"/>
                 </button>
             </div>
         </li>
-        <li t-foreach="visibleMoveLines" t-as="line" t-key="line.resId"
-            class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center">
+        <li t-foreach="visibleMoveLines" t-as="line" t-key="line.resId" t-on-click="() => this.editQuantity(line)"
+            class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center cursor-pointer">
             <span class="text-truncate ms-4">
                 <t t-if="line.data.location_id" t-out="line.data.location_id[1]"/>
                 <t t-if="line.data.location_id &amp;&amp; line.data.lot_id"> / </t>
@@ -29,8 +30,7 @@
             </span>
             <div>
                 <span class="me-1 fw-bold" t-out="line.data.quantity + ' ' + uom"/>
-                <button class="btn btn-outline-secondary" t-on-click="() => this.editQuantity(line)"
-                        t-att-class="{'d-none': !props.clickable}">
+                <button class="btn btn-outline-secondary" t-att-class="{'d-none': !props.clickable}">
                     <i class="fa fa-pencil"/>
                 </button>
             </div>
