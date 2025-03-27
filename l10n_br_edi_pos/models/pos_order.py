@@ -133,14 +133,14 @@ class PosOrder(models.Model):
 
     def _get_lines_eligible_for_external_taxes(self):
         """account.external.tax.mixin override."""
-        if not self.l10n_br_is_avatax:
+        if not any([order.l10n_br_is_avatax for order in self]):
             return super()._get_lines_eligible_for_external_taxes()
 
         return self.lines
 
     def _get_line_data_for_external_taxes(self):
         """account.external.tax.mixin override."""
-        if not self.l10n_br_is_avatax:
+        if not any([order.l10n_br_is_avatax for order in self]):
             return super()._get_line_data_for_external_taxes()
 
         res = []
@@ -160,7 +160,7 @@ class PosOrder(models.Model):
 
     def _set_external_taxes(self, mapped_taxes, summary):
         """account.external.tax.mixin override. Since taxes are always fully included, amount_total won't change."""
-        if not self.l10n_br_is_avatax:
+        if not any([order.l10n_br_is_avatax for order in self]):
             return super()._set_external_taxes(mapped_taxes, summary)
 
         for line, detail in mapped_taxes.items():
@@ -206,7 +206,7 @@ class PosOrder(models.Model):
         """Override. Refunds will be electronically invoiced through a normal account.move because it's not possible to
         do a salesReturn for NFC-e."""
         res = super()._prepare_invoice_vals()
-        if self.l10n_br_is_avatax and self.refunded_order_id:
+        if any([order.l10n_br_is_avatax for order in self]) and len(self.refunded_order_id.ids) > 0:
             fp = self.env["account.fiscal.position"].search([("l10n_br_is_avatax", "=", True)], limit=1).id
             res.update(
                 {
@@ -221,17 +221,20 @@ class PosOrder(models.Model):
     def _get_invoice_post_context(self):
         """Override. Taxes will change, if we skip_invoice_sync then the move will be unbalanced."""
         res = super()._get_invoice_post_context()
-        if self.l10n_br_is_avatax:
+        if any([order.l10n_br_is_avatax for order in self]):
             res.pop("skip_invoice_sync", False)
         return res
 
     def action_pos_order_invoice(self):
         """Override."""
-        if self.l10n_br_is_avatax:
-            if not self.refunded_order_id:
+        for record in self:
+            if not record.l10n_br_is_avatax:
+                continue
+
+            if not record.refunded_order_id:
                 raise UserError(_("You cannot invoice NFC-e orders."))
 
-            if not self.partner_id:
+            if not record.partner_id:
                 raise ValidationError(_("NF-e refunds require a customer."))
 
         return super().action_pos_order_invoice()
