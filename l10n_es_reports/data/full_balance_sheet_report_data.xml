@@ -4,8 +4,6 @@
         <field name="name">Complete Balance Sheet</field>
         <field name="name@es">Balance completo</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
-        <field name="availability_condition">coa</field>
-        <field name="chart_template">es_full</field>
         <field name="filter_date_range" eval="False"/>
         <field name="filter_analytic_groupby" eval="True"/>
         <field name="filter_unfold_all" eval="True"/>
@@ -36,7 +34,7 @@
                                 <field name="name">I. Intangible assets</field>
                                 <field name="name@es">I. Inmovilizado intangible</field>
                                 <field name="code">l10n_es_full_line_11100</field>
-                                <field name="aggregation_formula">l10n_es_full_line_11110.balance + l10n_es_full_line_11120.balance + l10n_es_full_line_11130.balance + l10n_es_full_line_11140.balance + l10n_es_full_line_11150.balance + l10n_es_full_line_11160.balance + l10n_es_full_line_11170.balance</field>
+                                <field name="aggregation_formula">l10n_es_full_line_11110.balance + l10n_es_full_line_11120.balance + l10n_es_full_line_11130.balance + l10n_es_full_line_11140.balance + l10n_es_full_line_11150.balance + l10n_es_full_line_11160.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_full_line_11110" model="account.report.line">
                                         <field name="name">1. Development</field>
@@ -68,7 +66,7 @@
                                         <field name="code">l10n_es_full_line_11140</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">204</field>
+                                        <field name="account_codes_formula">204 + 2804</field>
                                     </record>
                                     <record id="balance_full_line_11150" model="account.report.line">
                                         <field name="name">5. Computer software</field>
@@ -79,17 +77,9 @@
                                         <field name="account_codes_formula">2906 + 206 + 2806</field>
                                     </record>
                                     <record id="balance_full_line_11160" model="account.report.line">
-                                        <field name="name">6. Research</field>
-                                        <field name="name@es">6. Investigación</field>
+                                        <field name="name">6. Other intangible assets</field>
+                                        <field name="name@es">6. Otro inmovilizado intangible</field>
                                         <field name="code">l10n_es_full_line_11160</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">200 + 2900 + 2800</field>
-                                    </record>
-                                    <record id="balance_full_line_11170" model="account.report.line">
-                                        <field name="name">7. Other intangible assets</field>
-                                        <field name="name@es">7. Otro inmovilizado intangible</field>
-                                        <field name="code">l10n_es_full_line_11170</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
                                         <field name="account_codes_formula">209 + 2905 + 205 + 2805</field>
@@ -156,7 +146,7 @@
                                 <field name="name">IV. Non-current investments in group companies and associates</field>
                                 <field name="name@es">IV. Inversiones en empresas del grupo y asociadas a largo plazo</field>
                                 <field name="code">l10n_es_full_line_11400</field>
-                                <field name="aggregation_formula">l10n_es_full_line_11410.balance + l10n_es_full_line_11420.balance + l10n_es_full_line_11430.balance + l10n_es_full_line_11440.balance + l10n_es_full_line_11450.balance + l10n_es_full_line_11460.balance</field>
+                                <field name="aggregation_formula">l10n_es_full_line_11410.balance + l10n_es_full_line_11420.balance + l10n_es_full_line_11430.balance + l10n_es_full_line_11440.balance + l10n_es_full_line_11450.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_full_line_11410" model="account.report.line">
                                         <field name="name">1. Equity instruments</field>
@@ -198,21 +188,13 @@
                                         <field name="foldable" eval="True"/>
                                         <field name="domain_formula">-sum([('account_id.tag_ids', '=', '%(balance_sheet_11450_account)d')])</field>
                                     </record>
-                                    <record id="balance_full_line_11460" model="account.report.line">
-                                        <field name="name">6. Other investments</field>
-                                        <field name="name@es">6. Otras inversiones</field>
-                                        <field name="code">l10n_es_full_line_11460</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="domain_formula">sum([('account_id.tag_ids', '=', '%(balance_sheet_11460_account)d')])</field>
-                                    </record>
                                 </field>
                             </record>
                             <record id="balance_full_line_11500" model="account.report.line">
                                 <field name="name">V. Non-current investments</field>
                                 <field name="name@es">V. Inversiones financieras a largo plazo</field>
                                 <field name="code">l10n_es_full_line_11500</field>
-                                <field name="aggregation_formula">l10n_es_full_line_11510.balance + l10n_es_full_line_11520.balance + l10n_es_full_line_11530.balance + l10n_es_full_line_11540.balance + l10n_es_full_line_11550.balance + l10n_es_full_line_11560.balance</field>
+                                <field name="aggregation_formula">l10n_es_full_line_11510.balance + l10n_es_full_line_11520.balance + l10n_es_full_line_11530.balance + l10n_es_full_line_11540.balance + l10n_es_full_line_11550.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_full_line_11510" model="account.report.line">
                                         <field name="name">1. Equity instruments</field>
@@ -253,14 +235,6 @@
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
                                         <field name="account_codes_formula">26 + 258</field>
-                                    </record>
-                                    <record id="balance_full_line_11560" model="account.report.line">
-                                        <field name="name">6. Other investments</field>
-                                        <field name="name@es">6. Otras inversiones</field>
-                                        <field name="code">l10n_es_full_line_11560</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">257</field>
                                     </record>
                                 </field>
                             </record>
@@ -380,7 +354,7 @@
                                         <field name="code">l10n_es_full_line_12330</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">5531 + 44 + 5533</field>
+                                        <field name="account_codes_formula">44</field>
                                     </record>
                                     <record id="balance_full_line_12340" model="account.report.line">
                                         <field name="name">4. Personnel</field>
@@ -404,7 +378,7 @@
                                         <field name="code">l10n_es_full_line_12360</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">4700 + 471 + 472 + 4708 + 473</field>
+                                        <field name="account_codes_formula">4700 + 471 + 472 + 4708</field>
                                     </record>
                                     <record id="balance_full_line_12370" model="account.report.line">
                                         <field name="name">7. Receivable on called-up capital</field>
@@ -420,7 +394,7 @@
                                 <field name="name">IV. Current investments in group companies and associates</field>
                                 <field name="name@es">IV. Inversiones en entidades del grupo y asociadas a corto plazo</field>
                                 <field name="code">l10n_es_full_line_12400</field>
-                                <field name="aggregation_formula">l10n_es_full_line_12410.balance + l10n_es_full_line_12420.balance + l10n_es_full_line_12430.balance + l10n_es_full_line_12440.balance + l10n_es_full_line_12450.balance + l10n_es_full_line_12460.balance</field>
+                                <field name="aggregation_formula">l10n_es_full_line_12410.balance + l10n_es_full_line_12420.balance + l10n_es_full_line_12430.balance + l10n_es_full_line_12440.balance + l10n_es_full_line_12450.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_full_line_12410" model="account.report.line">
                                         <field name="name">1. Equity instruments</field>
@@ -477,21 +451,13 @@
                                             </record>
                                         </field>
                                     </record>
-                                    <record id="balance_full_line_12460" model="account.report.line">
-                                        <field name="name">6. Other investments</field>
-                                        <field name="name@es">6. Otras inversiones</field>
-                                        <field name="code">l10n_es_full_line_12460</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="domain_formula">sum([('account_id.tag_ids', '=', '%(balance_sheet_12460_account)d')])</field>
-                                    </record>
                                 </field>
                             </record>
                             <record id="balance_full_line_12500" model="account.report.line">
                                 <field name="name">V. Current financial investments</field>
                                 <field name="name@es">V. Inversiones financieras a corto plazo</field>
                                 <field name="code">l10n_es_full_line_12500</field>
-                                <field name="aggregation_formula">l10n_es_full_line_12510.balance + l10n_es_full_line_12520.balance + l10n_es_full_line_12530.balance + l10n_es_full_line_12540.balance + l10n_es_full_line_12550.balance + l10n_es_full_line_12560.balance</field>
+                                <field name="aggregation_formula">l10n_es_full_line_12510.balance + l10n_es_full_line_12520.balance + l10n_es_full_line_12530.balance + l10n_es_full_line_12540.balance + l10n_es_full_line_12550.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_full_line_12510" model="account.report.line">
                                         <field name="name">1. Equity instruments</field>
@@ -547,14 +513,6 @@
                                                 <field name="formula">l10n_es_full_line_12550.sub_debits + l10n_es_full_line_12550.sub_balances</field>
                                             </record>
                                         </field>
-                                    </record>
-                                    <record id="balance_full_line_12560" model="account.report.line">
-                                        <field name="name">6. Other investments</field>
-                                        <field name="name@es">6. Otras inversiones</field>
-                                        <field name="code">l10n_es_full_line_12560</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="domain_formula">sum([('account_id.tag_ids', '=', '%(balance_sheet_12560_account)d')])</field>
                                     </record>
                                 </field>
                             </record>
@@ -743,7 +701,7 @@
                                 <field name="name">A-2) Valuation adjustments</field>
                                 <field name="name@es">A-2) Ajustes por cambios de valor</field>
                                 <field name="code">l10n_es_full_line_22000</field>
-                                <field name="aggregation_formula">l10n_es_full_line_22100.balance + l10n_es_full_line_22200.balance + l10n_es_full_line_22300.balance + l10n_es_full_line_22400.balance + l10n_es_full_line_22500.balance</field>
+                                <field name="aggregation_formula">l10n_es_full_line_22100.balance + l10n_es_full_line_22200.balance + l10n_es_full_line_22300.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_full_line_22100" model="account.report.line">
                                         <field name="name">I. Available-for-sale financial assets</field>
@@ -759,28 +717,12 @@
                                         <field name="code">l10n_es_full_line_22200</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">-1340 - 1341</field>
+                                        <field name="account_codes_formula">-1340</field>
                                     </record>
                                     <record id="balance_full_line_22300" model="account.report.line">
-                                        <field name="name">III. Non-current assets and related liabilities held for sale</field>
-                                        <field name="name@es">III. Activos no corrientes y pasivos vinculados, mantenidos para la venta</field>
+                                        <field name="name">III. Other</field>
+                                        <field name="name@es">III. Otros</field>
                                         <field name="code">l10n_es_full_line_22300</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">-136</field>
-                                    </record>
-                                    <record id="balance_full_line_22400" model="account.report.line">
-                                        <field name="name">IV. Conversion difference</field>
-                                        <field name="name@es">IV. Diferencia de conversión</field>
-                                        <field name="code">l10n_es_full_line_22400</field>
-                                        <field name="groupby">account_id</field>
-                                        <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">-135</field>
-                                    </record>
-                                    <record id="balance_full_line_22500" model="account.report.line">
-                                        <field name="name">V. Other</field>
-                                        <field name="name@es">V. Otros</field>
-                                        <field name="code">l10n_es_full_line_22500</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
                                         <field name="account_codes_formula">-137</field>
@@ -1085,7 +1027,7 @@
                                         <field name="code">l10n_es_full_line_32550</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">-4751 - 4752 - 4750</field>
+                                        <field name="account_codes_formula">-4752</field>
                                     </record>
                                     <record id="balance_full_line_32560" model="account.report.line">
                                         <field name="name">6. Public entities, other current liabilities</field>
@@ -1093,7 +1035,7 @@
                                         <field name="code">l10n_es_full_line_32560</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">-476 - 477 - 4758 - 4759</field>
+                                        <field name="account_codes_formula">-4750 - 4751 - 4758 - 476 - 477</field>
                                     </record>
                                     <record id="balance_full_line_32570" model="account.report.line">
                                         <field name="name">7. Advances from customers</field>
