@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Multi record preview -->
     <template id="s_appointments_preview_data" name="Appointments Preview Data">
-        <div class="s_dialog_preview row my-4">
+        <div class="s_dialog_preview row">
             <div class="d-flex flex-grow-0 flex-shrink-0 col-3">
                 <div class="w-100">
                     <div class="card h-100 shadow-sm">
@@ -108,6 +109,83 @@
                                 <a href="/appointment/4" title="Book Table" role="button" class="btn btn-primary w-100 mt-3">Book now</a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="s_appointments_picture_preview_data" name="Appointments Preview Data">
+        <div class="s_dialog_preview row">
+            <div class="col-4">
+                <div class="position-relative d-flex align-items-center rounded overflow-hidden text-decoration-none ratio ratio-1x1" href="#">
+                    <div class="o_record_cover_container d-flex flex-column o_colored_level o_cc h-100 w-100 bg-600 position-absolute">
+                        <img class="img img-fluid w-100 h-100 object-fit-cover" src="/appointment/static/src/img/appointment_1.jpg"/>
+                        <div class="o_record_cover_component o_record_cover_filter oe_black" style="opacity: 0.4;"/>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center flex-grow-1 w-100 h-100 px-3 text-center text-white">
+                        <h3>Dental Care</h3>
+                        <span>Doctor's Office <i class="fa fa-marker" role="presentation"/></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="position-relative d-flex align-items-center rounded overflow-hidden text-decoration-none ratio ratio-1x1" href="#">
+                    <div class="o_record_cover_container d-flex flex-column o_colored_level o_cc h-100 w-100 bg-600 position-absolute">
+                        <img class="img img-fluid w-100 h-100 object-fit-cover" src="/appointment/static/src/img/appointment_2.jpg"/>
+                        <div class="o_record_cover_component o_record_cover_filter oe_black" style="opacity: 0.4;"/>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center flex-grow-1 w-100 h-100 px-3 text-center text-white">
+                        <h3>Tennis Court</h3>
+                        <span>Tennis Club <i class="fa fa-marker" role="presentation"/></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="position-relative d-flex align-items-center rounded overflow-hidden text-decoration-none ratio ratio-1x1" href="#">
+                    <div class="o_record_cover_container d-flex flex-column o_colored_level o_cc h-100 w-100 bg-600 position-absolute">
+                        <img class="img img-fluid w-100 h-100 object-fit-cover" src="/appointment/static/src/img/appointment_3.jpg"/>
+                        <div class="o_record_cover_component o_record_cover_filter oe_black" style="opacity: 0.4;"/>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center flex-grow-1 w-100 h-100 px-3 text-center text-white">
+                        <h3>Online Cooking Lesson</h3>
+                        <span>Online <i class="fa fa-marker" role="presentation"/></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="s_appointments_list_preview_data" name="Appointments Preview Data">
+        <div class="s_dialog_preview">
+            <div class="mb-2">
+                <div class="row row-gap-3 p-3 border rounded">
+                    <div class="col-md-6 d-flex flex-column justify-content-center gap-1 me-auto">
+                        <h5 class="mb-0">Dental Care</h5>
+                        <small class="text-muted">Schedule your visit today and experience expert dental care brought right to your doorstep.</small>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center justify-content-end">
+                        <span><i class="fa fa-map-marker" role="presentation"/> Doctor's Office</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="row row-gap-3 p-3 border rounded">
+                    <div class="col-md-6 d-flex flex-column justify-content-center gap-1 me-auto">
+                        <h5 class="mb-0">Tennis Court</h5>
+                        <small class="text-muted">Easily reserve tennis courts for your next match, anytime and anywhere.</small>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center justify-content-end">
+                        <span><i class="fa fa-map-marker" role="presentation"/> Tennis Court</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row row-gap-3 p-3 border rounded">
+                    <div class="col-md-6 d-flex flex-column justify-content-center gap-1 me-auto">
+                        <h5 class="mb-0">Online Cooking Lesson</h5>
+                        <small class="text-muted">Explore online cooking lessons and learn new recipes at your pace.</small>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center justify-content-end">
+                        <span><i class="fa fa-map-marker" role="presentation"/> Online</span>
                     </div>
                 </div>
             </div>

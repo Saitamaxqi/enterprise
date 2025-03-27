@@ -56,7 +56,7 @@ test("dynamic snippet appointments loads items and displays them through templat
     });
     const { core } = await startInteractions(`
       <div id="wrapwrap">
-          <section data-snippet="s_appointments" class="s_appointments s_dynamic s_dynamic_empty s_appointment_type_card o_dynamic_snippet_empty"
+          <section data-snippet="s_appointments" class="s_appointments s_dynamic s_appointment_type_card"
                   data-custom-template-data="{}"
                   data-name="Appointments"
                   data-filter-id="1"
