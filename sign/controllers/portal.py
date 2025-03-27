@@ -6,13 +6,12 @@ from collections import OrderedDict
 from markupsafe import Markup
 
 from odoo import http, _
-from odoo.exceptions import MissingError
+from odoo.fields import Domain
 from odoo.http import request
 from odoo.addons.portal.controllers import portal
-from odoo.addons.portal.controllers.portal import pager as portal_pager, get_records_pager
+from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 from odoo.tools import groupby as groupbyelem
-from odoo.osv.expression import AND
 
 
 class CustomerPortal(portal.CustomerPortal):
@@ -38,7 +37,7 @@ class CustomerPortal(portal.CustomerPortal):
         values = self._prepare_portal_layout_values()
         partner_id = request.env.user.partner_id
         SignRequestItem = request.env['sign.request.item'].sudo()
-        default_domain = [('partner_id', '=', partner_id.id), '|', ('state', '=', 'completed'), ('is_mail_sent', '=', True), ('sign_request_id.state', '!=', 'expired')]
+        default_domain = Domain([('partner_id', '=', partner_id.id), '|', ('state', '=', 'completed'), ('is_mail_sent', '=', True), ('sign_request_id.state', '!=', 'expired')])
 
         searchbar_sortings = {
             'new': {'label': _('Newest'), 'order': 'sign_request_id desc'},
@@ -47,11 +46,10 @@ class CustomerPortal(portal.CustomerPortal):
 
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': default_domain},
-            'tosign': {'label': _('To sign'), 'domain': AND([default_domain, [('state', '=', 'sent'),
-                                                                              ('sign_request_id.state', '=', 'sent')]])},
-            'completed': {'label': _('Completed'), 'domain': AND([default_domain, [('state', '=', 'completed')]])},
+            'tosign': {'label': _('To sign'), 'domain': default_domain & Domain('state', '=', 'sent') & Domain('sign_request_id.state', '=', 'sent')},
+            'completed': {'label': _('Completed'), 'domain': default_domain & Domain('state', '=', 'completed')},
             'signed': {'label': _('Fully Signed'),
-                       'domain': AND([default_domain, [('sign_request_id.state', '=', 'signed')]])},
+                       'domain': default_domain & Domain('sign_request_id.state', '=', 'signed')},
         }
 
         searchbar_inputs = {
@@ -71,12 +69,12 @@ class CustomerPortal(portal.CustomerPortal):
         if not filterby:
             filterby = 'all'
         # get the search  bar filters and remove the cancelled requests
-        domain = AND([searchbar_filters[filterby]['domain'], [('state', '!=', 'canceled')]])
+        domain = Domain.AND([searchbar_filters[filterby]['domain'], [('state', '!=', 'canceled')]])
         if date_begin and date_end:
-            domain = AND([domain, [('signing_date', '>', date_begin), ('signing_date', '<=', date_end)]])
+            domain &= Domain('signing_date', '>', date_begin) & Domain('signing_date', '<=', date_end)
         # search only the document name
         if search and search_in:
-            domain = AND([domain, [('reference', 'ilike', search)]])
+            domain &= Domain('reference', 'ilike', search)
         pager = portal_pager(
             url='/my/signatures',
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'filterby': filterby,

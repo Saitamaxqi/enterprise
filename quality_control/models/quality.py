@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from math import sqrt
 from dateutil.relativedelta import relativedelta
@@ -7,8 +6,8 @@ from datetime import datetime
 import random
 
 from odoo import api, Command, models, fields, _
+from odoo.fields import Domain
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_round, SQL
-from odoo.osv.expression import OR
 
 
 class QualityPoint(models.Model):
@@ -193,16 +192,14 @@ class QualityPoint(models.Model):
         :param picking_type_id: the products that could require a quality check
         :type picking_type_id: :class:`~odoo.addons.stock.models.stock_picking.StockPickingType`
         :returns: the domain for quality point with given picking_type_id for all the product_ids
-        :rtype: list
         """
-        domain = [('picking_type_ids', 'in', picking_type_id.ids)]
-        domain_in_products_or_categs = ['|', ('product_ids', 'in', product_ids.ids), ('product_category_ids', 'parent_of', product_ids.categ_id.ids)]
-        domain_no_products_and_categs = [('product_ids', '=', False), ('product_category_ids', '=', False)]
-        domain += OR([domain_in_products_or_categs, domain_no_products_and_categs])
+        domain = Domain('picking_type_ids', 'in', picking_type_id.ids)
+        domain_in_products_or_categs = Domain('product_ids', 'in', product_ids.ids) | Domain('product_category_ids', 'parent_of', product_ids.categ_id.ids)
+        domain_no_products_and_categs = Domain('product_ids', '=', False) & Domain('product_category_ids', '=', False)
+        domain &= domain_in_products_or_categs | domain_no_products_and_categs
         if measure_on:
-            domain += [('measure_on', '=', measure_on)]
-        domain += [('measure_frequency_type', '=' if on_demand else '!=', 'on_demand')]
-
+            domain &= Domain('measure_on', '=', measure_on)
+        domain &= Domain('measure_frequency_type', '=' if on_demand else '!=', 'on_demand')
         return domain
 
 
@@ -573,7 +570,7 @@ class ProductTemplate(models.Model):
 
         domain_in_products_or_categs = ['|', ('product_ids', 'in', self.product_variant_ids.ids), ('product_category_ids', 'parent_of', self.categ_id.ids)]
         domain_no_products_and_categs = [('product_ids', '=', False), ('product_category_ids', '=', False)]
-        action['domain'] = OR([domain_in_products_or_categs, domain_no_products_and_categs])
+        action['domain'] = Domain.OR([domain_in_products_or_categs, domain_no_products_and_categs])
         return action
 
     def action_see_quality_checks(self):
@@ -662,7 +659,7 @@ class ProductProduct(models.Model):
 
         domain_in_products_or_categs = ['|', ('product_ids', 'in', self.ids), ('product_category_ids', 'parent_of', self.categ_id.ids)]
         domain_no_products_and_categs = [('product_ids', '=', False), ('product_category_ids', '=', False)]
-        action['domain'] = OR([domain_in_products_or_categs, domain_no_products_and_categs])
+        action['domain'] = Domain.OR([domain_in_products_or_categs, domain_no_products_and_categs])
         return action
 
     def action_see_quality_checks(self):

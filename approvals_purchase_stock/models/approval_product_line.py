@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
-from odoo.osv import expression
+from odoo import fields, models
+from odoo.fields import Domain
 
 
 class ApprovalProductLine(models.Model):
@@ -31,10 +30,7 @@ class ApprovalProductLine(models.Model):
         domain = super()._get_purchase_orders_domain(vendor)
         picking_type = self._get_picking_type()
         if picking_type:
-            domain = expression.AND([
-                domain,
-                [('picking_type_id', '=', picking_type.id)]
-            ])
+            domain &= Domain('picking_type_id', '=', picking_type.id)
         return domain
 
     def _get_purchase_order_values(self, vendor):

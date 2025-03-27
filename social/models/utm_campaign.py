@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class UtmCampaign(models.Model):
@@ -28,7 +27,7 @@ class UtmCampaign(models.Model):
             campaign.social_engagement = campaigns_engagement[campaign.id]
 
     def _compute_social_posts_count(self):
-        domain = expression.AND([self._get_social_posts_domain(), [('utm_campaign_id', 'in', self.ids)]])
+        domain = Domain.AND([self._get_social_posts_domain(), [('utm_campaign_id', 'in', self.ids)]])
         post_data = self.env['social.post']._read_group(
             domain,
             ['utm_campaign_id'], ['__count']

@@ -8,9 +8,8 @@ from lxml import etree
 
 from odoo import http, _
 from odoo.http import request
-from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.osv import expression
-from odoo.service.model import get_public_method
+from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Domain
 from odoo.tools import sql, clean_context
 
 _logger = logging.getLogger(__name__)
@@ -121,7 +120,7 @@ class WebStudioController(http.Controller):
             "delivery_iot.report_shipping_docs",
             "l10n_co_reports.report_libro_diario",
         ]
-        report_domain = expression.AND([
+        report_domain = Domain.AND([
             # One can edit only reports backed by persisting models
             [("model_id.transient", "=", False)],
             [("model_id.abstract", "=", False)],

@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class ApprovalProductLine(models.Model):
@@ -86,16 +87,13 @@ class ApprovalProductLine(models.Model):
 
     def _get_purchase_orders_domain(self, vendor):
         """ Return a domain to get purchase order(s) where this product line could fit in.
-
-        :return: list of tuple.
         """
         self.ensure_one()
-        domain = [
+        return Domain([
             ('company_id', '=', self.company_id.id),
             ('partner_id', '=', vendor.id),
             ('state', '=', 'draft'),
-        ]
-        return domain
+        ])
 
     def _get_purchase_order_values(self, vendor):
         """ Get some values used to create a purchase order.

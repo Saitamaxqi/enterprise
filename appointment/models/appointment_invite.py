@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import re
 import secrets
@@ -9,7 +8,7 @@ from werkzeug.urls import url_encode, url_join
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 SHORT_CODE_PATTERN = re.compile(r"^[\w-]+$")
 
@@ -393,12 +392,12 @@ class AppointmentInvite(models.Model):
         return short_code
 
     def _find_identical_config(self, appointment_type_ids, resources_choice, short_code=False):
-        domain = [
+        domain = Domain([
             ('appointment_type_ids', '=', appointment_type_ids),
             ('resources_choice', '=', resources_choice),
-        ]
+        ])
         if short_code:
-            domain = expression.AND([domain, [('short_code', '=', short_code)]])
+            domain &= Domain('short_code', '=', short_code)
 
         return self.env['appointment.invite'].search(domain, limit=1)
 

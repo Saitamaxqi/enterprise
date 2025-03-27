@@ -1,16 +1,16 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
 from operator import itemgetter
 
 from odoo import http, _
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv.expression import AND, OR
 from odoo.tools import groupby as groupbyelem
 
 from odoo.addons.portal.controllers import portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
+
 
 class AppointmentPortal(portal.CustomerPortal):
 
@@ -39,7 +39,7 @@ class AppointmentPortal(portal.CustomerPortal):
             search_domains.append([('user_id', 'ilike', search)])
         if search_in in ('all', 'description'):
             search_domains.append([('description', 'ilike', search)])
-        return OR(search_domains) if search_domains else []
+        return Domain.OR(search_domains) if search_domains else Domain.TRUE
 
     def _appointment_get_groupby_mapping(self):
         return {
@@ -90,10 +90,10 @@ class AppointmentPortal(portal.CustomerPortal):
 
         if not filterby:
             filterby = 'all'
-        domain = AND([domain, searchbar_filters[filterby]['domain']])
+        domain = Domain.AND([domain, searchbar_filters[filterby]['domain']])
 
         if search and search_in and (search_domain := self._get_appointment_search_domain(search_in, search)):
-            domain = AND([domain, search_domain])
+            domain = Domain.AND([domain, search_domain])
 
         appointment_count = Event.search_count(domain)
         pager = portal_pager(

@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SocialPost(models.Model):
@@ -24,7 +23,7 @@ class SocialPost(models.Model):
         domain = super()._get_stream_post_domain()
         twitter_tweet_ids = [twitter_tweet_id for twitter_tweet_id in self.live_post_ids.mapped('twitter_tweet_id') if twitter_tweet_id]
         if twitter_tweet_ids:
-            return expression.OR([domain, [('twitter_tweet_id', 'in', twitter_tweet_ids)]])
+            return Domain.OR([domain, [('twitter_tweet_id', 'in', twitter_tweet_ids)]])
         return domain
 
     @api.model

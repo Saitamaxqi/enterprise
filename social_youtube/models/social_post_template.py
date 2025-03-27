@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SocialPostTemplate(models.Model):
@@ -14,7 +13,7 @@ class SocialPostTemplate(models.Model):
         It will also not be available for the social post template.
         """
         youtube_media = self.env.ref('social_youtube.social_media_youtube')
-        return expression.AND([
+        return Domain.AND([
             super()._get_default_accounts_domain(),
             [('media_id', '!=', youtube_media.id)]
         ])

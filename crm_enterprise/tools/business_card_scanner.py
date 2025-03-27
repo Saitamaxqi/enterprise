@@ -7,7 +7,7 @@ import requests
 from odoo import _
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from werkzeug.urls import url_join
 
 _logger = logging.getLogger(__name__)
@@ -107,9 +107,9 @@ class BusinessCardScanner:
 
                 # extract state
                 if data.get('state_code'):
-                    domain = [('code', '=', data['state_code'])]
+                    domain = Domain('code', '=', data['state_code'])
                     if country:
-                        domain = expression.AND([domain, [('country_id', '=', country.id)]])
+                        domain &= Domain('country_id', '=', country.id)
                     state = self.env['res.country.state'].search(domain, limit=1)
                     if state:
                         lead_values['state_id'] = state.id

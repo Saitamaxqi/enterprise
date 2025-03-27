@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from collections import OrderedDict
 from werkzeug.exceptions import NotFound
@@ -6,7 +5,7 @@ from werkzeug.exceptions import NotFound
 from odoo import _
 from odoo.http import request, route
 from odoo.exceptions import AccessError, MissingError
-from odoo.osv.expression import AND
+from odoo.fields import Domain
 
 from odoo.addons.helpdesk.controllers.portal import CustomerPortal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
@@ -59,9 +58,7 @@ class ProjectHelpdeskPortal(ProjectCustomerPortal, CustomerPortal):
         if not filterby:
             filterby = 'all'
 
-        domain = searchbar_filters.get(filterby, searchbar_filters.get('all'))['domain']
-
-        domain = AND([[('id', 'in', ticket.fsm_task_ids.ids)], domain])
+        domain = Domain('id', 'in', ticket.fsm_task_ids.ids) & Domain(searchbar_filters.get(filterby, searchbar_filters.get('all'))['domain'])
         values = self._prepare_tasks_values(page, date_begin, date_end, sortby, search, search_in, groupby, domain=domain)
 
         # pager

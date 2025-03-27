@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
@@ -14,7 +13,7 @@ from werkzeug.urls import url_join
 from odoo import api, Command, fields, models, _
 from odoo.addons.web_editor.tools import handle_history_divergence
 from odoo.exceptions import AccessError, ValidationError, UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import get_lang, is_html_empty, OrderedSet
 from odoo.tools.translate import html_translate
 from odoo.tools.sql import create_index, make_index_name, SQL
@@ -557,7 +556,7 @@ class KnowledgeArticle(models.Model):
 
         # share is never allowed to write
         if self.env.user.share:
-            return expression.TRUE_DOMAIN if operator == 'in' else expression.FALSE_DOMAIN
+            return Domain(operator == 'in')
 
         articles_with_access = KnowledgeArticle._get_internal_permission(filter_domain=[('internal_permission', '=', 'write')])
         member_permissions = KnowledgeArticle._get_partner_member_permissions(self.env.user.partner_id)
@@ -697,23 +696,19 @@ class KnowledgeArticle(models.Model):
 
     def _search_is_article_visible(self, operator, value):
         if self.env.user._is_public():
-            return expression.FALSE_DOMAIN
+            return Domain.FALSE
         if operator != 'in':
             return NotImplemented
         members_from_partner = self.env['knowledge.article.member']._search(
             [('partner_id', '=', self.env.user.partner_id.id)]
         )
-        members_domain = [
-            '|',
-                ('article_member_ids', 'in', members_from_partner),
-                ('root_article_id.article_member_ids', 'in', members_from_partner)
-        ]
+        members_domain = (
+            Domain('article_member_ids', 'in', members_from_partner)
+            | Domain('root_article_id.article_member_ids', 'in', members_from_partner)
+        )
         if not self.env.user._is_internal():
             return members_domain
-        return expression.OR([
-            [('is_article_visible_by_everyone', '=', True)],
-            members_domain
-        ])
+        return Domain('is_article_visible_by_everyone', '=', True) | members_domain
 
     @api.depends('root_article_id.is_article_visible_by_everyone')
     def _compute_is_article_visible_by_everyone(self):
@@ -770,9 +765,10 @@ class KnowledgeArticle(models.Model):
             return super().search_fetch(domain, field_names, offset, limit, order)
         order_items = [order_item.strip().lower() for order_item in (order or self._order).split(',')]
         favorite_asc = any('is_user_favorite asc' in item for item in order_items)
+        domain = Domain(domain)
 
         # Search articles that are favorite of the current user.
-        my_articles_domain = expression.AND([[('favorite_ids.user_id', 'in', [self.env.uid])], domain])
+        my_articles_domain = Domain('favorite_ids.user_id', 'in', [self.env.uid]) & domain
         my_articles_order = ', '.join(item for item in order_items if 'is_user_favorite' not in item)
         articles_ids = super().search_fetch(my_articles_domain, field_names, order=my_articles_order).ids
 
@@ -797,7 +793,7 @@ class KnowledgeArticle(models.Model):
         article_order = ', '.join(item for item in order_items if 'is_user_favorite' not in item)
 
         other_article_res = super().search_fetch(
-            expression.AND([[('id', 'not in', my_articles_ids_skip)], domain]),
+            Domain('id', 'not in', my_articles_ids_skip) & domain,
             field_names, article_offset, article_limit, article_order,
         )
         if favorite_asc in order_items:
@@ -1032,9 +1028,9 @@ class KnowledgeArticle(models.Model):
 
     @api.model
     def _read_group_stage_ids(self, stages, domain):
-        search_domain = [('id', 'in', stages.ids)]
+        search_domain = Domain('id', 'in', stages.ids)
         if self.env.context.get('default_parent_id'):
-            search_domain = expression.OR([[('parent_id', '=', self.env.context['default_parent_id'])], search_domain])
+            search_domain = Domain('parent_id', '=', self.env.context['default_parent_id']) | search_domain
         return stages.search(search_domain)
 
     def _get_read_domain(self):
@@ -1120,7 +1116,7 @@ class KnowledgeArticle(models.Model):
         parent record, without this override it will never match). """
 
         if operator == 'in':
-            return expression.OR(self._search_display_name('=', v) for v in value)
+            return Domain.OR(self._search_display_name('=', v) for v in value)
         if operator == 'not in':
             return NotImplemented
         if operator not in ('=', 'ilike') or not isinstance(value, str):
@@ -1552,14 +1548,14 @@ class KnowledgeArticle(models.Model):
         :param bool hidden_mode: If True, scope the search to the hidden articles.
                                  If False, scope the search to the visible articles.
         """
-        domain = [
+        domain = Domain([
             ('is_article_visible', '!=', hidden_mode),
             ("user_has_access", "=", True)  # Admins won't see other's private articles.
-        ]
+        ])
         if not search_query:
             if not hidden_mode:
-                domain = [('is_user_favorite', '=', True)]
-            domain = expression.AND([domain, [('is_template', '=', False)]])
+                domain = Domain('is_user_favorite', '=', True)
+            domain &= Domain('is_template', '=', False)
             return self.search_read(domain, limit=limit, fields=[
                 'id',
                 'icon',
@@ -1601,11 +1597,7 @@ class KnowledgeArticle(models.Model):
         """
         if not search_query:
             return []
-        domain = expression.AND([
-            domain or [],
-            [('is_template', '=', False)],
-        ])
-
+        domain = Domain(domain or Domain.TRUE) & Domain('is_template', '=', False)
         query = self._search(domain)
 
         # Escape special characters recognized by the 'ILIKE' keyword
@@ -3003,7 +2995,7 @@ class KnowledgeArticle(models.Model):
         if not article:
             # retrieve workspace articles first, then private/shared ones.
             article = self.search(
-                expression.AND([
+                Domain.AND([
                     [('parent_id', '=', False), ('is_template', '=', False)],
                     self._get_read_domain(),
                     [('is_article_visible', '=', True)]

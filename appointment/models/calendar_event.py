@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import uuid
@@ -6,13 +5,13 @@ import logging
 from datetime import datetime, timedelta
 from markupsafe import Markup
 
-from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
+from odoo import _, api, fields, models, tools, SUPERUSER_ID
 from odoo.addons.calendar.models.utils import interval_from_events
 from odoo.exceptions import ValidationError
+from odoo.fields import Command, Domain
 from odoo.tools.intervals import Intervals, intervals_overlap, invert_intervals
 from odoo.tools.date_utils import localized
 from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
-from odoo.osv import expression
 
 _logger = logging.getLogger(__name__)
 
@@ -528,7 +527,7 @@ class CalendarEvent(models.Model):
             The formatted_read_group privacy domain adapted to include every events related to a resource appointment type.
         """
         domain = super()._get_default_privacy_domain()
-        return expression.OR([domain, [
+        return Domain.OR([domain, [
             '&',
             ('appointment_type_id', '!=', False),
             ('appointment_type_id.schedule_based_on', '=', 'resources')

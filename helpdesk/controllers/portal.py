@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from operator import itemgetter
@@ -7,12 +6,12 @@ from markupsafe import Markup
 
 from odoo import http
 from odoo.exceptions import AccessError, MissingError, UserError
+from odoo.fields import Domain
 from odoo.http import request
 from odoo.tools.translate import _
 from odoo.tools import groupby as groupbyelem
 from odoo.addons.portal.controllers import portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
-from odoo.osv.expression import AND, FALSE_DOMAIN
 
 
 class CustomerPortal(portal.CustomerPortal):
@@ -80,7 +79,7 @@ class CustomerPortal(portal.CustomerPortal):
 
     def _prepare_my_tickets_values(self, page=1, date_begin=None, date_end=None, sortby=None, filterby='all', search=None, groupby='none', search_in='name'):
         values = self._prepare_portal_layout_values()
-        domain = self._prepare_helpdesk_tickets_domain()
+        domain = Domain(self._prepare_helpdesk_tickets_domain())
 
         searchbar_sortings = {
             'id desc': {'label': _('Newest')},
@@ -103,14 +102,14 @@ class CustomerPortal(portal.CustomerPortal):
         if not sortby:
             sortby = next(iter(searchbar_sortings))
 
-        domain = AND([domain, searchbar_filters[filterby]['domain']])
+        domain &= Domain(searchbar_filters[filterby]['domain'])
 
         if date_begin and date_end:
-            domain = AND([domain, [('create_date', '>', date_begin), ('create_date', '<=', date_end)]])
+            domain &= Domain('create_date', '>', date_begin) & Domain('create_date', '<=', date_end)
 
         # search
         if search and search_in:
-            domain = AND([domain, self._ticket_get_search_domain(search_in, search)])
+            domain &= Domain(self._ticket_get_search_domain(search_in, search))
 
         # pager
         tickets_count = request.env['helpdesk.ticket'].search_count(domain)

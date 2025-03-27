@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class UtmCampaign(models.Model):
@@ -56,9 +55,9 @@ class UtmCampaign(models.Model):
         return action
 
     def _get_social_posts_domain(self):
-        domain = super(UtmCampaign, self)._get_social_posts_domain()
-        return expression.AND([domain, [('media_ids.media_type', '!=', 'push_notifications')]])
+        domain = Domain(super()._get_social_posts_domain())
+        return domain & Domain('media_ids.media_type', '!=', 'push_notifications')
 
     def _get_social_media_accounts_domain(self):
-        domain = super(UtmCampaign, self)._get_social_media_accounts_domain()
-        return expression.AND([domain, [('media_type', '!=', 'push_notifications')]])
+        domain = Domain(super()._get_social_media_accounts_domain())
+        return domain & Domain('media_type', '!=', 'push_notifications')

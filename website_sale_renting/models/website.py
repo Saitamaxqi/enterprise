@@ -3,8 +3,8 @@
 import pytz
 
 from odoo import fields, models
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv import expression
 
 
 class Website(models.Model):
@@ -27,7 +27,7 @@ class Website(models.Model):
         ]
 
     def _product_domain(self):
-        return expression.OR([[('rent_ok', '=', True)], super()._product_domain()])
+        return Domain.OR([[('rent_ok', '=', True)], super()._product_domain()])
 
     def _is_customer_in_the_same_timezone(self):
         """ Return whether the customer is on the same timezone as the website or not.

@@ -1,6 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class EsgEmissionSource(models.Model):
@@ -101,7 +101,7 @@ class EsgEmissionSource(models.Model):
         if operator not in ('ilike', 'like', '=', '=ilike'):
             raise NotImplementedError(f"Operator {operator} not supported")
 
-        domain = [('name', operator, value)]
+        domain = Domain('name', operator, value)
 
         scope_labels = dict(self.env['esg.emission.source']._fields['scope']._description_selection(self.env))
         matching_scope_keys = [
@@ -113,12 +113,9 @@ class EsgEmissionSource(models.Model):
             )
         ]
         if matching_scope_keys:
-            domain = expression.OR([
-                domain,
-                [('scope', 'in', matching_scope_keys)],
-            ])
+            domain |= Domain('scope', 'in', matching_scope_keys)
         matched_sources = self.env['esg.emission.source'].search(domain)
 
         if not matched_sources:
-            return [('id', '=', 0)]
-        return [('id', 'child_of', matched_sources.ids)]
+            return Domain.FALSE
+        return Domain('id', 'child_of', matched_sources.ids)

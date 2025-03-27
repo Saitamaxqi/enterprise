@@ -8,11 +8,10 @@ import pytz
 
 from dateutil import relativedelta
 from collections import defaultdict
-from odoo import api, Command, fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools import float_round
-from odoo.tools.misc import unquote
 from odoo.addons.rating.models.rating_data import RATING_LIMIT_MIN
 from odoo.addons.web.controllers.utils import clean_action
 
@@ -630,12 +629,9 @@ class HelpdeskTeam(models.Model):
             if _is_sla_failed(ticket):
                 result[key]['failed'] += 1
 
-        domain = [('user_id', '=', self.env.uid)]
+        domain = Domain('user_id', '=', self.env.uid)
         tickets = HelpdeskTicket.search_read(
-            expression.AND([
-                domain,
-                [('stage_id.fold', '=', False)]
-            ]),
+            domain & Domain('stage_id.fold', '=', False),
             ['sla_deadline', 'open_hours', 'sla_reached_late', 'priority']
         )
         for ticket in tickets:
@@ -760,7 +756,7 @@ class HelpdeskTeam(models.Model):
             :param is_ticket_closed: Boolean if True, then we want to see the tickets closed in last 7 days
             :returns dict containing the params to update into the action.
         """
-        domain = [('team_id', 'in', self.ids)]
+        domain = Domain('team_id', 'in', self.ids)
 
         context = {
             'search_default_is_open': not is_ticket_closed,
@@ -768,9 +764,7 @@ class HelpdeskTeam(models.Model):
         }
         view_mode = 'list,kanban,form,activity,pivot,graph,cohort'
         if is_ticket_closed:
-            domain = expression.AND([domain, [
-                ('close_date', '>=', self._local_midnight_as_utc() - datetime.timedelta(days=6)),
-            ]])
+            domain &= Domain('close_date', '>=', self._local_midnight_as_utc() - datetime.timedelta(days=6))
             context.update(search_default_closed_on='custom_closed_on_last_7_days')
         return {
             'domain': domain,
@@ -783,7 +777,7 @@ class HelpdeskTeam(models.Model):
         action_params = self._get_action_view_ticket_params(True)
         action.update({
             **action_params,
-            'domain': expression.AND([action_params['domain'], [('stage_id.fold', '=', True)]]),
+            'domain': Domain.AND([action_params['domain'], [('stage_id.fold', '=', True)]]),
         })
         return action
 
@@ -791,7 +785,7 @@ class HelpdeskTeam(models.Model):
         action = self.action_view_ticket()
         action_params = self._get_action_view_ticket_params(True)
         action.update(
-            domain=expression.AND([
+            domain=Domain.AND([
                 action_params['domain'],
                 [('team_id', 'in', self.ids), ('stage_id.fold', '=', True)],
             ]),
@@ -837,7 +831,7 @@ class HelpdeskTeam(models.Model):
                 **action_params['context'],
                 'search_default_sla_failed': True,
             },
-            'domain': expression.AND([action_params['domain'], [('sla_fail', '=', True)]]),
+            'domain': Domain.AND([action_params['domain'], [('sla_fail', '=', True)]]),
         })
         return action
 
@@ -1000,7 +994,7 @@ class HelpdeskTeam(models.Model):
         action = self.env['ir.actions.act_window']._for_xml_id('helpdesk.rating_rating_action_helpdesk')
 
         ticket_ids = self.env['helpdesk.ticket']._search([('team_id.company_id', 'in', self.env.context.get('allowed_company_ids'))])
-        action['domain'] = expression.AND([
+        action['domain'] = Domain.AND([
             ast.literal_eval(action.get('domain', '[]')),
             [('res_id', 'in', list(ticket_ids))],
         ])

@@ -1,7 +1,7 @@
 from markupsafe import Markup
 
 from odoo import fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class FactorsAutoAssignmentWizard(models.TransientModel):
@@ -20,15 +20,13 @@ class FactorsAutoAssignmentWizard(models.TransientModel):
         self.ensure_one()
         updated_amls = set()
         emission_factors = self.env['esg.emission.factor'].browse(self.env.context.get('active_ids'))
-        domain = [
-            ('date', '>=', self.start_date),
-        ]
+        domain = Domain('date', '>=', self.start_date)
         if self.end_date:
-            domain = expression.AND([domain, [('date', '<=', self.end_date)]])
+            domain &= Domain('date', '<=', self.end_date)
         if not self.replace_previous_factors:
-            domain = expression.AND([domain, [('esg_emission_factor_id', '=', False)]])
+            domain &= Domain('esg_emission_factor_id', '=', False)
 
-        domain = expression.AND([domain, [('account_id.account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'))]])
+        domain &= Domain('account_id.account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'))
         move_lines = self.env['account.move.line'].search(domain)
         updated_amls.update(-id for id in move_lines._assign_factors_to_move_lines(factors=emission_factors))
 

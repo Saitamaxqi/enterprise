@@ -1,6 +1,6 @@
 from odoo import models, _
+from odoo.fields import Domain
 from odoo.addons.website_appointment.controllers.appointment import WebsiteAppointment
-from odoo.osv.expression import AND
 
 
 class WebsiteSnippetFilter(models.Model):
@@ -22,6 +22,6 @@ class WebsiteSnippetFilter(models.Model):
     def _prepare_values(self, limit=None, search_domain=None):
         if self.model_name == 'appointment.type':
             if country := WebsiteAppointment._get_customer_country():
-                customer_country_domain = [('country_ids', 'in', [False, country.id])]
-                search_domain = AND([search_domain, customer_country_domain])
+                customer_country_domain = Domain('country_ids', 'in', [False, country.id])
+                search_domain = Domain(search_domain or Domain.TRUE) & customer_country_domain
         return super()._prepare_values(limit=limit, search_domain=search_domain)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
@@ -7,7 +6,7 @@ from datetime import datetime
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv.expression import OR
+from odoo.fields import Domain
 
 
 class QualityPointTest_Type(models.Model):
@@ -287,9 +286,9 @@ class QualityAlert(models.Model):
         if not team_id and self.env.context.get('active_model') == 'quality.alert.team' and\
                 self.env.context.get('active_id'):
             team_id = self.env['quality.alert.team'].browse(self.env.context.get('active_id')).exists().id
-        domain = [('team_ids', '=', False)]
+        domain = Domain('team_ids', '=', False)
         if team_id:
-            domain = OR([domain, [('team_ids', 'in', team_id)]])
+            domain &= Domain('team_ids', 'in', team_id)
         return self.env['quality.alert.stage'].search(domain, limit=1).id
 
     def _get_default_team_id(self):
@@ -363,15 +362,15 @@ class QualityAlert(models.Model):
         """ Only shows the stage related to the current team.
         """
         team_id = self.env.context.get('default_team_id')
-        domain = [('id', 'in', stages.ids)]
+        domain = Domain('id', 'in', stages.ids)
         if not team_id and self.env.context.get('active_model') == 'quality.alert.team' and\
                 self.env.context.get('active_id'):
             team_id = self.env['quality.alert.team'].browse(self.env.context.get('active_id')).exists().id
         if team_id:
-            domain = OR([domain, ['|', ('team_ids', '=', False), ('team_ids', 'in', team_id)]])
+            domain |= Domain('team_ids', '=', False) | Domain('team_ids', 'in', team_id)
         elif not stages:
             # if enter here, means we won't get any team_id and stage_id to search
             # so search stage without team_ids instead
-            domain = [('team_ids', '=', False)]
+            domain = Domain('team_ids', '=', False)
         stage_ids = stages.sudo()._search(domain, order=stages._order)
         return stages.browse(stage_ids)

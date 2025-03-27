@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
@@ -9,8 +8,7 @@ from datetime import timedelta, date
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, modules, _
-from odoo.osv import expression
-from odoo.fields import Datetime
+from odoo.fields import Datetime, Domain
 from odoo.exceptions import ValidationError, AccessError
 from odoo.tools.misc import clean_context
 
@@ -138,11 +136,13 @@ class MarketingActivity(models.Model):
     @api.depends('activity_domain', 'campaign_id.domain', 'parent_id.domain')
     def _compute_inherited_domain(self):
         for activity in self:
-            domain = expression.AND([literal_eval(activity.activity_domain or '[]'),
-                                     literal_eval(activity.campaign_id.domain or '[]')])
+            domain = Domain.AND([
+                literal_eval(activity.activity_domain or '[]'),
+                literal_eval(activity.campaign_id.domain or '[]'),
+            ])
             ancestor = activity.parent_id
             while ancestor:
-                domain = expression.AND([domain, literal_eval(ancestor.activity_domain or '[]')])
+                domain &= Domain(literal_eval(ancestor.activity_domain or '[]'))
                 ancestor = ancestor.parent_id
             activity.domain = domain
 

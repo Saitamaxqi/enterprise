@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class IotBox(models.Model):
@@ -24,14 +24,10 @@ class IotBox(models.Model):
     def _compute_associated_pos_config_ids(self):
         """Compute the associated PoS config ids for the IoT Box."""
         for box in self:
-            domain = expression.OR([
-                [('iface_printer_id', 'in', box.device_ids.ids)],
-                [('iface_display_id', 'in', box.device_ids.ids)],
-                [('iface_scale_id', 'in', box.device_ids.ids)],
-                [('iface_scanner_ids', 'in', box.device_ids.ids)],
-            ])
-            domain = expression.AND([
-                [('is_posbox', '=', True)],
-                domain
-            ])
+            domain = Domain('is_posbox', '=', True) & Domain.OR(
+                Domain(field_name, 'in', box.device_ids.ids)
+                for field_name in (
+                    'iface_printer_id', 'iface_display_id', 'iface_scale_id', 'iface_scanner_ids'
+                )
+            )
             box.associated_pos_config_ids = self.env['pos.config'].search(domain)

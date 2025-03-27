@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class IrActionsReport(models.Model):
@@ -67,14 +67,8 @@ class IrActionsReport(models.Model):
     def associated_view(self):
         action_data = super(IrActionsReport, self).associated_view()
         if action_data is not False:
-            domain = expression.normalize_domain(action_data['domain'])
-
             view_name = self.report_name.split('.')[1].split('_copy_')[0]
-
-            domain = expression.OR([
-                domain,
-                ['&', ('name', 'ilike', view_name), ('type', '=', 'qweb')]
-            ])
-
-            action_data['domain'] = domain
+            action_data['domain'] = Domain(action_data['domain']) | (
+                Domain('name', 'ilike', view_name) & Domain('type', '=', 'qweb')
+            )
         return action_data

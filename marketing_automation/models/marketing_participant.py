@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.osv.expression import NEGATIVE_TERM_OPERATORS
+from odoo.fields import Domain
 
 
 class MarketingParticipant(models.Model):
@@ -31,7 +30,7 @@ class MarketingParticipant(models.Model):
         return [(model.model, model.name) for model in models]
 
     def _search_resource_ref(self, operator, value):
-        if operator in NEGATIVE_TERM_OPERATORS:
+        if Domain.is_negative_operator(operator):
             return NotImplemented
         ir_model_ids = []
         for [model_name] in self.env['marketing.campaign']._read_group([], ['model_name']):

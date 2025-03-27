@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -8,8 +7,8 @@ from dateutil.relativedelta import relativedelta
 import babel.dates
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, date_utils
-from odoo.osv import expression
 from odoo.tools.misc import get_lang
 
 DISPLAY_FORMATS = {
@@ -42,8 +41,9 @@ class Base(models.AbstractModel):
         columns_avg = defaultdict(lambda: dict(percentage=0, count=0))
         total_value = 0
         initial_churn_value = 0
+        domain = Domain(domain)
         if measure != '__count':
-            domain = expression.AND([domain, [(measure, '!=', False)]])
+            domain &= Domain(measure, '!=', False)
             measures = [f'{measure}:sum']
             field = self._fields[measure]
             if field.type == 'many2one':
@@ -56,7 +56,7 @@ class Base(models.AbstractModel):
 
         locale = get_lang(self.env).code
 
-        domain = expression.AND([domain, [(date_start, '!=', False)]])  # date not set are no take in account
+        domain &= Domain(date_start, '!=', False)  # date not set are no take in account
         row_groups = self._read_group(
             domain=domain,
             groupby=[date_start + ':' + interval],
@@ -73,9 +73,8 @@ class Base(models.AbstractModel):
 
         for group_value, sum_value, value in row_groups:
             total_value += value
-            group_domain = expression.AND([
-                domain,
-                ['&', (date_start, '>=', group_value), (date_start, '<', group_value + models.READ_GROUP_TIME_GRANULARITY[interval])]
+            group_domain = domain & Domain([
+                '&', (date_start, '>=', group_value), (date_start, '<', group_value + models.READ_GROUP_TIME_GRANULARITY[interval])
             ])
             sub_group = self._read_group(
                 domain=group_domain,
@@ -122,14 +121,9 @@ class Base(models.AbstractModel):
                 # In backward timeline, if columns are out of given range, we need
                 # to set initial value for calculating correct percentage
                 if timeline == 'backward' and col_index == 0:
-                    outside_timeline_domain = expression.AND(
-                        [
-                            group_domain,
-                            ['|',
-                                (date_stop, '=', False),
-                                (date_stop, '>=', fields.Datetime.to_string(col_start_date)),
-                            ]
-                        ]
+                    outside_timeline_domain = group_domain & (
+                        Domain(date_stop, '=', False)
+                        | Domain(date_stop, '>=', fields.Datetime.to_string(col_start_date))
                     )
                     col_group = self._read_group(
                         domain=outside_timeline_domain,

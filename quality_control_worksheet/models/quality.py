@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from ast import literal_eval
 
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class QualityPoint(models.Model):
@@ -90,13 +89,13 @@ class QualityCheck(models.Model):
         if self.worksheet_count == 0:
             raise UserError(_("Please fill in the worksheet."))
         else:
-            domain = literal_eval(self.point_id.worksheet_success_conditions or '[]')
+            domain = Domain(literal_eval(self.point_id.worksheet_success_conditions or '[]'))
             model = self.env[self.worksheet_template_id.model_id.model]
             quality_wizard_id = self.env.context.get('quality_wizard_id')
             if not quality_wizard_id:
                 return {'type': 'ir.actions.act_window_close'}
             quality_wizard = self.env['quality.check.wizard'].browse(quality_wizard_id)
-            if model.search_count(expression.AND([domain, [('x_quality_check_id', '=', self.id)]]), limit=1):
+            if model.search_count(domain & Domain('x_quality_check_id', '=', self.id), limit=1):
                 return quality_wizard.do_pass()
             else:
                 # TODO: Write fail message ?

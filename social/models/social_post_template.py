@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import re
 import json
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import format_datetime, OrderedSet
 
 
@@ -102,12 +101,12 @@ class SocialPostTemplate(models.Model):
                 ), False)
 
     def _search_display_message(self, operator, operand):
-        if operator in expression.NEGATIVE_TERM_OPERATORS:
+        if Domain.is_negative_operator(operator):
             return NotImplemented
-        return expression.OR([[
-            (field, operator, operand)]
+        return Domain.OR(
+            Domain(field, operator, operand)
             for field in ('message', *self._message_fields().values())
-        ])
+        )
 
     @api.depends(lambda self: ['image_ids'] + list(self._images_fields().values()))
     def _compute_image_urls(self):

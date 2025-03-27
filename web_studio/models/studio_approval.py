@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from ast import literal_eval
 import logging
 
-from odoo import api, models, fields, _, Command
-from odoo.osv import expression
+from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError, UserError
+from odoo.fields import Command, Domain
 from collections import defaultdict
 
 
@@ -719,11 +718,11 @@ class StudioApprovalRule(models.Model):
         # just in case someone didn't cast it properly client side, would be
         # a shame to be able to skip this 'security' because of a missing parseInt 😜
         action_id = self._parse_action_from_button(action_id)
-        domain = [('model_name', '=', model)]
+        domain = Domain('model_name', '=', model)
         if method:
-            domain = expression.AND([domain, [('method', '=', method)]])
+            domain &= Domain('method', '=', method)
         if action_id:
-            domain = expression.AND([domain, [('action_id', '=', action_id)]])
+            domain &= Domain('action_id', '=', action_id)
         return domain
 
     def _clean_context(self):
@@ -790,11 +789,10 @@ class StudioApprovalRule(models.Model):
             records.check_access('read')
 
         # Search every rule matching all methods and actions: we'll map those results afterwards
-        rules_domain = [('model_name', '=', model)]
-        rules_domain = expression.AND([rules_domain, [
-            "|", ("method", "in", list(all_methods)),
-            ("action_id", "in", list(all_action_ids))
-        ]])
+        rules_domain = Domain('model_name', '=', model) & (
+            Domain("method", "in", list(all_methods))
+            | Domain("action_id", "in", list(all_action_ids))
+        )
         rules_data = self.sudo().search_read(
             domain=rules_domain,
             fields=['name', 'message', 'exclusive_user', 'can_validate', 'action_id', 'method', "approver_ids", "users_to_notify", "approval_group_id", "notification_order", "domain"],

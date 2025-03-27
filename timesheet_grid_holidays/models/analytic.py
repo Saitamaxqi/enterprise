@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.exceptions import RedirectWarning, UserError
 
 
@@ -25,7 +24,7 @@ class AccountAnalyticLine(models.Model):
     @api.model
     def grid_update_cell(self, domain, measure_field_name, value):
         return super().grid_update_cell(
-            expression.AND([domain, [('holiday_id', '=', False)]]),
+            Domain.AND([domain, [('holiday_id', '=', False)]]),
             measure_field_name,
             value,
         )

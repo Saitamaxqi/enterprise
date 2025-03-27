@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import math
-from collections.abc import Collection
 
 from odoo import fields, models, api
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class HelpdeskSlaStatus(models.Model):
@@ -85,7 +83,7 @@ class HelpdeskSlaStatus(models.Model):
             domains.append(['&', ('reached_datetime', '=', True), ('reached_datetime', '<', 'deadline')])
         if 'ongoing' in value:
             domains.append(['|', ('deadline', '=', False), '&', ('reached_datetime', '=', False), ('deadline', '>', datetime_now)])
-        return expression.OR(domains)
+        return Domain.OR(domains)
 
     @api.depends('status')
     def _compute_color(self):

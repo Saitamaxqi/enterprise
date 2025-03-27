@@ -1,5 +1,5 @@
 from odoo import fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class WhatsappMessage(models.Model):
@@ -34,7 +34,7 @@ class WhatsappMessage(models.Model):
                 trace.sudo().process_event(trace_event)
 
     def _get_whatsapp_gc_domain(self):
-        return expression.AND([
+        return Domain.AND([
             super()._get_whatsapp_gc_domain(),
             [('marketing_trace_ids', '!=', 'False')],
         ])

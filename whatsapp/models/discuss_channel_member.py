@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.addons.mail.tools.discuss import Store
 
 
@@ -16,10 +16,10 @@ class DiscussChannelMember(models.Model):
             clean the operator's interface. """
         one_day_ago = datetime.now() - timedelta(days=1)
         five_days_ago = datetime.now() - timedelta(days=5)
-        members = self.env['discuss.channel.member'].search(expression.AND([
+        members = self.env['discuss.channel.member'].search(Domain.AND([
             [("is_pinned", "=", True)],
             [("channel_id.channel_type", "=", "whatsapp")],
-            expression.OR([
+            Domain.OR([
                 [("last_seen_dt", "<", one_day_ago)],
                 [
                     ("last_seen_dt", "=", False),

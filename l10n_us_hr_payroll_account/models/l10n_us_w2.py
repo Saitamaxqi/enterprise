@@ -1,8 +1,7 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
-from odoo.osv.expression import AND
+from odoo.fields import Domain
 
 
 class L10nUsW2(models.Model):
@@ -10,7 +9,7 @@ class L10nUsW2(models.Model):
 
     def _get_allowed_payslips_domain(self):
         self.ensure_one()
-        return AND([
+        return Domain.AND([
             super()._get_allowed_payslips_domain(),
             [('move_id', '!=', False)],
         ])

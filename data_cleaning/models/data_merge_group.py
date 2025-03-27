@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 from odoo.models import MAGIC_COLUMNS
-from odoo.osv import expression
 from odoo.tools import split_every
 
 import logging
@@ -60,10 +60,10 @@ class Data_MergeGroup(models.Model):
             group.similarity = min(1, len(data) / len(read_fields))
 
     def discard_records(self, records=None):
-        domain = [('group_id', '=', self.id)]
+        domain = Domain('group_id', '=', self.id)
 
         if records is not None:
-            domain = expression.AND([domain, [('id', 'in', records)]])
+            domain &= Domain('id', 'in', records)
         self.env['data_merge.record'].search(domain).write({'is_discarded': True, 'is_master': False})
         if all(not record.active for record in self.record_ids):
             self.active = False

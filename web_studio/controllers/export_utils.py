@@ -8,7 +8,7 @@ from collections import Counter, OrderedDict
 from lxml import etree
 from lxml.builder import E
 from odoo import models
-from odoo.osv.expression import OR
+from odoo.fields import Domain
 from odoo.tools import topological_sort
 
 # The fields whose value is some XML content
@@ -467,10 +467,10 @@ class StudioExportUtils:
                             dep_model = record.env[dep_field.comodel_name]
                 # determine the 'ir.model.fields' corresponding to 'dep_fields'
                 if dep_fields:
-                    return record.search(OR([
+                    return record.search(Domain.OR(
                         ['&', ('model', '=', dep_field.model_name), ('name', '=', dep_field.name)]
                         for dep_field in dep_fields
-                    ]))
+                    ))
             elif field.name == 'relation_field':
                 # The field 'relation_field' on 'ir.model.fields' is of type char,
                 # but it refers to another field that must be defined beforehand

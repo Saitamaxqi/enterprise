@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
 import pytz
 
 from odoo import models, fields, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SocialLivePost(models.Model):
@@ -37,10 +36,10 @@ class SocialLivePost(models.Model):
             icon_url = '/social_push_notifications/social_post/%s/push_notification_image' % post.id if post.push_notification_image else '/mail/static/src/img/odoobot_transparent.png'
 
             # TODO awa: force push_token domain here in case user manually removed it in form view?
-            visitor_domain = ast.literal_eval(live_post.post_id.visitor_domain)
+            visitor_domain = Domain(ast.literal_eval(live_post.post_id.visitor_domain))
             if account.website_id:
                 if account.website_id.firebase_enable_push_notifications:
-                    visitor_domain = expression.AND([visitor_domain, [('website_id', '=', account.website_id.id)]])
+                    visitor_domain &= Domain('website_id', '=', account.website_id.id)
                 else:
                     # If the website doesn't have push notifications enabled, we don't send any push notifications
                     live_post.write({'state': 'posted'})
@@ -66,7 +65,7 @@ class SocialLivePost(models.Model):
                     visitor_local_datetime = now_utc.astimezone(visitor_tz).replace(tzinfo=None)
                     return visitor_local_datetime > post_user_datetime
 
-                pending_visitors = self.env['website.visitor'].search(expression.AND([visitor_domain, [('id', 'not in', live_post.reached_visitor_ids.ids)]]))
+                pending_visitors = self.env['website.visitor'].search(visitor_domain & Domain('id', 'not in', live_post.reached_visitor_ids.ids))
                 target_visitors = pending_visitors.filtered(get_filtered_timezone_visitors)
 
             account._firebase_send_message({

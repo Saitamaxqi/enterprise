@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, Command, fields, models, tools, _
-from odoo.fields import Domain
-from odoo.osv import expression
+from odoo import api, fields, models, tools, _
+from odoo.fields import Command, Domain
 from odoo.tools import LazyTranslate
 from odoo.addons.web.controllers.utils import clean_action
 
@@ -456,7 +454,7 @@ class HelpdeskTicket(models.Model):
         """
         if not vals_list:
             return
-        domain = expression.OR([[('team_id', '=', team_id), ('tag_id', 'in', tag_ids)] for team_id, tag_ids, _dummy in vals_list])
+        domain = Domain.OR([('team_id', '=', team_id), ('tag_id', 'in', tag_ids)] for team_id, tag_ids, _dummy in vals_list)
         tag_assignment_res = self.env['helpdesk.tag.assignment'].sudo()._read_group(
             domain,
             ['team_id', 'tag_id', 'user_ids'],
@@ -780,10 +778,10 @@ class HelpdeskTicket(models.Model):
                 tickets_map[key] |= ticket
                 # group the SLA to apply, by key
                 if key not in sla_domain_map:
-                    sla_domain_map[key] = expression.AND([[
+                    sla_domain_map[key] = Domain.AND([[
                         ('team_id', '=', ticket.team_id.id), ('priority', '=', ticket.priority),
                         ('stage_id.sequence', '>=', ticket.stage_id.sequence),
-                    ], expression.OR([ticket._sla_find_extra_domain(), self._sla_find_false_domain()])])
+                    ], Domain.OR([ticket._sla_find_extra_domain(), self._sla_find_false_domain()])])
 
         result = {}
         for key, tickets in tickets_map.items():  # only one search per ticket group

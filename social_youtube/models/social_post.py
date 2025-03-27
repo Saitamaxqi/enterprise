@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SocialPost(models.Model):
@@ -119,7 +118,7 @@ class SocialPost(models.Model):
         domain = super()._get_stream_post_domain()
         youtube_video_ids = [youtube_video_id for youtube_video_id in self.mapped('youtube_video_id') if youtube_video_id]
         if youtube_video_ids:
-            return expression.OR([domain, [('youtube_video_id', 'in', youtube_video_ids)]])
+            return Domain.OR([domain, [('youtube_video_id', 'in', youtube_video_ids)]])
         else:
             return domain
 

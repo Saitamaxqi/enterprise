@@ -2,7 +2,7 @@ import contextlib
 
 from odoo import models
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class MailActivity(models.Model):
@@ -21,7 +21,7 @@ class MailActivity(models.Model):
                     ("res_id", "=", request.res_id),
                     ("rule_id", "=", request.rule_id.id)
                 ])
-            domain = expression.OR(domains)
+            domain = Domain.OR(domains)
             extra_requests = self.env["studio.approval.request"].sudo().search(domain)
             extra_activities_to_mark_as_done = extra_requests.mail_activity_id - approval_activities
             extra_activities_to_mark_as_done = self.env['mail.activity'].browse(extra_activities_to_mark_as_done.ids)

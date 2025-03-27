@@ -2,8 +2,8 @@
 
 from ast import literal_eval
 
-from odoo import _, Command, api, fields, models
-from odoo.osv import expression
+from odoo import _, api, fields, models
+from odoo.fields import Command, Domain
 
 # List of preset models to export when the preset action is triggered.
 # This list may include specific defaults for each model.
@@ -393,16 +393,12 @@ class StudioExportModel(models.Model):
             (model, DEFAULTS_BY_PRESET_MODELS.get(model["model"], {}))
             # find all existing models from the preset list + custom ones
             for model in self.env["ir.model"].search_read(
-                [
-                    ("transient", "=", False),
-                    ("abstract", "=", False),
-                ]
-                + expression.OR(
-                    [
-                        [("model", "in", list(DEFAULTS_BY_PRESET_MODELS.keys()))],
-                        [("model", "=like", r"x\_%")],
-                        [("state", "=", "manual")],
-                    ]
+                Domain("transient", "=", False)
+                & Domain("abstract", "=", False)
+                & (
+                    Domain("model", "in", list(DEFAULTS_BY_PRESET_MODELS.keys()))
+                    | Domain("model", "=like", r"x\_%")
+                    | Domain("state", "=", "manual")
                 ),
                 ["model"],
             )

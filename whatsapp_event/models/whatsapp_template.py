@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class WhatsappTemplate(models.Model):
@@ -17,7 +17,7 @@ class WhatsappTemplate(models.Model):
         method to filter the WhatsApp templates.
         """
         if self.env.context.get('filter_template_on_event'):
-            domain = expression.AND([[('model', '=', 'event.registration')], [('status', '=', 'approved')], domain])
+            domain = Domain.AND([[('model', '=', 'event.registration')], [('status', '=', 'approved')], domain])
         return super()._search(domain, *args, **kwargs)
 
     def unlink(self):

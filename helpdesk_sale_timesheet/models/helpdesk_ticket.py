@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools.misc import unquote
 
 from odoo.addons.sale_timesheet_enterprise.models.sale_order_line import DEFAULT_INVOICED_TIMESHEET
@@ -15,7 +14,7 @@ class HelpdeskTicket(models.Model):
     _inherit = 'helpdesk.ticket'
 
     def _domain_sale_line_id(self):
-        domain = expression.AND([
+        domain = Domain.AND([
             self.env['sale.order.line']._sellable_lines_domain(),
             self.env['sale.order.line']._domain_sale_line_service(),
             [
@@ -88,13 +87,14 @@ class HelpdeskTicket(models.Model):
             if ticket.sale_line_id.sudo().order_partner_id.commercial_partner_id != ticket.commercial_partner_id:
                 ticket.sale_line_id = False
             if not ticket.sale_line_id:
-                domain = tuple(ticket._get_last_sol_of_customer_domain())
-                if not domain:
+                domain = Domain(ticket._get_last_sol_of_customer_domain()).optimize(self.env['sale.order.line'])
+                if domain.is_true():
                     ticket.sale_line_id = False
                     continue
-                if domain not in sol_per_domain:
-                    sol_per_domain[domain] = self.env['sale.order.line'].search(domain, limit=1)
-                ticket.sale_line_id = sol_per_domain[domain]
+                domain_str = str(domain)
+                if domain_str not in sol_per_domain:
+                    sol_per_domain[domain_str] = self.env['sale.order.line'].search(domain, limit=1)
+                ticket.sale_line_id = sol_per_domain[domain_str]
 
     def _compute_display_invoice_button(self):
         for ticket in self:
@@ -105,9 +105,9 @@ class HelpdeskTicket(models.Model):
         # Get the domain of the last SOL made for the customer in the current task where we need to compute
         self.ensure_one()
         if not self.commercial_partner_id or not self.project_id.allow_billable or not self.use_helpdesk_sale_timesheet:
-            return []
+            return Domain.TRUE
         SaleOrderLine = self.env['sale.order.line']
-        domain = expression.AND([
+        domain = Domain.AND([
             SaleOrderLine._domain_sale_line_service(check_state=False),
             [
                 ('company_id', '=', self.company_id.id),
@@ -117,7 +117,7 @@ class HelpdeskTicket(models.Model):
             ],
         ])
         if self.project_id.pricing_type != 'task_rate' and (order_id := self.project_id.sale_order_id) and self.commercial_partner_id == self.project_id.partner_id.commercial_partner_id:
-            domain = expression.AND([domain, [('order_id', '=', order_id.id)]])
+            domain &= Domain('order_id', '=', order_id.id)
         return domain
 
     @api.model_create_multi
@@ -184,14 +184,14 @@ class HelpdeskTicket(models.Model):
         return field_list
 
     def _sla_find_false_domain(self):
-        return expression.AND([
+        return Domain.AND([
             super()._sla_find_false_domain(),
             [('product_ids', '=', False)],
         ])
 
     def _sla_find_extra_domain(self):
         self.ensure_one()
-        return expression.OR([
+        return Domain.OR([
             super()._sla_find_extra_domain(),
             [('product_ids', 'in', self.sale_line_id.product_template_id.ids)],
         ])

@@ -5,9 +5,9 @@ import re
 
 from reportlab.rl_config import TTFSearchPath
 
-from odoo import api, fields, models, Command, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools import misc, pdf
 from odoo.tools.pdf import PdfReadError
 
@@ -50,13 +50,13 @@ class SignTemplate(models.Model):
     @api.model
     def name_search(self, name='', domain=None, operator='ilike', limit=100):
         # Display favorite templates first
-        domain = expression.AND([[('display_name', operator, name)], domain or []])
+        domain = Domain.AND([[('display_name', operator, name)], domain or []])
         templates = self.search_fetch(domain, ['display_name'], limit=limit)
         if limit is None or len(templates) < limit:
             templates = templates.sorted(key=lambda t: self.env.user in t.favorited_ids, reverse=True)
         else:
             favorited_templates = self.search_fetch(
-                expression.AND([domain, [('favorited_ids', '=', self.env.user.id)]]),
+                domain & Domain('favorited_ids', '=', self.env.user.id),
                 ['display_name'], limit=limit)
             templates = favorited_templates + (templates - favorited_templates)
             templates = templates[:limit]

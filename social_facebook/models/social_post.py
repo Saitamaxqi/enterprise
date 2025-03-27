@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
@@ -6,7 +5,7 @@ import requests
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from werkzeug.urls import url_join
 
 
@@ -23,7 +22,7 @@ class SocialPost(models.Model):
         domain = super()._get_stream_post_domain()
         facebook_post_ids = [facebook_post_id for facebook_post_id in self.live_post_ids.mapped('facebook_post_id') if facebook_post_id]
         if facebook_post_ids:
-            return expression.OR([domain, [('facebook_post_id', 'in', facebook_post_ids)]])
+            return Domain.OR([domain, [('facebook_post_id', 'in', facebook_post_ids)]])
         else:
             return domain
 

@@ -2,9 +2,8 @@ import ast
 from itertools import starmap
 
 from lxml import etree as ET
-from odoo import Command
+from odoo.fields import Command, Domain
 from odoo.addons.web_studio.controllers.export_utils import StudioExportSerializer
-from odoo.osv import expression
 from odoo.tests.common import TransactionCase, tagged
 
 XMLPARSER = ET.XMLParser(remove_blank_text=True, strip_cdata=False, resolve_entities=False)
@@ -75,12 +74,10 @@ class StudioExportCase(TransactionCase):
             raise RuntimeError("Studio export already in progress: maybe make another test?")
 
         # Prepare the export wizard
-        custo_domains = [
-            [("model", "=", custo._name), ("res_id", "=", custo.id)]
+        domain = Domain.OR(
+            Domain("model", "=", custo._name) & Domain("res_id", "=", custo.id)
             for custo in self._customizations
-        ]
-        domain = expression.OR(custo_domains)
-        domain = expression.AND([domain, [("studio", "=", True)]])
+        ) & Domain("studio", "=", True)
         custo_data = self.env["ir.model.data"].search(domain)
         custo_data = self.env["studio.export.wizard.data"].create(
             [
