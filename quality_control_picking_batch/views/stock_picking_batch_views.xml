@@ -14,10 +14,10 @@
             <xpath expr="//button[@name='action_done']" position="after">
                 <field name="quality_check_todo" invisible="1"/>
                 <button name="action_done" string="Validate" type="object"
-                    invisible="not quality_check_todo or not picking_ids or state != 'in_progress'"/>
+                    invisible="not quality_check_todo or not picking_ids or state != 'in_progress'" data-hotkey="v"/>
                 <button string="Quality Checks" name="action_open_quality_check_wizard" type="object"
                     class="oe_highlight" groups="quality.group_quality_user"
-                    invisible="not quality_check_todo or state in ('done', 'cancel')"/>
+                    invisible="not quality_check_todo or state in ('done', 'cancel')" data-hotkey="shift+z"/>
             </xpath>
         </field>
     </record>

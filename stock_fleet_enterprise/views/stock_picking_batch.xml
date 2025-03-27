@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//header/button[@name='action_cancel']" position="before">
-                    <button type="object" name="action_picking_map_view" string="Map" class="btn btn-secondary" invisible="state != 'in_progress'"/>
+                    <button type="object" name="action_picking_map_view" string="Map" class="btn btn-secondary" invisible="state != 'in_progress'" data-hotkey="g"/>
                 </xpath>
             </data>
         </field>
