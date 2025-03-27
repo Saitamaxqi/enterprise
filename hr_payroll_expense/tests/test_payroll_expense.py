@@ -82,13 +82,13 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
                 'code': '654323',
                 'account_type': 'liability_payable',
             })
-        expense_payslip_journal = cls.account_journal.copy({
+        cls.expense_payslip_journal = cls.account_journal.copy({
             'company_id': cls.company_data['company'].id,
             'default_account_id': cls.expense_payable_account.id
         })
         cls.expense_hr_structure = cls.env['hr.payroll.structure'].create({
             'name': 'Salary Structure for Software Developer',
-            'journal_id': expense_payslip_journal.id,
+            'journal_id': cls.expense_payslip_journal.id,
             'rule_ids': [Command.create({
                 'name': 'Basic Salary',
                 'amount_select': 'code',
@@ -612,7 +612,8 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
             }).id,
         }))
         structure_without_expense_rule = self.expense_hr_structure.copy({
-            'rule_ids': new_structure_rules
+            'rule_ids': new_structure_rules,
+            'journal_id': self.expense_payslip_journal.id,
         })
 
         expense = self.create_expenses()
