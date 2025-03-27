@@ -666,6 +666,7 @@ class L10n_SeSieImportWizard(models.TransientModel):
         default_journal = self._get_sie_default_journal()
         new_balance_moves = {}
 
+        self.env['account.move.line'].flush_model(['account_id', 'date', 'balance', 'ref', 'parent_state', 'company_id'])
         query = Query(self.env, alias='aml', table=SQL.identifier('account_move_line'))
         query.add_join('JOIN', alias='account', table='account_account', condition=SQL('aml.account_id = account.id'))
         account_code = self.env['account.account']._field_to_sql('account', 'code', query)
