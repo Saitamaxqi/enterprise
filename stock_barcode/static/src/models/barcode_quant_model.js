@@ -735,7 +735,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
     }
 
     _getName() {
-        return _t("Inventory Count");
+        return _t("Physical Inventory");
     }
 
     _getPrintOptions() {
