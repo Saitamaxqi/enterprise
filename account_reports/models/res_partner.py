@@ -53,7 +53,7 @@ class ResPartner(models.Model):
 
         if not options:
             options = report.get_options({
-                'forced_companies': self.env.company.search([('id', 'child_of', self.env.context.get('allowed_company_ids', self.env.company.id))]),
+                'forced_companies': self.env.company.search([('id', 'child_of', self.env.context.get('allowed_company_ids', self.env.company.id))]).ids,
                 'partner_ids': self.ids,
                 'unfold_all': True,
                 'unreconciled': True,

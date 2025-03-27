@@ -1236,7 +1236,8 @@ class AccountReport(models.Model):
 
     def _init_options_companies(self, options, previous_options):
         if previous_options.get('forced_companies'):
-            companies = options['forced_companies'] = previous_options['forced_companies']
+            options['forced_companies'] = previous_options['forced_companies']
+            companies = self.env.company.browse(previous_options['forced_companies'])
         elif self.filter_multi_company == 'tax_units':
             companies = self._multi_company_tax_units_init_options(options, previous_options=previous_options)
         else:

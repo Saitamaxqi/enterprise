@@ -287,7 +287,11 @@ class AccountReportSend(models.TransientModel):
             # Set sending information on report
             if self.account_report_id.send_and_print_values:
                 raise UserError(_('There are currently reports waiting to be sent, please try again later.'))
-            self.account_report_id.send_and_print_values = self._get_wizard_values()
+
+            send_and_print_values = self._get_wizard_values()
+            send_and_print_values['report_options']['forced_companies'] = self.env.companies.ids
+            self.account_report_id.send_and_print_values = send_and_print_values
+
             self.env.ref('account_reports.ir_cron_account_report_send')._trigger()
             return {
                 'type': 'ir.actions.client',
