@@ -1924,3 +1924,44 @@ class TestReportEngines(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_engine_aggregation_if_other_expr_zero(self):
+        """ Test the correctness of the "if_other_expr_xx" when the bound is zero. """
+        self.env.company.account_fiscal_country_id = self.fake_country
+
+        # Prepare two simple expressions with 2500 and 0 respectively
+        test_1 = self._prepare_test_report_line(
+            self._prepare_test_expression_external('sum', [self._prepare_test_external_values(2500, '2020-01-01')], label='balance'),
+            name='test_1', code='test_1',
+        )
+        test_2 = self._prepare_test_report_line(
+            self._prepare_test_expression_external('sum', [self._prepare_test_external_values(0, '2020-01-01')], label='balance'),
+            name='test_2', code='test_2',
+        )
+        # And an aggregation which takes test_1 only if test_2 is below 50
+        test_3 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('test_1.balance', subformula='if_other_expr_below(test_2.balance, USD(50))'),
+            name='test_3', code='test_3',
+        )
+
+        report = self._create_report(
+            [
+                test_1, test_2, test_3,
+            ],
+            country_id=self.fake_country.id,
+        )
+
+        # Check the values.
+        options = self._generate_options(report, '2020-01-01', '2020-01-01')
+        report_lines = report._get_lines(options)
+        self.assertLinesValues(
+            # pylint: disable=bad-whitespace
+            report_lines,
+            [   0,                    1],
+            [
+                ('test_1',            2500.00),
+                ('test_2',            0.00),
+                ('test_3',            2500.00),
+            ],
+            options,
+        )

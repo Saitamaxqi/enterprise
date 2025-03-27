@@ -3561,11 +3561,10 @@ class AccountReport(models.Model):
 
                         bound_subformula = other_expr_criterium_match['criterium'].replace('other_expr_', '') # e.g. 'if_other_expr_above' => 'if_above'
                         bound_params = other_expr_criterium_match['bound_params']
-                        bound_value = self._aggregation_apply_bounds(column_group_options, f"{bound_subformula}({bound_params})", criterium_val)
-                        expression_result = formula_result * int(bool(bound_value))
-
+                        bounded_value = self._aggregation_apply_bounds(column_group_options, f"{bound_subformula}({bound_params})", criterium_val)
+                        expression_result = formula_result * int(bool(bounded_value is not None))
                     else:
-                        expression_result = self._aggregation_apply_bounds(column_group_options, expression.subformula, formula_result)
+                        expression_result = self._aggregation_apply_bounds(column_group_options, expression.subformula, formula_result) or 0
 
                     if column_group_options.get('integer_rounding_enabled'):
                         expression_result = float_round(expression_result, precision_digits=0, rounding_method=column_group_options['integer_rounding'])
@@ -3585,27 +3584,26 @@ class AccountReport(models.Model):
 
         return rslt
 
-    def _aggregation_apply_bounds(self, column_group_options, subformula, unbound_value):
+    def _aggregation_apply_bounds(self, column_group_options, subformula, unbounded_value):
         """ Applies the bounds of the provided aggregation expression to an unbounded value that got computed for it and returns the result.
         Bounds can be defined as subformulas of aggregation expressions, with the following possible values:
 
             - if_above(CUR(bound_value)):
-                                    => Result will be 0 if it's <= the provided bound value; else it'll be unbound_value
+                                    => Result will be None if it's <= the provided bound value; else it'll be unbounded_value
 
             - if_below(CUR(bound_value)):
-                                    => Result will be 0 if it's >= the provided bound value; else it'll be unbound_value
+                                    => Result will be None if it's >= the provided bound value; else it'll be unbounded_value
 
             - if_between(CUR(bound_value1), CUR(bound_value2)):
-                                    => Result will be unbound_value if it's strictly between the provided bounds. Else, it will
-                                       be brought back to the closest bound.
+                                    => Result will be None if it isn't strictly between the provided bound values; else it'll be unbounded_value
 
-            - round(decimal_places):
-                                    => Result will be round(unbound_value, decimal_places)
+            - round(decimal_places, rounding_method):
+                                    => Result will be the rounded unbounded_value.
 
             (where CUR is a currency code, and bound_value* are float amounts in CUR currency)
         """
         if not subformula:
-            return unbound_value
+            return unbounded_value
 
         # So an expression can't have bounds and be cross_reports, for simplicity.
         # To do that, just split the expression in two parts.
@@ -3617,11 +3615,11 @@ class AccountReport(models.Model):
             # As we also want to support using a rounding method, we will play a bit with the number and round using float_round
             if precision_string < 0:
                 precision_power = abs(precision_string)
-                unbound_value /= 10 ** precision_power
-                unbound_value = float_round(unbound_value, precision_digits=0, rounding_method=rounding_method)
-                return unbound_value * (10 ** precision_power)
+                unbounded_value /= 10 ** precision_power
+                unbounded_value = float_round(unbounded_value, precision_digits=0, rounding_method=rounding_method)
+                return unbounded_value * (10 ** precision_power)
             else:
-                return float_round(unbound_value, precision_digits=precision_string, rounding_method=rounding_method)
+                return float_round(unbounded_value, precision_digits=precision_string, rounding_method=rounding_method)
 
         if subformula != 'ignore_zero_division' and not subformula.startswith('cross_report'):
             company_currency = self.env.company.currency_id
@@ -3661,18 +3659,18 @@ class AccountReport(models.Model):
             # Evaluate result
             criterium = group_values['criterium']
             if criterium == 'if_below':
-                if company_currency.compare_amounts(unbound_value, amount_1) >= 0:
-                    return 0
+                if company_currency.compare_amounts(unbounded_value, amount_1) >= 0:
+                    return None
             elif criterium == 'if_above':
-                if company_currency.compare_amounts(unbound_value, amount_1) <= 0:
-                    return 0
+                if company_currency.compare_amounts(unbounded_value, amount_1) <= 0:
+                    return None
             elif criterium == 'if_between':
-                if company_currency.compare_amounts(unbound_value, amount_1) < 0 or company_currency.compare_amounts(unbound_value, amount_2) > 0:
-                    return 0
+                if company_currency.compare_amounts(unbounded_value, amount_1) < 0 or company_currency.compare_amounts(unbounded_value, amount_2) > 0:
+                    return None
             else:
                 raise UserError(_("Unknown bound criterium: %s", criterium))
 
-        return unbound_value
+        return unbounded_value
 
     def _compute_formula_batch(self, column_group_options, formula_engine, date_scope, formulas_dict, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         """ Evaluates a batch of formulas.
