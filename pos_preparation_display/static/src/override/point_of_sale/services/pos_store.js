@@ -31,7 +31,7 @@ patch(PosStore.prototype, {
                         process_order_options,
                     ]);
                 } else {
-                    await this.syncAllOrders({
+                    this.syncAllOrders({
                         orders: [o],
                         force: true,
                         context: {

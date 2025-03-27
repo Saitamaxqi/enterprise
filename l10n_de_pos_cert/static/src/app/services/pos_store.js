@@ -349,9 +349,10 @@ patch(PosStore.prototype, {
 
         const { orderToCreate, orderToUpdate } = this.getPendingOrder();
         const orders = [...orderToCreate, ...orderToUpdate];
+        this.clearPendingOrder();
 
         if (orders.length === 0) {
-            return super.syncAllOrders(options);
+            return super.syncAllOrders({ ...options, orders });
         }
 
         const orderObjectMap = {};
@@ -396,7 +397,7 @@ patch(PosStore.prototype, {
                 }
             }
             try {
-                result = await super.syncAllOrders(...arguments);
+                result = await super.syncAllOrders({ ...options, orders });
             } catch (error) {
                 odooError = error;
             }
