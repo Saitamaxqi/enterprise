@@ -242,6 +242,7 @@ class HrAppraisal(models.Model):
             appraisal.message_subscribe(partner_ids=partners.ids)
 
     def send_appraisal(self):
+        # TDE FIXME: probably some cleanup to do here
         for appraisal in self:
             confirmation_mail_template = appraisal.company_id.appraisal_confirm_mail_template
             mapped_data = {
@@ -308,6 +309,7 @@ class HrAppraisal(models.Model):
                     'last_appraisal_date': current_date,
                 })
         appraisals_to_send.send_appraisal()
+        # TDE FIXME: check if we can use suggested recipients instead (master)
         appraisals.subscribe_employees()
         return appraisals
 
