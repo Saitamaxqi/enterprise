@@ -5,12 +5,16 @@ import {
     mountView,
     onRpc,
     patchWithCleanup,
-    webModels
+    webModels,
 } from "@web/../tests/web_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
 
-import { DocumentsModels, getBasicPermissionPanelData, getDocumentsTestServerData } from "./helpers/data";
+import {
+    DocumentsModels,
+    getBasicPermissionPanelData,
+    getDocumentsTestServerData,
+} from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
 import { basicDocumentsListArch } from "./helpers/views/list";
 import { getEnrichedSearchArch } from "./helpers/views/search";
@@ -21,7 +25,7 @@ defineModels({
     ...webModels,
     ...mailModels,
     ...DocumentsModels,
-})
+});
 
 test("Open share with view user_permission", async function () {
     onRpc("/documents/touch/accessTokenFolder1", () => true);

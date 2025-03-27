@@ -136,11 +136,9 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
         const menuItems = super.getTopBarActionMenuItems();
         const selectionCount = this.model.targetRecords.length;
         const singleSelection = selectionCount === 1 && this.targetRecords[0];
-        const hasDocumentAttachment = (r) =>
-            r.data.attachment_id || r.shortcutTarget?.data?.attachment_id;
         menuItems.download.isAvailable = () =>
             this.model.targetRecords.some(
-                (r) => hasDocumentAttachment(r) && r.data.handler !== "spreadsheet"
+                (r) => !r.isRequest() && r.data.handler !== "spreadsheet"
             );
         return {
             ...menuItems,

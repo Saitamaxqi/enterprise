@@ -10,6 +10,8 @@ export const basicDocumentsKanbanArch = /* xml */ `
         <field name="mimetype"/>
         <field name="folder_id"/>
         <field name="owner_id"/>
+        <field name="partner_id"/>
+        <field name="user_permission"/>
         <field name="active"/>
         <field name="type"/>
         <field name="attachment_id"/>
@@ -24,8 +26,7 @@ export const basicDocumentsKanbanArch = /* xml */ `
 </kanban>
 `;
 
-
-export async function mountDocumentsKanbanView(params = {}, target=null) {
+export async function mountDocumentsKanbanView(params = {}, target = null) {
     return mountView(
         {
             type: "kanban",

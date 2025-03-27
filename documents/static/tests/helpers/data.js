@@ -10,7 +10,7 @@ export class DocumentsDocument extends models.Model {
     thumbnail = fields.Binary({ string: "Thumbnail" });
     favorited_ids = fields.Many2many({ string: "Name", relation: "res.users" });
     is_favorited = fields.Boolean({ string: "Name" });
-    is_folder = fields.Boolean({ string: "is_folder" });  // used for ordering
+    is_folder = fields.Boolean({ string: "is_folder" }); // used for ordering
     is_multipage = fields.Boolean({ string: "Is multipage" });
     is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
     mimetype = fields.Char({ string: "Mimetype" });
@@ -39,12 +39,29 @@ export class DocumentsDocument extends models.Model {
     res_id = fields.Integer({ string: "Resource ID" });
     res_name = fields.Char({ string: "Resource Name" });
     res_model_name = fields.Char({ string: "Resource Model Name" });
-    type = fields.Selection({ string: "Type", selection: [["binary", "File", "folder"]] });
+    type = fields.Selection({
+        string: "Type",
+        selection: [
+            ["binary", "File"],
+            ["url", "Url"],
+            ["folder", "Folder"],
+        ],
+        default: "binary",
+    });
     url = fields.Char({ string: "URL" });
     url_preview_image = fields.Char({ string: "URL preview image" });
     file_size = fields.Integer({ string: "File size" });
     raw = fields.Char({ string: "Raw" });
     access_token = fields.Char({ string: "Access token" });
+    user_permission = fields.Selection({
+        string: "User Permission",
+        selection: [
+            ["edit", "Editor"],
+            ["view", "Viewer"],
+            ["none", "None"],
+        ],
+        default: "edit",
+    });
     available_embedded_actions_ids = fields.Many2many({
         string: "Available Actions",
         // relation: "ir.actions.server",
@@ -59,7 +76,13 @@ export class DocumentsDocument extends models.Model {
     description = fields.Char({ string: "Attachment description" });
     last_access_date_group = fields.Selection({
         string: "Last Accessed On",
-        selection: [["0_older", "1_mont", "2_week", "3_day"]],
+        selection: [
+            ["0_older", "Older"],
+            ["1_month", "This Month"],
+            ["2_week", "This Week"],
+            ["3_day", "Today"],
+        ],
+        default: "3_day",
     });
 
     get_deletion_delay() {
@@ -77,51 +100,52 @@ export class DocumentsDocument extends models.Model {
         const result = super.search_panel_select_range(...arguments);
         result.values = [
             {
-                "bold": true,
-                "childrenIds": [],
-                "parentId": false,
-                "user_permission": "view",
-                "display_name": "Company",
-                "id": "COMPANY",
-                "description": "Common roots for all company users."
+                bold: true,
+                childrenIds: [],
+                parentId: false,
+                user_permission: "view",
+                display_name: "Company",
+                id: "COMPANY",
+                description: "Common roots for all company users.",
             },
             {
-                "bold": true,
-                "childrenIds": [],
-                "parentId": false,
-                "user_permission": "edit",
-                "display_name": "My Drive",
-                "id": "MY",
-                "description": "Your individual space."
+                bold: true,
+                childrenIds: [],
+                parentId: false,
+                user_permission: "edit",
+                display_name: "My Drive",
+                id: "MY",
+                description: "Your individual space.",
             },
             {
-                "bold": true,
-                "childrenIds": [],
-                "parentId": false,
-                "user_permission": "edit",
-                "display_name": "Shared with me",
-                "id": "SHARED",
-                "description": "Additional documents you have access to."
+                bold: true,
+                childrenIds: [],
+                parentId: false,
+                user_permission: "edit",
+                display_name: "Shared with me",
+                id: "SHARED",
+                description: "Additional documents you have access to.",
             },
             {
-                "bold": true,
-                "childrenIds": [],
-                "parentId": false,
-                "user_permission": "edit",
-                "display_name": "Recent",
-                "id": "RECENT",
-                "description": "Recently accessed documents."
+                bold: true,
+                childrenIds: [],
+                parentId: false,
+                user_permission: "edit",
+                display_name: "Recent",
+                id: "RECENT",
+                description: "Recently accessed documents.",
             },
             {
-                "bold": true,
-                "childrenIds": [],
-                "parentId": false,
-                "user_permission": "edit",
-                "display_name": "Trash",
-                "id": "TRASH",
-                "description": "Items in trash will be deleted forever after 30 days."
+                bold: true,
+                childrenIds: [],
+                parentId: false,
+                user_permission: "edit",
+                display_name: "Trash",
+                id: "TRASH",
+                description: "Items in trash will be deleted forever after 30 days.",
             },
-            ...this.env["documents.document"].search_read([["type", "=", "folder"]])
+            ...this.env["documents.document"]
+                .search_read([["type", "=", "folder"]])
                 .filter((r) => r.type === "folder")
                 .map((record) => {
                     const recordValues = {};
@@ -131,19 +155,23 @@ export class DocumentsDocument extends models.Model {
                             : record.owner_id[0] === serverState.userId
                                 ? "MY"
                                 : "SHARED";
+                    } else {
+                        recordValues.folder_id = record.folder_id[0];
                     }
                     if (!record.active) {
                         recordValues.folder_id = "TRASH";
                     }
                     [
                         "company_id",
+                        "owner_id",
+                        "partner_id",
                         "description",
                         "display_name",
                         "id",
                         "is_folder",
                         "type",
                         "user_permission",
-                    ].forEach((fieldName) => recordValues[fieldName] = record[fieldName]);
+                    ].forEach((fieldName) => (recordValues[fieldName] = record[fieldName]));
                     return recordValues;
                 }),
         ];
@@ -203,6 +231,8 @@ export function getDocumentsTestServerData(additionalRecords = []) {
                         folder_id: false,
                         name: "Folder 1",
                         type: "folder",
+                        owner_id: false,
+                        partner_id: false,
                     },
                     ...additionalRecords,
                 ],
@@ -265,7 +295,7 @@ export const DocumentsModels = {
     MailAliasDomain,
     DocumentsDocument,
     DocumentsTag,
-}
+};
 
 export function getDocumentsModel(modelName) {
     return Object.values(DocumentsModels).find((model) => model._name === modelName);

@@ -53,7 +53,7 @@ export const DocumentsControllerMixin = (component) =>
             return {
                 ...embeddedActions,
                 download: {
-                    isAvailable: () => singleSelection,
+                    isAvailable: () => this.targetRecords.some((r) => !r.isRequest()),
                     sequence: 50,
                     description: _t("Download"),
                     icon: "fa fa-download",

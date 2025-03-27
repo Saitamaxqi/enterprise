@@ -9,6 +9,7 @@ import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { XLSX_MIME_TYPES } from "@documents_spreadsheet/helpers";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
 import {
@@ -283,12 +284,14 @@ test("open csv converts to o-spreadsheet, clone it and opens the spreadsheet", a
     const spreadsheetId = 1;
     const spreadsheetCopyId = 99;
     const serverData = getTestServerData();
+    serverData.models["ir.attachment"] = { records: [{ id: 1 }] };
     serverData.models["documents.document"].records = [
         {
             id: spreadsheetId,
             name: "My CSV file",
             mimetype: "text/csv",
             thumbnail_status: "present",
+            attachment_id: 1, // Necessary to not be considered as a request
         },
     ];
     await makeDocumentsSpreadsheetMockEnv({
@@ -367,6 +370,9 @@ test("download a frozen spreadsheet document while selecting requested document"
 
 test("can open spreadsheet while multiple documents are selected along with it", async function () {
     const serverData = getTestServerData();
+    serverData.models["ir.attachment"] = {
+        records: [{ id: 1 }, { id: 2 }, { id: 3 }],
+    };
     serverData.models["documents.document"].records = [
         { id: 1, name: "demo-workspace", type: "folder" },
         {
@@ -375,16 +381,19 @@ test("can open spreadsheet while multiple documents are selected along with it",
             folder_id: 1,
             handler: "spreadsheet",
             thumbnail_status: "present",
+            attachment_id: 1,
         },
         {
             folder_id: 1,
             mimetype: "image/png",
             name: "test-image-1",
+            attachment_id: 2,
         },
         {
             folder_id: 1,
             mimetype: "image/png",
             name: "test-image-2",
+            attachment_id: 3,
         },
     ];
     await makeDocumentsSpreadsheetMockEnv({ serverData });
@@ -404,9 +413,9 @@ test("can open spreadsheet while multiple documents are selected along with it",
 
     const records = fixture.querySelectorAll(".o_kanban_record");
     await contains(records[0].querySelector(".o_record_selector")).click();
-    await contains(records[1].querySelector(".o_record_selector")).click();
-    await contains(records[2].querySelector(".o_record_selector")).click();
-    await contains(records[2].querySelector(".oe_kanban_previewer")).click();
+    await contains(records[1].querySelector(".o_record_selector")).click({ ctrlKey: true });
+    await contains(records[2].querySelector(".o_record_selector")).click({ ctrlKey: true });
+    await contains(".o_kanban_record:contains('spreadsheet') .oe_kanban_previewer").click();
     expect(".o-FileViewer").toHaveCount(0);
     expect.verifySteps(["action_open_spreadsheet"]);
 });
@@ -464,4 +473,59 @@ test("spreadsheet should be skipped while toggling the preview in the FileViewer
     expect(".o-FileViewer-header div:first()").toHaveText("pug");
     await contains(".o-FileViewer-navigation[aria-label='Next']").click();
     expect(".o-FileViewer-header div:first()").toHaveText("chihuahua");
+});
+
+test("Cannot download spreadsheets", async function () {
+    const serverData = getDocumentsTestServerData([
+        {
+            folder_id: 1,
+            id: 2,
+            name: "Request",
+        },
+        {
+            attachment_id: 1,
+            id: 3,
+            folder_id: 1,
+            name: "Binary",
+        },
+        {
+            attachment_id: 2,
+            folder_id: 1,
+            handler: "spreadsheet",
+            id: 4,
+            name: "Spreadsheet",
+        },
+    ]);
+    serverData.models["ir.attachment"] = {
+        records: [
+            { id: 1, name: "binary" },
+            { id: 2, name: "spreadsheet" },
+        ],
+    };
+    const { name: folder1Name } = serverData.models["documents.document"].records[0];
+    await makeDocumentsSpreadsheetMockEnv({ serverData });
+    await mountView({
+        type: "kanban",
+        resModel: "documents.document",
+        arch: basicDocumentKanbanArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+    await contains(`.o_kanban_record:contains(${folder1Name})`).click({ ctrlKey: true });
+    // Folder should be downloadable
+    await waitFor(".o_control_panel_actions:contains('Download')");
+    await contains(`.o_kanban_record:contains('Request')`).click();
+    // Request should not be downloadable
+    await waitForNone(".o_control_panel_actions:contains('Download')");
+    // Binary should be downloadable
+    await contains(".o_kanban_record:contains('Binary')").click();
+    await waitFor(".o_control_panel_actions:contains('Download')");
+    // Spreadsheet should not be downloadable
+    await contains(`.o_kanban_record:contains('Spreadsheet')`).click();
+    await waitForNone(".o_control_panel_actions:contains('Download')");
+    // Multiple documents can be downloaded
+    await contains(`.o_kanban_record:contains(${folder1Name})`).click({ ctrlKey: true });
+    await waitFor(".o_control_panel_actions:contains('Download')");
+    // Button should remain even if some records are not downloadable
+    await contains(`.o_kanban_record:contains('Spreadsheet')`).click({ ctrlKey: true });
+    await waitFor(".o_control_panel_actions:contains('Download')");
 });

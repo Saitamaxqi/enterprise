@@ -152,11 +152,7 @@ test("Multiple error dialogs", async () => {
     await contains(".modal-footer button:contains(Share):eq(2)").click();
     expect(".modal-footer button:contains(Share):eq(2)").not.toBeEnabled();
     await animationFrame();
-    expect.verifySteps([
-        "Upload traceback",
-        "test url",
-        "Success notification",
-    ]);
+    expect.verifySteps(["Upload traceback", "test url", "Success notification"]);
     expect(".modal-footer .o_field_CopyClipboardChar").toHaveCount(1);
     expect(".modal-footer .o_field_CopyClipboardChar").toHaveText("test url");
     await contains(".o_clipboard_button").click();
