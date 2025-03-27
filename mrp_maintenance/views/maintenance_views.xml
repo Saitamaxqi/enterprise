@@ -125,6 +125,17 @@
         </field>
     </record>
 
+    <record id="hr_equipment_request_view_graph_inherit_maintenance" model="ir.ui.view">
+        <field name="name">maintenance.request.view.graph.inherit.mrp.maintenance</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_graph"/>
+        <field name="arch" type="xml">
+            <field name="repeat_interval" position="after">
+                <field name="recurring_leaves_count" type="measure" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
     <record id="maintenance_workcenter_action" model="ir.actions.act_window">
         <field name="name">Work Centers</field>
         <field name="type">ir.actions.act_window</field>

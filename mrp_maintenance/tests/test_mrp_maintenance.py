@@ -3,6 +3,8 @@
 
 import time
 from datetime import datetime, timedelta
+from freezegun import freeze_time
+
 from odoo.tests import common, Form
 
 
@@ -72,7 +74,7 @@ class TestMrpMaintenance(common.TransactionCase):
         }
         return self.env['maintenance.request'].create(values)
 
-    def _create_workcenter_request(self, name, request_date, workcenter_id, maintenance_type):
+    def _create_workcenter_request(self, name, request_date, workcenter_id, maintenance_type, **kwargs):
         """ Create and return a workcenter maintenance request """
         values = {
             'name': name,
@@ -83,6 +85,7 @@ class TestMrpMaintenance(common.TransactionCase):
             'maintenance_type': maintenance_type,
             'maintenance_team_id': self.maintenance_team_id.id,
             'stage_id': self.stage_id,
+            **kwargs,
         }
         return self.env['maintenance.request'].create(values)
 
@@ -320,8 +323,8 @@ class TestMrpMaintenance(common.TransactionCase):
             equipment = equipment_form.save()
 
         maintenance_request_01 = self._create_request(name='Does not turn', request_date=datetime(2017, 5, 3).date(), equipment_id=equipment, maintenance_type="corrective")
-        maintenance_request_01.write({"schedule_date": datetime(2017, 5, 3, 8, microsecond=500), "duration": 2, "workcenter_id": self.workcenter_id.id})
-
+        maintenance_request_01.write({"schedule_date": datetime(2017, 5, 3, 8, microsecond=500),
+            "schedule_end": datetime(2017, 5, 3, 10, microsecond=500), "workcenter_id": self.workcenter_id.id})
         start_datetime = datetime(2017, 5, 3, 7)
         intervals_by_workcenter = self.workcenter_id._get_unavailability_intervals(start_datetime, start_datetime + timedelta(hours=4))
         intervals = intervals_by_workcenter[self.workcenter_id.id]
@@ -358,3 +361,55 @@ class TestMrpMaintenance(common.TransactionCase):
             self.maintenance_team_id.id,
             "Maintenance team should remain unchanged when workcenter has no maintenance_team_id."
         )
+
+    @freeze_time("2025-05-21 11:00:00")
+    def test_maintenance_block_workcenter(self):
+        """
+        Validate that maintenance requests can create resource leaves as long as they do not
+        conflict with existing workorder intervals, regardless of working hours (unlike workorder scheduling).
+        Also verifies that recurring maintenance requests are properly rescheduled after any overlapping
+        manufacturing orders have been completed.
+        """
+        product = self.env['product.product'].create({'name': 'Test Product'})
+        bom = self.env['mrp.bom'].create({'product_tmpl_id': product.product_tmpl_id.id})
+        self.env['mrp.routing.workcenter'].create({
+            'name': 'Test Operation',
+            'workcenter_id': self.workcenter_id.id,
+            'bom_id': bom.id,
+        })
+        mo = self.env['mrp.production'].create({'bom_id': bom.id, 'date_start': datetime.now()})  # 11:00 AM - 12:00 PM
+        mo.action_confirm()
+        mo.button_plan()
+        wo_finished_date = mo.workorder_ids[0].date_finished
+
+        # Create a preventive MR scheduled for one day before today (past), from 07:00 to 18:00.
+        schedule_date = datetime(2025, 5, 20, 7, 0, 0)
+        mr = self._create_workcenter_request(
+            name="Preventive Maintenance (Block Workcenter)",
+            request_date=schedule_date,
+            workcenter_id=self.workcenter_id,
+            maintenance_type='preventive',
+            schedule_date=schedule_date,
+            schedule_end=datetime(2025, 5, 20, 18, 0, 0),
+            recurring_maintenance=True,
+            repeat_unit='day',
+            repeat_interval=1,
+            repeat_until=schedule_date + timedelta(weeks=1),
+            recurring_leaves_count=2,
+            block_workcenter=True,
+        )
+        # Ensure the MR is allowed to span non-working hours (e.g., 07:00-08:00, 13:00-14:00)
+        # and that leave creation in the past is permitted without blocking the user.
+        self.assertEqual(len(mr.leave_ids), 3)  # 1 for today + 2 recurring leaves
+        self.assertRecordValues(mr.leave_ids, [
+            {'date_from': datetime(2025, 5, 20, 7, 0, 0), 'date_to': datetime(2025, 5, 20, 18, 0, 0)},
+            {'date_from': wo_finished_date, 'date_to': wo_finished_date + timedelta(hours=11)},
+            {'date_from': datetime(2025, 5, 22, 7, 0, 0), 'date_to': datetime(2025, 5, 22, 18, 0, 0)},
+        ])
+
+        mr.write({'stage_id': self.stage_repaired_id})
+        next_mr = self.env['maintenance.request'].search([('id', '!=', mr.id), ('name', '=', mr.name)])
+
+        # Confirm that the next MR is scheduled after the MO has finished
+        self.assertEqual(next_mr.schedule_date, wo_finished_date,
+            "Next preventive maintenance should be scheduled after the MO's end.")
