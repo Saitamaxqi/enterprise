@@ -36,7 +36,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_product', {
         {
             content: "Pick end time",
             trigger: '.o_time_picker_input:eq(1)',
-            run: "edit 12:00",
+            run: "edit 12:00 && press Enter",
         },
         {
             content: "Add one quantity",
