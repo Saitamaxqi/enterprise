@@ -5,3 +5,7 @@
 .o_web_studio_property input:invalid {
     border: map-get($theme-colors, 'danger') solid 1px !important;
 }
+
+.o_web_studio_sidebar_text span {
+    color: $o-web-studio-text-inactive;
+}
