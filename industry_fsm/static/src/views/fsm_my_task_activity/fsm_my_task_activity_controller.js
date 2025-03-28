@@ -16,6 +16,6 @@ export class FsmMyTaskActivityController extends ActivityController {
                 },
             });
         }
-        return super.openRecord(record);
+        return super.openRecord(...arguments);
     }
 }
