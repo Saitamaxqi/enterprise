@@ -263,7 +263,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_employee.py:0
 msgid ""
-"- Without Income: The spouse of the income recipient has no professional income.\n"
+"- Without Income: The spouse of the income recipient has no professional income or below %(no_income_threshold)s€.\n"
 "\n"
 "- High income: The spouse of the recipient of the income has professional income, other than pensions, annuities or similar income, which exceeds %(low_income_threshold)s€ net per month.\n"
 "\n"

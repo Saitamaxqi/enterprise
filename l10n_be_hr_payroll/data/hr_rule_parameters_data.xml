@@ -485,6 +485,17 @@
             <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         </record>
 
+        <record id="rule_parameter_prp_spouse_no_income_deduction" model="hr.rule.parameter">
+            <field name="name">Spouse with no income deduction</field>
+            <field name="code">spouse_no_income_deduction</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_value_prp_spouse_no_income_deduction_2018" model="hr.rule.parameter.value">
+            <field name="parameter_value">165</field>
+            <field name="rule_parameter_id" ref="rule_parameter_prp_spouse_no_income_deduction"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
+
         <record id="rule_parameter_prp_spouse_low_income_deduction" model="hr.rule.parameter">
             <field name="name">Spouse with low income deduction</field>
             <field name="code">spouse_low_income_deduction</field>
