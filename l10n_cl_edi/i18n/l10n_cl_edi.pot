@@ -363,6 +363,14 @@ msgstr ""
 #. module: l10n_cl_edi
 #. odoo-python
 #: code:addons/l10n_cl_edi/models/account_move.py:0
+#, python-format
+msgid "Address"
+msgstr ""
+
+#. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+#, python-format
 msgid ""
 "All the items you are billing in invoice %s - %s, have no taxes.\n"
 " If you need to bill exempt items you must either use exempt invoice document type (34), or at least one of the items should have vat tax."
@@ -824,6 +832,13 @@ msgid "Curicó"
 msgstr ""
 
 #. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/fetchmail_server.py:0
+#, python-format
+msgid "Draft move with id: %s has been filled from DTE %s"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:mail.template,name:l10n_cl_edi.l10n_cl_edi_email_template_invoice
 msgid "DTE - Send by Email"
 msgstr ""
@@ -1053,6 +1068,13 @@ msgstr ""
 #. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_l10n_cl_certificate__cert_expiration
 msgid "Expiration date"
+msgstr ""
+
+#. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/fetchmail_server.py:0
+#, python-format
+msgid "Failed to determine origin type of the attached document, attempting to process as a vendor bill"
 msgstr ""
 
 #. module: l10n_cl_edi
@@ -1351,6 +1373,13 @@ msgid "ND"
 msgstr ""
 
 #. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+#, python-format
+msgid "Name"
+msgstr ""
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_account_debit_note__l10n_cl_corrected_text
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_account_move_reversal__l10n_cl_corrected_text
 msgid "New Corrected Text"
@@ -1558,6 +1587,13 @@ msgstr ""
 #. module: l10n_cl_edi
 #: model:ir.model.fields.selection,name:l10n_cl_edi.selection__res_company__l10n_cl_sii_regional_office__ur_qui
 msgid "Quillota"
+msgstr ""
+
+#. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+#, python-format
+msgid "RUT"
 msgstr ""
 
 #. module: l10n_cl_edi
@@ -2069,6 +2105,16 @@ msgid ""
 "    Accepted and RG 19983: means that both the content of the document has been accepted and the merchandise or \n"
 "services reception has been received as well.\n"
 "    "
+msgstr ""
+
+#. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+#, python-format
+msgid ""
+"The total amount of the DTE's XML is %(xml_amount)s and the total amount calculated by "
+"Odoo is %(move_amount)s. Typically this is caused by additional lines in the detail or by"
+" unidentified taxes, please check if a manual correction is needed."
 msgstr ""
 
 #. module: l10n_cl_edi

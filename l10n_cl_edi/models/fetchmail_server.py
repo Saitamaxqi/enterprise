@@ -270,6 +270,27 @@ class FetchmailServer(models.Model):
                 _logger.info('E-invoice already exist: %s', document_number)
                 continue
 
+            partner_dict = {
+                'name': self._get_dte_partner_name(xml_content),
+                'vat': self._get_dte_issuer_vat(xml_content),
+                'street': self._get_dte_issuer_address(xml_content),
+                'country_id': self.env.ref('base.cl').id,
+                'l10n_latam_identification_type_id': self.env.ref('l10n_cl.it_RUT').id,
+                'l10n_cl_sii_taxpayer_type': '1'
+            }
+            if (
+                not partner
+                and partner_dict['name']
+                and partner_dict['vat']
+                and partner_dict['street']
+                and self.env.company.account_fiscal_country_id.code == 'CL'
+            ):
+                try:
+                    partner = self.env['res.partner'].create(partner_dict)
+                    _logger.info('Partner %s automatically generated from vendor bill', partner.name)
+                except ValidationError:
+                    _logger.info('Partner could not be automatically generated from vendor bill')
+
             default_move_type = 'in_invoice' if document_type_code != '61' else 'in_refund'
             msgs = []
             try:
@@ -289,6 +310,7 @@ class FetchmailServer(models.Model):
                 invoice_form.narration = issuer_vat or ''
             move = invoice_form
 
+            self._l10n_cl_adjust_manual_taxes(move, dte_xml)
             dte_attachment = self.env['ir.attachment'].create({
                 'name': 'DTE_{}.xml'.format(document_number),
                 'res_model': move._name,
@@ -308,9 +330,9 @@ class FetchmailServer(models.Model):
                 body=msg + Markup(_(
                     '<li><b>Name</b>: %(name)s</li><li><b>RUT</b>: %(vat)s</li><li>'
                     '<b>Address</b>: %(address)s</li>')) % {
-                    'vat': self._get_dte_issuer_vat(xml_content) or '',
-                    'name': self._get_dte_partner_name(xml_content) or '',
-                    'address': self._get_dte_issuer_address(xml_content) or ''}, attachment_ids=[dte_attachment.id])
+                    'vat': partner_dict['vat'] or '',
+                    'name': partner_dict['name'] or '',
+                    'address': partner_dict['street'] or ''}, attachment_ids=[dte_attachment.id])
 
             if float_compare(move.amount_total, xml_total_amount, precision_digits=move.currency_id.decimal_places) != 0:
                 move.message_post(
@@ -325,66 +347,107 @@ class FetchmailServer(models.Model):
             _logger.info('New move has been created from DTE %s with id: %s', att_name, move.id)
         return moves
 
+    def _l10n_cl_adjust_manual_taxes(self, move, dte_xml):
+        """
+        This method adjusts values on automatically created tax lines for taxes with manually read amounts from the imported XML
+        It should work for other properly setup taxes read from the <ImptoReten> section when their codes are added to the list
+        """
+        if dte_xml.findtext('.//ns0:ImptoReten', namespaces=XML_NAMESPACES) is not None:
+            manual_tax_lines = self._l10n_cl_get_manual_taxes(dte_xml)
+        else:
+            return
+        line_ids_command = []
+        processed_sii_codes = set()
+        for sii_code in manual_tax_lines:
+            sii_code_lines = move.line_ids.filtered(lambda aml: aml.tax_line_id.l10n_cl_sii_code == sii_code)
+            if len(sii_code_lines) != 1:
+                # Found more than one tax line corresponding to a manual import SII code, ignoring
+                processed_sii_codes.add(sii_code)
+        sign = -1 if move.is_inbound() else 1
+        delta_payment_term = 0.0
+        for line in move.line_ids:
+            sii_code = line.tax_line_id.l10n_cl_sii_code
+            if sii_code in (35, 28) and sii_code not in processed_sii_codes:
+                processed_sii_codes.add(sii_code)
+                new_amount_currency = sign * manual_tax_lines[sii_code]
+                delta = new_amount_currency - line.amount_currency
+                delta_payment_term -= delta
+                line_ids_command.append(Command.update(line.id, {'amount_currency': new_amount_currency}))
+        payment_term = move.line_ids.filtered(lambda aml: aml.display_type == 'payment_term')[:1]
+        if not payment_term or not processed_sii_codes:
+            return
+        line_ids_command.append(Command.update(payment_term.id, {'amount_currency': payment_term.amount_currency + delta_payment_term}))
+        move.line_ids = line_ids_command
+
     def _get_invoice_form(self, company_id, partner, default_move_type, from_address, dte_xml, document_number,
                           document_type, msgs):
         """
         This method creates a draft vendor bill from the attached xml in the incoming email.
         """
         with self.env.cr.savepoint(), self.env['account.move'].with_context(
-                default_invoice_source_email=from_address,
-                default_move_type=default_move_type, allowed_company_ids=[company_id])._get_edi_creation() as invoice_form:
-            journal = self._get_dte_purchase_journal(company_id)
-            if journal:
-                invoice_form.journal_id = journal
-
-            invoice_form.partner_id = partner
-            invoice_date = dte_xml.findtext('.//ns0:FchEmis', namespaces=XML_NAMESPACES)
-            if invoice_date is not None:
-                invoice_form.invoice_date = fields.Date.from_string(invoice_date)
-            # Set the date after invoice_date to avoid the onchange
-            invoice_form.date = fields.Date.context_today(
-                self.with_context(tz='America/Santiago'))
-
-            invoice_date_due = dte_xml.findtext('.//ns0:FchVenc', namespaces=XML_NAMESPACES)
-            if invoice_date_due is not None:
-                invoice_form.invoice_date_due = fields.Date.from_string(invoice_date_due)
-
-            currency = self._get_dte_currency(dte_xml)
-            if currency:
-                invoice_form.currency_id = currency
-
-            invoice_form.l10n_latam_document_type_id = document_type
-            invoice_form.l10n_latam_document_number = document_number
-            dte_lines = self._get_dte_lines(dte_xml, company_id, partner.id)
-            invoice_form.write({
-                'invoice_line_ids': [
-                    Command.create({
-                        'product_id': dte_line.get('product', self.env['product.product']).id,
-                        'name': dte_line.get('name'),
-                        'quantity': dte_line.get('quantity'),
-                        'price_unit': dte_line.get('price_unit'),
-                        'discount': dte_line.get('discount', 0),
-                        'tax_ids': [Command.set([tax.id for tax in dte_line.get('taxes', [])])],
-                    })
-                    for dte_line in dte_lines
-                ],
-                'l10n_cl_reference_ids': [
-                    Command.create({
-                        'origin_doc_number': reference_line['origin_doc_number'],
-                        'reference_doc_code': reference_line['reference_doc_code'],
-                        'l10n_cl_reference_doc_type_id': reference_line['l10n_cl_reference_doc_type_id'].id,
-                        'reason': reference_line['reason'],
-                        'date': reference_line['date'],
-                    })
-                    for reference_line in self._get_invoice_references(dte_xml)
-                ],
-            })
-            for line, dte_line in zip(invoice_form.invoice_line_ids, dte_lines):
-                if dte_line.get('default_tax'):
-                    default_tax = line._get_computed_taxes()
-                    if default_tax not in line.tax_ids:
-                        line.tax_ids += default_tax
+            default_invoice_source_email=from_address,
+            default_move_type=default_move_type,
+            allowed_company_ids=[company_id]
+        )._get_edi_creation() as invoice_form:
+            self._l10n_cl_fill_invoice_form(company_id, partner, dte_xml, document_number, document_type, invoice_form)
         return invoice_form, msgs
+
+    def _l10n_cl_fill_invoice_form(self, company_id, partner, dte_xml, document_number, document_type, invoice_form):
+        """
+        This method fills a draft vendor bill from the attached file. It is used both for fetchmail and manual uploads.
+        """
+        journal = self._get_dte_purchase_journal(company_id)
+        if journal:
+            invoice_form.journal_id = journal
+
+        invoice_form.partner_id = partner
+        invoice_date = dte_xml.findtext('.//ns0:FchEmis', namespaces=XML_NAMESPACES)
+        if invoice_date is not None:
+            invoice_form.invoice_date = fields.Date.from_string(invoice_date)
+        # Set the date after invoice_date to avoid the onchange
+        invoice_form.date = fields.Date.context_today(
+            self.with_context(tz='America/Santiago'))
+
+        invoice_date_due = dte_xml.findtext('.//ns0:FchVenc', namespaces=XML_NAMESPACES)
+        if invoice_date_due is not None:
+            invoice_form.invoice_date_due = fields.Date.from_string(invoice_date_due)
+
+        currency = self._get_dte_currency(dte_xml)
+        if currency:
+            invoice_form.currency_id = currency
+
+        invoice_form.l10n_latam_document_type_id = document_type
+        invoice_form.l10n_latam_document_number = document_number
+        dte_lines = self._get_dte_lines(dte_xml, company_id, partner.id)
+        invoice_form.write({
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': dte_line.get('product', self.env['product.product']).id,
+                    'name': dte_line.get('name'),
+                    'quantity': dte_line.get('quantity'),
+                    'price_unit': dte_line.get('price_unit'),
+                    'discount': dte_line.get('discount', 0),
+                    'tax_ids': [Command.set([tax.id for tax in dte_line.get('taxes', [])])],
+                })
+                for dte_line in dte_lines
+            ],
+            'l10n_cl_reference_ids': [
+                Command.create({
+                    'origin_doc_number': reference_line['origin_doc_number'],
+                    'reference_doc_code': reference_line['reference_doc_code'],
+                    'l10n_cl_reference_doc_type_id': reference_line['l10n_cl_reference_doc_type_id'].id,
+                    'reason': reference_line['reason'],
+                    'date': reference_line['date'],
+                })
+                for reference_line in self._get_invoice_references(dte_xml)
+            ],
+        })
+        for line, dte_line in zip(invoice_form.invoice_line_ids, dte_lines):
+            if dte_line.get('default_tax'):
+                default_tax = line._get_computed_taxes()
+                if default_tax not in line.tax_ids:
+                    line.tax_ids += default_tax
+        return invoice_form
 
     def _is_dte_email(self, attachment_content):
         return b'http://www.sii.cl/SiiDte' in attachment_content or b'<RESULTADO_ENVIO>' in attachment_content
@@ -610,6 +673,17 @@ class FetchmailServer(models.Model):
                     values['default_tax'] = self._use_default_tax(dte_xml)
             invoice_lines.append(values)
         return invoice_lines
+
+    def _l10n_cl_get_manual_taxes(self, dte_xml):
+        """
+        Get information for lines of manually-read taxes from the values listed in ImptoReten elements
+        """
+        tipo_list = [int(element.text) for element in dte_xml.findall('.//ns0:TipoImp', namespaces=XML_NAMESPACES)]
+        monto_list = [float(element.text) for element in dte_xml.findall('.//ns0:MontoImp', namespaces=XML_NAMESPACES)]
+        manual_tax_lines = {}
+        for tipo, monto in zip(tipo_list, monto_list):
+            manual_tax_lines[tipo] = monto
+        return manual_tax_lines
 
     def _get_invoice_references(self, dte_xml):
         invoice_reference_ids = []

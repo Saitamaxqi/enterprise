@@ -14,12 +14,19 @@ from psycopg2 import OperationalError
 
 from odoo import fields, models
 from odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util import UnexpectedXMLResponse, InvalidToken
-from odoo.exceptions import LockError, UserError
-from odoo.tools import _, LazyTranslate
+from odoo.exceptions import LockError, UserError, ValidationError
+from odoo.tools.misc import formatLang
+from odoo.tools.translate import _, LazyTranslate
 from odoo.tools.float_utils import float_repr
 
 _lt = LazyTranslate(__name__)
 _logger = logging.getLogger(__name__)
+
+XML_NAMESPACES = {
+    'ns0': 'http://www.sii.cl/SiiDte',
+    'ns1': 'http://www.w3.org/2000/09/xmldsig#',
+    'xml_schema': 'http://www.sii.cl/XMLSchema'
+}
 
 try:
     import pdf417gen
@@ -960,3 +967,126 @@ services reception has been received as well.
         for record in self.search([('l10n_cl_dte_status', '=', 'not_sent')]):
             record.with_context(cron_skip_connection_errs=True).l10n_cl_send_dte_to_sii()
             self.env.cr.commit()
+
+    def _get_edi_decoder(self, file_data, new=True):
+        # EXTENDS 'account'
+        if (
+            self.country_code == 'CL'
+            and new
+            and file_data['type'] == 'xml'
+            and etree.fromstring(file_data['content']).xpath('//ns0:DTE', namespaces=XML_NAMESPACES)
+        ):
+            return self._l10n_cl_process_attachment_content
+        return super()._get_edi_decoder(file_data, new=new)
+
+    def _l10n_cl_process_attachment_content(self, invoice, file_data, new=True):
+        """
+        A modification of the fetchmail method chain to be used for manual vendor bill uploads
+        """
+        origin_type = self.env['fetchmail.server']._get_xml_origin_type(etree.fromstring(file_data['content']))
+        if origin_type == 'not_classified':
+            invoice.message_post(body=_('Failed to determine origin type of the attached document, attempting to process as a vendor bill'))
+        for move in self._l10n_cl_create_document_from_attachment(file_data['content'], file_data['attachment'], self.company_id, invoice):
+            if move.partner_id:
+                try:
+                    move._l10n_cl_send_receipt_acknowledgment()
+                except Exception as error:
+                    move.message_post(body=str(error))
+
+    def _l10n_cl_create_document_from_attachment(self, att_content, att_name, company_id, invoice):
+        """
+        A modification of the fetchmail method chain to be used for manual vendor bill uploads
+        """
+        moves = []
+        xml_content = etree.fromstring(att_content)
+        cl_country_id = self.env.ref('base.cl').id
+        cl_id_type_id = self.env.ref('l10n_cl.it_RUT').id
+        for dte_xml in xml_content.xpath('//ns0:DTE', namespaces=XML_NAMESPACES):
+            document_number = self.env['fetchmail.server']._get_document_number(dte_xml)
+            document_type_code = self.env['fetchmail.server']._get_document_type_from_xml(dte_xml)
+            xml_total_amount = float(dte_xml.findtext('.//ns0:MntTotal', namespaces=XML_NAMESPACES))
+            document_type = self.env['l10n_latam.document.type'].search(
+                [('code', '=', document_type_code), ('country_id.code', '=', 'CL')], limit=1)
+            if not document_type:
+                _logger.info('DTE has been discarded! Document type %s not found', document_type_code)
+                continue
+            if document_type and document_type.internal_type not in ['invoice', 'debit_note', 'credit_note']:
+                _logger.info('DTE has been discarded! The document type %s is not a vendor bill', document_type_code)
+                continue
+
+            issuer_vat = self.env['fetchmail.server']._get_dte_issuer_vat(dte_xml)
+            partner = self.env['fetchmail.server']._get_partner(issuer_vat, company_id.id)
+            if partner and self.env['fetchmail.server']._check_document_number_exists(partner.id, document_number, document_type, company_id.id) \
+                    or (not partner and self.env['fetchmail.server']._check_document_number_exists_no_partner(document_number, document_type,
+                                                                                      company_id.id, issuer_vat)):
+                _logger.info('E-invoice already exist: %s', document_number)
+                continue
+
+            partner_dict = {
+                'name': self.env['fetchmail.server']._get_dte_partner_name(xml_content),
+                'vat': self.env['fetchmail.server']._get_dte_issuer_vat(xml_content),
+                'street': self.env['fetchmail.server']._get_dte_issuer_address(xml_content),
+                'country_id': cl_country_id,
+                'l10n_latam_identification_type_id': cl_id_type_id,
+                'l10n_cl_sii_taxpayer_type': '1'
+            }
+            if not partner and partner_dict['name'] and partner_dict['vat'] and partner_dict['street']:
+                try:
+                    partner = self.env['res.partner'].create(partner_dict)
+                    _logger.info('Partner %s automatically generated from vendor bill', partner.name)
+                except ValidationError:
+                    _logger.info('Partner could not be automatically generated from vendor bill')
+
+            msgs = []
+            try:
+                invoice_form = self.env['fetchmail.server']._l10n_cl_fill_invoice_form(
+                    company_id.id, partner, dte_xml, document_number, document_type, invoice)
+
+            except Exception as error:
+                _logger.info(error)
+                msgs.append(str(error))
+                invoice.partner_id = partner
+                invoice.l10n_latam_document_type_id = document_type
+                invoice.l10n_latam_document_number = document_number
+
+            if not partner:
+                invoice_form.narration = issuer_vat or ''
+            move = invoice_form
+
+            self.env['fetchmail.server']._l10n_cl_adjust_manual_taxes(move, dte_xml)
+            dte_attachment = self.env['ir.attachment'].create({
+                'name': 'DTE_{}.xml'.format(document_number),
+                'res_model': move._name,
+                'res_id': move.id,
+                'type': 'binary',
+                'datas': base64.b64encode(etree.tostring(dte_xml))
+            })
+            move.l10n_cl_dte_file = dte_attachment.id
+
+            for msg in msgs:
+                move.with_context(no_new_invoice=True).message_post(body=msg)
+
+            msg = _('Vendor Bill DTE has been generated for the following vendor:') if partner else \
+                  _('Vendor not found: You can generate this vendor manually with the following information:')
+            msg += Markup('<br/>')
+            move.with_context(no_new_invoice=True).message_post(
+                body=msg + Markup("<li><b>%(name_l)s</b>: %(name)s</li><li><b>%(rut_l)s</b>: %(rut)s</li><li><b>%(address_l)s</b>: %(address)s</li>") % {
+                    'name_l': _("Name"), 'name': partner_dict['name'] or '',
+                    'rut_l': _("RUT"), 'rut': partner_dict['vat'] or '',
+                    'address_l': _("Address"), 'address': partner_dict['street'] or ''},
+                attachment_ids=[dte_attachment.id])
+
+            if not move.currency_id.is_zero(move.amount_total - xml_total_amount):
+                move.message_post(
+                    body=Markup("<strong> %s </strong> %s") % (
+                            _("Warning:"),
+                            _("The total amount of the DTE\'s XML is %(xml_amount)s and the total amount calculated by Odoo is %(move_amount)s. Typically this is caused by additional lines in the detail or by unidentified taxes, please check if a manual correction is needed.",
+                                xml_amount=formatLang(self.env, xml_total_amount, currency_obj=move.currency_id),
+                                move_amount=formatLang(self.env, move.amount_total, currency_obj=move.currency_id)
+                            )
+                        )
+                    )
+            move.l10n_cl_dte_acceptation_status = 'received'
+            moves.append(move)
+            _logger.info('Draft move with id: %s has been filled from DTE %s', move.id, att_name)
+        return moves
