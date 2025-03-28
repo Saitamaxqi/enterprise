@@ -158,8 +158,8 @@
                         t-att-class="{'bg-200 o_social_bubble_radius': props.bubble_design}"
                         t-att-placeholder="isCommentReply ? write_reply_text : write_comment_text"
                         t-att-disabled="state.disabled"
-                        t-on-keydown="_onAddComment">
-                        <t t-esc="initialValue || ''"/>
+                        t-on-keydown="_onAddComment"
+                        t-att-value="initialValue || ''">
                     </textarea>
                     <div class="o_social_comment_controls mt-2">
                         <div t-if="canAddImage" class="o_social_comment_add_image o_social_subtle_btn px-3 py-1">
@@ -233,7 +233,7 @@
         <t t-if="state.isEditMode" t-component="commentReplyComponent"
            comment="comment"
            originalPost="props.originalPost"
-           initialValue="_htmlEscape(comment.message)"
+           initialValue="comment.message"
            isCommentEdit="true"
            mediaSpecificProps="props.mediaSpecificProps"
            toggleEditMode.bind="_toggleEditMode"
