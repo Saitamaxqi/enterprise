@@ -1,31 +1,34 @@
-import publicWidget from "@web/legacy/js/public/public_widget";
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
+import { redirect } from "@web/core/utils/urls";
 
+export class OnlineAppointmentCta extends Interaction {
+    static selector = ".s_online_appointment";
+    dynamicContent = {
+        _root: {
+            "t-on-click": this.onCtaClick,
+        },
+    }
 
-const OnlineAppointmentCtaWidget = publicWidget.Widget.extend({
-    selector: '.s_online_appointment',
-    disabledInEditableMode: true,
-    events: {
-        'click': '_onCtaClick'
-    },
-    _onCtaClick: function (ev) {
-        let url = '/appointment';
-
-        const selectedAppointments = ev.target.closest('.s_online_appointment').dataset.appointmentTypes;
+    onCtaClick(ev) {
+        const url = new URL("/appointment", window.location.origin);
+        const selectedAppointments = ev.target.closest(".s_online_appointment").dataset.appointmentTypes;
         const appointmentsTypeIds = selectedAppointments ? JSON.parse(selectedAppointments) : [];
         const nbSelectedAppointments = appointmentsTypeIds.length;
         if (nbSelectedAppointments === 1) {
-            url += `/${encodeURIComponent(appointmentsTypeIds[0])}`;
-            const selectedUsers = ev.target.closest('.s_online_appointment').dataset.staffUsers;
+            url.pathname += `/${encodeURIComponent(appointmentsTypeIds[0])}`;
+            const selectedUsers = ev.target.closest(".s_online_appointment").dataset.staffUsers;
             if (JSON.parse(selectedUsers).length) {
-                url += `?filter_staff_user_ids=${encodeURIComponent(selectedUsers)}`;
+                url.searchParams.set("filter_staff_user_ids", selectedUsers);
             }
         } else if (nbSelectedAppointments > 1) {
-            url += `?filter_appointment_type_ids=${encodeURIComponent(selectedAppointments)}`;
+            url.searchParams.set("filter_appointment_type_ids", selectedAppointments);
         }
-        window.location = url;
-    },
-});
+        redirect(url);
+    }
+}
 
-publicWidget.registry.online_appointment = OnlineAppointmentCtaWidget;
+registry
+    .category("public.interactions")
+    .add("website_appointment.online_appointments", OnlineAppointmentCta);
 
-export default OnlineAppointmentCtaWidget;

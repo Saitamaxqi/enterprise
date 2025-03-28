@@ -51,10 +51,4 @@
     </xpath>
 </template>
 
-<record id="website_appointment.s_online_appointment_000_js" model="ir.asset">
-    <field name="name">Appointment Button 000 JS</field>
-    <field name="bundle">web.assets_frontend</field>
-    <field name="path">website_appointment/static/src/snippets/s_online_appointment/000.js</field>
-</record>
-
 </odoo>
