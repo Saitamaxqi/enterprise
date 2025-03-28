@@ -243,7 +243,7 @@
             <xpath expr="//group[@name='previews_placeholder']" position="after">
                 <group name="live_posts" colspan="2" string="Posts"
                     invisible="state not in ['posting', 'posted']">
-                    <field name="live_post_ids" nolabel="1">
+                    <field name="live_post_ids" nolabel="1" colspan="2">
                         <kanban>
                             <field name="live_post_link" />
                             <templates>
