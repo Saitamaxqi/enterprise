@@ -71,7 +71,7 @@
                 <MrpDisplayEmployeesPanel t-if="groups.workorders" employees="useEmployee.employees"
                     setSessionOwner.bind="useEmployee.toggleSessionOwner"
                     popupAddEmployee.bind="popupAddEmployee"/>
-                <div class="o_mrp_display_records flex-grow-1 m-2 position-relative">
+                <div class="o_mrp_display_records position-relative d-grid align-items-start align-content-start flex-grow-1 gap-3 p-3 h-auto h-md-100">
                 <t t-foreach="relevantRecords" t-as="record" t-key="record.id">
                     <MrpDisplayRecord
                         groups="groups"

@@ -8,6 +8,8 @@ body:has(.o_mrp_display) {
     --o-btn-padding-y: 0.5rem;
     --o-btn-padding-y-lg: 0.75rem;
 
+    --Avatar-size: 2rem;
+
     --interaction-min-size: calc(#{$btn-font-size * $btn-line-height} + var(--o-btn-padding-y) * 2 + #{o-to-rem($border-width) * 2});
 
     .o_work_centers_container,
@@ -40,9 +42,9 @@ body:has(.o_mrp_display) {
         }
     }
 
-    .o_avatar_connected {
-        height: 2rem;
-        width: 2rem;
+    .o_mrp_display_content .list-group-item {
+        --list-group-item-padding-y: #{map-get($spacers, 1)};
+        --list-group-item-padding-x: #{map-get($spacers, 2)};
     }
 
     .o_tag, .badge {
@@ -52,23 +54,18 @@ body:has(.o_mrp_display) {
 
 .o_mrp_display {
     .o_mrp_display_records {
-        column-width: 340px;
-        column-gap: 8px;
-        display: grid;
         grid-template-columns: repeat(1, 1fr);
-        align-items: start;
 
+        @include media-breakpoint-up(md) {
+            overflow-y: auto;
+        }
         @include media-breakpoint-up(lg) {
             grid-template-columns: repeat(2, 1fr);
         }
-        @include media-breakpoint-up(xl) {
+        @include media-breakpoint-up(xxl) {
             grid-template-columns: repeat(3, 1fr);
         }
-        @include media-breakpoint-up(xxl) {
-            grid-template-columns: repeat(4, 1fr);
-        }
     }
-
 
     .o_mrp_timer {
         background-color: $list-group-active-bg;

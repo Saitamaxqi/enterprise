@@ -63,7 +63,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         },
         {
             content: "Start the workorder on header click",
-            trigger: '.o_finished_product span:contains("Giraffe")',
+            trigger: 'span.o_finished_product:contains("Giraffe")',
             run: "click",
         },
         {
@@ -652,7 +652,7 @@ registry.category("web_tour.tours").add("test_mrp_manual_consumption_in_shopfloo
             trigger: ".o_control_panel button.active:contains('Nuclear Workcenter')",
         },
         {
-            trigger: ".o_finished_product span:contains('Finish')",
+            trigger: "span.o_finished_product:contains('Finish')",
             run: "click",
         },
         {

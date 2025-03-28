@@ -23,7 +23,7 @@ registry.category("web_tour.tours").add("test_shop_floor_spreadsheet", {
     },
     {
         content: 'Start the workorder on header click',
-        trigger: '.o_finished_product span:contains("Snow leopard")',
+        trigger: 'span.o_finished_product:contains("Snow leopard")',
         run: "click",
     },
     {

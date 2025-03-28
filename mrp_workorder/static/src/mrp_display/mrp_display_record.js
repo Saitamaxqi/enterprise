@@ -80,10 +80,11 @@ export class MrpDisplayRecord extends Component {
         this.dialog.add(MrpRegisterProductionDialog, params);
     }
 
-    editLogNote() {
+    editLogNote(ev) {
         const title = _t("Log Note");
         const reload = () => this.env.reload();
         const params = { body: "", record: this.props.production, reload, title };
+        ev.stopPropagation();
         this.dialog.add(MrpLogNoteDialog, params);
     }
 

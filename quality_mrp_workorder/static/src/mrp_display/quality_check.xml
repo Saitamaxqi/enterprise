@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-inherit="mrp_workorder.QualityCheck" t-inherit-mode="extension">
         <xpath expr="//button[@t-if='hasInstruction']" position="after">
-            <button t-if="type === 'passfail' &amp;&amp; !isComplete" t-on-click.stop="failCheck" class="o_btn_icon btn me-1"
+            <button t-if="type === 'passfail' &amp;&amp; !isComplete" t-on-click.stop="failCheck" class="o_btn_icon btn"
                     t-attf-class="{{isActive ? 'btn-danger' : 'btn-outline-secondary'}}">
                 <i class="fa fa-times" role="img"/>
             </button>
