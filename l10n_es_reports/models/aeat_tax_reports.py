@@ -1407,13 +1407,13 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         groupby_field_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else SQL()
 
         query = SQL("""
-            SELECT %(select_from_groupby)s
+            SELECT DISTINCT account_move.id AS move_id,
+                %(select_from_groupby)s
                 account_move.l10n_es_reports_mod349_invoice_type AS invoice_type,
                 account_move.move_type AS move_type,
                 account_move.reversed_entry_id AS reversed_entry_id,
                 account_move.partner_id AS partner_id,
-                account_move.id AS move_id,
-                SUM(account_move.amount_untaxed) AS amount_untaxed
+                account_move.amount_untaxed_signed * (CASE WHEN account_move.move_type IN ('in_invoice', 'out_refund') THEN -1 ELSE 1 END) AS amount_untaxed
             FROM %(tables)s
             JOIN account_move on account_move.id = account_move_line.move_id
             WHERE %(where_clause)s

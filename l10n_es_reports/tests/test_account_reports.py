@@ -567,3 +567,117 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
             ],
             options
         )
+
+    def test_mod349_report_multi_installment_payment_terms(self):
+        """ This test makes sure the report show the correct amount when the invoice is paid using
+            multi installment payment terms (30% Now, Balance 60 Days)
+        """
+        options = self._generate_options(self.report, '2019-04-01', '2019-04-30')
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'date': '2019-04-05',
+            'invoice_date': '2019-04-05',
+            'partner_id': self.partner_a.id,
+            'invoice_payment_term_id': self.pay_terms_b.id,
+            'line_ids': [
+                Command.create({
+                    'product_id': self.product.id,
+                    'quantity': 1,
+                    'price_unit': self.product.lst_price,
+                    'tax_ids': [],
+                }),
+            ]
+        })
+        invoice.action_post()
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            [0,                                                                                                                                   1],
+            [
+                ('Summary',                                                                                                                      ''),
+                ('Total number of intra-community operations',                                                                                    1),
+                ('Total amount of intra-community operations',                                                                                100.0),
+                ('Total number of intra-community refund operations',                                                                             0),
+                ('Amount of intra-community refund operations',                                                                                   0),
+                ('Invoices',                                                                                                                     ''),
+                ('E. Intra-community sales',                                                                                                  100.0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Transfers of goods made under consignment sales contracts.',                                                                 0),
+                ('D. Returns of goods previously sent from the TAI',                                                                              0),
+                ('C. Replacements of goods',                                                                                                      0),
+                ('Refunds',                                                                                                                      ''),
+                ('E. Intra-community sales refunds',                                                                                              0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Rectifications of transfers of goods made under consignment sale contracts.',                                                0),
+                ('D. Rectifications of returned goods previously sent from the TAI',                                                              0),
+                ('C. Rectifications for replacement of goods',                                                                                    0),
+            ],
+            options
+        )
+
+    def test_mod349_report_multi_currency(self):
+        """ This test makes sure the report show the correct amount when invoicing in a foreign currency
+        """
+        options = self._generate_options(self.report, '2019-04-01', '2019-04-30')
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'date': '2019-04-05',
+            'invoice_date': '2019-04-05',
+            'partner_id': self.partner_a.id,
+            'invoice_payment_term_id': self.pay_terms_b.id,
+            'currency_id': self.other_currency.id,
+            'line_ids': [
+                Command.create({
+                    'product_id': self.product.id,
+                    'quantity': 1,
+                    'price_unit': self.product.lst_price,
+                    'tax_ids': [],
+                }),
+            ]
+        })
+        invoice.action_post()
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            [0,                                                                                                                                   1],
+            [
+                ('Summary',                                                                                                                      ''),
+                ('Total number of intra-community operations',                                                                                    1),
+                ('Total amount of intra-community operations',                                                                                 50.0),
+                ('Total number of intra-community refund operations',                                                                             0),
+                ('Amount of intra-community refund operations',                                                                                   0),
+                ('Invoices',                                                                                                                     ''),
+                ('E. Intra-community sales',                                                                                                   50.0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Transfers of goods made under consignment sales contracts.',                                                                 0),
+                ('D. Returns of goods previously sent from the TAI',                                                                              0),
+                ('C. Replacements of goods',                                                                                                      0),
+                ('Refunds',                                                                                                                      ''),
+                ('E. Intra-community sales refunds',                                                                                              0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Rectifications of transfers of goods made under consignment sale contracts.',                                                0),
+                ('D. Rectifications of returned goods previously sent from the TAI',                                                              0),
+                ('C. Rectifications for replacement of goods',                                                                                    0),
+            ],
+            options
+        )
