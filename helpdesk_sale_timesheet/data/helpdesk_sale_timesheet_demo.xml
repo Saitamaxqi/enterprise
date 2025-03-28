@@ -54,7 +54,6 @@
     <record id="res_partner_19" model="res.partner">
         <field name="name">Alexa Laza</field>
         <field name="category_id" eval="[Command.set([ref('base.res_partner_category_14')])]"/>
-        <field name="is_company">1</field>
         <field name="street">77 Santa Barbara Rd</field>
         <field name="city">Pleasant Hill</field>
         <field name="state_id" ref='base.state_us_5'/>

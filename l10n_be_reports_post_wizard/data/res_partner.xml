@@ -2,6 +2,7 @@
 <odoo>
     <record id="partner_fps_belgium" model="res.partner">
         <field name="name">FPS Finance - VAT Revenue Service Brussels</field>
+        <field name="is_company">1</field>
     </record>
 
     <data noupdate="1">
