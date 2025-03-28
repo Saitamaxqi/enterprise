@@ -652,6 +652,7 @@ class AccountOnlineLink(models.Model):
                 self.account_online_account_ids.fetching_status = 'done'
             if reset_tx:
                 context = self.env.context
+                button_label = url = None
                 if subject and message:
                     message_post = message
                     error_reference = context.get('error_reference')
@@ -674,7 +675,7 @@ class AccountOnlineLink(models.Model):
                 self.env.cr.commit()
                 # and then raise either a redirectWarning error so that customer can easily open an issue with Odoo,
                 # or eventually bring the user to the documentation if there's no need to contact the support.
-                if subject and message and context.get('redirect_warning_url'):
+                if url:
                     action_id = {
                         "type": "ir.actions.act_url",
                         "url": url,
