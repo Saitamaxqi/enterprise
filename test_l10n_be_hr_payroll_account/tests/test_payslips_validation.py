@@ -14,6 +14,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     @TestPayslipValidationCommon.setup_country('be')
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids += cls.quick_ref('hr_holidays.group_hr_holidays_manager')
         cls.date_from = datetime.date(2020, 9, 1)
         cls.date_to = datetime.date(2020, 9, 30)
 

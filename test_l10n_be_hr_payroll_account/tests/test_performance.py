@@ -176,13 +176,13 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'rd_percentage': 100,
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        cls.sick_time_off_type = cls.env['hr.leave.type'].create({
+        cls.sick_time_off_type = cls.env['hr.leave.type'].sudo().create({
             'name': 'Sick Time Off',
             'requires_allocation': 'no',
             'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_sick_leave').id,
         })
 
-        cls.long_term_sick_time_off_type = cls.env['hr.leave.type'].create({
+        cls.long_term_sick_time_off_type = cls.env['hr.leave.type'].sudo().create({
             'name': 'Sick Time Off',
             'requires_allocation': 'no',
             'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_long_sick').id,

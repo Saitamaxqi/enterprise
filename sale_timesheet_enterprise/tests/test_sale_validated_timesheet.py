@@ -280,6 +280,7 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
         self.assertEqual(validated_timesheet.so_line, ordered_task.sale_line_id)  # sale order line is not updated
 
     def test_create_invoice_for_past_validated_timesheet(self):
+        self.env.user.group_ids += self.quick_ref('hr_timesheet.group_timesheet_manager')
         self.env['ir.config_parameter'].sudo().set_param('sale.invoiced_timesheet', 'approved')
         self.employee_user.timesheet_manager_id = self.user_manager_company_B
         sale_order_2 = self.env['sale.order'].with_context(tracking_disable=True).create({
@@ -310,7 +311,7 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
             'date': month_before,
         })
         delivered_timesheet1.action_validate_timesheet()
-        self.employee_user.last_validated_timesheet_date = date.today()
+        self.employee_user.sudo().last_validated_timesheet_date = date.today()
         user = self.env['res.users'].create({
             'name': 'Basic User',
             'login': 'basic_user',
