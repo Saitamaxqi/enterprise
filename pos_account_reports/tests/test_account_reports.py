@@ -13,6 +13,7 @@ class POSTestTaxReport(TestAccountReportsCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref('point_of_sale.group_pos_manager')
 
         company = cls.company_data['company']
         test_country = cls.env['res.country'].create({
