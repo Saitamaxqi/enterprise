@@ -52,12 +52,8 @@ class SaleOrderLogReport(models.Model):
     first_contract_date = fields.Date('First Contract Date', readonly=True)
     end_date = fields.Date(readonly=True)
     close_reason_id = fields.Many2one("sale.order.close.reason", string="Close Reason", readonly=True)
-    currency_id = fields.Many2one('res.currency', compute='_compute_currency_id')
+    currency_id = fields.Many2one('res.currency')
     log_currency_id = fields.Many2one('res.currency')
-
-    @api.depends_context('allowed_company_ids')
-    def _compute_currency_id(self):
-        self.currency_id = self.env.company.currency_id
 
     def _with(self):
         companies = self.env['res.company'].search([], order='id asc')
@@ -77,14 +73,13 @@ class SaleOrderLogReport(models.Model):
         """
 
     def _select(self):
-        select = """
+        select = f"""
             log.id AS id,
             so.client_order_ref AS client_order_ref,
             log.order_id AS order_id,
             log.event_type AS event_type,
             log.event_date AS event_date,
             log.effective_date as effective_date,
-            log.currency_id AS currency_id,
             log.user_id AS user_id,
             log.team_id AS team_id,
             so.partner_id AS partner_id,
@@ -106,6 +101,7 @@ class SaleOrderLogReport(models.Model):
             r1.rate AS currency_rate,
             r2.rate AS user_rate,
             log.currency_id AS log_currency_id,
+            {self.env.company.currency_id.id} AS currency_id,
             log.company_id AS log_cmp,
             CASE
                 WHEN event_type = '0_creation' THEN 1
