@@ -24,5 +24,6 @@ class AccountJournal(models.Model):
 
     @api.onchange('type')
     def _onchange_type(self):
+        super()._onchange_type()
         self.l10n_cl_point_of_sale_type = ('online' if self.type == 'sale' and self.l10n_latam_use_documents and
                                            self.country_code == 'CL'else False)
