@@ -60,58 +60,66 @@ patch(PosStore.prototype, {
             line.quantity = line.qty.toString(); // Fiskaly ask this to be a string and called quantity
             line.price_per_unit = this.env.utils.roundCurrency(line.price_per_unit).toFixed(2);
         });
-        const data = {
-            state: "ACTIVE",
-            client_id: this.getClientId(),
-        };
-        return fetch(
-            `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}${
-                this.isUsingApiV2() ? "?tx_revision=1" : ""
-            }`,
-            {
-                method: "PUT",
-                headers: {
-                    Authorization: `Bearer ${this.getApiToken()}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            }
-        )
-            .then(() => {
-                const data = {
-                    state: "FINISHED",
-                    client_id: this.getClientId(),
-                    schema: {
-                        standard_v1: {
-                            order: {
-                                line_items: lineDifference,
-                            },
-                        },
+
+        const baseUrl = this.getApiUrl();
+        const tssId = this.getTssId();
+        const apiToken = this.getApiToken();
+        const isApiV2 = this.isUsingApiV2();
+        const clientId = this.getClientId();
+        try {
+            const activeData = { state: "ACTIVE", client_id: clientId };
+            const activeResponse = await fetch(
+                `${baseUrl}/tss/${tssId}/tx/${transactionUuid}${isApiV2 ? "?tx_revision=1" : ""}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${apiToken}`,
+                        "Content-Type": "application/json",
                     },
-                };
-                return fetch(
-                    `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}?${
-                        this.isUsingApiV2() ? "tx_revision=2" : "last_revision=1"
-                    }`,
-                    {
-                        method: "PUT",
-                        headers: {
-                            Authorization: `Bearer ${this.getApiToken()}`,
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                    }
-                );
-            })
-            .catch(async (error) => {
-                if (error.status === 401) {
-                    // Need to update the token
-                    await this._authenticate();
-                    return this.createAndFinishOrderTransaction(lineDifference);
+                    body: JSON.stringify(activeData),
                 }
-                // Return a Promise with rejected value for errors that are not handled here
-                return Promise.reject(error);
-            });
+            );
+
+            if (!activeResponse.ok) {
+                throw new Error(`Failed to activate transaction: ${activeResponse.status}`);
+            }
+
+            const finishedData = {
+                state: "FINISHED",
+                client_id: clientId,
+                schema: {
+                    standard_v1: {
+                        order: { line_items: lineDifference },
+                    },
+                },
+            };
+
+            const finishedResponse = await fetch(
+                `${baseUrl}/tss/${tssId}/tx/${transactionUuid}?${
+                    isApiV2 ? "tx_revision=2" : "last_revision=1"
+                }`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${apiToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(finishedData),
+                }
+            );
+
+            if (!finishedResponse.ok) {
+                throw new Error(`Failed to finish transaction: ${finishedResponse.status}`);
+            }
+        } catch (error) {
+            if (error.status === 401) {
+                // Handle token expiration, re-authenticate, and retry
+                await this._authenticate();
+                return this.createAndFinishOrderTransaction(transactionUuid, lineDifference);
+            }
+            console.error("Error in createAndFinishOrderTransaction:", error);
+            throw error; // Re-throw for higher-level error handling
+        }
     },
     async syncAllOrders(options = {}) {
         if (!this.isRestaurantCountryGermanyAndFiskaly()) {

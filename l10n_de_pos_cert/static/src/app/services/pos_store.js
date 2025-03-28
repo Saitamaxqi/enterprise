@@ -292,39 +292,47 @@ patch(PosStore.prototype, {
             api_key: this.getApiKey(),
             api_secret: this.getApiSecret(),
         };
+
         return fetch(url + "/auth", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Auth request failed");
+                }
+                return response.json();
+            })
+            .then((data) =>
                 fetch(url + "/vat_definitions", {
-                    headers: {
-                        Authorization: `Bearer ${data.access_token}`,
-                    },
+                    headers: { Authorization: `Bearer ${data.access_token}` },
                 })
-                    .then((response) => response.json())
-                    .then((vat_data) => {
-                        vat_data.data.forEach((vat_definition) => {
-                            if (!(vat_definition.percentage in this.vatRateMapping)) {
-                                this.vatRateMapping[vat_definition.percentage] =
-                                    RATE_ID_MAPPING[vat_definition.vat_definition_export_id];
-                            }
-                        });
-                    })
-                    .catch(() => {
-                        // This is a fallback where we hardcode the taxes hoping that they didn't change ...
-                        this.vatRateMapping = {
-                            19: "NORMAL",
-                            7: "REDUCED_1",
-                            10.7: "SPECIAL_RATE_1",
-                            5.5: "SPECIAL_RATE_2",
-                            0: "NULL",
-                        };
-                    });
+            )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("VAT definitions request failed");
+                }
+                return response.json();
+            })
+            .then((vat_data) => {
+                vat_data.data.forEach((vat_definition) => {
+                    if (!(vat_definition.percentage in this.vatRateMapping)) {
+                        this.vatRateMapping[vat_definition.percentage] =
+                            RATE_ID_MAPPING[vat_definition.vat_definition_export_id];
+                    }
+                });
+            })
+            .catch((error) => {
+                console.info("Error fetching VAT data:", error);
+                // This is a fallback where we hardcode the taxes hoping that they didn't change ...
+                this.vatRateMapping = {
+                    19: "NORMAL",
+                    7: "REDUCED_1",
+                    10.7: "SPECIAL_RATE_1",
+                    5.5: "SPECIAL_RATE_2",
+                    0: "NULL",
+                };
             });
     },
     //@Override

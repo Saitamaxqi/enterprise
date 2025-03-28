@@ -10,8 +10,9 @@ class TestFiskalyPoS(TestFrontend):
     def setUp(self):
         super().setUp()
         self.install_fiskalyhook()
-        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_kassensichv_url', 'http://127.0.0.1:8069/fake_fiskaly')
-        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_dsfinvk_url', 'http://127.0.0.1:8069/fake_fiskaly')
+        server_url = self.env['ir.config_parameter'].sudo().get_base_url()
+        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_kassensichv_url', f"{server_url}/fake_fiskaly")
+        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_dsfinvk_url', f"{server_url}/fake_fiskaly")
 
         self.company.write({
             "country_id": self.env.ref('base.de'),
