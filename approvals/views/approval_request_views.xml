@@ -279,6 +279,19 @@
         </field>
     </record>
 
+    <record id="model_approval_request_approve_admin" model="ir.actions.server">
+        <field name="name">Force Approval</field>
+        <field name="model_id" ref="approvals.model_approval_request"/>
+        <field name="binding_model_id" ref="approvals.model_approval_request"/>
+        <field name="group_ids" eval="[(4, ref('approvals.group_approval_user'))]"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    records._action_force_approval()
+        </field>
+    </record>
+
 <!--MenuItem-->
 
     <menuitem

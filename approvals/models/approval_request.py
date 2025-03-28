@@ -184,10 +184,6 @@ class ApprovalRequest(models.Model):
         activities = self.env['mail.activity'].search(domain)
         return activities
 
-    def _ensure_can_approve(self):
-        if any(approval.approver_sequence and approval.user_status == 'waiting' for approval in self):
-            raise ValidationError(_('You cannot approve before the previous approver.'))
-
     def _update_next_approvers(self, new_status, approver, only_next_approver, cancel_activities=False):
         approvers_updated = self.env['approval.approver']
         for approval in self.filtered('approver_sequence'):
@@ -209,29 +205,24 @@ class ApprovalRequest(models.Model):
         activities = self.activity_ids.filtered(lambda a: a.activity_type_id == approval_activity)
         activities.unlink()
 
+    def _action_force_approval(self):
+        if not self.env.user.has_group('approvals.group_approval_user'):
+            raise UserError(_('You do not have the rights to execute that action.'))
+        approval_requests = self.filtered(lambda request: request.request_status in ('pending', 'refused'))
+        approval_requests.approver_ids.write({'status': 'approved'})
+        approval_requests._cancel_activities()
+        for approval_request in approval_requests:
+            approval_request.message_post(body=_('The request has been approved by an Approval Officer'))
+
     def action_approve(self, approver=None):
-        self._ensure_can_approve()
+        if any(approval.approver_sequence and approval.user_status == 'waiting' for approval in self):
+            raise ValidationError(_('You cannot approve before the previous approver.'))
 
         if not isinstance(approver, models.BaseModel):
             approver = self.mapped('approver_ids').filtered(
                 lambda approver: approver.user_id == self.env.user
             )
         approver.write({'status': 'approved'})
-        # Send approval accepted message
-        for approval in self:
-            if approval.request_owner_id.partner_id:
-                body = _("The request created on %(create_date)s by %(request_owner)s has been accepted.",
-                         create_date=approval.create_date.date(),
-                         request_owner=approval.request_owner_id.name)
-                subject = _("The request %(request_name)s for %(request_owner)s has been accepted",
-                            request_name=approval.name,
-                            request_owner=approval.request_owner_id.name)
-                approval.message_notify(
-                    body=body,
-                    subject=subject,
-                    partner_ids=approval.request_owner_id.partner_id.ids,
-                )
-
         self.sudo()._update_next_approvers('pending', approver, only_next_approver=True)
         self.sudo()._get_user_approval_activities(user=self.env.user).action_feedback()
 
@@ -241,22 +232,6 @@ class ApprovalRequest(models.Model):
                 lambda approver: approver.user_id == self.env.user
             )
         approver.write({'status': 'refused'})
-
-        # Send approval refused message
-        for approval in self:
-            if approval.request_owner_id.partner_id:
-                body = _("The request created on %(create_date)s by %(request_owner)s has been refused.",
-                         create_date=approval.create_date.date(),
-                         request_owner=approval.request_owner_id.name)
-                subject = _("The request %(request_name)s for %(request_owner)s has been refused",
-                            request_name=approval.name,
-                            request_owner=approval.request_owner_id.name)
-                approval.message_notify(
-                    body=body,
-                    subject=subject,
-                    partner_ids=approval.request_owner_id.partner_id.ids,
-                )
-
         self.sudo()._update_next_approvers('refused', approver, only_next_approver=False, cancel_activities=True)
         self.sudo()._get_user_approval_activities(user=self.env.user).action_feedback()
 
@@ -284,6 +259,7 @@ class ApprovalRequest(models.Model):
     @api.depends('approver_ids.status', 'approver_ids.required')
     def _compute_request_status(self):
         for request in self:
+            old_status = request.request_status
             status_lst = request.mapped('approver_ids.status')
             required_approved = all(a.status == 'approved' for a in request.approver_ids.filtered('required'))
             minimal_approver = request.approval_minimum if len(status_lst) >= request.approval_minimum else len(status_lst)
@@ -301,6 +277,28 @@ class ApprovalRequest(models.Model):
             else:
                 status = 'new'
             request.request_status = status
+
+            # Send approval accepted/refused message
+            if status != old_status and status in ('approved', 'refused') and request.request_owner_id.partner_id:
+                if status == 'approved':
+                    body = _("The request created on %(create_date)s by %(request_owner)s has been approved.",
+                            create_date=request.create_date.date(),
+                            request_owner=request.request_owner_id.name)
+                    subject = _("The request %(request_name)s for %(request_owner)s has been approved",
+                                request_name=request.name,
+                                request_owner=request.request_owner_id.name)
+                else:
+                    body = _("The request created on %(create_date)s by %(request_owner)s has been refused.",
+                            create_date=request.create_date.date(),
+                            request_owner=request.request_owner_id.name)
+                    subject = _("The request %(request_name)s for %(request_owner)s has been refused",
+                                request_name=request.name,
+                                request_owner=request.request_owner_id.name)
+                request.message_notify(
+                    body=body,
+                    subject=subject,
+                    partner_ids=request.request_owner_id.partner_id.ids,
+                )
 
         self.filtered_domain([('request_status', 'in', ['approved', 'refused', 'cancel'])])._cancel_activities()
 

@@ -11,7 +11,15 @@ class ApprovalApprover(models.Model):
     _check_company_auto = True
 
     sequence = fields.Integer('Sequence', default=10)
-    user_id = fields.Many2one('res.users', string="User", required=True, check_company=True, domain="['|', ('id', 'not in', existing_request_user_ids), ('id', '=', user_id)]")
+    user_id = fields.Many2one('res.users', string="User", required=True, check_company=True,
+        domain="""
+            [
+                ('share', '=', False),
+                '|',
+                    ('id', 'not in', existing_request_user_ids),
+                    ('id', '=', user_id)
+            ]
+        """)
     existing_request_user_ids = fields.Many2many('res.users', compute='_compute_existing_request_user_ids')
     status = fields.Selection([
         ('new', 'New'),
