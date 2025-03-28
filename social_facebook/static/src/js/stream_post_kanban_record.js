@@ -3,6 +3,7 @@ import { _t } from "@web/core/l10n/translation";
 import { StreamPostKanbanRecord } from '@social/js/stream_post_kanban_record';
 import { StreamPostCommentsFacebook } from './stream_post_comments';
 
+import { debounce } from "@web/core/utils/timing";
 import { patch } from "@web/core/utils/patch";
 import { useEffect } from "@odoo/owl";
 
@@ -12,7 +13,7 @@ patch(StreamPostKanbanRecord.prototype, {
         super.setup(...arguments);
         useEffect((commentEl) => {
             if (commentEl) {
-                const onFacebookCommentsClick = this._onFacebookCommentsClick.bind(this);
+                const onFacebookCommentsClick = debounce(this._onFacebookCommentsClick.bind(this), 300, true);
                 commentEl.addEventListener('click', onFacebookCommentsClick);
                 return () => {
                     commentEl.removeEventListener('click', onFacebookCommentsClick);

@@ -3,6 +3,7 @@ import { StreamPostKanbanRecord } from '@social/js/stream_post_kanban_record';
 import { StreamPostCommentsTwitter } from './stream_post_comments';
 import { StreamPostTwitterQuote } from './stream_post_twitter_quote';
 
+import { debounce } from "@web/core/utils/timing";
 import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
 import { escape, sprintf } from "@web/core/utils/strings";
@@ -17,7 +18,7 @@ patch(StreamPostKanbanRecord.prototype, {
 
         useEffect((commentEl) => {
             if (commentEl) {
-                const onTwitterCommentsClick = this._onTwitterCommentsClick.bind(this);
+                const onTwitterCommentsClick = debounce(this._onTwitterCommentsClick.bind(this), 300, true);
                 commentEl.addEventListener('click', onTwitterCommentsClick);
                 return () => {
                     commentEl.removeEventListener('click', onTwitterCommentsClick);

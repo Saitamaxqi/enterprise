@@ -2,6 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { StreamPostKanbanRecord } from '@social/js/stream_post_kanban_record';
 import { StreamPostCommentsLinkedin } from './stream_post_comments';
 
+import { debounce } from "@web/core/utils/timing";
 import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
 import { useEffect } from "@odoo/owl";
@@ -12,7 +13,7 @@ patch(StreamPostKanbanRecord.prototype, {
         super.setup(...arguments);
         useEffect((commentEl) => {
             if (commentEl) {
-                const onLinkedInCommentsClick = this._onLinkedInCommentsClick.bind(this);
+                const onLinkedInCommentsClick = debounce(this._onLinkedInCommentsClick.bind(this), 300, true);
                 commentEl.addEventListener('click', onLinkedInCommentsClick);
                 return () => {
                     commentEl.removeEventListener('click', onLinkedInCommentsClick);
@@ -48,5 +49,4 @@ patch(StreamPostKanbanRecord.prototype, {
             });
         });
     },
-
 });
