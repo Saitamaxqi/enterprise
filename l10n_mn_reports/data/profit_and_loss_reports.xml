@@ -193,7 +193,7 @@
                         <field name="code">MNPL_OTHGAIN</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="account_codes_formula">-57 + -59</field>
+                        <field name="account_codes_formula">-57 - 59</field>
                     </record>
                     <record id="report_line_retained_earn" model="account.report.line">
                         <field name="name">Profit (loss) before tax</field>
