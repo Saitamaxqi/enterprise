@@ -55,8 +55,8 @@ class SaleCommissionAchievementReport(models.Model):
         return res
 
     @api.model
-    def _join_invoices(self):
-        res = super()._join_invoices()
+    def _join_invoices(self, join_type=None):
+        res = super()._join_invoices(join_type=join_type)
         res += """
           LEFT JOIN sale_order sub ON sub.id=aml.subscription_id
         """
@@ -105,9 +105,9 @@ subscription_rules AS (
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
-    JOIN currency_rate cr
-      ON cr.company_id=log.company_id
+    JOIN currency_rate cr ON cr.company_id=log.company_id
     WHERE rules.team_rule
+      {self._get_company_condition('log', alias=True)}
       AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.team_id = rules.team_id
@@ -131,9 +131,9 @@ subscription_rules AS (
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
-    JOIN currency_rate cr
-      ON cr.company_id=log.company_id
+    JOIN currency_rate cr ON cr.company_id=log.company_id
     WHERE NOT rules.team_rule
+      {self._get_company_condition('log', alias=True)}
       AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.user_id = rules.user_id

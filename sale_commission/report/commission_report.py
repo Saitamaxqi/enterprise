@@ -50,7 +50,10 @@ class SaleCommissionReport(models.Model):
                        ('date', '>=', self.target_id.date_from),
                        ('date', '<=', self.target_id.date_to),
                 ]
-        context = {'commission_user_ids': self.user_id.ids}
+        context = {'commission_user_ids': self.user_id.ids,
+                   'active_plan_id': self.plan_id.id,
+                   'active_target_id': self.target_id.id,
+        }
         return {
             "type": "ir.actions.act_window",
             "res_model": "sale.commission.achievement.report",
@@ -103,7 +106,7 @@ class SaleCommissionReport(models.Model):
 WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
 achievement AS (
     SELECT
-        ROW_NUMBER() OVER (ORDER BY MAX(era.date_to) DESC, u.user_id) AS id,
+        (era.plan_id * 10^13 + u.user_id + 10^5 * to_char(era.date_from, 'YYMMDD')::integer)::bigint AS id,
         era.id AS target_id,
         era.plan_id AS plan_id,
         u.user_id AS user_id,

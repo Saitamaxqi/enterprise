@@ -9,10 +9,10 @@ class SaleCommissionPlanTargetForecast(models.Model):
     _description = 'Commission Plan Target Forecast'
     _order = 'id'
 
-    plan_id = fields.Many2one('sale.commission.plan', ondelete='cascade')
+    plan_id = fields.Many2one('sale.commission.plan', ondelete='cascade', index=True)
     target_id = fields.Many2one('sale.commission.plan.target', string="Period", required=True, ondelete='cascade',
-                                domain="[('plan_id', '=', plan_id)]")
-    user_id = fields.Many2one('res.users', required=True, default=lambda self: self.env.user)
+                                domain="[('plan_id', '=', plan_id)]", index=True)
+    user_id = fields.Many2one('res.users', required=True, default=lambda self: self.env.user, index=True)
     team_id = fields.Many2one('crm.team', related='user_id.sale_team_id', depends=['user_id'], store=True)
     amount = fields.Monetary("Forecast", default=0, currency_field='currency_id')
     currency_id = fields.Many2one('res.currency', related='plan_id.currency_id')
