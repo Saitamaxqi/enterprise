@@ -60,7 +60,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         cadena_transformer = etree.parse(tools.file_open(path_xslt))
         cadena = str(etree.XSLT(cadena_transformer)(tree))
         tree.attrib['Sello'] = certificate_sudo._sign(cadena)
-        tree.attrib['noCertificado'] = certificate_sudo.serial_number
+        tree.attrib['noCertificado'] = ('%x' % int(certificate_sudo.serial_number))[1::2]
         tree.attrib['Certificado'] = certificate_sudo.pem_certificate
         return tree
 

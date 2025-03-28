@@ -386,6 +386,25 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             options,
         )
 
+    def test_coa_valid_no_certificado(self):
+        """
+        Test that the noCertificado section in the coa report contains 20 characters as specified by the format description:
+        http://www.sat.gob.mx/esquemas/ContabilidadE/1_1/BalanzaComprobacion/BalanzaComprobacion_1_1.xsd
+        """
+
+        options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
+
+        with freeze_time(self.frozen_today):
+            self.certificate.write({
+                'date_start': f'{self.frozen_today.year}-01-01',
+                'date_end': f'{self.frozen_today.year}-12-31',
+            })
+            self.company.l10n_mx_edi_certificate_ids = self.certificate
+            coa_report = self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)['file_content']
+
+        self.assertEqual(20, len(self.get_xml_tree_from_string(coa_report).attrib.get("noCertificado")))
+
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard', 'external')
 class TestL10nMXTrialBalanceReportXmlValidity(TestL10nMXTrialBalanceReportCommon):
