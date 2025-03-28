@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpWorkcenterDialog">
-        <Dialog size="'md'" title="props.title" modalRef="modalRef">
-                <div class="o_mrp_workcenter_dialog w-100">
-                    <div class="row">
+        <Dialog size="'lg'" title="props.title" modalRef="modalRef">
+                <div class="o_mrp_workcenter_dialog container px-0">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
                         <t t-foreach="workcenters" t-as="workcenter" t-key="workcenter.id">
-                            <div class="col-4 p-1">
-                                <label class="btn btn-outline-secondary w-100 text-start py-3 fw-normal" t-att-class="{'active' : active}" t-on-click="() => this.selectWorkcenter(workcenter)">
-                                    <t t-out="workcenter.display_name"/>
-                                </label>
+                            <div class="col">
+                                <div class="form-check btn btn-outline-secondary d-flex align-items-center py-3 w-100 h-100 text-start"
+                                     t-att-class="{'active' : active}"
+                                     t-on-click.prevent="() => this.selectWorkcenter(workcenter)">
+                                    <label class="form-check-label cursor-pointer"
+                                           t-out="workcenter.display_name"
+                                           t-att-for="'o_workcenter_checkbox_' + workcenter.id"/>
+                                    <input class="form-check-input ms-auto"
+                                           type="checkbox"
+                                           t-att-id="'o_workcenter_checkbox_' + workcenter.id"
+                                           t-att-checked="active"/>
+                                </div>
                             </div>
                         </t>
                     </div>

@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpRegisterProductionDialog">
-    <div class="o_tablet_popups">
-        <Dialog size="'fs'" title="props.title" modalRef="modalRef">
+    <div class="o_tablet_popups o_mrp_register_production_dialog">
+        <Dialog size="'md'" title="props.title" modalRef="modalRef">
             <t t-set-slot="header">
                 <div class="d-flex flex w-100">
                     <div class="h4 align-self-end" t-esc="props.title"/>
                     <div t-on-click="_cancel" type="button" class="btn-close" aria-label="Close"/>
                 </div>
             </t>
-            <div class="o_workorder_bar_content">
-                <div class="o_quantity row">
-                    <span class="col-3">Quantity Produced</span>
-                    <span name="qty_done" class="o_field_widget text-end col-2 pe-2">
+            <div class="o_workorder_bar_content d-grid gap-2">
+                <span>Quantity Produced</span>
+                <div>
+                    <span name="qty_done" class="o_field_widget text-end pe-2">
                         <FloatField t-props="qtyDoneInfo" readonly="props.record.data.product_tracking === 'serial'"/>
                     </span>
-                    <span class="col-4 ps-0">
+                    <span>
                         /<span name="product_qty" class="mx-2"
                             t-esc="formatFloat(quantityToProduce)"/>
                         <span t-esc="props.record.data.product_uom_id[1]"/>
                     </span>
                 </div>
-                <div t-if="props.record.data.product_tracking &amp;&amp; props.record.data.product_tracking !== 'none'" class="o_workorder_lot row">
-                    <span class="text-capitalize col-3" t-esc="props.record.data.product_tracking"/>
-                    <div name="lot_producing_id" class="o_field_widget col-4">
-                        <Many2OneField t-props="lotInfo"/>
+                <t t-if="props.record.data.product_tracking &amp;&amp; props.record.data.product_tracking !== 'none'" class="">
+                    <span class="text-capitalize" t-out="props.record.data.product_tracking"/>
+                    <div class="d-flex gap-2">
+                        <div name="lot_producing_id" class="o_field_widget">
+                            <Many2OneField t-props="lotInfo"/>
+                        </div>
+                        <button
+                            t-if="!props.record.data.lot_producing_id"
+                            t-att-disabled="state.disabled"
+                            class="btn btn-primary btn-sm"
+                            t-on-click="actionGenerateSerial">
+                            Create New
+                        </button>
                     </div>
-                    <button t-if="!props.record.data.lot_producing_id" t-att-disabled="state.disabled" class="btn btn-info fa fa-plus col-1" t-on-click="actionGenerateSerial"/>
-                </div>
+                </t>
             </div>
             <t t-set-slot="footer">
                 <button class="btn btn-primary me-2" t-on-click="validate" t-att-disabled="state.disabled">Validate</button>

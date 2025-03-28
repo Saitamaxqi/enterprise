@@ -435,7 +435,7 @@ export class MrpDisplay extends Component {
 
     toggleWorkcenterDialog(showWarning = true) {
         const params = {
-            title: _t("Configure your station"),
+            title: _t("Activate your Work Centers"),
             confirm: this.toggleWorkcenter.bind(this),
             disabled: [],
             active: this.state.workcenters.map((wc) => wc.id),
