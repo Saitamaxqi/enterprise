@@ -992,6 +992,51 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         self.assertEqual(len(resource_slots), 0, "Once a resource is booked on a slot, it should not be available anymore to other appointment types.")
 
     @users('apt_manager')
+    def test_appointment_resources_multi_edit_capacity(self):
+        """Check that the capacity reserved is correctly updated in multi-edit"""
+        resource_1, resource_2 = self.env['appointment.resource'].create([
+            {
+                'appointment_type_ids': self.apt_type_resource.ids,
+                'capacity': 4,
+                'name': 'Table of 4',
+            },
+            {
+                'appointment_type_ids': self.apt_type_resource.ids,
+                'capacity': 3,
+                'name': 'Table of 3',
+            }
+        ])
+        resource_1.linked_resource_ids = resource_2
+        start = datetime(2022, 2, 14, 15, 0, 0)
+        end = start + timedelta(hours=1)
+        apt_1, apt_2 = self.env['calendar.event'].with_context(self._test_context).create([{
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [
+                (0, 0, {'appointment_resource_id': resource_1.id, 'capacity_reserved': 4, 'capacity_used': 4}),
+                (0, 0, {'appointment_resource_id': resource_2.id, 'capacity_reserved': 1, 'capacity_used': 3}),
+            ],
+            'name': 'Booking 1',
+            'start': start,
+            'stop': end,
+        }, {
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [
+                (0, 0, {'appointment_resource_id': resource_1.id, 'capacity_reserved': 4, 'capacity_used': 2}),
+                (0, 0, {'appointment_resource_id': resource_2.id, 'capacity_reserved': 2, 'capacity_used': 3}),
+            ],
+            'name': 'Booking 1',
+            'start': start + timedelta(hours=2),
+            'stop': end + timedelta(hours=2),
+        }])
+        self.assertEqual(apt_1.resource_total_capacity_reserved, 5)
+        self.assertEqual(apt_2.resource_total_capacity_reserved, 6)
+
+        (apt_1 + apt_2).write({'resource_total_capacity_reserved': 7})
+        # Every appointment should be updated with the new value
+        self.assertEqual(apt_1.resource_total_capacity_reserved, 7)
+        self.assertEqual(apt_2.resource_total_capacity_reserved, 7)
+
+    @users('apt_manager')
     def test_appointment_resources_with_resource_calendar(self):
         """Check that the slots correctly take into account the default resource calendar"""
         self.env['appointment.resource'].create({
