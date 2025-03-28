@@ -81,7 +81,7 @@
                 t-att-class="{'py-0': !state.underValidation, 'opacity-0': disabled}">
                 <t t-if="props.record.resModel === 'mrp.production'" t-call="mrp_workorder.MrpDisplayProductionFooter"/>
                 <t t-if="props.record.resModel === 'mrp.workorder'" t-call="mrp_workorder.MrpDisplayWorkorderFooter"/>
-                <button t-if="!state.underValidation" class="btn btn-secondary py-2 px-3 ms-auto fa fa-ellipsis-v" t-on-click="onClickOpenMenu"/>
+                <button t-if="!state.underValidation" class="btn btn-secondary py-2 px-3 ms-auto fa fa-fw fa-ellipsis-v" t-on-click="onClickOpenMenu"/>
             </div>
         </div>
     </t>

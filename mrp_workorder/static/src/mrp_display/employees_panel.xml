@@ -30,9 +30,9 @@
                 </li>
             </ul>
             <div class="position-absolute bottom-0 p-3 w-100">
-                <button class="btn btn-secondary text-center w-100 py-2"
+                <button class="o_edit_operators btn btn-secondary text-center w-100 py-2"
                 t-on-click="props.popupAddEmployee">
-                <span>Edit Operators</span>
+                Edit Operators
             </button>
             </div>
         </div>
