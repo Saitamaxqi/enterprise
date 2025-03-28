@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 # Copyright (C) David Arnold (XOE Solutions).
@@ -27,8 +26,11 @@ Accounting reports for Colombia
         'data/profit_loss_pymes.xml',
         'data/balance_sheet_pymes.xml',
         'data/trial_balance_per_partner.xml',
+        'data/l10n_co_reports_libro_diario.xml',
+        'data/l10n_co_reports_libro_inv_blc.xml',
         'wizard/retention_report_views.xml',
         'report/certification_report_templates.xml',
+        'report/libro_diario_report_templates.xml',
     ],
     'auto_install': ['l10n_co', 'account_reports'],
     'installable': True,

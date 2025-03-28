@@ -92,6 +92,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_co_reports.l10n_co_bs_report_assets',
         'liability_line_ref': 'l10n_co_reports.l10n_co_bs_report_liabilities_equity',
     },
+    'l10n_co_reports.l10n_co_reports_libro_inv_blc': {
+        'asset_line_ref': 'l10n_co_reports.l10n_co_inv_blc_assets_expenses',
+        'liability_line_ref': 'l10n_co_reports.l10n_co_inv_blc_equity_liability',
+    },
     'l10n_cy_reports.l10n_cy_balance_sheet': {
         'asset_line_ref': 'l10n_cy_reports.account_financial_report_cy_active_line',
         'liability_line_ref': 'l10n_cy_reports.account_financial_report_cy_passive_line',
