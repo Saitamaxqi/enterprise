@@ -23,7 +23,7 @@ class HrEmployee(models.Model):
             if partner_ids:
                 sign_from_role = self.env['sign.request.item'].search([
                     ('partner_id', 'in', partner_ids.ids),
-                    ('role_id', '=', self.env.ref('sign.sign_item_role_employee').id)]).mapped('sign_request_id')
+                    ('role_id', '=', self.env.ref('hr_sign.sign_item_role_employee_signatory').id)]).mapped('sign_request_id')
             employee.sign_request_count = len(set(sign_from_contract + sign_from_role + employee.sign_request_ids))
 
     def open_employee_sign_requests(self):
@@ -35,7 +35,7 @@ class HrEmployee(models.Model):
         if partner_ids:
             sign_from_role = self.env['sign.request.item'].search([
                 ('partner_id', 'in', partner_ids.ids),
-                ('role_id', '=', self.env.ref('sign.sign_item_role_employee').id)]).mapped('sign_request_id')
+                ('role_id', '=', self.env.ref('hr_sign.sign_item_role_employee_signatory').id)]).mapped('sign_request_id')
         sign_request_ids = sign_from_contract + sign_from_role + self.sign_request_ids
         if len(sign_request_ids.ids) == 1:
             return sign_request_ids.go_to_document()

@@ -74,7 +74,7 @@
     <record model="sign.item" id="sign_item_6">
         <field name="document_id" ref="document_sign_termination"/>
         <field name="type_id" ref="sign.sign_item_type_signature"/>
-        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="responsible_id" ref="hr_sign.sign_item_role_employee_signatory"/>
         <field name="page" type="int">1</field>
         <field name="posX" type="float">0.695</field>
         <field name="posY" type="float">0.822</field>
@@ -85,7 +85,7 @@
     <record model="sign.item" id="sign_item_7">
         <field name="document_id" ref="document_sign_termination"/>
         <field name="type_id" ref="sign.sign_item_type_date"/>
-        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="responsible_id" ref="hr_sign.sign_item_role_employee_signatory"/>
         <field name="page" type="int">1</field>
         <field name="posX" type="float">0.740</field>
         <field name="posY" type="float">0.782</field>
@@ -97,7 +97,7 @@
         <field name="summary">Termination Request</field>
         <field name="activity_type_id" ref="sign.mail_activity_data_signature_request"/>
         <field name="sign_template_id" ref="template_sign_termination"/>
-        <field name="employee_role_id" ref="sign.sign_item_role_employee"/>
+        <field name="employee_role_id" ref="hr_sign.sign_item_role_employee_signatory"/>
         <field name="plan_id" ref="hr.offboarding_plan"/>
         <field name="responsible_type">other</field>
         <field name="responsible_id" ref="base.user_demo"/>

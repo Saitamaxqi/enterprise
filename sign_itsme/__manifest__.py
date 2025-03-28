@@ -9,7 +9,6 @@
     'depends': ['sign', 'iap'],
     'data': [
         'data/iap_service_data.xml',
-        'data/sign_itsme_data.xml',
         'report/sign_itsme_log_reports.xml',
         'views/sign_request_templates.xml'
     ],

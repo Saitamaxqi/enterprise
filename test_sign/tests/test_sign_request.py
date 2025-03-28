@@ -130,7 +130,7 @@ class TestSignRequest(SignRequestCommon):
         self.env['sign.item'].create([{
             'type_id': type_id.id,
             'required': True,
-            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'responsible_id': self.env.ref('sign.sign_item_role_default').id,
             'page': 1,
             'posX': 0.273,
             'posY': 0.158,
@@ -145,7 +145,7 @@ class TestSignRequest(SignRequestCommon):
             'reference_doc': f"sale.order,{sale_order.id}",
             'request_item_ids': [Command.create({
                 'partner_id': self.partner_1.id,
-                'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                'role_id': self.env.ref('sign.sign_item_role_default').id,
             })],
         })
         item_value = self.env['sign.request.item.value'].search([('sign_request_id', '=', sign_request.id)])

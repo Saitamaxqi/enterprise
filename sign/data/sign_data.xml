@@ -159,20 +159,6 @@
         <field name="icon">fa-pencil-square-o</field>
     </record>
 
-    <!-- Item responsibles -->
-    <record model="sign.item.role" id="sign_item_role_customer">
-        <field name="name">Customer</field>
-    </record>
-
-    <record model="sign.item.role" id="sign_item_role_user">
-        <field name="name">User</field>
-        <field name="change_authorized" eval="True"/>
-    </record>
-
-    <record model="sign.item.role" id="sign_item_role_employee">
-        <field name="name">Employee</field>
-    </record>
-
     <record model="sign.item.role" id="sign_item_role_default">
         <field name="name">Standard</field>
         <field name="default" eval="True"/>

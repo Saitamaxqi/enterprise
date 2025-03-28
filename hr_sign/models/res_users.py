@@ -26,7 +26,7 @@ class ResUsers(models.Model):
 
             sign_from_role = self.env['sign.request.item'].search([
                 ('partner_id', '=', user.partner_id.id),
-                ('role_id', '=', self.env.ref('sign.sign_item_role_employee').id)]).mapped('sign_request_id')
+                ('role_id', '=', self.env.ref('hr_sign.sign_item_role_employee_signatory').id)]).mapped('sign_request_id')
 
             user.sign_request_count = len(set(sign_from_contract + sign_from_role))
 
@@ -36,7 +36,7 @@ class ResUsers(models.Model):
         sign_from_contract = contracts.mapped('sign_request_ids')
         sign_from_role = self.env['sign.request.item'].sudo().search([
             ('partner_id', '=', self.partner_id.id),
-            ('role_id', '=', self.env.ref('sign.sign_item_role_employee').id)]).mapped('sign_request_id')
+            ('role_id', '=', self.env.ref('hr_sign.sign_item_role_employee_signatory').id)]).mapped('sign_request_id')
         sign_request_ids = sign_from_contract + sign_from_role
         if len(sign_request_ids.ids) == 1:
             return sign_request_ids.go_to_document()

@@ -42,7 +42,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             'lang_ids': [(6, 0, [fr_lang.id])]
         }).lang_install()
         self.partner_1.lang = 'fr_FR'
-        sign_request = self.create_sign_request_1_role(customer=self.partner_1, cc_partners=self.env['res.partner'])
+        sign_request = self.create_sign_request_1_role(signer=self.partner_1, cc_partners=self.env['res.partner'])
         url = f"/sign/document/{sign_request.id}/{sign_request.request_item_ids.access_token}"
         self.start_tour(url, 'translate_sign_instructions', login=None)
 
@@ -50,7 +50,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
         self.env['sign.item'].create([{
             'type_id': self.env.ref('sign.sign_item_type_signature').id,
             'required': True,
-            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'responsible_id': self.role_signer_1.id,
             'page': 1,
             'posX': 0.144,
             'posY': 0.716,
@@ -68,7 +68,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             'type_id': type_id.id,
             'required': False,
             'constant': True,
-            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'responsible_id': self.role_signer_1.id,
             'page': 1,
             'posX': 0.144,
             'posY': 0.716,

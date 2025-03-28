@@ -54,10 +54,9 @@ class SignItsmeCommon(TestSignControllerCommon):
             })],
         })
 
-    def create_sign_request_1_role_itsme_auth(self, customer, cc_partners):
-        role = self.env.ref('sign.sign_item_role_customer')
-        role.auth_method = 'itsme'
-        return self.create_sign_request_1_role(customer, cc_partners)
+    def create_sign_request_1_role_itsme_auth(self, signer, cc_partners):
+        self.role_signer_1.auth_method = 'itsme'
+        return self.create_sign_request_1_role(signer, cc_partners)
 
     def test_sign_itsme_with_token_is_successful(self):
         sign_request_item = self.sign_request_itsme.request_item_ids[0]

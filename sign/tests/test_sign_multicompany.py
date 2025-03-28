@@ -24,7 +24,7 @@ class TestSignMulticompany(SignRequestCommon, MockEmail):
                 'reference': self.template_1_role.display_name,
                 'request_item_ids': [Command.create({
                     'partner_id': self.partner_1.id,
-                    'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                    'role_id': self.role_signer_1.id,
                 })],
             })
             # Original mail should contain reference to company_2
@@ -41,12 +41,12 @@ class TestSignMulticompany(SignRequestCommon, MockEmail):
                 'reference': self.template_1_role.display_name,
                 'request_item_ids': [Command.create({
                     'partner_id': self.partner_1.id,
-                    'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                    'role_id': self.role_signer_1.id,
                 })],
             })
             # Original mail should contain reference to company_2
             self.assertSentEmail('"OdooBot" <odoobot@example.com>', self.partner_1, body_content='Company2')
 
             # Followup mail should contain reference to company_2
-            sign_request.request_item_ids.with_company(self.company_3).sign(self.single_role_customer_sign_values)
+            sign_request.request_item_ids.with_company(self.company_3).sign(self.single_signer_sign_values)
             self.assertSentEmail('"OdooBot" <odoobot@example.com>', self.partner_1, body_content='Company2')

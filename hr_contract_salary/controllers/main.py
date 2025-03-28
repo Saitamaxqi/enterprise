@@ -130,8 +130,8 @@ class SignContract(Sign):
                 request_items = []
                 template_roles = sign_template.sign_item_ids.responsible_id
 
-                if request.env.ref('sign.sign_item_role_employee') in template_roles:
-                    request_items.append(Command.create({'role_id': request.env.ref('sign.sign_item_role_employee').id,
+                if request.env.ref('hr_sign.sign_item_role_employee_signatory') in template_roles:
+                    request_items.append(Command.create({'role_id': request.env.ref('hr_sign.sign_item_role_employee_signatory').id,
                                         'partner_id': version.employee_id.work_contact_id.id}))
 
                 if request.env.ref('hr_sign.sign_item_role_job_responsible') in template_roles:
@@ -1041,7 +1041,7 @@ class HrContractSalary(http.Controller):
 
         access_token = request.env['sign.request.item'].sudo().search([
             ('sign_request_id', '=', sign_request_sudo.id),
-            ('role_id', '=', request.env.ref('sign.sign_item_role_employee').id)
+            ('role_id', '=', request.env.ref('hr_sign.sign_item_role_employee_signatory').id)
         ]).access_token
 
         if not access_token:

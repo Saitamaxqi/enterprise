@@ -33,7 +33,7 @@ class TestHrRecruitmentSign(HttpCase):
             {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
                 'required': True,
-                'responsible_id': cls.env.ref('sign.sign_item_role_customer').id,
+                'responsible_id': cls.env.ref('hr_sign.sign_item_role_default').id,
                 'page': 1,
                 'posX': 0.273,
                 'posY': 0.158,
@@ -56,7 +56,7 @@ class TestHrRecruitmentSign(HttpCase):
         wizard = self.env['hr.recruitment.sign.document.wizard'].create({
             'applicant_ids': self.applicant.ids,
             'sign_template_ids': self.template,
-            'applicant_role_id': self.env.ref('sign.sign_item_role_customer').id,
+            'applicant_role_id': self.env.ref('hr_sign.sign_item_role_default').id,
             'subject': 'Signature Request Test',
             'message': 'test',
         })

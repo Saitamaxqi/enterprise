@@ -160,9 +160,9 @@ class TestSignController(TestSignControllerCommon):
             self.assertTrue('/sign/document/%s/%s' % (sign_request.id, sign_request_item_id.access_token) in response.url)
 
             sign_request_item = {sign_request_item.role_id: sign_request_item for sign_request_item in sign_request.request_item_ids}
-            sign_request_item_customer = sign_request_item[self.role_customer]
+            sign_request_item_signer_1 = sign_request_item[self.role_signer_1]
 
-            sign_request_item_customer.sudo().sign(self.single_role_customer_sign_values)
+            sign_request_item_signer_1.sudo().sign(self.single_signer_sign_values)
             mail = self.env['mail.mail'].search([('email_to', '=', formataddr((self.partner_1.name, self.partner_1.email)))])
             self.assertEqual(len(mail.ids), 2)
 

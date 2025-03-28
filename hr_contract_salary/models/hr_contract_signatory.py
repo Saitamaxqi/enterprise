@@ -21,7 +21,7 @@ class HrContractSignatory(models.Model):
         roles = set(sign_template.sign_item_ids.responsible_id.ids)
 
         role_dict = {
-            self.env.ref('sign.sign_item_role_employee').id: 'employee',
+            self.env.ref('hr_sign.sign_item_role_employee_signatory').id: 'employee',
             self.env.ref('hr_sign.sign_item_role_job_responsible').id: 'hr',
         }
 

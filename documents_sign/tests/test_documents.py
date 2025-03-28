@@ -63,7 +63,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         self.env['sign.item'].create({
             'type_id': self.env.ref('sign.sign_item_type_text').id,
             'required': True,
-            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'responsible_id': self.env.ref('sign.sign_item_role_default').id,
             'page': 1,
             'posX': 0.273,
             'posY': 0.158,
@@ -77,11 +77,11 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
             'reference': template.display_name,
             'request_item_ids': [Command.create({
                 'partner_id': self.partner_1.id,
-                'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                'role_id': self.env.ref('sign.sign_item_role_default').id,
             })],
         })
         sign_request_item = sign_request.request_item_ids[0]
-        sign_values = self.create_sign_values(template.sign_item_ids, self.role_customer.id)
+        sign_values = self.create_sign_values(template.sign_item_ids, self.env.ref('sign.sign_item_role_default').id)
 
         sign_request_item.sign(sign_values)
         self.assertEqual(sign_request_item.state, 'completed', 'The sign.request.item should be completed')

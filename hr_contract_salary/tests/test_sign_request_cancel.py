@@ -38,7 +38,7 @@ class TestSignRequestCancel(TransactionCase):
         cls.sign_item = cls.env['sign.item'].create([{
             'type_id': cls.env.ref('sign.sign_item_type_text').id,
             'required': True,
-            'responsible_id': cls.env.ref('sign.sign_item_role_customer').id,
+            'responsible_id': cls.env.ref('hr_sign.sign_item_role_default').id,
             'page': 1,
             'posX': 0.273,
             'posY': 0.158,
@@ -70,7 +70,7 @@ class TestSignRequestCancel(TransactionCase):
                 'reference': 'Test Offer',
                 'request_item_ids': [Command.create({
                     'partner_id': self.partner.id,
-                    'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                    'role_id': self.env.ref('hr_sign.sign_item_role_default').id,
                 })],
             })
         self.salary_offer.sign_request_ids = sign_request
