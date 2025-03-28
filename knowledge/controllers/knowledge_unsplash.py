@@ -4,7 +4,6 @@ import werkzeug
 from odoo.addons.web_unsplash.controllers import main
 from odoo import http
 from odoo.http import request
-from werkzeug.urls import url_encode
 
 # ID of the unsplash collection, used as a fallback for knowledge covers when we can't find a suitable image
 UNSPLASH_COLLECTION_ID = 317099
@@ -29,22 +28,21 @@ class KnowledgeUnsplash(main.Web_Unsplash):
             return {'error': 'key_not_found'}
         kwargs['client_id'] = access_key
 
-        has_query = kwargs.get('query', False)
-        if has_query:
+        q = kwargs.pop('query', None)
+        params_seq = filter(None, [
+            {**kwargs, 'query': q} if q else {},
+            {**kwargs, 'collections': UNSPLASH_COLLECTION_ID},
+        ])
+        fetch_random_image_request = None
+        for params in params_seq:
             try:
-                fetch_random_image_request = requests.get('https://api.unsplash.com/photos/random', params=url_encode(kwargs), timeout=5)
+                fetch_random_image_request = requests.get('https://api.unsplash.com/photos/random', params=params, timeout=5)
             except requests.exceptions.RequestException:
                 return {'error': 'request_failed'}
-        # If no image matched the query term, do a generic search
-        if not has_query or not fetch_random_image_request.ok: #pylint: disable=E0601
-            kwargs.pop('query', None)
-            kwargs['collections'] = UNSPLASH_COLLECTION_ID
-            try:
-                fetch_random_image_request = requests.get('https://api.unsplash.com/photos/random', params=url_encode(kwargs), timeout=5)
-            except requests.exceptions.RequestException:
-                return {'error': 'request_failed'}
-            if not fetch_random_image_request.ok:
-                return {'error': fetch_random_image_request.status_code}
+            if fetch_random_image_request.ok:
+                break
+        else:
+            return {'error': fetch_random_image_request.status_code}
 
         image_info = fetch_random_image_request.json()
 
