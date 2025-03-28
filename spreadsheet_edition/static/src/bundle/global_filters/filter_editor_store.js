@@ -309,7 +309,7 @@ export class FilterEditorStore extends SpreadsheetStore {
             ...this._getFieldsMatchingPayload(),
         });
         if (result.isCancelledBecause(CommandResult.DuplicatedFilterLabel)) {
-            this.notificationStore.raiseError("Duplicated filter label");
+            this.notificationStore.raiseError(_t("Duplicated filter label"));
         } else {
             this.draft = undefined;
             this.sidePanelStore.open("GLOBAL_FILTERS_SIDE_PANEL");
