@@ -72,7 +72,7 @@ class TestSmartSchedule(TestSmartScheduleCommon):
         # user_projectmanager is off till 10
         # the first possible time for both of them is starting from 11
         self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.planned_date_begin, datetime(2023, 1, 11, 7))
-        self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.date_deadline, datetime(2023, 1, 12, 9))
+        self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.date_deadline, datetime(2023, 1, 12, 9 if self.is_module_timesheet_grid_installed else 11))
 
         # even that task_project_pigs_with_allocated_hours_manager was planned first as it has a deadline
         # smart scheduling is optimizing resources so
@@ -82,5 +82,5 @@ class TestSmartSchedule(TestSmartScheduleCommon):
 
         # should not be planned after the old deadline of its parent, as its parent will be planned again
         # if the new deadline is before the old one, no need to block the task and plan it ASAP
-        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.planned_date_begin, datetime(2023, 1, 12, 9))
-        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.date_deadline, datetime(2023, 1, 13, 14))
+        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.planned_date_begin, datetime(2023, 1, 12, 9 if self.is_module_timesheet_grid_installed else 12))
+        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.date_deadline, datetime(2023, 1, 13, 14 if self.is_module_timesheet_grid_installed else 16))
