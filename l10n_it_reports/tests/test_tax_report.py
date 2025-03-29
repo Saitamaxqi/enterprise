@@ -179,7 +179,8 @@ class TestItalianTaxReport(TestAccountReportsCommon):
 
         with patch.object(type(self.env['account.move']), '_get_vat_report_attachments', autospec=True, side_effect=_get_attachment):
             vat_closing_move = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.report, first_month_options)
-            vat_closing_move.action_post()
+            # with_context() is needed to avoid opening the tax report export wizard like it should when posting a closing entry.
+            vat_closing_move.with_context({"l10n_it_xml_export_monthly_tax_report_options": True}).action_post()
 
             # Get to the next month
             report_lines = self.report._get_lines(second_month_options)
