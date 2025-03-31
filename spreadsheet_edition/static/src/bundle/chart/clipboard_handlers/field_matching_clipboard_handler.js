@@ -1,6 +1,5 @@
-import { globalFiltersFieldMatchers } from "@spreadsheet/global_filters/plugins/global_filters_core_plugin";
-
 import { AbstractFigureClipboardHandler, registries } from "@odoo/o-spreadsheet";
+import { globalFieldMatchingRegistry } from "@spreadsheet/global_filters/helpers";
 
 const { clipboardHandlersRegistries } = registries;
 
@@ -21,7 +20,7 @@ class OdooChartFieldMatchingClipboardHandler extends AbstractFigureClipboardHand
             return;
         }
 
-        const odooChartIds = globalFiltersFieldMatchers["chart"].getIds();
+        const odooChartIds = globalFieldMatchingRegistry.get("chart").getIds(this.getters);
         for (const filterId in clippedMatchings) {
             const copiedFieldMatching = clippedMatchings[filterId];
             const filter = this.getters.getGlobalFilter(filterId);

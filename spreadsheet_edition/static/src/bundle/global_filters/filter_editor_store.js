@@ -1,11 +1,11 @@
 import { stores, helpers } from "@odoo/o-spreadsheet";
 import { ModelNotFoundError } from "@spreadsheet/data_sources/data_source";
-import { globalFiltersFieldMatchers } from "@spreadsheet/global_filters/plugins/global_filters_core_plugin";
 import { Domain } from "@web/core/domain";
 import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
 import { CommandResult } from "@spreadsheet/o_spreadsheet/cancelled_reason";
+import { globalFieldMatchingRegistry } from "@spreadsheet/global_filters/helpers";
 
 const { UuidGenerator } = helpers;
 
@@ -323,8 +323,9 @@ export class FilterEditorStore extends SpreadsheetStore {
 
     async _waitForDataSourcesBeReady() {
         try {
-            const promises = Object.values(globalFiltersFieldMatchers)
-                .map((el) => el.waitForReady())
+            const promises = globalFieldMatchingRegistry
+                .getAll()
+                .map((el) => el.waitForReady(this.model.getters))
                 .flat();
             await Promise.all(promises);
         } catch (e) {
@@ -340,16 +341,18 @@ export class FilterEditorStore extends SpreadsheetStore {
 
     async _loadFilterMatchings() {
         let id = 0;
-        for (const [type, el] of Object.entries(globalFiltersFieldMatchers)) {
-            for (const objectId of el.getIds()) {
-                const tag = await el.getTag(objectId);
+        for (const type of globalFieldMatchingRegistry.getKeys()) {
+            const el = globalFieldMatchingRegistry.get(type);
+            for (const objectId of el.getIds(this.model.getters)) {
+                const tag = await el.getTag(this.model.getters, objectId);
                 this._fieldsMatching.push({
                     id,
-                    name: el.getDisplayName(objectId),
+                    name: el.getDisplayName(this.model.getters, objectId),
                     tag,
-                    fieldMatch: el.getFieldMatching(objectId, this.filterId) || {},
-                    fields: () => el.getFields(objectId),
-                    model: () => el.getModel(objectId),
+                    fieldMatch:
+                        el.getFieldMatching(this.model.getters, objectId, this.filterId) || {},
+                    fields: () => el.getFields(this.model.getters, objectId),
+                    model: () => el.getModel(this.model.getters, objectId),
                     payload: () => ({ id: objectId, type }),
                     isValid: true,
                 });
