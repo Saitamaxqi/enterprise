@@ -240,8 +240,8 @@
                 <field name="partner_id" optional="show"/>
                 <field name="tag_ids" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
                 <field name="url" optional="hide"/>
-                <field name="lock_uid" optional="hide"/>
-                <field name="company_id" optional="hide"/>
+                <field name="lock_uid" groups="base.group_user" optional="hide"/>
+                <field name="company_id" groups="base.group_user" optional="hide"/>
                 <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="create_date" optional="hide"/>
                 <field name="write_date" optional="show"/>
@@ -259,13 +259,12 @@
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
                 <field name="access_url" column_invisible="1"/>
-                <field name="alias_email" optional="hide" widget="email"/>
-                <field name="alias_name" optional="hide"/>
-                <field name="alias_domain_id" optional="hide"/>
-                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/> <!-- fetch `color` too -->
-                <field name="create_activity_type_id" optional="hide"/>
-                <field name="create_activity_user_id" optional="hide"/>
-                <field name="mail_alias_domain_count" optional="hide"/>
+                <field name="alias_email" groups="base.group_user" optional="hide" widget="email"/>
+                <field name="alias_name" column_invisible="1"/>
+                <field name="alias_domain_id" column_invisible="1"/>
+                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
+                <field name="create_activity_type_id" column_invisible="1"/>
+                <field name="create_activity_user_id" column_invisible="1"/>
             </list>
         </field>
     </record>
