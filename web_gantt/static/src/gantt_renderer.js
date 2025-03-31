@@ -1026,11 +1026,13 @@ export class GanttRenderer extends Component {
             return;
         }
         const visibleCellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
-        const foldedColumnsCount =
+        const hiddenColumnsCount =
             this.offHoursState.foldedColumns?.reduce(
                 (sum, folded) => (folded ? sum + 1 : sum),
                 0
             ) || 0;
+        const foldedColumnsCount =
+            this.foldedGridColumnCount + hiddenColumnsCount - this.columnCount;
         const columnWidth = Math.floor(
             (visibleCellContainerWidth - 36 * foldedColumnsCount) /
                 (this.foldedGridColumnCount - foldedColumnsCount)
