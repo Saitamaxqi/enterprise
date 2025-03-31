@@ -542,7 +542,7 @@ test("Can clear a relation filter values", async function () {
 
 test("Can clear automatic default user with the global clear button", async function () {
     const uid = user.userId;
-    const tagSelector = ".o_multi_record_selector .badge";
+    const tagSelector = ".o_multi_record_selector .o_tag";
     const serverData = getBasicServerData();
     serverData.models["res.users"].records = [
         { id: uid, active: true, partner_id: serverState.partnerId },
@@ -591,8 +591,7 @@ test("Can clear automatic default user from the record selector tag", async func
     await openSidePanel(model, env);
     expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([["user_ids", "in", [uid]]]);
     // clear filter
-    const tagClearButton = target.querySelector(".o_multi_record_selector .o_delete");
-    await contains(tagClearButton).click();
+    await contains(".o_multi_record_selector .o_delete", { visible: false }).click();
     expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([]);
 });
 
