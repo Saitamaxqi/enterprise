@@ -30,7 +30,10 @@
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
         </div>
         <div name="product_price" position="after">
-            <div t-if="combination_info.get('is_rental')" class="d-inline-block mt-2 mb-3">
+            <div
+                t-if="combination_info.get('is_rental') and not combination_info['prevent_zero_price_sale']"
+                class="d-inline-block mt-2 mb-3"
+            >
                 <div class="h3">
                     <span
                         class="oe_price o_renting_total_price text-nowrap"
