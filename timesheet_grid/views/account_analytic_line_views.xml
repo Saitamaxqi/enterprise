@@ -13,7 +13,6 @@
                     <attribute name="js_class">timesheet_timer_list</attribute>
                 </xpath>
                 <xpath expr="/list" position="inside">
-                    <field name="readonly_timesheet" column_invisible="True"/>
                     <field name="is_timer_running" column_invisible="True"/>
                     <field name="timer_start" column_invisible="True"/>
                     <field name="display_timer" column_invisible="True"/>
