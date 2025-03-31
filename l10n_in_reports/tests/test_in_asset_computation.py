@@ -1,3 +1,5 @@
+from freezegun import freeze_time
+
 from odoo import fields
 
 from odoo.tests.common import tagged
@@ -12,6 +14,7 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+    @freeze_time("2024-12-01")
     def test_degressive_3_years_no_depreciated_amount(self):
         in_asset = self.create_asset(value=100000, periodicity="yearly", periods=3, method='degressive', acquisition_date="2023-04-01", salvage_value=5000, method_progress_factor=0.6316)
         in_asset.validate()
@@ -24,6 +27,7 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
             self._get_depreciation_move_values(date='2026-03-31', depreciation_value=8571.86, remaining_value=5000, depreciated_value=95000, state='draft'),
         ])
 
+    @freeze_time("2024-12-01")
     def test_degressive_3_years(self):
         in_asset = self.create_asset(value=100000, periodicity="yearly", periods=3, method='degressive', acquisition_date="2023-04-01", salvage_value=5000, method_progress_factor=0.6316, already_depreciated_amount_import=30000)
         in_asset.validate()
@@ -36,6 +40,7 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
             self._get_depreciation_move_values(date='2026-03-31', depreciation_value=8571.86, remaining_value=5000, depreciated_value=65000, state='draft'),
         ])
 
+    @freeze_time("2024-12-01")
     def test_degressive_negative_3_years(self):
         in_asset = self.create_asset(value=-100000, periodicity="yearly", periods=3, method='degressive', acquisition_date="2023-04-01", salvage_value=-5000, method_progress_factor=0.6316, already_depreciated_amount_import=-30000)
         in_asset.validate()
@@ -48,6 +53,7 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
             self._get_depreciation_move_values(date='2026-03-31', depreciation_value=-8571.86, remaining_value=-5000, depreciated_value=-65000, state='draft'),
         ])
 
+    @freeze_time("2024-12-01")
     def test_degressive_5_years_then_increase(self):
         in_asset = self.create_asset(value=100000, periodicity="yearly", periods=5, method='degressive', acquisition_date="2023-04-01", salvage_value=5000, method_progress_factor=0.4507, already_depreciated_amount_import=45070)
         in_asset.validate()
@@ -76,6 +82,7 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
             self._get_depreciation_move_values(date='2028-03-31', depreciation_value=4104.13, depreciated_value=49930.00, remaining_value=5000.00, state='draft'),
         ])
 
+    @freeze_time("2024-12-01")
     def test_degressive_5_years_then_decrease(self):
         in_asset = self.create_asset(value=100000, periodicity="yearly", periods=5, method='degressive', acquisition_date="2023-04-01", salvage_value=5000, method_progress_factor=0.4507, already_depreciated_amount_import=45070)
         in_asset.validate()
