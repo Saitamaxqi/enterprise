@@ -622,7 +622,7 @@ class PlanningSlot(models.Model):
 
             h = int(template_id.end_time)
             m = round(modf(template_id.end_time)[0] * 60.0)
-            end = (start + relativedelta(days=(template_id.duration_days - 1), hour=0, minute=0, second=0)).astimezone(pytz.timezone(resource.tz) if resource else user_tz)
+            end = (start + relativedelta(days=(template_id.duration_days - 1), hour=0, minute=0, second=0))
             if template_id.duration_days > 1 and resource_id.calendar_id:
                 end = resource.calendar_id.plan_days(template_id.duration_days, start, compute_leaves=True)
             end = end.replace(hour=int(h), minute=int(m))

@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 import pytz
 
 from odoo.tests import Form, new_test_user
@@ -125,3 +126,28 @@ class TestPlanningForm(TestCommonPlanning):
         self.assertEqual(material_resource.resource_type, 'material', "The resource type should be 'material'.")
         self.assertEqual(material_resource.role_ids, toolkit_role, "The assigned planning role should match the expected role.")
         self.assertEqual(material_resource.default_role_id, toolkit_role, "The default role should match the assigned planning role.")
+
+    @freeze_time("2025-03-30 01:00:00")
+    def test_plan_shift_to_flexible_employee_and_save_template(self):
+        developer_role = self.env['planning.role'].create({
+            'name': 'Developer',
+            'color': 2,
+        })
+        self.employee_joseph.write({
+            'resource_calendar_id': False,
+            'default_planning_role_id': developer_role.id,
+            'tz': 'Europe/Brussels',
+        })
+        self.resource_joseph.calendar_id = False
+        expected_start_datetime = datetime.now() + relativedelta(hour=8, minute=0, second=0)
+        expected_end_datetime = datetime.now() + relativedelta(hour=12, minute=0, second=0)
+        slot_form = Form(self.env['planning.slot'], view="planning.planning_view_form_in_gantt")
+        slot_form.resource_id = self.resource_joseph
+        self.assertEqual(slot_form.role_id, developer_role)
+        slot_form.start_datetime = expected_start_datetime
+        slot_form.end_datetime = expected_end_datetime
+        slot = slot_form.save()
+        slot.action_save_template()
+        self.assertTrue(slot.allocated_hours > 0)
+        self.assertEqual(slot.start_datetime, expected_start_datetime)
+        self.assertEqual(slot.end_datetime, expected_end_datetime)
