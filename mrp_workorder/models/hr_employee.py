@@ -162,8 +162,8 @@ class HrEmployee(models.Model):
         if login:
             self.login_user_employee()
 
-        companies_ids = self.env.companies.ids
-        all_employees = self.search_read(['|', ('company_id', '=', False), ('company_id', 'in', companies_ids)], fields=['id', 'name'])
+        domain = ['|', ('company_id', '=', False), ('company_id', 'in', self.env.companies.ids)]
+        all_employees = self.search_read(domain, fields=['id', 'name', 'barcode'])
 
         all_employees_ids = {employee['id'] for employee in all_employees}
         employees_connected = list(filter(

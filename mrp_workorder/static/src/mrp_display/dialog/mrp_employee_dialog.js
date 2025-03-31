@@ -1,5 +1,6 @@
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { browser } from "@web/core/browser/browser";
+import { useService, useBus } from "@web/core/utils/hooks";
 import { useState } from "@odoo/owl";
 
 export class MrpEmployeeDialog extends ConfirmationDialog {
@@ -14,6 +15,11 @@ export class MrpEmployeeDialog extends ConfirmationDialog {
         super.setup();
         this.imageBaseURL = `${browser.location.origin}/web/image?model=hr.employee&field=avatar_128&id=`;
         this.selected = useState({ ids: this.props.employees.connected.map((item) => item.id) });
+
+        this.barcode = useService("barcode");
+        useBus(this.barcode.bus, "barcode_scanned", (event) =>
+            this._onBarcodeScanned(event.detail.barcode)
+        );
     }
 
     toggleEmployee(id) {
@@ -27,5 +33,12 @@ export class MrpEmployeeDialog extends ConfirmationDialog {
     async confirm() {
         await this.props.setConnectedEmployees(this.selected.ids);
         return this.props.close();
+    }
+
+    _onBarcodeScanned(barcode) {
+        const employee = this.props.employees.all.find((employee) => employee.barcode == barcode);
+        if (employee) {
+            this.toggleEmployee(employee.id);
+        }
     }
 }
