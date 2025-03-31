@@ -1869,7 +1869,9 @@ msgid ""
 "- 05: Traslados de mercancias facturados previamente\n"
 "- 06: Factura generada por los traslados previos\n"
 "- 07: CFDI por aplicación de anticipo\n"
-"For example: 01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE"
+"For example: 01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE\n"
+"If there are more than one relation type, it needs to be separated by semicolon\n"
+"For example: 01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,03|89966ACC-0F5C-447D-AEF3-3EED22E711EE,6fad57a1-bf5b-4e27-a5d3-d84b2f36674c"
 msgstr ""
 
 #. module: l10n_mx_edi

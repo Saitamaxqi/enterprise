@@ -554,7 +554,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                 'customer': self.partner_mx,
                 'is_invoiced': True,
             })
-            order.account_move.l10n_mx_edi_cfdi_uuid = '424242'
+            order.account_move.l10n_mx_edi_cfdi_uuid = 'FBF147BD-D5E6-4C8F-B200-6095F37429F3'
 
         with self.with_pos_session():
             # Invoice the refund order.
@@ -568,7 +568,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                 'customer': self.partner_mx,
                 'is_invoiced': True,
             })[1]
-        self.assertEqual(refund.account_move.l10n_mx_edi_cfdi_origin, '03|424242')
+        self.assertEqual(refund.account_move.l10n_mx_edi_cfdi_origin, '03|FBF147BD-D5E6-4C8F-B200-6095F37429F3')
 
     def test_refund_order_mx(self):
         """ Test a pos order completely refunded by the negative lines. """

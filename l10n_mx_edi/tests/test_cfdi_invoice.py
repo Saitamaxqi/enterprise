@@ -1766,7 +1766,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
             self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_18_inv')
-    
+
     def test_cfdi_rounding_19(self):
         with self.mx_external_setup(self.frozen_today):
             self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
@@ -2346,3 +2346,24 @@ class TestCFDIInvoice(TestMxEdiCommon):
             'l10n_mx_edi_cfdi_sat_state': 'cancelled',
             'l10n_mx_edi_cfdi_state': 'cancel',
         }])
+
+    def test_cfdi_multi_relation_origin(self):
+        "Ensure that a CfdiRelacionados Node should be created for each relation"
+        cfdi_origin = "01|6c76a910-2115-4a2c-bf15-e67c1505dd21,02|6c76a910-2115-4a2c-bf15-e67c1505bb22"
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                l10n_mx_edi_cfdi_origin=cfdi_origin
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+                self._assert_invoice_cfdi(invoice, 'test_cfdi_multi_relation_inv')
+
+        # Testing with a relation with multiple uuids
+        cfdi_origin += ",7a86a910-3145-4a2c-bf15-e67c1505de30"
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                l10n_mx_edi_cfdi_origin=cfdi_origin
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+                self._assert_invoice_cfdi(invoice, 'test_cfdi_multi_uuid_inv')

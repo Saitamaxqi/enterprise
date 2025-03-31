@@ -626,24 +626,28 @@ class L10n_Mx_EdiDocument(models.Model):
     @api.model
     def _add_document_origin_cfdi_values(self, cfdi_values, document_origin):
         """ Add the values about the origin of the document to 'cfdi_values'.
+        Format should follow <code_1>|<uuid_1>,...<uuid_n>,...,<code_n>|...
 
         :param cfdi_values:     The current CFDI values.
         :param document_origin: The origin of the document.
         """
-        origin_type = None
-        origin_uuids = []
-        splitted = (document_origin or '').split('|')
-        if len(splitted) == 2:
-            try:
-                code = int(splitted[0])
-                if 1 <= code <= 7:
-                    origin_type = splitted[0]
-                    origin_uuids = [uuid.strip() for uuid in splitted[1].split(',') if uuid]
-            except ValueError:
-                pass
+        cfdi_values.update({'cfdi_relationado_data': {}})
+        group_pattern = r'^(?:0[0-7]\|)?[a-fA-F0-9]{8}-(?:[a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}$'
+        groups = (document_origin or '').split(',')
+        uuid_by_code = defaultdict(list)
+        current_code = ''
+        for group in groups:
+            if not re.match(group_pattern, group):  # Return if we found an invalid group
+                return
+            splitted = group.split('|')
+            if len(splitted) == 1 and not current_code:
+                return
+            if len(splitted) == 2:
+                current_code = splitted[0]
+            uuid = splitted[-1]
+            uuid_by_code[current_code].append(uuid)
 
-        cfdi_values['tipo_relacion'] = origin_type
-        cfdi_values['cfdi_relationado_list'] = origin_uuids
+        cfdi_values['cfdi_relationado_data'] = uuid_by_code
 
     @api.model
     def _get_datetime_now_with_mx_timezone(self, cfdi_values, journal=None):
@@ -697,10 +701,11 @@ class L10n_Mx_EdiDocument(models.Model):
         # If the CFDI is refunding a global invoice, it should be sent as a refund of a global invoice with
         # ad 'publico en general'.
         is_refund_gi = False
-        if cfdi_values.get('tipo_de_comprobante') == 'E' and cfdi_values.get('tipo_relacion') in ('01', '03'):
+        relationado_data = cfdi_values.get('cfdi_relationado_data', {})
+        if cfdi_values.get('tipo_de_comprobante') == 'E' and ('01' in relationado_data or '03' in relationado_data):
             # Force uso_cfdi to G02 since it's a refund of a global invoice.
-            origin_uuids = cfdi_values['cfdi_relationado_list']
-            is_refund_gi = bool(self.search([('attachment_uuid', 'in', origin_uuids), ('state', '=', 'ginvoice_sent')], limit=1))
+            origin_uuids = set(relationado_data.get('01', []) + relationado_data.get('03', []))
+            is_refund_gi = bool(self.search([('attachment_uuid', 'in', list(origin_uuids)), ('state', '=', 'ginvoice_sent')], limit=1))
 
         customer_as_publico_en_general = (not customer and to_public) or is_refund_gi
         customer_as_xexx_xaxx = to_public or customer.country_id.code != 'MX' or has_missing_vat
@@ -1970,8 +1975,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             emisor_node = get_node(cfdi_node, "//*[local-name()='Emisor']")
             receptor_node = get_node(cfdi_node, "//*[local-name()='Receptor']")
             info_global_node = get_node(cfdi_node, "//*[local-name()='InformacionGlobal']")
-            origin_node = get_node(cfdi_node, "//*[local-name()='CfdiRelacionados']")
-            origin_nodes = cfdi_node.xpath("//*[local-name()='CfdiRelacionado']")
+            relacionado_nodes = cfdi_node.xpath("//*[local-name()='CfdiRelacionados']")
         except etree.XMLSyntaxError:
             # Not an xml
             return {}
@@ -1980,13 +1984,23 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             return {}
 
         tfd_node = get_node(cfdi_node, "//*[local-name()='TimbreFiscalDigital']")
-        origin_type = get_value(origin_node, 'TipoRelacion')
-        origin_uuids = [origin_uuid for node in origin_nodes if (origin_uuid := get_value(node, 'UUID'))]
-        if origin_type and origin_uuids:
-            origin_uuids_str = ','.join(origin_uuids)
-            origin = f'{origin_type}|{origin_uuids_str}'
-        else:
-            origin = None
+        origin = None
+        origin_list = []
+        cfdi_relation_data = []
+        for node in relacionado_nodes:
+            origin_type = get_value(node, "TipoRelacion")
+            uuid_nodes = node.getchildren()
+            origin_uuids = []
+            for uuid_node in uuid_nodes:
+                if uuid := get_value(uuid_node, 'UUID'):
+                    origin_uuids.append(uuid)
+                    cfdi_relation_data.append({'relation_type': origin_type, 'uuid': uuid})
+            if origin_uuids and origin_type:
+                origin_uuids_str = ','.join(origin_uuids)
+                origin_list.append(f'{origin_type}|{origin_uuids_str}')
+
+        if origin_list:
+            origin = ','.join(origin_list)
 
         return {
             'uuid': get_value(tfd_node, 'UUID'),
@@ -2008,6 +2022,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             'stamp_date': (get_value(tfd_node, 'FechaTimbrado') or '').replace('T', ' '),
             'periodicity': get_value(info_global_node, 'Periodicidad'),
             'origin': origin,
+            'cfdi_relation_data': cfdi_relation_data
         }
 
     @api.model

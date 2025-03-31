@@ -84,6 +84,36 @@
             <t t-set="o_grid_layout" t-value="original_o_grid_layout"/>
         </xpath>
 
+        <xpath expr="//div[@id='informations']" position="after">
+            <t t-if="cfdi_values['cfdi_relation_data']">
+                <div class="row mt-3 mb-1" id="cfdi_relation_data">
+                    <div class="col-2 fw-bold">CFDI Related:   </div>
+                    <div class="col">
+                        <table id="cfdi_relation_table" class="text-start table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th name="th_uuid">UUID</th>
+                                    <th name="th_relation_type">Relation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="cfdi_values['cfdi_relation_data']" t-as="cfdi_related">
+                                    <tr>
+                                        <td name="td_uuid">
+                                            <span t-out="cfdi_related['uuid']" id="uuid"/>
+                                        </td>
+                                        <td name="td_relation_type">
+                                            <span t-out="cfdi_related['relation_type']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+
         <!-- Add new column on invoice lines: Predial Account -->
         <xpath expr="//table[@name='invoice_line_table']//th[@name='th_quantity']" position="before">
             <t t-set="has_l10n_mx_edi_predial_account" t-value="any(line.product_id.l10n_mx_edi_predial_account for line in o.invoice_line_ids)"/>

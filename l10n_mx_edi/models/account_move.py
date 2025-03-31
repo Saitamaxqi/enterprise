@@ -478,9 +478,9 @@ class AccountMove(models.Model):
         for move in self.filtered(lambda x: x.move_type == 'out_refund'):
             cfdi_values = {}
             self.env['l10n_mx_edi.document']._add_document_origin_cfdi_values(cfdi_values, move.l10n_mx_edi_cfdi_origin)
-            if cfdi_values['tipo_relacion'] in ('01', '03'):
-                for uuid in cfdi_values['cfdi_relationado_list']:
-                    origin_uuids.add(uuid)
+            relationado_data = cfdi_values['cfdi_relationado_data']
+            if '01' in relationado_data or '03' in relationado_data:
+                origin_uuids.update(relationado_data.get('01', []) + relationado_data['03', []])
         if origin_uuids:
             return self.env['account.move'].search([('l10n_mx_edi_cfdi_uuid', 'in', list(origin_uuids))])
         return self.env['account.move']
@@ -798,13 +798,15 @@ class AccountMove(models.Model):
             "- 05: Traslados de mercancias facturados previamente\n"
             "- 06: Factura generada por los traslados previos\n"
             "- 07: CFDI por aplicación de anticipo\n"
-            "For example: 01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE"
+            "For example: 01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE\n"
+            "If there are more than one relation type, it needs to be separated by comma\n"
+            "For example: 01|89966ACC-0F5C-447D-AEF3-3EED22E711EE,03|89966ACC-0F5C-447D-AEF3-3EED22E711EE,6fad57a1-bf5b-4e27-a5d3-d84b2f36674c"
         )
 
         for move in self.filtered('l10n_mx_edi_cfdi_origin'):
             cfdi_values = {}
             self.env['l10n_mx_edi.document']._add_document_origin_cfdi_values(cfdi_values, move.l10n_mx_edi_cfdi_origin)
-            if not cfdi_values['tipo_relacion'] or not cfdi_values['cfdi_relationado_list']:
+            if not cfdi_values['cfdi_relationado_data']:
                 raise ValidationError(error_message % move.l10n_mx_edi_cfdi_origin)
 
     # -------------------------------------------------------------------------
