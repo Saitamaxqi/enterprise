@@ -508,6 +508,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "selectByLabel Married",
         },
         {
+            content: "Set Spouse Witout Income",
+            trigger: "select[name=spouse_fiscal_status]:not(:visible)",
+            run: "selectByLabel Without Income",
+        },
+        {
             trigger: 'input[name="Net"][value="2431.1"]',
         },
         {

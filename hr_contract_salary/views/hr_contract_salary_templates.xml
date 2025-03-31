@@ -282,10 +282,12 @@
                                             <div t-att-name="'personal_info_child_group_' + personal_info.field" t-att-class="'card mb-2' + (' d-none' if hidden_children else '')">
                                                 <div class="card-body">
                                                     <t t-foreach="personal_info.child_ids" t-as="child_personal_info">
+                                                        <div>
                                                         <t t-call="hr_contract_salary.salary_package_personal_information_input">
                                                             <t t-set="personal_info" t-value="child_personal_info"/>
                                                             <t t-set="hidden_children" t-value="hidden_children"/>
                                                         </t>
+                                                        </div>
                                                     </t>
                                                 </div>
                                             </div>

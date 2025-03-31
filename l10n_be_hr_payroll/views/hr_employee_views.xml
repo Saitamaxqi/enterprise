@@ -7,7 +7,7 @@
         <field name="priority">30</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='marital']" position="after">
-                <field name="spouse_fiscal_status" invisible="marital not in ['married', 'cohabitant'] or company_country_code != 'BE'" required="marital in ['married', 'cohabitant']" help="if spouse has professionnel income or not"/>
+                <field name="spouse_fiscal_status" invisible="marital not in ['married', 'cohabitant'] or company_country_code != 'BE'" required="marital in ['married', 'cohabitant']" help="if spouse has professional income or not"/>
                 <p colspan="2" class="p-0 m-0 " invisible="marital not in ['married', 'cohabitant'] or company_country_code != 'BE'">
                     <a class="btn btn-link p-0 mb-1" data-bs-toggle="collapse" href="#spouse_status_explanation" role="button" aria-expanded="false" aria-controls="#spouse_status_explanation">Toggle Explanation</a>
                 </p>

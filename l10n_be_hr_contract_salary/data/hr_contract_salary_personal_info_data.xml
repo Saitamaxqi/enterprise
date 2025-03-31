@@ -137,29 +137,34 @@
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
         <field name="sequence">40</field>
     </record>
-    <record id="hr_contract_salary_personal_info_without_income" model="hr.contract.salary.personal.info.value">
-        <field name="name">Without Income</field>
-        <field name="value">without_income</field>
-        <field name="personal_info_id" ref="hr_contract_salary_personal_info_spouse_fiscal_status"/>
-    </record>
     <record id="hr_contract_salary_personal_info_high_income" model="hr.contract.salary.personal.info.value">
         <field name="name">With High Income</field>
         <field name="value">high_income</field>
+        <field name="sequence">41</field>
         <field name="personal_info_id" ref="hr_contract_salary_personal_info_spouse_fiscal_status"/>
     </record>
     <record id="hr_contract_salary_personal_info_low_income" model="hr.contract.salary.personal.info.value">
         <field name="name">With Low Income</field>
         <field name="value">low_income</field>
+        <field name="sequence">42</field>
         <field name="personal_info_id" ref="hr_contract_salary_personal_info_spouse_fiscal_status"/>
     </record>
-    <record id="hr_contract_salary_personal_info_low_pension" model="hr.contract.salary.personal.info.value">
-        <field name="name">With Low Pension</field>
-        <field name="value">low_pension</field>
+    <record id="hr_contract_salary_personal_info_without_income" model="hr.contract.salary.personal.info.value">
+        <field name="name">Without Income</field>
+        <field name="value">without_income</field>
+        <field name="sequence">43</field>
         <field name="personal_info_id" ref="hr_contract_salary_personal_info_spouse_fiscal_status"/>
     </record>
     <record id="hr_contract_salary_personal_info_high_pension" model="hr.contract.salary.personal.info.value">
-        <field name="name">With High Pension</field>
+        <field name="name">With High Pensions</field>
         <field name="value">high_pension</field>
+        <field name="sequence">44</field>
+        <field name="personal_info_id" ref="hr_contract_salary_personal_info_spouse_fiscal_status"/>
+    </record>
+    <record id="hr_contract_salary_personal_info_low_pension" model="hr.contract.salary.personal.info.value">
+        <field name="name">With Low Pensions</field>
+        <field name="value">low_pension</field>
+        <field name="sequence">45</field>
         <field name="personal_info_id" ref="hr_contract_salary_personal_info_spouse_fiscal_status"/>
     </record>
 

@@ -15,12 +15,12 @@ class HrEmployee(models.Model):
         'NISS Number', compute="_compute_niss", store=True, readonly=False,
         groups="hr.group_hr_user", tracking=True)
     spouse_fiscal_status = fields.Selection([
-        ('without_income', 'Without Income'),
-        ('high_income', 'With High income'),
+        ('high_income', 'With High Income'),
         ('low_income', 'With Low Income'),
-        ('low_pension', 'With Low Pensions'),
-        ('high_pension', 'With High Pensions')
-    ], string='Tax status for spouse', groups="hr.group_hr_user", default='without_income', required=False, tracking=True)
+        ('without_income', 'Without Income'),
+        ('high_pension', 'With High Pensions'),
+        ('low_pension', 'With Low Pensions')
+    ], string='Tax status for spouse', groups="hr.group_hr_user", default='high_income', required=False, tracking=True)
     spouse_fiscal_status_explanation = fields.Char(compute='_compute_spouse_fiscal_status_explanation', groups="hr.group_hr_user")
     disabled_spouse_bool = fields.Boolean(string='Disabled Spouse', help='if recipient spouse is declared disabled by law', groups="hr.group_hr_user", tracking=True)
     disabled_children_bool = fields.Boolean(string='Disabled Children', help='if recipient children is/are declared disabled by law', groups="hr.group_hr_user", tracking=True)
@@ -171,15 +171,19 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
             employee.l10n_be_holiday_pay_recovered_n1 = - sum(line_values['HolPayRecN1'][p.id]['total'] for p in employee_payslips)
 
     def _compute_spouse_fiscal_status_explanation(self):
-        no_income_threshold = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code('spouse_no_income_threshold', raise_if_not_found=False) or 165
+        no_income_threshold = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code('spouse_no_income_threshold')
         low_income_threshold = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code('spouse_low_income_threshold')
         other_income_threshold = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code('spouse_other_income_threshold')
         for employee in self:
-            employee.spouse_fiscal_status_explanation = _("""- Without Income: The spouse of the income recipient has no professional income or below %(no_income_threshold)s€.\n
-- High income: The spouse of the recipient of the income has professional income, other than pensions, annuities or similar income, which exceeds %(low_income_threshold)s€ net per month.\n
-- Low Income: The spouse of the recipient of the income has professional income, other than pensions, annuities or similar income, which does not exceed %(low_income_threshold)s€ net per month.\n
-- Low Pensions: The spouse of the beneficiary of the income has professional income which consists exclusively of pensions, annuities or similar income and which does not exceed %(other_income_threshold)s€ net per month.\n
-- High Pensions: The spouse of the beneficiary of the income has professional income which consists exclusively of pensions, annuities or similar income and which exceeds %(other_income_threshold)s€ net per month.""", no_income_threshold=no_income_threshold, low_income_threshold=low_income_threshold, other_income_threshold=other_income_threshold)
+            employee.spouse_fiscal_status_explanation = _("""- High Income: Spouse earns more than %(low_income_threshold)s€ net/month.\n
+- Low Income: Spouse earns between %(no_income_threshold)s€ and %(low_income_threshold)s€ net/month.\n
+- Without Income: Spouse earns less than %(no_income_threshold)s€ net/month.\n
+- High Pensions : Spouse is eligible to a pension higher than %(other_income_threshold)s€ net/month.\n
+- Low Pensions : Spouse is eligible to a pension lower than %(other_income_threshold)s€ net/month.\n
+Earnings are made of professional income, remuneration, unemployment allocations, annuities or similar income.""",
+        no_income_threshold=no_income_threshold,
+        low_income_threshold=low_income_threshold,
+        other_income_threshold=other_income_threshold)
 
     @api.depends('identification_id')
     def _compute_niss(self):

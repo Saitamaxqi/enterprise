@@ -454,6 +454,37 @@
             <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         </record>
 
+        <record id="rule_parameter_prp_spouse_no_income_threshold" model="hr.rule.parameter">
+            <field name="name">Spouse with no income threshold</field>
+            <field name="code">spouse_no_income_threshold</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_prp_spouse_no_income_threshold_2021" model="hr.rule.parameter.value">
+            <field name="parameter_value">141</field>
+            <field name="rule_parameter_id" ref="rule_parameter_prp_spouse_no_income_threshold"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_prp_spouse_no_income_threshold_2022" model="hr.rule.parameter.value">
+            <field name="parameter_value">144</field>
+            <field name="rule_parameter_id" ref="rule_parameter_prp_spouse_no_income_threshold"/>
+            <field name="date_from" eval="datetime(2022, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_prp_spouse_no_income_threshold_2023" model="hr.rule.parameter.value">
+            <field name="parameter_value">158</field>
+            <field name="rule_parameter_id" ref="rule_parameter_prp_spouse_no_income_threshold"/>
+            <field name="date_from" eval="datetime(2023, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_prp_spouse_no_income_threshold_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">165</field>
+            <field name="rule_parameter_id" ref="rule_parameter_prp_spouse_no_income_threshold"/>
+            <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_prp_spouse_no_income_threshold_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">170</field>
+            <field name="rule_parameter_id" ref="rule_parameter_prp_spouse_no_income_threshold"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
+
         <record id="rule_parameter_prp_spouse_low_income_threshold" model="hr.rule.parameter">
             <field name="name">Spouse with low income threshold</field>
             <field name="code">spouse_low_income_threshold</field>
