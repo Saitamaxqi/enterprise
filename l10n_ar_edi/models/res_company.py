@@ -63,6 +63,8 @@ class ResCompany(models.Model):
         key_to_cert = {cert.private_key_id: cert for cert in certs}
         key_to_cert[False] = False
         for company in self:
+            if company.country_code != 'AR':
+                continue
             if not company.l10n_ar_afip_ws_crt_id:
                 company.l10n_ar_afip_ws_crt_id = key_to_cert.get(company.l10n_ar_afip_ws_key_id)
             else:
@@ -81,6 +83,8 @@ class ResCompany(models.Model):
     @api.depends('l10n_ar_afip_ws_crt_id.private_key_id')
     def _compute_afip_key(self):
         for company in self:
+            if company.country_code != 'AR':
+                continue
             company.l10n_ar_afip_ws_key_id = company.l10n_ar_afip_ws_crt_id.private_key_id
 
     def _get_environment_type(self):
@@ -130,6 +134,8 @@ class ResCompany(models.Model):
         wizard to let the user change the certificate randomly if the one been set is blocked (because someone else
         is using the same certificate in another database) """
         for company in self:
+            if company.country_code != 'AR':
+                continue
             old_cert_name = company.l10n_ar_afip_ws_crt_id.name
             rid = random.randint(1, 10)
             new_cert_name = 'AR demo certificate %d' % rid
