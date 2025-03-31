@@ -55,14 +55,12 @@ export const FIELD_TYPE_ATTRIBUTES = {
         common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
     },
     float: {
-        common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
         list: [EDITABLE_FIELD_ATTRIBUTES.aggregate],
     },
     html: {
         common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
     },
     integer: {
-        common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
         list: [EDITABLE_FIELD_ATTRIBUTES.aggregate],
     },
     many2many: {
@@ -80,7 +78,6 @@ export const FIELD_TYPE_ATTRIBUTES = {
         ],
     },
     monetary: {
-        common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
         list: [EDITABLE_FIELD_ATTRIBUTES.aggregate],
     },
     selection: {
