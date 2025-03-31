@@ -240,14 +240,17 @@
         </xpath>
     </template>
 
-    <template id="cart_summary" inherit_id="website_sale.checkout_layout">
+    <template id="cart_summary" inherit_id="website_sale.cart_summary_content">
         <td name="website_sale_cart_summary_product_name" position="inside">
             <div t-if="line.is_rental"
                  t-esc="line._get_rental_pricing_description()"
                  class="d-md-block small text-muted"/>
         </td>
-        <xpath expr="//div[@id='o_wsale_total_accordion_item']/t[@t-call='website_sale.total']" position="before">
-            <div t-if="website_sale_order and website_sale_order.has_rented_products" class="pt-3 border-top mb-3">
+    </template>
+
+    <template id="cart_summary_total" inherit_id="website_sale.total">
+        <xpath expr="//div[contains(@t-attf-class, 'o_cart_total')]" position="before">
+            <div t-if="website_sale_order and website_sale_order.has_rented_products and not show_shorter_cart_summary" class="py-3 mx-n3 mx-lg-0 px-3 px-lg-0 border-top">
                 <h6 class="attribute_name">Rental Period</h6>
                 <div class="oe_unremovable d-flex gap-1 align-items-center w-100 text-muted">
                     <span t-out="website_sale_order.convert_to_website_tz(website_sale_order.rental_start_date)"
@@ -265,24 +268,22 @@
         </xpath>
     </template>
 
-    <template id="cart" inherit_id="website_sale.cart">
-        <xpath expr="//t[@t-call='website_sale.cart_lines']" position="before">
-            <div t-if="website_sale_order.has_rented_products" class="o_website_sale_daterange_picker mb-4 pb-3 border-bottom" id="cart_rental_period">
-                <h5>Rental period</h5>
-                <h6 class="text-muted small">Applies to all rented items</h6>
+    <template id="cart" inherit_id="website_sale.checkout_layout">
+        <xpath expr="//div[@name='o_cart_total_card_body']/t" position="before">
+            <div t-if="website_sale_order.has_rented_products" class="o_website_sale_daterange_picker mb-3 mb-lg-2 pb-lg-3" id="cart_rental_period">
+                <h6>Rental period</h6>
                 <input type="hidden" name="default_start_date" t-att-value="website_sale_order.rental_start_date"/>
                 <input type="hidden" name="default_end_date" t-att-value="website_sale_order.rental_return_date"/>
                 <input type="hidden" name="rental_duration_unit" t-attf-value="{{'hour' if website_sale_order._is_renting_possible_in_hours() else 'day'}}"/>
                 <div class="oe_unremovable w-100">
                     <div class="s_website_form_datetime date o_daterange_picker" data-target-input="nearest">
-                        <div class="d-flex gap-2 align-items-center flex-column flex-md-row">
+                        <div class="d-flex gap-2 align-items-center flex-column">
                             <div class="input-group">
                                 <input id="website_sale_order_renting_start_date" type="text" name="renting_start_date" class="o_website_sale_daterange_picker_input form-control" placeholder="Start date"/>
                                 <label for="website_sale_order_renting_start_date" class="input-group-text input-group-text-subtle d-flex align-items-center">
                                     <i class="fa fa-calendar" role="img"/>
                                 </label>
                             </div>
-                            <i class="oi oi-arrow-right d-none d-md-block" role="img"/>
                             <div class="input-group">
                                 <input id="website_sale_order_renting_end_date" type="text" name="renting_end_date" class="o_website_sale_daterange_picker_input form-control" placeholder="End date"/>
                                 <label for="website_sale_order_renting_end_date" class="input-group-text input-group-text-subtle d-flex align-items-center">

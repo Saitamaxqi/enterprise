@@ -49,8 +49,8 @@
         </div>
     </template>
 
-    <template id="cart_summary_inherit_website_sale_subscription" inherit_id="website_sale.checkout_layout">
-        <xpath expr="//table[@id='cart_products']//td[@name='website_sale_cart_summary_line_price']" position="inside">
+    <template id="cart_summary_inherit_website_sale_subscription" inherit_id="website_sale.cart_summary_content">
+        <xpath expr="//table[hasclass('o_cart_products_table')]//td[@name='website_sale_cart_summary_line_price']" position="inside">
             <div t-if="line.recurring_invoice">
                 <span t-esc="line.order_id.plan_id.billing_period_display_sentence"/>
             </div>

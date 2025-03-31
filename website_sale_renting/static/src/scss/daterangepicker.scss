@@ -69,3 +69,9 @@
         pointer-events: none;
     }
 }
+
+.o_website_sale_daterange_picker#cart_rental_period {
+    @include media-breakpoint-up(lg) {
+        border-bottom: $border-width solid $border-color;
+    }
+}
