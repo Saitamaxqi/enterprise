@@ -32,10 +32,11 @@ class SaleCommissionAchievementReport(models.Model):
         It is used to be able to get fixed results not depending on the currency daily rates.
         The date is converted to a string to allow updating the date value in view customizations.
         """
-        date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field)
-        date_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3]
-        if date_list and not 'conversion_date' in self.env.context:
-            conversion_date = max(date_list)
+        # take date_to but not plan_id.date_to
+        date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field and not 'plan_id' in field)
+        date_to_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3 and d[2]]
+        if date_to_list and not 'conversion_date' in self.env.context:
+            conversion_date = max(date_to_list)
             self = self.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
         return super(SaleCommissionAchievementReport, self)._search(domain, offset, limit, order)
 
