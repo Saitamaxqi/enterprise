@@ -36,16 +36,14 @@ class ProjectEnterpriseTestUi(HttpCase):
         project = cls.env['project.project'].create({
             'name': 'Test Project',
         })
-        # Allocated hours is only computed without _origin
-        task = cls.env['project.task'].new({
+        first_day_in_current_month = fields.Datetime.now() + relativedelta(day=1, hour=0, minute=0, second=0)
+        cls.env['project.task'].create({
             'project_id': project.id,
             'name': 'Test Task',
-            'planned_date_begin': fields.Datetime.now() - relativedelta(days=30),
-            'date_deadline': fields.Datetime.now() + relativedelta(days=30),
+            'planned_date_begin': first_day_in_current_month - relativedelta(months=1),
+            'date_deadline': first_day_in_current_month + relativedelta(months=2, days=-1),
             'user_ids': cls.env.ref('base.user_admin'),
         })
-        task._compute_allocated_hours()
-        task.create(task._convert_to_write(task._cache))
 
     def test_01_ui(self):
         self.start_tour("/", 'project_test_tour', login='admin')
