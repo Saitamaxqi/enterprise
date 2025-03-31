@@ -635,6 +635,8 @@ class MrpEco(models.Model):
             for eco in self:
                 if eco.new_bom_id and eco.state != 'done' and eco.will_update_version != vals['will_update_version']:
                     eco.new_bom_id.version += 1 if vals['will_update_version'] else -1
+        if vals.get('type') == 'product':
+            vals['bom_id'] = False
         res = super(MrpEco, self).write(vals)
         if vals.get('stage_id'):
             self._create_approvals()

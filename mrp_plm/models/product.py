@@ -12,8 +12,12 @@ class ProductTemplate(models.Model):
     eco_ids = fields.One2many('mrp.eco', 'product_tmpl_id', 'ECOs')
 
     def _compute_eco_count(self):
-        for p in self:
-            p.eco_count = len(p.eco_ids)
+        eco_count_map = dict(self.env['mrp.eco']._read_group(
+            [('product_tmpl_id', 'in', self.ids), ('type', '=', 'product')],
+            ['product_tmpl_id'], ['__count']
+        ))
+        for product in self:
+            product.eco_count = eco_count_map.get(product, 0)
 
     def mrp_eco_action_product_tmpl(self):
         action = self.env["ir.actions.actions"]._for_xml_id("mrp_plm.mrp_eco_action_product_tmpl")

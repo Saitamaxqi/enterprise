@@ -611,3 +611,32 @@ class TestMrpPlm(TestPlmCommon):
                 'user_ids': [Command.set(self.env.ref('base.user_admin').ids)],
                 'stage_id': self.eco_stage.id,
             })
+
+    def test_eco_count(self):
+        """Test that the ECO count is correctly updated for both
+        the product and the BOM when creating a new revision.
+        """
+        self.assertEqual(self.table.eco_count, 0)
+        self.assertEqual(self.bom_table.eco_count, 0)
+        # Create an ECO for the BOM and verify the count for both the BOM and the product
+        eco = self.env['mrp.eco'].create({
+            'name': 'eco',
+            'product_tmpl_id': self.table.product_tmpl_id.id,
+            'type_id': self.eco_type.id,
+            'type': 'bom',
+            'bom_id': self.bom_table.id,
+        })
+        self.table.invalidate_recordset(['eco_count'])
+        self.table.product_tmpl_id.invalidate_recordset(['eco_count'])
+        self.bom_table.invalidate_recordset(['eco_count'])
+        self.assertEqual(self.table.eco_count, 0)
+        self.assertEqual(self.bom_table.eco_count, 1)
+        # Update the ECO type to "Product" and verify that
+        # the bom_id field is cleared and the count is updated
+        eco.type = 'product'
+        self.assertFalse(eco.bom_id)
+        self.table.invalidate_recordset(['eco_count'])
+        self.table.product_tmpl_id.invalidate_recordset(['eco_count'])
+        self.bom_table.invalidate_recordset(['eco_count'])
+        self.assertEqual(self.table.eco_count, 1)
+        self.assertEqual(self.bom_table.eco_count, 0)
