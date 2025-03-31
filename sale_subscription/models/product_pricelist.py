@@ -19,11 +19,11 @@ class ProductPricelist(models.Model):
     def action_archive(self):
         """When archiving, we want to be archiving the product subscription pricing FIRST.
         The record of product_subscription_pricing_ids will be inactive when the price-list is archived."""
-        self.with_context(active_test=False).product_subscription_pricing_ids.action_archive()
+        self.sudo().with_context(active_test=False).product_subscription_pricing_ids.action_archive()
         return super().action_archive()
 
     def action_unarchive(self):
         """ When un-archiving, we want to un-archive the product subscription pricing LAST.
         The record of the product_subscription_pricing_ids will be active when the price list is unarchived."""
-        self.with_context(active_test=False).product_subscription_pricing_ids.action_unarchive()
+        self.sudo().with_context(active_test=False).product_subscription_pricing_ids.action_unarchive()
         return super().action_unarchive()
