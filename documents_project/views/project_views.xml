@@ -9,6 +9,7 @@
             <xpath expr="//group[@name='group_documents_analytics']" position="attributes">
                 <attribute name="string">Documents &amp; Analytics</attribute>
                 <attribute name="invisible">False</attribute>
+                <attribute name="groups"></attribute>
             </xpath>
             <xpath expr="//setting[@name='analytic_div']" position="before">
                 <setting class="col-lg-12" help="Categorize and share your documents with your customers" id="documents_setting">
