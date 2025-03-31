@@ -10,8 +10,7 @@
                     <t t-call="mail.ActivityViewFooter"/>
                 </table>
                 <DocumentsFileViewer parentRoot="root" t-props="getDocumentsAttachmentViewerProps()"/>
-
-                <t t-call="documents.DocumentsViews.RightPanel"/>
+                <DocumentsRightPanel nbViewItems="getNbViewItems()"/>
             </div>
         </div>
     </t>

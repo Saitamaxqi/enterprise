@@ -118,8 +118,8 @@ export const DocumentsModelMixin = (component) =>
         }
 
         get targetRecords() {
-            return this.documentService.previewedDocument
-                ? [this.documentService.previewedDocument.record]
+            return this.documentService.rightPanelReactive.previewedDocument
+                ? [this.documentService.rightPanelReactive.previewedDocument.record]
                 : this.root.selection;
         }
 
@@ -191,8 +191,8 @@ export const DocumentsModelMixin = (component) =>
         /**
          * Open/Close the chatter (the info will be stored in the local storage of the current user).
          */
-        async onToggleChatter() {
-            await this.documentService.toggleChatterState();
+        async onToggleRightPanel() {
+            await this.documentService.toggleRightPanelVisibility();
         }
 
         /**

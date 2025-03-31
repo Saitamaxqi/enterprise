@@ -12,7 +12,7 @@ export class DocumentsCogMenuItemDetails extends DocumentsCogMenuItem {
     }
 
     async doActionOnFolder(folder) {
-        this.documentService.toggleChatterState();
+        this.documentService.toggleRightPanelVisibility();
     }
 }
 

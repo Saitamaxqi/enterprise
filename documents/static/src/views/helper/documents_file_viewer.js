@@ -15,7 +15,7 @@ export class DocumentsFileViewer extends Component {
     setup() {
         this.documentService = useService("document.document");
         this.root = useRef("root");
-        this.chatterState = useState(this.documentService.chatterState);
+        this.rightPanelState = useState(this.documentService.rightPanelReactive);
         this.state = useState({ topOffset: 0 });
 
         const onKeydown = this.onIframeKeydown.bind(this);
@@ -61,8 +61,8 @@ export class DocumentsFileViewer extends Component {
         return this.props.parentRoot;
     }
 
-    get isChatterVisible() {
-        return this.chatterState.visible && !this.env.isSmall;
+    get isRightPanelVisible() {
+        return this.rightPanelState.visible && !this.env.isSmall;
     }
 
     onGlobalKeydown(ev) {

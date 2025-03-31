@@ -7,11 +7,16 @@ import { escape } from "@web/core/utils/strings";
 import { useSetupAction } from "@web/search/action_hook";
 import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { PdfManager } from "@documents/owl/components/pdf_manager/pdf_manager";
-import { EventBus, onMounted, onWillStart, markup, useComponent, useEnv, useRef, useSubEnv } from "@odoo/owl";
-
-// TODO: clean in master
-import { loadMaxUploadSize as loadMaxUploadSizeDocumentService } from "@documents/core/document_service";
-export const loadMaxUploadSize = loadMaxUploadSizeDocumentService;
+import {
+    EventBus,
+    onMounted,
+    onWillStart,
+    markup,
+    useComponent,
+    useEnv,
+    useRef,
+    useSubEnv,
+} from "@odoo/owl";
 
 /**
  * Controller/View hooks
@@ -178,7 +183,7 @@ export function useDocumentView(helpers) {
         component.isDocumentsManager = await user.hasGroup("documents.group_documents_manager");
     });
 
-    onMounted(async() => {
+    onMounted(async () => {
         documentService.updateDocumentURLRefresh();
     });
 
@@ -347,7 +352,7 @@ function useDocumentsViewFilePreviewer({
                             }
                         }
                         for (const record of env.model.root.records.filter((r) =>
-                            newDocumentIds.includes(r.resId),
+                            newDocumentIds.includes(r.resId)
                         )) {
                             record.toggleSelection(true);
                         }
@@ -406,6 +411,10 @@ function useDocumentsViewFilePreviewer({
                 const elements = getSelectedDocumentsElements();
                 if (elements.length) {
                     elements[0].focus();
+                    const focusedDocument = documentService.documentList.documents.find(
+                        (d) => d.record.id === elements[0].dataset.id
+                    );
+                    documentService.focusRecord(focusedDocument?.record || null);
                 }
                 if (component.root?.el) {
                     component.root.el
@@ -498,9 +507,9 @@ function useDocumentsViewFileUpload() {
                 error: _t("status code: %(status)s, message: %(message)s", {
                     status: xhr.status,
                     message: xhr.response,
-                })
+                }),
             });
-            return
+            return;
         }
         // Depending on the controller called, the response is different:
         // /documents/upload/xx: returns an array of document ids

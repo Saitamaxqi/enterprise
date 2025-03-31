@@ -1,7 +1,6 @@
-import { Chatter } from "@mail/chatter/web_portal/chatter";
 import { ActivityRenderer } from "@mail/views/web/activity/activity_renderer";
 
-import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
+import { DocumentsRightPanel } from "@documents/components/documents_right_panel/documents_right_panel";
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
 
@@ -15,8 +14,7 @@ export class DocumentsActivityRenderer extends DocumentsRendererMixin(ActivityRe
     static template = "documents.DocumentsActivityRenderer";
     static components = {
         ...ActivityRenderer.components,
-        Chatter,
-        DocumentsDetailsPanel,
+        DocumentsRightPanel,
         DocumentsFileViewer,
     };
 
@@ -24,12 +22,12 @@ export class DocumentsActivityRenderer extends DocumentsRendererMixin(ActivityRe
         super.setup();
         this.root = useRef("root");
 
-        onWillUpdateProps(nextProps => {
+        onWillUpdateProps((nextProps) => {
             const selectedRecord = nextProps.records.find((r) => r.selected);
             if (selectedRecord) {
-                this.documentsState.focusedRecord = selectedRecord;
+                this.documentService.focusRecord(selectedRecord);
             }
-        })
+        });
     }
 
     getDocumentsAttachmentViewerProps() {

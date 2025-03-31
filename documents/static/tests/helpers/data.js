@@ -169,8 +169,8 @@ export class DocumentsDocument extends models.Model {
                         recordValues.folder_id = !record.owner_id
                             ? "COMPANY"
                             : record.owner_id[0] === serverState.userId
-                                ? "MY"
-                                : "SHARED";
+                            ? "MY"
+                            : "SHARED";
                     } else {
                         recordValues.folder_id = record.folder_id[0];
                     }
@@ -221,6 +221,34 @@ export class MailAliasDomain extends models.Model {
 }
 
 /**
+ * @param {Number} id
+ * @param {String} name
+ * @param {object?} data
+ * @return {{}}
+ */
+export function makeDocumentRecordData(id, name, data = {}) {
+    const strippedName = name.replace(/\s/g, "");
+    const defaultValues = {
+        available_embedded_actions_ids: [],
+        folder_id: false,
+        company_id: false,
+        owner_id: false,
+        partner_id: false,
+        type: "binary",
+    };
+    const documentType = data.type || defaultValues.type;
+    return {
+        ...defaultValues,
+        id: id,
+        access_token: `accessToken${strippedName}`,
+        is_folder: documentType === "folder",
+        name: name,
+        type: documentType,
+        ...data,
+    };
+}
+
+/**
  * @returns {Object}
  */
 export function getDocumentsTestServerData(additionalRecords = []) {
@@ -239,18 +267,7 @@ export function getDocumentsTestServerData(additionalRecords = []) {
             },
             "documents.document": {
                 records: [
-                    {
-                        access_token: "accessTokenFolder1",
-                        available_embedded_actions_ids: [],
-                        id: 1,
-                        is_folder: true,
-                        folder_id: false,
-                        name: "Folder 1",
-                        type: "folder",
-                        company_id: false,
-                        owner_id: false,
-                        partner_id: false,
-                    },
+                    makeDocumentRecordData(1, "Folder 1", { type: "folder" }),
                     ...additionalRecords,
                 ],
             },

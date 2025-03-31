@@ -17,6 +17,7 @@ export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanCo
         this.documentStates = useState({
             previewStore: {},
         });
+        this.rightPanelState = useState(this.documentService.rightPanelReactive);
 
         useEffect(() => {
             this.documentService.getSelectionActions = () => {
@@ -91,5 +92,4 @@ export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanCo
     async onSelectDomain() {
         await this.model.root.selectDomain(true);
     }
-
 }

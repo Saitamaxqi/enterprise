@@ -82,9 +82,16 @@ export class DocumentService {
         ]);
         const initialState =
             this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
-        this.chatterState = reactive({ visible: initialState }, () => {
-            localStorage.setItem("documentsChatterVisible", this.chatterState.visible);
-        });
+        this.rightPanelReactive = reactive(
+            {
+                visible: initialState,
+                focusedRecord: null,
+                previewedDocument: null,
+            },
+            () => {
+                localStorage.setItem("documentsChatterVisible", this.rightPanelReactive.visible);
+            }
+        );
     }
 
     /**
@@ -379,10 +386,14 @@ export class DocumentService {
         ]);
     }
 
-    toggleChatterState() {
-        this.chatterState.visible = !this.chatterState.visible;
+    focusRecord(record) {
+        this.rightPanelReactive.focusedRecord = record;
+    }
 
-        if (this.chatterState.visible) {
+    toggleRightPanelVisibility() {
+        this.rightPanelReactive.visible = !this.rightPanelReactive.visible;
+
+        if (this.rightPanelReactive.visible) {
             this.observer = new MutationObserver(() => {
                 const chatterContainer = document.querySelector(".o-mail-Thread");
                 if (chatterContainer && this.env.isSmall) {
@@ -422,8 +433,10 @@ export class DocumentService {
      * Set the previewed document and send an event to notify the change.
      */
     setPreviewedDocument(document) {
-        this.previewedDocument = document;
-        this.bus.trigger("DOCUMENT_PREVIEWED");
+        this.rightPanelReactive.previewedDocument = document;
+        if (document) {
+            this.focusRecord(document.record);
+        }
     }
 
     async uploadDocument(files, accessToken, context) {

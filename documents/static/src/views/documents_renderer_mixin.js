@@ -1,7 +1,7 @@
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
-import { useBus, useService } from "@web/core/utils/hooks";
-import { onWillUpdateProps, useComponent, useState, useEffect } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { onWillUpdateProps, useComponent, useEffect, useState } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
@@ -9,16 +9,10 @@ export const DocumentsRendererMixin = (component) =>
             super.setup();
             this.documentService = useService("document.document");
 
-            this.documentService.chatterState.previewedDocument = null;
-            this.documentsState = useState({
-                focusedRecord: this.selection?.[0] || this.getContainerRecord(),
-            });
-            this.chatterState = useState(this.documentService.chatterState);
+            this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord());
+            this.rightPanelState = useState(this.documentService.rightPanelReactive);
             this.component = useComponent();
 
-            useBus(this.documentService.bus, "DOCUMENT_PREVIEWED", async (ev) => {
-                this.chatterState.previewedDocument = this.documentService.previewedDocument;
-            });
             useCommand(
                 _t("Move to trash"),
                 () => this.env.model.onArchive(),
@@ -54,7 +48,7 @@ export const DocumentsRendererMixin = (component) =>
 
             onWillUpdateProps((nextProps) => {
                 if (nextProps.list !== this.props.list) {
-                    this.documentsState.focusedRecord = this.getContainerRecord();
+                    this.documentService.focusRecord(this.getContainerRecord());
                 }
             });
         }
@@ -84,7 +78,7 @@ export const DocumentsRendererMixin = (component) =>
             /**
              * @override making sure we only save fields for which we have fetched data.
              */
-            record._update = async (changes, {}) => {
+            record._update = async (changes) => {
                 record.dirty = true;
                 const fieldsToSave = new Set(Object.keys(changes));
                 await Promise.all([
@@ -124,18 +118,6 @@ export const DocumentsRendererMixin = (component) =>
                 return this.props.records.length;
             }
             return this.props.list.model.useSampleModel ? 0 : this.props.list.count;
-        }
-
-        /**
-         * Records on which we will execute the actions / see the chatter.
-         */
-        get detailsRecord() {
-            const focusedRecord = this.documentsState.focusedRecord
-                ? this.documentsState.focusedRecord
-                : null;
-            return this.documentService.previewedDocument
-                ? this.documentService.previewedDocument.record
-                : focusedRecord;
         }
 
         get selection() {

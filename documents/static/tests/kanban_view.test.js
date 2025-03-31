@@ -15,6 +15,7 @@ import {
     DocumentsModels,
     getBasicPermissionPanelData,
     getDocumentsTestServerData,
+    makeDocumentRecordData,
 } from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
 import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/views/kanban";
@@ -64,12 +65,7 @@ test("Open share with view user_permission", async function () {
 
 test("Colorless-tags are also visible on cards", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            folder_id: 1,
-            name: "Testing tags",
-            tag_ids: [1, 2],
-        },
+        makeDocumentRecordData(2, "Testing tags", { folder_id: 1, tag_ids: [1, 2] }),
     ]);
     const { name: folder1Name } = serverData.models["documents.document"].records[0];
     const archWithTags = basicDocumentsKanbanArch.replace(
@@ -91,17 +87,8 @@ test("Colorless-tags are also visible on cards", async function () {
 
 test("Download button availability", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            folder_id: 1,
-            id: 2,
-            name: "Request",
-        },
-        {
-            attachment_id: 1,
-            folder_id: 1,
-            id: 3,
-            name: "Binary",
-        },
+        makeDocumentRecordData(2, "Request", { folder_id: 1 }),
+        makeDocumentRecordData(3, "Binary", { attachment_id: 1, folder_id: 1}),
     ]);
     serverData.models["ir.attachment"] = {
         records: [{ id: 1, name: "binary" }],
@@ -132,22 +119,9 @@ test("Download button availability", async function () {
 
 test("Drag and Drop - Search panel expand folders", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            is_folder: true,
-            folder_id: 1,
-            name: "Sub Folder",
-            type: "folder",
-        },
-        {
-            id: 3,
-            is_folder: true,
-            folder_id: false,
-            name: "Test Folder",
-            type: "folder",
-        },
+        makeDocumentRecordData(2, "Sub Folder", { folder_id: 1, type: "folder", }),
+        makeDocumentRecordData(3, "Test Folder", { type: "folder" }),
     ]);
-
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -192,22 +166,9 @@ test("Drag and Drop - Search panel expand folders", async function () {
 
 test("Drag and Drop - A folder into itself or its children", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            is_folder: true,
-            folder_id: 1,
-            name: "Sub Folder",
-            type: "folder",
-        },
-        {
-            id: 3,
-            is_folder: true,
-            folder_id: false,
-            name: "Folder 2",
-            type: "folder",
-        },
+        makeDocumentRecordData(2, "Sub Folder", { folder_id: 1, type: "folder" }),
+        makeDocumentRecordData(3, "Folder 2", { type: "folder" }),
     ]);
-
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -233,27 +194,9 @@ test("Drag and Drop - A folder into itself or its children", async function () {
 });
 
 test("Drag and Drop - After selecting multiple documents", async function () {
-    const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            folder_id: 1,
-            name: "Test Document 1",
-            type: "file",
-        },
-        {
-            id: 3,
-            folder_id: 1,
-            name: "Test Document 2",
-            type: "file",
-        },
-        {
-            id: 4,
-            folder_id: 1,
-            name: "Test Document 3",
-            type: "file",
-        },
-    ]);
-
+    const serverData = getDocumentsTestServerData(
+        [1, 2, 3].map((idx) => makeDocumentRecordData(idx + 1, `Test Document ${idx}`, { folder_id: 1 }))
+    );
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -278,21 +221,9 @@ test("Drag and Drop - After selecting multiple documents", async function () {
 
 test("Drag and Drop - Check permission when dropping documents", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            folder_id: false,
-            name: "Test Document 1",
-            type: "file",
-        },
-        {
-            id: 3,
-            folder_id: false,
-            name: "Test Document 2",
-            type: "file",
-            user_permission: "view",
-        },
+        makeDocumentRecordData(2, "Test Document 1"),
+        makeDocumentRecordData(3, "Test Document 2", { user_permission: "view" }),
     ]);
-
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -313,21 +244,9 @@ test("Drag and Drop - Check permission when dropping documents", async function 
 
 test("Drag and Drop - Drop multiple documents at once", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            folder_id: false,
-            name: "Test Document 1",
-            type: "file",
-        },
-        {
-            id: 3,
-            folder_id: false,
-            name: "Test Document 2",
-            type: "file",
-            user_permission: "view",
-        },
+        makeDocumentRecordData(2, "Test Document 1"),
+        makeDocumentRecordData(3, "Test Document 2", { user_permission: "view" }),
     ]);
-
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -346,14 +265,8 @@ test("Drag and Drop - Drop multiple documents at once", async function () {
 
 test("Drag and Drop - Drop document while holding CTRL", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            folder_id: false,
-            name: "Test Document",
-            type: "file",
-        },
+        makeDocumentRecordData(2, "Test Document"),
     ]);
-
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -373,14 +286,8 @@ test("Drag and Drop - Drop document while holding CTRL", async function () {
 
 test("Drag and Drop - Dropping in 'My Drive' should create a shortcut", async function () {
     const serverData = getDocumentsTestServerData([
-        {
-            id: 2,
-            folder_id: 1,
-            name: "Test Document",
-            type: "file",
-        },
+        makeDocumentRecordData(2, "Test Document", { folder_id: 1}),
     ]);
-
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 

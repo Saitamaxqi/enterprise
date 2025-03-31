@@ -58,7 +58,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Download"),
                     icon: "fa fa-download",
                     callback: () => this.model.onDownload(),
-                    groupNumber: 1
+                    groupNumber: 1,
                 },
                 share: {
                     isAvailable: () => singleSelection,
@@ -66,7 +66,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Share"),
                     icon: "fa fa-share",
                     callback: () => this.model.onShare(),
-                    groupNumber: 1
+                    groupNumber: 1,
                 },
             };
         }
@@ -75,8 +75,8 @@ export const DocumentsControllerMixin = (component) =>
             const selectionCount = this.targetRecords.length;
             const userIsInternal = this.documentService.userIsInternal;
             const singleSelection = selectionCount === 1 && this.targetRecords[0];
-            const isInTrash = this.env.searchModel.getSelectedFolderId() === 'TRASH';
-            const editMode = this.targetRecords.every((r) => r.data.user_permission === 'edit');
+            const isInTrash = this.env.searchModel.getSelectedFolderId() === "TRASH";
+            const editMode = this.targetRecords.every((r) => r.data.user_permission === "edit");
             const someActive = this.targetRecords.some((r) => r.data.active);
             const someArchived = this.targetRecords.some((r) => !r.data.active);
             const menuItems = super.getStaticActionMenuItems();
@@ -129,7 +129,7 @@ export const DocumentsControllerMixin = (component) =>
                     sequence: 75,
                     description: _t("Info & tags"),
                     icon: "fa fa-info-circle",
-                    callback: () => this.model.onToggleChatter(),
+                    callback: () => this.model.onToggleRightPanel(),
                     groupNumber: 2,
                 },
                 shortcut: {
@@ -173,5 +173,14 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2,
                 },
             };
+        }
+
+        get showActions() {
+            const previewing = !!this.rightPanelState.previewedDocument;
+            const focusing = !!this.rightPanelState.focusedRecord;
+            const focusedSelected =
+                focusing &&
+                !!this.targetRecords.find((r) => r.id === this.rightPanelState.focusedRecord.id);
+            return !previewing && (!focusing || focusedSelected);
         }
     };

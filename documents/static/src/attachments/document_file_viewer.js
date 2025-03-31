@@ -21,7 +21,7 @@ export class FileViewer extends WebFileViewer {
             }
         );
         this.folderId = this.documentService.documentList?.folderId;
-        this.chatterState = useState(this.documentService.chatterState);
+        this.rightPanelState = useState(this.documentService.rightPanelReactive);
         onWillUpdateProps((nextProps) => {
             const indexOfFileToPreview = nextProps.startIndex;
             if (
@@ -36,10 +36,7 @@ export class FileViewer extends WebFileViewer {
     }
 
     get isChatterButtonVisible() {
-        return (
-            this.documentService.userIsInternal &&
-            !this.env.isSmall
-        );
+        return this.documentService.userIsInternal && !this.env.isSmall;
     }
 
     close() {
