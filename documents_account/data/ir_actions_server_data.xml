@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-
+        <function model="documents.tag" name="_ensure_documents_account_tags_exist"/>
         <!-- Create Vendor Bill -->
         <record id="ir_actions_server_create_vendor_bill" model="ir.actions.server" forcecreate="0">
             <field name="name">Create Vendor Bill</field>

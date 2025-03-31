@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
+        <function model="documents.tag" name="_ensure_documents_project_tags_exist"/>
         <!-- Mark As Draft -->
         <record id="ir_actions_server_mark_as_draft" model="ir.actions.server" forcecreate="0">
             <field name="name">Mark as draft</field>
