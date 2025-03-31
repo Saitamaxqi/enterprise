@@ -148,7 +148,8 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
 
     def _validate_payslip(self, payslip, results, skip_lines=False):
         error = []
-        line_values = payslip._get_line_values(set(payslip.line_ids.mapped('code')))
+        payslip_lines = payslip.line_ids.filtered(lambda l: not l.salary_rule_id.title)
+        line_values = payslip._get_line_values(set(payslip_lines.mapped('code')))
         for code, value in results.items():
             if code in line_values:
                 payslip_line_value = line_values[code][payslip.id]['total']
@@ -156,10 +157,10 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
                     error.append(f"{'WRONG CALCULATION':>20} │ {code:<30} │ {value:>15} │ {payslip_line_value:>15} │ {round(payslip_line_value-value, 2):>15} │")
         if not skip_lines:
             for code, value in results.items():
-                if code not in payslip.line_ids.mapped('code'):
+                if code not in payslip_lines.mapped('code'):
                     error.append(
                         f"{'UNNECESSARY LINE':>20} │ {code:<30} │ {value:>15} │ {'/':>15} │")
-            for line in payslip.line_ids:
+            for line in payslip_lines:
                 if line.code not in results:
                     error.append(
                         f"{'MISSING LINE':>20} │ {line.code:<30} │ {'/':>15} │ {line_values[line.code][payslip.id]['total']:>15} │")
@@ -172,7 +173,7 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
                 "",
                 f"Payslip Period: {payslip.date_from} - {payslip.date_to}",
                 "Payslip Actual Values: ",
-                "        payslip_results = {" + ', '.join(f"'{line.code}': {line_values[line.code][payslip.id]['total']}" for line in payslip.line_ids) + "}"
+                "        payslip_results = {" + ', '.join(f"'{line.code}': {line_values[line.code][payslip.id]['total']}" for line in payslip_lines) + "}"
             ])
         self.assertEqual(len(error), 0, '\n\n' + '\n'.join(error))
 
