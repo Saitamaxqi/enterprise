@@ -162,13 +162,20 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
             'comment': options.get('comment') or '/',
             'prorata_deduction': deduction_text,
             'representative_node': _get_xml_export_representative_node(report),
+            'rectification_ref': options.get('rectification_ref'),
         }
 
         rslt = Markup(f"""<?xml version="1.0"?>
 <ns2:VATConsignment xmlns="http://www.minfin.fgov.be/InputCommon" xmlns:ns2="http://www.minfin.fgov.be/VATConsignment" VATDeclarationsNbr="1">
     %(representative_node)s
-    <ns2:VATDeclaration SequenceNumber="1" DeclarantReference="%(send_ref)s">
-        <ns2:Declarant>
+    <ns2:VATDeclaration SequenceNumber="1" DeclarantReference="%(send_ref)s">""") % file_data
+
+        if file_data.get('rectification_ref'):
+            rslt += Markup("""
+        <ns2:ReplacedVATDeclaration>%(rectification_ref)s</ns2:ReplacedVATDeclaration>
+            """) % file_data
+
+        rslt += Markup(f"""<ns2:Declarant>
             <VATNumber xmlns="http://www.minfin.fgov.be/InputCommon">%(only_vat)s</VATNumber>
             <Name>%(company_name)s</Name>
             <Street>%(address)s</Street>

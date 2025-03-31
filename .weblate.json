@@ -2183,6 +2183,12 @@
                 "language_regex": "^(de|fr|nl)$"
             },
             {
+                "name": "l10n_be_intervat",
+                "filemask": "l10n_be_intervat/i18n/*.po",
+                "new_base": "l10n_be_intervat/i18n/l10n_be_hr_payroll.pot",
+                "language_regex": "^(de|fr|nl)$"
+            },
+            {
                 "name": "l10n_be_intrastat",
                 "filemask": "l10n_be_intrastat/i18n/*.po",
                 "new_base": "l10n_be_intrastat/i18n/l10n_be_intrastat.pot",
