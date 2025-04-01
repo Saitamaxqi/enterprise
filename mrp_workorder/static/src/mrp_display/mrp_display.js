@@ -1,4 +1,3 @@
-import { Layout } from "@web/search/layout";
 import { user } from "@web/core/user";
 import { session } from "@web/session";
 import { Pager } from "@web/core/pager/pager";
@@ -32,7 +31,6 @@ const defaultWorkcenterButtons = [
 export class MrpDisplay extends Component {
     static template = "mrp_workorder.MrpDisplay";
     static components = {
-        Layout,
         ControlPanelButtons,
         MrpDisplayRecord,
         MrpDisplayEmployeesPanel,
@@ -73,8 +71,9 @@ export class MrpDisplay extends Component {
             localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}.picking_type_${this.pickingTypeId}`,
         });
 
-        const localStoredWC = JSON.parse(localStorage.getItem(this.env.localStorageName)) || [];
-        const workcenters = [...defaultWorkcenterButtons, ...localStoredWC];
+        const localStoredWC = JSON.parse(localStorage.getItem(this.env.localStorageName));
+        const firstLoad = !localStoredWC;
+        const workcenters = [...defaultWorkcenterButtons, ...(firstLoad ? [] : localStoredWC)];
         let activeWorkcenter = this.props.context.workcenter_id || false;
         // If no workcenter by default but some WC were already selected, selects the first one.
         if (!activeWorkcenter && workcenters.length) {
@@ -88,6 +87,7 @@ export class MrpDisplay extends Component {
             canLoadSamples: false,
             offset: 0,
             limit: 40,
+            firstLoad: firstLoad,
         });
         this.recordCacheIds = [];
 
@@ -327,6 +327,7 @@ export class MrpDisplay extends Component {
     }
 
     async toggleWorkcenter(workcenters) {
+        this.state.firstLoad = false;
         localStorage.setItem(this.env.localStorageName, JSON.stringify(workcenters));
         this.state.workcenters = [...defaultWorkcenterButtons, ...workcenters];
         this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
@@ -536,6 +537,15 @@ export class MrpDisplay extends Component {
 
     get appName() {
         return encodeURIComponent(this.menu.getCurrentApp().name);
+    }
+
+    get displayBackButton() {
+        return this.env.config.breadcrumbs.length > 2;
+    }
+
+    onClickBack() {
+        const crumbs = this.env.config.breadcrumbs;
+        crumbs[crumbs.length - 2].onSelected();
     }
 
     demoMORecords = [

@@ -2,117 +2,117 @@
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpDisplay">
         <div class="o_action o_mrp_display h-100 overflow-auto">
-            <Layout display="props.display" className="'d-flex o_component_with_search_panel'">
-                <t t-set-slot="layout-actions">
-                    <t t-if="groups.workorders">
-                        <ControlPanelButtons
-                            productionCount="productions.length"
-                            workorders="filteredWorkorders"
-                            workcenters="state.workcenters"
-                            toggleWorkcenter="toggleWorkcenterDialog.bind(this)"
-                            selectWorkcenter="selectWorkcenter.bind(this)"
-                            activeWorkcenter="state.activeWorkcenter"
-                            relevantCount="relevantRecords.length"
-                            adminWorkorders="adminWorkorderIds"
-                            hideNewWorkcenterButton="shouldHideNewWorkcenterButton"
-                        />
-                    </t>
-                </t>
-                <t t-set-slot="control-panel-navigation-additional">
-                    <MrpDisplaySearchBar>
-                        <t t-set-slot="search-bar-additional-menu" t-if="groups.workorders">
-                            <div class="o_dropdown_container border-start px-3">
-                                <div class="px-3 fs-5 mb-2">
-                                    <i class="me-2 text-info fa fa-filter"></i>
-                                    <h5 class="o_dropdown_title d-inline">WO Filters</h5>
-                                </div>
-                                <t t-foreach="env.searchModel.state.workorderFilters" t-as="item" t-key="item.name">
-                                    <CheckboxItem
-                                            class="{ 'o_menu_item text-truncate': true, selected: item.isActive }"
-                                            checked="item.isActive"
-                                            closingMode="'none'"
-                                            onSelected="() => {item.isActive = !item.isActive; this.invalidateRecordIdsCache();}"
-                                            t-out="item.string"/>
-                                </t>
+            <div class="o_control_panel d-flex gap-3 px-3 pt-2 pb-3">
+                <button class="btn btn-secondary fa fa-chevron-left" t-on-click="onClickBack" t-if="displayBackButton"/>
+                <ControlPanelButtons t-if="groups.workorders &amp;&amp; !state.firstLoad"
+                    productionCount="productions.length"
+                    workorders="filteredWorkorders"
+                    workcenters="state.workcenters"
+                    toggleWorkcenter="toggleWorkcenterDialog.bind(this)"
+                    selectWorkcenter="selectWorkcenter.bind(this)"
+                    activeWorkcenter="state.activeWorkcenter"
+                    relevantCount="relevantRecords.length"
+                    adminWorkorders="adminWorkorderIds"
+                    hideNewWorkcenterButton="shouldHideNewWorkcenterButton"
+                />
+                <MrpDisplaySearchBar t-if="!state.firstLoad">
+                    <t t-set-slot="search-bar-additional-menu" t-if="groups.workorders">
+                        <div class="o_dropdown_container border-start px-3">
+                            <div class="px-3 fs-5 mb-2">
+                                <i class="me-2 text-info fa fa-filter"></i>
+                                <h5 class="o_dropdown_title d-inline">WO Filters</h5>
                             </div>
-                        </t>
-                    </MrpDisplaySearchBar>
-                    <Pager
-                        t-if="model.root.count > model.root.limit"
-                        total="model.root.count"
-                        offset="model.root.offset"
-                        limit="model.root.limit"
-                        onUpdate.bind="_onPagerChanged"/>
-                    <div>
-                        <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-lg fa-navicon"/>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <button class="btn btn-light dropdown-item" t-on-click="onClickRefresh">
-                                    <i class="fa fa-lg fa-refresh me-2"/>Reload Data
-                                </button>
-                            </li>
-                            <li>
-                                <a class="btn btn-light dropdown-item" t-attf-href="/scoped_app?app_id=mrp_shop_floor&amp;path=scoped_app/shop-floor&amp;app_name={{appName}}" target="_blank">
-                                    <i class="fa fa-lg fa-arrow-circle-down me-2"/>Install App
-                                </a>
-                            </li>
-                            <li>
-                                <button t-if="!pwaService.isScopedApp" class="btn btn-light dropdown-item" t-on-click="close">
-                                    <i class="fa fa-lg fa-th me-2"/>Close
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </t>
+                            <t t-foreach="env.searchModel.state.workorderFilters" t-as="item" t-key="item.name">
+                                <CheckboxItem
+                                        class="{ 'o_menu_item text-truncate': true, selected: item.isActive }"
+                                        checked="item.isActive"
+                                        closingMode="'none'"
+                                        onSelected="() => {item.isActive = !item.isActive; this.invalidateRecordIdsCache();}"
+                                        t-out="item.string"/>
+                            </t>
+                        </div>
+                    </t>
+                </MrpDisplaySearchBar>
+                <Pager
+                    t-if="model.root.count > model.root.limit &amp;&amp; !state.firstLoad"
+                    total="model.root.count"
+                    offset="model.root.offset"
+                    limit="model.root.limit"
+                    onUpdate.bind="_onPagerChanged"/>
+                <div class="ms-auto">
+                    <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-lg fa-navicon"/>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="btn btn-light dropdown-item" t-on-click="onClickRefresh">
+                                <i class="fa fa-lg fa-refresh me-2"/>Reload Data
+                            </button>
+                        </li>
+                        <li>
+                            <a class="btn btn-light dropdown-item" t-attf-href="/scoped_app?app_id=mrp_shop_floor&amp;path=scoped_app/shop-floor&amp;app_name={{appName}}" target="_blank">
+                                <i class="fa fa-lg fa-arrow-circle-down me-2"/>Install App
+                            </a>
+                        </li>
+                        <li>
+                            <button t-if="!pwaService.isScopedApp" class="btn btn-light dropdown-item" t-on-click="close">
+                                <i class="fa fa-lg fa-th me-2"/>Close
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div t-if="state.firstLoad" class="h-100 w-100 bg-cover d-flex justify-content-around align-items-end" style="background: no-repeat center / contain url('/mrp_workorder/static/img/drawing.svg')">
+                <button class="btn btn-lg btn-primary mb-5" t-on-click="() => this.toggleWorkcenterDialog()">Configure Station</button>
+            </div>
+            <main t-else="" class="o_content o_component_with_search_panel">
                 <MrpDisplayEmployeesPanel t-if="groups.workorders" employees="useEmployee.employees"
                     setSessionOwner.bind="changeAdmin"
                     popupAddEmployee.bind="login"
                     logout.bind="logout"/>
                 <div class="o_mrp_display_records flex-grow-1 m-2 position-relative">
-                    <t t-foreach="relevantRecords" t-as="record" t-key="record.id">
+                <t t-foreach="relevantRecords" t-as="record" t-key="record.id">
+                    <MrpDisplayRecord
+                        groups="groups"
+                        record="record"
+                        production="getProduction(record)"
+                        workcenters="state.workcenters"
+                        isMyWO="state.activeWorkcenter == -1 ? true : false"
+                        selectWorkcenter.bind="selectWorkcenter"
+                        updateEmployees.bind="useEmployee.getConnectedEmployees"
+                        sessionOwner="useEmployee.employees.admin"
+                        removeFromCache.bind="removeRecordIdFromCache"
+                        barcodeTarget="barcodeTargetRecord === record.resId"
+                        />
+                </t>
+                <t t-if="!relevantRecords.length">
+                    <t t-foreach="demoMORecords" t-as="record" t-key="record.id">
                         <MrpDisplayRecord
-                            groups="groups"
-                            record="record"
-                            production="getProduction(record)"
-                            workcenters="state.workcenters"
-                            isMyWO="state.activeWorkcenter == -1 ? true : false"
-                            selectWorkcenter.bind="selectWorkcenter"
-                            updateEmployees.bind="useEmployee.getConnectedEmployees"
-                            sessionOwner="useEmployee.employees.admin"
-                            removeFromCache.bind="removeRecordIdFromCache"
-                            barcodeTarget="barcodeTargetRecord === record.resId"
-                            />
+                        groups="groups"
+                        record="record"
+                        production="getProduction(record)"
+                        workcenters="state.workcenters"
+                        selectWorkcenter.bind="selectWorkcenter"
+                        updateEmployees.bind="useEmployee.getConnectedEmployees"
+                        sessionOwner="useEmployee.employees.admin"
+                        removeFromCache.bind="removeRecordIdFromCache"
+                        demoRecord="true"
+                        />
                     </t>
-                    <t t-if="!relevantRecords.length">
-                        <t t-foreach="demoMORecords" t-as="record" t-key="record.id">
-                            <MrpDisplayRecord
-                            groups="groups"
-                            record="record"
-                            production="getProduction(record)"
-                            workcenters="state.workcenters"
-                            selectWorkcenter.bind="selectWorkcenter"
-                            updateEmployees.bind="useEmployee.getConnectedEmployees"
-                            sessionOwner="useEmployee.employees.admin"
-                            removeFromCache.bind="removeRecordIdFromCache"
-                            demoRecord="true"
-                            />
-                        </t>
-                        <div class="o_view_nocontent z-index-0">
-                            <div class="o_nocontent_help">
-                                <p>
-                                    Shop Floor Control Panel
-                                </p><p>
-                                    Track work orders, show instructions and record manufacturing operations from here:
-                                    quality control, consumed quantities, lot/serial numbers, etc.
-                                </p>
-                                <button role="button" class="btn btn-lg btn-primary" t-on-click="loadSamples" t-if="state.canLoadSamples" t-att-disabled="state.canLoadSamples === 'disabled'">Load Samples</button>
-                            </div>
+                    <div class="o_view_nocontent z-index-0">
+                        <div class="o_nocontent_help">
+                            <p>
+                                Shop Floor Control Panel
+                            </p><p>
+                                Track work orders, show instructions and record manufacturing operations from here:
+                                quality control, consumed quantities, lot/serial numbers, etc.
+                            </p>
+                            <button role="button" class="btn btn-lg btn-primary" t-on-click="loadSamples" t-if="state.canLoadSamples" t-att-disabled="state.canLoadSamples === 'disabled'">Load Samples</button>
                         </div>
-                    </t>
-                </div>
-            </Layout>
+                    </div>
+                </t>
+            </div>
+            </main>
         </div>
     </t>
 </templates>
