@@ -2,6 +2,7 @@
 
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
+from stdnum.exceptions import InvalidFormat, InvalidLength
 from stdnum.nl.btw import validate
 
 from odoo import api, models, fields, _
@@ -25,7 +26,13 @@ class VATPayWizard(models.TransientModel):
     def _compute_communication(self):
         for wizard in self:
             company = wizard.move_id.company_id or self.env.company
-            vat = validate(company.vat or '')
+            try:
+                vat = validate(company.vat)
+            except Exception as e:
+                raise UserError(_(
+                    "Something went wrong while validating the VAT number: %s. You can modify it in the company settings.",
+                    company.vat
+                )) from e
             head, tail = vat.split("B")
             date = wizard.move_id.date
 

@@ -123,6 +123,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_nl_reports_vat_pay_wizard/wizard/vat_pay_wizard.py:0
 msgid ""
+"Something went wrong while validating the VAT number: %s. You can modify it "
+"in the company settings."
+msgstr ""
+
+#. module: l10n_nl_reports_vat_pay_wizard
+#. odoo-python
+#: code:addons/l10n_nl_reports_vat_pay_wizard/wizard/vat_pay_wizard.py:0
+msgid ""
 "The Belastingdienst account is not configured.Please update module "
 "'l10n_nl_reports_vat_pay_wizard'."
 msgstr ""
