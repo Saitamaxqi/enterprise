@@ -214,7 +214,7 @@ class HrPayslip(models.Model):
                 payslip.date_to = self.env.context.get('default_date_to')
             else:
                 payslip.date_to = payslip.date_from and payslip.date_from + payslip._get_schedule_timedelta()
-            if payslip.contract_id and payslip.contract_id.date_end\
+            if payslip.contract_id and payslip.contract_id.date_end and payslip.date_from\
                     and payslip.date_from >= payslip.contract_id.date_start\
                     and payslip.date_from < payslip.contract_id.date_end\
                     and payslip.date_to > payslip.contract_id.date_end:
@@ -1127,6 +1127,8 @@ class HrPayslip(models.Model):
     def _compute_warning_message(self):
         for slip in self.filtered(lambda p: p.date_to):
             slip.warning_message = False
+            if not slip.date_from or not slip.date_to:
+                continue
             warnings = []
             if slip.contract_id and (slip.date_from < slip.contract_id.date_start
                     or (slip.contract_id.date_end and slip.date_to > slip.contract_id.date_end)):

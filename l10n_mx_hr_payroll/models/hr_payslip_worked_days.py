@@ -15,6 +15,8 @@ class HrPayslipWorkedDays(models.Model):
             if not worked_days.contract_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
                 worked_days.amount = 0
                 continue
+            if not worked_days.payslip_id.date_from or not worked_days.payslip_id.date_to:
+                continue
 
             start_date = max(worked_days.payslip_id.date_from, worked_days.contract_id.date_start)
             end_date = min(worked_days.payslip_id.date_to, worked_days.contract_id.date_end) if worked_days.contract_id.date_end else worked_days.payslip_id.date_to
