@@ -32,28 +32,6 @@ export class MrpDisplaySearchModel extends SearchModel {
         this.workorders = true;
     }
 
-    _getFacets() {
-        // Add workorder filter facet to the search bar if applicable
-        const facets = super._getFacets();
-        if (this.workorders && !facets.some((f) => f.type === "favorite")) {
-            const values = this.state.workorderFilters.reduce(
-                (acc, i) => (i.isActive ? [...acc, i.string] : acc),
-                []
-            );
-            if (values.length) {
-                facets.push({
-                    groupId: 0,
-                    type: "filter",
-                    values: values,
-                    separator: "or",
-                    icon: "fa fa-filter",
-                    color: "info",
-                });
-            }
-        }
-        return facets;
-    }
-
     _getIrFilterDescription(params = {}) {
         // Save workorder filters in favorite context
         const { irFilter, preFavorite } = super._getIrFilterDescription(params);
