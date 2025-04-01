@@ -84,10 +84,10 @@ export class DocumentsMemberInvite extends Component {
         const partners = await this.orm.call("res.partner", "web_search_read", [], {
             domain: domain,
             specification: this._getPartnersSpecification(),
-            limit: limit,
+            limit: Math.max(limit, 8),  // Perf: lower bound of 8 for the limit, to hit trigram indexes
             count_limit: 1, // we don't need the number of records, skip the search_count
         });
-        return partners.records;
+        return partners.records.slice(0, limit);
     }
 
     _getPartnersSpecification() {
