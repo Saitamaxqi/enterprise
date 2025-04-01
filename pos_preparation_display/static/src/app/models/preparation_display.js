@@ -9,6 +9,8 @@ import { deserializeDateTime } from "@web/core/l10n/dates";
 import { Product } from "@pos_preparation_display/app/models/product";
 import { session } from "@web/session";
 
+const { DateTime } = luxon;
+
 // in the furur, maybe just set "filterOrders" as a getter and directly call the function.
 export class PreparationDisplay extends Reactive {
     constructor({ categories, orders, stages }, env, preparationDisplayId) {
@@ -28,6 +30,7 @@ export class PreparationDisplay extends Reactive {
         this.selectedStageId = 0;
         this.selectedCategories = new Set();
         this.selectedProducts = new Set();
+        this.selectedTime = "all";
         this.filteredOrders = [];
         this.noteByLines = {};
         this.noteByOrders = {};
@@ -55,10 +58,51 @@ export class PreparationDisplay extends Reactive {
         let ordersToDisplay = [];
 
         this.stages.forEach((stage) => (stage.orderCount = 0));
+
+        this.orderCounts = { all: 0, today: 0, tomorrow: 0, next_days: 0 };
+        const now = DateTime.now().startOf("day");
+        const tomorrow = now.plus({ days: 1 });
+        const nextDays = now.plus({ days: 2 });
+
         ordersToDisplay = Object.values(this.orders)
-            .filter((order) =>
-                order.orderlines.find((orderline) => {
-                    // the order must be in selected categories or products (if set) and must be flag as displayed.
+            .filter((order) => {
+                const orderDate = DateTime.fromSQL(order.preset_time);
+
+                if (order.stageId === this.selectedStageId) {
+                    this.orderCounts.all++;
+                    if (!order.preset_time || orderDate.hasSame(now, "day")) {
+                        this.orderCounts.today++;
+                    }
+                    if (orderDate && orderDate.hasSame(tomorrow, "day")) {
+                        this.orderCounts.tomorrow++;
+                    }
+                    if (orderDate && orderDate >= nextDays) {
+                        this.orderCounts.next_days++;
+                    }
+                }
+
+                if (this.selectedTime !== "all") {
+                    if (!order.preset_time) {
+                        if (this.selectedTime === "tomorrow" || this.selectedTime === "next_days") {
+                            return false;
+                        }
+                    } else {
+                        if (this.selectedTime === "today" && !orderDate.hasSame(now, "day")) {
+                            return false;
+                        }
+                        if (
+                            this.selectedTime === "tomorrow" &&
+                            !orderDate.hasSame(tomorrow, "day")
+                        ) {
+                            return false;
+                        }
+                        if (this.selectedTime === "next_days" && orderDate < nextDays) {
+                            return false;
+                        }
+                    }
+                }
+                return order.orderlines.find((orderline) => {
+                    // The order must be in selected categories or products and must be displayed.
                     if (!this.checkOrderlineVisibility(orderline) || !order.displayed) {
                         return;
                     }
@@ -68,8 +112,8 @@ export class PreparationDisplay extends Reactive {
                     }
                     // second filter, if a stage is selected the order must be in.
                     return !this.selectedStageId || order.stageId === this.selectedStageId;
-                })
-            )
+                });
+            })
             .sort((a, b) => {
                 const stageA = stages.get(a.stageId);
                 const stageB = stages.get(b.stageId);
@@ -321,6 +365,11 @@ export class PreparationDisplay extends Reactive {
 
         this.filterOrders();
         this.saveFilterToLocalStorage();
+    }
+
+    filterOrdersByTime(time) {
+        this.selectedTime = time;
+        this.filterOrders();
     }
 
     async resetOrders() {

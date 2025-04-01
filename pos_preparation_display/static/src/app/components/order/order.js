@@ -40,6 +40,10 @@ export class Order extends Component {
         return DateTime.fromSQL(this.props.order.preset_time).toFormat("HH:mm");
     }
 
+    get presetDate() {
+        return DateTime.fromSQL(this.props.order.preset_time).toFormat("dd/MM");
+    }
+
     get stage() {
         const order = this.props.order;
         return this.preparationDisplay.stages.get(order.stageId);

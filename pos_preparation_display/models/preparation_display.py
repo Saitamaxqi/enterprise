@@ -91,17 +91,18 @@ class Pos_Preparation_DisplayDisplay(models.Model):
     def _get_open_orders_in_display(self):
         self.ensure_one()
         PosPreparationDisplayOrder = self.env['pos_preparation_display.order']
-        open_orders = self.env['pos_preparation_display.order.stage']._read_group(
-            domain=[
+        open_order_stages = self.env['pos_preparation_display.order.stage'].search(
+            [
                 ('preparation_display_id', '=', self.id),
-                ('order_id.pos_order_id.session_id.state', 'not in', ['closed', 'closing_control']),
+                ('done', '=', False),
             ],
-            groupby=['order_id'],
-            having=[('done:bool_or', '=', False)],
+        )
+        open_order_stages = open_order_stages.filtered(
+            lambda s: s.order_id.pos_order_id.session_id.state not in ['closed', 'closing_control'] or (s.order_id.pos_order_id.preset_time and s.order_id.pos_order_id.preset_time.date() > fields.Date.today())
         )
         orders = PosPreparationDisplayOrder
-        if open_orders:
-            orders = PosPreparationDisplayOrder.union(*(order[0] for order in open_orders))
+        if open_order_stages.order_id:
+            orders = PosPreparationDisplayOrder.union(*(order[0] for order in open_order_stages.order_id))
 
         return orders
 

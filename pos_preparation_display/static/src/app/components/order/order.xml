@@ -14,7 +14,11 @@
                         </div>
                     </div>
                     <div t-if="this.props.order.preset_name" class="flex-shrink-0">
-                        <i class="fa fa-info pe-1" aria-hidden="true"/>
+                        <t t-if="this.props.order.preset_time">
+                            <span t-esc="presetTime"/>
+                            <span class="ps-1" t-esc="presetDate"/>
+                        </t>
+                        <i class="fa fa-info pe-1 ps-3" aria-hidden="true"/>
                         <span t-esc="this.props.order.preset_name"/>
                     </div>
                 </div>
@@ -22,9 +26,6 @@
                     <div class="o_pdis_table-info d-flex justify-content-between align-items-center">
                         <div t-esc="this.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill"
                             t-att-style="`background-color: ${this.stage.color} !important; color: ${this.fondColor}`"/>
-                        <div t-if="this.props.order.preset_time">
-                            <span t-esc="presetTime"/>
-                        </div>
                         <div class="o_pdis_alert-timer" t-attf-class="{{ this.preparationDisplay.lastStage.id !== this.props.order.stageId ? '' : 'd-none' }}">
                             <div class="rounded-pill py-1 px-3"
                                 t-att-class="{ 'bg-white': !this.isAlert, 'o_pdis_is_alert text-bg-danger': this.isAlert, 'o_pdis_archive-order cursor-pointer': this.preparationDisplay.lastStage.id === this.props.order.stageId }">

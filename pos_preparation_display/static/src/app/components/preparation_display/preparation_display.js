@@ -60,6 +60,7 @@ export class PreparationDisplay extends Component {
     resetFilter() {
         this.preparationDisplay.selectedCategories = new Set();
         this.preparationDisplay.selectedProducts = new Set();
+        this.preparationDisplay.selectedTime = "all";
         this.preparationDisplay.filterOrders();
         this.preparationDisplay.saveFilterToLocalStorage();
     }
