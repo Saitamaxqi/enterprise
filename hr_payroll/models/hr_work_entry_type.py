@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class HrWorkEntryType(models.Model):
@@ -34,3 +35,8 @@ class HrWorkEntryType(models.Model):
     @api.depends_context('allowed_company_ids')
     def _compute_current_companies_country_codes(self):
         self.current_companies_country_codes = self.env.companies.mapped('country_id.code')
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_work_entry_type(self):
+        if self:
+            raise UserError(_("You cannot delete work entry type(s). Instead archive it."))
