@@ -2,25 +2,31 @@ import { defineAccountModels } from "@account/../tests/account_test_helpers";
 import {
     click,
     contains,
+    listenStoreFetch,
     onRpcBefore,
     openListView,
     patchUiSize,
     SIZES,
     start,
     startServer,
+    STORE_FETCH_ROUTES,
+    userContext,
+    waitStoreFetch,
 } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, test } from "@odoo/hoot";
-import { asyncStep, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
+import { asyncStep, onRpc, waitForSteps } from "@web/../tests/web_test_helpers";
 import { getOrigin } from "@web/core/utils/urls";
 
 const ROUTES_TO_IGNORE = [
+    ...STORE_FETCH_ROUTES,
     "/bus/im_status",
-    "/web/dataset/call_kw/account.move.line/get_views",
-    "/web/webclient/load_menus",
-    "/web/dataset/call_kw/res.users/load_views",
     "/hr_attendance/attendance_user_data",
+    "/web/dataset/call_kw/account.move.line/get_views",
     "/web/dataset/call_kw/res.users/has_group",
+    "/web/dataset/call_kw/res.users/load_views",
+    "/web/webclient/load_menus",
 ];
+
 const openPreparedView = async (size) => {
     patchUiSize({ size: size });
     onRpcBefore((route, args) => {
@@ -39,22 +45,9 @@ const openPreparedView = async (size) => {
         }
         asyncStep(`${route} - {"kwargs":${JSON.stringify(kwargs)}}`);
     });
+    listenStoreFetch("init_messaging");
     await start();
-    await waitForSteps([
-        `/web/dataset/call_kw/ir.http/lazy_session_info - ${JSON.stringify({
-            model: "ir.http",
-            method: "lazy_session_info",
-            args: [[]],
-            kwargs: {
-                context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
-                },
-            },
-        })}`,
-    ]);
+    await waitStoreFetch("init_messaging");
     await openListView("account.move.line", {
         context: { group_by: ["move_id"] },
         arch: `
@@ -121,10 +114,7 @@ test("No preview on small devices", async () => {
                 offset: 0,
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     read_group_expand: true,
                     group_by: ["move_id"],
                 },
@@ -148,10 +138,7 @@ test("No preview on small devices", async () => {
                 order: "",
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 1,
@@ -180,10 +167,7 @@ test("No preview on small devices", async () => {
                 order: "",
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 2,
@@ -213,10 +197,7 @@ test("Fetch and preview of attachments on big devices", async () => {
                 offset: 0,
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     read_group_expand: true,
                     group_by: ["move_id"],
                 },
@@ -243,10 +224,7 @@ test("Fetch and preview of attachments on big devices", async () => {
                 order: "",
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 1,
@@ -275,10 +253,7 @@ test("Fetch and preview of attachments on big devices", async () => {
                 order: "",
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 2,
@@ -317,10 +292,7 @@ test("Fetch and preview of attachments on big devices", async () => {
                 order: "",
                 limit: 80,
                 context: {
-                    lang: "en",
-                    tz: "taht",
-                    uid: serverState.userId,
-                    allowed_company_ids: [1],
+                    ...userContext(),
                     bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 3,

@@ -3,7 +3,7 @@ import { queryAll, queryAllTexts, waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 
-import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { mailModels, STORE_FETCH_ROUTES } from "@mail/../tests/mail_test_helpers";
 import {
     contains,
     defineActions,
@@ -995,7 +995,14 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
         const route = new URL(request.url).pathname;
         const match = route.match(R_DATASET_ROUTE) || route.match(R_WEBCLIENT_ROUTE);
         const step = match?.groups?.step || route;
-        if (!["/mail/action", "/mail/data", "/hr_attendance/attendance_user_data"].includes(step)) {
+        if (
+            ![
+                ...STORE_FETCH_ROUTES,
+                "/hr_attendance/attendance_user_data",
+                "/web/bundle/web.assets_emoji",
+            ].includes(step) ||
+            step === "lazy_session_info"
+        ) {
             expect.step(step);
         }
     });

@@ -1,11 +1,5 @@
 import { defineKnowledgeModels } from "@knowledge/../tests/knowledge_test_helpers";
-import {
-    click,
-    contains,
-    start,
-    startServer,
-
-} from "@mail/../tests/mail_test_helpers";
+import { click, contains, start, startServer } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
 import { asyncStep, mockService, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
 
