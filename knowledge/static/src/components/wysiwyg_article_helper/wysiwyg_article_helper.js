@@ -1,10 +1,11 @@
-import { Component } from "@odoo/owl";
+import { Component, onWillStart } from "@odoo/owl";
 import { ChatGPTPromptDialog } from "@html_editor/main/chatgpt/chatgpt_prompt_dialog";
 import { parseHTML } from "@html_editor/utils/html";
 import { ArticleTemplatePickerDialog } from "@knowledge/components/article_template_picker_dialog/article_template_picker_dialog";
 import { ItemCalendarPropsDialog } from "@knowledge/components/item_calendar_props_dialog/item_calendar_props_dialog";
 import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog";
 import { _t } from "@web/core/l10n/translation";
+import { user } from "@web/core/user";
 import { renderToFragment } from "@web/core/utils/render";
 import { useService } from "@web/core/utils/hooks";
 import { HtmlUpgradeManager } from "@html_editor/html_migrations/html_upgrade_manager";
@@ -21,6 +22,9 @@ export class WysiwygArticleHelper extends Component {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.orm = useService("orm");
+        onWillStart(async () => {
+            this.isPortalUser = await user.hasGroup("base.group_portal");
+        });
     }
 
     onLoadTemplateBtnClick() {
