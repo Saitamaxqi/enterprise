@@ -35,7 +35,8 @@ class AccountMove(models.Model):
         return user_infos
 
     def _save_form(self, ocr_results):
-        if self.move_type == 'in_invoice':
+        # Don't update the bill when it has at least one line
+        if self.move_type == 'in_invoice' and not self.invoice_line_ids:
             total_ocr = self._get_ocr_selected_value(ocr_results, 'total', 0.0)
 
             purchase_orders_ocr = ocr_results['purchase_order']['selected_values'] if 'purchase_order' in ocr_results else []

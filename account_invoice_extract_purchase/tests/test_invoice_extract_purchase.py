@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
 from odoo.tests import Form, tagged
@@ -179,3 +180,59 @@ class TestInvoiceExtractPurchase(AccountTestInvoicingCommon, TestExtractMixin):
         self.assertEqual(invoice.partner_id, self.vendor)
         self.assertEqual(invoice.ref, 'INV0001')
         self.assertEqual(invoice.invoice_line_ids.mapped('product_id'), self.product1 | self.product2 | self.product3)
+
+    def test_no_purchase_extraction_when_bill_lines(self):
+        ''' Tests that the purchase matching extraction does not update a bill that already has lines.'''
+
+        # Step 1: create 2 identical POs
+        partner = self.company_data['company'].partner_id
+        po1 = self.env['purchase.order'].create({
+            "partner_id": partner.id,
+            "order_line": [Command.create({
+                'product_id': self.product_a.id,
+                'name': self.product_a.name,
+                'product_qty': 1.0,
+                'price_unit': 100,
+                'tax_ids': False,
+            })],
+        })
+        po2 = po1.copy()
+        po2.order_line.write({'price_unit': 200})
+        (po1 + po2).button_confirm()
+        (po1 + po2).order_line.write({'qty_received': 1})
+
+        # Step 2: Create a bill from PO1
+        bill_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
+        bill_form.purchase_vendor_bill_id = self.env['purchase.bill.union'].browse(-po1.id)
+        bill = bill_form.save()
+
+        self.assertEqual(bill.invoice_origin, po1.name)
+
+        # Step 3: Extend the bill with PO2
+        extract_response = {
+            'results': [{
+                'supplier': {'selected_value': {'content': "company_1_data"}, 'candidates': []},
+                'total': {'selected_value': {'content': 200}, 'candidates': []},
+                'subtotal': {'selected_value': {'content': 200}, 'candidates': []},
+                'total_tax_amount': {'selected_value': {'content': 0.0}, 'words': []},
+                'currency': {'selected_value': {'content': 'EUR'}, 'candidates': []},
+                'purchase_order': {'selected_values': [{'content': po2.name}], 'candidates': []},
+                'invoice_lines': [
+                    {
+                        'description': {'selected_value': {'content': 'product_a'}},
+                        'unit_price': {'selected_value': {'content': 200}},
+                        'quantity': {'selected_value': {'content': 1}},
+                        'taxes': {'selected_values': [{'content': 0, 'amount_type': 'percent'}]},
+                        'subtotal': {'selected_value': {'content': 200}},
+                        'total': {'selected_value': {'content': 200}},
+                    },
+                ],
+            }],
+            'status': 'success',
+        }
+        bill.extract_state = 'waiting_extraction'
+        with self._mock_iap_extract(extract_response=extract_response):
+            bill._check_ocr_status()
+
+        self.assertEqual(bill.extract_status, 'success')
+        self.assertEqual(bill.invoice_origin, po1.name)
