@@ -46,7 +46,6 @@ class HrVersion(models.Model):
     ], compute='_compute_wage_type', store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
     hourly_wage = fields.Monetary('Hourly Wage', tracking=True, help="Employee's hourly gross wage.", groups="hr_payroll.group_hr_payroll_user")
     payslips_count = fields.Integer("# Payslips", compute='_compute_payslips_count', groups="hr_payroll.group_hr_payroll_user")
-    calendar_changed = fields.Boolean(help="Whether the previous or next contract has a different schedule or not", groups="hr.group_hr_user")
 
     time_credit = fields.Boolean('Part Time', readonly=False, groups="hr_payroll.group_hr_payroll_user")
     work_time_rate = fields.Float(
@@ -206,26 +205,6 @@ class HrVersion(models.Model):
             done_versions |= versions
         return result
 
-    def _compute_calendar_changed(self):
-        contract_resets = self.filtered(lambda c: not c.resource_calendar_id or not c.active)
-        contract_resets.filtered(lambda c: c.calendar_changed).write({'calendar_changed': False})
-        self -= contract_resets
-        occupation_dates = self._get_occupation_dates(include_future_contracts=True)
-        occupation_by_employee = defaultdict(list)
-        for row in occupation_dates:
-            occupation_by_employee[row[0][0].employee_id.id].append(row)
-        contract_changed = self.env['hr.version']
-        for occupations in occupation_by_employee.values():
-            if len(occupations) == 1:
-                continue
-            for i in range(len(occupations) - 1):
-                current_row = occupations[i]
-                next_row = occupations[i + 1]
-                contract_changed |= current_row[0][-1]
-                contract_changed |= next_row[0][0]
-        contract_changed.filtered(lambda c: not c.calendar_changed).write({'calendar_changed': True})
-        (self - contract_changed).filtered(lambda c: c.calendar_changed).write({'calendar_changed': False})
-
     def _get_normalized_wage(self):
         wage = self._get_contract_wage()
         if self.wage_type == 'hourly' or not self.resource_calendar_id.hours_per_week:
@@ -288,13 +267,6 @@ class HrVersion(models.Model):
         if self.wage_type == 'hourly':
             return 'hourly_wage'
         return super()._get_contract_wage_field()
-
-    @api.model
-    def _recompute_calendar_changed(self, employee_ids):
-        versions_sudo = self.sudo().search([('employee_id', 'in', employee_ids.ids)], order='contract_date_start asc')
-        if not versions_sudo:
-            return
-        versions_sudo._compute_calendar_changed()
 
     def action_open_payslips(self):
         # [XBO] TODO: to remove if we don't want to display the button in the list view of version
@@ -397,31 +369,12 @@ class HrVersion(models.Model):
                 nearly_expired_versions_without_new_versions |= expired_version
         return nearly_expired_versions_without_new_versions
 
-    @api.model
-    def _generate_work_entries_postprocess_adapt_to_calendar(self, vals):
-        res = super()._generate_work_entries_postprocess_adapt_to_calendar(vals)
-        return res and not vals.get('is_credit_time')
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        versions = super().create(vals_list)
-        self._recompute_calendar_changed(versions.mapped('employee_id'))
-        return versions
-
-    def unlink(self):
-        employee_ids = self.mapped('employee_id')
-        res = super().unlink()
-        self._recompute_calendar_changed(employee_ids)
-        return res
-
     def write(self, vals):
         res = super().write(vals)
         dependendant_fields = self._get_fields_that_recompute_payslip()
         if any(key in dependendant_fields for key in vals):
             for version_sudo in self.sudo():
                 version_sudo._recompute_payslips(version_sudo.date_start, version_sudo.date_end or date.max)
-        if any(key in vals for key in ('state', 'date_start', 'resource_calendar_id', 'employee_id')):
-            self._recompute_calendar_changed(self.employee_id)
         return res
 
     def copy(self, default=None):

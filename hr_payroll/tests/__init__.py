@@ -3,7 +3,6 @@
 from . import common
 from . import test_payslip_flow
 from . import test_contract_calendar_2_weeks
-from . import test_contract_schedule_change
 from . import test_dashboard
 from . import test_multi_contract
 from . import test_rule_parameter

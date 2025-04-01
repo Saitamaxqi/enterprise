@@ -554,6 +554,11 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
                 return amount / 2
         return private_car_reimbursement_scale[-1][1] / 2
 
+    @api.model
+    def _generate_work_entries_postprocess_adapt_to_calendar(self, vals):
+        res = super()._generate_work_entries_postprocess_adapt_to_calendar(vals)
+        return res and not vals.get('l10n_be_is_time_credit')
+
     def _preprocess_work_hours_data_split_half(self, work_data, date_from, date_to):
         """
         Method is meant to be overriden, see l10n_be_hr_payroll_attendance
