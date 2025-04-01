@@ -2851,56 +2851,34 @@
                     "size": 98
                 },
                 "9": {
-                    "isHidden": true,
                     "size": 106
                 },
                 "10": {
-                    "isHidden": true,
                     "size": 100
                 },
                 "11": {
-                    "isHidden": true,
                     "size": 122
                 },
                 "12": {
-                    "isHidden": true,
                     "size": 103
                 },
                 "13": {
-                    "isHidden": true,
                     "size": 107
                 },
-                "14": {
-                    "isHidden": true
-                },
                 "15": {
-                    "isHidden": true,
                     "size": 107
                 },
                 "16": {
-                    "isHidden": true,
                     "size": 149
                 },
                 "17": {
-                    "isHidden": true,
                     "size": 143
                 },
                 "18": {
-                    "isHidden": true,
                     "size": 143
                 },
-                "19": {
-                    "isHidden": true
-                },
                 "20": {
-                    "isHidden": true,
                     "size": 86
-                },
-                "21": {
-                    "isHidden": true
-                },
-                "22": {
-                    "isHidden": true
                 }
             },
             "merges": [],
