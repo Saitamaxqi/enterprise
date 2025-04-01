@@ -358,7 +358,9 @@ class EasypostRequest():
         # explicitly check response for any messages
         messages = response.get('messages', [])
         message_type = messages[0].get('type') if messages else None
-        if message_type and message_type not in NON_BLOCKING_MESSAGES:
+        message_carrier = messages[0].get('carrier') if messages else None
+        # LoomisExpress is an exception when validating multi-package
+        if message_type and message_type not in NON_BLOCKING_MESSAGES and (message_carrier != 'LoomisExpress' or message_type != 'rate_error'):
             raise UserError('\n'.join([x['carrier'] + ': ' + x['type'] + ' -- ' + x['message'] for x in response['messages']]))
 
         # get tracking code and lable file url
