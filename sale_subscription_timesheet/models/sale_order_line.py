@@ -21,8 +21,7 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self - timesheet_lines)._compute_qty_delivered()
 
         for so, lines in groupby(timesheet_lines, lambda sol: (sol.order_id)):
-            lines = sum(lines, self.env['sale.order.line'])
-            lines_by_timesheet = lines.filtered(lambda sol: sol.product_id and sol.product_id._is_delivered_timesheet())
+            lines_by_timesheet = sum(lines, self.env['sale.order.line'])
             domain = lines_by_timesheet._timesheet_compute_delivered_quantity_domain()
             refund_account_moves = so.invoice_ids.filtered(
                 lambda am: am.state == 'posted' and am.move_type == 'out_refund').reversed_entry_id

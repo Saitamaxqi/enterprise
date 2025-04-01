@@ -101,3 +101,44 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
             self.assertTrue(task)
             self.assertEqual(inv.amount_untaxed, 4500, "The amount depends on the timesheet (90 per hour)")
             self.assertEqual(len(task), 2, "Two tasks are created automatically")
+
+    def test_sub_timesheet_order_invoice_product(self):
+        # Subscription service product with invoicing policy `ordered_prepaid`
+        self.product_order_timesheet2.recurring_invoice = True
+
+        with freeze_time("2025-02-15"):
+            subscription_timesheet = self.env['sale.order'].create({
+                'name': 'Test',
+                'plan_id': self.plan_month.id,
+                'partner_id': self.user_portal.partner_id.id,
+                'start_date': '2025-02-01',
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product_order_timesheet2.id,
+                        'product_uom_qty': 10
+                    }),
+                ],
+            })
+            subscription_timesheet.action_confirm()
+            task = subscription_timesheet.tasks_ids
+            self.env['account.analytic.line'].create([
+                {
+                    'name': 'Timesheet before subscription period',
+                    'project_id': task.project_id.id,
+                    'task_id': task.id,
+                    'unit_amount': 2,
+                    'employee_id': self.employee_user.id,
+                    'date': '2025-01-15'
+                },
+                {
+                    'name': 'Timesheet during subscription period',
+                    'project_id': task.project_id.id,
+                    'task_id': task.id,
+                    'unit_amount': 2,
+                    'employee_id': self.employee_user.id,
+                    'date': '2025-02-15'
+                },
+            ])
+            # We need to run the cron once in order to update the next_invoice_date of the subscription
+            self.env['sale.order']._cron_recurring_create_invoice()
+            self.assertEqual(subscription_timesheet.order_line.qty_delivered, 2, "2 hours delivered for the February period")
