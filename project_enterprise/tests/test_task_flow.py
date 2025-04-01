@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 from markupsafe import Markup
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests import Form, TransactionCase
 
 from odoo.addons.mail.tests.common import mail_new_test_user
@@ -443,3 +443,171 @@ class TestTaskFlow(TransactionCase):
         })
         self.assertFalse(project.copy().task_ids.planned_date_begin, "The task's date fields shouldn't be copied on project duplication")
         self.assertFalse(task.copy().planned_date_begin, "The task's date fields shouldn't be copied on task duplication")
+
+    def test_plan_task_in_calendar(self):
+        self.project_test_user.resource_calendar_id = self.env['resource.calendar'].create({
+            'name': "Test Calendar : 36 Hours/Week",
+            'company_id': self.env.company.id,
+            'tz': 'Europe/Brussels',
+            'hours_per_week': 36.0,
+            'full_time_required_hours': 36.0,
+            'attendance_ids': [
+                Command.create({
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 17, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 17, "afternoon"),
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 17, "afternoon"),
+                    ("3", 14.0, 18, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 17, "afternoon"),
+                ]
+            ],
+        })
+        task1, task2, task3, task4, task5, task6 = self.env['project.task'].with_context(tz='Europe/Brussels').create([
+            {'name': 'Task 1', 'user_ids': self.project_user.ids},
+            {'name': 'Task 2', 'user_ids': self.project_user.ids, 'allocated_hours': 2},
+            {'name': 'Task 3', 'user_ids': self.project_test_user.ids, 'allocated_hours': 2},
+            {'name': 'Task 4', 'user_ids': (self.project_user + self.project_test_user).ids, 'allocated_hours': 2},
+            {'name': 'Task 5', 'user_ids': self.project_user.ids, 'allocated_hours': 10},
+            {'name': 'Task 6', 'user_ids': (self.project_user + self.project_test_user).ids, 'allocated_hours': 10},
+        ])
+        vals = {'planned_date_begin': '2021-09-23 11:00:00', 'date_deadline': '2021-09-23 12:00:00'}
+        task1.plan_task_in_calendar(vals)
+        self.assertEqual(fields.Datetime.to_string(task1.planned_date_begin), '2021-09-23 11:00:00', 'Should be the start date given in the vals')
+        self.assertEqual(fields.Datetime.to_string(task1.date_deadline), '2021-09-23 12:00:00', 'Should be the end date given in the vals')
+
+        task1.write({'planned_date_begin': False, 'date_deadline': False})
+        task1.plan_task_in_calendar({'date_deadline': '2021-09-23 12:00:00'})
+        self.assertFalse(task1.planned_date_begin)
+        self.assertEqual(
+            fields.Datetime.to_string(task1.date_deadline),
+            '2021-09-23 12:00:00',
+            'Should be the end date given in the vals'
+        )
+        task1.write({'planned_date_begin': False, 'date_deadline': False, 'allocated_hours': 0})
+        task1.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({
+            'planned_date_begin': '2021-09-23 07:00:00',
+            'date_deadline': '2021-09-23 19:00:00',
+        })
+        self.assertEqual(task1.planned_date_begin, datetime(2021, 9, 23, 6, 0, 0))
+        self.assertEqual(task1.date_deadline, datetime(2021, 9, 23, 15, 0, 0))
+        self.assertEqual(task1.allocated_hours, 8)
+
+        task2.plan_task_in_calendar(vals)
+        self.assertEqual(
+            fields.Datetime.to_string(task2.planned_date_begin),
+            '2021-09-23 11:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task2.date_deadline),
+            '2021-09-23 13:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+
+        task2.write({'planned_date_begin': False, 'date_deadline': False, 'allocated_hours': 2})
+        task2.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({'date_deadline': '2021-09-03 19:00:00'})
+        self.assertFalse(task2.planned_date_begin)
+        self.assertEqual(
+            fields.Datetime.to_string(task2.date_deadline),
+            '2021-09-03 19:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+        task2.write({'planned_date_begin': False, 'date_deadline': False, 'allocated_hours': 2})
+        task2.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({
+            'planned_date_begin': '2021-09-03 07:00:00',
+            'date_deadline': '2021-09-03 19:00:00',
+        })
+        self.assertEqual(
+            fields.Datetime.to_string(task2.planned_date_begin),
+            '2021-09-03 07:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task2.date_deadline),
+            '2021-09-03 09:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+
+        task3.plan_task_in_calendar(vals)
+        self.assertEqual(
+            fields.Datetime.to_string(task3.planned_date_begin),
+            '2021-09-23 11:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task3.date_deadline),
+            '2021-09-23 14:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+
+        task4.plan_task_in_calendar(vals)
+        self.assertEqual(
+            fields.Datetime.to_string(task4.planned_date_begin),
+            '2021-09-23 11:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task4.date_deadline),
+            '2021-09-23 14:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+        task4.write({'planned_date_begin': False, 'date_deadline': False, 'allocated_hours': 2})
+        task4.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({'date_deadline': '2021-09-03 19:00:00'})
+        self.assertFalse(task4.planned_date_begin)
+        self.assertEqual(
+            fields.Datetime.to_string(task4.date_deadline),
+            '2021-09-03 19:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+        task4.write({'planned_date_begin': False, 'date_deadline': False, 'allocated_hours': 2})
+        task4.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({
+            'planned_date_begin': '2021-09-03 07:00:00',
+            'date_deadline': '2021-09-03 19:00:00',
+        })
+        self.assertEqual(
+            fields.Datetime.to_string(task4.planned_date_begin),
+            '2021-09-03 07:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task4.date_deadline),
+            '2021-09-03 09:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+
+        task5.plan_task_in_calendar(vals)
+        self.assertEqual(
+            fields.Datetime.to_string(task5.planned_date_begin),
+            '2021-09-23 11:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task5.date_deadline),
+            '2021-09-24 13:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )
+
+        task6.plan_task_in_calendar(vals)
+        self.assertEqual(
+            fields.Datetime.to_string(task6.planned_date_begin),
+            '2021-09-23 11:00:00',
+            'Should be the start date given in the vals'
+        )
+        self.assertEqual(
+            fields.Datetime.to_string(task6.date_deadline),
+            '2021-09-24 14:00:00',
+            'Should take into account the allocated hours set on the task and the working calendar of users assigned'
+        )

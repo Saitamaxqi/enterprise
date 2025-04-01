@@ -628,6 +628,57 @@ class ProjectTask(models.Model):
                 filters.append(dom)
         return filters
 
+    def _get_users_available_work_intervals(self, start_datetime, end_datetime):
+        users_work_intervals, calendar_work_intervals = self.user_ids._get_valid_work_intervals(start_datetime, end_datetime)
+        company = self.user_ids.company_id if self.user_ids.company_id.id else self.env.company
+        company_work_intervals = calendar_work_intervals.get(company.resource_calendar_id.id, company.resource_calendar_id._work_intervals_batch(start_datetime, end_datetime)[False])
+        available_work_intervals = None
+        for user in self.user_ids:
+            work_intervals = users_work_intervals.get(user.id)
+            if not work_intervals:
+                continue
+            if available_work_intervals is None:
+                available_work_intervals = work_intervals
+            else:
+                available_work_intervals &= work_intervals
+
+        if not available_work_intervals:
+            available_work_intervals = company_work_intervals
+        return available_work_intervals
+
+    def plan_task_in_calendar(self, vals):
+        self.ensure_one()
+        if planned_date_begin := vals.get("planned_date_begin"):
+            tz_info = self.env.context.get('tz') or self.env.user.tz or 'UTC'
+            planned_date_begin = datetime.strptime(planned_date_begin, '%Y-%m-%d %H:%M:%S').astimezone(timezone(tz_info))
+            if self.allocated_hours:
+                # expected days + one month in case the current user took some day offs in the future
+                max_date_end = planned_date_begin + relativedelta(days=self.allocated_hours / 8, months=1)
+                available_work_intervals = self._get_users_available_work_intervals(planned_date_begin, max_date_end)
+                hours_to_plan = self.allocated_hours
+                compute_date_end = None
+                for start_date, end_date, _dummy in available_work_intervals:
+                    hours_to_plan -= (end_date - start_date).total_seconds() / 3600
+                    if hours_to_plan <= 0:
+                        compute_date_end = end_date + relativedelta(seconds=hours_to_plan * 3600)
+                        break
+                if available_work_intervals:
+                    if not compute_date_end:
+                        compute_date_end = available_work_intervals._items[-1][1]
+                    if self.env.context.get('task_calendar_plan_full_day'):
+                        vals['planned_date_begin'] = available_work_intervals._items[0][0].astimezone(utc).replace(tzinfo=None)
+                if compute_date_end:
+                    vals['date_deadline'] = compute_date_end.astimezone(utc).replace(tzinfo=None)
+            elif self.env.context.get('task_calendar_plan_full_day'):
+                planned_date_begin += relativedelta(hour=0, minute=0, second=0, microsecond=0)
+                planned_date_end = datetime.strptime(vals['date_deadline'], '%Y-%m-%d %H:%M:%S').astimezone(timezone(tz_info))
+                planned_date_end += relativedelta(hour=23, minute=59, second=59, microsecond=59)
+                available_work_intervals = self._get_users_available_work_intervals(planned_date_begin, planned_date_end)
+                if available_work_intervals:
+                    vals['planned_date_begin'] = available_work_intervals._items[0][0].astimezone(utc).replace(tzinfo=None)
+                    vals['date_deadline'] = available_work_intervals._items[-1][1].astimezone(utc).replace(tzinfo=None)
+        return super().plan_task_in_calendar(vals)
+
     # -------------------------------------
     # Business Methods : Smart Scheduling
     # -------------------------------------

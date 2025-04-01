@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { queryFirst } from "@odoo/hoot-dom";
 import { mockDate } from "@odoo/hoot-mock";
-import { mountView, onRpc } from "@web/../tests/web_test_helpers";
+import { contains, mountView, onRpc } from "@web/../tests/web_test_helpers";
 import { clickDate, selectDateRange } from "@web/../tests/views/calendar/calendar_test_helpers";
 import { defineProjectModels } from "@project/../tests/project_models";
 import { ProjectTask } from "@project_enterprise/../tests/task_gant_model";
+import { serializeDateTime } from "@web/core/l10n/dates";
 
 describe.current.tags("desktop");
 defineProjectModels();
@@ -31,7 +33,7 @@ const calendarMountParams = {
             date_stop="date_deadline"
             event_open_popup="1"
             mode="month"
-            js_class="project_enterprise_task_calendar"
+            js_class="project_task_calendar"
             quick_create="0"
         />
     `,
@@ -55,4 +57,38 @@ test("Planned Date Begin Should Be Set When Selecting Multiple Days", async () =
     expect("button.o_add_start_date").toHaveCount(0, {
         message: "the planned date begin should not be set when selecting a single day",
     });
+});
+
+test("Drag and drop task to schedule in month scale", async () => {
+    let expectedDate = null;
+
+    onRpc("project.task", "search_read", ({ method }) => {
+        expect.step(method);
+    });
+    onRpc("project.task", "web_search_read", ({ method }) => {
+        expect.step("fetch tasks to schedule");
+    });
+    onRpc("project.task", "plan_task_in_calendar", ({ args }) => {
+        const [taskIds, vals] = args;
+        expect(taskIds).toEqual([1]);
+        const dateDeadline = expectedDate.set({ hours: 19 });
+        expect(vals).toEqual({
+            date_deadline: serializeDateTime(dateDeadline),
+        });
+        expect.step("plan task");
+    });
+    await mountView({
+        ...calendarMountParams,
+        context: { default_project_id: 1 },
+    });
+    expect(".o_task_to_plan_draggable").toHaveCount(2);
+    const { drop, moveTo } = await contains(".o_task_to_plan_draggable:first").drag();
+    const dateCell = queryFirst(".fc-day.fc-day-today.fc-daygrid-day");
+    expectedDate = luxon.DateTime.fromISO(dateCell.dataset.date);
+    await moveTo(dateCell);
+    expect(dateCell).toHaveClass("o-highlight");
+    await drop();
+    expect.verifySteps(["search_read", "fetch tasks to schedule", "plan task", "search_read"]);
+    expect(".o_task_to_plan_draggable").toHaveCount(1);
+    expect(".o_task_to_plan_draggable").toHaveText("Regular task 2");
 });

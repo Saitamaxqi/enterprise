@@ -275,7 +275,6 @@
         <field name="inherit_id" ref="project.view_task_calendar"/>
         <field name="arch" type="xml">
             <xpath expr="//calendar" position="attributes">
-                <attribute name="js_class">project_enterprise_task_calendar</attribute>
                 <attribute name="date_start">planned_date_start</attribute>
                 <attribute name="date_stop">date_deadline</attribute>
             </xpath>

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
+from datetime import datetime
+
 from odoo import Command
 from odoo.exceptions import AccessError
 from odoo.tests import tagged, users
@@ -126,3 +128,13 @@ class TestFsmFlow(TestIndustryFsmCommon):
             "FSM Project with stages should have default task stages."
         )
         fsm_stage.action_unarchive()
+
+    def test_plan_task_in_calendar(self):
+        self.task.user_ids = self.george_user
+        self.task.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({
+            'planned_date_begin': '2023-02-01 07:00:00',
+            'date_deadline': '2023-02-01 19:00:00',
+        })
+        self.assertEqual(self.task.planned_date_begin, datetime(2023, 2, 1, 8, 0, 0))
+        self.assertEqual(self.task.date_deadline, datetime(2023, 2, 1, 17, 0, 0))
+        self.assertEqual(self.task.allocated_hours, 8)
