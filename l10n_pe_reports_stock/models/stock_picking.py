@@ -21,7 +21,7 @@ class StockPicking(models.Model):
             ('13', 'Shrinkage'),
             ('14', 'Deterioration'),
             ('15', 'Destruction'),
-            ('16', 'Initial Balance'),
+            ('16', 'Opening Balance'),
             ('17', 'Export'),
             ('18', 'Import'),
             ('19', 'Production Entry'),

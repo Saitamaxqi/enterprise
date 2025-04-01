@@ -177,8 +177,8 @@ msgstr "Importación"
 
 #. module: l10n_pe_reports_stock
 #: model:ir.model.fields.selection,name:l10n_pe_reports_stock.selection__stock_picking__l10n_pe_operation_type__16
-msgid "Initial Balance"
-msgstr "Balance inicial"
+msgid "Opening Balance"
+msgstr "Saldo inicial"
 
 #. module: l10n_pe_reports_stock
 #: model:ir.model.fields,field_description:l10n_pe_reports_stock.field_l10n_pe_stock_ple_wizard__write_uid
@@ -362,7 +362,7 @@ msgstr "Devolución entregada"
 #. module: l10n_pe_reports_stock
 #: model:ir.model.fields.selection,name:l10n_pe_reports_stock.selection__stock_picking__l10n_pe_operation_type__5
 msgid "Return Received"
-msgstr "Devolución entregada"
+msgstr "Devolución recibida"
 
 #. module: l10n_pe_reports_stock
 #: model:ir.model.fields.selection,name:l10n_pe_reports_stock.selection__stock_picking__l10n_pe_operation_type__20
