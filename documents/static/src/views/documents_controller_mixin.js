@@ -125,7 +125,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2
                 },
                 details: {
-                    isAvailable: () => singleSelection,
+                    isAvailable: () => userIsInternal && singleSelection,
                     sequence: 75,
                     description: _t("Info & tags"),
                     icon: "fa fa-info-circle",
