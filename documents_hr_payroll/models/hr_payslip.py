@@ -1,12 +1,52 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class HrPayslip(models.Model):
     _name = 'hr.payslip'
     _inherit = ['hr.payslip', 'documents.mixin']
+
+    document_access_url = fields.Char(compute="_compute_document_access_url")
+
+    def action_resend_payslips(self, notify=False):
+        def show_notification(notification_type, message):
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _("Send Payslip By Email"),
+                    'type': notification_type,
+                    'message': message
+                }
+            }
+
+        if not self.env.user.has_group('hr.group_hr_user'):
+            raise UserError(_('You can not send the documents link to the employee.'))
+        if any(payslip.state not in ['done', 'paid'] for payslip in self):
+            return show_notification('warning', _('A payslip should be done or paid to be sent to the employee.'))
+        invalid_employees = self.employee_id.filtered(lambda e: not (e.private_email or e.work_email))
+        if invalid_employees:
+            raise UserError(
+                _('Employee\'s private or work email must be set to use "Send By Email" function:\n%s',
+                  '\n'.join(invalid_employees.mapped('name'))))
+
+        payslip_without_documents = self.filtered(lambda p: not p.document_access_url)
+        template = self.env.ref('documents_hr_payroll.mail_template_new_payslip')
+        for payslip in (self - payslip_without_documents):
+            template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
+            payslip.message_post(body=_('The payslip has been re-sent to the employee.'))
+
+        if not notify and not payslip_without_documents:  # refresh the form view
+            return True
+
+        message = _("Some payslips could not be resend as they do not have related document") \
+            if payslip_without_documents else (
+            _("%s Payslip(s) correctly sent.", len(self)))
+        notification_type = "warning" if payslip_without_documents else "success"
+        return show_notification(notification_type, message)
 
     def _get_document_vals_access_rights(self):
         """ All payslips should be accessible in 'Anyone with the link' to make the link permanent.
@@ -40,14 +80,17 @@ class HrPayslip(models.Model):
             'documents_hr_payroll.mail_template_new_payslip', raise_if_not_found=False
         ) if self._check_create_documents() else None
 
-    def _get_document_link(self):
-        self.ensure_one()
-        document = self.env["documents.document"].sudo().search(
-            [('res_model', '=', self._name), ('res_id', '=', self.id)],
-            order='id desc',
-            limit=1 # need the last one created. (if payslip [canceled and] regenerated)
+    def _compute_document_access_url(self):
+        documents = self.env["documents.document"].search(
+            [('res_model', '=', self._name), ('res_id', 'in', self.ids)],
+            order='res_id, id desc'
         )
-        return document.access_url if document else False
+        access_url_per_payslip = dict()
+        for document in documents:
+            if document.res_id not in access_url_per_payslip:  # keep last document for each payslip
+                access_url_per_payslip[document.res_id] = document.access_url
+        for payslip in self:
+            payslip.document_access_url = access_url_per_payslip.get(payslip.id)
 
     @api.model
     def _cron_generate_pdf(self, batch_size=False):

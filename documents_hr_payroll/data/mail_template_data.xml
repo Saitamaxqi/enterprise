@@ -12,7 +12,7 @@
             <field name="description">Sent to employee to notify them about their new payslip</field>
             <field name="body_html" type="html">
     <table border="0" cellpadding="0" cellspacing="0" style="width:100%; margin:0px auto;"><tbody>
-        <t t-set="document_access_link" t-value="object._get_document_link()"/>
+        <t t-set="document_access_link" t-value="object.document_access_url"/>
         <tr><td valign="top" style="text-align: left; font-size: 14px;">
             Dear <t t-out="object.employee_id.name"></t>, a new payslip is available for you.<br/><br/>
             <t t-if="object.employee_id.user_id">Please find the PDF in your employee portal.<br/><br/></t>
