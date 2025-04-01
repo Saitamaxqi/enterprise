@@ -2360,8 +2360,8 @@ class AccountMove(models.Model):
             self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, cfdi_values['company'])
             _biggest_amount_total, biggest_used_payment_method = max(
                 [
-                    (invoice.amount_total, invoice.l10n_mx_edi_payment_method_id)
-                    for invoice in invoices
+                    (sum(sub_invoices.mapped('amount_total')), payment_method)
+                    for payment_method, sub_invoices in invoices.grouped('l10n_mx_edi_payment_method_id').items()
                 ],
                 key=lambda x: x[0],
             )

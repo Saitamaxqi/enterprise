@@ -735,8 +735,8 @@ class PosOrder(models.Model):
             self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, cfdi_values['company'])
             _biggest_amount_total, biggest_used_payment_method = max(
                 [
-                    (order.amount_total, order.l10n_mx_edi_payment_method_id)
-                    for order in orders
+                    (sum(sub_orders.mapped('amount_total')), payment_method)
+                    for payment_method, sub_orders in orders.grouped('l10n_mx_edi_payment_method_id').items()
                 ],
                 key=lambda x: x[0],
             )
