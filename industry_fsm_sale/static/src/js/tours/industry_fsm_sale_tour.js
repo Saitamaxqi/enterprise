@@ -101,7 +101,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: 'button[name="action_preview_worksheet"]',
                 content: markup(_t('<b>Review and sign</b> the <b>task report</b> with your customer.')),
-                position: 'bottom',
+                tooltipPosition: 'bottom',
                 run: "click",
             },
             {
@@ -110,7 +110,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: 'a[data-bs-target="#modalaccept"]',
                 content: markup(_t('Invite your customer to <b>validate and sign your task report</b>.')),
-                position: 'right',
+                tooltipPosition: 'right',
                 id: 'sign_report',
                 run: "click",
             },
@@ -135,7 +135,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: '.o_web_sign_auto_button',
                 content: markup(_t('Save time by automatically generating a <b>signature</b>.')),
-                position: 'right',
+                tooltipPosition: 'right',
                 run: "click",
             },
             {
@@ -144,7 +144,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: '.o_portal_sign_submit:enabled',
                 content: markup(_t('Validate the <b>signature</b>.')),
-                position: 'left',
+                tooltipPosition: 'left',
                 run: "click",
             },
             {
@@ -153,7 +153,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: 'a:contains(Back to edit mode)',
                 content: markup(_t('Go back to your Field Service <b>task</b>.')),
-                position: 'right',
+                tooltipPosition: 'right',
                 run: "click",
             },
             {
@@ -162,13 +162,13 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: 'button[name="action_send_report"]',
                 content: markup(_t('<b>Send your task report</b> to your customer.')),
-                position: 'bottom',
+                tooltipPosition: 'bottom',
                 run: "click",
             },
             {
                 trigger: 'button[name="document_layout_save"]',
                 content: markup(_t('Customize your <b>layout</b>.')),
-                position: 'right',
+                tooltipPosition: 'right',
                 run: "click",
             },
             {
@@ -177,7 +177,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: 'button[name="action_send_mail"]',
                 content: markup(_t('<b>Send your task report</b> to your customer.')),
-                position: 'right',
+                tooltipPosition: 'right',
                 run: "click",
                 id: 'industry_fsm_sale_sign_send_end',
             },
