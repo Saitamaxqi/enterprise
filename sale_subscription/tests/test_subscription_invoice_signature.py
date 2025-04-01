@@ -193,7 +193,7 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
             'plan_id': analytic_plan.id,
         } for i in (1, 2)])
 
-        project = self.env['project.project'].with_context({'mail_create_nolog': True}).create({
+        project = self.env['project.project'].sudo().with_context({'mail_create_nolog': True}).create({
             'name': 'Project',
             'partner_id': self.partner_a.id,
             'account_id': analytic_account1.id,

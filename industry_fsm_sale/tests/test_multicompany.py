@@ -16,6 +16,7 @@ class TestMultiCompany(TestSaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids += cls.quick_ref('industry_fsm.group_fsm_user')
 
         # adding groups to users to use through the various tests
         user_group_employee = cls.env.ref('base.group_user')

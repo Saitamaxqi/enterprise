@@ -28,6 +28,7 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids += cls.quick_ref('industry_fsm.group_fsm_manager')
         cls.product_lot = cls.env['product.product'].create({
             'name': 'Acoustic Magic Bloc',
             'list_price': 2950.0,
