@@ -166,6 +166,18 @@ msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
+#: code:addons/pos_settle_due/static/src/overrides/components/payment_screen/payment_screen.js:0
+msgid "Empty Order"
+msgstr ""
+
+#. module: pos_settle_due
+#. odoo-javascript
+#: code:addons/pos_settle_due/static/src/overrides/components/payment_screen/payment_screen.js:0
+msgid "Empty orders cannot be invoiced."
+msgstr ""
+
+#. module: pos_settle_due
+#. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/services/pos_store.js:0
 msgid "Select the payment method to deposit money"
 msgstr ""

@@ -114,9 +114,9 @@ patch(PosStore.prototype, {
                     newOrder = this.addNewOrder();
                 }
                 const payment = newOrder.addPaymentline(selectedPaymentMethod);
+                newOrder.is_settling_account = true;
                 payment.setAmount(amount);
                 newOrder.setPartner(partner);
-                newOrder.is_settling_account = true;
                 this.showScreen("PaymentScreen", {
                     orderUuid: this.selectedOrderUuid,
                     isDepositOrder: true,

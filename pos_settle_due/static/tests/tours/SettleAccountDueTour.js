@@ -21,7 +21,7 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
                 run: "click",
             },
             {
-                trigger: "tr.o_data_row td[name='name']:contains('Shop/0001')",
+                trigger: "tr.o_data_row td[name='name']:contains('Shop/')",
                 content: "Check the settle due account line is present",
                 run: "click",
             },

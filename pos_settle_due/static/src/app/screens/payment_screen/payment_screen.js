@@ -22,6 +22,20 @@ patch(PaymentScreen.prototype, {
             );
         }
     },
+    toggleIsToInvoice() {
+        if (
+            !this.currentOrder.isToInvoice() &&
+            this.currentOrder.is_settling_account &&
+            this.currentOrder.lines.length === 0
+        ) {
+            this.dialog.add(AlertDialog, {
+                title: _t("Empty Order"),
+                body: _t("Empty orders cannot be invoiced."),
+            });
+        } else {
+            super.toggleIsToInvoice();
+        }
+    },
     get partnerInfos() {
         const order = this.currentOrder;
         return this.pos.getPartnerCredit(order.getPartner());
