@@ -68,7 +68,18 @@ class HrReferralLinkToShare(models.TransientModel):
             elif wizard.channel == 'facebook':
                 wizard.url = 'https://www.facebook.com/sharer/sharer.php?u=%s' % link_tracker.short_url
             elif wizard.channel == 'twitter':
-                wizard.url = 'https://twitter.com/intent/tweet?tw_p=tweetbutton&text=Amazing' + \
-                    ' job offer for %s! Check it live: %s' % (self.job_id.name, link_tracker.short_url)
+                new_line_code = '%0A'
+                hashtag_code = '%23'
+                text_message = self.env._(
+                    "🚀 An exciting opportunity for a %(job_name)s at my company. "
+                    "If you're looking for a new challenge, check it out!👇%(new_line_code)s"
+                    "🔗%(short_url)s%(new_line_code)s"
+                    "%(hashtag_code)sHiring %(hashtag_code)sJobOpening %(hashtag_code)sCareerOpportunity",
+                    job_name=self.job_id.name,
+                    short_url=link_tracker.short_url,
+                    new_line_code=new_line_code,
+                    hashtag_code=hashtag_code,
+                )
+                wizard.url = f'https://twitter.com/intent/tweet?tw_p=tweetbutton&text={text_message}'
             elif wizard.channel == 'linkedin':
                 wizard.url = 'https://www.linkedin.com/sharing/share-offsite?url=%s' % link_tracker.short_url
