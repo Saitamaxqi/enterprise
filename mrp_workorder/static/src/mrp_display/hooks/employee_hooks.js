@@ -140,6 +140,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         if (employees.admin.id === employee_id) {
             await orm.call("hr.employee", "remove_session_owner", [employee_id]);
             await getConnectedEmployees();
+            employees.connected.find((e) => e.id === employee_id).isPreviousAdmin = true;
         } else {
             await setSessionOwner(employee_id, pin);
         }

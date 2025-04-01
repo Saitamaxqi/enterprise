@@ -117,7 +117,8 @@ export class MrpDisplayRecord extends Component {
     get cssClass() {
         const active = this.active ? "o_active" : "";
         const disabled = this.disabled ? "o_disabled" : "";
-        return `${active} ${disabled}`;
+        const demo = this.props.demoRecord ? "o_demo" : "";
+        return `${active} ${disabled} ${demo}`;
     }
 
     get displayDoneButton() {

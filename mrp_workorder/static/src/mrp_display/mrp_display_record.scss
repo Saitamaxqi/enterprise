@@ -10,6 +10,10 @@
     }
 
     &.o_disabled {
+        opacity: 0.75;
+    }
+
+    &.o_demo {
         opacity: 0.1;
     }
 }
