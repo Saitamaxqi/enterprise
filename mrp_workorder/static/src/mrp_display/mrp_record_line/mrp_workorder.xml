@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.WorkOrder">
-        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center gap-2"
-            t-att-class="active ? 'o_active' : ''" t-on-click="onClick">
+        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center gap-2 cursor-pointer"
+            t-att-class="{'o_active': active, 'disabled': !props.clickable}" t-on-click="onClick">
             <span class="o_mrp_operation_name" t-esc="props.record.data.name"/>
             <i t-if="isComplete" class="fa fa-check text-success pass"/>
             <span t-else="" t-out="workcenter[1]" class="ms-1 py-0 px-2 fw-bold rounded-1"

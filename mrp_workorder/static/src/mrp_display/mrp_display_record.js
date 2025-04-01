@@ -234,6 +234,9 @@ export class MrpDisplayRecord extends Component {
             }
         } else if (subRecord.resModel === "mrp.workorder") {
             props.selectWorkcenter = this.props.selectWorkcenter;
+            props.clickable =
+                subRecord.data.state !== "done" &&
+                this.props.workcenters.map((wc) => wc.id).includes(subRecord.data.workcenter_id[0]);
         }
         return props;
     }

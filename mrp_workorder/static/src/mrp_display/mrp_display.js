@@ -417,32 +417,16 @@ export class MrpDisplay extends Component {
               );
     }
 
-    async selectWorkcenter(workcenterId, filterMO = false) {
+    async selectWorkcenter(workcenterId, showcaseId = false) {
         await this.useEmployee.getConnectedEmployees();
-        if (filterMO) {
-            await this._onProductionBarcodeScanned(filterMO);
-        } else {
-            this.invalidateRecordIdsCache();
+        this.invalidateRecordIdsCache();
+        if (showcaseId) {
+            this.recordCacheIds.push(showcaseId);
         }
-        const workcenterIds = this.state.workcenters.map((wc) => wc.id);
         this.state.activeWorkcenter = Number(workcenterId);
         this.state.activeResModel = this.state.activeWorkcenter
             ? "mrp.workorder"
             : "mrp.production";
-        if (
-            this.state.activeWorkcenter > 0 &&
-            !workcenterIds.includes(this.state.activeWorkcenter)
-        ) {
-            const workcenters = await this.orm.searchRead("mrp.workcenter", [], ["display_name"]);
-            const workcenterToToggle = [...workcenterIds, this.state.activeWorkcenter].reduce(
-                (acc, id) => {
-                    const res = workcenters.find((wc) => wc.id === id);
-                    return res ? [...acc, res] : acc;
-                },
-                []
-            );
-            await this.toggleWorkcenter(workcenterToToggle);
-        }
     }
 
     toggleWorkcenterDialog(showWarning = true) {

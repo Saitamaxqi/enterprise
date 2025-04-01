@@ -30,6 +30,6 @@ export class MrpWorkorder extends Component {
     }
 
     clicked() {
-        // Do nothing
+        this.props.selectWorkcenter(this.workcenter[0], this.props.record.resId);
     }
 }
