@@ -13,5 +13,8 @@
         'web.assets_backend': [
             'stock_barcode_quality_mrp/static/src/**/*',
         ],
+        'web.assets_tests': [
+            'stock_barcode_quality_mrp/static/tests/tours/**/*',
+        ],
     },
 }

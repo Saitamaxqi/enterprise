@@ -11,7 +11,7 @@ patch(MainComponent.prototype, {
         ev.stopPropagation();
         await this.env.model.save();
         const res = await this.orm.call(this.resModel, this.env.model.openQualityChecksMethod, [
-            [this.resId],
+            [this.resId || this.env.model.record.id],
         ]);
         if (typeof res === "object" && res !== null) {
             return this.action.doAction(res, {
