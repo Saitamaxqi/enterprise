@@ -862,6 +862,7 @@ class AmazonAccount(models.Model):
         self.ensure_one()
 
         amazon_order_ref = order_data['AmazonOrderId']
+        order_fulfillment_channel = order_data['FulfillmentChannel']
         marketplace_api_ref = order_data['MarketplaceId']
 
         items_data = pull_items_data(amazon_order_ref)
@@ -874,6 +875,19 @@ class AmazonAccount(models.Model):
                 lambda m: m.api_ref == marketplace_api_ref
             )
             offer = self._find_or_create_offer(sku, marketplace)
+            offer_fulfillment_channel = None
+            if offer.amazon_feed_ref and offer.amazon_feed_ref != '{}':
+                try:
+                    is_fbm = json.loads(offer.amazon_feed_ref).get('is_fbm')
+                    offer_fulfillment_channel = 'MFN' if is_fbm else 'AFN'
+                except (json.JSONDecodeError, TypeError):  # field is an incorrect JSON
+                    continue
+            if offer_fulfillment_channel and order_fulfillment_channel != offer_fulfillment_channel:
+                # This discrepancy might happen if the fulfillment channel was changed for an offer
+                # in Amazon backend. But due to a known problem of ghost listings from Amazon side,
+                # we can't trust the order either.
+                offer.amazon_feed_ref = '{}'
+
             product_taxes = offer.product_id.taxes_id.filtered_domain(
                 [*self.env['account.tax']._check_company_domain(self.company_id)]
             )
