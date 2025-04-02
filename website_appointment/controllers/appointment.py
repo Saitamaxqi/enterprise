@@ -174,9 +174,20 @@ class WebsiteAppointment(AppointmentController):
         return website_company if website_company in companies else companies
 
     def _get_customer_partner(self):
+        """ Get the partner of the last calendar event of the public user's
+        visitor if no partner has been found from the user or visitor, to
+        avoid partner duplication if the user is not logged. """
         partner = super()._get_customer_partner()
         if not partner:
-            partner = request.env['website.visitor']._get_visitor_from_request().partner_id
+            visitor = request.env['website.visitor']._get_visitor_from_request()
+            if visitor.partner_id:
+                partner = visitor.partner_id
+            elif visitor and request.env.user._is_public():
+                partner = self.env['calendar.event'].sudo().search(
+                    [('visitor_id', '=', visitor.id), ('appointment_booker_id', '!=', False)],
+                    order='id desc',
+                    limit=1
+                ).appointment_booker_id
         return partner
 
     @staticmethod

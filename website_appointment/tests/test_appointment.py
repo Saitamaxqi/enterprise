@@ -4,6 +4,7 @@
 from collections import Counter
 from datetime import datetime
 
+from odoo import http
 from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.website_appointment.controllers.appointment import WebsiteAppointment
 from odoo.addons.website.tests.test_website_visitor import MockVisitor
@@ -14,6 +15,11 @@ from unittest.mock import patch
 
 
 class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.apt_type_bxls_2days.write({'is_published': True})
 
     def test_apt_type_create_from_website(self):
         """ Test that when creating an appointment type from the website, we use
@@ -179,3 +185,31 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
                                  "US visitor should not have access to an Appointment Type restricted to Belgium.")
                 self.assertIn(appointment_usa, available_appointments,
                               "US visitor should have access to an Appointment Type restricted to the US.")
+
+    def test_visitor_appointment_booker(self):
+        """ Check that the calendar events created by a visitor have the
+        same appointment_booker_id. """
+        visitor = self.env['website.visitor'].create(
+            {'access_token': 'c8d20bd006c3bf46b875451defb59911'}
+        )
+        with self.mock_visitor_from_request(force_visitor=visitor):
+            self.authenticate(None, None)
+            event_values = {
+                'csrf_token': http.Request.csrf_token(self),
+                'duration_str': '1.0',
+                'email': 'visitor@test.example.com',
+                'name': 'Visitor',
+                'phone': '+1 555-555-5555',
+                'staff_user_id': self.staff_user_bxls.id,
+            }
+
+            for datetime_str in ['2022-02-14 10:00:00', '2022-02-15 10:00:00']:
+                event_values['datetime_str'] = datetime_str
+                self.url_open(f'/appointment/{self.apt_type_bxls_2days.id}/submit', event_values)
+
+            # Check that visitor has been linked to the new events.
+            self.assertEqual(len(visitor.calendar_event_ids), 2)
+
+            # Check that the new events have the same appointment_booker_id.
+            self.assertTrue(all(event.appointment_booker_id for event in visitor.calendar_event_ids))
+            self.assertEqual(len(visitor.calendar_event_ids.appointment_booker_id), 1)
