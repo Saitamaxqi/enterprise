@@ -5,9 +5,6 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="industry_fsm.project_view_form_inherit"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='group_field_service']" position="attributes">
-                <attribute name="groups"/>
-            </xpath>
             <xpath expr="//group[@name='group_field_service']/div" position="inside">
                 <setting class="col-lg-12" help="Complete custom worksheets for your interventions" id="industry_fsm">
                     <field name="allow_worksheets"/>

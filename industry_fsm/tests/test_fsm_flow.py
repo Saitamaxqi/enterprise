@@ -3,8 +3,7 @@
 
 from odoo import Command
 from odoo.exceptions import AccessError
-from odoo.tests import tagged
-from odoo.tests.common import users
+from odoo.tests import tagged, users
 
 from .common import TestIndustryFsmCommon
 

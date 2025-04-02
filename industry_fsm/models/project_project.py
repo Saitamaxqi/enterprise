@@ -11,6 +11,11 @@ class ProjectProject(models.Model):
     is_fsm = fields.Boolean("Field Service", default=False, help="Display tasks in the Field Service module and allow planning with start/end dates.")
     allow_task_dependencies = fields.Boolean(compute='_compute_allow_task_dependencies', store=True, readonly=False)
     allow_milestones = fields.Boolean(compute='_compute_allow_milestones', store=True, readonly=False)
+    allow_geolocation = fields.Boolean(
+        "Geolocation",
+        compute='_compute_allow_geolocation', store=True, readonly=False,
+        help="Track worker location when running the timer.",
+    )
 
     @api.depends('is_fsm', 'is_internal_project', 'company_id')
     @api.depends_context('allowed_company_ids')
@@ -46,6 +51,12 @@ class ProjectProject(models.Model):
         has_group = self.env.user.has_group('project.group_project_milestone')
         for project in self:
             project.allow_milestones = has_group and not project.is_fsm
+
+    @api.depends('is_fsm', 'allow_timesheets')
+    def _compute_allow_geolocation(self):
+        for project in self:
+            if not (project.is_fsm and project.allow_timesheets):
+                project.allow_geolocation = False
 
     @api.model
     def default_get(self, fields_list):

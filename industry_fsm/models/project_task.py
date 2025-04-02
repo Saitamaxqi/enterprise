@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from ast import literal_eval
+from markupsafe import Markup
 from typing import Dict, List
 import pytz
 
@@ -59,6 +60,7 @@ class ProjectTask(models.Model):
     show_customer_preview = fields.Boolean(compute='_compute_show_customer_preview', export_string_translation=False)
     worksheet_signature = fields.Binary('Signature', copy=False, attachment=True)
     worksheet_signed_by = fields.Char('Signed By', copy=False)
+    allow_geolocation = fields.Boolean(related="project_id.allow_geolocation")
 
     @api.depends('planned_date_begin', 'date_deadline', 'user_ids')
     def _compute_planning_overlap(self):
@@ -200,15 +202,45 @@ class ProjectTask(models.Model):
     def action_timer_start(self):
         if not self.user_timer_id.timer_start and self.display_timesheet_timer:
             super().action_timer_start()
-            if self.is_fsm:
-                time = fields.Datetime.context_timestamp(self, self.timer_start)
-                self.message_post(
-                    body=_(
-                        'Timer started at: %(date)s %(time)s',
-                        date=time.strftime(get_lang(self.env).date_format),
-                        time=time.strftime(get_lang(self.env).time_format),
-                    ),
-                )
+            if not self.is_fsm:
+                return
+
+            if self.allow_geolocation and (geolocation := self.env.context.get("geolocation")):
+                success = geolocation.get("success")
+                latitude = 0
+                longitude = 0
+                localisation_start = False
+
+                if success:
+                    latitude = geolocation["latitude"]
+                    longitude = geolocation["longitude"]
+                    localisation_start = self.env["base.geocoder"]._get_localisation(latitude=latitude, longitude=longitude)
+
+                    geolocation_message = _("GPS Coordinates: %(localisation_start)s (%(latitude)s, %(longitude)s)",
+                        localisation_start=localisation_start,
+                        latitude=latitude,
+                        longitude=longitude,
+                    )
+                else:
+                    geolocation_message = geolocation.get("message", _("Location error"))
+            else:
+                geolocation_message = False
+
+            time = fields.Datetime.context_timestamp(self, self.timer_start)
+            body = _(
+                'Timer started at: %(date)s %(time)s',
+                date=time.strftime(get_lang(self.env).date_format),
+                time=time.strftime(get_lang(self.env).time_format),
+            )
+            if geolocation_message:
+                body += Markup("<br/>") + geolocation_message
+                if latitude and latitude:
+                    body += Markup("<a href='https://maps.google.com?q={latitude},{longitude}' target='_blank'>{label}</a>").format(
+                        latitude=latitude,
+                        longitude=longitude,
+                        label=_("View on Map")
+                    )
+            self.message_post(body=body)
 
     def action_view_timesheets(self):
         kanban_view = self.env.ref('hr_timesheet.view_kanban_account_analytic_line')

@@ -11,7 +11,11 @@
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="priority">999</field>
         <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">fsm_project_task_form</attribute>
+            </xpath>
             <xpath expr="//button[@name='action_timer_start'][hasclass('btn-primary')]" position='after'>
+                <field name="allow_geolocation" invisible="1"/>
                 <field name="allow_timesheets" invisible="1"/>
                 <field name="is_fsm" invisible="1"/>
                 <field name="fsm_done" invisible="1"/>
@@ -217,10 +221,13 @@
         <field name="inherit_id" ref="hr_timesheet.project_invoice_form"/>
         <field name="arch" type="xml">
             <xpath  expr="//group[@name='group_documents_analytics']" position="after">
-                <group name="group_field_service" string="Field Service" col="1" class="row mt16 o_settings_container col-lg-6" groups="base.group_no_one">
+                <group name="group_field_service" string="Field Service" col="1" class="row mt16 o_settings_container col-lg-6">
                     <div>
                         <setting class="col-lg-12" help="Manage tasks in the Field Service module" groups="base.group_no_one">
                             <field name="is_fsm"/>
+                        </setting>
+                        <setting class="col-lg-12" help="Track worker location when running the timer" invisible="not (is_fsm and allow_timesheets)">
+                            <field name="allow_geolocation"/>
                         </setting>
                      </div>
                 </group>

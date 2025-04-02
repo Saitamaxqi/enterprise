@@ -5,6 +5,7 @@ from . import common
 from . import test_base_document_layout
 from . import test_basic_features_settings
 from . import test_fsm_flow
+from . import test_fsm_flow_with_geolocation
 from . import test_industry_fsm_ui
 from . import test_project_milestone
 from . import test_auto_create_fsm_project

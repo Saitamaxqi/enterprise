@@ -36,6 +36,7 @@ Adds the following options:
         'views/project_sharing_views.xml',
         'views/project_portal_templates.xml',
         'data/mail_template_data.xml',
+        'wizard/hr_timesheet_stop_timer_confirmation_wizard_views.xml',
         'wizard/task_stop_timer_wizard_views.xml'
     ],
     'application': True,
