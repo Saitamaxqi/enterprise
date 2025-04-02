@@ -105,7 +105,7 @@ class AppointmentCalendarView(http.Controller):
     @route('/appointment/appointment_type/get_staff_user_appointment_types', type='jsonrpc', auth='user')
     def appointment_get_user_appointment_types(self):
         appointment_types_info = []
-        domain = [('staff_user_ids', 'in', [request.env.user.id]), ('category', 'in', ['punctual', 'recurring'])]
+        domain = [('schedule_based_on', '=', 'users'), ('staff_user_ids', 'in', [request.env.user.id]), ('category', 'in', ['punctual', 'recurring'])]
         appointment_types_info = request.env['appointment.type'].search_read(domain, ['name', 'category'])
         return {
             'appointment_types_info': appointment_types_info,
