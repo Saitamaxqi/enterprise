@@ -69,7 +69,7 @@ patch(HardwareProxy.prototype, {
             "iot.device",
             [
                 ["id", "in", device_ids],
-                ["connected", "=", true],
+                ["connected_status", "=", "connected"],
             ],
             this.pos.data.fields["iot.device"]
         );

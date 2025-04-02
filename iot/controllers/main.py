@@ -157,7 +157,7 @@ class IoTController(http.Controller):
         if box:
             previously_connected_iot_devices = request.env['iot.device'].sudo().search([
                 ('iot_id', '=', box.id),
-                ('connected', '=', True)
+                ('connected_status', '=', 'connected')
             ])
             connected_iot_devices = request.env['iot.device'].sudo()
             for device_identifier in devices:
@@ -192,8 +192,8 @@ class IoTController(http.Controller):
 
                     connected_iot_devices |= device
             # Mark the received devices as connected, disconnect the others.
-            connected_iot_devices.write({'connected': True})
-            (previously_connected_iot_devices - connected_iot_devices).write({'connected': False})
+            connected_iot_devices.write({'connected_status': 'connected'})
+            (previously_connected_iot_devices - connected_iot_devices).write({'connected_status': 'disconnected'})
             iot_channel = request.env['iot.channel'].sudo().get_iot_channel()
             return iot_channel
 

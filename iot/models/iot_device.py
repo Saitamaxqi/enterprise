@@ -39,12 +39,12 @@ class IotDevice(models.Model):
     report_ids = fields.Many2many('ir.actions.report', string='Reports')
     iot_ip = fields.Char(related="iot_id.ip")
     company_id = fields.Many2one('res.company', 'Company', related="iot_id.company_id")
-    connected = fields.Boolean(string='Status', help='If device is connected to the IoT Box', readonly=True)
     connected_status = fields.Selection([
             ('disconnected', 'Disconnected'),
             ('connected', 'Connected'),
         ],
-        compute='_compute_connected_status',
+        default='disconnected',
+        readonly=True
     )
     keyboard_layout = fields.Many2one('iot.keyboard.layout', string='Keyboard Layout')
     display_url = fields.Char(
@@ -93,11 +93,6 @@ class IotDevice(models.Model):
     def _compute_manual_measurement(self):
         for device in self:
             device.manual_measurement = device.manufacturer == 'Adam'
-
-    @api.depends('connected')
-    def _compute_connected_status(self):
-        for device in self:
-            device.connected_status = 'connected' if device.connected else 'disconnected'
 
 
 class IotKeyboardLayout(models.Model):

@@ -18,7 +18,7 @@
         <field name="type">display</field>
         <field name="manufacturer"></field>
         <field name="connection">hdmi</field>
-        <field name="connected">False</field>
+        <field name="connected_status">disconnected</field>
     </record>
 
     <record id="iot_keyboard" model="iot.device">
@@ -28,7 +28,7 @@
         <field name="type">keyboard</field>
         <field name="manufacturer"></field>
         <field name="connection">direct</field>
-        <field name="connected">False</field>
+        <field name="connected_status">disconnected</field>
     </record>
 
     <record id="iot_printer" model="iot.device">
@@ -38,7 +38,7 @@
         <field name="type">printer</field>
         <field name="manufacturer"></field>
         <field name="connection">network</field>
-        <field name="connected">False</field>
+        <field name="connected_status">disconnected</field>
     </record>
 
     <record id="iot_payment" model="iot.device">
@@ -48,7 +48,7 @@
         <field name="type">payment</field>
         <field name="manufacturer"></field>
         <field name="connection">network</field>
-        <field name="connected">False</field>
+        <field name="connected_status">disconnected</field>
     </record>
 
     </data>
