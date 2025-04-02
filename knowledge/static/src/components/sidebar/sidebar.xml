@@ -15,7 +15,7 @@
                     </a>
                     <button t-if="isInternalUser" data-hotkey="n" t-on-click="() => this.env.createArticle('private')"
                         class="o_knowledge_create_article btn fw-normal text-black text-start text-truncate flex-grow-1 ps-3">
-                        <i class="fa fa-pencil-square-o pe-2"/>New Article
+                        <i class="fa fa-fw fa-plus pe-2"/>New Article
                     </button>
                     <button data-hotkey="f" t-on-click="onSearchBarClick"
                         class="o_knowledge_search btn fw-normal text-black text-start text-truncate">
