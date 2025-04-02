@@ -497,6 +497,9 @@ class HrPayslip(models.Model):
         if not contracts or not first_contract_date:
             return 0.0
 
+        if first_contract_date.year == self.date_from.year and first_contract_date.month > 6:
+            return 0.0
+
         date_from = max(first_contract_date, self.date_from + relativedelta(day=1, month=1))
         date_to = self.date_to + relativedelta(day=31)
 
@@ -678,6 +681,8 @@ class HrPayslip(models.Model):
         self.ensure_one()
 
         def find_rates(x, rates):
+            low_bound, high_bound = rates[0][0], rates[-1][1]
+            x = min(max(low_bound, x), high_bound)
             for low, high, rate in rates:
                 if low <= x <= high:
                     return rate
@@ -1008,6 +1013,8 @@ class HrPayslip(models.Model):
     def _get_withholding_taxes_after_child_allowances(self, rates, gross, apply_reduction=True):
 
         def find_rates(x, rates):
+            low_bound, high_bound = rates[0][0], rates[-1][1]
+            x = min(max(low_bound, x), high_bound)
             for low, high, rate in rates:
                 if low <= x <= high:
                     return rate / 100.0

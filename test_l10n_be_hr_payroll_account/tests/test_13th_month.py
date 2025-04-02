@@ -58,7 +58,7 @@ class Test13thMonth(TestPayslipBase):
         work_entries = self.employee.contract_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
         work_entries.action_validate()
         self._adjust_payslip(contract)
-        self.assertEqual(self.payslip._get_paid_amount(), 1250, 'It should be count 6 months')
+        self.assertEqual(self.payslip._get_paid_amount(), 0, '13th month only for people who started before 01/07')
 
     def test_13th_month_paid_amount_month_start(self):
         contract = self.create_contract(date(2019, 6, 3))  # 3rd June 2019 is a Monday => June should count
