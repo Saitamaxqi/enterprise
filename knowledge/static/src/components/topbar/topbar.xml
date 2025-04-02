@@ -44,7 +44,7 @@
                 </a>
                 <div class="o-dropdown dropdown" t-if="props.record.resId">
                     <a role="button" class="btn btn-light dropdown-toggle o-no-caret" data-bs-toggle="dropdown" id="dropdown_tools_panel" aria-haspopup="true" aria-expanded="false" data-hotkey="p" title="More actions" t-ref="optionsBtn">
-                        <i class="fa fa-fw fs-6 fa-ellipsis-v"/>
+                        <i class="oi oi-fw fs-6 oi-ellipsis-v"/>
                     </a>
                     <div class="o_knowledge_more_options_panel dropdown-menu" role="menu" aria-labelledby="dropdown_tools_panel">
                         <div>

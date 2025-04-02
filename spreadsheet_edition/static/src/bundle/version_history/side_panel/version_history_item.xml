@@ -40,7 +40,7 @@
             t-on-click="this.activate"
             t-on-contextmenu.prevent.stop="this.activate"
           >
-            <i class="fa fa-ellipsis-v text-muted" />
+            <i class="oi oi-ellipsis-v text-muted" />
           </span>
         </Dropdown>
       </div>

@@ -60,7 +60,7 @@
                             <!-- Caret options -->
                             <Dropdown position="'right-start'">
                                 <button class="btn btn_dropdown" tabindex="-1">
-                                    <i class="fa fa-ellipsis-v"/>
+                                    <i class="oi oi-ellipsis-v"/>
                                 </button>
                                 <t t-set-slot="content">
                                     <div data-id="caret_options">

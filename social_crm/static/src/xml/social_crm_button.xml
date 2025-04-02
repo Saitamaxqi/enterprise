@@ -11,7 +11,7 @@
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false">
-                    <i class="fa fa-ellipsis-v"/>
+                    <i class="oi oi-ellipsis-v"/>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end" t-attf-aria-labelledby="post_actions_0">
                     <a

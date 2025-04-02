@@ -13,7 +13,7 @@
             <t t-if="hasDropdown">
                 <Dropdown>
                     <button class="o_web_studio_more cursor-pointer p-0 rounded border-0 bg-light pe-auto">
-                        <i class="fa fa-ellipsis-v"/>
+                        <i class="oi oi-ellipsis-v"/>
                     </button>
                     <t t-set-slot="content">
                         <t t-slot="dropdown" />

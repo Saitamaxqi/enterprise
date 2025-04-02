@@ -104,7 +104,7 @@ test("Display modal to choose recurrence type when deleting recurrent task", asy
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
 
-    await click("div button span.fa-ellipsis-v");
+    await click("div button span.oi-ellipsis-v");
     await contains("a.dropdown-item", { count: 2 });
     await click("a.dropdown-item.oe_kanban_action");
 
@@ -116,7 +116,7 @@ test("Display confirm delete modal when deleting non recurrent task", async () =
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
 
-    await target.querySelectorAll("div button span.fa-ellipsis-v")[1].click();
+    await target.querySelectorAll("div button span.oi-ellipsis-v")[1].click();
     await contains("a.dropdown-item", { count: 2 });
     await click("a.dropdown-item.oe_kanban_action");
 

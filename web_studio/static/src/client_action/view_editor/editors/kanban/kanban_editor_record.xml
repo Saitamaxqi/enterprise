@@ -13,7 +13,7 @@
 
  <xpath expr="//div" position="replace">
     <div t-if="showMenu" class="o_dropdown_kanban bg-transparent position-absolute end-0 top-0 w-auto o-web-studio-editor--element-clickable" t-att-studioxpath="dropdownXpath">
-      <span class="fa fa-ellipsis-v p-2" />
+      <span class="oi oi-ellipsis-v py-2 px-1" />
     </div>
     <div class="o_web_studio_hook m-1 position-absolute top-0 end-0 pe-none w-0" style="height: 50px;" data-type="t" data-position="after" data-structures="t,kanban_colorpicker" />
   </xpath>

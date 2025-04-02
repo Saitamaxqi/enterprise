@@ -15,7 +15,7 @@
                     class="btn btn_ellipsis"
                     t-on-click="(ev) => this.showEllipsisPopover(ev)"
                 >
-                    <i class="fa fa-ellipsis-h"/>
+                    <i class="oi oi-ellipsis-h"/>
                 </button>
             </t>
         </t>

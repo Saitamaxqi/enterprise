@@ -25,7 +25,7 @@
                     <div>
                         <Dropdown>
                             <button class="btn o_sign_sidebar_icon">
-                                <i class="fa fa-ellipsis-v"/>
+                                <i class="oi oi-ellipsis-v"/>
                             </button>
                             <t t-set-slot="content">
                                 <DropdownItem onSelected="() => this.openSignRoleRecord()">

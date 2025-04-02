@@ -11,7 +11,7 @@
             <t t-if="props.line.unfoldable">
                 <Dropdown position="'right-start'">
                     <button class="btn btn_more">
-                        <i class="fa fa-ellipsis-v"/>
+                        <i class="oi oi-ellipsis-v"/>
                     </button>
 
                     <t t-set-slot="content">

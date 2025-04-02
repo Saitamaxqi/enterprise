@@ -5,7 +5,7 @@
             <t t-if="props.line.cur_revaluation_line_model === 'res.currency'">
                 <Dropdown position="'right-start'">
                     <button class="btn btn_more">
-                        <i class="fa fa-ellipsis-v"/>
+                        <i class="oi oi-ellipsis-v"/>
                     </button>
 
                     <t t-set-slot="content">
@@ -19,7 +19,7 @@
             <t t-if="props.line.cur_revaluation_line_model === 'account.account'">
                 <Dropdown position="'right-start'">
                     <button class="btn btn_more">
-                        <i class="fa fa-ellipsis-v"/>
+                        <i class="oi oi-ellipsis-v"/>
                     </button>
 
                     <t t-set-slot="content">

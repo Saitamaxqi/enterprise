@@ -8,12 +8,12 @@
         <xpath expr="//div[hasclass('o_dropdown_kanban')]" position="attributes">
             <attribute name="class" add="appointment_type_action_toggler visible" separator=" "/>
         </xpath>
-        <xpath expr="//span[hasclass('fa-ellipsis-v')]" position="after">
+        <xpath expr="//span[hasclass('oi-ellipsis-v')]" position="after">
             <span class="text-large appointment_type_action_toggler_text d-none">Action</span>
         </xpath>
-        <xpath expr="//span[hasclass('fa-ellipsis-v')]" position="replace">
+        <xpath expr="//span[hasclass('oi-ellipsis-v')]" position="replace">
             <span class="fa fa-cog mx-1 d-none d-sm-inline-block"/>
-            <span class="fa fa-ellipsis-v m-2 d-sm-none"/>
+            <span class="oi oi-ellipsis-v m-2 d-sm-none"/>
         </xpath>
     </t>
 </templates>
