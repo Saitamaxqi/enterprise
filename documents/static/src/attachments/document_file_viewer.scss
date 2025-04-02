@@ -1,5 +1,9 @@
 .o-FileViewer-main {
     padding: ($o-navbar-height * 1.125) 0 0;
+
+    .o_documents_file_viewer_mail_watermark {
+        transform: scale(1.5) translate(-50%, -25%) rotate(-27deg);
+    }
 }
 
 .o-FileViewer-zoomer {

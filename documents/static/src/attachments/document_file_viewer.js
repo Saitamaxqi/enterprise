@@ -1,7 +1,7 @@
 import { DocumentsAction } from "@documents/views/action/documents_action";
 import { useService } from "@web/core/utils/hooks";
 import { FileViewer as WebFileViewer } from "@web/core/file_viewer/file_viewer";
-import { onWillUpdateProps, reactive, useState } from "@odoo/owl";
+import { onWillStart, onWillUpdateProps, reactive, useState } from "@odoo/owl";
 
 export class FileViewer extends WebFileViewer {
     static template = "documents.FileViewer";
@@ -16,8 +16,11 @@ export class FileViewer extends WebFileViewer {
         this.onSelectDocument = this.documentService.documentList?.onSelectDocument;
         this.previewed = reactive(
             { document: this.documentService.documentList.documents[this.state.index] },
-            () => {
+            async () => {
                 this.documentService.setPreviewedDocument(this.previewed.document);
+                if (this.state.file.isDocumentEmail) {
+                    await this.state.file.loadDocumentEmailContent();
+                }
             }
         );
         this.folderId = this.documentService.documentList?.folderId;
@@ -32,6 +35,11 @@ export class FileViewer extends WebFileViewer {
             }
             this.previewed.document =
                 this.documentService.documentList.documents[nextProps.startIndex];
+        });
+        onWillStart(async () => {
+            if (this.state.file.isDocumentEmail) {
+                await this.state.file.loadDocumentEmailContent();
+            }
         });
     }
 

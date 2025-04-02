@@ -26,6 +26,7 @@ class IrBinary(models.AbstractModel):
                 filename = record.name
             else:
                 filename = f'{name}.{record.file_extension}'
-
+        if record._name in ('documents.document', 'ir.attachment') and record.mimetype == 'application/documents-email':
+            mimetype = 'text/plain'  # changing the mimetype to render the document as plain text in the browser
         return super()._get_stream_from(
             record, field_name, filename, filename_field, mimetype, default_mimetype)

@@ -980,6 +980,38 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         document2 = record_capture.records.ensure_one()
         self.assertEqual(document2.company_id, main_company)
 
+    def test_custom_mimetype_content_routes(self):
+        """Check content routes for 'application/documents-email' mimetype do
+            not render the attachment as html in web browsers"""
+        attachment = self.env['ir.attachment'].create({
+            'name': "An Email without attachment",
+            'type': 'binary',
+            'raw':  '<p>A mail body</p>',
+            'mimetype': 'application/documents-email',
+            'res_model': 'documents.document',
+        })
+        document = self.env['documents.document'].create({
+            'name': "An Email without attachment",
+            'access_internal': 'edit',
+            'access_via_link': 'view',
+            'owner_id': self.user_admin.id,
+            'folder_id': self.public_folder.id,
+            'attachment_id': attachment.id,
+        })
+        self.authenticate('admin', 'admin')
+        urls = (f'/documents/content/{document.access_token}',
+                f'/web/content/documents.document/{document.id}/raw',
+                f'/web/content/{attachment.id}')
+        for url in urls:
+            res = self.url_open(f"{url}?download=0")
+            self.assertEqual(res.content, b'<p>A mail body</p>')
+            self.assertEqual(res.headers.get('Content-Type'), "text/plain; charset=utf-8")
+            self.assertTrue('inline;' in res.headers.get('Content-Disposition'),
+                "attachment is displayed as plain text in browser.")
+            res = self.url_open(f"{url}?download=1")
+            self.assertTrue('attachment;' in res.headers.get('Content-Disposition'),
+                "attachment is downloaded")
+
 
 @tagged('post_install', '-at_install')
 class TestCaseSecurityRoutes(HttpCaseWithUserDemo):

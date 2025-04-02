@@ -1405,11 +1405,17 @@ class DocumentsDocument(models.Model):
 
     def _message_post_after_hook(self, message, msg_vals):
         # If the res model was an attachment and a mail, adds all the custom values of the linked
-        # document settings to the attachments of the mail.
+        # document settings to the attachments of the mail. If it was only a new email converts
+        # its body to an attachment for the given document (use case: invoice/receipt sent as an email)
+        if message.message_type != 'email' or not self.env.context.get("document_message_new"):
+            return super()._message_post_after_hook(message, msg_vals)
+
         m2m_commands = msg_vals['attachment_ids']
         attachments = self.env['ir.attachment'].browse([x[1] for x in m2m_commands])
-        email_message_new = message.message_type == 'email' and self.env.context.get("document_message_new")
-        if email_message_new and attachments:
+        disable_mail_to_document = literal_eval(self.env['ir.config_parameter'].get_param('documents.disable_mail_to_document', default="0"))
+        documents = None
+
+        if attachments:
             self.attachment_id = False
             documents = self.env['documents.document'].create([{
                 'name': attachment.name,
@@ -1438,7 +1444,28 @@ class DocumentsDocument(models.Model):
                 sub_message_values.pop('res_id', None)
                 sub_message_values.pop('attachment_ids', None)
                 document.message_post(**sub_message_values)
-                # Activity settings set through alias_defaults values has precedence over the activity folder settings
+        elif not self.attachment_id and not disable_mail_to_document:
+            attachment = self.env['ir.attachment'].create({
+                'name': msg_vals.get('subject') or msg_vals.get('email_from', _('email')),
+                'type': 'binary',
+                'raw':  message.body,
+                'mimetype': 'application/documents-email',  # Custom mimetype. Only for preview in Documents
+                'res_model': 'documents.document',
+            })
+            document = self.env['documents.document'].create({
+                'attachment_id': attachment.id,
+                'folder_id': self.folder_id.id,
+                'owner_id': self.folder_id.owner_id.id,
+                'partner_id': self.partner_id.id,
+                'tag_ids': self.tag_ids.ids,
+            })
+            message.res_id = document.id
+            attachment.res_id = document.id
+            documents = document
+
+        # Activity settings set through alias_defaults values has precedence over the activity folder settings
+        if documents:
+            for document in documents:
                 if self.create_activity_option:
                     document.documents_set_activity(settings_record=self)
                 elif self.folder_id.create_activity_option:

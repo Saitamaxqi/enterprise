@@ -103,6 +103,15 @@
             <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
 
+        <record id="documents_email_as_vendor_bill" model="documents.document" forcecreate="0">
+            <field name="name">Invoice #INV-2025-001 - Payment Due April 24, 2025</field>
+            <field name="datas" type="base64" file="documents/demo/files/email-as-invoice.html"/>
+            <field name="mimetype">application/documents-email</field>
+            <field name="folder_id" ref="documents.document_finance_folder"/>
+            <field name="access_internal">edit</field>
+            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
+        </record>
+
         <!-- marketing -->
 
         <record id="documents_image_La_landscape_document" model="documents.document" forcecreate="0">

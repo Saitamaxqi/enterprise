@@ -6,7 +6,7 @@ import ast
 
 from odoo import Command, fields, tools
 from odoo.addons.mail.tests.common import MailCommon
-from odoo.addons.test_mail.data.test_mail_data import MAIL_EML_ATTACHMENT, MAIL_NO_BODY
+from odoo.addons.test_mail.data.test_mail_data import MAIL_EML_ATTACHMENT, MAIL_NO_BODY, MAIL_TEMPLATE, MAIL_TEMPLATE_EXTRA_HTML
 from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import new_test_user
 from odoo.tests.common import RecordCapturer
@@ -152,8 +152,8 @@ class TestMailGateway(MailCommon):
 
         self.assertEqual(
             self.env['documents.document'].with_context(active_test=False).search_count([]),
-            documents_count + 1,
-            "No attachment, so only the template document, archived should be created",
+            documents_count + 2,
+            "No attachment, the template document, archived, and a document with email body as attachment should be created",
         )
 
     @freeze_time('2022-07-24 08:00:00')
@@ -291,3 +291,46 @@ class TestMailGateway(MailCommon):
 
         alias.alias_name = False
         Doc.with_user(user).create({'name': 'Test', 'alias_id': alias.id, 'type': 'folder'})
+
+    def test_documents_email_system_parameter(self):
+        with self.mock_mail_gateway():
+            document = self.format_and_process(
+                MAIL_TEMPLATE,
+                self.email_with_no_partner,
+                f'inbox-test@{self.alias_domain}',
+                subject='Test Sys Param 1',
+                target_model='documents.document',
+                references='<f3b9f8f8-28fa-2543-cab2-7aa68f679ebb@odoo.com>',
+                msg_id='<cb7eaf62-58dc-2017-148c-305d0c78892f@odoo.com>',
+            )
+        self.assertTrue(document.active)
+        self.assertEqual(document.name, 'Test Sys Param 1')
+        self.env['ir.config_parameter'].set_param('documents.disable_mail_to_document', '1')
+        with self.mock_mail_gateway():
+            document = self.format_and_process(
+                MAIL_TEMPLATE,
+                self.email_with_no_partner,
+                f'inbox-test@{self.alias_domain}',
+                subject='Test Sys Param 2',
+                target_model='documents.document',
+                references='<f3b9f8f8-28fa-2543-cab2-7aa68f679ebb@odoo.com>',
+                msg_id='<cb7eaf62-58dc-2017-148c-305d0c78892f@odoo.com>',
+            )
+        self.assertFalse(document.active)
+
+    def test_email_converted_to_document_is_sanitized(self):
+        with self.mock_mail_gateway():
+            document = self.format_and_process(
+                MAIL_TEMPLATE_EXTRA_HTML,
+                self.email_with_no_partner,
+                f'inbox-test@{self.alias_domain}',
+                subject='Test Message body sanitization',
+                target_model='documents.document',
+                references='<f3b9f8f8-28fa-2543-cab2-7aa68f679ebb@odoo.com>',
+                msg_id='<cb7eaf62-58dc-2017-148c-305d0c78892f@odoo.com>',
+                extra_html='<script>alert("XSS!")</script>',
+            )
+        self.assertEqual(document.name, 'Test Message body sanitization')
+        self.assertTrue(document.attachment_id)
+        self.assertEqual(document.mimetype, 'application/documents-email')
+        self.assertNotIn('<script>alert("XSS!")</script>', document.raw.decode())
