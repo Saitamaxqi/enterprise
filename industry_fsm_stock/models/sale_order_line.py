@@ -9,8 +9,8 @@ class SaleOrderLine(models.Model):
 
     fsm_lot_id = fields.Many2one('stock.lot', domain="[('product_id', '=', product_id)]")
 
-    def _prepare_procurement_values(self, group_id=False):
-        values = super()._prepare_procurement_values(group_id)
+    def _prepare_procurement_values(self):
+        values = super()._prepare_procurement_values()
         triggered_from_fsm_product_view = self.env.context.get('industry_fsm_stock_set_quantity')
         triggered_from_fsm_stock_tracking_wizard = self.env.context.get('industry_fsm_stock_tracking') and self.fsm_lot_id
         if self.task_id.is_fsm and (triggered_from_fsm_product_view or triggered_from_fsm_stock_tracking_wizard):

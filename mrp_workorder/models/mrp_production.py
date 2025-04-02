@@ -202,7 +202,7 @@ class MrpProduction(models.Model):
             'date_start': datetime.today() + relativedelta(days=1),
             'bom_id': bom.id,
         }}], True)
-        self.env['procurement.group'].run_scheduler()
+        self.env['stock.rule'].run_scheduler()
         MO.action_confirm()
 
         if self.env.user.has_group('mrp.group_mrp_routings'):

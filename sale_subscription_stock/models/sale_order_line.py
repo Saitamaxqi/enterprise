@@ -135,12 +135,12 @@ class SaleOrderLine(models.Model):
             return self.product_uom_qty
         return super()._get_qty_procurement(previous_product_uom_qty=previous_product_uom_qty)
 
-    def _prepare_procurement_values(self, group_id=False):
+    def _prepare_procurement_values(self):
         """ Update move.line values
         We use product_description_variants to display the invoicing date
         Ensure one is present in inherited function
         """
-        values = super()._prepare_procurement_values(group_id)
+        values = super()._prepare_procurement_values()
         if not self.recurring_invoice or self.order_id.subscription_state == '7_upsell' or self._subscription_is_one_time_sale():
             return values
         # Remove 1 day as normal people thinks in terms of inclusive ranges.

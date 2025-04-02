@@ -476,7 +476,7 @@ class TestShopFloor(HttpCase):
         action = mo.button_mark_done()
         backorder = Form(self.env['mrp.production.backorder'].with_context(**action['context']))
         backorder.save().action_backorder()
-        mo_backorder = mo.procurement_group_id.mrp_production_ids[-1]
+        mo_backorder = mo.production_group_id.production_ids[-1]
         mo_backorder.button_plan()
 
         # Sanity check
@@ -653,7 +653,7 @@ class TestShopFloor(HttpCase):
         mo.action_assign()
         mo.button_plan()
         self.start_tour("/odoo/shop-floor", "test_automatic_backorder_no_redirect", login='admin')
-        self.assertRecordValues(mo.procurement_group_id.mrp_production_ids.sorted('name'), [
+        self.assertRecordValues(mo.production_group_id.production_ids.sorted('name'), [
             {'name': 'MOBACK-001', 'state': 'done'},
             {'name': 'MOBACK-002', 'state': 'done'},
         ])

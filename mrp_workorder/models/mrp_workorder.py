@@ -433,12 +433,12 @@ class MrpWorkorder(models.Model):
 
         else:
             if self.operation_id:
-                backorder = (self.production_id.procurement_group_id.mrp_production_ids - self.production_id).filtered(
+                backorder = (self.production_id.production_group_id.production_ids - self.production_id).filtered(
                     lambda p: p.workorder_ids.filtered(lambda wo: wo.operation_id == self.operation_id).state not in ('cancel', 'done')
                 )[:1]
             else:
                 index = list(self.production_id.workorder_ids).index(self)
-                backorder = (self.production_id.procurement_group_id.mrp_production_ids - self.production_id).filtered(
+                backorder = (self.production_id.production_group_id.production_ids - self.production_id).filtered(
                     lambda p: index < len(p.workorder_ids) and p.workorder_ids[index].state not in ('cancel', 'done')
                 )[:1]
 

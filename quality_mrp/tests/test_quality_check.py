@@ -64,7 +64,7 @@ class TestQualityCheck(TestQualityMrpCommon):
         # Now check state of quality check.
         self.assertEqual(self.mrp_production_qc_test1.check_ids.quality_state, 'pass')
         # Check that the Quality Check was created on the backorder
-        self.assertEqual(len(self.mrp_production_qc_test1.procurement_group_id.mrp_production_ids[-1].check_ids), 1)
+        self.assertEqual(len(self.mrp_production_qc_test1.production_group_id.production_ids[-1].check_ids), 1)
 
     def test_02_quality_check_scrapped(self):
         """
@@ -132,7 +132,7 @@ class TestQualityCheck(TestQualityMrpCommon):
         action = consumption_warning.save().action_confirm()
         backorder = Form(self.env['mrp.production.backorder'].with_context(**action['context']))
         backorder.save().action_backorder()
-        production_backorder = production.procurement_group_id.mrp_production_ids[-1]
+        production_backorder = production.production_group_id.production_ids[-1]
         self.assertEqual(len(production_backorder.check_ids), 1)
         self.assertEqual(production_backorder.check_ids.point_id, quality_point_operation_type)
         self.assertEqual(production_backorder.check_ids.production_id, production_backorder)
@@ -200,7 +200,7 @@ class TestQualityCheck(TestQualityMrpCommon):
         wizard.save().action_apply()
 
         # Last MO in sequence is the backorder
-        bo = mo.procurement_group_id.mrp_production_ids[-1]
+        bo = mo.production_group_id.production_ids[-1]
         self.assertEqual(len(bo.check_ids), 1)
 
     def test_failure_quality_point_location_on_operation(self):

@@ -406,7 +406,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         # Marks the MO as done and creates a backorder.
         Form.from_action(self.env, mo.button_mark_done()).save().action_backorder()
 
-        backorder = mo.procurement_group_id.mrp_production_ids[-1]
+        backorder = mo.production_group_id.production_ids[-1]
         self.assertEqual(mo.state, 'done')
         self.assertEqual(backorder.state, 'confirmed')
         self.assertEqual(len(backorder.workorder_ids), 3)
@@ -453,7 +453,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         action = mo.button_mark_done()
         backorder_form = Form.from_action(self.env, action)
         backorder_form.save().action_backorder()
-        backorder = mo.procurement_group_id.mrp_production_ids[1]
+        backorder = mo.production_group_id.production_ids[1]
 
         self.assertEqual(mo.move_raw_ids.move_line_ids.quantity, 1)
         self.assertEqual(mo.move_raw_ids.move_line_ids.location_id, location)
@@ -495,8 +495,8 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         wizard.max_batch_size = 1
         action = wizard.save().action_split()
         # Should have 2 mos w/ 2 wos each
-        self.assertEqual(len(mo.procurement_group_id.mrp_production_ids), 2)
-        mo2 = mo.procurement_group_id.mrp_production_ids[1]
+        self.assertEqual(len(mo.production_group_id.production_ids), 2)
+        mo2 = mo.production_group_id.production_ids[1]
         self.assertEqual(len(mo.workorder_ids), 2)
         self.assertEqual(len(mo2.workorder_ids), 2)
         self.assertEqual(mo.state, 'confirmed')

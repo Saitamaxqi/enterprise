@@ -1328,7 +1328,7 @@ registry.category("web_tour.tours").add("test_backorder_partial_completion_save_
         { trigger: ".o_stock_barcode_main_menu", run: "scan TBPCSNS mo" },
         { trigger: ".o_validate_page", run: "click" },
         { trigger: 'button[name="action_backorder"]', run: "click" },
-        { trigger: ".o_notification_buttons" },
+        { trigger: ".o_notification_bar.bg-success" },
     ],
 });
 

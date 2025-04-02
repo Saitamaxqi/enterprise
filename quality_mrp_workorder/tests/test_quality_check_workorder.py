@@ -156,10 +156,10 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         wizard.max_batch_size = 1
         action = wizard.save().action_split()
         # Should have 2 mos /w 1 sn each
-        self.assertEqual(len(mo.procurement_group_id.mrp_production_ids), 2)
+        self.assertEqual(len(mo.production_group_id.production_ids), 2)
         # Check that the assigned lots didn't change
-        self.assertEqual(mo.procurement_group_id.mrp_production_ids[0].workorder_ids.current_quality_check_id.lot_ids, lots[0])
-        self.assertEqual(mo.procurement_group_id.mrp_production_ids[1].workorder_ids.current_quality_check_id.lot_ids, lots[1])
+        self.assertEqual(mo.production_group_id.production_ids[0].workorder_ids.current_quality_check_id.lot_ids, lots[0])
+        self.assertEqual(mo.production_group_id.production_ids[1].workorder_ids.current_quality_check_id.lot_ids, lots[1])
         # Register sn3 on mo 1 and check that it is reflected on the associated move line
         component_move = mo.workorder_ids.current_quality_check_id.move_id
         component_move.action_add_from_quant(self.env['stock.quant'].search([('lot_id', '=', lots[2].id), ('location_id', '=', warehouse.lot_stock_id.id)], limit=1).id)
@@ -239,7 +239,7 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         # MO qty_producing should become 1 since only 1 qty was fully produced
         self.assertEqual(mo.qty_producing, 1)
         Form.from_action(self.env, mo.button_mark_done()).save().action_backorder()
-        backorder = mo.procurement_group_id.mrp_production_ids[1]
+        backorder = mo.production_group_id.production_ids[1]
         # the backorder has 1 qty to produce and the full workorder done from before should be cancelled (its a copy)
         # and should not have any quality check to perform
         self.assertEqual(backorder.product_qty, 1)

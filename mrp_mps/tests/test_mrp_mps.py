@@ -718,7 +718,7 @@ class TestMpsMps(common.TransactionCase):
         delivery_rule.delay = 15
 
         product = self.env['product.product'].create({'name': 'SuperProduct', 'is_storable': True})
-        procurement = self.env["procurement.group"].Procurement(
+        procurement = self.env["stock.rule"].Procurement(
             product, 1, product.uom_id,
             customer_location,
             product.name,
@@ -729,7 +729,7 @@ class TestMpsMps(common.TransactionCase):
                 "date_planned": date.today() + timedelta(days=16),
             }
         )
-        self.env["procurement.group"].run([procurement])
+        self.env["stock.rule"].run([procurement])
 
         tomorrow = start_of(datetime.now() + timedelta(days=1), 'day')
         move = self.env['stock.move'].search([('product_id', '=', product.id)], limit=1)
@@ -1312,25 +1312,25 @@ class TestMpsMps(common.TransactionCase):
         When that move is marked as done, it should instead use the next move if there's one. """
         self.env['stock.quant']._update_available_quantity(self.table, self.warehouse.lot_stock_id, 5)
         self.warehouse.delivery_steps = 'pick_pack_ship'
-        pg = self.env['procurement.group'].create({'name': 'Test-MPS-actual-demand-multisteps'})
-        self.env['procurement.group'].run([
-            pg.Procurement(
+        reference = self.env['stock.reference'].create({'name': 'Test-MPS-actual-demand-multisteps'})
+        self.env['stock.rule'].run([
+            self.env['stock.rule'].Procurement(
                 self.table,
                 5.0,
                 self.table.uom_id,
                 self.env.ref('stock.stock_location_customers'),
-                pg.name,
-                pg.name,
+                reference.name,
+                reference.name,
                 self.warehouse.company_id,
                 {
                     'warehouse_id': self.warehouse,
-                    'group_id': pg,
+                    'reference_ids': reference,
                 },
             ),
         ])
 
         # Check that the outgoing quantity is 5 and that the related picking is the pick_picking
-        pick_picking = pg.stock_move_ids.picking_id
+        pick_picking = reference.picking_ids
         mps_table = self.mps_table.get_production_schedule_view_state()[0]
         self.assertEqual(mps_table['forecast_ids'][0]['outgoing_qty'], 5, 'actual demand qty is incorrect')
         # Get the domain_moves, it is always the same so no need to get it again
@@ -1369,25 +1369,25 @@ class TestMpsMps(common.TransactionCase):
         self.table.route_ids = [Command.set([resupply_route.id])]
         self.env['stock.quant']._update_available_quantity(self.table, self.warehouse.lot_stock_id, 5)
         self.warehouse.delivery_steps = 'pick_pack_ship'
-        pg = self.env['procurement.group'].create({'name': 'Test-MPS-actual-demand-multisteps-interwarehouse'})
-        self.env['procurement.group'].run([
-            pg.Procurement(
+        reference = self.env['stock.reference'].create({'name': 'Test-MPS-actual-demand-multisteps-interwarehouse'})
+        self.env['stock.rule'].run([
+            self.env['stock.rule'].Procurement(
                 self.table,
                 5.0,
                 self.table.uom_id,
                 second_warehouse.lot_stock_id,
-                pg.name,
-                pg.name,
+                reference.name,
+                reference.name,
                 second_warehouse.company_id,
                 {
                     'warehouse_id': second_warehouse,
-                    'group_id': pg,
+                    'reference_ids': reference,
                 },
             ),
         ])
 
         # Check that the outgoing quantity is 5 and that the related picking is the transit picking for WH
-        wh_transit_picking = pg.stock_move_ids.filtered(lambda m: m.location_dest_id.usage == 'transit').picking_id
+        wh_transit_picking = reference.move_ids.filtered(lambda m: m.location_dest_id.usage == 'transit').picking_id
         mps_table_wh0 = self.mps_table.get_production_schedule_view_state()[0]
         self.assertEqual(mps_table_wh0['forecast_ids'][0]['outgoing_qty'], 5, 'actual demand qty is incorrect')
         # Get the domain_moves for outgoing moves for WH
@@ -1402,7 +1402,7 @@ class TestMpsMps(common.TransactionCase):
             'bom_id': self.bom_table.id,
         })
         # Check that the incoming quantity is 5 and that the related picking is the transit picking for CC
-        cc_transit_picking = pg.stock_move_ids.filtered(lambda m: m.location_id.usage == 'transit').picking_id
+        cc_transit_picking = reference.move_ids.filtered(lambda m: m.location_id.usage == 'transit').picking_id
         mps_table_cc0 = mps_record_table_cc.get_production_schedule_view_state()[0]
         self.assertEqual(mps_table_cc0['forecast_ids'][0]['incoming_qty'], 5, 'actual replenishment qty is incorrect')
         # Get the domain_moves for incoming moves for CC

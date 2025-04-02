@@ -18,7 +18,7 @@ class StockMove(models.Model):
         if lot and self.product_id.tracking != "serial":
             return super()._update_reserved_quantity(need, location_id, lot_id=lot, package_id=package_id, owner_id=owner_id, strict=strict)
 
-        so_lines_with_fsm_lot = self.group_id.stock_move_ids.sale_line_id.sudo().filtered(lambda l: l.product_id == self.product_id and l.fsm_lot_id)
+        so_lines_with_fsm_lot = self.sale_line_id.sudo().filtered(lambda l: l.product_id == self.product_id and l.fsm_lot_id)
         if not so_lines_with_fsm_lot:
             return super()._update_reserved_quantity(need, location_id, lot_id=lot_id, package_id=package_id, owner_id=owner_id, strict=strict)
 

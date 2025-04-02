@@ -750,6 +750,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         url = f"/web#action={action_id.id}"
         self.start_tour(url, 'test_backorder_partial_completion_save_sensible_split', login='admin', timeout=180)
         # Check that the unavailable + unedited component move was unaffected by the split
+        self.assertEqual(manufacturing_order.state, 'done')
         self.assertEqual(manufacturing_order.move_raw_ids.filtered(lambda m: m.product_id == unavailable_comp).mapped('quantity'), [0.00])
         backorder_mo = manufacturing_order.backorder_ids - manufacturing_order
         self.assertRecordValues(

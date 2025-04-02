@@ -481,7 +481,7 @@ class SaleOrderLine(models.Model):
                 raise ValidationError(_("You cannot change the product of lines linked to stock moves."))
 
     def _create_procurements(self, product_qty, procurement_uom, values):
-        """ Change the destination for rental procurement groups. """
+        """ Change the destination for rental procurement. """
         if self.is_rental and self._are_rental_pickings_enabled():
             values['route_ids'] = values.get('route_ids') or self.env.ref('sale_stock_renting.route_rental')
             delivery_values = {
@@ -495,10 +495,10 @@ class SaleOrderLine(models.Model):
                 'date_deadline': self.order_id.rental_return_date,
             }
             return [
-                self.env['procurement.group'].Procurement(
+                self.env['stock.rule'].Procurement(
                     self.product_id, product_qty, procurement_uom, self.order_id.company_id.rental_loc_id,
                     self.product_id.display_name, self.order_id.name, self.order_id.company_id, delivery_values),
-                self.env['procurement.group'].Procurement(
+                self.env['stock.rule'].Procurement(
                     self.product_id, product_qty, procurement_uom, self.order_id.warehouse_id.lot_stock_id,
                     self.product_id.display_name, self.order_id.name, self.order_id.company_id, return_values)]
         return super()._create_procurements(product_qty, procurement_uom, values)

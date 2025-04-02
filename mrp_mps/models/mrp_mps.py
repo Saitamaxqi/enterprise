@@ -385,7 +385,7 @@ class MrpProductionSchedule(models.Model):
                 extra_values = production_schedule._get_procurement_extra_values(forecast)
                 quantity = forecast['replenish_qty'] - forecast['incoming_qty']
                 if not bom:
-                    procurements.append(self.env['procurement.group'].Procurement(
+                    procurements.append(self.env['stock.rule'].Procurement(
                         production_schedule.product_id,
                         quantity,
                         production_schedule.product_uom_id,
@@ -395,7 +395,7 @@ class MrpProductionSchedule(models.Model):
                     ))
                 else:
                     for bom_line, qty_ratio in product_ratio:
-                        procurements.append(self.env['procurement.group'].Procurement(
+                        procurements.append(self.env['stock.rule'].Procurement(
                             bom_line.product_id,
                             quantity * qty_ratio,
                             bom_line.product_uom_id,
@@ -414,7 +414,7 @@ class MrpProductionSchedule(models.Model):
                         'production_schedule_id': production_schedule.id
                     })
         if procurements:
-            self.env['procurement.group'].with_context(skip_lead_time=True).run(procurements)
+            self.env['stock.rule'].with_context(skip_lead_time=True).run(procurements)
 
         forecasts_to_set_as_launched.write({
             'procurement_launched': True,

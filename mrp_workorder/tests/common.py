@@ -14,7 +14,7 @@ class TestMrpWorkorderCommon(TestMrpCommon):
     @classmethod
     def get_backorder_wo(cls, workorder):
         production = workorder.production_id
-        backorder = production.procurement_group_id.mrp_production_ids.filtered(lambda p: p.backorder_sequence == production.backorder_sequence + 1)
+        backorder = production.production_group_id.production_ids.filtered(lambda p: p.backorder_sequence == production.backorder_sequence + 1)
         if workorder.operation_id:
             return backorder.workorder_ids.filtered(lambda wo: wo.operation_id == workorder.operation_id)
         else:

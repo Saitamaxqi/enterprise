@@ -191,7 +191,8 @@ class DHLProvider():
         shipment_details.InsuredAmount = float_repr(sum(pkg.total_cost for pkg in packages) * picking.carrier_id.shipping_insurance / 100, precision_digits=2)
         if picking.carrier_id.dhl_dutiable:
             shipment_details.IsDutiable = "Y"
-        currency = picking.group_id.sale_id.currency_id or picking.company_id.currency_id
+        sale = picking.reference_ids.sale_ids
+        currency = sale and sale[0].currency_id or picking.company_id.currency_id
         shipment_details.CurrencyCode = currency.name
         return shipment_details
 

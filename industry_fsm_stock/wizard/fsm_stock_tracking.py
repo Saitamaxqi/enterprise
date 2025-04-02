@@ -73,9 +73,6 @@ class FsmStockTracking(models.TransientModel):
                             move.product_uom_qty -= previous_qty - new_line_qty
                         if qty_done_diff == 0:
                             break
-                if deleted_line and move.product_uom_qty == 0 and move.warehouse_id != self.task_id.sale_order_id.warehouse_id:
-                    move.move_line_ids.unlink()
-                    move.state = 'cancel'
                 if qty_done_diff == 0:
                     break
 
@@ -144,22 +141,17 @@ class FsmStockTracking(models.TransientModel):
         dict_moves_per_picking = self._get_moves_dict(self.task_id.sale_order_id)
         self.env['stock.move'].check_access('write')
 
-        if dict_moves_per_picking:  # create/update the move_lines for the intermediate deliveries
-            ml_to_create = []
-            for lot_id, qty in move_line_qty_per_lot_id.items():
-                ml_to_create.extend(self._add_qty_to_intermediate_delivery_batch(dict_moves_per_picking, lot_id, qty))
-            self.env['stock.move.line'].create(ml_to_create)
-
         # set the qty to 0 for the sol and the deliveries from the deleted wizard line
         for sl in sale_lines_remove:
             if sl.qty_delivered == 0 and sl.fsm_lot_id:
-                if dict_moves_per_picking:  # handles 2/3 ways deliveries
-                    self._remove_qty_from_intermediate_delivery(dict_moves_per_picking, sl.fsm_lot_id, 0-(sl.product_uom_qty - sl.qty_delivered), deleted_line=True)
+                # if dict_moves_per_picking:  # handles 2/3 ways deliveries
+                #     self._remove_qty_from_intermediate_delivery(dict_moves_per_picking, sl.fsm_lot_id, 0-(sl.product_uom_qty - sl.qty_delivered), deleted_line=True)
                 editable_moves = sl.move_ids.filtered(lambda m: m.state not in ['done', 'cancel'])
                 editable_moves.move_line_ids.unlink()
-                editable_moves.lot_ids -= sl.fsm_lot_id
+                for m in editable_moves:
+                    m.lot_ids = [Command.unlink(sl.fsm_lot_id.id)]
                 sl.fsm_lot_id = False
-                # If the warehouse of the delivery is different from the one of the sale_order, the procurement.group.run() will not handle the moves correctly.
+                # If the warehouse of the delivery is different from the one of the sale_order, the stock.rule.run() will not handle the moves correctly.
                 # We have to manually set the product_uom_qty and cancel the moves
                 if sl.order_id.warehouse_id != self.env.user._get_default_warehouse_id():
                     editable_moves.product_uom_qty = 0

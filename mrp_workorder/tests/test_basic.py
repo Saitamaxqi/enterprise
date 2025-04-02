@@ -211,7 +211,7 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         workorder.record_production()
         # Post Inventory
         manufacturing_order._post_inventory()
-        backorder = manufacturing_order.procurement_group_id.mrp_production_ids[-1]
+        backorder = manufacturing_order.production_group_id.production_ids[-1]
         # Cancel it
         backorder.action_cancel()
         # Check MO is done, WO is cancelled and its SML are done or cancelled
@@ -999,7 +999,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
 
         # Produce 4 Unit of custom laptop will consume ( 8 Unit of keybord and 8 Unit of charger).
         laptop_lot_002 = self.env['stock.lot'].create({'product_id': custom_laptop.id})
-        mo_custom_laptop = mo_custom_laptop.procurement_group_id.mrp_production_ids[1]
+        mo_custom_laptop = mo_custom_laptop.production_group_id.production_ids[1]
         mo_form = Form(mo_custom_laptop)
         mo_form.qty_producing = 4
         mo_form.lot_producing_ids.set(laptop_lot_002)
@@ -1225,7 +1225,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         workorder_1.production_id.qty_producing = 2
         workorder_1.production_id.lot_producing_ids = lot_1 | lot_2
 
-        productions = workorder_1.production_id.procurement_group_id.mrp_production_ids
+        productions = workorder_1.production_id.production_group_id.production_ids
         self.assertEqual(sum(productions.mapped('qty_producing')), 2)
         self.assertEqual(productions.lot_producing_ids, lot_1 | lot_2)
         for production in productions:
@@ -2324,7 +2324,7 @@ class TestRoutingAndKits(TransactionCase):
         wo1.qty_producing = 4
         wo1.finished_lot_ids = lot1
         wo1.record_production()
-        backorder = mo.procurement_group_id.mrp_production_ids[-1]
+        backorder = mo.production_group_id.production_ids[-1]
         ba_wo1 = backorder.workorder_ids[0]
         self.assertEqual(ba_wo1.qty_producing, 6)
         self.assertEqual(ba_wo1.qty_produced, 0)

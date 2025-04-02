@@ -183,7 +183,11 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
     get backordersDomain() {
         return [
             ["id", "not in", this.record.backorder_ids],
-            ["procurement_group_id", "=", this.record.procurement_group_id],
+            [
+                "production_group_id.production_ids",
+                "=",
+                this.record.production_group_id.production_ids,
+            ],
             ["state", "=", "confirmed"],
         ];
     }

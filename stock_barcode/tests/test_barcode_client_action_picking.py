@@ -2230,10 +2230,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'barcode': p_name,
         } for p_name in ['PA', 'PB']])
 
-        customer = self.env["res.partner"].create({"name": "Customer"})
-        proc_group = self.env["procurement.group"].create({"partner_id": customer.id})
+        reference = self.env["stock.reference"].create({'name': "test_procurement_backorder"})
 
-        procurement = self.env["procurement.group"].Procurement(
+        procurement = self.env["stock.rule"].Procurement(
             product_a, 1, product_a.uom_id,
             self.env.ref('stock.stock_location_customers'),
             product_a.name,
@@ -2241,15 +2240,15 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             self.env.company,
             {
                 "warehouse_id": self.env['stock.warehouse'].search([], limit=1),
-                "group_id": proc_group,
+                "reference_ids": reference,
             }
         )
-        self.env["procurement.group"].run([procurement])
+        self.env["stock.rule"].run([procurement])
 
         move = self.env['stock.move'].search([('product_id', '=', product_a.id)], limit=1)
         url = self._get_client_action_url(move.picking_id.id)
         self.start_tour(url, 'test_procurement_backorder', login='admin', timeout=99)
-        self.assertEqual(len(proc_group.stock_move_ids), 2)
+        self.assertEqual(len(reference.move_ids), 2)
 
     def test_receipt_delete_button(self):
         """ Scan products that not part of a receipt. Check that products not part of original receipt
@@ -3116,7 +3115,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         The flow slightly change with mto moves: both mts and mto procure methods are tested here
         """
-        procurement_group = self.env['procurement.group'].create({
+        reference = self.env['stock.reference'].create({
             'name': 'custom procurement',
         })
         warehouse = self.picking_type_out.warehouse_id
@@ -3125,13 +3124,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         warehouse.delivery_steps = 'pick_ship'
         final_destination = self.env.ref('stock.stock_location_customers')
         origin = 'custom origin'
-        self.env['procurement.group'].run([
-            self.env['procurement.group'].Procurement(mto_product, 4.0, mto_product.uom_id, final_destination, mto_product.name, origin,
-                self.picking_type_out.company_id, {'warehouse_id': warehouse, 'group_id': procurement_group})
+        self.env['stock.rule'].run([
+            self.env['stock.rule'].Procurement(mto_product, 4.0, mto_product.uom_id, final_destination, mto_product.name, origin,
+                self.picking_type_out.company_id, {'warehouse_id': warehouse, 'reference_ids': reference})
         ])
-        pick = self.env['stock.picking'].search([('group_id', '=', procurement_group.id)], limit=1)
+        pick = self.env['stock.picking'].search([('reference_ids', 'in', reference.ids)], limit=1)
         pick.button_validate()
-        ship = self.env['stock.picking'].search([('group_id', '=', procurement_group.id)], limit=2) - pick
+        ship = self.env['stock.picking'].search([('reference_ids', 'in', reference.ids)], limit=2) - pick
         mts_product = self.product2
         self.env['stock.quant']._update_available_quantity(mts_product, ship.location_id, 5)
         self.env['stock.move'].create({
@@ -4176,7 +4175,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_select_with_same_product_and_lot(self):
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
-        pg = self.env['procurement.group'].create({'name': 'ProcurementGroup'})
+        ref = self.env['stock.reference'].create({'name': 'ProcurementGroup'})
         lot_xyz = self.env['stock.lot'].create({'name': 'lot_xyz', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
         self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 4, lot_id=lot_xyz)
         self.picking_type_out.show_reserved_sns = True
@@ -4184,7 +4183,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
-            'group_id': pg.id,
         })
         self.env['stock.move'].create({
             'location_id': self.stock_location.id,
@@ -4193,7 +4191,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'product_uom': self.uom_unit.id,
             'product_uom_qty': 2,
             'picking_id': delivery_picking.id,
-            'group_id': pg.id,
+            'reference_ids': ref.ids,
         })
         delivery_picking.action_confirm()
         second_move = self.env['stock.move'].create({
@@ -4203,7 +4201,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'product_uom': self.uom_unit.id,
             'quantity': 2,
             'picking_id': delivery_picking.id,
-            'group_id': pg.id,
+            'reference_ids': ref.ids,
         })
         second_move.move_line_ids.lot_id = lot_xyz
         self.assertEqual(len(delivery_picking.move_ids), 2)
