@@ -323,9 +323,8 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_arch, """
         <data>
            <data>
-             <xpath position="replace" expr="/t[@t-name='web_studio.test_report']//t[@t-call='web.html_container']/div/p">
-                <p>edited with odoo editor</p>
-             </xpath>
+            <xpath expr="/t[@t-name='web_studio.test_report']//t[@t-call='web.html_container']/div/p/br" position="replace"/>
+             <xpath expr="/t[@t-name='web_studio.test_report']//t[@t-call='web.html_container']/div/p" position="inside">edited with odoo editor</xpath>
            </data>
         </data>
         """)
@@ -344,9 +343,8 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_arch, """
         <data>
            <data>
-             <xpath position="replace" expr="/t[@t-name='web_studio.test_report_document']/p">
-                <p>edited with odoo editor 2</p>
-             </xpath>
+             <xpath expr="/t[@t-name='web_studio.test_report_document']/p/br" position="replace"/>
+             <xpath expr="/t[@t-name='web_studio.test_report_document']/p" position="inside">edited with odoo editor 2</xpath>
            </data>
         </data>
         """)
@@ -663,8 +661,7 @@ class TestReportEditorUIUnit(HttpCase):
             <t t-name="web_studio.test_report">
                <t t-call="web.html_container">
                  <div>
-                    <p><br/>
-      edited with odooEditor</p>
+                    <p><br/>edited with odooEditor</p>
                  </div>
                  <t t-foreach="docs" t-as="doc">
                    <t t-call="web_studio.test_report_document"/>
@@ -732,7 +729,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_arch, """
         <data>
             <data>
-                 <xpath position="replace" expr="/t[@t-name='web_studio.test_report_document']/p">
+                 <xpath expr="/t[@t-name='web_studio.test_report_document']/p" position="replace">
                    <p>original term edited</p>
                  </xpath>
             </data>
@@ -1157,7 +1154,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_arch, """
         <data>
             <data>
-                <xpath position="before" expr="/t[@t-name='web_studio.test_report_document']/div" meta-class="outside-t-call">
+                <xpath expr="/t[@t-name='web_studio.test_report_document']/div" position="before" meta-class="outside-t-call">
                 <div class="added"><br/></div>
                 </xpath>
             </data>
@@ -1200,7 +1197,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_arch, """
         <data>
             <data>
-                <xpath position="after" expr="/t[@t-name='web_studio.test_report_document']//t[@t-call='web_studio.t_call_0']/t[@t-set='somevar']" meta-t-set="somevar" meta-t-value="'someValue'">
+                <xpath expr="/t[@t-name='web_studio.test_report_document']//t[@t-call='web_studio.t_call_0']//t[@t-set='somevar']" position="after" meta-t-set="somevar" meta-t-value="'someValue'">
                 <div class="added"><br/></div>
                 </xpath>
             </data>
@@ -1244,12 +1241,12 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_arch, """
             <data>
                 <data>
-                    <xpath position="before" expr="/t[@t-name='web_studio.test_report_document']/div" meta-class="outside-t-call">
+                    <xpath expr="/t[@t-name='web_studio.test_report_document']/div" position="before" meta-class="outside-t-call">
                     <div class="added0"><br/></div>
                     </xpath>
                 </data>
                 <data>
-                    <xpath position="after" expr="/t[@t-name='web_studio.test_report_document']//t[@t-call='web_studio.t_call_0']/t[@t-set='somevar']" meta-t-set="somevar" meta-t-value="'someValue'">
+                    <xpath expr="/t[@t-name='web_studio.test_report_document']//t[@t-call='web_studio.t_call_0']//t[@t-set='somevar']" position="after" meta-t-set="somevar" meta-t-value="'someValue'">
                     <div class="added1"><br/></div>
                     </xpath>
                 </data>
@@ -1419,7 +1416,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(studio_view_arch, """
          <data>
            <data>
-           <xpath position="replace" expr="/t[@t-name='web_studio.test_report_document']/span">
+           <xpath expr="/t[@t-name='web_studio.test_report_document']/span" position="replace">
              <span>some textadded</span>
            </xpath>
            </data>
