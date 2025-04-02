@@ -72,7 +72,7 @@ class CarvajalRequest():
     def client(self):
         if not hasattr(self, '_client'):
             token = self._create_wsse_header(self.username, self.password)
-            self._client = Client(self.wsdl, plugins=[CarvajalPlugin()], wsse=token, operation_timeout=10)
+            self._client = Client(self.wsdl, plugins=[CarvajalPlugin()], wsse=token, operation_timeout=30)
         return self._client
 
     def _handle_exception(self, e):
