@@ -9,10 +9,8 @@ from odoo.tools import mute_logger
 
 from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
-from odoo.addons.sale_subscription.controllers.portal import CustomerPortal
 from odoo.addons.website.tools import MockRequest
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
-from odoo.addons.website.tools import MockRequest
 
 
 @tagged('post_install', '-at_install')
@@ -36,8 +34,8 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
             'password': 'user_b_pouet',
             'name': 'User B',
         })
-        # Portal access rule currently relies on mail follower(s) of the order
-        cls.order._message_subscribe(partner_ids=[cls.user_with_so_access.partner_id.id])
+        # Portal access rule currently relies on customer of the order -> put in same company
+        cls.user_with_so_access.partner_id.parent_id = cls.partner.id
 
     def _my_sub_assign_token(self, **values):
         url = self._build_url(f"/my/subscriptions/assign_token/{self.order.id}")

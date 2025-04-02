@@ -143,7 +143,7 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
 
         # The SO is not accessible but the token is mine
         data = {'token_id': stolen_payment_method.id, 'order_id': legit_user_subscription.id}
-        self._build_url("/my/subscriptions/assign_token/%s" % legit_user_subscription.id)
+        url = self._build_url("/my/subscriptions/assign_token/%s" % legit_user_subscription.id)
         with self._assertNotFound():
             self.make_jsonrpc_request(url, data)
         legit_user_subscription.invalidate_recordset()

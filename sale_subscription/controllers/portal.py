@@ -151,7 +151,6 @@ class CustomerPortal(payment_portal.PaymentPortal):
         enable_token_management = request.env.user.partner_id in (order_sudo.partner_id.child_ids | order_sudo.partner_id)
         closable = order_sudo.user_closable and order_sudo.subscription_state in ['3_progress', '4_paused']
         display_close = closable and (not order_sudo.end_date or order_sudo.end_date > order_sudo.next_invoice_date)
-        is_follower = request.env.user.partner_id in order_sudo.message_follower_ids.partner_id
         periods = {'week': 'weeks', 'month': 'months', 'year': 'years'}
         # Calculate the duration when the customer can reopen his subscription
         missing_periods = 1
@@ -185,7 +184,6 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'report_type': 'html',
             'display_close': display_close,
             'closable': closable,
-            'is_follower': is_follower,
             'close_reasons': request.env['sale.order.close.reason'].search([]),
             'missing_periods': missing_periods,
             'user': request.env.user,

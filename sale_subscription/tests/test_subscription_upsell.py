@@ -626,6 +626,7 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
         """
         with freeze_time("2024-11-01"):
             self.subscription.action_confirm()
+            self.subscription.message_subscribe(partner_ids=self.sale_user.partner_id.ids)
             self.env['sale.order']._cron_recurring_create_invoice()
 
         with freeze_time("2024-11-10"):
@@ -635,14 +636,14 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             renewal_so._create_invoices()
             renewal_so.order_line.invoice_lines.move_id._post()
             self.assertIn(
-                self.subscription.message_follower_ids.partner_id.id, renewal_so.message_follower_ids.partner_id.ids,
+                self.sale_user.partner_id, renewal_so.message_partner_ids,
                 "Parent order's followers should be copied into renew order.")
             # add a new follower in the renew order
-            renewal_so.message_subscribe(self.partner.ids)
+            renewal_so.message_subscribe(partner_ids=(self.partner + self.legit_user.partner_id).ids)
 
             # create a upsell order from renewal order
             action = renewal_so.prepare_upsell_order()
             upsell_so = self.env['sale.order'].browse(action['res_id'])
             self.assertEqual(
-                renewal_so.message_follower_ids.partner_id.ids, upsell_so.message_follower_ids.partner_id.ids,
-                "Parent order's followers should be copied into upsell order.")
+                upsell_so.message_partner_ids, (self.sale_user + self.env.user).partner_id,
+                "Parent order's internal followers should be copied into upsell order, not customers")
