@@ -6,6 +6,7 @@ import logging
 from lxml import etree
 from lxml.builder import E
 import json
+import random
 
 import odoo.tests
 from odoo import Command, api, http
@@ -235,7 +236,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         action1 = self.env[action1.type].browse(action1.id)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//form[1]/field[@name='name']" position="before">
+                <xpath expr="/form//field[@name='name']" position="before">
                     <header>
                         <button string="web_studio_new_button_action_name" type="action" name="{action1_Id}"/>
                     </header>
@@ -251,7 +252,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//form[1]/field[@name='name']" position="before">
+                <xpath expr="/form//field[@name='name']" position="before">
                     <header>
                         <button string="web_studio_new_button_action_name" type="action" name="{action1_Id}"/>
                         <button string="web_studio_other_button_action_name" type="action" name="{action2_Id}"/>
@@ -261,8 +262,9 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.start_tour("/odoo?debug=tests", 'web_studio_test_remove_action_button_in_form_view', login="admin")
         self.start_tour("/odoo?debug=tests", 'web_studio_test_remove_action_button_in_form_view', login="admin")
         arch = """<data>
-                <xpath expr="//form[1]/field[@name='name']" position="before">
-                    <header/>
+                <xpath expr="/form//field[@name='name']" position="before">
+                    <header>
+                    </header>
                 </xpath>
             </data>"""
         #FIXME Can't do it otherwise cause of indentation problems
@@ -283,7 +285,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         action = self.env[action.type].browse(action.id)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//field[@name='avatar_128']" position="before">
+                <xpath expr="/list//field[@name='avatar_128']" position="before">
                     <header>
                         <button string="web_studio_new_button_action_name" type="action" name="{actionId}"/>
                     </header>
@@ -291,8 +293,9 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             </data>""".format(actionId=action.xml_id))
         self.start_tour("/odoo?debug=tests", 'web_studio_test_remove_action_button_in_list_view', login="admin")
         arch = """<data>
-                <xpath expr="//field[@name='avatar_128']" position="before">
-                    <header/>
+                <xpath expr="/list//field[@name='avatar_128']" position="before">
+                    <header>
+                    </header>
                 </xpath>
             </data>"""
         #FIXME Can't do it otherwise cause of indentation problems
@@ -316,6 +319,15 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.assertEqual(studioView.arch, "<data/>")
 
     def test_enter_x2many_edition_and_add_field(self):
+        normalize_origin = self.env.registry.get("ir.ui.view").normalize
+
+        def mock_normalize(*args, **kwargs):
+            random.seed('https://youtu.be/tFjNH9l6-sQ')
+            return normalize_origin(*args, **kwargs)
+
+        self.addCleanup(random.seed)
+        self.patch(self.env.registry.get("ir.ui.view"), "normalize", mock_normalize)
+
         doesNotHaveGroup = self.env["res.groups"].create({
             "name": "studio does not have"
         })
@@ -333,7 +345,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <form class="test-user-form">
                     <t groups="{doesnothavegroup}" >
-                        <div class="condition_group" />
+                        <div class="condition_group"/>
                     </t>
                     <group>
                         <field name="name" />
@@ -358,12 +370,12 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         assertViewArchEqual(self, studioView.arch, """
             <data>
-               <xpath expr="//field[@name='user_ids']" position="inside">
+               <xpath expr="/form//field[@name='user_ids']" position="inside">
                  <form class="test-user-form">
                    <t groups="{doesnothavegroup}" >
-                     <div class="condition_group" />
+                     <div class="condition_group" name="studio_div_302a40"/>
                    </t>
-                   <group>
+                   <group name="studio_group_4e2ccd">
                      <field name="name"/>
                      <field name="log_ids"/>
                    </group>
@@ -400,7 +412,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         assertViewArchEqual(self, studioView.arch, """
             <data>
-               <xpath expr="//field[@name='user_ids']" position="inside">
+               <xpath expr="/form//field[@name='user_ids']" position="inside">
                  <list class="test-user-list">
                    <field name="display_name" />
                    <field name="log_ids" optional="show" />
@@ -447,7 +459,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         assertViewArchEqual(self, studio_view.arch, """
             <data>
-               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='user_ids']" position="inside">
+               <xpath expr="/form/sheet/notebook/page/field[@name='user_ids']" position="inside">
                  <list class="test-user-list">
                    <field name="display_name" />
                    <field name="log_ids" optional="show" />
@@ -494,7 +506,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, """
              <data>
-                <xpath expr="//field[@name='function']" position="after">
+                <xpath expr="/list//field[@name='function']" position="after">
                     <field name="website" optional="show"/>
                 </xpath>
             </data>
@@ -579,7 +591,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-               <xpath expr="//field[@name='display_name']" position="after">
+               <xpath expr="/form//field[@name='display_name']" position="after">
                  <field name="website"/>
                </xpath>
             </data>
@@ -652,7 +664,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testView)
         assertViewArchEqual(self, studio_view.arch, """
         <data>
-            <xpath expr="//field[@name='lang']" position="attributes">
+            <xpath expr="/form//field[@name='lang']" position="attributes">
                 <attribute name="required">True</attribute>
             </xpath>
          </data>
@@ -790,7 +802,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-               <xpath expr="//form[1]/field[@name='child_ids']/list[2]/field[@name='name']" position="before">
+               <xpath expr="/form/field[@name='child_ids']/list[2]//field[@name='name']" position="before">
                  <field name="active" optional="show"/>
                </xpath>
             </data>
@@ -993,7 +1005,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.maxDiff = None
         assertViewArchEqual(self, studioView["arch"], '''
             <data>
-                <xpath expr="//field[@name='color']" position="after">
+                <xpath expr="/form//field[@name='color']" position="after">
                   <field name="website"/>
                 </xpath>
             </data>
@@ -1015,7 +1027,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//form[1]/field[@name='child_ids']/form[1]" position="attributes">
+                <xpath expr="/form/field[@name='child_ids']/form" position="attributes">
                     <attribute name="create">false</attribute>
                 </xpath>
             </data>""")
@@ -1044,7 +1056,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, '''
             <data>
-            <xpath expr="//form[1]/field[@name='user_ids']/form[1]/group[1]/field[@name='log_ids']/form[2]/group[1]/field[@name='display_name']" position="before">
+            <xpath expr="/form/field[@name='user_ids']/form/group/field[@name='log_ids']/form[2]//field[@name='display_name']" position="before">
              <field name="create_date"/>
             </xpath>
             </data>
@@ -1128,7 +1140,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.newView)
         assertViewArchEqual(self, studioView.arch, f"""
             <data>
-                <xpath expr="//field[@name='x_name']" position="before">
+                <xpath expr="/form//field[@name='x_name']" position="before">
                     <field name="{monetary_name_list[0]}"/>
                     <field name="{currency_name_list[0]}"/>
                 </xpath>
@@ -1287,7 +1299,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.newView)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//field[@name='x_studio_monetary_test']" position="after">
+                <xpath expr="/form//field[@name='x_studio_monetary_test']" position="after">
                     <field name="x_studio_currency_test2"/>
                 </xpath>
             </data>
@@ -1320,7 +1332,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.newView)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//field[@name=\'x_name\']" position="before">
+                <xpath expr="/form//field[@name=\'x_name\']" position="before">
                     <field name="x_studio_monetary_test"/>
                     <field name="x_studio_currency_test"/>
                 </xpath>
@@ -1355,7 +1367,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.newView)
         assertViewArchEqual(self, studioView.arch, f"""
             <data>
-                <xpath expr="//field[@name=\'x_name\']" position="after">
+                <xpath expr="/form//field[@name=\'x_name\']" position="after">
                     <field name="{monetary_name_list[0]}"/>
                 </xpath>
             </data>
@@ -1385,8 +1397,8 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, '''
         <data>
-            <xpath expr="//field[@name='active']" position="before">
-                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]/group[1]/group[1]/field[@name='display_name']" position="move" />
+            <xpath expr="/form//field[@name='active']" position="before">
+                <xpath expr="/form/sheet/notebook/page[2]/group/group/field[@name='display_name']" position="move" />
             </xpath>
         </data>
         ''')
@@ -1440,7 +1452,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         assertViewArchEqual(self, studioView.arch,
         '''
         <data>
-            <xpath expr="//form[1]/group[1]/field[@name=\'name\']" position="before">
+            <xpath expr="/form//field[@name=\'name\']" position="before">
                 <field filename="{binary_field.name}_filename" name="{binary_field.name}"/>
                 <field invisible="True" name="{binary_field.name}_filename"/>
             </xpath>
@@ -1495,7 +1507,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         assertViewArchEqual(self, studioView.arch,
         '''
         <data>
-            <xpath expr="//form[1]/group[1]/field[@name=\'name\']" position="before">
+            <xpath expr="/form//field[@name=\'name\']" position="before">
                 <field filename="{binary_field.name}_filename" name="{binary_field.name}"/>
                 <field invisible="True" name="{binary_field.name}_filename"/>
             </xpath>
@@ -1523,7 +1535,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         assertViewArchEqual(self, studioView.arch,
         '''
         <data>
-            <xpath expr="//form[1]/group[1]/field[@name=\'name\']" position="before">
+            <xpath expr="/form//field[@name=\'name\']" position="before">
                 <field name="{binary_field.name}"/>
             </xpath>
         </data>
@@ -1545,7 +1557,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, '''
         <data>
-          <xpath expr="//form[1]/field[@name='name']" position="attributes">
+          <xpath expr="/form//field[@name='name']" position="attributes">
              <attribute name="required">False</attribute>
           </xpath>
         </data>
@@ -1567,7 +1579,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         assertViewArchEqual(self, studioView.arch, '''
              <data>
-                <xpath expr="//form[1]/group[1]/field[@name='name']" position="after">
+                <xpath expr="/form//field[@name='name']" position="after">
                     <field name="{boolean_field.name}"/>
                 </xpath>
             </data>
@@ -1588,7 +1600,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         self.assertXMLEqual(studioView.arch, """
             <data>
-                <xpath expr="//form[1]/group[1]/field[@name='name']" position="after">
+                <xpath expr="/form//field[@name='name']" position="after">
                    <field name="x_studio_my_new_field"/>
                 </xpath>
             </data>
@@ -1602,7 +1614,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//field[@name='partner_latitude']" position="attributes">
+                <xpath expr="/form//field[@name='partner_latitude']" position="attributes">
                     <attribute name="options">{"digits":[4,2]}</attribute>
                 </xpath>
              </data>
@@ -1617,7 +1629,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         self.assertXMLEqual(studioView.arch, """
         <data>
-          <xpath expr="//button[@name='open_commercial_entity']" position="attributes">
+          <xpath expr="/form//button[@name='open_commercial_entity']" position="attributes">
             <attribute name="effect">{'img_url': '/web/content/%s'}</attribute>
           </xpath>
         </data>
@@ -1823,10 +1835,10 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studioView = _get_studio_view(self.testView)
         self.assertXMLEqual(studioView.arch, """
             <data>
-                <xpath expr="//field[@name='display_name']" position="attributes">
+                <xpath expr="/kanban//field[@name='display_name']" position="attributes">
                     <attribute name="class">fs-6 whatever</attribute>
                 </xpath>
-                <xpath expr="//field[@name='email']" position="attributes">
+                <xpath expr="/kanban//field[@name='email']" position="attributes">
                     <attribute name="class">fw-bold text-muted</attribute>
                 </xpath>
             </data>""")
@@ -1856,7 +1868,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testViewKanban)
         self.assertXMLEqual(studio_view.arch, """
         <data>
-          <xpath expr="//kanban[1]/t[@t-name='card']" position="before">
+          <xpath expr="/kanban//t[@t-name='card']" position="before">
             <t t-name="menu">
               <t t-if="widget.editable">
                 <a type="open" class="dropdown-item">Edit</a>
@@ -1866,7 +1878,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
               </t>
             </t>
           </xpath>
-          <xpath expr="//field[@name='function']" position="before">
+          <xpath expr="/kanban//field[@name='function']" position="before">
             <widget name="web_ribbon" title="Demo"/>
           </xpath>
         </data>
@@ -1903,7 +1915,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testViewForm)
         self.assertXMLEqual(studio_view.arch, f"""
         <data>
-          <xpath expr="//form[1]/group[1]/field[@name='name']" position="after">
+          <xpath expr="/form//field[@name='name']" position="after">
             <field name="{new_field.name}"/>
           </xpath>
         </data>
@@ -1940,7 +1952,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testView)
         assertViewArchEqual(self, studio_view.arch, """
         <data>
-            <xpath expr="//form[1]/field[@name='name']" position="attributes">
+            <xpath expr="/form//field[@name='name']" position="attributes">
                 <attribute name="groups">web_studio.studio_test_doesnothavegroup,!base.group_system</attribute>
             </xpath>
         </data>
@@ -1959,7 +1971,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testView)
         self.assertXMLEqual(studio_view.arch, """
             <data>
-                <xpath expr="//form[1]" position="attributes">
+                <xpath expr="/form" position="attributes">
                     <attribute name="create">true</attribute>
                     <attribute name="duplicate">false</attribute>
                 </xpath>
@@ -1988,7 +2000,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testViewList)
         self.assertXMLEqual(studio_view.arch, """
             <data>
-                <xpath expr="//list[1]" position="attributes">
+                <xpath expr="/list" position="attributes">
                     <attribute name="create">true</attribute>
                     <attribute name="duplicate">false</attribute>
                 </xpath>
@@ -2036,7 +2048,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         [html_field] = self.env['ir.model.fields'].search([('name', '=like', 'x_studio_html_field_%')], limit=1)
         assertViewArchEqual(self, studio_view.arch, '''
              <data>
-                <xpath expr="//form[1]/sheet[1]/group[1]" position="before">
+                <xpath expr="/form/sheet/group" position="before">
                     <field name="{html_field.name}"/>
                 </xpath>
             </data>
@@ -2075,7 +2087,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         studio_view = _get_studio_view(self.testView)
         assertViewArchEqual(self, studio_view.arch, '''
         <data>
-            <xpath expr="//kanban[1]" position="attributes">
+            <xpath expr="/kanban" position="attributes">
                 <attribute name="default_group_by"/>
             </xpath>
         </data>''')
@@ -2096,7 +2108,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         assertViewArchEqual(self, studio_view.arch, """
         <data>
-            <xpath expr="//form[1]/field[@name='child_ids']/list[1]/field[@name='function'][2]" position="attributes">
+            <xpath expr="/form/field[@name='child_ids']/list/field[@name='function'][2]" position="attributes">
                 <attribute name="string">new label from tour</attribute>
             </xpath>
         </data>

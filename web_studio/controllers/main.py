@@ -449,10 +449,11 @@ class WebStudioController(http.Controller):
         studio_view = self._get_studio_view(view)
         if studio_view and len(arch):
             studio_view.arch_db = arch
+            return studio_view
         elif studio_view:
             studio_view.unlink()
         elif len(arch):
-            self._create_studio_view(view, arch)
+            return self._create_studio_view(view, arch)
 
     def _generate_studio_view_name(self, view):
         return "Odoo Studio: %s customization" % (view.name)
@@ -684,24 +685,20 @@ class WebStudioController(http.Controller):
             # call the right operation handler
             getattr(self, '_operation_%s' % (op['type']))(arch, op, model)
 
-        # Save or create changes into studio view, identifiable by xmlid
-        # Example for view id 42 of model crm.lead: web-studio_crm.lead-42
         new_arch = etree.tostring(arch, encoding='unicode', pretty_print=True)
-        self._set_studio_view(view, new_arch)
-
-        # Normalize the view
         studio_view = self._get_studio_view(view)
         try:
-            normalized_view = studio_view.normalize()
-            self._set_studio_view(view, normalized_view)
+            # Normalize the new arch
+            normalized_view = (studio_view or view).normalize(new_arch)
+            studio_view = self._set_studio_view(view, normalized_view)
         except ValidationError:  # Element '<...>' cannot be located in parent view
             # If the studio view is not applicable after normalization, let's
             # just ignore the normalization step, it's better to have a studio
             # view that is not optimized than to prevent the user from making
             # the change he would like to make.
-            self._set_studio_view(view, new_arch)
+            studio_view = self._set_studio_view(view, new_arch)
 
-        return self._return_view(view, studio_view, context)
+        return self._return_view(view, studio_view or request.env["ir.ui.view"], context)
 
     @http.route('/web_studio/rename_field', type='jsonrpc', auth='user')
     def rename_field(self, studio_view_id, studio_view_arch, model, old_name, new_name, new_label=None):

@@ -145,7 +145,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+              <xpath expr="/form/sheet/group" position="after">
                 <group name="studio_group_E16QG">
                   <group name="studio_group_E16QG_left" string="Left Title">
                     <field name="partner_latitude"/>
@@ -186,7 +186,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+              <xpath expr="/form/sheet/group" position="after">
                 <group name="studio_group_E16QG">
                   <field name="id"/>
                   <group name="studio_group_E16QG_right" string="Right Title">
@@ -216,7 +216,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+              <xpath expr="/form/sheet/group" position="after">
                 <group name="studio_group_E16QG">
                   <field name="id"/>
                 </group>
@@ -243,7 +243,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+              <xpath expr="/form/sheet/group" position="after">
                 <group name="studio_group_E16QG">
                   <field name="id"/>
                 </group>
@@ -287,7 +287,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="replace">
                 <field name="tz"/>
               </xpath>
             </data>
@@ -312,7 +312,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='category_id']" position="after">
+              <xpath expr="/form//field[@name='category_id']" position="after">
                 <field name="create_date"/>
               </xpath>
             </data>
@@ -339,7 +339,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="after">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="after">
                 <field name="tz"/>
                 <field name="create_uid"/>
               </xpath>
@@ -366,10 +366,10 @@ class TestViewNormalization(TransactionCase):
           </data>
         """, """
           <data>
-            <xpath expr="//field[@name='website']" position="after">
+            <xpath expr="/form//field[@name='website']" position="after">
               <field name="create_uid"/>
             </xpath>
-            <xpath expr="//field[@name='category_id']" position="after">
+            <xpath expr="/form//field[@name='category_id']" position="after">
               <field name="create_date"/>
             </xpath>
           </data>
@@ -396,10 +396,10 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="after">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="after">
                 <field name="id"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="after">
                 <field name="create_uid"/>
               </xpath>
             </data>
@@ -423,7 +423,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="replace">
                 <field name="contact_address"/>
                 <field name="id"/>
               </xpath>
@@ -452,7 +452,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="replace">
                 <field name="id"/>
                 <field name="create_uid"/>
               </xpath>
@@ -477,12 +477,12 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="attributes">
+              <xpath expr="/form/sheet/notebook/page" position="after">
+                <page name="PAGE_2" string="AWESOME PAGE 2"/>
+              </xpath>
+              <xpath expr="/form/sheet/notebook/page" position="attributes">
                 <attribute name="help">PAGE 1 HELP</attribute>
                 <attribute name="zzz">PAGE 1 ZZZ</attribute>
-              </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
-                <page name="PAGE_2" string="AWESOME PAGE 2"/>
               </xpath>
             </data>
         """)
@@ -506,19 +506,17 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="attributes">
+              <xpath expr="/form/sheet/notebook/page" position="after">
+                <page name="PAGE_2" string="AWESOME PAGE 2"/>
+              </xpath>
+              <xpath expr="/form/sheet/notebook/page" position="attributes">
                 <attribute name="help">PAGE 1 HELP</attribute>
                 <attribute name="string">PAGE 1</attribute>
-              </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
-                <page name="PAGE_2" string="AWESOME PAGE 2"/>
               </xpath>
             </data>
         """)
 
     def test_view_normalization_14(self):
-        # There is already a chatter on res.partner.form view, which is why
-        # the resulting xpath is /div instead of /sheet.
         self._test_view_normalization("""
             <data>
               <xpath expr="/form[1]/*[last()]" position="after">
@@ -527,7 +525,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]" position="after">
+              <xpath expr="/form/sheet" position="after">
                 <chatter/>
               </xpath>
             </data>
@@ -550,7 +548,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="replace">
                 <h1>
                     THIS
                     IS
@@ -577,7 +575,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="after">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="after">
                 <field name="contact_address"/>
                 <field name="phone"/>
                 <field name="tz"/>
@@ -593,13 +591,14 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='lang']" position="replace"/>
+              <xpath expr="/form//field[@name='lang']" position="replace"/>
             </data>
         """)
 
     # Replace an existing element then add it back in but somewhere before
     # its original position
     def test_view_normalization_18(self):
+        # 1. Nothing to do: the phone field kept its place
         self._test_view_normalization("""
             <data>
               <xpath expr="//field[@name='phone']" position="replace"/>
@@ -607,10 +606,20 @@ class TestViewNormalization(TransactionCase):
                 <field name="phone" widget="phone"/>
               </xpath>
             </data>
+        """, """""")
+
+        # 2. phone field has been moved just before the field function
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='phone']" position="replace"/>
+              <xpath expr="//field[@name='function']" position="before">
+                <field name="phone" widget="phone"/>
+              </xpath>
+            </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="after">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="before">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="move"/>
               </xpath>
             </data>
         """)
@@ -628,11 +637,12 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="replace">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="after">
+                <xpath expr="/form//field[@name='user_ids']" position="move"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="attributes">
-                <attribute name="widget"></attribute>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="replace"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="attributes">
+                <attribute name="widget"/>
               </xpath>
             </data>
         """)
@@ -650,12 +660,12 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='phone']" position="replace">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='phone']" position="replace">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="move"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="attributes">
-                <attribute name="required"></attribute>
-                <attribute name="widget"></attribute>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="attributes">
+                <attribute name="required"/>
+                <attribute name="widget"/>
               </xpath>
             </data>
         """)
@@ -673,10 +683,10 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]/field[@name='name']" position="before">
+              <xpath expr="/form/sheet/notebook/page/field[@name='child_ids']/kanban//field[@name='name']" position="before">
                 <field name="color"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]/field[@name='name']" position="after">
+              <xpath expr="/form/sheet/notebook/page/field[@name='child_ids']/kanban//field[@name='name']" position="after">
                 <field name="phone"/>
               </xpath>
             </data>
@@ -707,13 +717,10 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/field[@name='phone']" position="after">
+              <xpath expr="/form/sheet/notebook/page/field[@name='child_ids']/kanban//field[@name='phone']" position="after">
                 <field name="lang"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]" position="attributes">
-                <attribute name="color">lang</attribute>
-              </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]/field[@name='name']" position="after">
+              <xpath expr="/form/sheet/notebook/page/field[@name='child_ids']/kanban//field[@name='name']" position="after">
                 <div class="o_dropdown_kanban dropdown" name="studio_div_302a40">
                   <a role="button" class="dropdown-toggle o-no-caret btn" data-bs-toggle="dropdown" href="#">
                     <span class="fa fa-bars fa-lg" title="menu"/>
@@ -729,6 +736,9 @@ class TestViewNormalization(TransactionCase):
                   </div>
                 </div>
               </xpath>
+              <xpath expr="/form/sheet/notebook/page/field[@name='child_ids']/kanban/templates/t[@t-name='card']/div" position="attributes">
+                <attribute name="color">lang</attribute>
+              </xpath>
             </data>
         """)
 
@@ -742,7 +752,7 @@ class TestViewNormalization(TransactionCase):
             </data>
             """, """
             <data>
-              <xpath expr="//gantt[1]" position="attributes">
+              <xpath expr="/gantt" position="attributes">
                 <attribute name="date_stop">date</attribute>
               </xpath>
             </data>
@@ -767,7 +777,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="after">
+              <xpath expr="/form/sheet/notebook" position="after">
                 <group name="studio_group_a9eb51">
                   <p>hello world!</p>
                 </group>
@@ -800,7 +810,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+              <xpath expr="/form/sheet/notebook/page" position="after">
                 <page name="studio_page_302a40">
                   <p>hello world!</p>
                 </page>
@@ -828,12 +838,12 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='category_id']" position="attributes">
+              <xpath expr="/form//field[@name='category_id']" position="after">
+                <field name="create_uid"/>
+              </xpath>
+              <xpath expr="/form//field[@name='category_id']" position="attributes">
                 <attribute name="placeholder"/>
                 <attribute name="widget"/>
-              </xpath>
-              <xpath expr="//field[@name='category_id']" position="after">
-                <field name="create_uid"/>
               </xpath>
             </data>
         """)
@@ -853,7 +863,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='website']" position="after">
+              <xpath expr="/form//field[@name='website']" position="after">
                 <div name="studio_div_302a40">
                   <field name="create_uid"/>
                 </div>
@@ -879,7 +889,7 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='website']" position="after">
+              <xpath expr="/form//field[@name='website']" position="after">
                 <div name="studio_div_302a40">
                   <div name="studio_div_4e2ccd">
                     <field name="create_uid"/>
@@ -900,8 +910,8 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="after">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
               </xpath>
             </data>
         """)
@@ -916,8 +926,8 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='website']" position="after">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              <xpath expr="/form//field[@name='website']" position="after">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
               </xpath>
             </data>
         """)
@@ -935,9 +945,9 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
-                <xpath expr="//field[@name='lang']" position="move"/>
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="after">
+                <xpath expr="/form//field[@name='lang']" position="move"/>
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
               </xpath>
             </data>
         """)
@@ -955,9 +965,9 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='website']" position="after">
-                <xpath expr="//field[@name='lang']" position="move"/>
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              <xpath expr="/form//field[@name='website']" position="after">
+                <xpath expr="/form//field[@name='lang']" position="move"/>
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
               </xpath>
             </data>
         """)
@@ -975,9 +985,9 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
-                <xpath expr="//field[@name='lang']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="after">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
+                <xpath expr="/form//field[@name='lang']" position="move"/>
               </xpath>
             </data>
         """)
@@ -995,8 +1005,8 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="after">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
                 <field name="partner_latitude"/>
               </xpath>
             </data>
@@ -1015,10 +1025,10 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+              <xpath expr="/form/sheet/group/group[2]/field[@name='email']" position="after">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="move"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="attributes">
+              <xpath expr="/form/sheet/group/group[2]/field[@name='function']" position="attributes">
                 <attribute name="placeholder">Kikou</attribute>
               </xpath>
             </data>
@@ -1035,9 +1045,9 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//field[@name='display_name']" position="before">
-                <xpath expr="//field[@name='lang']" position="move"/>
-                <xpath expr="//field[@name='category_id']" position="move"/>
+              <xpath expr="/form//field[@name='display_name']" position="before">
+                <xpath expr="/form//field[@name='lang']" position="move"/>
+                <xpath expr="/form//field[@name='category_id']" position="move"/>
               </xpath>
             </data>
         """)
@@ -1056,13 +1066,13 @@ class TestViewNormalization(TransactionCase):
           </data>
         """, """
           <data>
-            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+            <xpath expr="/form/sheet/notebook/page" position="after">
               <page name="my_new_page">
                 <group name="my_new_group"/>
               </page>
             </xpath>
-            <xpath expr="//group[@name='my_new_group']" position="inside">
-              <xpath expr="//field[@name='lang']" position="move"/>
+            <xpath expr="/form//group[@name='my_new_group']" position="inside">
+              <xpath expr="/form//field[@name='lang']" position="move"/>
             </xpath>
           </data>
         """)
@@ -1095,7 +1105,7 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
                <data>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="before">
+                <xpath expr="/form/sheet/div" position="before">
                   <div class="oe_button_box" name="button_box">
                   </div>
                 </xpath>
@@ -1132,7 +1142,7 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
                <data>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="before">
+                <xpath expr="/form/sheet/div" position="before">
                   <div name="x_path_2"/>
                   <div name="x_path_1"/>
                 </xpath>
@@ -1179,14 +1189,14 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
                <data>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="before">
+                <xpath expr="/form/sheet/div" position="before">
                   <div name="x_path_1"/>
                   <div name="x_path_2"/>
                 </xpath>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="after">
+                <xpath expr="/form/sheet/div[3]" position="after">
                   <div name="x_path_3"/>
                 </xpath>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][2]" position="after">
+                <xpath expr="/form/sheet/div[5]" position="after">
                   <div name="x_path_4"/>
                 </xpath>
               </data>
@@ -1226,15 +1236,15 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
                <data>
-                <xpath expr="//form[1]/sheet[1]/div[3]" position="replace">
-                  <div name="x_path_3"/>
-                  <div name="x_path_4">!?</div>
-                </xpath>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="before">
+                <xpath expr="/form/sheet/div" position="before">
                   <div name="x_path_2">orator:</div>
                 </xpath>
-                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="after">
+                <xpath expr="/form/sheet/div[2]" position="after">
                   <div name="x_path_1">cruel</div>
+                </xpath>
+                <xpath expr="/form/sheet/div[5]" position="replace">
+                  <div name="x_path_3"/>
+                  <div name="x_path_4">!?</div>
                 </xpath>
               </data>
             ''')
@@ -1265,7 +1275,7 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
               <data>
-                <xpath expr="//form[1]/div[1]" position="before">
+                <xpath expr="/form/div" position="before">
                   <!-- , -->
                   <div name="studio_div_302a40"/>
                 </xpath>
@@ -1303,7 +1313,7 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
               <data>
-                <xpath expr="//group[@name='o2m_field']" position="inside">
+                <xpath expr="/form//group[@name='o2m_field']" position="inside">
                   <list>
                     <button name="first_in_tree"/>
                     <button name="middle"/>
@@ -1344,7 +1354,7 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
               <data>
-                <xpath expr="//form[1]/header[1]/button[@name='action_confirm'][2]" position="attributes">
+                <xpath expr="/form/header/button[@name='action_confirm'][2]" position="attributes">
                   <attribute name="fire">on the bayou</attribute>
                 </xpath>
               </data>
@@ -1392,8 +1402,8 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/group[2]" position="replace"/>
-              <xpath expr="//field[@name='active']" position="before">
+              <xpath expr="/form/sheet/notebook/page/group[2]" position="replace"/>
+              <xpath expr="/form//field[@name='active']" position="before">
                 <field name="email"/>
               </xpath>
             </data>
@@ -1434,8 +1444,8 @@ class TestViewNormalization(TransactionCase):
             ''',
             '''
             <data>
-              <xpath expr="//form[1]/group[1]/group[@name='group_name']/field[@name='create_date'][2]" position="replace"/>
-              <xpath expr="//form[1]/group[1]/group[@name='group_name']/div[2]" position="replace"/>
+              <xpath expr="/form/group/group[@name='group_name']/field[@name='create_date'][2]" position="replace"/>
+              <xpath expr="/form/group/group[@name='group_name']/div[2]" position="replace"/>
             </data>
             ''',
         )
@@ -1467,8 +1477,8 @@ class TestViewNormalization(TransactionCase):
             </data>
             ''', """
             <data>
-              <xpath expr="//group[@name='group_name_2']" position="replace"/>
-              <xpath expr="//field[@name='display_name']" position="after">
+              <xpath expr="/form//group[@name='group_name_2']" position="replace"/>
+              <xpath expr="/form//field[@name='display_name']" position="after">
                 <field name="function"/>
               </xpath>
             </data>

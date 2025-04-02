@@ -5,7 +5,7 @@ from itertools import chain
 from collections.abc import Iterable
 from collections import deque
 from dataclasses import dataclass, field
-from typing import Optional, Callable, Union, Literal, TypeAlias, Any
+from typing import Optional, Callable, Union, Literal, TypeAlias
 from lxml import etree
 
 Element = etree.Element
@@ -97,7 +97,7 @@ def longest_increasing_subsequence(arr):
     it is useful to compute the least amount of moving items into that list
 
     eg: [3,1,2] : 1 and 2 did not move, 3 is just placed before 1
-    longest_increasing_subsequence = [1,2]
+    longest_increasing_subsequence = [2,1] (the output is the reversed of the subsequence)
     """
     if not arr:
         return []
@@ -124,6 +124,9 @@ def longest_increasing_subsequence(arr):
 
 
 Position = Literal["replace", "attributes", "move", "before", "after", "inside"]
+
+# Leaves are representation of the elements in the Tree
+# to ease their management
 
 
 @dataclass
@@ -188,7 +191,8 @@ def _group_by_pivot(iterable: Iterable, is_pivot: Callable):
     if left_overs or current_group:
         yield (current_pivot, None), left_overs or current_group
 
-def _get_subtree_and_ancestors(node: etree._Element, is_subtree = lambda n: False) -> tuple[etree._Element | None, list[etree._Element]]:
+
+def _get_subtree_and_ancestors(node: etree._Element, is_subtree=lambda n: False) -> tuple[etree._Element | None, list[etree._Element]]:
     """For a node, returns its subtree parent (a relevant parent node that indicates a tree that could be separate)
     eg:
     <form> (this is a subtree)
@@ -252,14 +256,15 @@ def append_leaf(leaves, leaf: Leaf):
 DIFF_ATTRIBUTE = "o-diff-key"
 
 
-@dataclass
-class DiffAnalysisResult:
-    changes: dict[str, dict[str, Any]]
-    original_node_map: dict[str, etree._Element]
-    tracker_snapshot: "NodeTracker"
-
-
 class DiffAnalyzer:
+    """Class that parses both trees and determines what has changed between the two.
+    For each pair, it computes the differences in the attributes and in content.
+    Changes are understood as a mapping from node_id to the things (added, removed, moving nodes)
+    at that spot precisely.
+    It uses a NodeTracker to globally register what happens in terms of nodes moving around.
+    The two sets of data are necessary to ensure we do things with a global perspective, but also
+    be able to put the relevant changes around a node grouped together.
+    """
     def __init__(
         self,
         ignore_attributes=None,
@@ -276,7 +281,7 @@ class DiffAnalyzer:
         self.changes = {}
         self.tracker = NodeTracker(get_moving_candidate_key)
 
-    def diff(self, old: XMLInput, new: XMLInput) -> DiffAnalysisResult:
+    def diff(self, old: XMLInput, new: XMLInput) -> dict:
         old_tree = self._build_tree_from_input(old)
         new_tree = self._build_tree_from_input(new)
 
@@ -284,12 +289,11 @@ class DiffAnalyzer:
         self.tracker.keep(new_tree.get(DIFF_ATTRIBUTE))
         self._diff_nodes(self.map_id_to_node_old[new_tree.get(DIFF_ATTRIBUTE)], new_tree)
 
-        result = DiffAnalysisResult(
-            changes=self.changes,
-            original_node_map=self.map_id_to_node_old,
-            tracker_snapshot=self.tracker,
-        )
-        return result
+        return {
+            "changes": self.changes,
+            "original_node_map": self.map_id_to_node_old,
+            "node_tracker": self.tracker,
+        }
 
     def _build_tree_from_input(self, diff_input: XMLInput) -> etree._ElementTree:
         if isinstance(diff_input, (etree._ElementTree, etree._Element)):
@@ -463,11 +467,10 @@ class KeyedXmlDiffer:
     # Methods that concern the building of the Odoo's xpath semantic tree
     def diff_xpath(self, old: XMLInput, new: XMLInput, flat: bool = False) -> str:
         diff = self.diff(old, new)
-        changes = diff.changes
+        changes = diff["changes"]
 
-        # FIXME
-        self.tracker = diff.tracker_snapshot
-        self.map_id_to_node_old = diff.original_node_map
+        self.tracker = diff["node_tracker"]
+        self.map_id_to_node_old = diff["original_node_map"]
         self.new_nodes_map: dict[str, etree._Element] = {}
 
         return self._build_xpath_operations(changes, flat)

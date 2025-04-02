@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-import difflib
-import io
-from collections import defaultdict
-from copy import deepcopy
 from lxml import etree
 from lxml.builder import E
 import functools
@@ -14,6 +9,8 @@ import random
 
 from odoo import api, models, _
 from odoo.exceptions import UserError
+from ..controllers.keyed_xml_differ import KeyedXmlDiffer
+from odoo.tools.template_inheritance import apply_inheritance_specs
 
 from odoo.addons.web_studio.controllers.report import get_report_view_copy
 
@@ -21,8 +18,6 @@ from odoo.addons.web_studio.controllers.report import get_report_view_copy
 CONTAINER_TYPES = (
     'group', 'page', 'sheet', 'div', 'ul', 'li', 'notebook',
 )
-
-DIFF_KEY = "o-diff-key"
 
 
 class Base(models.AbstractModel):
@@ -589,674 +584,51 @@ class IrUiView(models.Model):
                 return not pre_locate or pre_locate(arch)
             return super().apply_inheritance_specs(source, specs_tree, pre_locate=pre_locate_studio)
 
-    def _generate_trees_with_diff_key(self, parser, old_view):
-        old_view_arch = etree.fromstring(old_view, parser)
-        _id = 1
-        for desc in old_view_arch.iter(etree.Element):
-            desc.set(DIFF_KEY, str(_id))
-            _id += 1
-
-        # replaces root_view.get_combined_arch() because we need an edited arch with the DIFF_KEY attributes
-        new_view_arch = self.apply_inheritance_specs(deepcopy(old_view_arch), etree.fromstring(self.arch, parser))
-
-        new_view_tree = etree.Element('data')
-        new_view_tree.append(new_view_arch)
-
-        old_view_tree = etree.Element('data')
-        old_view_tree.append(old_view_arch)
-
-        return old_view_tree, new_view_tree
-
-    def normalize(self):
-        """
-        Normalizes the studio arch by comparing the studio view to the base view
-        and combining as many xpaths as possible in order to have a more compact
-        final view
-
-        Returns the normalized studio arch
-        """
-        # Beware! By its reasoning, this function assumes that the view you
-        # want to normalize is the last one to be applied on its root view.
-        # This could be improved by deactivating all views that would be applied
-        # after this one when calling the get_combined_arch to get the old_view
-        # then re-enabling them all afterwards.
-
-
-        def is_moved(node):
-            """ Helper method that determines if a node is a moved field."""
-            return node.tag == 'field' and node.get('name') in moved_fields
-
-        # Fetch the root view
-        root_view = self
-        while root_view.mode != 'primary':
-            root_view = root_view.inherit_id
-
-        parser = etree.XMLParser(remove_blank_text=True)
-
-        # Get the result of the xpath applications without this view
-        self.active = False
-        old_view = root_view.get_combined_arch()
-        self.active = True
-
-        old_view_tree, new_view_tree = self._generate_trees_with_diff_key(parser, old_view)
-
-        new_view_arch_string = self._stringify_view(new_view_tree)
-        old_view_arch_string = self._stringify_view(old_view_tree)
-
-        def get_unified_diff(old, new):
-            """
-            Get all diff lines using unified_diff without the header.
-            Format of difflib.unified_diff output is:
-            ---
-            +++
-            @@  @@
-            unchanged
-            -removed
-            +added
-            """
-            # set n to infinity to get all unchanged lines
-            diff = difflib.unified_diff(old.split('\n'), new.split('\n'), n=float('inf'))
-            for i in range(3):
-                # handle empty diff generator
-                try:
-                    next(diff)
-                except StopIteration:
-                    break
-            return diff
-
-        diff = get_unified_diff(old_view_arch_string, new_view_arch_string)
-        old_view_iterator = old_view_tree.iter()
-        new_view_iterator = new_view_tree.iter()
-
-        # Determine which fields have moved. This information will be used to
-        # compute the second diff because the moved nodes must appear in the
-        # diff (see @stringify_node).
-        removed_fields = {}
-        added_fields = {}
-        moved_fields = {}
-        changes = {
-            '-': [],
-            '+': []
-        }
-        moving_boundary = None
-        node = None
-
-        def store_field(operation):
-            if operation == '-':
-                node = next(old_view_iterator)
-                if node.tag == 'field':
-                    removed_fields[node.get('name')] = node
-            elif operation == '+':
-                node = next(new_view_iterator)
-                if node.tag == 'field':
-                    added_fields[node.get('name')] = node
-
-        for line in diff:
-            if line.strip():
-                if line.startswith('-') or line.startswith('+'):
-                    operation, line = line[0], line[1:]
-                    nodes = changes[operation]
-
-                    if line.endswith('[@closed]') and nodes and nodes[-1] + '[@closed]' == line:
-                        # This is the closing of a node we were operating on.
-                        # It is not a candidate for moving boundary.
-                        nodes.pop()
-
-                    elif moving_boundary and moving_boundary != operation:
-                        # We are already in a moving boundary mode.
-                        # Look into the corresponding nodes for a match.
-                        nodes = changes.get(moving_boundary)
-
-                        if nodes and line == nodes[0]:
-                            # The node matches the current moving boundary.
-                            # We can stop watching this node.
-                            nodes.pop(0)
-
-                            if not nodes:
-                                # The moving boundary is over as we found
-                                # all its nodes twice.
-                                moving_boundary = None
-
-                        if not line.endswith('[@closed]'):
-                            # If we are operating on a field, let's store it.
-                            store_field(operation)
-
-                    elif line.endswith('[@closed]'):
-                        # We are operating on the closing of a node that
-                        # we are not not operating on ! Moving boundary !
-                        nodes.append(line)
-                        moving_boundary = operation
-
-                    else:
-                        # Store this node to match when we close it.
-                        nodes.append(line)
-
-                        # If we are operating on a field, let's store it.
-                        store_field(operation)
-
-                else:
-                    # This node seemingly has not moved.
-                    if not line.endswith('[@closed]'):
-                        # Only the nodes can be moved, we ignore the closings
-                        old_node = next(old_view_iterator)
-                        node = next(new_view_iterator)
-                        # If we are in moving boundary mode, then this node
-                        # definitely moved, since the boundary moved around it!
-                        if moving_boundary and node.tag == 'field':
-                            # Only fields are currently supported.
-                            removed_fields[node.get('name')] = old_node
-                            added_fields[node.get('name')] = node
-
-        # Look at the fields we decided to watch. If they were both
-        # removed and added, it means they have been moved.
-        for name in removed_fields:
-            if name in added_fields:
-                moved_fields[name] = {
-                    'old': removed_fields[name],
-                    'new': added_fields[name],
-                }
-
-        # Recreate the trees as they have been modified during the first processing
-        old_view_tree, new_view_tree = self._generate_trees_with_diff_key(parser, old_view)
-
-        old_view_iterator = old_view_tree.iter()
-        new_view_iterator = new_view_tree.iter()
-        new_view_arch_string = self._stringify_view(new_view_tree, moved_fields)
-        old_view_arch_string = self._stringify_view(old_view_tree)
-        diff = get_unified_diff(old_view_arch_string, new_view_arch_string)
-
-        # Keep track of nameless elements with more than 1 occurrence
-        nameless_count = defaultdict(int)
-        for node in new_view_tree.iter():
-            if not node.get('name'):
-                nameless_count[node.tag] += 1
-
-        arch = etree.Element('data')
-        xpath = etree.Element('xpath')
-        for line in diff:
-            # Ignore details lines and [@closed] that are used so diff has correct order
-            if line.strip() and not line.endswith('[@closed]'):
-                line = line.replace('[@moved]', '')
-                if line.startswith('-'):
-                    node = next(old_view_iterator)
-
-                    if node.tag == 'attribute':
-                        continue
-
-                    if is_moved(node) or \
-                            any(is_moved(x) for x in node.iterancestors()):
-                        # nothing to do here, the node will be moved in the '+'
-                        continue
-
-                    # If we are already writing an xpath, we need to either
-                    # close it or ignore this line
-                    if xpath.get('expr'):
-                        # Maybe we are already removing the parent of this
-                        # node so this one will be removed automatically
-                        current_xpath_target = next(iter(old_view_tree.xpath('.' + xpath.get('expr'))), None)
-                        is_xpath_target_an_ancestor = None if current_xpath_target is None else current_xpath_target in node.iterancestors()
-                        if xpath.get('position') == 'replace' and is_xpath_target_an_ancestor:
-                            continue
-                        # If we are already adding stuff just before this node,
-                        # we could as well replace it directly by what we want to add
-                        # Also take care not to close the xpath is we are still
-                        # in the attributes section of a given node
-                        elif ((node.tag != 'attributes' and xpath.get('position') != 'after') or
-                                (node.tag == 'attributes' and xpath.get('position') != 'attributes')):
-                            # Consecutive removals need different xpath
-                            xpath = self._close_and_get_new(arch, xpath)
-
-                        # The current xpath does not contain the current removed node
-                        # and they are not siblings either.
-                        # So it is safe to say the current xpath cannot be aggregated
-                        # to contain the removal we are about to do.
-                        elif is_xpath_target_an_ancestor is False and current_xpath_target.getparent() != node.getparent():
-                            xpath = self._close_and_get_new(arch, xpath)
-
-                    xpath.attrib['expr'] = self._node_to_xpath(node)
-                    if node.tag == 'attributes':
-                        xpath.attrib['position'] = 'attributes'
-                        # The attribute is removed
-                        etree.SubElement(xpath, 'attribute', {'name': node.get('name')})
-                    else:
-                        xpath.attrib['position'] = 'replace'
-
-                elif line.startswith('+'):
-                    node = next(new_view_iterator)
-
-                    # if there is more than one element with this tag and it doesn't have a way
-                    # to identify itself, give it a name
-                    if (node.tag in CONTAINER_TYPES
-                            and nameless_count[node.tag] > 1
-                            and not node.get('name')):
-                        uid = str(uuid.UUID(int=random.getrandbits(128)))[:6]
-                        node.attrib['name'] = 'studio_%s_%s' % (node.tag, uid)
-
-                    if node.tag == 'attributes':
-                        continue
-
-                    if any(is_moved(x) for x in node.iterancestors()):
-                        # moved attributes will be computed afterwards because
-                        # the move xpaths don't support children
-                        # (see @get_node_attributes_diff)
-                        continue
-
-                    # The node for which this is the attribute may have been
-                    # added by studio, in which case we don't need a new
-                    # xpath to handle it properly
-                    if node.tag == 'attribute' and self._get_node_from_xpath(xpath, node.getparent().getparent(), moved_fields) is not None:
-                        continue
-
-                    anchor_node = self._get_anchor_node(arch, xpath, node, moved_fields)
-
-                    if anchor_node.tag == 'xpath' and not anchor_node.get('expr'):
-                        # If the current xpath was not compatible, it has been
-                        # closed and a new one has been generated
-                        xpath = anchor_node
-                        xpath.attrib['expr'], xpath.attrib['position'] = self._closest_node_to_xpath(node, old_view_tree, moved_fields)
-
-                    if node.tag == 'field' and node.get('name') in moved_fields:
-                        # manually replace the node by the `move` xpath
-                        node = etree.Element('xpath', {
-                            'expr': self._node_to_xpath(moved_fields[node.get('name')]['old']),
-                            'position': 'move',
-                        })
-
-                    self._clone_and_append_to(node, anchor_node)
-
-                else:
-                    old_node = next(old_view_iterator)
-                    next(new_view_iterator)
-                    # This is an unchanged line, if an xpath is ungoing, close it.
-                    if old_node.tag not in ['attribute', 'attributes']:
-                        if xpath.get('expr'):
-                            xpath = self._close_and_get_new(arch, xpath)
-
-        # Append last remaining xpath if needed
-        if xpath.get('expr') is not None:
-            self._add_xpath_to_arch(arch, xpath)
-
-        def get_node_attributes_diff(node1, node2):
-            """ Computes the differences of attributes between two nodes."""
-            diff = {}
-            for attr in node1.attrib:
-                if attr == DIFF_KEY:
-                    continue
-                if attr not in node2.attrib:
-                    diff[attr] = ''
-                elif node1.attrib[attr] != node2.attrib[attr]:
-                    diff[attr] = node2.attrib[attr]
-            for attr in dict(node2.attrib).keys() - dict(node1.attrib).keys():
-                if attr == DIFF_KEY:
-                    continue
-                diff[attr] = node2.attrib[attr]
-            return diff
-
-        # Add xpath attributes for moved fields
-        for f in moved_fields:
-            old_node = moved_fields[f]['old']
-            new_node = moved_fields[f]['new']
-            attrs_diff = get_node_attributes_diff(old_node, new_node)
-            if len(attrs_diff):
-                xpath = etree.Element('xpath')
-                xpath.attrib['expr'] = self._node_to_xpath(new_node)
-                xpath.attrib['position'] = 'attributes'
-                # alphabetically sort attributes by name
-                node_attributes = sorted(attrs_diff.keys())
-                for attr in node_attributes:
-                    etree.SubElement(xpath, 'attribute', {
-                        'name': attr,
-                    }).text = attrs_diff[attr]
-                self._add_xpath_to_arch(arch, xpath)
-
-        normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
-        return normalized_arch
-
-    def _close_and_get_new(self, arch, xpath):
-        self._add_xpath_to_arch(arch, xpath)
-        return etree.Element('xpath')
-
-    def _get_anchor_node(self, arch, xpath, node, moved_fields):
-        """
-        Check if a node can be merged inside an existing xpath
-
-        Returns True if the node can be fit inside the given xpath, False otherwise
-        """
-        # Not compatible is either:
-        # - position != attributes when node is an attribute
-        # - position == attributes when node is not an attribute
-        # - the node we want to add is not contiguous with the current xpath,
-        #   which means the current xpath is not empty and the node preceding
-        #   the one we we want to add is not in the xpath
-
-        if not len(xpath):
-            return xpath
-
-        if xpath.get('position') == 'attributes':
-            if node.tag == 'attribute':
-                return xpath
-            else:
-                return self._close_and_get_new(arch, xpath)
-
-        # If the preceding node or the parent is in the current xpath, we can append to it
-        anchor_node = node.getprevious()
-        if (anchor_node is not None and anchor_node.tag not in ['attribute', 'attributes']):
-            studio_previous_node = self._get_node_from_xpath(xpath, anchor_node, moved_fields)
-            if studio_previous_node is not None:
-                return studio_previous_node.getparent()
-            else:
-                return self._close_and_get_new(arch, xpath)
-
+    def normalize(self, arch_to_normalize=None):
+        if not self.inherit_id:
+            base_arch = self.get_combined_arch()
         else:
-            anchor_node = node.getparent()
-            if anchor_node.tag == 'attributes':
-                anchor_node = anchor_node.getparent()
+            base_arch = self.with_context(ir_ui_view_tree_cut_off_view=self).get_combined_arch()
+            arch_to_normalize = arch_to_normalize or self.arch
 
-            if node.tag == 'field' and node.get('name') in moved_fields:
-                # Parent node of a moved field xpath must be the xpath of the new targeted position
-                return self._close_and_get_new(arch, xpath)
+        if not arch_to_normalize or not base_arch:
+            return ""
 
-            studio_parent_node = self._get_node_from_xpath(xpath, anchor_node, moved_fields)
-            if studio_parent_node is not None:
-                return studio_parent_node
-            else:
-                return self._close_and_get_new(arch, xpath)
+        return self.normalize_with_keyed_tree(base_arch=base_arch, arch_to_normalize=arch_to_normalize)
 
-    def _get_node_from_xpath(self, xpath, node, moved_fields):
+    @api.model
+    def normalize_with_keyed_tree(self, base_arch, arch_to_normalize) -> str:
         """
-        Get a node from within an xpath if it exists
+        Normalizes a view's arch by comparing
+            The result from the inheritance tree (*excluding* self)
+            TO
+            The result from the inheritance tree (*including* self)
 
-        Returns a node if it exists within the given xpath, None otherwise
+        It should yield as few simple xpaths as possible.
+
+        :return: Returns the normalized studio arch
         """
-        for n in reversed(list(xpath.iter())):
-            if n.tag == node.tag and n.attrib == node.attrib and n.text == node.text:
-                return n
-            # Find the node if it had been moved (only fields can be moved)
-            if node.tag == 'field':  # Only fields are currently supported
-                name = node.get('name')
-                if n.get('position') == 'move' and name in moved_fields:
-                    # the moved nodes are set as xpath so in order to match the
-                    # nodes we need to compare both xpath
-                    old_node = moved_fields.get(name)['old']
-                    if n.get('expr') == self._node_to_xpath(old_node):
-                        return n
-        return None
+        old_tree = etree.fromstring(base_arch)
+        KeyedXmlDiffer.assign_node_ids_for_diff(old_tree)
+        old_str = etree.tostring(old_tree)
 
-    def _add_xpath_to_arch(self, arch, xpath):
-        """
-        Appends the xpath to the arch if the xpath's position != 'replace'
-        (deletion), otherwise it is prepended to the arch.
+        new_tree = apply_inheritance_specs(old_tree, etree.fromstring(arch_to_normalize))
 
-        This is done because when moving an existing field somewhere before
-        its original position it will append a replace xpath and then
-        append the existing field xpath, effictively removing the one just
-        added and showing the one that existed before.
-        """
-        # TODO: Only add attributes if the xpath has children
-        if xpath.get('position') == 'replace':
-            arch.insert(0, xpath)
-        else:
-            arch.append(xpath)
+        # Assign names to some node added to the tree, if they don't have one
+        def on_new_node(node):
+            if node.tag in CONTAINER_TYPES and not node.get("name"):
+                uid = str(uuid.UUID(int=random.getrandbits(128)))[:6]
+                node.set('name', 'studio_%s_%s' % (node.tag, uid))
 
-    def _clone_and_append_to(self, node, parent_node):
-        """
-        Clones the passed-in node and appends it to the passed-in
-        parent_node
+        # Consider views as elementary boundaries to compute xpath to and from
+        def is_subtree(node):
+            parent = node.getparent()
+            return parent is None or parent.tag == "field"
 
-        Returns the parent_node with the newly-appended node
-        """
-        if node.tag is etree.Comment:
-            # For comments, node.tag is the constructor of Comment nodes
-            elem = parent_node.append(etree.Comment(node.text))
-        else:
-            # This doesn't copy the children, but we don't truly
-            # care, since children will be another diff line
-            elem = etree.SubElement(parent_node, node.tag, node.attrib)
-            elem.text = node.text
-            elem.tail = node.tail
-        return elem
+        def get_moving_candidate_key(node):
+            return ("field", node.get("name")) if node.tag == "field" else None
 
-    def _node_to_xpath(self, target_node, node_context=None):
-        """
-        Creates and returns a relative xpath that points to target_node
-        """
-        if target_node.tag == 'attribute':
-            target_node = target_node.getparent().getparent()
-        elif target_node.tag == 'attributes':
-            target_node = target_node.getparent()
-
-        root = target_node.getroottree()
-        el_name = target_node.get('name')
-
-        if el_name and root.xpath('count(//*[@name="%s"])' % el_name) == 1:
-            # there are cases when there are multiple instances of the same
-            # named element in the same view, but for different reasons
-            # i.e.: sub-views and kanban views
-            expr = '//%s' % self._identify_node(target_node)
-        else:
-            ancestors = [
-                self._identify_node(n, node_context)
-                for n in target_node.iterancestors()
-                if n.getparent() is not None
-            ]
-            node = self._identify_node(target_node, node_context)
-            if ancestors:
-                expr = '//%s/%s' % ('/'.join(reversed(ancestors)), node)
-            else:
-                # There are cases where there might not be any ancestors
-                # like in a brand new gantt or calendar view, if that's the
-                # case then just give the identified node
-                expr = '//%s' % node
-
-        return expr
-
-    def _identify_node(self, node, node_context=None):
-        """
-        Creates and returns an identifier for the passed-in node either by using
-        its name attribute (relative identifier) or by getting the number of preceding
-        sibling elements (absolute identifier)
-        """
-        # Some nodes may have a name which is not id-like, but is a technical attribute
-        # that won't be unique
-        named_tags = ['field', 'button']
-
-        # 0. Identify "regular" nodes by their name: name here is id-like
-        if node.get('name') and node.tag not in named_tags:
-            node_str = '%s[@name=\'%s\']' % (node.tag, node.get('name'))
-            return node_str
-        if node.tag == "t" and node.get("t-name"):
-            return "t[@t-name=\'%s\']" % node.get("t-name")
-
-        same_tag_prev_siblings = list(node.itersiblings(tag=node.tag, preceding=True))
-
-        # Otherwise, we'd have to compute the absolute path of the node along 2 cases
-        # 1. Current node does not have a name or doesn't need one
-        if not node.get('name') or node.tag not in named_tags:
-            # Only consider same tag siblings that don't have a name either
-            colliding_prev_siblings = [
-                sibling for sibling in same_tag_prev_siblings
-                if ('name' not in sibling.attrib)
-            ]
-
-            node_str = '%s' % (node.tag,)
-
-            # Only count no name node to avoid conflict with other studio change
-            if len(colliding_prev_siblings) != len(same_tag_prev_siblings):
-                node_str += '[not(@name)]'
-
-            # We need to add 1 to the number of previous siblings to get the
-            # position index of the node because these indices start at 1 in an xpath context.
-            node_str += '[%s]' % (len(colliding_prev_siblings) + 1,)
-            return node_str
-
-        # 2. Current node has a name which is not id-like
-        # There can be more than one node in that case
-        if node.get('name') and node.tag in named_tags:
-            # Only consider same tag siblings that do have the same name
-            colliding_prev_siblings = [
-                sibling for sibling in same_tag_prev_siblings
-                if (node.get('name') == sibling.get('name'))
-            ]
-
-            node_str = '%s[@name=\'%s\']' % (
-                node.tag,
-                node.get('name'),
-            )
-            if len(colliding_prev_siblings):
-                node_str += '[%s]' % (len(colliding_prev_siblings) + 1,)
-
-            return node_str
-
-    def _closest_node_to_xpath(self, node, old_view, moved_fields, node_context=None):
-        """
-        Returns an expr and position for the node closest to the passed-in node so
-        that it may be used as a target.
-
-        The closest node will be one adjacent to this one and that has an identifiable
-        name (name attr), this can be it's next sibling, previous sibling or its parent.
-
-        If none is found, the method will fallback to next/previous sibling or parent even if they
-        don't have an identifiable name, in which case an absolute xpath expr will be generated
-        """
-
-        def _is_valid_anchor(target_node):
-            if (target_node is None) or not isinstance(target_node.tag, str):
-                return None
-            if target_node.tag in ['attribute', 'attributes']:
-                return None
-            if target_node.tag == 'field' and target_node.get('name') in moved_fields:
-                # a moved field cannot be used as anchor
-                return None
-            target_node_expr = '.' + self._node_to_xpath(target_node, node_context)
-            return bool(old_view.xpath(target_node_expr))
-
-        nxt = node.getnext()
-        prev = node.getprevious()
-
-        if node.tag == 'attribute':
-            # Invisible element
-            target_node = node.getparent().getparent()  # /node/attributes/attribute
-            reanchor_position = 'attributes'
-        elif node.tag == 'page':
-            # a page is always put inside its corresponding notebook
-            target_node = node.getparent()
-            reanchor_position = 'inside'
-        else:
-            # Visible element
-            while prev is not None or nxt is not None:
-                # Try to anchor onto the closest adjacent element
-                if _is_valid_anchor(prev):
-                    target_node = prev
-                    reanchor_position = 'after'
-                    break
-                elif _is_valid_anchor(nxt):
-                    target_node = nxt
-                    reanchor_position = 'before'
-                    break
-                else:
-                    if prev is not None:
-                        prev = prev.getprevious()
-                    if nxt is not None:
-                        nxt = nxt.getnext()
-            else:
-                # Reanchor on first parent, but the "inside" will make it last child
-                target_node = node.getparent()
-                reanchor_position = 'inside'
-
-        reanchor_expr = self._node_to_xpath(target_node, node_context)
-        return reanchor_expr, reanchor_position
-
-    def _stringify_view(self, arch, moved_fields=None):
-        return self._stringify_node('', arch, moved_fields)
-
-    def _stringify_node(self, ancestor, node, moved_fields=None):
-        r"""
-        Converts a node into its string representation
-
-        Example::
-
-            from: <field name='color'/>
-              to: "/field[@name='color']\n"
-
-        Returns the stringified node
-        """
-        result = ''
-        node_string = ancestor + '/'
-        if node.tag is etree.Comment:
-            node_string += 'comment'
-        else:
-            node_string += node.tag
-
-        if node.get(DIFF_KEY):
-            node_string += '#%s' % node.get(DIFF_KEY)
-        if node.get('name') and node.get('name').strip():
-            node_string += '[@name=%s]' % node.get('name').strip().replace('\n', ' ')
-        if node.text and node.text.strip():
-            node_string += '[@text=%s]' % node.text.strip().replace('\n', ' ')
-        if node.tail and node.tail.strip():
-            node_string += '[@tail=%s]' % node.tail.strip().replace('\n', ' ')
-        if node.tag == 'field' and moved_fields and node.get('name') in moved_fields:
-            # make sure we don't tagged fields which are not really moved
-            # (i.e. if the field appears more than once in the view)
-            if self._node_to_xpath(node) == self._node_to_xpath(moved_fields[node.get('name')]['new']):
-                # ensure that moved fields do appear in the final diff
-                # (if they don't, it's not possible to reconstruct `move` xpaths)
-                node_string += '[@moved]'
-        result += node_string + '\n'
-
-        self._generate_node_attributes(node)
-        for child in node.iterchildren():
-            result += self._stringify_node(node_string, child, moved_fields)
-
-        # have a end marker so same location changes are not mixed
-        result += node_string + '[@closed]' + '\n'
-
-        return result
-
-    def _generate_node_attributes(self, node):
-        """
-        Generates attributes wrapper elements for each of the node's
-        attributes and prepend them as first children of the node
-        """
-        if node.tag not in ('attribute', 'attributes'):
-            # node.items() gives a list of tuples, each tuple representing
-            # a key, value pair for attributes
-            node_attributes = sorted(node.items(), key=lambda i: i[0], reverse=True)  # inverse alphabetically sort attributes by name
-            if len(node_attributes):
-                for attr in node_attributes:
-                    if attr == DIFF_KEY:
-                        continue
-                    attributes = etree.Element('attributes', {
-                        'name': attr[0],
-                    })
-                    etree.SubElement(attributes, 'attribute', {
-                        'name': attr[0],
-                    }).text = attr[1]
-                    node.insert(0, attributes)
-
-    def _indent_tree(self, elem, level=0):
-        """
-        The lxml library doesn't pretty_print xml tails, this method aims
-        to solve this.
-
-        Returns the elem with properly indented text and tail
-        """
-        # See: http://lxml.de/FAQ.html#why-doesn-t-the-pretty-print-option-reformat-my-xml-output
-        # Below code is inspired by http://effbot.org/zone/element-lib.htm#prettyprint
-        i = "\n" + level * "  "
-        if len(elem):
-            if not elem.text or not elem.text.strip():
-                elem.text = i + "  "
-            if not elem.tail or not elem.tail.strip():
-                elem.tail = i
-            for subelem in elem:
-                self._indent_tree(subelem, level + 1)
-            if not subelem.tail or not subelem.tail.strip():
-                subelem.tail = i
-        else:
-            if level and (not elem.tail or not elem.tail.strip()):
-                elem.tail = i
-        return elem
+        return KeyedXmlDiffer(on_new_node=on_new_node, is_subtree=is_subtree, get_moving_candidate_key=get_moving_candidate_key).diff_xpath(old_str, etree.tostring(new_tree), flat=True)
 
     def copy_qweb_template(self):
         new = self.copy()
