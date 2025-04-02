@@ -80,10 +80,11 @@ patch(OrderSummary.prototype, {
         if (!this.pos.useBlackBoxBe()) {
             return await super.setLinePrice(line, price);
         }
-        await this.pos.pushCorrection(this.currentOrder, [
-            this.currentOrder.getSelectedOrderline(),
-        ]);
-        await super.setLinePrice(line, price);
-        await this.pos.pushProFormaOrderLog(this.currentOrder);
+        const oldPrice = line.getUnitDisplayPriceBeforeDiscount();
+        if (price > oldPrice) {
+            return;
+        }
+        const discount = ((oldPrice - price) / oldPrice) * 100;
+        line.setDiscount(discount);
     },
 });
