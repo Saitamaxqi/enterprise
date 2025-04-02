@@ -61,7 +61,7 @@ class KnowledgeArticle(models.Model):
         [('write', 'Can edit'), ('read', 'Can read'), ('none', 'No access')],
         string='Inherited Permission',
         compute="_compute_inherited_permission", compute_sudo=True,
-        store=True, recursive=True)
+        store=True, index=True, recursive=True)
     inherited_permission_parent_id = fields.Many2one(
         "knowledge.article", string="Inherited Permission Parent Article",
         compute="_compute_inherited_permission", compute_sudo=True,
@@ -509,31 +509,24 @@ class KnowledgeArticle(models.Model):
             is not member with 'none' access
         """
         KnowledgeArticle = self.env["knowledge.article"]
+        # The ORM will optimize the domain leaf
+        # before calling the search method:
+        # = True | != False -> in [True]
+        # != True | = False -> not in [True]
         if operator not in ('in', 'not in'):
             return NotImplemented
 
-        articles_with_access = {}
-        if not self.env.user.share:
-            articles_with_access = KnowledgeArticle._get_internal_permission(
-                filter_domain=[('internal_permission', 'not in', ['none', False])])
         member_permissions = KnowledgeArticle._get_partner_member_permissions(self.env.user.partner_id)
-        articles_with_no_member_access = [article_id for article_id, perm in member_permissions.items() if perm == 'none']
-        articles_with_member_access = list(set(member_permissions.keys() - set(articles_with_no_member_access)))
+        articles_with_member_access = {article_id for article_id, perm in member_permissions.items() if perm != 'none'}
 
-        # If searching articles for which user has access.
-        if operator == 'in':
-            if self.env.user.share:
-                return [('id', 'in', articles_with_member_access)]
-            return ['|',
-                    '&', ('id', 'in', list(articles_with_access.keys())), ('id', 'not in', articles_with_no_member_access),
-                    ('id', 'in', articles_with_member_access)]
-
-        # If searching articles for which user has NO access.
         if self.env.user.share:
-            return [('id', 'not in', articles_with_member_access)]
-        return ['|',
-                '&', ('id', 'not in', list(articles_with_access.keys())), ('id', 'not in', articles_with_member_access),
-                ('id', 'in', articles_with_no_member_access)]
+            return [('id', operator, list(articles_with_member_access))]
+
+        # sudo reason: we're already computing ir.rules, avoid re-applying it.
+        articles_with_access = KnowledgeArticle.with_context(active_test=False).sudo().search([('inherited_permission', 'in', ('read', 'write'))])
+        articles_with_no_member_access = member_permissions.keys() - articles_with_member_access
+        article_ids = list((set(articles_with_access.ids) - articles_with_no_member_access) | articles_with_member_access)
+        return [('id', operator, article_ids)]
 
     @api.depends_context('uid')
     @api.depends('user_has_access', 'parent_id.user_has_access_parent_path')
@@ -2333,37 +2326,41 @@ class KnowledgeArticle(models.Model):
         self.env['knowledge.article.member'].flush_model()
 
         if self.ids:
-            base_where_domain = SQL("WHERE perms1.id in %s", tuple(self.ids))
+            where_domain = SQL("WHERE id in %s", tuple(self.ids))
         else:
-            base_where_domain = SQL()
+            where_domain = SQL()
 
         return dict(self.env.execute_query(SQL('''
-    WITH RECURSIVE article_perms as (
-        SELECT a.id, a.parent_id, m.permission, a.is_desynchronized
-          FROM knowledge_article a
-     LEFT JOIN knowledge_article_member m
-            ON a.id=m.article_id and partner_id = %s
-    ), article_rec as (
-        SELECT perms1.id, perms1.id as article_id, perms1.parent_id,
-               perms1.permission, perms1.is_desynchronized
-          FROM article_perms as perms1
-            %s
-         UNION
-        SELECT perms2.id, perms_rec.article_id, perms2.parent_id,
-               COALESCE(perms_rec.permission, perms2.permission),
-               perms2.is_desynchronized
-          FROM article_perms as perms2
-    INNER JOIN article_rec perms_rec
-            ON perms_rec.parent_id=perms2.id
-               AND perms_rec.is_desynchronized IS NOT TRUE
-               AND perms_rec.permission IS NULL
-    )
-    SELECT article_id, max(permission)
-      FROM article_rec
-     WHERE permission IS NOT NULL
-  GROUP BY article_id''',
-            partner.id,
-            base_where_domain,
+            WITH RECURSIVE membered_articles AS (
+                -- base case: all articles the partner is member of
+                SELECT a.id,
+                       a.parent_id,
+                       a.is_desynchronized,
+                       m.permission
+                FROM knowledge_article AS a
+                     JOIN knowledge_article_member AS m ON a.id = m.article_id
+                WHERE m.partner_id = %(partner_id)s
+
+                UNION ALL
+                -- recurse into each child, that is not desync, and the partner is not a member of,
+                -- to propagate the member permission
+                SELECT a.id,
+                       a.parent_id,
+                       a.is_desynchronized,
+                       m.permission
+                FROM membered_articles AS m
+                     JOIN knowledge_article AS a ON m.id = a.parent_id
+                WHERE a.is_desynchronized IS NOT TRUE
+                  AND NOT EXISTS (SELECT 1
+                                  FROM knowledge_article_member AS mm
+                                  WHERE mm.article_id = a.id
+                                    AND mm.partner_id = %(partner_id)s))
+            SELECT id AS article_id, permission
+            FROM membered_articles
+            %(where_domain)s
+            ''',
+            partner_id=partner.id,
+            where_domain=where_domain,
         )))
 
     def _get_article_member_permissions(self, additional_fields=False):
