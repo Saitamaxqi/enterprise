@@ -842,7 +842,7 @@ class HrPayslip(models.Model):
                 'inputs': {line.code: line for line in self.input_line_ids if line.code},
                 'employee': self.employee_id,
                 'contract': self.contract_id,
-                'result_rules': DefaultDictPayroll(lambda: dict(total=0, amount=0, quantity=0, rate=0)),
+                'result_rules': DefaultDictPayroll(lambda: dict(total=0, amount=0, quantity=0, rate=0, ytd=0)),
                 'same_type_input_lines': same_type_input_lines,
             }
         }
@@ -949,11 +949,13 @@ class HrPayslip(models.Model):
                             localdict['inputs'][rule.code] = multi_line_rule
                             amount, qty, rate = rule._compute_rule(localdict)
                             tot_rule = payslip._get_payslip_line_total(amount, qty, rate, rule)
+                            ytd = line_values[rule.code][last_ytd_payslips[payslip].id]['ytd'] + tot_rule
 
                             result_rules_dict[rule.code]['total'] += tot_rule
                             result_rules_dict[rule.code]['amount'] += tot_rule
                             result_rules_dict[rule.code]['quantity'] = 1
                             result_rules_dict[rule.code]['rate'] = 100
+                            result_rules_dict[rule.code]['ytd'] = ytd
 
                             localdict = rule.category_id._sum_salary_rule_category(
                                 localdict, tot_rule)
@@ -969,8 +971,7 @@ class HrPayslip(models.Model):
                                 'rate': rate,
                                 'total': tot_rule,
                                 'slip_id': payslip.id,
-                                'ytd': line_values[rule.code][last_ytd_payslips[payslip].id]
-                                    ['ytd'] + tot_rule,
+                                'ytd': ytd,
                             })
                         input_line_ids = localdict['same_type_input_lines'][rule.code].ids
                         localdict['inputs'][rule.code] = self.__get_aggregator_hr_payslip_input_model()(
@@ -982,8 +983,11 @@ class HrPayslip(models.Model):
                         previous_amount = localdict.get(rule.code, 0.0)
                         #set/overwrite the amount computed for this rule in the localdict
                         tot_rule = payslip._get_payslip_line_total(amount, qty, rate, rule)
+                        ytd = line_values[rule.code][last_ytd_payslips[payslip].id]['ytd'] + tot_rule
                         localdict[rule.code] = tot_rule
-                        result_rules_dict[rule.code] = {'total': tot_rule, 'amount': amount, 'quantity': qty, 'rate': rate}
+                        result_rules_dict[rule.code] = {
+                            'total': tot_rule, 'amount': amount, 'quantity': qty, 'rate': rate, 'ytd': ytd
+                        }
                         # sum the amount for its salary category
                         localdict = rule.category_id._sum_salary_rule_category(localdict, tot_rule - previous_amount)
                         # create/overwrite the rule in the temporary results
@@ -999,8 +1003,7 @@ class HrPayslip(models.Model):
                             'rate': rate,
                             'total': tot_rule,
                             'slip_id': payslip.id,
-                            'ytd': line_values[rule.code][last_ytd_payslips[payslip].id]
-                                ['ytd'] + tot_rule,
+                            'ytd': ytd,
                         }
             line_vals += list(result.values())
         return line_vals

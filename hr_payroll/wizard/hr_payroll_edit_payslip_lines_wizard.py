@@ -42,7 +42,7 @@ class HrPayrollEditPayslipLinesWizard(models.TransientModel):
                     remove_lines = True
                 blacklisted_rule_ids.append(line.salary_rule_id.id)
                 localdict[line.code] = line.total
-                result_rules_dict[line.code] = {'total': line.total, 'amount': line.amount, 'quantity': line.quantity, 'rate': line.rate}
+                result_rules_dict[line.code] = {'total': line.total, 'amount': line.amount, 'quantity': line.quantity, 'rate': line.rate, 'ytd': line.ytd}
                 localdict = line.salary_rule_id.category_id._sum_salary_rule_category(localdict, line.total)
 
         payslip = self.payslip_id.with_context(force_payslip_localdict=localdict, prevent_payslip_computation_line_ids=blacklisted_rule_ids)
