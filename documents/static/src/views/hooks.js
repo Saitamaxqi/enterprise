@@ -179,10 +179,6 @@ export function useDocumentView(helpers) {
         _openAutomations(ev.detail);
     });
 
-    onWillStart(async () => {
-        component.isDocumentsManager = await user.hasGroup("documents.group_documents_manager");
-    });
-
     onMounted(async () => {
         documentService.updateDocumentURLRefresh();
     });

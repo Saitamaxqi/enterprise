@@ -241,7 +241,10 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
     }
 
     toggleSelection(record) {
-        this.documentService.focusRecord(record);
+        const isSelection = record && !record.selected;
         super.toggleSelection(...arguments);
+        if (isSelection) {
+            this.documentService.focusRecord(record, true);
+        }
     }
 }

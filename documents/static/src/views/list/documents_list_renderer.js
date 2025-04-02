@@ -197,9 +197,10 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
     }
 
     toggleRecordSelection(record) {
-        if (!record.selected) {
-            this.documentService.focusRecord(record);
-        }
+        const isSelection = record && !record.selected;
         super.toggleRecordSelection(record);
+        if (isSelection) {
+            this.documentService.focusRecord(record, true);
+        }
     }
 }

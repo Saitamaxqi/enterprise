@@ -9,7 +9,7 @@ export const DocumentsRendererMixin = (component) =>
             super.setup();
             this.documentService = useService("document.document");
 
-            this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord());
+            this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord(), true);
             this.rightPanelState = useState(this.documentService.rightPanelReactive);
             this.component = useComponent();
 

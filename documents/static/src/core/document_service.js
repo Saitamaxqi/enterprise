@@ -250,7 +250,7 @@ export class DocumentService {
                 targetFolderId,
             ]);
             message =
-                records.all.length == 1
+                records.all.length === 1
                     ? _t("A shortcut has been created.")
                     : _t("%s shortcuts have been created.", records.all.length);
         } else {
@@ -260,7 +260,7 @@ export class DocumentService {
                     targetFolderId,
                 ]);
                 message =
-                    records.movableRecordIds.length == 1
+                    records.movableRecordIds.length === 1
                         ? _t("The document has been moved.")
                         : _t("%s documents have been moved.", records.movableRecordIds.length);
             }
@@ -323,23 +323,32 @@ export class DocumentService {
      * by simply sharing its URL.
      * When multiple document are viewed, it removes the access_token from the URL as sharing
      * multiple document with one URL is not supported.
-     * Note that when the folderChange argument is undefined, the service use the preceding
+     * Similarly, when a document is focused but not selected, nor being previewed, the access
+     * token is not put in the URL either to avoid confusion about what record it is.
+     * Note that when the folderChange argument is null, the service use the preceding
      * given value if needed.
      *
-     * @param folderChange the new folder or undefined if not changed
-     * @param inspectedDocuments the currently inspected documents (can be undefined)
+     * @param {object} folderChange the new folder or null if not changed
+     * @param {object[]} inspectedDocuments the currently inspected documents (can be undefined)
+     * @param {boolean} forceInspected force updating to single inspected document token, or ignored
      */
-    updateDocumentURL(folderChange, inspectedDocuments) {
-        let accessToken;
+    updateDocumentURL(folderChange, inspectedDocuments, forceInspected) {
+        let accessToken = undefined;
         if (folderChange) {
             accessToken = folderChange.access_token;
             this.currentFolderAccessToken = accessToken;
         } else if (inspectedDocuments && inspectedDocuments.length === 1) {
-            accessToken = inspectedDocuments[0].data.access_token;
+            const record = inspectedDocuments[0];
+            if (
+                forceInspected ||
+                record.selected ||
+                record.isContainer ||
+                this.rightPanelReactive.previewedDocument?.record.id === record.id
+            ) {
+                accessToken = record.data.access_token;
+            }
         } else if (!inspectedDocuments || inspectedDocuments.length === 0) {
             accessToken = this.currentFolderAccessToken;
-        } else {
-            accessToken = undefined;
         }
         router.pushState({ access_token: accessToken });
     }
@@ -352,8 +361,9 @@ export class DocumentService {
      * (the current folder) to the router state.
      */
     updateDocumentURLRefresh() {
-        if (this.currentFolderAccessToken) {
-            router.pushState({ access_token: this.currentFolderAccessToken });
+        const tokenToShow = this.focusedRecord?.data.access_token || this.currentFolderAccessToken;
+        if (tokenToShow) {
+            router.pushState({ access_token: tokenToShow });
         }
     }
 
@@ -386,8 +396,24 @@ export class DocumentService {
         ]);
     }
 
-    focusRecord(record) {
-        this.rightPanelReactive.focusedRecord = record;
+    get focusedRecord() {
+        return this.rightPanelReactive.focusedRecord;
+    }
+
+    /**
+     * Support reactivity for focused record and update URL.
+     * @param record
+     * @param forceSelected to force updating the URL to record's token,
+     *   necessary because the service can't easily know if a record is selected.
+     */
+    focusRecord(record, forceSelected) {
+        if (this.focusedRecord !== record) {
+            this.rightPanelReactive.focusedRecord = record;
+            this.updateDocumentURL(null, record ? [record] : null, forceSelected);
+            if (record) {
+                this.logAccess(record.data.access_token);
+            }
+        }
     }
 
     toggleRightPanelVisibility() {

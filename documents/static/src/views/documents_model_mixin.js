@@ -518,16 +518,6 @@ export const DocumentsRecordMixin = (component) => class extends component {
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });
     }
 
-    async toggleSelection(selected) {
-        await super.toggleSelection(selected);
-
-        if (this.selected) {
-            this.model.documentService.logAccess(this.data.access_token);
-        }
-
-        this.model.documentService.updateDocumentURL(null, this.model.root.selection);
-    }
-
     /**
      * Jump to shortcut targeted file / open targeted folder.
      */
