@@ -1,6 +1,6 @@
 import { busModels, waitNotifications, waitUntilSubscribe } from "@bus/../tests/bus_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { animationFrame } from "@odoo/hoot-dom";
+import { animationFrame, runAllTimers } from "@odoo/hoot-dom";
 import {
     defineModels,
     getMockEnv,
@@ -52,6 +52,7 @@ export async function mountRoomBookingView(useBus) {
             notificationType = "room#1/" + notificationType;
             await busSubscriptionPromise;
             pyEnv["bus.bus"]._sendone("room_booking#room_test", notificationType, bookings);
+            await runAllTimers();
             await waitNotifications([env, notificationType, bookings]);
             await animationFrame();
         };
