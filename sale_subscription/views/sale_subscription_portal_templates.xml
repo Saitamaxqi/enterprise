@@ -583,6 +583,9 @@
                 </div>
             </div>
         </div>
+        <xpath expr="//t[@t-set='is_note']" position="after">
+            <t t-set="is_note" t-value="is_note or line.display_type == 'subscription_discount'"/>
+        </xpath>
     </template>
 
     <template id="sale_order_portal_content_totals_table_inherit" inherit_id="sale.sale_order_portal_content_totals_table">
