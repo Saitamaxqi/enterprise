@@ -16,7 +16,7 @@ class ResUsers(models.Model):
     def SELF_WRITEABLE_FIELDS(self):
         return super().SELF_WRITEABLE_FIELDS + SIGN_USER_FIELDS
 
-    sign_signature = fields.Binary(string="Digital Signature", copy=False, groups="base.group_user")
-    sign_initials = fields.Binary(string="Digital Initials", copy=False, groups="base.group_user")
-    sign_signature_frame = fields.Binary(string="Digital Signature Frame", copy=False, groups="base.group_user")
-    sign_initials_frame = fields.Binary(string="Digital Initials Frame", copy=False, groups="base.group_user")
+    sign_signature = fields.Binary(string="Digital Signature", copy=False, groups="base.group_system")
+    sign_initials = fields.Binary(string="Digital Initials", copy=False, groups="base.group_system")
+    sign_signature_frame = fields.Binary(string="Digital Signature Frame", copy=False, groups="base.group_system")
+    sign_initials_frame = fields.Binary(string="Digital Initials Frame", copy=False, groups="base.group_system")

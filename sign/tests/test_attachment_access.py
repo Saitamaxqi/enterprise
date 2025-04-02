@@ -3,8 +3,9 @@ import base64
 import io
 
 from odoo.exceptions import AccessError
-from odoo.tests import TransactionCase
+from odoo.tests import Form, TransactionCase, users
 from odoo.tools.pdf import PdfFileWriter
+from odoo.tools import mute_logger
 
 
 class testAttachmentAccess(TransactionCase):
@@ -163,3 +164,71 @@ class testAttachmentAccess(TransactionCase):
         # As user, ensure that both the attachment and the template can be read
         self.env.invalidate_all()
         self.assertEqual(new_template.document_ids[0].with_user(self.user).datas, self.pdf)
+
+    @users('foo')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule', 'odoo.models')
+    def test_access_sign_user_fields(self):
+        """Test an employee can read and write his own signature / initials but not others"""
+        # This test doesn't make sense if the record read/updated are sudo,
+        # it needs to be tested with the employee access rights
+        admin = self.env.ref('base.user_admin')
+        self.assertTrue(
+            admin.env.user == self.user and not admin.env.su,
+            'This test makes sense only if it is tested with employee access rights'
+        )
+        my_user = self.env['res.users'].browse(self.env.user.id)
+        self.assertTrue(
+            my_user.env.user == self.user and not my_user.env.su,
+            'This test makes sense only if it is tested with employee access rights'
+        )
+
+        sign_user_fields = ['sign_signature', 'sign_initials']
+
+        # Set a signature / initials for the admin, to test if the employee can read or change it later on
+        for field in sign_user_fields:
+            admin.sudo()[field] = base64.b64encode(b'admin')
+
+        signature = base64.b64encode(b'foo')
+        for field in sign_user_fields:
+            # A user must be able to change his own signature / initials
+            my_user[field] = signature
+            # and read
+            self.assertEqual(my_user[field], signature, f'An employee must be able to read his own {field!r}')
+            # but not others
+            with self.assertRaises(AccessError, msg=f'An employee must not be able to write {field!r} of another user'):
+                admin[field] = signature
+            with self.assertRaises(AccessError, msg=f'An employee must not be able to read {field!r} of another user'):
+                admin[field]
+
+            # Let's take the assumption the employee obtains the attachment id linked to the admin attachments somehow.
+            # Hence herebelow the sudo just to get the id of the attachment
+            attachment_id = self.env['ir.attachment'].sudo().search([
+                ('res_model', '=', 'res.users'),
+                ('res_id', '=', admin.id),
+                ('res_field', '=', field),
+            ]).id
+
+            with self.assertRaises(
+                AccessError,
+                msg=f'An employee must not be able to read the attachment related to the {field!r} of another user'
+            ):
+                self.env['ir.attachment'].browse(attachment_id).datas
+
+    @users('foo')
+    def test_sign_user_fields_preferences_form(self):
+        """
+        Test an employee can change its signature and initials through the preferences form
+
+        It deserves a test because of the tricky case that the signature and initials fields are protected
+        behind a `groups='base.group_system' but part of the `SELF_WRITEABLE_FIELDS`,
+        as a user should be able to change its own signature and initials,
+        so they should be included in the user preferences form and be editable.
+        """
+        my_user = self.env['res.users'].browse(self.env.user.id)
+        signature = base64.b64encode(b'signature')
+        initials = base64.b64encode(b'initials')
+        with Form(my_user, view='base.view_users_form_simple_modif') as UserForm:
+            UserForm.sign_signature = signature
+            UserForm.sign_initials = initials
+        self.assertEqual(my_user.sign_signature, signature)
+        self.assertEqual(my_user.sign_initials, initials)
