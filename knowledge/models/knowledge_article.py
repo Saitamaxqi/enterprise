@@ -1939,8 +1939,8 @@ class KnowledgeArticle(models.Model):
 
         # If user doesn't gain higher access when removing own member,
         # we should allow to do it.
-        self_escalation = not (remove_self and \
-                             ARTICLE_PERMISSION_LEVEL[member.permission] > ARTICLE_PERMISSION_LEVEL[self.inherited_permission])
+        self_escalation = not (remove_self and
+                             ARTICLE_PERMISSION_LEVEL[member.permission] >= ARTICLE_PERMISSION_LEVEL[self.inherited_permission])
         if not self.env.su and self_escalation and not self.user_can_write:
             raise AccessError(
                 _("You have to be editor on %(article_name)s to remove or exclude member %(member_name)s.",

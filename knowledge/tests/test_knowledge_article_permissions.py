@@ -301,6 +301,20 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
 
     @mute_logger('odoo.addons.base.models.ir_rule', 'odoo.models.unlink')
     @users('employee')
+    def test_remove_member_leave_article(self):
+        """ You can remove your member if its permission level is the same as the linked article"""
+        readable_root = self.article_roots[1].with_env(self.env)
+        readable_root.action_join()
+        self.assertMembers(readable_root, 'read',
+                           {self.env.user.partner_id: 'read',
+                            self.partner_employee_manager: 'write'})
+        user_member_id = readable_root.article_member_ids.filtered(
+            lambda m: m.partner_id == self.env.user.partner_id)
+        readable_root.remove_member(user_member_id.id)
+        self.assertMembers(readable_root, 'read', {self.partner_employee_manager: 'write'})
+
+    @mute_logger('odoo.addons.base.models.ir_rule', 'odoo.models.unlink')
+    @users('employee')
     def test_remove_member_leave_shared_article(self):
         # Can remove self if no write access only if does not gain higher access rights while doing so.
         # AKA: allow to leave shared articles.
