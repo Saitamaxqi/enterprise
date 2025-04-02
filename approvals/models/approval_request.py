@@ -60,6 +60,7 @@ class ApprovalRequest(models.Model):
     attachment_ids = fields.One2many(comodel_name='ir.attachment', inverse_name='res_id', domain=[('res_model', '=', 'approval.request')], string='Attachments')
     attachment_number = fields.Integer('Number of Attachments', compute='_compute_attachment_number')
     product_line_ids = fields.One2many('approval.product.line', 'approval_request_id', check_company=True)
+    approval_properties = fields.Properties('Properties', definition='category_id.approval_properties_definition')
 
     has_date = fields.Selection(related="category_id.has_date")
     has_period = fields.Selection(related="category_id.has_period")

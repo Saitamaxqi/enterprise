@@ -68,6 +68,7 @@ class ApprovalCategory(models.Model):
     sequence_code = fields.Char(string="Code")
     sequence_id = fields.Many2one('ir.sequence', 'Reference Sequence',
         copy=False, check_company=True)
+    approval_properties_definition = fields.PropertiesDefinition('Approval Properties')
 
     def _compute_request_to_validate_count(self):
         domain = [('request_status', '=', 'pending'), ('approver_ids.user_id', '=', self.env.user.id)]

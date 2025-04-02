@@ -60,6 +60,7 @@
                 <field name="activity_ids" widget="list_activity" optional="hide"/>
                 <field name="user_ids" string="Approvers" widget="many2many_avatar_user" optional="hide"/>
                 <field name="request_status" decoration-info="request_status == 'new'" decoration-warning="request_status == 'pending'" decoration-success="request_status == 'approved'" decoration-danger="request_status == 'refused'" widget="badge"/>
+                <field name="approval_properties"/>
                 <field name="company_id" readonly="True" optional="hide" groups="base.group_multi_company"/>
             </list>
         </field>
@@ -179,6 +180,7 @@
                             <field name="reference" invisible="has_reference == 'no'" required="has_reference == 'required'"/>
                             <field name="company_id" invisible="1"/>
                         </group>
+                        <field name="approval_properties" columns="2"/>
                     </group>
                     <notebook>
                         <page string="Products" name="products"
