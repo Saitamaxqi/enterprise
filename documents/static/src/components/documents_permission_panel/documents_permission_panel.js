@@ -157,10 +157,8 @@ export class DocumentsPermissionPanel extends Component {
     /**
      * Create/Update/Unlink access to document/folder.
      * @param {Object} partners Partners to be added.
-     * @param {Boolean} notify Whether to notify the `partners`
-     * @param {String} message Optional customized message
      */
-    async updateAccessRights(partners= undefined, notify = false, message = "") {
+    async updateAccessRights(partners = undefined) {
         const accessValuesToSend = Object.fromEntries(
             Object.entries(this.baseAccess).map(([field, oldValue]) => [
                 field,
@@ -188,8 +186,6 @@ export class DocumentsPermissionPanel extends Component {
             accessValuesToSend.access_via_link,
             accessValuesToSend.is_access_via_link_hidden,
             partnersToUpdate,
-            notify,
-            message,
         ]))[0];
         this.state.didSave = true;
         return userPermission;

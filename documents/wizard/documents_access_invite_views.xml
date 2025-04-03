@@ -4,7 +4,7 @@
         <field name="name">documents.access.invite.view.form</field>
         <field name="model">documents.access.invite</field>
         <field name="arch" type="xml">
-            <form>
+            <form class="o_document_invite_wizard">
                 <sheet>
                     <group>
                         <group colspan="2">
@@ -18,11 +18,11 @@
                             <field name="role"/>
                             <field name="notify" widget="boolean_toggle"/>
                         </group>
-                        <group colspan="2">
-                            <field name="notify_message" invisible="not notify" nolabel="1"
-                                placeholder="Optional message..."/>
-                        </group>
                     </group>
+                    <div invisible="not notify">
+                        <label for="notify_message" string="Message"/>
+                        <field name="notify_message" class="embedded-editor-height-4" placeholder="Extra comments..."/>
+                    </div>
                 </sheet>
                 <footer>
                     <button string="Share"

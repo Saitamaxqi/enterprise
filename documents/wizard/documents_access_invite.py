@@ -19,7 +19,10 @@ class DocumentsAccessInvite(models.TransientModel):
             partners={
                 partner: (self.role, None)
                 for partner in self.partner_ids
-            },
-            notify=self.notify,
-            message=self.notify_message,
+            }
         )
+
+        if self.notify and (share_template := self.env.ref('documents.mail_template_document_share', raise_if_not_found=False)):
+            share_template.with_context(message=self.notify_message).send_mail_batch(
+                self.document_id.access_ids.filtered(lambda acc: acc.partner_id in self.partner_ids).ids
+            )

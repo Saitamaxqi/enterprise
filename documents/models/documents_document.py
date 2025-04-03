@@ -10,7 +10,6 @@ from collections import Counter, OrderedDict, defaultdict
 
 import requests
 from dateutil.relativedelta import relativedelta
-from markupsafe import Markup
 from urllib.parse import quote
 from werkzeug.urls import url_encode
 
@@ -915,7 +914,7 @@ class DocumentsDocument(models.Model):
                 'name', 'partner_id', 'type', 'url', 'url_preview_image'}
 
     def action_update_access_rights(self, access_internal=None, access_via_link=None, is_access_via_link_hidden=None,
-                                    partners=None, notify=False, message=""):
+                                    partners=None):
         """Update access to a document and propagate if applicable.
 
         This method can be called to update the access of internal users, with
@@ -935,8 +934,6 @@ class DocumentsDocument(models.Model):
             Mapping of partner(_id) to the tuple:
                 role: 'edit', 'view', False (=>delete),
                 expiration: datetime string, False (removed/None)
-        :param bool notify: whether to send an email
-        :param str message: message to add to the email
         """
         if len(self.ids) == 0:
             return
@@ -944,9 +941,6 @@ class DocumentsDocument(models.Model):
             self.check_access('write')
         except UserError:
             raise AccessError(self.env._("You are not allowed to update these access rights."))
-
-        if len(self.ids) > 1 and notify:
-            raise UserError(_("Impossible to invite partners on multiple documents at once."))
 
         if self.shortcut_document_id:
             raise UserError(_("You can not update the access of a shortcut, update its target instead."))
@@ -975,13 +969,7 @@ class DocumentsDocument(models.Model):
                 (role, fields.Datetime.to_datetime(exp) if exp and isinstance(exp, str) else exp)
                 for partner, (role, exp) in (partners or {}).items()
             }
-            root_access_partners = self.access_ids.partner_id
             self._action_update_members(partners)
-            if notify:
-                self._send_access_by_mail(
-                    {p: role for p, (role, __) in partners.items() if role and p not in root_access_partners},
-                    message=message
-                )
 
         return self.mapped('user_permission')
 
@@ -1353,34 +1341,6 @@ class DocumentsDocument(models.Model):
             'views': [(False, "form")],
             'context': context,
         }
-
-    def _send_access_by_mail(self, partners, message=""):
-        """Send a notification email to contacts granted with a new document/folder access.
-
-        :param dict[res.partner(), str] partners: Mapping of partner to new_role: 'edit', 'view'.
-        :param message: message to add to the email
-        """
-        self.ensure_one()
-        subject = _('%s shared with you', self.display_name) if self.display_name else _('Access to a folder or a document')
-        formatted_msg = Markup(message) if message else ""
-        roles_info = {
-            (role, lang): {
-                "body": self.env['ir.qweb'].with_context(lang=lang)._render(
-                        'documents.mail_template_document_share',
-                        {'record': self, 'user': self.env.user, 'message': formatted_msg}
-                ),
-                "role_label": _('Editor') if role == 'edit' else _('Viewer'),
-            } for role, lang in {(role, partner.lang) for partner, role in partners.items()}
-        }
-
-        for partner, role in partners.items():
-            self.with_context(lang=partner.lang).message_notify(
-                body=roles_info[role, partner.lang]['body'],
-                email_layout_xmlid='mail.mail_notification_layout',
-                partner_ids=partner.ids,
-                subject=subject,
-                subtitles=[self.display_name, _('Your Role: %s', roles_info[role, partner.lang]['role_label'])],
-            )
 
     def _notify_get_recipients_groups(self, message, model_description, msg_vals=False):
         groups = super()._notify_get_recipients_groups(

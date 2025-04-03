@@ -23,7 +23,6 @@ App to upload and manage your documents.
         'security/ir.model.access.csv',
         'data/digest_data.xml',
         'data/mail_template_data.xml',
-        'data/mail_template_views.xml',
         'data/mail_activity_type_data.xml',
         'data/documents_tag_data.xml',
         'data/documents_document_data.xml',

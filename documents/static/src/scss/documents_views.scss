@@ -297,3 +297,12 @@
         width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
     }
 }
+
+////// ======= HTML Field in Dialog =========
+////// ======================================
+
+.o_document_invite_wizard {
+    .embedded-editor-height-4 .note-editable {
+        min-height: 6em;
+    }
+}
