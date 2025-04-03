@@ -362,5 +362,5 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         # they are replaced by an empty space.
         vals = super()._get_note_vals_list(invoice)
         for note_vals in vals:
-            note_vals['note'] = re.sub(r'[^\w ]+', ' ', note_vals['note']).strip()[:200]
+            note_vals['note'] = re.sub(r'[\s]+', ' ', note_vals['note']).strip()[:200]
         return vals
