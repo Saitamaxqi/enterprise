@@ -100,7 +100,7 @@
                         demoRecord="true"
                         />
                     </t>
-                    <div class="o_view_nocontent z-index-0">
+                    <div class="o_view_nocontent">
                         <div class="o_nocontent_help">
                             <p>
                                 Shop Floor Control Panel
