@@ -1,4 +1,4 @@
-import { Record } from "@mail/core/common/record";
+import { fields } from "@mail/core/common/record";
 import { Activity } from "@mail/core/common/activity_model";
 
 import { patch } from "@web/core/utils/patch";
@@ -19,7 +19,7 @@ const activityPatch = {
     /** @override */
     setup() {
         super.setup();
-        this.partner = Record.one("Persona");
+        this.partner = fields.One("Persona");
     },
 };
 patch(Activity.prototype, activityPatch);

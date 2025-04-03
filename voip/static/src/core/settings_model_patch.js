@@ -1,4 +1,4 @@
-import { Record } from "@mail/core/common/record";
+import { fields } from "@mail/core/common/record";
 import { Settings } from "@mail/core/common/settings_model";
 
 import { FOREVER } from "@voip/softphone/do_not_disturb_selector";
@@ -9,7 +9,7 @@ import { patch } from "@web/core/utils/patch";
 patch(Settings.prototype, {
     setup() {
         super.setup();
-        this.do_not_disturb_until_dt = Record.datetime({
+        this.do_not_disturb_until_dt = fields.Datetime({
             onUpdate() {
                 clearTimeout(this.resetDoNotDisturbTimeoutId);
                 if (
