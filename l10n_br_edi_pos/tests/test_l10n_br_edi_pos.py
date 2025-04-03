@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import json
+import re
 from contextlib import contextmanager
 from unittest import mock
 from unittest.mock import patch
@@ -290,6 +291,32 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
             order,
             expected_communications,
             expected_adjustment_line_vals,
+        )
+
+    @freeze_time(TEST_DATETIME)
+    def test_06_order_messages(self):
+        order, _ = self.create_backend_pos_order({
+            "order_data": {
+                "name": "Order/0001",
+            },
+            "line_data": [{
+                "qty": 3,
+                "product_id": self.product_screens.product_variant_id.id,
+                "price_unit": 1.0,
+            }],
+        })
+        with self._with_mocked_l10n_br_iap_request(
+            [
+                ("calculate_tax", "anonymous_tax_request", "anonymous_tax_response"),
+                ("submit_invoice_goods", "anonymous_edi_request", "anonymous_edi_response"),
+            ]
+        ):
+            self.env["pos.make.payment"].with_context(active_id=order.id).create({"amount": order.amount_total}).check()
+
+        self.assertRegex(order.message_ids[-2].body, ".*E-invoice submitted successfully.*")
+        self.assertRegex(
+            order.message_ids[-1].body,
+            f".*{re.escape('<b>aa Regular Consumable Product</b><br>COFINS Incl. - R$&nbsp;0.00<br>ICMS Incl. - R$&nbsp;0.58<br>PIS Incl. - R$&nbsp;0.00')}.*"
         )
 
 

@@ -764,6 +764,33 @@ class PosOrder(models.Model):
 
         return adjustment_move
 
+    def _l10n_br_edi_log_taxes(self):
+        """There's no tax breakdown per line or order. So, we log the taxes here manually instead."""
+        message = []
+        has_informative_tax = False
+        for line in self.l10n_br_edi_avatax_data.get('lines', []):
+            tax_descriptions = []
+            for tax_detail in line.get('taxDetails', []):
+                # Taxes are guaranteed to be unarchived after tax calculation.
+                tax = self.env['account.tax'].search([('l10n_br_avatax_code', '=', tax_detail['taxType'])], limit=1)
+                is_informative = tax_detail['taxImpact']['impactOnNetAmount'] == 'Informative'
+                has_informative_tax = has_informative_tax or is_informative
+                tax_descriptions.append(Markup("{tax_name}{informative} - {tax_amount}").format(
+                    tax_name=tax.display_name or tax_detail['taxType'],
+                    tax_amount=self.currency_id.format(tax_detail['tax']),
+                    informative=' (*)' if is_informative else ''
+                ))
+
+            message.append(Markup("<b>{line_name}</b><br/>{tax_descriptions}").format(
+                line_name=line['itemDescriptor'].get('description'),
+                tax_descriptions=Markup("<br/>").join(tax_descriptions))
+            )
+
+        if has_informative_tax:
+            message.append(Markup("<i> *: ") + _("informative tax") + Markup("</i>"))
+
+        self.message_post(body=Markup("<hr/>").join(message))
+
     def _l10n_br_edi_send(self, save_avalara_pdf=False):
         """Sends the e-invoice and returns an array of error strings."""
         for order in self:
@@ -789,6 +816,7 @@ class PosOrder(models.Model):
                     order.l10n_br_edi_authorization_date = status.get("authorizationDateTime")
                     order.l10n_br_edi_series = status.get("serial")
 
+                    order._l10n_br_edi_log_taxes()
                     order.with_context(no_new_invoice=True).message_post(
                         body=message,
                         attachment_ids=order._l10n_br_edi_attachments_from_response(

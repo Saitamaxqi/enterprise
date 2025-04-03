@@ -694,3 +694,9 @@ msgid ""
 "You must configure the 'Series' field on point of sale "
 "\"%(point_of_sale_name)s\"."
 msgstr ""
+
+#. module: l10n_br_edi_pos
+#. odoo-python
+#: code:addons/l10n_br_edi_pos/models/pos_order.py:0
+msgid "informative tax"
+msgstr ""
