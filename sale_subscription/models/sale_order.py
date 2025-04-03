@@ -1006,10 +1006,12 @@ class SaleOrder(models.Model):
         self.set_open()
 
     def pause_subscription(self):
-        self.filtered(lambda so: so.subscription_state == '3_progress').write({'subscription_state': '4_paused'})
+        with self.env.protecting([self.order_line._fields['discount']], self.order_line):
+            self.filtered(lambda so: so.subscription_state == '3_progress').write({'subscription_state': '4_paused'})
 
     def resume_subscription(self):
-        self.filtered(lambda so: so.subscription_state == '4_paused').write({'subscription_state': '3_progress'})
+        with self.env.protecting([self.order_line._fields['discount']], self.order_line):
+            self.filtered(lambda so: so.subscription_state == '4_paused').write({'subscription_state': '3_progress'})
 
     def create_alternative(self):
         self.ensure_one()
