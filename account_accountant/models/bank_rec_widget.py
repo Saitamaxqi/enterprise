@@ -971,29 +971,29 @@ class BankRecWidget(models.Model):
     def _line_value_changed_date(self, line):
         self.ensure_one()
         if line.flag == 'liquidity' and line.date:
-            self.st_line_id.date = line.date
-            self._action_reload_liquidity_line()
+            with self._action_reload_liquidity_line():
+                self.st_line_id.date = line.date
             self.return_todo_command = {'reset_global_info': True, 'reset_record': True}
 
     def _line_value_changed_ref(self, line):
         self.ensure_one()
-        if line.flag == 'liquidity':
-            self.st_line_id.move_id.ref = line.ref
-            self._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.ref:
+            with self._action_reload_liquidity_line():
+                self.st_line_id.move_id.ref = line.ref
             self.return_todo_command = {'reset_record': True}
 
     def _line_value_changed_narration(self, line):
         self.ensure_one()
-        if line.flag == 'liquidity':
-            self.st_line_id.move_id.narration = line.narration
-            self._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.narration:
+            with self._action_reload_liquidity_line():
+                self.st_line_id.move_id.narration = line.narration
             self.return_todo_command = {'reset_record': True}
 
     def _line_value_changed_name(self, line):
         self.ensure_one()
-        if line.flag == 'liquidity':
-            self.st_line_id.payment_ref = line.name
-            self._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.name:
+            with self._action_reload_liquidity_line():
+                self.st_line_id.payment_ref = line.name
             self.return_todo_command = {'reset_global_info': True, 'reset_record': True}
             return
 
@@ -1002,13 +1002,13 @@ class BankRecWidget(models.Model):
     def _line_value_changed_amount_transaction_currency(self, line):
         self.ensure_one()
         if line.flag == 'liquidity':
-            if line.transaction_currency_id != self.journal_currency_id:
-                self.st_line_id.amount_currency = line.amount_transaction_currency
-                self.st_line_id.foreign_currency_id = line.transaction_currency_id
-            else:
-                self.st_line_id.amount_currency = 0.0
-                self.st_line_id.foreign_currency_id = None
-            self._action_reload_liquidity_line()
+            with self._action_reload_liquidity_line():
+                if line.transaction_currency_id != self.journal_currency_id:
+                    self.st_line_id.amount_currency = line.amount_transaction_currency
+                    self.st_line_id.foreign_currency_id = line.transaction_currency_id
+                else:
+                    self.st_line_id.amount_currency = 0.0
+                    self.st_line_id.foreign_currency_id = None
             self.return_todo_command = {'reset_global_info': True, 'reset_record': True}
 
     def _line_value_changed_transaction_currency_id(self, line):
@@ -1016,9 +1016,9 @@ class BankRecWidget(models.Model):
 
     def _line_value_changed_amount_currency(self, line):
         self.ensure_one()
-        if line.flag == 'liquidity':
-            self.st_line_id.amount = line.amount_currency
-            self._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.amount_currency:
+            with self._action_reload_liquidity_line():
+                self.st_line_id.amount = line.amount_currency
             self.return_todo_command = {'reset_global_info': True, 'reset_record': True}
             return
 
@@ -1069,9 +1069,9 @@ class BankRecWidget(models.Model):
 
     def _line_value_changed_balance(self, line):
         self.ensure_one()
-        if line.flag == 'liquidity':
-            self.st_line_id.amount = line.balance
-            self._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.balance:
+            with self._action_reload_liquidity_line():
+                self.st_line_id.amount = line.balance
             self.return_todo_command = {'reset_global_info': True, 'reset_record': True}
             return
 
@@ -1126,9 +1126,9 @@ class BankRecWidget(models.Model):
 
     def _line_value_changed_partner_id(self, line):
         self.ensure_one()
-        if line.flag == 'liquidity':
-            self.st_line_id.partner_id = line.partner_id
-            self._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.partner_id:
+            with self._action_reload_liquidity_line():
+                self.st_line_id.partner_id = line.partner_id
             self.return_todo_command = {'reset_global_info': True, 'reset_record': True}
             return
 
@@ -1162,13 +1162,10 @@ class BankRecWidget(models.Model):
         self.ensure_one()
         self._lines_turn_auto_balance_into_manual_line(line)
 
-        if line.flag == 'liquidity':
-            st_line = self.st_line_id
-            liquidity_line, _suspense_lines, _write_off_lines = self.st_line_id._seek_for_lines()
-            liquidity_line.analytic_distribution = line.analytic_distribution
-            # We need to keep track of the statement line to avoid losing the data.
-            # Will be improved in master by turning _action_reload_liquidity_line into a context manager.
-            self.with_context(default_st_line_id=st_line.id)._action_reload_liquidity_line()
+        if line.flag == 'liquidity' and line.analytic_distribution:
+            with self._action_reload_liquidity_line():
+                liquidity_line, _suspense_lines, _write_off_lines = self.st_line_id._seek_for_lines()
+                liquidity_line.analytic_distribution = line.analytic_distribution
             return
 
         # Recompute taxes.
@@ -1348,9 +1345,12 @@ class BankRecWidget(models.Model):
                     line_ids_commands.append(orm_command)
         return line_ids_commands
 
+    @contextmanager
     def _action_reload_liquidity_line(self):
         self.ensure_one()
         self = self.with_context(default_st_line_id=self.st_line_id.id)
+
+        yield
 
         self.invalidate_model()
 
