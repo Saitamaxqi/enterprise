@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-from datetime import timedelta
-from markupsafe import Markup
-
-from odoo import fields
 from odoo.addons.sms.tests.common import SMSCommon
 from odoo.addons.test_mail_sms.tests.common import TestSMSRecipients
 from odoo.tests.common import users
@@ -67,3 +60,20 @@ class TestActivity(SMSCommon, TestSMSRecipients):
         activity = record.create_call_activity()
         new_activity_type = self.env['mail.activity.type'].search([('category', '=', 'phonecall')])
         self.assertTrue(bool(new_activity_type))
+
+    @users('employee')
+    def test_type_phonecall(self):
+        activities = self.env['mail.activity'].create([
+            {
+                'activity_type_id': self.phonecall_activity.id,
+                'phone': '+32455001122',
+                'user_id': self.user_employee.id,
+            },
+            {
+                'activity_type_id': self.phonecall_activity.id,
+                'phone': '+32455334455',
+                'user_id': self.user_employee.id,
+            },
+        ])
+        stored_free = self.env['mail.activity'].get_today_call_activities().get('mail.activity')
+        self.assertEqual(len(stored_free), len(activities), 'Should have one entry / activity')
