@@ -1326,42 +1326,6 @@ class DocumentsDocument(models.Model):
                             '(possibly known) issue within PyPDF2.', self.name, exc_info=True)
             return False
 
-    # todo: unused, remove in master
-    def _get_models(self, domain):
-        """
-        Return the names of the models to which the attachments are attached.
-
-        :param domain: the domain of the _read_group on documents.
-        :return: a list of model data, the latter being a dict with the keys
-            'id' (technical name),
-            'name' (display name) and
-            '__count' (how many attachments with that domain).
-        """
-        not_a_file = []
-        not_attached = []
-        models = []
-        groups = self._read_group(domain, ['res_model'], ['__count'])
-        for res_model, count in groups:
-            if not res_model:
-                not_a_file.append({
-                    'id': res_model,
-                    'display_name': _('Not a file'),
-                    '__count': count,
-                })
-            elif res_model == 'documents.document':
-                not_attached.append({
-                    'id': res_model,
-                    'display_name': _('Not attached'),
-                    '__count': count,
-                })
-            else:
-                models.append({
-                    'id': res_model,
-                    'display_name': self.env['ir.model']._get(res_model).display_name,
-                    '__count': count,
-                })
-        return sorted(models, key=lambda m: m['display_name']) + not_attached + not_a_file
-
     @api.depends('favorited_ids')
     @api.depends_context('uid')
     def _compute_is_favorited(self):
