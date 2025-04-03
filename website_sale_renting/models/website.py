@@ -39,9 +39,11 @@ class Website(models.Model):
         """
         now = fields.Datetime.now()
         customer_tz = request.cookies.get('tz') if request else None
-        return pytz.timezone(self.tz).utcoffset(now) != pytz.timezone(
-            customer_tz or 'UTC'
-        ).utcoffset(now)
+
+        return (
+            pytz.timezone(self.tz).localize(now).utcoffset()
+            == pytz.timezone(customer_tz or 'UTC').localize(now).utcoffset()
+        )
 
     def _get_utc_offset(self, tz):
         """ Return the offset between UTC and the provided timezone

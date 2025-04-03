@@ -34,6 +34,6 @@ class SaleOrderLine(models.Model):
         """
         order_line_description = super()._get_rental_order_line_description()
         website = self.order_id.website_id
-        if website and website._is_customer_in_the_same_timezone():
+        if website and not website._is_customer_in_the_same_timezone():
             order_line_description += f' ({self.order_id.website_id.tz})'
         return order_line_description

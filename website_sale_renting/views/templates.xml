@@ -105,7 +105,11 @@
                     <input type="hidden" name="rental_duration_unit" t-att-value="combination_info['rental_duration_unit']"/>
                     <strong class="attribute_name">
                         <span>Rental Period</span>
-                        <span t-if="website._is_customer_in_the_same_timezone()" t-out="website._get_utc_offset(website.tz)" class="ms-1 o_not_editable"/>
+                        <span
+                            t-if="not website._is_customer_in_the_same_timezone()"
+                            class="ms-1 o_not_editable"
+                            t-out="website._get_utc_offset(website.tz)"
+                        />
                         <i
                             t-attf-class="o_rental_info_message fa fa-info-circle #{not periodIsSet and 'd-none'} ms-2 text-info o_not_editable" data-bs-toggle="tooltip"
                             data-bs-placement="top"
@@ -251,7 +255,7 @@
                           widget="datetime"
                           class="o_not_editable"/>
                 </div>
-                <t t-if="website_sale_order.website_id._is_customer_in_the_same_timezone()">
+                <t t-if="not website_sale_order.website_id._is_customer_in_the_same_timezone()">
                     (<t t-out="website_sale_order.website_id.tz"/>)
                 </t>
             </div>

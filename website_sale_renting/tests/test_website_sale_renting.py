@@ -134,3 +134,14 @@ class TestWebsiteSaleRenting(TestWebsiteSaleRentingCommon):
             self.assertTrue(
                 so._is_valid_renting_dates(), "It should be possible to rent the product now"
             )
+
+    def test_daylight_saving_time_change(self):
+        self.website.tz = 'Europe/Brussels'
+
+        # pytz.exceptions.AmbiguousTimeError:
+        with freeze_time('2024-10-27 02:01:00 UTC'):
+            self.assertFalse(self.website._is_customer_in_the_same_timezone())
+
+        # pytz.exceptions.NonExistentTimeError
+        with freeze_time('2025-03-30 02:01:00 UTC'):
+            self.assertFalse(self.website._is_customer_in_the_same_timezone())
