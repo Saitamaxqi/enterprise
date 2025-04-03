@@ -1,6 +1,7 @@
 import { Component, useExternalListener, useRef, useState } from "@odoo/owl";
 
 import { useAutofocus, useService } from "@web/core/utils/hooks";
+import { useDebounced } from "@web/core/utils/timing";
 
 export class TimesheetTimerHeaderButtons extends Component {
     static template = "timesheet_grid.TimesheetTimerHeaderButtons";
@@ -19,6 +20,7 @@ export class TimesheetTimerHeaderButtons extends Component {
         this.stopButton = useRef("stopButton");
         useAutofocus({ refName: "startButton" });
         useAutofocus({ refName: "stopButton" });
+        this.onClickTimerButton = useDebounced(this.handleClickTimerButton.bind(this), 250);
         useExternalListener(document.body, "click", (ev) => {
             if (
                 ev.target.closest(".modal, .popover") ||
@@ -28,6 +30,14 @@ export class TimesheetTimerHeaderButtons extends Component {
             }
             this.startButton.el ? this.startButton.el.focus() : this.stopButton.el.focus();
         });
+    }
+
+    async handleClickTimerButton() {
+        if (this.props.timerRunning) {
+            this._onClickStopTimer();
+        } else {
+            this._onClickStartTimer();
+        }
     }
 
     async _onClickStartTimer() {
