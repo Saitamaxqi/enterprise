@@ -19,7 +19,9 @@ class MontlhyReturnWizard(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
-        options = self.env.context['options']
+        options = self.env.context.get('options')
+        if not options:
+            return res
         date_from = fields.Date.from_string(options['date']['date_from'])
         date_to = fields.Date.from_string(options['date']['date_to'])
 
