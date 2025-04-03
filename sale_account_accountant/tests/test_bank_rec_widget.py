@@ -8,7 +8,7 @@ from odoo.addons.account_accountant.tests.common import TestBankRecWidgetCommon
 class TestBankRecWidget(TestBankRecWidgetCommon):
 
     def create_order(self, **kwargs):
-        order = self.env['sale.order'].create({
+        order = self.env['sale.order'].sudo().create({
             'partner_id': self.partner_a.id,
             'partner_invoice_id': self.partner_a.id,
             'partner_shipping_id': self.partner_a.id,

@@ -1,7 +1,9 @@
-from odoo.addons.account_inter_company_rules.tests.common import TestInterCompanyRulesCommon
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from odoo.addons.sale_purchase_inter_company_rules.tests.common import TestInterCompanyRulesCommonSOPO
 
 
-class TestInterCompanyRulesCommonStock(TestInterCompanyRulesCommon):
+class TestInterCompanyRulesCommonStock(TestInterCompanyRulesCommonSOPO):
 
     @classmethod
     def setUpClass(cls):

@@ -1,12 +1,15 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo import fields
-from odoo.tests.common import tagged
-from odoo.tools.misc import formatLang
-from odoo.addons.account_avatax.tests.common import TestAccountAvataxCommon
+from odoo.tests import tagged
+
+from odoo.addons.account_avatax_sale.tests.common import TestAccountAvataxSaleCommon
+
 from .mocked_so_response import generate_response
 
 
 @tagged("-at_install", "post_install")
-class TestSaleAvalara(TestAccountAvataxCommon):
+class TestSaleAvalara(TestAccountAvataxSaleCommon):
     @classmethod
     def setUpClass(cls):
         res = super().setUpClass()
@@ -208,7 +211,7 @@ class TestSaleAvalara(TestAccountAvataxCommon):
 
 
 @tagged("-at_install", "post_install")
-class TestAccountAvalaraSalesTaxItemsIntegration(TestAccountAvataxCommon):
+class TestAccountAvalaraSalesTaxItemsIntegration(TestAccountAvataxSaleCommon):
     """https://developer.avalara.com/certification/avatax/sales-tax-badge/"""
 
     @classmethod

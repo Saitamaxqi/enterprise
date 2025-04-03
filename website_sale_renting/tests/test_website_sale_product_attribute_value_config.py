@@ -5,14 +5,14 @@ from dateutil.relativedelta import relativedelta
 from odoo.fields import Command
 from odoo.tests import tagged
 
-from odoo.addons.sale.tests.test_sale_product_attribute_value_config import (
-    TestSaleProductAttributeValueCommon,
+from odoo.addons.product.tests.test_product_attribute_value_config import (
+    TestProductAttributeValueCommon,
 )
 from odoo.addons.website_sale.tests.common import MockRequest, WebsiteSaleCommon
 
 
 @tagged('post_install', '-at_install', 'product_attribute')
-class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttributeValueCommon, WebsiteSaleCommon):
+class TestWebsiteSaleRentingProductAttributeValueConfig(TestProductAttributeValueCommon, WebsiteSaleCommon):
 
     @classmethod
     def setUpClass(cls):
@@ -42,6 +42,8 @@ class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttribute
                 'product_template_id': cls.computer.id,
             },
         ])
+
+        cls.curr_eur = cls._enable_currency('EUR')
 
     def test_product_tax_included_get_combination_info(self):
         config = self.env['res.config.settings'].create({})
@@ -86,8 +88,9 @@ class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttribute
 
         discount_rate = 1 # No discount should apply on rental products (functional choice)
 
-        currency_ratio = 2
-        self.pricelist.currency_id = self._setup_currency(currency_ratio)
+        self.curr_eur.rate_ids = [Command.create({'rate': 3.0})]
+        currency_ratio = self.curr_eur.rate
+        self.pricelist.currency_id = self.curr_eur
 
         computer = self.computer.with_context(website_id=self.website.id)
         with MockRequest(self.env, website=self.website, website_sale_current_pl=self.pricelist.id) as request:

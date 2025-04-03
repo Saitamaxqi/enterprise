@@ -1,10 +1,13 @@
-from odoo import Command
-from odoo.tests.common import tagged
-from odoo.addons.account_avatax.tests.common import TestAccountAvataxCommon
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from odoo.fields import Command
+from odoo.tests import tagged
+
+from odoo.addons.account_avatax_sale.tests.common import TestAccountAvataxSaleCommon
 
 
 @tagged("-at_install", "post_install")
-class TestAccountAvalaraStock(TestAccountAvataxCommon):
+class TestAccountAvalaraStock(TestAccountAvataxSaleCommon):
     """https://developer.avalara.com/certification/avatax/sales-tax-badge/"""
 
     @classmethod

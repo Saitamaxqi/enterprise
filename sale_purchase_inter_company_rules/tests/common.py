@@ -1,8 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo.addons.account_inter_company_rules.tests.common import TestInterCompanyRulesCommon
 
 
 class TestInterCompanyRulesCommonSOPO(TestInterCompanyRulesCommon):
+
+    @classmethod
+    def get_default_groups(cls):
+        groups = super().get_default_groups()
+        # give current user the rights to create sales orders
+        return groups | cls.quick_ref('sales_team.group_sale_manager')
 
     @classmethod
     def setUpClass(cls):

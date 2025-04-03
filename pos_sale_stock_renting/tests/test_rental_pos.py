@@ -1,10 +1,13 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
-from odoo import fields
 from datetime import timedelta
+
+from odoo import fields
+from odoo.fields import Command
 from odoo.tests.common import tagged
+
+from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
+
 
 @tagged('post_install', '-at_install')
 class TestPoSRental(TestPointOfSaleHttpCommon):
@@ -40,21 +43,21 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
             'city': 'city',
             'country_id': self.env.ref('base.be').id, })
 
-        self.sale_order_id = self.env['sale.order'].create({
+        self.sale_order_id = self.env['sale.order'].with_context(in_rental_app=True).sudo().create({
             'partner_id': self.cust1.id,
             'partner_invoice_id': self.cust1.id,
             'partner_shipping_id': self.cust1.id,
             'rental_start_date': fields.Datetime.today(),
             'rental_return_date': fields.Datetime.today() + timedelta(days=3),
+            'order_line': [
+                Command.create({
+                    'product_id': self.tracked_product_id.id,
+                    'product_uom_qty': 0.0,
+                    'price_unit': 250,
+                })
+            ]
         })
 
-        self.order_line_id2 = self.env['sale.order.line'].create({
-            'order_id': self.sale_order_id.id,
-            'product_id': self.tracked_product_id.id,
-            'product_uom_qty': 0.0,
-            'price_unit': 250,
-        })
-        self.order_line_id2.write({'is_rental': True})
         self.pos_user.write({
             'group_ids': [
                 (4, self.env.ref('stock.group_stock_manager').id),

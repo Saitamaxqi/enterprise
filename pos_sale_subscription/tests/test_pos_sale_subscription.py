@@ -1,8 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo import fields
+from odoo.fields import Command
 from odoo.tests.common import tagged
+
+from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 
 
 @tagged('post_install', '-at_install')
@@ -10,7 +12,11 @@ class TestPoSSubscription(TestPointOfSaleHttpCommon):
     def test_pos_recurring_product_invoicing(self):
         """ Test if qty_invoiced is correctly updated when a recurring product is
             invoiced from the POS and the next_invoice_date is updated. """
-        plan_month = self.env['sale.subscription.plan'].create({'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month'})
+        plan_month = self.env['sale.subscription.plan'].sudo().create({
+            'name': 'Monthly',
+            'billing_period_value': 1,
+            'billing_period_unit': 'month',
+        })
         self.recurring_product_id = self.env['product.product'].create({
             'name': 'Test2',
             'available_in_pos': True,
@@ -19,19 +25,21 @@ class TestPoSSubscription(TestPointOfSaleHttpCommon):
             'taxes_id': False,
         })
 
-        self.sale_order_id = self.env['sale.order'].create({
+        self.sale_order_id = self.env['sale.order'].sudo().create({
             'partner_id': self.partner_a.id,
             'plan_id': plan_month.id,
             'start_date': fields.Date.from_string('2021-01-01'),
             'next_invoice_date': fields.Date.from_string('2021-01-01'),
+            'order_line': [
+                Command.create({
+                    'product_id': self.recurring_product_id.id,
+                    'product_uom_qty': 1,
+                    'price_unit': 250,
+
+                })
+            ]
         })
 
-        self.order_line_id2 = self.env['sale.order.line'].create({
-            'order_id': self.sale_order_id.id,
-            'product_id': self.recurring_product_id.id,
-            'product_uom_qty': 1,
-            'price_unit': 250,
-        })
         self.main_pos_config.with_user(self.pos_user).open_ui()
         current_session = self.main_pos_config.current_session_id
 

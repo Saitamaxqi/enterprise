@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.tests import Form
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+
+from odoo.addons.sale.tests.common import TestSaleCommon
 
 
-class TestCommissionsSetup(AccountTestInvoicingCommon):
+class TestCommissionsSetup(TestSaleCommon):
 
     def _setup_accounting(self):
         self.account_receivable = self.company_data['default_account_receivable']
