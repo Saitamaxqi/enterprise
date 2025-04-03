@@ -12,7 +12,7 @@ defineTestSpreadsheetEditionModels();
 preloadBundle("web.assets_emoji");
 
 const { topbarMenuRegistry } = registries;
-const { HoveredCellStore } = stores;
+const { DelayedHoveredCellStore } = stores;
 
 const { toCartesian } = helpers;
 
@@ -21,7 +21,7 @@ test("Hover cell only shows messages, Composer appears on click", async () => {
     const sheetId = model.getters.getActiveSheetId();
     await createThread(model, pyEnv, { sheetId, ...toCartesian("A2") }, ["wave"]);
 
-    env.getStore(HoveredCellStore).hover({ col: 0, row: 1 });
+    env.getStore(DelayedHoveredCellStore).hover({ col: 0, row: 1 });
     await animationFrame();
 
     expect(".o-thread-popover .o-mail-Thread").toHaveCount(1);

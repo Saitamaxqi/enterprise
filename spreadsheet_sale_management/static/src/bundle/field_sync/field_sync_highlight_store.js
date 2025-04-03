@@ -3,12 +3,12 @@ import { getFirstListFunction } from "@spreadsheet/list/list_helpers";
 
 const { positionToZone } = helpers;
 
-const { SpreadsheetStore, HighlightStore, HoveredCellStore } = stores;
+const { SpreadsheetStore, HighlightStore, DelayedHoveredCellStore } = stores;
 
 export class FieldSyncHighlightStore extends SpreadsheetStore {
     constructor(get) {
         super(get);
-        this.hoveredCell = get(HoveredCellStore);
+        this.hoveredCell = get(DelayedHoveredCellStore);
         const highlightStore = get(HighlightStore);
         highlightStore.register(this);
         this.onDispose(() => {
