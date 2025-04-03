@@ -8,7 +8,7 @@ Add an extra tab in the checkout process of the website/eCommerce with the mexic
 - l10n_mx_edi_cfdi_to_public (sale.order/account.move)
 - l10n_mx_edi_fiscal_regime (res.partner)
 - l10n_mx_edi_usage (sale.order/account.move)
-- l10n_mx_edi_no_tax_breakdown (res.partner)
+- l10n_mx_edi_ieps_breakdown (res.partner)
 
 The extra tab only appears if:
 

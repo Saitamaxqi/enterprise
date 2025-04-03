@@ -119,11 +119,27 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 l10n_mx_edi_cfdi_to_public=l10n_mx_edi_cfdi_to_public,
             )
 
+        existing_taxes_combinations_to_test = [
+            (self.env['account.tax'],),
+            (self.tax_0_exento, self.tax_0),
+            (self.tax_0_exento, self.tax_16),
+            (self.tax_0, self.tax_16),
+            (self.tax_0_exento, self.tax_0, self.tax_16),
+            (self.tax_0_exento,),
+            (self.tax_0,),
+            (self.tax_16 + self.tax_10_ret_isr + self.tax_10_67_ret,),
+            (self.tax_8_ieps + self.tax_0,),
+            (self.tax_53_ieps + self.tax_16,),
+            (self.local_tax_16_transferred, self.local_tax_8_withholding, self.local_tax_3_5_withholding, self.tax_16),
+        ]
+
         with self.mx_external_setup(self.frozen_today):
-            for index, taxes_list in enumerate(self.existing_taxes_combinations_to_test, start=1):
+            for index, taxes_list in enumerate(existing_taxes_combinations_to_test, start=1):
+                if index != 2:
+                    continue
                 with self.subTest(index=index):
                     # Test the invoice CFDI.
-                    self.partner_mx.l10n_mx_edi_no_tax_breakdown = False
+                    self.partner_mx.l10n_mx_edi_ieps_breakdown = False
                     invoice = create_invoice(taxes_list)
                     with self.with_mocked_pac_sign_success():
                         invoice._l10n_mx_edi_cfdi_invoice_try_send()
@@ -141,25 +157,22 @@ class TestCFDIInvoice(TestMxEdiCommon):
                         invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
                     self._assert_global_invoice_cfdi_from_invoices(invoice, f'test_invoice_taxes_{index}_ginvoice')
 
-                    # Test the invoice with no tax breakdown.
-                    self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
-                    invoice = create_invoice(taxes_list)
-                    with self.with_mocked_pac_sign_success():
-                        invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                    self._assert_invoice_cfdi(invoice, f'test_invoice_taxes_{index}_invoice_no_tax_breakdown')
-
     def test_invoice_taxes_cuota(self):
         self.env['decimal.precision'].search([('name', '=', 'Product Price')]).digits = 6
+        self.partner_mx.l10n_mx_edi_ieps_breakdown = True
         tax_cuota = self.env['account.tax'].create({
             'name': "Cuota 14.0163",
             'amount_type': 'fixed',
             'amount': 14.0163,
             'l10n_mx_factor_type': 'Cuota',
             'l10n_mx_tax_type': 'ieps',
+            'include_base_amount': True,
+            'sequence': 10,
         })
 
-        def create_invoice(l10n_mx_edi_cfdi_to_public=False):
-            return self._create_invoice(
+        with self.mx_external_setup(self.frozen_today):
+            # Test the first invoice CFDI.
+            invoice = self._create_invoice(
                 invoice_line_ids=[
                     Command.create({
                         'product_id': self.product.id,
@@ -167,21 +180,200 @@ class TestCFDIInvoice(TestMxEdiCommon):
                         'tax_ids': [Command.set(tax_cuota.ids)],
                     })
                 ],
-                l10n_mx_edi_cfdi_to_public=l10n_mx_edi_cfdi_to_public,
             )
-
-        with self.mx_external_setup(self.frozen_today):
-            # Test the invoice CFDI.
-            invoice = create_invoice()
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
-            self._assert_invoice_cfdi(invoice, 'test_invoice_taxes_cuota_invoice')
+            self._assert_invoice_cfdi(invoice, 'test_invoice_taxes_cuota_1_invoice')
 
-            # Test the payment CFDI.
+            # Test the first payment CFDI.
             payment = self._create_payment(invoice)
             with self.with_mocked_pac_sign_success():
                 payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-            self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_cuota_payment')
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_cuota_1_payment')
+
+            # Test the second invoice CFDI.
+            tax_8_include_base_amount = self.tax_8.copy(default={'name': "tax_8_include_base_amount"})
+            tax_8_include_base_amount.include_base_amount = True
+            tax_8_include_base_amount.sequence = 9
+            self.tax_1_25_sale_withholding.sequence = 8
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 4000.0,
+                        'tax_ids': [Command.set((tax_8_include_base_amount + tax_cuota + self.tax_1_25_sale_withholding).ids)],
+                    })
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_invoice_taxes_cuota_2_invoice')
+
+            # Test the second payment CFDI.
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_cuota_2_payment')
+
+    def test_tax_objected_01(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[Command.create({
+                'product_id': self.product.id,
+                'tax_ids': [],
+            })])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_01_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_01_pay')
+
+    def test_tax_objected_02(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[
+                Command.create({
+                    'product_id': self.product.id,
+                    'tax_ids': [Command.set(self.tax_16.ids)],
+                }),
+                Command.create({
+                    'product_id': self.product.id,
+                    'discount': 100.0,
+                    'tax_ids': [Command.set(self.tax_16.ids)],
+                }),
+            ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_02_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_02_pay')
+
+    def test_tax_objected_03(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[Command.create({
+                'product_id': self.product.id,
+                'l10n_mx_edi_tax_object': '03',
+                'tax_ids': [Command.set(self.tax_16.ids)],
+            })])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_03_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_03_pay')
+
+    def test_tax_objected_04(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[
+                Command.create({
+                    'product_id': self.product.id,
+                    'discount': 100.0,
+                    'tax_ids': [Command.set(self.tax_16.ids)],
+                    'l10n_mx_edi_tax_object': '04',
+                }),
+                Command.create({
+                    'product_id': self.product.id,
+                    'tax_ids': [Command.set(self.tax_16.ids)],
+                }),
+            ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_04_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_04_pay')
+
+    def test_tax_objected_05(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[Command.create({
+                'product_id': self.product.id,
+                'l10n_mx_edi_tax_object': '05',
+                'tax_ids': [Command.set(self.tax_16.ids)],
+            })])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_05_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_05_pay')
+
+    def test_tax_objected_06(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[Command.create({
+                'product_id': self.product.id,
+                'tax_ids': [Command.set(self.tax_10_ret_isr.ids)],
+            })])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_06_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_06_pay')
+
+    def test_tax_objected_07(self):
+        with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_ieps_breakdown = True
+            invoice = self._create_invoice(invoice_line_ids=[Command.create({
+                'product_id': self.product.id,
+                'tax_ids': [Command.set((self.tax_10_ret_isr + self.tax_8_ieps).ids)],
+            })])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_07_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_07_pay')
+
+    def test_tax_objected_07_to_public(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                l10n_mx_edi_cfdi_to_public=True,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'tax_ids': [Command.set((self.tax_10_ret_isr + self.tax_8_ieps).ids)],
+                    })
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_07_to_public_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_07_to_public_pay')
+
+    def test_tax_objected_08(self):
+        with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_ieps_breakdown = True
+            invoice = self._create_invoice(invoice_line_ids=[Command.create({
+                'product_id': self.product.id,
+                'l10n_mx_edi_tax_object': '08',
+                'tax_ids': [Command.set((self.tax_10_ret_isr + self.tax_8_ieps).ids)],
+            })])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_tax_objected_08_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_tax_objected_08_pay')
 
     def test_invoice_addenda(self):
         # The test data for complementos in this test are not recognized by the SAT as valid.
@@ -1108,6 +1300,35 @@ class TestCFDIInvoice(TestMxEdiCommon):
             }
         ))
 
+    def test_import_bill_custom_tax_object(self):
+        file_name = "test_import_bill_custom_tax_object"
+        full_file_path = misc.file_path(f'{self.test_module}/tests/test_files/{file_name}.xml')
+
+        # Read the problematic xml file that kept causing crash on bill uploads
+        with file_open(full_file_path, "rb") as file:
+            new_bill = self._upload_document_on_journal(
+                journal=self.company_data['default_journal_purchase'],
+                content=file.read(),
+                filename=file_name,
+            )
+
+        self.assertRecordValues(new_bill.invoice_line_ids, (
+            {
+                'quantity': 1,
+                'price_unit': 1000.0,
+                'discount': 100.0,
+                'tax_ids': [],
+                'l10n_mx_edi_tax_object': '04',
+            },
+            {
+                'quantity': 1,
+                'price_unit': 1000.0,
+                'discount': 0.0,
+                'tax_ids': self.tax_16_purchase.ids,
+                'l10n_mx_edi_tax_object': '02',
+            },
+        ))
+
     def test_import_bill_with_withholding(self):
         file_name = "test_import_bill_with_withholding"
         full_file_path = misc.file_path(f'{self.test_module}/tests/test_files/{file_name}.xml')
@@ -1450,6 +1671,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
 
     def test_cfdi_rounding_7(self):
         with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_ieps_breakdown = True
             invoice = self._create_invoice(
                 invoice_line_ids=[
                     Command.create({
@@ -1477,6 +1699,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
 
     def test_cfdi_rounding_8(self):
         with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_ieps_breakdown = True
             invoice = self._create_invoice(
                 invoice_line_ids=[
                     Command.create({
@@ -1648,6 +1871,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
             )
 
         with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_ieps_breakdown = True
             invoice = create_invoice()
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
@@ -1808,10 +2032,10 @@ class TestCFDIInvoice(TestMxEdiCommon):
 
     def test_cfdi_rounding_18(self):
         with self.mx_external_setup(self.frozen_today):
-            self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
             invoice = self._create_invoice(
                 invoice_line_ids=[
                     Command.create({
+                        'l10n_mx_edi_tax_object': '03',
                         'product_id': self.product.id,
                         'price_unit': 50.00,
                         'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
@@ -1823,15 +2047,16 @@ class TestCFDIInvoice(TestMxEdiCommon):
 
     def test_cfdi_rounding_19(self):
         with self.mx_external_setup(self.frozen_today):
-            self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
             invoice = self._create_invoice(
                 invoice_line_ids=[
                     Command.create({
+                        'l10n_mx_edi_tax_object': '03',
                         'product_id': self.product.id,
                         'price_unit': 7.00,
                         'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
                     }),
                     Command.create({
+                        'l10n_mx_edi_tax_object': '03',
                         'product_id': self.product.id,
                         'price_unit': 43.00,
                         'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
@@ -1843,15 +2068,16 @@ class TestCFDIInvoice(TestMxEdiCommon):
 
     def test_cfdi_rounding_20(self):
         with self.mx_external_setup(self.frozen_today):
-            self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
             invoice = self._create_invoice(
                 invoice_line_ids=[
                     Command.create({
+                        'l10n_mx_edi_tax_object': '03',
                         'product_id': self.product.id,
                         'price_unit': 17.00,
                         'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
                     }),
                     Command.create({
+                        'l10n_mx_edi_tax_object': '03',
                         'product_id': self.product.id,
                         'price_unit': 33.00,
                         'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],

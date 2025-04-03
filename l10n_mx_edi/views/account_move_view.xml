@@ -63,6 +63,16 @@
                            readonly="l10n_mx_edi_cfdi_state in ('sent', 'global_sent')"/>
                 </xpath>
 
+                <!-- Invoice lines -->
+                <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='price_total']" position="after">
+                    <field name="l10n_mx_edi_tax_object"
+                           required="parent.l10n_mx_edi_is_cfdi_needed"
+                           column_invisible="not parent.l10n_mx_edi_is_cfdi_needed"
+                           readonly="parent.l10n_mx_edi_cfdi_state in ('sent', 'global_sent')"
+                           optional="hide"
+                    />
+                </xpath>
+
                 <!-- Documents tab -->
                 <xpath expr="//page[@id='other_tab_entry']" position="after">
                     <page id="edi_documents"

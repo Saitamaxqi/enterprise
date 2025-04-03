@@ -40,7 +40,7 @@ class WebsiteSaleL10nMX(WebsiteSale):
             request.env['ir.model.fields']._get('res.partner', 'l10n_mx_edi_fiscal_regime'),
             request.env['ir.model.fields']._get('account.move', 'l10n_mx_edi_usage'),
             request.env['ir.model.fields']._get('account.move', 'l10n_mx_edi_payment_method_id'),
-            request.env['ir.model.fields']._get('res.partner', 'l10n_mx_edi_no_tax_breakdown'),
+            request.env['ir.model.fields']._get('res.partner', 'l10n_mx_edi_ieps_breakdown'),
         ]
 
         # === GET ===
@@ -50,7 +50,7 @@ class WebsiteSaleL10nMX(WebsiteSale):
             default_vals['need_invoice'] = not order_sudo.l10n_mx_edi_cfdi_to_public
             default_vals['l10n_mx_edi_fiscal_regime'] = partner.l10n_mx_edi_fiscal_regime
             default_vals['l10n_mx_edi_usage'] = order_sudo.l10n_mx_edi_usage
-            default_vals['l10n_mx_edi_no_tax_breakdown'] = partner.l10n_mx_edi_no_tax_breakdown
+            default_vals['l10n_mx_edi_ieps_breakdown'] = partner.l10n_mx_edi_ieps_breakdown
             default_vals['l10n_mx_edi_payment_method_id'] = order_sudo.l10n_mx_edi_payment_method_id
 
         # === POST & possibly redirect ===
@@ -64,7 +64,7 @@ class WebsiteSaleL10nMX(WebsiteSale):
                     'need_invoice': True,
                     'l10n_mx_edi_fiscal_regime': kw.get('l10n_mx_edi_fiscal_regime'),
                     'l10n_mx_edi_usage': kw.get('l10n_mx_edi_usage'),
-                    'l10n_mx_edi_no_tax_breakdown': kw.get('l10n_mx_edi_no_tax_breakdown') == 'on',
+                    'l10n_mx_edi_ieps_breakdown': kw.get('l10n_mx_edi_ieps_breakdown') == 'on',
                     'l10n_mx_edi_payment_method_id': int(kw.get('l10n_mx_edi_payment_method_id', False)) or False,
                 }
                 partner_vals = {}
@@ -84,7 +84,7 @@ class WebsiteSaleL10nMX(WebsiteSale):
                 order_sudo.l10n_mx_edi_payment_method_id = default_vals['l10n_mx_edi_payment_method_id']
                 partner_vals.update({
                     'l10n_mx_edi_fiscal_regime': default_vals['l10n_mx_edi_fiscal_regime'],
-                    'l10n_mx_edi_no_tax_breakdown': default_vals['l10n_mx_edi_no_tax_breakdown'],
+                    'l10n_mx_edi_ieps_breakdown': default_vals['l10n_mx_edi_ieps_breakdown'],
                 })
                 partner.write(partner_vals)
                 if not errors:

@@ -239,13 +239,29 @@ class AccountMove(models.Model):
     # HELPERS
     # -------------------------------------------------------------------------
 
+    def _l10n_mx_edi_is_cfdi_document(self):
+        """ Helper to know if the current account.move is eligible for the MX CFDI.
+
+        :return: A boolean.
+        """
+        self.ensure_one()
+        return self.country_code == 'MX' and self.company_currency_id.name == 'MXN'
+
+    def _l10n_mx_edi_is_cfdi_invoice(self):
+        """ Helper to know if the current account.move is an invoice or not.
+
+        :return: True if the account.move is an invoice, False otherwise.
+        """
+        self.ensure_one()
+        return self._l10n_mx_edi_is_cfdi_document() and self.is_invoice()
+
     def _l10n_mx_edi_is_cfdi_payment(self):
         """ Helper to know if the current account.move is a payment or not.
 
         :return: True if the account.move is a payment, False otherwise.
         """
         self.ensure_one()
-        return self.origin_payment_id or self.statement_line_id
+        return self._l10n_mx_edi_is_cfdi_document() and (self.origin_payment_id or self.statement_line_id)
 
     def _l10n_mx_edi_cfdi_invoice_append_addendas(self, cfdi_str, addendas):
         """ Helper to handle appending Complementos/Addenda before/after sending the CFDI string.
@@ -508,10 +524,10 @@ class AccountMove(models.Model):
         """ Check whatever or not the CFDI is needed on this invoice.
         """
         for move in self:
-            move.l10n_mx_edi_is_cfdi_needed = \
-                move.country_code == 'MX' \
-                and move.company_currency_id.name == 'MXN' \
-                and (move.move_type in ('out_invoice', 'out_refund') or move._l10n_mx_edi_is_cfdi_payment())
+            move.l10n_mx_edi_is_cfdi_needed = (
+                move._l10n_mx_edi_is_cfdi_payment()
+                or (move._l10n_mx_edi_is_cfdi_invoice() and move.move_type in ('out_invoice', 'out_refund'))
+            )
 
     @api.depends('l10n_mx_edi_invoice_document_ids.state', 'l10n_mx_edi_invoice_document_ids.sat_state',
                  'l10n_mx_edi_payment_document_ids.state', 'l10n_mx_edi_payment_document_ids.sat_state')
@@ -1028,6 +1044,7 @@ class AccountMove(models.Model):
                 'name': invl._l10n_mx_edi_get_cfdi_line_name(),
                 'product_unspsc_code': invl._get_product_unspsc_code(),
                 'uom_unspsc_code': invl._get_uom_unspsc_code(),
+                'tax_objected': invl.l10n_mx_edi_tax_object,
             }
             for invl in self._l10n_mx_edi_cfdi_invoice_line_ids()
         ]
@@ -1221,8 +1238,14 @@ class AccountMove(models.Model):
                 # Both are expressed in different currencies.
                 computed_rate = calculate_rate(invoice_values['invoice_amount_currency'], invoice_values['payment_amount_currency'])
 
+            # 'objeto_imp' has to be set on the invoice but is computed for each lines.
+            all_tax_objected = {line['objeto_imp'] for line in inv_cfdi_values['conceptos_list']}
+            all_tax_objected.discard('04')
+            objeto_imp = all_tax_objected.pop() if len(all_tax_objected) == 1 else '02'
+
             invoice_values_list.append({
                 **inv_cfdi_values,
+                'objeto_imp': objeto_imp,
                 'id_documento': invoice.l10n_mx_edi_cfdi_uuid,
                 'equivalencia': computed_rate,
                 'inv_rate': computed_rate,
@@ -1947,7 +1970,9 @@ class AccountMove(models.Model):
             * amount_residual_after:    The residual_amount after reconciliation.
         """
         # Only consider the invoices already signed.
-        invoices = self.filtered(lambda x: x.is_invoice() and x.l10n_mx_edi_cfdi_state == 'sent').sorted()
+        invoices = self\
+            .filtered(lambda x: x._l10n_mx_edi_is_cfdi_invoice() and x.l10n_mx_edi_cfdi_state == 'sent')\
+            .sorted()
 
         # Collect the reconciled amounts.
         reconciliation_values = {}
@@ -2077,7 +2102,7 @@ class AccountMove(models.Model):
 
             reconciled_amls = pay_rec_lines.matched_debit_ids.debit_move_id \
                               + pay_rec_lines.matched_credit_ids.credit_move_id
-            invoices = reconciled_amls.move_id.filtered(lambda x: x.l10n_mx_edi_is_cfdi_needed and x.is_invoice())
+            invoices = reconciled_amls.move_id.filtered(lambda x: x._l10n_mx_edi_is_cfdi_invoice())
             if any(
                 not invoice.l10n_mx_edi_cfdi_state
                 for invoice in invoices
@@ -2519,7 +2544,7 @@ class AccountMove(models.Model):
 
     def l10n_mx_edi_cfdi_try_sat(self):
         self.ensure_one()
-        if self.is_invoice():
+        if self._l10n_mx_edi_is_cfdi_invoice():
             documents = self.l10n_mx_edi_invoice_document_ids
         elif self._l10n_mx_edi_is_cfdi_payment():
             documents = self.l10n_mx_edi_payment_document_ids
@@ -2572,6 +2597,7 @@ class AccountMove(models.Model):
         code = tree.attrib.get('NoIdentificacion')  # default_code if export from Odoo
         unspsc_code = tree.attrib.get('ClaveProdServ')  # UNSPSC code
         description = tree.attrib.get('Descripcion')  # label of the invoice line "[{p.default_code}] {p.name}"
+        tax_object = tree.attrib.get('ObjetoImp')
         cleaned_name = re.sub(r"^\[.*\] ", "", description)
         product = self.env['product.product']._retrieve_product(
             name=cleaned_name,
@@ -2608,6 +2634,7 @@ class AccountMove(models.Model):
             'price_unit': float(tree.attrib.get('ValorUnitario')),
             'discount': discount_percent,
             'tax_ids': [Command.set(tax_ids)],
+            'l10n_mx_edi_tax_object': tax_object,
         })
         return True
 

@@ -767,21 +767,55 @@ class L10n_Mx_EdiDocument(models.Model):
         })
 
     @api.model
+    def _add_tax_objected_base_line(self, cfdi_values, base_line):
+        """ Add 'objeto_imp' into base_line.
+
+        :param cfdi_values:     The current CFDI values.
+        :param base_line:       A dictionary representing one line.
+        """
+        receptor = cfdi_values['receptor']
+        customer = receptor['customer']
+        ieps_breakdown = receptor['to_public'] or customer.l10n_mx_edi_ieps_breakdown
+        if 'tax_objected' not in base_line:
+            taxes = base_line['tax_ids'].flatten_taxes_hierarchy().filtered(lambda tax: tax.l10n_mx_tax_type != 'local')
+            if not taxes:
+                tax_objected = '01'
+            elif False:
+                # TODO PODEBI
+                tax_objected = '05'
+            elif (
+                # ISR Withholding
+                any(tax.amount < 0.0 and tax.l10n_mx_tax_type == 'isr' for tax in taxes)
+                # No VAT, No IEPS
+                and all(tax.l10n_mx_tax_type not in ('iva', 'ieps') for tax in taxes if tax.amount >= 0.0)
+            ):
+                tax_objected = '06'
+            elif (
+                # ISR Withholding
+                any(tax.amount < 0.0 and tax.l10n_mx_tax_type == 'isr' for tax in taxes)
+                # IEPS
+                and any(tax.l10n_mx_tax_type == 'ieps' for tax in taxes if tax.amount >= 0.0)
+                # No VAT
+                and all(tax.l10n_mx_tax_type != 'iva' for tax in taxes if tax.amount >= 0.0)
+                # Partner IEPS breakdown
+                and ieps_breakdown
+            ):
+                tax_objected = '07'
+            else:
+                tax_objected = '02'
+            base_line['tax_objected'] = tax_objected
+
+        base_line['ieps_breakdown'] = base_line['tax_objected'] != '08' and ieps_breakdown
+
+    @api.model
     def _add_tax_objected_cfdi_values(self, cfdi_values, base_lines):
         """ Add the values about the tax objective of the document to 'cfdi_values'.
 
         :param cfdi_values:     The current CFDI values.
         :param base_lines:      A list of dictionaries representing the lines of the document.
         """
-        customer = cfdi_values['receptor']['customer']
-        if customer.l10n_mx_edi_no_tax_breakdown:
-            # Tax exempted.
-            tax_objected = '03'
-        elif all(not x['tax_ids'] for x in base_lines):
-            tax_objected = '01'
-        else:
-            tax_objected = '02'
-        cfdi_values['objeto_imp'] = tax_objected
+        for base_line in base_lines:
+            self._add_tax_objected_base_line(cfdi_values, base_line)
 
     @api.model
     def _dispatch_cfdi_base_lines(self, base_lines):
@@ -830,7 +864,6 @@ class L10n_Mx_EdiDocument(models.Model):
         :param base_lines:      A list of dictionaries representing the lines of the document.
         """
         currency = cfdi_values['currency']
-        tax_objected = cfdi_values['objeto_imp']
         AccountTax = self.env['account.tax']
 
         def grouping_function_base_line_tax_details(base_line, tax_data):
@@ -846,13 +879,14 @@ class L10n_Mx_EdiDocument(models.Model):
         # Invoice lines.
         base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_base_line_tax_details)
         cfdi_values['conceptos_list'] = line_values_list = []
+        receptor = cfdi_values['receptor']
         for line, aggregated_values in base_lines_aggregated_values:
             product = line['product_id']
             quantity = line['quantity']
             uom = line['uom_id']
             discount = line['discount_amount']
 
-            is_refund_gi = cfdi_values['receptor']['uso_cfdi'] == 'G02'
+            is_refund_gi = receptor['uso_cfdi'] == 'G02'
             if is_refund_gi:
                 product_unspsc_code = '84111506'
                 uom_unspsc_code = 'ACT'
@@ -862,15 +896,11 @@ class L10n_Mx_EdiDocument(models.Model):
                 uom_unspsc_code = line.get('uom_unspsc_code') or uom.unspsc_code_id.code
                 description = line['name']
 
-            if line['discount'] != 100.0 and any(grouping_key and not grouping_key['skip'] for grouping_key in aggregated_values):
-                line['objeto_imp'] = tax_objected
-            else:
-                line['objeto_imp'] = '01'
-
             cfdi_line_values = {
                 'line': line,
                 'clave_prod_serv': product_unspsc_code,
-                'objeto_imp': line['objeto_imp'],
+                'objeto_imp': line['tax_objected'],
+                'ieps_breakdown': line['ieps_breakdown'],
                 'no_identificacion': product.default_code,
                 'cuenta_predial': product.l10n_mx_edi_predial_account,
                 'cantidad': quantity,
@@ -919,26 +949,48 @@ class L10n_Mx_EdiDocument(models.Model):
                     cfdi_line_values['traslados_list'].append(tax_values)
 
             # Manage 'objeto_imp'.
-            # In case of tax breakdown, the taxes are squashed into the price without tax ('importe').
-            has_tax_breakdown = cfdi_line_values['objeto_imp'] != '02'
-            if has_tax_breakdown:
+            objeto_imp = cfdi_line_values['objeto_imp']
+            removed_tax_values = []
+            for results_key, sign in (
+                ('retenciones_list', -1),
+                ('traslados_list', 1),
+            ):
+                new_values = []
+                for tax_values in cfdi_line_values[results_key]:
+                    removal_needed = (
+                        # No tax breakdown:
+                        objeto_imp in ('01', '03', '04', '05')
+                        # No IEPS tax breakdown:
+                        or (not cfdi_line_values['ieps_breakdown'] and tax_values['impuesto'] == '003')
+                    )
+                    if removal_needed:
+                        removed_tax_values.append((sign, tax_values))
+                    else:
+                        new_values.append(tax_values)
+
+                cfdi_line_values[results_key] = new_values
+
+            # If some tax values have to be removed and added to the price without tax, we no longer can report
+            # it using 6 decimals as precision. In that case, turn it to the number of decimals of the currency
+            # and remove the tax values to avoid rounding issues.
+            if removed_tax_values:
                 cfdi_line_values['importe'] = (
                     line['currency_id'].round(line['gross_price_subtotal'])
                     + line['tax_details']['delta_total_excluded_currency']
                 )
-                for tax_values in cfdi_line_values['retenciones_list']:
-                    cfdi_line_values['importe'] -= tax_values['importe']
-                    tax_values.pop('raw_importe')
-                cfdi_line_values['retenciones_list'] = []
-                for tax_values in cfdi_line_values['traslados_list']:
-                    cfdi_line_values['importe'] += tax_values['importe']
-                    tax_values.pop('raw_importe')
-                cfdi_line_values['traslados_list'] = []
+                for sign, tax_values in removed_tax_values:
+                    cfdi_line_values['importe'] += sign * tax_values['importe']
             else:
                 cfdi_line_values['importe'] = line['gross_price_subtotal']
-                for tax_values_key in ('retenciones_list', 'traslados_list'):
-                    for tax_values in cfdi_line_values[tax_values_key]:
+
+            for results_key in ('retenciones_list', 'traslados_list'):
+                for tax_values in cfdi_line_values[results_key]:
+                    if objeto_imp in ('01', '03', '07'):
+                        tax_values.pop('raw_importe')
+                    else:
                         tax_values['importe'] = tax_values.pop('raw_importe')
+                    if float_is_zero(tax_values['base'], precision_digits=6):
+                        tax_values['base'] = 0.000001
 
             # Manage 'valor_unitario'.
             if cfdi_line_values['cantidad']:
@@ -958,7 +1010,13 @@ class L10n_Mx_EdiDocument(models.Model):
                 'tax_amount_field': tax.amount,
                 'is_withholding': tax.amount < 0.0,
                 'local_tax_name': local_tax_name,
-                'skip': (base_line['objeto_imp'] != '02' or base_line['discount'] == 100.0) and not local_tax_name,
+                'skip': (
+                    (
+                        base_line['tax_objected'] in ('01', '03', '04', '05')
+                        or (not base_line['ieps_breakdown'] and tax.l10n_mx_tax_type == 'ieps')
+                    )
+                    and not local_tax_name
+                ),
             }
 
         base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_global_tax_details)
@@ -1013,8 +1071,13 @@ class L10n_Mx_EdiDocument(models.Model):
             is_local_tax = tax.l10n_mx_tax_type == 'local'
             return {
                 'impuesto': TAX_TYPE_TO_CFDI_CODE.get(tax.l10n_mx_tax_type),
-                'objeto_imp': base_line['objeto_imp'],
-                'skip': base_line['objeto_imp'] != '02' or base_line['discount'] == 100.0 or tax.amount >= 0.0 or is_local_tax,
+                'objeto_imp': base_line['tax_objected'],
+                'skip': (
+                    base_line['tax_objected'] in ('01', '03', '04', '05')
+                    or (not base_line['ieps_breakdown'] and tax.l10n_mx_tax_type == 'ieps')
+                    or tax.amount >= 0.0
+                    or is_local_tax
+                ),
             }
 
         base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_global_reduced_tax_details)
@@ -1030,14 +1093,6 @@ class L10n_Mx_EdiDocument(models.Model):
             })
 
         # Totals.
-        def grouping_function_total_amounts(base_line, tax_data):
-            tax = tax_data['tax']
-            is_local_tax = tax.l10n_mx_tax_type == 'local'
-            return {
-                'account_base': base_line['objeto_imp'] != '02' or not is_local_tax,
-                'account_tax_in_base': base_line['objeto_imp'] != '02' and not is_local_tax,
-            }
-
         transferred_tax_amounts = [x['importe'] for x in cfdi_values['traslados_list'] if x['tipo_factor'] != 'Exento']
         withholding_tax_amounts = [x['importe'] for x in cfdi_values['retenciones_list'] if x['tipo_factor'] != 'Exento']
         cfdi_values['total_impuestos_trasladados'] = sum(transferred_tax_amounts)
@@ -1052,19 +1107,36 @@ class L10n_Mx_EdiDocument(models.Model):
             for x in cfdi_values['local_retenciones_list']
             if x['tipo_factor'] != 'Exento'
         )
-
-        base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_total_amounts)
-        values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
         cfdi_values['descuento'] = currency.round(sum(x['discount_amount'] for x in base_lines))
         cfdi_values['subtotal'] = cfdi_values['descuento']
         cfdi_values['total'] = 0.0
+
+        def grouping_function_base_amounts(base_line, tax_data):
+            return True
+
+        base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_base_amounts)
+        values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
         for grouping_key, values in values_per_grouping_key.items():
-            if grouping_key and grouping_key['account_tax_in_base']:
-                cfdi_values['subtotal'] += values['tax_amount_currency']
+            cfdi_values['subtotal'] += values['total_excluded_currency']
+            cfdi_values['total'] += values['total_excluded_currency']
             cfdi_values['total'] += values['tax_amount_currency']
-            if not grouping_key or grouping_key['account_base']:
-                cfdi_values['subtotal'] += values['total_excluded_currency']
-                cfdi_values['total'] += values['total_excluded_currency']
+
+        def grouping_function_tax_into_base_amounts(base_line, tax_data):
+            if not tax_data:
+                return
+            tax = tax_data['tax']
+            is_local_tax = tax.l10n_mx_tax_type == 'local'
+            account_base = (
+                base_line['tax_objected'] in ('01', '03', '04', '05')
+                or (not base_line['ieps_breakdown'] and tax.l10n_mx_tax_type == 'ieps')
+            )
+            return account_base and not is_local_tax
+
+        base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_tax_into_base_amounts)
+        values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
+        for grouping_key, values in values_per_grouping_key.items():
+            if grouping_key:
+                cfdi_values['subtotal'] += values['tax_amount_currency']
 
         # Post-fix discount.
         # We have to deal with a special case: 100.05 with 50% of discount. In that case,

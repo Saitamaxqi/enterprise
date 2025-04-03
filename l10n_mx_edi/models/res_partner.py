@@ -22,10 +22,7 @@ class ResPartner(models.Model):
         readonly=False,
         store=True,
         help="Fiscal Regime is required for all partners (used in CFDI)")
-    l10n_mx_edi_no_tax_breakdown = fields.Boolean(
-        string="No Tax Breakdown",
-        help="Mexico: Includes taxes in the price and does not add tax information to the CFDI.")
-
+    l10n_mx_edi_ieps_breakdown = fields.Boolean(string="IEPS Breakdown")
     l10n_mx_edi_usage = fields.Selection(
         selection=USAGE_SELECTION,
         string="Usage",
