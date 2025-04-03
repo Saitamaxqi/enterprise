@@ -569,7 +569,7 @@ class ProjectTask(models.Model):
             ]),
             domain,
         ])
-        return self.search(domain_expand).user_ids | self.env.user
+        return self.search(domain_expand).user_ids.filtered(lambda user: user.active) | self.env.user
 
     def _group_expand_user_ids_domain(self, domain_expand):
         project_id = self._context.get('default_project_id')
