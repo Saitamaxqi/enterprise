@@ -439,6 +439,12 @@ msgid "The full relative URL to access the document through the website."
 msgstr ""
 
 #. module: website_helpdesk
+#. odoo-javascript
+#: code:addons/website_helpdesk/static/src/js/website_helpdesk_edit_menu.js:0
+msgid "This URL is reserved for the helpdesk teams with 'website form' feature enabled."
+msgstr ""
+
+#. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submited
 msgid "Ticket #"
 msgstr ""

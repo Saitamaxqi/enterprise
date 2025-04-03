@@ -1,6 +1,6 @@
 import re
 
-from odoo.tests.common import HttpCase
+from odoo.tests.common import HttpCase, TransactionCase
 
 
 class TestHelpdesk(HttpCase):
@@ -29,3 +29,27 @@ class TestHelpdesk(HttpCase):
         expected_string = "Select your Team for help"
         search_result = re.search(expected_string.encode(), other_response.content).group().decode()
         self.assertEqual(search_result, expected_string)
+
+
+class TestHelpdeskMenu(TransactionCase):
+    def test_menu_item_visibility(self):
+        website = self.env['website'].create({
+            'name': 'test website'
+        })
+        public_user = self.env.ref('base.public_user')
+        non_helpdesk_menu = self.env['website.menu'].create({
+            'name': 'Menu with helpdesk in URL',
+            'url': '/helpdesk-123',
+            'website_id': website.id,
+        })
+        team = self.env['helpdesk.team'].create({
+            'name': 'Test team',
+            'use_website_helpdesk_form': True,
+            'website_id': website.id,
+        })
+
+        non_helpdesk_menu.invalidate_recordset(["is_visible"])
+        self.assertTrue(non_helpdesk_menu.with_user(public_user).is_visible, "Item with helpdesk in URL should stay visible.")
+        self.assertTrue(team.website_menu_id.is_visible)
+        team.use_website_helpdesk_form = False
+        self.assertFalse(team.website_menu_id.is_visible)
