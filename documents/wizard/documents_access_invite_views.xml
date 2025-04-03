@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="documents_access_invite_view_form" model="ir.ui.view">
+        <field name="name">documents.access.invite.view.form</field>
+        <field name="model">documents.access.invite</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group colspan="2">
+                            <field name="partner_ids" widget="many2many_tags_email"
+                                placeholder="Add people or email addresses"
+                                context="{'show_email': True, 'form_view_ref': 'base.view_partner_simple_form'}"
+                                string="People"
+                            />
+                        </group>
+                        <group>
+                            <field name="role"/>
+                            <field name="notify" widget="boolean_toggle"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="notify_message" invisible="not notify" nolabel="1"
+                                placeholder="Optional message..."/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Share"
+                        type="object" name="action_invite_members" class="btn-primary"/>
+                    <field name="document_id" invisible="1"/> <!-- To force the computation of the access_url related field -->
+                    <field name="access_url" widget="CopyClipboardButton" string="Copy Link"
+                        options="{'btn_class': 'secondary'}"/>
+                    <button string="Discard" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

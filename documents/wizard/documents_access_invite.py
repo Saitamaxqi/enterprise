@@ -1,0 +1,25 @@
+from odoo import fields, models
+
+
+class DocumentsAccessInvite(models.TransientModel):
+    _name = 'documents.access.invite'
+    _description = "Documents Access Invite"
+
+    document_id = fields.Many2one('documents.document', string="Documents", required=True)
+    partner_ids = fields.Many2many('res.partner', required=True)
+    role = fields.Selection(
+        [('view', 'Viewer'), ('edit', 'Editor')],
+        string='Role', default='view', required=True)
+    notify = fields.Boolean("Notify", default=True)
+    notify_message = fields.Html("Notification Message")
+    access_url = fields.Char(related="document_id.access_url")
+
+    def action_invite_members(self):
+        self.document_id.action_update_access_rights(
+            partners={
+                partner: (self.role, None)
+                for partner in self.partner_ids
+            },
+            notify=self.notify,
+            message=self.notify_message,
+        )

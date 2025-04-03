@@ -42,6 +42,7 @@ App to upload and manage your documents.
         'views/documents_templates_portal.xml',
         'views/documents_templates_share.xml',
         'views/ir_actions_views.xml',
+        'wizard/documents_access_invite_views.xml',
         'wizard/documents_link_to_record_wizard_views.xml',
         'wizard/documents_request_wizard_views.xml',
         # Need the `ir.actions.act_window` to exist

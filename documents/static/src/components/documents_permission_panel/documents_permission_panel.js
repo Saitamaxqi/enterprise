@@ -1,7 +1,6 @@
 import { CopyButton } from "@web/core/copy_button/copy_button";
 import { Dialog } from "@web/core/dialog/dialog";
 import { DocumentsAccessSettings } from "./documents_access_settings";
-import { DocumentsMemberInvite } from "./documents_member_invite";
 import { DocumentsPartnerAccess } from "./documents_partner_access";
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
@@ -15,7 +14,6 @@ export class DocumentsPermissionPanel extends Component {
         CopyButton,
         Dialog,
         DocumentsAccessSettings,
-        DocumentsMemberInvite,
         DocumentsPartnerAccess,
     };
     static props = {
@@ -41,6 +39,7 @@ export class DocumentsPermissionPanel extends Component {
         this.documentService = useService("document.document");
         this.isInternalUser = this.documentService.userIsInternal;
         this.state = useState({
+            hidden: false,
             loading: true,
             mainPage: true,
             didSave: false,
@@ -191,6 +190,35 @@ export class DocumentsPermissionPanel extends Component {
         ]))[0];
         this.state.didSave = true;
         return userPermission;
+    }
+
+    async inviteMembers() {
+        this.state.hidden = true;
+        return this.actionService.doAction(
+            {
+                name: this.panelTitle,
+                type: "ir.actions.act_window",
+                res_model: "documents.access.invite",
+                views: [[false, "form"]],
+                target: "new",
+            },
+            {
+                additionalContext: {
+                    default_document_id: this.props.document.id,
+                    dialog_size: "medium",
+                },
+                onClose: async (closeInfo) => {
+                    if (closeInfo?.special || closeInfo?.dismiss) {
+                        this.state.loading = true;
+                        this.state.hidden = false;
+                        await this.loadMainPage();
+                        this.state.loading = false;
+                    } else {
+                        this.close();
+                    }
+                },
+            }
+        );
     }
 
     /**

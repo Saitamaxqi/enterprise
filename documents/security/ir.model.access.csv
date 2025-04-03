@@ -17,3 +17,5 @@ access_documents_link_to_record_wizard,access.documents.link_to_record_wizard,mo
 access_mail_activity_plan_documents_manager,mail.activity.plan.documents.manager,mail.model_mail_activity_plan,documents.group_documents_manager,1,1,1,1
 access_mail_activity_plan_template_documents_manager,mail.activity.plan.template.documents.manager,mail.model_mail_activity_plan_template,documents.group_documents_manager,1,1,1,1
 access_documents_redirect_base_system_user,documents_redirect_base_system_user,model_documents_redirect,base.group_system,1,0,0,1
+
+access_documents_access_invite_user,access.documents.access.invite.user,documents.model_documents_access_invite,base.group_user,1,1,1,0
