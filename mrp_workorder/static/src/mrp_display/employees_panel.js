@@ -6,6 +6,5 @@ export class MrpDisplayEmployeesPanel extends Component {
         employees: { type: Object },
         setSessionOwner: { type: Function },
         popupAddEmployee: { type: Function },
-        logout: { type: Function },
     };
 }

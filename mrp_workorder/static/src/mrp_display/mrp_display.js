@@ -405,7 +405,9 @@ export class MrpDisplay extends Component {
     }
 
     get adminWorkorderIds() {
-        const adminId = this.useEmployee.employees.admin.id;
+        const adminId =
+            this.useEmployee.employees.admin.id ||
+            this.useEmployee.employees.connected.find((e) => e.isPreviousAdmin)?.id;
         return !adminId
             ? []
             : this.workorders.reduce(
@@ -419,8 +421,8 @@ export class MrpDisplay extends Component {
     }
 
     async selectWorkcenter(workcenterId, showcaseId = false) {
-        await this.useEmployee.getConnectedEmployees();
         this.invalidateRecordIdsCache();
+        await this.useEmployee.getConnectedEmployees();
         if (showcaseId) {
             this.recordCacheIds.push(showcaseId);
         }
@@ -491,30 +493,9 @@ export class MrpDisplay extends Component {
         return params;
     }
 
-    async onClickRefresh() {
-        this.env.reload();
+    onClickRefresh() {
         this.invalidateRecordIdsCache();
-    }
-
-    login() {
-        this.useEmployee.popupAddEmployee();
-        if (this.state.activeWorkcenter === -1) {
-            this.invalidateRecordIdsCache();
-        }
-    }
-
-    async logout(id) {
-        await this.useEmployee.logout(id);
-        if (this.state.activeWorkcenter === -1) {
-            this.invalidateRecordIdsCache();
-        }
-    }
-
-    async changeAdmin(id) {
-        await this.useEmployee.toggleSessionOwner(id);
-        if (this.state.activeWorkcenter === -1) {
-            this.invalidateRecordIdsCache();
-        }
+        this.env.reload();
     }
 
     _onPagerChanged({ offset, limit }) {
