@@ -240,6 +240,7 @@ class TestBarcodeClientAction(HttpCase):
             self.assertTrue(lot1 in lots and lot2 in lots, "Lot lenght is variable so we can't trim it")
 
     def test_filter_on_barcode(self):
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         product = self.env['product.product'].create({
             'name': 'product1',
             'barcode': '01304510',

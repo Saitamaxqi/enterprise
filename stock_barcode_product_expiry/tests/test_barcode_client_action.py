@@ -2,6 +2,7 @@
 
 import logging
 
+from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
 
@@ -25,8 +26,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         convert to expiration date according to the setting on the product. When
         both dates are scanned, only the expiration date will be used.
         """
-        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
-        self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         picking_form = Form(self.env['stock.picking'])
@@ -62,14 +61,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Scan a package with a tracked product that has an expiration date.
         Ensure that the date is displayed on the line
         """
-        self.clean_access_rights()
         self.env.user.write({
             'group_ids': [
-                (4, self.env.ref('stock.group_tracking_lot').id),
-                (4, self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
             ],
         })
-
         lot = self.env['stock.lot'].create({
             'name': 'SuperLot',
             'product_id': self.productlot1.id,

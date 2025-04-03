@@ -80,7 +80,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
     def test_barcode_production_create(self):
         """Create a manufacturing order from barcode app
         """
-        self.clean_access_rights()
         self.env['stock.quant'].create({
             'quantity': 4,
             'product_id': self.component01.id,
@@ -100,7 +99,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         should create a line for each component, and automatically increase
         their quantity every time the final product is scanned.
         """
-        self.clean_access_rights()
         # Creates a BoM.
         component02 = self.env['product.product'].create({
             'name': 'Compo 02',
@@ -136,10 +134,12 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
     def test_barcode_production_create_tracked_bom(self):
         """Create a manufacturing order with bom from barcode app, with byproducts
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        grp_by_product = self.env.ref('mrp.group_mrp_byproducts')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0), (4, grp_by_product.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('mrp.group_mrp_byproducts').id),
+            ],
+        })
         self.env['stock.quant'].create({
             'quantity': 4,
             'product_id': self.component01.id,
@@ -172,9 +172,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ Process a production with components reserved in different locations
         and with the scan of the source for each component.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         picking_type_production = self.env['stock.picking.type'].search([
             ('code', '=', 'mrp_operation'), ('company_id', '=', self.env.company.id)])
         picking_type_production.restrict_scan_dest_location = 'no'
@@ -221,10 +219,12 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ Process a production with a reserved untracked component and a lot tracked component.
         Scan a different lot than the reserved lot and scan a different (location) component than
         the reserved location."""
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0), (4, grp_multi_loc.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         picking_type_production = self.env['stock.picking.type'].search([
             ('code', '=', 'mrp_operation'), ('company_id', '=', self.env.company.id)])
         picking_type_production.restrict_scan_source_location = 'mandatory'
@@ -292,7 +292,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
     def test_barcode_production_component_no_stock(self):
         """Create MO from barcode for final product with bom but component has not stock
         """
-        self.clean_access_rights()
         self.env['mrp.bom'].create({
             'product_tmpl_id': self.final_product.product_tmpl_id.id,
             'product_qty': 1.0,
@@ -325,7 +324,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ When components are unreserved, they should not be visible in the
         Barcode app nor re-reserved when the MO is opened.
         Only reserved components should be visible in the barcode."""
-        self.clean_access_rights()
         self.env['stock.quant'].create({
             'quantity': 4,
             'product_id': self.component01.id,
@@ -359,7 +357,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
     def test_barcode_production_add_scrap(self):
         """ Process a production where one of the component is scraped
         """
-        self.clean_access_rights()
         # Creates a BoM.
         component02 = self.env['product.product'].create({
             'name': 'Compo 02',
@@ -392,9 +389,12 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ Process a production where we add a byproduct.
         We ensure the final product can't be added as a byproduct.
         """
-        self.clean_access_rights()
-        grp_by_product = self.env.ref('mrp.group_mrp_byproducts')
-        self.env.user.write({'group_ids': [(4, grp_by_product.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('mrp.group_mrp_byproducts').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
         # Disable creation of new lots for component, the purpose is to check
         # by-products lots can still be created anyway.
         self.env['stock.picking.type'].search(
@@ -433,8 +433,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
     def test_split_line_on_exit_for_production(self):
         """ Ensures that exit an unfinished MO will split the uncompleted move lines to have one
         move line with all picked quantity and one move line with the remaining qty."""
-        self.clean_access_rights()
-
         # Creates a product with a BoM.
         product_final = self.env['product.product'].create({
             'name': 'Final Product',
@@ -490,8 +488,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """
         Test that the move lines are correctly splitted when exiting the barcode app.
         """
-        self.clean_access_rights()
-
         available_comp, unavailable_comp = self.component01, self.product1
         unavailable_comp.write({'name': 'Compo 02', 'code': False, 'default_code': False})
         self.env['stock.quant']._update_available_quantity(available_comp, self.stock_location, quantity=20)
@@ -533,8 +529,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         ])
 
     def test_barcode_production_component_different_uom(self):
-        self.clean_access_rights()
-        self.env.ref('base.user_admin').group_ids += self.env.ref('uom.group_uom')
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
         uom_kg = self.env.ref('uom.product_uom_kgm')
         uom_gm = self.env.ref('uom.product_uom_gram')
         self.component01.uom_id = uom_gm
@@ -552,7 +547,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ Ensure that when a manufacturing operation of an active (checked) company is scanned,
         then some product is added, its `company_id` matches that of the operation type.
         """
-        self.clean_access_rights()
         company2 = self.env['res.company'].create({'name': 'second company'})
         self.env.user.company_ids = [(4, company2.id)]
         self.env['stock.picking.type'].search([
@@ -578,7 +572,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         Then, ensure that we can add a product that belongs to the company who owns the MO picking
         type.
         """
-        self.clean_access_rights()
         company2 = self.env['res.company'].create({'name': 'second company'})
         company2_product = self.env['product.product'].create({
             'name': 'second company product',
@@ -619,8 +612,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         )
 
     def test_kit_bom_decomposition_keeps_location(self):
-        self.clean_access_rights()
-        self.env.user.group_ids += self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         self.picking_type_internal.active = True
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10.0)
@@ -681,7 +673,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         Check that you are not redirect to the backend when you automatically
         backorder an mo from the barcode module.
         """
-        self.clean_access_rights()
         warehouse = self.stock_location.warehouse_id
         manufacturing_type = warehouse.manu_type_id
         manufacturing_type.create_backorder = "always"
@@ -709,8 +700,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         In a production opened in Barcode, create move lines as opposed to moves when having to
         split incomplete transfer lines but dont split unassigned.
         """
-        self.clean_access_rights()
-
         available_comp, unavailable_comp = self.component01, self.product1
         self.env['stock.quant']._update_available_quantity(available_comp, self.stock_location, quantity=10)
 
@@ -753,8 +742,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         Ensures that MO is created in another manufacturing operation type (MO2)
         with creating new MO in MO2 operation type and confirm it and Produce it.
         """
-        self.clean_access_rights()
-
         mo2_operation_type = self.env['stock.picking.type'].create({
             'name': 'MO2',
             'barcode': 'MO2_BARCODE',
@@ -780,8 +767,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         Ensures that MO is created in another manufacturing operation type (MO2)
         with creating new MO in MO2 operation type by scanning the product and Produce it.
         """
-        self.clean_access_rights()
-
         mo2_operation_type = self.env['stock.picking.type'].create({
             'name': 'MO2',
             'code': 'mrp_operation',
@@ -805,7 +790,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ This test ensures that non-reserved products cannot be added when the
             "allow extra product" option is disabled for the manufacturing operation type
         """
-        self.clean_access_rights()
         picking_type_manufacturing = self.env.ref('stock.warehouse0').manu_type_id
         picking_type_manufacturing.barcode_allow_extra_product = False
 
@@ -833,8 +817,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """
         In a production opened in Barcode, do not split done moves just after validation.
         """
-        self.clean_access_rights()
-
         self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, quantity=2)
 
         manufacturing_order = self.env['mrp.production'].create({
@@ -863,7 +845,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         Check that new raw moves for products using a different uom category
         than the final product of the MO can be created from barcode.
         """
-        self.clean_access_rights()
         new_uom = self.env['uom.uom'].create({
             'name': 'Little Boutch',
             'rounding': 0.01
@@ -885,8 +866,12 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         Check that you can not assign nonexistent lots to components of an MO
         if the option is disabled.
         """
-        self.clean_access_rights()
-        self.env.ref('base.user_admin').group_ids |= self.env.ref('stock.group_production_lot') |  self.env.ref('mrp.group_mrp_byproducts')
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('mrp.group_mrp_byproducts').id),
+            ],
+        })
         # disable "Create New Lots/Serial Numbers for Components"
         self.env.ref('stock.warehouse0').manu_type_id.use_create_components_lots = False
         product = self.final_product

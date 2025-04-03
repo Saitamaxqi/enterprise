@@ -26,11 +26,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Then creates a fourth move by scanning product1 (from shelf1 to shelf3).
         Counts the number of picking's write.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 2.0)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 2.0)
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
         internal_picking = self.env['stock.picking'].create({
@@ -95,9 +93,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         This test ensures that whenever a product is already scanned in a package,
         if we scan the package, a confirmation is asked before adding the content of the package.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         package1 = self.env['stock.quant.package'].create({'name': 'package001'})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 1, package_id=package1)
@@ -129,10 +125,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         assign it as the result package, and finally scans the destination (shelf2).
         Checks the dest location is correctly set on the lines.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0), (4, grp_pack.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         self.picking_type_internal.active = True
         # Creates a new package and add some quants.
         package2 = self.env['stock.quant.package'].create({'name': 'P00002'})
@@ -161,11 +159,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
           - move 1 `self.product1` from shelf3 to shelf4.
         Before doing the reservation, move 1 `self.product1` from shelf3 to shelf2
         """
-        self.clean_access_rights()
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         internal_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
@@ -208,11 +204,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_internal_picking_reserved_1', login='admin', timeout=180)
 
     def test_receipt_from_scratch_with_lots_1(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
         # Create a sibling stock location to check we can scan not only picking's
         # destination and its sublocations for immediate transfers.
         stock_2 = self.env['stock.location'].create({
@@ -234,12 +231,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ])
 
     def test_receipt_from_scratch_with_lots_2(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
         self.picking_type_in.write({
             "use_existing_lots": True,
             "use_create_lots": True,
@@ -259,12 +256,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Scans a non tracked product, then scans a tracked by lots product, then scans a
         production lot twice and checks the tracked product quantity was rightly increased.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
@@ -284,12 +275,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         scan a tracked product 3 times and checks the tracked product quantity was rightly
         increased without the need to enter serial/lot number.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_in.use_create_lots = False
         self.picking_type_in.use_existing_lots = False
 
@@ -308,12 +294,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ With picking type options "use_create_lots" and "use_existing_lots" enabled, scan a
         tracked product and enter a serial number already registered (but not used) in the system.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-
         self.picking_type_in.use_create_lots = True
         self.picking_type_in.use_existing_lots = True
         snObj = self.env['stock.lot']
@@ -348,9 +328,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Open a receipt. Move four units of `self.product1` and four units of
         unit of `self.product2` into shelf1.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
@@ -411,9 +389,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_receipt_reserved_2_partial_put_in_pack(self):
         """ For a planned receipt, check put in pack a uncompleted move line will split it. """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         # Create a receipt and confirm it.
         receipt_form = Form(self.env['stock.picking'])
         receipt_form.picking_type_id = self.picking_type_in
@@ -454,8 +430,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_receipt_product_not_consecutively(self):
         """ Check that there is no new line created when scanning the same product several times but not consecutively."""
-        self.clean_access_rights()
-
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
@@ -474,9 +448,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Ensures a location who isn't the picking's source location or one of its sublocations
         can't be scanned as the source while processing a delivery.
         Ensures also this constraint is not applyable for immediate transfers."""
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         # Creates a new location at the same level than WH/Stock.
         sibling_loc = self.env['stock.location'].create({
             'name': "Second Stock",
@@ -529,7 +501,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ This test ensures that scanning a lot or serial number who exists for
         multiple companies will fetch only the one who belongs to the active company.
         """
-        self.clean_access_rights()
         # Creates two companies and assign them to the user.
         company_a = self.env['res.company'].create({'name': 'Company "Ah !" (le meme TMTC)'})
         company_b = self.env['res.company'].create({'name': 'Company Bae 😏😘'})
@@ -573,15 +544,14 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Have a delivery for a product tracked by SN, scan a non-reserved SN
         and checks the new created line has the right SN's package & owner.
         """
-        self.clean_access_rights()
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_owner').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.picking_type_out.show_reserved_sns = True
-        grp_lot = self.env.ref('stock.group_production_lot')
-        grp_owner = self.env.ref('stock.group_tracking_owner')
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_owner.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-
         # Creates 4 serial numbers and adds 2 qty. for the reservation.
         snObj = self.env['stock.lot']
         sn1 = snObj.create({'name': 'sn1', 'product_id': self.productserial1.id})
@@ -663,15 +633,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         multiple packages (or package and no package) for the same lot
         in multi-locations configuration.
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         sn = self.env['stock.lot'].create({'name': 'sn', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
         package1 = self.env['stock.quant.package'].create({'name': 'pack_sn'})
         package2 = self.env['stock.quant.package'].create({'name': 'pack_sn_2'})
@@ -724,9 +692,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ])
 
     def test_delivery_reserved_1(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         delivery_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
@@ -772,7 +738,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             self.assertEqual(self.call_count, 1)
 
     def test_delivery_reserved_2(self):
-        self.clean_access_rights()
         self.picking_type_out.restrict_scan_source_location = 'no'
         delivery_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
@@ -823,7 +788,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             self.assertEqual(self.call_count, 0)
 
     def test_delivery_reserved_3(self):
-        self.clean_access_rights()
         delivery_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
@@ -861,7 +825,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Checks the backorders are correctly created when all quantity isn't processed and the
         confirmation's dialog is shown at the right time with the right informations.
         """
-        self.clean_access_rights()
         product3 = self.env['product.product'].create({
             'name': 'product3',
             'is_storable': True,
@@ -902,8 +865,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_delivery_reserved_5_dont_show_reserved_sn(self):
         """ Checks reserved serial numbers aren't show until scanned when
         `show_reserved_sns` is set on False."""
-        self.clean_access_rights()
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_out.show_reserved_sns = False
 
         # Creates some SN and adds more than enough quantity on hand for the delivery.
@@ -945,8 +907,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_delivery_reserved_6_dont_show_reserved_lots(self):
         """ Uncheck setting to display reserved lots and check they are not show
         in the Barcode app until they are scanned."""
-        self.clean_access_rights()
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_out.show_reserved_sns = False
 
         # Creates some lots and adds more than enough quantity on hand for the delivery.
@@ -987,9 +948,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_delivery_from_scratch_1(self):
         """ Scan unreserved lots on a delivery order.
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
 
         # Adds lot1 and lot2 for productlot1
         lotObj = self.env['stock.lot']
@@ -1018,10 +977,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         scanned, both are found, but to avoid issue, the lot is ignored because
         a lot shouldn't be applied to a line if its product is not the same.
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id)]})
-
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_out.use_create_lots = False
         self.picking_type_out.use_existing_lots = True
 
@@ -1058,10 +1014,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         that does not expect them and updates/creates the right line depending
         of the scanned lot
         """
-        self.clean_access_rights()
-        group_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, group_lot.id, 0)]})
-
         (self.product1 + self.product2).tracking = 'lot'
 
         lot01, lot02, sn = self.env['stock.lot'].create([{
@@ -1092,9 +1044,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         quantities in stock. Checks reserved lots are correctly visible in the
         Barcode app and that they can be processed alongside not reserved lots.
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_out.show_reserved_sns = True
 
         delivery_picking = self.env['stock.picking'].create({
@@ -1137,10 +1087,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ])
 
     def test_delivery_different_products_with_same_lot_name(self):
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-
         self.productlot2 = self.env['product.product'].create({
             'name': 'productlot2',
             'is_storable': True,
@@ -1227,10 +1173,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_delivery_reserved_with_sn_1(self):
         """ Scan unreserved serial number on a delivery order.
         """
-
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
 
         # Add 4 serial numbers productserial1
         snObj = self.env['stock.lot']
@@ -1277,8 +1220,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Checks also written quantity on buttons is correctly updated and only
         "+1" button is displayed on new line created by user.
         """
-        self.clean_access_rights()
-
         # Creates a new product.
         product3 = self.env['product.product'].create({
             'name': 'product3',
@@ -1317,13 +1258,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_remaining_decimal_accuracy(self):
         """ Checks if the remaining value of a move is correct
         """
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_out.show_reserved_sns = True
         lot01, lot02 = self.env['stock.lot'].create([{
             'name': lot_name,
             'product_id': self.productlot1.id,
         } for lot_name in ["LOT01", "LOT02"]])
-
-        self.clean_access_rights()
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4)
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 1)
         self.env['stock.quant']._update_available_quantity(self.productlot1, self.shelf1, 2, lot_id=lot01)
@@ -1351,11 +1291,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_remaining_decimal_accuracy', login='admin', timeout=90)
 
     def test_receipt_reserved_lots_multiloc_1(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
 
         receipts_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -1402,9 +1343,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Then make a delivery, scan the package two times (check the warning) and validate.
         Finally, check that the package is in the customer location.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         # set sequence packages to 1000 to find it easily in the tour
         sequence = self.env['ir.sequence'].search([(
@@ -1425,9 +1364,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         inside. It should display one barcode line for each package and
         not a common barcode line for both packages.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         # Create a pack and 2 quants in this pack
         pack1 = self.env['stock.quant.package'].create({
@@ -1468,11 +1405,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_pack_multiple_location(self):
         """ Create a package in Shelf 1 and makes an internal transfer to move it to Shelf 2.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         self.picking_type_internal.active = True
         self.picking_type_internal.show_entire_packs = True
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
@@ -1505,12 +1443,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Creates an internal transfer and reserves a package. Then this test will scan the
         location source, the package (already in the barcode view) and the location destination.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         # Creates a package with 1 quant in it.
         pack1 = self.env['stock.quant.package'].create({
             'name': 'PACK0002020',
@@ -1551,10 +1489,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Creates a delivery and reserves a package. Then this test will scan
          a different location source, the package should be removed.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0), (4, grp_multi_loc.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
 
         # Creates a package with a quant in it.
         pack1 = self.env['stock.quant.package'].create({
@@ -1586,10 +1526,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Put a package in shelf4. Then this test will scan
         this package, the source location of line should be the same location of the package.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [Command.link(grp_pack.id), Command.link(grp_multi_loc.id)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         self.picking_type_internal.active = True
         self.picking_type_internal.show_entire_packs = False
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
@@ -1614,14 +1556,15 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ In an internal picking where prod1 and prod2 are reserved in shelf1 and shelf2, processing
         all these products and then hitting put in pack should move them all in the new pack.
         """
-        self.clean_access_rights()
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         # Adapts the setting to scan only the source location.
         self.picking_type_internal.restrict_scan_dest_location = 'no'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
@@ -1664,7 +1607,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_put_in_pack_no_freeze(self):
         """ Test that the page doesn't freeze when clicking on put in pack """
-        self.clean_access_rights()
         self.env['res.config.settings'].create({'group_stock_tracking_lot': True}).execute()
 
         receipt_form = Form(self.env['stock.picking'])
@@ -1682,9 +1624,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_put_in_pack_no_freeze', login='admin', timeout=180)
 
     def test_reload_flow(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
 
         self.start_tour("/odoo/barcode", 'test_reload_flow', login='admin', timeout=180)
 
@@ -1710,24 +1650,24 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         number. It will try to break the ClientAction by using twice the same
         serial number.
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         self.start_tour("/odoo/barcode", 'test_receipt_duplicate_serial_number', login='admin', timeout=180)
         self.start_tour("/odoo/barcode", 'test_delivery_duplicate_serial_number', login='admin', timeout=180)
 
     def test_bypass_source_scan(self):
         """ Scan a lot, package, product without source location scan. """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
         # For the purpose of this test, disable the source scan (mandatory for a deliery otherwise).
         self.picking_type_out.restrict_scan_source_location = 'no'
 
@@ -1794,11 +1734,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Scans two different products from two different locations, then put them in pack and
         scans a destination location. Checks the package is in the right location.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.picking_type_internal.active = True
         self.picking_type_internal.restrict_scan_source_location = 'no'
         self.picking_type_internal.restrict_scan_dest_location = 'optional'
@@ -1842,11 +1783,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(pack.location_id, self.shelf2)
 
     def test_put_in_pack_before_dest(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.picking_type_internal.active = True
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
@@ -1891,12 +1833,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Put in pack a product line, then scan the newly created package to
         assign it to another lines.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 1)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
@@ -1932,9 +1874,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Receive a product P, put it in a pack PK and validates the receipt.
         Then, do the same a second time with the same package PK
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         receipt01 = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -1963,9 +1903,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(self.package.quant_ids.available_quantity, 2)
 
     def test_highlight_packs(self):
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         pack1 = self.env['stock.quant.package'].create({
             'name': 'PACK001',
@@ -2004,10 +1942,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_highlight_packs', login='admin', timeout=180)
 
     def test_picking_owner_scan_package(self):
-        grp_owner = self.env.ref('stock.group_tracking_owner')
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_owner.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_owner').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 7, package_id=self.package, owner_id=self.owner)
 
@@ -2021,12 +1961,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_picking_type_mandatory_scan_settings(self):
         ''' Makes some operations with different scan's settings.'''
-        self.clean_access_rights()
-
         # Enables packages and multi-locations.
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
         # Creates a product without barcode to check it can always be processed regardless the config.
         product_without_barcode = self.env['product.product'].create({
             'name': 'Barcodeless Product',
@@ -2091,13 +2032,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         then all and only previously scanned line will be packed/go to this location.
         """
         # Enables packages and multi-locations.
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         # Creates a product without barcode to check it will count even if not
         # scanned but processed through the button.
         product_without_barcode = self.env['product.product'].create({
@@ -2144,11 +2085,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ This check ensure that changing the dest location does not create an empty line.
         """
         # Enables multi-locations and lots.
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
@@ -2176,9 +2118,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_picking_type_mandatory_scan_product_packaging(self):
         """ Check a product's packaging can also be scanned when the scan of a product is mandatory.
         """
-        self.clean_access_rights()
-        group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
         self.picking_type_in.restrict_scan_product = True
         pack_10 = self.env['uom.uom'].create({
             'name': "product1 x10",
@@ -2237,7 +2177,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
                 move.product_uom_qty = 6
             return picking_form.save()
 
-        self.clean_access_rights()
         # Creates a product without barcode to check it can always be processed regardless the config.
         product_without_barcode = self.env['product.product'].create({
             'name': 'Barcodeless Product',
@@ -2335,7 +2274,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(picking_delivery.state, 'done')
 
     def test_procurement_backorder(self):
-        self.clean_access_rights()
         product_a, _product_b = self.env['product.product'].create([{
             'name': p_name,
             'is_storable': True,
@@ -2367,7 +2305,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Scan products that not part of a receipt. Check that products not part of original receipt
         can be deleted, but the products that are part of the original receipt cannot be deleted.
         """
-        self.clean_access_rights()
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
@@ -2399,7 +2336,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Checks the config parameter `stock_barcode.barcode_separator_regex`
         works as expected and it's possible to scan aggregate barcodes if its
         individual barcode encodings are separated by the separator."""
-        self.clean_access_rights()
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.env['ir.config_parameter'].set_param('stock_barcode.barcode_separator_regex', '[,|]')
         url = "/odoo/action-stock_barcode.stock_barcode_action_main_menu"
         self.start_tour(url, "test_scan_aggregate_barcode", login="admin", timeout=180)
@@ -2420,6 +2357,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_scrap(self):
         """ Checks the scrap button is displayed for when it's possible to scrap
         and the corresponding barcode command follows the same rules."""
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         # Creates SN product lots, for digipad testing
         self.env['stock.lot'].create([{
             'name': 'SN0001',
@@ -2459,9 +2397,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
           - One where we use package level;
           - One where we use move without package.
         Then, checks it's the right type of line who is shown in the Barcode App."""
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         self.picking_type_out.show_entire_packs = True
         package1 = self.env['stock.quant.package'].create({'name': 'package001'})
         package2 = self.env['stock.quant.package'].create({'name': 'package002'})
@@ -2515,9 +2451,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Suppose a picking that moves a product from a package to another one
         This test ensures that the user can scans the destination package
         """
-        self.clean_access_rights()
-        group_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, group_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         pack01, pack02 = self.env['stock.quant.package'].create([{
             'name': name,
@@ -2548,10 +2482,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         On a delivery, a user scans L (it should add a line)
         Then, the user scans a non-existing lot LX (it should not create any line)
         """
-        self.clean_access_rights()
-        group_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, group_lot.id, 0)]})
-
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         lot01 = self.env['stock.lot'].create({
             'name': "LOT01",
             'product_id': self.productlot1.id,
@@ -2574,7 +2505,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ This test ensures we can't add non-reserved product when the picking type is set like
         that, but we can still scan any product for a picking created on the fly.
         """
-        self.clean_access_rights()
         self.picking_type_out.barcode_allow_extra_product = False
         self.env['stock.quant'].with_context(inventory_mode=True).create({
             'product_id': self.product1.id,
@@ -2608,11 +2538,15 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             - product1 partially available at given location
             - product2 not available
         """
-        self.clean_access_rights()
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_tracking_lot').id, 0)]})
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_adv_location').id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_adv_location').id),
+            ],
+        })
+
         lot01 = self.env['stock.lot'].create({
             'name': "LOT01",
             'product_id': self.productlot1.id,
@@ -2680,8 +2614,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_split_line_on_destination_scan(self):
         """ Ensures a non-complete line is split when a destination is scanned. """
-        self.clean_access_rights()
-        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
         # Creates a receipt for 4x product1 and confirm it.
@@ -2734,7 +2667,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_split_line_on_exit_for_delivery(self):
         """ Ensures that exit an unfinished operation will split the uncompleted move lines to have
         one move line with all picked quantity and one move line with the remaining quantity."""
-        self.clean_access_rights()
         product3 = self.env['product.product'].create({
             'name': 'product3',
             'is_storable': True,
@@ -2783,10 +2715,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Ensures that the total quantity handled by the splitted moves does
         not exceed the initial demand in case another lot than the initially
         reserved one is scanned from the barcode."""
-        self.clean_access_rights()
-
-        group_pack = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [Command.link(group_pack.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         lots = self.env['stock.lot'].create([
             {'name': 'LOT001', 'product_id': self.productlot1.id},
             {'name': 'LOT002', 'product_id': self.productlot1.id},
@@ -2827,10 +2756,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_split_line_on_exit_for_receipt(self):
         """ Ensures that exit an unfinished operation will split the uncompleted move lines to have
         one move line with all picked quantity and one move line with the remaining quantity."""
-        self.clean_access_rights()
         # Enables package to check the split after a put in pack.
-        group_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, group_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         # Set packages' sequence to 1000 to find it easily during the tour.
         package_sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
         package_sequence.write({'number_next_actual': 1000})
@@ -2871,7 +2798,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_editing_done_picking(self):
         """ Create and validate a picking then try editing it."""
-        self.clean_access_rights()
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
         with picking_form.move_ids_without_package.new() as move:
@@ -2890,7 +2816,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """Test the lines are correctly sorted in the Barcode App regarding
         their product's category.
         """
-        self.clean_access_rights()
         # Creates two categories and some products using them.
         product_categoryB = self.env["product.category"].create({"name": "TestB"})
         product_categoryA = self.env["product.category"].create({"name": "TestA"})
@@ -2949,8 +2874,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         we should still be shown the confirmation dialog when validating a partially
         complete order, informing the user that a backorder will be created.
         """
-        self.clean_access_rights()
-
         receipt = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
@@ -3010,7 +2933,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Test that creating a picking operation wholly in the barcode app will not permit a user
         to find records that don't belong to the operation type's company.
         """
-        self.clean_access_rights()
         company2 = self.env['res.company'].create({'name': 'second company'})
         self.env['stock.picking.type'].search([
             ('code', '=', 'incoming'),
@@ -3042,8 +2964,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ If a split of incomplete barcode lines is triggered when the line quantity == 0, don't
         go through with the split.
         """
-        self.clean_access_rights()
-
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 1)
         picking = self.env['stock.picking'].create({
             'name': 'TNZDNLFS picking',
@@ -3077,10 +2997,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         This test ensures that products of the same lot can be
         packed in different packages.
         """
-        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
-        self.clean_access_rights()
-        group_tracking = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         warehouse = self.picking_type_out.warehouse_id
         # Enable "Show reserved lots/SN"
         warehouse.out_type_id.write({
@@ -3132,8 +3054,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_barcode_picking_return(self):
         """ create a return from a done picking """
-        self.clean_access_rights()
-
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5)
 
         delivery_form = Form(self.env['stock.picking'])
@@ -3154,9 +3074,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         This test ensures that destination location scan is taken into
         account when proposed by the UI.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         self.picking_type_internal.active = True
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10.0)
@@ -3185,9 +3103,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         The flow slightly change with mto moves: both mts and mto procure methods are tested here
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
         procurement_group = self.env['procurement.group'].create({
             'name': 'custom procurement',
         })
@@ -3238,8 +3153,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         delivery.
         """
 
-        self.clean_access_rights()
-        self.env.user.write({'group_ids': [Command.link(self.ref('stock.group_production_lot'))]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.picking_type_out.show_reserved_sns = True
 
         lots = self.env['stock.lot'].create([
@@ -3285,10 +3199,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_barcode_create_serials_in_batch_with_single_scan(self):
         """ Check that it is possible to generate 1000 serial numbers with a signle scan."""
-        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
-        self.clean_access_rights()
-        group_tracking = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         # Enable "Show reserved lots/SN"
         self.picking_type_out.write({
             'show_reserved_sns': True,
@@ -3340,11 +3256,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Ensures the stock move's location, package and owner can be updated by clicking on a
         quant card in the Barcode move line form view accordingly to the selected quant values.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         package = self.env['stock.quant.package'].create({'name': 'package001'})
-        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 2)
@@ -3384,11 +3302,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         to allow the user to verify when applying the change.
         This test ensures this confirmation dialog is shown when needed.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         package = self.env['stock.quant.package'].create({'name': 'package001'})
-        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 5)
@@ -3426,9 +3346,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Check that a picking related to archived records can be processed in barcode
         in the same way as it can be in backend.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
         warehouse = self.shelf2.warehouse_id
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 10)
         floor_location = self.env['stock.location'].create({
@@ -3459,7 +3376,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_validate_uncomplete_return(self):
         """ Ensures we can validate a return created in the Barcode app without any issue.
         """
-        self.clean_access_rights()
         self.env['stock.picking'].create({
             'name': 'TEST/IN/0001',
             'location_id': self.supplier_location.id,
@@ -3483,9 +3399,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         two different products and check the move line has the right lot.
         Do the same test by scanning a packaging instead of the product.
         """
-        self.clean_access_rights()
-        group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         product_a, product_b = self.env['product.product'].create([{
             'name': name,
@@ -3524,7 +3438,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Have a delivery for a product tracked by SN then scan a SN who exists for
         two different products and check the move line has the right SN.
         """
-        self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         product_a, product_b = self.env['product.product'].create([{
             'name': f'product{i}',
@@ -3570,7 +3483,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_gs1_reserved_delivery(self):
         """ Process a delivery by scanning multiple quantity multiple times.
         """
-        self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         # Creates a product and adds some quantity.
@@ -3608,7 +3520,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Creates some receipts for two products but their barcodes mingle
         together once they are adapted for GS1.
         """
-        self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         product_gtin_8 = self.env['product.product'].create({
@@ -3691,13 +3602,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_gs1_receipt_conflicting_barcodes_mistaken_as_gs1(self):
         """ Checks if a record has a barcode who can be mistaken for a GS1 barcode,
         this record can still be found anyway while using the GS1 nomenclature."""
-        self.clean_access_rights()
-        group_package = self.env.ref('stock.group_tracking_lot')
-        group_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [
-            (4, group_package.id, 0),
-            (4, group_lot.id, 0),
-        ]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         # Creates two products and a package with misleading barcode.
         self.env['product.product'].create({
@@ -3718,9 +3628,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_gs1_receipt_lot_serial(self):
         """ Creates a receipt for a product tracked by lot, then process it in the Barcode App.
         """
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         picking_form = Form(self.env['stock.picking'])
@@ -3751,12 +3659,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         of product and quantity expressed with different UoM and checks the
         quantity is taken only if the UoM is compatible with the product's one.
         """
-        self.clean_access_rights()
         # Enables the UoM and the GS1 nomenclature.
-        grp_uom = self.env.ref('uom.group_uom')
-        group_user = self.env.ref('base.group_user')
-        group_user.write({'implied_ids': [(4, grp_uom.id)]})
-        self.env.user.write({'group_ids': [(4, grp_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         # Configures three products using units, kg and g.
         uom_g = self.env.ref('uom.product_uom_gram')
@@ -3802,9 +3706,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_gs1_receipt_scan_not_gs1_multi_barcode(self):
         """ This test ensures the user can scan a barcode containing multiple
         non-GS1 barcode when GS1 nomenclature is active."""
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         self.start_tour('/odoo/barcode', 'test_gs1_receipt_scan_not_gs1_multi_barcode', login='admin')
 
@@ -3812,10 +3714,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Receives some products and scans a GS1 barcode for a package, then
         creates a delivery and scans the same package.
         """
-        self.clean_access_rights()
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         # Set package's sequence to 123 to generate always the same package's name in the tour.
         sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
@@ -3867,9 +3767,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         This test ensures that a user can scan a packaging when processing a receipt
         """
-        self.clean_access_rights()
-        group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         product = self.env['product.product'].create({
@@ -3899,11 +3797,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Ensures we can scan a GS1 barcode containing a packaging for a
         tracked product and the lot in one scan.
         """
-        self.clean_access_rights()
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('uom.group_uom').id),
+            ],
+        })
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
-        group_tracking = self.env.ref('stock.group_production_lot')
-        group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'group_ids': [(4, group_tracking.id, 0), (4, group_uom.id, 0)]})
 
         self.productlot1.uom_ids = self.env.ref('uom.product_uom_dozen')
         self.env['product.uom'].create({
@@ -3924,11 +3824,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ This test ensures that correct packaging lines generated
         for serial product in operations.
         """
-        self.clean_access_rights()
-        group_lot = self.env.ref('stock.group_production_lot')
-        group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'group_ids': [(4, group_lot.id, 0)]})
-        self.env.user.write({'group_ids': [(4, group_uom.id)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('uom.group_uom').id),
+            ],
+        })
         pack_4 = self.env['uom.uom'].create({
             'name': 'Pack of 4',
             'relative_factor': 4,
@@ -3948,9 +3849,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         This test ensures that move lines are split correctly
         when a user scans a package on an incomplete move line
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5)
         # Create two empty packs
@@ -3983,12 +3882,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         while scanning, properly preserve destination info after scanning
         a package
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         # Create two empty packs
         pack1 = self.env['stock.quant.package'].create({
             'name': 'THEPACK1',
@@ -4029,9 +3928,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         3. After the tour is run, verify that the signature is set
         4. Verify that the two delivery orders have been validated in the end
         """
-        self.clean_access_rights()
-        group_sign_delivery = self.env.ref('stock.group_stock_sign_delivery')
-        self.env.user.write({'group_ids': [(4, group_sign_delivery.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_sign_delivery').id)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 5)
 
@@ -4072,9 +3969,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(delivery2.state, 'done')
 
     def test_select_with_same_product_and_lot(self):
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [Command.link(grp_lot.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         pg = self.env['procurement.group'].create({'name': 'ProcurementGroup'})
         lot_xyz = self.env['stock.lot'].create({'name': 'lot_xyz', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
         self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 4, lot_id=lot_xyz)
@@ -4115,7 +4010,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Test that when creating a receipt or internal transfer using the barcode app, the
         description_picking field of the move_line is not empty
         """
-        self.clean_access_rights()
         product = self.env['product.product'].create({
             'name': 'test_product',
             'description_pickingin': 'receipt',

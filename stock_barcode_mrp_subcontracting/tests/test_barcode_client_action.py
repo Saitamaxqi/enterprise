@@ -37,9 +37,7 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         })
 
     def test_receipt_classic_subcontracted_product(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         receipt_picking = self.env['stock.picking'].create({
             'partner_id': self.subcontractor_partner.id,
             'location_id': self.supplier_location.id,
@@ -69,7 +67,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(sub_order.mapped('state'), ['done', 'done'])
 
     def test_receipt_tracked_subcontracted_product(self):
-        self.clean_access_rights()
         self.subcontracted_component.tracking = 'lot'
         lot_id = self.env['stock.lot'].create({
             'product_id': self.subcontracted_component.id,
@@ -101,9 +98,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(receipt_picking.move_ids.quantity, 5)
 
     def test_receipt_flexible_subcontracted_product(self):
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         self.bom.consumption = 'flexible'  # To able to record flexible component
         receipt_picking = self.env['stock.picking'].create({
             'partner_id': self.subcontractor_partner.id,
@@ -137,8 +131,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         opened in barcode and the form is used to add another move line (for the same product), the
         src location of the new move line should also be the subcontract location.
         """
-        self.clean_access_rights()
-
         receipt = self.env['stock.picking'].create({
             'name': 'TRSBPMASL picking',
             'location_id': self.supplier_location.id,

@@ -14,14 +14,6 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
             'email': 'mitchell.admin@example.com',
         })
 
-        self.clean_access_rights()
-        grp_lot = self.env.ref('stock.group_production_lot')
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
-
         # Create some products
         self.product3 = self.env['product.product'].create({
             'name': 'product3',
@@ -183,6 +175,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """ Create a batch picking with 3 receipts, then open the batch in
         barcode app and scan each product, SN or LN one by one.
         """
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         # Creates an additional receipt for the product tracked by lots.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
@@ -221,6 +219,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         then open the batch in barcode app and scan each product.
         Change the location when all products of the page has been scanned.
         """
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         batch_form = Form(self.env['stock.picking.batch'])
         # Adds two quantities for product tracked by SN.
         sn1 = self.env['stock.lot'].create({'name': 'sn1', 'product_id': self.productserial1.id})
@@ -275,9 +279,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         entire package" setting and check lines are correctly displayed as package line when moving
         the entire package, or as usual barcode line in other cases.
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         self.picking_type_out.show_entire_packs = True
 
         # Creates two packages and adds some quantities on hand.
@@ -345,7 +347,6 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """ Checks the count number of regular pickings and batch pickings
         buttons is correctly computed in the Baroce app.
         """
-        self.clean_access_rights()
         # Create a company for this test purpose and assign it to the user.
         company = self.env['res.company'].create({'name': 'Company Test'})
         self.env.user.write({
@@ -386,10 +387,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         completed before changing the line, even if the scanned lot is planned for another picking
         or another picking has an empty line for this product.
         """
-        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         common_vals = {'product_id': self.productlot1.id, 'company_id': self.env.company.id}
         lot1 = self.env['stock.lot'].create({**common_vals, 'name': 'lot1'})
         lot2 = self.env['stock.lot'].create({**common_vals, 'name': 'lot2'})
@@ -464,10 +467,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
     def test_barcode_batch_scan_other_reserved_lost(self):
         """ Checks that scanning a lot won't erase the reserved one if the
         scanned one is reserved too."""
-        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [Command.link(grp_pack.id)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.picking_type_out.show_reserved_sns = True
         # Create some lots and add quantity in stock for them.
         common_vals = {'product_id': self.productlot1.id, 'company_id': self.env.company.id}
@@ -505,6 +510,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         batch's `put_in_pack` button as we do with a single internal transfer so we re-use the same exact tour.
         Note that batch `put_in_pack` logic is not the same as it is for pickings.
         """
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            ],
+        })
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 1)
@@ -575,6 +586,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         For some reason the order of the move lines in the destination wizard is different, so we swap the expected
         destination in this test (since it doesn't matter).
         """
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.picking_type_internal.active = True
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
@@ -637,11 +654,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         Put first picking line in a package and the second one in another package,
         then change the location page and scan the suggested packaged for each picking lines.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.picking_type_out.barcode_validation_all_product_packed = True
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 2)
@@ -706,6 +724,13 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
 
     def test_batch_create(self):
         """ Create a batch picking via barcode app from scratch """
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
         self.start_tour("/odoo/barcode", 'test_batch_create', login='admin', timeout=180)
         self.assertEqual(self.picking_delivery_1.batch_id, self.picking_delivery_2.batch_id)
         batch_delivery = self.picking_delivery_1.batch_id
@@ -723,9 +748,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         also update the move lines related to P2 and a new line should be
         created for the surplus (45 x P2).
         """
-        self.clean_access_rights()
-        grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'group_ids': [(4, grp_pack.id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         package02 = self.package.copy({'name': 'P00002'})
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 10, package_id=self.package)
@@ -773,10 +796,12 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """ Checks lines are correctly grouped even when from different pickings
         in case the parameter `group_lines_by_product` is enabled.
         """
-        self.clean_access_rights()
-        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+            ],
+        })
         self.picking_type_in.group_lines_by_product = True
 
         # Creates 3 receipts.
@@ -872,13 +897,9 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
     def test_setting_group_lines_by_product_when_tracking_is_off(self):
         """ This test ensures lines are grouped by product in batch if the option is enabled even if
         tracking setting is off (used to define if lines should be grouped or not.)"""
-        self.clean_access_rights()
-        self.picking_type_in.group_lines_by_product = True
         # Explicitly remove the tracking group access right.
-        group_lot = self.env.ref('stock.group_production_lot')
-        group_user = self.env.ref('base.group_user')
-        group_user.write({'implied_ids': [Command.unlink(group_lot.id)]})
-        self.env.user.write({'group_ids': [Command.unlink(group_lot.id)]})
+        self.env.ref('base.group_user').write({'implied_ids': [Command.unlink(self.env.ref('stock.group_production_lot').id)]})
+        self.picking_type_in.group_lines_by_product = True
 
         receipt_1 = self.env['stock.picking'].create({
             'picking_type_id': self.picking_type_in.id,
@@ -904,8 +925,6 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
     def test_split_line_on_exit_for_batch(self):
         """ Ensures that exit an unfinished batch will split the uncompleted move lines to have one
         move line with all picked quantity and one move line with the remaining quantity."""
-        self.clean_access_rights()
-
         # Creates a new batch.
         batch_receipts = self.env['stock.picking.batch'].create({
             'name': 'batch_split_line_on_exit',
@@ -961,6 +980,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """ When we have multiple pickings in a batch for the same product, we should be able to change
         the destination location of each of them by scanning only once the destination.
         """
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, quantity=2)
         self.picking_type_internal.write({
             'restrict_scan_source_location': 'mandatory',
