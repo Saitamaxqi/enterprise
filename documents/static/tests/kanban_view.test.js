@@ -18,6 +18,7 @@ import {
     makeDocumentRecordData,
 } from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
+import { embeddedActionsServerData } from "./helpers/test_server_data";
 import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/views/kanban";
 
 describe.current.tags("desktop");
@@ -297,4 +298,21 @@ test("Drag and Drop - Dropping in 'My Drive' should create a shortcut", async fu
     await drop();
     await waitFor(".o_notification");
     expect(queryAll(".o_notification_content").at(-1)).toHaveText("A shortcut has been created.");
+});
+
+test("only show common available actions", async function () {
+    await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
+    await mountDocumentsKanbanView();
+
+    await contains(`.o_kanban_record:contains('Request 1')`).click();
+    await waitFor(".o_control_panel_actions:contains('Action 1')");
+
+    await contains(`.o_kanban_record:contains('Request 2')`).click();
+    await waitForNone(".o_control_panel_actions:contains('Action 1')");
+    await waitFor(".o_control_panel_actions:contains('Action 2 only')");
+    await waitFor(".o_control_panel_actions:contains('Action 2 and 3')");
+
+    await contains(`.o_kanban_record:contains('Request 3')`).click({ ctrlKey: true });
+    await waitForNone(".o_control_panel_actions:contains('Action 2 only')");
+    await waitFor(".o_control_panel_actions:contains('Action 2 and 3')");
 });

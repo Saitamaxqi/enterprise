@@ -10,6 +10,7 @@ import { getBasicPermissionPanelData, DocumentsModels } from "@documents/../test
 
 const ACCESS_TOKEN_MY_SPREADSHEET = "accessTokenMyspreadsheet";
 const {
+    IrEmbeddedActions,
     MailActivityType,
     MailAlias,
     MailAliasDomain,
@@ -205,6 +206,7 @@ export function defineDocumentSpreadsheetModels() {
         DocumentsDocument,
         DocumentsTag,
         SpreadsheetTemplate,
+        IrEmbeddedActions,
         IrUIMenu,
         ResCountries,
         ResCountryState,

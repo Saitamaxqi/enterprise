@@ -8,7 +8,7 @@ export const basicDocumentsListArch = /* xml */ `
     <field name="active"/>
     <field name="partner_id"/>
     <field name="id" invisible="1"/>
-    <field name="available_embedded_actions_ids" invisible="1"/>
+    <field name="available_embedded_actions_ids" widget="many2many_tags"/>
     <field name="access_token" invisible="1"/>
     <field name="mimetype" invisible="1"/>
     <field name="tag_ids" />

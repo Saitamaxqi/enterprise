@@ -1,3 +1,4 @@
+import { getCommonEmbeddedActions } from "@documents/views/utils";
 import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { _t } from "@web/core/l10n/translation";
 import { omit } from "@web/core/utils/objects";
@@ -23,20 +24,8 @@ export const DocumentsControllerMixin = (component) =>
          * Return the common list of actions for the selected / previewed document folders.
          */
         getEmbeddedActions() {
-            if (!this.model.targetRecords[0]?.data.available_embedded_actions_ids?.records.length) {
-                return [];
-            }
-            const actionsList = this.model.targetRecords.map((d) =>
-                d.data.available_embedded_actions_ids.records.map((rec) => ({
-                    id: rec.resId,
-                    name: rec.data.display_name,
-                }))
-            );
-            const actionsListIds = actionsList.map((actions) => actions.map((a) => a.id));
-            const _embeddedActions = actionsList[0].filter((action) =>
-                actionsListIds.every((a) => a.includes(action.id))
-            );
-            return Object.fromEntries(_embeddedActions.map(e => [
+            const embeddedActions = getCommonEmbeddedActions(this.model.targetRecords);
+            return Object.fromEntries(embeddedActions.map(e => [
                 e.id,
                 {
                     description: e.name,

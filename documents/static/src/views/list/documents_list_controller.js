@@ -26,7 +26,6 @@ export class DocumentsListController extends DocumentsControllerMixin(ListContro
                     getMenuProps: () => this.actionMenuProps
                 };
             }
-            return () => this.documentService.getSelectionActions = null;
         }, () => []);
     }
 

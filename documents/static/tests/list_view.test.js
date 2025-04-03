@@ -9,7 +9,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
-import { waitFor } from "@odoo/hoot-dom";
+import { waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 import {
@@ -19,6 +19,7 @@ import {
     makeDocumentRecordData,
 } from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
+import { embeddedActionsServerData } from "./helpers/test_server_data";
 import { basicDocumentsListArch } from "./helpers/views/list";
 import { getEnrichedSearchArch } from "./helpers/views/search";
 
@@ -207,4 +208,27 @@ test("Document actions are hidden when focused record is not selected", async fu
     // Select it to show actions again
     await contains(".o_data_row:contains('File 2') .o_list_record_selector").click();
     await waitFor(".o_control_panel_actions:contains('Download')");
+});
+
+test("only show common available actions", async function () {
+    await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
+    await mountView({
+        type: "list",
+        resModel: "documents.document",
+        arch: basicDocumentsListArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+
+    await contains(`.o_data_row:contains('Request 1') .o_list_record_selector`).click();
+    await waitFor(".o_control_panel_actions:contains('Action 1')");
+    await contains(`.o_data_row:contains('Request 1') .o_list_record_selector`).click();
+
+    await contains(`.o_data_row:contains('Request 2') .o_list_record_selector`).click();
+    await waitForNone(".o_control_panel_actions:contains('Action 1')");
+    await waitFor(".o_control_panel_actions:contains('Action 2 only')");
+    await waitFor(".o_control_panel_actions:contains('Action 2 and 3')");
+
+    await contains(`.o_data_row:contains('Request 3') .o_list_record_selector`).click();
+    await waitForNone(".o_control_panel_actions:contains('Action 2 only')");
+    await waitFor(".o_control_panel_actions:contains('Action 2 and 3')");
 });

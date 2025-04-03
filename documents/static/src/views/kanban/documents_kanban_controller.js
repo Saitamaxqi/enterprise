@@ -26,7 +26,6 @@ export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanCo
                     getMenuProps: () => this.actionMenuProps
                 };
             }
-            return () => this.documentService.getSelectionActions = null;
         }, () => []);
 
         /**

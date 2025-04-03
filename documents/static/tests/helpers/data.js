@@ -65,8 +65,7 @@ export class DocumentsDocument extends models.Model {
     });
     available_embedded_actions_ids = fields.Many2many({
         string: "Available Actions",
-        // relation: "ir.actions.server",
-        relation: "res.partner",
+        relation: "ir.embedded.actions",
     });
     alias_id = fields.Many2one({ relation: "mail.alias" });
     alias_domain_id = fields.Many2one({ relation: "mail.alias.domain" });
@@ -202,6 +201,12 @@ export class DocumentsTag extends models.Model {
     color = fields.Integer({ default: 1 });
 }
 
+export class IrEmbeddedActions extends models.Model {
+    _name = "ir.embedded.actions";
+
+    name = fields.Char({ string: "Action Name" });
+}
+
 export class MailActivityType extends models.Model {
     _name = "mail.activity.type";
 
@@ -324,6 +329,7 @@ export function getBasicPermissionPanelData(recordExtra) {
 
 export const DocumentsModels = {
     ...mailModels,
+    IrEmbeddedActions,
     MailActivityType,
     MailAlias,
     MailAliasDomain,

@@ -3,6 +3,7 @@ import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { toggleArchive, openDeleteConfirmationDialog } from "@documents/views/hooks";
+import { getCommonEmbeddedActions } from "@documents/views/utils";
 import { serializeDate } from "@web/core/l10n/dates";
 import { download } from "@web/core/network/download";
 
@@ -286,7 +287,7 @@ export const DocumentsModelMixin = (component) =>
          */
         onSplitPDF() {
             const documents = this.targetRecords;
-            if (!documents || !documents.every((d) => d.isPdf())) {
+            if (!documents?.length || !documents.every((d) => d.isPdf())) {
                 return;
             }
 
@@ -295,7 +296,7 @@ export const DocumentsModelMixin = (component) =>
                 mainDocument: this.targetRecords[0],
                 isPdfSplit: true,
                 hasPdfSplit: true,
-                embeddedActions: this.embeddedActions,
+                embeddedActions: getCommonEmbeddedActions(documents),
             });
         }
 
@@ -326,7 +327,7 @@ export const DocumentsModelMixin = (component) =>
         }
 
         /**
-         * Execute the given `ir.actions.server` on the current selected documents.
+         * Execute the given `ir.embedded.action` on the current selected documents.
          */
         async onDoAction(actionId) {
             const documentIds = this.targetRecords.map((record) => record.data.id);
@@ -352,13 +353,13 @@ export const DocumentsModelMixin = (component) =>
                     return;
                 }
             }
-            this._notifyChange();
+            await this._notifyChange();
         }
 
         /**
          * Download the selected documents.
          */
-        onDownload() {
+        async onDownload() {
             const documents = this.targetRecords.filter((rec) => !rec.isRequest());
             if (!documents.length) {
                 return;
@@ -375,12 +376,12 @@ export const DocumentsModelMixin = (component) =>
             } else if (noLinkDocuments.length) {
                 // Download all documents which are not links
                 if (noLinkDocuments.length === 1) {
-                    download({
+                    await download({
                         data: {},
                         url: `/documents/content/${noLinkDocuments[0].data.access_token}`,
                     });
                 } else {
-                    download({
+                    await download({
                         data: {
                             file_ids: noLinkDocuments.map((rec) => rec.data.id),
                             zip_name: `documents-${serializeDate(DateTime.now())}.zip`,
