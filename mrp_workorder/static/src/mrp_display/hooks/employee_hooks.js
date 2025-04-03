@@ -169,16 +169,9 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         await orm.call("hr.employee", "stop_all_workorder_from_employee", [employeeId]);
     };
 
-    const popupAddEmployee = () => {
-        dialog.add(MrpEmployeeDialog, {
-            title: _t("Configure your station"),
-            setConnectedEmployees,
-            employees: employees,
-        });
-    };
-
     const setConnectedEmployees = async (ids) => {
         if (employees.admin) {
+            await stopAllWorkorderFromEmployee(employees.admin.id);
             await orm.call("hr.employee", "logout", [employees.admin.id, false, true]);
         }
         await orm.call("hr.employee", "set_employees_connected", [null, ids]);
@@ -217,7 +210,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         setSessionOwner,
         stopAllWorkorderFromEmployee,
         toggleSessionOwner,
-        popupAddEmployee,
+        setConnectedEmployees,
         checkPin,
         closePopup,
         pinValidation,

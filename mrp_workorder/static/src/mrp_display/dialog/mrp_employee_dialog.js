@@ -24,8 +24,8 @@ export class MrpEmployeeDialog extends ConfirmationDialog {
         }
     }
 
-    confirm() {
-        this.props.setConnectedEmployees(this.selected.ids);
-        this.props.close();
+    async confirm() {
+        await this.props.setConnectedEmployees(this.selected.ids);
+        return this.props.close();
     }
 }

@@ -22,6 +22,7 @@ import {
     useState,
     useSubEnv,
 } from "@odoo/owl";
+import { MrpEmployeeDialog } from "./dialog/mrp_employee_dialog";
 
 const defaultWorkcenterButtons = [
     { id: 0, display_name: _t("Overview") },
@@ -527,6 +528,17 @@ export class MrpDisplay extends Component {
     onClickBack() {
         const crumbs = this.env.config.breadcrumbs;
         crumbs[crumbs.length - 2].onSelected();
+    }
+
+    popupAddEmployee() {
+        this.dialogService.add(
+            MrpEmployeeDialog,
+            {
+                setConnectedEmployees: this.useEmployee.setConnectedEmployees,
+                employees: this.useEmployee.employees,
+            },
+            { onClose: this.env.reload }
+        );
     }
 
     demoMORecords = [

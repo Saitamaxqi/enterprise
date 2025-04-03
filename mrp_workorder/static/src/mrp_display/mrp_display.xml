@@ -68,7 +68,7 @@
             <main t-else="" class="o_content o_component_with_search_panel">
                 <MrpDisplayEmployeesPanel t-if="groups.workorders" employees="useEmployee.employees"
                     setSessionOwner.bind="useEmployee.toggleSessionOwner"
-                    popupAddEmployee.bind="useEmployee.popupAddEmployee"/>
+                    popupAddEmployee.bind="popupAddEmployee"/>
                 <div class="o_mrp_display_records flex-grow-1 m-2 position-relative">
                 <t t-foreach="relevantRecords" t-as="record" t-key="record.id">
                     <MrpDisplayRecord
