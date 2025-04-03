@@ -162,7 +162,7 @@ class AccountMove(models.Model):
         super()._compute_need_cancel_request()
 
     def _l10n_br_edi_check_calculated_tax(self):
-        if self.state != "posted":
+        if self.state != "posted" or self.l10n_br_last_edi_status:
             return {}
 
         if not self.l10n_br_edi_avatax_data:
