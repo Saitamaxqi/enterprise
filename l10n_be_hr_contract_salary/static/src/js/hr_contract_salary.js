@@ -18,6 +18,7 @@ hrContractSalary.include({
         "change input[name='fold_l10n_be_ambulatory_insured_spouse']": "onchangeAmbulatory",
         "change input[name='children']": "onchangeChildren",
         "change input[name='fold_wishlist_car_total_depreciated_cost']": "onchangeWishlistCar",
+        "change input[name='other_dependent_people']": "onchangeOtherDependentPeople",
     }),
 
     getBenefits() {
@@ -364,6 +365,28 @@ hrContractSalary.include({
             disabledChildrenEl?.parentElement.classList.add("d-none");
         } else {
             disabledChildrenEl?.parentElement.classList.remove("d-none");
+        }
+    },
+
+    onchangeOtherDependentPeople(event) {
+        const otherDependentChecked = parseInt(event && event.currentTarget && event.currentTarget.checked);
+        if (!otherDependentChecked) {
+            const seniorDependentEl = this.el.querySelector(
+                "input[name='other_senior_dependent']"
+            );
+            const disabledSeniorDependentEl = this.el.querySelector(
+                "input[name='other_disabled_senior_dependent']"
+            );
+            const juniorDependentEl = this.el.querySelector(
+                "input[name='other_juniors_dependent']"
+            );
+            const disabledJuniorDependentEl = this.el.querySelector(
+                "input[name='other_disabled_juniors_dependent']"
+            );
+            seniorDependentEl.value = 0
+            disabledSeniorDependentEl.value = 0
+            juniorDependentEl.value = 0
+            disabledJuniorDependentEl.value = 0
         }
     },
 });
