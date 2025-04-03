@@ -37,6 +37,7 @@ patch(QtyAtDateWidget.prototype, {
 export const rentalQtyAtDateWidget = {
     ...qtyAtDateWidget,
     fieldDependencies: [
+        ...qtyAtDateWidget.fieldDependencies,
         { name: 'start_date', type: 'datetime' },
         { name: 'return_date', type: 'datetime' },
     ],
