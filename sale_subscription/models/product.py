@@ -71,27 +71,25 @@ class ProductTemplate(models.Model):
                 )
 
     def copy(self, default=None):
-        copied_tmpls = self.env['product.template']
-        for record in self:
-            copied_tmpl = super(ProductTemplate, record).copy(default)
-            copied_tmpls += copied_tmpl
-            for pricing in record.product_subscription_pricing_ids:
+        copied_tmpls = super().copy(default)
+        for template, template_copy in zip(self, copied_tmpls):
+            for pricing_sudo in template.sudo().product_subscription_pricing_ids:
                 copied_variant_ids = []
-                for product in pricing.product_variant_ids:
+                for product in pricing_sudo.product_variant_ids:
                     pav_ids = product\
                         .product_template_variant_value_ids\
                         .product_attribute_value_id\
                         .ids
                     copied_variant_ids.extend(
-                        copied_tmpl.product_variant_ids.filtered(
+                        template_copy.product_variant_ids.filtered(
                             lambda p: p
                                 .product_template_variant_value_ids
                                 .product_attribute_value_id
                                 .ids == pav_ids
                         ).ids
                     )
-                pricing.copy({
-                    'product_template_id': copied_tmpl.id,
+                pricing_sudo.copy({
+                    'product_template_id': template_copy.id,
                     'product_variant_ids': copied_variant_ids,
                 })
         return copied_tmpls
