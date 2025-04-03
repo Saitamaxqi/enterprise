@@ -20,6 +20,9 @@
         'point_of_sale._assets_pos': [
             'l10n_se_pos/static/src/**/*',
         ],
+        'web.assets_tests': [
+            'l10n_se_pos/static/tests/**/*'
+        ],
     },
     'installable': True,
     'author': 'Odoo S.A.',

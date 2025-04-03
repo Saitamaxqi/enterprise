@@ -8,14 +8,14 @@ patch(PosStore.prototype, {
         return !!this.config.iface_sweden_fiscal_data_module;
     },
     hasNegativeAndPositiveProducts(product) {
-        const isPositive = product.lst_price >= 0;
+        const isPositive = product.list_price >= 0;
         const order = this.getOrder();
 
         for (const id in order.getOrderlines()) {
             const line = order.getOrderlines()[id];
             if (
-                (line.product_id.lst_price >= 0 && !isPositive) ||
-                (line.product_id.lst_price < 0 && isPositive)
+                (line.product_id.list_price >= 0 && !isPositive) ||
+                (line.product_id.list_price < 0 && isPositive)
             ) {
                 return true;
             }
@@ -24,6 +24,7 @@ patch(PosStore.prototype, {
     },
     async addLineToCurrentOrder(vals, opt = {}, configure = true) {
         const product = vals.product_tmpl_id;
+        const productTaxesIds = product.taxes_id.map((tax) => tax.id);
         if (this.useBlackBoxSweden() && product.taxes_id.length === 0) {
             this.dialog.add(AlertDialog, {
                 title: _t("POS error"),
@@ -33,7 +34,7 @@ patch(PosStore.prototype, {
         } else if (
             this.useBlackBoxSweden() &&
             !this.models["account.tax"]
-                .get(product.taxes_id)
+                .filter((tax) => productTaxesIds.includes(tax.id))
                 ?.every((tax) => tax.tax_group_id.pos_receipt_label)
         ) {
             this.dialog.add(AlertDialog, {
