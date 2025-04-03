@@ -9,9 +9,7 @@ import { patch } from "@web/core/utils/patch";
 patch(Settings.prototype, {
     setup() {
         super.setup();
-        /** @type {luxon.DateTime} */
-        this.do_not_disturb_until_dt = Record.attr(undefined, {
-            type: "datetime",
+        this.do_not_disturb_until_dt = Record.datetime({
             onUpdate() {
                 clearTimeout(this.resetDoNotDisturbTimeoutId);
                 if (
