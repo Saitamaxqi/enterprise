@@ -106,7 +106,14 @@ class PaymentTransaction(models.Model):
             and t.mandate_id
         )
         for tx in sepa_txs:
-            tx.token_id = tx.provider_id._sdd_create_token_for_mandate(tx.partner_id, tx.mandate_id)
+            existing_token = self.env['payment.token'].search(
+                [('provider_id', '=', tx.provider_id.id), ('sdd_mandate_id', '=', tx.mandate_id.id)],
+                limit=1,
+            )
+            tx.token_id = (
+                existing_token
+                or tx.provider_id._sdd_create_token_for_mandate(tx.partner_id, tx.mandate_id)
+            )
             tx.mandate_id._confirm()
         return confirmed_txs
 
