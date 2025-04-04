@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate="1">
         <record id="base.user_demo" model="res.users">
-            <field name="group_ids" eval="[(3, ref('helpdesk.group_helpdesk_manager'))]"/>
+            <field name="group_ids" eval="[(4, ref('helpdesk.group_helpdesk_user'))]"/>
         </record>
 
         <record id="base.default_user_group" model="res.groups">

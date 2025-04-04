@@ -208,11 +208,9 @@
             <field name="user_id" ref="base.user_admin"/>
         </record>
 
-        <!-- Set the demo user as a project and fsm user -->
+        <!-- Set the demo user as an fsm user -->
         <record id="base.user_demo" model="res.users">
-            <field name="group_ids" eval="[
-                (3, ref('industry_fsm.group_fsm_manager')),
-                (3, ref('project.group_project_manager'))]"/>
+            <field name="group_ids" eval="[(4, ref('industry_fsm.group_fsm_user'))]"/>
         </record>
 
         <record id="base.default_user_group" model="res.groups">
