@@ -251,3 +251,31 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
             self.company_allowed,
             "shortcut with(out) company is updated when set on target"
         )
+
+    def test_folder_move_company_propagation(self):
+        self.assertFalse((self.folder_a | self.folder_b | self.folder_b.children_ids).company_id)
+        self.folder_a.company_id = self.company_allowed
+        self.folder_b.folder_id = self.folder_a
+        document_with_other_company = self.env['documents.document'].create({
+            'name': 'doc',
+            'company_id': self.company_other.id,
+        })
+        shortcut_with_other_company = document_with_other_company.action_create_shortcut()
+        self.assertEqual(shortcut_with_other_company.company_id, self.company_other)
+        self.assertEqual((self.folder_b | self.folder_b.children_ids).company_id, self.company_allowed)
+        shortcut_with_other_company.folder_id = self.folder_a
+        self.assertEqual(shortcut_with_other_company.company_id, self.company_other,
+                         "shortcut should stay synced with target")
+        document_with_other_company.folder_id = self.folder_a
+        self.assertEqual(document_with_other_company.company_id, self.company_allowed)
+        self.assertEqual(shortcut_with_other_company.company_id, self.company_allowed,
+                         "shortcut should have been updated along with its target")
+
+        document_without_company = self.env['documents.document'].create({'name': 'doc'})
+        self.assertFalse(document_without_company.company_id)
+        document_without_company.write({'folder_id': self.folder_a.id, 'company_id': False})
+        self.assertFalse(document_without_company.company_id)
+        document_without_company.write({'folder_id': self.folder_b.id, 'company_id': None})
+        self.assertFalse(document_without_company.company_id)
+        document_without_company.write({'folder_id': self.folder_a.id, 'company_id': self.company_other.id})
+        self.assertEqual(document_without_company.company_id, self.company_other)

@@ -2065,6 +2065,9 @@ class DocumentsDocument(models.Model):
                 partners={access.partner_id: (access.role, access.expiration_date)
                           for access in new_parent_folder.access_ids},
             )
+            # Propagate folder company unless passed as well (already done)
+            if 'company_id' not in vals:
+                documents_to_sync._update_company(new_parent_folder.company_id.id)
 
         return write_result
 
