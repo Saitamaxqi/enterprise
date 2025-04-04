@@ -88,7 +88,6 @@ class AccountBatchPayment(models.Model):
                 "payment_identifier": batch.payment_identifier,
                 "account_id": account_online_account.online_identifier,
                 "payment_type": "bulk",
-                "provider_data": account_online_account.account_online_link_id.provider_data,
             }
 
             while True:
@@ -175,7 +174,6 @@ class AccountBatchPayment(models.Model):
             "date": fields.Date.to_string(self.date),
             "payment_type": "bulk",
             "payments": payments,
-            "provider_data": self.journal_id.account_online_link_id.provider_data,
             "reference": self.name,
         }
 

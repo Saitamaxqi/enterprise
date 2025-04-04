@@ -161,7 +161,6 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
             'account_id': False,
             'last_transaction_identifier': False,
             'currency_code': 'EUR',
-            'provider_data': False,
             'account_data': False,
             'include_foreign_currency': True,
         }

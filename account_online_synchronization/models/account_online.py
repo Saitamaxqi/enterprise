@@ -203,13 +203,9 @@ class AccountOnlineAccount(models.Model):
         """
         data = {'account_id': self.online_identifier}
         while True:
-            # While this is kind of a bad practice to do, it can happen that provider_data/account_data change between
-            # 2 calls, the reason is that those field contains the encrypted information needed to access the provider
-            # and first call can result in an error due to the encrypted token inside provider_data being expired for example.
-            # In such a case, we renew the token with the provider and send back the newly encrypted token inside provider_data
-            # which result in the information having changed, henceforth why those fields are passed at every loop.
+            # account_data and fetching_status can be updated in the middle of the loop.
+            # Enforces that the information we give is always the right one
             data.update({
-                'provider_data': self.account_online_link_id.provider_data,
                 'account_data': self.account_data,
                 'fetching_status': self.fetching_status,
             })
@@ -245,13 +241,8 @@ class AccountOnlineAccount(models.Model):
             'include_foreign_currency': True,
         }
         while True:
-            # While this is kind of a bad practice to do, it can happen that provider_data/account_data change between
-            # 2 calls, the reason is that those field contains the encrypted information needed to access the provider
-            # and first call can result in an error due to the encrypted token inside provider_data being expired for example.
-            # In such a case, we renew the token with the provider and send back the newly encrypted token inside provider_data
-            # which result in the information having changed, henceforth why those fields are passed at every loop.
+            # Ensures that the account_data given is always up-to-date, in case of a refresh in the middle of these calls.
             data.update({
-                'provider_data': self.account_online_link_id.provider_data,
                 'account_data': self.account_data,
             })
             resp_json = self.account_online_link_id._fetch_odoo_fin(f'/proxy/v2/transactions/{transactions_type}', data=data)
@@ -390,7 +381,6 @@ class AccountOnlineLink(models.Model):
     refresh_token = fields.Char(help="Token used to sign API request, Never disclose it",
                                 readonly=True, groups="base.group_system")
     access_token = fields.Char(help="Token used to access API.", readonly=True, groups="account.group_account_basic")
-    provider_data = fields.Char(help="Information needed to interact with third party provider", readonly=True)
     expiring_synchronization_date = fields.Date(help="Date when the consent for this connection expires",
                                                 readonly=True)
     journal_ids = fields.One2many('account.journal', compute='_compute_journal_ids')
@@ -636,14 +626,6 @@ class AccountOnlineLink(models.Model):
             message = result.get('display_message') or False
             subject = message and _('Message') or False
             self._log_information(state=state, message=message, subject=subject)
-            if result.get('provider_data'):
-                # Provider_data is extremely important and must be saved as soon as we received it
-                # as it contains encrypted credentials from external provider and if we loose them we
-                # loose access to the bank account, As it is possible that provider_data
-                # are received during a transaction containing multiple calls to the proxy, we ensure
-                # that provider_data is committed in database as soon as we received it.
-                self.provider_data = result.get('provider_data')
-                self.env.cr.commit()
             return result
         else:
             error = resp_json.get('error')
@@ -664,7 +646,7 @@ class AccountOnlineLink(models.Model):
             elif error.get('code') == 300:  # redirect, not an error
                 raise OdooFinRedirectException(mode=error.get('data', {}).get('mode', 'link'))
             # If we are in the process of deleting the record ignore code 100 (invalid signature), 104 (account deleted)
-            # 106 (provider_data corrupted) and allow user to delete his record from this side.
+            # 106 (account_data corrupted) and allow user to delete his record from this side.
             elif error.get('code') in (100, 104, 106) and self.env.context.get('delete_sync'):
                 return {'delete': True}
             # Log and raise error
@@ -750,7 +732,7 @@ class AccountOnlineLink(models.Model):
         to_unlink = self.env['account.online.link']
         for link in self:
             try:
-                resp_json = link.with_context(delete_sync=True)._fetch_odoo_fin('/proxy/v1/delete_user', data={'provider_data': link.provider_data}, ignore_status=True)  # delete proxy user
+                resp_json = link.with_context(delete_sync=True)._fetch_odoo_fin('/proxy/v1/delete_user', ignore_status=True)  # delete proxy user
                 if resp_json.get('delete', True) is True:
                     to_unlink += link
             except (OdooFinRedirectException, UserError, RedirectWarning):
@@ -778,12 +760,6 @@ class AccountOnlineLink(models.Model):
         }
         swift_code = False
         while True:
-            # While this is kind of a bad practice to do, it can happen that provider_data changes between
-            # 2 calls, the reason is that that field contains the encrypted information needed to access the provider
-            # and first call can result in an error due to the encrypted token inside provider_data being expired for example.
-            # In such a case, we renew the token with the provider and send back the newly encrypted token inside provider_data
-            # which result in the information having changed, henceforth why that field is passed at every loop.
-            data['provider_data'] = self.provider_data
             # Retrieve information about a specific account
             if online_identifier:
                 data['online_identifier'] = online_identifier
@@ -1007,7 +983,6 @@ class AccountOnlineLink(models.Model):
     def _cron_delete_unused_connection(self):
         account_online_links = self.search([
             ('write_date', '<=', fields.Datetime.now() - relativedelta(months=1)),
-            ('provider_data', '!=', False)
         ])
         for link in account_online_links:
             if not link.account_online_account_ids.filtered('journal_ids'):
@@ -1028,13 +1003,6 @@ class AccountOnlineLink(models.Model):
         if data:
             journal_type = data.pop('journal_type', None) or 'bank'
             self.write(data)
-            # Provider_data is extremely important and must be saved as soon as we received it
-            # as it contains encrypted credentials from external provider and if we loose them we
-            # loose access to the bank account, As it is possible that provider_data
-            # are received during a transaction containing multiple calls to the proxy, we ensure
-            # that provider_data is committed in database as soon as we received it.
-            if data.get('provider_data'):
-                self.env.cr.commit()
 
             self._update_connection_status()
         # if for some reason we just have to update the record without doing anything else, the mode will be set to 'none'
@@ -1117,10 +1085,10 @@ class AccountOnlineLink(models.Model):
     def action_new_synchronization(self, preferred_inst=None, journal_id=False, journal_type='bank'):
         # Search for an existing link that was not fully connected
         online_link = self
-        if not online_link or online_link.provider_data:
-            online_link = self.search([('account_online_account_ids', '=', False), ('provider_data', '=', False)], limit=1)
+        if not online_link:
+            online_link = self.search([('account_online_account_ids', '=', False)], limit=1)
         # If not found, create a new one
-        if not online_link or online_link.provider_data:
+        if not online_link:
             online_link = self.create({})
         return online_link._open_iframe('link', preferred_institution=preferred_inst, journal_id=journal_id, journal_type=journal_type)
 
@@ -1171,8 +1139,6 @@ class AccountOnlineLink(models.Model):
                 'dialog_size': 'medium',
             },
         }
-        if self.provider_data:
-            action['params']['providerData'] = self.provider_data
         if preferred_institution:
             action['params']['includeParam']['clickedInstitution'] = preferred_institution
         if journal_id:
