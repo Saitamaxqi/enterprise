@@ -83,6 +83,9 @@ export const FIELD_TYPE_ATTRIBUTES = {
     selection: {
         common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
     },
+    text: {
+        common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
+    },
 };
 
 /**

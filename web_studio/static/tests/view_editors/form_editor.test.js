@@ -854,6 +854,25 @@ test("CharField can edit its placeholder_field option", async () => {
     );
 });
 
+test("TextField can edit its placeholder", async () => {
+    Coucou._fields.text = fields.Text();
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
+        <sheet>
+            <group>
+                <field name="text" class="studio"/>
+            </group>
+        </sheet>
+    </form>
+    `,
+    });
+    await contains(".o_cell[data-field-name=text]").click();
+    expect(".o_web_studio_property input[name=placeholder]").toHaveCount(1);
+    expect(".o_web_studio_property[name=placeholder_field]").toHaveCount(1);
+});
+
 test("form editor - chatter edition", async () => {
     onRpc("/web_studio/get_email_alias", () => ({ email_alias: "coucou" }));
     await mountViewEditor({
