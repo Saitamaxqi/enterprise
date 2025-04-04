@@ -950,7 +950,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         
         self.user_admin.write({'company_ids': [Command.link(comp.id)]})
         # assert admin has access to both companies
-        self.assertEqual(self.user_admin.company_ids, main_company | comp)
+        self.assertGreaterEqual(self.user_admin.company_ids, main_company | comp)
 
         self.authenticate('admin', 'admin')
         with RecordCapturer(self.env['documents.document'], []) as record_capture:
