@@ -574,3 +574,23 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         expected_message = tools.html2plaintext(purchase_orders_state_change_log_message)
         actual_logged_message = tools.html2plaintext(approval_request_chatter_message.body)
         self.assertEqual(expected_message, actual_logged_message)
+
+    def test_product_line_add_seller(self):
+        product_without_vendor = self.product_mouse
+        request_form = self.create_request_form(approver=self.user_approver)
+        with request_form.product_line_ids.new() as line:
+            line.product_id = product_without_vendor
+            line.quantity = 1
+        request_purchase = request_form.save()
+        request_purchase.action_confirm()
+        request_purchase.with_user(self.user_approver).action_approve()
+        with self.assertRaises(UserError):  # No vendor on the product should block the RFQ generation
+            request_purchase.action_create_purchase_orders()
+
+        seller = self.env['product.supplierinfo'].create({
+            'partner_id': self.partner_seller_1.id,
+            'min_qty': 5,
+            'price': 250,
+        })
+        product_without_vendor.seller_ids = [(6, 0, [seller.id])]
+        request_purchase.action_create_purchase_orders()  # Should not raise any error as we added a vendor

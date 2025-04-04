@@ -44,7 +44,7 @@ class ApprovalProductLine(models.Model):
             else:
                 line.po_uom_qty = 0.0
 
-    @api.depends('product_id', 'po_uom_qty')
+    @api.depends('product_id', 'po_uom_qty', 'product_id.seller_ids')
     def _compute_seller_id(self):
         for line in self:
             if line.product_id and line.po_uom_qty:
@@ -52,8 +52,14 @@ class ApprovalProductLine(models.Model):
                     quantity=line.po_uom_qty,
                     uom_id=line.product_id.uom_id,
                 )
+                if not line.seller_id:
+                    # If no vendor found for the right quantity, we still want to display a vendor if any
+                    line.seller_id = line.product_id.with_company(line.company_id)._select_seller(
+                        quantity=None,
+                        uom_id=line.product_id.uom_id,
+                    )
 
-    @api.depends('product_id', 'po_uom_qty')
+    @api.depends('product_id', 'po_uom_qty', 'product_id.seller_ids')
     def _compute_has_no_seller(self):
         for line in self:
             line.has_no_seller = False
@@ -62,10 +68,16 @@ class ApprovalProductLine(models.Model):
                     quantity=line.po_uom_qty,
                     uom_id=line.product_id.uom_id,
                 ))
+                if line.has_no_seller:
+                    # If no vendor found for the right quantity, we still want to know if there is a vendor
+                    line.has_no_seller = not bool(line.product_id.with_company(line.company_id)._select_seller(
+                        quantity=None,
+                        uom_id=line.product_id.uom_id,
+                    ))
 
     def _check_products_vendor(self):
         """ Raise an error if at least one product requires a seller. """
-        product_lines_without_seller = self.filtered(lambda line: not line.seller_id)
+        product_lines_without_seller = self.filtered(lambda line: line.has_no_seller)
         if product_lines_without_seller:
             product_names = product_lines_without_seller.product_id.mapped('display_name')
             raise UserError(

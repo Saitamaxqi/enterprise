@@ -75,7 +75,10 @@ class ApprovalRequest(models.Model):
     def _create_purchase_orders(self):
         self.product_line_ids._check_products_vendor()
         for line in self.product_line_ids:
-            seller = line.seller_id
+            seller = line.seller_id or line.product_id.with_company(line.company_id)._select_seller(
+                quantity=line.po_uom_qty,
+                uom_id=line.product_id.uom_po_id,
+            )
             vendor = seller.partner_id
             po_domain = line._get_purchase_orders_domain(vendor)
             purchase_orders = self.env['purchase.order'].search(po_domain)
