@@ -38,7 +38,7 @@ class AccountJournal(models.Model):
         return super()._parse_bank_statement_file(raw_file)
 
     def _parse_bank_statement_file_camt(self, root):
-        ns = {k or 'ns': v for k, v in root.nsmap.items()}
+        ns = {'ns': root.xpath('namespace-uri(.)')}
 
         curr_cache = {c['name']: c['id'] for c in self.env['res.currency'].search_read([], ['id', 'name'])}
         statements_per_iban = {}

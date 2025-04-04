@@ -450,3 +450,24 @@ class TestAccountBankStatementImportCamt(AccountTestInvoicingCommon):
         self.assertRecordValues(imported_statement.line_ids, [{
             'amount': 1672.98,
         }])
+
+    def test_camt_file_import_namespace(self):
+        """
+        Ensures that CAMT files using namespaces can be imported.
+        """
+        usd_currency = self.env.ref('base.USD')
+        self.assertEqual(self.env.company.currency_id.id, usd_currency.id)
+        self._test_minimal_camt_file_import('camt_053_namespace.xml', usd_currency)
+
+    def test_camt_file_import_custom_code(self):
+        """
+        Ensures that CAMT files with custom codes can be imported.
+        """
+        usd_currency = self.env.ref('base.USD')
+        self.assertEqual(self.env.company.currency_id.id, usd_currency.id)
+        self._test_minimal_camt_file_import('camt_053_custom_codes.xml', usd_currency)
+        bank_st_record = self.env['account.bank.statement'].search(
+            [('name', '=', '2514988305.2019-02-13')]
+        ).filtered(lambda bk_stmt: bk_stmt.currency_id == usd_currency).ensure_one()
+        line = bank_st_record.line_ids.ensure_one()
+        self.assertEqual(line.transaction_type, "custom_code: custom_family (custom_subfamily)")
