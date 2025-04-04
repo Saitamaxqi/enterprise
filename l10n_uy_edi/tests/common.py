@@ -202,12 +202,12 @@ class TestUyEdi(AccountTestInvoicingCommon):
     def _mock_cron_l10n_uy_edi_get_vendor_bills(self, expected_folder, get_pdf=False):
         """ Call the cron to create vendor bills, will simulate that we have a notification, we read it and process
         the info and pdf of the vendor bill and then will stop the cron because there ar not more notificactions """
-        with patch(f"{self.utils_path}._ucfe_inbox") as mock_inbox, patch(f"{self.utils_path}._ucfe_query", \
-            return_value=self._mocked_response(expected_folder + "_pdf" if get_pdf else False)):
+        with patch(f"{self.utils_path}._ucfe_inbox") as mock_inbox, patch(f"{self.utils_path}._ucfe_query",
+            return_value=self._mocked_response(expected_folder + '_pdf' if get_pdf else False)):
             mock_inbox.side_effect = [
                 self._mocked_response(expected_folder + '/response_600'),  # Find if they are notifications available
                 self._mocked_response(expected_folder + '/response_610'),  # Read the notification
-                self._mocked_response(expected_folder + "/_status"),  # Update the status of the CFE
+                self._mocked_response(expected_folder + '/_status'),  # Update the status of the CFE
                 self._mocked_response(expected_folder + '/response_620'),  # Discard Notification
                 self._mocked_response(expected_folder + '/response_600_end'),  # No more notifications
             ]
@@ -237,7 +237,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
         self.assertXmlTreeEqual(expected_xml, result_xml)
 
     def _mock_attachment_upload(self, journal, filename):
-        filename =  filename + ".xml"
+        filename = filename + ".xml"
         content = misc.file_open("l10n_uy_edi/tests/sobres_from_uruware/" + filename, mode="rb").read()
         attachment = self.env['ir.attachment'].create({
             'raw': content,

@@ -140,7 +140,7 @@ class TestMock(common.TestUyEdi):
         available, so also exists a move that will be created. The goal of this tests is not to check if the received
         pdf is created because it is private information of an Uruware user and also is not updated the dgi state."""
         self._mock_cron_l10n_uy_edi_get_vendor_bills('test_130_cron_vendor_bills_ok')
-        new_move_created = self.env['l10n_uy_edi.document'].search([('uuid', '=', '9695285')]).move_id
+        new_move_created = self.env['l10n_uy_edi.document'].search([('uuid', '=', '9695285-notification')]).move_id
         self.assertEqual(new_move_created.name, 'e-FC A1419036')
         self.assertEqual(new_move_created.invoice_date.strftime('%Y-%m-%d'), '2025-10-01')
         self.assertEqual(new_move_created.invoice_date_due.strftime('%Y-%m-%d'), '2025-11-15')

@@ -2,9 +2,6 @@ from unittest.mock import patch
 
 from odoo import Command, fields
 from odoo.tests.common import tagged
-from odoo.tools import misc
-from lxml import etree
-import datetime
 
 from . import common
 

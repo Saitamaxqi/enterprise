@@ -846,6 +846,14 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"The invoice partner has account payable without account currency but this "
+"move has '%(currency)s' currency."
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "The partner of the CFE needs to have an Identification Type"
 msgstr ""
 
@@ -993,9 +1001,17 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"Up to now it is not possible to create %(doc_type_name)s documents. IdReq: "
+"%(l10n_uy_idreq)s"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid ""
-"Up to now it is not possible to create e-Resguardo or e-Delivery documents"
+"For now it is not possible to create %(latam_document_name)s documents"
 msgstr ""
 
 #. module: l10n_uy_edi
