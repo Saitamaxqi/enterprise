@@ -869,6 +869,69 @@ class PlanningSlot(models.Model):
             shifts = super().create(vals_list)
         return shifts
 
+    def create_batch_from_calendar(self, vals_list):
+        if not len(vals_list):
+            return
+        template_id = self.env['planning.slot.template'].browse(vals_list[0]['template_id'])
+
+        resources = self.env['resource.resource']
+        resource_per_id = {}
+        min_datetime = datetime.strptime(vals_list[0]['start_datetime'], '%Y-%m-%d %H:%M:%S')
+        max_datetime = datetime.strptime(vals_list[-1]['end_datetime'], '%Y-%m-%d %H:%M:%S')
+        if template_id.duration_days > 1:
+            max_datetime = max_datetime + relativedelta(months=2)
+
+        for vals in vals_list:
+            if resource_id := vals.get('resource_id'):
+                resource = resource_per_id.get(resource_id)
+                if not resource:
+                    resource = resources.browse(resource_id)
+                    resource_per_id[resource_id] = resource
+                    resources |= resource
+
+        user_tz = pytz.timezone(self._get_tz())
+        schedule, _ = resources._get_valid_work_intervals(min_datetime.astimezone(user_tz),
+                                                          max_datetime.astimezone(user_tz))
+        vals_list_updated_slots = []
+        if template_id.duration_days > 1:
+            for vals in vals_list:
+                if resource_id := vals.get('resource_id'):
+                    end_datetime = datetime.strptime(vals['end_datetime'], '%Y-%m-%d %H:%M:%S')
+                    current_end_datetime = end_datetime - relativedelta(days=template_id.duration_days)
+                    current_start_datetime = datetime.strptime(vals['start_datetime'], '%Y-%m-%d %H:%M:%S') - relativedelta(days=1)
+                    working_days_to_assign = template_id.duration_days
+                    while working_days_to_assign > 0 and current_end_datetime < max_datetime:
+
+                        current_start_datetime += relativedelta(days=1)
+                        current_end_datetime += relativedelta(days=1)
+                        shift_interval = Intervals([(
+                            current_start_datetime.astimezone(user_tz),
+                            current_end_datetime.astimezone(user_tz),
+                            self.env['resource.calendar.attendance'],
+                        )])
+                        if shift_interval & schedule[resource_id]:
+                            working_days_to_assign -= 1
+
+                    vals['end_datetime'] = current_end_datetime.strftime('%Y-%m-%d %H:%M:%S')
+                    vals_list_updated_slots.append(vals)
+                else:
+                    vals_list_updated_slots = vals_list
+                    break
+        else:
+            for vals in vals_list:
+                if resource_id := vals.get('resource_id'):
+                    shift_interval = Intervals([(
+                        datetime.strptime(vals['start_datetime'], '%Y-%m-%d %H:%M:%S').astimezone(user_tz),
+                        datetime.strptime(vals['end_datetime'], '%Y-%m-%d %H:%M:%S').astimezone(user_tz),
+                        self.env['resource.calendar.attendance'],
+                    )])
+                    if shift_interval & schedule[resource_id]:
+                        vals_list_updated_slots.append(vals)
+                else:
+                    vals_list_updated_slots.append(vals)
+
+        return self.create(vals_list_updated_slots)
+
     def write(self, values):
         new_resource = self.env['resource.resource'].browse(values['resource_id']) if 'resource_id' in values else None
         if new_resource and new_resource.resource_type == 'material':

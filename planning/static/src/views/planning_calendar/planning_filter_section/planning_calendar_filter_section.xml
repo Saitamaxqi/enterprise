@@ -19,4 +19,17 @@
             </t>
         </xpath>
     </t>
+
+    <t t-name="planning.PlanningCalendarFilterSection" t-inherit="web.CalendarFilterSection" t-inherit-mode="primary">
+        <xpath expr="//t[@t-if='optionScope.data.id and section.avatar.field']" position="replace">
+            <t t-if="optionScope.data.id and section.avatar.field">
+                <t t-if="optionScope.data.isHumanResource">
+                    <img class="rounded me-1 o_avatar" t-attf-src="/web/image/{{ section.avatar.model }}/{{ optionScope.data.id }}/{{ section.avatar.field }}"/>
+                </t>
+                <t t-else="">
+                    <i t-attf-class="me-1 o_cw_filter_avatar o_avatar rounded fa fa-wrench"/>
+                </t>
+            </t>
+        </xpath>
+    </t>
 </templates>

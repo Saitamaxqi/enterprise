@@ -14,3 +14,4 @@ access_planning_slot_template_user,planning.slot.template.user,planning.model_pl
 access_planning_slot_template_manager,planning.slot.template.manager,planning.model_planning_slot_template,planning.group_planning_manager,1,1,1,1
 access_planning_send,access.planning.send,model_planning_send,planning.group_planning_manager,1,1,1,0
 access_planning_analysis_report_user,planning.analysis.report,model_planning_analysis_report,planning.group_planning_user,1,0,0,0
+access_planning_calendar_resource,planning.calendar.resource,model_planning_calendar_resource,planning.group_planning_user,1,1,1,1

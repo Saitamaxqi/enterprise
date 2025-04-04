@@ -384,14 +384,27 @@
         <field name="name">planning.slot.calendar</field>
         <field name="model">planning.slot</field>
         <field name="arch" type="xml">
-            <calendar string="Planning" date_start="start_datetime" date_stop="end_datetime" color="color" form_view_id="%(planning_view_form_in_gantt)d" event_open_popup="true" quick_create="0" js_class="planning_calendar" mode="month" show_unusual_days="True">
-                <field name="resource_id" avatar_field="avatar_128" widget="many2one_avatar_resource"/>
+            <calendar string="Planning"
+                      date_start="start_datetime"
+                      date_stop="end_datetime"
+                      color="color"
+                      multi_create_view="planning.shifts_template_for_multi_create_in_calendar_view"
+                      form_view_id="%(planning_view_form_in_gantt)d"
+                      event_open_popup="true"
+                      quick_create="0"
+                      js_class="planning_calendar"
+                      mode="month"
+                      show_unusual_days="True"
+            >
+                 <field name="resource_id" avatar_field="avatar_128" widget="many2one_avatar_resource" filters="1"
+                        write_model="planning.calendar.resource" write_field="resource_id" filter_field="checked"/>
+
                 <field name="resource_type" invisible="1"/>
                 <field name="is_hatched" invisible="1" />
                 <field name="repeat" invisible="1" />
                 <field name="resource_type" invisible="1"/>
                 <field name="resource_color" invisible="1"/>
-                <field name="role_id" filters="1" color="color" invisible="resource_type == 'material'"/>
+                <field name="role_id" invisible="1"/>
                 <field name="allocated_hours" invisible="1"/>
                 <field name="allocated_percentage" invisible="1"/>
                 <field name="state" invisible="1"/>
@@ -435,10 +448,22 @@
         <field name="model">planning.slot</field>
         <field name="priority">25</field>
         <field name="arch" type="xml">
-            <calendar string="Planning" date_start="start_datetime" date_stop="end_datetime" color="color" form_view_id="%(planning_view_form_in_gantt)d" event_open_popup="true" show_unusual_days="True" quick_create="0" js_class="planning_calendar" mode="month">
-                <field name="resource_id" avatar_field="avatar_128" widget="many2one_avatar_resource"/>
+            <calendar string="Planning"
+                      date_start="start_datetime"
+                      date_stop="end_datetime"
+                      color="color"
+                      multi_create_view="planning.shifts_template_for_multi_create_in_calendar_view"
+                      form_view_id="%(planning_view_form_in_gantt)d"
+                      event_open_popup="true"
+                      show_unusual_days="True"
+                      quick_create="0"
+                      js_class="planning_calendar"
+                      mode="month"
+            >
+                <field name="resource_id" avatar_field="avatar_128" widget="many2one_avatar_resource" filters="1"
+                        write_model="planning.calendar.resource" write_field="resource_id" filter_field="checked"/>
                 <field name="resource_type" invisible="1"/>
-                <field name="role_id" filters="1" color="color" invisible="resource_type == 'material'"/>
+                <field name="role_id" invisible="1"/>
                 <field name="allocated_hours" invisible="1"/>
                 <field name="allocated_percentage" invisible="1"/>
                 <field name="state" invisible="1"/>
@@ -446,6 +471,18 @@
             </calendar>
         </field>
     </record>
+
+    <record id="shifts_template_for_multi_create_in_calendar_view" model="ir.ui.view">
+         <field name="name">planning.slot.form</field>
+         <field name="model">planning.slot</field>
+         <field name="arch" type="xml">
+             <form string="Planning Role">
+                 <group>
+                     <field name="template_id" options="{'no_quick_create': True}" required="1"/>
+                 </group>
+             </form>
+         </field>
+     </record>
 
     <record id="planning_view_kanban_inherit" model="ir.ui.view">
         <field name="name">planning.slot.kanban</field>

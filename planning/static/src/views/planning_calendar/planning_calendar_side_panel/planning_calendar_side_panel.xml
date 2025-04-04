@@ -8,5 +8,17 @@
                 <img src="/hr/static/src/img/icons/hatched.svg" width="30px" class="mb-1"/><span>Draft</span><br/>
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('btn-group')]" position="replace">
+            <div class="btn-group">
+                <button class="btn btn-secondary" t-att-class="{'active': props.mode === MODES.filter}" data-tooltip="Filter by specific resources to show only their shifts"  t-on-click.stop="() => this.props.setMode(MODES.filter)"><i class="fa fa-filter"/></button>
+                <button class="btn btn-secondary" t-att-class="{'active': props.mode === MODES.add}" data-tooltip="Click on a day or select a range of days to create shifts for the selected resources using the shift template" t-on-click="() => this.props.setMode(MODES.add)"><i class="fa fa-plus"/></button>
+                <button class="btn btn-secondary" t-att-class="{'active': props.mode === MODES.delete}" data-tooltip="Clicking on a day or selecting a range of days will permanently delete its contents" t-on-click="() => this.props.setMode(MODES.delete)">
+                    <i class="fa fa-trash" t-att-class="{'text-danger': props.mode === MODES.delete}"/>
+                </button>
+             </div>
+        </xpath>
+        <xpath expr="//DatePicker" position="replace">
+            <DatePicker t-if="showDatePicker" t-props="datePickerProps"/>
+        </xpath>
     </t>
 </templates>
