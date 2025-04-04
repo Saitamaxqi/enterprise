@@ -489,8 +489,10 @@ class AccountBankStatementLine(models.Model):
             ))
         move = self.move_id.with_context(force_delete=True, skip_readonly_check=True)
         move.line_ids = lines_commands
-        if partner_id := self._get_partner_id({line['partner_id'] for line in lines_to_add if line.get('partner_id')}):
-            move.line_ids.filtered(lambda line: not line.partner_id).partner_id = partner_id
+        partner_id = self._get_partner_id({line['partner_id'] for line in lines_to_add if line.get('partner_id')})
+        partner = self.env['res.partner'].browse(partner_id)
+        if partner and partner.company_id == partner.company_id.root_id:
+            move.line_ids.filtered(lambda line: not line.partner_id).partner_id = partner
 
         # Create missing partner bank if necessary.
         if self.account_number and self.partner_id:

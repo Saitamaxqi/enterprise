@@ -1074,3 +1074,36 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             'date': fields.Date.from_string('2017-01-31'),
             'amount_total_signed': 200.0,
         }])
+
+    def test_reconciliation_with_branch(self):
+        """
+        Test that the reconciliation flow doesn't break with aml from branch and st line from root company
+        """
+        company = self.company_data['company']
+        branch = self.env['res.company'].create({
+            'name': "Branch A",
+            'parent_id': company.id,
+        })
+        # Load CoA
+        self.cr.precommit.run()
+
+        partner_branch = self.env['res.partner'].create({
+            'name': 'Partner Branch',
+            'company_id': branch.id,
+        })
+
+        aml = self._create_invoice_line(
+            'out_invoice',
+            company_id=branch.id,
+            partner_id=partner_branch.id,
+            invoice_date='2019-01-01',
+            invoice_line_ids=[{'name': 'Test reco', 'quantity': 1, 'price_unit': 1000}],
+        )
+        st_line = self._create_st_line(
+            1000.0,
+            company_id=company.id,
+            date='2019-01-01',
+            payment_ref='Test reco',
+        )
+
+        st_line.set_line_bank_statement_line(aml.ids)
