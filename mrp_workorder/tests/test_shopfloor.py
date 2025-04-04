@@ -668,7 +668,7 @@ class TestShopFloor(HttpCase):
         mos.button_plan()
         action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.action_mrp_display")
         url = '/web?#action=%s' % (action['id'])
-        self.start_tour(url, "test_component_registration_on_split_productions", login='admin')
+        self.start_tour(url, "test_component_registration_on_split_productions", login='admin', step_delay=500)
         # check that both productions were splitted and that the component registration was not erased.
         self.assertEqual([len(mo.procurement_group_id.mrp_production_ids) for mo in mos], [2, 2])
         self.assertRecordValues(mos[0].move_raw_ids, [

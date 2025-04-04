@@ -35,12 +35,7 @@ registry
             {
                 content: 'Pick an invalid start date',
                 trigger: 'input[name=renting_start_date]',
-                run: 'edit 01/01/2000 00:00:00',
-            },
-            {
-                content: 'Apply change',
-                trigger: 'input[name=renting_start_date]',
-                run: 'press Enter',
+                run: 'edit 01/01/2000 00:00:00 && press Tab',
             },
             {
                 content: 'Check that css_not_available has been added to the product form',
@@ -49,12 +44,12 @@ registry
             {
                 content: 'Pick a valid end date first (otherwise start date after end date)',
                 trigger: 'input[name=renting_end_date]',
-                run: `edit ${getValidNextEndDatetime()}`,
+                run: `edit ${getValidNextEndDatetime()} && press Tab`,
             },
             {
                 content: 'Pick a valid start date',
                 trigger: 'input[name=renting_start_date]',
-                run: `edit ${getValidNextStartDatetime()}`,
+                run: `edit ${getValidNextStartDatetime()} && press Tab`,
             },
             {
                 content: 'Check that css_not_available has been removed',
