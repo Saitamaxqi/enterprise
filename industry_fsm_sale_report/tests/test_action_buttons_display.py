@@ -15,7 +15,7 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
     """ Test visibility of the following buttons:
         - START/STOP/PAUSE/RESUME
         - Send/Sign Report
-        - Customer Preview
+        - Preview
     """
 
     @classmethod
@@ -344,10 +344,10 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
         image = base64.b64encode(f.read())
         self.task.worksheet_signature = image
         self.task._compute_show_customer_preview()
-        self.assertTrue(self.task.show_customer_preview, 'The Customer Preview button should be visible as the report was signed')
+        self.assertTrue(self.task.show_customer_preview, 'The Preview button should be visible as the report was signed')
 
     def test_customer_preview_report_sent(self):
         self.assertFalse(self.task.show_customer_preview)
         self.task.fsm_is_sent = True
         self.task._compute_show_customer_preview()
-        self.assertTrue(self.task.show_customer_preview, 'The Customer Preview button should be visible as the report was sent')
+        self.assertTrue(self.task.show_customer_preview, 'The Preview button should be visible as the report was sent')

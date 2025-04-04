@@ -56,6 +56,7 @@
             <xpath expr="//div[@name='button_box']" position="inside">
                 <field name="show_customer_preview" invisible="1"/>
                 <button
+                    string="Preview"
                     class="oe_stat_button"
                     name="action_preview_worksheet"
                     icon="fa-globe"

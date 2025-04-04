@@ -391,7 +391,7 @@ class HelpdeskTicket(models.Model):
                 'tag': 'display_notification',
                 'params': {
                     'type': 'danger',
-                    'message': _('At this time, there is no customer preview available to show. The current ticket cannot be accessed by the customer, as it belongs to a helpdesk team that is not publicly available, or there is no customer associated with the ticket.'),
+                    'message': _('At this time, there is no preview available to show. The current ticket cannot be accessed by the customer, as it belongs to a helpdesk team that is not publicly available, or there is no customer associated with the ticket.'),
                 }
             }
         return {
