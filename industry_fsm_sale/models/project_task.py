@@ -160,7 +160,7 @@ class ProjectTask(models.Model):
     def _compute_material_line_totals(self):
 
         def if_fsm_material_line(sale_line_id, task, employee_mapping_product_ids=None):
-            is_not_timesheet_line = sale_line_id.product_id != task.timesheet_product_id
+            is_not_timesheet_line = sale_line_id.product_id != task.sudo().timesheet_product_id
             if employee_mapping_product_ids:  # Then we need to search the product in the employee mappings
                 is_not_timesheet_line = is_not_timesheet_line and sale_line_id.product_id.id not in employee_mapping_product_ids
             is_not_empty = sale_line_id.product_uom_qty != 0
