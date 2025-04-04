@@ -13,3 +13,8 @@
         box-shadow: inset map-get($spacers, 1) 0 0 $warning;
     }
 }
+
+.o_mrp_employees_panel_btn {
+    height: 2.75rem;
+    max-width: 45%;
+}

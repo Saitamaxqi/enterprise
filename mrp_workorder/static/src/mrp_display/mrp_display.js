@@ -59,6 +59,7 @@ export class MrpDisplay extends Component {
         this.pwaService = useService("pwa");
         this.overlayService = useService("overlay");
         this.menu = useService("menu");
+        this.ui = useService("ui");
 
         this.adminId = false;
         this.barcodeTargetRecordId = false;

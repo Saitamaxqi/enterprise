@@ -1,4 +1,5 @@
 import { Component } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
 
 export class MrpDisplayEmployeesPanel extends Component {
     static template = "mrp_workorder.MrpDisplayEmployeesPanel";
@@ -7,4 +8,8 @@ export class MrpDisplayEmployeesPanel extends Component {
         setSessionOwner: { type: Function },
         popupAddEmployee: { type: Function },
     };
+
+    setup() {
+        this.ui = useService("ui");
+    }
 }

@@ -1,7 +1,10 @@
 .o_mrp_display {
     .o_cp_searchview {
+        margin-left: auto;
         min-height: var(--interaction-min-size);
-        width: 26rem;
+        @include media-breakpoint-up(md) {
+            width: 26rem;
+        }
     }
 
     .o_search_bar_menu {
