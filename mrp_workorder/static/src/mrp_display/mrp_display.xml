@@ -64,8 +64,21 @@
                     </ul>
                 </div>
             </div>
-            <div t-if="state.firstLoad" class="h-100 w-100 bg-cover d-flex justify-content-around align-items-end" style="background: no-repeat center / contain url('/mrp_workorder/static/img/drawing.svg')">
-                <button class="btn btn-lg btn-primary mb-5" t-on-click="() => this.toggleWorkcenterDialog()">Configure Station</button>
+            <div t-if="state.firstLoad" class="d-flex align-items-center justify-content-center overflow-hidden">
+                <div class="o_mrp_display_onboarding_image position-relative ms-5">
+                    <img class="position-absolute z-n1" src="/mrp_workorder/static/img/op_sidebar.png" alt="Shop Floor Onboarding Image"/>
+                    <span class="o_annotation o_annotation_1 o_annotation_end position-absolute fw-bolder">Time Clock</span>
+                    <span class="o_annotation o_annotation_2 o_annotation_end position-absolute fw-bolder">Quality Control</span>
+                    <span class="o_annotation o_annotation_3 position-absolute fw-bolder">Work Orders</span>
+                    <span class="o_annotation o_annotation_4 o_annotation_start position-absolute fw-bolder">Track Materials</span>
+                    <span class="o_annotation o_annotation_5 o_annotation_start position-absolute fw-bolder">Multi Operators</span>
+                    <span class="o_annotation o_annotation_6 o_annotation_end position-absolute fw-bolder">Maintenance</span>
+                    <span class="o_annotation o_annotation_7 o_annotation_start position-absolute fw-bolder">Feedback Loop</span>
+
+                </div>
+                <div class="o_mrp_display_onboarding_button_container position-fixed bottom-0 w-100 text-center">
+                    <button class="btn btn-lg btn-primary my-5" t-on-click="() => this.toggleWorkcenterDialog()">Activate your Work Centers</button>
+                </div>
             </div>
             <main t-else="" class="o_mrp_display_content o_content o_component_with_search_panel">
                 <MrpDisplayEmployeesPanel t-if="groups.workorders" employees="useEmployee.employees"

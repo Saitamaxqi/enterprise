@@ -15,7 +15,8 @@ body:has(.o_mrp_display) {
     .o_work_centers_container,
     .o_cp_burger_menu,
     .o_mrp_display_content,
-    .o_mrp_display_back_button {
+    .o_mrp_display_back_button,
+    .o_mrp_display_onboarding_button_container {
         & .btn, &.btn {
             --btn-padding-x: var(--o-btn-padding-x);
             --btn-padding-y: var(--o-btn-padding-y);
@@ -75,4 +76,103 @@ body:has(.o_mrp_display) {
     .o_tabular_nums {
         font-variant-numeric: tabular-nums;
     }
+}
+
+.o_mrp_display_onboarding_image {
+    overflow: hidden;
+    min-width: 1920px;
+    min-height: 1080px;
+    background: url('/mrp_workorder/static/img/drawing.svg') no-repeat top / 1920px 1080px;
+
+    img {
+        left: 34.5%;
+        top: 31.8%;
+        width: 264px;
+    }
+
+    .o_annotation:before {
+        content: "";
+        @include o-position-absolute($top: 50%);
+        border: $border-width * 2 solid $gray-900;
+        width: 2rem;
+    }
+
+    .o_annotation_end:before {
+        right: 105%;
+        border-top-left-radius: $border-radius-lg;
+        border-bottom: none;
+        border-right: none;
+    }
+
+    .o_annotation_start:before {
+        left: 105%;
+        border-top-right-radius: $border-radius-lg;
+        border-bottom: none;
+        border-left: none;
+    }
+
+    .o_annotation_1 {
+        top: 24%;
+        left: 42.5%;
+
+        &:before {
+            height: 8rem;
+        }
+    }
+
+    .o_annotation_2 {
+        top: 27.5%;
+        left: 44%;
+
+        &:before {
+            height: 7rem;
+        }
+    }
+
+    .o_annotation_3 {
+        top: 18%;
+        left: 36.9%;
+
+        &:before {
+            top: 100%;
+            right: 50%;
+            border-top: none;
+            border-left: none;
+            border-bottom: none;
+            width: 0;
+            height: 10.5rem;
+        }
+    }
+
+    .o_annotation_4 {
+        top: 28.8%;
+        left: 30.6%;
+
+        &:before {
+            height: 7rem;
+        }
+    }
+
+    .o_annotation_5 {
+        top: 34%;
+        left: 27.8%;
+
+        &:before {
+            height: 4rem;
+        }
+    }
+
+    .o_annotation_6 {
+        top: 21%;
+        left: 41%;
+    }
+
+    .o_annotation_7 {
+        top: 24%;
+        left: 31.7%;
+    }
+}
+
+.o_mrp_display_onboarding_button_container {
+    background: linear-gradient(to bottom, transparent, $o-view-background-color);
 }
