@@ -35,6 +35,17 @@ class ProjectTask(models.Model):
             "url": self.helpdesk_ticket_id.get_portal_url(),
         }
 
+    def action_open_helpdesk_ticket(self):
+        self.ensure_one()
+        action = self.env['ir.actions.act_window']._for_xml_id('helpdesk.helpdesk_ticket_action_main_my')
+        action.update({
+            'res_id': self.helpdesk_ticket_id.id,
+            'view_mode': 'form',
+            'views': [(False, 'form')],
+            'context': {'create': False},
+        })
+        return action
+
     def write(self, vals):
         previous_states_fsm_done = None
         previous_states_state = None

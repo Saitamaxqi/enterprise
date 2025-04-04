@@ -14,6 +14,7 @@ Convert helpdesk tickets to field service tasks.
         'views/helpdesk_ticket_views.xml',
         'views/helpdesk_team_views.xml',
         'views/project_sharing_views.xml',
+        'views/project_task_views.xml',
         'wizard/create_task_views.xml',
     ],
     'demo': ['data/helpdesk_fsm_demo.xml'],
