@@ -3,7 +3,6 @@
 from datetime import datetime
 
 from odoo import api, models, fields, _
-from odoo.fields import Domain
 from odoo.tools import SQL
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
@@ -41,19 +40,18 @@ class SaleCommissionReport(models.Model):
         if date_to_list:
             date_to = max(date_to_list)
             context.update(conversion_date=date_to.strftime('%Y-%m-%d'))
-        self = self.with_context(context)
-        return super(SaleCommissionReport, self)._search(domain, offset, limit, order)
+        return super(SaleCommissionReport, self.with_context(context))._search(domain, offset, limit, order)
 
     def action_achievement_detail(self):
         self.ensure_one()
         domain = [('plan_id', '=', self.plan_id.id),
-                       ('user_id', '=', self.user_id.id),
-                       ('date', '>=', self.target_id.date_from),
-                       ('date', '<=', self.target_id.date_to),
+                  ('user_id', '=', self.user_id.id),
+                  ('date', '>=', self.target_id.date_from),
+                  ('date', '<=', self.target_id.date_to),
                 ]
         context = {'commission_user_ids': self.user_id.ids,
-                   'active_plan_id': self.plan_id.id,
-                   'active_target_id': self.target_id.id,
+                   'active_plan_ids': self.plan_id.ids,
+                   'active_target_ids': self.target_id.ids,
         }
         return {
             "type": "ir.actions.act_window",

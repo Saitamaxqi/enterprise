@@ -3,7 +3,6 @@
 from datetime import datetime
 
 from odoo import models, api, fields
-from odoo.fields import Domain
 from odoo.tools import SQL
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
@@ -121,10 +120,10 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _get_filtered_orders_cte(self, users=None, teams=None):
-        if self.env.context.get('active_plan_id'):
-            plan_id = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_id'])
-            date_from = plan_id.date_from
-            date_to = plan_id.date_to
+        if self.env.context.get('active_plan_ids'):
+            plan_ids = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_ids'])
+            date_from = min(plan_ids.mapped('date_from'))
+            date_to = max(plan_ids.mapped('date_to'))
         else:
             all_plan_ids = self.env['sale.commission.plan'].sudo().search([('state', '=', 'approved')])
             date_from = all_plan_ids and min(all_plan_ids.mapped('date_from'))
@@ -135,7 +134,7 @@ JOIN sale_commission_plan_target era
         else:
             company_condition = f"AND company_id IN {tuple(self.env.companies.ids)}"
         today = fields.Date.today().strftime('%Y-%m-%d')
-        date_from_condition = f"AND date_order >= '{datetime.strftime(date_from, "%Y-%m-%d")}'" if date_from else ""
+        date_from_condition = f"""AND date_order >= '{datetime.strftime(date_from, "%Y-%m-%d")}'""" if date_from else ""
         query = f"""
         filtered_orders AS (
             SELECT
@@ -159,22 +158,22 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _get_filtered_moves_cte(self, users=None, teams=None):
-        if self.env.context.get('active_plan_id'):
-            plan_id = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_id'])
-            date_from = plan_id.date_from
-            date_to = plan_id.date_to
+        if self.env.context.get('active_plan_ids'):
+            plan_ids = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_ids'])
+            date_from = min(plan_ids.mapped('date_from'))
+            date_to = max(plan_ids.mapped('date_to'))
         else:
-            all_plan_ids = self.env['sale.commission.plan'].sudo().search([('state', '=', 'approved')])
-            date_from = all_plan_ids and min(all_plan_ids.mapped('date_from'))
-            date_to = all_plan_ids and min(all_plan_ids.mapped('date_to'))
+            plan_ids = self.env['sale.commission.plan'].sudo().search([('state', '=', 'approved')])
+            date_from = plan_ids and min(plan_ids.mapped('date_from'))
+            date_to = plan_ids and min(plan_ids.mapped('date_to'))
         company_count = len(self.env.companies.ids)
         if company_count == 1:
             company_condition = f"AND company_id = {self.env.companies.id}"
         else:
             company_condition = f"AND company_id IN {tuple(self.env.companies.ids)}"
         today = fields.Date.today().strftime('%Y-%m-%d')
-        date_from_str = date_from and datetime.strftime(date_from, "\%Y-%m-%d")
-        date_from_condition = f"AND date >= '{date_from_str}'" if date_from_str else ""
+        date_from_str = date_from and datetime.strftime(date_from, "%Y-%m-%d")
+        date_from_condition = f"""AND date >= '{date_from_str}'""" if date_from_str else ""
         query = f"""
         filtered_moves AS (
             SELECT
@@ -190,7 +189,7 @@ JOIN sale_commission_plan_target era
              WHERE move_type IN ('out_invoice', 'out_refund')
                AND state = 'posted'
                {company_condition}
-             {'AND user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
+             {'AND invoice_user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
              {'AND team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
                {date_from_condition}
                AND date <= '{datetime.strftime(date_to, "%Y-%m-%d") if date_to else today}'
@@ -254,12 +253,12 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_invoices(self):
-        _where = """
+        where = """
           aml.display_type = 'product'
           AND fm.move_type in ('out_invoice', 'out_refund')
           AND fm.state = 'posted'
         """
-        return _where
+        return where
 
     @api.model
     def _select_rules(self):
@@ -288,7 +287,7 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_sales(self):
-        _where = """
+        where = """
           AND sol.display_type IS NULL
           AND (fo.date_order BETWEEN rules.date_from AND rules.date_to)
           AND fo.state = 'sale'
@@ -297,21 +296,21 @@ JOIN sale_commission_plan_target era
           AND COALESCE(sol.is_expense, false) = false
           AND COALESCE(sol.is_downpayment, false) = false
         """
-        return _where
+        return where
 
     @api.model
     def _get_filtered_achivement_cte(self, users=None, teams=None):
         date_from = None
         date_to = None
-        if self.env.context.get('active_target_id'):
-            target_id = self.env['sale.commission.plan.target'].sudo().browse(self.env.context['active_target_id'])
-            date_from = target_id.date_from
-            date_to = target_id.date_to
+        if self.env.context.get('active_target_ids'):
+            target_ids = self.env['sale.commission.plan.target'].sudo().browse(self.env.context['active_target_ids'])
+            date_from = min(target_ids.mapped('date_from'))
+            date_to = max(target_ids.mapped('date_to'))
 
-        elif self.env.context.get('active_plan_id'):
-            plan_id = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_id'])
-            date_from = plan_id.date_from
-            date_to = plan_id.date_to
+        elif self.env.context.get('active_plan_ids'):
+            plan_ids = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_ids'])
+            date_from = min(plan_ids.mapped('date_from'))
+            date_to = max(plan_ids.mapped('date_to'))
 
         company_count = len(self.env.companies.ids)
         if company_count == 1:
@@ -320,7 +319,7 @@ JOIN sale_commission_plan_target era
             company_condition = f"WHERE company_id IN {tuple(self.env.companies.ids)}"
         today = fields.Date.today().strftime('%Y-%m-%d')
         date_from_str = date_from and datetime.strftime(date_from, "%Y-%m-%d")
-        date_from_condition = f"AND date >= '{date_from_str}'" if date_from_str else ""
+        date_from_condition = f"""AND date >= '{date_from_str}'""" if date_from_str else ""
         if users:
             res_user_ids = ','.join(str(i) for i in users.ids)
             user_condition = f'AND (scpu_add.user_id IN ({res_user_ids}) OR scpu_rem.user_id IN ({res_user_ids}))'
@@ -420,7 +419,7 @@ achievement_commission_lines_rem AS (
 
     def _invoices_lines(self, users=None, teams=None):
         return f"""
-{self._get_filtered_moves_cte(users=None, teams=None)},
+{self._get_filtered_moves_cte(users=users, teams=teams)},
 invoices_rules AS (
     SELECT
         COALESCE(scpu.date_from, scp.date_from) AS date_from,
@@ -482,7 +481,7 @@ invoices_rules AS (
 
     def _sale_lines(self, users=None, teams=None):
         return f"""
-{self._get_filtered_orders_cte(users=None, teams=None)},
+{self._get_filtered_orders_cte(users=users, teams=teams)},
 sale_rules AS (
     SELECT
         COALESCE(scpu.date_from, scp.date_from) AS date_from,
