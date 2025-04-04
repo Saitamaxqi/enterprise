@@ -32,4 +32,5 @@ class TestUi(TestPointOfSaleHttpCommon):
             'iface_scale_id': iot_device_id.id,
         })
 
-        self.start_tour("/odoo", 'pos_iot_scale_tour', login="pos_user")
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_pos_tour("pos_iot_scale_tour")

@@ -1,9 +1,9 @@
 /* global posmodel */
 
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
-import * as Order from "@point_of_sale/../tests/generic_helpers/order_widget_util";
 import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
+import * as Chrome from "@point_of_sale/../tests/pos/tours/utils/chrome_util";
+import * as ProductScreen from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 
 class PosScaleDummy {
     action() {}
@@ -22,20 +22,12 @@ class PosScaleDummy {
 }
 
 registry.category("web_tour.tours").add("pos_iot_scale_tour", {
-    url: "/odoo",
     steps: () =>
         [
-            stepUtils.showAppsMenuItem(),
-            {
-                trigger: '.o_app[data-menu-xmlid="point_of_sale.menu_point_root"]',
-                run: "click",
-            },
-            {
-                trigger: ".o_pos_kanban button.oe_kanban_action",
-                run: "click",
-            },
+            Chrome.startPoS(),
             Dialog.confirm("Open Register"),
             {
+                content: "mock the connected scale",
                 trigger: ".pos .pos-content",
                 run: function () {
                     posmodel.hardwareProxy.connectionInfo = {
@@ -49,18 +41,20 @@ registry.category("web_tour.tours").add("pos_iot_scale_tour", {
                     posmodel.hardwareProxy.deviceControllers.scale = new PosScaleDummy();
                 },
             },
+            ProductScreen.clickDisplayedProduct("Whiteboard Pen"),
             {
-                trigger: '.product:contains("Whiteboard Pen")',
-                run: "click",
-            },
-            {
+                content: "gross weight is set",
                 trigger: '.gross-weight:contains("2.35")',
-                run: "click",
             },
             {
+                content: "total price is correct",
+                trigger: '.computed-price:contains("7.52")',
+            },
+            {
+                content: "confirm the weighing",
                 trigger: ".buy-product",
                 run: "click",
             },
-            ...Order.hasLine({ quantity: "2.35" }),
+            ProductScreen.selectedOrderlineHas("Whiteboard Pen", "2.35"),
         ].flat(),
 });
