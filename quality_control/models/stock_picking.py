@@ -43,13 +43,6 @@ class StockPicking(models.Model):
         for picking in self:
             picking.quality_alert_count = len(picking.quality_alert_ids)
 
-    @api.depends('quality_check_todo')
-    def _compute_show_validate(self):
-        super()._compute_show_validate()
-        for picking in self:
-            if picking.quality_check_todo:
-                picking.show_validate = False
-
     def check_quality(self):
         if all(not move.picked for move in self.move_ids):
             checkable_lines = self.move_line_ids
