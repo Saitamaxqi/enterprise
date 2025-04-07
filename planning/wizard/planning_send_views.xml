@@ -7,16 +7,15 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <group>
-                        <field name="start_datetime" string="Period" widget="daterange" options="{'end_date_field': 'end_datetime'}" />
+                    <field name="slot_ids" invisible="1"/>
+                    <label for="start_datetime" string="Period"/>
+                    <div class="d-flex flex-column flex-sm-row">
+                        <field name="start_datetime" class="oe_inline" widget="daterange" options="{'end_date_field': 'end_datetime'}" />
                         <field name="end_datetime" invisible="1" />
-                    </group>
-                    <group>
-                        <field name="include_unassigned"/>
-                        <field name="slot_ids" invisible="1"/>
-                    </group>
+                        <span><field name="include_unassigned"/>Include Open Shifts</span>
+                    </div>
                 </group>
-                <group col="2">
+                <group>
                     <field name="employee_ids" widget="many2many_avatar_employee" default_focus="1"/>
                     <field name="note" nolabel="1" colspan="2" placeholder="Additional message included in the email sent to your employees"/>
                 </group>
