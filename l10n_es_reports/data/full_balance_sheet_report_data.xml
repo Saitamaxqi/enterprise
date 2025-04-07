@@ -438,16 +438,22 @@
                                                 <field name="engine">account_codes</field>
                                                 <field name="formula">5353 + 5354</field>
                                             </record>
-                                            <record id="balance_full_line_12450_sub_debits" model="account.report.expression">
-                                                <field name="label">sub_debits</field>
+                                            <record id="balance_full_line_12450_5523_sub_debits" model="account.report.expression">
+                                                <field name="label">5523_sub_debits</field>
                                                 <field name="engine">domain</field>
-                                                <field name="formula" eval="['|', ('account_id.code','=like','5523%'), ('account_id.code','=like','5524%')]"/>
+                                                <field name="formula" eval="[('account_id.code','=like','5523%')]"/>
+                                                <field name="subformula">sum_if_pos</field>
+                                            </record>
+                                            <record id="balance_full_line_12450_5524_sub_debits" model="account.report.expression">
+                                                <field name="label">5524_sub_debits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','5524%')]"/>
                                                 <field name="subformula">sum_if_pos</field>
                                             </record>
                                             <record id="balance_full_line_12450_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
-                                                <field name="formula">l10n_es_full_line_12450.sub_balances + l10n_es_full_line_12450.sub_debits</field>
+                                                <field name="formula">l10n_es_full_line_12450.sub_balances + l10n_es_full_line_12450.5523_sub_debits + l10n_es_full_line_12450.5524_sub_debits</field>
                                             </record>
                                         </field>
                                     </record>
@@ -501,16 +507,34 @@
                                                 <field name="engine">account_codes</field>
                                                 <field name="formula">566 + 565 + 545 + 5355 + 548</field>
                                             </record>
-                                            <record id="balance_full_line_12550_sub_debits" model="account.report.expression">
-                                                <field name="label">sub_debits</field>
+                                            <record id="balance_full_line_12550_550_sub_debits" model="account.report.expression">
+                                                <field name="label">550_sub_debits</field>
                                                 <field name="engine">domain</field>
-                                                <field name="formula" eval="['|', ('account_id.code','=like','550%'), '|', ('account_id.code','=like','551%'), '|', ('account_id.code','=like','554%'), ('account_id.code','=like','5525%')]"/>
+                                                <field name="formula" eval="[('account_id.code','=like','550%')]"/>
+                                                <field name="subformula">sum_if_pos</field>
+                                            </record>
+                                            <record id="balance_full_line_12550_551_sub_debits" model="account.report.expression">
+                                                <field name="label">551_sub_debits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','551%')]"/>
+                                                <field name="subformula">sum_if_pos</field>
+                                            </record>
+                                            <record id="balance_full_line_12550_554_sub_debits" model="account.report.expression">
+                                                <field name="label">554_sub_debits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','554%')]"/>
+                                                <field name="subformula">sum_if_pos</field>
+                                            </record>
+                                            <record id="balance_full_line_12550_5525_sub_debits" model="account.report.expression">
+                                                <field name="label">5525_sub_debits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','5525%')]"/>
                                                 <field name="subformula">sum_if_pos</field>
                                             </record>
                                             <record id="balance_full_line_12550_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
-                                                <field name="formula">l10n_es_full_line_12550.sub_debits + l10n_es_full_line_12550.sub_balances</field>
+                                                <field name="formula">l10n_es_full_line_12550.550_sub_debits + l10n_es_full_line_12550.551_sub_debits + l10n_es_full_line_12550.554_sub_debits + l10n_es_full_line_12550.5525_sub_debits + l10n_es_full_line_12550.sub_balances</field>
                                             </record>
                                         </field>
                                     </record>
@@ -945,16 +969,34 @@
                                                 <field name="engine">account_codes</field>
                                                 <field name="formula">-560 - 5135 - 5566 - 525 - 526 - 192 - 528 - 569 - 5115 - 1044 - 5530 - 561 - 509 - 1034 - 5532 - 521 - 555 - 5565 - 523 - 5145 - 5585 - 190 - 194 - 522</field>
                                             </record>
-                                            <record id="balance_full_line_32350_sub_credits" model="account.report.expression">
-                                                <field name="label">sub_credits</field>
+                                            <record id="balance_full_line_32350_550_sub_credits" model="account.report.expression">
+                                                <field name="label">550_sub_credits</field>
                                                 <field name="engine">domain</field>
-                                                <field name="formula" eval="['|', ('account_id.code','=like','550%'), '|', ('account_id.code','=like','551%'), '|', ('account_id.code','=like','554%'), ('account_id.code','=like','5525%')]"/>
+                                                <field name="formula" eval="[('account_id.code','=like','550%')]"/>
+                                                <field name="subformula">-sum_if_neg</field>
+                                            </record>
+                                            <record id="balance_full_line_32350_551_sub_credits" model="account.report.expression">
+                                                <field name="label">551_sub_credits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','551%')]"/>
+                                                <field name="subformula">-sum_if_neg</field>
+                                            </record>
+                                            <record id="balance_full_line_32350_554_sub_credits" model="account.report.expression">
+                                                <field name="label">554_sub_credits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','554%')]"/>
+                                                <field name="subformula">-sum_if_neg</field>
+                                            </record>
+                                            <record id="balance_full_line_32350_5525_sub_credits" model="account.report.expression">
+                                                <field name="label">5525_sub_credits</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.code','=like','5525%')]"/>
                                                 <field name="subformula">-sum_if_neg</field>
                                             </record>
                                             <record id="balance_full_line_32350_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
-                                                <field name="formula">l10n_es_full_line_32350.sub_balances + l10n_es_full_line_32350.sub_credits</field>
+                                                <field name="formula">l10n_es_full_line_32350.sub_balances + l10n_es_full_line_32350.550_sub_credits + l10n_es_full_line_32350.551_sub_credits + l10n_es_full_line_32350.554_sub_credits + l10n_es_full_line_32350.5525_sub_credits</field>
                                             </record>
                                         </field>
                                     </record>
@@ -970,16 +1012,22 @@
                                         <field name="engine">account_codes</field>
                                         <field name="formula">-5114 - 5134 - 5144 - 5563 - 5113 - 5104 - 5103 - 5124 - 5564 - 5143 - 5123 - 5133</field>
                                     </record>
-                                    <record id="balance_full_line_32400_sub_credits" model="account.report.expression">
-                                        <field name="label">sub_credits</field>
+                                    <record id="balance_full_line_32400_5523_sub_credits" model="account.report.expression">
+                                        <field name="label">5523_sub_credits</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="['|', ('account_id.code','=like','5523%'), ('account_id.code','=like','5524%')]"/>
+                                        <field name="formula" eval="[('account_id.code','=like','5523%')]"/>
+                                        <field name="subformula">-sum_if_neg</field>
+                                    </record>
+                                    <record id="balance_full_line_32400_5524_sub_credits" model="account.report.expression">
+                                        <field name="label">5524_sub_credits</field>
+                                        <field name="engine">domain</field>
+                                        <field name="formula" eval="[('account_id.code','=like','5524%')]"/>
                                         <field name="subformula">-sum_if_neg</field>
                                     </record>
                                     <record id="balance_full_line_32400_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
-                                        <field name="formula">l10n_es_full_line_32400.sub_balances + l10n_es_full_line_32400.sub_credits</field>
+                                        <field name="formula">l10n_es_full_line_32400.sub_balances + l10n_es_full_line_32400.5523_sub_credits + l10n_es_full_line_32400.5524_sub_credits</field>
                                     </record>
                                 </field>
                             </record>
