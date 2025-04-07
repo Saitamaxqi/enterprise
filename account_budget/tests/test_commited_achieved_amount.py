@@ -488,3 +488,92 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         purchase_order.button_confirm()
         plan_a_line = self.budget_analytic_both.budget_line_ids[0]
         self.assertBudgetLine(plan_a_line, committed=-1000, achieved=0)
+
+    def test_account_budget_company_shared(self):
+        """
+        Ensure that a shared budget aggregates values across companies,
+        and that filtering by company scopes it correctly.
+        """
+        # === Create shared budget ===
+        budget = self.env['budget.analytic'].create({
+            'name': 'Budget Shared',
+            'date_from': '2025-01-01',
+            'date_to': '2025-12-31',
+            'company_id': False,
+            'budget_line_ids': [
+                Command.create({
+                    'budget_amount': 2000,
+                    self.project_column_name: self.analytic_account_partner_a.id,
+                }),
+            ]
+        })
+        budget.action_budget_confirm()
+        line = budget.budget_line_ids[0]
+
+        # === Setup: Two companies ===
+        company_a = self.env.ref('base.main_company')
+        company_b = self.env['res.company'].search([('id', '!=', company_a.id)])[0]
+
+        # Ensure test user has access to both companies
+        self.env.user.write({
+            'company_ids': [(6, 0, [company_a.id, company_b.id])],
+            'company_id': company_a.id,
+        })
+
+        # === PO and Bill for Company A ===
+        po_a = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'company_id': company_a.id,
+            'date_order': '2025-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 1,
+                    'price_unit': 1000,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        po_a.button_confirm()
+
+        # === PO and Bill for Company B ===
+        po_b = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'company_id': company_b.id,
+            'date_order': '2025-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 1,
+                    'price_unit': 1000,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        po_b.button_confirm()
+        # === Check shared totals ===
+        self.assertEqual(line.committed_amount, 2000.0, "Shared committed should be 2000")
+        self.assertEqual(line.achieved_amount, 0.0, "Shared achieved should be 1000")
+
+        po_a.order_line.qty_received = 0.5
+        bill_a = self.env['account.move'].browse(po_a.action_create_invoice()['res_id'])
+        bill_a.invoice_date = '2025-01-15'
+        bill_a.sudo().action_post()
+
+        po_b.order_line.qty_received = 0.5
+        bill_b = self.env['account.move'].with_company(company_b).browse(po_b.action_create_invoice()['res_id'])
+        bill_b.invoice_date = '2025-01-15'
+        bill_b.action_post()
+
+        self.env['budget.line'].invalidate_model(['committed_amount', 'achieved_amount'])
+        # === Check shared totals ===
+        self.assertEqual(line.committed_amount, 2000.0, "Shared committed should be 2000")
+        self.assertEqual(line.achieved_amount, 1000.0, "Shared achieved should be 1000")
+
+        # === Filter to Company A only ===
+        budget.company_id = company_a.id
+        self.env['budget.line'].invalidate_model(['committed_amount', 'achieved_amount'])
+
+        # === Check filtered totals ===
+        self.assertEqual(line.committed_amount, 1000.0, "Company A committed should be 1000")
+        self.assertEqual(line.achieved_amount, 500.0, "Company A committed should be 1000")

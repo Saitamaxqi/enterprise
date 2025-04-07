@@ -74,7 +74,7 @@ class BudgetReport(models.Model):
                    0 AS theoretical,
                    %(analytic_fields)s
               FROM account_analytic_line aal
-         LEFT JOIN budget_line bl ON aal.company_id = bl.company_id
+         LEFT JOIN budget_line bl ON (bl.company_id IS NULL OR aal.company_id = bl.company_id)
                                  AND aal.date >= bl.date_from
                                  AND aal.date <= bl.date_to
                                  AND %(condition)s
@@ -151,7 +151,7 @@ class BudgetReport(models.Model):
          LEFT JOIN (%(qty_invoiced_table)s) qty_invoiced_table ON qty_invoiced_table.pol_id = pol.id
               JOIN purchase_order po ON pol.order_id = po.id AND po.state = 'purchase'
         CROSS JOIN JSONB_TO_RECORDSET(pol.analytic_json) AS a(rate FLOAT, %(field_cast)s)
-         LEFT JOIN budget_line bl ON po.company_id = bl.company_id
+         LEFT JOIN budget_line bl ON (bl.company_id IS NULL OR po.company_id = bl.company_id)
                                  AND po.date_order >= bl.date_from
                                  AND date_trunc('day', po.date_order) <= bl.date_to
                                  AND %(condition)s
