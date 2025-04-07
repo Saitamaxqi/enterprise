@@ -68,7 +68,7 @@ class AccountPayment(models.Model):
                 {
                     'record_type': '14',  # Disposition
                     'section_number': section_number,
-                    'payment_due_date': min(reconciled_invoices.mapped("invoice_date_due")) if reconciled_invoices else payment.date,
+                    'payment_date': payment.date,
                     'amount': int(rounded_amount * 100),
                     'creditor_abi': get_iban_part(creditor_bank_account.acc_number, "bank"),
                     'creditor_cab': get_iban_part(creditor_bank_account.acc_number, "branch"),

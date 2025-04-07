@@ -103,14 +103,14 @@ class TestRiba(AccountTestInvoicingCommon):
     def _expected_content(self, payment_ids):
         return (
               " IB1234505428221124BATCH/IN/2024/0001                                                                            E      "
-            "\n 140000001            311224300000000000010000-05428111010000001234560333201600            123454Aluvetraro Srl        E"
+            "\n 140000001            221124300000000000010000-05428111010000001234560333201600            123454Aluvetraro Srl        E"
             "\n 200000001Da'mone Srl             Via Silvio Pellico 12   Palazzolo sull'Oglio                                          "
             "\n 300000001Aluvetraro Srl                                              03450700988                                       "
             "\n 400000001Via Marco Alberti 245         86170Isernia                ISCRA di Borgo San Giacomo Credito Cooperativo SCRL "
             "\n 500000001Invoice INV/2024/00001 Amount 100.00                                                      03821260985         "
            f"\n 510000001{payment_ids[0]:>010}Da'mone Srl                                                                                         "
             "\n 700000001                                                                                                              "
-            "\n 140000002            310125300000000000015300-05428111010000001234560333201600            123454Aluvetraro Srl        E"
+            "\n 140000002            221124300000000000015300-05428111010000001234560333201600            123454Aluvetraro Srl        E"
             "\n 200000002Da'mone Srl             Via Silvio Pellico 12   Palazzolo sull'Oglio                                          "
             "\n 300000002Aluvetraro Srl                                              03450700988                                       "
             "\n 400000002Via Marco Alberti 245         86170Isernia                ISCRA di Borgo San Giacomo Credito Cooperativo SCRL "

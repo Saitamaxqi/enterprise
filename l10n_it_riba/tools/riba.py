@@ -97,7 +97,7 @@ TEMPLATE_MAP = {
         '14',                                  # record type
         ('section_number', '>07', 7, _int),
         f'{" ":<12}',                          # filler
-        ('payment_due_date', '%d%m%y', 6, _date),
+        ('payment_date', '%d%m%y', 6, _date),
         '30000',                               # reason, fixed
         ('amount', '>013', 13, _int),
         '-',                                   # sign, fixed
