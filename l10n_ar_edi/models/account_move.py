@@ -303,22 +303,22 @@ class AccountMove(models.Model):
             # WSFE 10119 / WSFEX 1667 / WSBFE 1014: Extra Show that the rates are out of allowed margin
             min_rate = arca_rate - (arca_rate * 0.02)
             max_rate = arca_rate * 400
-            if not (min_rate <= self.l10n_ar_currency_rate <= max_rate):
+            if not (min_rate <= 1 / self.invoice_currency_rate <= max_rate):
                 raise UserError(_(
                     "The currency rate to be reported (%(currency_rate)s) is not valid. It must be between 2%% and 400%% of"
                     " the official quote (%(min_rate)s - %(max_rate)s)",
-                    currency_rate=float_repr(self.l10n_ar_currency_rate, precision_digits=3),
+                    currency_rate=float_repr(1 / self.invoice_currency_rate, precision_digits=3),
                     min_rate=float_repr(min_rate, precision_digits=3),
                     max_rate=float_repr(max_rate, precision_digits=3),
                 ))
 
             # WSFE 10038 / WSFEX 1604
             if self.l10n_ar_payment_foreign_currency == "Yes" and float_compare(
-               self.l10n_ar_currency_rate, arca_rate, precision_digits=3) != 0:
+               1 / self.invoice_currency_rate, arca_rate, precision_digits=3) != 0:
                 raise UserError(_(
                     "The rate to be reported (%(currency_rate)s) differs from that of ARCA Remember that if you pay"
                     " in foreign currency you must use the same rate of the last business day of ARCA (%(arca_rate)s - %(arca_date)s)",
-                    currency_rate=float_repr(self.l10n_ar_currency_rate, precision_digits=3),
+                    currency_rate=float_repr(1 / self.invoice_currency_rate, precision_digits=3),
                     arca_rate=arca_rate,
                     arca_date=arca_date,
                 ))
@@ -771,7 +771,7 @@ class AccountMove(models.Model):
             'FchServHasta': service_end.strftime(WS_DATE_FORMAT['wsfe']) if service_end else False,
             'FchVtoPago': due_payment_date.strftime(WS_DATE_FORMAT['wsfe']) if due_payment_date else False,
             'MonId': self.currency_id.l10n_ar_afip_code,
-            'MonCotiz': float_repr(self.l10n_ar_currency_rate, precision_digits=6),
+            'MonCotiz': float_repr(1 / self.invoice_currency_rate, precision_digits=6),
             'CbtesAsoc': ArrayOfCbteAsoc([related_invoices]) if related_invoices else None,
             'Iva': ArrayOfAlicIva(vat_items) if vat_items else None,
             'Tributos': ArrayOfTributo(tributes) if tributes else None,
