@@ -26,6 +26,8 @@ App to upload and manage your documents.
         'data/mail_activity_type_data.xml',
         'data/documents_tag_data.xml',
         'data/documents_document_data.xml',
+        # folder has to exist
+        'data/mail_alias_data.xml',
         'data/ir_config_parameter_data.xml',
         'data/documents_tour.xml',
         'views/res_config_settings_views.xml',

@@ -15,7 +15,13 @@
         <field name="name">Administrative</field>
     </record>
 
-    <function model="documents.document" name="_add_inbox_alias_if_not_used"/>
+    <record id="document_inbox_folder" model="documents.document" forcecreate="0">
+        <field name="type">folder</field>
+        <field name="access_internal">edit</field>
+        <field name="name">Inbox</field>
+        <field name="create_activity_type_id" ref="mail.mail_activity_data_todo"/>
+        <field name="create_activity_user_id" ref="base.user_root"/>
+    </record>
 
     <record id="document_finance_folder" model="documents.document" forcecreate="0">
         <field name="type">folder</field>

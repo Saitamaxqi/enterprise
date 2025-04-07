@@ -34,29 +34,11 @@
 
         <!-- internal -->
 
-        <record id="documents_data_multi_pdf_document" model="documents.document" forcecreate="0">
-            <field name="name">Mails_inbox.pdf</field>
-            <field name="datas" type="base64" file="documents/data/files/Mails_inbox.pdf"/>
-            <field name="folder_id" ref="documents.document_internal_folder"/>
-            <field name="access_internal">view</field>
-        </record>
-
         <record id="documents_image_city_document" model="documents.document" forcecreate="0">
             <field name="name">city.jpg</field>
             <field name="datas" type="base64" file="documents/demo/files/city.jpg"/>
             <field name="folder_id" ref="documents.document_internal_folder"/>
             <field name="access_internal">view</field>
-        </record>
-
-        <record id="documents_image_mail_document" model="documents.document" forcecreate="0">
-            <field name="name">mail.png</field>
-            <field name="datas" type="base64" file="documents/data/files/mail.png"/>
-            <field name="folder_id" ref="documents.document_internal_folder"/>
-            <field name="access_internal">view</field>
-        </record>
-        <!-- The thumbnail is added after -->
-        <record id="documents_image_mail_document" model="documents.document" forcecreate="0">
-            <field name="thumbnail" type="base64" file="documents/data/files/mail_thumbnail.png"/>
         </record>
 
         <record id="documents_image_people_document" model="documents.document" forcecreate="0">
@@ -85,17 +67,37 @@
             <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_to_validate')])]"/>
         </record>
 
+        <!-- inbox -->
+
+        <record id="documents_data_multi_pdf_document" model="documents.document" forcecreate="0">
+            <field name="name">Mails_inbox.pdf</field>
+            <field name="datas" type="base64" file="documents/data/files/Mails_inbox.pdf"/>
+            <field name="folder_id" ref="documents.document_inbox_folder"/>
+            <field name="access_internal">view</field>
+        </record>
+
+        <record id="documents_image_mail_document" model="documents.document" forcecreate="0">
+            <field name="name">mail.png</field>
+            <field name="datas" type="base64" file="documents/data/files/mail.png"/>
+            <field name="folder_id" ref="documents.document_inbox_folder"/>
+            <field name="access_internal">view</field>
+        </record>
+        <!-- The thumbnail is added after -->
+        <record id="documents_image_mail_document" model="documents.document" forcecreate="0">
+            <field name="thumbnail" type="base64" file="documents/data/files/mail_thumbnail.png"/>
+        </record>
+
         <record id="documents_vendor_bill_extract_open_value_document" model="documents.document" forcecreate="0">
             <field name="name">invoice OpenValue.pdf</field>
             <field name="datas" type="base64" file="documents/demo/files/invoice_openvalue.pdf"/>
-            <field name="folder_id" ref="documents.document_finance_folder"/>
+            <field name="folder_id" ref="documents.document_inbox_folder"/>
             <field name="access_internal">edit</field>
         </record>
 
         <record id="documents_data_comercial_tenancy_agreement" model="documents.document" forcecreate="0">
             <field name="name">Commercial-Tenancy-Agreement.pdf</field>
             <field name="datas" type="base64" file="documents/demo/files/Commercial-Tenancy-Agreement.pdf"/>
-            <field name="folder_id" ref="documents.document_finance_folder"/>
+            <field name="folder_id" ref="documents.document_inbox_folder"/>
             <field name="access_internal">edit</field>
         </record>
 
@@ -103,7 +105,7 @@
             <field name="name">Invoice #INV-2025-001 - Payment Due April 24, 2025</field>
             <field name="datas" type="base64" file="documents/demo/files/email-as-invoice.html"/>
             <field name="mimetype">application/documents-email</field>
-            <field name="folder_id" ref="documents.document_finance_folder"/>
+            <field name="folder_id" ref="documents.document_inbox_folder"/>
             <field name="access_internal">edit</field>
             <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
@@ -154,6 +156,10 @@ if target:
 
         <function model="documents.document" name="action_folder_embed_action" eval="[
             ref('documents.document_internal_folder'),
+            ref('documents.ir_actions_server_send_to_finance'),
+        ]"/>
+        <function model="documents.document" name="action_folder_embed_action" eval="[
+            ref('documents.document_inbox_folder'),
             ref('documents.ir_actions_server_send_to_finance'),
         ]"/>
 

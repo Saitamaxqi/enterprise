@@ -62,3 +62,5 @@ class DocumentsDocument(models.Model):
         action_sign = self.env.ref("documents_sign.ir_actions_server_create_sign_template_direct")
         if internal_folder := self.env.ref("documents.document_internal_folder", raise_if_not_found=False):
             self.action_folder_embed_action(internal_folder.id, action_sign.id)
+        if inbox_folder := self.env.ref("documents.document_inbox_folder", raise_if_not_found=False):
+            self.action_folder_embed_action(inbox_folder.id, action_sign.id)
