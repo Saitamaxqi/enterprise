@@ -160,11 +160,16 @@ test("Autofill non-odoo pivot should copy the formula", function () {
     patchTranslations();
     // prettier-ignore
     const grid = {
-        A1: "Customer",   B1: "Price", C1: `=PIVOT.VALUE(1, "Price")`,
-        A2: "Alice",      B2: "10",
-        A3: "",           B3: "20",
-        A4: "Olaf",       B4: "30",
-    }
+        A1: "Customer",
+        B1: "Price",
+        C1: `=PIVOT.VALUE(1, "Price")`,
+        A2: "Alice",
+        B2: "10",
+        A3: "",
+        B3: "20",
+        A4: "Olaf",
+        B4: "30",
+    };
     const model = createModelFromGrid(grid);
     const pivot = {
         name: "Pivot",
@@ -411,6 +416,45 @@ test("Autofill empty pivot date value", async function () {
         expect(model.getters.getTooltipFormula(getCellFormula(model, "A1"))).toEqual([
             { value: "None" },
         ]);
+    }
+});
+
+test("Autofill past bound pivot date value", async function () {
+    const { model, pivotId } = await createSpreadsheetWithPivot({
+        arch: /* xml */ `
+                <pivot>
+                    <field name="date" interval="year" type="row"/>
+                    <field name="probability" type="measure"/>
+                </pivot>`,
+    });
+
+    const granularities = [
+        ["quarter_number", 1, 4],
+        ["month_number", 1, 12],
+        ["iso_week_number", 0, 54],
+        ["day_of_month", 1, 31],
+    ];
+
+    const steps = [1, 10, 20, 30, 40, 50, 60, 70, 80];
+
+    for (const grIdx in granularities) {
+        const [granularity, lowerBound, upperBound] = granularities[grIdx];
+        updatePivot(model, pivotId, {
+            rows: [{ fieldName: "date", granularity, order: "asc" }],
+        });
+        await animationFrame();
+        setCellContent(model, "A1", `=PIVOT.HEADER(1,"date:${granularity}",1)`);
+        for (const stepIdx in steps) {
+            const step = steps[stepIdx];
+            const expectedValue = 1 + step;
+            const expectedFormula =
+                lowerBound <= expectedValue && expectedValue <= upperBound
+                    ? `=PIVOT.HEADER(1,"date:${granularity}",${expectedValue})`
+                    : "";
+            expect(getPivotAutofillValue(model, "A1", { direction: "bottom", steps: step })).toBe(
+                expectedFormula
+            );
+        }
     }
 });
 

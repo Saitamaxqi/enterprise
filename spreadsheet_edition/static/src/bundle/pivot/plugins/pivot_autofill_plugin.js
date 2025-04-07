@@ -208,7 +208,11 @@ export class PivotAutofillPlugin extends UIPlugin {
                 // Date
                 const group = this._getGroupOfFirstDate(definition, "COLUMN");
                 cols = currentElement.cols;
-                cols[0] = this._incrementDate(cols[0], group, increment);
+                const value = this._incrementDate(cols[0], group, increment);
+                if (value === undefined){
+                    return ""
+                }
+                cols[0] = value
                 measure = cols.pop();
             } else {
                 const currentColIndex = this._getColMeasureIndex(table, currentElement.cols);
@@ -239,7 +243,11 @@ export class PivotAutofillPlugin extends UIPlugin {
                 }
                 const group = this._getGroupOfFirstDate(definition, "ROW");
                 rows = currentElement.rows;
-                rows[0] = this._incrementDate(rows[0], group, increment);
+                const value = this._incrementDate(rows[0], group, increment);
+                if (value === undefined){
+                    return ""
+                }
+                rows[0] = value
             } else {
                 const currentRowIndex = this._getRowIndex(table, currentElement.rows);
                 if (currentRowIndex === -1) {
@@ -318,7 +326,11 @@ export class PivotAutofillPlugin extends UIPlugin {
                 // Date
                 const group = this._getGroupOfFirstDate(definition, "COLUMN");
                 groupValues = currentElement.cols;
-                groupValues[0] = this._incrementDate(groupValues[0], group, increment);
+                const value = this._incrementDate(groupValues[0], group, increment);
+                if (value === undefined){
+                    return ""
+                }
+                groupValues[0] = value
             } else {
                 const rowIndex = currentElement.cols.length - 1;
                 const nextColIndex = currentColIndex + increment;
@@ -428,7 +440,11 @@ export class PivotAutofillPlugin extends UIPlugin {
                 // Date
                 const group = this._getGroupOfFirstDate(definition, "ROW");
                 rows = currentElement.rows;
-                rows[0] = this._incrementDate(rows[0], group, increment);
+                const value = this._incrementDate(rows[0], group, increment);
+                if (value === undefined){
+                    return ""
+                }
+                rows[0] = value
             } else {
                 const nextIndex = currentIndex + increment;
                 if (currentIndex === -1 || nextIndex < 0 || nextIndex >= table.rows.length) {
