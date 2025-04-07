@@ -1779,9 +1779,10 @@ class KnowledgeArticle(models.Model):
         access is straightforward (just set permission). Inviting with rights
         requires to check for privilege escalation in descendants.
 
-        :param Model<res.partner> partner_ids: recordset of invited partners;
-        :param string permission: permission of newly invited members, one of
+        :param partners recordset of invited partners;
+        :param str permission: permission of newly invited members, one of
           'none', 'read' or 'write';
+        :param message: the message relayed to :meth:`~_send_invite_mail`.
         """
         self.ensure_one()
         if permission == 'none':
@@ -1856,8 +1857,8 @@ class KnowledgeArticle(models.Model):
           considering it as sufficient to modify members permissions.
         - portal users cannot alter memberships in any way.
 
-        :param <knowledge.article.member> member: member whose permission
-          is to be updated. Can be a member of 'self' or one of its ancestors;
+        :param int member_id: member_id whose permission is to be updated.
+          Can be a member of 'self' or one of its ancestors;
         :param str permission: new permission, one of 'none', 'read' or 'write';
         """
         member = self.env['knowledge.article.member'].browse(member_id)
@@ -1916,7 +1917,7 @@ class KnowledgeArticle(models.Model):
           * when removing someone else: write access is required on the article
             (explicitly checked);
 
-        :param int member: member's id to remove
+        :param int member_id: member's id to remove
         """
         self.ensure_one()
         if not self.env.su and not self.env.user._is_internal():
@@ -2051,8 +2052,8 @@ class KnowledgeArticle(models.Model):
           given by force_partners. Otherwise fallback on inherited computed
           internal permission;
 
-        :return list member_commands: commands to be applied on 'article_member_ids'
-          field;
+        :returns: commands to be applied on 'article_member_ids' field;
+        :rtype: list
         """
         self.ensure_one()
         members_permission = self._get_article_member_permissions()[self.id]
@@ -2093,7 +2094,7 @@ class KnowledgeArticle(models.Model):
         Security note: this method does not check accesses. Caller has to ensure
         access is granted, depending on the business flow.
 
-        :return <knowledge.article> children: the children articles which were
+        :returns: the children knowledge.article which were
           not detached, meaning that current user has write access on them """
         all_descendants_sudo = self.sudo()._get_descendants()
         writable_descendants_sudo = all_descendants_sudo.with_env(self.env)._filtered_access('write').sudo()
@@ -2290,7 +2291,8 @@ class KnowledgeArticle(models.Model):
           should not be considered when checking for a write access, used when
           unlinking members that should not be taken into account;
 
-        :return boolean: whether a write member has been found;
+        :returns: whether a write member has been found;
+        :rtype: bool
         """
         self.ensure_one()
         partners_to_exclude = partners_to_exclude if partners_to_exclude else self.env['res.partner']
@@ -2715,8 +2717,9 @@ class KnowledgeArticle(models.Model):
           - False: when creating a template based article from scratch;
           - True: in other cases to avoid collaborative issues (write on
             body should be done at client side);
-        :return str: body of the article, used notably client side for
+        :returns: body of the article, used notably client side for
           collaborative mode
+        :rtype: str
         """
         self.ensure_one()
         template = self.env['knowledge.article'].browse(template_id)

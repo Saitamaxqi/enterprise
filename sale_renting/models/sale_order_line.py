@@ -167,7 +167,7 @@ class SaleOrderLine(models.Model):
         :param float delay_price: Price of the delay line
 
         :return: sale.order.line creation values
-        :rtype dict:
+        :rtype: dict
         """
         delay_line_description = self._get_delay_line_description()
         return {

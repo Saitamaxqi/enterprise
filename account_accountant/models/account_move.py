@@ -685,12 +685,12 @@ class AccountMoveLine(models.Model):
         this validation set based on the previous entries.
         The result is roughly 90% of success.
 
-        :param field (str): the sql column that has to be predicted.
+        :param str field: the sql column that has to be predicted.
             /!\ it is injected in the query without any checks.
-        :param query (osv.Query): the query object on account.move.line that is
-            used to do the ranking, containing the right domain, limit, etc. If
-            it is omitted, a default query is used.
-        :param additional_queries (list<str>): can be used in addition to the
+        :param odoo.tools.query.Query query: the query object on
+            account.move.line that is used to do the ranking, containing the
+            right domain, limit, etc. If it is omitted, a default query is used.
+        :param list[str] additional_queries: can be used in addition to the
             default query on account.move.line to fetch data coming from other
             tables, to have starting values for instance.
             /!\ it is injected in the query without any checks.

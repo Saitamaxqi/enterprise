@@ -78,8 +78,9 @@ class DocumentsMixin(models.AbstractModel):
     def _get_document_access_ids(self):
         """ Add or remove members
 
-        :return boolean|list: list of tuple (partner, (role, expiration_date)) or False to avoid
-        inheriting members from parent folder.
+        :returns: list of tuple (partner, (role, expiration_date)) or False to avoid
+            inheriting members from parent folder.
+        :rtype: bool | list
         """
         return []
 

@@ -468,9 +468,10 @@ class AppointmentType(models.Model):
     def insert_reorder_action_views(action, first_view_names):
         """Set the first N entries in views_ids of an action dict reusing existing views.
 
-        :param action dict: Dict representing an action.
-        :param first_view_names list[str]: List of the names of the first N views.
-        :return dict: The original action, with view_mode and view_ids modified.
+        :param dict action: Dict representing an action.
+        :param list[str] first_view_names: List of the names of the first N views.
+        :return: The original action, with view_mode and view_ids modified.
+        :rtype: dict
         """
         existing_views = [view for view in action["view_mode"].split(',') if view not in first_view_names]
         action['view_mode'] = ",".join(first_view_names + existing_views)
@@ -1309,7 +1310,7 @@ class AppointmentType(models.Model):
                 of particular resources (e.g. when we check if the resources are still available when a customer book an
                 appointment or to compute remaining capacity for a particular resource)
             :param <appointment.resource> filter_resources: filter the resources impacted with this value
-            :return remaining_capacity:
+            :returns: remaining_capacity
         """
         self.ensure_one()
 

@@ -166,7 +166,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_avatax_dates(self):
         """Get the dates related to the document.
 
-        :return (tuple<date, date>): the document date and the tax computation date
+        :returns: a 2-elements tuple with the document date and the tax computation date
+        :rtype: tuple[datetime.date, datetime.date]
         """
         raise NotImplementedError()  # implement in business document
 
@@ -177,7 +178,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
         permanent transaction that will be recorded in AvaTax. A document type ending with Order is
         a temporary estimate that will not be preserved.
 
-        :return (string): i.e. `SalesInvoice`, `ReturnInvoice` or `SalesOrder`
+        :returns: i.e. ``'SalesInvoice'``, ``'ReturnInvoice'`` or ``'SalesOrder'``
+        :rtype: str
         """
         raise NotImplementedError()  # implement in business document
 
@@ -186,14 +188,15 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
         This assumes that partner_id exists on models using this class.
 
-        :return (Model): a `res.partner` record
+        :returns: a ``res.partner`` record
         """
         return self.partner_shipping_id or self.partner_id
 
     def _perform_address_validation(self):
         """Allows to bypass the _check_address constraint.
 
-        :return (bool): whether to execute the _check_address constraint
+        :returns: whether to execute the _check_address constraint
+        :rtype: bool
         """
         return self.fiscal_position_id.is_avatax
 
@@ -204,7 +207,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_avatax_invoice_line(self, line_data):
         """Create a `LineItemModel` based on line_data.
 
-        :param line_data (dict): data returned by _get_line_data_for_external_taxes()
+        :param dict line_data: data returned by _get_line_data_for_external_taxes()
         """
         product = line_data['product_id']
         if not product._get_avatax_category_id():
@@ -265,8 +268,9 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_avatax_addresses(self, partner):
         """Get the addresses related to a partner.
 
-        :param partner (Model<res.partner>): the partner we need the addresses of.
-        :return (dict): the AddressesModel to return to Avatax
+        :param partner: the partner we need the addresses of.
+        :return: the AddressesModel to return to Avatax
+        :rtype: dict
         """
         res = {
             'shipFrom': self._get_avatax_address_from_partner(self.company_id.partner_id),
@@ -280,7 +284,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_avatax_taxes(self, commit):
         """Get the transaction values.
 
-        :return (dict): a mapping defined by the AvataxModel `CreateTransactionModel`.
+        :returns: a mapping defined by the AvataxModel ``CreateTransactionModel``.
+        :rtype: dict
         """
         self.ensure_one()
         partner = self.partner_id.commercial_partner_id
@@ -315,7 +320,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _query_avatax_taxes(self, commit=False):
         """Query Avatax with all the transactions linked to `self`.
 
-        :return (dict<Model, dict>): a mapping between document records and the response from Avatax
+        :returns: a mapping between document records and the response from Avatax
+        :rtype: dict[models.Model, dict]
         """
         if not self:
             return {}

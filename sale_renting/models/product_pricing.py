@@ -111,7 +111,8 @@ class ProductPricing(models.Model):
 
         :param datetime start_date: beginning of the duration.
         :param datetime end_date: end of the duration.
-        :return dict: duration length in different units.
+        :returns: duration length in different units.
+        :rtype: dict
         """
         duration = end_date - start_date
         vals = dict(hour=(duration.days * 24 + duration.seconds / 3600))

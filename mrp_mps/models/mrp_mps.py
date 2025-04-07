@@ -127,8 +127,8 @@ class MrpProductionSchedule(models.Model):
         schedule.
 
         :param date_str: period name for the forecast sellected
-        :param date_start: select incoming moves after this date
-        :param date_stop: select incoming moves before this date
+        :param date_start_str: select incoming moves after this date
+        :param date_stop_str: select incoming moves before this date
         :return: action values that open the picking list
         :rtype: dict
         """
@@ -152,8 +152,8 @@ class MrpProductionSchedule(models.Model):
         """ Open the actual replenishment details.
 
         :param date_str: period name for the forecast sellected
-        :param date_start: select incoming moves and RFQ after this date
-        :param date_stop: select incoming moves and RFQ before this date
+        :param date_start_str: select incoming moves and RFQ after this date
+        :param date_stop_str: select incoming moves and RFQ before this date
         :return: action values that open the forecast details wizard
         :rtype: dict
         """

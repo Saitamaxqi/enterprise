@@ -184,7 +184,7 @@ class SocialStreamPost(models.Model):
     def _linkedin_comment_fetch(self, comment_urn=None, offset=0, count=20):
         """Retrieve comments on a LinkedIn element.
 
-        :param element_urn: URN of the element (UGC Post or Comment) on which we want to retrieve comments
+        :param comment_urn: URN of the element (UGC Post or Comment) on which we want to retrieve comments
             If no specified, retrieve comments on the current post
         :param offset: Used to scroll over the comments, position of the first retrieved comment
         :param count: Number of comments returned

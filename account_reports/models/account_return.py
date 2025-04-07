@@ -1779,7 +1779,8 @@ class AccountReturnCheck(models.Model):
         """
         Can be overridden
 
-        :return dict: A dictionary with a mapping of current state mapped to the action function that trigger the next state
+        :returns: A dictionary with a mapping of current state mapped to the action function that trigger the next state
+        :rtype: dict
         """
         return {
             'new': self.return_id.action_review,

@@ -18,13 +18,13 @@ class Base(models.AbstractModel):
         raise NotImplementedError()
 
     @api.model
-    def grid_unavailability(self, start_date, end_date, groupby='', res_ids=None):
+    def grid_unavailability(self, start_date, end_date, groupby='', res_ids=()):
         """ Get the unavailability intervals for the grid view when the column is a Date
 
-            :start_date (Date): the start date of the grid view.
-            :end_date (Date): the end date of the grid view.
-            :groupby (str): field to use to group by the unavailability intervals.
-            :res_ids (List): the ids to use to correctly groupby without adding new data in the grid.
+            :param str start_date: the start date of the grid view.
+            :param str end_date: the end date of the grid view.
+            :param str groupby: field to use to group by the unavailability intervals.
+            :param list[int] res_ids: the ids to use to correctly groupby without adding new data in the grid.
 
             :returns: dict in which the key is the field specified in the groupby parameter
                       (or just false) and values will be a list of unavailability dates.

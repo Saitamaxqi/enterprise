@@ -32,7 +32,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_external_taxes(self):
         """ Required hook that should return tax information calculated by an external service.
 
-        :return (tuple(detail, summary)):
+        :returns: a 2-elements tuple with:
             detail (dict<Model, dict>): mapping between the document lines and its
                 related taxes. The related taxes dict should have the following keys:
                 - total: subtotal amount of this line (excl. tax)

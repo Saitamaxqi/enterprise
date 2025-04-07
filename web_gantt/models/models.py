@@ -227,7 +227,7 @@ class Base(models.AbstractModel):
                 record.write(vals)
 
     @api.model
-    def _gantt_progress_bar(self, field, res_ids, start, stop):
+    def _gantt_progress_bar(self, field: str, res_ids: list[int], start: str, stop: str):
         """ Get progress bar value per record.
 
             This method is meant to be overriden by each related model that want to
@@ -246,10 +246,10 @@ class Base(models.AbstractModel):
                     2: {'value': 25, 'max_value': 200},
                 }
 
-            :param string field: field on which there are progressbars
-            :param list res_ids: res_ids of related records for which we need to compute progress bar
-            :param string start_datetime: start date in utc
-            :param string end_datetime: end date in utc
+            :param field: field on which there are progressbars
+            :param res_ids: res_ids of related records for which we need to compute progress bar
+            :param start: start date in utc
+            :param stop: end date in utc
             :returns: dict of value and max_value per record
         """
         return {}

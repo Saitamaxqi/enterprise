@@ -26,7 +26,8 @@ class AccountAvataxUniqueCode(models.AbstractModel):
 
         E.g. 'Customer 10' with this function returning 'Customer'.
 
-        :return (string): a name for this model
+        :returns: a name for this model
+        :rtype: str
         """
         raise NotImplementedError()
 

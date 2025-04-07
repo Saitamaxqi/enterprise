@@ -147,7 +147,7 @@ class HrEmployee(models.Model):
         about the hours employees have worked and should work.
 
         :param date_start: date start of the interval to search
-        :param state_stop: date stop of the interval to search
+        :param date_stop: date stop of the interval to search
         :return: Dictionary of dictionary
                  for each employee id =>
                      number of units to work,

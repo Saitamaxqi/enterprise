@@ -266,7 +266,7 @@ class HrSalaryAttachment(models.Model):
     def record_payment(self, total_amount):
         ''' Record a new payment for this attachment, if the total has been reached the attachment will be closed.
 
-        :param amount: amount to register for this payment
+        :param total_amount: amount to register for this payment
             computed using the payslip_amount and the total if not given
 
         Note that paid_amount can never be higher than total_amount

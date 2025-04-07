@@ -367,7 +367,7 @@ class CalendarEvent(models.Model):
         """Used to find the partners from the emails strings and creates partners if not found.
         :param str guest_emails: optional line-separated guest emails. It will
           fetch or create partners to add them as event attendees;
-        :return tuple: partners (recordset)"""
+        :returns: partners (recordset)"""
         # Split and normalize guest emails
         formatted_emails = email_split_and_format_normalize(guest_emails_str)
         valid_normalized = list(tools.misc.unique(email_normalize(email_input, strict=False) for email_input in formatted_emails))
@@ -572,7 +572,8 @@ class CalendarEvent(models.Model):
     def _gantt_unavailabilities_events(self, start, stop, partners):
         """Get a mapping from partner id to unavailabilities based on existing events.
 
-        :return dict[int, Intervals[<res.partner>]]: {5: Intervals([(monday_morning, monday_noon, <res.partner>(5))])}
+        :returns: {5: Intervals([(monday_morning, monday_noon, <res.partner>(5))])}
+        :rtype: dict[int, Intervals[<res.partner>]]
         """
         return {
             attendee.id: Intervals([

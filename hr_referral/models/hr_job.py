@@ -53,7 +53,8 @@ class HrJob(models.Model):
             referral links. If not given, the current user is used.
         :param str channel: the channel to use for the referral links.
             Default to 'direct'.
-        :return dict: a dictionary mapping each user to its referral link.
+        :returns: a dictionary mapping each user to its referral link.
+        :rtype: dict
         '''
 
         # checks and defaults

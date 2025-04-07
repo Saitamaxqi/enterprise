@@ -165,8 +165,8 @@ class WhatsappMessage(models.Model):
     def _get_formatted_number(self, sanitized_number, country_code):
         """ Format a valid mobile number for whatsapp.
 
-        :examples:
-        '+919999912345' -> '919999912345'
+        Examples: ``'+919999912345'`` -> ``'919999912345'``
+
         :return: formatted mobile number
 
         TDE FIXME: remove in master

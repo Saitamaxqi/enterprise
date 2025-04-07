@@ -363,7 +363,8 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
     def _read_generic_tax_report_amounts(self, report, options_by_column_group, groupby_fields):
         """ Read the tax details to compute the tax amounts.
 
-        :param options_list:    The list of report options, one for each period.
+        :param report:
+        :param options_by_column_group:
         :param groupby_fields:  A list of tuple (alias, field) representing the way the amounts must be grouped.
         :return:                A dictionary mapping each groupby key (e.g. a tax_id) to a sub dictionary containing:
 

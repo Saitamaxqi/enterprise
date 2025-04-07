@@ -542,7 +542,8 @@ class MarketingActivity(models.Model):
         """ Retrieve a set of trigger types that have a schedule_date that depends
         on parent or activity / campaign, not on external user actions.
 
-        :returns set[str]: set of ``trigger_type`` elements
+        :returns: set of ``trigger_type`` elements
+        :rtype: set[str]
         """
         return {'activity', 'begin', 'mail_not_open', 'mail_not_click', 'mail_not_reply'}
 

@@ -8,9 +8,10 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_avatax_line_addresses(self, partner, warehouse_id):
         """Get the line level addresses from the warehouse.
 
-        :param partner (Model<res.partner>): the partner we are shipping to.
-        :param warehouse (Model<stock.warehouse>): the warehouse that the product is shipped from.
-        :return (dict): the AddressesModel to return to Avatax
+        :param partner: the partner we are shipping to.
+        :param warehouse_id: the warehouse that the product is shipped from.
+        :return: the AddressesModel to return to Avatax
+        :rtype: dict
         """
 
         # A 'shipTo' parameter must be added to line level addresses too because when 'addresses' is set at the line

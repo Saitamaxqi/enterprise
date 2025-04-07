@@ -89,8 +89,8 @@ class StockPickingBatch(models.Model):
         Errors are expected to be handled in parent class and automatically stops batch confirmation
         and pickings.write(...). If picking_ids=None or picking_ids.types not the same => expect UserError.
 
-        :params picking_batch_id: newly created batch
-        :params picking_ids: pickings ids to add to new batch
+        :param picking_batch_id: newly created batch
+        :param picking_ids: pickings ids to add to new batch
         :return: boolean if successful
         """
         if picking_ids:

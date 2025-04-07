@@ -900,7 +900,7 @@ class StudioApprovalRule(models.Model):
                     "all_rules": { [id]: rule },
                     [model_name]: [((res_id, method, action_id), { rules: [], entries: [] }), ... ]
                 }
-        :rtype dict:
+        :rtype: dict
         :raise: UserError if action_id and method are both truthy (rules can only apply to a method
                 or an action, not both)
         :raise: AccessError if the user does not have read access to the underlying model (and record
@@ -963,7 +963,7 @@ class StudioApprovalRule(models.Model):
         :param str method: method of the action that the user wants to run
         :param int action_id: database ID of the ir.actions.action that the user wants to run
         :return: a dict describing the result of the approval flow
-        :rtype dict:
+        :rtype: dict
         :raise: UserError if action_id and method are both truthy (rules can only apply to a method
                 or an action, not both)
         :raise: AccessError if the user does not have write access to the underlying record

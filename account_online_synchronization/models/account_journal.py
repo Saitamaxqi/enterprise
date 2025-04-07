@@ -239,7 +239,7 @@ class AccountJournal(models.Model):
             We do not check on online_transaction_identifier because this is called after the fetch
             where transitions would already have been filtered on existing online_transaction_identifier.
 
-            :param from_date: date from with we must check for duplicates.
+            :param date_from: date from with we must check for duplicates.
         """
         self.env.cr.execute(SQL.join(SQL(''), [
             self._get_duplicate_amount_date_account_transactions_query(date_from),
@@ -255,7 +255,7 @@ class AccountJournal(models.Model):
                or
                - same transaction id
 
-            :param from_date: date from with we must check for duplicates.
+            :param date_from: date from with we must check for duplicates.
         """
         query = SQL.join(SQL(''), [
             self._get_duplicate_amount_date_account_transactions_query(date_from),

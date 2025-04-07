@@ -3386,7 +3386,7 @@ class AccountReport(models.Model):
                                                  This is a dict in the same format as _compute_expression_totals_for_single_column_group's result
                                                  (the only difference being it does not contain any aggregation expression yet).
 
-        :param other_cross_report_expr_totals: A dict(forced_date_scope, expression_totals), where expression_totals is in the same form as
+        :param other_cross_report_expr_totals_by_scope: A dict(forced_date_scope, expression_totals), where expression_totals is in the same form as
                                                _compute_expression_totals_for_single_column_group's result. This parameter contains the results
                                                of the non-aggregation expressions used by cross_report expressions ; they all belong to different
                                                reports than self. The forced_date_scope corresponds to the original date_scope set on the
@@ -4844,9 +4844,9 @@ class AccountReport(models.Model):
 
         :param target_column_group_options: The options dict of the column group where the modification happened.
 
-        :param column_group_key: The string identifying the column group into which the change as manual value needs to be done.
-
         :param new_value_str: The new value to be set, as a string.
+
+        :param target_expression_id:
 
         :param rounding: The number of decimal digits to round with.
 
@@ -5540,12 +5540,12 @@ class AccountReport(models.Model):
         Its expand function must ensure the right sublines are reloaded when unfolding it.
 
         :param options: Option dict for this report.
-        :lines_to_group: The lines list to regroup by prefix if necessary. They must all have the same parent line (which might be no line at all).
-        :expand_function_name: Name of the expand function to be called on created prefix group lines, when unfolding them
-        :parent_level: Level of the parent line, which generated the lines in lines_to_group. It will be used to compute the level of the prefix group lines.
-        :matched_prefix': A string containing the parent prefix that's already matched. For example, when computing prefix 'ABC', matched_prefix will be 'AB'.
-        :groupby: groupby value of the parent line, which generated the lines in lines_to_group.
-        :parent_line_dict_id: id of the parent line, which generated the lines in lines_to_group.
+        :param lines_to_group: The lines list to regroup by prefix if necessary. They must all have the same parent line (which might be no line at all).
+        :param expand_function_name: Name of the expand function to be called on created prefix group lines, when unfolding them
+        :param parent_level: Level of the parent line, which generated the lines in lines_to_group. It will be used to compute the level of the prefix group lines.
+        :param matched_prefix: A string containing the parent prefix that's already matched. For example, when computing prefix 'ABC', matched_prefix will be 'AB'.
+        :param groupby: groupby value of the parent line, which generated the lines in lines_to_group.
+        :param parent_line_dict_id: id of the parent line, which generated the lines in lines_to_group.
 
         :return: lines_to_group, grouped by prefix if it was necessary.
         """

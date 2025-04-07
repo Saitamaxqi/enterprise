@@ -910,7 +910,7 @@ class WhatsappTemplate(models.Model):
 
         :param bool demo_fallback: if true, fallback on demo values instead of blanks
         :param dict variable_values: values to use instead of demo values {'header-{{1}}': 'Hello'}
-        :return Markup:
+        :returns: Markup
         """
         self.ensure_one()
         variable_values = variable_values or {}

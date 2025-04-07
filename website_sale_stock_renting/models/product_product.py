@@ -16,9 +16,6 @@ class ProductProduct(models.Model):
         :param datetime from_date: The first date where a rental sale order line is returned.
         :param datetime to_date: The last date where a rental sale order line reservation begins.
         :param list(tuple) domain: An additional restrictive domain to search sale order line for.
-
-        :return:
-        :rtype:
         """
         self.ensure_one()
 

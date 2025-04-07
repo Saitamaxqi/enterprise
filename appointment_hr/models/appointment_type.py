@@ -61,7 +61,8 @@ class AppointmentType(models.Model):
           intervals are given we consider employee does not work during this slot.
           See ``Resource._work_intervals_batch()`` for more details;
 
-        :return bool: whether employee is available for this slot;
+        :returns: whether employee is available for this slot;
+        :rtype: bool
         """
         def find_start_index():
             """ find the highest index of intervals for which the start_date

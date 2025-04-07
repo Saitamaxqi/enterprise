@@ -56,7 +56,7 @@ class AccountAnalyticLine(models.Model):
                                           and not analytic_line._should_not_display_timer()
 
     @api.model
-    def grid_unavailability(self, start_date, end_date, groupby='', res_ids=None):
+    def grid_unavailability(self, start_date, end_date, groupby='', res_ids=()):
         start_datetime = fields.Datetime.from_string(start_date)
         end_datetime = fields.Datetime.from_string(end_date) + relativedelta(hour=23, minute=59, second=59)
         unavailability_intervals_per_employee_id = {}

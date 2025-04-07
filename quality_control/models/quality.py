@@ -189,10 +189,10 @@ class QualityPoint(models.Model):
         - At least one category that is a parent of the product_ids categories
 
         :param product_ids: the products that could require a quality check
-        :type product: :class:`~odoo.addons.product.models.product.ProductProduct`
+        :type product_ids: :class:`~odoo.addons.product.models.product.ProductProduct`
         :param picking_type_id: the products that could require a quality check
-        :type product: :class:`~odoo.addons.stock.models.stock_picking.StockPickingType`
-        :return: the domain for quality point with given picking_type_id for all the product_ids
+        :type picking_type_id: :class:`~odoo.addons.stock.models.stock_picking.StockPickingType`
+        :returns: the domain for quality point with given picking_type_id for all the product_ids
         :rtype: list
         """
         domain = [('picking_type_ids', 'in', picking_type_id.ids)]

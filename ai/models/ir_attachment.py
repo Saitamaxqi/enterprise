@@ -78,11 +78,12 @@ class IrAttachment(models.Model):
 
     @staticmethod
     def _clean_text(text):
-        """Clean up the text content while preserving meaningful structure.
-        Args:
-            text (str): Raw text content to clean
-        Returns:
-            str: Cleaned text content
+        """
+        Clean up the text content while preserving meaningful structure.
+
+        :param str text: Raw text content to clean
+        :returns: Cleaned text content
+        :rtype: str
         """
         text = text.replace('\r\n', '\n')
 
@@ -125,14 +126,12 @@ class IrAttachment(models.Model):
         """
         Split text into chunks based on character count with a margin to avoid abrupt cuts.
 
-        Args:
-            text (str): The input text to chunk.
-            chunk_size (int): Target chunk size in characters.
-            margin (int): Allow flexibility in chunk sizes within chunk_size ± margin.
-            min_chunk_size (int): Minimum size a chunk should have before finalizing.
-
-        Returns:
-            list: List of text chunks.
+        :param str text: The input text to chunk.
+        :param int chunk_size: Target chunk size in characters.
+        :param int margin: Allow flexibility in chunk sizes within chunk_size ± margin.
+        :param int min_chunk_size: Minimum size a chunk should have before finalizing.
+        :return: List of text chunks
+        :rtype: list[str]
         """
         cleaned_text = IrAttachment._clean_text(text)
         chunks = []
