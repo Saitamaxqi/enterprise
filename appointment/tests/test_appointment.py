@@ -615,7 +615,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         host_partner = self.apt_manager.partner_id
         appointment_type.message_confirmation = '<p>Please try to be there <strong>5 minutes</strong> before the time.<p><br>Thank you.'
         appointment_question = self.env['appointment.question'].create({
-            'appointment_type_id': appointment_type.id,
+            'appointment_type_ids': [(6, 0, appointment_type.ids)],
             'name': 'How are you ?',
             'question_type': 'char',
         })

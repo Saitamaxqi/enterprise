@@ -110,21 +110,23 @@
                                                                 </div>
                                                             </div>
                                                         </t>
+                                                        <div t-if="not is_html_empty(question.extra_comment)"
+                                                            t-attf-class="{{'mt-2' if question.question_type in ['checkbox', 'radio'] else 'mt-1'}}">
+                                                            <div class="form-text" t-field="question.extra_comment"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-4" t-if="question.question_type == 'text'">
-                                                    <label t-attf-for="question_#{question.id}" class="fw-normal mb-2" t-out="' '.join([question.name, '*' if question.question_required else ''])"/>
-                                                    <textarea class="form-control" rows="6"
+                                                    <label t-attf-for="question_#{question.id}" class="fw-normal mb-1" t-out="' '.join([question.name, '*' if question.question_required else ''])"/>
+                                                    <div t-if="not is_html_empty(question.extra_comment)" class="mb-3">
+                                                        <div class="form-text" t-field="question.extra_comment"/>
+                                                    </div>
+                                                    <textarea class="form-control mt-1" rows="6"
                                                         t-att-required="question.question_required or None"
                                                         t-attf-name="question_#{question.id}"
                                                         t-att-placeholder="question.placeholder"/>
                                                 </div>
                                             </t>
-                                            <div groups="appointment.group_appointment_manager" class=" o_not_editable alert alert-info mt-4 text-center" role="status">
-                                                <a class="alert-link" t-attf-href="/odoo/action-appointment.appointment_type_action/{{appointment_type.id}}">
-                                                    <i class="fa fa-pencil me-2" role="img" aria-label="Edit" title="Create custom questions in backend"/>Add Custom Questions
-                                                </a>
-                                            </div>
                                             <div class="my-3 pt-3">
                                                 <div class="o_not_editable text-end">
                                                     <button type="button" class="o_appointment_form_confirm_btn btn btn-primary ms-auto">Confirm Appointment</button>

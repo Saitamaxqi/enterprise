@@ -139,7 +139,10 @@ class AppointmentType(models.Model):
     min_schedule_hours = fields.Float('Schedule before (hours)', required=True, default=1.0)
     max_schedule_days = fields.Integer('Schedule not after (days)', required=True, default=15)
 
-    question_ids = fields.One2many('appointment.question', 'appointment_type_id', string='Questions', copy=True)
+    question_ids = fields.Many2many(
+        'appointment.question',
+        relation='appointment_type_appointment_question_rel',
+        string='Questions')
     reminder_ids = fields.Many2many(
         'calendar.alarm', string="Reminders",
         default=lambda self: self.env['calendar.alarm'].search([('default_for_new_appointment_type', '=', True)]))

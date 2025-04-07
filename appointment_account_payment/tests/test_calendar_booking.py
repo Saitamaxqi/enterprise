@@ -157,7 +157,7 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
         """ Unlinking a booking should (only) unlink appointment answers not linked to any calendar event. """
         appointment_type = self.appointment_users_payment
         appointment_question = self.env['appointment.question'].create({
-            'appointment_type_id': appointment_type.id,
+            'appointment_type_ids': [(6, 0, appointment_type.ids)],
             'name': 'How are you ?',
             'question_type': 'char',
         })

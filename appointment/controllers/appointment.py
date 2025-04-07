@@ -552,6 +552,7 @@ class AppointmentController(http.Controller):
             'partner_data': partner_data,
             'appointment_type': appointment_type,
             'available_appointments': available_appointments,
+            'is_html_empty': is_html_empty,
             'main_object': appointment_type,
             'datetime': date_time,
             'date_locale': f'{day_name} {date_formated}',

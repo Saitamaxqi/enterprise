@@ -90,12 +90,12 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
         # Types of questions: char, select, radio, checkbox
         cls.appointment_question_single_line_text, cls.appointment_question_dropdown, cls.appointment_question_radio, cls.appointment_question_checkbox = cls.env['appointment.question'].create([
             {
-                'appointment_type_id': cls.appointment_users.id,
+                'appointment_type_ids': cls.appointment_users.ids,
                 'name': 'How are you ?',
                 'question_type': 'char',
             },
             {
-                'appointment_type_id': cls.appointment_users.id,
+                'appointment_type_ids': cls.appointment_users.ids,
                 'name': 'How do you feel?',
                 'question_type': 'select',
                 'answer_ids': [
@@ -103,7 +103,7 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
                 ]
             },
             {
-                'appointment_type_id': cls.appointment_users.id,
+                'appointment_type_ids': cls.appointment_users.ids,
                 'name': "Don't answer this",
                 'question_type': 'radio',
                 'answer_ids': [
@@ -111,7 +111,7 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
                 ]
             },
             {
-                'appointment_type_id': cls.appointment_users.id,
+                'appointment_type_ids': cls.appointment_users.ids,
                 'name': 'Select multiple',
                 'question_type': 'checkbox',
                 'answer_ids': [

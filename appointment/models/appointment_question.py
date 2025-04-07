@@ -8,10 +8,13 @@ from odoo.exceptions import ValidationError
 class AppointmentQuestion(models.Model):
     _name = 'appointment.question'
     _description = "Appointment Questions"
-    _order = "sequence"
+    _order = "sequence,id"
 
     sequence = fields.Integer('Sequence')
-    appointment_type_id = fields.Many2one('appointment.type', 'Appointment Type', ondelete="cascade", index='btree_not_null')
+    appointment_type_ids = fields.Many2many('appointment.type', relation='appointment_type_appointment_question_rel', string='Appointment Types')
+    appointment_count = fields.Integer('# Appointments', compute='_compute_appointment_count')
+    is_reusable = fields.Boolean('Is Reusable', default=True,
+        help="Will appear in the list of available questions when adding one in any appointment.")
     name = fields.Char('Question', translate=True, required=True)
     placeholder = fields.Char('Placeholder', translate=True)
     question_required = fields.Boolean('Mandatory Answer')
@@ -20,9 +23,11 @@ class AppointmentQuestion(models.Model):
         ('text', 'Multi-line text'),
         ('select', 'Dropdown (one answer)'),
         ('radio', 'Radio (one answer)'),
-        ('checkbox', 'Checkboxes (multiple answers)')], 'Answer Type', default='char')
+        ('checkbox', 'Checkboxes (multiple answers)')], 'Answer Type', default='char', required=True)
     answer_ids = fields.One2many('appointment.answer', 'question_id', string='Available Answers', copy=True)
     answer_input_ids = fields.One2many('appointment.answer.input', 'question_id', string='Submitted Answers')
+    extra_comment = fields.Html('Extra Comment', translate=True,
+        help="This will appear below the question in the appointment form.")
 
     @api.constrains('question_type', 'answer_ids')
     def _check_question_type(self):
@@ -34,15 +39,40 @@ class AppointmentQuestion(models.Model):
                   )
             )
 
+    @api.depends('appointment_type_ids')
+    def _compute_appointment_count(self):
+        appointment_data = self.env["appointment.type"]._read_group(
+            [('question_ids', 'in', self.ids)],
+            ['question_ids'],
+            ['__count']
+        )
+        mapped_data = {appointment_question.id: count for appointment_question, count in appointment_data}
+        for question in self:
+            if not question.id:  # new record
+                question.appointment_count = len(question.appointment_type_ids)
+            else:
+                question.appointment_count = mapped_data.get(question.id, 0)
+
     def action_view_question_answer_inputs(self):
         """ Allow analyzing the answers to a question on an appointment in a convenient way:
         - A graph view showing counts of each suggested answers for multiple-choice questions:
         select / radio / checkbox. (Along with secondary pivot and list views)
-        - A list view showing textual answers values for char / text_box questions"""
+        - A list view showing textual answers values for char / text questions"""
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("appointment.appointment_answer_input_action_from_question")
+        action = self.env["ir.actions.actions"]._for_xml_id("appointment.appointment_answer_input_action")
         if self.question_type in ['select', 'radio', 'checkbox']:
             action['views'] = [(False, 'pivot'), (False, 'graph'), (False, 'list'), (False, 'form')]
-        elif self.question_type in ['char', 'text_box']:
+        elif self.question_type in ['char', 'text']:
             action['views'] = [(False, 'list'), (False, 'form')]
+        action['context'] = {
+            'create': False,
+            'search_default_question_id': self.id,
+        }
+        if appointment_id := self.env.context.get('search_default_appointment_type_id'):
+            action['context'].update(search_default_appointment_type_id=appointment_id)
+        return action
+
+    def action_view_appointment_types(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("appointment.appointment_type_action")
+        action['domain'] = [('question_ids', 'in', self.ids)]
         return action
