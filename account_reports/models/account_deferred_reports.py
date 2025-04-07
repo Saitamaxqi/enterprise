@@ -472,18 +472,13 @@ class AccountDeferredReportHandler(models.AbstractModel):
 
     def action_generate_entry(self, options):
         new_deferred_moves = self._generate_deferral_entry(options)
-        return {
-            'name': _('Deferred Entries'),
-            'type': 'ir.actions.act_window',
-            'views': [(False, "list"), (False, "form")],
-            'domain': [('id', 'in', new_deferred_moves.ids)],
-            'res_model': 'account.move',
-            'context': {
-                'search_default_group_by_move': True,
-                'expand': True,
-            },
-            'target': 'current',
-        }
+        report = self.env['account.report'].browse(options['report_id'])
+        domain = report._get_generated_deferral_entries_domain(options)
+        already_generated = self.env['account.move'].search_count(domain, limit=1)
+        if new_deferred_moves or already_generated:
+            return report.open_deferral_entries(options, {})
+
+        raise UserError(_("No entry to generate."))
 
     def _get_moves_to_defer(self, options):
         date_from = fields.Date.to_date(DEFERRED_DATE_MIN)
@@ -509,7 +504,7 @@ class AccountDeferredReportHandler(models.AbstractModel):
         if self.env.company._get_violated_lock_dates(date_to, False, journal):
             raise UserError(_("You cannot generate entries for a period that is locked."))
         if not move_lines:
-            raise UserError(_("No entry to generate."))
+            return self.env['account.move']
 
         deferred_move = self.env['account.move'].with_context(skip_account_deprecation_check=True).create({
             'move_type': 'entry',

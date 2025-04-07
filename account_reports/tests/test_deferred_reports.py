@@ -687,8 +687,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             options,
         )
         # Nothing should be generated either.
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options)
+        self.assertFalse(self.generate_deferral_entries(options).exists())
 
         # In Feb, the move is accounted, so it should be displayed.
         options = self.get_options('2023-02-01', '2023-02-28')
@@ -751,8 +750,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
 
         options = self.get_options('2023-01-01', '2023-01-31')
 
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options)
+        self.assertFalse(self.generate_deferral_entries(options).exists())
 
         # Create 3 different invoices (instead of one with 3 lines)
         for expense_line in self.expense_lines[:3]:
@@ -786,8 +784,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         self.assertEqual(deferred_inverse_january.date, fields.Date.from_string('2023-02-01'))
 
         # Don't re-generate entries for the same period if they already exist for all move lines
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options)
+        self.assertFalse(self.generate_deferral_entries(options).exists())
 
         # Generate the grouped deferred entries for the next period
         generated_entries_february = self.generate_deferral_entries(self.get_options('2023-02-01', '2023-02-28'))
@@ -837,8 +834,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         }])
 
         # Don't re-generate entries for the same period if they already exist for all move lines
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options)
+        self.assertFalse(self.generate_deferral_entries(options).exists())
 
         # Let's create a new invoice that should be shown in the January period
         self.create_invoice([self.expense_lines[2]])
@@ -920,8 +916,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         }])
 
         # Don't re-generate entries for the same period if they already exist for all move lines
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options)
+        self.assertFalse(self.generate_deferral_entries(options).exists())
 
         # Let's create a new invoice that should be shown in the february period
         self.create_invoice([self.expense_lines[2]])
@@ -1042,9 +1037,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         self.assert_invoice_lines(deferred_inverse_march, expected_values_inverse_march)
 
         # APRIL
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            # No entry should be generated, since everything has been deferred.
-            self.generate_deferral_entries(self.get_options('2023-04-01', '2023-04-30'))
+        self.assertFalse(self.generate_deferral_entries(self.get_options('2023-04-01', '2023-04-30')).exists())
 
     def test_deferred_revenue_generate_grouped_without_taxes(self):
         """
@@ -1143,8 +1136,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             [],
             options_january,
         )
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options_january)
+        self.assertFalse(self.generate_deferral_entries(options_january).exists())
 
         move1.button_cancel()
 
@@ -1193,8 +1185,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         )
 
         # The invoice is now accounted for in february, so nothing should be generated
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options_february)
+        self.assertFalse(self.generate_deferral_entries(options_january).exists())
 
     def test_deferred_same_date(self):
         """
@@ -1241,8 +1232,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
 
         # When changing the method to manual, the deferred entries should not be re-generated
         self.company.generate_deferred_expense_entries_method = 'manual'
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(self.get_options('2023-02-01', '2023-02-28'))
+        self.assertFalse(self.generate_deferral_entries(self.get_options('2023-02-01', '2023-02-28')).exists())
 
     def test_deferred_expense_manual_generation_totally_deferred(self):
         """
@@ -1255,8 +1245,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         self.generate_deferral_entries(self.get_options('2023-03-01', '2023-03-31'))
         self.assertEqual(self.env['account.move.line'].search_count([('account_id', '=', self.deferral_account.id)]), 2)
 
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(self.get_options('2023-04-01', '2023-04-30'))
+        self.assertFalse(self.generate_deferral_entries(self.get_options('2023-04-01', '2023-04-30')).exists())
 
         move2 = self.create_invoice([[self.expense_accounts[1], 1000, '2023-01-01', '2023-05-31']])
         generated_entry = self.generate_deferral_entries(self.get_options('2023-04-01', '2023-04-30'))[0]
@@ -1273,8 +1262,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         self.create_invoice([self.expense_lines[0]], post=False)
         options = self.get_options('2023-01-01', '2023-01-31')
         options['all_entries'] = True
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options)
+        self.assertFalse(self.generate_deferral_entries(options).exists())
 
     def test_deferred_expense_manual_generation_after_on_validation(self):
         """
@@ -1396,8 +1384,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
 
         # No entries yet for August
         options_august = self.get_options('2023-08-01', '2023-08-31')
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options_august)
+        self.assertFalse(self.generate_deferral_entries(options_august).exists())
 
         self.create_invoice([[self.expense_accounts[0], 600, '2023-07-01', '2023-09-30']])
 
@@ -1416,8 +1403,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         self.assert_invoice_lines(deferred_move_august, expected_values_august)
 
         # Don't re-generate entries for the same period if they already exist for all move lines
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options_august)
+        self.assertFalse(self.generate_deferral_entries(options_august).exists())
 
         # Generate the grouped deferred entries for July
         options_july = self.get_options('2023-07-01', '2023-07-31')
@@ -1448,8 +1434,7 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         self.assert_invoice_lines(reversed_deferred_move_july, expected_values_july_reversed)
 
         # Don't re-generate entries for the same period if they already exist for all move lines
-        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
-            self.generate_deferral_entries(options_july)
+        self.assertFalse(self.generate_deferral_entries(options_july).exists())
 
     def test_deferred_expense_manual_generation_single_period(self):
         """
