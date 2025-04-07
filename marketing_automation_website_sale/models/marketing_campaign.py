@@ -86,6 +86,7 @@ class MarketingCampaign(models.Model):
         server_action = self.env['ir.actions.server'].create({
             'evaluation_type': 'value',
             'model_id': self.env['ir.model']._get_id('res.partner'),
+            'state': 'object_write',
             'name': _('Add Coupon Recipient Tag'),
             'resource_ref': f'res.partner.category,{anniversary_tag.id}',
             'update_m2m_operation': 'add',
