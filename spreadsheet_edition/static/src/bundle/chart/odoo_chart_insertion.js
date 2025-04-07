@@ -23,6 +23,7 @@ export function insertChart(chartData) {
         stacked: chartData.metaData.stacked,
         fillArea: chartType === "odoo_line",
         cumulative: chartData.metaData.cumulated,
+        cumulatedStart: chartData.metaData.cumulatedStart,
         title: { text: chartData.name },
         background: "#FFFFFF",
         legendPosition: "top",

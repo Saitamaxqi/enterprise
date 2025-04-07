@@ -151,6 +151,39 @@ test("stacked line chart", async () => {
     expect(".o-checkbox input:checked").toHaveCount(1, { message: "checkbox should be checked" });
 });
 
+test("Odoo line chart with cumulated start", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_line");
+
+    expect(model.getters.getChartDefinition(chartId).cumulative).toBe(undefined);
+    expect(model.getters.getChartDefinition(chartId).cumulatedStart).toBe(undefined);
+    expect(".o-checkbox input[name='cumulatedStart']").toHaveCount(0, {
+        message: "cumulated Start is not visible",
+    });
+
+    // uncheck
+    await contains(".o-checkbox input[name='cumulative']").click();
+    expect(model.getters.getChart(chartId).cumulative).toBe(true);
+    expect(model.getters.getChart(chartId).cumulatedStart).toBe(undefined);
+    expect(".o-checkbox input[name='cumulatedStart']").toHaveCount(1, {
+        message: "cumulated Start is visible",
+    });
+    expect(".o-checkbox input[name='cumulatedStart']:checked").toHaveCount(0, {
+        message: "cumulated Start not checked",
+    });
+
+    // check
+    await contains(".o-checkbox input[name='cumulatedStart']").click();
+    expect(model.getters.getChart(chartId).cumulative).toBe(true);
+    expect(model.getters.getChart(chartId).cumulatedStart).toBe(true);
+    expect(".o-checkbox input[name='cumulatedStart']:checked").toHaveCount(1, {
+        message: "cumulated Start is visible and checked",
+    });
+});
+
 test("Odoo area chart", async () => {
     const { model, env } = await createSpreadsheetFromGraphView();
     const sheetId = model.getters.getActiveSheetId();

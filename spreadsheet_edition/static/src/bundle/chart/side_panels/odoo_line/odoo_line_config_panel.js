@@ -27,4 +27,9 @@ export class OdooLineChartConfigPanel extends CommonOdooChartConfigPanel {
             cumulative,
         });
     }
+    onUpdateCumulatedStart(cumulatedStart) {
+        this.props.updateChart(this.props.figureId, {
+            cumulatedStart,
+        });
+    }
 }

@@ -17,7 +17,17 @@
                     label="chartTerms.CumulativeData"
                     value="props.definition.cumulative"
                     onChange.bind="onUpdateCumulative"
+                    className="'mb-2'"
                 />
+                <div class="ms-3">
+                    <Checkbox
+                    t-if="props.definition.cumulative"
+                    name="'cumulatedStart'"
+                    label.translate="Include historical data"
+                    value="props.definition.cumulatedStart"
+                    onChange.bind="onUpdateCumulatedStart"
+                    />
+                </div>
             </Section>
         </xpath>
     </t>

@@ -208,3 +208,21 @@ test("graph with a contextual domain", async () => {
     );
     expect.verifySteps(["formatted_read_group", "formatted_read_group"]);
 });
+
+
+test("'cumulated_start' is fetched from the graph view", async () => {
+    const serverData = getBasicServerData();
+    serverData.views["partner,false,graph"] = /* xml */ `
+        <graph string="Partner" cumulated_start="true">
+            <field name="foo" type="measure"/>
+        </graph>
+    `;
+    const { model } = await createSpreadsheetFromGraphView({
+        serverData
+    });
+
+    const sheetId = model.getters.getActiveSheetId();
+    const chartIds = model.getters.getChartIds(sheetId)
+    expect(chartIds.length).toBe(1);
+    expect(model.getters.getChart(chartIds[0]).metaData.cumulatedStart).toBe(true);
+})
