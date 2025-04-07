@@ -205,7 +205,7 @@
                                                     <input type="hidden" name="max_capacity" t-att-value="max_capacity"/>
                                                     <label class="mb-2 o_editable" for="resourceCapacity">Number of people</label>
                                                     <select class="form-select cursor-pointer" name="resourceCapacity" id="resourceCapacity">
-                                                        <option value="1" t-att-selected="not asked_capacity and 'selected'" data-placeholder-option="True">-</option>
+                                                        <option value="0" t-att-selected="not asked_capacity and 'selected'" data-placeholder-option="True">-</option>
                                                         <option t-foreach="range(1, max_capacity + 1)" t-as="counter"
                                                             t-att-value="counter" t-att-selected="counter == asked_capacity and 'selected'">
                                                             <t t-out="counter"/>
@@ -265,6 +265,7 @@
             <i class="fa fa-3x fa-circle-o-notch fa-spin mx-auto"/>
         </div>
         <div id="slots_availabilities" class="d-none">
+            <input type="hidden" name="max_resource_capacity" t-att-value="max_resource_capacity"/>
             <div id="calendar" t-attf-class="p-0 border rounded-3 overflow-hidden #{'d-none' if (month_first_available is False or not appointment_type.active) and capacity == 1 else ''}">
                 <t t-set="displayed_month_id" t-value="month_kept_from_update if month_kept_from_update is not False else month_first_available"/>
                 <div t-foreach="slots" t-as="month" t-attf-id="month-#{month['id']}" t-attf-class="o_appointment_month #{'d-none' if month['id'] != displayed_month_id else ''}">

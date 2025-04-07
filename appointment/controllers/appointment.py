@@ -359,8 +359,10 @@ class AppointmentController(http.Controller):
             if appointment_type.schedule_based_on == 'users':
                 max_capacity_possible = appointment_type.user_capacity
             else:
-                possible_combinations = (resource_selected or resource_default or resources_possible)._get_filtered_possible_capacity_combinations(1, {})
-                max_capacity_possible = possible_combinations[-1][1] if possible_combinations else 1
+                max_capacity_possible = self._get_max_capacity_possible(
+                    resources_possible,
+                    resource_selected_id=(resource_selected or resource_default).id,
+                )
         else:
             max_capacity_possible = 1
 
@@ -938,6 +940,22 @@ class AppointmentController(http.Controller):
             return cookie
         return appointment_type.appointment_tz
 
+    def _get_max_capacity_possible(self, resources, resource_selected_id=False):
+        """
+            Returns the maximum capacity possible considering the resources given.
+            We consider all the combinations of linked resources and their capacities.
+
+            :param resources: an appointment.resource recordset
+            :param resource_selected_id: id of the selected resource
+            :return: int, the maximum capacity possible with the resources given
+        """
+        possible_combinations = resources._get_filtered_possible_capacity_combinations(1, {})
+        capacity_to_resources = {
+            resource_ids: capacity for resource_ids, capacity in possible_combinations
+            if not resource_selected_id or resource_selected_id in resource_ids
+        }
+        return max(capacity_to_resources.values()) if capacity_to_resources else 1
+
     # ------------------------------------------------------------
     # APPOINTMENT TYPE JSON DATA
     # ------------------------------------------------------------
@@ -1039,6 +1057,7 @@ class AppointmentController(http.Controller):
         month_before_update = kwargs.get('month_before_update')
         month_kept_from_update = next((month['id'] for month in slots if month['month'] == month_before_update), False) if month_before_update else False
         formated_days = _formated_weekdays(get_lang(request.env).code)
+        max_possible_capacity = self._get_max_capacity_possible(filter_resources, int(resource_selected_id))
 
         return request.env['ir.qweb']._render('appointment.appointment_calendar', {
             'appointment_type': appointment_type,
@@ -1049,4 +1068,5 @@ class AppointmentController(http.Controller):
             'slots': slots,
             'month_kept_from_update': month_kept_from_update,
             'month_first_available': month_first_available,
+            'max_resource_capacity': max_possible_capacity,
         })

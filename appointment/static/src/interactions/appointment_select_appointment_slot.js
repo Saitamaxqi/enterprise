@@ -102,6 +102,31 @@ export class appointmentSlotSelect extends Interaction {
         }, monthEl);
     }
 
+    _updateResourceCapacityOptions() {
+        const capacitySelect = document.querySelector("select[name='resourceCapacity']");
+        const resourceId = document.querySelector("#slots_form select[name='resource_id']")?.value;
+
+        if (resourceId && capacitySelect.value) {
+            const max_resource_capacity = parseInt(
+                document.querySelector("input[name='max_resource_capacity']")?.value || 0
+            );
+            const max_default_capacity = parseInt(
+                document.querySelector("input[name='max_capacity']").value
+            );
+            const previousCapacitySelected = parseInt(capacitySelect.value);
+            const max_capacity = max_resource_capacity || max_default_capacity;
+            capacitySelect.replaceChildren();
+            this.renderAt(
+                "appointment.resources_capacity_options",
+                {
+                    asked_capacity: previousCapacitySelected <= max_capacity ? previousCapacitySelected : false,
+                    max_capacity: max_capacity,
+                },
+                capacitySelect
+            );
+        }
+    }
+
     /**
      * Checks whether any slot is available in the calendar.
      * If there isn't, adds an explicative message in the slot list, and hides the appointment details,
@@ -449,6 +474,7 @@ export class appointmentSlotSelect extends Interaction {
             if (updatedAppointmentCalendarHtml) {
                 this.el.querySelector("#slots_availabilities").outerHTML = updatedAppointmentCalendarHtml;
                 this.initSlots();
+                this._updateResourceCapacityOptions();
                 // If possible, we keep the current month, and display the helper if it has no availability.
                 const displayedMonthEl = this.el.querySelector(".o_appointment_month:not(.d-none)");
                 if (!!this.firstEl && !displayedMonthEl.querySelector(".o_day")) {

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template>
+<templates>
+
+    <t t-name="appointment.resources_capacity_options">
+        <option value="0" t-att-selected="!asked_capacity and 'selected'" data-placeholder-option="True">-</option>
+        <t t-foreach="[...Array(max_capacity).keys()].map(i => i + 1)" t-as="counter" t-key="counter_index">
+            <option t-att-value="counter" t-att-selected="counter == asked_capacity and 'selected'">
+                <t t-out="counter"/>
+            </option>
+        </t>
+    </t>
+
     <t t-name="appointment.slots_list">
         <span>Select a time</span>
         <div class="o_slots_list row px-0">
@@ -22,4 +32,4 @@
         </div>
     </t>
 
-</template>
+</templates>
