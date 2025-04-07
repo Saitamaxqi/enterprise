@@ -73,14 +73,18 @@ class L10nCLWebsiteSale(WebsiteSale):
                 values.update(request.website._get_checkout_step_values())
                 return request.render("l10n_cl_edi_website_sale.l10n_cl_edi_invoicing_info", values)
             self._l10n_cl_update_order(order_sudo, **kw)
-            return request.redirect("/shop/confirm_order")
+            return request.redirect(
+                request.website._get_checkout_step_values()['next_website_checkout_step_href']
+            )
         # httprequest.method GET
         if order_sudo.partner_id.country_id.code != 'CL':
             order_sudo.partner_invoice_id = request.env.ref('l10n_cl.par_cfa')
-            return request.redirect("/shop/confirm_order")
+            return request.redirect(
+                request.website._get_checkout_step_values()['next_website_checkout_step_href']
+            )
         if 'l10n_cl_type_document' not in values['default_value']:
             values['default_value'].update(l10n_cl_type_document='ticket')
-        values.update(request.website._get_checkout_step_values(request.httprequest.path))
+        values.update(request.website._get_checkout_step_values())
         return request.render('l10n_cl_edi_website_sale.l10n_cl_edi_invoicing_info', values)
 
     def _check_billing_address(self, partner_sudo):

@@ -28,7 +28,9 @@ class WebsiteSaleL10nMX(WebsiteSale):
     @route('/shop/l10n_mx_invoicing_info', type='http', auth='public', website=True, sitemap=False)
     def l10n_mx_invoicing_info(self, **kw):
         if not self._l10n_mx_edi_is_extra_info_needed():
-            return request.redirect("/shop/confirm_order")
+            return request.redirect(
+                request.website._get_checkout_step_values()['next_website_checkout_step_href']
+            )
 
         order_sudo = request.cart
         if redirection := self._check_cart(order_sudo):
@@ -88,9 +90,13 @@ class WebsiteSaleL10nMX(WebsiteSale):
                 })
                 partner.write(partner_vals)
                 if not errors:
-                    return request.redirect("/shop/confirm_order")
+                    return request.redirect(
+                        request.website._get_checkout_step_values()['next_website_checkout_step_href']
+                    )
             else:
-                return request.redirect("/shop/confirm_order")
+                return request.redirect(
+                    request.website._get_checkout_step_values()['next_website_checkout_step_href']
+                )
 
         # === Render extra_info tab ===
         values = {
@@ -108,6 +114,6 @@ class WebsiteSaleL10nMX(WebsiteSale):
             'l10n_mx_show_extra_info': True,
             'can_edit_vat': can_edit_vat,
         }
-        values.update(request.website._get_checkout_step_values(request.httprequest.path))
+        values.update(request.website._get_checkout_step_values())
 
         return request.render("l10n_mx_edi_website_sale.l10n_mx_edi_invoicing_info", values)
