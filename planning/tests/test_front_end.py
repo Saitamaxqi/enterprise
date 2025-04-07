@@ -117,3 +117,14 @@ class TestFrontEnd(TestUiCommon):
         )
         self.start_tour(front_end_thibault_unassign_url, 'planning_front_end_buttons_tour')
         self.assertFalse(self.front_end_slot.resource_id, "Thibault's shift should now be an open slot")
+
+    def test_preview_planning_shift(self):
+        preview = self.env['planning.preview'].with_context({
+            'default_start_datetime': '2025-04-19 09:00:00',
+            'default_end_datetime': '2025-04-19 17:00:00',
+        }).create({
+            'employee_id': self.employee_thibault.id,
+        })
+        result = preview.action_preview_shift()
+        self.assertEqual(result['type'], 'ir.actions.act_url')
+        self.start_tour(result['url'], 'planning_preview_tour')

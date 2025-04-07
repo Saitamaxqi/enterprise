@@ -159,6 +159,20 @@ export class PlanningControllerActions {
         this.notificationFn = notificationRemove;
     }
 
+    previewShift() {
+        const additionalContext = this.getAdditionalContext();
+        const adjustedEndDate = this.getStopDate();
+        if (adjustedEndDate) {
+            additionalContext.default_end_datetime = serializeDateTime(
+                adjustedEndDate.plus({ days: 1 }).minus({ minutes: 1 })
+            );
+        }
+        return this.actionService.doAction("planning.resource_preview_action", {
+            additionalContext,
+            onClose: this.reload,
+        });
+    }
+
     autoPlanDomain() {
         return this.getDomain();
     }

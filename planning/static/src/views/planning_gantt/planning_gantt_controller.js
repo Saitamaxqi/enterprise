@@ -86,4 +86,8 @@ export class PlanningGanttController extends GanttController {
         };
         super.openDialog({ ...props, title, context }, options);
     }
+
+    get previewTitle() {
+        return _t("Preview");
+    }
 }

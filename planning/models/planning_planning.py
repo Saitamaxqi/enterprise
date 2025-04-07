@@ -24,6 +24,7 @@ class PlanningPlanning(models.Model):
     date_end = fields.Date('Date End', compute='_compute_dates')
     allow_self_unassign = fields.Boolean('Let Employee Unassign Themselves', compute='_compute_allow_self_unassign')
     self_unassign_days_before = fields.Integer("Days before shift for unassignment", related="company_id.planning_self_unassign_days_before", export_string_translation=False)
+    is_planning_preview = fields.Boolean(string="Is Planning Preview")
 
     @api.depends('start_datetime', 'end_datetime')
     @api.depends_context('uid')
@@ -93,3 +94,27 @@ class PlanningPlanning(models.Model):
             'publication_warning': False,
         })
         return True
+
+    def _get_preview_planning(self, start_datetime, end_datetime, include_unassigned):
+        Planning = self.env['planning.planning']
+        planning = Planning.search([
+            ('start_datetime', '=', start_datetime),
+            ('end_datetime', '=', end_datetime),
+            ('is_planning_preview', '=', True),
+        ], limit=1)
+        if not planning:
+            planning = Planning.create({
+                'start_datetime': start_datetime,
+                'end_datetime': end_datetime,
+                'include_unassigned': include_unassigned,
+            })
+        return planning
+
+    @api.autovacuum
+    def _gc_planning_preview(self):
+        limit_dt = fields.Datetime.subtract(fields.Datetime.now(), months=3)
+        plannings = self.env['planning.planning'].search([
+            ('is_planning_preview', '=', True),
+            ('create_date', '<=', limit_dt),
+        ])
+        plannings.unlink()

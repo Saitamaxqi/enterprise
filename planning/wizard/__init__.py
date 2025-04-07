@@ -3,3 +3,4 @@
 
 from . import hr_departure_wizard
 from . import planning_send
+from . import planning_preview

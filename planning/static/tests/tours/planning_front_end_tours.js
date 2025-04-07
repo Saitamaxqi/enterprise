@@ -80,3 +80,12 @@ registry.category("web_tour.tours").add('planning_front_end_buttons_tour', {
         content: "The slots inside the front end calendar should be rendered",
     }],
 });
+
+registry.category("web_tour.tours").add('planning_preview_tour', {
+    steps: () => [
+        {
+            trigger: "div.o_planning_calendar_container",
+            content: "The planning preview container should be displayed"
+        },
+    ],
+});

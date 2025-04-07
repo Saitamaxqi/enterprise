@@ -100,12 +100,11 @@ class PlanningSend(models.TransientModel):
                     'message': _("The shifts have already been published, or there are no shifts to publish."),
                 }
             }
-        # create the planning
-        planning = self.env['planning.planning'].create({
-            'start_datetime': self.start_datetime,
-            'end_datetime': self.end_datetime,
-            'include_unassigned': self.include_unassigned,
-        })
+
+        planning = self.env['planning.planning']._get_preview_planning(self.start_datetime, self.end_datetime, self.include_unassigned)
+        planning.is_planning_preview = False
+        planning.include_unassigned = self.include_unassigned
+
         slot_employees = slot_to_send.mapped('employee_id')
         open_slots = slot_to_send.filtered(lambda s: not s.employee_id and not s.is_past)
         employees_to_send = self.env['hr.employee']
