@@ -352,6 +352,10 @@ class Sign(http.Controller):
     @http.route(["/sign/get_document/<int:request_id>/<token>"], type='jsonrpc', auth='user')
     def get_document(self, request_id, token):
         context = self.get_document_qweb_context(request_id, token)
+        if not isinstance(context, dict):
+            # context contains a rendered QWeb template (not found, deleted sign request, ...)
+            # TODO MASTER clean return type of get_document_qweb_context
+            return context
         return {
             'html': request.env['ir.qweb']._render('sign._doc_sign', context),
             'context': {
