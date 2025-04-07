@@ -86,6 +86,7 @@ class TestCPA005(AccountTestInvoicingCommon):
 
     def test_cpa005(self):
         self.maxDiff = None  # show full diff in case of errors
+        self.company_data["company"].write({"name": "Long Compàny Nàme"})
         expected = [
             # A record ("header")
             "A0000000011234567890010302033501600                    CAD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ",
@@ -112,6 +113,9 @@ class TestCPA005(AccountTestInvoicingCommon):
         generated = self.batch._generate_cpa005_file()
         self.assertEqual(
             generated.count("\r\n"), len(expected) - 1, "The generated CPA 005 file should use DOS line endings."
+        )
+        self.assertEqual(
+            generated.count("à"), 0, "The generated CPA 005 file should not have special characters."
         )
 
         generated = generated.splitlines()

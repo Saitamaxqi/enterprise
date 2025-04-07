@@ -3,6 +3,7 @@ import base64
 
 from odoo import fields, models, _
 from odoo.exceptions import ValidationError, RedirectWarning
+from odoo.tools import remove_accents
 
 
 class AccountBatchPayment(models.Model):
@@ -97,7 +98,7 @@ class AccountBatchPayment(models.Model):
         return sum(round(payment.amount * 100) for payment in payments)
 
     def _l10n_ca_cpa005_generate_header(self, currency, file_creation_nr):
-        return (
+        return remove_accents(
             "A"  # 01 1 1 "A" Logical Record Type ID
             "000000001"  # 02 2-10 9 "000000001" Logical Record Count
             f"{self.journal_id.l10n_ca_cpa005_originator_id:10.10}"  # 03 11-20 10 Alphanumeric Originator's ID
@@ -112,7 +113,7 @@ class AccountBatchPayment(models.Model):
     def _l10n_ca_cpa005_outgoing_payment(self, file_creation_nr, payment, logical_record_count):
         journal = self.journal_id
 
-        return (
+        return remove_accents(
             "C"  # 01 1 1 "C" Logical Record Type ID
             f"{logical_record_count:09d}"  # 02 2-10 9 Numeric Logical Record Count
             f"{journal.l10n_ca_cpa005_originator_id:10.10}{file_creation_nr}"  # 03 11-24 14 Alphanumeric Origination Control Data (originator ID + Numeric File Creation No.)
@@ -141,7 +142,7 @@ class AccountBatchPayment(models.Model):
         journal = self.journal_id
         payments = self.payment_ids
 
-        return (
+        return remove_accents(
             "Z"  # 01 1 1 "Z" Logical Record Type ID
             f"{logical_record_count:09d}"  # 02 2-10 9 Numeric Logical Record Count
             f"{journal.l10n_ca_cpa005_originator_id:10.10}{file_creation_nr}"  # 03 11-24 14 Alphanumeric Origination Control Data (originator ID + Numeric File Creation No.)
