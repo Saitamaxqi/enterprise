@@ -37,11 +37,9 @@ class PurchaseOrder(models.Model):
         return res
 
     def _get_destination_location(self):
-        self.ensure_one()
         res = super()._get_destination_location()
 
-        if self.dest_address_id and self.sale_order_count:
-            sale_order = self._get_sale_orders()[0]
+        if self.dest_address_id and (sale_order := self._get_sale_orders()[:1]):
             partner_company = self.env['res.company']._find_company_from_partner(sale_order.partner_id.id)
             if partner_company and partner_company != self.company_id and self.dest_address_id != sale_order.partner_id:
                 # Means that's we're in inter-company transaction -> Must dropship to inter-company transit.
