@@ -56,3 +56,9 @@ class DocumentsDocument(models.Model):
 
     def _get_gc_clear_bin_domain(self):
         return AND([super()._get_gc_clear_bin_domain(), [("res_model", "!=", "sign.request")]])
+
+    @api.model
+    def _data_embed_sign_create_sign_template_direct(self):
+        action_sign = self.env.ref("documents_sign.ir_actions_server_create_sign_template_direct")
+        if internal_folder := self.env.ref("documents.document_internal_folder", raise_if_not_found=False):
+            self.action_folder_embed_action(internal_folder.id, action_sign.id)

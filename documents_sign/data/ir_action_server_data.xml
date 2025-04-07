@@ -13,9 +13,7 @@
             <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
         </record>
 
-        <function model="documents.document" name="action_folder_embed_action" eval="[
-            ref('documents.document_internal_folder'),
-            ref('documents_sign.ir_actions_server_create_sign_template_direct'),
-        ]"/>
+        <function model="documents.document" name="_data_embed_sign_create_sign_template_direct"/>
+
     </data>
 </odoo>

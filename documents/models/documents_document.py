@@ -2347,6 +2347,16 @@ class DocumentsDocument(models.Model):
             ('write_date', '<=', fields.Datetime.now() - relativedelta(days=deletion_delay)),
         ]
 
+    @api.model
+    def _add_inbox_alias_if_not_used(self):
+        """Add inbox alias_name (if not used) to Internal folder (if not already set).
+
+        Done this way to avoid migration in stable. todo: remove in master.
+        """
+        if (internal_folder := self.env.ref('documents.document_internal_folder')) and not internal_folder.alias_name:
+            with contextlib.suppress(UserError):  # Skip if already used
+                internal_folder.alias_name = 'inbox'
+
     def _get_access_action(self, access_uid=None, force_website=False):
         self.ensure_one()
         if access_uid and not force_website and self.active and self.env.user.has_group("documents.group_documents_user"):

@@ -39,7 +39,6 @@
             <field name="datas" type="base64" file="documents/data/files/Mails_inbox.pdf"/>
             <field name="folder_id" ref="documents.document_internal_folder"/>
             <field name="access_internal">view</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
 
         <record id="documents_image_city_document" model="documents.document" forcecreate="0">
@@ -54,7 +53,6 @@
             <field name="datas" type="base64" file="documents/data/files/mail.png"/>
             <field name="folder_id" ref="documents.document_internal_folder"/>
             <field name="access_internal">view</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
         <!-- The thumbnail is added after -->
         <record id="documents_image_mail_document" model="documents.document" forcecreate="0">
@@ -92,7 +90,6 @@
             <field name="datas" type="base64" file="documents/demo/files/invoice_openvalue.pdf"/>
             <field name="folder_id" ref="documents.document_finance_folder"/>
             <field name="access_internal">edit</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
 
         <record id="documents_data_comercial_tenancy_agreement" model="documents.document" forcecreate="0">
@@ -100,7 +97,6 @@
             <field name="datas" type="base64" file="documents/demo/files/Commercial-Tenancy-Agreement.pdf"/>
             <field name="folder_id" ref="documents.document_finance_folder"/>
             <field name="access_internal">edit</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
 
         <record id="documents_email_as_vendor_bill" model="documents.document" forcecreate="0">

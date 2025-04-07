@@ -15,6 +15,8 @@
         <field name="name">Administrative</field>
     </record>
 
+    <function model="documents.document" name="_add_inbox_alias_if_not_used"/>
+
     <record id="document_finance_folder" model="documents.document" forcecreate="0">
         <field name="type">folder</field>
         <field name="access_internal">edit</field>
