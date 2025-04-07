@@ -356,3 +356,8 @@ class TestFsmFlowSale(TestFsmFlowSaleCommon):
         
         self.assertTrue(normal_task.sale_order_id)
         self.assertTrue(normal_task.sale_order_id.invoice_ids)
+
+    def test_invoice_without_sale_order(self):
+        """Should return a red toast notification if no sale order is linked."""
+        res = self.task.action_create_invoice()
+        self.assertEqual(res['params']['type'], 'danger', "Expected a red toast notification")

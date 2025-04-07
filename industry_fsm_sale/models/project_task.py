@@ -263,6 +263,15 @@ class ProjectTask(models.Model):
         return super()._compute_partner_id() # Call to super will reset partner_id for non-billable tasks
 
     def action_create_invoice(self):
+        if not self.sale_order_id:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _("Tasks need to be linked to a sales order to be invoiced."),
+                    'type': 'danger',
+                },
+            }
         # ensure the SO exists before invoicing, then confirm it
         so_to_confirm = self.filtered(
             lambda task: task.sale_order_id and task.sale_order_id.state in ['draft', 'sent']
