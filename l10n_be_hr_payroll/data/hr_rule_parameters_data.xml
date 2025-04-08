@@ -1921,6 +1921,11 @@
             <field name="rule_parameter_id" ref="rule_parameter_cp200_special_ffe_rate"/>
             <field name="date_from" eval="datetime(2016, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_cp200_special_ffe_rate_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.17</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_special_ffe_rate"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_cp200_cpae_rate" model="hr.rule.parameter">
             <field name="name">CP200: CPAE Rate</field>
@@ -1970,6 +1975,11 @@
             <field name="rule_parameter_id" ref="rule_parameter_cp200_ffe_commercial_rate_low"/>
             <field name="date_from" eval="datetime(2022, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_cp200_ffe_commercial_rate_low_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.0018</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_ffe_commercial_rate_low"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_cp200_ffe_commercial_rate_high" model="hr.rule.parameter">
             <field name="name">CP200: FFE commercial rate (high)</field>
@@ -1991,6 +2001,11 @@
             <field name="rule_parameter_id" ref="rule_parameter_cp200_ffe_commercial_rate_high"/>
             <field name="date_from" eval="datetime(2022, 10, 1).date()"/>
         </record>
+        <record id="rule_parameter_cp200_ffe_commercial_rate_high_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.0023</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_ffe_commercial_rate_high"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_cp200_ffe_noncommercial_rate" model="hr.rule.parameter">
             <field name="name">CP200: FFE non-commercial rate</field>
@@ -2001,6 +2016,11 @@
             <field name="parameter_value">0.02</field>
             <field name="rule_parameter_id" ref="rule_parameter_cp200_ffe_noncommercial_rate"/>
             <field name="date_from" eval="datetime(2016, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_cp200_ffe_noncommercial_rate_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.0001</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_ffe_noncommercial_rate"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         </record>
 
         <record id="rule_parameter_cp200_cycle_reimbursement_per_km" model="hr.rule.parameter">
