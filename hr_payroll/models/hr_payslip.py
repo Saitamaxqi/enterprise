@@ -846,6 +846,11 @@ class HrPayslip(models.Model):
                 'same_type_input_lines': same_type_input_lines,
             }
         }
+        for code, input_lines in same_type_input_lines.items():
+            input_line_ids = input_lines.ids
+            localdict['inputs'][code] = self.__get_aggregator_hr_payslip_input_model()(
+                env=self.env, ids=input_line_ids, prefetch_ids=input_line_ids,
+            )
         return localdict
 
     def _get_payslip_line_total(self, amount, quantity, rate, rule):

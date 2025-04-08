@@ -422,6 +422,43 @@ class TestPayslipComputation(TestPayslipContractBase):
         assert(payslip.line_ids.filtered(lambda r: r.code == 'TEST2').total == 500.00)
         assert(payslip.line_ids.filtered(lambda r: r.code == 'TEST3').total == 300.00)
 
+    def test_payslip_with_multiple_input_same_type_no_matching_rule_aggregations(self):
+        payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip of Richard',
+            'employee_id': self.richard_emp.id,
+            'contract_id': self.contract_cdi.id,
+            'date_from': date(2016, 1, 1),
+            'date_to': date(2016, 1, 31)
+        })
+        input_type = self.env['hr.payslip.input.type'].create({'name': 'ABCD', 'code': 'ABCD'})
+        self.env['hr.payslip.input'].create([
+            {
+                'payslip_id': payslip.id,
+                'sequence': 1,
+                'input_type_id': input_type.id,
+                'amount': 300,
+                'contract_id': self.contract_cdi.id,
+            },
+            {
+                'payslip_id': payslip.id,
+                'sequence': 2,
+                'input_type_id': input_type.id,
+                'amount': 200,
+                'contract_id': self.contract_cdi.id,
+            },
+        ])
+        self.developer_pay_structure.write({'rule_ids': [
+            (0, 0, {
+                'name': 'Non matching code rule',
+                'sequence': 5,
+                'code': 'EFGH',
+                'category_id': self.env.ref('hr_payroll.COMP').id,
+                'amount_select': 'code',
+                'amount_python_compute': 'result = inputs["ABCD"].amount',
+            })]})
+        payslip.compute_sheet()
+        self.assertEqual(payslip.line_ids.filtered(lambda r: r.code == 'EFGH').total, 500.00)
+
     def test_payslip_multiple_inputs_and_attachments_same_type(self):
         self.env['hr.salary.attachment'].create([
             {
