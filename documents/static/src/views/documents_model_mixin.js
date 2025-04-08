@@ -1,6 +1,6 @@
 import { browser } from "@web/core/browser/browser";
 import { _t } from "@web/core/l10n/translation";
-import { user } from '@web/core/user';
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { toggleArchive, openDeleteConfirmationDialog } from "@documents/views/hooks";
 import { serializeDate } from "@web/core/l10n/dates";
@@ -16,7 +16,6 @@ export const DocumentsModelMixin = (component) =>
                 this.originalSelection = params.state?.sharedSelection;
             }
             this.documentService = useService("document.document");
-            this.initialLimit = 40;
         }
 
         exportSelection() {
@@ -40,7 +39,7 @@ export const DocumentsModelMixin = (component) =>
                 return res;
             }
             this.env.searchModel.skipLoadClosePreview
-                ? this.env.searchModel.skipLoadClosePreview = false
+                ? (this.env.searchModel.skipLoadClosePreview = false)
                 : this.env.documentsView.bus.trigger("documents-close-preview");
             this._reapplySelection();
             this._computeFileSize();
@@ -76,7 +75,7 @@ export const DocumentsModelMixin = (component) =>
 
         async _loadShortcutTargetRecords() {
             const shortcuts = this.root.records.filter(
-                (record) => !!record.data.shortcut_document_id,
+                (record) => !!record.data.shortcut_document_id
             );
             if (!shortcuts.length) {
                 return [];
@@ -119,8 +118,8 @@ export const DocumentsModelMixin = (component) =>
         }
 
         get targetRecords() {
-            return this.documentService.previewedDocument
-                ? [this.documentService.previewedDocument.record]
+            return this.documentService.rightPanelReactive.previewedDocument
+                ? [this.documentService.rightPanelReactive.previewedDocument.record]
                 : this.root.selection;
         }
 
@@ -140,7 +139,7 @@ export const DocumentsModelMixin = (component) =>
         }
 
         get canDeleteRecords() {
-             // Portal user can delete their own documents while internal user can only delete document in the Trash.
+            // Portal user can delete their own documents while internal user can only delete document in the Trash.
             const documents = this.targetRecords.map((r) => r.data);
             if (this.documentService.userIsInternal) {
                 return documents.some((d) => !d.active);
@@ -192,8 +191,8 @@ export const DocumentsModelMixin = (component) =>
         /**
          * Open/Close the chatter (the info will be stored in the local storage of the current user).
          */
-        async onToggleChatter() {
-            await this.documentService.toggleChatterState();
+        async onToggleRightPanel() {
+            await this.documentService.toggleRightPanelVisibility();
         }
 
         /**
@@ -203,11 +202,9 @@ export const DocumentsModelMixin = (component) =>
             if (this.targetRecords.length !== 1) {
                 return;
             }
-            await this.orm.call(
-                "documents.document",
-                "action_create_shortcut",
-                [this.targetRecords[0].data.id],
-            );
+            await this.orm.call("documents.document", "action_create_shortcut", [
+                this.targetRecords[0].data.id,
+            ]);
             await this._notifyChange();
         }
 
@@ -400,12 +397,13 @@ export const DocumentsRecordMixin = (component) => class extends component {
     async update(changes, options = {}) {
         const modelMultiEdit = this.model.multiEdit;
         let movedRecordsIds = this.model.root.selection.map((rec) => rec.id);
-        if (this.resId === this.model.documentService.previewedDocument?.record.resId) {
-            // As previewed documents are not selected, force `save=true` to save any changes as the record is updated
+        if (this.isDetailsPanelRecord) {
+            // As previewed/focused documents are not necessarily selected,
+            // force `save=true` to save any changes as the record is updated
             options.save = true;
-            // Prevent multiEditing/moving the selection as it is not what we intend to modify when previewing.
+            // Prevent multiEditing/moving the (whole) selection as it is not what we intend to modify when previewing.
             this.model.multiEdit = false;
-            movedRecordsIds = [this.model.root.records.find((rec)=> rec.data.id === this.resId).id];
+            movedRecordsIds = [this.resId];
         }
         const originalFolderId = this.data.folder_id[0];
         const ret = await super.update(changes, options);
@@ -518,16 +516,6 @@ export const DocumentsRecordMixin = (component) => class extends component {
         this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
         this.model.originalSelection = [this.shortcutTarget.resId];
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });
-    }
-
-    async toggleSelection(selected) {
-        await super.toggleSelection(selected);
-
-        if (this.selected) {
-            this.model.documentService.logAccess(this.data.access_token);
-        }
-
-        this.model.documentService.updateDocumentURL(null, this.model.root.selection);
     }
 
     /**

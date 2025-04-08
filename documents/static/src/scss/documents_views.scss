@@ -26,6 +26,16 @@
     justify-content: center !important;
 }
 
+.o_documents_list_view {
+    // Remove the black square chrome adds when navigating with arrow keys
+    *:focus {
+        outline: none;
+    }
+    .o_data_row[focused] td {
+        background-color: #e3e3e3 !important;
+    }
+}
+
 .o_documents_action_dropdown button {
     width: max-content;
 }

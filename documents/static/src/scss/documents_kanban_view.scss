@@ -17,9 +17,12 @@
             margin: .5rem;
             border: none;
 
-            @include media-breakpoint-down(lg) {
-                width: 160px;
-                flex-basis: auto;
+            @include media-breakpoint-down(xxl) {
+                max-width: calc(50% - 20px);
+            }
+
+            @include media-breakpoint-down(xl) {
+                max-width: calc(100% - 20px);
             }
             .o_kanban_progress_card {
                 height: 100%;

@@ -1,19 +1,19 @@
-import { _t } from "@web/core/l10n/translation";
-import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
-
-import { useService } from "@web/core/utils/hooks";
-import { DocumentsDropZone } from "../helper/documents_drop_zone";
+import { useCommand } from "@web/core/commands/command_hook";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressKanbanRecord } from "@web/core/file_upload/file_upload_progress_record";
+import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
+import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
+
+import { DocumentsRightPanel } from "@documents/components/documents_right_panel/documents_right_panel";
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
-import { DocumentsKanbanRecord } from "./documents_kanban_record";
-import { DocumentsActionHelper } from "../helper/documents_action_helper";
-import { DocumentsFileViewer } from "../helper/documents_file_viewer";
-import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
-import { useDraggableDocuments } from "../helper/documents_draggable";
-import { useCommand } from "@web/core/commands/command_hook";
+import { DocumentsActionHelper } from "@documents/views/helper/documents_action_helper";
+import { useDraggableDocuments } from "@documents/views/helper/documents_draggable";
+import { DocumentsDropZone } from "@documents/views/helper/documents_drop_zone";
+import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
+import { DocumentsKanbanRecord } from "@documents/views/kanban/documents_kanban_record";
+
 import { useExternalListener, useRef } from "@odoo/owl";
-import { Chatter } from "@mail/chatter/web_portal/chatter";
 
 export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRenderer) {
     static props = [...KanbanRenderer.props, "previewStore"];
@@ -25,8 +25,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         KanbanRecord: DocumentsKanbanRecord,
         DocumentsActionHelper,
         DocumentsFileViewer,
-        DocumentsDetailsPanel,
-        Chatter,
+        DocumentsRightPanel,
     });
 
     setup() {
@@ -90,6 +89,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         if (ev.target.closest(".o_kanban_record:not(.o_kanban_ghost)")) {
             return;
         }
+        this.documentService.focusRecord(this.getContainerRecord());
         this.props.list.selection.forEach((el) => el.toggleSelection(false));
     }
 
@@ -149,7 +149,12 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
             newIdx += 1; // right
         }
         if (newIdx >= 0 && newIdx < cards.length && cards[newIdx] instanceof HTMLElement) {
-            cards[newIdx].focus();
+            const focusedCard = cards[newIdx];
+            focusedCard.focus();
+            const record = this.props.list.records.find((e) => e.id === focusedCard.dataset.id);
+            if (record) {
+                this.documentService.focusRecord(record);
+            }
             return true;
         }
     }
@@ -164,11 +169,11 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
     }
 
     hasFolders() {
-        return this.props.list.records.some((record) => record.data.type === 'folder');
+        return this.props.list.records.some((record) => record.data.type === "folder");
     }
 
     hasFiles() {
-        return this.props.list.records.some((record) => record.data.type !== 'folder');
+        return this.props.list.records.some((record) => record.data.type !== "folder");
     }
 
     get isRecentFolder() {
@@ -185,8 +190,8 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
      */
     getFolderRecords() {
         return this.props.list.records
-            .filter((record) => record.data.type === 'folder')
-            .map((record) => ({ record, key: record.id}));
+            .filter((record) => record.data.type === "folder")
+            .map((record) => ({ record, key: record.id }));
     }
 
     /**
@@ -199,7 +204,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
             return super.getGroupsOrRecords();
         }
         return this.props.list.records
-            .filter((record) => record.data.type !== 'folder')
+            .filter((record) => record.data.type !== "folder")
             .map((record) => ({ record, key: record.id }));
     }
 
@@ -232,6 +237,14 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
     onKeyUp(ev) {
         if (ev.key === "Control") {
             this.root.el.classList.remove("o_documents_dnd_shortcut");
+        }
+    }
+
+    toggleSelection(record) {
+        const isSelection = record && !record.selected;
+        super.toggleSelection(...arguments);
+        if (isSelection) {
+            this.documentService.focusRecord(record, true);
         }
     }
 }

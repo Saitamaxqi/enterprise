@@ -18,7 +18,7 @@ export class DocumentsControlPanel extends ControlPanel {
         super.setup();
         this.documentService = useService("document.document");
 
-        this.chatterState = useState(this.documentService.chatterState);
+        this.rightPanelState = useState(this.documentService.rightPanelReactive);
 
         onPatched(() => {
             const searchPanelContainer = document.querySelector('.o_search_panel');
@@ -33,6 +33,17 @@ export class DocumentsControlPanel extends ControlPanel {
      */
     get currentFolderId() {
         return this.env.searchModel.getSelectedFolderId();
+    }
+
+    get showActions() {
+        const previewing = !!this.rightPanelState.previewedDocument;
+        const focusing = !!this.rightPanelState.focusedRecord;
+        const focusedSelected =
+            focusing &&
+            !!this.env.model.root.selection.find(
+                (r) => r.id === this.rightPanelState.focusedRecord.id
+            );
+        return !previewing && (!focusing || focusedSelected);
     }
 
     get pathBreadcrumbs() {

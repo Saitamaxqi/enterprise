@@ -6,12 +6,12 @@ import { SIZES } from "@web/core/ui/ui_service";
 export class DocumentsAction extends Component {
     static template = "documents.DocumentsAction";
     static components = {
-        ActionMenus
+        ActionMenus,
     };
     static props = {
         targetRecords: Array,
         folderId: [String, Number, Boolean],
-        isPreview: { type: Boolean, optional: true }
+        isPreview: { type: Boolean, optional: true },
     };
 
     setup() {
@@ -19,7 +19,7 @@ export class DocumentsAction extends Component {
         this.state = useState({
             topbarActions: [],
             actionMenuProps: null,
-        })
+        });
         this.ui = useState(useService("ui"));
         useEffect(() => {
             if (this.documentService.getSelectionActions) {
@@ -27,7 +27,6 @@ export class DocumentsAction extends Component {
                 this.state.topbarActions = Object.values(this.documentService.getSelectionActions().getTopbarActions()).sort((a, b) => b.groupNumber - a.groupNumber)
                 if (this.props.isPreview) {
                     const actionMenuProps = selectionActions.getMenuProps();
-                    actionMenuProps.items.action = actionMenuProps.items.action.filter(e => !["details"].includes(e.key));
                     this.state.actionMenuProps = actionMenuProps;
                 }
             }
@@ -39,6 +38,6 @@ export class DocumentsAction extends Component {
     }
 
     get visibleTopbarActions() {
-        return this.ui.size >= SIZES.XL ? 4 : 2;
+        return this.ui.size >= SIZES.XL ? 3 : 2;
     }
 }

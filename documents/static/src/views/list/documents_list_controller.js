@@ -17,6 +17,7 @@ export class DocumentsListController extends DocumentsControllerMixin(ListContro
         this.documentStates = useState({
             previewStore: {},
         });
+        this.rightPanelState = useState(this.documentService.rightPanelReactive);
 
         useEffect(() => {
             this.documentService.getSelectionActions = () => {

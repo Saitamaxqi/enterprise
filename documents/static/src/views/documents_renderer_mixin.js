@@ -1,7 +1,7 @@
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
-import { useBus, useService } from "@web/core/utils/hooks";
-import { useComponent, useState, useEffect } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { onWillUpdateProps, useComponent, useEffect, useState } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
@@ -9,13 +9,10 @@ export const DocumentsRendererMixin = (component) =>
             super.setup();
             this.documentService = useService("document.document");
 
-            this.documentService.chatterState.previewedDocument = null;
-            this.chatterState = useState(this.documentService.chatterState);
+            this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord(), true);
+            this.rightPanelState = useState(this.documentService.rightPanelReactive);
             this.component = useComponent();
 
-            useBus(this.documentService.bus, "DOCUMENT_PREVIEWED", async (ev) => {
-                this.chatterState.previewedDocument = this.documentService.previewedDocument;
-            });
             useCommand(
                 _t("Move to trash"),
                 () => this.env.model.onArchive(),
@@ -25,7 +22,7 @@ export const DocumentsRendererMixin = (component) =>
                     isAvailable: () =>
                         this.documentService.userIsInternal &&
                         this.recordsToArchive &&
-                        this.targetRecords.every((r) => r.data.user_permission === "edit")
+                        this.selection.every((r) => r.data.user_permission === "edit")
                 }
             );
             useCommand(
@@ -42,12 +39,18 @@ export const DocumentsRendererMixin = (component) =>
             useEffect(
                 () => {
                     this.recordsToDelete = !this.documentService.userIsInternal
-                        ? this.targetRecords
-                        : this.targetRecords.some((r) => !r.data.active);
-                    this.recordsToArchive = this.targetRecords.some((r) => r.data.active);
+                        ? this.selection
+                        : this.selection.some((r) => !r.data.active);
+                    this.recordsToArchive = this.selection.some((r) => r.data.active);
                 },
-                () => [this.targetRecords]
+                () => [this.selection]
             );
+
+            onWillUpdateProps((nextProps) => {
+                if (nextProps.list !== this.props.list) {
+                    this.documentService.focusRecord(this.getContainerRecord());
+                }
+            });
         }
         /**
          * Record for showing/modifying details of containing folder
@@ -59,23 +62,23 @@ export const DocumentsRendererMixin = (component) =>
                 typeof folder.folder_id === "object"
                     ? folder.folder_id
                     : folderData?.length > 1 && typeof folderData[1].id === "number"
-                        ? [folderData[1].id, folderData[1].display_name]
-                        : false;
+                    ? [folderData[1].id, folderData[1].display_name]
+                    : false;
 
             const data = Object.assign({}, folder, {
                 folder_id: folderId,
                 name: folder.display_name,
                 type: "folder",
-                file_size: (this.props.list.model.fileSize || 0) * 1e6, // from MB to B to be precise on single doc.
+                file_size: (this.props.list?.model.fileSize || 0) * 1e6, // from MB to B to be precise on single doc.
             });
-            const config =  {...this.env.model.config, resId: data.id}
+            const config = { ...this.env.model.config, resId: data.id };
             const record = new this.env.model.constructor.Record(this.env.model, config, data);
             record.isContainer = true;
 
             /**
              * @override making sure we only save fields for which we have fetched data.
              */
-            record._update = async (changes, {}) => {
+            record._update = async (changes) => {
                 record.dirty = true;
                 const fieldsToSave = new Set(Object.keys(changes));
                 await Promise.all([
@@ -111,15 +114,16 @@ export const DocumentsRendererMixin = (component) =>
          * Number of documents in the current (container) folder
          */
         getNbViewItems() {
+            if (!this.props.list) {
+                return this.props.records.length;
+            }
             return this.props.list.model.useSampleModel ? 0 : this.props.list.count;
         }
 
-        /**
-         * Records on which we will execute the actions / see the chatter.
-         */
-        get targetRecords() {
-            return this.chatterState.previewedDocument
-                ? [this.chatterState.previewedDocument.record]
-                : this.props.list.selection;
+        get selection() {
+            if (!this.props.list) {
+                return this.props.records.filter((r) => r.selected);
+            }
+            return this.props.list.selection;
         }
     };

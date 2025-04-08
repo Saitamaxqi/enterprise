@@ -38,7 +38,7 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
             run: "click",
         },
         {
-            trigger: `.o_data_cell:contains("${SHEETNAME}")`,
+            trigger: `.o_data_row:contains("${SHEETNAME}") .o_documents_mimetype_icon`,
             content: "Open the sheet",
             run: "click",
         },

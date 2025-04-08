@@ -476,6 +476,7 @@ test("spreadsheet should be skipped while toggling the preview in the FileViewer
 });
 
 test("Cannot download spreadsheets", async function () {
+    onRpc("/documents/touch/accessTokenFolder1", () => true);
     const serverData = getDocumentsTestServerData([
         {
             folder_id: 1,
@@ -522,6 +523,9 @@ test("Cannot download spreadsheets", async function () {
     // Spreadsheet should not be downloadable
     await contains(`.o_kanban_record:contains('Spreadsheet')`).click();
     await waitForNone(".o_control_panel_actions:contains('Download')");
+    // deselect spreadsheet
+    await contains(`.o_kanban_record:contains('Spreadsheet')`).click({ ctrlKey: true });
+
     // Multiple documents can be downloaded
     await contains(`.o_kanban_record:contains(${folder1Name})`).click({ ctrlKey: true });
     await waitFor(".o_control_panel_actions:contains('Download')");

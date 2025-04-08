@@ -3,140 +3,155 @@
     <t t-name="documents.DocumentsDetailsPanel">
         <div t-if="record?.data" class="o_documents_details_panel p-3 pb-2 border-bottom border-secondary w-100"
             t-att-class="{'o_documents_details_panel_folder': record.data.type === 'folder'}">
-            <!-- Breadcrumbs Section & File Size -->
-            <div class="mt-1 mb-3 w-100 d-flex align-items-center">
-                <div class="d-flex align-items-center me-3 flex-grow-1">
-                    <i class="fa fa-folder-o me-1"/>
-                    <div t-if="userPermissionViewOnly">
-                        <span t-out="record.data.folder_id?.[1] || rootFolderPlaceholder" class="me-1"/> / <span t-out="record.data.name" class="mx-1"/>
-                    </div>
-                    <t t-else="">
-                        <div class="w-25">
-                            <Many2OneField
-                                name="'folder_id'"
-                                record="record"
-                                canOpen="false"
-                                canCreate="false"
-                                canQuickCreate="false"
-                                canCreateEdit="false"
-                                placeholder="rootFolderPlaceholder"
-                            />
-                        </div>
-                        <div>
-                            /
-                            <div class="o_field_widget o_field_char ms-2 w-75">
-                                <CharField name="'name'" record="record"/>
-                            </div>
-                        </div>
-                    </t>
-                    <div>
-                        <i class="fa fa-fw fa-lock mx-1" title="Locked" t-if="record.data.lock_uid"/>
-                        <button
-                            class="btn mx-1 p-0 border-0"
-                            t-if="record.data.shortcut_document_id"
-                            t-on-click="() => record.jumpToTarget()"
-                            data-tooltip="This is a shortcut - Click to access source document"
-                        >
-                            <i class="fa fa-external-link"/>
-                        </button>
-                    </div>
-                    <div t-if="fileSize" t-attf-class="text-nowrap ms-auto">
-                        (<span t-if="record.isContainer"><t t-out="props.nbViewItems"/> items, </span><t t-out="fileSize"/>)
-                    </div>
+            <div class="d-flex flex-row w-100 my-2 align-items-center">
+                <div class="me-1">
+                    <DocumentsTypeIcon name="'type'" record="record"/>
                 </div>
+                <div class="o_field_widget o_documents_details_panel_name">
+                    <CharField name="'name'" record="record" readonly="userPermissionViewOnly"/>
+                </div>
+                <div t-if="fileSize" t-attf-class="text-nowrap ms-2">
+                    (<span t-if="record.isContainer"><t t-out="props.nbViewItems"/> items, </span><t t-out="fileSize"/>)
+                </div>
+
+                <i class="fa fa-fw fa-lock mx-1" title="Locked" t-if="record.data.lock_uid"/>
+                <button
+                    class="btn mx-1 p-0 border-0"
+                    t-if="record.data.shortcut_document_id"
+                    t-on-click="() => record.jumpToTarget()"
+                    data-tooltip="This is a shortcut - Click to access source document"
+                >
+                    <i class="fa fa-external-link"/>
+                </button>
             </div>
 
-             <!-- Owner Information -->
-             <div t-if="record" class="basic-info mb-3 d-flex justify-content-between">
-                 <div class="d-flex me-2 align-items-center">
-                     <span class="fw-bold me-2">Owner</span>
-                     <div class="o_field_widget o_field_many2one">
-                         <Many2OneAvatarField
-                            name="'owner_id'"
+            <div class="o_documents_details_panel_fields d-flex flex-row flex-wrap align-items-baseline">
+                <i class="fa fa-folder mx-1 my-2"/>
+                <div class="o_field_widget o_field_many2one">
+                    <Many2OneField
+                        name="'folder_id'"
+                        record="record"
+                        canOpen="false"
+                        canCreate="false"
+                        canQuickCreate="false"
+                        canCreateEdit="false"
+                        placeholder="rootFolderPlaceholder"
+                        context="{'documents_show_parent_name': true}"
+                    />
+                </div>
+
+                <i t-att-class="{invisible: !documentService.multiCompany}" class="fa fa-building mx-1 my-2"/>
+                <div class="o_field_widget o_field_many2one">
+                    <Many2OneField
+                        t-if="documentService.multiCompany"
+                        name="'company_id'"
+                        record="record"
+                        canOpen="false"
+                        canCreate="false"
+                        canCreateEdit="false"
+                        canQuickCreate="false"
+                        placeholder.translate="All companies"
+                        domain="[['id', 'in', activeCompanies]]"
+                    />
+                </div>
+
+                <i class="fa fa-user-circle-o mx-1 my-2"/>
+                <div class="o_field_widget o_field_many2one">
+                    <Many2OneField
+                        name="'owner_id'"
+                        readonly="userPermissionViewOnly"
+                        record="record"
+                        canOpen="false"
+                        canCreate="true"
+                        canQuickCreate="false"
+                        canCreateEdit="false"
+                        placeholder.translate="No owner"
+                     />
+                </div>
+
+                <i class="fa fa-user fa-fw mx-1 my-2"/>
+                <div class="o_field_widget o_field_many2one">
+                    <Many2OneField
+                        name="'partner_id'"
+                        readonly="userPermissionViewOnly"
+                        record="record"
+                        canOpen="false"
+                        canCreate="true"
+                        canQuickCreate="false"
+                        canCreateEdit="false"
+                        placeholder.translate="No contact"
+                    />
+                </div>
+                <t t-if="record.data.type !== 'folder'">
+                    <i class="fa fa-tags fa-fw mx-1 my-2"/>
+                    <div class="o_field_widget o_field_many2one">
+                        <DocumentsDetailsMany2ManyTagsField
+                            name="'tag_ids'"
                             readonly="userPermissionViewOnly"
                             record="record"
-                            canOpen="false"
                             canCreate="true"
-                            canQuickCreate="false"
-                            canCreateEdit="false"
-                         />
-                     </div>
-                 </div>
+                            canQuickCreate="true"
+                            canCreateEdit="true"
+                            placeholder.translate="Add tags..."
+                            colorField="'color'"
+                        />
+                    </div>
 
-                 <!-- Contact Information -->
-                 <div class="d-flex mx-auto align-items-center">
-                     <span class="fw-bold me-2">Contact</span>
-                     <div class="o_field_widget o_field_many2one">
-                         <Many2OneAvatarField
-                             name="'partner_id'"
-                             readonly="userPermissionViewOnly"
-                             record="record"
-                             canOpen="false"
-                             canCreate="true"
-                             canQuickCreate="false"
-                             canCreateEdit="false"
-                         />
-                     </div>
-                </div>
-             </div>
-
-            <!-- Link Section -->
-            <div t-if="record.data.res_model and record.data.res_model !== 'documents.document'" class="mb-2">
-                <span class="fw-bold me-2">Linked To</span>
-                <a href="#" t-on-click.stop="openLinkedRecord" t-out="record.data.res_name"/>
-            </div>
-
-            <!-- Tags Section -->
-            <div t-if="record.data.type !== 'folder'" class="o_field_widget o_field_many2many_tags d-flex mb-3 w-100">
-                <DocumentsDetailsMany2ManyTagsField
-                    name="'tag_ids'"
-                    readonly="userPermissionViewOnly"
-                    record="record"
-                    canCreate="true"
-                    canQuickCreate="true"
-                    canCreateEdit="true"
-                    placeholder.translate="Add a tag..."
-                    colorField="'color'"
-                />
+                    <i class="oi oi-odoo text-primary mx-1 my-2"/>
+                    <div t-if="this.record.data.res_id and state.resModel !== 'documents.document'" class="o_documents_details_panel_record d-flex flex-row align-items-center">
+                        <a href="#" t-on-click.stop="openLinkedRecord" t-out="record.data.res_name" class="text-truncate"/>
+                        <button t-on-click="() => this.onRecordReset()" class="btn fa fa-close"/>
+                    </div>
+                    <div t-else="" class="o_field_widget o_field_many2one">
+                        <div class="o_input_dropdown">
+                            <ModelSelector
+                                value="state.resModel === 'documents.document' ? '' : state.resModelName"
+                                onModelSelected.bind="onModelSelected"
+                                models="this.state.models"
+                                placeholder.translate="No linked model"
+                            />
+                        </div>
+                    </div>
+                </t>
             </div>
 
             <!-- Email Alias Section -->
-            <div t-if="record.data.type === 'folder' and !record.data.shortcut_document_id"
-                class="text-dark d-flex mb-3 w-100">
-                <span class="fw-bold me-2 text-nowrap">Email</span>
-                <div t-if="!userPermissionViewOnly and !!documentService.userIsDocumentManager" class="d-flex">
-                    <div class="o_field_widget o_field_char w-50">
-                        <CharField
-                            name="'alias_name'"
-                            record="record"
-                            placeholder.translate="alias"
-                        />
+            <div t-if="record.data.type === 'folder' and !record.data.shortcut_document_id and record.data.mail_alias_domain_count">
+                <div class="d-flex flex-row w-100 align-items-baseline w-100">
+                    <i class="fa fa-envelope mx-1"/>
+                    <div t-if="!userPermissionViewOnly and !!documentService.userIsDocumentManager" class="mt-1 d-flex">
+                        <div class="o_field_widget o_field_char">
+                            <CharField
+                                name="'alias_name'"
+                                record="record"
+                                placeholder.translate="No email alias"
+                            />
+                        </div>
+                        <span t-if="record.data.alias_domain_id" class="me-2">@</span>
+                        <div t-if="record.data.alias_domain_id" class="o_field_widget o_field_many2one w-50">
+                            <Many2OneField
+                                name="'alias_domain_id'"
+                                record="record"
+                                canOpen="false"
+                                canCreate="documentService.userIsErpManager"
+                                canCreateEdit="documentService.userIsErpManager"
+                                canQuickCreate="documentService.userIsErpManager"
+                                placeholder.translate="e.g. mycompany.com"
+                                readonly="record.data.mail_alias_domain_count == 1"
+                            />
+                        </div>
                     </div>
-                    <span class="me-2">@</span>
-                    <div class="o_field_widget o_field_many2one w-50">
-                        <Many2OneField
-                            name="'alias_domain_id'"
-                            record="record"
-                            canOpen="false"
-                            canCreate="documentService.userIsErpManager"
-                            canCreateEdit="documentService.userIsErpManager"
-                            canQuickCreate="documentService.userIsErpManager"
-                            placeholder.translate="e.g. mycompany.com"
-                        />
+                    <div t-elif="record.data.alias_name and record.data.alias_domain_id">
+                        <t t-out="record.data.alias_name"/>@<t t-out="record.data.alias_domain_id[1]"/>
+                    </div>
+                    <div t-else="" class="fw-lighter">
+                        Not set
                     </div>
                 </div>
-                <div t-elif="record.data.alias_name and record.data.alias_domain_id">
-                    <t t-out="record.data.alias_name"/>@<t t-out="record.data.alias_domain_id[1]"/>
-                </div>
-                <div t-else="" class="fw-lighter">
-                    Not set
-                </div>
-            </div>
-            <div t-if="record.data.type === 'folder' and !record.data.shortcut_document_id and record.data.alias_name and record.data.alias_domain_id"
-                class="basic-info mb-3 d-flex justify-content-between">
-                 <div class="d-flex me-2 align-items-center">
-                     <span class="fw-bold me-2 text-nowrap">Activity type</span>
-                    <div class="o_field_widget o_field_many2one">
+
+                <div t-if="record.data.alias_name and record.data.alias_domain_id" class="d-flex flex-row flex-wrap w-100 my-2 justify-content-between">
+                    <div class="o_field_widget o_field_many2one d-flex flex-row align-items-baseline my-1 w-50">
+                        <span class="fw-bold mx-1">Activity type</span>
                         <Many2OneField
                             name="'create_activity_type_id'"
                             readonly="userPermissionViewOnly"
@@ -148,35 +163,34 @@
                             placeholder.translate="No activity"
                         />
                     </div>
+                    <div class="o_field_widget o_field_many2one d-flex flex-row align-items-baseline my-1 w-50">
+                        <span class="fw-bold mx-1">Responsible</span>
+                        <Many2OneField
+                            name="'create_activity_user_id'"
+                            readonly="userPermissionViewOnly"
+                            record="record"
+                            canOpen="false"
+                            canCreate="false"
+                            canQuickCreate="false"
+                            canCreateEdit="false"
+                            placeholder.translate="Activity assigned to"
+                        />
+                    </div>
+
+                    <div class="o_field_widget o_field_many2one d-flex flex-row align-items-baseline my-1">
+                        <span class="fw-bold mx-1">Tags</span>
+                        <DocumentsDetailsMany2ManyTagsField
+                            name="'alias_tag_ids'"
+                            readonly="userPermissionViewOnly"
+                            record="record"
+                            canCreate="true"
+                            canQuickCreate="true"
+                            canCreateEdit="true"
+                            placeholder.translate="Add an alias tag..."
+                            colorField="'color'"
+                        />
+                    </div>
                 </div>
-                <div class="o_field_widget o_field_many2one">
-                    <Many2OneAvatarField
-                        name="'create_activity_user_id'"
-                        readonly="userPermissionViewOnly"
-                        record="record"
-                        canOpen="false"
-                        canCreate="false"
-                        canQuickCreate="false"
-                        canCreateEdit="false"
-                        placeholder.translate="Activity assigned to"
-                    />
-                </div>
-            </div>
-            <div
-                t-if="record.data.type === 'folder' and !record.data.shortcut_document_id and record.data.alias_name and record.data.alias_domain_id"
-                class="o_field_widget o_field_many2many_tags d-flex mb-3 w-100"
-            >
-                <span class="fw-bold me-2">Tags</span>
-                <DocumentsDetailsMany2ManyTagsField
-                    name="'alias_tag_ids'"
-                    readonly="userPermissionViewOnly"
-                    record="record"
-                    canCreate="true"
-                    canQuickCreate="true"
-                    canCreateEdit="true"
-                    placeholder.translate="Add an alias tag..."
-                    colorField="'color'"
-                />
             </div>
         </div>
     </t>

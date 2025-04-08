@@ -1,19 +1,19 @@
-import { _t } from "@web/core/l10n/translation";
-import { ListRenderer } from "@web/views/list/list_renderer";
-
-import { useService } from "@web/core/utils/hooks";
+import { useCommand } from "@web/core/commands/command_hook";
+import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressDataRow } from "@web/core/file_upload/file_upload_progress_record";
-import { DocumentsDropZone } from "../helper/documents_drop_zone";
-import { DocumentsActionHelper } from "../helper/documents_action_helper";
-import { DocumentsFileViewer } from "../helper/documents_file_viewer";
-import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
+import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
+import { ListRenderer } from "@web/views/list/list_renderer";
+
+import { DocumentsRightPanel } from "@documents/components/documents_right_panel/documents_right_panel";
+import { DocumentsActionHelper } from "@documents/views/helper/documents_action_helper";
+import { useDraggableDocuments } from "@documents/views/helper/documents_draggable";
+import { DocumentsDropZone } from "@documents/views/helper/documents_drop_zone";
+import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
-import { useCommand } from "@web/core/commands/command_hook";
-import { useDraggableDocuments } from "../helper/documents_draggable";
+
 import { useExternalListener, useRef } from "@odoo/owl";
-import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
-import { Chatter } from "@mail/chatter/web_portal/chatter";
 
 export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) {
     static props = [...ListRenderer.props, "previewStore"];
@@ -25,8 +25,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         DocumentsDropZone,
         DocumentsActionHelper,
         DocumentsFileViewer,
-        DocumentsDetailsPanel,
-        Chatter,
+        DocumentsRightPanel,
     });
 
     setup() {
@@ -84,7 +83,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
      * Called when a keydown event is triggered.
      */
     onGlobalKeydown(ev) {
-        if (ev.key !== "Enter" && ev.key !== " " || this.editedRecord) {
+        if ((ev.key !== "Enter" && ev.key !== " ") || this.editedRecord) {
             return;
         }
         const row = ev.target.closest(".o_data_row");
@@ -120,15 +119,22 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
      */
     onCellClicked(record, column, ev) {
         ev.stopPropagation();
-        const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey;
-        if (isSelectionKeyPressed) {
+        const isIcon = ev.target.closest(".o_field_documents_type_icon");
+        if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey) {
             this.toggleRecordSelection(record, ev);
-        } else if (record.selected && this.editableColumns.includes(column.name)) {
+            return;
+        }
+        if (isIcon) {
+            if (record.data.type === "folder") {
+                record.openFolder();
+            } else {
+                record.onClickPreview(ev);
+            }
+            return;
+        }
+        this.documentService.focusRecord(record);
+        if (record.selected && this.editableColumns.includes(column.name)) {
             super.onCellClicked(...arguments);
-        } else if (record.data.type !== "folder") {
-            record.onClickPreview(ev);
-        } else {
-            record.openFolder();
         }
     }
 
@@ -148,6 +154,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         if (ev.target.closest(".o_documents_view thead")) {
             return; // We then have to check that we are not clicking on the header
         }
+        this.documentService.focusRecord(this.getContainerRecord());
         this.props.list.selection.forEach((el) => el.toggleSelection(false));
     }
 
@@ -156,6 +163,21 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
             count: this.props.list.model.useSampleModel ? 0 : this.props.list.count,
             fileSize: this.props.list.model.fileSize,
         };
+    }
+
+    /**
+     * @override to update focusedRecord when navigating with arrow keys
+     */
+    findFocusFutureCell(cell, cellIsInGroupRow, direction) {
+        const futureCell = super.findFocusFutureCell(cell, cellIsInGroupRow, direction);
+        if (futureCell) {
+            const dataPointId = futureCell.closest("tr").dataset.id;
+            const record = this.props.list.records.filter((x) => x.id === dataPointId)[0];
+            if (record) {
+                this.documentService.focusRecord(record);
+            }
+        }
+        return futureCell;
     }
 
     onCellKeydown(ev, group = null, record = null) {
@@ -172,5 +194,13 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
 
     get isMobile() {
         return this.env.isSmall;
+    }
+
+    toggleRecordSelection(record) {
+        const isSelection = record && !record.selected;
+        super.toggleRecordSelection(record);
+        if (isSelection) {
+            this.documentService.focusRecord(record, true);
+        }
     }
 }

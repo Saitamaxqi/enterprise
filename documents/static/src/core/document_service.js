@@ -36,6 +36,7 @@ export class DocumentService {
         this.userIsDocumentUser = false;
         this.userIsErpManager = false;
         this.userIsInternal = false;
+        this.multiCompany = false;
         // Init data
         const urlSearch = parseSearchQuery(browser.location.search);
         const { documents_init } = session;
@@ -71,16 +72,26 @@ export class DocumentService {
             this.userIsDocumentUser,
             this.userIsErpManager,
             this.userIsInternal,
+            this.multiCompany,
         ] = await Promise.all([
             user.hasGroup("documents.group_documents_manager"),
             user.hasGroup("documents.group_documents_user"),
             user.hasGroup("base.group_erp_manager"),
             user.hasGroup("base.group_user"),
+            user.hasGroup("base.group_multi_company"),
         ]);
-        const initialState = this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
-        this.chatterState = reactive({ visible: initialState }, () => {
-            localStorage.setItem("documentsChatterVisible", this.chatterState.visible);
-        });
+        const initialState =
+            this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
+        this.rightPanelReactive = reactive(
+            {
+                visible: initialState,
+                focusedRecord: null,
+                previewedDocument: null,
+            },
+            () => {
+                localStorage.setItem("documentsChatterVisible", this.rightPanelReactive.visible);
+            }
+        );
     }
 
     /**
@@ -239,7 +250,7 @@ export class DocumentService {
                 targetFolderId,
             ]);
             message =
-                records.all.length == 1
+                records.all.length === 1
                     ? _t("A shortcut has been created.")
                     : _t("%s shortcuts have been created.", records.all.length);
         } else {
@@ -249,14 +260,14 @@ export class DocumentService {
                     targetFolderId,
                 ]);
                 message =
-                    records.movableRecordIds.length == 1
+                    records.movableRecordIds.length === 1
                         ? _t("The document has been moved.")
                         : _t("%s documents have been moved.", records.movableRecordIds.length);
             }
             if (records.nonMovableRecordIds.length) {
                 this.notification.add(
                     _t("At least one document could not be moved due to access rights."),
-                    { type: "warning" },
+                    { type: "warning" }
                 );
             }
         }
@@ -269,7 +280,7 @@ export class DocumentService {
         if (!records.movableRecordIds.length) {
             return this.notification.add(
                 _t("You can't move this/those folder(s) to the Company root."),
-                { type: "warning" },
+                { type: "warning" }
             );
         }
         await this.orm.call("documents.document", "action_set_as_company_root", [
@@ -280,7 +291,7 @@ export class DocumentService {
                 ? _t("The document/folder has been moved to the Company root.")
                 : _t(
                       "%s documents/folders have been moved to the Company root.",
-                      records.movableRecordIds.length,
+                      records.movableRecordIds.length
                   );
         if (records.nonMovableRecordIds.length) {
             message += _t("<br/>At least one document hasn't been moved.");
@@ -312,23 +323,32 @@ export class DocumentService {
      * by simply sharing its URL.
      * When multiple document are viewed, it removes the access_token from the URL as sharing
      * multiple document with one URL is not supported.
-     * Note that when the folderChange argument is undefined, the service use the preceding
+     * Similarly, when a document is focused but not selected, nor being previewed, the access
+     * token is not put in the URL either to avoid confusion about what record it is.
+     * Note that when the folderChange argument is null, the service use the preceding
      * given value if needed.
      *
-     * @param folderChange the new folder or undefined if not changed
-     * @param inspectedDocuments the currently inspected documents (can be undefined)
+     * @param {object} folderChange the new folder or null if not changed
+     * @param {object[]} inspectedDocuments the currently inspected documents (can be undefined)
+     * @param {boolean} forceInspected force updating to single inspected document token, or ignored
      */
-    updateDocumentURL(folderChange, inspectedDocuments) {
-        let accessToken;
+    updateDocumentURL(folderChange, inspectedDocuments, forceInspected) {
+        let accessToken = undefined;
         if (folderChange) {
             accessToken = folderChange.access_token;
             this.currentFolderAccessToken = accessToken;
         } else if (inspectedDocuments && inspectedDocuments.length === 1) {
-            accessToken = inspectedDocuments[0].data.access_token;
+            const record = inspectedDocuments[0];
+            if (
+                forceInspected ||
+                record.selected ||
+                record.isContainer ||
+                this.rightPanelReactive.previewedDocument?.record.id === record.id
+            ) {
+                accessToken = record.data.access_token;
+            }
         } else if (!inspectedDocuments || inspectedDocuments.length === 0) {
             accessToken = this.currentFolderAccessToken;
-        } else {
-            accessToken = undefined;
         }
         router.pushState({ access_token: accessToken });
     }
@@ -341,8 +361,9 @@ export class DocumentService {
      * (the current folder) to the router state.
      */
     updateDocumentURLRefresh() {
-        if (this.currentFolderAccessToken) {
-            router.pushState({ access_token: this.currentFolderAccessToken });
+        const tokenToShow = this.focusedRecord?.data.access_token || this.currentFolderAccessToken;
+        if (tokenToShow) {
+            router.pushState({ access_token: tokenToShow });
         }
     }
 
@@ -375,18 +396,38 @@ export class DocumentService {
         ]);
     }
 
-    toggleChatterState() {
-        this.chatterState.visible = !this.chatterState.visible;
+    get focusedRecord() {
+        return this.rightPanelReactive.focusedRecord;
+    }
 
-        if (this.chatterState.visible) {
+    /**
+     * Support reactivity for focused record and update URL.
+     * @param record
+     * @param forceSelected to force updating the URL to record's token,
+     *   necessary because the service can't easily know if a record is selected.
+     */
+    focusRecord(record, forceSelected) {
+        if (this.focusedRecord !== record) {
+            this.rightPanelReactive.focusedRecord = record;
+            this.updateDocumentURL(null, record ? [record] : null, forceSelected);
+            if (record) {
+                this.logAccess(record.data.access_token);
+            }
+        }
+    }
+
+    toggleRightPanelVisibility() {
+        this.rightPanelReactive.visible = !this.rightPanelReactive.visible;
+
+        if (this.rightPanelReactive.visible) {
             this.observer = new MutationObserver(() => {
-                const chatterContainer = document.querySelector('.o-mail-Thread');
+                const chatterContainer = document.querySelector(".o-mail-Thread");
                 if (chatterContainer && this.env.isSmall) {
                     chatterContainer.scrollIntoView({ behavior: "smooth" });
                     this.observer.disconnect();
                     return;
                 }
-                const view = this.action.currentController.props.type;
+                const view = this.action.currentController?.props.type;
                 if (
                     chatterContainer &&
                     ["kanban", "list"].includes(view)
@@ -405,7 +446,12 @@ export class DocumentService {
                     this.observer.disconnect();
                 }
             });
-            this.observer.observe(document.querySelector('.o_documents_content'), { childList: true, subtree: true });
+            if (document.querySelector(".o_documents_content")) {
+                this.observer.observe(document.querySelector(".o_documents_content"), {
+                    childList: true,
+                    subtree: true,
+                });
+            }
         }
     }
 
@@ -413,8 +459,10 @@ export class DocumentService {
      * Set the previewed document and send an event to notify the change.
      */
     setPreviewedDocument(document) {
-        this.previewedDocument = document;
-        this.bus.trigger("DOCUMENT_PREVIEWED");
+        this.rightPanelReactive.previewedDocument = document;
+        if (document) {
+            this.focusRecord(document.record);
+        }
     }
 
     async uploadDocument(files, accessToken, context) {

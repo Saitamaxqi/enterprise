@@ -53,6 +53,7 @@
                 <field name="type"/>
                 <field name="shortcut_document_id"/>
                 <field name="create_uid"/>
+                <field name="company_id"/>
                 <field name="url"/>
                 <field name="url_preview_image"/>
                 <field name="checksum"/>
@@ -75,6 +76,7 @@
                 <field name="file_size"/>
                 <field name="alias_name"/>
                 <field name="alias_domain_id"/>
+                <field name="mail_alias_domain_count"/>
                 <field name="create_activity_type_id"/>
                 <field name="create_activity_user_id"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
@@ -280,7 +282,6 @@
                             <field name="create_date" readonly="True"/>
                             <field name="tag_ids" readonly="not context.get('editable')" widget="many2many_tags"
                                 options="{'color_field': 'color'}" invisible="type == 'folder'"/>
-                            <field name="document_count" readonly="True" invisible="type != 'folder'"/>
                         </group>
                     </page>
                     <page string="Email Upload" invisible="type !='folder' or shortcut_document_id">
@@ -355,9 +356,8 @@
                   sample="1" default_order="is_folder, create_date DESC, id DESC">
                 <field name="is_favorited" widget="boolean_favorite" nolabel="1"/>
                 <field name="is_company_root_folder" column_invisible="1"/>
-                <field name="type" width="25px" widget="documents_type_icon" nolabel="1" optional="show"/>
+                <field name="type" width="25px" widget="documents_type_icon" nolabel="1"/>
                 <field name="name" required="True" readonly="False"/>
-                 <!-- before 18.2, assume only folder_id.id is available (column_invisible = True) -->
                 <field name="folder_id" optional="show"/>
                 <field name="display_name" column_invisible="1"/>
                 <field name="owner_id" widget="many2one_avatar_user" optional="show"/>
@@ -366,29 +366,30 @@
                 <field name="url" optional="hide"/>
                 <field name="lock_uid" optional="hide"/>
                 <field name="company_id" optional="hide"/>
-                <field name="document_count" string="" widget="document_count"/>
                 <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="create_date" optional="hide"/>
                 <field name="write_date" optional="show"/>
                 <field name="file_extension" optional="hide"/>
-                <field name="file_size" optional="show"/>
+                <field name="file_size" optional="show" widget="document_size"/>
+                <field name="res_id" string="Link to" optional="hide" widget="documents_many2one_reference"/>
                 <field name="id" column_invisible="1"/>
                 <field name="access_token" column_invisible="1"/>
                 <field name="active" column_invisible="1"/>
                 <field name="user_permission" column_invisible="1"/>
                 <field name="attachment_id" column_invisible="1"/>
-                <field name="res_id" column_invisible="1"/>
                 <field name="res_model" column_invisible="1"/>
+                <field name="res_model_name" column_invisible="1"/>
                 <field name="res_name" column_invisible="1"/>
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
                 <field name="access_url" column_invisible="1"/>
                 <field name="alias_email" optional="hide" widget="email"/>
-                <field name="alias_name" column_invisible="1"/>
-                <field name="alias_domain_id" column_invisible="1"/>
-                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
-                <field name="create_activity_type_id" column_invisible="1"/>
-                <field name="create_activity_user_id" column_invisible="1"/>
+                <field name="alias_name" optional="hide"/>
+                <field name="alias_domain_id" optional="hide"/>
+                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/> <!-- fetch `color` too -->
+                <field name="create_activity_type_id" optional="hide"/>
+                <field name="create_activity_user_id" optional="hide"/>
+                <field name="mail_alias_domain_count" optional="hide"/>
             </list>
         </field>
     </record>
@@ -415,6 +416,31 @@
             <activity string="Documents" js_class="documents_activity">
                 <field name="folder_id" required="True"/>
                 <field name="access_token" invisible="1"/>
+
+                <!-- Load fields for the details panel -->
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="partner_id"/>
+                <field name="owner_id"/>
+                <field name="type"/>
+                <field name="file_size"/>
+                <field name="company_id"/>
+                <field name="id"/>
+                <field name="active"/>
+                <field name="user_permission"/>
+                <field name="attachment_id"/>
+                <field name="res_id"/>
+                <field name="res_model"/>
+                <field name="res_model_name"/>
+                <field name="res_name"/>
+                <field name="shortcut_document_id"/>
+                <field name="mimetype"/>
+                <field name="access_url"/>
+                <field name="alias_email"/>
+                <field name="alias_name"/>
+                <field name="alias_domain_id"/>
+                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="mail_alias_domain_count"/>
+
                 <templates>
                     <div t-name="activity-box">
                         <img class="rounded" t-att-src="activity_image('res.users', 'avatar_128', record.owner_id.raw_value)"

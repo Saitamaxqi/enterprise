@@ -9,11 +9,14 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
+import { waitFor } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 
 import {
     DocumentsModels,
     getBasicPermissionPanelData,
     getDocumentsTestServerData,
+    makeDocumentRecordData,
 } from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
 import { basicDocumentsListArch } from "./helpers/views/list";
@@ -63,4 +66,145 @@ test("Open share with view user_permission", async function () {
 
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
     expect.verifySteps(["permission_panel_data", "Document url copied"]);
+});
+
+test("Right panel shows and updates focused or container record only", async function () {
+    onRpc("/documents/touch/accessTokenFolder1", () => true);
+    onRpc("/documents/touch/accessTokenFile1", () => true);
+    onRpc("/documents/touch/accessTokenFile2", () => true);
+    onRpc("/documents/touch/accessTokenFile3", () => true);
+
+    const file2Id = 3;
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "File 1", { attachment_id: 1, folder_id: 1 }),
+        makeDocumentRecordData(file2Id, "File 2", { attachment_id: 2, folder_id: 1 }),
+        makeDocumentRecordData(4, "File 3", { attachment_id: 3, folder_id: 1 }),
+    ]);
+    serverData.models["ir.attachment"] = {
+        records: [
+            { id: 1, name: "One" },
+            { id: 2, name: "Two" },
+            { id: 3, name: "Three" },
+        ],
+    };
+    const { name: folder1Name } = serverData.models["documents.document"].records[0];
+    onRpc("web_save", ({ args }) => {
+        if (args[0].length === 1 && args[0][0] === file2Id) {
+            expect.step("edit_request_2");
+        }
+    });
+    await makeDocumentsMockEnv({
+        serverData,
+        mockRPC: async function (route, args) {
+            if (args.method === "can_upload_traceback") {
+                return false;
+            }
+            if (args.model === "ir.model" && args.method === "display_name_for") {
+                return args.args[0];
+            }
+        },
+    });
+    await mountView({
+        type: "list",
+        resModel: "documents.document",
+        arch: basicDocumentsListArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+
+    // Open right panel
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    await waitFor(".documents_chatter_disabled_overlay");
+    // Focus without selection
+    await contains(`.o_data_row td[name='name']:contains(${folder1Name})`).click();
+    await animationFrame();
+    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
+        folder1Name
+    );
+    await contains(`.o_list_renderer`).click(); // de-focus
+
+    await waitFor(".documents_chatter_disabled_overlay"); // As we're in all/company
+    // Enter folder
+    await contains(`.o_data_row:contains(${folder1Name}) .fa-folder-o`).click();
+    await animationFrame();
+    expect(`.o_data_row .o_list_record_selector`).toHaveCount(3);
+    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
+        folder1Name
+    );
+
+    // Focus without selection
+    await contains(".o_data_row :contains('File 1')").click();
+    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
+        "File 1"
+    );
+    // Unfocus
+    await contains(`.o_list_renderer`).click();
+    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
+        folder1Name
+    );
+
+    // select record focuses it
+    await contains(".o_data_row:contains('File 1') .o_list_record_selector").click();
+    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
+        "File 1"
+    );
+    // Focus without selection
+    await contains(".o_data_row :contains('File 2')").click();
+    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
+        "File 2"
+    );
+    // Editing unselected File 2 only
+    await contains(".o_documents_details_panel .o_documents_details_panel_name input").edit(
+        "File 4"
+    );
+    // Row is modified, not File 1
+    await waitFor(".o_data_row :contains('File 4')");
+    await waitFor(".o_data_row :contains('File 1')");
+
+    expect.verifySteps(["edit_request_2"]);
+});
+
+test("Document actions are hidden when focused record is not selected", async function () {
+    onRpc("/documents/touch/accessTokenFolder1", () => true);
+    onRpc("/documents/touch/accessTokenFile1", () => true);
+    onRpc("/documents/touch/accessTokenFile2", () => true);
+
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "File 1", { attachment_id: 1, folder_id: 1 }),
+        makeDocumentRecordData(3, "File 2", { attachment_id: 2, folder_id: 1 }),
+    ]);
+    serverData.models["ir.attachment"] = {
+        records: [
+            { id: 1, name: "One" },
+            { id: 2, name: "Two" },
+        ],
+    };
+    await makeDocumentsMockEnv({
+        serverData,
+        mockRPC: async function (route, args) {
+            if (args.method === "can_upload_traceback") {
+                return false;
+            }
+            if (args.model === "ir.model" && args.method === "display_name_for") {
+                return args.args[0];
+            }
+        },
+    });
+    await mountView({
+        type: "list",
+        resModel: "documents.document",
+        arch: basicDocumentsListArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+    // select record focuses it
+    await contains(".o_data_row:contains('File 1') .o_list_record_selector").click();
+    // Actions are visible as selection is focused
+    await waitFor(".o_control_panel_actions:contains('Download')");
+    // Focus without selection
+    await contains(".o_data_row :contains('File 2')").click();
+    await waitFor(".o_selection_container");
+    // Actions are no longer visible as focused is not selected
+    await waitFor(".o_control_panel_actions:not(:contains('Download'))");
+    // Select it to show actions again
+    await contains(".o_data_row:contains('File 2') .o_list_record_selector").click();
+    await waitFor(".o_control_panel_actions:contains('Download')");
 });

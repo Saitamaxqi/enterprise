@@ -4,14 +4,7 @@ import {
     SpreadsheetModels,
     defineSpreadsheetModels,
 } from "@spreadsheet/../tests/helpers/data";
-import {
-    defineActions,
-    fields,
-    models,
-    onRpc,
-    serverState,
-    webModels,
-} from "@web/../tests/web_test_helpers";
+import { defineActions, fields, models, onRpc, serverState } from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
 import { getBasicPermissionPanelData, DocumentsModels } from "@documents/../tests/helpers/data";
 
@@ -159,13 +152,6 @@ export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
         list: /* xml */ `<list/>`,
         form: /* xml */ `<form/>`,
     };
-}
-
-export class ResCompany extends webModels.ResCompany {
-    document_spreadsheet_folder_id = fields.Many2one({
-        relation: "documents.document",
-        default: 1,
-    });
 }
 
 export class ResCountries extends models.Model {

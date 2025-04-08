@@ -40,11 +40,5 @@
                 </t>
             </ul>
         </div>
-        <t t-set="shareTitle">
-            <t t-if="this.targetRecords.length > 1">You cannot share multiple documents at the same time</t>
-            <t t-elif="folder.id === 'TRASH'">Documents in the Trash cannot be shared</t>
-            <t t-elif="!selectionCount and (!folder.id or typeof folder.id !== 'number')">Special folders cannot be shared</t>
-            <t t-else="">Open the permissions panel</t>
-        </t>
     </div>
 </templates>

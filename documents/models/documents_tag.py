@@ -27,22 +27,6 @@ class DocumentsTag(models.Model):
         "Tag name already used",
     )
 
-    # todo: unused, remove in master
-    @api.model
-    def _get_tags(self, domain):
-        """
-        fetches the tag and facet ids for the document selector (custom left sidebar of the kanban view)
-        """
-        tags = self.env['documents.document'].search(domain).tag_ids
-        return [
-            {
-                'sequence': tag.sequence,
-                'id': tag.id,
-                'color': tag.color,
-                '__count': len(tag.document_ids)
-            } for tag in tags
-        ]
-
     @api.ondelete(at_uninstall=False)
     def _unlink_except_used_in_server_action(self):
         external_ids = self._get_external_ids()
