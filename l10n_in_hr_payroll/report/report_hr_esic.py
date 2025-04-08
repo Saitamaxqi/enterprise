@@ -35,6 +35,11 @@ class HrESICReport(models.Model):
     xlsx_file = fields.Binary(string="Generated File")
     xlsx_filename = fields.Char()
 
+    _unique_esic_report_per_month_year = models.Constraint(
+        'UNIQUE(company_id, month, year, export_report_type)',
+        "An ESI/ESIC Report for this month and year already exists.",
+    )
+
     @api.model
     def default_get(self, field_list=None):
         if self.env.company.country_id.code != "IN":
@@ -150,7 +155,7 @@ class HrESICReport(models.Model):
 
         worksheet = workbook.add_worksheet(_('Employee_ESI_report'))
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
-        style_normal = workbook.add_format({'align': 'center', 'font_size': 12})
+        style_normal = workbook.add_format({'font_size': 12})
         row = 0
         worksheet.set_row(row, 20)
 
@@ -205,10 +210,7 @@ class HrESICReport(models.Model):
             'border': 1,
             'border_color': '#000000',
         })
-        style_normal = workbook.add_format({
-            'align': 'center',
-            'font_size': 12,
-        })
+        style_normal = workbook.add_format({'font_size': 12})
         row = 0
         esic_headers = [
             _("IP Number (10 Digits)"),

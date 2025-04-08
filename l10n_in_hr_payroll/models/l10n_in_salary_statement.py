@@ -27,6 +27,11 @@ class L10n_In_Hr_PayrollSalaryStatement(models.Model):
         ('12', 'December'),
     ], required=True, default=lambda self: str((fields.Date.today() + relativedelta(months=-1)).month))
 
+    _unique_salary_statement_report_per_month_year = models.Constraint(
+        'UNIQUE(company_id, month, year)',
+        "A Salary Statement Report for this month and year already exists.",
+    )
+
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
         res['year'] = str(datetime.now().year)

@@ -33,10 +33,19 @@ class L10nInHrPayrollEpfReport(models.Model):
     _description = 'Indian Payroll: Employee Provident Fund Report'
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
-    month = fields.Selection(MONTH_SELECTION, default='1', required=True)
+    month = fields.Selection(
+        MONTH_SELECTION,
+        required=True,
+        default=lambda self: str(fields.Date.context_today(self).month)
+    )
     year = fields.Integer(required=True, default=lambda self: fields.Date.context_today(self).year)
     xls_file = fields.Binary(string="XLS file")
     xls_filename = fields.Char()
+
+    _unique_epf_report_per_month_year = models.Constraint(
+        'UNIQUE(company_id, month, year)',
+        "An EPF Report for this month and year already exists.",
+    )
 
     @api.model
     def default_get(self, field_list=None):
@@ -104,7 +113,7 @@ class L10nInHrPayrollEpfReport(models.Model):
             diff = round(epf_contri - eps_contri, 2)
 
             result.append((
-                employee.l10n_in_uan,
+                employee.l10n_in_uan or '',
                 employee.name,
                 wage,
                 epf,
@@ -125,7 +134,7 @@ class L10nInHrPayrollEpfReport(models.Model):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Employee_provident_fund_report')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
-        style_normal = workbook.add_format({'align': 'center', 'font_size': 12})
+        style_normal = workbook.add_format({'font_size': 12})
         row = 0
         worksheet.set_row(row, 20)
 
