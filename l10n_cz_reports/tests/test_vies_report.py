@@ -137,3 +137,34 @@ class CzechVIESReportTest(CzechReportsCommon):
             self.get_xml_tree_from_string(generated_xml),
             self.get_xml_tree_from_string(expected_xml),
         )
+
+    def test_cz_vies_report_with_miscellaneous_entry(self):
+        self.env['account.move'].create({
+            'invoice_date': '2025-01-01',
+            'taxable_supply_date': '2025-01-01',
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_eu_1.id,
+            'invoice_line_ids': [Command.create(line_data) for line_data in [
+                {
+                    'price_unit': 20,
+                    'deferred_start_date': '2025-01-01',
+                    # Create deferred entries --> not an invoice/refund (with a transaction code set)
+                    'deferred_end_date': '2025-12-31',
+                    'l10n_cz_transaction_code': '0',
+                },
+            ]],
+        }).action_post()
+        report = self.env.ref('l10n_cz_reports.vies_summary_report')
+        options = self._generate_options(report, date_from='2025-01-01', date_to='2025-12-31')
+
+        self.assertLinesValues(
+            report._get_lines({**options, 'unfold_all': True}), [0, 5],
+            #        name              total
+            [
+                ('B. SECTION',          20),
+                ('Partner EU 1',        20),
+                ('0 Goods',             20),
+                ('BILL/2025/01/0001',   20),
+            ],
+            options,
+        )

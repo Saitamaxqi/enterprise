@@ -119,10 +119,12 @@ class CzechVIESSummaryReportCustomHandler(models.AbstractModel):
                 FROM %(table_references)s
                 JOIN res_partner                partner         ON account_move_line.partner_id                 = partner.id
                 JOIN res_country                country         ON partner.country_id                           = country.id
+                LEFT JOIN account_move          move            ON account_move_line.move_id                    = move.id
                 WHERE
                     %(search_condition)s
                     AND l10n_cz_transaction_code IS NOT NULL
                     AND country.code IN %(eu_countries)s
+                    AND move.move_type IN %(move_types)s
                 %(groupby_clause)s
                 %(orderby_clause)s
                 %(tail_query)s
@@ -131,6 +133,7 @@ class CzechVIESSummaryReportCustomHandler(models.AbstractModel):
             table_references=query.from_clause,
             search_condition=query.where_clause,
             eu_countries=tuple(cz_utils.get_eu_country_codes(self.env, options)),
+            move_types=tuple(self.env['account.move'].get_invoice_types()),
             groupby_clause=SQL("GROUP BY %s", groupby_clause),
             orderby_clause=SQL("ORDER BY %s", groupby_clause),
             tail_query=SQL(tail_query),
