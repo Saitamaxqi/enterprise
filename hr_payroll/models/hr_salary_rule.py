@@ -15,7 +15,7 @@ class HrSalaryRule(models.Model):
     code = fields.Char(required=True,
         help="The code of salary rules can be used as reference in computation of other rules. "
              "In that case, it is case sensitive.")
-    struct_id = fields.Many2one('hr.payroll.structure', string="Salary Structure", required=True, index=True)
+    struct_id = fields.Many2one('hr.payroll.structure', string="Salary Structure", required=True, index=True, ondelete='cascade')
     country_id = fields.Many2one(related="struct_id.country_id")
     sequence = fields.Integer(required=True, index=True, default=5,
         help='Use to arrange calculation sequence')
