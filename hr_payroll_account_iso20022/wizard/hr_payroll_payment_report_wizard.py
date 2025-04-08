@@ -11,10 +11,6 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     journal_id = fields.Many2one(
         string='Bank Journal', comodel_name='account.journal', required=True,
         default=lambda self: self.env['account.journal'].search([('type', '=', 'bank')], limit=1))
-    effective_date = fields.Date(
-        string='Effective Date',
-        help='Effective Entry Date: the banking day on which you intend the payslip batch to be settled.',
-        default=fields.Date.context_today, required=True)
 
     def _create_sepa_binary(self):
         # Map the necessary data

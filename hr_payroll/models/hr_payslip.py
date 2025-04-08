@@ -528,11 +528,19 @@ class HrPayslip(models.Model):
         self.ensure_one()
         if len(self.payslip_run_id) > 1:
             raise UserError(_('The selected payslips should be linked to the same batch'))
-        self.env['hr.payroll.payment.report.wizard'].create({
-            'payslip_ids': self.ids,
-            'payslip_run_id': self.payslip_run_id.id,
-            'export_format': export_format
-        }).generate_payment_report()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.payroll.payment.report.wizard',
+            'view_mode': 'form',
+            'view_id': 'hr_payslip_payment_report_view_form',
+            'views': [(False, 'form')],
+            'target': 'new',
+            'context': {
+                'default_payslip_ids': self.ids,
+                'default_payslip_run_id': self.payslip_run_id.id,
+                'default_export_format': export_format,
+            },
+        }
 
     def action_payslip_unpaid(self):
         if any(slip.state != 'paid' for slip in self):

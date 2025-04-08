@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <group id="payment_report_group" position="inside">
                 <field name="journal_id" invisible="export_format != 'nacha'"/>
-                <field name="effective_date" invisible="export_format != 'nacha'"/>
             </group>
         </field>
     </record>

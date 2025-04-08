@@ -5,7 +5,7 @@ from io import StringIO
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools.misc import format_date
+from odoo.tools.misc import format_amount, format_date
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
@@ -19,41 +19,40 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         ('csv', 'CSV'),
     ], string='Export Format', required=True, default='csv')
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
+    effective_date = fields.Date(
+        string='Effective Date',
+        help='Effective Entry Date: the banking day on which you intend the payslip batch to be settled.',
+        default=fields.Date.context_today, required=True)
 
     def _create_csv_binary(self):
         output = StringIO()
         report_data = csv.writer(output)
-        report_data.writerow([_('Report Date'), _('Payslip Period'), _('Employee name'), _('Employee address'), _('Bank account'), _('Amount to pay')])
+        report_data.writerow([_('Sequence'), _('Effective Date'), _('Report Date'), _('Payslip Period'), _('Employee name'), _('Bank account'), _('BIC'), _('Amount to pay')])
         rows = []
-        for slip in self.payslip_ids:
-            private_address = ' '.join((
-                slip.employee_id.private_street or '',
-                slip.employee_id.private_street2 or '',
-                slip.employee_id.private_zip or '',
-                slip.employee_id.private_city or '',
-                slip.employee_id.country_id.name or '',
-            ))
+        for index, slip in enumerate(self.payslip_ids):
             rows.append((
+                str(index + 1),
+                format_date(self.env, self.effective_date),
                 format_date(self.env, fields.Date.today()),
                 format_date(self.env, slip.date_from) + ' - ' + format_date(self.env, slip.date_to),
                 slip.employee_id.legal_name,
-                private_address,
                 slip.employee_id.bank_account_id.acc_number,
-                str(slip.net_wage) + slip.currency_id.symbol
+                slip.employee_id.bank_account_id.bank_bic or '',
+                format_amount(self.env, slip.net_wage, slip.currency_id)
             ))
         report_data.writerows(rows)
         return base64.encodebytes(output.getvalue().encode())
 
     def _write_file(self, payment_report, extension, filename=''):
         if self.payslip_run_id:
-            batch_filename = filename or _('Pay Report - %(batch_name)s', batch_name=self.payslip_run_id.name)
+            batch_filename = filename or _('Payment Report - %(batch_name)s', batch_name=self.payslip_run_id.name)
             self.payslip_run_id.write({
                 'payment_report': payment_report,
                 'payment_report_filename': batch_filename + extension,
                 'payment_report_date': fields.Date.today()})
 
         for payslip in self.payslip_ids:
-            payslip_filename = filename or _('Pay Report - %(dates)s - %(employee_name)s',
+            payslip_filename = filename or _('Payment Report - %(dates)s - %(employee_name)s',
                                              dates=payslip._get_period_name({}),
                                              employee_name=payslip.employee_id.legal_name)
             payslip.write({
