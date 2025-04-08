@@ -22,6 +22,7 @@ Documents app in the desired format(s).
         'views/account_move_views.xml',
         'views/documents_account_folder_setting_views.xml',
         'views/documents_document_views.xml',
+        'views/ir_actions_server_views.xml',
         'views/res_config_settings_views.xml',
         'wizard/account_reports_export_wizard_views.xml',
     ],

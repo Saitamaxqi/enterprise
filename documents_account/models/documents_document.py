@@ -8,6 +8,7 @@ from xml.etree import ElementTree
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class DocumentsDocument(models.Model):
@@ -160,3 +161,14 @@ class DocumentsDocument(models.Model):
         # many times the same bank statement is later checked.
         default_journal = journal_id or self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
         return default_journal.create_document_from_attachment(attachment_ids=self.attachment_id.ids)
+
+    @api.model
+    def _get_base_server_actions_domain(self):
+        return Domain.AND([
+            super()._get_base_server_actions_domain(),
+            Domain.OR([
+                [('state', '!=', 'documents_account_record_create')],
+                [('documents_account_journal_id', '=', False)],
+                [('documents_account_journal_id.company_id', '=', self.env.company.id)],
+            ])
+        ])
