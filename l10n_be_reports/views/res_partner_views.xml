@@ -7,6 +7,7 @@
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="priority" eval="1"/>
             <field name="arch" type="xml">
+                <!-- TDE FIXME: check required fields now that sync is more simple -->
                 <xpath expr="//field[@name='street']" position="attributes">
                     <attribute name="required">'street' in context.get('required_fields', [])</attribute>
                 </xpath>
