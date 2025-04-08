@@ -59,7 +59,9 @@ class AccountJournal(models.Model):
         self.browse(list(dashboard_data.keys())).fetch(['type', 'account_online_account_id'])
         for journal_id, journal_data in dashboard_data.items():
             journal = self.browse(journal_id)
-            journal_data['display_connect_bank_in_dashboard'] = journal.type in ('bank', 'credit') and not journal.account_online_account_id
+            journal_data['display_connect_bank_in_dashboard'] = journal.type in ('bank', 'credit') \
+                                                                and not journal.account_online_account_id \
+                                                                and journal.company_id.id == self.env.company.id
 
     @api.constrains('account_online_account_id')
     def _check_account_online_account_id(self):
@@ -338,13 +340,17 @@ class AccountJournal(models.Model):
 
     def _get_journal_dashboard_data_batched(self):
         dashboard_data = super()._get_journal_dashboard_data_batched()
-        for journal in self.filtered('account_online_link_id'):
-            if journal.company_id.id not in self.env.companies.ids:
-                continue
-            connection_state_details = journal.account_online_link_id._get_connection_state_details(journal=journal)
-            if not connection_state_details and journal.account_online_account_id.fetching_status in ('waiting', 'processing'):
-                connection_state_details = {'status': 'fetching'}
-            dashboard_data[journal.id]['connection_state_details'] = connection_state_details
+        for journal in self.filtered(lambda j: j.type == 'bank'):
+            if journal.account_online_account_id:
+                if journal.company_id.id not in self.env.companies.ids:
+                    continue
+                connection_state_details = journal.account_online_link_id._get_connection_state_details(journal=journal)
+                if not connection_state_details and journal.account_online_account_id.fetching_status in ('waiting', 'processing'):
+                    connection_state_details = {'status': 'fetching'}
+                dashboard_data[journal.id]['connection_state_details'] = connection_state_details
+                dashboard_data[journal.id]['show_sync_actions'] = journal.account_online_link_id.show_sync_actions
+            else:
+                dashboard_data[journal.id]['show_bank_connect'] = journal.company_id.id == self.env.company.id
         return dashboard_data
 
     def get_related_connection_state_details(self):

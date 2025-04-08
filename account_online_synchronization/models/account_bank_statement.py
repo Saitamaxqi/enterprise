@@ -84,7 +84,7 @@ class AccountBankStatementLine(models.Model):
                 if filtered_transactions:
                     # split transactions import in batch and commit after each batch except in testing mode
                     for index in range(0, len(filtered_transactions), STATEMENT_LINE_CREATION_BATCH_SIZE):
-                        lines_to_reconcile += self.with_user(SUPERUSER_ID).with_context(skip_statement_line_cron_trigger=True).create(filtered_transactions[index:index+STATEMENT_LINE_CREATION_BATCH_SIZE])
+                        lines_to_reconcile += self.with_user(SUPERUSER_ID).with_company(journal.company_id).with_context(skip_statement_line_cron_trigger=True).create(filtered_transactions[index:index + STATEMENT_LINE_CREATION_BATCH_SIZE])
                         if do_commit:
                             self.env.cr.commit()
                     # Set last sync date as the last transaction date

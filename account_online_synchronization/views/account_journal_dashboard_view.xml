@@ -28,7 +28,7 @@
                 </xpath>
 
                 <xpath expr='//div[@id="dashboard_bank_cash_left"]' position='inside'>
-                    <div t-if="dashboard.bank_statements_source === 'online_sync'">
+                    <div t-if="dashboard.bank_statements_source === 'online_sync' and dashboard.show_sync_actions">
                         <t t-if="record.account_online_link_state.raw_value === 'connected' and record.account_online_account_id">
                             <widget name="refresh_spin_widget" groups="account.group_account_manager"/>
                             <span invisible="not expiring_synchronization_date" groups="account.group_account_manager">
@@ -63,10 +63,12 @@
                 </xpath>
 
                 <xpath expr="//t[@t-name='bank_configuration_placeholder']" position="replace">
-                    <t t-if="bank_unconfigured">
-                        <widget name="bank_configure" groups="account.group_account_manager"/>
+                    <t t-if="dashboard.show_bank_connect">
+                        <t t-if="bank_unconfigured">
+                            <widget name="bank_configure" groups="account.group_account_manager"/>
+                        </t>
+                        <t t-else="" t-call="JournalBodyBankCash" t-name="bank_configuration_placeholder"/>
                     </t>
-                    <t t-else="" t-call="JournalBodyBankCash" t-name="bank_configuration_placeholder"/>
                 </xpath>
             </field>
         </record>

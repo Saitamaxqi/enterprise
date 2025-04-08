@@ -9,11 +9,12 @@
                     <header>
                         <button name="action_fetch_transactions" string="Fetch Transactions" class="oe_highlight"
                                 type="object" groups="account.group_account_user"
-                                invisible="state == 'disconnected' or not provider_data"/>
-                        <button groups="account.group_account_manager" name="action_update_credentials" string="Update Credentials" class="btn-secondary" type="object" invisible="state == 'disconnected' or not provider_data"/>
-                        <button groups="account.group_account_manager" name="action_reconnect_account" string="Reconnect" class="btn-primary" type="object" invisible="state != 'disconnected' or not provider_data"/>
-                        <button groups="account.group_account_manager" name="action_new_synchronization" string="Connect" class="btn-primary" type="object" invisible="state != 'disconnected' or provider_data"/>
+                                invisible="state == 'disconnected' or not provider_data or not show_sync_actions"/>
+                        <button groups="account.group_account_manager" name="action_update_credentials" string="Update Credentials" class="btn-secondary" type="object" invisible="state == 'disconnected' or not provider_data or not show_sync_actions"/>
+                        <button groups="account.group_account_manager" name="action_reconnect_account" string="Reconnect" class="btn-primary" type="object" invisible="state != 'disconnected' or not provider_data or not show_sync_actions"/>
+                        <button groups="account.group_account_manager" name="action_new_synchronization" string="Connect" class="btn-primary" type="object" invisible="state != 'disconnected' or provider_data or not show_sync_actions"/>
                         <field name="state" widget="statusbar" readonly="1"/>
+                        <field name="show_sync_actions" invisible="1"/>
                     </header>
                     <sheet>
                         <div class="oe_title">

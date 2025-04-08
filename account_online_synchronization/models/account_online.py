@@ -376,6 +376,7 @@ class AccountOnlineLink(models.Model):
     )
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     has_unlinked_accounts = fields.Boolean(default=True, help="True if that connection still has accounts that are not linked to an Odoo journal")
+    show_sync_actions = fields.Boolean(compute='_compute_show_sync_actions')
 
     # Information received from OdooFin, should not be tampered with
     name = fields.Char(help="Institution Name", readonly=True)
@@ -397,6 +398,12 @@ class AccountOnlineLink(models.Model):
     def _compute_journal_ids(self):
         for online_link in self:
             online_link.journal_ids = online_link.account_online_account_ids.journal_ids
+
+    @api.depends('company_id')
+    @api.depends_context('allowed_company_ids')
+    def _compute_show_sync_actions(self):
+        for online_link in self:
+            online_link.show_sync_actions = online_link.company_id in self.env.companies
 
     ##########################
     # Wizard opening actions #
