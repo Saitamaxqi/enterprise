@@ -39,7 +39,6 @@ Accounting reports for India
     'demo': [
         'demo/demo_company.xml',
     ],
-    'auto_install': ['l10n_in', 'account_reports'],
     'installable': True,
     'post_init_hook': '_l10n_in_reports_post_init',
     'author': 'Odoo S.A.',
