@@ -301,7 +301,7 @@ export class FilterEditorStore extends SpreadsheetStore {
         const filter = this.draft;
         if (filter.rangeOfAllowedValues) {
             // rangeOfAllowedValues is a RangeData in the command
-            filter.rangeOfAllowedValues = filter.rangeOfAllowedValues.rangeData;
+            filter.rangeOfAllowedValues = this.getters.getRangeData(filter.rangeOfAllowedValues);
         }
         const command = this.isNew ? "ADD_GLOBAL_FILTER" : "EDIT_GLOBAL_FILTER";
         const result = this.model.dispatch(command, {

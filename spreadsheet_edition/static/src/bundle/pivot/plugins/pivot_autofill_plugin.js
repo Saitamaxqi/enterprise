@@ -2,8 +2,13 @@ import { _t } from "@web/core/l10n/translation";
 import { UIPlugin, tokenize, helpers } from "@odoo/o-spreadsheet";
 import { domainHasNoRecordAtThisPosition } from "@spreadsheet/pivot/pivot_helpers";
 
-const { getNumberOfPivotFunctions, isDateOrDatetimeField, pivotTimeAdapter, createPivotFormula } =
-    helpers;
+const {
+    getNumberOfPivotFunctions,
+    isDateOrDatetimeField,
+    pivotTimeAdapter,
+    createPivotFormula,
+    toNormalizedPivotValue,
+} = helpers;
 
 /**
  * @typedef {import("@odoo/o-spreadsheet").SpreadsheetPivotTable} SpreadsheetPivotTable
@@ -500,14 +505,11 @@ export class PivotAutofillPlugin extends UIPlugin {
      */
     _getCurrentHeaderElement(args, definition) {
         const values = this._parseArgs(args.slice(1));
-        const cols = this._getFieldValues(
-            [...definition.columns.map((col) => col.nameWithGranularity), "measure"],
-            values
-        );
-        const rows = this._getFieldValues(
-            definition.rows.map((row) => row.nameWithGranularity),
-            values
-        );
+        const cols = this._getFieldValues(definition.columns, values);
+        const rows = this._getFieldValues(definition.rows, values);
+        if ("measure" in values) {
+            cols.push(values.measure);
+        }
         return { cols, rows };
     }
     /**
@@ -523,33 +525,38 @@ export class PivotAutofillPlugin extends UIPlugin {
      */
     _getCurrentValueElement(args, definition) {
         const values = this._parseArgs(args.slice(2));
-        const cols = this._getFieldValues(
-            definition.columns.map((col) => col.nameWithGranularity),
-            values
-        );
+        const cols = this._getFieldValues(definition.columns, values);
         cols.push(args[1]); // measure
-        const rows = this._getFieldValues(
-            definition.rows.map((row) => row.nameWithGranularity),
-            values
-        );
+        const rows = this._getFieldValues(definition.rows, values);
         return { cols, rows };
     }
     /**
      * Return the values for the fields which are present in the list of
      * fields
      *
-     * ex: fields: ["create_date"]
-     *     values: { create_date: "01/01", stage_id: 1 }
+     * ex: dimensions: [{ nameWithGranularity: "create_date:month" }]
+     *     values: { "create_date:month": "01/01", stage_id: 1 }
      *      => ["01/01"]
      *
-     * @param {Array<string>} fields List of fields
+     * @param {import("@odoo/o-spreadsheet").PivotDimension[]} dimensions List of fields
      * @param {Object} values Association field-values
      *
      * @private
      * @returns {Array<string>}
      */
-    _getFieldValues(fields, values) {
-        return fields.filter((field) => field in values).map((field) => values[field]);
+    _getFieldValues(dimensions, values) {
+        return dimensions
+            .filter((dimension) => dimension.nameWithGranularity in values)
+            .map((dimension) => {
+                try {
+                    return toNormalizedPivotValue(
+                        dimension,
+                        values[dimension.nameWithGranularity]
+                    ).toString();
+                } catch {
+                    return "";
+                }
+            });
     }
     /**
      * Increment a date with a given increment and interval (group)

@@ -44,7 +44,8 @@
       </t>
       <Menu
         t-if="menuState.isOpen"
-        position="menuState.position"
+        anchorRect="menuState.anchorRect"
+        popoverPositioning="'bottom-left'"
         menuItems="menuItems"
         onClose.bind="closeMenu"
       />
