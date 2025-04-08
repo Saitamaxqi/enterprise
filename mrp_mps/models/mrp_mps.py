@@ -99,7 +99,7 @@ class MrpProductionSchedule(models.Model):
     def _search_replenish_state(self, operator, value):
         if operator != 'in':
             return NotImplemented
-        states = set(self._field['replenish_state'].get_values(self.env))
+        states = set(self._fields['replenish_state'].get_values(self.env))
         states.add(False)
         states.intersection_update(value)
         if not states:
