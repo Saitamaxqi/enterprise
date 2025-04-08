@@ -97,7 +97,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = categories['BASIC'] + categories['ALW'] + categories['DED']
+result = categories['GROSS'] + categories['ALW'] + categories['DED']
         </field>
         <field name="struct_id" ref="hr_payroll_structure_in_stipend"/>
     </record>
