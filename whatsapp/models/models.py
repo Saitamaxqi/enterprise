@@ -53,10 +53,12 @@ class Base(models.AbstractModel):
          a customer replies to a sent 'whatsapp.template'. In short: who should be notified.
 
          Heuristic is as follows:
+
          - Try to find a 'user_id/user_ids' field on the record, use that as responsible if available;
          - Always add the author of the original message
            (If you send a template to a customer, you should be able to reply to his questions.)
          - If nothing found, fallback on the first available among the following:
+
            - The creator of the record
            - The last editor of the record
            - Ultimate fallback is the people configured as 'notify_user_ids' on the whatsapp account

@@ -1170,10 +1170,11 @@ class IrUiView(models.Model):
         return self._stringify_node('', arch, moved_fields)
 
     def _stringify_node(self, ancestor, node, moved_fields=None):
-        """
+        r"""
         Converts a node into its string representation
 
-        Example:
+        Example::
+        
             from: <field name='color'/>
               to: "/field[@name='color']\n"
 

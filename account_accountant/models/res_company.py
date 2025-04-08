@@ -149,10 +149,10 @@ class ResCompany(models.Model):
         """Compute the start and end dates of the fiscal year where the given 'date' belongs to.
 
         :param current_date: A datetime.date/datetime.datetime object.
-        :return: A dictionary containing:
-            * date_from
-            * date_to
-            * [Optionally] record: The fiscal year record.
+        :return: a dictionnary in the form
+            ``{'date_from': ..., 'date_to': ..., ['record': ...]}``
+            where the ``record`` key can be absent.
+
         """
         self.ensure_one()
         date_str = current_date.strftime(DEFAULT_SERVER_DATE_FORMAT)

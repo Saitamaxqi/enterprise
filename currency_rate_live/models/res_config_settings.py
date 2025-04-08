@@ -208,14 +208,15 @@ class ResCompany(models.Model):
         For this, all those functions must be called _parse_xxx_data, where xxx
         is the technical name of the provider in the selection field. Each of them
         must also be such as:
-            - It takes as its only parameter the recordset of the currencies
-              we want to get the rates of
-            - It returns a dictionary containing currency codes as keys, and
-              the corresponding exchange rates as its values. These rates must all
-              be based on the same currency, whatever it is. This dictionary must
-              also include a rate for the base currencies of the companies we are
-              updating rates from, otherwise this will result in an error
-              asking the user to choose another provider.
+
+        - It takes as its only parameter the recordset of the currencies
+          we want to get the rates of
+        - It returns a dictionary containing currency codes as keys, and
+          the corresponding exchange rates as its values. These rates must all
+          be based on the same currency, whatever it is. This dictionary must
+          also include a rate for the base currencies of the companies we are
+          updating rates from, otherwise this will result in an error
+          asking the user to choose another provider.
 
         :return: True if the rates of all the records in self were updated
                  successfully, False if at least one wasn't.
@@ -569,17 +570,20 @@ class ResCompany(models.Model):
 
     def _parse_banxico_data(self, available_currencies):
         """Parse function for Banxico provider.
+
         * With basement in legal topics in Mexico the rate must be **one** per day and it is equal to the rate known the
-        day immediate before the rate is gotten, it means the rate for 02/Feb is the one at 31/jan.
+          day immediate before the rate is gotten, it means the rate for 02/Feb is the one at 31/jan.
         * The base currency is always MXN but with the inverse 1/rate.
         * The official institution is Banxico.
         * The webservice returns the following currency rates:
-            - SF46410 EUR
-            - SF60632 CAD
-            - SF43718 USD Fixed
-            - SF46407 GBP
-            - SF46406 JPY
-            - SF60653 USD SAT - Officially used from SAT institution
+
+          - SF46410 EUR
+          - SF60632 CAD
+          - SF43718 USD Fixed
+          - SF46407 GBP
+          - SF46406 JPY
+          - SF60653 USD SAT - Officially used from SAT institution
+
         Source: http://www.banxico.org.mx/portal-mercado-cambiario/
         """
         try:
@@ -638,25 +642,30 @@ class ResCompany(models.Model):
 
         This function parses exchange rate data for available currencies from the XE.com provider
         via a JSON-RPC request and processes the data into a structured format. It filters the rates
-        to include only those matching the given `available_currencies`.
+        to include only those matching the given ``available_currencies``.
 
         :param available_currencies: A recordset containing available currency objects. Each object
             is expected to have a `name` attribute representing the currency code (e.g., 'USD', 'EUR').
         :returns: A dictionary where keys are currency codes (strings) and values are tuples:
+
             - The exchange rate (float).
-            - The timestamp of the rate, formatted as a string in `DEFAULT_SERVER_DATE_FORMAT`.
+            - The timestamp of the rate, formatted as a string in ``DEFAULT_SERVER_DATE_FORMAT``.
         :rtype: dict
 
-        Example:
-            If the XE.com API returns the following data:
+        Example
+
+        If the XE.com API returns the following data::
+
                 {
                     '2025-01-21T00:00:00Z': {
                         'EUR': 1.2345,
                         'USD': 1.0,
                     },
                 }
-            and `available_currencies` contains 'USD' and 'EUR',
-            the function will return:
+
+        and ``available_currencies`` contains 'USD' and 'EUR', the function
+        will return::
+
                 {
                     'EUR': (1.2345, '2025-01-20'),
                     'USD': (1.0, '2025-01-20'),
@@ -773,14 +782,16 @@ class ResCompany(models.Model):
 
     def _parse_mindicador_data(self, available_currencies):
         """Parse function for mindicador.cl provider for Chile
+
         * Regarding needs of rates in Chile there will be one rate per day, except for UTM index (one per month)
         * The value of the rate is the "official" rate
         * The base currency is always CLP but with the inverse 1/rate.
         * The webservice returns the following currency rates:
-            - EUR
-            - USD (Dolar Observado)
-            - UF (Unidad de Fomento)
-            - UTM (Unidad Tributaria Mensual)
+
+          - EUR
+          - USD (Dolar Observado)
+          - UF (Unidad de Fomento)
+          - UTM (Unidad Tributaria Mensual)
         """
         logger = _logger.getChild('mindicador')
         icp = self.env['ir.config_parameter'].sudo()
@@ -1014,7 +1025,7 @@ class ResCompany(models.Model):
     def _parse_bcu_data(self, available_currencies):
         """ This method is used to update the currencies by using BCU service provider.
         They can be manually verified at:
-            https://www.bcu.gub.uy/Estadisticas-e-Indicadores/Paginas/Cotizaciones.aspx
+        https://www.bcu.gub.uy/Estadisticas-e-Indicadores/Paginas/Cotizaciones.aspx
         """
         # Only sync currencies that have BCU code, UYU is not included
         iso_to_moneda_map = self._get_bcu_currencies_mapping()

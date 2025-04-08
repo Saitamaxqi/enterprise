@@ -97,21 +97,23 @@ class ResCompany(models.Model):
 
         self is always returned as the first element of the resulting recordset (so that this can safely be used to restore the active company).
 
-        Example:
-        - main company ; vat = 123
-            - branch 1
-                - branch 1_1
-            - branch 2 ; vat = 456
-                - branch 2_1 ; vat = 789
-                - branch 2_2
+        Example::
 
-        In this example, the following VAT numbers will be considered for each company:
-        - main company: 123
-        - branch 1: 123
-        - branch 1_1: 123
-        - branch 2: 456
-        - branch 2_1: 789
-        - branch 2_2: 456
+            - main company ; vat = 123
+                - branch 1
+                    - branch 1_1
+                - branch 2 ; vat = 456
+                    - branch 2_1 ; vat = 789
+                    - branch 2_2
+
+        In this example, the following VAT numbers will be considered for each company::
+
+            - main company: 123
+            - branch 1: 123
+            - branch 1_1: 123
+            - branch 2: 456
+            - branch 2_1: 789
+            - branch 2_2: 456
 
         :param accessible_only: whether the returned companies should exclude companies that are not in self.env.companies
         """

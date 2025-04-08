@@ -59,29 +59,32 @@ class Base(models.AbstractModel):
         :param read_specification: web_read specification to read records within the groups
         :param limit: see ``limit`` param of ``_read_group``
         :param offset: see ``offset`` param of ``_read_group``
-        :param boolean unavailability_fields
+        :param boolean unavailability_fields:
         :param string start_date: start datetime in utc, e.g. "2024-06-22 23:00:00"
         :param string stop_date: stop datetime in utc
         :param string scale: among "day", "week", "month" and "year"
-        :return: {
-            'groups': [
+        :return:
+            example::
+
                 {
-                    '<groupby_1>': <value_groupby_1>,
-                    ...,
-                    '__record_ids': [<ids>]
+                    'groups': [
+                        {
+                            '<groupby_1>': <value_groupby_1>,
+                            ...,
+                            '__record_ids': [<ids>]
+                        }
+                    ],
+                    'records': [<record data>]
+                    'length': total number of groups
+                    'unavailabilities': {
+                        '<unavailability_fields_1>': <value_unavailability_fields_1>,
+                        ...
+                    }
+                    'progress_bars': {
+                        '<progress_bar_fields_1>': <value_progress_bar_fields_1>,
+                        ...
+                    }
                 }
-            ],
-            'records': [<record data>]
-            'length': total number of groups
-            'unavailabilities': {
-                '<unavailability_fields_1>': <value_unavailability_fields_1>,
-                ...
-            }
-            'progress_bars': {
-                '<progress_bar_fields_1>': <value_progress_bar_fields_1>,
-                ...
-            }
-        }
         """
         # Because there is no limit by group, we can fetch record_ids as aggregate
         final_result = self.with_context(read_group_expand=True).web_read_group(
@@ -159,8 +162,8 @@ class Base(models.AbstractModel):
 
             - type: Notification type.
             - message: Notification message.
-            - old_vals_per_pill_id: A dictionary where the key is the pill ID, and the value is another dictionary
-            containing the start and stop dates before rescheduling.
+            - old_vals_per_pill_id: A dictionary where the key is the pill ID, and the value is
+              another dictionary containing the start and stop dates before rescheduling.
 
         :rtype: dict
         """
@@ -234,13 +237,15 @@ class Base(models.AbstractModel):
             implement this feature on Gantt groups. The progressbar is composed
             of a value and a max_value given for each groupedby field.
 
-            Example:
+            Example::
+
                 field = 'foo',
                 res_ids = [1, 2]
                 start_date = 01/01/2000, end_date = 01/07/2000,
                 self = base()
 
-            Result:
+            Result::
+
                 {
                     1: {'value': 50, 'max_value': 100},
                     2: {'value': 25, 'max_value': 200},
@@ -262,35 +267,41 @@ class Base(models.AbstractModel):
         implement this feature on a Gantt view. A subslot is considered
         unavailable (and greyed) when totally covered by an unavailability.
 
-        Example:
-            * start = 01/01/2000 in datetime utc, stop = 01/07/2000 in datetime utc, scale = 'week',
-              field = "empployee_id", res_ids = [3, 9]
+        Example::
 
-            * The expected return value of this function is a dict of the form
-                {
-                    value: [{
-                        start: <start date of first unavailabity in UTC format>,
-                        stop: <stop date of first unavailabity in UTC format>
-                    }, {
-                        start: <start date of second unavailabity in UTC format>,
-                        stop: <stop date of second unavailabity in UTC format>
-                    }, ...]
-                    ...
-                }
+            >>> _gantt_unavailability(
+            ...    field="employee_id",
+            ...    res_ids=[3, 9],
+            ...    start='01/01/2000'  # UTC,
+            ...    stop='01/07/2000'  # UTC,
+            ...    scale='week',
+            ... )
+            {
+                value: [{
+                    start: <start date of first unavailabity in UTC format>,
+                    stop: <stop date of first unavailabity in UTC format>
+                }, {
+                    start: <start date of second unavailabity in UTC format>,
+                    stop: <stop date of second unavailabity in UTC format>
+                }, ...]
+                ...
+            }
 
-              For example Marcel (3) is unavailable January 2 afternoon and
-              January 4 the whole day, the dict should look like this
-                {
-                    3: [{
-                        'start': '2018-01-02 14:00:00',
-                        'stop': '2018-01-02 18:00:00'
-                    }, {
-                        'start': '2018-01-04 08:00:00',
-                        'stop': '2018-01-04 18:00:00'
-                    }]
-                }
-                Note that John (9) has no unavailabilies and thus 9 is not in
-                returned dict
+        For example Marcel (3) is unavailable January 2 afternoon and
+        January 4 the whole day, the dict should look like this::
+
+            {
+                3: [{
+                    'start': '2018-01-02 14:00:00',
+                    'stop': '2018-01-02 18:00:00'
+                }, {
+                    'start': '2018-01-04 08:00:00',
+                    'stop': '2018-01-04 18:00:00'
+                }]
+            }
+
+        Note that John (9) has no unavailabilies and thus 9 is not in
+        returned dict
 
         :param string field: name of a many2X field
         :param list res_ids: list of values for field for which we want unavailabilities (a value is either False or an id)
@@ -519,7 +530,6 @@ class Base(models.AbstractModel):
             :param dependency_field_name: The field name of the relation between the master and slave records.
             :param dependency_inverted_field_name: The field name of the relation between the slave and the parent
                    records.
-            search_forward, candidates_ids, date_candidate
             :param search_forward: True if the direction = 'forward'
             :param candidates_ids: The candidates to reschdule
             :param date_candidate: The first possible date for the rescheduling
@@ -584,49 +594,65 @@ class Base(models.AbstractModel):
             in case 1 and case 2 in the below example)
 
             This method Executes a dfs (depth first search algorithm) on the dependencies tree to:
-                1- detect cycles (detect if it's not a valid tree)
-                2- return the topological sorting of the candidates to reschedule
 
-            Example:
+            1) detect cycles (detect if it's not a valid tree)
+            2) return the topological sorting of the candidates to reschedule
 
-                                      [4]->[6]
-                                            |
-                                            v
-                --->[0]->[1]->[2]     [5]->[7]->[8]-----------------
-                |         |            |                           |
-                |         v            v                           |
-                |        [3]          [9]->[10]                    |
-                |                                                  |
-                ---------------------<x>----------------------------
+            Example 1
+            =========
 
-                [0]->[1]: pill 0 should be done before 1
-                <: left arrow to move pill 8 backward pill 0
-                >: right arrow to move pill 0 forward pill 8
-                x: delete the dependence
+                Considere the follow graph::
 
-                Case 1:
-                    If the right arrow is clicked, pill 0 should move forward. And as 1, 2, 3 are children of 0, they should be done after it,
-                    they should also be moved forward.
-                    This method will return False (no cycles) and a valid order of candidates = [0, 1, 2, 3] that should be scheduled
+                                          [4]->[6]
+                                                |
+                                                v
+                    --->[0]->[1]->[2]     [5]->[7]->[8]-----------------
+                    |         |            |                           |
+                    |         v            v                           |
+                    |        [3]          [9]->[10]                    |
+                    |                                                  |
+                    ---------------------<x>----------------------------
 
-                Case 2:
-                    If the left arrow is clicked, pill 8 should move backward task 0, as 4, 6, 5, 7 are ancestors for 8, they should be done
-                    before it, they should be moved backward also. 9 and 10 should not be impacted as they are not ancestors of 8.
-                    This method will return False (no cycles) and a valid order of candidates = [5, 4, 6, 7, 8] that should be scheduled
+                * ``[0]->[1]``: pill 0 should be done before 1
+                * ``<``: left arrow to move pill 8 backward pill 0
+                * ``>``: right arrow to move pill 0 forward pill 8
+                * ``x``: delete the dependence
 
-            Example 2:
-                modify the previous tree by adding an edge from pill 2 to pill 0 (no more a tree after this added edge)
-                 -----------
-                 |         |
-                 v         |
-                [0]->[1]->[2]
+            Case Right Arrow
+            ----------------
 
-                This method will return True because there is the cycle illustrated above
+            If the right arrow is clicked, pill 0 should move forward. And as 1, 2, 3 are
+            children of 0, they should be done after it, they should also be moved forward.
+            This method will return ``False`` (no cycles) and a valid order of candidates
+            ``[0, 1, 2, 3]`` that should be scheduled.
+
+            Case Left Arrow
+            ---------------
+
+            If the left arrow is clicked, pill 8 should move backward task 0, as 4, 6, 5, 7 are
+            ancestors for 8, they should be done before it, they should be moved backward also.
+            9 and 10 should not be impacted as they are not ancestors of 8. This method will
+            return ``False`` (no cycles) and a valid order of candidates ``[5, 4, 6, 7, 8]``
+            that should be scheduled.
+
+            Example 2
+            =========
+
+                Modify the previous tree by adding an edge from pill 2 to pill 0 (no more a tree
+                after this added edge)::
+
+                     -----------
+                     |         |
+                     v         |
+                    [0]->[1]->[2]
+
+                This method will return ``True`` because there is the cycle illustrated above.
 
             :param candidates_ids: empty list that will contain the candidates at the end
-            :param dependency_field_name: The field name of the relation between the master and slave records.
-            :param dependency_inverted_field_name: The field name of the relation between the slave and the parent
-                   records.
+            :param dependency_field_name: The field name of the relation between the master and
+                slave records.
+            :param dependency_inverted_field_name: The field name of the relation between the
+                slave and the parent records.
             :param start_date_field_name: The start date field used in the gantt view.
             :param stop_date_field_name: The stop date field used in the gantt view.
             :param candidates_to_exclude: candidates to exclude

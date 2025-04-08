@@ -40,10 +40,13 @@ class IrUiMenu(models.Model):
     def customize(self, to_move, to_delete):
         """ Apply customizations on menus. The deleted elements will no longer be active.
             When moving a menu, we needed to resequence it. Note that this customization will
-                not be kept when upgrading the module (we don't put the ir.model.data in noupdate)
+            not be kept when upgrading the module (we don't put the ir.model.data in noupdate)
 
-            :param to_move: a dict of modifications with menu ids as keys
-                ex: {10: {'parent_id': 1, 'sequence': 0}, 11: {'sequence': 1}}
+            :param to_move: a dict of modifications with menu ids as keys,
+                example::
+
+                    {10: {'parent_id': 1, 'sequence': 0}, 11: {'sequence': 1}}
+
             :param to_delete: a list of ids
         """
 

@@ -28,14 +28,16 @@ class IrAttachment(models.Model):
     def _pdf_split(self, new_files=None, open_files=None):
         """Creates and returns new pdf attachments based on existing data.
 
-        :param new_files: the array that represents the new pdf structure:
-            [{
-                'name': 'New File Name',
-                'new_pages': [{
-                    'old_file_index': 7,
-                    'old_page_number': 5,
-                }],
-            }]
+        :param new_files: the array that represents the new pdf
+            structure::
+
+                [{
+                    'name': 'New File Name',
+                    'new_pages': [{
+                        'old_file_index': 7,
+                        'old_page_number': 5,
+                    }],
+                }]
         :param open_files: array of open file objects.
         :returns: the new PDF attachments
         """
@@ -75,7 +77,7 @@ class IrAttachment(models.Model):
         their business models.
 
         :param vals: the create/write dictionary of ir attachment
-        :return True if new documents are created
+        :return: True if new documents are created
         """
         # Special case for documents
         if vals.get('res_model') == 'documents.document' and vals.get('res_id'):

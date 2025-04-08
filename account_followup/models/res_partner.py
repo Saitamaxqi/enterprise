@@ -299,12 +299,17 @@ class ResPartner(models.Model):
         return self.env['account.followup.report'].with_context(print_mode=True, lang=self.lang or self.env.user.lang).get_followup_report_html(options)
 
     def _get_followup_lines_info(self):
-        """ returns the followup plan of the current user's company
-        in the form of a dictionary with
-         * keys being the different possible lines of followup for account.move.line's (None or IDs of account_followup.followup.line)
-         * values being a dict of 2 elements:
-           - 'next_followup_line_id': the followup ID of the next followup line
-           - 'next_delay': the delay in days of the next followup line
+        """ Return the followup plan of the current user's company
+        in the form of a dictionary with.
+
+        * keys being the different possible lines of followup for
+          account.move.line's (None or IDs of account_followup.followup.line)
+        * values being a dict of 2 elements:
+
+          next_followup_line_id
+              the followup ID of the next followup line
+          next_delay
+              the delay in days of the next followup line
         """
         followup_lines = self.env['account_followup.followup.line'].search([('company_id', 'parent_of', self.env.company.id)], order="delay asc")
 
