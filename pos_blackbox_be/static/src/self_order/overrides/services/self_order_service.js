@@ -6,7 +6,7 @@ import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/
 patch(SelfOrder.prototype, {
     async setup(...args) {
         await super.setup(...args);
-        this.onNotified("BLACKBOX_CONFIRMATION", (data) => {
+        this.data.connectWebSocket("BLACKBOX_CONFIRMATION", (data) => {
             // handle response
             if (this.currentOrder.id == data.order_id && data.blackbox_response) {
                 this.currentOrder.setDataForPushOrderFromBlackbox(data.blackbox_response);
@@ -14,7 +14,7 @@ patch(SelfOrder.prototype, {
                 this.currentOrder.uiState.receiptReady = true;
             }
         });
-        this.onNotified("BLACKBOX_CLOCK", async (data) => {
+        this.data.connectWebSocket("BLACKBOX_CLOCK", async (data) => {
             if (this.config.self_ordering_mode === "kiosk") {
                 // print clock ticket order
                 const orderData = await rpc(`/pos_self_blackbox/get_clock_order/`, {
