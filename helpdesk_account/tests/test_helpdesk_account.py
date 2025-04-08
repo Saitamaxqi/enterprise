@@ -87,6 +87,7 @@ class TestHelpdeskAccount(common.HelpdeskCommon):
         self.env['sale.order.line'].create({
             'product_id': self.product.id,
             'price_unit': 10,
+            'product_uom_qty': 10,
             'order_id': self.so.id,
         })
         self.so.action_confirm()
@@ -107,23 +108,28 @@ class TestHelpdeskAccount(common.HelpdeskCommon):
             'reason': 'test',
             'journal_id': journal_id,
             'move_ids': self.so.invoice_ids,
+            'helpdesk_sale_order_id': self.so.id,
         })
         res = credit_note.refund_moves()
         move = self.env['account.move'].browse(res['res_id'])
         move.invoice_line_ids.quantity = 2
         move.action_post()
         self.assertEqual(invoice.state, 'posted', "credit note should be posted.")
+        self.assertIn(invoice.id, credit_note.suitable_move_ids.ids, "Invoice should still be suitable after partial refund.")
+
         #  create a Full Refund
         credit_note = self.env['account.move.reversal'].create({
             'helpdesk_ticket_id': ticket.id,
             'reason': 'test',
             'journal_id': journal_id,
             'move_ids': invoice,
+            'helpdesk_sale_order_id': self.so.id,
         })
         res = credit_note.modify_moves()
         new_invoice = self.env['account.move'].browse(res['res_id'])
         self.assertEqual(invoice.state, 'posted', "reversed invoice remain in posted state")
         self.assertEqual(new_invoice.state, 'draft', "newly created invoice should be in draft state.")
+        self.assertFalse(credit_note.suitable_move_ids, "No suitable invoices should remain after full refund.")
 
         # create a Refund
         credit_note_form = Form(self.env['account.move.reversal'].with_context({
