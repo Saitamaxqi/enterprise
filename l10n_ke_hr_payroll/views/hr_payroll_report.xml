@@ -28,12 +28,4 @@
         <field name="attachment_use" eval="False"/>
         <field name="paperformat_id" ref="hr_payroll.paperformat_euro_light"/>
     </record>
-
-    <record id="action_report_master_report" model="ir.actions.report">
-        <field name="name">Master Report</field>
-        <field name="model">l10n_ke.master.report</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">l10n_ke_hr_payroll.report_master_report</field>
-        <field name="report_file">l10n_ke_hr_payroll.report_master_report</field>
-    </record>
 </odoo>

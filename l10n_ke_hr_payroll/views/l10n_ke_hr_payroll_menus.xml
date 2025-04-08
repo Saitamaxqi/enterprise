@@ -26,12 +26,4 @@
         action="l10n_ke_hr_payroll_nssf_report_wizard_action"
         parent="l10n_ke_hr_payroll.menu_reporting_l10n_ke"
         sequence="43"/>
-
-    <menuitem
-        id="menu_l10n_ke_hr_payroll_master_report"
-        name="Master Report"
-        action="action_open_l10n_ke_master_report"
-        parent="l10n_ke_hr_payroll.menu_reporting_l10n_ke"
-        sequence="44"/>
-
 </odoo>
