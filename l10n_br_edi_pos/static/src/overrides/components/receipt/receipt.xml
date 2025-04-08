@@ -10,7 +10,7 @@
 
     <t t-name="ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
         <div t-if="order.company.website" position="after">
-            <t t-if="order.config_id.l10n_br_is_nfce">
+            <t t-if="order.config.l10n_br_is_nfce">
                 <t t-if="order.l10n_br_edi_avatax_data">
                     <t t-set="establishment" t-value="order.l10n_br_edi_avatax_data['header']['locations']['establishment']"/>
                     <t t-set="address" t-value="establishment['address']"/>
@@ -26,16 +26,16 @@
 
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//div[contains(@class, 'pos-receipt-taxes')]" position="attributes">  <!-- keep original to not break other inherits -->
-            <attribute name="t-attf-class" add="{{ order.config_id.l10n_br_is_nfce &amp;&amp; order.l10n_br_edi_avatax_data ? 'd-none' : ''}}"/>
+            <attribute name="t-attf-class" add="{{ order.config.l10n_br_is_nfce &amp;&amp; order.l10n_br_edi_avatax_data ? 'd-none' : ''}}"/>
         </xpath>
         <xpath expr="//div[contains(@class, 'pos-receipt-taxes')]" position="after">
-            <div t-if="order.config_id.l10n_br_is_nfce &amp;&amp; order.l10n_br_edi_avatax_data">
+            <div t-if="order.config.l10n_br_is_nfce &amp;&amp; order.l10n_br_edi_avatax_data">
                 <div>Total number of items: <span class="pos-receipt-right-align" t-esc="order.l10nBrEdiGetNrUniqueItems()"/></div>
             </div>
         </xpath>
 
         <xpath expr="//div[contains(@class, 'after-footer')]" position="after">
-            <t t-if="order.config_id.l10n_br_is_nfce &amp;&amp; order.l10n_br_edi_avatax_data">
+            <t t-if="order.config.l10n_br_is_nfce &amp;&amp; order.l10n_br_edi_avatax_data">
                 <div class="text-center">--------------------------------</div>
                 <t t-set="avatax_header" t-value="order.l10n_br_edi_avatax_data['header']"/>
 
