@@ -318,4 +318,11 @@
         <field name="country_id" ref="base.be"/>
         <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_salary_advance'))]"/>
     </record>
+
+    <record id="input_be_mobility_budget_payment" model="hr.payslip.input.type">
+        <field name="name">Mobility Budget Payment</field>
+        <field name="code">MOBILITY.PAYMENT</field>
+        <field name="country_id" ref="base.be"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary'))]"/>
+    </record>
 </odoo>

@@ -5164,6 +5164,16 @@ msgid "Mobility Bonus"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_mobility_budget_payment
+msgid "Mobility Budget Payment"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_mobility_budget_tax
+msgid "Mobility Budget Special Contribution"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_281_10__type_treatment__1
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_281_45__type_treatment__1
 msgid "Modification"

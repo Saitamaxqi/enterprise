@@ -1200,7 +1200,7 @@
                 PRESENCE:   Obligatoire si il s’agit d'un membre du personnel d’un employeur déclaré avec la catégorie employeur 105, 205 ou 305 qui a acquis ces jours de vacances.
                 Cette donnée ne peut pas être utilisée pour les déclarations antérieures au 1er trimestre 2018.
              -->
-            <HolidayDaysNumber t-esc="info.holiday_days_number"/>
+            <HolidayDaysNumber t-if="info.six_months_illness_date != -1" t-esc="info.holiday_days_number"/>
 
             <!-- 00728
                 DESCRIPTION:
@@ -1220,7 +1220,7 @@
                 · MM est le mois
                 . JJ est le jour
               -->
-            <SixMonthsIllnessDate t-esc="info.six_months_illness_date"/>
+            <SixMonthsIllnessDate t-if="info.six_months_illness_date != -1" t-esc="info.six_months_illness_date"/>
 
             <!-- 00794
                 DESCRIPTION:    Code qui détermine si le travailleur est engagé dans le cadre d'une mesure pour l'emploi pour le secteur non marchand (maribel social et secteur non marchand).
@@ -1246,7 +1246,7 @@
 
                 PRESENCE:   Obligatoire si l'engagement s'effectue dans le secteur public dans le cadre du maribel social ou si le jeune est engagé dans le secteur non marchand en exécution du pacte de solidarité entre les générations
             -->
-            <NOSSLPASocialMaribel t-esc="info.maribel"/>
+            <NOSSLPASocialMaribel t-if="info.maribel != -1" t-esc="info.maribel"/>
 
             <!-- 00795
                 DESCRIPTION:    A partir du 1/2020 travailleur occasionnel occupé dans l'Horeca ou dans le secteur des pompes funèbres.
@@ -1262,7 +1262,7 @@
                 A partir du 3/2007 jusqu'au 3/2013, obligatoire si le travailleur est un occasionnel de l'Horeca déclaré par un bureau d'intérim.
                 A partir du 2/2005 jusqu'au 2/2007, obligatoire si le travailleur est un extra de l'Horeca qui ne bénéficie pas de l'assujettissement réduit.
             -->
-            <HorecaExtra t-esc="info.horeca_extra"/>
+            <HorecaExtra t-if="info.horeca_extra != -1" t-esc="info.horeca_extra"/>
 
             <!-- 00812
                 DESCRIPTION:    Le salaire horaire est le salaire, tel que convenu dans le contrat de travail, qui est dû pour une heure normale de travail prestée dans le trimestre.
@@ -1279,7 +1279,7 @@
 
                 PRESENCE:   Obligatoire si la déclaration concerne le 3ème trimestre et qu’il s’agit d’un ouvrier de la construction, à partir des déclarations du 3/2005 jusqu'aux déclarations du 2/2007.
              -->
-            <HourRemun t-esc="info.hour_remun"/>
+            <HourRemun t-if="info.hour_remun != -1" t-esc="info.hour_remun"/>
 
             <!-- 00826
                 DESCRIPTION:    Notion signalant si le travailleur est dispensé ou non, de l’exécution de ses prestations.
@@ -1305,7 +1305,7 @@
 
                 Obligatoire dans le bloc Occupation - Informations (90313), si dispense de prestations durant tout le trimestre ou, si application de la réduction travailleurs âgés - Région flamande (à partir du 1/2018) ou si application de la réduction travailleurs âgés - Communauté germanophone (à partir du 2/2018) ou si application de la réduction travailleurs âgés - Région wallonne (à partir du 3/2018).
             -->
-            <ServiceExemptionNotion t-esc="info.service_exemption_notion"/>
+            <ServiceExemptionNotion t-if="info.service_exemption_notion != -1" t-esc="info.service_exemption_notion"/>
 
             <!-- 00862
                 DESCRIPTION:    Le salaire horaire est le salaire, tel que convenu dans le contrat de travail, qui est dû pour une heure normale de travail prestée dans le trimestre.
@@ -1323,7 +1323,7 @@
 
                 PRESENCE:   Obligatoire si la déclaration concerne le 3ème trimestre et qu'il s'agit d'un ouvrier de la construction, à partir des déclarations du 3/2007. A partir de 2011, obligatoire pour chaque trimestre lorsqu'il s'agit d'un ouvrier de la construction.
             -->
-            <HourRemunInThousandthOfEuro t-esc="info.hour_remun_thousandth"/>
+            <HourRemunInThousandthOfEuro t-if="info.hour_remun_thousandth != -1" t-esc="info.hour_remun_thousandth"/>
 
             <!-- 00893
                 DESCRIPTION:    Code indiquant si le membre du personnel a été mis à disposition par l'employeur chez un autre employeur ou à été mis à disposition chez l'employeur par un autre employeur.
@@ -1337,7 +1337,7 @@
 
                 PRESENCE:   Obligatoire si la déclaration concerne un trimestre à partir du 1/2022 et s'il s'agit d'un travailleur mis à disposition à temps plein auprès d'un employeur pour lequel la cotisation prime syndicale est due.
             -->
-            <PostedWorker t-esc="info.posted_employee"/>
+            <PostedWorker t-if="info.posted_employee != -1" t-esc="info.posted_employee"/>
 
             <!-- 01010
                 DESCRIPTION:    Nombre de jours d'incapacité de travail suite à une maladie ou à un accident de droit commun avec salaire garanti la première semaine, non compris le nombre de jours avec rémunération journalière garantie. Les jours de carence sont inclus lorsqu'ils sont payés par l'employeur.
@@ -1351,7 +1351,7 @@
 
                 PRESENCE:   Obligatoire si il s'agit d'un ouvrier de la construction et que les jours sont couverts par un salaire garanti la première semaine ou lorsqu'il y a des jours de carence payés par l'employeur, à partir des déclarations du 1er trimestre 2011.
             -->
-            <FirstWeekGuaranteedSalaryNbrDays t-esc="info.first_week_guaranteed_salary"/>
+            <FirstWeekGuaranteedSalaryNbrDays t-if="info.first_week_guaranteed_salary != -1" t-esc="info.first_week_guaranteed_salary"/>
 
             <!-- 01011
                 DESCRIPTION:    Total des rémunérations brutes, y compris celles qui ne sont pas soumises à des cotisations de sécurité sociale, payées par l'employeur dans le cadre d'une maladie ou d'un accident de droit commun au cours du trimestre concerné, non compris les indemnités payées par l'employeur pour le(s) jour(s) avec rémunération journalière garantie.
@@ -1366,7 +1366,7 @@
                 PRESENCE:   Obligatoire si il s'agit d'un ouvrier de la construction et que des rémunérations sont payées dans le cadre d'une maladie, à partir des déclarations du 1er trimestre 2011 jusqu’au 2020/1.
                 A partir du 2020/2, obligatoire s'il s'agit d’un travailleur contractuel et que des rémunérations sont payées dans le cadre d'une maladie.
             -->
-            <IllnessGrossRemunAmount t-esc="info.illness_gross_remun"/>
+            <IllnessGrossRemunAmount t-if="info.illness_gross_remun != -1" t-esc="info.illness_gross_remun"/>
 
             <!-- 01012
                 DESCRIPTION:    Zone qui indique, pour une occupation a priori couverte par le champ d'application de Capelo (combinaison catégorie d'employeur – code travailleur ET employeur faisant partie du champ d'application), que la déclaration des blocs dits Capelo (Données de l'occupation relatives au secteur public, Traitement barémique et Supplément de traitement) n'est pas requise, parce que cette occupation n'est pas susceptible d'ouvrir le droit à une pension secteur public.
@@ -1378,7 +1378,7 @@
 
                 PRESENCE:   Obligatoire si l'occupation n'est pas susceptible d'ouvrir le droit à une pension dans le secteur public pour un travailleur contractuel au service d'un employeur dans le champ d'application de Capelo.
             -->
-            <PSDDclExemption t-esc="info.psddcl_exemption"/>
+            <PSDDclExemption t-if="info.psddcl_exemption != -1" t-esc="info.psddcl_exemption"/>
 
             <!-- 01013
                 DESCRIPTION:    Zone qui fournit des informations supplémentaires concernant le champ d’application du régime de pension complémentaire.
@@ -1395,7 +1395,7 @@
                 ou si les régimes de pension complémentaires « contractuels locaux » et « Provant » ne sont pas d'application au travailleur en question d'une administration locale (code 1)
                 ou si une administration locale est affiliée à plusieurs régimes de pension complémentaires et que le travailleur en question relève du régime de « Provant » (code 2).
             -->
-            <SupplPensionContributionExemption t-esc="info.suppl_pension_exemption"/>
+            <SupplPensionContributionExemption t-if="info.suppl_pension_exemption != -1" t-esc="info.suppl_pension_exemption"/>
 
             <!-- 01063
                 DESCRIPTION:    Information permettant de prendre en compte un travailleur dans le calcul d’une obligation d’un employeur.
@@ -1407,7 +1407,7 @@
 
                 PRESENCE:   Obligatoire si le travailleur est un ancien stagiaire d’intégration engagé immédiatement après le stage par le même employeur et s’il s’agit du trimestre d’engagement ou un des trois trimestres suivant l’engagement.
             -->
-            <ObligationControlInformation t-esc="info.obligation_control"/>
+            <ObligationControlInformation t-if="info.obligation_control != -1" t-esc="info.obligation_control"/>
 
             <!-- 01092
                 DESCRIPTION:
@@ -1429,7 +1429,7 @@
                 · MM est le mois
                 . JJ est le jour
             -->
-            <DefinitiveNominationDate t-esc="info.definitive_nomination_date"/>
+            <DefinitiveNominationDate t-if="info.definitive_nomination_date != -1" t-esc="info.definitive_nomination_date"/>
 
             <!-- 01148
                 DESCRIPTION:
@@ -1449,7 +1449,7 @@
                 · MM est le mois
                 . JJ est le jour
             -->
-            <NewMaribelEmploymentDate t-esc="info.maribel_date"/>
+            <NewMaribelEmploymentDate t-if="info.maribel_date != -1" t-esc="info.maribel_date"/>
 
             <!-- 01176
                 DESCRIPTION:    Zone qui indique que la cotisation pension du secteur public pour travailleurs statutaires, suite à des circonstances particulières, a une base de calcul dérogatoire.
@@ -1462,7 +1462,7 @@
                 PRESENCE:   Obligatoire si la base de calcul de la cotisation pension du secteur public pour travailleurs statutaires est dérogatoire, à partir du 1/2017.
                 Interdite avant le 1/2017.
             -->
-            <PSPContribCalcBasisDerogation t-esc="info.psp_contrib_derogation"/>
+            <PSPContribCalcBasisDerogation t-if="info.psp_contrib_derogation != -1" t-esc="info.psp_contrib_derogation"/>
 
             <!-- 01194
                 DESCRIPTION:    Code qui détermine si le travailleur est occupé dans le cadre d’une mesure carrière.
@@ -1479,7 +1479,7 @@
                 PRESENCE:   Obligatoire si l'occupation du travailleur est effectuée dans le cadre d'une mesure carrière susmentionnée.
                 Interdite avant le premier trimestre 2018.
             -->
-            <CareerMeasure t-esc="info.career_measure"/>
+            <CareerMeasure t-if="info.career_measure != -1" t-esc="info.career_measure"/>
 
             <!-- 01215
                 DESCRIPTION:    Indication du sous-secteur qui relève de la compétence flamande en matière d'activités non marchandes (accord intersectoriel flamand).
@@ -1492,7 +1492,7 @@
                 PRESENCE:   Obligatoire si l’occupation a lieu dans un sous-secteur relevant de la compétence flamande en matière d'activités non marchandes.
                 Cette donnée ne peut pas être utilisée pour les déclarations antérieures au 1er trimestre 2019.
             -->
-            <SectorDetail t-esc="info.sector_detail"/>
+            <SectorDetail t-if="info.sector_detail != -1" t-esc="info.sector_detail"/>
 
             <!-- 01216
                 DESCRIPTION:    Budget total qui est attribué au travailleur sur le plan de la mobilité, et qu’il peut consacrer à un ou plusieurs piliers prévus par la législation : un véhicule de société respectueux de l’environnement, modes de transports alternatifs et durables et le paiement du solde du budget.
@@ -1505,7 +1505,7 @@
 
                 PRESENCE:   Obligatoire si le travailleur opte pour le budget mobilité et la partie non utilisée du solde du budget est versée au travailleur.
             -->
-            <MobilityBudget t-esc="info.mobility_budget"/>
+            <MobilityBudget t-if="info.mobility_budget != -1" t-esc="info.mobility_budget"/>
 
             <!-- 01232
                 DESCRIPTION:    Nombre d'heures d'absence en vue de suivre une formation dans le cadre d'un congé formation flamand.
@@ -1521,7 +1521,7 @@
 
                 PRESENCE:   Obligatoire si une absence concerne une formation suivie dans le cadre d’un congé formation flamand, à partir du 1/2020.
             -->
-            <FlemishTrainingHolidayHoursNbr t-esc="info.flemish_training_hours"/>
+            <FlemishTrainingHolidayHoursNbr t-if="info.flemish_training_hours != -1" t-esc="info.flemish_training_hours"/>
 
             <!-- 01237
                 DESCRIPTION:    Code qui indique que l’occupation du travailleur est effectuée dans le cadre d’une aide régionale à l’emploi.
@@ -1534,7 +1534,7 @@
                 PRESENCE:   Obligatoire si l'occupation du travailleur est effectuée dans le cadre d'une aide régionale à l’emploi susmentionnée.
                 Cette donnée ne peut pas être utilisée pour les déclarations antérieures au 1er trimestre 2021.
             -->
-            <RegionalAidMeasure t-esc="info.regional_aid_measure"/>
+            <RegionalAidMeasure t-if="info.regional_aid_measure != -1" t-esc="info.regional_aid_measure"/>
         </OccupationInformations>
         </t>
     </template>

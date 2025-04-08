@@ -276,7 +276,7 @@ class DMFAWorker(DMFANode):
         contribution_payslips = contribution_payslips.filtered(lambda p: p.struct_id.code in basis_lines)
         line_values = contribution_payslips._get_line_values(['SALARY', 'BASIC', 'PAY_SIMPLE'])
         basis = round(sum(line_values[basis_lines[p.struct_id.code]][p.id]['total'] for p in contribution_payslips), 2)
-
+        has_mobility_budget_balance = 'MOBILITY.PAYMENT' in contribution_payslips.input_line_ids.mapped('code')
         if not basis:
             return []
 
@@ -298,7 +298,9 @@ class DMFAWorker(DMFANode):
             DMFAWorkerContributionSpecialSocialCotisation(contribution_payslips, basis, self.quarter_start)
         ] + [
             DMFAWorkerContributionTemporaryUnemployment(contribution_payslips, basis, self.quarter_start)
-        ]
+        ] + ([
+            DMFAWorkerContributionMobilityBudget(contribution_payslips, self.quarter_start),
+        ] if has_mobility_budget_balance else [])
 
         return contributions
 
@@ -658,6 +660,22 @@ class DMFAWorkerContributionTemporaryUnemployment(DMFANode):
         self.first_hiring_date = -1
 
 
+class DMFAWorkerContributionMobilityBudget(DMFANode):
+    """
+    Represents the paid amounts on the employee payslips - Mobility Budget
+    """
+    def __init__(self, payslips, quarter_start, sequence=None):
+        super().__init__(payslips.env, sequence=sequence)
+        # Source: https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/special_contributions/saldo_mobilitybudget.html
+        self.worker_code = 869
+        self.quarter_start = quarter_start
+        self.contribution_type = 0
+        line_values = payslips._get_line_values(['MOBILITY.PAYMENT', 'MOBILITY.BUDGET.TAX'], compute_sum=True)
+        self.calculation_basis = format_amount(line_values['MOBILITY.PAYMENT']['sum']['total'])
+        self.amount = format_amount(-line_values['MOBILITY.BUDGET.TAX']['sum']['total'])
+        self.first_hiring_date = -1
+
+
 class DMFAOccupation(DMFANode):
     """
     Represents the contract
@@ -784,6 +802,7 @@ class DMFAOccupation(DMFANode):
         termination_fees = self.env.ref('l10n_be_hr_payroll.cp200_employees_termination_fees_basic')
         holiday_pay_recovery_n = self.env.ref('l10n_be_hr_payroll.cp200_employees_salary_holiday_pay_recovery_n', raise_if_not_found=False)
         holiday_pay_recovery_n1 = self.env.ref('l10n_be_hr_payroll.cp200_employees_salary_holiday_pay_recovery_n1', raise_if_not_found=False)
+        mobility_budget = self.env.ref('l10n_be_hr_payroll.cp200_employees_salary_mobility_budget_payment', raise_if_not_found=False)
         codes = {
             regular_gross: 1,
             regular_gross_student: 1,
@@ -793,6 +812,7 @@ class DMFAOccupation(DMFANode):
             termination_n1: 7,
             regular_car: 10,
             termination_fees: 3,
+            mobility_budget: 29,
         }
         if holiday_pay_recovery_n:
             codes[holiday_pay_recovery_n] = 12
@@ -822,10 +842,15 @@ class DMFAOccupation(DMFANode):
         # mobilité (code rémunération 029).
         return DMFARemuneration.init_multi([(
             lines, code, frequency, lines_to_deduct_by_code[code, frequency]
-        ) for (code, frequency), lines in lines_by_code.items() if sum(lines.mapped('total'))])
+        ) for (code, frequency), lines in lines_by_code.items() if sum(lines.mapped('total')) or code == 29])
 
     def _prepare_occupation_informations(self):
-        return DMFAOccupationInformation.init_multi([])
+        infos_to_declare = []
+        has_mobility_budget_balance = 'MOBILITY.PAYMENT' in self.payslips.input_line_ids.mapped('code')
+        if has_mobility_budget_balance:
+            infos_to_declare.append('mobility_budget')
+        return DMFAOccupationInformation.init_multi([(self.payslips, infos_to_declare)] if infos_to_declare else [])
+
 
 class DMFARemuneration(DMFANode):
     """
@@ -851,11 +876,9 @@ class DMFAOccupationInformation(DMFANode):
     """
     Represents the paid amounts on payslips
     """
-    def __init__(self, sequence=1):
-        super().__init__(self.payslips.env, sequence=sequence)
-
-        self.display_info = False
-
+    def __init__(self, payslips, infos_to_declare, sequence=1):
+        super().__init__(payslips.env, sequence=sequence)
+        self.display_info = bool(infos_to_declare)
         self.holiday_days_number = -1
         self.six_months_illness_date = -1
         self.maribel = -1
@@ -875,10 +898,10 @@ class DMFAOccupationInformation(DMFANode):
         self.career_measure = -1
         self.sector_detail = -1
         self.mobility_budget = -1
+        if 'mobility_budget' in infos_to_declare and 'l10n_be_mobility_budget_amount' in payslips.env['hr.contract']:
+            self.mobility_budget = format_amount(max(payslips.contract_id.mapped('l10n_be_mobility_budget_amount')))
         self.flemish_training_hours = -1
-        if self.display_info:
-            self.flemish_training_hours = 400
-            self.display_info = True
+        self.flemish_training_hours = -1
         self.regional_aid_measure = -1
 
 

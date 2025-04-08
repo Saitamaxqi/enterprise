@@ -133,6 +133,10 @@ class AccountChartTemplate(models.AbstractModel):
         net_rule = self.env.ref('l10n_be_hr_payroll.cp200_employees_termination_fees_withholding_taxes_total')
         rules_mapping[net_rule]['credit'] = '455000'
 
+        # Mobility Budget Withholding Tax
+        net_rule = self.env.ref('l10n_be_hr_payroll.cp200_employees_salary_mobility_budget_tax')
+        rules_mapping[net_rule]['credit'] = '454000'
+
         # ONSS Employer
         onss_rule = self.env.ref('l10n_be_hr_payroll.cp200_employees_termination_fees_termination_ONSS')
         rules_mapping[onss_rule]['debit'] = '621000'

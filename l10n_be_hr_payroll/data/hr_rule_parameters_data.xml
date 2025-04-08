@@ -2287,5 +2287,18 @@ covered for the company (teleworking costs, mobile phone, internet, etc., namely
             <field name="rule_parameter_id" ref="rule_parameter_l10n_be_mobility_budget_min_amount"/>
             <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         </record>
+
+        <record id="rule_parameter_l10n_be_mobility_budget_withholding_tax" model="hr.rule.parameter">
+            <field name="name">Mobility Budget Withholding Tax</field>
+            <field name="code">mobility_budget_tax</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_l10n_be_mobility_budget_withholding_tax_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">38.07</field>
+            <field name="rule_parameter_id" ref="rule_parameter_l10n_be_mobility_budget_withholding_tax"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
+
+
     </data>
 </odoo>

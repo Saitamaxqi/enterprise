@@ -840,6 +840,36 @@ result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] + result_rules['DOUBLE.D
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
 
+
+    <record id="cp200_employees_salary_mobility_budget_payment" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_head_div_net"/>
+        <field name="name">Mobility Budget Payment</field>
+        <field name="code">MOBILITY.PAYMENT</field>
+        <field name="amount_select">code</field>
+        <field name="sequence">185</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'MOBILITY.PAYMENT' in inputs</field>
+        <field name="amount_python_compute">result = inputs['MOBILITY.PAYMENT'].amount</field>
+        <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
+        <field name="appears_on_payroll_report" eval="True"/>
+    </record>
+
+    <record id="cp200_employees_salary_mobility_budget_tax" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Mobility Budget Special Contribution</field>
+        <field name="code">MOBILITY.BUDGET.TAX</field>
+        <field name="amount_select">code</field>
+        <field name="sequence">186</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = result_rules['MOBILITY.PAYMENT']['total'] > 0</field>
+        <field name="amount_python_compute">
+result = result_rules['MOBILITY.PAYMENT']['total']
+result_rate = -payslip._rule_parameter('mobility_budget_tax')
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
+        <field name="appears_on_payroll_report" eval="True"/>
+    </record>
+
     <record id="cp200_employees_salary_expense_refund" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Refund Expenses</field>
