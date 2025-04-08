@@ -1523,7 +1523,7 @@ class HrPayslip(models.Model):
                 if not self or len(self) == 1:
                     return super().name
                 if len(set(self.mapped('name'))) == 1:
-                    return super(self[0], ProxyHrPayslipInput).name
+                    return super(ProxyHrPayslipInput, self[0]).name
                 return ', '.join(self.mapped('name'))
 
             @property
