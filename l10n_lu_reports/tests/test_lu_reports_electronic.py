@@ -88,6 +88,14 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         # Remove the <?xml version='1.0' encoding='UTF-8'?> from the string
         return options, b64decode(wizard.report_data.decode('utf-8'))[38:]
 
+    def _get_oss_ioss_sme_values(self):
+        oss_value = hasattr(self.env['res.config.settings'], "l10n_eu_oss_eu_country") and '1' or '0'
+        ioss_value = hasattr(self.env.company, "ioss") and self.env.company.ioss and '1' or '0'
+        report = self.env.ref('l10n_lu.tax_report')
+        sme_lines = report.line_ids.filtered(lambda line: line.code in ['LUTAX_481', 'LUTAX_482']).mapped('expression_ids')
+        sme_value = any(value.value for value in self.env['account.report.external.value'].search([('target_report_expression_id', 'in', sme_lines.ids)])) and '1' or '0'
+        return oss_value, ioss_value, sme_value
+
     def test_balance_sheet(self):
         report = self.env.ref('l10n_lu_reports.account_financial_report_l10n_lu_bs')
         options = self._generate_options(report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))
@@ -163,6 +171,8 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         move.action_post()
 
         options, declaration_to_compare = self._get_xml_declaration('l10n_lu.tax_report')
+        # Depending on the modules installed, the following values can change and the test is more about the values being present than their actual value.
+        oss, ioss, sme = self._get_oss_ioss_sme_values()
         expected_xml = """
         <eCDFDeclarations xmlns="http://www.ctie.etat.lu/2011/ecdf">
             <FileReference>%s</FileReference>
@@ -218,6 +228,9 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                 <NumericField id="105">-39,50</NumericField>
                                 <Choice id="204">0</Choice>
                                 <Choice id="205">1</Choice>
+                                <Choice id="491">%s</Choice>
+                                <Choice id="492">%s</Choice>
+                                <Choice id="493">%s</Choice>
                                 <NumericField id="403">0</NumericField>
                                 <NumericField id="418">0</NumericField>
                                 <NumericField id="453">0</NumericField>
@@ -231,7 +244,12 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                 </Declarer>
             </Declarations>
         </eCDFDeclarations>
-        """ % options['filename']
+        """ % (
+            options['filename'],
+            oss,
+            ioss,
+            sme,
+        )
 
         self.assertXmlTreeEqual(
             self.get_xml_tree_from_string(declaration_to_compare),
@@ -282,6 +300,8 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         self.env['account.report.external.value'].create(create_vals)
 
         options, declaration_to_compare = self._get_xml_declaration('l10n_lu_reports.l10n_lu_annual_tax_report', yearly=True)
+        # Depending on the modules installed, the following values can change and the test is more about the values being present than their actual value.
+        oss, ioss, sme = self._get_oss_ioss_sme_values()
         expected_xml = """
             <eCDFDeclarations xmlns="http://www.ctie.etat.lu/2011/ecdf">
                 <FileReference>%s</FileReference>
@@ -348,6 +368,9 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                     <NumericField id="415">25,42</NumericField>
                                     <Choice id="204">0</Choice>
                                     <Choice id="205">1</Choice>
+                                    <Choice id="491">%s</Choice>
+                                    <Choice id="492">%s</Choice>
+                                    <Choice id="493">%s</Choice>
                                     <NumericField id="403">0</NumericField>
                                     <NumericField id="418">0</NumericField>
                                     <NumericField id="453">0</NumericField>
@@ -373,7 +396,12 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                     </Declarer>
                 </Declarations>
             </eCDFDeclarations>
-        """ % options['filename']
+        """ % (
+            options['filename'],
+            oss,
+            ioss,
+            sme,
+        )
 
         self.assertXmlTreeEqual(
             self.get_xml_tree_from_string(declaration_to_compare),

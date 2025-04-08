@@ -72,6 +72,17 @@ class L10n_LuGenerateTaxReport(models.TransientModel):
 
         form['field_values']['204'] = {'value': on_payment and '0' or '1', 'field_type': 'boolean'}
         form['field_values']['205'] = {'value': on_payment and '1' or '0', 'field_type': 'boolean'}
+
+        # The simple fact that "l10n_eu_oss_eu_country" is in the settings means that the
+        # user is using OSS while ioss on a company has to be set to mean IOSS is used.
+        oss = hasattr(self.env['res.config.settings'], "l10n_eu_oss_eu_country")
+        ioss = hasattr(report.env.company, "ioss") and self.env['res.company'].browse(options['companies'][0]['id']).ioss
+        form['field_values']['491'] = {'value': oss and '1' or '0', 'field_type': 'boolean'}
+        form['field_values']['492'] = {'value': ioss and '1' or '0', 'field_type': 'boolean'}
+        # 481 and 482 are the SME scheme fields
+        sme = any(float(str(form['field_values'].get(index, {'value': 0})['value']).replace(',', '.')) for index in ['481', '482'])
+        form['field_values']['493'] = {'value': sme and '1' or '0', 'field_type': 'boolean'}
+
         for code, field_type in (
                 ('403', 'number'), ('418', 'number'), ('453', 'number'), ('042', 'float'), ('416', 'float'), ('417', 'float'), ('451', 'float'), ('452', 'float')
             ):

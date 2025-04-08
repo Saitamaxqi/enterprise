@@ -171,24 +171,6 @@
                     </record>
                 </field>
             </record>
-            <record id="l10n_lu_annual_tax_report_supplies_special" model="account.report.line">
-                <field name="name">166 - Supplies carried out within the scope of the special arrangement of art. 56sexies</field>
-                <field name="code">L10N_LU_TAX_166</field>
-                <field name="hierarchy_level">0</field>
-                <field name="aggregation_formula">L10N_LU_TAX_106.balance + L10N_LU_TAX_107.balance</field>
-                <field name="children_ids">
-                    <record id="l10n_lu_annual_tax_report_section_appendix_a_106" model="account.report.line">
-                        <field name="name">106 - Services supplied by the declaring person himself as a registered taxpayer in Luxembourg</field>
-                        <field name="code">L10N_LU_TAX_106</field>
-                        <field name="external_formula">monetary</field>
-                    </record>
-                    <record id="l10n_lu_annual_tax_report_section_appendix_a_107" model="account.report.line">
-                        <field name="name">107 - Services to be declared and taxed by the registered taxpayer in Luxembourg, which have been supplied by fixed establishments located in other Member States</field>
-                        <field name="code">L10N_LU_TAX_107</field>
-                        <field name="external_formula">monetary</field>
-                    </record>
-                </field>
-            </record>
         </field>
     </record>
 </odoo>
