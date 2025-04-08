@@ -89,7 +89,7 @@ class TestPushNotification(SMSCommon):
         })
 
         cls.group_channel = cls.env['discuss.channel']._create_channel(name='Channel', group_id=None)
-        cls.group_channel.add_members((cls.user_email + cls.user_inbox).partner_id.ids)
+        cls.group_channel._add_members(users=cls.user_email | cls.user_inbox)
 
     @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
     def test_push_notifications(self, jsonrpc):
