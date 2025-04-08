@@ -209,9 +209,8 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         draft_deferred_move_ids = invoice.deferred_move_ids.filtered(lambda move: move.state =="draft")
         self.assertEqual(len(draft_deferred_move_ids), 2)
 
-        # Set the company's audit trail to True
-        self.env.company.check_account_audit_trail = True
-
+        # Try with restricted mode
+        self.env.company.restrictive_audit_trail = True
         invoice.button_draft()
 
         # Assert that the draft moves no longer exist

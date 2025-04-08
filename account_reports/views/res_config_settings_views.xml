@@ -35,15 +35,13 @@
                 </setting>
             </setting>
 
-            <block id="analytic" position="after">
-                <block title="Reporting" id="account_reports_settings" groups="account.group_account_user" invisible="not module_account_reports">
-                    <setting title="This allows you to choose the position of totals in your financial reports." company_dependent="1" help="When ticked, totals and subtotals appear below the sections of the report">
-                        <field name="totals_below_sections"/>
-                    </setting>
-                    <setting>
-                        <button name="%(account.action_check_hash_integrity)d" type="action" string="Download the Data Inalterability Check Report" class="oe_link" id="action_hash_integrity"/>
-                    </setting>
-                </block>
+            <block id="account_reports_settings" position="inside">
+                <setting title="This allows you to choose the position of totals in your financial reports." company_dependent="1" help="When ticked, totals and subtotals appear below the sections of the report">
+                    <field name="totals_below_sections"/>
+                </setting>
+                <setting>
+                    <button name="%(account.action_check_hash_integrity)d" type="action" string="Download the Data Inalterability Check Report" class="oe_link" id="action_hash_integrity"/>
+                </setting>
             </block>
 
         </field>
