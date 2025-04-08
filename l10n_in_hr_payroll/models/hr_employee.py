@@ -8,9 +8,9 @@ from odoo import fields, models
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    l10n_in_uan = fields.Char(string='UAN', groups="hr.group_hr_user")
-    l10n_in_pan = fields.Char(string='PAN', groups="hr.group_hr_user")
-    l10n_in_esic_number = fields.Char(string='ESIC Number', groups="hr.group_hr_user")
+    l10n_in_uan = fields.Char(string='UAN', groups="hr.group_hr_user", copy=False)
+    l10n_in_pan = fields.Char(string='PAN', groups="hr.group_hr_user", copy=False)
+    l10n_in_esic_number = fields.Char(string='ESIC Number', groups="hr.group_hr_user", copy=False)
     l10n_in_relationship = fields.Char("Relationship", groups="hr.group_hr_user", tracking=True)
     l10n_in_residing_child_hostel = fields.Integer("Child Residing in hostel", groups="hr.group_hr_user", tracking=True)
     l10n_in_lwf_account_number = fields.Char("LWF Account Number", groups="hr.group_hr_user", tracking=True)
