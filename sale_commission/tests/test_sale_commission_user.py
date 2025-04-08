@@ -414,3 +414,14 @@ class TestSaleCommissionUser(TestSaleCommissionCommon):
             })],
         })
         self.assertEqual(commission_2023_normal.user_ids.other_plans, commission_2023_overflow)
+
+    def test_salesperson_date_from_matches_plan(self):
+        """
+        When updating `date_from` on an existing commission plan (`commission_plan_user`),
+        all linked salesperson records should automatically update their `date_from` to match the plan.
+        """
+        for user in self.commission_plan_user.user_ids:
+            user.date_from = datetime.date(year=2024, month=1, day=2)
+        self.commission_plan_user.date_from = datetime.date(year=2024, month=1, day=3)
+        for user in self.commission_plan_user.user_ids:
+            self.assertEqual(user.date_from, self.commission_plan_user.date_from)

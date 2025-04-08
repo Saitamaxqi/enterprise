@@ -60,12 +60,10 @@ class SaleCommissionPlanUser(models.Model):
                 other_plans_ids.append(plan.id)
             pu.other_plans = [Command.clear()] if not other_plans_ids else [Command.set(other_plans_ids)]
 
-    @api.depends('plan_id')
+    @api.depends('plan_id', 'plan_id.date_from')
     def _compute_date_from(self):
         today = fields.Date.today()
         for user in self:
-            if user.date_from:
-                return
             if not user.plan_id.date_from:
-                return
-            user.date_from = max(user.plan_id.date_from, today) if user.plan_id.state != 'draft' else user.plan_id.date_from
+                continue
+            user.date_from = user.plan_id.date_from
