@@ -501,7 +501,9 @@ class TestKnowledgeArticlePortal(KnowledgeArticlePermissionsCase):
         with self.assertRaises(exceptions.AccessError):
             # cannot leave an article, as it may interfere with the desync status of an article
             # and we do not want portal users messing with that
-            article_root._remove_member(self.user_portal)
+            portal_member = article_root.sudo().article_member_ids.filtered(
+                lambda m: m.partner_id == self.user_portal.partner_id)
+            article_root._remove_member(portal_member)
 
     @users('portal_test')
     def test_article_membership_access(self):
