@@ -887,7 +887,7 @@ class TestQualityCheck(TestQualityCommon):
         wizard.failure_location_id = self.failure_location.id
         wizard.confirm_fail()
         self.assertEqual(len(self.receipt.move_ids), 2)
-        self.assertEqual(self.receipt.location_dest_id, self.failure_location)
+        self.assertEqual(self.receipt.location_dest_id.id, self.location_dest_id)
         self.assertEqual(self.receipt.move_ids.location_dest_id, self.failure_location)
         self.assertRecordValues(self.receipt.check_ids, [
             {'quality_state': 'fail', 'product_id': False, 'picking_id': self.receipt.id, 'failure_location_id': self.failure_location.id},

@@ -490,7 +490,7 @@ class QualityCheck(models.Model):
     def _move_to_failure_location_operation(self, failure_location_id):
         self.ensure_one()
         if self.picking_id and failure_location_id:
-            self.picking_id.location_dest_id = failure_location_id
+            self.picking_id.move_ids.location_dest_id = failure_location_id
             self.failure_location_id = failure_location_id
 
     def _move_to_failure_location_product(self, failure_location_id):

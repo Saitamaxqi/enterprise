@@ -44,7 +44,7 @@ class QualityCheck(models.Model):
     def _move_to_failure_location_operation(self, failure_location_id):
         self.ensure_one()
         if self.production_id and failure_location_id:
-            self.production_id.location_dest_id = failure_location_id
+            self.production_id.move_finished_ids.location_dest_id = failure_location_id
             self.failure_location_id = failure_location_id
         return super()._move_to_failure_location_operation(failure_location_id)
 

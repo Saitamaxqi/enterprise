@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.tests import Form
-from odoo import Command
+from odoo.fields import Command
 
 from .test_common import TestQualityMrpCommon
 
@@ -200,6 +200,38 @@ class TestQualityCheck(TestQualityMrpCommon):
         # Last MO in sequence is the backorder
         bo = mo.procurement_group_id.mrp_production_ids[-1]
         self.assertEqual(len(bo.check_ids), 1)
+
+    def test_failure_quality_point_location_on_operation(self):
+        """ test the failure location is hidden in case of manufacturing quality point """
+        self.env['quality.point'].create({
+            'measure_on': 'operation',
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+            'failure_location_ids': [Command.link(self.failure_location.id)],
+        })
+        production_form = Form(self.env['mrp.production'])
+        production_form.product_id = self.env['product.product'].browse(self.product_id)
+        production_form.product_qty = 1
+        production = production_form.save()
+        production.action_confirm()
+        production.qty_producing = 1
+        production.lot_producing_id = self.lot_product_27_0
+        production.move_raw_ids[0].move_line_ids[0].lot_id = self.lot_product_product_drawer_drawer_0
+        production.move_raw_ids[1].move_line_ids[0].lot_id = self.lot_product_product_drawer_case_0
+        production.move_raw_ids.picked = True
+        check_action = production.check_quality()
+        quality_wizard = Form(self.env[check_action['res_model']].with_context(**check_action['context']))
+        quality_wizard = quality_wizard.save()
+        action = quality_wizard.do_fail()
+        quality_wizard = Form(self.env[action['res_model']].with_context(**action['context']))
+        quality_wizard = quality_wizard.save()
+        self.assertEqual(quality_wizard.failure_location_id, self.failure_location)
+        quality_wizard.confirm_fail()
+        self.assertEqual(production.location_dest_id.id, self.location_dest_id)
+        self.assertEqual(production.move_finished_ids.location_dest_id, self.failure_location)
+        production.button_mark_done()
+        self.assertEqual(production.state, 'done')
+        self.assertEqual(production.move_finished_ids.location_dest_id, self.failure_location)
 
     def test_failure_quality_point_location(self):
         """ test the failure location is hidden in case of manufacturing quality point """
