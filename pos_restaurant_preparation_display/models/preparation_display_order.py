@@ -102,14 +102,15 @@ class Pos_Preparation_DisplayOrder(models.Model):
     def _get_order_name(self):
         order = self.pos_order_id
         if order.session_id.config_id.module_pos_restaurant:
-            if not order.table_id and not order.floating_order_name:
-                return _("Direct Sale")
-
             if order.table_id:
                 name = self._get_table_name(order.table_id)
                 if self.pos_course_id:
                     name += f" - C{self.pos_course_id.index}"
                 return name
+            elif order.floating_order_name:
+                return order.floating_order_name
+            else:
+                return _("Direct Sale")
 
         return super()._get_order_name()
 

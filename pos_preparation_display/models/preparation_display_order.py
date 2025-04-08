@@ -135,7 +135,7 @@ class Pos_Preparation_DisplayOrder(models.Model):
         return preparation_display_orders
 
     def _get_order_name(self):
-        return self.pos_order_id.floating_order_name
+        return self.pos_order_id.floating_order_name or f"{self.pos_order_id.tracking_number} ({self.pos_order_id.pos_reference})"
 
     def _export_for_ui(self, preparation_display):
         preparation_display_orderlines = []
