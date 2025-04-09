@@ -23,7 +23,7 @@ class WorksheetTemplate(models.Model):
     model_id = fields.Many2one('ir.model', readonly=True, domain=[('state', '=', 'manual')])
     action_id = fields.Many2one('ir.actions.act_window', readonly=True)
     company_id = fields.Many2one('res.company', string='Company', domain=lambda self: [('id', 'in', self.env.companies.ids)])
-    report_view_id = fields.Many2one('ir.ui.view', domain=[('type', '=', 'qweb')], readonly=True)
+    report_view_id = fields.Many2one('ir.ui.view', domain=[('type', '=', 'qweb')], readonly=True, copy=False)
     active = fields.Boolean(default=True)
     res_model = fields.Char('Host Model', help="The model that is using this template")
 
