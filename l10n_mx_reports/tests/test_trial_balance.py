@@ -422,6 +422,13 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         </BCE:Balanza>
         """
 
+        # Adding a more specific group to ensure that the SAT is still generated correctly
+        self.env['account.group'].create({
+            "code_prefix_start": "201.01.01",
+            "code_prefix_end": "201.01.01",
+            "name": "Specific group",
+        })
+
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
         options['l10n_mx_sat_ignore_errors'] = True
         with freeze_time(self.frozen_today):
