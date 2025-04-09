@@ -314,7 +314,8 @@ class SignRequest(models.Model):
         self.ensure_one()
         if not default_action:
             default_action = {}
-        action_rec = self.env['ir.actions.act_window'].search([
+        # user might not have access to Action Window model
+        action_rec = self.env['ir.actions.act_window'].sudo().search([
             ('res_model', '=', self.reference_doc._name),
             ('context', 'not ilike', 'active_id')], limit=1)
         if action_rec:
