@@ -7,6 +7,13 @@ from odoo import Command
 from odoo.addons.sale.tests.common import TestSaleCommon
 
 
+class UncatchableException(BaseException):
+    """ New type of exception to interrupt _create_recurring_invoice
+        without being catch by except Exception
+        It needs to inherit from the parent of Exception
+    """
+
+
 class TestSubscriptionCommon(TestSaleCommon):
 
     def setUp(self):
@@ -345,6 +352,11 @@ class TestSubscriptionCommon(TestSaleCommon):
         invoice = self.original_prepare_invoice()
         invoice['partner_bank_id'] = False
         return invoice
+
+    def _mock_subscription_process_invoice_to_send(self, account_moves):
+        subscription_id = account_moves.line_ids.subscription_id
+        if self.crashing_sub_id in subscription_id.ids:
+            raise UncatchableException("I want to break free")
 
     def flush_tracking(self):
         """ Force the creation of tracking values. """

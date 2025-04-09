@@ -8,7 +8,7 @@ from odoo.tests import tagged, freeze_time
 from odoo.tools import mute_logger
 from odoo.exceptions import AccessError, UserError
 
-from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
+from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon, UncatchableException
 
 
 @tagged('post_install', '-at_install')
@@ -853,3 +853,43 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
             self.product_a.list_price,
             msg="We should get the amount invoiced for non-recurring products",
         )
+
+    @freeze_time("2025-04-14")
+    def test_failing_sub_invoice_flag(self):
+        """ Make sure that when the cron is crashing, we don't end up with successful subscription with an error flag.
+        Processed subscriptions are
+        """
+        self.subscription.write({
+            'partner_id': self.partner.id,
+            'company_id': self.company.id,
+            'payment_token_id': self.payment_token.id,
+            'sale_order_template_id': self.subscription_tmpl.id,
+        })
+        self.subscription._onchange_sale_order_template_id()
+        self.subscription.action_confirm()
+        start_date = datetime.date.today()
+        self.subscription.start_date = start_date
+        self.subscription.payment_token_id = False
+        subs = self.env['sale.order']
+        for _i in range(3):
+            subs |= self.subscription.copy()
+        # last sub of the batch will make the cron crash.
+        # _create_recurring_invoice revert the order of subscriptions and we want to crash on the last one
+        self.crashing_sub_id = subs[0].id
+        subs.action_confirm()
+        self.assertEqual(subs.mapped('next_invoice_date'), [datetime.date(2025, 4, 14), datetime.date(2025, 4, 14), datetime.date(2025, 4, 14)])
+        # Create invoices, the third should crash but only the last one will keep is_invoice_cron value
+        try:
+            with patch(
+                    'odoo.addons.sale_subscription.models.sale_order.SaleOrder._process_invoices_to_send',
+                    wraps=self._mock_subscription_process_invoice_to_send
+            ), mute_logger('odoo.addons.sale_subscription.models.sale_order'):
+                subs._create_recurring_invoice()
+        except UncatchableException:
+            pass
+        self.assertEqual(subs.mapped('is_invoice_cron'), [True, False, False])
+        invs = self.env['account.move'].search([('invoice_line_ids.subscription_id', 'in', subs.ids)])
+        self.assertEqual(invs.mapped('state'), ["posted", "posted", "posted"])
+        # Make sure next time it's running it reset all is_invoice_cron
+        self.env['sale.order']._create_recurring_invoice()
+        self.assertEqual(subs.mapped('is_invoice_cron'), [False, False, False])

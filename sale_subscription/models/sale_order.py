@@ -1390,7 +1390,6 @@ class SaleOrder(models.Model):
             extra_domain = []
         current_date = fields.Date.today()
         search_domain = [('is_batch', '=', False),
-                         ('is_invoice_cron', '=', False),
                          ('is_subscription', '=', True),
                          ('subscription_state', '=', '3_progress'),
                          ('payment_exception', '=', False),
@@ -1500,7 +1499,6 @@ class SaleOrder(models.Model):
         all_invoiceable_lines = self.env['sale.order.line']
         order_to_remove_ids = []
         for subscription in all_subscriptions:
-            subscription.is_invoice_cron = True
             # Don't spam sale with assigned emails.
             subscription = subscription.with_context(mail_auto_subscribe_no_notify=True)
             # Close ending subscriptions
@@ -1517,15 +1515,14 @@ class SaleOrder(models.Model):
             all_subscriptions -= self.env['sale.order'].browse(order_to_remove_ids)
         lines_to_reset_qty = self.env['sale.order.line']
         account_moves = self.env['account.move']
-        move_to_send_ids = []
         # Set quantity to invoice before the invoice creation. If something goes wrong, the line will appear as "to invoice"
         # It prevents the use of _compute method and compare the today date and the next_invoice_date in the compute which would be bad for perfs
         all_invoiceable_lines._reset_subscription_qty_to_invoice()
         self._subscription_commit_cursor(auto_commit)
-        for subscription in all_subscriptions:
+        for number, subscription in enumerate(all_subscriptions, start=1):
             if len(subscription) == 1:
                 subscription = subscription[0]  # Trick to not prefetch other subscriptions is all_subscription is recordset, as the cache is currently invalidated at each iteration
-
+            subscription.is_invoice_cron = True
             # We check that the subscription should not be processed or that it has not already been set to "in exception" by previous cron failure
             # We only invoice contract in sale state. Locked contracts are invoiced in advance. They are frozen.
             subscription = subscription.filtered(lambda sub: sub.subscription_state == '3_progress' and not sub.payment_exception)
@@ -1589,35 +1586,34 @@ class SaleOrder(models.Model):
                     # when the invoice is not confirmed, we keep it and keep the payment_exception flag
                     # Failed payment that delete the invoice will also be handled here and the flag will be removed
                     subscription.with_context(mail_notrack=True).payment_exception = False
-                if not subscription.mapped('payment_token_id'): # _get_auto_invoice_grouping_keys groups by token too
-                    move_to_send_ids += existing_invoices.ids
+                if not subscription.payment_token_id:  # _get_auto_invoice_grouping_keys groups by token too
+                    self._process_invoices_to_send(existing_invoices)
+
+                self._subscription_commit_cursor(auto_commit)
+                try:
+                    subscription._post_invoice_hook()
+                    self._subscription_commit_cursor(auto_commit)
+                except Exception:
+                    self._subscription_rollback_cursor(auto_commit)
+                    _logger.exception("Error during post invoice action")
+                    subscription._handle_post_invoice_hook_exception()
+                subscription.is_invoice_cron = False
+                self.env['ir.cron']._notify_progress(done=number, remaining=len(all_subscriptions) - number)
                 self._subscription_commit_cursor(auto_commit)
             except Exception:
                 name_list = [f"{sub.name} {sub.client_order_ref}" for sub in subscription]
                 _logger.exception("Error during renewal of contract %s", "; ".join(name_list))
                 self._subscription_rollback_cursor(auto_commit)
-        self._subscription_commit_cursor(auto_commit)
-        self._process_invoices_to_send(self.env['account.move'].browse(move_to_send_ids))
-        self._subscription_commit_cursor(auto_commit)
         # There is still some subscriptions to process. Then, make sure the CRON will be triggered again asap.
         if need_cron_trigger:
             self._subscription_launch_cron_parallel(batch_size)
         else:
-            if self:
-                invoice_sub = self.filtered('is_subscription')
-            else:
-                invoice_sub = self.search([('is_invoice_cron', '=', True)])
-
-            try:
-                invoice_sub._post_invoice_hook()
-                self._subscription_commit_cursor(auto_commit)
-            except Exception as e:
-                self._subscription_rollback_cursor(auto_commit)
-                _logger.exception("Error during post invoice action: %s", e)
-                invoice_sub._handle_post_invoice_hook_exception()
-
-            failing_subscriptions = self.search([('is_batch', '=', True)])
-            (failing_subscriptions | invoice_sub).write({'is_batch': False, 'is_invoice_cron': False})
+            # Cron has ended properly make sure to clean up the flags
+            subscriptions_to_reset = self.search(['|', ('is_batch', '=', True), ('is_invoice_cron', '=', True)])
+            subscriptions_to_reset.write({
+                'is_invoice_cron': False,
+                'is_batch': False,
+            })
             self._subscription_commit_cursor(auto_commit)
         return account_moves
 
