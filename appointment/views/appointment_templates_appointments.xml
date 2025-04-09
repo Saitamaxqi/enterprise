@@ -376,7 +376,7 @@
                     class="o_appointment_user_short_card d-flex flex-column gap-1 mt-2"
                     itemscope="itemscope"
                     itemtype="http://schema.org/Employee">
-                    <div t-attf-class="d-flex #{'align-items-center' if appointment_type.avatars_display == 'show' else ''} py-1 px-0 bg-transparent border-0">
+                    <div t-attf-class="d-flex py-1 px-0 bg-transparent border-0">
                         <t t-if="staff_user">
                             <div t-if="appointment_type.avatars_display == 'show'" t-attf-style="background-image: url('/appointment/#{appointment_type.id}/avatar?user_id=#{staff_user.id}');"
                                 class="rounded-circle o_appointment_avatar_background o_appointment_user_avatar"/>
@@ -389,7 +389,7 @@
                         <t t-if="resource">
                             <div t-if="appointment_type.avatars_display == 'show'"
                                 t-attf-style="background-image: url('/appointment/#{appointment_type.id}/resource_avatar?resource_id=#{resource.id}');"
-                                class="rounded-circle o_appointment_avatar_background o_appointment_user_avatar"/>
+                                class="mt-1 flex-shrink-0 rounded-circle o_appointment_avatar_background o_appointment_user_avatar"/>
                             <i t-else="" class="fa fa-fw fa-cubes mt-1 text-muted"/>
                             <div class="ms-2">
                                 <strong class="mb-1" t-out="resource.name"/>
