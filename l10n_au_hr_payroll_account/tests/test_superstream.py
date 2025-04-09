@@ -166,8 +166,9 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             assert expected_line and saff_line, (
                     "%s payslip lines expected by the test, but %s were found in the payslip."
                     % (len(expected_line), len(saff_line.line_ids)))
-            self.assertEqual(len(expected_line), len(saff_line),
-                "Expected %s Columns but found %s in the payslip." % (len(expected_line), len(saff_line)))
+            # Superstream SAFF requires 133 columns
+            self.assertEqual(133, len(saff_line),
+                "Expected %s Columns but found %s in the payslip." % (133, len(saff_line)))
             for expected_val, saff_val, header in zip_longest(expected_line, saff_line, values[2]):
                 # print(f"{header}: {expected_val} - {saff_val}")
                 self.assertEqual(expected_val, saff_val, "%s was expected but %s is found at header %s!" % (expected_val, saff_val, header))

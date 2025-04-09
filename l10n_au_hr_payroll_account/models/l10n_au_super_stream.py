@@ -436,6 +436,7 @@ class L10n_AuSuperStreamLine(models.Model):
             # super fund member common [AH:BE] (24) (33 - 56)
             self.employee_id.l10n_au_tfn,
             "",
+            "",
             ' '.join(self.employee_id.name.split(' ')[1:]),
             self.employee_id.name.split(' ')[0],
             self.employee_id.l10n_au_other_names or "",  # Other given name
