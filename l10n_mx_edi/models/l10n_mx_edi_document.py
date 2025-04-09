@@ -867,6 +867,8 @@ class L10n_Mx_EdiDocument(models.Model):
         AccountTax = self.env['account.tax']
 
         def grouping_function_base_line_tax_details(base_line, tax_data):
+            if not tax_data:
+                return None
             tax = tax_data['tax']
             return {
                 'tipo_factor': tax.l10n_mx_factor_type,
@@ -1002,6 +1004,8 @@ class L10n_Mx_EdiDocument(models.Model):
 
         # Tax details for the whole document.
         def grouping_function_global_tax_details(base_line, tax_data):
+            if not tax_data:
+                return None
             tax = tax_data['tax']
             local_tax_name = tax.tax_group_id.name if tax.l10n_mx_tax_type == 'local' else None
             return {
@@ -1067,6 +1071,8 @@ class L10n_Mx_EdiDocument(models.Model):
 
         # Tax details, reduced list.
         def grouping_function_global_reduced_tax_details(base_line, tax_data):
+            if not tax_data:
+                return None
             tax = tax_data['tax']
             is_local_tax = tax.l10n_mx_tax_type == 'local'
             return {

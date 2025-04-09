@@ -345,6 +345,8 @@ class AccountEdiFormat(models.Model):
             base_line['co_is_exempt_tax'] = tax_group_covered_goods and tax_group_covered_goods in base_line['tax_ids'].tax_group_id
 
         def grouping_function_tim_sections(base_line, tax_data):
+            if not tax_data:
+                return None
             tax = tax_data['tax']
             return {
                 'amount': tax.amount,
