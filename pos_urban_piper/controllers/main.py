@@ -115,8 +115,9 @@ class PosUrbanPiperController(http.Controller):
         pos_config_sudo = request.env['pos.config'].sudo().search([
             ('urbanpiper_store_identifier', '=', order['store']['merchant_ref_id'])
         ])
+        # Check the customer exists with the same name and phone number
         customer_sudo = request.env['res.partner'].sudo().search(
-            [('phone', '=', customer['phone'])], limit=1
+            [('name', '=', customer['name']), ('phone', '=', customer['phone'])], limit=1
         )
         if not customer_sudo:
             customer_sudo = request.env['res.partner'].sudo().create({
@@ -129,13 +130,13 @@ class PosUrbanPiperController(http.Controller):
                 'zip': customer_address.get('pin'),
             })
         else:
-            if customer_sudo.zip != customer_address.get('zip'):
-                customer_sudo.write({
-                    'street': customer_address.get('line_1'),
-                    'street2': customer_address.get('line_2'),
-                    'zip': customer_address.get('pin'),
-                    'city': customer_address.get('city'),
-                })
+            customer_sudo.write({
+                'email': customer['email'],
+                'street': customer_address.get('line_1'),
+                'street2': customer_address.get('line_2'),
+                'zip': customer_address.get('pin'),
+                'city': customer_address.get('city'),
+            })
 
         def get_prep_time(details):
             data = details.get('prep_time')
