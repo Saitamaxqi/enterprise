@@ -623,6 +623,60 @@
         </field>
     </record>
 
+    <record id="open_shifts_pivot_view" model="ir.ui.view">
+        <field name="name">open.shifts.pivot.view</field>
+        <field name="model">planning.slot</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Planning" sample="1" js_class="planning_pivot">
+                <field name="role_id" type="row"/>
+                <field name="start_datetime" interval="week" type="col"/>
+                <field name="self_unassign_days_before" invisible="1"/>
+                <field name="resource_color" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="open_shifts_gantt_view" model="ir.ui.view">
+        <field name="name">open.shifts.gantt.view</field>
+        <field name="model">planning.slot</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="planning_view_gantt"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <gantt position="attributes">
+                <attribute name="default_group_by">role_id</attribute>
+            </gantt>
+        </field>
+    </record>
+
+    <record id="open_shifts_list_view" model="ir.ui.view">
+        <field name="name">open.shifts.list.view</field>
+        <field name="model">planning.slot</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="planning.planning_view_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <field name="resource_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="open_shifts_graph_view" model="ir.ui.view">
+        <field name="name">open.shifts.graph.view</field>
+        <field name="model">planning.slot</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="planning_view_graph"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='allocated_hours']" position="replace"/>
+            <xpath expr="//field[@name='resource_id']" position="replace">
+                <field name="role_id" type="col"/>
+            </xpath>
+        </field>
+    </record>
+
     <!--
         Actions
     -->
@@ -892,6 +946,65 @@
         </field>
     </record>
 
+    <record id="planning_action_open_shifts" model="ir.actions.act_window">
+        <field name="name">Open Shifts</field>
+        <field name="res_model">planning.slot</field>
+        <field name="path">open-shifts</field>
+        <field name="view_mode">calendar,gantt,list,form,kanban,pivot,graph</field>
+        <field name="mobile_view_mode">calendar</field>
+        <field name="domain">[('start_datetime', '!=', False), ('end_datetime', '!=', False)]</field>
+        <field name="context">{'search_default_open_shifts': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No shifts found. Let's create one!
+            </p>
+            <p>
+                Create open shifts for the roles you will be needing to complete a mission.<br/>
+                Allocate open shifts to resources based on their roles.
+            </p>
+        </field>
+    </record>
+
+        <record id="planning_action_open_shifts_view_calendar" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">calendar</field>
+            <field name="act_window_id" ref="planning_action_open_shifts"/>
+        </record>
+
+        <record id="planning_action_open_shifts_view_gantt" model="ir.actions.act_window.view">
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">gantt</field>
+            <field name="view_id" ref="open_shifts_gantt_view"/>
+            <field name="act_window_id" ref="planning_action_open_shifts"/>
+        </record>
+
+        <record id="planning_action_open_shifts_view_list" model="ir.actions.act_window.view">
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="open_shifts_list_view"/>
+            <field name="act_window_id" ref="planning_action_open_shifts"/>
+        </record>
+
+        <record id="planning_action_open_shifts_view_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="30"/>
+            <field name="view_mode">kanban</field>
+            <field name="act_window_id" ref="planning_action_open_shifts"/>
+        </record>
+
+        <record id="planning_action_open_shifts_view_pivot" model="ir.actions.act_window.view">
+            <field name="sequence" eval="40"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="open_shifts_pivot_view"/>
+            <field name="act_window_id" ref="planning_action_open_shifts"/>
+        </record>
+
+        <record id="planning_action_open_shifts_view_graph" model="ir.actions.act_window.view">
+            <field name="sequence" eval="50"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="open_shifts_graph_view"/>
+            <field name="act_window_id" ref="planning_action_open_shifts"/>
+        </record>
+
     <record id="model_planning_slot_action_publish_and_send" model="ir.actions.server">
         <field name="name">Publish &amp; Send</field>
         <field name="model_id" ref="planning.model_planning_slot"/>
@@ -928,6 +1041,14 @@
         sequence="30"
         parent="planning_menu_root"
         action="planning_action_my_calendar"/>
+
+    <menuitem
+        id="planning_menu_open_shifts"
+        name="Open Shifts"
+        sequence="20"
+        parent="planning_menu_root"
+        action="planning_action_open_shifts"
+        groups="planning.group_planning_manager"/>
 
     <menuitem
         id="planning_menu_schedule"
