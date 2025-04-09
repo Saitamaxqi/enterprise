@@ -31,7 +31,7 @@ class SalaryRegisterWizard(models.TransientModel):
     def _get_payslip_domain(self):
         date_from = self.date_from or self._get_default_date_from()
         date_to = self.date_to or self._get_default_date_to()
-        domain = [('date_from', '>=', date_from), ('date_to', '<=', date_to)]
+        domain = [('date_from', '>=', date_from), ('date_to', '<=', date_to), ('company_id', 'in', self.env.companies.ids)]
         if self.include_paid and self.include_done:
             domain.append(('state', 'in', ['done', 'paid']))
         elif self.include_paid:
