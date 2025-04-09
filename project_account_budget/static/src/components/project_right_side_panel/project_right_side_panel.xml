@@ -8,7 +8,7 @@
                 name="'budgets'"
                 show="showBudget"
                 showData="showBudget"
-                dataClassName="'py-3'"
+                headerClassName="'border-top pt-0 pt-md-3'"
             >
                 <t t-set-slot="title">
                     Budgets
@@ -18,13 +18,13 @@
                         <a t-on-click="addBudget">Add Budget</a>
                     </div>
                 </t>
-                <div t-if="!state.data.budget_items.data.length" class="ps-3">
+                <div t-if="!state.data.budget_items.data.length" class="px-3 pb-3">
                     <span class="text-muted fst-italic">
                         Compare expected and actual revenues and costs.
                     </span>
                 </div>
-                <table t-else="" class="table table-sm table-striped table-hover mb-0">
-                    <thead class="bg-100 align-middle">
+                <table t-else="" class="o_rightpanel_data_table table table-sm table-borderless table-hover mb-3 border-top">
+                    <thead class="bg-100">
                         <tr>
                             <th>Budget</th>
                             <th class="text-end">Forecast</th>
@@ -45,10 +45,10 @@
                                         <t t-call="project_account_budget.BudgetName"/>
                                     </t>
                                 </td>
-                                <td class="text-end align-middle" t-att-class="budget_item.allocated === 0 ? 'text-500' : ''"><t t-out="formatMonetary(budget_item.allocated)"/></td>
-                                <td class="text-end align-middle" t-att-class="budget_item.spent === 0 ? 'text-500' : ''"><t t-out="formatMonetary(budget_item.spent)"/></td>
+                                <td class="text-end" t-att-class="budget_item.allocated === 0 ? 'text-500' : ''"><t t-out="formatMonetary(budget_item.allocated)"/></td>
+                                <td class="text-end" t-att-class="budget_item.spent === 0 ? 'text-500' : ''"><t t-out="formatMonetary(budget_item.spent)"/></td>
                                 <t t-set="budget_remaining" t-value="budget_item.spent - budget_item.allocated"/>
-                                <td class="text-end align-middle" t-attf-class="text-bold text-{{ budget_item.budget_type == 'expense' and (budget_item.progress >= 0.25 ? 'danger': budget_item.progress >= 0 ? 'warning': 'success')
+                                <td class="text-end" t-attf-class="text-bold text-{{ budget_item.budget_type == 'expense' and (budget_item.progress >= 0.25 ? 'danger': budget_item.progress >= 0 ? 'warning': 'success')
                                     or budget_item.progress &gt;= 0.25 ? 'success' : budget_item.progress &gt;= 0 ? 'warning' : 'danger' }}">
                                     <t t-out="formatMonetary(budget_remaining)"/>
                                     <t t-if="budget_item.allocated"> (<t t-out="Math.abs(budget_item.spent / budget_item.allocated * 100).toFixed()"/>%)</t>
@@ -57,10 +57,10 @@
                             <t t-foreach="budget_item['budgets']" t-as="budget" t-key="budget.id">
                                 <tr>
                                     <td><span class="ms-3"><small t-out="budget.name"/></span></td>
-                                    <td class="text-end align-middle" t-att-class="budget.allocated === 0 ? 'text-500' : ''"><small t-out="formatMonetary(budget.allocated)"/></td>
-                                    <td class="text-end align-middle" t-att-class="budget.spent === 0 ? 'text-500' : ''"><small t-out="formatMonetary(budget.spent)"/></td>
+                                    <td class="text-end" t-att-class="budget.allocated === 0 ? 'text-500' : ''"><small t-out="formatMonetary(budget.allocated)"/></td>
+                                    <td class="text-end" t-att-class="budget.spent === 0 ? 'text-500' : ''"><small t-out="formatMonetary(budget.spent)"/></td>
                                     <t t-set="budget_remaining" t-value="budget.spent - budget.allocated"/>
-                                    <td class="text-end align-middle" t-attf-class="text-bold text-{{ budget_item.budget_type == 'expense' and (budget_item.progress >= 0.25 ? 'danger': budget_item.progress >= 0 ? 'warning': 'success')
+                                    <td class="text-end" t-attf-class="text-bold text-{{ budget_item.budget_type == 'expense' and (budget_item.progress >= 0.25 ? 'danger': budget_item.progress >= 0 ? 'warning': 'success')
                                         or budget_item.progress &gt;= 0.25 ? 'success' : budget_item.progress &gt;= 0 ? 'warning' : 'danger' }}">
                                         <small t-out="formatMonetary(budget_remaining)"/>
                                         <t t-if="budget.allocated"> (<small t-out="Math.abs(budget.spent / budget.allocated * 100).toFixed()"/>%)</t>
