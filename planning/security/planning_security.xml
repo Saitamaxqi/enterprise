@@ -94,5 +94,10 @@
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
 
+    <record id="planning_analysis_report_rule_multi_company" model="ir.rule">
+        <field name="name">Planning Analysis Report multi-company</field>
+        <field name="model_id" ref="planning.model_planning_analysis_report"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
 </data>
 </odoo>
