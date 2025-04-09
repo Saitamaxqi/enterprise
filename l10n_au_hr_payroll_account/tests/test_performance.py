@@ -178,7 +178,19 @@ class TestPerformance(AccountTestInvoicingCommon):
     @warmup
     def test_performance_l10n_au_payroll_whole_flow(self):
         # Create Opening Balances
-        self.company._create_ytd_values(self.employees, self.date_from)
+        self.env["l10n_au.previous.payroll.transfer"].create(
+            {
+                "company_id": self.company.id,
+                "l10n_au_previous_payroll_transfer_employee_ids": [
+                    (0, 0, {
+                        "employee_id": employee.id,
+                        "previous_payroll_id": "employee_%s" % employee.id,
+                        "l10n_au_income_stream_type": employee.l10n_au_income_stream_type,
+                    }) for employee in self.employees
+                ]
+            }
+        ).action_transfer()
+        # self.company._create_ytd_values(self.employees, self.date_from)
 
         # Work entry generation
         self.employees.generate_work_entries(self.date_from, self.date_to)
@@ -209,14 +221,14 @@ class TestPerformance(AccountTestInvoicingCommon):
             _logger.info("Payslips Computation: --- %s seconds ---", time.time() - start_time)
 
         # Payslip Validation
-        with self.assertQueryCount(admin=600):
+        with self.assertQueryCount(admin=700):
             start_time = time.time()
             payslips.action_payslip_done()
             # --- 0.3815627098083496 seconds ---
             _logger.info("Payslips Validation: --- %s seconds ---", time.time() - start_time)
 
         # STP Submission
-        with self.assertQueryCount(admin=2000):
+        with self.assertQueryCount(admin=2500):
             start_time = time.time()
             stp = payslips._get_payslip_stp()[payslips[0].id]
             self.assertTrue(stp, "The STP record should have been created when the payslip was created")

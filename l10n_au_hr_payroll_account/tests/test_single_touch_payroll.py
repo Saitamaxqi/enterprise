@@ -143,7 +143,9 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             {
                 "previous_bms_id": "12321321",
                 "l10n_au_previous_payroll_transfer_employee_ids": [
-                    Command.create({"employee_id": employee.id, "previous_payroll_id": "test_123213"})
+                    Command.create({"employee_id": employee.id,
+                                    "previous_payroll_id": "test_123213",
+                                    "l10n_au_income_stream_type": employee.l10n_au_income_stream_type})
                 ]
             })
         ytd_wizard.action_transfer()
@@ -943,6 +945,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         ytd_wizard = self.env["l10n_au.previous.payroll.transfer"].create(
             {
                 "previous_bms_id": "12321321",
+                "fiscal_year_start_date": "2023-07-01",
                 "l10n_au_previous_payroll_transfer_employee_ids": [
                     (0, 0, {
                         "employee_id": self.employee_1.id,
