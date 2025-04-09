@@ -30,10 +30,13 @@ export class DocumentsAccessSettings extends Component {
      */
     get accessInternalHelper() {
         if (this.props.access.access_internal === "view") {
-            return _t("Internal users can view");
-        }
-        if (this.props.access.access_internal === "edit") {
-            return _t("Internal users can edit");
+            return this.props.access.type === "folder"
+                ? _t("Can only view contents. Cannot add, modify, or delete items.")
+                : _t("Can only view. Cannot rename, move, or delete.");
+        } else if (this.props.access.access_internal === "edit") {
+            return this.props.access.type === "folder"
+                ? _t("Can add, modify, and delete files within this folder.")
+                : _t("Can modify, delete, and rename.");
         }
         return _t("Only people with access can open with the link");
     }
@@ -43,10 +46,13 @@ export class DocumentsAccessSettings extends Component {
      */
     get accessLinkHelper() {
         if (this.props.access.access_via_link === "view") {
-            return _t("Anyone on the internet with the link can view");
-        }
-        if (this.props.access.access_via_link === "edit") {
-            return _t("Anyone on the internet with the link can edit");
+            return this.props.access.type === "folder"
+                ? _t("Can only view contents. Cannot add, modify, or delete items.")
+                : _t("Can only view. Cannot rename, move, or delete.");
+        } else if (this.props.access.access_via_link === "edit") {
+            return this.props.access.type === "folder"
+                ? _t("Can add, modify, and delete files within this folder.")
+                : _t("Can modify, delete, and rename.");
         }
         return _t("No one on the internet can access");
     }
