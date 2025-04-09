@@ -66,7 +66,7 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
         from_str = """
             FROM generate_series(
                 (SELECT min(start_datetime) FROM planning_slot)::date,
-                (SELECT max(end_datetime) FROM planning_slot)::date,
+                CURRENT_DATE,
                 '1 day'::interval
             ) d
                 LEFT JOIN planning_slot F ON d::date >= F.start_datetime::date AND d::date <= F.end_datetime::date
@@ -118,6 +118,7 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
     def _where_union(self):
         where_str = """
             WHERE A.project_id IS NOT NULL
+              AND A.date <= CURRENT_DATE
         """
         return where_str
 
