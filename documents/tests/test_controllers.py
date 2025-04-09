@@ -23,6 +23,7 @@ from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.addons.documents.controllers.documents import ShareRoute
 
 
+@tagged('post_install', '-at_install')
 class TestDocumentsControllers(HttpCaseWithUserDemo):
     def _assertPathEqual(self, first, second):
         self.assertEqual(parse_url(first).path, parse_url(second).path)
