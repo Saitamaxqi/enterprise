@@ -3,13 +3,13 @@ import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { createSpreadsheetDashboard } from "@spreadsheet_dashboard/../tests/helpers/dashboard_action";
 import { defineSpreadsheetDashboardModels } from "@spreadsheet_dashboard/../tests/helpers/data";
-import { mockService, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import { mockService, onRpc, serverState } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineSpreadsheetDashboardModels();
 
 test("Clicking 'Edit' icon navigates to dashboard edit view", async function () {
-    patchWithCleanup(odoo, { debug: "1" });
+    serverState.debug = "1";
     const action = {
         type: "ir.actions.client",
         tag: "action_edit_dashboard",
@@ -38,14 +38,14 @@ test("Clicking 'Edit' icon navigates to dashboard edit view", async function () 
 });
 
 test("User without edit permissions does not see the 'Edit' option on the dashboard (Debug mode ON)", async function () {
-    patchWithCleanup(odoo, { debug: "1" });
+    serverState.debug = "1";
     onRpc("has_group", async (route, args) => false);
     await createSpreadsheetDashboard();
     expect(".o_edit_dashboard").toHaveCount(0);
 });
 
 test("User with edit permissions sees the 'Edit' option on the dashboard (Debug mode ON)", async function () {
-    patchWithCleanup(odoo, { debug: "1" });
+    serverState.debug = "1";
     onRpc("has_group", async (route, args) => true);
     await createSpreadsheetDashboard();
     expect(
@@ -54,14 +54,13 @@ test("User with edit permissions sees the 'Edit' option on the dashboard (Debug 
 });
 
 test("User with edit permissions does not see the 'Edit' option on the dashboard (Debug mode OFF)", async function () {
-    patchWithCleanup(odoo, { debug: "" });
     onRpc("has_group", async (route, args) => true);
     await createSpreadsheetDashboard();
     expect(".o_edit_dashboard").toHaveCount(0);
 });
 
 test("Can edit a non-active dashboard", async function () {
-    patchWithCleanup(odoo, { debug: "1" });
+    serverState.debug = "1";
 
     const action = (spreadsheetId) => ({
         type: "ir.actions.client",

@@ -452,7 +452,7 @@ test("supports attachments of apps deleted", async () => {
             webIcon: "bloop,bloop",
         },
     ]);
-    serverState.debug = true;
+    serverState.debug = "1";
     await mountWebClient({ WebClient: WebClientEnterprise });
     expect(".o_home_menu").toHaveCount(1);
 });
@@ -467,7 +467,7 @@ test("debug manager resets to global items when home menu is displayed", async (
         sequence: 10,
     }));
     onRpc("has_access", () => true);
-    serverState.debug = true;
+    serverState.debug = "1";
     await mountWebClient({ WebClient: WebClientEnterprise });
     await contains(".o_debug_manager .dropdown-toggle").click();
     expect(".dropdown-item:contains('globalItem')").toHaveCount(1);

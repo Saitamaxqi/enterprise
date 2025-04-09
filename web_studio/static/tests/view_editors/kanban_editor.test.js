@@ -582,7 +582,7 @@ test("kanban editor, grouped on date field, no record", async () => {
 
 test("kanban editor, grouped on date field granular, no record, progressbar", async () => {
     Coucou._fields.date = fields.Date({ string: "Date" });
-    serverState.debug = true;
+    serverState.debug = "1";
     const def = new Deferred();
     patchWithCleanup(CodeEditor.prototype, {
         setup() {
