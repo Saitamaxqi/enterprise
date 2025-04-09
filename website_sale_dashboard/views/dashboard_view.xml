@@ -45,6 +45,7 @@
         <record id="sale_dashboard" model="ir.actions.act_window">
             <field name="name">eCommerce Dashboard</field>
             <field name="res_model">sale.report</field>
+            <field name="path">ecommerce-dashboard</field>
             <field name="view_mode">graph,pivot</field>
             <field name="domain">[('team_id.website_ids', '!=', False)]</field>
             <field name="search_view_id" ref="website_sale.sale_report_view_search_website"/>
