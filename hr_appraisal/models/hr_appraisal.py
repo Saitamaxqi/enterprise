@@ -401,9 +401,6 @@ class HrAppraisal(models.Model):
                     partner_ids=appraisal.message_partner_ids.ids,
                 )
                 self.message_post(body=body)
-        previous_managers = {}
-        if 'manager_ids' in vals:
-            previous_managers = {x: y for x, y in self.mapped(lambda a: (a.id, a.manager_ids))}
         result = super(HrAppraisal, self).write(vals)
         if force_published:
             for appraisal in force_published:

@@ -5,8 +5,8 @@
             <field name="name">SEPA Direct Debit mandate expiration warning</field>
             <field name="subject">SEPA Direct Debit mandate expiration warning</field>
             <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
-            <field name="email_cc">{{ ','.join(object.message_follower_ids.mapped('email')) }}</field>
-            <field name="use_default_to" eval="False"/>
+            <field name="email_cc" eval="False"/>
+            <field name="use_default_to" eval="True"/>
             <field name="model_id" ref="account_sepa_direct_debit.model_sdd_mandate"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -195,7 +195,7 @@
             <field name="description">Email requesting the customer to sign the mandate attached</field>
             <field name="model_id" ref="account_sepa_direct_debit.model_sdd_mandate_send"/>
             <field name="subject">{{ object.partner_id.display_name }} SEPA Direct Debit Mandate</field>
-            <field name="use_default_to" eval="False"/>
+            <field name="use_default_to" eval="True"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">

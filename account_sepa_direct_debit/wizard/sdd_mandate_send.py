@@ -48,7 +48,7 @@ class SddMandateSend(models.TransientModel):
     @api.depends('mandate_id')
     def _compute_recipient_ids(self):
         for wizard in self:
-            wizard.recipient_ids = wizard.partner_id | wizard.mandate_id.message_partner_ids - wizard.author_id
+            wizard.recipient_ids = wizard.partner_id
 
     @api.depends('mandate_id')
     def _compute_company_id(self):
@@ -122,6 +122,7 @@ class SddMandateSend(models.TransientModel):
             partner_ids=self.recipient_ids.ids,
             subject=self.subject,
             attachment_ids=mandate_pdf.ids,
+            subtype_id=self.env.ref('mail.mt_comment').id,
         )
 
     def action_send_and_print(self):

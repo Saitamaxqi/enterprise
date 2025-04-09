@@ -5,10 +5,12 @@ from datetime import datetime, timedelta
 from freezegun import freeze_time
 
 from odoo import Command
-from odoo.tests import users
+from odoo.tests import tagged, users
 from odoo.addons.mail.tests.common import MailCase
 from odoo.addons.appointment.tests.common import AppointmentCommon
 
+
+@tagged('mail_flow')
 class AppointmentTestTracking(AppointmentCommon, MailCase):
 
     @classmethod
@@ -21,7 +23,7 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
             'email': 'follower@test.lan',
             'phone': '+32 81 212 220'
         }])
-        cls.apt_type_bxls_2days.message_partner_ids = cls.apt_type_follower
+        cls.apt_type_bxls_2days.message_subscribe(partner_ids=cls.apt_type_follower.ids)
 
         cls.appointment_attendee_ids = cls.env['res.partner'].create([{
             'name': f'Customer {attendee_indx}',
@@ -78,11 +80,10 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
         meeting2 = meeting1.copy()
         self.flush_tracking()
         self.assertGreater(meeting1.start, datetime.now(), 'Test expects `datetime.now` to be before start of meeting')
-        permanent_followers = self.apt_manager.partner_id + self.apt_type_follower
         self.assertEqual(meeting1.partner_ids, self.apt_manager.partner_id + self.appointment_attendee_ids,
                          'Manager and attendees should be there')
-        self.assertEqual(meeting1.message_partner_ids, permanent_followers + self.appointment_attendee_ids,
-                         'All attendees and concerned users should be followers')
+        self.assertEqual(meeting1.message_partner_ids, self.apt_type_follower,
+                         'All attendees and concerned users should not be added in followers, keeping only those manually added')
 
         with self.mock_mail_gateway(), self.mock_mail_app():
             meeting1.with_context(mail_notify_force_send=True).action_cancel_meeting(self.appointment_attendee_ids[0].ids)
