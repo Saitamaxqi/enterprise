@@ -130,6 +130,7 @@ class AccountBatchPayment(models.Model):
             'partner_id': payment.partner_id.id,
             'partner_bank_id': payment.partner_bank_id.id,
             'partner_country_code': payment.partner_id.country_id.code,
+            'end_to_end_uuid': payment.end_to_end_uuid,
             'iso20022_uetr': payment.iso20022_uetr,
             'iso20022_charge_bearer': payment.iso20022_charge_bearer,
             'iso20022_priority': payment.iso20022_priority,

@@ -1,4 +1,3 @@
-
 from textwrap import dedent
 from uuid import uuid4
 
@@ -28,6 +27,13 @@ ISO20022_PRIORITY_HELP = dedent('''\
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
+    end_to_end_uuid = fields.Char(
+        string='End to End ID',
+        compute='_compute_end_to_end_uuid',
+        store=True,
+        index=True,
+        help='Unique end-to-end assigned by the initiating party',
+    )
     sepa_pain_version = fields.Selection(related='journal_id.sepa_pain_version')
     iso20022_uetr = fields.Char(
         string='UETR',
@@ -97,6 +103,12 @@ class AccountPayment(models.Model):
         return res
 
     @api.depends('payment_method_id')
+    def _compute_end_to_end_uuid(self):
+        for payment in self:
+            if not payment.end_to_end_uuid and payment.payment_method_id.code in {'iso20022', 'sepa_ct'}:
+                payment.end_to_end_uuid = uuid4().hex
+
+    @api.depends('payment_method_id')
     def _compute_iso20022_uetr(self):
         payments = self.filtered(
             lambda p: not p.iso20022_uetr and p.payment_method_id.code in ('iso20022', 'sepa_ct')
@@ -111,3 +123,12 @@ class AccountPayment(models.Model):
                 payment.payment_method_is_iso20022
                 and payment.journal_id.iso20022_default_priority
             )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        # If the import doesn't have an end_to_end_uuid, there's on need to compute one for it as it should only be
+        # created by the initiating party.
+        if self.env.context.get('import_file'):
+            res.env.remove_to_compute(self._fields['end_to_end_uuid'], res)
+        return res

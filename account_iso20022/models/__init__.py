@@ -2,6 +2,7 @@
 
 from . import res_config_settings
 from . import account_batch_payment
+from . import account_bank_statement_line
 from . import account_journal
 from . import account_journal_sepa_ct
 from . import account_journal_sepa_ct_at

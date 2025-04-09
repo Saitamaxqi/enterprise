@@ -165,7 +165,7 @@ class AccountBatchPayment(models.Model):
                 "date": fields.Date.to_string(payment.date),
                 "reference": payment.memo,
                 "structured_reference": is_valid_structured_reference(payment.memo),
-                "end_to_end_id": payment.end_to_end_id,
+                "end_to_end_uuid": payment.end_to_end_uuid,
             })
 
         return {
@@ -176,6 +176,3 @@ class AccountBatchPayment(models.Model):
             "payments": payments,
             "reference": self.name,
         }
-
-    def _get_payment_vals(self, payment):
-        return {**super()._get_payment_vals(payment), 'end_to_end_id': payment.end_to_end_id}

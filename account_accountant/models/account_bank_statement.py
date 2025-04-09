@@ -3,7 +3,6 @@ import re
 import string
 
 from markupsafe import Markup
-from dateutil.relativedelta import relativedelta
 from itertools import product
 
 from odoo import Command, _, api, fields, models, modules, SUPERUSER_ID
@@ -312,8 +311,38 @@ class AccountBankStatementLine(models.Model):
             'amount', 'foreign_currency_id', 'amount_currency', 'payment_ref'
         ])
 
-        # First try to match invoices and payments where we can't be wrong, using the statement lines payment_ref
+        # First, try to match invoices and payments using the end to end ID.
         processed_st_line_ids = set()
+        st_lines_with_end_to_end_uuid = 'end_to_end_uuid' in self._fields and self.filtered('end_to_end_uuid')
+        if st_lines_with_end_to_end_uuid:
+            self.env.cr.execute(SQL("""
+               SELECT st_line.id AS st_line_id,
+                      ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS aml_ids
+                 FROM account_bank_statement_line st_line
+                 JOIN account_payment payment ON st_line.end_to_end_uuid = payment.end_to_end_uuid
+                 JOIN account_move_line aml ON payment.move_id = aml.move_id
+                WHERE aml.move_id NOT IN %s
+                  AND aml.company_id = st_line.company_id
+                  AND aml.reconciled = false
+                  AND aml.account_id IN %s
+                  AND ((st_line.amount > 0 and aml.balance > 0) OR (st_line.amount < 0 and aml.balance < 0))
+                  AND aml.parent_state in ('draft', 'posted')
+                  AND st_line.id IN %s
+             GROUP BY st_line.id
+            """, tuple(st_move_ids), tuple(account_ids), tuple(st_lines_with_end_to_end_uuid.ids)))
+
+            for st_line_id, aml_ids in self.env.cr.fetchall():
+                st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # Guarantees batch prefetching if needed.
+                st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_ids)
+                processed_st_line_ids.add(st_line_id)
+        remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
+
+        # early return if we already processed everything
+        if not remaining_st_line_ids:
+            self.write({'cron_last_check': self.env.cr.now()})
+            return
+
+        # Then try to match invoices and payments where we can't be wrong, using the statement lines payment_ref
         query = SQL("""
                 SELECT st_line.id,
                        ARRAY_AGG(word_aml.id) aml_ids,
@@ -343,7 +372,7 @@ class AccountBankStatementLine(models.Model):
                        ) word_aml ON TRUE
               GROUP BY st_line.id, matching_word
                 HAVING COUNT(*) = 1
-        """, tuple(st_move_ids), tuple(account_ids), tuple(self.ids))
+        """, tuple(st_move_ids), tuple(account_ids), tuple(remaining_st_line_ids))
         self.env.cr.execute(query)
 
         st_lines_refs = {}
@@ -379,12 +408,11 @@ class AccountBankStatementLine(models.Model):
 
         # early return if we already processed everything
         if not remaining_st_line_ids:
-            self.write({'cron_last_check': fields.Datetime.now()})
+            self.write({'cron_last_check': self.env.cr.now()})
             return
 
         # At this point, we don't try anymore to find a matching payment for statement lines without partner_id that haven't
         # yet found a counterpart based on the communication. This would be too risky to reconcile only based on the amounts.
-        processed_st_line_ids = set()
         query = SQL("""
                 SELECT st_line.id AS st_line_id,
                        ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS all_aml_ids,
@@ -423,14 +451,14 @@ class AccountBankStatementLine(models.Model):
 
         # early return if we already processed everything
         if not remaining_st_line_ids:
-            self.write({'cron_last_check': fields.Datetime.now()})
+            self.write({'cron_last_check': self.env.cr.now()})
             return
 
         # try to apply reco models on the remaining statement lines
         remaining_st_lines = self.browse(remaining_st_line_ids).with_prefetch(self._prefetch_ids)
         reco_models._apply_reconcile_models(remaining_st_lines)
 
-        self.write({'cron_last_check': fields.Datetime.now()})
+        self.write({'cron_last_check': self.env.cr.now()})
 
     def _retrieve_partner(self):
         if not (lines_without_partner := self.filtered(lambda stl: not stl.partner_id)):
