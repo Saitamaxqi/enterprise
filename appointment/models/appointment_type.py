@@ -169,7 +169,7 @@ class AppointmentType(models.Model):
     appointment_count = fields.Integer('# Appointments', compute='_compute_appointment_counts')
     appointment_count_request = fields.Integer('# Appointments To Confirm', compute="_compute_appointment_counts")
     appointment_count_upcoming = fields.Integer('# Upcoming Appointments', compute='_compute_appointment_counts')
-    appointment_invite_ids = fields.Many2many('appointment.invite', string='Invitation Links')
+    appointment_invite_ids = fields.Many2many('appointment.invite', string='Invitation Links', copy=False)
     appointment_invite_count = fields.Integer('# Invitation Links', compute='_compute_appointment_invite_count')
     meeting_ids = fields.One2many('calendar.event', 'appointment_type_id', string="Appointment Meetings")
 

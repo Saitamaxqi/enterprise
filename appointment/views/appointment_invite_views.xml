@@ -43,10 +43,10 @@
         <field name="name">appointment.invite.view.form</field>
         <field name="model">appointment.invite</field>
         <field name="arch" type="xml">
-            <form string="Link Generator" create="false" js_class="appointment_invite_view_form">
+            <form string="Link Generator" create="false">
                 <field name="short_code_format_warning" invisible="1"/>
                 <field name="short_code_unique_warning" invisible="1"/>
-                <field name="has_identical_config" invisible="1"/>
+                <field name="identical_config_id" invisible="1"/>
                 <field name="schedule_based_on" invisible="1"/>
                 <div class="alert alert-warning" role="alert"
                     invisible="not appointment_type_count or not short_code_format_warning">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="alert alert-warning" role="alert"
                     invisible="not appointment_type_count or not short_code_unique_warning">
-                    The URL is already taken, please pick another code.
+                    Oops! The extension "<field name="short_code" readonly="1"/>" is already in use. Please pick another one.
                 </div>
                 <div class="alert alert-warning" role="alert"
                     invisible="appointment_type_count != 1 or resources_choice != 'current_user' or uid in suggested_staff_user_ids">
@@ -91,7 +91,7 @@
                                invisible="not suggested_resource_ids or appointment_type_count != 1 or schedule_based_on == 'users' or resources_resource_choice == 'all_assigned_resources'"/>
                     </group>
                     <div invisible="not suggested_staff_user_ids and not suggested_resource_ids">
-                        <label for="base_book_url" string="Link URL" class="opacity-100 fw-bold text-900"/><br/>
+                        <label for="base_book_url" string="Link" class="opacity-100 fw-bold text-900"/><br/>
                         <field name="base_book_url" nolabel="1" readonly="1" class="me-1 oe_inline"/>
                         <field name="short_code" nolabel="1" required="1" class="oe_inline o_input" onchange_on_keydown="True" keydown_debounce_delay="500"/>
                         <field name="book_url_params" readonly="1"/>
@@ -100,7 +100,7 @@
                 </sheet>
                 <footer>
                     <widget name="appointment_invite_copy_close" class="d-flex w-50 w-md-auto" invisible="appointment_type_count &lt; 1"/>
-                    <button string="Cancel" class="btn btn-secondary" special="cancel" data-hotkey="x"/>
+                    <button string="Discard" class="btn btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>
         </field>

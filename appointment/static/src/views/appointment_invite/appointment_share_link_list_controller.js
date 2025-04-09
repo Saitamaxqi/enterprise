@@ -16,6 +16,9 @@ class AppointmentShareLinkListController extends ListController {
             resModel: "appointment.invite",
             size: "md",
             title: _t("Create a Share Link"),
+            context: this.props.context?.active_ids
+                ? { default_appointment_type_ids: this.props.context.active_ids }
+                : {},
         });
     }
 

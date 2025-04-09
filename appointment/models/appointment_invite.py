@@ -9,6 +9,7 @@ from werkzeug.urls import url_encode, url_join
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+from odoo.osv import expression
 
 SHORT_CODE_PATTERN = re.compile(r"^[\w-]+$")
 
@@ -19,12 +20,80 @@ class AppointmentInvite(models.Model):
     _order = 'create_date DESC, id DESC'
     _rec_name = 'short_code'
 
+    @api.model
+    def default_get(self, fields):
+        """ The purpose of this override is to suggest a default short_code.
+        There are 2 distinct use cases.
+
+        1. Identical Configuration
+
+        If we find an identical configuration, we try to re-use it by assigning the same
+        short_code along with a 'identical_config_id' field.
+
+        The UI is designed to just copy the existing configuration URL if the end-user doesn't
+        modify it instead of creating a new appointment.invite record.
+        When manually modified, it is reset through an onchange trigger.
+
+        Note that this could be annoying for code-based creation of appointment.invite records, but
+        that is less likely and in this case the code can manually assign a short code by calling
+        '_get_unique_short_code'.
+        The trade-off seems worth it as it will prevent the UI from creating a lot of identical
+        appointment.invite records from the numerous "Share" buttons available.
+
+        Note that we only attempt to re-use for 'simple' configurations, aka single-appointment
+        and not specific staff users or resources assigned.
+
+        2. Help with Onboarding
+
+        When the user first interacts with the "Share" feature, meaning that there are no existing
+        appointment.invite records for a specific appointment, we attempt to generate a more
+        user-friendly short-code by using the name of the appointment.
+
+        That nicer-looking URL will then be re-applied on subsequent shares by the first use case
+        here above. """
+
+        res = super().default_get(fields)
+        if 'short_code' in fields and 'short_code' not in res:
+            appointment_type = False
+            appointments = res.get('appointment_type_ids')
+            appointment_type_ids = appointments[0][2] if appointments else []
+            if len(appointment_type_ids) == 1:
+                appointment_type = self.env['appointment.type'].browse(appointment_type_ids)
+
+            resources_choice = res.get('resources_choice')
+            if not resources_choice and appointment_type:
+                resources_choice = 'current_user' if appointment_type.schedule_based_on == 'users' \
+                                                      and self.env.user in appointment_type.staff_user_ids \
+                                                  else 'all_assigned_resources'
+
+            identical_config = False
+            if not res.get('staff_user_ids') and not res.get('resource_ids') \
+                and resources_choice in ['current_user', 'all_assigned_resources']:
+                identical_config = self._find_identical_config(
+                    appointment_type_ids,
+                    resources_choice,
+                )
+
+            short_code = False
+            if identical_config:
+                short_code = identical_config.short_code
+                res['identical_config_id'] = identical_config.id
+            elif appointment_type:
+                short_code = self._get_unique_short_code(appointment_type=appointment_type)
+
+            if not short_code:
+                short_code = self._get_unique_short_code()
+
+            res['short_code'] = short_code
+
+        return res
+
     access_token = fields.Char('Token', default=lambda s: uuid.uuid4().hex, required=True, copy=False, readonly=True)
-    short_code = fields.Char('Short Code', default=lambda s: s._get_unique_short_code(), required=True)
+    short_code = fields.Char('Short Code', required=True)
     short_code_format_warning = fields.Boolean('Short Code Format Warning', compute="_compute_short_code_warning")
     short_code_unique_warning = fields.Boolean('Short Code Unique Warning', compute="_compute_short_code_warning")
     disable_save_button = fields.Boolean('Computes if alert is present', compute='_compute_disable_save_button')
-    has_identical_config = fields.Boolean("Has Identical Config",
+    identical_config_id = fields.Many2one('appointment.invite', string="Identical Config",
                                           help="Interface field to try to prevent creating identical links")
 
     base_book_url = fields.Char('Base Link URL', compute="_compute_base_book_url")
@@ -152,11 +221,11 @@ class AppointmentInvite(models.Model):
         for invite in self:
             invite.calendar_event_count = mapped_data.get(invite.id, 0)
 
-    @api.depends('short_code', 'has_identical_config')
+    @api.depends('short_code', 'identical_config_id')
     def _compute_short_code_warning(self):
         for invite in self:
             invite.short_code_format_warning = not bool(re.match(SHORT_CODE_PATTERN, invite.short_code)) if invite.short_code else False
-            invite.short_code_unique_warning = not invite.has_identical_config and bool(self.env['appointment.invite'].search_count([
+            invite.short_code_unique_warning = not invite.identical_config_id and bool(self.env['appointment.invite'].search_count([
                 ('id', '!=', invite._origin.id), ('short_code', '=', invite.short_code)]))
 
     @api.depends('appointment_type_ids')
@@ -245,13 +314,34 @@ class AppointmentInvite(models.Model):
         for invite in self:
             invite.resources_choice = invite.resources_resource_choice if invite.schedule_based_on == "resources" else invite.resources_choice
 
-    @api.onchange('appointment_type_ids', 'resources_choice', 'resources_resource_choice', 'resource_ids', 'staff_user_ids')
+    @api.onchange('appointment_type_ids', 'resources_choice', 'staff_user_ids', 'resource_ids', 'short_code')
     def _onchange_configuration(self):
-        """ If the end user changes anything to the configuration, we generate a new code
-         instead of trying to re-use a configuration (as it's not identical anymore). """
-        if self.has_identical_config:
-            self.has_identical_config = False
-            self.short_code = secrets.token_hex(4)
+        """ Reset the short code when the configuration is manually modified.
+
+            Note: Don't reset the short_code which has been modified manually via input.
+            So, we can allow the modified short_code to be saved.
+
+         See 'default_get' for details. """
+        for invite in self.filtered('identical_config_id'):
+            reset_identical_config = False
+            if invite.resources_choice not in ['current_user', 'all_assigned_resources'] \
+                or (invite.staff_user_ids and invite.resources_choice != 'current_user') \
+                or invite.resource_ids:
+                reset_identical_config = True
+            else:
+                if invite.short_code != invite.identical_config_id.short_code:
+                    invite.identical_config_id = False
+                else:
+                    new_identical_config = invite._find_identical_config(
+                        invite.appointment_type_ids.ids,
+                        invite.resources_choice,
+                        short_code=invite.short_code,
+                    )
+                    reset_identical_config = new_identical_config != invite.identical_config_id
+
+            if reset_identical_config:
+                invite.identical_config_id = False
+                invite.short_code = invite._get_unique_short_code(short_code=invite.access_token[:8])
 
     @api.model
     def _get_invitation_url_parameters(self):
@@ -289,12 +379,28 @@ class AppointmentInvite(models.Model):
             return False
         return True
 
-    def _get_unique_short_code(self, short_code=None):
-        short_code = short_code or self.short_code or (self.access_token[:8] if self.access_token else secrets.token_hex(4))
-        nb_short_code = self.env['appointment.invite'].search_count([('id', '!=', self._origin.id), ('short_code', '=', short_code)])
+    def _get_unique_short_code(self, short_code=None, appointment_type=None):
+        name_based_code = False
+        if appointment_type and appointment_type.appointment_invite_count == 0:
+            code = re.sub(r'[\s\-*]+', '-', appointment_type.name.strip().lower())
+            if bool(re.match(SHORT_CODE_PATTERN, code)):
+                name_based_code = code
+
+        short_code = name_based_code or short_code or self.short_code or (self.access_token[:8] if self.access_token else secrets.token_hex(4))
+        nb_short_code = self.env['appointment.invite'].search_count([('id', '!=', self._origin.id), ('short_code', 'ilike', short_code)])
         if nb_short_code:
-            short_code = "%s_%s" % (short_code, nb_short_code)
+            short_code = "%s-%s" % (short_code, nb_short_code)
         return short_code
+
+    def _find_identical_config(self, appointment_type_ids, resources_choice, short_code=False):
+        domain = [
+            ('appointment_type_ids', '=', appointment_type_ids),
+            ('resources_choice', '=', resources_choice),
+        ]
+        if short_code:
+            domain = expression.AND([domain, [('short_code', '=', short_code)]])
+
+        return self.env['appointment.invite'].search(domain, limit=1)
 
     @api.autovacuum
     def _gc_appointment_invite(self):

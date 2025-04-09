@@ -17,7 +17,7 @@
     <t t-set="attendee_description" t-value="object._get_attendee_description()"/>
     <p>
     Appointment booked for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
-    <t t-if="object.appointment_type_id.category != 'custom' and object.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t>.
+    <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t>.
     </p>
     <div style="text-align: center; padding: 16px 0px 16px 0px;">
         <a t-attf-href="/calendar/meeting/join?token={{ object.access_token }}"
@@ -131,7 +131,7 @@
     <t t-set="mail_tz" t-value="object._get_mail_tz() or ctx.get('mail_tz')" />
     <t t-set="attendee_description" t-value="object._get_attendee_description()"/>
     <p>
-    The appointment for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t> <t t-if="object.appointment_type_id.category != 'custom' and object.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t> has been canceled.
+    The appointment for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t> <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t> has been canceled.
     </p>
 <table border="0" cellpadding="0" cellspacing="0"><tr>
             <td width="130px;" style="min-width: 130px;">
@@ -221,15 +221,15 @@
         <t t-if="target_customer">
             <t t-if="object.event_id.appointment_type_id.appointment_manual_confirmation">
                 <t t-if="object.event_id.appointment_status == 'booked'">
-                    We're happy to let you know your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been confirmed.<br/>
+                    We're happy to let you know your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category not in ['custom', 'anytime'] and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been confirmed.<br/>
                 </t>
                 <t t-elif="object.event_id.appointment_status == 'request'">
-                    We've got your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t>.<br/>
+                    We've got your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category not in ['custom', 'anytime'] and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t>.<br/>
                     We'll notify you once it's confirmed.
                 </t>
             </t>
             <t t-else="">
-                Your appointment <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong> <t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been booked.
+                Your appointment <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong> <t t-if="object.event_id.appointment_type_id.category not in ['custom', 'anytime'] and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been booked.
             </t>
             <span style="display: block;">
                 Need to reschedule? Use this

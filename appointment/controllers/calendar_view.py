@@ -146,7 +146,7 @@ class AppointmentCalendarView(http.Controller):
     @classmethod
     def _prepare_appointment_type_anytime_values(cls, user):
         return {
-            'name': _("%(name)s - Let's meet anytime", name=user.name),
+            'name': _("Meeting with %(name)s", name=user.name),
             'max_schedule_days': 15,
             'category': 'anytime',
             'staff_user_ids': [user.id],
@@ -162,6 +162,7 @@ class AppointmentCalendarView(http.Controller):
                 'appointment_type_ids': appointment_type.ids,
                 'resources_choice': 'current_user',
                 'staff_user_ids': user.ids,
+                'short_code': request.env['appointment.invite']._get_unique_short_code(appointment_type=appointment_type),
             }
             if appointment_type.category == 'custom':
                 # Custom appointment users may be edited on the spot. 'all_assigned_resources'

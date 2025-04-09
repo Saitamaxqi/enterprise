@@ -27,7 +27,7 @@ export class AppointmentInviteCopyClose extends Component {
             return;
         }
 
-        if (!this.props.record.data.has_identical_config) {
+        if (!this.props.record.data.identical_config_id) {
             const recordSaved = await this.props.record.save();
             if (!recordSaved) {
                 return;
