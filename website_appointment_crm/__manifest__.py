@@ -16,4 +16,9 @@ country and detailed information like pages browsed by the lead (through a link 
     'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
+    'assets': {
+        'web.assets_tests': [
+            'website_appointment_crm/static/tests/tours/**/*',
+        ],
+    },
 }

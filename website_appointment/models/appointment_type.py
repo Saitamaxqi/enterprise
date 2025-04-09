@@ -88,3 +88,15 @@ class AppointmentType(models.Model):
             website_id = self.env['website']
         action['context'].update({'default_website_id': website_id.id})
         return action
+
+    def _prepare_calendar_event_values(
+            self, asked_capacity, booking_line_values, duration,
+            appointment_invite, guests, name, customer, staff_user, start, stop
+    ):
+        values = super()._prepare_calendar_event_values(
+            asked_capacity, booking_line_values, duration,
+            appointment_invite, guests, name, customer, staff_user, start, stop
+        )
+        if self.env.user._is_public() and (visitor := self.env['website.visitor']._get_visitor_from_request()):
+            values['visitor_id'] = visitor.id
+        return values

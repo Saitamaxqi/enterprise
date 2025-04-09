@@ -45,3 +45,25 @@ class AppointmentType(models.Model):
         whitelist_fields = super()._get_calendar_view_appointment_type_default_context_fields_whitelist()
         whitelist_fields.append('opportunity_id')
         return whitelist_fields
+
+    def _prepare_calendar_event_values(
+            self, asked_capacity, booking_line_values, duration,
+            appointment_invite, guests, name, customer, staff_user, start, stop
+    ):
+        """ Add values of the customer's last ongoing lead linked to the staff member, if the appointment type has
+        a random staff user selection. This avoids duplicate leads. """
+        values = super()._prepare_calendar_event_values(
+            asked_capacity, booking_line_values, duration,
+            appointment_invite, guests, name, customer, staff_user, start, stop
+        )
+        if self.assign_method == 'time_auto_assign' and self.lead_create and staff_user and customer != staff_user.partner_id:
+            active_lead = self.env['crm.lead'].sudo().search([
+                ('user_id', '=', staff_user.id),
+                ('stage_id.is_won', '=', False),
+                ('partner_id', '=', customer.id)
+            ], order="id desc", limit=1)
+
+            if active_lead:
+                values['opportunity_id'] = values['res_id'] = active_lead.id
+                values['res_model_id'] = self.env['ir.model']._get_id(active_lead._name)
+        return values
