@@ -2866,7 +2866,7 @@ export class GanttRenderer extends Component {
                 type: result["type"],
                 sticky: true,
                 buttons:
-                    result["type"] === "warning"
+                    result.type === "warning" || !result.old_vals_per_pill_id
                         ? []
                         : [
                               {

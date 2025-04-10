@@ -532,6 +532,11 @@ test("Connector buttons: reschedule task start backward, different data.", async
     await mountGanttView(ganttViewParams);
 
     await clickConnectorButton(getConnector(1), "reschedule-backward");
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_notification .o_notification_buttons button").toHaveCount(0, {
+        message:
+            "No button should be displayed in the notification since `old_vals_per_pill_id` is not given in the result of `web_gantt_reschedule` call",
+    });
     expect.verifySteps([
         [
             "web_gantt_reschedule",
@@ -550,6 +555,11 @@ test("Connector buttons: reschedule task forward, different data.", async () => 
     await mountGanttView(ganttViewParams);
 
     await clickConnectorButton(getConnector(1), "reschedule-forward");
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_notification .o_notification_buttons button").toHaveCount(0, {
+        message:
+            "No button should be displayed in the notification since `old_vals_per_pill_id` is not given in the result of `web_gantt_reschedule` call",
+    });
     expect.verifySteps([
         [
             "web_gantt_reschedule",
