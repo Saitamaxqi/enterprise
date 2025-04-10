@@ -88,7 +88,7 @@ export class MrpDisplay extends Component {
             workcenters,
             canLoadSamples: false,
             offset: 0,
-            limit: 40,
+            limit: this.props.action?.context?.limit || 40,
             firstLoad: firstLoad,
         });
         this.recordCacheIds = [];
