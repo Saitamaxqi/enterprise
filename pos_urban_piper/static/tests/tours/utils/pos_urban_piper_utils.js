@@ -63,3 +63,11 @@ export function fetchDeliveryData() {
         },
     ];
 }
+
+export function orderHasText(orderNumber, text) {
+    return [
+        {
+            trigger: `.ticket-screen .orders tbody .order-row:has(td:contains("${orderNumber}")):has(td:contains("${text}"))`,
+        },
+    ];
+}
