@@ -22,7 +22,7 @@
                 </t>
             </div>
             <div class="popover-footer d-flex justify-content-between">
-                <div t-if="(props.displayGenericButtons and props.buttons) or templates.footer" class="p-3 d-flex gap-1">
+                <div t-if="(props.displayGenericButtons and props.buttons) or templates.footer" class="p-3 pt-0 d-flex gap-1">
                     <t t-if="props.displayGenericButtons and props.buttons">
                         <t t-foreach="props.buttons" t-as="button" t-key="button_index">
                             <button t-att-class="button.class" t-on-click="() => this.onClick(button)" t-esc="button.text" />
@@ -32,7 +32,7 @@
                         <t t-call="{{ templates.footer }}" t-call-context="renderingContext" />
                     </t>
                 </div>
-                <span t-if="!displayPopoverHeader" class="p-3 mt-1 ms-auto cursor-pointer" t-on-click.stop="props.close">
+                <span t-if="!displayPopoverHeader" class="p-3 pt-0 mt-1 ms-auto cursor-pointer" t-on-click.stop="props.close">
                     <i class="fa fa-close" />
                 </span>
             </div>
