@@ -182,7 +182,6 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "id": self.user_admin.partner_id.id,
                                         "type": "partner",
                                     },
-                                    "syncUnread": True,
                                     "thread": {
                                         "id": employee_channel.id,
                                         "model": "discuss.channel",
