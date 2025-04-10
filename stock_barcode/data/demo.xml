@@ -79,7 +79,7 @@
             <field name="weight">1.1</field>
             <field name="tracking">lot</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="image_1920" type="base64" file="stock/static/img/cable_management.png"/>
+            <field name="image_1920" type="base64" file="stock/static/img/cable_management.jpg"/>
             <field name="barcode">06016478556677</field>
         </record>
         <record id="product_custom_cabinet_usa" model="product.product">

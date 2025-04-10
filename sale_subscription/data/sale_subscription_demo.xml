@@ -94,6 +94,7 @@
             <field name="invoice_policy">order</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
             <field name="product_subscription_pricing_ids" eval="[(6,0,[ref('subscription_pricing_1'), ref('subscription_pricing_2'), ref('subscription_pricing_3')])]"/>
+            <field name="image_1920" type="base64" file="sale_subscription/static/img/product_office_cleaning.jpg"/>
         </record>
 
         <record id="product_car_leasing" model="product.product">
@@ -105,6 +106,7 @@
             <field name="invoice_policy">delivery</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
             <field name="product_subscription_pricing_ids" eval="[(6,0,[ref('subscription_pricing_4'), ref('subscription_pricing_5'), ref('subscription_pricing_6')])]"/>
+            <field name="image_1920" type="base64" file="sale_subscription/static/img/product_car_leasing.jpg"/>
         </record>
 
         <!-- Default Subscription Templates
