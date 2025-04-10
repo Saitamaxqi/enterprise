@@ -21,7 +21,7 @@ class HrJob(models.Model):
         ('biweekly', 'Bi-Week'),
         ('monthly', 'Month'),
         ('yearly', 'Year'),
-    ], string='Salary Time Unit', default='monthly')
+    ], string='Salary Time Unit', default='monthly', required=True)
     schedule_id = fields.Many2one('resource.calendar', string='Working Schedule')
     date_from = fields.Date(help="Is set, update applicants availability once hired for that specific mission.")
     date_to = fields.Date()
@@ -41,7 +41,7 @@ class HrJob(models.Model):
         res = super().write(vals)
 
         # Update the availability on all hired applicants if the mission end date is changed
-        if "date_to" in vals:
+        if vals.get('date_to'):
             for job in self:
                 hired_applicants = job.application_ids.filtered(lambda a: a.application_status == 'hired')
                 for applicant in hired_applicants:

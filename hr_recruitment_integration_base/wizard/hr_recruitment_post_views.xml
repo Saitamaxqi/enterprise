@@ -8,6 +8,7 @@
                 <sheet>
                     <group name="base_parameters">
                         <field name="job_id" readonly="1"/>
+                        <field name="industry_id"  placeholder="e.g. Health, IT Services, Agriculture ..."/>
                         <field name="platform_ids" widget="many2many_tags_avatar" required="1"/>
                         <field name="job_apply_mail" invisible="apply_method != 'email'"/>
                         <label for="campaign_start_date" string="From"/>
@@ -16,6 +17,11 @@
                             <strong class="mx-1">to</strong>
                             <field name="campaign_end_date" placeholder="No Limit"/>
                         </div>
+                        <field name="date_from"
+                            widget="daterange"
+                            string="Mission Dates"
+                            options="{'end_date_field': 'date_to'}"
+                        />
                     </group>
                     <notebook>
                         <page string="Description">

@@ -39,6 +39,23 @@
         </field>
     </record>
 
+    <record id="recruitment_stage_report_view_cohort" model="ir.ui.view">
+        <field name="model">hr.recruitment.stage.report</field>
+        <field name="arch" type="xml">
+            <cohort string="Hiring Velocity" date_start="date_begin" date_stop="date_end" interval="week" mode="churn" sample="1">
+                <field name="applicant_id"/>
+                <field name="name"/>
+                <field name="stage_id"/>
+                <field name="job_id" />
+                <field name="days_in_stage"/>
+                <field name="state"/>
+                <field name="company_id"/>
+                <field name="date_begin"/>
+                <field name="date_end"/>
+            </cohort>
+        </field>
+    </record>
+
     <record id="recruitment_stage_report_view_search" model="ir.ui.view">
         <field name="model">hr.recruitment.stage.report</field>
         <field name="arch" type="xml">
@@ -73,9 +90,9 @@
     </record>
 
     <record id="recruitment_stage_report_action" model="ir.actions.act_window">
-        <field name="name">Velocity Analysis</field>
+        <field name="name">Hiring Velocity</field>
         <field name="res_model">hr.recruitment.stage.report</field>
-        <field name="view_mode">graph,pivot</field>
+        <field name="view_mode">graph,pivot,cohort</field>
         <field name="search_view_id" ref="recruitment_stage_report_view_search"/>
         <field name="context">{
             'search_default_year': True,

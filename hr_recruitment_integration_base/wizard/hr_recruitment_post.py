@@ -23,6 +23,7 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
         help='The date when the campaign will end. If not set, '
         'the campaign will run indefinitely or to the maximum allowed by a platform.')
     job_id = fields.Many2one('hr.job', string="Job")
+    industry_id = fields.Many2one(related="job_id.industry_id", readonly=False)
     job_apply_mail = fields.Char(string="Email", compute="_compute_job_apply_mail", store=True, readonly=False)
     apply_method = fields.Selection([
         ('email', 'Send an Email'),
@@ -33,6 +34,17 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
     api_data = fields.Json(string="Data")
     post_ids = fields.Many2many('hr.job.post', 'job_id', string="Job Posts")
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    date_from = fields.Date(
+        string="Mission date start",
+        help="This will update the applicant's availability status once they are hired for this position.",
+        related="job_id.date_from",
+        readonly=False,
+    )
+    date_to = fields.Date(
+        string="Mission date end",
+        related="job_id.date_to",
+        readonly=False,
+    )
 
     @api.depends('job_id')
     def _compute_job_apply_mail(self):
