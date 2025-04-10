@@ -2362,6 +2362,10 @@ class L10n_InGstReturnPeriod(models.Model):
         return self._request(
             url="/iap/l10n_in_reports/1/authentication/refreshtoken", params=params, company=company)
 
+    def _invalidate_token_request(self, company):
+        params = {"auth_token": company.sudo().l10n_in_gstr_gst_token}
+        return self._request("/iap/l10n_in_reports/1/authentication/logout", company, params)
+
     def _send_gstr1(self, company, month_year, json_payload):
         params = {
             "ret_period": month_year,
