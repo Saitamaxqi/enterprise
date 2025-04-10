@@ -73,8 +73,8 @@ export class AttachmentPreviewListController extends ListController {
             id: lineData.data[modelField][0],
             model: lineData.fields[modelField].relation,
         });
-        if (!thread.mainAttachment && thread.attachmentsInWebClientView.length > 0) {
-            thread.update({ mainAttachment: thread.attachmentsInWebClientView[0] });
+        if (!thread.message_main_attachment_id && thread.attachmentsInWebClientView.length > 0) {
+            thread.update({ message_main_attachment_id: thread.attachmentsInWebClientView[0] });
         }
         this.attachmentPreviewState.thread = thread;
     }

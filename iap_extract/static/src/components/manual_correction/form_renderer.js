@@ -131,10 +131,12 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
             model: this.props.record.resModel,
         });
         return (
-            ['waiting_validation', 'validation_to_send'].includes(this.props.record.data.extract_state) &&
+            ["waiting_validation", "validation_to_send"].includes(
+                this.props.record.data.extract_state
+            ) &&
             this.props.record.data.extract_attachment_id &&
-            thread.mainAttachment.id === this.props.record.data.extract_attachment_id[0]
-        )
+            thread.message_main_attachment_id.id === this.props.record.data.extract_attachment_id[0]
+        );
     }
 
     /**
