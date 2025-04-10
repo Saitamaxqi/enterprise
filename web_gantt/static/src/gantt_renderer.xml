@@ -201,7 +201,7 @@
                     class="position-absolute h-100 o_gantt_progress"
                     t-attf-style="width:{{ pill._progress }}%;"
                 />
-                <span class="o_gantt_pill_title text-truncate mx-1" t-esc="pill.displayName" />
+                <span class="o_gantt_pill_title text-truncate mx-1"><t t-esc="pill.displayName"/></span>
                 <div t-if="pill.disableDrag" class="o_gantt_lock fa fa-lock ms-auto me-2" />
             </div>
             <t t-if="renderConnectors" t-call="{{ constructor.connectorCreatorTemplate }}">

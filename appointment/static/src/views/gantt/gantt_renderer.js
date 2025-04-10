@@ -8,6 +8,7 @@ import { onWillStart } from "@odoo/owl";
 import { AppointmentBookingGanttRendererControls } from "./gantt_renderer_controls";
 
 export class AppointmentBookingGanttRenderer extends GanttRenderer {
+    static pillTemplate = "appointment.AppointmentBookingGanttRendererPill";
     static components = {
         ...GanttRenderer.components,
         GanttRendererControls: AppointmentBookingGanttRendererControls,
