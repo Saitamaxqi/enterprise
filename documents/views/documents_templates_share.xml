@@ -126,19 +126,8 @@
                    t-as="subfolder">
                     <t t-set="subfolder_open_url" t-valuef="/documents/redirect/#{quote(subfolder.access_token)}"/>
                     <t t-set="subfolder_downloadzip_url" t-valuef="/documents/content/#{quote(subfolder.access_token)}"/>
-                    <t t-set="subfolder_upload_url" t-valuef="/documents/upload/#{quote(subfolder.access_token)}"/>
                     <div class="col-sm-6 col-lg-3">
                         <article id="documents-folder" class="o_card d-flex mb16 border">
-                            <figure class="o_card_left d-flex position-relative flex-column flex-nowrap justify-content-between m-0">
-                                <form t-if="(subfolder.access_via_link == 'edit' or subfolder.user_permission == 'edit')"
-                                      class="o_hidden"
-                                      enctype="multipart/form-data"
-                                      t-att-action="subfolder_upload_url"
-                                      method="POST">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <input name="ufile" class="o_request_upload" type="file" onchange="form.submit()"/>
-                                </form>
-                            </figure>
                             <div class="o_card_content d-flex flex-column flex-nowrap flex-grow-1 flex-shrink-1 justify-content-between">
                                 <header>
                                     <h6 class="o_card_title mt0 mb4">
@@ -188,11 +177,11 @@
                                       enctype="multipart/form-data"
                                       t-attf-action="/documents/upload/#{quote(document.access_token)}"
                                       method="POST">
-                                    <input name="ufile" class="o_request_upload" type="file" onchange="form.submit()"/>
+                                    <input name="ufile" t-attf-id="request_{{ document_index }}" type="file" onchange="form.submit()"/>
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 </form>
                                 <div t-if="document_request"
-                                     onclick="document.querySelector('.o_request_upload').click()"
+                                     t-attf-onclick="document.querySelector('#request_{{ document_index }}').click()"
                                      t-attf-class="d-flex align-items-center justify-content-center o_request_icon
                                                    #{'o_request_allowed' if document.access_via_link == 'edit' or document.user_permission == 'edit' else ''}">
                                     <i class="fa fa-upload fa-2x"/>
@@ -218,8 +207,8 @@
                                         <b><time t-field="document.write_date" t-options="{'format':'MMM d, yyyy'}"/></b>
                                         •
                                         <b>
-                                            <t t-if="document.type == 'binary'" t-call="documents.format_file_size"/>
-                                            <t t-else=""><span title="Requested Document">Requested Document</span></t>
+                                            <t t-if="document_request"><span title="Requested Document">Requested Document</span></t>
+                                            <t t-else="" t-call="documents.format_file_size"/>
                                         </b>
                                     </small>
                                 </div>
