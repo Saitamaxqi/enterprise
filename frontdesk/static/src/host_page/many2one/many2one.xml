@@ -4,19 +4,19 @@
     <t t-name="frontdesk.Many2One">
         <div class="o_input_dropdown">
             <AutoComplete
-                value="props.value || ''"
+                value="props.value"
                 id="props.id"
                 placeholder="props.placeholder || 'Write the name of the person you\'re visiting....'"
                 sources="sources"
-                onSelect.bind="onSelect"
+                onInput="() => props.update(null)"
                 dropdown="true"
                 autoSelect="true"
                 autofocus="true"
             >
                 <t t-set-slot="option" t-slot-scope="optionScope">
                     <span class="o_avatar_many2x_autocomplete o_avatar d-flex align-items-center">
-                        <img t-if="optionScope.option.value" class="rounded me-1" t-attf-src="/web/image/hr.employee.public/{{optionScope.option.value}}/avatar_128"/>
-                        <t t-esc="optionScope.option.label"/>
+                        <img t-if="optionScope.data.id" class="rounded me-1" t-attf-src="/web/image/hr.employee.public/{{optionScope.data.id}}/avatar_128"/>
+                        <t t-esc="optionScope.label"/>
                     </span>
                 </t>
             </AutoComplete>

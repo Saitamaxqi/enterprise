@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { Component, useRef } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { Many2One } from "./many2one/many2one";
 
 export class HostPage extends Component {
@@ -13,17 +13,9 @@ export class HostPage extends Component {
     };
 
     setup() {
-        this.buttonRef = useRef("button");
-    }
-
-    /**
-     * This method disables the confirm button.
-     * When the text in the input field is not present in the selection.
-     *
-     * @param {Boolean} isDisable
-     */
-    disableButton(isDisable) {
-        this.buttonRef.el.disabled = isDisable;
+        this.state = useState({
+            hostName: "",
+        });
     }
 
     /**
@@ -38,10 +30,11 @@ export class HostPage extends Component {
     }
 
     /**
-     * @param {Object} host
+     * @param {object | null} host
      */
     selectedHost(host) {
         this.host = host;
+        this.state.hostName = host?.display_name ?? "";
     }
 }
 

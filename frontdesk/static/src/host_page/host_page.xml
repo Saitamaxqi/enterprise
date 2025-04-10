@@ -7,8 +7,8 @@
                 <div class="row g-0 d-flex justify-content-center">
                     <div class="col-lg-6">
                         <form t-on-submit.prevent="_onConfirm">
-                            <Many2One update.bind="selectedHost" disableButton.bind="disableButton" stationId="props.stationId" token="props.token"/>
-                            <button t-ref="button" class="btn btn-primary mt-3 w-100" disabled="disabled">Confirm</button>
+                            <Many2One value="state.hostName" update.bind="selectedHost" stationId="props.stationId" token="props.token"/>
+                            <button class="btn btn-primary mt-3 w-100" t-att-disabled="!state.hostName">Confirm</button>
                         </form>
                     </div>
                 </div>

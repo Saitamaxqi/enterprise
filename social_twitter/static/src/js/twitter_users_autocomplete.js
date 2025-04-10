@@ -25,8 +25,7 @@ export class TwitterUsersAutocompleteField extends CharField {
         this.value = "";
     }
 
-    async selectTwitterUser(selectedSubjection) {
-        const twitterUser = Object.getPrototypeOf(selectedSubjection);
+    async selectTwitterUser(twitterUser) {
         this.value = twitterUser.name;
         const twitterAccountId = await this.orm.call(
             'social.twitter.account',
@@ -55,7 +54,15 @@ export class TwitterUsersAutocompleteField extends CharField {
                     'twitter_get_user_by_username',
                     [[accountId], request]
                 );
-                return userInfo ? [userInfo] : [];
+                const options = [];
+                if (userInfo) {
+                    options.push({
+                        data: userInfo,
+                        label: `${userInfo.name} - @${userInfo.username}`,
+                        onSelect: () => this.selectTwitterUser(userInfo),
+                    });
+                }
+                return options;
             }
         }];
     }

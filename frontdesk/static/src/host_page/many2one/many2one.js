@@ -7,10 +7,10 @@ export class Many2One extends Component {
     static template = "frontdesk.Many2One";
     static components = { AutoComplete };
     static props = {
-        disableButton: Function,
         stationId: Number,
         token: String,
         update: Function,
+        value: String,
     };
 
     async loadOptionsSource(request) {
@@ -22,32 +22,11 @@ export class Many2One extends Component {
         }
         this.lastProm = this.search(request);
         const records = await this.lastProm;
-        if (!records.length) {
-            this.props.disableButton(true);
-        }
-        const options = records.map((result) => this.mapRecordToOption(result));
-        return options;
-    }
-
-    mapRecordToOption(result) {
-        return {
-            value: result[0],
-            label: result[1].split("\n")[0],
-            displayName: result[1],
-        };
-    }
-
-    /* This method triggers when a user select a option */
-    onSelect(option, params = {}) {
-        const record = {
-            id: option.value,
-            display_name: option.displayName,
-        };
-        if (record) {
-            this.props.disableButton(false);
-        }
-        params.input.value = option.displayName;
-        this.props.update(record);
+        return records.map(([id, display_name]) => ({
+            data: { id },
+            label: display_name.split("\n")[0],
+            onSelect: () => this.props.update({ id, display_name }),
+        }));
     }
 
     /* This method triggers when a user types in the input field */

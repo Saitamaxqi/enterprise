@@ -104,21 +104,16 @@
 
     <t t-name="social_twitter.TwitterUsersAutocompleteField" t-inherit="web.CharField">
         <xpath expr="//t[@t-else='']" position="replace">
-            <AutoComplete
-                autofocus="true"
-                value="value"
-                sources="sources"
-                onSelect.bind="selectTwitterUser"
-            >
+            <AutoComplete autofocus="true" value="value" sources="sources">
                 <t t-set-slot="option" t-slot-scope="optionScope">
                     <div t-attf-class="o_social_twitter_users_autocomplete_suggestion clearfix#{suggestion_index == 0 and ' active' or ''}">
-                        <img t-att-src="optionScope.option['profile_image_url']" alt="X Profile Image"/>
+                        <img t-att-src="optionScope.data['profile_image_url']" alt="X Profile Image"/>
                         <div class="o_twitter_users_autocomplete_info">
                             <strong><span class="o_twitter_users_autocomplete_info_name">
-                                <t t-esc="optionScope.option['name']" /> - @<t t-esc="optionScope.option['username']" />
+                                <t t-esc="optionScope.label" />
                             </span></strong>
                             <br/>
-                            <span><small t-esc="optionScope.option['description']" /></span>
+                            <span><small t-esc="optionScope.data['description']" /></span>
                         </div>
                     </div>
                 </t>
