@@ -1,7 +1,7 @@
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
-import { onWillUpdateProps, useComponent, useEffect, useState } from "@odoo/owl";
+import { onWillRender, onWillUpdateProps, useComponent, useEffect, useState } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
@@ -12,6 +12,7 @@ export const DocumentsRendererMixin = (component) =>
             this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord(), true);
             this.rightPanelState = useState(this.documentService.rightPanelReactive);
             this.component = useComponent();
+            this.refreshFocus = false;
 
             useCommand(
                 _t("Move to trash"),
@@ -48,7 +49,13 @@ export const DocumentsRendererMixin = (component) =>
 
             onWillUpdateProps((nextProps) => {
                 if (nextProps.list !== this.props.list) {
-                    this.documentService.focusRecord(this.getContainerRecord());
+                    this.refreshFocus = true;
+                }
+            });
+            onWillRender(() => {
+                if (this.refreshFocus) {
+                    this.refreshFocus = false;
+                    this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord());
                 }
             });
         }
