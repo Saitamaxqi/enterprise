@@ -4,7 +4,6 @@
 import logging
 
 from dateutil.relativedelta import relativedelta
-from psycopg2 import IntegrityError, OperationalError
 
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
@@ -135,12 +134,10 @@ class ExtractMixin(models.AbstractModel):
         This is meant to be used for batch uploading where we don't want that an error rollbacks the whole transaction.
         """
         try:
-            with self.env.cr.savepoint():
-                self.with_company(self.company_id)._upload_to_extract()
+            self.with_company(self.company_id)._upload_to_extract()
         except Exception as e:
-            if not isinstance(e, (IntegrityError, OperationalError)):
-                self.extract_state = 'error_status'
-                self.extract_status = 'error_internal'
+            self.extract_state = 'error_status'
+            self.extract_status = 'error_internal'
             self.env['iap.account']._send_error_notification(
                 message=self._get_iap_bus_notification_error(),
             )

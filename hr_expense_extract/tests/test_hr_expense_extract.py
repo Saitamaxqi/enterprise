@@ -333,11 +333,12 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
             self.env['hr.expense'].create_expense_from_attachments(attachment.ids)
 
+        self.env.cr.precommit.clear()  # Clear the tracking values
         expense = self.env['hr.expense'].search([('attachment_ids', '=', attachment.id)]).ensure_one()
         with self._mock_iap_extract(extract_response=self.get_result_success_response()):
             expense.check_all_status()
 
-        self.env.cr.flush()
+        self.env.cr.flush()  # Runs the precommit hooks to create the tracking message
         message = self.env['mail.message'].search([
             ('model', '=', 'hr.expense'),
             ('res_id', '=', expense.id),
