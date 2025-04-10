@@ -2850,23 +2850,23 @@ export class GanttRenderer extends Component {
         this.model.removeDependency(masterId, slaveId);
     }
     rescheduleAccordingToDependencyCallback(result) {
-        if (result["type"] !== "warning" && "old_vals_per_pill_id" in result) {
+        const isWarning = result.type === "warning";
+        if (!isWarning && "old_vals_per_pill_id" in result) {
             this.model.toggleHighlightPlannedFilter(
                 Object.keys(result["old_vals_per_pill_id"]).map(Number)
             );
         }
         this.notificationFn?.();
+        const icon = isWarning ? "fa-warning" : "fa-check";
         this.notificationFn = this.notificationService.add(
             markup(
-                `<i class="fa btn-link fa-check"></i><span class="ms-1">${escape(
-                    result["message"]
-                )}</span>`
+                `<i class="fa ${icon}"></i><span class="ms-1">${escape(result["message"])}</span>`
             ),
             {
                 type: result["type"],
                 sticky: true,
                 buttons:
-                    result.type === "warning" || !result.old_vals_per_pill_id
+                    isWarning || !result.old_vals_per_pill_id
                         ? []
                         : [
                               {

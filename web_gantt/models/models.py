@@ -197,16 +197,12 @@ class Base(models.AbstractModel):
 
         if not trigger_record._web_gantt_reschedule_is_record_candidate(start_date_field_name, stop_date_field_name):
             return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'type': 'warning',
-                    'message': _(
-                        "You cannot move %(record)s towards %(related_record)s.",
-                        record=trigger_record.name,
-                        related_record=related_record.name,
-                    ),
-                }
+                'type': 'warning',
+                'message': _(
+                    "You cannot move %(record)s towards %(related_record)s.",
+                    record=trigger_record.name,
+                    related_record=related_record.name,
+                ),
             }
 
         with self.env.cr.savepoint() as sp:
