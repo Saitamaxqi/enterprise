@@ -55,7 +55,7 @@ registry.category("web_tour.tours").add("l10n_mx_edi_pos.test_mx_pos_invoice_ord
             TicketScreen.selectOrder("0001"),
             ProductScreen.clickNumpad("1"),
             TicketScreen.confirmRefund(),
-            ProductScreen.clickPayButton(),
+            PaymentScreen.isShown(),
             {
                 content: "Usage: 'Returns, discounts or bonuses' should be selected",
                 trigger: "div.mx_invoice:contains('Returns, discounts or bonuses')",

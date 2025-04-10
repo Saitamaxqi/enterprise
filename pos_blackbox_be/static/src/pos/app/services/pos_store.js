@@ -178,9 +178,6 @@ patch(PosStore.prototype, {
     restrictLinePriceChange() {
         return this.useBlackBoxBe() || super.restrictLinePriceChange();
     },
-    doNotAllowRefundAndSales() {
-        return this.useBlackBoxBe() || super.doNotAllowRefundAndSales();
-    },
     async preSyncAllOrders(orders) {
         if (this.useBlackBoxBe() && orders.length > 0) {
             for (const order of orders) {

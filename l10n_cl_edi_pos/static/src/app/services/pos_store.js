@@ -14,9 +14,6 @@ patch(PosStore.prototype, {
     isChileanCompany() {
         return this.company.country_id?.code == "CL";
     },
-    doNotAllowRefundAndSales() {
-        return this.isChileanCompany() || super.doNotAllowRefundAndSales(...arguments);
-    },
     getSyncAllOrdersContext(orders, options = {}) {
         let context = super.getSyncAllOrdersContext(...arguments);
         if (this.isChileanCompany() && orders) {
