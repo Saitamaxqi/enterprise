@@ -10,6 +10,7 @@ export class DiscussChannel extends mailModels.DiscussChannel {
     whatsapp_channel_valid_until = fields.Datetime({
         default: () => serializeDateTime(DateTime.local().plus({ days: 1 })),
     });
+    wa_account_id = fields.Generic({ default: () => 1 });
 
     /**
      * @override
@@ -30,6 +31,10 @@ export class DiscussChannel extends mailModels.DiscussChannel {
                 whatsapp_partner_id: mailDataHelpers.Store.one(
                     ResPartner.browse(channel.whatsapp_partner_id),
                     makeKwArgs({ only_id: true })
+                ),
+                wa_account_id: mailDataHelpers.Store.one(
+                    this.env["whatsapp.account"].browse(channel.wa_account_id),
+                    makeKwArgs({ fields: ["name"] })
                 ),
             });
         }

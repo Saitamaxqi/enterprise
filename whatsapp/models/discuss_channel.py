@@ -301,7 +301,7 @@ class DiscussChannel(models.Model):
         return super()._to_store_defaults(for_current_user=for_current_user) + [
             "whatsapp_channel_valid_until",
             Store.One("whatsapp_partner_id", []),
-            Store.Attr("whatsapp_account_name", lambda channel: channel.wa_account_id.name),
+            Store.One("wa_account_id", ["name"]),
         ]
 
     def _types_allowing_seen_infos(self):

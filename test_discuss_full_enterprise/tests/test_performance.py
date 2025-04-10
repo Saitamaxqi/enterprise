@@ -58,7 +58,7 @@ old_expected_result_for_channel = TestDiscussFullPerformance._expected_result_fo
 def _expected_result_for_channel(self, channel):
     result = old_expected_result_for_channel(self, channel)
     result.update(
-        whatsapp_account_name=False,
+        wa_account_id=False,
         whatsapp_channel_valid_until=False,
         whatsapp_partner_id=False
     )

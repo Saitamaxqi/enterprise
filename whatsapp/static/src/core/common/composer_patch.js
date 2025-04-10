@@ -41,7 +41,7 @@ patch(Composer.prototype, {
                 return _t("Conversation closed.");
             }
             return _t("Answer as %(whatsapp_account_name)s", {
-                whatsapp_account_name: this.thread.whatsapp_account_name,
+                whatsapp_account_name: this.thread.wa_account_id.name,
             });
         }
         return super.placeholder;
