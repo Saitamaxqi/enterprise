@@ -874,6 +874,15 @@ class AccountMoveLine(models.Model):
             return predicted_account_id
         return False
 
+    def _predict_deductible_amount(self):
+        if self.account_id and self.partner_id and self.env.user.has_group('account.group_partial_purchase_deductibility'):
+            field = SQL('account_move_line.deductible_amount')
+            query = self._build_predictive_query(self.move_id, [('account_id', '=', self.account_id.id)])
+            predicted_deductible_amount = self._predicted_field(self.name, self.partner_id, field, query)
+            if predicted_deductible_amount and predicted_deductible_amount != self.deductible_amount:
+                return predicted_deductible_amount
+        return False
+
     @api.onchange('name')
     def _onchange_name_predictive(self):
         if ((self.move_id.quick_edit_mode or self.move_id.move_type == 'in_invoice') and self.name and self.display_type == 'product'
@@ -900,6 +909,11 @@ class AccountMoveLine(models.Model):
                 predicted_tax_ids = self._predict_taxes()
                 if predicted_tax_ids:
                     self.tax_ids = [Command.set(predicted_tax_ids)]
+
+            # Predict Deductibility
+            predicted_deductible_amount = self._predict_deductible_amount()
+            if predicted_deductible_amount:
+                self.deductible_amount = predicted_deductible_amount
 
     def _read_group_select(self, aggregate_spec, query):
         # Enable to use HAVING clause that sum rounded values depending on the

@@ -201,3 +201,45 @@ class TestBillsPrediction(AccountTestInvoicingCommon):
             'balance': 800.0,
             'tax_ids': self.tax_purchase_a.ids,
         }])
+
+    def test_deductible_amount_prediction(self):
+        default_account = self.company_data['default_journal_purchase'].default_account_id
+        bill_1 = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': self.test_partners[0].id,
+            'line_ids': [
+                Command.create({'name': "Laptop", 'deductible_amount': 80.0, 'account_id': default_account.id, 'quantity': 1, 'price_unit': 100.0}),
+                Command.create({'name': "T-shirt", 'deductible_amount': 50.0, 'account_id': default_account.id, 'quantity': 1, 'price_unit': 100.0}),
+                Command.create({'name': "T-shirt", 'deductible_amount': 60.0, 'account_id': default_account.id, 'quantity': 1, 'price_unit': 100.0}),
+            ],
+        })
+        bill_1.action_post()
+
+        bill_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
+        bill_form.partner_id = self.test_partners[0]
+        labels = ['Laptop', 'Laptops', 'Laptopp', 'T-shirt', 'Mobile']
+        for label in labels:
+            with bill_form.invoice_line_ids.new() as invoice_line_form:
+                invoice_line_form.name = label
+        bill_2 = bill_form.save()
+        self.assertRecordValues(bill_2.invoice_line_ids, [
+            {'name': 'Laptop', 'deductible_amount': 80.0},
+            {'name': 'Laptops', 'deductible_amount': 80.0},
+            {'name': 'Laptopp', 'deductible_amount': 100.0},
+            {'name': 'T-shirt', 'deductible_amount': 100.0},
+            {'name': 'Mobile', 'deductible_amount': 100.0},
+        ])
+
+        # Don't predict if the user is not having group `account.group_partial_purchase_deductibility`
+        self.env.user.group_ids -= self.env.ref('account.group_partial_purchase_deductibility')
+        bill_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
+        bill_form.partner_id = self.test_partners[0]
+        labels = ['Laptop', 'Laptops']
+        for label in labels:
+            with bill_form.invoice_line_ids.new() as invoice_line_form:
+                invoice_line_form.name = label
+        bill_3 = bill_form.save()
+        self.assertRecordValues(bill_3.invoice_line_ids, [
+            {'name': 'Laptop', 'deductible_amount': 100.0},
+            {'name': 'Laptops', 'deductible_amount': 100.0},
+        ])
