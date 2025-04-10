@@ -20,9 +20,16 @@ class WhatsAppApi:
         self.token = wa_account_id.sudo().token
         self.is_shared_account = False
 
-    def __api_requests(self, request_type, url, auth_type="", params=False, headers=None, data=False, files=False, endpoint_include=False):
+    def _check_allow_requests(self):
+        """Raise when attempting to make a request in tests.
+
+        Overridable to allow testing internals, if requests themselves are mocked.
+        """
         if modules.module.current_test:
             raise WhatsAppError("API requests disabled in testing.")
+
+    def __api_requests(self, request_type, url, auth_type="", params=False, headers=None, data=False, files=False, endpoint_include=False):
+        self._check_allow_requests()
 
         headers = headers or {}
         params = params or {}
@@ -36,26 +43,39 @@ class WhatsAppApi:
             headers.update({'Authorization': f'Bearer {self.token}'})
         call_url = (DEFAULT_ENDPOINT + url) if not endpoint_include else url
 
+        # Log the request details for debugging purposes if debug logging is enabled
+        if wa_account_id.debug_logging:
+            message = (
+                f"Type: {request_type}\n"
+                f"URL: {call_url}\n"
+                f"Data: {data}"
+            )
+            wa_account_id._add_ir_log('WA Api Call', message, '__api_requests')
         try:
-            # Log the request details for debugging purposes if debug logging is enabled
-            if wa_account_id.debug_logging:
-                message = (
-                    f"Type: {request_type}\n"
-                    f"URL: {call_url}\n"
-                    f"Data: {data}"
-                )
-                wa_account_id._add_ir_log('WA Api Call', message, '__api_requests')
             res = requests.request(request_type, call_url, params=params, headers=headers, data=data, files=files, timeout=(10, 30))
+        except requests.exceptions.RequestException:
+            raise WhatsAppError(failure_type='network')
+        else:
             # Log the response details for debugging purposes if debug logging is enabled
+            content_type = res.headers.get('Content-Type', '')
+            if content_type.startswith(("application/json", "text/")):
+                response_repr = res.text
+            else:
+                content_type = res.headers.get('Content-Type', 'application/octet-stream')
+                content_size = len(res.content)
+                response_repr = (
+                    f"[Binary Content]\n"
+                    f"Content-Type: {content_type}\n"
+                    f"Size: {content_size} bytes\n"
+                )
+
             if wa_account_id.debug_logging:
                 message = (
                     f"URL: {call_url}\n"
                     f"Status Code: {res.status_code}\n"
-                    f"Response Text: {res.text}"
+                    f"Response Text: {response_repr}"
                 )
                 wa_account_id._add_ir_log('WA Response', message, '__api_requests')
-        except requests.exceptions.RequestException:
-            raise WhatsAppError(failure_type='network')
 
         # raise if json-parseable and 'error' in json
         try:

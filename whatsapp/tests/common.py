@@ -8,6 +8,7 @@ import random
 import werkzeug
 
 from contextlib import contextmanager, nullcontext
+from requests import Response
 from unittest.mock import patch
 
 from odoo.addons.base.models.res_partner import ResPartner
@@ -128,6 +129,35 @@ class MockOutgoingWhatsApp(common.BaseCase):
         self._wa_document_store = {}
         self._wa_uploaded_document_count = 0
         self._wa_msg_sent_vals = []
+
+    @contextmanager
+    def mockWhatsappHTTPResponse(self, response_map):
+        """Mock request response when testing response handling."""
+        self._init_wa_http_mock()
+
+        def _make_request(request_type, call_url, params=None, headers=None, data=None, files=None, timeout=None):
+            response = Response()
+            response_vals = response_map.get(call_url)
+            content = response_vals['content']
+
+            response.status_code = response_vals.get('status_code', 200)
+            response._content = json.dumps(content).encode() if isinstance(content, dict) else content
+            response.headers['Content-Type'] = response_vals.get(
+                'content_type',
+                'application/json' if isinstance(content, dict) else 'application/octet-stream'
+            )
+
+            self._wa_http_requests.append({'call_url': call_url, 'response': response})
+            return response
+
+        with (
+            patch('requests.request', side_effect=_make_request),
+            patch('odoo.addons.whatsapp.tools.whatsapp_api.WhatsAppApi._check_allow_requests'),
+        ):
+            yield
+
+    def _init_wa_http_mock(self):
+        self._wa_http_requests = []
 
     @contextmanager
     def patchWhatsappCronTrigger(self):
