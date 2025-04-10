@@ -40,8 +40,8 @@
         .o_app_icon {
             width: $o-home-menu-app-icon-max-width;
             aspect-ratio: 1;
-            padding: 10px;
-            background-color: var(--AppSwitcherIcon-background, rgba(#fff, 1));
+            padding: $o-home-menu-app-icon-padding;
+            background-color: var(--AppSwitcherIcon-background, #{$o-home-menu-app-icon-background-color});
             object-fit: cover;
             transform-origin: center bottom;
             transition: box-shadow ease-in 0.1s, transform ease-in 0.1s;

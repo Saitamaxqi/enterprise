@@ -55,7 +55,7 @@
             <div class="o_web_studio_app_creator_right h-100 w-50 d-flex justify-content-center align-items-center rounded-end" t-if="state.step !== 'model_configuration'">
                 <div class="o_web_studio_app_creator_right_content">
                     <t t-if="state.step === 'welcome'">
-                        <img class="o_web_studio_welcome_image rounded-3 shadow" src="/web_studio/static/src/img/studio_app_icon.png"/>
+                        <img class="o_web_studio_welcome_image" src="/web_studio/static/description/icon.svg"/>
                     </t>
                     <IconCreator t-else=""
                         t-props="state.data.iconData"
