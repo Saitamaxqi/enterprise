@@ -98,9 +98,10 @@ class HrRuleParameter(models.Model):
             # Here we get the first value that is not in the future, i.e. the current value.
             for value_id in rule_parameter.parameter_version_ids:
                 if value_id.date_from <= fields.Date.today():
-                    rule_parameter.current_value = value_id.parameter_value
-                    is_number = value_id.parameter_value.replace('-', '').replace('.', '').isnumeric()
-                    rule_parameter.current_value_one_line = value_id.parameter_value if is_number else '(...)'
+                    parameter_value = value_id.parameter_value or ''
+                    rule_parameter.current_value = parameter_value
+                    is_number = parameter_value.replace('-', '').replace('.', '').isnumeric()
+                    rule_parameter.current_value_one_line = parameter_value if is_number else '(...)'
                     rule_parameter.valid_since = value_id.date_from
                     break
 
