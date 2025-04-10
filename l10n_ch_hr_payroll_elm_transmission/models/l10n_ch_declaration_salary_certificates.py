@@ -27,7 +27,7 @@ class L10nChSalaryCertificateDeclaration(models.Model):
         persons_to_rectify = False
         if self.tax_rectificate_type == "individual":
             persons_to_rectify = self.tax_rectificate_employee_ids.mapped('registration_number')
-        previous_declaration = self.previous_declaration.l10n_ch_declare_salary_data
+        previous_declaration = self.previous_declaration.l10n_ch_declare_salary_data or {}
         previous_staff = previous_declaration.get("Staff", {}).get("Person", [])
         for person in previous_staff:
             if not persons_to_rectify or person.get("Particulars", {}).get("EmployeeNumber") in persons_to_rectify:
