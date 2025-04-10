@@ -77,8 +77,10 @@ class MrpProduction(models.Model):
         action = self.env['ir.actions.actions']._for_xml_id('mrp_workorder.action_mrp_display')
         action['context'] = literal_eval(action['context']) | {
             'search_default_name': self.name,
+            'search_default_blocked': True,
             'shouldHideNewWorkcenterButton': True,
         }
+        del action['context']['search_default_filter_ready']
         return action
 
     @api.depends('workorder_ids', 'workorder_ids.employee_ids')

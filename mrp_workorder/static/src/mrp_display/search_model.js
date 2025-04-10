@@ -22,11 +22,6 @@ export class MrpDisplaySearchModel extends SearchModel {
                     string: _t("In Progress"),
                     isActive: !!args.search_default_progress,
                 },
-                {
-                    name: "done",
-                    string: _t("Finished"),
-                    isActive: !!args.search_default_done,
-                },
             ],
         });
         this.workorders = true;

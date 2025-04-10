@@ -17,7 +17,12 @@
         <field name="tag">mrp_display</field>
         <field name="target">fullscreen</field>
         <field name="res_model">mrp.production</field>
-        <field name="context">{'search_default_filter_ready': True, 'search_default_ready': True, 'search_default_progress': True, 'search_view_ref': 'mrp_workorder.view_mrp_production_filter_shop_floor'}</field>
+        <field name="context">{
+            'search_default_filter_ready': True,
+            'search_default_ready': True,
+            'search_default_progress': True,
+            'search_view_ref': 'mrp_workorder.view_mrp_production_filter_shop_floor'
+        }</field>
     </record>
 
     <!-- Manufacturing Order for Planing view -->
