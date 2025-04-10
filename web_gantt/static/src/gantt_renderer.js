@@ -195,6 +195,7 @@ export class GanttRenderer extends Component {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.notificationService = useService("notification");
+        this.orm = useService("orm");
         this.viewService = useService("view");
 
         this.keepLast = new KeepLast();

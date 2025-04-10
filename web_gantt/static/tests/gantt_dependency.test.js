@@ -558,6 +558,31 @@ test("Connector buttons: reschedule task forward, different data.", async () => 
     ]);
 });
 
+test("Connector buttons: reschedule task forward and undo.", async () => {
+    onRpc(({ method, model, args }) => {
+        if (
+            model === "project.task" &&
+            ["web_gantt_reschedule", "action_rollback_scheduling"].includes(method)
+        ) {
+            expect.step([method, args]);
+            return { old_vals_per_pill_id: { 1: { test: true }, 2: { foo: false } } };
+        }
+    });
+    await mountGanttView(ganttViewParams);
+
+    await clickConnectorButton(getConnector(1), "reschedule-forward");
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_notification .o_notification_buttons button").toHaveCount(1);
+    await contains(".o_notification .o_notification_buttons button i.fa-undo").click();
+    expect.verifySteps([
+        [
+            "web_gantt_reschedule",
+            ["forward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
+        ],
+        ["action_rollback_scheduling", [[1, 2], { 1: { test: true }, 2: { foo: false } }]],
+    ]);
+});
+
 test("Connectors are displayed behind pills, except on hover.", async () => {
     const getZIndex = (el) => Number(getComputedStyle(el).zIndex) || 0;
     await mountGanttView(ganttViewParams);
