@@ -60,7 +60,8 @@
                         <field name="planned_date_begin" widget="daterange" options="{'end_date_field': 'date_deadline', 'show_time': False, 'condensed': True}"/>
                     </t>
                 </div>
-                <field name="planning_overlap" class="text-danger mt-2 mb-0" invisible="not context.get('is_form_gantt', False)"/>
+                <field name="planning_overlap" class="text-danger o_planning_overlap"
+                    invisible="not context.get('is_form_gantt', False)"/>
             </field>
         </field>
     </record>
