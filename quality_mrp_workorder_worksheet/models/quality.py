@@ -25,9 +25,3 @@ class QualityCheck(models.Model):
     def action_fill_sheet(self):
         self.ensure_one()
         return self.action_quality_worksheet()
-
-    def action_open_quality_check_wizard(self, current_check_id=None):
-        res = super().action_open_quality_check_wizard(current_check_id=current_check_id)
-        if len(self) == 1 and self.test_type == 'worksheet' and self.workorder_id:
-            res['next_check_id'] = self._next()
-        return res
