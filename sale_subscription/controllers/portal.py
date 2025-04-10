@@ -216,7 +216,6 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'amount': order_sudo.amount_total,
             'partner_id': order_sudo.partner_id.id,
         }
-
         rendering_context = {
             **SalePortal._get_payment_values(self, order_sudo, is_subscription=True, subscription_anticipate=True),
             **portal_page_values,
@@ -413,7 +412,8 @@ class PaymentPortal(payment_portal.PaymentPortal):
                 amount_to_invoice = invoice_to_pay.amount_total if invoice_to_pay else order_sudo.amount_to_invoice
                 amount = amount or amount_to_invoice
             recurring_amount = sum(order_sudo.order_line.filtered(lambda l: l.recurring_invoice).mapped('price_total'))
-            tokenize = amount and recurring_amount and order_sudo.currency_id.compare_amounts(amount, recurring_amount) > 0
+            is_zero = order_sudo.currency_id.is_zero(amount or recurring_amount)
+            tokenize = not is_zero and amount and recurring_amount and order_sudo.currency_id.compare_amounts(amount, recurring_amount) >= 0
             kwargs.update({
                 'amount': amount,
                 'currency_id': order_sudo.currency_id.id,
