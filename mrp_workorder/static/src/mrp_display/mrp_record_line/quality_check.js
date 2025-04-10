@@ -62,7 +62,7 @@ export class QualityCheck extends MrpWorkorder {
             case "picture":
                 return this.passed ? "mw" : "fa fa-camera";
             case "instructions":
-                return this.passed ? "fa fa-check" : "fa fa-check text-white";
+                return this.passed ? "fa fa-undo" : "fa fa-check";
             case "print_label":
                 return "fa fa-print";
             case "register_production":
@@ -96,7 +96,12 @@ export class QualityCheck extends MrpWorkorder {
     clicked() {
         switch (this.type) {
             case "instructions":
-                return this.doActionAndNext("action_next");
+                if (this.isComplete) {
+                    this.props.record.data.quality_state = "none";
+                    return;
+                } else {
+                    return this.doActionAndNext("action_next");
+                }
             case "print_label":
                 return this.doActionAndNext("action_print");
             case "picture":
