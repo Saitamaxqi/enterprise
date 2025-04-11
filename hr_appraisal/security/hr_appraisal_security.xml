@@ -122,27 +122,55 @@
         <field name="groups" eval="[(4, ref('hr_appraisal.group_hr_appraisal_user'))]"/>
     </record>
 
-    <record id="hr_appraisal_goal_own" model="ir.rule">
-        <field name="name">Appraisal: An employee can see his own goals or his subordinates'</field>
+    <record id="hr_appraisal_goal_own_create" model="ir.rule">
+        <field name="name">Appraisal: An employee can create his own goals or his subordinates'</field>
         <field name="model_id" ref="model_hr_appraisal_goal"/>
         <field name="domain_force">[
+            ('employee_ids', '!=', False),
             '|',
-            '|',
-            '|',
-            '|',
-            ('is_manager', '=', True),
-            ('employee_ids.user_id', '=', user.id),
-            ('manager_ids.user_id', '=', user.id),
-            '&amp;',
-                ('employee_ids.parent_id', '!=', False),
-                ('employee_ids.parent_id.user_id', '=', user.id),
-            '&amp;',
-                ('employee_ids.last_appraisal_id.manager_ids.user_id', '=', user.id),
-                ('employee_ids.last_appraisal_id.state', 'in', ['1_new', '2_pending'])
+                '|',
+                    '|',
+                        '|',
+                            ('is_manager', '=', True),
+                            ('employee_ids.user_id', '=', user.id),
+                        ('manager_ids.user_id', '=', user.id),
+                    '&amp;',
+                        ('employee_ids.parent_id', '!=', False),
+                        ('employee_ids.parent_id.user_id', '=', user.id),
+                '&amp;',
+                    ('employee_ids.last_appraisal_id.manager_ids.user_id', '=', user.id),
+                    ('employee_ids.last_appraisal_id.state', 'in', ['1_new', '2_pending'])
         ]</field>
         <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="hr_appraisal_goal_template_own_write" model="ir.rule">
+        <field name="name">Appraisal: An employee can edit his own goals or his subordinates' (only goals without child)</field>
+        <field name="model_id" ref="model_hr_appraisal_goal"/>
+        <field name="domain_force">[
+            ('child_ids', '=', False),
+            ('employee_ids', '!=', False),
+            '|',
+                '|',
+                    '|',
+                        '|',
+                            ('is_manager', '=', True),
+                            ('employee_ids.user_id', '=', user.id),
+                        ('manager_ids.user_id', '=', user.id),
+                    '&amp;',
+                        ('employee_ids.parent_id', '!=', False),
+                        ('employee_ids.parent_id.user_id', '=', user.id),
+                '&amp;',
+                    ('employee_ids.last_appraisal_id.manager_ids.user_id', '=', user.id),
+                    ('employee_ids.last_appraisal_id.state', 'in', ['1_new', '2_pending'])
+        ]</field>
+        <field name="perm_create" eval="False"/>
         <field name="perm_write" eval="True"/>
-        <field name="perm_read" eval="True"/>
+        <field name="perm_read" eval="False"/>
         <field name="perm_unlink" eval="False"/>
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
     </record>
@@ -151,15 +179,23 @@
     <field name="name">Appraisal: An employee can delete his own goals,if he created it, or his subordinates'</field>
         <field name="model_id" ref="model_hr_appraisal_goal"/>
         <field name="domain_force">[
+            ('employee_ids', '!=', False),
             '|',
-            ('employee_ids.user_id', '!=', user.id),
-            '&amp;',
-                ('employee_ids.user_id', '=', user.id),
-                ('create_uid', '=', user.id)]</field>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_read" eval="False"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_unlink" eval="True"/>
+                '&amp;',
+                    ('employee_ids.user_id', '=', user.id),
+                    ('create_uid', '=', user.id),
+                '|',
+                    '&amp;',
+                        ('employee_ids.user_id', '!=', user.id),
+                        ('employee_ids.parent_id.user_id', '=', user.id),
+                    '&amp;',
+                        ('employee_ids.last_appraisal_id.manager_ids.user_id', '=', user.id),
+                        ('employee_ids.last_appraisal_id.state', 'in', ['1_new', '2_pending']),
+        ]</field>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
     </record>
     </data>

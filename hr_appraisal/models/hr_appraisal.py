@@ -524,8 +524,14 @@ class HrAppraisal(models.Model):
             'view_mode': 'kanban,list,form,graph',
             'res_model': 'hr.appraisal.goal',
             'type': 'ir.actions.act_window',
+            'views': [
+                (self.env.ref('hr_appraisal.hr_appraisal_goal_view_tree').id, 'list'),
+                (False, 'kanban'),
+                (self.env.ref('hr_appraisal.hr_appraisal_goal_view_form').id, 'form'),
+                (False, 'graph'),
+            ],
             'target': 'current',
-            'domain': [('employee_ids', '=', self.employee_id.id)],
+            'domain': [('employee_ids', '=', self.employee_id.id), ('child_ids', '=', False)],
             'context': {'default_employee_id': self.employee_id.id},
         }
 

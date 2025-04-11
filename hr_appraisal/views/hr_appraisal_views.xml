@@ -251,7 +251,7 @@
                 <filter string="Done" name="filter_done" domain="[('state', '=', '3_done')]"/>
                 <separator/>
                 <filter string="My Appraisals" name="my_appraisals" domain="[('employee_id.user_id', '=', uid)]"/>
-                <filter string="People I Manage" name="people_i_manage" domain="[('employee_id.parent_id.user_id', '=', uid)]" groups="hr_appraisal.group_hr_appraisal_user"/>
+                <filter string="My team" name="people_i_manage" domain="[('employee_id.parent_id.user_id', '=', uid)]" groups="hr_appraisal.group_hr_appraisal_user"/>
                 <separator />
                 <filter string="Creation Date" name="filter_create_date" date="create_date"/>
                 <filter string="Appraisal Date" name="filter_date_close" date="date_close"/>
@@ -276,6 +276,7 @@
                     <filter string='Employee' name="employee" icon="fa-user" domain="[]" context="{'group_by': 'employee_id'}"/>
                     <filter string='Department' name="group_by_department_id" context="{'group_by': 'department_id'}"/>
                     <filter string='Final Rating' name="group_by_assessment_note" context="{'group_by': 'assessment_note'}"/>
+                    <filter string='Job' name="groupby_job" context="{'group_by': 'job_id'}"/>
                     <filter name="groupby_state" context="{'group_by': 'state'}"/>
                     <filter string="Creation Date" name="groupby_create_date" context="{'group_by': 'create_date'}"/>
                     <filter name="groupby_date_close" context="{'group_by': 'date_close'}"/>

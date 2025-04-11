@@ -31,6 +31,7 @@ Key Features
         'wizard/request_appraisal_views.xml',
         'data/hr_appraisal_templates.xml',
         'views/hr_appraisal_views.xml',
+        'views/hr_appraisal_goal_template_views.xml',
         'views/hr_appraisal_goal_views.xml',
         'views/hr_appraisal_note_views.xml',
         'views/hr_department_views.xml',

@@ -22,7 +22,9 @@ class HrEmployee(models.Model):
     goals_count = fields.Integer(compute='_compute_goals_count', groups="hr.group_hr_user")
     appraisal_ids = fields.One2many('hr.appraisal', 'employee_id', groups="hr.group_hr_user")
     can_request_appraisal = fields.Boolean(compute='_compute_can_request_appraisal')
-
+    goals_ids = fields.Many2many(
+        'hr.appraisal.goal', 'hr_appraisal_goal_hr_employee_rel', 'hr_employee_id',
+        string="Goals", groups="hr.group_hr_user")
     parent_user_id = fields.Many2one(related='parent_id.user_id', string="Parent User")
     last_appraisal_id = fields.Many2one('hr.appraisal')
     last_appraisal_state = fields.Selection(related='last_appraisal_id.state')
@@ -101,13 +103,13 @@ class HrEmployee(models.Model):
             employee.ongoing_appraisal_count = result.get(employee.id, 0)
 
     def _compute_uncomplete_goals_count(self):
-        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_ids', 'in', self.ids), ('progression', '!=', '100')], ['employee_ids'], ['__count'])
+        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_ids', 'in', self.ids), ('progression', '!=', '100'), ('child_ids', '=', False)], ['employee_ids'], ['__count'])
         result = {employee.id: count for employee, count in read_group_result}
         for employee in self:
             employee.uncomplete_goals_count = result.get(employee.id, 0)
 
     def _compute_goals_count(self):
-        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_ids', 'in', self.ids)], ['employee_ids'], ['__count'])
+        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_ids', 'in', self.ids), ('child_ids', '=', False)], ['employee_ids'], ['__count'])
         result = {employee.id: count for employee, count in read_group_result}
         for employee in self:
             employee.goals_count = result.get(employee.id, 0)
@@ -159,7 +161,7 @@ class HrEmployee(models.Model):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id('hr_appraisal.action_hr_appraisal_goal')
         action.update({
-            'domain': [('employee_ids', '=', self.id)],
+            'domain': [('employee_ids', '=', self.id), ('child_ids', '=', False)],
             'context': {'default_employee_id': self.id},
         })
         return action

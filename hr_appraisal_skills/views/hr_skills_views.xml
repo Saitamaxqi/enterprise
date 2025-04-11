@@ -26,24 +26,24 @@
                                         width="100px"
                                         placeholder="Unknown"
                                         options="{'no_create': True}"/>
-                                <field name="level_progress" widget="progressbar" width="200px"/>
+                                <field name="level_progress" widget="progressbar" string="Current"/>
                                 <field name="target_job_skill_progress" widget="percentage"
                                     width="100px" invisible="not target_job_skill_progress"
                                     decoration-success="level_progress >= (target_job_skill_progress * 100)"
                                     decoration-danger="level_progress &lt; (target_job_skill_progress * 100)"
                                 />
-                                <field name="justification"/>
+                                <field name="justification" class="text-wrap"/>
                                 <field name="valid_from"
                                     invisible="not is_certification"
                                     optional="hidden"
-                                    width="100px"
-                                />
+                                    width="100px"/>
                                 <field name="valid_to"
                                     invisible="not is_certification"
                                     placeholder="infinite"
                                     optional="hidden"
-                                    width="100px"
-                                />
+                                    width="100px"/>
+                                <field name="goals_completion_percentage" widget="goal_progressbar" invisible="not goal_ids" context="{'default_employee_id': employee_id}"/>
+                                <button name="action_open_recommend_goals" class="oe_link" type="object" string="Recommend Goals" invisible="not number_of_recommended_goals"/>
                             </list>
                         </field>
                     </div>
@@ -61,7 +61,7 @@
 
     <menuitem
         id="menu_hr_appraisal_surveys"
-        name="Skills Type"
+        name="Skills"
         action="hr_skill_type_action_appraisal"
         parent="hr_appraisal.menu_hr_appraisal_configuration"
         sequence="6"

@@ -13,12 +13,15 @@
             <button role="button"
                 class="btn btn-secondary btn-sm ms-3 mt-2"
                 t-on-click="() => props.onAdd({ editable: false})"
-                t-if="isEditable and anySkills">
+                t-if="isEditable and anySkills and showTable">
                 Add new skills
             </button>
         </xpath>
 
         <xpath expr="//div[@name='skills_header']" position="replace"/>
+        <xpath expr="//div[@name='skills_available']/button" position="attributes">
+            <attribute name="t-on-click">() => props.onAdd({ editable: false})</attribute>
+        </xpath>
         <xpath expr="//div[@name='no_skills']/button" position="attributes">
             <attribute name="t-if">IsHrUser</attribute>
         </xpath>

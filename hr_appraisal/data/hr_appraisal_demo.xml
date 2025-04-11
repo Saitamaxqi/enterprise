@@ -467,6 +467,10 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">025</field>
+            <field name="tag_ids" eval="[Command.set([
+                ref('hr_appraisal_goal_tag_training'),
+                ref('hr_appraisal_goal_tag_external'),
+            ])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=8)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -475,6 +479,7 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">000</field>
+            <field name="tag_ids" eval="[Command.set([ref('hr_appraisal_goal_tag_programming')])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -483,14 +488,19 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_al')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="progression">000</field>
+            <field name="tag_ids" eval="[Command.set([
+                ref('hr_appraisal_goal_tag_training'),
+                ref('hr_appraisal_goal_tag_softskills'),
+            ])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_4" model="hr.appraisal.goal">
-            <field name="name">Exercices to imporove typing speed</field>
+            <field name="name">Exercises to improve typing speed</field>
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_al')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="progression">050</field>
+            <field name="tag_ids" eval="[Command.set([ref('hr_appraisal_goal_tag_training')])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=12)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -499,6 +509,7 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_al')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="progression">100</field>
+            <field name="tag_ids" eval="[Command.set([ref('hr_appraisal_goal_tag_training')])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -507,6 +518,7 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">050</field>
+            <field name="tag_ids" eval="[Command.set([ref('hr_appraisal_goal_tag_softskills')])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -515,6 +527,7 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">075</field>
+            <field name="tag_ids" eval="[Command.set([ref('hr_appraisal_goal_tag_internal')])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -523,6 +536,10 @@
             <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp'), ref('hr.employee_al')])]"/>
             <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin'), ref('hr.employee_qdp')])]"/>
             <field name="progression">025</field>
+            <field name="tag_ids" eval="[Command.set([
+                ref('hr_appraisal_goal_tag_programming'),
+                ref('hr_appraisal_goal_tag_hardskills'),
+            ])]"/>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=3)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -811,6 +828,105 @@
                 <strong>Handover to manage inside the team</strong>
                 <p><br/></p>
             </field>
+        </record>
+        <record id="hr_appraisal_goal_odoo_advanced" model="hr.appraisal.goal">
+            <field name="name">Odoo 18 Advanced</field>
+            <field name="tag_ids" eval="[
+                Command.set([
+                    ref('hr_appraisal.hr_appraisal_goal_tag_external'),
+                    ref('hr_appraisal.hr_appraisal_goal_tag_training'),
+                ])
+            ]"/>
+            <field name="usual_duration_month">6</field>
+            <field name="description" type="html">
+                <ul>
+                    <li>Deepen your expertise in Odoo 18 from a functional and business perspective.</li><br/>
+                    <li>Learn to design advanced workflows and optimize key business processes.</li><br/>
+                    <li>Master multi-company, multi-currency, and advanced reporting features.</li><br/>
+                    <li>Gain confidence in scoping client needs and proposing tailored Odoo solutions.</li><br/>
+                    <li>Ideal for sales and business analysts involved in solution design, demos, and implementations.</li>
+                </ul>
+            </field>
+        </record>
+
+        <record id="hr_appraisal_goal_odoo_advanced_training" model="hr.appraisal.goal">
+            <field name="name">Complete Odoo 18 Training Advanced</field>
+            <field name="tag_ids" eval="[
+                Command.set([
+                    ref('hr_appraisal.hr_appraisal_goal_tag_external'),
+                    ref('hr_appraisal.hr_appraisal_goal_tag_training'),
+                ])
+            ]"/>
+            <field name="usual_duration_month">3</field>
+            <field name="description" type="html">
+                <ul>
+                    <li>Deliver impactful, industry-specific Odoo demos</li><br/>
+                    <li>Understand and present key legal and fiscal features (e.g., e-invoicing, SEPA, VAT rules)</li><br/>
+                    <li>Configure and explain multi-company and multi-currency setups</li><br/>
+                    <li>Showcase advanced reporting and dashboards for decision-makers</li><br/>
+                    <li>Accurately scope client needs and propose tailored Odoo solutions</li>
+                </ul>
+            </field>
+            <field name="parent_id" ref="hr_appraisal.hr_appraisal_goal_odoo_advanced"/>
+        </record>
+
+        <record id="hr_appraisal_goal_project_management" model="hr.appraisal.goal">
+            <field name="name">Project Management Training</field>
+            <field name="tag_ids" eval="[
+                Command.set([
+                    ref('hr_appraisal.hr_appraisal_goal_tag_softskills'),
+                ])
+            ]"/>
+            <field name="usual_duration_month">1</field>
+            <field name="description">
+                Succeed to deliver 3 client project
+            </field>
+            <field name="parent_id" ref="hr_appraisal.hr_appraisal_goal_odoo_advanced"/>
+        </record>
+
+        <record id="hr_appraisal_goal_demo" model="hr.appraisal.goal">
+            <field name="name">Demo Training (approved by manager)</field>
+            <field name="tag_ids" eval="[
+                Command.set([
+                    ref('hr_appraisal.hr_appraisal_goal_tag_softskills'),
+                    ref('hr_appraisal.hr_appraisal_goal_tag_internal'),
+                ])
+            ]"/>
+            <field name="usual_duration_month">1</field>
+            <field name="description">
+                Do a big demo for a fictional client
+            </field>
+            <field name="parent_id" ref="hr_appraisal.hr_appraisal_goal_odoo_advanced"/>
+        </record>
+
+        <record id="hr_appraisal_goal_odoo_advanced_youtube_video" model="hr.appraisal.goal">
+            <field name="name">Watch Odoo Youtube Videos</field>
+            <field name="tag_ids" eval="[
+                Command.set([
+                    ref('hr_appraisal.hr_appraisal_goal_tag_external'),
+                    ref('hr_appraisal.hr_appraisal_goal_tag_training'),
+                ])
+            ]"/>
+            <field name="usual_duration_month">2</field>
+            <field name="description">
+                Watch all Odoo Youtube videos related to Odoo 18
+            </field>
+            <field name="parent_id" ref="hr_appraisal.hr_appraisal_goal_odoo_advanced_training"/>
+        </record>
+
+        <record id="hr_appraisal_goal_odoo_advanced_quizz" model="hr.appraisal.goal">
+            <field name="name">Get Odoo 18 Advanced Certification Quizz</field>
+            <field name="tag_ids" eval="[
+                Command.set([
+                    ref('hr_appraisal.hr_appraisal_goal_tag_internal'),
+                    ref('hr_appraisal.hr_appraisal_goal_tag_training'),
+                ])
+            ]"/>
+            <field name="usual_duration_month">1</field>
+            <field name="description">
+                Get Odoo 18 Advanced Certification
+            </field>
+            <field name="parent_id" ref="hr_appraisal.hr_appraisal_goal_odoo_advanced_training"/>
         </record>
     </data>
 </odoo>
