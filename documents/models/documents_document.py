@@ -2123,8 +2123,8 @@ class DocumentsDocument(models.Model):
                 )
                 accessible_folder_ids = {rec['id'] for rec in values}
                 for record in values:
-                    if record['folder_id'] not in accessible_folder_ids:
-                        record['folder_id'] = False  # consider them as roots
+                    if folder_id := record['folder_id']:
+                        record['folder_id'] = folder_id[0] if folder_id[0] in accessible_folder_ids else False
                 return {
                     'parent_field': 'folder_id',
                     'values': values,

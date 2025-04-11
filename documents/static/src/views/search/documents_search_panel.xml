@@ -15,7 +15,6 @@
 
     <t t-name="documents.SearchPanel.Category" t-inherit="web.SearchPanel.Category" t-inherit-mode="primary">
         <xpath expr="//li[hasclass('o_search_panel_category_value')]" position="attributes">
-            <attribute name="t-if">valueId || !this.env.model.config.context.active_model</attribute>
             <attribute name="class" add="pe-0" separator=" "/>
             <attribute name="t-att-class">{
                     'o_treeEntry' : isChildList,

@@ -282,6 +282,9 @@ export class DocumentsSearchModel extends SearchModel {
             return [['access_ids', 'any', [['partner_id', '=', user.partnerId], ['last_access_date', '!=', false]]]];
         }
         if (!folderCategory.activeValueId) {
+            if (this.context.documents_unique_folder_id) {
+                return [["id", "child_of", this.context.documents_unique_folder_id]];
+            }
             return [];
         }
         const folder = this.getSelectedFolder();
