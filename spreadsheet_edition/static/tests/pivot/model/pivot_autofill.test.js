@@ -346,6 +346,30 @@ test("Autofill pivot values with date in cols", async function () {
     expect(getPivotAutofillValue(model, "B3", { direction: "right", steps: 1 })).toBe(
         '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016,4,15))'
     );
+
+    setCellContent(model, "C1", '=PIVOT.HEADER(1,"date:day",DATE(2016,4,15))');
+    expect(getPivotAutofillValue(model, "C1", { direction: "bottom", steps: 1 })).toBe(
+        '=PIVOT.HEADER(1,"date:day",DATE(2016,4,15),"measure","probability:avg")'
+    );
+    expect(getPivotAutofillValue(model, "C1", { direction: "bottom", steps: 2 })).toBe(
+        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016,4,15))'
+    );
+});
+
+test("Autofill pivot values with date in cols and multiple cols", async (assert) => {
+    const { model } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+                <pivot>
+                    <field name="date" interval="month" type="col"/>
+                    <field name="product_id" type="col"/>
+                    <field name="tag_ids" type="row"/>
+                    <field name="probability" type="measure"/>
+                </pivot>`,
+    });
+    setCellContent(model, "H2", '=PIVOT.HEADER(1,"date:month","05/2016")');
+    expect(getPivotAutofillValue(model, "H2", { direction: "bottom", steps: 1 })).toBe("");
+    expect(getPivotAutofillValue(model, "H2", { direction: "bottom", steps: 2 })).toBe("");
+    expect(getPivotAutofillValue(model, "H2", { direction: "bottom", steps: 3 })).toBe("");
 });
 
 test("Autofill pivot values with date (day)", async function () {
