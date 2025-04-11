@@ -87,7 +87,12 @@
                                 </div>
                                 <div id="working_schedule">
                                     <strong class="me-2">Working Schedule:</strong>
-                                    <span t-field="o.version_id.hours_per_week"/> Hours / Week
+                                    <t t-if="o.version_id.resource_calendar_id.flexible_hours">
+                                        <span t-field="o.version_id.resource_calendar_id.full_time_required_hours"/> Hours / Week
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.version_id.hours_per_week"/> Hours / Week
+                                    </t>
                                 </div>
                             </td>
                         </tr>
