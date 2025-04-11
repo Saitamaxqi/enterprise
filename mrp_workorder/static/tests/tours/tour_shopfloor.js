@@ -5,14 +5,16 @@ import * as helper from "./running_tour_action_helper";
 
 registry.category("web_tour.tours").add("test_shop_floor", {
     steps: () => [
+        { trigger: "button:contains('Configure Station')", run: "click" },
         // Select the workcenter the first time we enter in shopfloor.
         ...stepUtils.addWorkcenterToDisplay("Jungle"),
+        ...stepUtils.addWorkcenterToDisplay("Savannah"),
         {
             trigger: "footer.modal-footer button.btn-primary",
             run: "click",
         },
         {
-            trigger: '.o_control_panel_actions button:contains("Jungle")',
+            trigger: '.o_control_panel button:contains("Jungle")',
         },
         // Select two employees: one by scanning her badge ID and one by clicking on him.
         ...stepUtils.openEmployeesList(),
@@ -35,11 +37,29 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         { trigger: ".o_mrp_employees_panel li:contains(Billy Demo).o_admin_user" },
         {
             content: "Go to workcenter Savannah from MO card",
-            trigger: '.o_mrp_record_line button span:contains("Savannah")',
+            trigger: '.o_mrp_record_line [class*=o_workcenter_item_]:contains("Savannah")',
             run: "click",
         },
         {
-            trigger: '.o_control_panel_actions button.active:contains("Savannah")',
+            trigger: '.o_control_panel button.active:contains("Savannah")',
+            run: () => {
+                helper.assertWorkOrderValues({
+                    index: 0,
+                    name: "WH/MO/00001 - Creation",
+                    product: "Giraffe",
+                    quantity: "2 Units",
+                    steps: [
+                        { label: "Register Production" },
+                        { label: "Instructions" },
+                        { label: "Leg", value: "8 Units" },
+                        { label: "WH/Stock", value: "8 Units" },
+                        { label: "Neck", value: "2 Units" },
+                        { label: "WH/Stock / NE1", value: "1 Units" },
+                        { label: "WH/Stock / NE2", value: "1 Units" },
+                        { label: "Release" },
+                    ],
+                });
+            },
         },
         {
             content: "Start the workorder on header click",
@@ -48,19 +68,33 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         },
         {
             content: "Register production check",
-            trigger: ".modal:not(.o_inactive_modal) .btn.fa-plus",
+            trigger: ".o_mrp_record_line:contains('Register Production') .btn-primary",
+            run: "click",
+        },
+        // Produced product's lot should be displayed and "Register Production" should be crossed.
+        { trigger: ".text-decoration-line-through:contains('Register Production')" },
+        { trigger: ".o_line_value:contains('0000001')" },
+
+        // Check the instruction then mark it as read.
+        { trigger: ".o_mrp_record_line:nth-child(2) .fa-info", run: "click" },
+        {
+            trigger: ".o_tablet_popups.o_worksheet_modal .o_tablet_instruction_note",
+            run: () => {
+                assert(this.anchor.innerText, "Create this giraffe with a lot of care !");
+            },
+        },
+        {
+            content: "Close the instruction popup",
+            trigger: ".o_tablet_popups.o_worksheet_modal .modal-header button.btn-close",
             run: "click",
         },
         {
-            content: "Validate production check",
-            trigger: '.modal:not(.o_inactive_modal) button:contains("Validate"):enabled',
+            content: "Mark the instruction as read",
+            trigger: ".o_web_client:not(.modal-open) .o_mrp_record_line:nth-child(2) .fa-info",
             run: "click",
         },
-        {
-            trigger:
-                '.modal:not(.o_inactive_modal):contains(Instructions) button[barcode_trigger="NEXT"]',
-            run: "scan OBTNEXT",
-        },
+        { trigger: ".o_web_client:not(.modal-open) .o_mrp_record_line:nth-child(2) .fa-undo" },
+        // TODO: Tour reworked until here, following code needs rework.
         {
             trigger: '.modal:not(.o_inactive_modal) .modal-title:contains("Register legs")',
         },
@@ -114,7 +148,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             run: "click",
         },
         {
-            trigger: '.o_control_panel_actions button:contains("Jungle")',
+            trigger: '.o_control_panel button:contains("Jungle")',
             run: "click",
         },
         {
@@ -269,10 +303,10 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
         { trigger: "input[name='Furnace']", run: "click" },
         { trigger: ".modal-footer button.btn-primary", run: "click" },
         {
-            trigger: ".o_control_panel_actions button:nth-child(3)",
+            trigger: ".o_control_panel button:nth-child(3)",
             run: () => {
                 const selectionButtons = document.querySelectorAll(
-                    ".o_control_panel_actions button.text-nowrap"
+                    ".o_control_panel button.text-nowrap"
                 );
                 assert(selectionButtons.length, 3, "Three WC buttons should be visible");
             },
@@ -280,11 +314,11 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
         // Exit the Shop Floor and re-open it.
         { trigger: ".o_home_menu", run: "click" },
         { trigger: ".o_menuitem[href='/odoo/shop-floor']", run: "click" },
-        { trigger: ".o_control_panel_actions button:first-child.active" },
-        { trigger: ".o_control_panel_actions button:nth-child(2):not(.active)" },
-        { trigger: ".o_control_panel_actions button:nth-child(3):not(.active)" },
+        { trigger: ".o_control_panel button:first-child.active" },
+        { trigger: ".o_control_panel button:nth-child(2):not(.active)" },
+        { trigger: ".o_control_panel button:nth-child(3):not(.active)" },
 
-        { trigger: ".o_control_panel_actions button.fa-plus", run: "click" },
+        { trigger: ".o_control_panel button.fa-plus", run: "click" },
         { trigger: ".o_mrp_workcenter_dialog" },
         { trigger: "input[name='All MO']", run: "click" },
         { trigger: "input[name='My WO']", run: "click" },
@@ -297,13 +331,13 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
             trigger: ".o_action.o_mrp_display",
             run: () => {
                 const selectedWC = document.querySelector(
-                    ".o_control_panel_actions button:first-child.active"
+                    ".o_control_panel button:first-child.active"
                 );
                 assert(selectedWC.innerText.includes("Preparation Table 1"), true);
             },
         },
         // Unselect WCs then re-select them to change the order ("All MO" will be first.)
-        { trigger: ".o_control_panel_actions button.fa-plus", run: "click" },
+        { trigger: ".o_control_panel button.fa-plus", run: "click" },
         { trigger: ".o_mrp_workcenter_dialog" },
         { trigger: "input[name='Preparation Table 1']", run: "click" },
         { trigger: "input[name='Preparation Table 2']", run: "click" },
@@ -311,7 +345,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
         { trigger: ".modal-footer button.btn-primary", run: "click" },
 
         { trigger: ".o_web_client:not(.modal-open)" },
-        { trigger: ".o_control_panel_actions button.fa-plus", run: "click" },
+        { trigger: ".o_control_panel button.fa-plus", run: "click" },
         { trigger: ".o_mrp_workcenter_dialog" },
         { trigger: "input[name='Preparation Table 1']", run: "click" },
         { trigger: "input[name='Preparation Table 2']", run: "click" },
@@ -321,9 +355,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
         {
             trigger: ".o_web_client:not(.modal-open)",
             run: () => {
-                const firstButton = document.querySelector(
-                    ".o_control_panel_actions button:first-child"
-                );
+                const firstButton = document.querySelector(".o_control_panel button:first-child");
                 assert(firstButton.innerText.includes("All MO"), true);
             },
         },
@@ -335,14 +367,14 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
             trigger: ".o_action.o_mrp_display",
             run: () => {
                 const selectedWC = document.querySelector(
-                    ".o_control_panel_actions button:first-child.active"
+                    ".o_control_panel button:first-child.active"
                 );
                 assert(selectedWC.innerText.includes("All MO"), true);
             },
         },
         // Check the MO is visible now but won't be once "Preparation Table 2" will be selected.
         { trigger: ".o_mrp_display_record .o_mrp_record_line:contains('Prepare the pizza')" },
-        { trigger: ".o_control_panel_actions button.fa-plus", run: "click" },
+        { trigger: ".o_control_panel button.fa-plus", run: "click" },
         { trigger: ".o_mrp_workcenter_dialog" },
         { trigger: "input[name='All MO']", run: "click" },
         { trigger: "input[name='My WO']", run: "click" },
@@ -355,7 +387,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
             trigger: ".o_view_nocontent .o_nocontent_help",
             run: () => {
                 const selectedWC = document.querySelector(
-                    ".o_control_panel_actions button:first-child.active"
+                    ".o_control_panel button:first-child.active"
                 );
                 assert(selectedWC.innerText.includes("Preparation Table 2"), true);
             },
@@ -372,11 +404,11 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
             trigger: ".o_action.o_mrp_display",
             run: () => {
                 const selectedWC = document.querySelector(
-                    ".o_control_panel_actions button:first-child.active"
+                    ".o_control_panel button:first-child.active"
                 );
                 assert(selectedWC.innerText.includes("Furnace"), true);
                 const selectionButtons = document.querySelectorAll(
-                    ".o_control_panel_actions button.text-nowrap"
+                    ".o_control_panel button.text-nowrap"
                 );
                 assert(selectionButtons.length, 1, "Only one WC buttons should be visible");
             },
@@ -393,7 +425,7 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         { trigger: 'input[name="Winter\'s Workshop"]:checked' },
         { trigger: "footer.modal-footer button.btn-primary", run: "click" },
         // Open the employee panel and select first and second employees.
-        { trigger: '.o_control_panel_actions button:contains("Winter\'s Workshop")' },
+        { trigger: '.o_control_panel button:contains("Winter\'s Workshop")' },
         { trigger: 'button[name="employeePanelButton"]', run: "click" },
         { trigger: "button:contains('Operator')", run: "click" },
         { trigger: ".modal-body td.o_data_cell:contains('John Snow')", run: "click" },
@@ -405,7 +437,7 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         { trigger: ".o_mrp_employees_panel .o_admin_user:contains('Queen Elsa')" },
         {
             content: "Display right Workcenter",
-            trigger: '.o_control_panel_actions button:contains("Winter\'s Workshop")',
+            trigger: '.o_control_panel button:contains("Winter\'s Workshop")',
             run: "click",
         },
         { trigger: 'button:contains("Winter\'s Workshop").active' },
@@ -426,12 +458,12 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         { trigger: ".o_mrp_display_record:contains('TEST/00002').o_active" },
         {
             content: 'Display "My WO" workorders',
-            trigger: ".o_control_panel_actions button:contains('My WO')",
+            trigger: ".o_control_panel button:contains('My WO')",
             run: "click",
         },
         // Check the right WO is displayed.
         {
-            trigger: ".o_control_panel_actions button:contains(My WO).active",
+            trigger: ".o_control_panel button:contains(My WO).active",
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div.fw-bold");
                 assert(currentEmployeeEl.innerText, "John Snow");
@@ -617,7 +649,7 @@ registry.category("web_tour.tours").add("test_mrp_manual_consumption_in_shopfloo
             run: "click",
         },
         {
-            trigger: ".o_control_panel_actions button.active:contains('Nuclear Workcenter')",
+            trigger: ".o_control_panel button.active:contains('Nuclear Workcenter')",
         },
         {
             trigger: ".o_finished_product span:contains('Finish')",

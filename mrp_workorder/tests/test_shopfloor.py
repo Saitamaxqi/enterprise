@@ -31,6 +31,17 @@ class TestShopFloor(HttpCase):
         # Add some properties for commonly used in tests records.
         self.warehouse = self.env['stock.warehouse'].search([], limit=1)
         self.stock_location = self.warehouse.lot_stock_id
+        # Create new sequence specific for test to always have the same MO names
+        # regardless the number of time tests are runned.
+        mo_sequence = self.env['ir.sequence'].create({
+            'name': 'Test MO Sequence',
+            'padding': 5,
+            'prefix': f'{self.warehouse.code}/{self.warehouse.manu_type_id.sequence_code}/',
+        })
+        self.warehouse.manu_type_id.sequence_id = mo_sequence
+        # Reset LN/SN sequence for the same reason.
+        stock_lot_seq = self.env['ir.sequence'].search([('code', '=', 'stock.lot.serial')])
+        stock_lot_seq.number_next_actual = 1
 
     @unittest.skip  # TODO: tour needs to be updated.
     def test_shop_floor(self):
@@ -115,6 +126,7 @@ class TestShopFloor(HttpCase):
                 'title': 'Instructions',
                 'test_type_id': self.env.ref('quality.test_type_instructions').id,
                 'sequence': 1,
+                'note': "Create this giraffe with a lot of care !",
             },
             {
                 **steps_common_values,

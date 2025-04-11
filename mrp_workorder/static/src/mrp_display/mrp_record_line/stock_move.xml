@@ -3,15 +3,17 @@
     <t t-name="mrp_workorder.StockMove">
         <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center cursor-pointer"
             t-on-click="onClick">
-            <span class="text-truncate" t-att-class="isComplete ? 'text-decoration-line-through opacity-25' : ''" t-out="label"/>
+            <span class="o_line_label text-truncate"
+                  t-att-class="isComplete ? 'text-decoration-line-through opacity-25' : ''"
+                  t-out="label"/>
             <div>
-                <span class="me-1 fw-bold" t-att-class="{
+                <span class="o_line_value me-1 fw-bold" t-att-class="{
                     'text-danger': quantityDone > toConsumeQuantity
                 }">
                     <t t-if="(quantityDone || isComplete) &amp;&amp; quantityDone !== toConsumeQuantity">
-                    <t t-out="quantityDone"/> / </t>
-                    <t t-esc="toConsumeQuantity"/>
-                <span class="ms-1" t-esc="uom"/>
+                        <t t-out="quantityDone"/> /
+                    </t>
+                    <t t-esc="toConsumeQuantity"/> <t t-esc="uom"/>
                 </span>
                 <button t-if="hasInstruction" t-on-click.stop="showWorksheet" class="btn btn-lg btn-outline-secondary fa fa-info me-1"
                         t-att-class="{'d-none': !props.clickable}"/>
@@ -23,13 +25,13 @@
         </li>
         <li t-foreach="visibleMoveLines" t-as="line" t-key="line.resId" t-on-click="() => this.editQuantity(line)"
             class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center cursor-pointer">
-            <span class="text-truncate ms-4">
+            <span class="o_line_label text-truncate ms-4">
                 <t t-if="line.data.location_id" t-out="line.data.location_id[1]"/>
                 <t t-if="line.data.location_id &amp;&amp; line.data.lot_id"> / </t>
                 <t t-if="line.data.lot_id" t-out="line.data.lot_id[1]"/>
             </span>
             <div>
-                <span class="me-1 fw-bold" t-out="line.data.quantity + ' ' + uom"/>
+                <span class="o_line_value me-1 fw-bold" t-out="line.data.quantity + ' ' + uom"/>
                 <button class="btn btn-outline-secondary" t-att-class="{'d-none': !props.clickable}">
                     <i class="fa fa-pencil"/>
                 </button>
