@@ -113,9 +113,8 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
 
     def action_generate_export(self):
         self.ensure_one()
-        options = self.env.context.get("l10n_it_xml_export_monthly_tax_report_options", {})
-        if not options:
-            _dummy, options = self.env['account.move'].browse(self.env.context['active_id'])._get_report_options_from_tax_closing_entry()
+        move = self.env[self._context['active_model']].browse(self._context['active_id'])
+        options = move._get_tax_closing_report_options(move.company_id, move.fiscal_position_id, move.tax_closing_report_id, move.date)
         options.update(self._get_wizard_field_dict())
         return {
             'type': 'ir_actions_account_report_download',
