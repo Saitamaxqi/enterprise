@@ -21,7 +21,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.groups_id |= cls.env.ref('hr.group_hr_manager')
+        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_manager')
         cls.env['l10n_au.stp'].search([]).unlink()
         cls.env['ir.sequence'].create({
             'name': 'STP Sequence',

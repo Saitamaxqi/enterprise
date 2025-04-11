@@ -135,7 +135,8 @@ class L10n_AuPayslipYtd(models.Model):
         ote_work_entry_type_ids = self.env["hr.work.entry.type"].search([
             ("l10n_au_is_ote", "=", True)
         ]).ids
-        opening_balances = self.env["l10n_au.payslip.ytd.input"].read_group([
+        opening_balances = self.env["l10n_au.payslip.ytd.input"]._read_group(
+            domain=[
                 ("l10n_au_payslip_ytd_id.employee_id", "in", employee_ids),
                 ("l10n_au_payslip_ytd_id.start_date", "=", start_date),
                 '|',
@@ -146,11 +147,11 @@ class L10n_AuPayslipYtd(models.Model):
                         ('res_model', '=', 'hr.work.entry.type'),
                         ('res_id', 'in', ote_work_entry_type_ids)
             ],
-            ["ytd_amount:sum"],
-            ["employee_id"],
+            groupby=["employee_id"],
+            aggregates=["ytd_amount:sum"],
         )
-        opening_balances = {r["employee_id"][0]: r["ytd_amount"] for r in opening_balances}
-        res = defaultdict(float, opening_balances)
+
+        res = defaultdict(float, {r[0].id: r[1] for r in opening_balances})
         rtw_lines = self.search_read([
                 ("employee_id", "in", employee_ids),
                 ("start_date", "=", start_date),
