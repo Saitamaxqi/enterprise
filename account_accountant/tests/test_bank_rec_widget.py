@@ -126,7 +126,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'auto_balance',  'account_id': rec_account_id, 'balance': -1000.0},
         ])
 
-        partner._increase_rank('supplier_rank', 1)
+        partner.sudo().supplier_rank += 1
         wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
         self.assertRecordValues(wizard.line_ids, [
             # pylint: disable=C0326
