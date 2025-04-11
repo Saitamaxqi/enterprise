@@ -7,7 +7,7 @@
             <list>
                 <field name="month"/>
                 <field name="year" options="{'type': 'number'}"/>
-                <field name="export_report_type" string="Report Type"/>
+                <field name="export_report_type"/>
             </list>
         </field>
     </record>

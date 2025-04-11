@@ -28,8 +28,8 @@ class HrESICReport(models.Model):
     month = fields.Selection(MONTH_SELECTION, default=lambda self: str(datetime.today().month), required=True)
     year = fields.Selection(selection='_get_year_selection', required=True, default=lambda self: str(datetime.now().year))
     export_report_type = fields.Selection(
-        [('esi', 'ESI Summary Report'), ('esic', 'ESIC Report')],
-        default='esi', required=True, string="Export Report Name"
+        [('esi', 'ESI Summary'), ('esic', 'ESIC')],
+        default='esi', required=True, string="Report Type"
     )
     period_has_payslips = fields.Boolean(compute='_compute_period_has_payslips')
     xlsx_file = fields.Binary(string="Generated File")
