@@ -93,7 +93,7 @@
         <field name="name">Tasks Analysis</field>
         <field name="res_model">report.project.task.user.fsm</field>
         <field name="path">field-service-tasks-analysis</field>
-        <field name="domain">[]</field>
+        <field name="domain">[('project_id.is_fsm', '=', True)]</field>
         <field name="view_mode">graph,pivot</field>
         <field name="search_view_id" ref="industry_fsm.report_project_task_user_fsm_view_search"/>
         <field name="context">{
