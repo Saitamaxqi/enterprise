@@ -298,12 +298,11 @@ class HelpdeskTicket(models.Model):
     @api.depends('partner_id', 'partner_email', 'partner_phone')
     def _compute_partner_ticket_count(self):
         for ticket in self:
-            partner_tickets = self.search([("partner_id", "child_of", ticket.partner_id.commercial_partner_id.id)]) if ticket.partner_id else ticket
+            partner_tickets = self.search_fetch([("partner_id", "child_of", ticket.partner_id.commercial_partner_id.id)], ['fold']) if ticket.partner_id else ticket
             ticket.partner_ticket_ids = partner_tickets
             partner_tickets = partner_tickets - ticket._origin
             ticket.partner_ticket_count = len(partner_tickets) if partner_tickets else 0
-            partner_tickets.fetch(['stage_id'])  # prevent over-fetching fields, leading to potential out-of-memory error
-            open_ticket = partner_tickets.filtered(lambda ticket: not ticket.stage_id.fold)
+            open_ticket = partner_tickets.filtered(lambda ticket: not ticket.fold)
             ticket.partner_open_ticket_count = len(open_ticket)
 
     @api.depends('assign_date')
