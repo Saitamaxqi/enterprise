@@ -30,3 +30,26 @@ class ProductProduct(models.Model):
         }
         for product in service_products:
             product.is_booking_fee = has_appointment_type_per_product.get(product.id, False)
+
+    def _can_return_content(self, field_name=None, access_token=None):
+        """ Override of `orm` to give public users access to the unpublished product image.
+
+        Give access to the public users to the unpublished product images if they are linked to an
+        appointement type.
+
+        :param field_name: The name of the field to check.
+        :param access_token: The access token.
+        :return: Whether to allow the access to the image.
+        :rtype: bool
+        """
+        if (
+            field_name in ["image_%s" % size for size in [1920, 1024, 512, 256, 128]]
+            and self.sudo().is_booking_fee
+        ):
+            return True
+        return super()._can_return_content(field_name, access_token)
+
+    def _get_product_placeholder_filename(self):
+        if self.sudo().is_booking_fee:
+            return 'appointment_account_payment/static/src/img/booking_product.png'
+        return super()._get_product_placeholder_filename()
