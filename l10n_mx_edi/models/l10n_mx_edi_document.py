@@ -2306,7 +2306,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if not from_cron:
             results.extend([
                 [
-                    ('state', 'in', ('invoice_sent', 'payment_sent')),
+                    ('state', 'in', ('invoice_sent', 'invoice_cancel_requested', 'payment_sent')),
                     ('move_id.l10n_mx_edi_cfdi_state', '=', 'sent'),
                     ('sat_state', '=', 'valid'),
                 ],
