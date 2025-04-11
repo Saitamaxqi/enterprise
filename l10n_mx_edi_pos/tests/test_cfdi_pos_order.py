@@ -616,3 +616,20 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                 self.url_open(f'/pos/ticket/validate?access_token={pos_order.access_token}', data=get_invoice_data)
 
             self._assert_invoice_cfdi(pos_order.account_move, 'test_pos_order_then_invoice_request')
+
+    def test_pos_combine_payment_l10n_mx_edi_payment_method(self):
+        """
+        Test that the l10n_mx_edi_payment_method_id is well computed on the payment created from a POS order
+        """
+        # set another payment method than payment_method_transferencia, which is the default value for payment
+        payment_method_electronico = self.env.ref('l10n_mx_edi.payment_method_monedero_electronico')
+        self.bank_pm1.l10n_mx_edi_payment_method_id = payment_method_electronico
+
+        with self.mx_external_setup(self.frozen_today), self.with_pos_session() as session:
+            self._create_order({
+                'pos_order_lines_ui_args': [(self.product, 1)],
+                'payments': [(self.bank_pm1, 1160.0)],
+            })
+
+        payment = self.env['account.payment'].search([('pos_session_id', '=', session.id)])
+        self.assertEqual(payment.l10n_mx_edi_payment_method_id, payment_method_electronico)
