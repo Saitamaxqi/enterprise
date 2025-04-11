@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Switzerland - Payroll with Accounting',
+    'name': 'Switzerland - Payroll with Accounting (ELM Transmission)',
     'icon': '/account/static/description/l10n.png',
     'author': 'Odoo',
     'version': '1.0',
