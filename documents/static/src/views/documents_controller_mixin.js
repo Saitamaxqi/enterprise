@@ -39,6 +39,7 @@ export const DocumentsControllerMixin = (component) =>
             const selectionCount = this.targetRecords.length;
             const singleSelection = selectionCount === 1 && this.targetRecords[0];
             const embeddedActions = this.getEmbeddedActions();
+            const userIsInternal = this.documentService.userIsInternal;
             return {
                 ...embeddedActions,
                 download: {
@@ -50,7 +51,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 1,
                 },
                 share: {
-                    isAvailable: () => singleSelection,
+                    isAvailable: () => userIsInternal && singleSelection,
                     sequence: 51,
                     description: _t("Share"),
                     icon: "fa fa-share",
