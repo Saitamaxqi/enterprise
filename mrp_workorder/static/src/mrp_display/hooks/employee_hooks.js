@@ -4,7 +4,6 @@ import { browser } from "@web/core/browser/browser";
 import { PinPopup } from "@mrp_workorder/components/pin_popup";
 import { DialogWrapper } from "@mrp_workorder/components/dialog_wrapper";
 import { useState } from "@odoo/owl";
-import { MrpEmployeeDialog } from "@mrp_workorder/mrp_display/dialog/mrp_employee_dialog";
 
 export function useConnectedEmployee(controllerType, context, actionService, dialogService) {
     const orm = useService("orm");
