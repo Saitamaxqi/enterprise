@@ -16,12 +16,13 @@ class ResourceCalendarInherit(models.Model):
         leave_data = self.env['hr.leave'].search([
             ('employee_id', '=', leave.resource_id.employee_id.id),
             ('request_date_from', '=', leave.date_from),
-            ('request_date_to', '=', leave.date_to)
+            ('request_date_to', '=', leave.date_to),
+            ('state', '!=', 'refuse'),
+            ('request_unit_half', '=', True),
         ])
-        
         # Check if the leave contains a half-day granularity
         tz = dt0.tzinfo
-        if leave_data and leave_data.request_unit_half and leave_data.request_date_from_period:
+        if len(leave_data) == 1 and leave_data.request_date_from_period:
             if leave_data.request_date_from_period == 'am':
                 dt0 = datetime.combine(dt0.date(), time.min).replace(tzinfo=tz)
                 dt1 = datetime.combine(dt1.date(), time.min).replace(hour=12, tzinfo=tz)

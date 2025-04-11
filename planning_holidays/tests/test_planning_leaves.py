@@ -237,7 +237,7 @@ class TestPlanningLeaves(TestCommon):
             'state': 'confirm',
         })
         leave_am.sudo().action_validate()
-    
+
         start_dt_am = datetime.datetime(2025, 3, 5, 0, 0, 0, tzinfo=utc)
         end_dt_am = datetime.datetime(2025, 3, 5, 12, 0, 0, tzinfo=utc)
 
@@ -270,3 +270,82 @@ class TestPlanningLeaves(TestCommon):
         interval_pm = intervals_list_pm[0]
         self.assertEqual(interval_pm[0], datetime.datetime(2025, 3, 6, 12, 0, 0, tzinfo=utc), "The start of the interval should be 12:00:00")
         self.assertEqual(interval_pm[1], end_dt_pm, "The end of the interval should be 23:59:59.999999")
+
+    def test_multiple_leaves_with_one_refusal_and_approval(self):
+        """
+        Test by creating 2 leaves for same date and same employee
+        having a resource calendar of flexible hours with state of
+        one refused and another approved.
+        """
+        self.employee_bert.resource_calendar_id = self.env['resource.calendar'].create({
+            'name': 'Flex Calendar',
+            'tz': 'UTC',
+            'flexible_hours': True,
+            'hours_per_day': 8,
+            'attendance_ids': [],
+        })
+        self.env['hr.leave'].sudo().create({
+            'holiday_status_id': self.leave_type.id,
+            'employee_id': self.employee_bert.id,
+            'request_date_from': '2020-1-6',
+            'request_date_to': '2020-1-7',
+        }).action_refuse()
+        self.env['hr.leave'].sudo().create({
+            'holiday_status_id': self.leave_type.id,
+            'employee_id': self.employee_bert.id,
+            'request_date_from': '2020-1-6',
+            'request_date_to': '2020-1-7',
+        }).action_validate()
+
+        slot_1 = self.env['planning.slot'].create({
+            'resource_id': self.resource_bert.id,
+            'start_datetime': datetime.datetime(2020, 1, 6, 8, 0),
+            'end_datetime': datetime.datetime(2020, 1, 6, 17, 0),
+        })
+
+        self.assertEqual(slot_1.leave_warning,
+                         "bert is on time off from 01/06/2020 to 01/07/2020. \n")
+
+    def test_two_half_day_off_leaves_on_same_day_of_flexible_resource(self):
+        """
+        Test half-day off leave for a flexible resource.
+        The leave intervals should be set to 00:00:00 - 23:59:59
+        if 2 half-day offs on the same day(am and pm).
+        """
+        flexible_calendar = self.env['resource.calendar'].create({
+            'name': 'Flex Calendar',
+            'tz': 'UTC',
+            'flexible_hours': True,
+            'hours_per_day': 8,
+            'attendance_ids': [],
+        })
+        self.employee_bert.resource_calendar_id = flexible_calendar
+        leave_am, leave_pm = self.env['hr.leave'].sudo().create([
+            {
+                'name': 'AM Half Day Off',
+                'employee_id': self.employee_bert.id,
+                'holiday_status_id': self.leave_type.id,
+                'request_date_from': '2025-04-30',
+                'request_date_to': '2025-04-30',
+                'request_unit_half': True,
+                'request_date_from_period': 'am',
+                'state': 'confirm',
+            }, {
+                'name': 'PM Half Day Off',
+                'employee_id': self.employee_bert.id,
+                'holiday_status_id': self.leave_type.id,
+                'request_date_from': '2025-04-30',
+                'request_date_to': '2025-04-30',
+                'request_unit_half': True,
+                'request_date_from_period': 'pm',
+                'state': 'confirm',
+            },
+        ])
+        leave_am.sudo().action_validate()
+        leave_pm.sudo().action_validate()
+        start_dt = datetime.datetime(2025, 4, 30, 0, 0, 0, tzinfo=utc)
+        end_dt = datetime.datetime(2025, 4, 30, 23, 59, 59, 999999, tzinfo=utc)
+        intervals = flexible_calendar._leave_intervals_batch(start_dt, end_dt, [self.employee_bert.resource_id])
+        interval = next(iter(intervals[self.employee_bert.resource_id.id]))
+        self.assertEqual(interval[0], datetime.datetime(2025, 4, 30, 0, 0, 0, tzinfo=utc), "The start of the interval should be 00:00:00")
+        self.assertEqual(interval[1], datetime.datetime(2025, 4, 30, 23, 59, 59, 999999, tzinfo=utc), "The end of the interval should be 23:59:59.999999")
