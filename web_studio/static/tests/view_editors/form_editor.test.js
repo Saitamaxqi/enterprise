@@ -1019,8 +1019,7 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
                 ...STORE_FETCH_ROUTES,
                 "/hr_attendance/attendance_user_data",
                 "/web/bundle/web.assets_emoji",
-            ].includes(step) ||
-            step === "lazy_session_info"
+            ].includes(step)
         ) {
             expect.step(step);
         }
@@ -1028,11 +1027,7 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
 
     await mountWithCleanup(WebClient);
     await animationFrame();
-    expect.verifySteps([
-        "/web/webclient/translations",
-        "/web/webclient/load_menus",
-        "lazy_session_info",
-    ]);
+    expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
     await getService("action").doAction("studio.coucou_action");
     expect.verifySteps(["/web/action/load", "get_views", "web_read"]);
     await openStudio();

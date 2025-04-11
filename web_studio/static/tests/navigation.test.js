@@ -123,7 +123,7 @@ test("navigation in Studio with act_window", async () => {
     expect.verifySteps([
         "/web/webclient/translations",
         "/web/webclient/load_menus",
-        "lazy_session_info",
+        "/mail/data",
         "/web/action/load",
         "get_views",
         "web_search_read",
