@@ -196,7 +196,7 @@ export class PivotAutofillPlugin extends UIPlugin {
      */
     _autofillPivotValue(pivotId, args, isColumn, increment, dataSource, definition) {
         const currentElement = this._getCurrentValueElement(args, definition);
-        const table = dataSource.getTableStructure();
+        const table = dataSource.getExpandedTableStructure();
         const isDate = this._isGroupedOnlyByOneDate(definition, isColumn ? "COLUMN" : "ROW");
         let cols = [];
         let rows = [];
@@ -313,7 +313,7 @@ export class PivotAutofillPlugin extends UIPlugin {
      */
     _autofillPivotColHeader(pivotId, args, isColumn, increment, dataSource, definition) {
         /** @type {SpreadsheetPivotTable} */
-        const table = dataSource.getTableStructure();
+        const table = dataSource.getExpandedTableStructure();
         const currentElement = this._getCurrentHeaderElement(args, definition);
         const currentColIndex = this._getColMeasureIndex(table, currentElement.cols);
         const isDate =
@@ -412,7 +412,7 @@ export class PivotAutofillPlugin extends UIPlugin {
      * @returns {string}
      */
     _autofillPivotRowHeader(pivotId, args, isColumn, increment, dataSource, definition) {
-        const table = dataSource.getTableStructure();
+        const table = dataSource.getExpandedTableStructure();
         const currentElement = this._getCurrentHeaderElement(args, definition);
         const currentIndex = this._getRowIndex(table, currentElement.rows);
         const isDate = this._isGroupedOnlyByOneDate(definition, "ROW");
@@ -472,7 +472,7 @@ export class PivotAutofillPlugin extends UIPlugin {
         if (nextIndex >= 0) {
             return "";
         }
-        const table = dataSource.getTableStructure();
+        const table = dataSource.getExpandedTableStructure();
         const groupIndex = this._getColMeasureIndex(table, currentElement.cols);
         if (groupIndex < 0) {
             return "";

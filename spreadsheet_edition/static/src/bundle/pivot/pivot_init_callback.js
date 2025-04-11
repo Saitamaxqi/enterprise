@@ -108,7 +108,7 @@ export function insertPivot(pivotData) {
         }
         const sheetId = model.getters.getActiveSheetId();
 
-        const table = ds.getTableStructure();
+        const table = ds.getExpandedTableStructure();
         ensureSuccess(
             model.dispatch("INSERT_PIVOT_WITH_TABLE", {
                 sheetId,

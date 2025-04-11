@@ -945,3 +945,38 @@ test("Can autofill pivot horizontally with column grouped by date", async () => 
     setCellContent(model, "B1", `=PIVOT.VALUE(1,"probability:avg","product_id",47)`);
     expect(getPivotAutofillValue(model, "B1", { direction: "right", steps: 1 })).toBe("");
 });
+
+test("Can autofill pivot with collapsed dimensions", async () => {
+    const { model } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+                <pivot>
+                    <field name="date" interval="year" type="row"/>
+                    <field name="date" interval="month" type="row"/>
+                    <field name="probability" type="measure"/>
+                </pivot>`,
+    });
+    const pivotId = model.getters.getPivotIds()[0];
+    updatePivot(model, pivotId, {
+        collapsedDomains: {
+            ROW: [[{ field: "date:year", value: 2016, type: "date" }]],
+            COL: [],
+        },
+    });
+
+    setCellContent(model, "A1", `=PIVOT.HEADER(1,"date:year",2016)`);
+    selectCell(model, "A1");
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 4 });
+    model.dispatch("AUTOFILL");
+
+    expect(getCell(model, "A1").content).toBe(`=PIVOT.HEADER(1,"date:year",2016)`);
+    expect(getCell(model, "A2").content).toBe(
+        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016, 4, 1))`
+    );
+    expect(getCell(model, "A3").content).toBe(
+        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016, 10, 1))`
+    );
+    expect(getCell(model, "A4").content).toBe(
+        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016, 12, 1))`
+    );
+    expect(getCell(model, "A5").content).toBe(`=PIVOT.HEADER(1)`);
+});
