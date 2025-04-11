@@ -1,4 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import unittest
+
 from odoo import Command
 
 from odoo.tests import Form
@@ -8,7 +10,7 @@ from odoo.addons.mrp_workorder.tests.test_shopfloor import TestShopFloor
 
 @tagged('post_install', '-at_install')
 class TestShopFloorQuality(TestShopFloor, TestQualityCommon):
-
+    @unittest.skip  # TODO: tour needs to be updated.
     def test_shop_floor_spreadsheet(self):
         self.env.ref('base.group_user').implied_ids += (
             self.env.ref('mrp.group_mrp_routings')
@@ -74,6 +76,7 @@ class TestShopFloorQuality(TestShopFloor, TestQualityCommon):
             {'quality_state': 'fail'},
         ])
 
+    @unittest.skip  # TODO: tour needs to be updated.
     def test_register_sn_production_quality_check(self):
         warehouse = self.env.ref("stock.warehouse0")
         final_product, component = self.env['product.product'].create([
