@@ -76,7 +76,7 @@
                 }
             }
 
-            &.oe_file_request {
+            & > .o_kanban_attachment.oe_file_request {
                 border-style: dashed;
                 background-color: #fff0;
             }
