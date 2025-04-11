@@ -717,3 +717,42 @@ class TestBudgetReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_hierarchy_with_budget(self):
+        """ Check that the report lines are correct with a budget and the option "Hierarchy and subtotals" is ticked"""
+        self.env['account.group'].create({
+            'name': 'Sales',
+            'code_prefix_start': '1',
+            'code_prefix_end': '9',
+        })
+
+        move = self.env['account.move'].create({
+            'date': '2020-02-02',
+            'line_ids': [
+                Command.create({
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'name': 'name',
+                })
+            ],
+        })
+        move.action_post()
+        move.line_ids.flush_recordset()
+        profit_and_loss_report = self.env.ref('account_reports.profit_and_loss')
+        line_id = self._get_basic_line_dict_id_from_report_line_ref('account_reports.account_financial_report_revenue0')
+        options = self._generate_options(profit_and_loss_report, '2020-02-01', '2024-12-28', default_options={'budgets': [{'id': self.budget_1.id, 'selected': True}]})
+        options['unfolded_lines'] = [line_id]
+        options['hierarchy'] = True
+        options['unfold_all'] = True
+
+        lines = profit_and_loss_report._get_lines(options)
+        unfolded_lines = profit_and_loss_report._get_unfolded_lines(lines, line_id)
+        unfolded_lines = [{'name': line['name'], 'level': line['level']} for line in unfolded_lines]
+
+        self.assertEqual(
+            unfolded_lines,
+            [
+                {'level': 1, 'name': 'Revenue'},
+                {'level': 2, 'name': '1-9 Sales'},
+                {'level': 3, 'name': '400000 Product Sales'},
+            ]
+        )

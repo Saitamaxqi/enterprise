@@ -1133,11 +1133,14 @@ class AccountReport(models.Model):
             }
 
         def compute_group_totals(line, group=None):
-            return [
-                hierarchy_total + (column.get('no_format') or 0.0) if isinstance(hierarchy_total, float) else hierarchy_total
-                for hierarchy_total, column
-                in zip(hierarchy[group]['totals'], line['columns'])
-            ]
+            result = []
+            for total, column in zip(hierarchy[group]['totals'], line['columns']):
+                value = column.get('no_format')
+                if isinstance(total, float) and isinstance(value, (int, float)):
+                    result.append(total + value)
+                else:
+                    result.append('')
+            return result
 
         def render_lines(account_groups, current_level, parent_line_id, skip_no_group=True):
             to_treat = [(current_level, parent_line_id, group) for group in account_groups.sorted()]
