@@ -8,6 +8,7 @@ from odoo import modules
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixin
 from odoo.exceptions import UserError
+from odoo.fields import Command
 from odoo.tests.common import tagged
 from .mocked_invoice_response import generate_response
 
@@ -167,6 +168,38 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon):
 
         return invoice, generate_response(invoice.invoice_line_ids)
 
+    @classmethod
+    def _create_invoice_02(cls, operation_types=False):
+        products = (
+            cls.product_user,
+            cls.product_accounting,
+            cls.product_expenses,
+            cls.product_invoicing,
+        )
+
+        operation_types = operation_types or (
+            cls.env.ref('l10n_br_avatax.operation_type_1'),
+            cls.env.ref('l10n_br_avatax.operation_type_2'),
+            cls.env.ref('l10n_br_avatax.operation_type_3'),
+            cls.env.ref('l10n_br_avatax.operation_type_60'),
+        )
+        invoice = cls.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': cls.partner.id,
+            'fiscal_position_id': cls.fp_avatax.id,
+            'invoice_date': '2021-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': product.id,
+                    'tax_ids': None,
+                    'price_unit': product.list_price,
+                    'l10n_br_goods_operation_type_id': operation_type and operation_type.id,
+                }) for product, operation_type in zip(products, operation_types)
+            ],
+        })
+
+        return invoice
+
 
 class TestAvalaraBrInvoiceCommon(TestAvalaraBrCommon):
     def assertInvoice(self, invoice, test_exact_response):
@@ -292,6 +325,9 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             invoice.action_post()
 
     def test_05_credit_note(self):
+        """Tax calculation without setting operation types on the lines. This should use the default
+            from the parent model instead. (salesReturn)
+        """
         invoice, response = self._create_invoice_01_and_expected_response()
         with self._capture_request_br(return_value=response):
             invoice.action_post()
@@ -305,8 +341,43 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         self.assertTrue(credit_note, "A credit note should have been created.")
 
         payload = credit_note._l10n_br_get_calculate_payload()
-        self.assertEqual(payload['header']['operationType'], 'salesReturn', 'The operationType for credit notes should be returnSales.')
+        self.assertTrue(all(line['operationType'] == 'salesReturn' for line in payload['lines']), 'The default operationType for credit notes should be salesReturn.')
         self.assertEqual(payload['header']['invoicesRefs'][0]['documentCode'], f'account.move_{invoice.id}', 'The credit note should reference the original invoice.')
+
+    def test_06_unique_operation_types(self):
+        """Tax calculation with unique operation types on each line."""
+        invoice = self._create_invoice_02()
+        self.assertRecordValues(invoice, [{
+            'amount_total': 95.0,
+            'amount_untaxed': 95.0,
+            'amount_tax': 0.0,
+        }])
+
+        payload = invoice._l10n_br_get_calculate_payload()
+        operation_types = [line['operationType'] for line in payload['lines']]
+        expected_operation_types = ['standardSales', 'complementary', 'amountComplementary', 'salesReturn']
+        self.assertEqual(operation_types, expected_operation_types, 'The expected operation types are not properly set. It should be unique per line.')
+
+    def test_07_override_operation_type(self):
+        """Tax calculation with operation types set only on a single line. The rest should default to standardSales."""
+        operation_types = (
+            False,
+            self.env.ref('l10n_br_avatax.operation_type_2'),
+            False,
+            False,
+        )
+
+        invoice = self._create_invoice_02(operation_types=operation_types)
+        self.assertRecordValues(invoice, [{
+            'amount_total': 95.0,
+            'amount_untaxed': 95.0,
+            'amount_tax': 0.0,
+        }])
+
+        payload = invoice._l10n_br_get_calculate_payload()
+        operation_types = [line['operationType'] for line in payload['lines']]
+        expected_operation_types = ['standardSales', 'complementary', 'standardSales', 'standardSales']
+        self.assertEqual(operation_types, expected_operation_types, 'The expected operation types are not properly set.')
 
 
 @tagged('post_install_l10n', '-at_install', 'post_install')

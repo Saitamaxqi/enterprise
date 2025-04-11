@@ -1,7 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.tests.common import tagged
+from odoo.fields import Command
 from odoo.addons.l10n_br_avatax.tests.test_br_avatax import TestAvalaraBrCommon
 from .mocked_so_response import generate_response
+
 
 @tagged("post_install_l10n", "-at_install", "post_install")
 class TestSaleAvalaraBr(TestAvalaraBrCommon):
@@ -57,6 +59,34 @@ class TestSaleAvalaraBr(TestAvalaraBrCommon):
         })
         return order, generate_response(order.order_line)
 
+    def _create_sale_order_with_operation_types(self, operation_types=False):
+        products = (
+            self.product_user,
+            self.product_accounting,
+            self.product_expenses,
+            self.product_invoicing,
+        )
+        operation_types = operation_types or (
+            self.env.ref('l10n_br_avatax.operation_type_1'),
+            self.env.ref('l10n_br_avatax.operation_type_2'),
+            self.env.ref('l10n_br_avatax.operation_type_3'),
+            self.env.ref('l10n_br_avatax.operation_type_60'),
+        )
+        order = self.env['sale.order'].create({
+            'partner_id': self.partner.id,
+            'fiscal_position_id': self.fp_avatax.id,
+            'date_order': '2021-01-01',
+            'order_line': [
+                Command.create({
+                    'product_id': product.id,
+                    'price_unit': product.list_price,
+                    'tax_ids': None,
+                    'l10n_br_goods_operation_type_id': operation_type and operation_type.id,
+                }) for product, operation_type in zip(products, operation_types)
+            ]
+        })
+        return order
+
     def test_01_sale_order_br(self):
         order, mocked_response = self._create_sale_order()
         order.currency_id = self.env.ref('base.BRL')
@@ -70,3 +100,27 @@ class TestSaleAvalaraBr(TestAvalaraBrCommon):
         with self._skip_no_credentials():
             order.button_external_tax_calculation()
             self.assertOrder(order, mocked_response=False)
+
+    def test_03_sale_order_unique_operation_type(self):
+        """Tax calculation with unique operation types on each line."""
+        order = self._create_sale_order_with_operation_types()
+
+        payload = order._l10n_br_get_calculate_payload()
+        operationTypes = [line['operationType'] for line in payload['lines']]
+        expected_operation_types = ['standardSales', 'complementary', 'amountComplementary', 'salesReturn']
+        self.assertEqual(operationTypes, expected_operation_types, 'The expected operation types are not properly set. It should be unique per line.')
+
+    def test_04_sale_order_override_operation_type(self):
+        """Tax calculation with operation types set only on a single line."""
+        operation_types = (
+            False,
+            False,
+            self.env.ref('l10n_br_avatax.operation_type_2'),
+            False,
+        )
+        order = self._create_sale_order_with_operation_types(operation_types=operation_types)
+
+        payload = order._l10n_br_get_calculate_payload()
+        operationTypes = [line['operationType'] for line in payload['lines']]
+        expected_operation_types = ['standardSales', 'standardSales', 'complementary', 'standardSales']
+        self.assertEqual(operationTypes, expected_operation_types, 'The expected operation types are not properly set.')

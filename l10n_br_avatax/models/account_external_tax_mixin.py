@@ -51,7 +51,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         readonly=False,
         copy=False,
         string="Goods Operation Type",
-        help="Brazil: this is the operation type related to the goods transaction. This will define the CFOP used on the NF-e."
+        help="Brazil: this is the operation type related to the goods transaction. This will be used as a default on transaction lines."
     )
     l10n_br_use_type = fields.Selection(
         USE_TYPE_SELECTION,
@@ -309,7 +309,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
             return '%s\n%s\n%s' % (title, response['error']['message'], '\n'.join(inner_errors))
 
-    def _l10n_br_build_avatax_line(self, product, description, qty, uom, unit_price, total, discount, line_id):
+    def _l10n_br_build_avatax_line(self, product, description, qty, uom, unit_price, total, discount, line_id, operation_type):
         """ Prepares the line data for the /calculations API call. temp* values are here to help with post-processing
         and will be removed before sending by _remove_temp_values_lines.
 
@@ -321,11 +321,13 @@ class AccountExternalTaxMixin(models.AbstractModel):
         :param float total: the amount on the line without taxes or discount
         :param float discount: the discount amount on the line
         :param int line_id: the database ID of the line record, this is used to uniquely identify it in Avatax
+        :param l10n_br.operation.type operation_type: the operation type of the line
         :return dict: the basis for the 'lines' value in the /calculations API call
         """
         line = {
             'lineCode': line_id,
             'useType': self.l10n_br_use_type or product.l10n_br_use_type,
+            'operationType': operation_type.technical_name,
             'otherCostAmount': 0,
             'freightAmount': 0,
             'insuranceAmount': 0,
@@ -465,6 +467,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 line['qty'] * line['price_unit'],
                 line['qty'] * line['price_unit'] * (line['discount'] / 100.0),
                 line['id'],
+                line['operation_type'],
             )
             for line
             in self._get_line_data_for_external_taxes()

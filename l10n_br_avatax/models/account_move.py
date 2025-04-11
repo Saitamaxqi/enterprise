@@ -9,6 +9,13 @@ class AccountMove(models.Model):
         """account.external.tax.mixin override."""
         return super()._depends_l10n_br_avatax_warnings() + ["invoice_line_ids.product_id", "partner_shipping_id"]
 
+    def _get_line_data_for_external_taxes(self):
+        """ Override to set the operation_type per line. """
+        res = super()._get_line_data_for_external_taxes()
+        for i, line in enumerate(self._get_lines_eligible_for_external_taxes()):
+            res[i]['operation_type'] = line.l10n_br_goods_operation_type_id or self.l10n_br_goods_operation_type_id
+        return res
+
     @api.depends("l10n_br_is_avatax", "move_type", "debit_origin_id")
     def _compute_l10n_br_goods_operation_type_id(self):
         """Override."""

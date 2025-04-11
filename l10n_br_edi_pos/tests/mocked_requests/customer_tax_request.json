@@ -100,6 +100,7 @@
         "unit": "Units",
         "unitTaxable": "Units"
       },
+      "operationType": "standardSales",
       "itemCode": "FURN_6666"
     }
   ]

@@ -144,6 +144,7 @@ class PosOrder(models.Model):
             return super()._get_line_data_for_external_taxes()
 
         res = []
+        operation_type = self.env.ref("l10n_br_avatax.operation_type_1")
         for line in self._get_lines_eligible_for_external_taxes():
             res.append(
                 {
@@ -154,6 +155,7 @@ class PosOrder(models.Model):
                     "uom_id": line.product_uom_id,
                     "price_unit": line.price_unit,
                     "discount": line.discount,
+                    "operation_type": operation_type,
                 }
             )
         return res
