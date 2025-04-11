@@ -219,7 +219,7 @@
 
     <template id="navbar" name="Search Bar">
         <div class="container">
-            <a class="d-inline-block d-print-none mt-4 mb-2" title="Back to help" t-attf-href="/helpdesk/{{slug(team)}}/knowledgebase"><i class="fa fa-chevron-left me-2"/>Back to help</a>
+            <a class="d-inline-block d-print-none mt-4 mb-2" title="Back to help" t-attf-href="/helpdesk/{{slug(team)}}/knowledgebase"><i class="oi oi-chevron-left me-2"/>Back to help</a>
             <div class="d-flex flex-wrap align-items-center justify-content-between w-100 mb-2">
                 <h5 class="flex-grow-1 w-100 w-sm-auto mb-2 mb-sm-0">
                     <span class="text-muted">Results for</span> <q><t t-out="search"/></q>
