@@ -16,7 +16,7 @@ class ResPartner(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_customer_statement")
         action['params'] = {
             'options': {
-                'partner_ids': self.ids,
+                'partner_ids': (self | self.commercial_partner_id).ids,
                 'unfold_all': len(self.ids) == 1,
             },
             'ignore_session': True,

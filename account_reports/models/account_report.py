@@ -2764,12 +2764,20 @@ class AccountReport(models.Model):
         if self.filter_multi_company == 'tax_units' and any(accessible_branch.id not in report_company_ids for accessible_branch in self.env.company._accessible_branches()):
             warnings['account_reports.tax_report_warning_tax_id_selected_companies'] = {'alert_type': 'warning'}
 
-        # Check whether there are unposted entries for the selected period or not (if the report allows it)
+        # Check whether there are unposted entries for the selected period and partner or not (if the report allows it)
         if options.get('date') and options.get('all_entries') is not None:
-            if self.env['account.move'].search_count(
-                [('state', '=', 'draft'), ('date', '<=', options['date']['date_to'])],
-                limit=1,
-            ):
+            domain = (
+                Domain(self.env['account.move']._check_company_domain(report_company_ids))
+                & Domain('state', '=', 'draft')
+                & Domain('date', '<=', options['date']['date_to'])
+            )
+            if options.get('partner_ids'):
+                domain &= (
+                    Domain('partner_id', 'in', options['partner_ids'])
+                    | Domain('partner_shipping_id', 'in', options['partner_ids'])
+                    | Domain('commercial_partner_id', 'in', options['partner_ids'])
+                )
+            if self.env['account.move'].search_count(domain, limit=1):
                 warnings['account_reports.common_warning_draft_in_period'] = {}
 
     def _fully_unfold_lines_if_needed(self, lines, options):
