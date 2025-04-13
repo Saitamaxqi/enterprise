@@ -909,3 +909,41 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_not_allowing_component_lot_creation', login='admin')
         self.assertEqual(mo.move_raw_line_ids.lot_id, lots[1])
         self.assertEqual(mo.move_byproduct_ids.move_line_ids.lot_name, '77734319')
+
+    def test_mo_barcode_byproduct_destination_location(self):
+        """
+        Ensure that in the MO barcode interface, the by-product section correctly:
+            - Lines are grouped by destination location (not source location).
+            - Displays the destination location for each by-product line.
+            - Hide the source location field when editing by-product lines.
+            - Allow editing by-product lines even when source location scan is mandatory
+            on the MO operation type.
+        """
+        picking_type_production = self.env['stock.picking.type'].search([
+            ('code', '=', 'mrp_operation'), ('company_id', '=', self.env.company.id)])
+        picking_type_production.restrict_scan_source_location = 'mandatory'
+        grp_by_product = self.env.ref('mrp.group_mrp_byproducts')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(grp_by_product.id), Command.link(grp_multi_loc.id)]})
+
+        self.bom_lot.write({
+            'byproduct_ids': [
+                Command.create({'product_id': self.by_product.id, 'product_qty': 1.0}),
+                Command.create({'product_id': self.component01.id, 'product_qty': 1.0}),
+            ],
+        })
+
+        mo = self.env['mrp.production'].create({
+            'product_id': self.final_product.id,
+            'product_qty': 1,
+            'bom_id': self.bom_lot.id,
+        })
+        mo.action_confirm()
+
+        # Assign destination locations for each by-product.
+        mo.move_byproduct_ids[0].location_dest_id = self.shelf1.id
+        mo.move_byproduct_ids[1].location_dest_id = self.shelf2.id
+
+        action = self.env.ref('stock_barcode_mrp.stock_barcode_mo_client_action')
+        url = f'/web#action={action.id}&active_id={mo.id}'
+        self.start_tour(url, 'test_mo_barcode_byproduct_destination_location', login='admin')

@@ -1497,3 +1497,52 @@ registry.category("web_tour.tours").add("test_not_allowing_component_lot_creatio
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_mo_barcode_byproduct_destination_location", {
+    steps: () => [
+        {
+            trigger: '.o_by_products',
+            run: "click",
+        },
+        // Check that lines are grouped by destination location.
+        {
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"]',
+        },
+        {
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"]',
+        },
+        // Check that we can still select/edit the by-product line even if source location scan is mandatory.
+        {
+            trigger: '.o_barcode_line:contains("By Product")',
+            run: "click",
+        },
+        // Check that destination location is shown on the by-product line.
+        {
+            trigger: '.o_barcode_line:contains("By Product").o_selected .o_line_destination_location:contains("../Section 1")',
+        },
+        {
+            trigger: '.o_barcode_line:contains("Compo 01")',
+            run: "click",
+        },
+        {
+            trigger: '.o_barcode_line:contains("Compo 01").o_selected .o_line_destination_location:contains("../Section 2")',
+        },
+        {
+            trigger: '.o_barcode_line:contains("Compo 01") .o_line_button.o_edit',
+            run: "click",
+        },
+        // Check that no 'location_id' field is shown in the by-product edit form.
+        {
+            trigger: '.o_form_view_container',
+            run: function() {
+                const srclocation = document.querySelectorAll('.o_field_widget[name="location_id"] input');
+                helper.assert(srclocation.length, 0, "Expected no 'location_id' field in the by-product edit form, but found.");
+            },
+        },
+        {
+            trigger: "button.o_exit",
+            run: "click",
+        },
+        { trigger: ".o_barcode_line" },
+    ],
+});

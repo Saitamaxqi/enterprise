@@ -27,6 +27,9 @@
             <xpath expr="//widget[@name='stock_barcode_unlink_button']" position="attributes">
                 <attribute name="invisible">context.get('newByProduct') or context.get('hide_unlink_button')</attribute>
             </xpath>
+            <xpath expr="//div[@name='location_src']" position="attributes">
+                <attribute name="invisible">context.get('newByProduct') or picking_code == 'incoming'</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -192,6 +192,21 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         return _t("Produce All");
     }
 
+    getLineLocation(line) {
+        return this.displayByProduct ? line.location_dest_id : super.getLineLocation(...arguments);
+    }
+
+    get displayDestinationLocation() {
+        return (
+            (this.groups.group_stock_multi_locations && this.displayByProduct) ||
+            super.displayDestinationLocation
+        );
+    }
+
+    lineCanBeSelected(line) {
+        return this.displayByProduct || super.lineCanBeSelected(line);
+    }
+
     /** Fetch data and set state */
 
     getActionRefresh(newId) {

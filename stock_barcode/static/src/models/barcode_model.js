@@ -251,12 +251,17 @@ export default class BarcodeModel extends EventBus {
         return lines;
     }
 
+    getLineLocation(line) {
+        // Determine whether to group lines by source or destination location.
+        return line.location_id;
+    }
+
     get groupedLinesByLocation() {
         const lines = [].concat(this.groupedLines, this.packageLines);
         const linesByLocations = [];
         const linesByLocation = {};
         for (const line of lines) {
-            const lineLoc = line.location_id;
+            const lineLoc = this.getLineLocation(line);
             if (!linesByLocation[lineLoc.id]) {
                 linesByLocation[lineLoc.id] = {
                     location: lineLoc,
