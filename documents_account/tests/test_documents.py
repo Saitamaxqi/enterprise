@@ -410,9 +410,6 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
 
     def test_workflow_create_vendor_receipt(self):
         # Activate the group for the vendor receipt
-        self.env['res.config.settings'].create({'group_show_purchase_receipts': True}).execute()
-        self.assertTrue(self.env.user.has_group('account.group_purchase_receipts'), 'The "purchase Receipt" feature should be enabled.')
-
         vendor_receipt_action = self.document_txt.account_create_account_move('in_receipt')
         move = self.env['account.move'].browse(self.document_txt.res_id)
         self.assertEqual(vendor_receipt_action.get('res_model'), 'account.move')
