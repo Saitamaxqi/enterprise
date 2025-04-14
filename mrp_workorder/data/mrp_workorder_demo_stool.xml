@@ -2,45 +2,6 @@
     <!-- Stool demo data -->
     <data noupdate="1">
 
-        <record id="product_attribute_color_radio" model="product.attribute" forcecreate="0">
-            <field name="name">Color</field>
-            <field name="sequence">1</field>
-        </record>
-        <record id="product_attribute_value_1_radio" model="product.attribute.value" forcecreate="0">
-            <field name="name">Dark Blue</field>
-            <field name="attribute_id" ref="product_attribute_color_radio"/>
-            <field name="sequence">1</field>
-        </record>
-        <record id="product_attribute_value_2_radio" model="product.attribute.value" forcecreate="0">
-            <field name="name">Green</field>
-            <field name="attribute_id" ref="product_attribute_color_radio"/>
-            <field name="sequence">2</field>
-        </record>
-        <record id="product_attribute_value_3_radio" model="product.attribute.value" forcecreate="0">
-            <field name="name">Grey</field>
-            <field name="attribute_id" ref="product_attribute_color_radio"/>
-            <field name="sequence">2</field>
-        </record>
-
-        <record id="product_attribute_value_1" model="product.attribute.value" forcecreate="0">
-            <field name="name">Dark Blue</field>
-            <field name="html_color">#00008b</field>
-            <field name="attribute_id" ref="product.product_attribute_2"/>
-            <field name="sequence">1</field>
-        </record>
-        <record id="product_attribute_value_2" model="product.attribute.value" forcecreate="0">
-            <field name="name">Green</field>
-            <field name="html_color">#00ff00</field>
-            <field name="attribute_id" ref="product.product_attribute_2"/>
-            <field name="sequence">2</field>
-        </record>
-        <record id="product_attribute_value_3" model="product.attribute.value" forcecreate="0">
-            <field name="name">Grey</field>
-            <field name="html_color">#505050</field>
-            <field name="attribute_id" ref="product.product_attribute_2"/>
-            <field name="sequence">2</field>
-        </record>
-
         <record id="product_template_stool" model="product.template" forcecreate="0">
             <field name="name">Stool</field>
             <field name="categ_id" ref="product.product_category_office"/>
@@ -59,21 +20,28 @@
         <!-- the product template attribute lines have to be defined before creating the variants -->
         <record id="product_template_stool_attribute_line_1" model="product.template.attribute.line" forcecreate="0">
             <field name="product_tmpl_id" ref="product_template_stool"/>
-            <field name="attribute_id" ref="product.product_attribute_2"/>
-            <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_1'), ref('product_attribute_value_2'), ref('product_attribute_value_3')])]"/>
+            <field name="attribute_id" ref="product.pa_color"/>
+            <field
+                name="value_ids"
+                eval="[Command.set([
+                    ref('product.pav_color_navy'),
+                    ref('product.pav_color_green'),
+                    ref('product.pav_color_gray'),
+                ])]"
+            />
         </record>
 
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
-                'xml_id': 'mrp_workorder.product_attribute_value_1',
+                'xml_id': 'mrp_workorder.product_pav_navy',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_attribute_line_1').product_template_value_ids[0],
                 'noupdate': True,
                 }, {
-                'xml_id': 'mrp_workorder.product_attribute_value_2',
+                'xml_id': 'mrp_workorder.product_pav_green',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_attribute_line_1').product_template_value_ids[1],
                 'noupdate': True,
                 }, {
-                'xml_id': 'mrp_workorder.product_attribute_value_3',
+                'xml_id': 'mrp_workorder.product_pav_gray',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_attribute_line_1').product_template_value_ids[2],
                 'noupdate': True,
                 }]"/>
@@ -82,15 +50,15 @@
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
                 'xml_id': 'mrp_workorder.product_product_stool_1',
-                'record': obj().env.ref('mrp_workorder.product_template_stool')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_1')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_navy')),
                 'noupdate': True,
                 }, {
                 'xml_id': 'mrp_workorder.product_product_stool_2',
-                'record': obj().env.ref('mrp_workorder.product_template_stool')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_2')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_green')),
                 'noupdate': True,
                 }, {
                 'xml_id': 'mrp_workorder.product_product_stool_3',
-                'record': obj().env.ref('mrp_workorder.product_template_stool')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_3')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_gray')),
                 'noupdate': True,
                 }]"/>
         </function>
@@ -133,21 +101,28 @@
         <!-- the product template attribute lines have to be defined before creating the variants -->
         <record id="product_template_stool_foot_attribute_line_1" model="product.template.attribute.line" forcecreate="0">
             <field name="product_tmpl_id" ref="product_template_stool_foot"/>
-            <field name="attribute_id" ref="product_attribute_color_radio"/>
-            <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_1_radio'), ref('product_attribute_value_2_radio'), ref('product_attribute_value_3_radio')])]"/>
+            <field name="attribute_id" ref="product.pa_legs"/>
+            <field
+                name="value_ids"
+                eval="[Command.set([
+                    ref('product.pav_legs_steel'),
+                    ref('product.pav_legs_aluminium'),
+                    ref('product.pav_legs_wood'),
+                ])]"
+            />
         </record>
 
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
-                'xml_id': 'mrp_workorder.product_attribute_value_1_radio',
+                'xml_id': 'mrp_workorder.product_pav_steel',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_foot_attribute_line_1').product_template_value_ids[0],
                 'noupdate': True,
                 }, {
-                'xml_id': 'mrp_workorder.product_attribute_value_2_radio',
+                'xml_id': 'mrp_workorder.product_pav_aluminum',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_foot_attribute_line_1').product_template_value_ids[1],
                 'noupdate': True,
                 }, {
-                'xml_id': 'mrp_workorder.product_attribute_value_3_radio',
+                'xml_id': 'mrp_workorder.product_pav_wood',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_foot_attribute_line_1').product_template_value_ids[2],
                 'noupdate': True,
                 }]"/>
@@ -156,15 +131,15 @@
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
                 'xml_id': 'mrp_workorder.product_product_stool_foot_1',
-                'record': obj().env.ref('mrp_workorder.product_template_stool_foot')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_1_radio')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool_foot')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_steel')),
                 'noupdate': True,
                 }, {
                 'xml_id': 'mrp_workorder.product_product_stool_foot_2',
-                'record': obj().env.ref('mrp_workorder.product_template_stool_foot')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_2_radio')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool_foot')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_aluminum')),
                 'noupdate': True,
                 }, {
                 'xml_id': 'mrp_workorder.product_product_stool_foot_3',
-                'record': obj().env.ref('mrp_workorder.product_template_stool_foot')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_3_radio')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool_foot')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_wood')),
                 'noupdate': True,
                 }]"/>
         </function>
@@ -208,21 +183,28 @@
         <!-- the product template attribute lines have to be defined before creating the variants -->
         <record id="product_template_stool_top_attribute_line_1" model="product.template.attribute.line" forcecreate="0">
             <field name="product_tmpl_id" ref="product_template_stool_top"/>
-            <field name="attribute_id" ref="product_attribute_color_radio"/>
-            <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_1_radio'), ref('product_attribute_value_2_radio'), ref('product_attribute_value_3_radio')])]"/>
+            <field name="attribute_id" ref="product.pa_legs"/>
+            <field
+                name="value_ids"
+                eval="[Command.set([
+                    ref('product.pav_legs_steel'),
+                    ref('product.pav_legs_aluminium'),
+                    ref('product.pav_legs_wood'),
+                ])]"
+            />
         </record>
 
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
-                'xml_id': 'mrp_workorder.product_attribute_value_1_radio',
+                'xml_id': 'mrp_workorder.product_pav_steel',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_top_attribute_line_1').product_template_value_ids[0],
                 'noupdate': True,
                 }, {
-                'xml_id': 'mrp_workorder.product_attribute_value_2_radio',
+                'xml_id': 'mrp_workorder.product_pav_aluminum',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_top_attribute_line_1').product_template_value_ids[1],
                 'noupdate': True,
                 }, {
-                'xml_id': 'mrp_workorder.product_attribute_value_3_radio',
+                'xml_id': 'mrp_workorder.product_pav_wood',
                 'record': obj().env.ref('mrp_workorder.product_template_stool_top_attribute_line_1').product_template_value_ids[2],
                 'noupdate': True,
                 }]"/>
@@ -231,15 +213,15 @@
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
                 'xml_id': 'mrp_workorder.product_product_stool_top_1',
-                'record': obj().env.ref('mrp_workorder.product_template_stool_top')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_1_radio')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool_top')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_steel')),
                 'noupdate': True,
                 }, {
                 'xml_id': 'mrp_workorder.product_product_stool_top_2',
-                'record': obj().env.ref('mrp_workorder.product_template_stool_top')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_2_radio')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool_top')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_aluminum')),
                 'noupdate': True,
                 }, {
                 'xml_id': 'mrp_workorder.product_product_stool_top_3',
-                'record': obj().env.ref('mrp_workorder.product_template_stool_top')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_attribute_value_3_radio')),
+                'record': obj().env.ref('mrp_workorder.product_template_stool_top')._get_variant_for_combination(obj().env.ref('mrp_workorder.product_pav_wood')),
                 'noupdate': True,
                 }]"/>
         </function>
@@ -351,7 +333,10 @@
             <field name="product_qty">1</field>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">1</field>
-            <field name="bom_product_template_attribute_value_ids" eval="[(6, 0, [ref('mrp_workorder.product_attribute_value_1')])]"/>
+            <field
+                name="bom_product_template_attribute_value_ids"
+                eval="[Command.set([ref('mrp_workorder.product_pav_navy')])]"
+            />
             <field name="bom_id" ref="mrp_bom_stool"/>
         </record>
         <record id="mrp_bom_stool_line_2" model="mrp.bom.line" forcecreate="0">
@@ -359,7 +344,10 @@
             <field name="product_qty">1</field>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">1</field>
-            <field name="bom_product_template_attribute_value_ids" eval="[(6, 0, [ref('mrp_workorder.product_attribute_value_2')])]"/>
+            <field
+                name="bom_product_template_attribute_value_ids"
+                eval="[Command.set([ref('mrp_workorder.product_pav_green')])]"
+            />
             <field name="bom_id" ref="mrp_bom_stool"/>
         </record>
         <record id="mrp_bom_stool_line_3" model="mrp.bom.line" forcecreate="0">
@@ -367,7 +355,10 @@
             <field name="product_qty">1</field>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">1</field>
-            <field name="bom_product_template_attribute_value_ids" eval="[(6, 0, [ref('mrp_workorder.product_attribute_value_3')])]"/>
+            <field
+                name="bom_product_template_attribute_value_ids"
+                eval="[Command.set([ref('mrp_workorder.product_pav_gray')])]"
+            />
             <field name="bom_id" ref="mrp_bom_stool"/>
         </record>
         <record id="mrp_bom_stool_line_4" model="mrp.bom.line" forcecreate="0">
@@ -375,7 +366,10 @@
             <field name="product_qty">4</field>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">1</field>
-            <field name="bom_product_template_attribute_value_ids" eval="[(6, 0, [ref('mrp_workorder.product_attribute_value_1')])]"/>
+            <field
+                name="bom_product_template_attribute_value_ids"
+                eval="[Command.set([ref('mrp_workorder.product_pav_navy')])]"
+            />
             <field name="bom_id" ref="mrp_bom_stool"/>
         </record>
         <record id="mrp_bom_stool_line_5" model="mrp.bom.line" forcecreate="0">
@@ -383,7 +377,10 @@
             <field name="product_qty">4</field>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">1</field>
-            <field name="bom_product_template_attribute_value_ids" eval="[(6, 0, [ref('mrp_workorder.product_attribute_value_2')])]"/>
+            <field
+                name="bom_product_template_attribute_value_ids"
+                eval="[Command.set([ref('mrp_workorder.product_pav_green')])]"
+            />
             <field name="bom_id" ref="mrp_bom_stool"/>
         </record>
         <record id="mrp_bom_stool_line_6" model="mrp.bom.line" forcecreate="0">
@@ -391,7 +388,10 @@
             <field name="product_qty">4</field>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">1</field>
-            <field name="bom_product_template_attribute_value_ids" eval="[(6, 0, [ref('mrp_workorder.product_attribute_value_3')])]"/>
+            <field
+                name="bom_product_template_attribute_value_ids"
+                eval="[Command.set([ref('mrp_workorder.product_pav_gray')])]"
+            />
             <field name="bom_id" ref="mrp_bom_stool"/>
         </record>
         <record id="quality_point_stool_instruction_1" model="quality.point" forcecreate="0">

@@ -8,7 +8,7 @@
             <field name="is_published" eval="True"/>
             <field
                 name="optional_product_ids"
-                eval="[Command.set([ref('sale_renting.rental_product_1_product_template')])]"
+                eval="[Command.set([ref('sale_renting.rental_product_1_template')])]"
             />
         </record>
 
