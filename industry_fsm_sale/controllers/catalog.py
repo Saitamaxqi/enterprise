@@ -9,6 +9,8 @@ class CatalogControllerFSM(ProductCatalogController):
     def product_catalog_get_order_lines_info(self, res_model, order_id, product_ids, **kwargs):
         task_id = kwargs.get('task_id')
         if task_id:
+            if not order_id:
+                order_id = request.env['project.task'].browse(task_id).sale_order_id.id
             request.update_context(fsm_task_id=task_id)
             task_company = request.env['project.task'].browse(task_id).company_id
             request.update_context(allowed_company_ids=task_company.ids if task_company else request.env.companies.ids)
