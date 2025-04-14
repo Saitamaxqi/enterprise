@@ -14,7 +14,6 @@ class TestIndustryFsmUi(HttpCase):
     def test_ui(self):
         # Disable onboarding tours as they can conflict with our running tours.
         self.env.ref('base.user_admin').write({
-            'tour_enabled': False,
             'email': 'mitchell.admin@example.com',
         })
         self.env['res.partner'].create([
