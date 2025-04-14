@@ -147,9 +147,9 @@ export class QualityCheck extends MrpWorkorder {
     }
 
     async showWorksheet() {
-        const { data, model, resId } = this.props.record;
+        const { model, resId } = this.props.record;
         let worksheetData = false;
-        if (data.worksheet_document) {
+        if (this.check.worksheet_document) {
             const sheet = await model.orm.read("quality.check", [resId], ["worksheet_document"]);
             worksheetData = {
                 resModel: "quality.check",
@@ -160,7 +160,7 @@ export class QualityCheck extends MrpWorkorder {
             };
         }
         this.dialog.add(MrpWorksheetDialog, {
-            worksheetText: data.note,
+            worksheetText: this.check.note,
             worksheetData,
         });
     }

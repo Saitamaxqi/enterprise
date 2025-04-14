@@ -64,7 +64,7 @@ export class StockMove extends QualityCheck {
     }
 
     get check() {
-        return this.props.check;
+        return this.props.check ? this.props.check.data : false;
     }
 
     get hasInstruction() {
