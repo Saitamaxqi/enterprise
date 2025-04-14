@@ -11,7 +11,7 @@ class AppointmentManageLeaves(models.TransientModel):
     _description = 'Add or remove leaves from appointments'
 
     def _default_time(self, hour, minute):
-        user_timezone = pytz.timezone(self.env.user.tz or self.env.context.get('tz', 'utc'))
+        user_timezone = pytz.timezone(self.env.user.tz or self.env.context.get('tz') or 'UTC')
         user_time = user_timezone.localize(fields.Datetime.today().replace(hour=hour, minute=minute))
         return user_time.astimezone(pytz.utc).replace(tzinfo=None)
 
