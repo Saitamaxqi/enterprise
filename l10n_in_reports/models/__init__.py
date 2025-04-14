@@ -1,4 +1,3 @@
-from . import account_asset
 from . import account_batch_payment
 from . import account_move
 from . import gst_return_period

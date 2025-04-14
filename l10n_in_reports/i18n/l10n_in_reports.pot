@@ -412,11 +412,6 @@ msgid "Assam"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model,name:l10n_in_reports.model_account_asset
-msgid "Asset/Revenue Recognition"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_ir_attachment
 msgid "Attachment"
 msgstr ""
@@ -637,7 +632,6 @@ msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_batch_payment__country_code
-#: model:ir.model.fields,field_description:l10n_in_reports.field_asset_modify__l10n_in_fiscal_code
 msgid "Country Code"
 msgstr ""
 
@@ -714,11 +708,6 @@ msgid "Delhi"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_asset_modify__l10n_in_value_residual
-msgid "Depreciable Value"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:account.report.line,name:l10n_in_reports.account_financial_report_in_depreciation0
 msgid "Depreciation"
 msgstr ""
@@ -730,14 +719,12 @@ msgid "Discount Value"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_asset__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_batch_payment__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment_method__display_name
-#: model:ir.model.fields,field_description:l10n_in_reports.field_asset_modify__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_ir_attachment__display_name
@@ -957,6 +944,12 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__field_name
 msgid "Field Name"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+msgid "File generation is in progress on the GST portal. Auto retry in 10 minutes."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1334,14 +1327,12 @@ msgid "Himachal Pradesh"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_asset__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_batch_payment__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment_method__id
-#: model:ir.model.fields,field_description:l10n_in_reports.field_asset_modify__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_ir_attachment__id
@@ -1575,6 +1566,11 @@ msgid "Invalid tax for Intra State Transaction"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:ir.model.constraint,message:l10n_in_reports.constraint_account_move_uniq_l10n_in_irn_number
+msgid "Irn number must be unique for bills per company."
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_is_follower
 msgid "Is Follower"
 msgstr ""
@@ -1710,6 +1706,22 @@ msgid "Manipur"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_account_move_form_inherit_account
+msgid "Manually Match"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_move__l10n_in_gstr2b_reconciliation_status__manually_matched
+msgid "Manually Matched"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_move.py:0
+msgid "Manually matched with GSTR-2B bills:"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__03
 msgid "March"
 msgstr ""
@@ -1770,11 +1782,6 @@ msgid "Mizoram"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model,name:l10n_in_reports.model_asset_modify
-msgid "Modify Asset"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__month
 msgid "Month"
 msgstr ""
@@ -1804,11 +1811,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:account.report.line,name:l10n_in_reports.account_financial_report_in_net_profit0
 msgid "Net Profit"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_asset_modify__l10n_in_value_residual
-msgid "New residual amount for the asset"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2090,6 +2092,11 @@ msgid "Regenerate"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_account_move_form_inherit_account
+msgid "Reset Manual Match"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_user_id
 msgid "Responsible User"
 msgstr ""
@@ -2333,7 +2340,6 @@ msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,help:l10n_in_reports.field_account_batch_payment__country_code
-#: model:ir.model.fields,help:l10n_in_reports.field_asset_modify__l10n_in_fiscal_code
 msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
@@ -2649,11 +2655,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
 msgid "checkout"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_l10n_in_account_asset_form
-msgid "depreciable)"
 msgstr ""
 
 #. module: l10n_in_reports

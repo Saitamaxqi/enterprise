@@ -14,7 +14,6 @@ Accounting reports for India
         'barcodes',
         'account_invoice_extract',
         'documents',
-        'account_asset',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -28,8 +27,6 @@ Accounting reports for India
         'data/bank_template.xml',
         'data/enet_payment_methods.xml',
         'wizard/gst_otp_validation.xml',
-        'views/account_asset_view.xml',
-        'views/account_modify_views.xml',
         'views/gst_return_period.xml',
         'views/account_move_views.xml',
         'views/res_config_settings.xml',
