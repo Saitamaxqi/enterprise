@@ -3,7 +3,7 @@
 
 import psycopg2
 
-from odoo import _, api, fields, models, tools, Command
+from odoo import _, api, fields, models, Command
 from odoo.exceptions import UserError, ValidationError
 from odoo.addons.base_import.models.base_import import FIELDS_RECURSION_LIMIT
 
@@ -136,10 +136,6 @@ class Base_ImportImport(models.TransientModel):
                 'line_ids': [Command.set(res.get('ids', []))],
                 **options.get('statement_vals', {}),
             })
-
-            cron_limit_time = tools.config['limit_time_real_cron'] or -1
-            limit_time = cron_limit_time if 0 < cron_limit_time < 180 else 180
-            statement.line_ids._cron_try_auto_reconcile_statement_lines(limit_time=limit_time)
 
             try:
                 savepoint.close(rollback=dryrun)
