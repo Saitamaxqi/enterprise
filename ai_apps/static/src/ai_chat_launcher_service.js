@@ -1,0 +1,140 @@
+/** @odoo-module **/
+
+import { registry } from "@web/core/registry";
+import { _t } from "@web/core/l10n/translation";
+import { formatDate, formatDateTime } from "@web/core/l10n/dates";
+
+
+export const aiChatLauncherService = {
+    dependencies: ["mail.store", "orm"],
+    start(env, services) {
+        return {
+            async launchAIChat({
+                callerComp,
+                recordName,
+                recordModel,
+                recordId,
+                aiSpecialActions,
+                aiChatSourceId,
+                placeholderPrompt = "",
+                frontEndRecordInfo = null,
+                textSelection = null,
+            }) {
+                const ai_channel_id = await services.orm.call(
+                    'discuss.channel',
+                    'create_ai_composer_channel',
+                    [
+                        callerComp,
+                        recordName,
+                        recordModel,
+                        recordId,
+                        frontEndRecordInfo,
+                        textSelection,
+                    ],
+                );
+
+                const thread = await services['mail.store'].Thread.getOrFetch({
+                    model: "discuss.channel",
+                    id: Number(ai_channel_id),
+                });
+
+                thread.composer.text = placeholderPrompt;
+                thread.aiSpecialActions = aiSpecialActions;
+                thread.aiChatSource = aiChatSourceId;
+                thread.openChatWindow({ focus: true });
+            },
+            /**
+             * Converts record data to JSON, so we can pass them to the AI record's context
+             * @returns {String} String JSON representation of the record
+             */
+            recordDataToContextJSON(recordData, fieldsInfo) {
+                const result = {};
+
+                for (const fieldName in recordData) {
+                    if (!recordData.hasOwnProperty(fieldName)) continue;
+                    const fieldValue = recordData[fieldName];
+                    const fieldInfo = fieldsInfo[fieldName] || {};
+                    // Skip binary fields entirely - there is no easy way of placing them in the context
+                    if (fieldInfo.type === 'binary') {
+                        continue;
+                    }
+                    // Handle relational fields
+                    if (['many2one', 'many2many', 'one2many'].includes(fieldInfo.type)) {
+                        // Skip abnormally large relational fields which can floud the AI context
+                        if (fieldValue && fieldValue.records && fieldValue.records.length > 50) {
+                            continue;
+                        }
+                        switch (fieldInfo.type) {
+                            case 'many2one':
+                                result[fieldName] = fieldValue ? fieldValue.display_name || fieldValue.name : null;
+                                break;
+                            case 'many2many':
+                            case 'one2many':
+                                if (fieldValue && fieldValue.records) {
+                                    result[fieldName] = fieldValue.records.map(record => 
+                                        record.data.display_name || record.data.name
+                                    );
+                                } else {
+                                    result[fieldName] = [];
+                                }
+                                break;
+                        }
+                    } else if (fieldInfo.type === 'date' && fieldValue) {  // handle date fields
+                        const date = luxon.DateTime.fromISO(fieldValue);
+                        result[fieldName] = date.isValid ? formatDate(date) : fieldValue;
+                    } else if (fieldInfo.type === 'datetime' && fieldValue) {  // handle datetime fields
+                        const datetime = luxon.DateTime.fromISO(fieldValue);
+                        result[fieldName] = datetime.isValid ? formatDateTime(datetime) : fieldValue;
+                    } else {  // handle all other types of fields
+                        result[fieldName] = fieldValue;
+                    }
+                }
+                return result;
+            },
+            async openAIChatFromContextV2({
+                callerComponentName,
+                originalRecordModel,
+                originalRecordId,
+                specialActionCallbacks,
+                aiChatSourceId,
+                placeholderPrompt = "",
+                originalRecordData = null,
+                originalRecordFields = null,
+                textSelection = null,
+            }) {
+                let aiChatWindowName, frontEndRecordInfo;
+                if (['html_field_record', 'html_field_text_select', 'chatter_ai_button'].includes(callerComponentName)) {
+                    frontEndRecordInfo = this.recordDataToContextJSON(originalRecordData, originalRecordFields);
+                }
+                aiChatWindowName = originalRecordData?.record_name || frontEndRecordInfo?.name 
+                if (!aiChatWindowName) {
+                    switch (callerComponentName) {
+                        case "html_field_text_select":
+                            aiChatWindowName = _t("Text Refine");
+                            break;
+                        case "html_field_knowledge":
+                            aiChatWindowName = _t("Knowledge Article");
+                            break;
+                        default:
+                            aiChatWindowName = _t("Editor");
+                    }
+                };
+                services['mail.store'].aiInsertButtonTarget = aiChatSourceId;
+
+                await this.launchAIChat({
+                    callerComp: callerComponentName,
+                    recordName: aiChatWindowName,
+                    recordModel: originalRecordModel,
+                    recordId: originalRecordId,
+                    aiChatSourceId: aiChatSourceId,
+                    placeholderPrompt: placeholderPrompt,
+                    frontEndRecordInfo: frontEndRecordInfo ? JSON.stringify(frontEndRecordInfo) : null,
+                    textSelection: textSelection,
+                    aiSpecialActions: specialActionCallbacks,
+                });
+            }
+        };
+    },
+};
+
+registry.category("services").add("aiChatLauncher", aiChatLauncherService);

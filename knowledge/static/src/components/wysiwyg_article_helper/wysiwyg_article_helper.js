@@ -1,5 +1,4 @@
 import { Component, onWillStart } from "@odoo/owl";
-import { ChatGPTPromptDialog } from "@html_editor/main/chatgpt/chatgpt_prompt_dialog";
 import { parseHTML } from "@html_editor/utils/html";
 import { ArticleTemplatePickerDialog } from "@knowledge/components/article_template_picker_dialog/article_template_picker_dialog";
 import { ItemCalendarPropsDialog } from "@knowledge/components/item_calendar_props_dialog/item_calendar_props_dialog";
@@ -22,6 +21,7 @@ export class WysiwygArticleHelper extends Component {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.orm = useService("orm");
+        this.aiChatLauncher = useService("aiChatLauncher");
         onWillStart(async () => {
             this.isPortalUser = await user.hasGroup("base.group_portal");
         });
@@ -190,32 +190,30 @@ export class WysiwygArticleHelper extends Component {
         });
     }
 
-    onGenerateArticleClick() {
-        this.dialogService.add(ChatGPTPromptDialog, {
-            initialPrompt: _t("Write an article about"),
-            baseContainer: "P",
-            insert: (fragment) => {
-                const generatedContentTitle = fragment.querySelector("h1,h2");
-                const articleTitle = this.props.editor.document.createElement("h1");
-                if (generatedContentTitle && generatedContentTitle.tagName !== "H1") {
-                    articleTitle.innerText = generatedContentTitle.innerText;
-                    generatedContentTitle.replaceWith(articleTitle);
-                } else if (!generatedContentTitle) {
-                    const br = this.props.editor.document.createElement("BR");
-                    articleTitle.replaceChildren(br);
-                    fragment.prepend(articleTitle);
-                }
-                this.props.editor.editable.replaceChildren(...fragment.children);
-                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
-                this.props.editor.shared.history.addStep();
+    async onGenerateArticleClick() {
+        await this.aiChatLauncher.openAIChatFromContextV2({
+            callerComponentName: 'html_field_knowledge',
+            originalRecordModel: this.props.record.resModel,
+            originalRecordId: this.props.record.resId,
+            specialActionCallbacks: {
+                'insert': (fragment) => {
+                    const generatedContentTitle = fragment.querySelector("h1,h2");
+                    const articleTitle = this.props.editor.document.createElement("h1");
+                    if (generatedContentTitle && generatedContentTitle.tagName !== "H1") {
+                        articleTitle.innerText = generatedContentTitle.innerText;
+                        generatedContentTitle.replaceWith(articleTitle);
+                    } else if (!generatedContentTitle) {
+                        const br = this.props.editor.document.createElement("BR");
+                        articleTitle.replaceChildren(br);
+                        fragment.prepend(articleTitle);
+                    }
+                    this.props.editor.editable.replaceChildren(...fragment.children);
+                    this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+                    this.props.editor.shared.history.addStep();
+                },
             },
-            sanitize: (fragment) => {
-                return DOMPurify.sanitize(fragment, {
-                    IN_PLACE: true,
-                    ADD_TAGS: ["#document-fragment"],
-                    ADD_ATTR: ["contenteditable"],
-                });
-            },
+            aiChatSourceId: this.props.record.id,
+            placeholderPrompt: _t("Write a knowledge article about"),
         });
     }
 }
