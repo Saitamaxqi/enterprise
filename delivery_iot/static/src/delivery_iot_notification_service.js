@@ -1,5 +1,5 @@
 import { registry } from '@web/core/registry';
-import { DeviceController } from '@iot/device_controller';
+import { DeviceController } from '@iot_base/device_controller';
 
 export const deliveryIoTNotificationService = {
     dependencies: ['multi_tab', 'bus_service', 'iot_longpolling'],

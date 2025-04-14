@@ -17,8 +17,8 @@
     'assets': {
         'pos_self_order.assets': [
             'web/static/lib/jquery/jquery.js',
-            'iot/static/src/iot_longpolling.js',
-            'iot/static/src/device_controller.js',
+            'iot_base/static/src/network_utils/*',
+            'iot_base/static/src/device_controller.js',
             'pos_iot/static/src/app/utils/printer/iot_printer.js',
             'point_of_sale/static/src/app/services/hardware_proxy_service.js',
             'pos_self_order_iot/static/src/overrides/models/*',

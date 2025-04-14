@@ -45,6 +45,7 @@ class IotBox(models.Model):
 
     token = fields.Char(default=lambda self: self._default_token(), readonly=True)
 
+    @api.model
     def sign_communication(self, iot_box_ip, url, payload):
         """Compute HMAC signature for the url and the payload of a request with
         the IoT Box `token` as key.

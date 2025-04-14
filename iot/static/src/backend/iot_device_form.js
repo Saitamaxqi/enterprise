@@ -2,7 +2,7 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { formView } from "@web/views/form/form_view";
 import { _t } from "@web/core/l10n/translation";
-import { DeviceController } from "../device_controller";
+import { DeviceController } from "@iot_base/device_controller";
 import { useSubEnv } from "@odoo/owl";
 
 class IoTDeviceController extends formView.Controller {

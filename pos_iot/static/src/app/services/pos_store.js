@@ -3,7 +3,7 @@ import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
-import { DeviceController } from "@iot/device_controller";
+import { DeviceController } from "@iot_base/device_controller";
 import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
 
 patch(PosStore.prototype, {

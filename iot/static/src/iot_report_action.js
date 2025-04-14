@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { browser } from "@web/core/browser/browser"
-import { DeviceController } from "@iot/device_controller";
+import { DeviceController } from "@iot_base/device_controller";
 import {
     IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY,
     removeIoTReportIdFromBrowserLocalStorage,

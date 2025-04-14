@@ -1,7 +1,7 @@
 import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";
-import { DeviceController } from "@iot/device_controller";
+import { DeviceController } from "@iot_base/device_controller";
 import { PaymentPage } from "@pos_self_order/app/pages/payment_page/payment_page";
 
 patch(PaymentPage.prototype, {

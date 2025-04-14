@@ -1,6 +1,6 @@
 /* global posmodel */
 
-import { IoTLongpolling, iotLongpollingService } from "@iot/iot_longpolling";
+import { IoTLongpolling, iotLongpollingService } from "@iot_base/network_utils/longpolling";
 import { patch } from "@web/core/utils/patch";
 import { iotBoxDisconnectedDialog } from "@pos_iot/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog";
 
