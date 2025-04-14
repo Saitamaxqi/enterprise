@@ -407,6 +407,18 @@ test("doughnut charts", async () => {
     expect(runtime.chartJsConfig.type).toBe("doughnut");
 });
 
+test("funnel chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_funnel");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_funnel");
+    expect(model.getters.getChartDefinition(chartId).cumulative).toBe(true);
+    expect(model.getters.getChartRuntime(chartId).chartJsConfig.type).toBe("funnel");
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();

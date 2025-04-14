@@ -3,6 +3,7 @@ import { CommonOdooChartConfigPanel } from "./common/config_panel";
 import { OdooBarChartConfigPanel } from "./odoo_bar/odoo_bar_config_panel";
 import { OdooLineChartConfigPanel } from "./odoo_line/odoo_line_config_panel";
 import { OdooGeoChartConfigPanel } from "./odoo_geo/odoo_geo_config_panel";
+import { OdooFunnelChartConfigPanel } from "./odoo_funnel/odoo_funnel_config_panel";
 import { _t } from "@web/core/l10n/translation";
 
 const { chartSidePanelComponentRegistry, chartSubtypeRegistry } = spreadsheet.registries;
@@ -13,6 +14,7 @@ const {
     RadarChartDesignPanel,
     WaterfallChartDesignPanel,
     GeoChartDesignPanel,
+    FunnelChartDesignPanel,
 } = spreadsheet.components;
 
 chartSidePanelComponentRegistry
@@ -51,6 +53,10 @@ chartSidePanelComponentRegistry
     .add("odoo_geo", {
         configuration: OdooGeoChartConfigPanel,
         design: GeoChartDesignPanel,
+    })
+    .add("odoo_funnel", {
+        configuration: OdooFunnelChartConfigPanel,
+        design: FunnelChartDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -203,4 +209,13 @@ chartSubtypeRegistry.add("odoo_geo", {
     chartSubtype: "odoo_geo",
     category: "misc",
     preview: "o-spreadsheet-ChartPreview.GEO_CHART",
+})
+chartSubtypeRegistry.add("odoo_funnel", {
+    matcher: (definition) => definition.type === "odoo_funnel",
+    displayName: _t("Funnel"),
+    chartType: "odoo_funnel",
+    chartSubtype: "odoo_funnel",
+    subtypeDefinition: { cumulative: true },
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.FUNNEL_CHART",
 });
