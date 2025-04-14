@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Electronic invoicing for Colombia with Carvajal',
@@ -37,7 +36,7 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            'l10n_co_edi/static/src/js/portal_address.js',
+            'l10n_co_edi/static/src/interactions/**/*',
         ],
     },
     'installable': True,
