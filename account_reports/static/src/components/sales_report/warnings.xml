@@ -23,4 +23,8 @@
         <a t-on-click="(ev) => controller.reportAction(ev, 'get_warning_act_window', { type: 'same_country', model: 'partner' })">partners</a>
         that are not established abroad.
     </t>
+
+    <t t-name="account_reports.sales_report_warning_duplicated_vat">
+        <a t-on-click="(ev) => controller.reportAction(ev, 'get_warning_act_window', { type: 'duplicated_vat', model: 'partner', 'duplicated_partners_vat': warningParams.duplicated_partners_vat})">Some partners</a> share the same VAT number.
+    </t>
 </templates>

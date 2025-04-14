@@ -7,6 +7,8 @@ from odoo.tests import tagged
 from odoo.tools.misc import NON_BREAKING_SPACE
 from freezegun import freeze_time
 
+from odoo import Command
+
 
 @tagged('post_install', '-at_install')
 class AccountSalesReportTest(AccountSalesReportCommon):
@@ -120,4 +122,58 @@ class AccountSalesReportTest(AccountSalesReportCommon):
                 ('Total',               '',                       '',                       f'${NON_BREAKING_SPACE}100.00'),
             ],
             options,
+        )
+
+    def test_ec_sales_set_as_main(self):
+        """Test setting a partner as the main in EC Sales Report when two partners share the same VAT.
+
+        Scenario:
+        - Two partners have the same VAT.
+        - Set one partner as the main partner.
+        - Validate that the second partner is linked correctly as a child and that moves are updated.
+        """
+        # Prepare partners
+        partner_main = self.partner_a
+        partner_duplicate = self.partner_b
+        partner_duplicate.vat = partner_main.vat
+
+        move_vals = {
+            'move_type': 'out_invoice',
+            'invoice_date': '2025-04-29',
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500.0,
+                'tax_ids': [],
+            })],
+        }
+        # Create and post invoice for the main partner
+        move_main = self.env['account.move'].create({**move_vals, 'partner_id': partner_main.id})
+        move_main.action_post()
+        # Create and post invoice for the duplicate partner
+        move_duplicate = self.env['account.move'].create({**move_vals, 'partner_id': partner_duplicate.id})
+        move_duplicate.action_post()
+
+        # Call with context
+        partner_main.with_context(duplicated_partners_vat=[partner_main.vat, partner_duplicate.vat]).set_commercial_partner_main()
+
+        # Assertions: partner relationships
+        self.assertEqual(
+            partner_duplicate.commercial_partner_id, partner_main,
+            "Duplicate partner's commercial partner should be the main partner."
+        )
+        self.assertEqual(
+            partner_duplicate.parent_id, partner_main,
+            "Duplicate partner's parent should be set to the main partner."
+        )
+
+        # Assertions: accounting move reassignment
+        self.assertEqual(
+            move_duplicate.commercial_partner_id, partner_main,
+            "The move's commercial partner should also be reassigned."
+        )
+
+        # Assertions: journal items (move lines)
+        self.assertEqual(
+            move_duplicate.line_ids.partner_id, partner_main,
+            "Each move line should now be assigned to the main partner."
         )

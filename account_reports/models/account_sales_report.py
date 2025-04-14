@@ -245,6 +245,11 @@ class AccountEcSalesReportHandler(models.AbstractModel):
                         warnings['account_reports.sales_report_warning_missing_vat'] = {'alert_type': 'warning'}
                     if row.get('same_country') and row['country_code']:
                         warnings['account_reports.sales_report_warning_same_country'] = {'alert_type': 'warning'}
+                    if row.get('is_vat_duplicated') and row.get('vat_number'):
+                        if warnings.get('account_reports.sales_report_warning_duplicated_vat'):
+                            warnings['account_reports.sales_report_warning_duplicated_vat']['duplicated_partners_vat'].append(row['vat_number'])
+                        else:
+                            warnings['account_reports.sales_report_warning_duplicated_vat'] = {'alert_type': 'warning', 'duplicated_partners_vat': [row['vat_number']]}
 
         company_currency = self.env.company.currency_id
 
@@ -302,7 +307,8 @@ class AccountEcSalesReportHandler(models.AbstractModel):
                     -SUM(%(balance_select)s)        AS balance,
                     %(tax_elem_table_name)s         AS sales_type_code,
                     %(tax_elem_table)s.id           AS tax_element_id,
-                    (comp_partner.country_id = res_partner.country_id) AS same_country
+                    (comp_partner.country_id = res_partner.country_id) AS same_country,
+                    COUNT(*) OVER (PARTITION BY res_partner.vat) > 1 AS is_vat_duplicated
                 FROM %(table_references)s
                 %(currency_table_join)s
                 JOIN %(aml_rel_table)s ON %(aml_rel_table)s.account_move_line_id = account_move_line.id
@@ -373,6 +379,8 @@ class AccountEcSalesReportHandler(models.AbstractModel):
         elif params['type'] == 'non_ec_country':
             aml_domains = [('partner_id.country_id.code', 'not in', tuple(self._get_ec_country_codes(options)))]
             act_window['name'] = _("EC tax on non EC countries")
+        elif params['type'] == 'duplicated_vat':
+            return self._get_duplicated_vat_partners(tuple(params['duplicated_partners_vat']))
         else:
             aml_domains = [('partner_id.country_id.code', '=', options.get('same_country_warning'))]
             act_window['name'] = _("EC tax on same country")
@@ -398,3 +406,14 @@ class AccountEcSalesReportHandler(models.AbstractModel):
             })
 
         return act_window
+
+    def _get_duplicated_vat_partners(self, duplicated_partners_vat):
+        view_ref = self.env.ref('account_reports.duplicated_vat_partner_tree_view', raise_if_not_found=False)
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Partners with duplicated VAT numbers'),
+            'context': {'group_by': 'vat', 'expand': 1, 'duplicated_partners_vat': duplicated_partners_vat},
+            'views': [(view_ref and view_ref.id or False, 'list'), (False, 'form')],
+            'res_model': 'res.partner',
+            'domain': [('vat', 'in', duplicated_partners_vat)],
+        }

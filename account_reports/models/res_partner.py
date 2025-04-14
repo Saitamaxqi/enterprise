@@ -70,3 +70,21 @@ class ResPartner(models.Model):
                 'mimetype': 'application/pdf',
             },
         ])
+
+    def set_commercial_partner_main(self):
+        self.ensure_one()
+
+        main_partner = self
+        duplicated_partners = self.env['res.partner'].search([
+            ('vat', '=', main_partner.vat),
+            ('id', '!=', main_partner.id)
+        ])
+        # Update commercial partner of all duplicates
+        duplicated_partners.write({
+            'is_company': False,
+            'parent_id': main_partner.id,
+            'type': 'invoice',
+        })
+        duplicated_partners_vat = self._context.get('duplicated_partners_vat', [])
+        remaining_vats = [pvat for pvat in duplicated_partners_vat if pvat != main_partner.vat]
+        return self.env['account.ec.sales.report.handler']._get_duplicated_vat_partners(remaining_vats)
