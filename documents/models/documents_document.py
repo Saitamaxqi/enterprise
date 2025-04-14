@@ -565,15 +565,18 @@ class DocumentsDocument(models.Model):
 
     def _get_folder_embedded_actions(self, folder_ids):
         """Return the enabled actions for the given folder."""
-        folders = self.env['documents.document'].browse(folder_ids)._filtered_access('read')
-        if not folders:
+        folders_sudo = self.env['documents.document'].sudo().search([
+            ('id', 'in', folder_ids),
+            '|', ('user_permission', '!=', 'none'), ('children_ids', 'any', [('user_permission', '!=', 'none')])
+        ])
+        if not folders_sudo:
             return {}
         all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search(
             domain=[
                 ('parent_action_id', '=', self.env.ref("documents.document_action").id),
                 ('action_id.type', '=', 'ir.actions.server'),
                 ('parent_res_model', '=', 'documents.document'),
-                ('parent_res_id', 'in', (folders + folders.shortcut_document_id).ids),
+                ('parent_res_id', 'in', (folders_sudo + folders_sudo.shortcut_document_id).ids),
             ],
             order='sequence',
         )
@@ -588,16 +591,16 @@ class DocumentsDocument(models.Model):
             lambda e: e.action_id.id in accessible_server_actions_ids).sudo(False)
         # group after ordering by `ir.embedded.actions` sequence
         actions_per_folder = embedded_actions.grouped('parent_res_id')
-        targets_to_shortcuts = folders.grouped('shortcut_document_id')
+        targets_to_shortcuts_sudo = folders_sudo.grouped('shortcut_document_id')
         actions_per_shortcut_folder = {
-            shortcut.id: actions
-            for target, shortcuts in targets_to_shortcuts.items()
-            for shortcut in shortcuts
-            if (actions := actions_per_folder.get(target.id))
+            shortcut_sudo.id: actions
+            for target_sudo, shortcuts_sudo in targets_to_shortcuts_sudo.items()
+            for shortcut_sudo in shortcuts_sudo
+            if (actions := actions_per_folder.get(target_sudo.id))
         }
         return actions_per_folder | actions_per_shortcut_folder
 
-    @api.depends_context('uid')
+    @api.depends_context('uid', 'allowed_company_ids')
     @api.depends('folder_id')
     def _compute_available_embedded_actions_ids(self):
         embedded_actions = self._get_folder_embedded_actions(self.folder_id.ids)
@@ -1133,13 +1136,11 @@ class DocumentsDocument(models.Model):
         } for action in actions]
 
     @api.model
-    def action_folder_embed_action(self, folder_id, action_id, groups_ids=None):
+    def action_folder_embed_action(self, folder_id, action_id):
         """Enable / disable the action for the given folder
 
         :param int folder_id: The folder on which we pin the actions
         :param int action_id: The id of the action to enable
-        :param list[int] groups_ids: deprecated: ids of the groups the action is available to
-          Groups cannot be implemented at this level, they must be set on the server action instead.
         """
         if not self.env.user.has_group('documents.group_documents_user'):
             raise AccessError(_("You are not allowed to pin/unpin embedded Actions."))
@@ -1156,7 +1157,7 @@ class DocumentsDocument(models.Model):
         if not folder or folder.type != 'folder':
             raise UserError(_('You cannot pin an action on that document.'))
         if folder.shortcut_document_id:
-            return self.action_folder_embed_action(folder.shortcut_document_id.id, action_id, groups_ids)
+            return self.action_folder_embed_action(folder.shortcut_document_id.id, action_id)
 
         all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search([
             ('parent_action_id', '=', self.env.ref("documents.document_action").id),
