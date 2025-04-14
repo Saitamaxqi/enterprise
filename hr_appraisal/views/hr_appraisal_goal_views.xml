@@ -71,7 +71,7 @@
             <kanban quick_create="false" class="o_hr_employee_kanban" sample="1">
                 <templates>
                     <t t-name="card" class="overflow-hidden">
-                        <field name="name" class="fs-4 mb-1"/>
+                        <field name="name" class="fs-4 mb-1" style="max-width: 70%;"/>
                         <span t-if="record.progression.raw_value != 100">
                             Progress:
                             <field name="progression"/>

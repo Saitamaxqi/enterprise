@@ -202,8 +202,8 @@
                 <field name="previous_appraisal_date" optional="hide"/>
                 <field name="next_appraisal_date" optional="hide"/>
                 <field name="assessment_note" optional="hide"/>
-                <field name="state" widget="badge" readonly="1"
-                    decoration-warning="state == '1_new'" decoration-info="state == '2_pending'" decoration-success="state == '3_done'"/>
+                <field name="state" widget="badge" readonly="1" 
+                    invisible="state == '1_new'" decoration-success="state == '2_pending'"/>
                 <field name="company_id" readonly="1" optional="hide"/>
                 <field name="activity_exception_decoration" widget="activity_exception"/>
             </list>
@@ -298,7 +298,7 @@
                                 <field name="avatar_128" widget="background_image" class="d-block position-relative"/>
                             </aside>
                             <main class="ms-2">
-                                <field name="employee_id" class="fw-bolder fs-5"/>
+                                <field name="employee_id" class="fw-bolder fs-5" style="max-width: 70%;"/>
                                 <field name="department_id"/>
                                 <field name="date_close" widget="appraisal_remaining_days"/>
                                 <field name="appraisal_properties" widget="properties"/>
