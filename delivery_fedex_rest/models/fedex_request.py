@@ -32,7 +32,7 @@ FEDEX_CURR_MATCH = {
     'VES': 'VEF',
     # 'LVL': 'EUR',
     # 'UYU': 'UYP',
-    # 'GBP': 'UKL',
+    'GBP': 'UKL',
     # 'IDR': 'RPA',
 }
 
