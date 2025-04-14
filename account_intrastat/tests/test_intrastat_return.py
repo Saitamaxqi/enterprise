@@ -22,8 +22,9 @@ class TestIntrastatReturn(TestAccountReportsCommon):
         country = cls.env['res.country'].create({
             'name': 'Squamuglia',
             'code': 'SQ',
-            'intrastat': True,
         })
+        intrastat_country_group = cls.env.ref('account.intrastat')
+        intrastat_country_group.country_ids |= country
         cls.company_data['company'].country_id = country
         cls.company_data['company'].currency_id = cls.env.ref('base.EUR').id
         cls.company_data['currency'] = cls.env.ref('base.EUR')

@@ -10,14 +10,12 @@ Intrastat Reports
     'depends': ['account_reports'],
     'data': [
         'security/ir.model.access.csv',
-        'data/country_data.xml',
         'data/code_transaction_data.xml',
         'data/code_transport_data.xml',
         # Commodity codes are loaded as CSV due to the huge amount of records.
         'data/account.intrastat.code.csv',
         'views/account_intrastat_code_view.xml',
         'views/product_view.xml',
-        'views/res_country_view.xml',
         'views/res_config_settings_view.xml',
         'views/account_invoice_view.xml',
         'data/intrastat_goods_report.xml',

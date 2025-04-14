@@ -269,7 +269,17 @@ class AccountIntrastatReportHandler(models.AbstractModel):
 
         query_params = {
             'country_table_join': SQL("LEFT JOIN res_country country ON account_move.intrastat_country_id = country.id"),
-            'country_condition': SQL("AND country.intrastat = TRUE AND (country.code != 'GB' OR account_move.date < '2021-01-01')"),
+            'country_condition': SQL("""
+                AND EXISTS (
+                    SELECT 1
+                    FROM res_country_group g
+                    JOIN res_country_res_country_group_rel rel
+                        ON rel.res_country_group_id = g.id
+                    WHERE rel.res_country_id = country.id
+                    AND g.code = 'INTRASTAT'
+                )
+                AND (country.code != 'GB' OR account_move.date < '2021-01-01')
+            """),
             'commodity_code': SQL('code.code'),
             **query_params,
         }
@@ -338,7 +348,16 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 LEFT JOIN account_intrastat_code inv_transport ON account_move.intrastat_transport_mode_id = inv_transport.id
                 LEFT JOIN account_intrastat_code comp_transport ON company.intrastat_transport_mode_id = comp_transport.id
                 LEFT JOIN res_country product_country ON product_country.id = account_move_line.intrastat_product_origin_country_id
-                LEFT JOIN res_country partner_country ON partner.country_id = partner_country.id AND partner_country.intrastat IS TRUE
+                LEFT JOIN res_country partner_country
+                    ON partner.country_id = partner_country.id
+                    AND EXISTS (
+                        SELECT 1
+                        FROM res_country_group g
+                        JOIN res_country_res_country_group_rel rel
+                            ON rel.res_country_group_id = g.id
+                        WHERE rel.res_country_id = partner_country.id
+                        AND g.code = 'INTRASTAT'
+                    )
                 LEFT JOIN res_currency invoice_currency ON invoice_currency.id = account_move.currency_id
             WHERE
                 %(search_condition)s

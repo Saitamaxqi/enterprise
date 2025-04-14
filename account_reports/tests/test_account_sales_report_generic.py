@@ -96,7 +96,7 @@ class AccountSalesReportTest(AccountSalesReportCommon):
         """
         Ensure that Northern Irish companies are included in the EC sales report.
         """
-        northern_ireland = self.env.ref('account_intrastat.xi', raise_if_not_found=False)
+        northern_ireland = self.env.ref('base.xi', raise_if_not_found=False)
 
         if not northern_ireland:
             self.skipTest("`account_intrastat` module not installed")

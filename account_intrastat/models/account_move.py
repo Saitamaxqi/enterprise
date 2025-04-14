@@ -18,7 +18,7 @@ class AccountMove(models.Model):
         compute='_compute_intrastat_country_id',
         readonly=False,
         store=True,
-        domain=[('intrastat', '=', True)])
+        domain=[('country_group_ids.code', '=', 'INTRASTAT')])
 
     def _get_invoice_intrastat_country_id(self):
         ''' Hook allowing to retrieve the intrastat country depending of installed modules.
@@ -26,7 +26,10 @@ class AccountMove(models.Model):
         '''
         self.ensure_one()
         if self.is_sale_document():
-            if self.partner_shipping_id.country_id.intrastat:
+            if (
+                self.partner_shipping_id.country_id
+                and 'INTRASTAT' in self.partner_shipping_id.country_id.country_group_codes
+            ):
                 return self.partner_shipping_id.country_id.id
             else:
                 return False
@@ -35,7 +38,11 @@ class AccountMove(models.Model):
     @api.depends('partner_id', 'partner_shipping_id')
     def _compute_intrastat_country_id(self):
         for move in self:
-            if move.partner_id.country_id.intrastat or move.is_sale_document():
+            if (
+                move.partner_id.country_id
+                and 'INTRASTAT' in move.partner_id.country_id.country_group_codes
+                or move.is_sale_document()
+            ):
                 move.intrastat_country_id = move._get_invoice_intrastat_country_id()
             else:
                 move.intrastat_country_id = False

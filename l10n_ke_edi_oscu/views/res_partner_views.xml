@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
             <group name="general" position="after">
-                <group string="Kenya Accounting Details" name="l10n_ke_details">
+                <group string="Kenya Accounting Details" name="l10n_ke_details" invisible="'KE' not in fiscal_country_codes">
                     <field name="l10n_ke_branch_code"/>
                     <div class="cell"/>
                     <button name="action_l10n_ke_oscu_register_bhf_customer"

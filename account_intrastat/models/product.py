@@ -38,6 +38,7 @@ class ProductTemplate(models.Model):
     intrastat_code_domain = fields.Char(
         compute='_compute_intrastat_code_domain',
     )
+    account_fiscal_country_group_codes = fields.Json(related="company_id.account_fiscal_country_group_codes")
 
     @api.depends('type')
     def _compute_intrastat_code_domain(self):

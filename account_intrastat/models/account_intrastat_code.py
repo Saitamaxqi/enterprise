@@ -49,7 +49,12 @@ class AccountIntrastatCode(models.Model):
 
     name = fields.Char(string='Name')
     code = fields.Char(string='Code', required=True)
-    country_id = fields.Many2one('res.country', string='Country', help='Restrict the applicability of code to a country.', domain="[('intrastat', '=', True)]")
+    country_id = fields.Many2one(
+        'res.country',
+        string='Country',
+        help='Restrict the applicability of code to a country.',
+        domain=[('country_group_ids.code', '=', 'INTRASTAT')],
+    )
     description = fields.Char(string='Description')
     type = fields.Selection(string='Type', required=True,
         selection=[

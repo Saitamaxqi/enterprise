@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='general']" position="inside">
-                <field name="iso20022_lei"/>
+                <field name="iso20022_lei" invisible="'SEPA' not in fiscal_country_group_codes"/>
             </xpath>
         </field>
     </record>

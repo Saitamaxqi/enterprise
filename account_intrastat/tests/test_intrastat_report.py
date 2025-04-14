@@ -18,8 +18,9 @@ class TestIntrastatReport(TestAccountReportsCommon):
         country = cls.env['res.country'].create({
             'name': 'Squamuglia',
             'code': 'SQ',
-            'intrastat': True,
         })
+        intrastat_country_group = cls.env.ref('account.intrastat')
+        intrastat_country_group.country_ids |= country
         cls.company_data['company'].country_id = country
         cls.company_data['company'].currency_id = cls.env.ref('base.EUR').id
         cls.company_data['currency'] = cls.env.ref('base.EUR')
@@ -887,7 +888,7 @@ class TestIntrastatReport(TestAccountReportsCommon):
             'invoice_date': '2024-01-10',
             'date': '2024-01-10',
             'company_id': self.company_data['company'].id,
-            'intrastat_country_id': self.env.ref('account_intrastat.xi').id,
+            'intrastat_country_id': self.env.ref('base.xi').id,
             'invoice_line_ids': [
                 Command.create({
                     'product_id': self.product_no_supplementary_unit.id,

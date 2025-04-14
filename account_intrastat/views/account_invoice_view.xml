@@ -8,12 +8,19 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='fiscal_position_id']" position="after">
                     <field name="intrastat_country_id"
-                           invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')"
+                           invisible="(
+                               ('INTRASTAT' not in account_fiscal_country_group_codes)
+                               or (move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))
+                           )"
                            readonly="state in ['cancel', 'posted']"
                            help="Arrival country"
                            options="{'no_create': True}"/>
                     <field name="intrastat_transport_mode_id"
-                           invisible="not intrastat_country_id or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')"
+                           invisible="(
+                               ('INTRASTAT' not in account_fiscal_country_group_codes)
+                               or (not intrastat_country_id)
+                               or (move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))
+                           )"
                            readonly="state != 'draft'"
                            context="{'search_view_ref': 'account_intrastat.view_intrastat_code_restricted_type_search',
                            'form_view_ref': 'account_intrastat.view_intrastat_code_restricted_type_form',

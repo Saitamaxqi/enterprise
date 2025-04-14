@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@id='inbound_payment_settings']" position="inside">
-                    <group invisible="type != 'bank'">
+                    <group invisible="type != 'bank' or 'SEPA' not in account_fiscal_country_group_codes">
                         <group string="SEPA Pain Version">
                             <field name="debit_sepa_pain_version" string='SEPA Pain version'/>
                         </group>
