@@ -107,7 +107,7 @@ class SendCloud:
         parcels = self._prepare_parcel(picking, sender_id, is_return)
 
         # the id of the access_point needs to be passed as parameter following Sendcloud API's
-        if picking.sale_id.pickup_location_data:
+        if picking.sale_id.pickup_location_data and not is_return:
             for parcel in parcels:
                 parcel['to_service_point'] = picking.sale_id.pickup_location_data['id']
 
