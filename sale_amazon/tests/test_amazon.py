@@ -603,11 +603,20 @@ class TestAmazon(common.TestAmazonCommon):
                     'attributes': {'merchant_shipping_group': {}},
                 }],
             },
-        ) as make_sp_api_request_mock:
+        ):
             feed_info = self.offer._get_feed_data()
 
         self.assertIn(self.offer, feed_info)
         self.assertEqual(self.offer.amazon_feed_ref, '{"productType":"PRODUCT","is_fbm":true}')
+
+    def test_offer_get_feed_data_fallback_when_missing_data(self):
+        self.offer.amazon_feed_ref = 'incorrect json'  # force fetch of feed data
+
+        with patch('odoo.addons.sale_amazon.utils.make_sp_api_request', return_value={'items': []}):
+            feed_info = self.offer._get_feed_data()
+
+        self.assertIn(self.offer, feed_info)
+        self.assertEqual(self.offer.amazon_feed_ref, '{"productType":false,"is_fbm":false}')
 
     @mute_logger('odoo.addons.sale_amazon.models.amazon_offer')
     def test_offer_get_feed_data_fails_gracefully(self):
@@ -616,7 +625,7 @@ class TestAmazon(common.TestAmazonCommon):
         with patch(
             'odoo.addons.sale_amazon.utils.make_sp_api_request',
             side_effect=amazon_utils.AmazonRateLimitError(''),
-        ) as make_sp_api_request_mock:
+        ):
             feed_info = self.offer._get_feed_data()
 
         self.assertNotIn(self.offer, feed_info)

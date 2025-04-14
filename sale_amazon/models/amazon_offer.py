@@ -150,7 +150,7 @@ class AmazonOffer(models.Model):
                         'marketplaceIds': marketplace_id.api_ref,
                         'includedData': 'attributes,productTypes',
                         'identifiersType': 'SKU',
-                        'identifiers': ','.join(offers.mapped('sku')),
+                        'identifiers': ','.join(offer.sku.replace(',', '') for offer in offers),
                         'pageSize': len(offers),
                     },
                 )
@@ -162,6 +162,9 @@ class AmazonOffer(models.Model):
 
             # Parse product data
             offer_by_sku = offers.grouped('sku')
+            feed_data_by_offer.update(
+                {offer: {'productType': False, 'is_fbm': False} for offer in offers}
+            )  # Default to FBA to not fetch the info everytime when the offer isn't found by Amazon
             for item in response['items']:
                 feed_data_by_offer[offer_by_sku[item['sku']]] = {
                     'productType':
