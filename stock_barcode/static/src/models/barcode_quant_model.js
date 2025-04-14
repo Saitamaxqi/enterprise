@@ -628,7 +628,10 @@ export default class BarcodeQuantModel extends BarcodeModel {
         for (const quant of quants) {
             const product = this.cache.getRecord("product.product", quant.product_id);
             const lot = quant.lot_id && this.cache.getRecord("stock.lot", quant.lot_id);
+            const quant_package =
+                quant.package_id && this.cache.getRecord("stock.quant.package", quant.package_id);
             const searchLineParams = Object.assign({}, barcodeData, { product, lot });
+            searchLineParams["package"] = quant_package;
             const currentLine = this._findLine(searchLineParams);
             if (!currentLine) {
                 const fieldsParams = this._convertDataToFieldsParams({

@@ -1754,3 +1754,29 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_with_no_inter
         },
     },
 ]});
+
+registry.category("web_tour.tours").add('test_correct_inventory_with_packages', { steps: () => [
+    {
+        trigger: '.o_button_inventory',
+        run: "click",
+    },
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan Shelf11',
+    },
+    {
+        trigger: '.o_barcode_line',
+        run: "click"
+    },
+    {
+        trigger: '.o_barcode_line_details',
+        run: function () {
+            helper.assertLinesCount(1);
+            helper.assertLineProduct(0, 'Product');
+            helper.assertLineQty(0, "?/10");
+            const [subline1, subline2] = helper.getSublines();
+            helper.assertLineQty(subline1, "?/5");
+            helper.assertLineQty(subline2, "?/5");
+        }
+    },
+]});

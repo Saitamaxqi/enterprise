@@ -847,3 +847,35 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         })
         self.assertEqual(product.qty_available, 10)
         self.start_tour("/odoo", 'stock_barcode_package_with_lot', login="admin")
+
+    def test_inventory_count_lot_split_in_packages(self):
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        grp_lot = self.env.ref('stock.group_production_lot')
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_barcode_count_entire_location = self.env.ref('stock_barcode.group_barcode_count_entire_location')
+        self.env.user.write({'group_ids': [(4, grp_barcode_count_entire_location.id, 0), (4, grp_pack.id, 0), (4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        shelf1 = self.env['stock.location'].create({
+            'name': 'Shelf 11',
+            'barcode': 'Shelf11',
+            'location_id': self.env.ref('stock.warehouse0').lot_stock_id.id,
+        })
+        product = self.env['product.product'].create({
+            'name': 'Product',
+            'is_storable': True,
+            'tracking': 'lot',
+        })
+        lot = self.env['stock.lot'].create({
+            'name': 'Lot-test',
+            'product_id': product.id,
+            })
+        pack1 = self.env['stock.quant.package'].create({
+                'name': 'Pack1',
+            })
+        pack2 = self.env['stock.quant.package'].create({
+                'name': 'Pack2',
+            })
+        self.env['stock.quant']._update_available_quantity(product, shelf1, 5, lot_id=lot, package_id=pack1)
+        self.env['stock.quant']._update_available_quantity(product, shelf1, 5, lot_id=lot, package_id=pack2)
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+        self.start_tour(url, 'test_correct_inventory_with_packages', login="admin")
