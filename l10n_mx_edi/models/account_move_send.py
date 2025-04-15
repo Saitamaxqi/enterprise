@@ -48,9 +48,9 @@ class AccountMoveSend(models.AbstractModel):
             attachments += move.l10n_mx_edi_cfdi_attachment_id
         return attachments
 
-    def _get_placeholder_mail_attachments_data(self, move, extra_edis=None):
+    def _get_placeholder_mail_attachments_data(self, move, invoice_edi_format=None, extra_edis=None):
         # EXTENDS 'account'
-        results = super()._get_placeholder_mail_attachments_data(move, extra_edis=extra_edis)
+        results = super()._get_placeholder_mail_attachments_data(move, invoice_edi_format=invoice_edi_format, extra_edis=extra_edis)
 
         if not move.l10n_mx_edi_cfdi_attachment_id and 'mx_cfdi' in extra_edis:
             filename = move._l10n_mx_edi_get_invoice_cfdi_filename()
