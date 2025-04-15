@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, Command
+from odoo import models, Command, _
 from collections import defaultdict
 
 
@@ -32,6 +32,7 @@ class AccountMove(models.Model):
                 tax_group = subtotal['tax_groups'][0]
                 tax_totals['subtotals'][0]['tax_groups'].append({
                     **tax_group,
+                    'group_name': _('Taxes'),
                     'base_amount_currency': tax_totals['base_amount_currency'],
                     'tax_amount_currency': tax_totals['tax_amount_currency'],
                 })

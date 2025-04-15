@@ -25,6 +25,10 @@ class TestAccountAvalaraInternalCommon(TestAccountAvataxCommon):
         }])
         invoice.action_post()
 
+        tax_groups = invoice.tax_totals['subtotals'][0]['tax_groups']
+        self.assertEqual(len(tax_groups), 1, "There should be one tax group on the invoice containing all taxes.")
+        self.assertEqual(tax_groups[0]['group_name'], 'Taxes')
+
         if test_exact_response:
             self.assertRecordValues(invoice, [{
                 'amount_total': 96.54,

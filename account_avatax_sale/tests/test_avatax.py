@@ -49,6 +49,10 @@ class TestSaleAvalara(TestAccountAvataxCommon):
             self.assertEqual(subtotal['tax_amount_currency'], order.amount_tax)
             self.assertEqual(totals['total_amount_currency'], order.amount_total)
 
+            tax_groups = subtotal['tax_groups']
+            self.assertEqual(len(tax_groups), 1, "There should be one tax group on the invoice containing all taxes.")
+            self.assertEqual(tax_groups[0]['group_name'], 'Taxes')
+
             for avatax_line in mocked_response['lines']:
                 so_line = order.order_line.filtered(lambda l: str(l.id) == avatax_line['lineNumber'].split(',')[1])
                 self.assertRecordValues(so_line, [{
