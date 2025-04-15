@@ -744,3 +744,25 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_blank_if_zero(self):
+        """
+            This test will check that the option blank if zero works as expected which means that
+            a '0.0' value will be blanked, but not in the total line.
+        """
+        self.report.column_ids.write({'blank_if_zero': True})
+        options = self._generate_options(self.report, '2017-01-01', '2017-01-31', default_options={'unfold_all': True, 'test_unfold_all': True})
+        options = self._update_multi_selector_filter(options, 'journals', self.company_data['default_journal_sale'].ids)
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #    Name                                  Initial Balance       Debit          Credit      End Balance
+            [0,                                                1,               2,             3,             4],
+            [
+                ('121000 Account Receivable',                  '',          1000.0,           '',         1000.0),
+                ('400000 Product Sales',                       '',         20000.0,           '',        20000.0),
+                ('600000 Expenses',                            '',             '',       21000.0,       -21000.0),
+                ('Total',                                      0.0,        21000.0,      21000.0,            0.0),
+            ],
+            options,
+        )

@@ -434,6 +434,9 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
                 lines.append(lines.pop(0))
                 # To make the style as if totals_below_sections was activated
                 lines[-1]['id'] = report._build_subline_id(lines[-1]['id'], report._build_line_id([('total', None, None)]))
+            # To make totals line not blank
+            for col in lines[-1]['columns']:
+                col['blank_if_zero'] = False
             lines[-1]['name'] = _("Total")
 
         return lines
