@@ -811,7 +811,9 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         commands = [{
             "type": "CREATE_IMAGE",
             "figureId": "image-id",
-            "position": {"x": 0, "y": 0},
+            "col": 0,
+            "row": 0,
+            "offset": {"x": 0, "y": 0},
             "size": {"width": 1, "height": 1},
             "definition": {
                 "path": "/web/image/%s" % image.id,
@@ -819,7 +821,9 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         }, {
             "type": "CREATE_IMAGE",
             "figureId": "image-id2",
-            "position": {"x": 0, "y": 0},
+            "col": 0,
+            "row": 0,
+            "offset": {"x": 0, "y": 0},
             "size": {"width": 1, "height": 1},
             "definition": {
                 "path": "/web/image/%s?access_token=%s" % (image.id, image.generate_access_token()[0]),

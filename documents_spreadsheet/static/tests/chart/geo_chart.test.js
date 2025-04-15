@@ -66,8 +66,11 @@ test("Can create a geo chart on countries", async function () {
 
     const sheetId = model.getters.getActiveSheetId();
     model.dispatch("CREATE_CHART", {
-        id: "chartId",
+        figureId: "chartId",
         sheetId,
+        col: 0,
+        row: 0,
+        offset: {x: 0, y: 0},
         definition: {
             type: "geo",
             title: { text: "test" },
@@ -107,8 +110,11 @@ test("Can create a geo chart on US states", async function () {
 
     const sheetId = model.getters.getActiveSheetId();
     model.dispatch("CREATE_CHART", {
-        id: "chartId",
+        figureId: "chartId",
         sheetId,
+        col: 0,
+        row: 0,
+        offset: {x: 0, y: 0},
         definition: {
             type: "geo",
             region: "usa",

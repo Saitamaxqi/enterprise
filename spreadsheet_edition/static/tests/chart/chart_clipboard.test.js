@@ -44,7 +44,7 @@ test("link is kept when copying chart", async () => {
     expect(model.getters.getChartOdooMenu(chartId).id).toBe(1);
     model.dispatch("UPDATE_CHART", {
         sheetId: model.getters.getActiveSheetId(),
-        id: chartId,
+        figureId: chartId,
         definition: {
             ...model.getters.getChartDefinition(chartId),
             type: "line",
@@ -52,7 +52,7 @@ test("link is kept when copying chart", async () => {
     });
     expect(model.getters.getChartOdooMenu(chartId).id).toBe(1);
     const sheetId = model.getters.getActiveSheetId();
-    model.dispatch("SELECT_FIGURE", { id: chartId });
+    model.dispatch("SELECT_FIGURE", { figureId: chartId });
     model.dispatch("COPY");
     model.dispatch("PASTE", { target: [toZone("A1")] });
     const chartIds = model.getters.getChartIds(sheetId);
@@ -84,7 +84,7 @@ test("copy/paste Odoo chart field matching", async () => {
         },
         fieldMatching
     );
-    model.dispatch("SELECT_FIGURE", { id: chartId2 });
+    model.dispatch("SELECT_FIGURE", { figureId: chartId2 });
     model.dispatch("COPY");
     model.dispatch("PASTE", { target: [toZone("A1")] });
     const chartIds = model.getters.getChartIds(sheetId);
@@ -121,7 +121,7 @@ test("cut/paste Odoo chart field matching", async () => {
         },
         fieldMatching
     );
-    model.dispatch("SELECT_FIGURE", { id: chartId2 });
+    model.dispatch("SELECT_FIGURE", { figureId: chartId2 });
     model.dispatch("CUT");
     model.dispatch("PASTE", { target: [toZone("A1")] });
     const chartIds = model.getters.getChartIds(sheetId);

@@ -41,7 +41,7 @@ patch(ChartTypePicker.prototype, {
             };
             this.env.model.dispatch("UPDATE_CHART", {
                 definition,
-                id: this.props.figureId,
+                figureId: this.props.figureId,
                 sheetId: this.env.model.getters.getActiveSheetId(),
             });
             this.closePopover();
