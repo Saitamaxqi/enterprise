@@ -156,7 +156,7 @@ result_rate = 10''')
             return localdict['inputs'][self.amount_other_input_id.code].amount, 1.0, 100.0
         # python code
         try:
-            safe_eval(self.amount_python_compute or 0.0, localdict, mode='exec', nocopy=True)
+            safe_eval(self.amount_python_compute or 0.0, localdict, mode='exec')
             return float(localdict['result']), localdict.get('result_qty', 1.0), localdict.get('result_rate', 100.0)
         except Exception as e:
             self._raise_error(localdict, _("Wrong python code defined for:"), e)
@@ -176,7 +176,7 @@ result_rate = 10''')
             return self.condition_other_input_id.code in localdict['inputs']
         # python code
         try:
-            safe_eval(self.condition_python, localdict, mode='exec', nocopy=True)
+            safe_eval(self.condition_python, localdict, mode='exec')
             return localdict.get('result', False)
         except Exception as e:
             self._raise_error(localdict, _("Wrong python condition defined for:"), e)

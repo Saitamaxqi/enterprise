@@ -1582,7 +1582,7 @@ class HrPayslip(models.Model):
             last_batches = self.env['hr.payslip.run']
 
         for warning in self.env['hr.payroll.dashboard.warning'].search([]):
-            localdict = {
+            context = {
                 'date': safe_eval_datetime.date,
                 'datetime': safe_eval_datetime.datetime,
                 'relativedelta': safe_eval_dateutil.relativedelta.relativedelta,
@@ -1590,26 +1590,24 @@ class HrPayslip(models.Model):
                 'warning_records': self.env['base'],
                 'warning_action': False,
                 'additional_context': {},
-            }
-            globaldict = {
                 'self': self.env['hr.payslip'],
                 'last_batches': last_batches,
                 'defaultdict': defaultdict,
             }
             try:
-                safe_eval(warning.evaluation_code, locals_dict=localdict, globals_dict=globaldict, mode='exec', nocopy=True)
+                safe_eval(warning.evaluation_code, context, mode='exec')
             except Exception as e:
                 raise UserError(_("Wrong warning computation code defined for:\n- Warning: %(warning)s\n- Error: %(error)s", warning=warning.name, error=e))
-            if localdict['warning_count']:
+            if context['warning_count']:
                 result.append({
                     'string': warning.name,
                     'color': warning.color,
-                    'count': localdict['warning_count'],
-                    'action': localdict['warning_action'] or self._dashboard_default_action(
+                    'count': context['warning_count'],
+                    'action': context['warning_action'] or self._dashboard_default_action(
                         warning.name,
-                        localdict['warning_records']._name,
-                        localdict['warning_records'].ids,
-                        additional_context=localdict['additional_context'],
+                        context['warning_records']._name,
+                        context['warning_records'].ids,
+                        additional_context=context['additional_context'],
                     ),
                 })
         return result
