@@ -15,6 +15,13 @@ export class PlanningKanbanController extends KanbanController {
         this.planningRecurrenceDeletion = usePlanningRecurringDeleteAction();
     }
 
+    get modelOptions() {
+        return {
+            ...super.modelOptions,
+            lazy: false,
+        };
+    }
+
     async deleteRecord(record) {
         if (record.data.repeat) {
             this.dialogService.add(AddressRecurrencyConfirmationDialog, {

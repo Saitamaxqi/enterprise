@@ -72,6 +72,7 @@ function useParentedStaticList(model, parentRecord, resIds) {
         list.selection = [];
         return list;
     };
+    model._createEmptyRoot = () => null;
 }
 
 class ListEditorController extends listView.Controller {

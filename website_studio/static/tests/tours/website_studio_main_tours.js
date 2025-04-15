@@ -43,7 +43,7 @@ registry.category("web_tour.tours").add("website_studio_listing_and_page", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_view",
+            trigger: ".o_kanban_view .o_kanban_renderer",
             run() {
                 const pages = this.anchor.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)");
                 assertEqual(pages.length, 1);
@@ -100,7 +100,7 @@ registry.category("web_tour.tours").add("website_studio_listing_without_page", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_view",
+            trigger: ".o_kanban_view .o_kanban_renderer",
             run() {
                 const pages = this.anchor.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)");
                 assertEqual(pages.length, 1);

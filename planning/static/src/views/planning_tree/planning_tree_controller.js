@@ -15,6 +15,13 @@ export class PlanningTreeController extends ListController {
         this.planningRecurrenceDeletion = usePlanningRecurringDeleteAction();
     }
 
+    get modelOptions() {
+        return {
+            ...super.modelOptions,
+            lazy: false,
+        };
+    }
+
     async onDeleteSelectedRecords() {
         const selectedRecords = this.model.root.selection;
         const recordsWithRecurrency_id = selectedRecords.filter((record) => record.data.recurrency_id);
