@@ -189,11 +189,11 @@ test("graph with a contextual domain", async () => {
         serverData,
         additionalContext: { search_default_filter: 1 },
         mockRPC: function (route, args) {
-            if (args.method === "web_read_group") {
+            if (args.method === "formatted_read_group") {
                 expect(args.kwargs.domain).toEqual([["foo", "=", uid]], {
                     message: "data should be fetched with the evaluated the domain",
                 });
-                expect.step("web_read_group");
+                expect.step("formatted_read_group");
             }
         },
     });
@@ -206,5 +206,5 @@ test("graph with a contextual domain", async () => {
         '[("foo", "=", uid)]',
         { message: "domain is exported with the dynamic value" }
     );
-    expect.verifySteps(["web_read_group", "web_read_group"]);
+    expect.verifySteps(["formatted_read_group", "formatted_read_group"]);
 });

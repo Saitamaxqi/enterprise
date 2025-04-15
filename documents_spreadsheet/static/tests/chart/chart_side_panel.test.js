@@ -410,28 +410,25 @@ describe("trend line", () => {
     });
 
     test("Can change polynomial degree", async function () {
-        onRpc("web_read_group", () =>
+        onRpc("formatted_read_group", () =>
             // return at least 3 groups to have a valid trend line
-            ({
-                groups: [
-                    {
-                        bar: true,
-                        __count: 1,
-                        __domain: [],
-                    },
-                    {
-                        bar: false,
-                        __count: 2,
-                        __domain: [],
-                    },
-                    {
-                        bar: null,
-                        __count: 3,
-                        __domain: [],
-                    },
-                ],
-                length: 3,
-            })
+            ([
+                {
+                    bar: true,
+                    __count: 1,
+                    __domain: [],
+                },
+                {
+                    bar: false,
+                    __count: 2,
+                    __domain: [],
+                },
+                {
+                    bar: null,
+                    __count: 3,
+                    __domain: [],
+                },
+            ])
         );
         const { model, env } = await createSpreadsheetFromGraphView();
         const sheetId = model.getters.getActiveSheetId();

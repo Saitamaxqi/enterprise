@@ -23,7 +23,7 @@ function _mockGetCohortData({ args, kwargs, model }) {
     let initialChurnValue = 0;
     const columnsAvg = {};
     const domain = kwargs.domain;
-    const { groups } = this.env[model].web_read_group({
+    const groups = this.env[model].formatted_read_group({
         ...kwargs,
         groupby: [kwargs.date_start + ":" + kwargs.interval],
         aggregates: ['__count'],

@@ -1724,18 +1724,18 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.subscription.action_confirm()
         self.assertEqual(self.subscription.state, 'sale')
 
-    def test_web_read_group_sale_subscription(self):
+    def test_formatted_read_group_sale_subscription(self):
         self.subscription.action_confirm()
         SaleSubscription = self.env['sale.order']
         domain = ['&', ['subscription_state', 'not in', ['2_renewal', '5_renewed', '7_upsell', False]], '|', ['subscription_state', '=', '3_progress'], ['subscription_state', '=', '4_paused']]
         aggregates = ['rating_last_value:sum', 'recurring_total:sum', '__count']
         groupby = ['subscription_state']
-        result = SaleSubscription.with_context(read_group_expand=True).web_read_group(domain, groupby, aggregates)
+        result = SaleSubscription.with_context(read_group_expand=True).formatted_read_group(domain, groupby, aggregates)
 
-        self.assertEqual(result['groups'][0]['__count'], 1)
-        self.assertEqual(result['groups'][0]['subscription_state'], '3_progress')
-        self.assertEqual(result['groups'][1]['__count'], 0)
-        self.assertEqual(result['groups'][1]['subscription_state'], '4_paused')
+        self.assertEqual(result[0]['__count'], 1)
+        self.assertEqual(result[0]['subscription_state'], '3_progress')
+        self.assertEqual(result[1]['__count'], 0)
+        self.assertEqual(result[1]['subscription_state'], '4_paused')
 
     def test_subscription_confirm_update_salesperson_on_partner(self):
         """ confirming sale order should update the salesperson on related partner. """

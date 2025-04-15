@@ -58,7 +58,7 @@ patch(TimesheetGridModel.prototype, {
         if (fieldsToRemove.length) {
             additionalDomain = Domain.removeDomainLeaves(additionalDomain, fieldsToRemove);
         }
-        const previousWeekSlotsInfo = this.orm.webReadGroup(
+        const previousWeekSlotsInfo = this.orm.formattedReadGroup(
             "planning.slot",
             Domain.and([additionalDomain, domain]).toList({}),
             validRowFields,
@@ -98,8 +98,8 @@ patch(TimesheetGridModel.prototype, {
         };
 
         additionalGroups.push(
-            previousWeekSlotsInfo.then((data) => {
-                const timesheet_data = data.groups.map((r) => {
+            previousWeekSlotsInfo.then((groups) => {
+                const timesheet_data = groups.map((r) => {
                     const d = {};
                     for (const validRowField of validRowFields) {
                         d[validRowField] = r[validRowField];

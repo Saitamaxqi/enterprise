@@ -594,7 +594,7 @@ describe("grid_view_desktop", () => {
     test("groupBy with column field should not be supported", async () => {
         expect.assertions(7);
         mockDate("2017-01-25 00:00:00");
-        onRpc("web_read_group", ({ kwargs }) => {
+        onRpc("formatted_read_group", ({ kwargs }) => {
             expect(kwargs.groupby).toEqual(["date:day", "task_id", "project_id"]);
         });
         mockService("notification", {
@@ -1686,7 +1686,7 @@ describe("grid_view_desktop", () => {
     test("date should be grouped by month in year range", async () => {
         expect.assertions(1);
 
-        onRpc("web_read_group", (args) => {
+        onRpc("formatted_read_group", (args) => {
             expect(args.kwargs.groupby).toEqual(["date:month", "project_id", "task_id"]);
         });
         await mountView({
@@ -1709,7 +1709,7 @@ describe("grid_view_desktop", () => {
         expect.assertions(8 + 7);
 
         let rangeStep = "day";
-        onRpc("web_read_group", (args) => {
+        onRpc("formatted_read_group", (args) => {
             expect(args.kwargs.groupby).toEqual([`date:${rangeStep}`, "project_id", "task_id"]);
         });
         await mountView({

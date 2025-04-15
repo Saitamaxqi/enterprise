@@ -268,7 +268,7 @@ test("hr.timesheet (grid)(timer): stop running timer then restart new one", asyn
         } else if (
             !timerRunning &&
             model === "account.analytic.line" &&
-            method === "web_read_group"
+            method === "formatted_read_group"
         ) {
             expect.step("Reload");
         }
@@ -958,7 +958,7 @@ test("hr.timesheet (grid)(timer): start timer and create a new project and a new
         } else if (
             reload &&
             model === "account.analytic.line" &&
-            method === "web_read_group"
+            method === "formatted_read_group"
         ) {
             expect.step("Reload");
             reload = false;

@@ -878,14 +878,14 @@ export class GridModel extends Model {
 
     async fetchData(metaData) {
         const { searchParams } = metaData;
-        const dataFetched = await this.orm.webReadGroup(
+        let dataFetched = await this.orm.formattedReadGroup(
             this.resModel,
             Domain.and([searchParams.domain, this.generateNavigationDomain()]).toList({}),
             this._getGroupByFields(metaData),
             this.aggregates,
         );
         if (this.orm.isSample) {
-            dataFetched.groups = dataFetched.groups.filter((group) => {
+            dataFetched = dataFetched.filter((group) => {
                 const date = DateTime.fromISO(group[this.columnGroupByFieldName][0]);
                 const { periodStart, periodEnd } = this.navigationInfo;
                 return date >= periodStart && date <= periodEnd;
@@ -899,7 +899,7 @@ export class GridModel extends Model {
      * fetching.
      *
      * This function is intended to be overriden in modules where we want to display additional sections and/or rows in
-     * the grid than what would be returned by the webReadGroup.
+     * the grid than what would be returned by the formattedReadGroup.
      * The model `sectionField` and `rowFields` can be used in order to know what need to be returned.
      *
      * An example of this is:
@@ -930,7 +930,7 @@ export class GridModel extends Model {
      * Gets additional groups to be added to the grid. The call to this function is made after the main data fetching
      * has been processed which allows using `data` in the code.
      * This function is intended to be overriden in modules where we want to display additional sections and/or rows in
-     * the grid than what would be returned by the webReadGroup.
+     * the grid than what would be returned by the formattedReadGroup.
      * The model `sectionField`, `rowFields` as well as `data` can be used in order to know what need to be returned.
      *
      * @return {Array<Promise<Object>>} an array of Promise of Object of type:
@@ -1042,7 +1042,7 @@ export class GridModel extends Model {
     async _generateData(readGroupResults, metaData) {
         const { data, record, sectionField, rowFields } = metaData;
         let section;
-        for (const readGroupResult of readGroupResults.groups) {
+        for (const readGroupResult of readGroupResults) {
             if (!this.orm.isSample) {
                 record.resIds.push(...readGroupResult['id:array_agg']);
             }

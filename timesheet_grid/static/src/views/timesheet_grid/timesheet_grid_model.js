@@ -24,7 +24,7 @@ export class TimesheetGridModel extends GridModel {
         if (sectionField) {
             orderFieldArray.unshift(this.fieldsInfo[sectionField.name]);
         }
-        dataFetched.groups = dataFetched.groups.sort((firstRow, secondRow) => {
+        dataFetched = dataFetched.sort((firstRow, secondRow) => {
             for (const orderField of orderFieldArray) {
                 const fieldName = orderField.name;
                 let firstRowFieldData = firstRow[fieldName];
@@ -141,7 +141,7 @@ export class TimesheetGridModel extends GridModel {
         }
 
         const previousWeekTimesheetPromise = this.orm
-            .webReadGroup(
+            .formattedReadGroup(
                 this.resModel,
                 Domain.and([searchParams.domain, this._getPreviousWeekTimesheetDomain()]).toList({}),
                 this._getGroupByFields(metaData),
@@ -150,7 +150,7 @@ export class TimesheetGridModel extends GridModel {
             .then((additionalDataFetched) => {
                 const additionalData = {};
                 this._sortGridRows(metaData, additionalDataFetched);
-                for (const readGroupResult of additionalDataFetched.groups) {
+                for (const readGroupResult of additionalDataFetched) {
                     let sectionKey = false;
                     let sectionValue = null;
                     if (sectionField) {
