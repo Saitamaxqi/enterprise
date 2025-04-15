@@ -54,7 +54,7 @@ Allow clients to Schedule Appointments through your Website
             'website_appointment/static/src/scss/website_appointment_editor.scss',
             'website_appointment/static/src/xml/website_appointment_templates.xml',
             'website_appointment/static/src/xml/appointment_no_slot.xml',
-            'website_appointment/static/src/js/appointment_frontend/*.js',
+            'website_appointment/static/src/interactions/*.js',
             'website_appointment/static/src/snippets/**/*.js',
             ('remove', 'website_appointment/static/src/snippets/**/options.js'),
         ],

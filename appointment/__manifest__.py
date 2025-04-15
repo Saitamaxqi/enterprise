@@ -54,7 +54,7 @@ Allow clients to Schedule Appointments through the Portal
             'appointment/static/src/interactions/appointment_select_appointment_type.js',
             'appointment/static/src/interactions/appointment_validation.js',
             'appointment/static/src/interactions/appointment_select_appointment_slot.js',
-            'appointment/static/src/js/appointment_form.js',
+            'appointment/static/src/interactions/appointment_form.js',
             'appointment/static/src/xml/*.xml',
         ],
         'web.assets_backend': [
