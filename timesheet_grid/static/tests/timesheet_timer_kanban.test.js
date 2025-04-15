@@ -63,6 +63,11 @@ test("hr.timesheet (kanban)(timer): switch view with GroupBy and start the timer
 });
 
 test("hr.timesheet (kanban)(timer): start timer, set fields and switch view", async () => {
+    HRTimesheet._fields.is_timer_running = fields.Boolean();
+    HRTimesheet._views["kanban,false"] = HRTimesheet._views["kanban,false"].replace(
+        '<field name="unit_amount"/>',
+        '<field name="unit_amount" widget="timesheet_uom_timer"/><field name="is_timer_running" invisible="1"/>'
+    );
     let timerRunning = false;
     onRpc(({ method }) => {
         if (method === "get_running_timer" && timerRunning) {
@@ -72,6 +77,7 @@ test("hr.timesheet (kanban)(timer): start timer, set fields and switch view", as
             };
         } else if (method === "action_start_new_timesheet_timer") {
             timerRunning = true;
+            HRTimesheet._records[3].is_timer_running = true;
             return { id: 4 };
         }
     });

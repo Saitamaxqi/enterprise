@@ -391,12 +391,15 @@ const patchController = () => ({
                         company_id: company_id && company_id[0],
                     },
                 ]);
-            } else {
-                await record.model.orm.write(
-                    record.resModel,
-                    [record.resId],
-                    this.onChangeWriteValues(record)
-                );
+            } else if (record.data.is_timer_running) {
+                const writeValues = this.onChangeWriteValues(record);
+                if (writeValues.project_id != false) {
+                    await record.model.orm.write(
+                        record.resModel,
+                        [record.resId],
+                        writeValues
+                    );
+                }
             }
         };
         return params;
