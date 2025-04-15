@@ -19,6 +19,10 @@
             <field name="vat">24DUMMY1234AAZA</field>
         </record>
 
+        <record id="base.partner_demo_company_in" model="res.partner">
+            <field name="company_id" ref="base.demo_company_in"/>
+        </record>
+
         <record id="bank_hdfc" model="res.bank">
             <field name="name">HDFC Bank</field>
             <field name="bic">HDFC0000123</field>
@@ -61,6 +65,15 @@
             <field name="bank_id" ref="l10n_in_hr_payroll.bank_sbi"/>
             <field name="company_id" ref="base.demo_company_in" />
             <field name="partner_id" ref="l10n_in_hr_payroll.l10n_in_res_partner_vihaan"/>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="allow_out_payment" eval="True"/>
+        </record>
+
+        <record id="l10n_in_bank_account" model="res.partner.bank">
+            <field name="acc_number">77889960501010</field>
+            <field name="bank_id" ref="l10n_in_hr_payroll.bank_hdfc"/>
+            <field name="company_id" ref="base.demo_company_in" />
+            <field name="partner_id" ref="base.partner_demo_company_in"/>
             <field name="currency_id" ref="base.INR"/>
             <field name="allow_out_payment" eval="True"/>
         </record>
