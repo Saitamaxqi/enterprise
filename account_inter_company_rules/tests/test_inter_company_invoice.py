@@ -238,3 +238,33 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
             str(analytic_account_company_b.id): 100
         }
         self.assertEqual(supplier_invoice.invoice_line_ids.analytic_distribution, expected_distribution)
+
+    def test_inter_company_attachment_with_contact_as_partner(self):
+        """
+        Test that when creating and printing an invoice in company A for an individual contact belonging to company B,
+        the corresponding bill in company B there is an attachment.
+        """
+        company_partner = self.env['res.partner'].create({
+            'name': 'company partner',
+            'parent_id': self.company_b.partner_id.id,
+        })
+
+        customer_invoice = self.env['account.move'].create({
+            'company_id': self.company_a.id,
+            'move_type': 'out_invoice',
+            'invoice_date': '2023-05-01',
+            'partner_id': company_partner.id,
+            'invoice_line_ids': [Command.create({
+                'product_id': self.product_a.id,
+                'price_unit': 100.0,
+                'quantity': 1.0,
+                'tax_ids': False,
+            })]
+        })
+
+        customer_invoice.action_post()
+
+        self.env['account.move.send.wizard'].with_context(active_model='account.move', active_ids=customer_invoice.id)._generate_and_send_invoices(customer_invoice)
+
+        bill = self.env['account.move'].search([('move_type', '=', 'in_invoice'), ('company_id', '=', self.company_b.id)], limit=1)
+        self.assertTrue(bill.attachment_ids)

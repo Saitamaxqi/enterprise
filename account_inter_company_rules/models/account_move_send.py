@@ -14,7 +14,7 @@ class AccountMoveSend(models.AbstractModel):
         moves_with_attachments = moves.filtered(
             lambda move: bool(move.message_main_attachment_id)
             and move.is_sale_document(include_receipts=True)
-            and move.partner_id.id in partner_companies
+            and move.commercial_partner_id.id in partner_companies
         )
 
         ico_moves = self.env['account.move'].sudo().search([
