@@ -10,4 +10,5 @@ class IrHttp(models.AbstractModel):
         res = super().session_info()
         res["groups"]["documents.group_documents_manager"] = self.env.user.has_group("documents.group_documents_manager")
         res["groups"]["documents.group_documents_user"] = self.env.user.has_group("documents.group_documents_user")
+        res["groups"]["base.group_multi_company"] = self.env.user.has_group('base.group_multi_company')
         return res
