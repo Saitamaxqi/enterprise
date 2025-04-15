@@ -1150,6 +1150,10 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             expectUnloadPage: true,
         },
         {
+            content: "wait for the interaction to load",
+            trigger: "#hr_contract_salary[is-ready=true]",
+        },
+        {
             content: "Unchoose default car",
             trigger: "input[name=fold_company_car_total_depreciated_cost]:not(:visible)",
             run: "click",

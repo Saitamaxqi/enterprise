@@ -1,46 +1,41 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, reactive } from "@odoo/owl";
 import { KeepLast } from "@web/core/utils/concurrency";
-import publicWidget from "@web/legacy/js/public/public_widget";
+import { registry } from "@web/core/registry";
+import { Interaction } from "@web/public/interaction";
 import { debounce } from "@web/core/utils/timing";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
-import { renderToElement } from "@web/core/utils/render";
 import { getDataURLFromFile } from "@web/core/utils/urls";
-import { attachComponent } from "@web_editor/js/core/owl_utils";
 import { HrContractSalarySelectMenu } from "../js/hr_contract_salary_select_menu" 
 
 class SelectMenuWrapper extends Component {
     static template = "hr_contract_salary.SelectMenuWrapper";
     static components = { HrContractSalarySelectMenu };
     static props = {
-        el: { optional: true, type: Object },
+        el: { optional: false, type: Object },
+        name: { optional: false, type: String },
+        selectMenus: { optional: false, type: Object },
     };
 
     setup() {
-        this.state = useState({
-            choices: [],
-            groups: [],
-            value: this.props.el.value,
-            disabled: false,
-            required: this.props.el.required,
-            autoSort: false,
-        });
+        this.selectMenu = useState(this.props.selectMenus[this.props.name]);
 
         let optgroup = [...this.props.el.querySelectorAll("optgroup")]
         if (optgroup.length){
-            this.state.groups = optgroup.map(x => ({
+            this.selectMenu.groups = optgroup.map(x => ({
                 label: x.label,
                 choices: [...x.querySelectorAll("option")],
             }));
         } else {
-           this.state.choices = [...this.props.el.querySelectorAll("option")].filter((x) => x.value);
+            this.selectMenu.choices = [...this.props.el.querySelectorAll("option")].filter((x) => x.value);
         }
 
         this.props.el.classList.add("d-none");
+
     }
 
     onSelect(value) {
-        this.state.value = value;
+        this.selectMenu.value = value;
         this.props.el.value = value;
         // Manually trigger the change event
         const event = new Event("change", { bubbles: true });
@@ -48,105 +43,142 @@ class SelectMenuWrapper extends Component {
     }
 }
 
-publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
-    selector: '#hr_cs_form',
-    events: {
-        "change .benefit_input": "onchangeBenefit",
-        "change input.folded": "onchangeFolded",
-        "change .personal_info": "onchangePersonalInfo",
-        "click #hr_cs_submit": "submitSalaryPackage",
-        "click .o_submit_feedback": "submitFeedback",
-        "click a[name='recompute']": "recompute",
-        "click button[name='toggle_personal_information']": "togglePersonalInformation",
-        "change input.border-danger": "checkFormValidity",
-        "change div.invalid_radio": "checkFormValidity",
-        "change input.document": "onchangeDocument",
-        "input input[type='range']": "onchangeSlider",
-        "change select[name='private_country_id']": "onchangeCountry",
-        "keydown input[type='number']": "onkeydownInput",
-    },
+export class SalaryPackage extends Interaction {
+    static selector = "#hr_cs_form";
 
-    init(parent, options) {
-        this._super(parent);
+    dynamicContent = {
+        ".benefit_input": {
+            "t-on-change": this.onchangeBenefit,
+        },
+        "input.folded": {
+            "t-on-change": this.onchangeFolded,
+        },
+        ".personal_info": {
+            "t-on-change": this.onchangePersonalInfo,
+        },
+        "#hr_cs_submit": {
+            "t-on-click": this.submitSalaryPackage,
+        },
+        ".o_submit_feedback": {
+            "t-on-click": this.submitFeedback,
+        },
+        "a[name='recompute']": {
+            "t-on-click": this.recompute,
+        },
+        "button[name='toggle_personal_information']": {
+            "t-on-click": this.togglePersonalInformation,
+        },
+        "input.border-danger": {
+            "t-on-change": this.checkFormValidity,
+        },
+        "div.invalid_radio": {
+            "t-on-change": this.checkFormValidity,
+        },
+        "input.document": {
+            "t-on-change": this.onchangeDocument,
+        },
+        "input[type='range']": {
+            "t-on-input": this.onchangeSlider,
+        },
+        "select[name='private_country_id']": {
+            "t-on-change": this.onchangeCountry,
+        },
+        "#hr_contract_salary *:has(> select:not(.refuse-reason-select))": {
+            "t-component": (el) => {
+                const child = el.querySelector("select:not(.refuse-reason-select)");
+                return [
+                    SelectMenuWrapper,
+                    {
+                        el: child,
+                        name: child.name,
+                        selectMenus: this.selectMenus,
+                    },
+                ];
+            },
+        },
+        "input[type='number']": {
+            "t-on-keydown": this.onkeydownInput,
+        },
+        
+    };
+
+    setup() {
         this.keepLast = new KeepLast();
-        this.selectMenus = {};
-        $('body').attr('id', 'hr_contract_salary');
-        const selectWrapperEls = document.querySelectorAll(
+        this.selectMenus = reactive({});
+        $("body").attr("id", "hr_contract_salary");
+        const selectWrapperEls = this.el.querySelectorAll(
             "#hr_contract_salary select:not(.refuse-reason-select)"
         );
+
         // Create a wrapper div to ensure the working schedule selection appears directly below the label TODO: remove master
-        const workingScheduleSelect = document.querySelector("#hr_contract_salary select[name='simulation_working_schedule']");
+        const workingScheduleSelect = this.el.querySelector("#hr_contract_salary select[name='simulation_working_schedule']");
         if (workingScheduleSelect) {
-            const wrapperDiv = workingScheduleSelect.parentNode.insertBefore(document.createElement("div"), workingScheduleSelect);
+            const wrapperDiv = workingScheduleSelect.parentNode.insertBefore(this.el.createElement("div"), workingScheduleSelect);
             wrapperDiv.append(workingScheduleSelect);
         }
 
-        const promises = [];
         selectWrapperEls.forEach((el) => {
-            const prom = attachComponent(parent, el.parentNode, SelectMenuWrapper, {
-                el: el,
-            }).then((result) => {
-                this.selectMenus[el.name] = result;
-            });
-            promises.push(prom);
+            this.selectMenus[el.name] = {
+                disabled: false,
+                choices: [],
+                value: el.value,
+                groups: [],
+                required: el.required,
+                autoSort: false,
+            };
         });
-
+        
         this.updateGross = debounce(this.updateGross, 1000);
         this.initializeUnsetSliders();
         var whitelist = $("input[name='whitelist']").val();
         if (whitelist) {
-            var whitelisted_fields = whitelist.split(',');
-            document.querySelectorAll("input").forEach((input) => {
+            var whitelisted_fields = whitelist.split(",");
+            this.el.querySelectorAll("input").forEach((input) => {
                 if (!whitelisted_fields.includes(input.name)) {
                     input.setAttribute("disabled", true);
                 }
             });
-            Promise.all(promises).then(() => {
-                for (const [, selectMenuInst] of Object.entries(this.selectMenus)) {
-                    if (!whitelisted_fields.includes(selectMenuInst.component.props.el.name)) {
-                        selectMenuInst.component.state.disabled = true;
-                    }
+            for (const [, selectMenuInst] of Object.entries(this.selectMenus)) {
+                if (!whitelisted_fields.includes(selectMenuInst)) {
+                    selectMenuInst.disabled = true;
                 }
-            });
+            }
         }
-        this.stateElements = document.querySelector("select[name='private_state_id']").querySelectorAll("option");
-        Promise.all(promises).then(() => {
-            this.onchangeCountry();
-        });
+        this.stateElements = this.el.querySelector("select[name='private_state_id']").querySelectorAll("option");
+        this.onchangeCountry();
 
         // When user use back button, unfold previously unfolded items.
-        $('#hr_cs_configurator .hr_cs_control input.folded:checked').closest('div').find('.folded_content').removeClass('d-none')
-    },
+        $("#hr_cs_configurator .hr_cs_control input.folded:checked").closest("div").find(".folded_content").removeClass("d-none");
+    }
 
     willStart() {
         return Promise.all([
-            this._super(),
             this.updateGross(),
             this.setUpBenefits(),
         ]);
-    },
+    }
 
     setUpBenefits() {
         // When we load the benefits, if any of the advantage is not set and it has
         // dependent benefits (or requested documents),
         // unset those dependent benefits (or hide those requested documents)
-        $('input')
+        $("input")
             .toArray()
             .forEach(async input => {
-                let dependentBenefits = $(input).data('benefit_ids_dependent');
-                const requested_documents = $(input).data('requested_documents');
+                let dependentBenefits = $(input).data("benefit_ids_dependen");
+                const requested_documents = $(input).data("requested_documents");
                 let mandatoryBenefitSelected;
                 if (dependentBenefits || requested_documents) {
-                    let newValue = $(input).data('value');
-                    if (input.type === 'radio') {
+                    let newValue = $(input).data("value");
+                    if (input.type === "radio") {
                         const target = [
                             ...document.querySelectorAll("input[name='" + input.name + "']"),
                         ].find((elem) => elem.checked);
                         newValue = target.getAttribute("data-value");
-                        if (newValue === 'No') {
+                        if (newValue === "No") {
                             newValue = 0;
                         }
-                    } else if (input.type === 'checkbox') {
+                    } else if (input.type === "checkbox") {
                         newValue = input.checked;
                     } else {
                         newValue = input.value;
@@ -158,24 +190,24 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
                     this.updateDependentBenefits(dependentBenefits, mandatoryBenefitSelected);
                 }
                 if (requested_documents) {
-                    requested_documents.split(',').forEach(requested_document => {
+                    requested_documents.split(",").forEach(requested_document => {
                         const document_div = $("div[name='" + requested_document + "']");
-                        mandatoryBenefitSelected ? document_div.removeClass('d-none') : document_div.addClass('d-none');
+                        mandatoryBenefitSelected ? document_div.removeClass("d-none") : document_div.addClass("d-none");
                     });
                 }
             });
-    },
+    }
 
     initializeUnsetSliders() {
         $("input[type='range']").toArray().forEach(input => {
-            const inputName = input.name.replace('_slider', '');
+            const inputName = input.name.replace("_slider", "");
             const valueInput = $("input[name='" + inputName + "']");
             if (!valueInput.val()) {
                 $(input).val(0);
                 valueInput.val(0);
             }
         });
-    },
+    }
 
     getFileData(documentName) {
         const file = $("input[name='" + documentName + "']");
@@ -189,17 +221,17 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
                 resolve(false);
             }
         });
-    },
+    }
 
     async getPersonalDocuments() {
         const documentNames = $("input[type='file']").toArray().map(input => ({
             name: input.name,
-            appliesOn: $(input).attr('applies-on'),
+            appliesOn: $(input).attr("applies-on"),
         }));
         let documentSrcs = {
-            'employee': {},
-            'address': {},
-            'bank_account': {}
+            "employee": {},
+            "address": {},
+            "bank_account": {}
         };
         const promises = documentNames.map(async ({name, appliesOn}) => {
             const docSrc = await this.getFileData(name)
@@ -207,7 +239,7 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         });
         await Promise.all(promises);
         return documentSrcs;
-    },
+    }
 
     getBenefits() {
         const benefits = {
@@ -219,73 +251,74 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         benefits.employee.job_title = $("input[name='job_title']").val();
         benefits.employee.employee_job_id = $("input[name='employee_job_id']").val();
         benefits.employee.department_id = $("input[name='department_id']").val();
-        $('input')
+        $("input")
             .toArray()
-            .filter(input => input.hasAttribute('applies-on'))
-            .filter(input => input.type !== 'file')
+            .filter(input => input.hasAttribute("applies-on"))
+            .filter(input => input.type !== "file")
             .forEach(input => {
-                const appliesOn = $(input).attr('applies-on');
-                if (input.type === 'checkbox') {
+                const appliesOn = $(input).attr("applies-on");
+                if (input.type === "checkbox") {
                     benefits[appliesOn][input.name] = input.checked;
-                } else if (input.type === 'radio' && input.checked) {
-                    benefits[appliesOn][input.name] = $(input).data('value');
-                } else if (input.type !== 'hidden' && input.type !== 'radio') {
+                } else if (input.type === "radio" && input.checked) {
+                    benefits[appliesOn][input.name] = $(input).data("value");
+                } else if (input.type !== "hidden" && input.type !== "radio") {
                     benefits[appliesOn][input.name] = input.value;
                 }
             });
-        $('textarea')
+        $("textarea")
             .toArray()
-            .filter(area => area.hasAttribute('applies-on'))
+            .filter(area => area.hasAttribute("applies-on"))
             .forEach(area => {
-                const appliesOn = $(area).attr('applies-on');
+                const appliesOn = $(area).attr("applies-on");
                 benefits[appliesOn][area.name] = area.value;
             });
-        $('select.benefit_input,select.personal_info')
+        $("select.benefit_input,select.personal_info")
             .toArray()
-            .filter(select => select.name !== 'simulation_working_schedule')
+            .filter(select => select.name !== "simulation_working_schedule")
             .forEach(select => {
-                const appliesOn = $(select).attr('applies-on');
+                const appliesOn = $(select).attr("applies-on");
                 benefits[appliesOn][select.name] = $(select).val();
             });
         return benefits;
-    },
+    }
 
     updateGrossToNetModal(data) {
-        const resumeSidebar = renderToElement('hr_contract_salary.salary_package_resume', {
-            'lines': data.resume_lines_mapped,
-            'categories': data.resume_categories,
-            'configurator_warning': data.configurator_warning,
-        });
-        this.$("div[name='salary_package_resume']").html(resumeSidebar);
-        $("input[name='wage_with_holidays']").val(data['wage_with_holidays']);
-        $("div[name='net']").removeClass('d-none').hide().slideDown( "slow" );
-        $("input[name='NET']").removeClass('o_outdated');
-    },
+        this.el.querySelector("div[name='salary_package_resume']").replaceChildren();
+        this.renderAt("hr_contract_salary.salary_package_resume", {
+            "lines": data.resume_lines_mapped,
+            "categories": data.resume_categories,
+            "configurator_warning": data.configurator_warning,
+        },  this.el.querySelector("div[name='salary_package_resume']"));
+
+        $("input[name='wage_with_holidays']").val(data["wage_with_holidays"]);
+        $("div[name='net']").removeClass("d-none").hide().slideDown( "slow" );
+        $("input[name='NET']").removeClass("o_outdated");
+    }
 
     onchangeFoldedResetInteger(benefitField) {
         return true;
-    },
+    }
 
     onchangeFolded(event) {
-        const foldedContent = $(event.target.parentElement.parentElement).find('.folded_content');
+        const foldedContent = $(event.target.parentElement.parentElement).find(".folded_content");
         const checked = event.target.checked;
         if (!checked) {
-            $(foldedContent).find('input').toArray().forEach(input => {
-                if (input.type == 'number' && this.onchangeFoldedResetInteger(input.name)) {
+            $(foldedContent).find("input").toArray().forEach(input => {
+                if (input.type == "number" && this.onchangeFoldedResetInteger(input.name)) {
                     $(input).val(0);
-                    $(input).trigger('change');
+                    $(input).trigger("change");
                 }
             });
         } else {
-            $(foldedContent).find('select').trigger('change');
+            $(foldedContent).find("select").trigger("change");
         }
-        checked ? $(foldedContent).removeClass('d-none') : $(foldedContent).addClass('d-none');
-    },
+        checked ? $(foldedContent).removeClass("d-none") : $(foldedContent).addClass("d-none");
+    }
 
     onchangeSlider(event) {
         let benefitField = event.target.name.replace("_slider", "");;
         $("input[name='" + benefitField + "']").val(event.target.value);
-    },
+    }
 
     async onchangeCountry(event) {
         const stateElement = document.querySelector("select[name='private_state_id']");
@@ -301,15 +334,16 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
             const stateCountryID = option.getAttribute("data-additional-info");
             if (countryID === stateCountryID) {
                 enableState = false;
+
             } else {
                 option.remove();
             }
         });
         const choicesEls = [...stateElement.querySelectorAll("option")];
-        stateSelectMenu.component.state.value = "";
-        stateSelectMenu.component.state.choices = choicesEls;
-        stateSelectMenu.component.state.disabled = enableState;
-    },
+        stateSelectMenu.value = "";
+        stateSelectMenu.choices = choicesEls;
+        stateSelectMenu.disabled = enableState;
+    }
 
     onkeydownInput(event) {
         const disallowedKeys = [
@@ -321,28 +355,28 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         ];
         // Only allow numbers to be written in the input fields with type="number"
         return !(event.code in disallowedKeys);
-    },
+    }
 
     _isInvalidInput() {
         let isInvalidInput;
-        $('input[data-field-type=integer]').toArray().forEach(input => {
+        $("input[data-field-type=integer]").toArray().forEach(input => {
             if (input.value && !Number.isInteger(parseFloat(input.value))) {
                 isInvalidInput = true;
-                if (!input.classList.contains('border-danger')) {
+                if (!input.classList.contains("border-danger")) {
                     $("<div class='alert alert-danger alert-dismissable fade show'>")
-                        .text(_t('Not a valid input in integer field'))
+                        .text(_t("Not a valid input in integer field"))
                         .appendTo($("button#hr_cs_submit").parent());
-                    input.classList.toggle('border-danger', isInvalidInput);
+                    input.classList.toggle("border-danger", isInvalidInput);
                     $(".alert").delay(4000).slideUp(200, function () {
-                        $(this).alert('close');
+                        $(this).alert("close");
                     });
                 }
-            } else if(input.classList.contains('border-danger')) {
-                input.classList.remove('border-danger');
+            } else if(input.classList.contains("border-danger")) {
+                input.classList.remove("border-danger");
             }
         });
         return isInvalidInput;
-    },
+    }
 
     async onchangeBenefit(event) {
         // Check that https://github.com/odoo/enterprise/commit/e4fdb4df1d0d6aa5e8880ce1b4cc289a075479fd#diff-aa5bcb2caed35c99a7bd3e018a104342 is still valid
@@ -351,62 +385,62 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
             return false;
         }
         // Prevent negative value for number inputs
-        if (event.target.type === 'number' && parseFloat(event.target.value) < 0) {
+        if (event.target.type === "number" && parseFloat(event.target.value) < 0) {
             $(event.target).val(0);
         }
         let benefitField = event.target.name;
-        if (benefitField.includes('_slider')) {
+        if (benefitField.includes("_slider")) {
             benefitField = benefitField.replace("_slider", "");
-        } else if (benefitField.includes('_manual')) {
+        } else if (benefitField.includes("_manual")) {
             benefitField = benefitField.replace("_manual", "");
-        } else if (benefitField.includes('_radio')) {
+        } else if (benefitField.includes("_radio")) {
             benefitField = benefitField.replace("_radio", "");
-        } else if (benefitField.includes('select_')) {
+        } else if (benefitField.includes("select_")) {
             benefitField = benefitField.replace("select_", "");
         }
-        const requested_documents = $(event.target).data('requested_documents');
+        const requested_documents = $(event.target).data("requested_documents");
         if (requested_documents) {
             let hide;
-            if (event.target.type === 'number') {
+            if (event.target.type === "number") {
                 hide = event.target.value === "0" || event.target.value === "";
-            } else if (event.target.type === 'checkbox') {
+            } else if (event.target.type === "checkbox") {
                 hide = !event.target.checked;
-            } else if (event.target.type === 'radio') {
-                hide = $(event.target.parentElement).find('.hr_cs_control_no').length;
+            } else if (event.target.type === "radio") {
+                hide = $(event.target.parentElement).find(".hr_cs_control_no").length;
             }
-            requested_documents.split(',').forEach(requested_document => {
+            requested_documents.split(",").forEach(requested_document => {
                 const document_div = $("div[name='" + requested_document + "']");
-                hide ? document_div.addClass('d-none') : document_div.removeClass('d-none');
+                hide ? document_div.addClass("d-none") : document_div.removeClass("d-none");
             });
         }
 
         let newValue;
-        if (event.target.type === 'radio') {
+        if (event.target.type === "radio") {
             const target = $("input[name='" + event.target.name + "']").toArray().find(elem => elem.checked);
             const description = $("span[name='description_" + benefitField + "']");
-            $(target).hasClass('hide_description') ? description.addClass('d-none') : description.removeClass('d-none');
-            newValue = $(target).data('value');
-            if (newValue === 'No') {
+            $(target).hasClass("hide_description") ? description.addClass("d-none") : description.removeClass("d-none");
+            newValue = $(target).data("value");
+            if (newValue === "No") {
                 newValue = 0;
             }
-        } else if (event.target.type === 'checkbox') {
+        } else if (event.target.type === "checkbox") {
             newValue = event.target.checked;
         } else {
             newValue = event.target.value;
         }
 
-        const dependentBenefits = $(event.target).data('benefit_ids-dependent');
+        const dependentBenefits = $(event.target).data("benefit_ids-dependent");
 
         const mandatoryBenefitSelected = Boolean(+newValue);
         this.updateDependentBenefits(dependentBenefits, mandatoryBenefitSelected);
         await this.updateAfterChangingBenefit(event.target.type, benefitField, newValue);
-    },
+    }
 
     updateDependentBenefits (dependentBenefits, mandatoryBenefitSelected) {
         if (!dependentBenefits) {
             return;
         }
-        dependentBenefits.trim().split(' ').forEach(async dependentBenefit => {
+        dependentBenefits.trim().split(" ").forEach(async dependentBenefit => {
             /*
             Let's say the benefit X depends on A, B, C
             If one of the mandatory benefits, A, is selected
@@ -420,70 +454,70 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
                 let dependentBenefitSelected =  this.checkInputSelected(dependentBenefit);
                 let dependentBenefitField = dependentBenefit;
                 let type = target.toArray()[0].type;
-                if (dependentBenefit.includes('select_')) {
+                if (dependentBenefit.includes("select_")) {
                     dependentBenefitField = dependentBenefit.replace("select_", "");
-                    type = 'select';
-                } else if (dependentBenefit.includes('manual')) {
-                    type = 'manual';
+                    type = "select";
+                } else if (dependentBenefit.includes("manual")) {
+                    type = "manual";
                     dependentBenefitField = dependentBenefit.replace("_manual", "");
-                } else if (dependentBenefit.includes('_slider')) {
-                    type = 'slider';
+                } else if (dependentBenefit.includes("_slider")) {
+                    type = "slider";
                     dependentBenefitField = dependentBenefit.replace("_slider", "");
-                } else if (dependentBenefit.includes('_radio')) {
-                    type = 'radio';
+                } else if (dependentBenefit.includes("_radio")) {
+                    type = "radio";
                     dependentBenefitField = dependentBenefit.replace("_radio", "");
                 }
                 if (dependentBenefitSelected) { // no need to update it if it was not selected to start with
                     let targetType = target.toArray()[0].type;
-                    if (targetType === 'checkbox') {
+                    if (targetType === "checkbox") {
                         target.click();
-                    } else if (targetType === 'radio') {
-                        const toCheck = target.toArray().filter(elem => elem.dataset.value == '0.0');
+                    } else if (targetType === "radio") {
+                        const toCheck = target.toArray().filter(elem => elem.dataset.value == "0.0");
                         toCheck[0].click();
                     }
-                    $(target).val(0).trigger('change');
+                    $(target).val(0).trigger("change");
                     target.attr("disabled", "disabled");
-                    target.parent().addClass('o_disabled');
+                    target.parent().addClass("o_disabled");
                     await this.updateAfterChangingBenefit(type, dependentBenefitField, 0);
                 }
                 target.attr("disabled", "disabled");
-                target.parent().addClass('o_disabled');
+                target.parent().addClass("o_disabled");
 
-                const mandatoryBenefitsNames = $(target).data('benefit_ids-mandatory-names').trim().split(';').filter(elem => elem != '');
+                const mandatoryBenefitsNames = $(target).data("benefit_ids-mandatory-names").trim().split(";").filter(elem => elem != "");
                 const dep = mandatoryBenefitsNames.shift();
-                let title = _t('In order to choose %s, first you need to choose:\n %s', dep, mandatoryBenefitsNames.join('\n '));
+                let title = _t("In order to choose %s, first you need to choose:\n %s", dep, mandatoryBenefitsNames.join("\n "));
 
-                $(target).closest('div').parent().attr("title", title);
-                $(target).closest('div')[0].style.cursor = "pointer";
+                $(target).closest("div").parent().attr("title", title);
+                $(target).closest("div")[0].style.cursor = "pointer";
             } else {
-                const mandatoryBenefits = $(target).data('benefit_ids-mandatory').trim().split(' ');
+                const mandatoryBenefits = $(target).data("benefit_ids-mandatory").trim().split(" ");
                 const allMandatorySelected = mandatoryBenefits.every(adv => this.checkInputSelected(adv));
                 if (allMandatorySelected) {
-                    const targets = $("input[name='" + dependentBenefit + "']").toArray().filter(elem => elem.hasAttribute('disabled'));
+                    const targets = $("input[name='" + dependentBenefit + "']").toArray().filter(elem => elem.hasAttribute("disabled"));
                     if (targets) {
-                        $(targets).removeAttr('disabled');
-                        target.parent().removeClass('o_disabled');
-                        $(target).closest('div')[0].style.cursor = "";
-                        $(target).closest('div').removeAttr('title');
+                        $(targets).removeAttr("disabled");
+                        target.parent().removeClass("o_disabled");
+                        $(target).closest("div")[0].style.cursor = "";
+                        $(target).closest("div").removeAttr("title");
                     }
                 }
             }
         });
-    },
+    }
 
     checkInputSelected(benefit) {
         const target = $("input[name='" + benefit + "']").toArray();
         let type = target[0].type;
         let newValue;
-        if (type === 'radio') {
-            newValue = $(target.find(elem => elem.checked)).data('value');
-        } else if (type === 'checkbox') {
+        if (type === "radio") {
+            newValue = $(target.find(elem => elem.checked)).data("value");
+        } else if (type === "checkbox") {
             newValue = target[0].checked;
         } else {
             newValue = target[0].value;
         }
         return Boolean(+newValue);
-    },
+    }
 
     async updateAfterChangingBenefit(type, benefitField, newValue) {
         if (type !== 'file') {
@@ -493,7 +527,7 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
                 'version_id': parseInt($("input[name='version']").val()),
                 'benefits': this.getBenefits({includeFiles: false}),
             });
-            if (type !== 'select') {
+            if (type !== "select") {
                 $("input[name='" + benefitField + "']").val(result.new_value);
             }
             $("span[name='description_" + benefitField + "']").html(result.description);
@@ -504,33 +538,32 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
             }
             await this.updateGross();
         }
-    },
+    }
 
     async onchangeDocument(input) {
         if (input.target.files) {
             const testString = await getDataURLFromFile(input.target.files[0]);
             const regex = new RegExp(",(.{0,})", "g");
             const img_src = regex.exec(testString)[1];
-            if (img_src.startsWith('JVBERi0')) {
-                $('iframe#' + input.target.name + '_pdf').attr('src', testString);
-                $('img#' + input.target.name + '_img').addClass('d-none');
-                $('iframe#' + input.target.name + '_pdf').removeClass('d-none');
+            if (img_src.startsWith("JVBERi0")) {
+                $("iframe#" + input.target.name + "_pdf").attr("src", testString);
+                $("img#" + input.target.name + "_img").addClass("d-none");
+                $("iframe#" + input.target.name + "_pdf").removeClass("d-none");
             } else {
-                $('img#' + input.target.name + '_img').attr('src', testString);
-                $('img#' + input.target.name + '_img').removeClass('d-none');
-                $('iframe#' + input.target.name + '_pdf').addClass('d-none');
+                $("img#" + input.target.name + "_img").attr("src", testString);
+                $("img#" + input.target.name + "_img").removeClass("d-none");
+                $("iframe#" + input.target.name + "_pdf").addClass("d-none");
             }
         }
-    },
+    }
 
     updateGross() {
         const self = this;
-        $("div[name='net']").addClass('d-none');
-        $("div[name='compute_net']").removeClass('d-none');
-        $("a[name='details']").addClass('d-none');
-        $("a[name='recompute']").removeClass('d-none');
-        $("input[name='NET']").addClass('o_outdated');
-
+        $("div[name='net']").addClass("d-none");
+        $("div[name='compute_net']").removeClass("d-none");
+        $("a[name='details']").addClass("d-none");
+        $("a[name='recompute']").removeClass("d-none");
+        $("input[name='NET']").addClass("o_outdated");
         return this.keepLast.add(
             rpc('/salary_package/update_salary', {
                 'version_id': parseInt($("input[name='version']").val()),
@@ -538,54 +571,54 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
                 'benefits': self.getBenefits({includeFiles: false}),
                 'simulation_working_schedule': $("select[name='simulation_working_schedule']").val(),
             }).then(data => {
-                $("input[name='wage']").val(data['new_gross']);
-                $("a[name='recompute']").addClass('d-none');
-                $("a[name='details']").removeClass('d-none');
+                $("input[name='wage']").val(data["new_gross"]);
+                $("a[name='recompute']").addClass("d-none");
+                $("a[name='details']").removeClass("d-none");
                 self.updateGrossToNetModal(data);
             })
         );
-    },
+    }
 
     async onchangePersonalInfo(event) {
         let newValue;
-        if (event.target.type === 'radio') {
+        if (event.target.type === "radio") {
             const target = $("input[name='" + event.target.name + "']").toArray().filter(elem => elem.checked);
-            newValue = $(target).data('value');
-        } else if (event.target.type === 'checkbox') {
+            newValue = $(target).data("value");
+        } else if (event.target.type === "checkbox") {
             newValue = event.target.checked;
         } else {
             newValue = event.target.value;
         }
-        const data = await rpc('/salary_package/onchange_personal_info', {
-            'field': event.target.name,
-            'value': newValue,
+        const data = await rpc("/salary_package/onchange_personal_info", {
+            "field": event.target.name,
+            "value": newValue,
         });
         if (Object.keys(data || {}).length > 0) {
             const childDiv = $("div[name='personal_info_child_group_" + data.field + "']")
-            const childInputs = childDiv.find('input').toArray();
+            const childInputs = childDiv.find("input").toArray();
             if (data.hide_children) {
-                childDiv.addClass('d-none');
-                childInputs.forEach(input => $(input).removeAttr('required'));
+                childDiv.addClass("d-none");
+                childInputs.forEach(input => $(input).removeAttr("required"));
             } else {
-                childDiv.removeClass('d-none');
-                childInputs.forEach(input => $(input).attr('required', ''));
+                childDiv.removeClass("d-none");
+                childInputs.forEach(input => $(input).attr("required", ""));
             }
         }
-    },
+    }
 
     recompute() {
-        $("a[name='details']").removeClass('d-none');
-        $("a[name='recompute']").addClass('d-none');
-        $("input[name='NET']").removeClass('o_outdated');
-    },
+        $("a[name='details']").removeClass("d-none");
+        $("a[name='recompute']").addClass("d-none");
+        $("input[name='NET']").removeClass("o_outdated");
+    }
 
     checkFormValidity() {
         // Don't make the input required, if the element is not displayed.
         // For example, we don't want to require driving license
         // when it is not displayed. As it will be conditionally hidden if car advantage is not set.
-        const requiredEmptyInput = $("input:required").toArray().find(input => input.value === '' && input.name !== '' && input.type !== 'checkbox' && input.offsetParent !== null);
-        const requiredEmptySelect = $("select:required").toArray().find(select => $(select).val() === '');
-        const requiredEmptyTextArea = $("textarea:required").toArray().find(textarea => textarea.value === '' && textarea.offsetParent !== null);
+        const requiredEmptyInput = $("input:required").toArray().find(input => input.value === "" && input.name !== "" && input.type !== "checkbox" && input.offsetParent !== null);
+        const requiredEmptySelect = $("select:required").toArray().find(select => $(select).val() === "");
+        const requiredEmptyTextArea = $("textarea:required").toArray().find(textarea => textarea.value === "" && textarea.offsetParent !== null);
         const email = $("input[name='private_email']").val();
         const atpos = email.indexOf("@");
         const dotpos = email.lastIndexOf(".");
@@ -593,52 +626,52 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         const isInvalidInput = this._isInvalidInput();
         let elementToScroll;
         let elementToScrollPosition;
-        const isEmailEmpty = email === '';
+        const isEmailEmpty = email === "";
 
         let requiredEmptyRadio;
-        const radios = Array.prototype.slice.call(document.querySelectorAll('input[type=radio]:required'));
+        const radios = Array.prototype.slice.call(document.querySelectorAll("input[type=radio]:required"));
         const groups = Object.values(radios.reduce((result, el) => Object.assign(result, {[el.name]: (result[el.name] || []).concat(el)}), {}));
         groups.some((group, index) => {
             const $radio = group[0].parentElement.parentElement;
             if (!group.some(el => el.checked)) {
                 requiredEmptyRadio = true;
-                const $warning = document.createElement('div');
-                $warning.classList = 'alert alert-danger alert-dismissable fade show';
-                $warning.textContent = _t('Some required fields are not filled');
+                const $warning = document.createElement("div");
+                $warning.classList = "alert alert-danger alert-dismissable fade show";
+                $warning.textContent = _t("Some required fields are not filled");
                 document.querySelector("button#hr_cs_submit").parentElement.append($warning);
-                $radio.classList.toggle('invalid_radio', requiredEmptyRadio);
+                $radio.classList.toggle("invalid_radio", requiredEmptyRadio);
                 elementToScroll = $radio;
                 elementToScrollPosition = $($radio).offset().top;
-            } else if ($radio.classList.contains('invalid_radio')) {
-                $radio.classList.toggle('invalid_radio');
+            } else if ($radio.classList.contains("invalid_radio")) {
+                $radio.classList.toggle("invalid_radio");
             }
         });
 
         if(requiredEmptyInput ||  requiredEmptySelect || requiredEmptyTextArea) {
             $("<div class='alert alert-danger alert-dismissable fade show'>")
-                .text(_t('Some required fields are not filled'))
+                .text(_t("Some required fields are not filled"))
                 .appendTo($("button#hr_cs_submit").parent());
             $("input:required").toArray().forEach(input => {
-                $(input).toggleClass('border-danger', input.value === '');
+                $(input).toggleClass("border-danger", input.value === "");
                 let inputPosition = $(input).offset().top;
-                if ((!elementToScroll || inputPosition < elementToScrollPosition) && input.value === '' && input.type !== 'checkbox') {
+                if ((!elementToScroll || inputPosition < elementToScrollPosition) && input.value === "" && input.type !== "checkbox") {
                     elementToScroll = $(input)[0];
                     elementToScrollPosition = $(input).offset().top;
                 }
             });
             $("textarea:required").toArray().forEach(textarea => {
-                $(textarea).toggleClass('border-danger', textarea.value === '');
+                $(textarea).toggleClass("border-danger", textarea.value === "");
                 let textareaPosition = $(textarea).offset().top;
-                if ((!elementToScroll || textareaPosition < elementToScrollPosition) && textarea.value === '') {
+                if ((!elementToScroll || textareaPosition < elementToScrollPosition) && textarea.value === "") {
                     elementToScroll = $(textarea)[0];
                     elementToScrollPosition = $(textarea).offset().top;
                 }
             });
             $("select:required").toArray().forEach(select =>  {
-                const selectParent = $(select).parent().find('.o_select_menu');
-                selectParent.toggleClass('border-danger', $(select).val() === '');
+                const selectParent = $(select).parent().find(".o_select_menu");
+                selectParent.toggleClass("border-danger", $(select).val() === "");
                 let selectPosition = selectParent.offset().top;
-                if ((!elementToScroll || selectPosition <= elementToScrollPosition) && $(select).val() === '') {
+                if ((!elementToScroll || selectPosition <= elementToScrollPosition) && $(select).val() === "") {
                     elementToScroll = selectParent[0];
                     elementToScrollPosition = selectParent.offset().top;
                 }
@@ -646,23 +679,23 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         }
         else{
             $("input:required").toArray().forEach(input => {
-                $(input).removeClass('border-danger');
+                $(input).removeClass("border-danger");
             });
             $("textarea:required").toArray().forEach(textarea => {
-                $(textarea).removeClass('border-danger');
+                $(textarea).removeClass("border-danger");
             });
             $("select:required").toArray().forEach(select => {
-                const selectParent = $(select).parent().find('.o_select_menu');
-                if ($(select).val() !== '') {
-                    selectParent.removeClass('border-danger');
+                const selectParent = $(select).parent().find(".o_select_menu");
+                if ($(select).val() !== "") {
+                    selectParent.removeClass("border-danger");
                 }
             });
         }
         if (invalid_email) {
-            $("input[name='private_email']").addClass('border-danger');
+            $("input[name='private_email']").addClass("border-danger");
             if (!isEmailEmpty) {
                 $("<div class='alert alert-danger alert-dismissable fade show'>")
-                    .text(_t('Not a valid e-mail address'))
+                    .text(_t("Not a valid e-mail address"))
                     .appendTo($("button#hr_cs_submit").parent());
             }
             let emailPosition = $("input[name='private_email']").offset().top;
@@ -671,13 +704,13 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
             }
         }
         $(".alert").delay(4000).slideUp(200, function () {
-            $(this).alert('close');
+            $(this).alert("close");
         });
         if (elementToScroll) {
-            elementToScroll.scrollIntoView({block: 'center', behavior: 'smooth'});
+            elementToScroll.scrollIntoView({block: "center", behavior: "smooth"});
         }
         return !invalid_email && !requiredEmptyInput && !requiredEmptySelect && !requiredEmptyTextArea && !requiredEmptyRadio && !isInvalidInput;
-    },
+    }
 
     async getFormInfo() {
         const personalDocuments = await this.getPersonalDocuments();
@@ -696,19 +729,19 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
             'offer_id': parseInt($("input[name='offer_id']").val()) || false,
             'original_link': $("input[name='original_link']").val()
         };
-    },
+    }
 
     async submitSalaryPackage(event) {
         if (this.checkFormValidity()) {
             const formInfo = await this.getFormInfo();
-            const data = await rpc('/salary_package/submit', formInfo);
-            if (data['error']) {
-                $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade show'>" + data['error_msg'] + "</div>");
+            const data = await rpc("/salary_package/submit", formInfo);
+            if (data["error"]) {
+                $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade show'>" + data["error_msg"] + "</div>");
             } else {
-                document.location.pathname = '/sign/document/' + data['request_id'] + '/' + data['token'];
+                document.location.pathname = "/sign/document/" + data["request_id"] + "/" + data["token"];
             }
         }
-    },
+    }
 
     async submitFeedback() {
         const feedbackEl = $("#feedback-textarea");
@@ -718,7 +751,7 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         if (!feedbackValue) {
             return;
         }
-        const res = await rpc('/salary_package/post_feedback/', {
+        const res = await rpc("/salary_package/post_feedback/", {
             feedback: feedbackValue,
             offer_id: offer_id,
             token,
@@ -731,13 +764,15 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
                 $("#feedback-form").removeClass("show");
             }, 3000);
         }
-    },
+    }
 
     togglePersonalInformation() {
-        $("button[name='toggle_personal_information']").toggleClass('d-none');
+        $("button[name='toggle_personal_information']").toggleClass("d-none");
         $("div[name='personal_info']").toggle(500);
         $("div[name='personal_info_withholding_taxes']").toggle(500);
-    },
-});
+    }
+}
 
-export default publicWidget.registry.SalaryPackageWidget;
+registry
+    .category("public.interactions")
+    .add("hr_contract_salary.salary_package", SalaryPackage);

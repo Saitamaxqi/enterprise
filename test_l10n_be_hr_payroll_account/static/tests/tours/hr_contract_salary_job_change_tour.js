@@ -101,6 +101,10 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             },
             expectUnloadPage: true,
         },
+        {
+            content: "wait for the interaction to load",
+            trigger: "#hr_contract_salary[is-ready=true]",
+        },
         /*
          * We only modify the IP to check if the change is correctly made
          * according to the job change of the employee.
@@ -117,6 +121,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             content: "Upload ID card copy (Both Sides)",
             trigger: 'input[name="id_card"]',
             async run() {
+
                 const file = new File(["hello, world"], "employee_id_card.pdf", {
                     type: "application/pdf",
                 });
@@ -162,7 +167,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
         },
         {
             content: "Next 1",
-            trigger: ":iframe .o_sign_sign_item_navigator:contains(click to start)",
+            trigger: ":iframe .o_sign_sign_item_navigator:contains(Click to start)",
             run: "click",
         },
         {

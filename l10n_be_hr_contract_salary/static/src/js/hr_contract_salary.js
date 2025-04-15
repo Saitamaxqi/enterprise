@@ -1,28 +1,61 @@
 import { _t } from "@web/core/l10n/translation";
-
-import hrContractSalary from "@hr_contract_salary/js/hr_contract_salary";
+import { SalaryPackage } from "@hr_contract_salary/interactions/hr_contract_salary";
 import { renderToElement } from "@web/core/utils/render";
+import { patch } from "@web/core/utils/patch";
+import { patchDynamicContent } from "@web/public/utils";
 
-hrContractSalary.include({
-    events: Object.assign({}, hrContractSalary.prototype.events, {
-        "change input[name='has_hospital_insurance_radio']": "onchangeHospital",
-        "change input[name='insured_relative_children_manual']": "onchangeHospital",
-        "change input[name='insured_relative_adults_manual']": "onchangeHospital",
-        "change input[name='fold_insured_relative_spouse']": "onchangeHospital",
-        "change input[name='fold_company_car_total_depreciated_cost']": "onchangeCompanyCar",
-        "change input[name='fold_private_car_reimbursed_amount']": "onchangePrivateCar",
-        "change input[name='fold_l10n_be_bicyle_cost']": "onchangePrivateBike",
-        "change input[name='l10n_be_has_ambulatory_insurance_radio']": "onchangeAmbulatory",
-        "change input[name='l10n_be_ambulatory_insured_children_manual']": "onchangeAmbulatory",
-        "change input[name='l10n_be_ambulatory_insured_adults_manual']": "onchangeAmbulatory",
-        "change input[name='fold_l10n_be_ambulatory_insured_spouse']": "onchangeAmbulatory",
-        "change input[name='children']": "onchangeChildren",
-        "change input[name='fold_wishlist_car_total_depreciated_cost']": "onchangeWishlistCar",
-        "change input[name='fold_l10n_be_mobility_budget_amount_monthly']": "onchangeMobility",
-    }),
+patch(SalaryPackage.prototype, {
+
+    setup() {
+        super.setup();
+        patchDynamicContent(this.dynamicContent, {
+            "input[name='has_hospital_insurance_radio']": {
+                "t-on-change": this.onchangeHospital.bind(this),
+            },
+            "input[name='insured_relative_children_manual']": {
+                "t-on-change": this.onchangeHospital.bind(this),
+            },
+            "input[name='insured_relative_adults_manual']": {
+                "t-on-change": this.onchangeHospital.bind(this),
+            },
+            "input[name='fold_insured_relative_spouse']": {
+                "t-on-change": this.onchangeHospital.bind(this),
+            },
+            "input[name='fold_company_car_total_depreciated_cost']": {
+                "t-on-change": this.onchangeCompanyCar.bind(this),
+            },
+            "input[name='fold_private_car_reimbursed_amount']": {
+                "t-on-change": this.onchangePrivateCar.bind(this),
+            },
+            "input[name='fold_l10n_be_bicyle_cost']": {
+                "t-on-change": this.onchangePrivateBike.bind(this),
+            },
+            "input[name='l10n_be_has_ambulatory_insurance_radio']": {
+                "t-on-change": this.onchangeAmbulatory.bind(this),
+            },
+            "input[name='l10n_be_ambulatory_insured_children_manual']": {
+                "t-on-change": this.onchangeAmbulatory.bind(this),
+            },
+            "input[name='l10n_be_ambulatory_insured_adults_manual']": {
+                "t-on-change": this.onchangeAmbulatory.bind(this),
+            },
+            "input[name='fold_l10n_be_ambulatory_insured_spouse']": {
+                "t-on-change": this.onchangeAmbulatory.bind(this),
+            },
+            "input[name='children']": {
+                "t-on-change": this.onchangeChildren.bind(this),
+            },
+            "input[name='fold_wishlist_car_total_depreciated_cost']": {
+                "t-on-change": this.onchangeWishlistCar.bind(this),
+            },
+            "input[name='fold_l10n_be_mobility_budget_amount_monthly']": {
+                "t-on-change": this.onchangeMobility.bind(this),
+            },
+        });
+    },
 
     getBenefits() {
-        var res = this._super.apply(this, arguments);
+        var res = super.getBenefits();
         res.version.l10n_be_canteen_cost = parseFloat(
             this.el.querySelector("input[name='l10n_be_canteen_cost']").value || "0.0"
         );
@@ -30,30 +63,30 @@ hrContractSalary.include({
     },
 
     updateGrossToNetModal(data) {
-        this._super(data);
+        super.updateGrossToNetModal(data);
         const dblHolidayWageEl = this.el.querySelector("input[name='double_holiday_wage']");
         if (dblHolidayWageEl) {
             dblHolidayWageEl.value = data["double_holiday_wage"];
         }
         if (data["wishlist_simulation"]) {
-            const modal_body = renderToElement('hr_contract_salary.salary_package_resume', {
-                'lines': data.wishlist_simulation.resume_lines_mapped,
-                'categories': data.wishlist_simulation.resume_categories,
-                'configurator_warning': data.wishlist_warning,
-                'hide_details': true,
+            const modal_body = renderToElement("hr_contract_salary.salary_package_resume", {
+                "lines": data.wishlist_simulation.resume_lines_mapped,
+                "categories": data.wishlist_simulation.resume_categories,
+                "configurator_warning": data.wishlist_warning,
+                "hide_details": true,
             });
-            const wishlistModalEl = this.el.querySelector('main[name="wishlist_modal_body"]');
+            const wishlistModalEl = this.el.querySelector("main[name='wishlist_modal_body']");
             wishlistModalEl.innerHTML = "";
             wishlistModalEl.appendChild(modal_body);
         }
         const $submit_button = $("button#hr_cs_submit");
         if ($submit_button.length) {
-            $submit_button.prop('disabled', !!data["configurator_warning"]);
+            $submit_button.prop("disabled", !!data["configurator_warning"]);
         }
-        $("input[name='l10n_be_mobility_budget_amount_monthly']").val(data['l10n_be_mobility_budget_amount_monthly']);
+        $("input[name='l10n_be_mobility_budget_amount_monthly']").val(data["l10n_be_mobility_budget_amount_monthly"]);
     },
 
-    onchangeCompanyCar: function(event) {
+    onchangeCompanyCar(event) {
         const privateCarInputEl = this.el.querySelector(
             "input[name='fold_private_car_reimbursed_amount']"
         );
@@ -62,7 +95,7 @@ hrContractSalary.include({
         }
     },
 
-    onchangePrivateCar: function(event) {
+    onchangePrivateCar(event) {
         const companyCarInputEl = this.el.querySelector(
             "input[name='fold_company_car_total_depreciated_cost']"
         );
@@ -71,7 +104,7 @@ hrContractSalary.include({
         }
     },
 
-    onchangeWishlistCar: function(event) {
+    onchangeWishlistCar(event) {
         if (event.target.checked) {
             const anchorEl = document.createElement("a");
             anchorEl.classList.add("btn", "btn-link", "ps-0", "pt-0", "pb-2", "m-3");
@@ -83,7 +116,7 @@ hrContractSalary.include({
             anchorEl.setAttribute("name", "wishlist_simulation_button");
             anchorEl.textContent = _t("Simulation");
             const nextToSelectEl = this.el.querySelector(
-                'input[name="wishlist_car_total_depreciated_cost"]'
+                "input[name='wishlist_car_total_depreciated_cost']"
             ).parentElement;
             nextToSelectEl.parentNode.insertBefore(
                 anchorEl,
@@ -91,7 +124,7 @@ hrContractSalary.include({
             );
         } else {
             const wishlistSimulationButtonEl = this.el.querySelector(
-                'a[name="wishlist_simulation_button"]'
+                "a[name='wishlist_simulation_button']"
             );
             if (wishlistSimulationButtonEl) {
                 wishlistSimulationButtonEl.remove();
@@ -99,7 +132,7 @@ hrContractSalary.include({
         }
     },
 
-    onchangePrivateBike: function(event) {
+    onchangePrivateBike(event) {
         if (event.target.checked) {
             // Set the fuel card slider value to 0 and disable it
             const fuelCardSliderEl = this.el.querySelector("input[name='fuel_card_slider']");
@@ -118,14 +151,14 @@ hrContractSalary.include({
     },
 
     onchangeFoldedResetInteger(benefitField) {
-        if (benefitField === 'private_car_reimbursed_amount_manual' || benefitField === 'l10n_be_bicyle_cost_manual') {
+        if (benefitField === "private_car_reimbursed_amount_manual" || benefitField === "l10n_be_bicyle_cost_manual") {
             return false;
         } else {
-            return this._super.apply(this, arguments);
+            return super.onchangeFoldedResetInteger(benefitField);
         }
     },
 
-    onchangeMobility: function(event) {
+    onchangeMobility(event) {
         const hasMobility = this.el.querySelector(`input[name='fold_l10n_be_mobility_budget_amount_monthly']`)?.checked;
         const transportRelatedFields = [
             "fold_company_car_total_depreciated_cost",
@@ -153,7 +186,7 @@ hrContractSalary.include({
                 fuelCardEl.value = 0;
             }
 
-            this.el.querySelector("label[for='company_car_total_depreciated_cost']")?.removeAttribute('checked');
+            this.el.querySelector("label[for='company_car_total_depreciated_cost']")?.removeAttribute("checked");
             this.el.querySelector("label[for='company_car_total_depreciated_cost']")?.parentElement.classList.add("o_disabled");
             this.el.querySelector("label[for='wishlist_car_total_depreciated_cost']")?.parentElement.classList.add("o_disabled");
             this.el.querySelector("label[for='public_transport_reimbursed_amount']")?.parentElement.classList.add("o_disabled");
@@ -173,8 +206,8 @@ hrContractSalary.include({
     },
 
 
-    start: async function () {
-        const res = await this._super(...arguments);
+    async willStart() {
+        const res = await super.willStart();
         this.onchangeChildren();
         this.onchangeHospital();
         // Hack to make these benefits required. TODO: remove when required benefits are supported.
@@ -253,11 +286,11 @@ hrContractSalary.include({
         return res;
     },
 
-    onchangeHospital: function() {
-        const insranceRadioEls = this.el.querySelectorAll(
+    onchangeHospital() {
+        const insuranceRadioEls = this.el.querySelectorAll(
             "input[name='has_hospital_insurance_radio']"
         );
-        const hasInsurance = insranceRadioEls[insranceRadioEls.length - 1]?.checked;
+        const hasInsurance = insuranceRadioEls[insuranceRadioEls.length - 1]?.checked;
         if (hasInsurance) {
             // Show fields
             this.el
@@ -296,7 +329,7 @@ hrContractSalary.include({
             }
         } else {
             // Reset values
-            this.el.querySelector("input[name='fold_insured_relative_spouse']")?.removeAttribute('checked');
+            this.el.querySelector("input[name='fold_insured_relative_spouse']")?.removeAttribute("checked");
             const relativeChildrenEl = this.el
                 .querySelector("input[name='insured_relative_children_manual']");
             const relativeAdultsEl = this.el
@@ -323,7 +356,7 @@ hrContractSalary.include({
         }
     },
 
-    onchangeAmbulatory: function() {
+    onchangeAmbulatory() {
         const insuranceRadiosEls = this.el.querySelectorAll(
             "input[name='l10n_be_has_ambulatory_insurance_radio']"
         );
@@ -370,7 +403,7 @@ hrContractSalary.include({
             // Reset values
             this.el.querySelector(
                 "input[name='fold_l10n_be_ambulatory_insured_spouse']"
-            )?.removeAttribute('checked')
+            )?.removeAttribute("checked")
             const ambulatoryChildrenEl = this.el
                 .querySelector("input[name='l10n_be_ambulatory_insured_children_manual']");
             const ambulatoryAdultsEl = this.el
