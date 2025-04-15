@@ -887,7 +887,7 @@ class AmazonAccount(models.Model):
                     # This discrepancy might happen if the fulfillment channel was changed for an
                     # offer in Amazon backend. But due to a known problem of ghost listings from
                     # Amazon side, we can't trust the order either.
-                    offer.amazon_feed_ref = '{}'
+                    offer.update({'amazon_feed_ref': '{}', 'amazon_sync_status': False})
 
             product_taxes = offer.product_id.taxes_id.filtered_domain(
                 [*self.env['account.tax']._check_company_domain(self.company_id)]
