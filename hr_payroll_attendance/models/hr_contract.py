@@ -21,7 +21,18 @@ class HrContract(models.Model):
                 ('date', '>=', date_from), ('date', '<=', date_to)],
             [], ['duration:sum'],
         )[0][0]
+        # unapproved overtimes should not be taken into account
+        unapproved_overtime_hours = round(self.env['hr.attendance'].sudo()._read_group([
+            ('employee_id', 'in', self.employee_id.ids),
+            ('check_in', '>=', date_from),
+            ('check_out', '<=', date_to),
+            ('overtime_hours', '>', 0),
+            ('overtime_status', '!=', 'approved')],
+            [], ['overtime_hours:sum'],
+        )[0][0], 2)
         if not overtime_hours or overtime_hours < 0:
             return
         work_data[default_work_entry_type.id] -= overtime_hours
-        work_data[work_entry_type_overtime.id] = overtime_hours
+        overtime_hours -= unapproved_overtime_hours
+        if overtime_hours > 0:
+            work_data[work_entry_type_overtime.id] = overtime_hours

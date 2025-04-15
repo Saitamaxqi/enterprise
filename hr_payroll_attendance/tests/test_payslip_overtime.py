@@ -110,3 +110,31 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
         self.payslip._compute_worked_days_line_ids()
         overtime_worked_days = self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME')
         self.assertEqual(overtime_worked_days.number_of_hours * self.contract.hourly_wage * .15, overtime_worked_days.amount)
+
+    def test_overtime_with_approval(self):
+        """Test that the overtime is taken into account only when it's approved."""
+        self.company.write({
+            "attendance_overtime_validation": "by_manager"
+        })
+
+        attendance = self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2022, 1, 3, 0, 0, 0),
+            'check_out': datetime(2022, 1, 3, 20, 0, 0),
+        })
+        self.payslip._compute_worked_days_line_ids()
+        self.assertFalse(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME'))
+
+        # Approve the overtime
+        attendance.update({
+            'overtime_status': 'approved',
+        })
+        self.payslip._compute_worked_days_line_ids()
+        self.assertTrue(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME'))
+
+        # refuse the overtime
+        attendance.update({
+            'overtime_status': 'refused',
+        })
+        self.payslip._compute_worked_days_line_ids()
+        self.assertFalse(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME'))
