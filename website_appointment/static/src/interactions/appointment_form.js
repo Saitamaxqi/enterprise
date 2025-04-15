@@ -1,15 +1,15 @@
-/** @odoo-module **/
-
-import publicWidget from "@web/legacy/js/public/public_widget";
+import { patch } from "@web/core/utils/patch";
+import { AppointmentForm } from "@appointment/interactions/appointment_form";
 import { ReCaptcha } from "@google_recaptcha/js/recaptcha";
 import { session } from "@web/session";
 import { _t } from "@web/core/l10n/translation";
 
-publicWidget.registry.appointmentForm.include({
-    init: function () {
-        this._super(...arguments);
-        this._recaptcha = new ReCaptcha();
-        this.notification = this.bindService("notification");
+
+patch(AppointmentForm.prototype, {
+    setup(){
+        super.setup();
+        this.recaptcha = new ReCaptcha();
+        this.notification = this.services.notification;
         // dynamic get rather than import as we don't depend on this module
         if (session.turnstile_site_key) {
             const { TurnStile } = odoo.loader.modules.get(
@@ -22,10 +22,10 @@ publicWidget.registry.appointmentForm.include({
         }
     },
 
-    willStart: async function () {
-        this._recaptcha.loadLibs();
-        this._addTurnstile(document.querySelector("form.appointment_submit_form"));
-        return this._super(...arguments);
+    async willStart(){
+        this.recaptcha.loadLibs();
+        this.addTurnstile(document.querySelector("form.appointment_submit_form"));
+        await super.willStart();
     },
 
     /**
@@ -33,15 +33,14 @@ publicWidget.registry.appointmentForm.include({
      *
      * @override
      */
-    _onConfirmAppointment: async function (ev) {
-        const superFunc = this._super.bind(this);
+    async onConfirmAppointment(ev){
         const button = ev.target;
         const form = button.closest("form");
-        if (!(await this._addRecaptchaToken(form))) {
+        if (!(await this.addRecaptchaToken(form))) {
             button.setAttribute("disabled", true);
             setTimeout(() => button.removeAttribute("disabled"), 2000);
         } else {
-            superFunc(...arguments);
+            super.onConfirmAppointment.call(this, ...arguments);
         }
     },
 
@@ -50,8 +49,8 @@ publicWidget.registry.appointmentForm.include({
      *
      * @returns {boolean} false if form submission should be cancelled otherwise true
      */
-    _addRecaptchaToken: async function (form) {
-        const tokenObj = await this._recaptcha.getToken("appointment_form_submission");
+    async addRecaptchaToken(form) {
+        const tokenObj = await this.recaptcha.getToken("appointment_form_submission");
         if (tokenObj.error) {
             this.notification.add(tokenObj.error, {
                 sticky: true,
@@ -69,17 +68,18 @@ publicWidget.registry.appointmentForm.include({
         return true;
     },
 
-    _addTurnstile: function (form) {
+    addTurnstile(form) {
         if (!this._turnstile) {
             return false;
         }
 
         const submitButton = form.querySelector("button.o_appointment_form_confirm_btn");
-        this._turnstile.constructor.disableSubmit(submitButton);
-        submitButton.after(this._turnstile.turnstileEl);
-        this._turnstile.insertScripts(form);
-        this._turnstile.render();
+        this.turnstile.constructor.disableSubmit(submitButton);
+        submitButton.after(this.turnstile.turnstileEl);
+        this.turnstile.insertScripts(form);
+        this.turnstile.render();
 
         return true;
     },
 });
+

@@ -1,104 +1,117 @@
-import publicWidget from "@web/legacy/js/public/public_widget";
+import { registry } from "@web/core/registry";
+import { Interaction } from "@web/public/interaction";
 import { findInvalidEmailFromText } from  "../js/utils.js"
 import { _t } from "@web/core/l10n/translation";
-import { addLoadingEffect } from '@web/core/utils/ui';
+import { addLoadingEffect } from "@web/core/utils/ui";
 
-publicWidget.registry.appointmentForm = publicWidget.Widget.extend({
-    selector: '.o_appointment_attendee_form',
-    events: {
-        'click div.o_appointment_add_guests button.o_appointment_input_guest_add': '_onAddGuest',
-        'click div.o_appointment_add_guests button.o_appointment_input_guest_cancel': '_onHideGuest',
-        'click .o_appointment_form_confirm_btn': '_onConfirmAppointment',
-    },
+export class AppointmentForm extends Interaction {
+    static selector = ".o_appointment_attendee_form";
+    dynamicContent = {
+        "div.o_appointment_add_guests button.o_appointment_input_guest_add": {
+            "t-on-click.noUpdate": this.onAddGuest,
+        },
+        "#o_appointment_input_guest_emails": {
+            "t-att-class": () => ({
+                "d-none": !this.showAddGuest,
+            }),
+        },
+        "button.o_appointment_input_guest_add": {
+            "t-att-class": () => ({
+                "d-none": this.showAddGuest,
+            }),
+        },
+        "button.o_appointment_input_guest_cancel": {
+            "t-att-class": () => ({
+                "d-none": !this.showAddGuest,
+            }),
+        },
+        "div.o_appointment_add_guests button.o_appointment_input_guest_cancel": {
+            "t-on-click": this.onHideGuest,
+        },
+        ".o_appointment_form_confirm_btn": {
+            "t-on-click": this.onConfirmAppointment,
+        },
+        ".o_appointment_validation_error": {
+            "t-att-class": () => ({
+                "d-none": this.errorMessage === "",
+            }),
+        },
+        ".o_appointment_error_text": {
+            "t-out": () => this.errorMessage,
+        },
+    }
 
-    /**
-     * Restore the attendee data from the local storage if the attendee doesn't have any partner data.
-     */
-    start: function () {
-        return this._super(...arguments).then(() => {
-            this.hasFormDefaultValues = this._getAttendeeFormData().some(([_, value]) => value !== '');
-            if (!this.hasFormDefaultValues && localStorage.getItem('appointment.form.values')) {
-                const attendeeData = JSON.parse(localStorage.getItem('appointment.form.values'));
-                const form = this.el.querySelector('form.appointment_submit_form');
-                for (const [name, value] of Object.entries(attendeeData)) {
-                    const input = form.querySelector(`input[name="${name}"]`);
-                    if (input) {
-                        input.value = value;
-                    }
+    setup() {
+        this.showAddGuest = false;
+        this.errorMessage = "";
+    }
+
+    start() {
+        this.hasFormDefaultValues = this.getAttendeeFormData().some(([_, value]) => value !== "");
+        if (!this.hasFormDefaultValues && localStorage.getItem("appointment.form.values")) {
+            const attendeeData = JSON.parse(localStorage.getItem("appointment.form.values"));
+            const formEl = this.el.querySelector("form.appointment_submit_form");
+            for (const [name, value] of Object.entries(attendeeData)) {
+                const inputEl = formEl.querySelector(`input[name="${name}"]`);
+                if (inputEl) {
+                    inputEl.value = value;
                 }
             }
-        });
-    },
+        }
+    }
 
-    _getAttendeeFormData: function() {
-        const formData = new FormData(this.el.querySelector('form.appointment_submit_form'));
-        return Array.from(formData).filter(([key]) => ['name', 'phone', 'email'].includes(key));
-    },
+    getAttendeeFormData() {
+        const formData = new FormData(this.el.querySelector("form.appointment_submit_form"));
+        return Array.from(formData).filter(([key]) => ["name", "phone", "email"].includes(key));
+    }
 
     /**
      * This function will show the guest email textarea where user can enter the
      * emails of the guests if allow_guests option is enabled.
      */
-    _onAddGuest: function(){
-        const textArea = this.el.querySelector('#o_appointment_input_guest_emails');
-        textArea.classList.remove('d-none');
-        textArea.focus();
-        const addGuestDiv = this.el.querySelector('div.o_appointment_add_guests')
-        addGuestDiv.querySelector('button.o_appointment_input_guest_add').classList.add('d-none')
-        addGuestDiv.querySelector('button.o_appointment_input_guest_cancel').classList.remove('d-none')
-    },
+    onAddGuest() {
+        this.showAddGuest = true;
+        this.updateContent();
+        const textAreaEl = this.el.querySelector("#o_appointment_input_guest_emails");
+        textAreaEl.focus();
+    }
 
-    _onConfirmAppointment: async function(event) {
-        this._validateCheckboxes();
-        const textArea = this.el.querySelector('#o_appointment_input_guest_emails');
-        const appointmentForm = document.querySelector('.appointment_submit_form');
-        if (textArea && textArea.value.trim() !== '') {
-            let emailInfo = findInvalidEmailFromText(textArea.value);
+    onConfirmAppointment (event) {
+        this.validateCheckboxes();
+        const textAreaEl = this.el.querySelector("#o_appointment_input_guest_emails");
+        const appointmentFormEl = document.querySelector(".appointment_submit_form");
+        if (textAreaEl && textAreaEl.value.trim() !== "") {
+            let emailInfo = findInvalidEmailFromText(textAreaEl.value);
             if (emailInfo.invalidEmails.length || emailInfo.emailList.length > 10) {
-                const errorMessage = emailInfo.invalidEmails.length > 0 ? _t('Invalid Email') : _t("You cannot invite more than 10 people");
-                this._showErrorMsg(errorMessage);
+                this.errorMessage = emailInfo.invalidEmails.length > 0 ? _t("Invalid Email") : _t("You cannot invite more than 10 people");
                 return;
             } else {
-                this._hideErrorMsg();
+                this.errorMessage = "";
             }
         }
-        if (appointmentForm.reportValidity()) {
+        if (appointmentFormEl.reportValidity()) {
             if (!this.hasFormDefaultValues) {
-                const attendeeData = this._getAttendeeFormData();
+                const attendeeData = this.getAttendeeFormData();
                 if (attendeeData.length) {
-                    localStorage.setItem('appointment.form.values', JSON.stringify(Object.fromEntries(attendeeData)));
+                    localStorage.setItem("appointment.form.values", JSON.stringify(Object.fromEntries(attendeeData)));
                 }
             }
-            appointmentForm.submit();
+            appointmentFormEl.submit();
             addLoadingEffect(event.target);
         }
-    },
+    }
 
     /**
      * This function will hide the guest email textarea if allow_guests option is enabled.
      */
-    _onHideGuest: function() {
-        this._hideErrorMsg();
-        const textArea = this.el.querySelector('#o_appointment_input_guest_emails');
-        textArea.classList.add('d-none')
-        textArea.value = "";
-        const addGuestDiv = this.el.querySelector('div.o_appointment_add_guests')
-        addGuestDiv.querySelector('button.o_appointment_input_guest_add').classList.remove('d-none');
-        addGuestDiv.querySelector('button.o_appointment_input_guest_cancel').classList.add('d-none');
-    },
+    onHideGuest() {
+        this.errorMessage = "";
+        this.showAddGuest = false;
+        const textAreaEl = this.el.querySelector("#o_appointment_input_guest_emails");
+        textAreaEl.value = "";
+    }
 
-    _hideErrorMsg: function() {
-        const errorMsgDiv = this.el.querySelector('.o_appointment_validation_error');
-        errorMsgDiv.classList.add('d-none');
-    },
-
-    _showErrorMsg: function(errorMessage) {
-        const errorMsgDiv = this.el.querySelector('.o_appointment_validation_error');
-        errorMsgDiv.classList.remove('d-none');
-        errorMsgDiv.querySelector('.o_appointment_error_text').textContent = errorMessage;
-    },
-
-    _validateCheckboxes: function() {
+    validateCheckboxes() {
         this.el.querySelectorAll(".checkbox-group.required").forEach((groupEl) => {
             const checkboxEls = groupEl.querySelectorAll(".checkbox input");
             checkboxEls.forEach(
@@ -108,5 +121,11 @@ publicWidget.registry.appointmentForm = publicWidget.Widget.extend({
                     ))
             );
         });
-    },
-});
+    }
+}
+
+
+registry
+    .category("public.interactions")
+    .add("appointment.appointment_form", AppointmentForm);
+
