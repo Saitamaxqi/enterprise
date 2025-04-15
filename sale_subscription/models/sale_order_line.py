@@ -649,3 +649,18 @@ class SaleOrderLine(models.Model):
     def _is_postpaid_line(self):
         self.ensure_one()
         return self.product_id.invoice_policy == 'delivery'
+
+    def _is_all_postpaid(self):
+        """ Helper to know if all lines are postpaid.
+        We filter out non recurring lines as this method is useful to know if we are mixing
+        prepaid and postpaid lines.
+        """
+        results = []
+        for line in self:
+            if not line.recurring_invoice:
+                continue
+            if line._is_postpaid_line():
+                results.append(True)
+            else:
+                results.append(False)
+        return all(results)

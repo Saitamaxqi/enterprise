@@ -2389,6 +2389,61 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             details = renewal_so._next_billing_details()
             self.assertAlmostEqual(details["next_invoice_amount"], 666.6, 2, "Only the recurring product is invoiced")
 
+    def test_postpaid_next_invoice_date(self):
+        """" Ensure the next invoice date is correctly updated for postpaid orders
+        This test fix a bug where a new invoice was created every day if postpaid line were mixed with non recurring lines
+        """
+        if self.env.ref('base.module_sale_subscription_stock').state == 'installed':
+            self.skipTest("`stock` module is installed. The invoice amount depends on the stock.move validation")
+        with freeze_time("2025-01-01"):
+            sub_product_delivery = self.env['product.product'].create({
+                'name': "Subscription consumable invoiced on delivery",
+                'list_price': 42,
+                'type': 'consu',
+                'uom_id': self.uom_unit.id,
+                'invoice_policy': 'delivery',
+                'recurring_invoice': True,
+            })
+            product_non_recurring = self.env['product.product'].create({
+                'name': "Consumable invoiced on order",
+                'list_price': 30.0,
+                'type': 'consu',
+                'uom_id': self.uom_unit.id,
+                'invoice_policy': 'order',
+            })
+            sub = self.env['sale.order'].create({
+                'name': 'Delivery',
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'plan_id': self.plan_month.id,
+                'pricelist_id': self.company_data['default_pricelist'].id,
+                'order_line': [Command.create({
+                    'product_id': sub_product_delivery.id,
+                    'product_uom_qty': 1,
+                    'tax_id': [Command.clear()],
+                }), Command.create({
+                    'product_id': product_non_recurring.id,
+                    'product_uom_qty': 1,
+                    'tax_id': [Command.clear()],
+                })],
+            })
+            sub.action_confirm()
+            inv = sub._create_recurring_invoice()
+            self.assertEqual(sub.next_invoice_date, datetime.date(2025, 2, 1))
+            self.assertAlmostEqual(inv.amount_untaxed, 30, msg="We invoice only the non recurring product")
+            recurring_line = sub.order_line.filtered(lambda l: l.product_id.id == sub_product_delivery.id)
+            recurring_line.qty_delivered = 1
+
+        with freeze_time("2025-02-01"):
+            inv = self.env['sale.order']._create_recurring_invoice()
+            self.assertAlmostEqual(inv.amount_untaxed, 42, msg="We invoice recurring products")
+            self.assertEqual(sub.next_invoice_date, datetime.date(2025, 3, 1))
+
+        with freeze_time("2025-03-01"):
+            inv = sub._create_recurring_invoice()
+            self.assertAlmostEqual(inv.amount_untaxed, 42, msg="We invoice recurring products")
+            self.assertEqual(sub.next_invoice_date, datetime.date(2025, 4, 1))
+
     def test_churn_discount_removal(self):
         """ Test the following flow:
                 Sub with first year discount -> Renew -> Discount is removed on original sub -> Cancel the renewal -> Churn the original sub
