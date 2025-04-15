@@ -247,9 +247,9 @@ JOIN sale_commission_plan_target era
           JOIN filtered_moves fm ON {jointure}
           JOIN account_move_line aml
             ON aml.move_id = fm.id
-          JOIN product_product pp
+          LEFT JOIN product_product pp
             ON aml.product_id = pp.id
-          JOIN product_template pt
+          LEFT JOIN product_template pt
             ON pp.product_tmpl_id = pt.id
           JOIN currency_rate cr
             ON cr.company_id = fm.company_id
