@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class CrmLead(models.Model):
@@ -34,17 +33,17 @@ class CrmLead(models.Model):
     def _get_action_view_sale_quotation_domain(self):
         # over-ride to exclude rental quotations linked to lead
         action_lead_quotation_domain = super()._get_action_view_sale_quotation_domain()
-        return expression.AND([action_lead_quotation_domain, [("is_rental_order", "=", False)]])
+        return Domain.AND([action_lead_quotation_domain, [("is_rental_order", "=", False)]])
 
     def _get_lead_quotation_domain(self):
         # over-ride to exclude rental quotations linked to lead
         lead_quotation_domain = super()._get_lead_quotation_domain()
-        return expression.AND([lead_quotation_domain, [("is_rental_order", "=", False)]])
+        return Domain.AND([lead_quotation_domain, [("is_rental_order", "=", False)]])
 
     def _get_lead_sale_order_domain(self):
         # over-ride to exclude rental sale orders linked to lead
         lead_sale_order_domain = super()._get_lead_sale_order_domain()
-        return expression.AND([lead_sale_order_domain, [("is_rental_order", "=", False)]])
+        return Domain.AND([lead_sale_order_domain, [("is_rental_order", "=", False)]])
 
     def action_rental_quotations_new(self):
         if not self.partner_id:

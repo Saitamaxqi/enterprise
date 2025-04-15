@@ -5,7 +5,7 @@ from math import ceil
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import float_compare
 
 
@@ -240,7 +240,7 @@ class SaleOrder(models.Model):
         """
         domain = super()._get_product_catalog_domain()
         if self.is_rental_order:
-            return expression.OR([
+            return Domain.OR([
                 domain, [
                     ('rent_ok', '=', True),
                     ('company_id', 'in', [self.company_id.id, False]),

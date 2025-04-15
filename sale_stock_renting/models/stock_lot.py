@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class StockLot(models.Model):
@@ -19,7 +19,7 @@ class StockLot(models.Model):
             ('location_id.usage', '=', 'internal')
         ]
         if location:
-            quant_domain = expression.AND([quant_domain, [
+            quant_domain = Domain.AND([quant_domain, [
                 '|',
                 ('location_id', '=', location.id),
                 ('location_id', 'child_of', location.id)

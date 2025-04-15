@@ -3,9 +3,9 @@
 from collections import defaultdict
 from datetime import timedelta
 
-from odoo import Command, _, api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools.misc import groupby as tools_groupby
 
 
@@ -42,7 +42,7 @@ class SaleOrderLine(models.Model):
                 ('lot_id', 'in', line.reserved_lot_ids.ids),
             ]
             leaving_move_lines_groups = self.env['stock.move.line']._read_group(
-                expression.AND([domain, [
+                Domain.AND([domain, [
                             ('location_usage', '=', 'internal'),
                             ('location_dest_id', 'child_of', partner_location_id.id),
                         ]]),
@@ -51,7 +51,7 @@ class SaleOrderLine(models.Model):
             )
             leaving_move_by_lot = {g[0].id: g[1] for g in leaving_move_lines_groups}
             incoming_move_lines_groups = self.env['stock.move.line']._read_group(
-                expression.AND([domain, [
+                Domain.AND([domain, [
                             ('location_id', 'child_of', partner_location_id.id),
                             ('location_dest_usage', '=', 'internal'),
                         ]]),

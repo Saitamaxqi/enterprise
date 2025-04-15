@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import pytz
 
 from odoo import _, api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import float_utils, DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools.intervals import Intervals
 
@@ -14,7 +14,7 @@ class PlanningSlot(models.Model):
     _inherit = 'planning.slot'
 
     def _domain_sale_line_id(self):
-        return expression.AND([
+        return Domain.AND([
             self.env['sale.order.line']._sellable_lines_domain(),
             self.env['sale.order.line']._domain_sale_line_service(),
         ])
@@ -206,7 +206,7 @@ class PlanningSlot(models.Model):
     def _get_domain_template_slots(self):
         domain = super()._get_domain_template_slots()
         if self.sale_line_plannable:
-            domain = expression.AND([domain, ['|', ('role_id', '=', self.sale_line_id.product_id.planning_role_id.id), ('role_id', '=', False)]])
+            domain = Domain.AND([domain, ['|', ('role_id', '=', self.sale_line_id.product_id.planning_role_id.id), ('role_id', '=', False)]])
         return domain
 
     def _get_sale_order_slots_to_plan(self, vals, slot_vals_list_per_resource):
@@ -547,18 +547,17 @@ class PlanningSlot(models.Model):
         }
 
     def _get_shifts_to_plan_domain(self, view_domain=None):
-        new_view_domain = []
         if view_domain:
-            for clause in view_domain:
-                if isinstance(clause, str) or clause[0] not in ['start_datetime', 'end_datetime']:
-                    new_view_domain.append(clause)
-                elif clause[0] in ['start_datetime', 'end_datetime']:
-                    new_view_domain.append([clause[0], '=', False])
+            domain = Domain(view_domain).map_conditions(
+                lambda cond: Domain(cond.field_expr, '=', False)
+                if cond.field_expr in ('start_datetime', 'end_datetime')
+                else cond
+            )
         else:
-            new_view_domain = [('start_datetime', '=', False)]
-        domain = expression.AND([new_view_domain, [('sale_line_id', '!=', False)]])
+            domain = Domain('start_datetime', '=', False)
+        domain &= Domain('sale_line_id', '!=', False)
         if self.env.context.get('planning_gantt_active_sale_order_id'):
-            domain = expression.AND([domain, [('sale_order_id', '=', self.env.context.get('planning_gantt_active_sale_order_id'))]])
+            domain &= Domain('sale_order_id', '=', self.env.context.get('planning_gantt_active_sale_order_id'))
         return domain
 
     def auto_plan_id(self):

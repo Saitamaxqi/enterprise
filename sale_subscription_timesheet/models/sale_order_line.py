@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import groupby
 
 
@@ -22,20 +22,21 @@ class SaleOrderLine(models.Model):
 
         for so, lines in groupby(timesheet_lines, lambda sol: (sol.order_id)):
             lines_by_timesheet = sum(lines, self.env['sale.order.line'])
-            domain = lines_by_timesheet._timesheet_compute_delivered_quantity_domain()
+            domain = Domain(lines_by_timesheet._timesheet_compute_delivered_quantity_domain())
             refund_account_moves = so.invoice_ids.filtered(
                 lambda am: am.state == 'posted' and am.move_type == 'out_refund').reversed_entry_id
-            timesheet_domain = [
-                '|',
-                ('timesheet_invoice_id', '=', False),
-                ('timesheet_invoice_id.state', '=', 'cancel')]
+            timesheet_domain = Domain('timesheet_invoice_id', '=', False) | Domain('timesheet_invoice_id.state', '=', 'cancel')
             if refund_account_moves:
-                credited_timesheet_domain = [('timesheet_invoice_id.state', '=', 'posted'),
-                                             ('timesheet_invoice_id', 'in', refund_account_moves.ids)]
-                timesheet_domain = expression.OR([timesheet_domain, credited_timesheet_domain])
+                credited_timesheet_domain = Domain('timesheet_invoice_id.state', '=', 'posted') & Domain('timesheet_invoice_id', 'in', refund_account_moves.ids)
+                timesheet_domain = timesheet_domain | credited_timesheet_domain
             # Shortcut to allow computing the domain for a bunch of lines without using _get_deferred_date that does not work in batch.
             # Side effect: It won't work for the first period if the invoice cron never run. (the next invoice date has never been incremented)
-            domain = expression.AND([domain, timesheet_domain, [('date', '>=', so.last_invoice_date or so.start_date), ('date', '<', so.next_invoice_date)]])
+            domain = Domain.AND([
+                domain,
+                timesheet_domain,
+                Domain('date', '>=', so.last_invoice_date or so.start_date),
+                Domain('date', '<', so.next_invoice_date),
+            ])
             mapping = lines_by_timesheet.sudo()._get_delivered_quantity_by_analytic(domain)
             for line in lines:
                 line.qty_delivered = mapping[line.id]

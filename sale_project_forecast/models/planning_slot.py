@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
 
@@ -45,6 +44,8 @@ class PlanningSlot(models.Model):
     def _get_shifts_to_plan_domain(self, view_domain=None):
         domain = super()._get_shifts_to_plan_domain(view_domain)
         if self.env.context.get('default_project_id'):
-            domain = filter_domain_leaf(domain, lambda field: field != "project_id")
-            domain = expression.AND([domain, [('sale_order_id', 'in', self.env['project.project'].browse(self.env.context.get('default_project_id'))._fetch_sale_order_items({'project.task': [('is_closed', '=', False)]}).order_id.ids)]])
+            domain = Domain(filter_domain_leaf(domain, lambda field: field != "project_id"))
+            project = self.env['project.project'].browse(self.env.context.get('default_project_id'))
+            sale_order_lines = project._fetch_sale_order_items({'project.task': [('is_closed', '=', False)]})
+            domain &= Domain('sale_order_id', 'in', sale_order_lines.order_id.ids)
         return domain

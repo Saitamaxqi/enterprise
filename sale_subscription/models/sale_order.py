@@ -11,8 +11,7 @@ from psycopg2.extensions import TransactionRollbackError
 
 from odoo import _, api, fields, models, modules
 from odoo.exceptions import UserError, ValidationError
-from odoo.fields import Command
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools import config, format_amount, plaintext2html, split_every, str2bool
 from odoo.tools.misc import format_date
 
@@ -1429,7 +1428,7 @@ class SaleOrder(models.Model):
                          ('pending_transaction', '=', False),
                          '|', ('next_invoice_date', '<=', current_date), ('end_date', '<=', current_date)]
         if extra_domain:
-            search_domain = expression.AND([search_domain, extra_domain])
+            search_domain = Domain.AND([search_domain, extra_domain])
         return search_domain
 
     def _get_invoice_grouping_keys(self):

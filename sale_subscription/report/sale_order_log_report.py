@@ -1,10 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import re
-from datetime import date
-
-from odoo import api, fields, models, tools
-from odoo.osv import expression
+from odoo import fields, models
 
 from odoo.addons.sale.models.sale_order import SALE_ORDER_STATE
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRESS_STATE, SUBSCRIPTION_STATES

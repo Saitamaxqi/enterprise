@@ -4,8 +4,7 @@ from datetime import timedelta
 
 from odoo import api, fields, models, _
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_STATES, SUBSCRIPTION_PROGRESS_STATE, SUBSCRIPTION_CLOSED_STATE
-from odoo.osv import expression
-from odoo.tools import float_compare
+
 
 class SaleOrderLog(models.Model):
     _name = 'sale.order.log'
