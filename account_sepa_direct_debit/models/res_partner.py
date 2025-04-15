@@ -19,6 +19,9 @@ class ResPartner(models.Model):
         for partner in self:
             partner.sdd_count = mapped_data.get(partner.id, 0)
 
+    def _get_account_statistics_count(self):
+        return super()._get_account_statistics_count() + self.sdd_count
+
     def action_open_ssd_mandates(self):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act')
