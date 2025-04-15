@@ -1,6 +1,6 @@
 from odoo.addons.pos_urban_piper.controllers.main import PosUrbanPiperController
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv.expression import AND
 
 
 class PosUrbanPiperInController(PosUrbanPiperController):
@@ -15,11 +15,7 @@ class PosUrbanPiperInController(PosUrbanPiperController):
 
     def _get_tax_domain(self, pos_config, tax_percentage):
         base_domain = super()._get_tax_domain(pos_config, tax_percentage)
-        return (
-            AND([
-                [("tax_group_id.name", "=", "GST")],
-                base_domain
-            ])
-            if pos_config.company_id.country_id.code == "IN"
-            else base_domain
-        )
+        domain = Domain(base_domain)
+        if pos_config.company_id.country_id.code == "IN":
+            domain &= Domain("tax_group_id.name", "=", "GST")
+        return domain

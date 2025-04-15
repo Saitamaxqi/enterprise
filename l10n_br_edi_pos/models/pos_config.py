@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models, fields, tools, _
 from odoo.exceptions import RedirectWarning
-from odoo.osv import expression
 from odoo.tools import format_list
 
 

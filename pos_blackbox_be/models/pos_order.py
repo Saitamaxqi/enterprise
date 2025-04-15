@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 from datetime import datetime
-from odoo.osv.expression import AND
 import hashlib
 import re
 
@@ -209,7 +208,7 @@ class PosOrder(models.Model):
 
     @api.model
     def search_paid_order_ids(self, config_id, domain, limit, offset):
-        domain = AND([[['lines.product_id', 'not in', self.env['pos.config']._get_work_products()]], domain])
+        domain = Domain('lines.product_id', 'not in', self.env['pos.config']._get_work_products()) & Domain(domain)
         return super().search_paid_order_ids(config_id, domain, limit, offset)
 
     def _get_tax_amount_by_percent(self, tax_percent):

@@ -1,5 +1,5 @@
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class PosPaymentMethod(models.Model):
@@ -14,5 +14,5 @@ class PosPaymentMethod(models.Model):
     def _load_pos_self_data_domain(self, data):
         domain = super()._load_pos_self_data_domain(data)
         if data['pos.config'][0]['self_ordering_mode'] == 'kiosk':
-            domain = expression.OR([[('iot_device_id', '!=', False)], domain])
+            domain = Domain.OR([[('iot_device_id', '!=', False)], domain])
         return domain

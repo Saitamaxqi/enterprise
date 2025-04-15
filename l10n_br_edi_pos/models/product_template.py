@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models, fields, api, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ProductTemplate(models.Model):
@@ -22,7 +22,7 @@ class ProductTemplate(models.Model):
         config = data['pos.config'][0]
         if config['l10n_br_is_nfce']:
             taxes_domain = [*self.env["account.tax"]._check_company_domain(config['company_id']), ("price_include", "=", False)]
-            domain = expression.AND(
+            domain = Domain.AND(
                 [
                     domain,
                     [
@@ -35,7 +35,7 @@ class ProductTemplate(models.Model):
                     # Exclude combo products that have combo items with price-excluded taxes. _load_pos_data() of product.template
                     # will load combo products indiscriminately of the provided domain, thus bypassing our goal of not
                     # loading products with price-excluded taxes.
-                    expression.OR(
+                    Domain.OR(
                         [
                             [("type", "!=", "combo")],
                             [("combo_ids.combo_item_ids.product_id.product_tmpl_id.taxes_id", "not any", taxes_domain)]
