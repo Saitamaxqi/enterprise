@@ -5,7 +5,7 @@
         <field name="l10n_au_is_ote" eval="True"/>
         <field name="l10n_au_work_stp_code">G</field>
     </record>
-    <record id="hr_work_entry.overtime_work_entry_type" model="hr.work.entry.type">
+    <record id="hr_work_entry.work_entry_type_overtime" model="hr.work.entry.type">
         <field name="l10n_au_work_stp_code">T</field>
     </record>
 

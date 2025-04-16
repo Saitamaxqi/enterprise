@@ -54,7 +54,7 @@ class ResCompany(models.Model):
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("hr_work_entry.overtime_work_entry_type").id,
+                            "res_id": self.env.ref("hr_work_entry.work_entry_type_overtime").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),

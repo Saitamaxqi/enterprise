@@ -21,7 +21,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_manager')
+        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_manager') + cls.env.ref("hr_holidays.group_hr_holidays_manager")
         cls.env['l10n_au.stp'].search([]).unlink()
         cls.env['ir.sequence'].create({
             'name': 'STP Sequence',
@@ -520,11 +520,11 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             work_entry.action_validate()
 
         # Work Entries, For simplicty, Leaves handled as work entries
-        create_work_entry("hr_work_entry.overtime_work_entry_type", datetime(2024, 10, 1, 9), 3)
-        create_work_entry("l10n_au_hr_payroll.l10n_au_work_entry_type_other", datetime(2024, 10, 3, 9), 4, "validated")
-        create_work_entry("l10n_au_hr_payroll.l10n_au_work_entry_type_parental", datetime(2024, 10, 4, 9), 3, "validated")
-        create_work_entry("l10n_au_hr_payroll.l10n_au_work_entry_type_compensation", datetime(2024, 10, 5, 9), 4)
-        create_work_entry("l10n_au_hr_payroll.l10n_au_work_entry_type_defence", datetime(2024, 10, 6, 9), 3, "validated")
+        create_work_entry("hr_work_entry.work_entry_type_overtime", datetime(2024, 10, 1, 9), 3)
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_other", datetime(2024, 10, 3, 9), 4, "validated")
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_parental", datetime(2024, 10, 4, 9), 3, "validated")
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_compensation", datetime(2024, 10, 5, 9), 4)
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_defence", datetime(2024, 10, 6, 9), 3, "validated")
 
         input_lines = [
             ('l10n_au_hr_payroll.input_leaves_cashed_out_in_service', 200.2),

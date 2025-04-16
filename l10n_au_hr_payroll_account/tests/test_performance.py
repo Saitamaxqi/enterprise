@@ -120,7 +120,7 @@ class TestPerformance(AccountTestInvoicingCommon):
             "fund_id": cls.super_fund.id,
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        cls.employees[1].user_id = new_test_user(cls.env, login='employee1', groups='hr.group_hr_manager')
+        cls.employees[1].user_id = new_test_user(cls.env, login='employee1', groups='hr.group_hr_manager', email="test@example.com")
         cls.company.l10n_au_hr_super_responsible_id = cls.employees[1]
         cls.company.l10n_au_stp_responsible_id = cls.employees[1]
 
@@ -208,6 +208,7 @@ class TestPerformance(AccountTestInvoicingCommon):
 
         # Payslip Creation
         with self.assertQueryCount(admin=1300):  # randomness
+            self.env.user.partner_id.email = "admin@example.com"
             start_time = time.time()
             payslips = self.env['hr.payslip'].with_context(allowed_company_ids=self.company.ids).create(payslips_values)
             # --- 0.11892914772033691 seconds ---
