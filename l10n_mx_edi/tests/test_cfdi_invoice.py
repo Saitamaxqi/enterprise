@@ -2110,6 +2110,63 @@ class TestCFDIInvoice(TestMxEdiCommon):
             self.assertEqual(payment.move_id.l10n_mx_edi_cfdi_state, 'sent', f'Error: {payment.move_id.l10n_mx_edi_document_ids.message}')
             self._assert_invoice_payment_cfdi(payment.move_id, 'test_full_payment_rate')
 
+    def test_sw_finkok_CRP20211_usd_statement_in_mxn_journal_rounded_exchange_rate(self):
+        """ Test rounding of exchange rate in payment cfdi of a statement line with foreign currency
+        using Finkok or SW does not trigger the CRP20211 error.
+        """
+        self.env.company.l10n_mx_edi_pac = 'finkok'
+
+        payment_date = self.frozen_today
+        # Rates for how much USD for 1 MXN
+        usd = self.setup_other_currency('USD', rates=[(payment_date, 0.05)])
+
+        with self.mx_external_setup(payment_date):
+            invoice1 = self._create_invoice(
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 11396.55,  # + tax(16%) = 13220.0 USD
+                    }),
+                ],
+            )
+
+            with self.with_mocked_pac_sign_success():
+                invoice1._l10n_mx_edi_cfdi_invoice_try_send()
+
+        bank_journal = self.env['account.journal'].create({
+            'name': 'Bank 123456',
+            'code': 'BNK67',
+            'type': 'bank',
+            'bank_acc_number': '123456',
+            'l10n_mx_edi_payment_method_id': self.env.ref('l10n_mx_edi.payment_method_transferencia').id,  # To default to this payment method
+        })
+
+        with self.mx_external_setup(payment_date):
+            # Those are the important amount because
+            # 305147.51 MXN / 13220.0 USD = 23.082262481 ≃ 23.082262 MXN/USD
+            # 13220.0 USD * 23.082262 MXN/USD = 305147.50 MXN which is not 305147.51 MXN
+            st_line = self.env['account.bank.statement.line'].create({
+                'journal_id': bank_journal.id,
+                'amount_currency': 13220.00,  # USD
+                'amount': 305147.51,  # MXN
+                'foreign_currency_id': self.env.ref('base.USD').id,
+                'date': payment_date,
+                'payment_ref': 'test'
+            })
+
+            # Reconcile bank transaction with invoice
+            st_line.set_line_bank_statement_line(invoice1.line_ids.filtered(lambda l: l.display_type == 'payment_term').ids)
+            self.assertRecordValues(st_line, [{'is_reconciled': True}])
+            self.assertRecordValues(invoice1, [{'payment_state': 'paid'}])
+
+            # Generate payment cfdi file
+            with self.with_mocked_pac_sign_success():
+                st_line.move_id._l10n_mx_edi_cfdi_payment_try_send()
+
+            # Without fix, the generated cfdi payment file will be refused by Quadrum (finkok) due to CRP20211
+            self._assert_invoice_payment_cfdi(st_line.move_id, 'test_sw_finkok_CRP20211_usd_statement_in_mxn_journal_rounded_exchange_rate_pay')
+
     def test_foreign_curr_payment_comp_curr_invoice_forced_balance(self):
         date1 = self.frozen_today - relativedelta(days=1)
         date2 = self.frozen_today

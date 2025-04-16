@@ -1147,7 +1147,16 @@ class AccountMove(models.Model):
         else:
             raw_payment_rate = abs(total_in_company_curr / total_in_payment_curr) if total_in_payment_curr else 0.0
             payment_rate = float_round(raw_payment_rate, precision_digits=cfdi_values['tipo_cambio_dp'])
-        cfdi_values['tipo_cambio'] = payment_rate
+
+            # Finkok/SwSapien CRP20211: MontoTotalPagos must be exactly equal to round(total_in_payment_curr * payment_rate)
+            if cfdi_values['root_company'].l10n_mx_edi_pac in {'finkok', 'sw'}:
+                total_in_company_curr = company_curr.round(total_in_payment_curr * payment_rate)
+
+        cfdi_values.update({
+            'tipo_cambio': payment_rate,
+            'monto_total_pagos': total_in_company_curr,
+            'mxn_digits': company_curr.decimal_places,
+        })
 
         # === Create the list of invoice data ===
         invoice_values_list = []
@@ -1266,11 +1275,6 @@ class AccountMove(models.Model):
         })
 
         # Taxes.
-        cfdi_values.update({
-            'monto_total_pagos': total_in_company_curr,
-            'mxn_digits': company_curr.decimal_places,
-        })
-
         def update_tax_amount(key, amount):
             if key not in cfdi_values:
                 cfdi_values[key] = 0.0
