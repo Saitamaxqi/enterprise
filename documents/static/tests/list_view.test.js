@@ -31,6 +31,13 @@ defineModels({
     ...DocumentsModels,
 });
 
+/**
+ * Shortcut for details panel selector
+ * @param selector
+ * @return {`.o_documents_details_panel ${string}`}
+ */
+const dp = (selector) => `.o_documents_details_panel ${selector}`;
+
 test("Open share with view user_permission", async function () {
     onRpc("/documents/touch/accessTokenFolder1", () => true);
     const serverData = getDocumentsTestServerData();
@@ -118,9 +125,7 @@ test("Right panel shows and updates focused or container record only", async fun
     // Focus without selection
     await contains(`.o_data_row td[name='name']:contains(${folder1Name})`).click();
     await animationFrame();
-    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
-        folder1Name
-    );
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue(folder1Name);
     await contains(`.o_list_renderer`).click(); // de-focus
 
     await waitFor(".documents_chatter_disabled_overlay"); // As we're in all/company
@@ -128,35 +133,23 @@ test("Right panel shows and updates focused or container record only", async fun
     await contains(`.o_data_row:contains(${folder1Name}) .fa-folder-o`).click();
     await animationFrame();
     expect(`.o_data_row .o_list_record_selector`).toHaveCount(3);
-    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
-        folder1Name
-    );
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue(folder1Name);
 
     // Focus without selection
     await contains(".o_data_row :contains('File 1')").click();
-    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
-        "File 1"
-    );
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue("File 1");
     // Unfocus
     await contains(`.o_list_renderer`).click();
-    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
-        folder1Name
-    );
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue(folder1Name);
 
     // select record focuses it
     await contains(".o_data_row:contains('File 1') .o_list_record_selector").click();
-    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
-        "File 1"
-    );
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue("File 1");
     // Focus without selection
     await contains(".o_data_row :contains('File 2')").click();
-    expect(".o_documents_details_panel .o_documents_details_panel_name input").toHaveValue(
-        "File 2"
-    );
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue("File 2");
     // Editing unselected File 2 only
-    await contains(".o_documents_details_panel .o_documents_details_panel_name input").edit(
-        "File 4"
-    );
+    await contains(dp(".o_documents_details_panel_name input")).edit("File 4");
     // Row is modified, not File 1
     await waitFor(".o_data_row :contains('File 4')");
     await waitFor(".o_data_row :contains('File 1')");

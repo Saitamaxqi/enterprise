@@ -7,6 +7,12 @@ import { Many2ManyTagsField } from "@web/views/fields/many2many_tags/many2many_t
  * in "preview" mode or focused only.
  */
 export class DocumentsDetailsMany2ManyTagsField extends Many2ManyTagsField {
+    static props = {
+        ...Many2ManyTagsField.props,
+        readonlyPlaceholder: { ...Many2ManyTagsField.props.placeholder },
+    };
+    static template = "documents.DocumentsDetailsPanelMany2ManyTagsField";
+
     setup() {
         super.setup();
         const superUpdate = this.update;
