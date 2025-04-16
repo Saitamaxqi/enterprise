@@ -19,7 +19,7 @@ import { mountSaleOrderSpreadsheetAction } from "./helpers/webclient_helpers";
 import { addFieldSync } from "./helpers/commands";
 import { stores, helpers } from "@odoo/o-spreadsheet";
 
-const { HighlightStore, HoveredCellStore } = stores;
+const { HighlightStore, DelayedHoveredCellStore } = stores;
 const { toZone } = helpers;
 
 defineSpreadsheetSaleModels();
@@ -117,7 +117,7 @@ describe("field sync action", () => {
 
     test("hover field sync highlights matching list formulas", async () => {
         const { model, env } = await mountSaleOrderSpreadsheetAction();
-        const hoverStore = env.getStore(HoveredCellStore);
+        const hoverStore = env.getStore(DelayedHoveredCellStore);
         const highlightStore = env.getStore(HighlightStore);
         addFieldSync(model, "B1", "product_uom_qty", 0);
         setCellContent(model, "A1", '=ODOO.LIST(1,1,"product_uom_qty")');

@@ -103,21 +103,49 @@ test("Pivot cells are highlighted when their side panel is open", async function
     expect(getHighlightsFromStore(env)).toEqual([]);
 });
 
-test("Pivot side panel becomes non-interactive and grayed out in read-only mode", async function () {
+test("Can change measure display as from the side panel", async function () {
+    const { model, env } = await createSpreadsheetFromPivotView();
+    const pivotId = model.getters.getPivotIds()[0];
+    env.openSidePanel("PivotSidePanel", { pivotId });
+    await animationFrame();
+
+    await contains(".pivot-measure .fa-cog").click();
+    await contains(".o-sidePanel select").select("%_of");
+
+    expect(model.getters.getPivotCoreDefinition(pivotId).measures[0]).toEqual({
+        id: "probability:avg",
+        fieldName: "probability",
+        aggregator: "avg",
+        display: {
+            type: "%_of",
+            fieldNameWithGranularity: "foo",
+            value: "(previous)",
+        },
+    });
+});
+
+test("Pivot side panel is disabled and dimmed in read-only mode but still scrollable", async function () {
     const { model, env } = await createSpreadsheetFromPivotView();
 
     const pivotId = model.getters.getPivotIds()[0];
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
 
-    const sidePanel = target.querySelector(".o-sidePanelBody > div");
-    expect(sidePanel).not.toHaveClass("pe-none");
-    expect(sidePanel).not.toHaveClass("opacity-50");
+    const sidePanel = target.querySelector(".o-sidePanel");
+    expect(".o-sidePanelBody div[inert]").toHaveCount(0);
 
     model.updateMode("readonly");
     await animationFrame();
 
-    expect(sidePanel).toHaveClass("pe-none");
-    expect(sidePanel).toHaveClass("opacity-50");
-    expect(sidePanel).toHaveAttribute("inert", "1");
+    const scrollableContainer = sidePanel.querySelector(".overflow-y-auto");
+    expect(scrollableContainer).toHaveCount(1);
+
+    // The [inert] wrapper with `pe-none` and `opacity-50` is placed inside the scrollable container,
+    // ensuring that user interactions are blocked while still allowing vertical scrolling.
+    const interactiveWrapper = scrollableContainer.querySelector(".o-sidePanelBody div[inert]");
+    expect(interactiveWrapper).toHaveClass("pe-none");
+    expect(interactiveWrapper).toHaveClass("opacity-50");
+    expect(interactiveWrapper).toHaveAttribute("inert", "1");
+
+    expect(".pivot-defer-update").toHaveCount(0);
 });

@@ -82,7 +82,7 @@ test("Possible chart types are correct when switching from a spreadsheet to an o
     let optionValues = Array.from(options).map((option) => option.dataset.id);
     expect(optionValues.every((value) => value.startsWith("odoo_"))).toBe(true);
 
-    model.dispatch("SELECT_FIGURE", { id: "nonOdooChartId" });
+    model.dispatch("SELECT_FIGURE", { figureId: "nonOdooChartId" });
     await animationFrame();
 
     await contains(".o-type-selector").click();
@@ -185,7 +185,7 @@ test("Open chart odoo's data properties", async function () {
     const chartId = model.getters.getChartIds(sheetId)[0];
 
     // opening from a chart
-    model.dispatch("SELECT_FIGURE", { id: chartId });
+    model.dispatch("SELECT_FIGURE", { figureId: chartId });
     env.openSidePanel("ChartPanel");
     await animationFrame();
 
@@ -207,7 +207,7 @@ test("Update the chart domain from the side panel", async function () {
     const { model, env } = await createSpreadsheetFromGraphView();
     const sheetId = model.getters.getActiveSheetId();
     const chartId = model.getters.getChartIds(sheetId)[0];
-    model.dispatch("SELECT_FIGURE", { id: chartId });
+    model.dispatch("SELECT_FIGURE", { figureId: chartId });
     env.openSidePanel("ChartPanel");
     await animationFrame();
     const fixture = getFixture();

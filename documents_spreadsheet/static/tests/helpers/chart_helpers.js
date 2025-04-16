@@ -115,7 +115,7 @@ export async function createSpreadsheetFromGraphView(params = {}) {
 export async function openChartSidePanel(model, env) {
     const sheetId = model.getters.getActiveSheetId();
     const chartId = model.getters.getChartIds(sheetId)[0];
-    model.dispatch("SELECT_FIGURE", { id: chartId });
+    model.dispatch("SELECT_FIGURE", { figureId: chartId });
     env.openSidePanel("ChartPanel", {});
     await animationFrame();
 }

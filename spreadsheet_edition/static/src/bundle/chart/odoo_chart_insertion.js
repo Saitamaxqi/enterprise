@@ -34,8 +34,10 @@ export function insertChart(chartData) {
     return (model, stores) => {
         model.dispatch("CREATE_CHART", {
             sheetId: model.getters.getActiveSheetId(),
-            id: definition.id,
-            position: {
+            figureId: definition.id,
+            col: 0,
+            row: 0,
+            offset: {
                 x: 10,
                 y: 10,
             },

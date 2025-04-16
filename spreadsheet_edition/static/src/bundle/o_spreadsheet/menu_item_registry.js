@@ -95,7 +95,7 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
         name: env.model.getters.getOdooChartDisplayName(chartId),
         sequence: sequence++,
         execute: (env) => {
-            env.model.dispatch("SELECT_FIGURE", { id: chartId });
+            env.model.dispatch("SELECT_FIGURE", { figureId: chartId });
             env.openSidePanel("ChartPanel");
         },
         icon: "o-spreadsheet-Icon.INSERT_CHART",
