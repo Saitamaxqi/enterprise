@@ -83,7 +83,7 @@ class ResConfigSettings(models.TransientModel):
         the response. """
         self._validate_create_account_data()
         partner = self.company_id.partner_id
-        result = self.env['account.external.tax.mixin']._l10n_br_iap_create_account({
+        payload = {
             'subscriptionName': self.company_name,
             'corporateName': self.company_name,
             'tradeName': self.company_name,
@@ -96,7 +96,8 @@ class ResConfigSettings(models.TransientModel):
             'addressNumber': partner.street_number,
             'corporateContactEmailAddress': self.l10n_br_avatax_portal_email,
             'zipCode': partner.zip,
-        }, self.company_id)
+        }
+        result = self.env['account.external.tax.mixin']._l10n_br_iap_create_account({k: v or '' for k, v in payload.items()}, self.company_id)
 
         if 'avalara_api_id' in result:
             self.company_id.l10n_br_avatax_api_identifier = result['avalara_api_id']

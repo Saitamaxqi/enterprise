@@ -140,8 +140,8 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon):
     @classmethod
     @contextmanager
     def _capture_request_br(cls, return_value=None):
-        with patch(f'{AccountExternalTaxMixin.__module__}.AccountExternalTaxMixin._l10n_br_iap_request', return_value=return_value):
-            yield
+        with patch(f'{AccountExternalTaxMixin.__module__}.AccountExternalTaxMixin._l10n_br_iap_request', return_value=return_value) as mocked:
+            yield mocked
 
     @classmethod
     def _create_invoice_01_and_expected_response(cls):
@@ -429,6 +429,15 @@ class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
         with self._capture_request_br(return_value=return_value), \
              self.assertRaisesRegex(UserError, 'Login já utlizado'):
             self.settings.create_account()
+
+    def test_04_no_false(self):
+        """ Do not send "false" to the API for empty fields. It will populate "false" in some of the fields on Avatax's side
+        and cause issues during EDI. """
+        with self._capture_request_br(return_value={}) as mocked_request:
+            self.settings.create_account()
+
+        for k, v in mocked_request.call_args[0][1].items():
+            self.assertNotEqual(v, False, f"{k} was False instead of empty string")
 
 
 @tagged('external_l10n', 'external', '-at_install', 'post_install', '-standard')
