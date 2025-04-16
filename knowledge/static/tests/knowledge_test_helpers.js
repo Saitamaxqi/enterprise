@@ -1,11 +1,38 @@
 import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { defineModels, onRpc } from "@web/../tests/web_test_helpers";
+import { defineModels, mockService, onRpc } from "@web/../tests/web_test_helpers";
 import { KnowledgeArticle } from "./mock_server/mock_models/knowledge_article";
 import { KnowledgeArticleThread } from "./mock_server/mock_models/knowledge_article_thread";
 import { beforeEach, expect } from "@odoo/hoot";
 
 export function defineKnowledgeModels() {
     return defineModels(knowledgeModels);
+}
+
+export function mockKnowledgeCommentsService() {
+    mockService("knowledge.comments", {
+        createThread() {},
+        createThreadAndPost() {},
+        createVirtualThread() {},
+        deleteThread() {},
+        fetchMessages() {},
+        getCommentsState: () => ({
+            articleId: undefined,
+            activeThreadId: undefined,
+            shouldOpenActiveThread: false,
+            threadRecords: {},
+            threads: {},
+            disabledEditorThreads: {},
+            editorThreads: {},
+            displayMode: "handler",
+            focusedThreads: new Set(),
+            deletedThreadIds: new Set(),
+            hasFocus: () => false,
+        }),
+        loadRecords() {},
+        loadThreads() {},
+        setArticleId() {},
+        updateResolveState() {},
+    });
 }
 
 export function mockKnowledgePermissionPanelRpc() {

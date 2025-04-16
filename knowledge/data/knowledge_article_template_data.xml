@@ -52,7 +52,8 @@
                             'is_default': True,
                             'model_id': 'knowledge.article',
                             'domain': [('article_properties.priority', '=', 'high_priority')],
-                            'context': {}
+                            'context': {},
+                            'user_ids': []
                         }
                     },
                     'context': {
@@ -1619,7 +1620,8 @@
                             'is_default': True,
                             'model_id': 'knowledge.article',
                             'domain': [('article_properties.available', '=', True)],
-                            'context': {}
+                            'context': {},
+                            'user_ids': []
                         }
                     },
                     'context': {
