@@ -1030,8 +1030,8 @@ class L10n_BeDmfa(models.Model):
     error_message = fields.Char(store=True, compute='_compute_validation_state', string="Error Message")
 
     __unique = models.Constraint(
-        'unique (company_id, year, quarter)',
-        "Only one DMFA per year and per quarter is allowed. Another one already exists.",
+        'unique (company_id, year, quarter, file_type)',
+        "Only one DMFA per year/ quarter / declaration type is allowed. Another one already exists.",
     )
 
     @api.depends('reference', 'quarter', 'year')

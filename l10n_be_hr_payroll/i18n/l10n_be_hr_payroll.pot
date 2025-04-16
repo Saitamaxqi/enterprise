@@ -6408,8 +6408,8 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.constraint,message:l10n_be_hr_payroll.constraint_l10n_be_dmfa_L10n_BeDmfa__unique
 msgid ""
-"Only one DMFA per year and per quarter is allowed. Another one already "
-"exists."
+"Only one DMFA per year/ quarter / declaration type is allowed. Another one "
+"already exists."
 msgstr ""
 
 #. module: l10n_be_hr_payroll
