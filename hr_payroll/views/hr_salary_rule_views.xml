@@ -35,7 +35,7 @@
         <field name="name">hr.salary.rule.form</field>
         <field name="model">hr.salary.rule</field>
         <field name="arch" type="xml">
-            <form string="Salary Rules" js_class="hr_salary_rule_preview">
+            <form string="Salary Rules">
             <sheet>
                 <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                 <label for="name" string="Rule Name"/>
@@ -132,7 +132,16 @@
                                 <field name="italic"/>
                             </group>
                             <label for="note" string="Description" class="fw-bold text-900 opacity-100"/>
-                            <field name="note" placeholder="Provide a description that will be printed on the payslip."/>
+                            <field name="note"/>
+                        </group>
+                        <group name="preview" string="Preview">
+                            <group>
+                                <div>
+                                    <field name="name" readonly="1" class="fs-4" widget="formatted_text_preview"/>
+                                    <field name="note" readonly="1" class="text-truncate fs-6"
+                                        widget="formatted_text_preview" invisible="not note"/>
+                                </div>
+                            </group>
                         </group>
                     </page>
                 </notebook>

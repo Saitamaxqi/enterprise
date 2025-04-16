@@ -44,10 +44,7 @@ export class RuleFormRenderer extends FormRenderer {
 
     async saveChanges() {
         const contentElements = document.querySelectorAll('.o_preview');
-        if (this.props.record.isInEdition && contentElements.length) {
-            await this._applyStylesToElements(contentElements);
-            await this.props.record.save();
-        }
+        await this._applyStylesToElements(contentElements);
     }
 }
 
@@ -66,4 +63,4 @@ export const ruleFormView = {
     Compiler: RuleFormCompiler,
 };
 
-registry.category("views").add("hr_salary_rule_preview", ruleFormView);
+registry.category("views").add("hr_salary_rule_preview", formView);
