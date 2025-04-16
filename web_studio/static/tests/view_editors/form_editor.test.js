@@ -1324,3 +1324,26 @@ test("One2Many form datapoint doesn't contain the parent datapoint", async () =>
     await contains(".o_field_one2many").click();
     await contains('.o_web_studio_editX2Many[data-type="form"]').click();
 });
+
+test("'Add a button' is not shown when editing a list subview", async () => {
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
+                <sheet>
+                    <field name='display_name'/>
+                    <field name='product_ids'>
+                        <list>
+                            <field name='m2o_partner'/>
+                            <field name='coucou_id'/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        `,
+    });
+    expect(".o-web-studio-editor--add-button-action").toHaveCount(1);
+    await contains(".o_form_view .o_list_view").click();
+    await contains(".o_web_studio_editX2Many:contains(Edit List view)").click();
+    expect(".o-web-studio-editor--add-button-action").toHaveCount(0);
+});

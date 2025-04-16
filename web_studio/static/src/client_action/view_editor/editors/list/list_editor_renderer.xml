@@ -4,7 +4,7 @@
   <t t-name="web_studio.ListEditorRenderer" t-inherit="web.ListRenderer" >
 
     <xpath expr="//*[@t-ref='table']" position="before">
-      <SelectionHeaderButtons headerButtons="props.archInfo.headerButtons" />
+      <SelectionHeaderButtons t-if="!this.env.viewEditorModel.isEditingSubview" headerButtons="props.archInfo.headerButtons" />
     </xpath>
 
     <xpath expr="//*[@t-ref='table']" position="attributes">
