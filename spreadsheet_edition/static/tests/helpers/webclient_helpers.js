@@ -4,12 +4,9 @@ import { makeFakeSpreadsheetService } from "@spreadsheet_edition/../tests/helper
 import { InsertListSpreadsheetMenu } from "@spreadsheet_edition/assets/list_view/insert_list_spreadsheet_menu_owl";
 import { AbstractSpreadsheetAction } from "@spreadsheet_edition/bundle/actions/abstract_spreadsheet_action";
 import { mockService, patchWithCleanup } from "@web/../tests/web_test_helpers";
-import { loadJS } from "@web/core/assets";
 import { registry } from "@web/core/registry";
 
 export async function prepareWebClientForSpreadsheet() {
-    await loadJS("/web/static/lib/Chart/Chart.js");
-    await loadJS("/spreadsheet/static/lib/chartjs-chart-geo/chartjs-chart-geo.js");
     mockService("spreadsheet_collaborative", makeFakeSpreadsheetService());
 
     registry.category("favoriteMenu").add(
