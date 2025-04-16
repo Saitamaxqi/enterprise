@@ -4,7 +4,7 @@ import { PosStore } from "@point_of_sale/app/services/pos_store";
 patch(PosStore.prototype, {
     async manageBookings() {
         this.orderToTransferUuid = null;
-        this.showScreen("ActionScreen", { actionName: "ManageBookings" });
+        this.navigate("ActionScreen", { actionName: "manage-booking" });
         await this.action.doAction(
             await this.data.call("calendar.event", "action_open_booking_gantt_view", [false], {
                 context: { appointment_type_id: this.config.raw.appointment_type_id },

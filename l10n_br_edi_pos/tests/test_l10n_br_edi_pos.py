@@ -354,7 +354,7 @@ class TestUi(TestL10nBREDIPOSCommon, TestPointOfSaleHttpCommon):
             ]
         ):
             self.start_tour(
-                "/pos/ui?config_id=%d" % self.main_pos_config.id,
+                "/pos/ui/%d" % self.main_pos_config.id,
                 "l10n_br_edi_pos.tour_anonymous_order",
                 login=self.env.user.login,
             )
@@ -367,5 +367,5 @@ class TestUi(TestL10nBREDIPOSCommon, TestPointOfSaleHttpCommon):
             ]
         ):
             self.start_tour(
-                "/pos/ui?config_id=%d" % self.main_pos_config.id, "l10n_br_edi_pos.tour_customer_order", login=self.env.user.login
+                "/pos/ui/%d" % self.main_pos_config.id, "l10n_br_edi_pos.tour_customer_order", login=self.env.user.login
             )

@@ -2,7 +2,6 @@ import { patch } from "@web/core/utils/patch";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
-import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { DeviceController } from "@iot_base/device_controller";
 import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
 
@@ -60,7 +59,7 @@ patch(PosStore.prototype, {
 
     showScreen(name, props, newOrder = false) {
         if (
-            this.mainScreen.component === PaymentScreen &&
+            this.router.state.current === "PaymentScreen" &&
             this.getOrder().payment_ids.some(
                 (pl) =>
                     pl.payment_method_id.use_payment_terminal === "worldline" &&

@@ -149,5 +149,5 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
         current_session.action_pos_session_closing_control()
 
         self.main_pos_config.with_user(self.user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'pos_settle_account_due', login="accountman")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'pos_settle_account_due', login="accountman")
         self.assertEqual(self.partner_test_1.total_due, 0)

@@ -68,10 +68,10 @@ patch(TicketScreen.prototype, {
             filter: filterState,
         };
         this.env.services.ui.block();
-        this._setOrder(this._getEmptyOrder(false));
+        this.setOrder(this._getEmptyOrder(false));
         this.closeTicketScreen();
         setTimeout(() => {
-            this.pos.showScreen("TicketScreen", { stateOverride, upState });
+            this.pos.navigate("TicketScreen", { stateOverride, upState });
             this.env.services.ui.unblock();
         }, 300);
     },

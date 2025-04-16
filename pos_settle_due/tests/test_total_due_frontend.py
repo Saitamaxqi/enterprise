@@ -19,7 +19,7 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
 
         self.main_pos_config.write({'payment_method_ids': [(6, 0, self.customer_account_payment_method.ids)]})
         self.main_pos_config.open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'pos_settle_account_due_update_instantly', login="accountman")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'pos_settle_account_due_update_instantly', login="accountman")
 
     def test_settle_due_account_button(self):
         """ Test that an invoice can be created after the session is closed """
@@ -64,7 +64,7 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
         order_payment.with_context(**payment_context).check()
         current_session.close_session_from_ui()
         self.main_pos_config.open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'SettleDueButtonPresent', login="accountman")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'SettleDueButtonPresent', login="accountman")
 
     def test_settle_due_search_more(self):
         self.customer_account_payment_method = self.env['pos.payment.method'].create({
@@ -118,4 +118,4 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
         self.main_pos_config.with_user(self.user).open_ui()
         with patch.object(PosConfig, 'get_limited_partners_loading', mocked_get_limited_partners_loading):
             self.main_pos_config.open_ui()
-            self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'SettleDueAmountMoreCustomers', login="pos_user")
+            self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'SettleDueAmountMoreCustomers', login="pos_user")

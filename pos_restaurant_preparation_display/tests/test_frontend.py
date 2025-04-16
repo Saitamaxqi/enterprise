@@ -128,7 +128,7 @@ class TestUi(test_frontend.TestFrontendCommon):
         })
         self.pos_config.printer_ids.unlink()
         self.pos_config.with_user(self.pos_user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'PreparationDisplayPaymentNotCancelDisplayTour', login="pos_user")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'PreparationDisplayPaymentNotCancelDisplayTour', login="pos_user")
         pos_order = self.env['pos.order'].search([], limit=1)
         pdis_order = self.env['pos.prep.order'].search(
             [('pos_order_id', '=', pos_order.id)]

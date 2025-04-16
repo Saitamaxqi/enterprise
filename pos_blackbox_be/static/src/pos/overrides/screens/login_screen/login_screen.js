@@ -11,7 +11,7 @@ patch(LoginScreen.prototype, {
             !this.pos.shouldShowOpeningControl() &&
             this.pos.useBlackBoxBe() &&
             !this.pos.userSessionStatus &&
-            this.pos.mainScreen.component != LoginScreen
+            this.pos.router.state.current != "LoginScreen"
         ) {
             await this.pos.clock(true);
         }

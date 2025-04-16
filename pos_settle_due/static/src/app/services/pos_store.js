@@ -141,7 +141,8 @@ patch(PosStore.prototype, {
                 newOrder.is_settling_account = true;
                 payment.setAmount(amount);
                 newOrder.setPartner(partner);
-                this.showScreen("PaymentScreen", {
+                newOrder.is_settling_account = true;
+                this.navigate("PaymentScreen", {
                     orderUuid: this.selectedOrderUuid,
                     isDepositOrder: true,
                 });

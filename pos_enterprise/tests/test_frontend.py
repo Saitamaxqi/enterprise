@@ -50,7 +50,7 @@ class TestUi(TestPointOfSaleHttpCommon):
         })
 
         self.main_pos_config.with_user(self.pos_user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'PreparationDisplayPrinterTour', login="pos_user")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'PreparationDisplayPrinterTour', login="pos_user")
 
         order = self.env['pos.order'].search([('amount_paid', '=', 5.28)], limit=1)
         preparation_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)
@@ -81,7 +81,7 @@ class TestUi(TestPointOfSaleHttpCommon):
         })
 
         self.main_pos_config.with_user(self.pos_user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'PreparationDisplayTourConfigurableProduct', login="pos_user")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'PreparationDisplayTourConfigurableProduct', login="pos_user")
 
         order = self.env['pos.order'].search([('amount_paid', '=', 11.0)], limit=1)
         preparation_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)

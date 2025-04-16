@@ -24,16 +24,15 @@ export class DeliveryButton extends Component {
             },
             filter: filter,
         };
-        if (this.pos.mainScreen.component?.name == "TicketScreen") {
+        if (this.pos.router.state.current == "TicketScreen") {
             this.env.services.ui.block();
             this.pos.ticket_screen_mobile_pane = "left";
-            this.pos.closeScreen();
             setTimeout(() => {
-                this.pos.showScreen("TicketScreen", { stateOverride: stateOverride, upState });
+                this.pos.navigate("TicketScreen", { stateOverride: stateOverride, upState });
                 this.env.services.ui.unblock();
             }, 300);
             return;
         }
-        this.pos.showScreen("TicketScreen", { stateOverride: stateOverride, upState });
+        this.pos.navigate("TicketScreen", { stateOverride: stateOverride, upState });
     }
 }

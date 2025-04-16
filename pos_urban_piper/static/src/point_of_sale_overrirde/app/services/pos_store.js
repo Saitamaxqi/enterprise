@@ -61,15 +61,16 @@ patch(PosStore.prototype, {
                             filter: "ACTIVE_ORDERS",
                         };
                         this.setOrder(this.deliveryOrderNotification);
-                        if (this.mainScreen.component?.name == "TicketScreen") {
-                            this.closeScreen();
+                        if (this.router.state.current == "TicketScreen") {
+                            const next = this.defaultPage;
+                            this.navigate(next.page, next.params);
                             setTimeout(() => {
-                                this.showScreen("TicketScreen", { stateOverride });
+                                this.navigate("TicketScreen", { stateOverride });
                                 this.env.services.ui.unblock();
                             }, 300);
                             return;
                         }
-                        return this.showScreen("TicketScreen", { stateOverride });
+                        return this.navigate("TicketScreen", { stateOverride });
                     },
                 },
             ],
@@ -128,7 +129,7 @@ patch(PosStore.prototype, {
     async goToBack() {
         this.addPendingOrder([this.getOrder().id]);
         await this.syncAllOrders();
-        this.showScreen("TicketScreen");
+        this.navigate("TicketScreen");
         if (this.getOrder().delivery_status !== "placed") {
             try {
                 await this.sendOrderInPreparation(this.getOrder());

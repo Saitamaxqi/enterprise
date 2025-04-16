@@ -3,8 +3,8 @@ import { patch } from "@web/core/utils/patch";
 
 patch(Navbar.prototype, {
     get mainButton() {
-        return this.pos.mainScreen.component.name === "ActionScreen" &&
-            this.pos.mainScreen.props.actionName === "ManageBookings"
+        return this.pos.router.state.current === "ActionScreen" &&
+            this.pos.router.state.params.actionName === "manage-booking"
             ? "booking"
             : super.mainButton;
     },

@@ -92,7 +92,8 @@ patch(PosStore.prototype, {
     removeClockOrder(order) {
         this.removeOrder(order, false);
         this.selectedOrderUuid = null;
-        this.showScreen(this.defaultScreen);
+        const screen = this.defaultPage;
+        this.pos.navigate(screen.page, screen.params);
     },
     removeEmptyOrders() {
         const orders = this.models["pos.order"].filter((o) => !o.finalized);

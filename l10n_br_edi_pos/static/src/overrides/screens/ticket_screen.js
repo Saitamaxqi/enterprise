@@ -21,7 +21,7 @@ patch(TicketScreen.prototype, {
     postRefund(destinationOrder) {
         if (this.pos.config.l10n_br_is_nfce) {
             destinationOrder.to_invoice = true;
-            this.pos.showScreen("PaymentScreen", { orderUuid: destinationOrder.uuid });
+            this.pos.navigate("PaymentScreen", { orderUuid: destinationOrder.uuid });
 
             // A partner will be required for refunds. Prompt the user to select one.
             if (!destinationOrder.getPartner()) {

@@ -32,7 +32,7 @@ registry.category("web_tour.tours").add("OrderFlowTour", {
             UrbanPiper.orderButtonClick("Mark as ready"),
             UrbanPiper.fetchDeliveryData(),
             UrbanPiper.orderHasText("001", "Food Ready"),
-            UrbanPiper.onDropdownStatus("Ongoing"),
+            TicketScreen.selectFilter("Active"),
             TicketScreen.selectOrder("002"),
             UrbanPiper.orderButtonClick("Mark as ready"),
             UrbanPiper.fetchDeliveryData(),

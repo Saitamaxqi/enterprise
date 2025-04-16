@@ -80,13 +80,13 @@ class TestFiskalyPoS(TestFrontend):
 
     def test_fiskaly_basic_order(self):
         self.main_pos_config.with_user(self.pos_user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'FiskalyTour', login="pos_user")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'FiskalyTour', login="pos_user")
 
     def test_fiskaly_tss_payload(self):
         # Change the payment method name to anything else than "Cash"
         self.main_pos_config.payment_method_ids.filtered(lambda p: p.type == 'cash').name = "Random Name"
         self.main_pos_config.with_user(self.pos_user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_fiskaly_tss_payload', login="pos_user")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'test_fiskaly_tss_payload', login="pos_user")
 
     def test_fiskaly_receipt_printer(self):
         """This test make sure that the receipt is printed only once.
@@ -97,5 +97,5 @@ class TestFiskalyPoS(TestFrontend):
             "epson_printer_ip": "127.0.0.1:8069/receipt_receiver",
         })
         self.main_pos_config.with_user(self.pos_user).open_ui()
-        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_fiskaly_receipt_printer', login="pos_user")
+        self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'test_fiskaly_receipt_printer', login="pos_user")
         self.assertEqual(self.received_receipt_count, 1)
