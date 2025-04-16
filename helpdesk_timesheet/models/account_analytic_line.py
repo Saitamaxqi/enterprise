@@ -12,7 +12,7 @@ class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
 
     helpdesk_ticket_id = fields.Many2one(
-        'helpdesk.ticket', 'Helpdesk Ticket', index='btree_not_null',
+        'helpdesk.ticket', 'Ticket', index='btree_not_null',
         compute='_compute_helpdesk_ticket_id', store=True, readonly=False,
         domain="[('company_id', '=', company_id), ('project_id', '=?', project_id)]")
     project_id = fields.Many2one(inverse="_inverse_project_id")

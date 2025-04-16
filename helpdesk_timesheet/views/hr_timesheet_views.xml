@@ -22,7 +22,7 @@
             </xpath>
             <xpath expr="//field[@name='task_id']" position="after">
                 <field name="has_helpdesk_team" column_invisible="True"/>
-                <field name="helpdesk_ticket_id" string="Ticket"
+                <field name="helpdesk_ticket_id"
                     invisible="not has_helpdesk_team or task_id"
                     readonly="readonly_timesheet"
                     optional="hide" groups="helpdesk_timesheet.group_use_helpdesk_timesheet"
@@ -66,7 +66,7 @@
         <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_search"/>
         <field name="arch" type="xml">
             <xpath expr="field[@name='task_id']" position="after">
-                <field name="helpdesk_ticket_id" string="Ticket" groups="helpdesk_timesheet.group_use_helpdesk_timesheet"/>
+                <field name="helpdesk_ticket_id" groups="helpdesk_timesheet.group_use_helpdesk_timesheet"/>
             </xpath>
             <xpath expr="//filter[@name='groupby_task']" position="after">
                 <filter string="Ticket" name="groupby_ticket" context="{'group_by': 'helpdesk_ticket_id'}"
@@ -83,7 +83,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="after">
                 <field name="display_task" invisible="1"/>
-                <field name="helpdesk_ticket_id" string="Ticket"
+                <field name="helpdesk_ticket_id"
                     invisible="display_task"
                     readonly="readonly_timesheet"
                     context="{'search_default_my_ticket': True, 'search_default_is_open': True, 'search_view_ref': 'helpdesk.helpdesk_ticket_view_search_analysis', 'default_project_id': project_id}"
