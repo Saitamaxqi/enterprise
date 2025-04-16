@@ -14,14 +14,29 @@ registry.category("web_tour.tours").add("spreadsheet_save_multipage", {
             content: "check if the folders are loaded",
         },
         {
-            trigger: '.o_search_panel_category_value:contains("Company).o_toggle_fold',
-            content: "Select parent folder",
+            trigger: ".o_searchview_input",
+            content: "click on search",
+            run: "click",
+        },
+        {
+            trigger: ".o_searchview_input",
+            content: "fill in searchbar",
+            run: `edit Test folder`,
+        },
+        {
+            content: "find the right folder",
+            trigger: ".o_searchview_autocomplete span:contains(Test folder)",
             run: "click",
         },
         {
             trigger: '.o_kanban_record:contains("Test folder")',
             content: "Open the test folder",
             run: "dblclick",
+        },
+        {
+            trigger: ".o_searchview_facet .o_facet_remove",
+            content: "remove filter",
+            run: "click",
         },
         {
             trigger: ".o_cp_buttons:contains('New') .dropdown-toggle",

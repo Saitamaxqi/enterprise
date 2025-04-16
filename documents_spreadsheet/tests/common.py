@@ -26,6 +26,7 @@ class SpreadsheetTestCommon(SpreadsheetTestCase):
             "access_via_link": "none",
             "owner_id": False,
             "folder_id": False,
+            "sequence": -10,
         })
         cls.spreadsheet_user = new_test_user(
             cls.env, login="spreadsheetDude", groups="documents.group_documents_user"
