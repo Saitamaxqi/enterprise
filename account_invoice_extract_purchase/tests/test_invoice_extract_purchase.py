@@ -177,5 +177,5 @@ class TestInvoiceExtractPurchase(AccountTestInvoicingCommon, TestExtractMixin):
         self.assertEqual(invoice.amount_untaxed, 300)
         self.assertEqual(invoice.amount_tax, 0)
         self.assertEqual(invoice.partner_id, self.vendor)
-        self.assertEqual(invoice.ref, 'INV1234')
+        self.assertEqual(invoice.ref, 'INV0001')
         self.assertEqual(invoice.invoice_line_ids.mapped('product_id'), self.product1 | self.product2 | self.product3)
