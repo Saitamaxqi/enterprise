@@ -28,9 +28,13 @@
         ],
         'web.assets_backend': [
             'spreadsheet_edition/static/src/**/*.scss',
+            ('remove', 'spreadsheet_edition/static/src/**/*.dark.scss'),
             'spreadsheet_edition/static/src/assets/**/*',
             ('remove', 'spreadsheet_edition/static/src/assets/graph_view/**'),
             ('remove', 'spreadsheet_edition/static/src/assets/pivot_view/**'),
+        ],
+        'web.assets_web_dark': [
+            'spreadsheet_edition/static/src/**/*.dark.scss',
         ],
         'web.assets_backend_lazy': [
             'spreadsheet_edition/static/src/assets/graph_view/**',

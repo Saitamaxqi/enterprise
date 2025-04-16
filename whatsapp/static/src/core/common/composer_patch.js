@@ -19,6 +19,15 @@ patch(Composer.prototype, {
         );
         onWillDestroy(() => clearTimeout(this.composerDisableCheckTimeout));
     },
+    get allowUpload() {
+        if (
+            this.thread?.channel_type === "whatsapp" &&
+            this.props.composer.attachments.length > 0
+        ) {
+            return false;
+        }
+        return super.allowUpload;
+    },
     get areAllActionsDisabled() {
         if (
             this.thread?.channel_type === "whatsapp" &&

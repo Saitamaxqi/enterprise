@@ -33,6 +33,7 @@
 }
 
 .o-thread-popover {
+    width: $o-mail-ChatWindow-width;
     overflow-y: auto;
 
     .o-thread-highlight, .o-cell-thread, .o-thread-start-composer {
@@ -40,9 +41,11 @@
         width: 100%;
     }
 
+    .o-cell-thread, .o-thread-start-composer {
+        background-color: white;
+    }
+
     .o-thread-highlight {
-        &, .o-cell-thread {
-            background-color: #E8EDFF;
-        }
+        background-color: #E8EDFF;
     }
 }

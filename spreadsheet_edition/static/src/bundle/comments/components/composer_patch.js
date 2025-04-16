@@ -10,10 +10,19 @@ patch(Composer.prototype, {
      * @override
      */
     get SEND_TEXT() {
-        if (this.props.composer?.thread?.model === "spreadsheet.cell.thread") {
-            return _t("Send");
-        } else {
-            return super.SEND_TEXT;
-        }
+        return this._isSpreadsheetCellThread() ? _t("Send") : super.SEND_TEXT;
+    },
+
+    get allowUpload() {
+        return this._isSpreadsheetCellThread() ? false : super.allowUpload;
+    },
+
+    /**
+     * Utility to check if the current thread is a spreadsheet cell thread.
+     * @private
+     */
+    _isSpreadsheetCellThread() {
+        const threadModel = (this.thread ?? this.message?.thread)?.model;
+        return threadModel === "spreadsheet.cell.thread";
     },
 });

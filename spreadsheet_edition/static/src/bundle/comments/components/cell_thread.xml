@@ -22,9 +22,7 @@
                 mode="'extended'"
                 type="'note'"
                 placeholder.translate="Add a comment..."
-                allowUpload="false"
                 showFullComposer="false"
-                autofocus="props.autofocus+1"
             />
         </t>
     </div>

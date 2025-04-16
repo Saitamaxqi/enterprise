@@ -64,7 +64,7 @@ cellPopoverRegistry.add("OdooCellComment", {
             props: {
                 threadId: thread.threadId,
                 position,
-                focused: true,
+                isInteractive: true,
             },
             isOpen: true,
             positioning: "TopRight",
@@ -87,7 +87,7 @@ cellPopoverRegistry.add("OdooCellComment", {
             props: {
                 threadId: threads.at(-1).threadId,
                 position,
-                focused: false,
+                isInteractive: false,
             },
             isOpen: true,
             positioning: "TopRight",

@@ -11,9 +11,7 @@ export class CellThread extends Component {
     static props = {
         threadId: Number,
         edit: Boolean,
-        autofocus: { type: Number, optional: true },
     };
-    static defaultProps = { autofocus: 0 };
     static threadModel = "spreadsheet.cell.thread";
 
     setup() {

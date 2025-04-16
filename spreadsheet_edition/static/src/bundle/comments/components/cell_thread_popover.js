@@ -21,7 +21,7 @@ export class CellThreadPopover extends Component {
             optional: true,
             type: Function,
         },
-        focused: Boolean,
+        isInteractive: Boolean,
         position: Object,
     };
 
@@ -50,7 +50,7 @@ export class CellThreadPopover extends Component {
     }
 
     onFocused() {
-        if (this.props.threadId && !this.props.focused) {
+        if (this.props.threadId && !this.props.isInteractive) {
             this.commentsStore.openCommentThread(this.props.threadId);
         }
     }

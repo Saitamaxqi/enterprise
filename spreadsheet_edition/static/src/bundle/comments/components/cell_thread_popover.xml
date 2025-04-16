@@ -8,8 +8,8 @@
     t-on-click.prevent="">
     <!-- the prevent on click is necessary because we cannot benefit from the scroller service event listener -->
     <t t-if="state.thread.id">
-        <div t-att-class="{'o-thread-highlight': !props.focused}">
-            <CellThread threadId="state.thread.id" t-key="state.thread.localId" edit="props.focused" />
+        <div t-att-class="{'o-thread-highlight': !props.isInteractive}">
+            <CellThread threadId="state.thread.id" t-key="state.thread.localId" edit="props.isInteractive" />
         </div>
     </t>
     <t t-else="1">
@@ -20,13 +20,12 @@
                 type="'note'"
                 mode="'extended'"
                 showFullComposer="false"
-                allowUpload="false"
                 onPostCallback.bind="insertNewThread"
                 autofocus="1"
             />
         </div>
     </t>
-    <div t-if="props.focused" class="o-thread-highlight">
+    <div t-if="props.isInteractive" class="o-thread-highlight">
         <button
             class="p-2 btn text-primary pointer-event"
             t-on-click="() => this.showAllComments()">Open all comments</button>
