@@ -59,12 +59,11 @@ class PurchaseOrder(models.Model):
             # read it as sudo, because inter-compagny user can not have the access right on PO
             sale_order_data = rec.sudo()._prepare_sale_order_data(rec.name, company_partner, company, rec.dest_address_id.id or False)
 
-            inter_user = self.env['res.users'].sudo().browse(intercompany_uid)
             # lines are browse as sudo to access all data required to be copied on SO line (mainly for company dependent field like taxes)
             for line in rec.order_line.sudo():
                 sale_order_data['order_line'] += [(0, 0, rec._prepare_sale_order_line_data(line, company))]
             sale_order = self.env['sale.order'].with_context(
-                allowed_company_ids=inter_user.company_ids.ids,
+                allowed_company_ids=company.ids,
                 in_rental_app=False,  # avoid creating rental orders if PO is accessed via Rental
             ).with_user(intercompany_uid).create(sale_order_data)
             msg = _("Automatically generated from %(origin)s of company %(company)s.", origin=self.name, company=rec.company_id.name)

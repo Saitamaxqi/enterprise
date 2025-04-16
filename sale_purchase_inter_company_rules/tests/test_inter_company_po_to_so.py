@@ -129,3 +129,40 @@ class TestInterCompanyPurchaseToSale(TestInterCompanyRulesCommonSOPO):
         # Find related sale order based on client order reference.
         sale_order = self.env['sale.order'].search([('client_order_ref', '=', purchase_order.name)], limit=1)
         self.assertTrue((not sale_order), "Sale order created for company A from Purchase order of company B without configuration")
+
+    def test_06_inter_company_purchase_order_from_so_with_sales_team(self):
+        """
+        Check that the default sales team used on the automatically generated SO
+        belongs to the appropriate company.
+        """
+        # Automatically generate SO in COMP B if a PO is confirmed in COMP A for COMP B
+        self.company_b.update({
+             'intercompany_generate_sales_orders': True,
+        })
+        # Archive all the sales team and create a sales team for COMP A but not for COMP B
+        self.env['crm.team'].search([]).action_archive()
+        self.env['crm.team'].create({
+            'name': 'Team A',
+            'company_id': self.company_a.id,
+        })
+        # Generate purchase order in company A for company B
+        purchase_order = self.generate_purchase_order(self.company_a, self.company_b.partner_id)
+        # Check sale order is created in company B ( for company A )
+        sale_order = self.env['sale.order'].with_company(self.company_b).search([('client_order_ref', '=', purchase_order.name)], limit=1)
+        self.assertRecordValues(sale_order, [{
+            'company_id': self.company_b.id,
+            'team_id': False,
+        }])
+        # Create a sales Team for COMP B, proceed the same steps and check that it has been set as a default value
+        valid_sales_team = self.env['crm.team'].create({
+            'name': 'Team B',
+            'company_id': self.company_b.id,
+        })
+        # Generate purchase order in company A for company B
+        purchase_order_2 = self.generate_purchase_order(self.company_a, self.company_b.partner_id)
+        # Check sale order is created in company B ( for company A )
+        sale_order = self.env['sale.order'].with_company(self.company_b).search([('client_order_ref', '=', purchase_order_2.name)], limit=1)
+        self.assertRecordValues(sale_order, [{
+            'company_id': self.company_b.id,
+            'team_id': valid_sales_team.id,
+        }])
