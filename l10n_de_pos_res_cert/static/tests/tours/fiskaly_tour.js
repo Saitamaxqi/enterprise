@@ -84,7 +84,7 @@ registry.category("web_tour.tours").add("test_fiskaly_receipt_printer", {
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Cash"),
             PaymentScreen.clickValidate(),
-            Dialog.is({ title: "Connection to the printer failed" }),
+            Dialog.is({ title: "Printing Failed" }),
             Dialog.cancel(),
         ].flat(),
 });
