@@ -30,7 +30,6 @@ class PosConfig(models.Model):
             self._load_preparation_display_demo_data()
         return res
 
-    def _load_restaurant_demo_data(self):
-        super()._load_restaurant_demo_data()
+    def _load_restaurant_demo_data(self, with_demo_data=True):
+        super()._load_restaurant_demo_data(with_demo_data)
         self._load_preparation_display_demo_data()
-
