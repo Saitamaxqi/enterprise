@@ -8,6 +8,7 @@
         <field name="load_more_limit" eval="80"/>
         <field name="root_report_id" ref="account_reports.partner_ledger_report"/>
         <field name="custom_handler_model_id" ref="model_account_followup_report_handler"/>
+        <field name="filter_account_type">receivable</field>
         <field name="column_ids">
             <record id="followup_report_invoicing_date" model="account.report.column">
                 <field name="name">Invoice Date</field>

@@ -19,7 +19,7 @@ class AccountFollowupCustomHandler(models.AbstractModel):
             options['unreconciled'] = True
             # by default, select only the 'sales' journals
             for journal in options['journals']:
-                journal['selected'] = journal.get('type') == 'sale' # dividers don't get a type
+                journal['selected'] = journal.get('type') != 'general'  # dividers don't get a type
             # Since we forced the selection of some journal, we need to recompute the filter label
             report._init_options_journals_names(options, previous_options=previous_options)
 
