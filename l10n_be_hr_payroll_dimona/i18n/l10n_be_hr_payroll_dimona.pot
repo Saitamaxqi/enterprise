@@ -299,7 +299,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
-msgid "No Certificate definer on the Payroll Configuration"
+msgid "No Certificate defined on the Payroll Configuration"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona

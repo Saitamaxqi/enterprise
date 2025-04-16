@@ -5914,7 +5914,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_dmfa.py:0
-msgid "No Certificate definer on the Payroll Configuration"
+msgid "No Certificate defined on the Payroll Configuration"
 msgstr ""
 
 #. module: l10n_be_hr_payroll

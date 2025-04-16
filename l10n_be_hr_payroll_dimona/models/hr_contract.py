@@ -196,7 +196,7 @@ class HrContract(models.Model):
             raise UserError(_('No expeditor number defined on the payroll settings.'))
         certificate_sudo = self.company_id.sudo().onss_certificate_id
         if not certificate_sudo:
-            raise UserError(_('No Certificate definer on the Payroll Configuration'))
+            raise UserError(_('No Certificate defined on the Payroll Configuration'))
         unique_id = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(20)])
         now = int(time.time())
         payload = {

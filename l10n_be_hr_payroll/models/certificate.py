@@ -22,12 +22,16 @@ class CertificateCertificate(models.Model):
 
         cert = x509.load_pem_x509_certificate(base64.b64decode(self.pem_certificate))
         key = serialization.load_pem_private_key(base64.b64decode(self.private_key_id.pem_key), None)
-        options = [pkcs7.PKCS7Options.DetachedSignature]
+        options = [
+            pkcs7.PKCS7Options.DetachedSignature,
+        ]
         signature = pkcs7.PKCS7SignatureBuilder().set_data(
             message
         ).add_signer(
             cert, key, hashes.SHA256()
-        )._sign(
+        ).sign(
             serialization.Encoding.PEM, options
         )
+        # Remove -----BEGIN PKCS7-----, -----END PKCS7----- and final new line
+        signature = (b'\r\n').join(signature.split(b'\n')[1:-2]) + b'\r\n'
         return signature

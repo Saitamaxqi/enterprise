@@ -1057,7 +1057,7 @@ class L10n_BeDmfa(models.Model):
                 dmfa.validation_state = 'normal'
                 dmfa.error_message = False
             else:
-                xml_root = etree.fromstring(base64.b64decode(dmfa.dmfa_xml))
+                xml_root = etree.fromstring(base64.b64decode(dmfa.with_context(bin_size=False).dmfa_xml))
                 try:
                     schema.assertValid(xml_root)
                     dmfa.validation_state = 'done'
@@ -1139,7 +1139,8 @@ class L10n_BeDmfa(models.Model):
         # Prettify xml string
         root = etree.fromstring(xml_str, parser=etree.XMLParser(remove_blank_text=True))
         xml_formatted_str = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
-
+        # Yep, shame.
+        xml_formatted_str = xml_formatted_str.replace(b'\n', b'\r\n')
         self.dmfa_xml = base64.encodebytes(xml_formatted_str)
 
         if self.env.context.get('dmfa_skip_signature'):
@@ -1147,18 +1148,15 @@ class L10n_BeDmfa(models.Model):
 
         # Signature File
         # ==============
-        if self.file_type != 'R':
+        if self.file_type == 'S':
             self.dmfa_signature = False
         else:
             certificate_sudo = self.company_id.sudo().onss_certificate_id
             if not certificate_sudo:
-                raise UserError(_('No Certificate definer on the Payroll Configuration'))
+                raise UserError(_('No Certificate defined on the Payroll Configuration'))
 
-            sign = certificate_sudo._decode_certificate_for_be_dmfa_xml(self.dmfa_xml)
-
-            # Remove -----BEGIN PKCS7-----, -----END PKCS7----- and final new line
-            sign = (b'\n').join(sign.split(b'\n')[1:-2])
-            self.dmfa_signature = sign
+            sign = certificate_sudo._decode_certificate_for_be_dmfa_xml(xml_formatted_str)
+            self.dmfa_signature = base64.b64encode(sign)
 
         # GO File
         # =======
