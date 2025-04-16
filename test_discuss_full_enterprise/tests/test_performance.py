@@ -5,7 +5,8 @@ from odoo.addons.test_discuss_full.tests.test_performance import TestDiscussFull
 # Queries for _query_count_init_store:
 #   1: _get_default_voip_provider when creating res.users.settings
 #   1: voipConfig: missedCalls
-TestDiscussFullPerformance._query_count_init_store += 2
+#   1: voipConfig: search callActivityTypeId
+TestDiscussFullPerformance._query_count_init_store += 3
 TestDiscussFullPerformance._query_count_init_messaging += 0
 TestDiscussFullPerformance._query_count_discuss_channels += 0
 
@@ -22,6 +23,7 @@ def _get_init_store_data_result(self):
             "hasDocumentsUserGroup": False,
             "helpdesk_livechat_active": False,
             "voipConfig": {
+                "callActivityTypeId": self.env.ref("mail.mail_activity_data_call").id,
                 "mode": "demo",
                 "missedCalls": 0,
                 "pbxAddress": "localhost",
@@ -52,6 +54,7 @@ TestDiscussFullPerformance._get_init_store_data_result = _get_init_store_data_re
 
 old_expected_result_for_channel = TestDiscussFullPerformance._expected_result_for_channel
 
+
 def _expected_result_for_channel(self, channel):
     result = old_expected_result_for_channel(self, channel)
     result.update(
@@ -60,5 +63,6 @@ def _expected_result_for_channel(self, channel):
         whatsapp_partner_id=False
     )
     return result
+
 
 TestDiscussFullPerformance._expected_result_for_channel = _expected_result_for_channel

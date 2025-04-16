@@ -16,6 +16,7 @@ import { escape } from "@web/core/utils/strings";
 
 export class Voip {
     bus = new EventBus();
+    callActivityTypeId;
     error;
     /**
      * Either “demo” or “prod”. In demo mode, phone calls are simulated in the
@@ -60,7 +61,7 @@ export class Voip {
         this.busService.subscribe("refresh_call_activities", () => {
             this.fetchTodayCallActivities();
         });
-        document.body.addEventListener("beforeunload", this._onBeforeUnload.bind(this));
+        window.addEventListener("beforeunload", this._onBeforeUnload.bind(this));
         return reactive(this);
     }
 
@@ -86,7 +87,7 @@ export class Voip {
     }
 
     get calls() {
-        return this.store.Call.records;
+        return this.store["voip.call"].records;
     }
 
     /** @returns {boolean} */
@@ -143,49 +144,62 @@ export class Voip {
         );
     }
 
-    async fetchContacts(searchTerms = "", offset = 0, limit = 13) {
+    async fetchContacts(searchTerms = "", offset = 0, limit = 13, t9Search = false) {
         if (this._contactRpc) {
             this._contactRpc.abort();
         }
         this._contactRpc = this.orm.call("res.partner", "get_contacts", [], {
             offset,
             limit,
-            search_terms: searchTerms,
+            search_terms: searchTerms.trim(),
+            t9_search: t9Search,
         });
         try {
-            const contactsData = await this._contactRpc;
-            contactsData.forEach((contactData) =>
-                this.store.Persona.insert({ ...contactData, type: "partner" })
-            );
+            const data = await this._contactRpc;
+            this.store.insert(data);
             this._contactRpc = null;
         } catch (error) {
             if (error.event?.type === "abort") {
                 error.event.preventDefault();
-            } else {
-                this._contactRpc = null;
+                return;
             }
+            if (error.message?.toLowerCase().includes("abort")) {
+                // Unreliable, message content varies between browsers.
+                return;
+            }
+            this._contactRpc = null;
+            // Don't throw, it could still be an abort error that wasn't caught
+            // by the conditions above.
+            console.error(error);
         }
     }
 
-    async fetchRecentCalls(offset = 0, limit = 13) {
+    async fetchRecentCalls(searchTerms = "", offset = 0, limit = 13) {
         if (this._recentCallsRpc) {
             this._recentCallsRpc.abort();
         }
         this._recentCallsRpc = this.orm.call("voip.call", "get_recent_phone_calls", [], {
             offset,
             limit,
-            search_terms: this.softphone.searchBarInputValue.trim(),
+            search_terms: searchTerms.trim(),
         });
         try {
-            const callsData = await this._recentCallsRpc;
-            callsData.forEach((data) => this.store.Call.insert(data));
+            const data = await this._recentCallsRpc;
+            this.store.insert(data);
             this._recentCallsRpc = null;
         } catch (error) {
             if (error.event?.type === "abort") {
                 error.event.preventDefault();
-            } else {
-                this._recentCallsRpc = null;
+                return;
             }
+            if (error.message?.toLowerCase().includes("abort")) {
+                // Unreliable, message content varies between browsers.
+                return;
+            }
+            this._recentCallsRpc = null;
+            // Don't throw, it could still be an abort error that wasn't caught
+            // by the conditions above.
+            console.error(error);
         }
     }
 
@@ -222,9 +236,9 @@ export class Voip {
      * @param {boolean} [options.isNonBlocking=false] If true, the error will
      * not block the UI.
      */
-    triggerError(message, { isNonBlocking = false } = {}) {
+    triggerError(message, { isNonBlocking = false, title, button } = {}) {
         const safeText = markup(escape(message).replaceAll("\n", "<br>"));
-        this.error = { text: safeText, isNonBlocking };
+        this.error = { title, text: safeText, isNonBlocking, button };
     }
 
     /** @returns {Deferred<boolean>} */
@@ -250,13 +264,29 @@ export class Voip {
      * @returns {string|undefined}
      */
     _onBeforeUnload(ev) {
-        if (!this.softphone.selectedCorrespondence?.call?.isInProgress) {
+        if (!this.env.services["voip.user_agent"]?.session?.call.isInProgress) {
             return;
         }
         ev.preventDefault();
         return (ev.returnValue = _t(
             "There is still a call in progress, are you sure you want to leave the page?"
         ));
+    }
+
+    // TODO: remove
+    fakeIncoming() {
+        const fakeInvitation = {
+            remoteIdentity: {
+                uri: {
+                    user: "+1 555-555-5555",
+                },
+            },
+            incomingInviteRequest: {},
+            stateChange: {
+                addListener() {},
+            },
+        };
+        this.env.services["voip.user_agent"]._onIncomingInvitation(fakeInvitation);
     }
 }
 

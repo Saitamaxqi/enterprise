@@ -1,7 +1,5 @@
 /* global SIP */
 
-import { reactive } from "@odoo/owl";
-
 import { Registerer } from "@voip/core/registerer";
 import { cleanPhoneNumber } from "@voip/utils/utils";
 
@@ -9,6 +7,7 @@ import { loadBundle } from "@web/core/assets";
 import { browser } from "@web/core/browser/browser";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
+import { Reactive } from "@web/core/utils/reactive";
 import { session } from "@web/session";
 
 /**
@@ -21,7 +20,7 @@ import { session } from "@web/session";
  * @property {string} [transferTarget]
  */
 
-export class UserAgent {
+export class UserAgent extends Reactive {
     attemptingToReconnect = false;
     /**
      * The id of the setTimeout used in demo mode to simulate the waiting time
@@ -48,6 +47,7 @@ export class UserAgent {
     __sipJsUserAgent;
 
     constructor(env, services) {
+        super();
         this.env = env;
         this.callService = services["voip.call"];
         this.multiTabService = services.multi_tab;
@@ -56,16 +56,15 @@ export class UserAgent {
         this.voip = services.voip;
         this.softphone = this.voip.softphone;
         this.init();
-        return reactive(this);
     }
 
     /** @returns {boolean} */
     get hasCallInvitation() {
-        const call = this.softphone.selectedCorrespondence?.call;
+        const call = this.session?.call;
         if (!call) {
             return false;
         }
-        return call.state === "calling" && call.direction === "incoming" && Boolean(this.session);
+        return call.state === "calling" && call.direction === "incoming";
     }
 
     /** @returns {Object} */
@@ -198,9 +197,6 @@ export class UserAgent {
                 break;
         }
         this.session = null;
-        if (this.softphone.isInAutoCallMode) {
-            this.softphone.selectNextActivity();
-        }
     }
 
     async init() {
@@ -310,11 +306,9 @@ export class UserAgent {
         }
         const call = await this.callService.create(data);
         this.softphone.show();
-        this.softphone.closeNumpad();
         this.notificationService.add(
             _t("Calling %(phone number)s", { "phone number": call.phoneNumber })
         );
-        this.softphone.selectCorrespondence({ call });
         this.session = {
             inviteState: "trying",
             isMute: false,
@@ -385,7 +379,9 @@ export class UserAgent {
         }
         const { sessionDescriptionHandler } = this.session.sipSession;
         sessionDescriptionHandler.enableReceiverTracks(!this.session.isOnHold);
-        sessionDescriptionHandler.enableSenderTracks(!this.session.isOnHold && !this.session.isMute);
+        sessionDescriptionHandler.enableSenderTracks(
+            !this.session.isOnHold && !this.session.isMute
+        );
     }
 
     _cleanUpRemoteAudio() {
@@ -406,9 +402,6 @@ export class UserAgent {
         await this.callService.end(this.session.call);
         this.session = null;
         this._cleanUpRemoteAudio();
-        if (this.softphone.isInAutoCallMode) {
-            this.softphone.selectNextActivity();
-        }
     }
 
     /** @param {DOMException} error */
@@ -472,7 +465,6 @@ export class UserAgent {
             phone_number: phoneNumber,
             state: "calling",
         });
-        this.softphone.selectCorrespondence({ call });
         inviteSession.delegate = this.sessionDelegate;
         inviteSession.incomingInviteRequest.delegate = {
             onCancel: (message) => this._onIncomingInvitationCanceled(message),
@@ -488,31 +480,38 @@ export class UserAgent {
         if (this.shouldPlayIncomingCallRingtone) {
             this.ringtoneService.incoming.play();
         }
-        // TODO send notification
     }
 
-    async setHold(hold) {
+    async setHold(newState) {
+        // Save the session in the closure, just in case. Subsequent operations
+        // are asynchronous. You never know what might happen, the state of
+        // 'this' might have changed in the meantime, and this.session might
+        // refer to a completely different session.
+        const session = this.session;
+        if (this.session.sipSession) {
+            try {
+                await this.session.sipSession.invite({
+                    requestDelegate: {
+                        onAccept() {
+                            session.isOnHold = newState;
+                        },
+                    },
+                    sessionDescriptionHandlerOptions: { hold: newState },
+                });
+            } catch (error) {
+                console.error(error);
+                this.voip.triggerError(_t("Failed to put the call on hold/unhold."));
+                return;
+            }
+        }
+        session.isOnHold = newState;
+    }
+
+    setMute() {
         if (!this.session?.sipSession) {
             return;
         }
-        const session = this.session;
-        session.isOnHold = hold;
-        try {
-            await this.session.sipSession.invite({
-                requestDelegate: {
-                    onAccept() {
-                        session.isOnHold = hold;
-                    },
-                    onReject() {
-                        session.isOnHold = !hold;
-                    },
-                },
-                sessionDescriptionHandlerOptions: { hold },
-            });
-        } catch (error) {
-            console.error(error);
-            this.voip.triggerError(_t("Failed to put the call on hold/unhold."));
-        }
+        this.updateTracks();
     }
 
     /**

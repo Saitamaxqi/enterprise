@@ -12,19 +12,11 @@ test("Clicking on systray item when softphone is hidden shows the softphone.", a
     await contains(".o-voip-Softphone");
 });
 
-test("Clicking on systray item when softphone is displayed and unfolded hides the softphone.", async () => {
+test("Clicking on systray item when softphone is displayed hides the softphone.", async () => {
     start();
     await click(".o_menu_systray button[title='Open Softphone']");
     await click(".o_menu_systray button[title='Close Softphone']");
     await contains(".o-voip-Softphone");
-});
-
-test("Clicking on systray item when softphone is displayed but folded unfolds the softphone.", async () => {
-    start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".o-voip-Softphone-topbar"); // fold
-    await click(".o_menu_systray button[title='Unfold Softphone']");
-    await contains(".o-voip-Softphone-content");
 });
 
 test("Display missed call count in systray rounded pill “10” when there are 10 missed calls", async () => {

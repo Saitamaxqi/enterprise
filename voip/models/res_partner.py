@@ -1,31 +1,108 @@
-from odoo import api, models
+import unicodedata
+
+from odoo import api, fields, models
 from odoo.osv import expression
+
+from odoo.addons.mail.tools.discuss import Store
+
+"""
+    █
+    █
+    █
+┌────────────────────────┐
+│ ██████████████████████ │
+│ █      10:22 PM      █ │
+│ █     YO LA TEAM     █ │
+│ ██████████████████████ │  T9 "ENCODING" (ITU E.161)
+│                        │  =========================
+│ ╔══════╦══════╦══════╗ │
+│ ║  1   ║  2   ║  3   ║ │  Each letter of the Latin alphabet is mapped to a
+│ ║      ║ ABC  ║ DEF  ║ │  number, which is used to encode a word using only
+│ ╠══════╬══════╬══════╣ │  digits, like on an old cell phone keypad.
+│ ║  4   ║  5   ║  6   ║ │
+│ ║ GHI  ║ JKL  ║ MNO  ║ │
+│ ╠══════╬══════╬══════╣ │
+│ ║  7   ║  8   ║  9   ║ │
+│ ║ PQRS ║ TUV  ║ WXYZ ║ │
+│ ╠══════╬══════╬══════╣ │
+│ ║  *   ║  0   ║  #   ║ │
+│ ║      ║      ║      ║ │
+│ ╚══════╩══════╩══════╝ │
+└────────────────────────┘
+"""
+T9_MAPPING = {
+    letter: digit
+    for letters, digit in [
+        ("ABC", "2"),
+        ("DEF", "3"),
+        ("GHI", "4"),
+        ("JKL", "5"),
+        ("MNO", "6"),
+        ("PQRS", "7"),
+        ("TUV", "8"),
+        ("WXYZ", "9"),
+    ]
+    for letter in letters
+}
+
+
+def unaccent(text):
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if unicodedata.category(c) != "Mn"
+    )
 
 
 class ResPartner(models.Model):
-    _name = 'res.partner'
-    _inherit = ["res.partner", "voip.queue.mixin"]
+    _name = "res.partner"
+    _inherit = ["res.partner", "voip.country.code.mixin", "voip.queue.mixin"]
+
+    t9_name = fields.Char(
+        compute="_compute_t9_name",
+        export_string_translation=False,
+        help=(
+            "The partner's name, encoded as the digits that correspond to the letters on an old cell phone keypad.\n"
+            "Useful for searching for partners based on this field.\n"
+            "Spaces are preserved, characters that can't be encoded are replaced with an 'x'.\n"
+            "T9 stands for Text on 9 keys, it comes from the name of the original technology on old cell phones."
+        ),
+        index="trigram",
+        store=True,
+    )
+
+    @api.depends("name")
+    def _compute_t9_name(self):
+        def encode(letter):
+            if letter in T9_MAPPING:
+                return T9_MAPPING[letter]
+            if letter == " ":
+                return " "
+            return "x"
+
+        for partner in self:
+            if not partner.name:
+                partner.t9_name = False
+                continue
+            normalized_name = unaccent(partner.name).upper()
+            partner.t9_name = "".join(encode(letter) for letter in normalized_name)
+            # Add a space at the beginning so you can search for matches at the
+            # beginning of each word using a pattern like '% 234%'.
+            partner.t9_name = " " + partner.t9_name
 
     @api.model
-    def get_contacts(self, offset, limit, search_terms):
+    def get_contacts(self, offset, limit, search_terms, t9_search=False):
+        # Fast path, keep first. Filters out all partners without a phone number.
         domain = [("phone", "!=", False)]
+        if t9_search:
+            domain = expression.AND([domain, [("t9_name", "ilike", f"% {search_terms}%")]])
         if search_terms:
-            search_domain = expression.OR([
+            subdomain = expression.OR([
                 [("phone", "like", search_terms)],
                 [("complete_name", "ilike", search_terms)],
                 [("email", "ilike", search_terms)],
             ])
-            domain = expression.AND([domain, search_domain])
-        return self.search(domain, offset=offset, limit=limit)._format_contacts()
+            domain = expression.AND([domain, subdomain])
+        contacts = self.search(domain, offset=offset, limit=limit)
+        return Store(contacts, self._voip_get_store_fields()).get_result()
 
-    def _format_contacts(self):
-        return [
-            {
-                "id": contact.id,
-                "displayName": contact.display_name,
-                "email": contact.email,
-                "phone": contact.phone,
-                "name": contact.name,
-            }
-            for contact in self
-        ]
+    def _voip_get_store_fields(self):
+        return ["commercial_company_name", "country_code_from_phone", "email", "function", "is_company", "name", "phone", "t9_name"]

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@odoo/hoot";
+import { describe, test } from "@odoo/hoot";
 import { advanceTime } from "@odoo/hoot-mock";
 import {
     click,
@@ -14,22 +14,6 @@ import { serverState } from "@web/../tests/web_test_helpers";
 describe.current.tags("desktop");
 setupVoipTests();
 
-test("Clicking on top bar when softphone is unfolded folds the softphone.", async () => {
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".o-voip-Softphone-content");
-    await click(".o-voip-Softphone-topbar");
-    await contains(".o-voip-Softphone-content", { count: 0 });
-});
-
-test("Clicking on top bar when softphone is folded unfolds the softphone.", async () => {
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".o-voip-Softphone-topbar"); // fold
-    await click(".o-voip-Softphone-topbar");
-    await contains(".o-voip-Softphone-content");
-});
-
 test("Clicking on close button closes the softphone.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
@@ -39,57 +23,37 @@ test("Clicking on close button closes the softphone.", async () => {
 });
 
 test.tags("focus required");
-test("Search bar is focused after opening the softphone.", async () => {
+test("Search bar is focused after switching to a tab with search bar.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await contains("input[placeholder='Search']:focus");
+    await click("button span:contains('Keypad')");
+    await contains(".o-voip-Dialer input:focus");
+    await click("button span:contains('Recent')");
+    await contains("input[placeholder='Search…']:focus");
 });
 
 test.tags("focus required");
-test("Search bar is focused after unfolding the softphone.", async () => {
+test("Search bar is focused after reopen the softphone.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".o-voip-Softphone-topbar"); // fold
-    await click(".o-voip-Softphone-topbar"); // unfold
-    await contains("input[placeholder='Search']:focus");
-});
-
-test("“Next activities” is the active tab by default.", async () => {
-    await start();
+    await click("button span:contains('Keypad')");
+    await contains(".o-voip-Dialer input:focus");
+    await click(".o-voip-Softphone button[title='Close']");
     await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".nav-link.active", { text: "Next Activities" });
+    await contains(".o-voip-Dialer input:focus");
+    await click("button span:contains('Recent')");
+    await click(".o-voip-Softphone button[title='Close']");
+    await click(".o_menu_systray button[title='Open Softphone']");
+    await contains("input[placeholder='Search…']:focus");
 });
 
 test("Clicking on a tab makes it the active tab.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".nav-link", { text: "Contacts" });
-    await contains(".nav-link.active", { text: "Contacts" });
-    await contains(".nav-link.active");
-});
-
-test("Click on the “Numpad button” to open and close the numpad.", async () => {
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    // dropdown requires an extra delay before click (because handler is registered in useEffect)
-    await contains("button[title='Open Numpad']");
-    await click("button[title='Open Numpad']");
-    await contains(".o-voip-Numpad");
-    await click("button[title='Close Numpad']");
-    await contains(".o-voip-Numpad", { count: 0 });
-});
-
-test("The softphone top bar text is “VoIP”.", async () => {
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".o-voip-Softphone-topbar", { text: "VoIP" });
-});
-
-test("The cursor when hovering over the top bar has “pointer” style", async () => {
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".o-voip-Softphone-topbar");
-    expect(".o-voip-Softphone-topbar:first").toHaveStyle({ cursor: "pointer" });
+    await contains("button.active span:contains('Keypad')");
+    await contains("button.active span:contains('Recent')", { count: 0 });
+    await click("button span:contains('Recent')");
+    await contains("button.active span:contains('Recent')");
 });
 
 test("Using VoIP in prod mode without configuring the server shows an error", async () => {
@@ -103,7 +67,7 @@ test("Using VoIP in prod mode without configuring the server shows an error", as
     pyEnv["res.users"].write([serverState.userId], { voip_provider_id: providerId });
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".o-voip-Softphone-error");
+    await contains(".o-voip-ErrorScreen");
 });
 
 test.tags("focus required");
@@ -114,12 +78,12 @@ test("When a call is created, a partner with a corresponding phone number is dis
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     // dropdown requires an extra delay before click (because handler is registered in useEffect)
-    await contains("button[title='Open Numpad']");
-    await click("button[title='Open Numpad']");
+    await contains("button span:contains('Keypad')");
+    await click("button span:contains('Keypad')");
     // ensure initial focusing is done before inserting text to avoid focus reset
-    await contains("input[placeholder='Enter the number…']:focus");
-    await insertText("input[placeholder='Enter the number…']", phoneNumber);
+    await contains(".o-voip-Dialer input:focus");
+    await insertText(".o-voip-Dialer input:focus", phoneNumber);
     await triggerHotkey("Enter");
     await advanceTime(5000);
-    await contains(".o-voip-CorrespondenceDetails", { text: "Maxime Randonnées" });
+    await contains(".o-voip-InCallView", { text: "Maxime Randonnées" });
 });

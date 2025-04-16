@@ -1,11 +1,13 @@
 from collections import defaultdict
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
+
 from odoo.addons.mail.tools.discuss import Store
 
 
 class MailActivity(models.Model):
-    _inherit = "mail.activity"
+    _name = "mail.activity"
+    _inherit = ["mail.activity", "voip.country.code.mixin"]
 
     phone = fields.Char("Phone", compute="_compute_phone", readonly=False, store=True)
 
@@ -58,7 +60,7 @@ class MailActivity(models.Model):
         )
         # ----- Tackling multi-company shenanigans 👺 -----
         record_ids_by_model_name = defaultdict(set)
-        for activity in overdue_call_activities_of_current_user.filtered('res_model'):
+        for activity in overdue_call_activities_of_current_user.filtered("res_model"):
             record_ids_by_model_name[activity.res_model].add(activity.res_id)
 
         allowed_record_ids_by_model_name = defaultdict(list)
@@ -95,14 +97,13 @@ class MailActivity(models.Model):
             store.add(self.env["res.partner"].browse(partner_ids))
             for activity in activities:
                 activity_data = {
-                    **activity.read(["id", "res_name", "phone", "res_id", "res_model", "state", "date_deadline", "mail_template_ids"])[0],
+                    **activity.read(["id", "res_name", "phone", "res_id", "res_model", "state", "summary", "date_deadline", "mail_template_ids", "user_id"])[0],
                     "activity_category": activity.activity_type_id.category,
-                    "modelName": activity.sudo().res_model_id.display_name if model_name else _("Other activities"),
-                    "user_id": activity._read_format(["user_id"])[0]["user_id"],
                 }
+                activity_data["user_id"] = activity_data["user_id"][0]
                 partners = partners_by_records.get(activity.res_id)
                 if partners:
-                    activity_data["partner"] = Store.One(partners[:1], [])
+                    activity_data["partner"] = Store.One(partners[:1], partners._voip_get_store_fields())
                 store.add(activity, activity_data)
 
     def _get_phone_numbers_by_activity(self):
@@ -111,7 +112,7 @@ class MailActivity(models.Model):
         :return: phone number for each activity (obtained from the activity itself or from the related partner);
         """
         phone_numbers_by_activity = {}
-        data_by_model = self.filtered('res_model')._classify_by_model()
+        data_by_model = self.filtered("res_model")._classify_by_model()
         for model, data in data_by_model.items():
             records = self.env[model].browse(data["record_ids"])
             for record, activity in zip(records, data["activities"]):
@@ -126,4 +127,4 @@ class MailActivity(models.Model):
         return phone_numbers_by_activity
 
     def _to_store_defaults(self):
-        return super()._to_store_defaults() + ["phone", "user_id"]
+        return [*super()._to_store_defaults(), "country_code_from_phone", "phone", "user_id"]

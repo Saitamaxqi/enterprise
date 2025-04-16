@@ -1,0 +1,106 @@
+import { Component, onMounted, useState } from "@odoo/owl";
+
+import { tabComponents } from "@voip/softphone/tab";
+import { isSubstring } from "@voip/utils/utils";
+
+import { user } from "@web/core/user";
+import { useService } from "@web/core/utils/hooks";
+import { useDebounced } from "@web/core/utils/timing";
+
+/** @typedef {import("@mail/core/common/persona_model").Persona} Persona */
+
+/**
+ * List of contacts, i.e. people you can call.
+ */
+export class AddressBook extends Component {
+    static components = tabComponents;
+    static defaultProps = { extraClass: "" };
+    static props = { extraClass: { type: String, optional: true } };
+    static template = "voip.AddressBook";
+
+    setup() {
+        this.action = useService("action");
+        this.userAgent = useService("voip.user_agent");
+        this.voip = useService("voip");
+        this.ui = useService("ui");
+        this.state = useState(this.voip.softphone.addressBook);
+        onMounted(() => this.voip.fetchContacts());
+        this.onInputSearch = useDebounced(
+            () => this.voip.fetchContacts(this.state.searchInputValue),
+            300
+        );
+    }
+
+    /** @returns {Map<string, Array<Persona>>} */
+    get contactsByInitial() {
+        const contacts = [...this.filteredContacts];
+        const compareFn = new Intl.Collator(user.lang).compare;
+        contacts.sort((a, b) => compareFn(a.voipName, b.voipName));
+        const getInitial = (contact) => [...contact.voipName][0].toUpperCase();
+        return Map.groupBy(contacts, getInitial);
+    }
+
+    /** @returns {Persona[]} Contacts filtered by search terms. */
+    get filteredContacts() {
+        const contacts = this.voip.softphone.contacts;
+        const searchTerms = this.state.searchInputValue;
+        if (!searchTerms) {
+            return contacts;
+        }
+        return contacts.filter(
+            ({ voipName, phone }) =>
+                isSubstring(voipName, searchTerms) || isSubstring(phone, searchTerms)
+        );
+    }
+
+    /**
+     * @param {Persona} contact
+     * @returns {string}
+     */
+    getSubtitle(contact) {
+        if (contact.is_company) {
+            return "";
+        }
+        const info = [];
+        if (contact.commercial_company_name) {
+            info.push(contact.commercial_company_name);
+        }
+        if (contact.function) {
+            info.push(contact.function);
+        }
+        return info.join(" - ");
+    }
+
+    /** @param {Persona} contact */
+    onClickActivity(contact) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_id: false,
+            res_model: "mail.activity",
+            views: [[false, "form"]],
+            view_mode: "form",
+            target: "new",
+            context: {
+                default_activity_type_id: this.voip.callActivityTypeId,
+                default_res_id: contact.id,
+                default_res_model: "res.partner",
+            },
+        });
+    }
+
+    /** @param {Persona} contact */
+    onClickCall(contact) {
+        this.userAgent.makeCall({ partner: contact, phone_number: contact.phone });
+    }
+
+    /** @param {Persona} contact */
+    onClickContact(contact) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "res.partner",
+            res_id: contact.id,
+            views: [[false, "form"]],
+            target: this.ui.isSmall ? "new" : "current",
+        });
+    }
+}

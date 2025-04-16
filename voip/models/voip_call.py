@@ -1,11 +1,14 @@
+from typing import Optional
+
 from odoo import api, fields, models
 from odoo.osv import expression
 
-from typing import Optional
+from odoo.addons.mail.tools.discuss import Store
 
 
 class VoipCall(models.Model):
-    _name = 'voip.call'
+    _name = "voip.call"
+    _inherit = "voip.country.code.mixin"
     _description = """A phone call handled using the VoIP application"""
 
     phone_number = fields.Char(required=True, readonly=True)
@@ -73,18 +76,20 @@ class VoipCall(models.Model):
                 iter(related_record._mail_get_partners(introspect_fields=True)[related_record.id]),
                 self.env["res.partner"],
             ).id
-        return self.create(kwargs)._format_calls()
+        calls = self.create(kwargs)
+        return {"ids": [call.id for call in calls], "store_data": Store(calls, calls._get_voip_store_fields()).get_result()}
 
     @api.model
     def get_recent_phone_calls(
         self, search_terms: Optional[str] = None, offset: int = 0, limit: Optional[int] = None
-    ) -> list:
+    ):
         domain = [("user_id", "=", self.env.uid)]
         if search_terms:
             search_fields = ["phone_number", "partner_id.name", "activity_name"]
             search_domain = expression.OR([[(field, "ilike", search_terms)] for field in search_fields])
             domain += search_domain
-        return self.search(domain, offset=offset, limit=limit, order="create_date DESC")._format_calls()
+        calls = self.search(domain, offset=offset, limit=limit, order="create_date DESC")
+        return Store(calls, calls._get_voip_store_fields()).get_result()
 
     @api.model
     def _get_number_of_missed_calls(self) -> int:
@@ -94,29 +99,29 @@ class VoipCall(models.Model):
             domain += [("id", ">", last_seen_phone_call.id)]
         return self.search_count(domain)
 
-    def abort_call(self) -> list:
+    def abort_call(self):
         self.state = "aborted"
-        return self._format_calls()
+        return Store(self, self._get_voip_store_fields()).get_result()
 
-    def start_call(self) -> list:
+    def start_call(self):
         self.start_date = fields.Datetime.now()
         self.state = "ongoing"
-        return self._format_calls()
+        return Store(self, self._get_voip_store_fields()).get_result()
 
-    def end_call(self, activity_name: Optional[str] = None) -> list:
+    def end_call(self, activity_name: Optional[str] = None):
         self.end_date = fields.Datetime.now()
         self.state = "terminated"
         if activity_name:
             self.activity_name = activity_name
-        return self._format_calls()
+        return Store(self, self._get_voip_store_fields()).get_result()
 
-    def reject_call(self) -> list:
+    def reject_call(self):
         self.state = "rejected"
-        return self._format_calls()
+        return Store(self, self._get_voip_store_fields()).get_result()
 
-    def miss_call(self) -> list:
+    def miss_call(self):
         self.state = "missed"
-        return self._format_calls()
+        return Store(self, self._get_voip_store_fields()).get_result()
 
     def get_contact_info(self):
         self.ensure_one()
@@ -151,20 +156,20 @@ class VoipCall(models.Model):
         if not partner:
             return False
         self.partner_id = partner
-        return self.partner_id._format_contacts()[0]
+        return Store(self, self._get_voip_store_fields()).get_result()
 
-    def _format_calls(self) -> list:
+    def _get_voip_store_fields(self):
         return [
-            {
-                "id": call.id,
-                "creationDate": call.create_date,
-                "direction": call.direction,
-                "displayName": call.display_name,
-                "endDate": call.end_date,
-                "partner": call.partner_id._format_contacts()[0] if call.partner_id else False,
-                "phoneNumber": call.phone_number,
-                "startDate": call.start_date,
-                "state": call.state,
-            }
-            for call in self
+            "country_code_from_phone",
+            Store.Attr("create_date", rename="creationDate"),
+            "direction",
+            Store.Attr("display_name", rename="displayName"),
+            Store.Attr("end_date", rename="endDate"),
+            Store.One("partner_id", self.partner_id._voip_get_store_fields(), rename="partner"),
+            Store.Attr("phone_number", rename="phoneNumber"),
+            Store.Attr("start_date", rename="startDate"),
+            "state",
         ]
+
+    def _phone_get_number_fields(self):
+        return ["phone_number"]

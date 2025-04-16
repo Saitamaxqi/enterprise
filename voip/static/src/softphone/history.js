@@ -1,0 +1,182 @@
+import { Component, onMounted, useState } from "@odoo/owl";
+
+import { tabComponents } from "@voip/softphone/tab";
+import { isSubstring } from "@voip/utils/utils";
+
+import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
+import { useDebounced } from "@web/core/utils/timing";
+
+/**
+ * List of your most recent calls.
+ */
+export class History extends Component {
+    static components = tabComponents;
+    static defaultProps = { extraClass: "" };
+    static props = { extraClass: { type: String, optional: true } };
+    static template = "voip.History";
+
+    setup() {
+        this.action = useService("action");
+        this.userAgent = useService("voip.user_agent");
+        this.voip = useService("voip");
+        this.ui = useService("ui");
+        this.softphone = useState(this.voip.softphone);
+        this.state = useState(this.voip.softphone.history);
+        onMounted(() => this.voip.fetchRecentCalls());
+        this.onInputSearch = useDebounced(() => this.voip.fetchRecentCalls(), 300);
+    }
+
+    get callsByDate() {
+        const calls = [...this.filteredCalls];
+        calls.sort((a, b) => (b.startDate || b.creationDate) - (a.startDate || a.creationDate));
+        const today = luxon.DateTime.now();
+        const yesterday = luxon.DateTime.now().minus({ days: 1 });
+        return Map.groupBy(calls, (call) => {
+            const date = call.startDate || call.creationDate;
+            if (today.hasSame(date, "day")) {
+                return _t("Today");
+            }
+            if (yesterday.hasSame(date, "day")) {
+                return _t("Yesterday");
+            }
+            return date.toLocaleString(luxon.DateTime.DATE_MED);
+        });
+    }
+
+    /**
+     * Get the locale list of calls, filtered by search terms if available.
+     */
+    get filteredCalls() {
+        const calls = Object.values(this.voip.calls);
+        const searchTerms = this.state.searchInputValue.trim();
+        if (!searchTerms) {
+            return calls;
+        }
+        return calls.filter((call) => {
+            if (call.partner && isSubstring(call.partner.name, searchTerms)) {
+                return true;
+            }
+            return isSubstring(call.phoneNumber, searchTerms);
+        });
+    }
+
+    getStatusColor(call) {
+        const pendingCall = this.userAgent.session?.call;
+        switch (call.state) {
+            case "rejected":
+            case "missed":
+                return "text-danger";
+            case "calling":
+            case "ongoing":
+                return call.id === pendingCall?.id ? "text-muted" : "text-danger";
+            case "aborted":
+            case "terminated":
+            default:
+                return "text-muted";
+        }
+    }
+
+    /** @returns {string} */
+    getStatusText(call) {
+        const pendingCall = this.userAgent.session?.call;
+        switch (call.state) {
+            case "aborted":
+                return _t("Cancelled call");
+            case "missed":
+                return _t("Missed call");
+            case "rejected":
+                return _t("Call rejected");
+            case "terminated":
+                return _t("Call ended (%(duration)s)", { duration: call.durationString });
+            case "calling":
+            case "ongoing":
+                return call.id === pendingCall?.id ? _t("Ongoing") : _t("Ended unexpectedly");
+            default:
+                return "✌︎☹︎☹︎☜︎💧︎ ✋︎💧︎ 😐︎✌︎🏱︎⚐︎❄︎";
+        }
+    }
+
+    getSubtitleIcon(call) {
+        const classes = ["oi oi-fw"];
+        if (call.direction === "incoming") {
+            classes.push("oi-arrow-down-left");
+        } else {
+            classes.push("oi-arrow-up-right");
+        }
+        const pendingCall = this.userAgent.session?.call;
+        switch (call.state) {
+            case "terminated":
+                classes.push("text-success");
+                break;
+            case "rejected":
+            case "missed":
+                classes.push("text-danger");
+                break;
+            case "calling":
+            case "ongoing":
+                classes.push(call.id === pendingCall?.id ? "text-muted" : "text-danger");
+                break;
+            case "aborted":
+            default:
+                classes.push("text-muted");
+                break;
+        }
+        return classes.join(" ");
+    }
+
+    onClickActivity(call) {
+        const action = {
+            type: "ir.actions.act_window",
+            res_id: false,
+            res_model: "mail.activity",
+            views: [[false, "form"]],
+            view_mode: "form",
+            target: "new",
+            context: {
+                default_activity_type_id: this.voip.callActivityTypeId,
+            },
+        };
+        if (call.partner) {
+            action.context.default_res_id = call.partner.id;
+            action.context.default_res_model = "res.partner";
+        }
+        this.action.doAction(action);
+    }
+
+    onClickCall(call) {
+        this.userAgent.makeCall({ partner: call.partner, phone_number: call.phoneNumber });
+    }
+
+    onClickContact(call) {
+        const action = {
+            type: "ir.actions.act_window",
+            res_model: "res.partner",
+            views: [[false, "form"]],
+            target: this.ui.isSmall ? "new" : "current",
+            context: {},
+        };
+        if (call.partner) {
+            action.res_id = call.partner.id;
+        } else {
+            action.context.default_phone = call.phoneNumber;
+        }
+        this.action.doAction(action);
+    }
+
+    onClickEmail(call) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "mail.compose.message",
+            views: [[false, "form"]],
+            target: "new",
+            context: {
+                default_res_ids: [call.partner.id],
+                default_model: "res.partner",
+                default_partner_ids: [call.partner.id],
+                default_composition_mode: "comment",
+                default_use_template: true,
+            },
+        });
+    }
+}

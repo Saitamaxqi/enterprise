@@ -20,7 +20,11 @@ export class VoipCall extends models.ServerModel {
         delete kwargs.res_id;
         delete kwargs.res_model;
         delete kwargs.context;
-        return this._format_calls(this.create(kwargs, makeKwArgs({ context })));
+        const store_data = this._format_calls(this.create(kwargs, makeKwArgs({ context })));
+        return {
+            ids: [store_data["voip.call"][0].id],
+            store_data,
+        };
     }
 
     compute_display_name(calls) {
@@ -84,7 +88,6 @@ export class VoipCall extends models.ServerModel {
                 id: call.id,
                 creationDate: call.create_date,
                 direction: call.direction,
-                displayName: call.display_name,
                 endDate: call.end_date,
                 phoneNumber: call.phone_number,
                 startDate: call.start_date,
@@ -95,7 +98,7 @@ export class VoipCall extends models.ServerModel {
             }
             formattedCalls.push(data);
         }
-        return formattedCalls;
+        return { "voip.call": formattedCalls };
     }
 
     /** @param {number[]} ids */
@@ -118,7 +121,7 @@ export class VoipCall extends models.ServerModel {
             return false;
         }
         this.write(ids, { partner_id: partnerId });
-        return ResPartner._format_contacts([partnerId])[0];
+        return { "res.partner": ResPartner._format_contacts([partnerId])[0] };
     }
 
     _get_number_of_missed_calls() {
@@ -148,11 +151,14 @@ export class VoipCall extends models.ServerModel {
                 domain.push("|", [field, "ilike", search_terms]);
             }
         }
-        const recordIds = this.search(domain, {
-            offset,
-            limit,
-            order: "create_date DESC",
-        });
+        const recordIds = this.search(
+            domain,
+            makeKwArgs({
+                offset,
+                limit,
+                order: "create_date DESC",
+            })
+        );
         return this._format_calls(recordIds);
     }
 

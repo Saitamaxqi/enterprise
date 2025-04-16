@@ -1,32 +1,56 @@
 .o-voip-Softphone {
-    z-index: $zindex-modal - 2;
+    --Avatar-size: 40px;
 
-    width: 300px;
-    max-height: 100vh;
+    z-index: $o-voip-softphone-z-index;
 
-    :focus {
-        outline: 0;
+    &:not(.o-mobile) {
+        width: $o-voip-softphone-width;
+        height: $o-voip-softphone-height;
     }
-}
 
-.o-voip-Softphone-topbar {
-    height: 36px;
+    .o-voip-avatar-bg {
+        background-color: var(--Avatar-background-color, #fff);
+    }
 
-    background-color: var(--voip__topBar-bg, #{$o-brand-odoo});
-    color: #FFFFFF;
+    &.o-calling {
+        --#{$prefix}border-color: #{$o-voipCalling-button-bg-color};
 
-}
+        background-color: $o-voipCalling-bg-color;
+        color: color-contrast($o-voipCalling-bg-color);
 
-.o-voip-Softphone-error {
-    z-index: $zindex-modal - 1;
-    background-color: var(--voip__error-bg, rgba($o-gray-900, $o-opacity-muted));
-    color: #FFFFFF;
-}
+        .btn-secondary {
+            --#{$prefix}btn-color: #{$o-voipCalling-button-color};
+            --#{$prefix}btn-bg: #{$o-voipCalling-button-bg-color};
+            --#{$prefix}btn-border-color: #{$o-voipCalling-button-border-color};
+            --#{$prefix}btn-hover-color: #{$o-voipCalling-button-color};
+            --#{$prefix}btn-hover-bg: #{$o-voipCalling-button-bg-color-hover};
+            --#{$prefix}btn-hover-border-color: #{$o-voipCalling-button-border-color};
+            --#{$prefix}btn-active-color: #{$o-voipCalling-button-color-active};
+            --#{$prefix}btn-active-bg: #{$o-voipCalling-button-bg-color-active};
+            --#{$prefix}btn-active-border-color: #{$o-voipCalling-button-border-color};
+            --#{$prefix}btn-disabled-color: #{$o-voipCalling-button-color};
+            --#{$prefix}btn-disabled-bg: #{$o-voipCalling-button-bg-color};
+            --#{$prefix}btn-disabled-border-color: #{$o-voipCalling-button-border-color};
+        }
 
-.o-voip-Softphone-tab {
-    height: 360px;
-}
+        .btn-close {
+            filter: var(--voipCalling__closeButton-filter, #{$btn-close-white-filter});
+        }
+    }
 
-.o-voip-Softphone-content {
-    min-height: 440px;
+    .o-voip-CallIcon-end {
+        transform: rotate(135deg);
+    }
+
+    details summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .o-voip-countryFlag-wrapper {
+        width: $oi-fw-ratio * 1em;
+    }
+
+    .o-voip-countryFlag {
+        width: var(--voip__countryFlag-width, #{$o-voip-countryFlag-width});
+    }
 }

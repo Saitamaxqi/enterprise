@@ -22,8 +22,9 @@ test("Clicking on the “open record” button opens the corresponding record.",
     });
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".o-voip-ActivitiesTab .list-group-item-action", { text: "Vincent's Birthday" });
+    await click("button span:contains('Activities')");
+    await click(".o-voip-TabEntry", { text: "Vincent's Birthday" });
     await contains(".o_form_view", { count: 0 });
-    await click(".o-voip-CorrespondenceDetails button .fa-wpforms");
+    await click("button .oi-arrow-right");
     await contains(".o_form_view");
 });

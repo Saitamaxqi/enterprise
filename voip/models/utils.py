@@ -20,12 +20,12 @@ INTERNATIONAL_PHONE_NUMBER_RE = re.compile(
 
 def extract_country_code(phone_number):
     if not phonenumbers:
-        return ""
+        return {"iso": "", "itu": ""}
 
     def extract_country_code_from_partial_number(phone_number):
         match = INTERNATIONAL_PHONE_NUMBER_RE.match(phone_number)
         if not match:
-            return ""
+            return {"iso": "", "itu": ""}
         sanitized_number = match.group("phone_number")  # the phone number without the + or 00
         for length in range(min(4, len(sanitized_number) + 1), 0, -1):  # 3 is the max length of a country code
             country_code = int(sanitized_number[:length])
@@ -36,15 +36,21 @@ def extract_country_code(phone_number):
                 and len(COUNTRY_CODE_TO_REGION_CODE[country_code]) == 1
             ):
                 region_code = phonenumbers.region_code_for_country_code(country_code)
-                return region_code.lower() if region_code != "ZZ" else ""
-        return ""
+                return {
+                    "iso": region_code.lower() if region_code != "ZZ" else "",
+                    "itu": str(country_code) if region_code != "ZZ" else "",
+                }
+        return {"iso": "", "itu": ""}
 
     if len(phone_number) >= 6 and phonenumbers:
         try:
             parsed_number = phonenumbers.parse(phone_number, None)
             country_code = phonenumbers.region_code_for_number(parsed_number)
             if country_code:
-                return country_code.lower()
+                return {
+                    "iso": country_code.lower(),
+                    "itu": str(parsed_number.country_code),
+                }
         except phonenumbers.NumberParseException:
             pass
     return extract_country_code_from_partial_number(phone_number)

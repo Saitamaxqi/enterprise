@@ -22,15 +22,12 @@ export class MailActivity extends mailModels.MailActivity {
 
     /** @param {number[]} ids */
     _format_call_activities(ids, store) {
-        /** @type {import("mock_models").ResUsers} */
-        const ResUsers = this.env["res.users"];
         /** @type {import("mock_models").ResPartner} */
         const ResPartner = this.env["res.partner"];
 
         const activities = this.browse(ids);
         const now = serializeDate(today());
         for (const activity of activities) {
-            const [user] = ResUsers.search_read([["id", "=", activity.user_id]]);
             const state =
                 activity.date_deadline === now
                     ? "today"
@@ -47,7 +44,8 @@ export class MailActivity extends mailModels.MailActivity {
                 res_model: activity.res_model,
                 res_name: activity.res_name || record.display_name,
                 state,
-                user_id: [activity.user_id, user.name],
+                user_id: activity.user_id,
+                date_deadline: activity.date_deadline,
             };
             let relatedPartner;
             if (activity.res_model === "res.partner") {

@@ -1,4 +1,5 @@
 import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { mailDataHelpers } from "@mail/../tests/mock_server/mail_mock_server";
 
 export class ResPartner extends mailModels.ResPartner {
     /** @override */
@@ -12,7 +13,12 @@ export class ResPartner extends mailModels.ResPartner {
     }
 
     get_contacts() {
-        return this._format_contacts(this.search([["phone", "!=", false]]));
+        const store = new mailDataHelpers.Store();
+        const contacts = this._format_contacts(this.search([["phone", "!=", false]]));
+        for (const contact of contacts) {
+            store.add(this.browse(contact.id), contact);
+        }
+        return store.get_result();
     }
 
     /** @param {number[]} ids */
@@ -20,7 +26,6 @@ export class ResPartner extends mailModels.ResPartner {
         const contacts = this.browse(ids);
         return contacts.map((contact) => ({
             id: contact.id,
-            displayName: contact.display_name,
             email: contact.email,
             phone: contact.phone,
             name: contact.display_name,

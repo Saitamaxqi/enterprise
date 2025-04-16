@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
@@ -8,9 +8,9 @@ export class VoipSystrayItem extends Component {
     static template = "voip.SystrayItem";
 
     setup() {
-        this.voip = useState(useService("voip"));
+        this.voip = useService("voip");
         this.ringtoneService = useService("voip.ringtone");
-        this.userAgent = useState(useService("voip.user_agent"));
+        this.userAgent = useService("voip.user_agent");
         this.softphone = this.voip.softphone;
     }
 
@@ -25,7 +25,7 @@ export class VoipSystrayItem extends Component {
 
     /** @returns {boolean} */
     get shouldDisplayInCallIndicator() {
-        const call = this.softphone.selectedCorrespondence?.call;
+        const call = this.userAgent.session?.call;
         if (!call) {
             return false;
         }
@@ -38,26 +38,15 @@ export class VoipSystrayItem extends Component {
      * @returns {string}
      */
     get titleText() {
-        if (this.softphone.isDisplayed) {
-            if (this.softphone.isFolded) {
-                return _t("Unfold Softphone");
-            }
-            return _t("Close Softphone");
-        }
-        return _t("Open Softphone");
+        return this.softphone.isDisplayed ? _t("Close Softphone") : _t("Open Softphone");
     }
 
     /** @param {MouseEvent} ev */
     onClick(ev) {
         if (this.softphone.isDisplayed) {
-            if (this.softphone.isFolded) {
-                this.softphone.unfold();
-                this.voip.resetMissedCalls();
-            } else {
-                this.softphone.hide();
-                if (this.userAgent.hasCallInvitation) {
-                    this.ringtoneService.stopPlaying();
-                }
+            this.softphone.hide();
+            if (this.userAgent.hasCallInvitation) {
+                this.ringtoneService.stopPlaying();
             }
         } else {
             this.softphone.show();

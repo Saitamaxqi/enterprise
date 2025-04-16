@@ -1,7 +1,11 @@
-.o-voip-Softphone-topbar {
-    --voip__topBar-bg: #{$o-gray-100};
-}
+// = VOIP Softphone
+// ============================================================================
+// No CSS hacks, variables overrides only
 
-.o-voip-Softphone-error {
-    --voip__error-bg: #{rgba($o-gray-300, $o-opacity-muted)};
+.o-voip-Softphone {
+    --voipCalling__closeButton-filter: none;
+
+    .o-voip-avatar-bg {
+        --Avatar-background-color: #{$gray-900};
+    }
 }

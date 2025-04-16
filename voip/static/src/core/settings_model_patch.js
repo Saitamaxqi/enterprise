@@ -1,7 +1,7 @@
 import { fields } from "@mail/core/common/record";
 import { Settings } from "@mail/core/common/settings_model";
 
-import { FOREVER } from "@voip/softphone/do_not_disturb_selector";
+import { FOREVER } from "@voip/softphone/dnd_selector";
 
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { patch } from "@web/core/utils/patch";

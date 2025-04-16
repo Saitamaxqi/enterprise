@@ -7,7 +7,8 @@ import { serverState } from "@web/../tests/web_test_helpers";
 describe.current.tags("desktop");
 setupVoipTests();
 
-test("Today call activities are displayed in the “Next Activities” tab.", async () => {
+test("Call activities are displayed in the “Activities” tab.", async () => {
+    mockDate("1993-08-12 12:00:00");
     const pyEnv = await startServer();
     const [activityTypeId] = pyEnv["mail.activity.type"].search([["category", "=", "phonecall"]]);
     const [partnerId1, partnerId2] = pyEnv["res.partner"].create([
@@ -25,14 +26,14 @@ test("Today call activities are displayed in the “Next Activities” tab.", as
     pyEnv["mail.activity"].create([
         {
             activity_type_id: activityTypeId,
-            date_deadline: "1999-01-29",
+            date_deadline: "1993-08-12",
             res_id: partnerId1,
             res_model: "res.partner",
             user_id: serverState.userId,
         },
         {
             activity_type_id: activityTypeId,
-            date_deadline: "2016-08-06",
+            date_deadline: "1993-08-11",
             res_id: partnerId2,
             res_model: "res.partner",
             user_id: serverState.userId,
@@ -40,12 +41,19 @@ test("Today call activities are displayed in the “Next Activities” tab.", as
     ]);
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".o-voip-ActivitiesTab .list-group-item-action", { count: 2 });
-    await contains(".o-voip-ActivitiesTab .list-group-item-action", {
-        text: "Boulangerie Vortex, Françoise Délire",
+    await click("button span:contains('Activities')");
+    await contains(".o-voip-TabEntry", { count: 2 });
+    await contains("h2.text-danger", {
+        text: "Due: Yesterday",
     });
-    await contains(".o-voip-ActivitiesTab .list-group-item-action", {
+    await contains(".o-voip-TabEntry", {
         text: "Sanit’Hair, Naomi Dag",
+    });
+    await contains("h2", {
+        text: "Due: Today",
+    });
+    await contains(".o-voip-TabEntry", {
+        text: "Boulangerie Vortex, Françoise Délire",
     });
 });
 
@@ -68,31 +76,8 @@ test("The name of the partner linked to an activity is displayed in the activity
     ]);
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
-    await contains(".o-voip-ActivitiesTab .list-group-item-action .fw-bold", {
+    await click("button span:contains('Activities')");
+    await contains("button[title='Open related record']", {
         text: "Gwendoline Zumba",
     });
-});
-
-test("Clicking on an activity opens the correspondence details", async () => {
-    mockDate("2024-05-23 12:00:00");
-    const pyEnv = await startServer();
-    const partnerId = pyEnv["res.partner"].create({
-        name: "Yveline Colbert",
-        phone: "456 284 9936",
-    });
-    pyEnv["mail.activity"].create([
-        {
-            activity_type_id: pyEnv["mail.activity.type"].search([
-                ["category", "=", "phonecall"],
-            ])[0],
-            date_deadline: "2022-11-16",
-            res_id: partnerId,
-            res_model: "res.partner",
-            user_id: serverState.userId,
-        },
-    ]);
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".o-voip-ActivitiesTab .list-group-item-action", { text: "Yveline Colbert" });
-    await contains(".o-voip-CorrespondenceDetails");
 });

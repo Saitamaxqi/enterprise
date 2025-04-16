@@ -1,21 +1,42 @@
 <?xml version="1.0"?>
 <templates>
-    <t t-name="voip.CallInvitation">
-        <div t-attf-class="o-voip-CallInvitation {{ props.extraClass }}">
-            <div class="d-flex flex-column align-items-center pt-5 bg-success bg-opacity-25">
-                <div>Incoming call from…</div>
-                <img class="o-voip-CallInvitation-avatar mt-3 rounded" t-att-src="props.correspondence.avatarUrl"/>
-                <div class="m-2 fw-bold" t-esc="partnerName"/>
-                <div class="mb-4" t-esc="props.correspondence.phoneNumber"/>
-            </div>
-            <div class="d-flex justify-content-around mt-5">
-                <button class="btn btn-danger rounded-circle" t-on-click="onClickReject">
-                    <i class="o-voip-CallInvitation-reject fa fa-2x fa-phone p-2" role="img"/>
-                </button>
-                <button class="btn btn-success rounded-circle" t-on-click="onClickAccept">
-                    <i class="fa fa-2x fa-phone p-2" role="img"/>
-                </button>
+<t t-name="voip.CallInvitation">
+    <div class="o-voip-CallInvitation h-100 d-flex flex-column gap-3 p-3">
+        <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-3">
+            <UserInfo name="contactName" subtitle="contactInfo" avatarAlt="avatarAlt" avatarUrl="avatarUrl"/>
+            <div class="d-flex justify-content-center gap-3">
+                <ActionButton
+                    t-if="contact"
+                    name.translate="Contact"
+                    title.translate="View caller information"
+                    icon="'oi-user'"
+                    onClick.bind="onClickContact"
+                />
+                <t class="o-voip-CallInvitation-xpathTarget"/>
+                <ActionButton
+                    name.translate="Activity"
+                    title.translate="Schedule an activity"
+                    icon="'oi-activity-plus'"
+                    onClick.bind="onClickActivity"
+                />
             </div>
         </div>
-    </t>
+        <div class="d-flex justify-content-center gap-5 py-4">
+            <ActionButton
+                name.translate="Reject the call"
+                hideLabel="true"
+                type="'danger'"
+                icon="'oi-close fa-2x'"
+                onClick.bind="onClickReject"
+            />
+            <ActionButton
+                name.translate="Accept the call"
+                hideLabel="true"
+                type="'success'"
+                icon="'fa-phone fa-2x'"
+                onClick.bind="onClickAccept"
+            />
+        </div>
+    </div>
+</t>
 </templates>

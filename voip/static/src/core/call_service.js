@@ -11,8 +11,7 @@ export class CallService {
     }
 
     async abort(call) {
-        const [data] = await this.orm.call("voip.call", "abort_call", [[call.id]]);
-        this.store.Call.insert(data);
+        this.store.insert(await this.orm.call("voip.call", "abort_call", [[call.id]]));
     }
 
     async create(data) {
@@ -20,15 +19,19 @@ export class CallService {
         delete data.activity;
         delete data.partner;
         data.partner_id = partner?.id;
-        const [res] = await this.orm.call("voip.call", "create_and_format", [], data);
-        const call = this.store.Call.insert(res);
+        const {
+            ids: [id],
+            store_data,
+        } = await this.orm.call("voip.call", "create_and_format", [], data);
+        this.store.insert(store_data);
+        const call = this.store["voip.call"].insert(id);
         if (activity) {
             call.activity = activity;
         }
         if (!call.partner) {
-            this.orm.call("voip.call", "get_contact_info", [[call.id]]).then((partnerData) => {
-                if (partnerData) {
-                    call.partner = partnerData;
+            this.orm.call("voip.call", "get_contact_info", [[call.id]]).then((data) => {
+                if (data) {
+                    this.store.insert(data);
                 }
             });
         }
@@ -38,16 +41,16 @@ export class CallService {
     async end(call, { activityDone = true } = {}) {
         let data;
         if (call.activity && activityDone) {
-            [data] = await this.orm.call("voip.call", "end_call", [[call.id]], {
+            data = await this.orm.call("voip.call", "end_call", [[call.id]], {
                 activity_name: call.activity.res_name,
             });
             await call.activity.markAsDone();
             call.activity.remove();
             call.activity = null;
         } else {
-            [data] = await this.orm.call("voip.call", "end_call", [[call.id]]);
+            data = await this.orm.call("voip.call", "end_call", [[call.id]]);
         }
-        this.store.Call.insert(data);
+        this.store.insert(data);
         if (call.timer) {
             clearInterval(call.timer.interval);
             call.timer = null;
@@ -55,19 +58,16 @@ export class CallService {
     }
 
     async miss(call) {
-        const [data] = await this.orm.call("voip.call", "miss_call", [[call.id]]);
-        this.store.Call.insert(data);
-        this.missedCalls++;
+        this.store.insert(await this.orm.call("voip.call", "miss_call", [[call.id]]));
+        ++this.missedCalls;
     }
 
     async reject(call) {
-        const [data] = await this.orm.call("voip.call", "reject_call", [[call.id]]);
-        this.store.Call.insert(data);
+        this.store.insert(await this.orm.call("voip.call", "reject_call", [[call.id]]));
     }
 
     async start(call) {
-        const [data] = await this.orm.call("voip.call", "start_call", [[call.id]]);
-        this.store.Call.insert(data);
+        this.store.insert(await this.orm.call("voip.call", "start_call", [[call.id]]));
         call.timer = {};
         const computeDuration = () => {
             call.timer.time = Math.floor((luxon.DateTime.now() - call.startDate) / 1000);
