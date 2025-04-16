@@ -4,7 +4,7 @@
     'name': 'AI',
     'version': '0.1',
     'sequence': 420,
-    'summary': 'Artificial Intelligence Feature Management',
+    'summary': 'Artificial Intelligence Text Drafting Feature Management',
     'depends': [
         'base',
         'base_setup',
@@ -17,6 +17,8 @@
         'data/ai_composer_data.xml',
         'views/ai_composer_views.xml',
         'views/ai_app_menu.xml',
+        'views/mail_scheduled_message_views.xml',
+        'wizard/mail_compose_message_views.xml',
     ],
     'installable': True,
     'application': True,

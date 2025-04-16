@@ -1,6 +1,5 @@
 import { patch } from "@web/core/utils/patch";
 import { threadActionsRegistry, threadActionsInternal } from "@mail/core/common/thread_actions";
-import { _t } from "@web/core/l10n/translation";
 
 patch(threadActionsRegistry.get("close"), {
     open(component) {

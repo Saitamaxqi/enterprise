@@ -4,6 +4,9 @@ import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 
+import { convertBrToLineBreak } from "@mail/utils/common/format";
+
+
 /**
  * @type {import("@mail/chatter/web_portal/chatter").Chatter }
  * @typedef {Object} Props
@@ -27,11 +30,13 @@ patch(Chatter.prototype, {
             originalRecordData: this.props.record.data,
             originalRecordFields: this.props.record.fields,
             specialActionCallbacks: {
-                'sendMessage': (content) => {
-                    this.state.thread.post(content);
+                sendMessage: (content) => {
+                    this.state.thread.composer.text = convertBrToLineBreak(content);
+                    this.toggleComposer('message');
                 },
-                'logNote': (content) => {
-                    this.state.thread.post(content, { 'isNote': true });
+                logNote: (content) => {
+                    this.state.thread.composer.text = convertBrToLineBreak(content);
+                    this.toggleComposer('note');
                 }
             },
             placeholderPrompt: _t("Summarize the chatter conversation"),

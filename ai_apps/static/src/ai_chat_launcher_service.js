@@ -1,9 +1,6 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { formatDate, formatDateTime } from "@web/core/l10n/dates";
-
 
 export const aiChatLauncherService = {
     dependencies: ["mail.store", "orm"],
@@ -20,7 +17,7 @@ export const aiChatLauncherService = {
                 frontEndRecordInfo = null,
                 textSelection = null,
             }) {
-                const ai_channel_id = await services.orm.call(
+                const { ai_channel_id, data } = await services.orm.call(
                     'discuss.channel',
                     'create_ai_composer_channel',
                     [
@@ -32,6 +29,8 @@ export const aiChatLauncherService = {
                         textSelection,
                     ],
                 );
+
+                services['mail.store'].insert(data);
 
                 const thread = await services['mail.store'].Thread.getOrFetch({
                     model: "discuss.channel",

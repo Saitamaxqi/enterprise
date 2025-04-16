@@ -1,13 +1,13 @@
 import { _t } from "@web/core/l10n/translation";
 import { Plugin } from "@html_editor/plugin";
-import { closestElement } from "../../utils/dom_traversal";
-import { ChatGPTPromptDialog } from "./chatgpt_prompt_dialog";
-import { ChatGPTAlternativesDialog } from "./chatgpt_alternatives_dialog";
-import { ChatGPTTranslateDialog } from "./chatgpt_translate_dialog";
-import { LanguageSelector } from "./language_selector";
+import { closestElement } from "@html_editor/utils/dom_traversal";
+import { ChatGPTTranslateDialog } from "@html_editor/main/chatgpt/chatgpt_translate_dialog";
+import { LanguageSelector } from "@html_editor/main/chatgpt/language_selector";
 import { withSequence } from "@html_editor/utils/resource";
 import { user } from "@web/core/user";
 import { isContentEditable } from "@html_editor/utils/dom_info";
+import { unwrapContents } from "@html_editor/utils/dom";
+import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
 
 export class ChatGPTPlugin extends Plugin {
     static id = "chatgpt";
@@ -82,7 +82,7 @@ export class ChatGPTPlugin extends Plugin {
         return cannotReplace || isEmpty;
     }
 
-    openDialog(params = {}) {
+    async openDialog(params = {}) {
         const selection = this.dependencies.selection.getEditableSelection();
         const dialogParams = {
             insert: (content) => {
@@ -123,21 +123,60 @@ export class ChatGPTPlugin extends Plugin {
                     divContainer.prepend(div);
                     setTimeout(() => div.remove(), 2000);
                 }
+                unwrapContents(insertedNodes[0]);
             },
             ...params,
         };
         dialogParams.baseContainer = this.dependencies.baseContainer.getDefaultNodeName();
         // collapse to end
         const sanitize = this.dependencies.sanitize.sanitize;
-        if (selection.isCollapsed) {
-            this.dependencies.dialog.addDialog(ChatGPTPromptDialog, { ...dialogParams, sanitize });
-        } else {
+        if (params.language) {
             const originalText = selection.textContent() || "";
             this.dependencies.dialog.addDialog(
-                params.language ? ChatGPTTranslateDialog : ChatGPTAlternativesDialog,
+                ChatGPTTranslateDialog,
                 { ...dialogParams, originalText, sanitize }
             );
-        }
+        } else {
+            let callerComp, recordModel, recordId, recordData, recordFields, callerId, placeholderPrompt, textSelection;
+            const { resModel, resId, data, fields, id } = this.config.getRecordInfo();
+            if (selection.isCollapsed) {
+                if (resModel === "mail.compose.message") {
+                    callerComp = "html_field_composer";
+                    recordModel = data.model;
+                    recordId = Number(data.res_ids.slice(1,-1));  // resIds should look like so `[id]`, the slice and cast allows to extract the id
+                    recordData = data;
+                    callerId = id;
+                    placeholderPrompt =  _t("Write a followup answer");
+                } else {
+                    callerComp = "html_field_record";
+                    recordModel = resModel;
+                    recordId = resId;
+                    recordData = data;
+                    recordFields = fields;
+                    callerId = resId || id;
+                }
+            } else {
+                callerComp = "html_field_text_select";
+                recordData = data;
+                recordFields = fields;
+                callerId = resId || id;
+                placeholderPrompt = _t("Rewrite");
+                textSelection = selection.textContent();
+            }
+            await this.services.aiChatLauncher.openAIChatFromContextV2({
+                callerComponentName: callerComp,
+                originalRecordModel: recordModel,
+                originalRecordId: recordId,
+                originalRecordData: recordData,
+                originalRecordFields: recordFields,
+                specialActionCallbacks: {
+                    insert: dialogParams.insert,
+                },
+                aiChatSourceId: callerId,
+                placeholderPrompt: placeholderPrompt,
+                textSelection: textSelection,
+            });
+        } 
         if (this.services.ui.isSmall) {
             // TODO: Find a better way and avoid modifying range
             // HACK: In the case of opening through dropdown:
@@ -152,4 +191,14 @@ export class ChatGPTPlugin extends Plugin {
             });
         }
     }
+
+    destroy() {
+        const { resModel } = this.config.getRecordInfo();
+        if (resModel !== "mail.compose.message") {
+            this.services['mail.store'].aiInsertButtonTarget = false;
+        }
+        super.destroy();
+    }
 }
+
+MAIN_PLUGINS.push(ChatGPTPlugin);

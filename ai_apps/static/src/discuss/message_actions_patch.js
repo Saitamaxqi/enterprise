@@ -3,7 +3,7 @@ import { patch } from "@web/core/utils/patch";
 import { user } from '@web/core/user';
 import { _t } from "@web/core/l10n/translation";
 import { messageActionsRegistry, messageActionsInternal } from "@mail/core/common/message_actions";
-import { htmlReplace } from "@mail/utils/common/html";
+import { unwrapContents } from "@html_editor/utils/dom";
 import { setElementContent } from "@web/core/utils/html";
 
 messageActionsRegistry
@@ -21,41 +21,46 @@ messageActionsRegistry
             const fragment = document.createDocumentFragment();
             const content_root = document.createElement('span');
             content_root.setAttribute('InsertorId', 'AIInsertion');
-            setElementContent(content_root, htmlReplace(component.props.message.body, /^<p>(.*?)<\/p>$/, (match, innerContent) => innerContent));
+            setElementContent(content_root, component.props.message.body);
+            // check if the content is enclosed in a <p> element, if so, unwrap it
+            const paragraphElements = content_root.querySelectorAll('p');
+            if (paragraphElements.length === 1) {
+                unwrapContents(paragraphElements[0]);
+            }
             fragment.appendChild(content_root);
-            component.props.thread.aiSpecialActions['insert'](fragment);
+            component.props.thread.aiSpecialActions.insert(fragment);
             if (component.env.isSmall) {
                 component.props.thread.closeChatWindow();
             }
         },
         sequence: 10,
     })
+    .add("send-message-direct", {
+        condition: (component) => (
+            !!component.props.thread.aiSpecialActions?.sendMessage &&
+            component.message.author.userId !== user.userId  // don't show the buttons for the user's messages
+        ),
+        title: _t("Send as Message"),
+        onClick: (component) => {
+            component.props.thread.aiSpecialActions.sendMessage(component.props.message.body);
+        },
+        sequence: 20,
+    })
+    .add("log-note-direct", {
+        condition: (component) => (
+            !!component.props.thread.aiSpecialActions?.logNote &&
+            component.message.author.userId !== user.userId  // don't show the buttons for the user's messages
+        ),
+        title: _t("Log as Note"),
+        onClick: (component) => component.props.thread.aiSpecialActions.logNote(component.props.message.body),
+        sequence: 30,
+    })
     .add("copy-message", {
         condition: (component) => component.props.thread.channel_type === "ai_composer",
         icon: "fa fa-copy",
         title: _t("Copy to Clipboard"),
         onClick: (component) => component.message.copyMessageText(),
-        sequence: 30,
-    })
-    .add("send-message-direct", {
-        condition: (component) => (
-            !!component.props.thread.aiSpecialActions?.['sendMessage'] &&
-            component.message.author.userId !== user.userId  // don't show the buttons for the user's messages
-        ),
-        title: _t("Send as Message"),
-        onClick: (component) => {
-            component.props.thread.aiSpecialActions['sendMessage'](component.props.message.body);
-        },
-        sequence: 10,
-    })
-    .add("log-note-direct", {
-        condition: (component) => (
-            !!component.props.thread.aiSpecialActions?.['logNote'] &&
-            component.message.author.userId !== user.userId  // don't show the buttons for the user's messages
-        ),
-        title: _t("Log as Note"),
-        onClick: (component) => component.props.thread.aiSpecialActions['logNote'](component.props.message.body),
-        sequence: 20,
+        sequence: 50,
     });
     
 patch(messageActionsInternal, {

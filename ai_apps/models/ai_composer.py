@@ -7,6 +7,10 @@ class AIComposer(models.Model):
     _name = "ai.composer"
     _description = "AI model configurations (system prompts) for text drafting."
 
-    key = fields.Char("AI Key", help="The identifier of the mail assistant")
-    default_prompt = fields.Text("Default Prompt", help="The default prompt passed to this mail assistant")
-    system_prompt = fields.Text("System Prompt", help="The system prompt passed to this mail assistant - used for formatting")
+    composer_name = fields.Char(
+        "AI Composer Name", help="The identifier of the mail assistant"
+    )
+    display_name = fields.Char(related="composer_name")
+    default_prompt = fields.Text(
+        "Default Prompt", help="The default prompt passed to this mail assistant"
+    )

@@ -6,18 +6,18 @@
         web_icon="ai_apps,static/description/icon.png"
         sequence="420"/>
 
-        <menuitem
-            name="Configuration"
-            id="menu_ai_config"
-            groups="group_ai_manager"
-            sequence="100"
-            parent="menu_ai_root"/>
+    <menuitem
+        name="Configuration"
+        id="menu_ai_config"
+        groups="group_ai_manager"
+        sequence="100"
+        parent="menu_ai_root"/>
 
-            <menuitem
-                name="AI Composer Prompts"
-                id="menu_ai_composer"
-                action="open_view_ai_composer_kanban"
-                sequence="20"
-                parent="menu_ai_config"/>
+    <menuitem
+        name="AI Composer Prompts"
+        id="menu_ai_composer"
+        action="open_view_ai_composer_kanban"
+        sequence="20"
+        parent="menu_ai_config"/>
 
 </odoo>

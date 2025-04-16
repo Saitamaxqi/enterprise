@@ -7,16 +7,19 @@ import { convertBrToLineBreak } from "@mail/utils/common/format";
 
 const messagePatch = {
     async copyMessageText() {
-        let notification = _t("Message Copied!");
-        let type = "info";
         try {
             const messageBody = convertBrToLineBreak(this.body);
             await browser.navigator.clipboard.writeText(messageBody);
         } catch {
-            notification = _t("Message Copy Failed (Permission denied?)!");
-            type = "danger";
+            this.store.env.services.notification.add(
+                _t("Message Copy Failed (Permission denied?)!"), 
+                { type: "danger" },
+            );
         }
-        this.store.env.services.notification.add(notification, { type });
+        this.store.env.services.notification.add(
+            _t("Message Copied!"), 
+            { type: "info" },
+        );
     },
 };
 

@@ -16,9 +16,6 @@
                 <a href="#" class="o_knowledge_add_item_calendar p-2 text-muted" data-hotkey="C" t-on-click="onBuildItemCalendarBtnClick">
                     <i class="fa fa-lg fa-calendar me-1"/> Build an Item Calendar
                 </a>
-                <a href="#" class="o_knowledge_generate_article p-2 text-muted" data-hotkey="G" t-on-click="onGenerateArticleClick">
-                    <i class="fa fa-lg fa-magic me-1"/> Generate an Article with AI
-                </a>
             </div>
         </div>
     </t>

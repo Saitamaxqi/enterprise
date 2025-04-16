@@ -6,12 +6,15 @@
         <field name="model">ai.composer</field>
         <field name="arch" type="xml">
             <form>
-                <header>
-                    <field name="key" readonly="1"/>
-                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="composer_name" string="Composer"/>
+                        <h2>
+                            <field name="composer_name" readonly="1"/>
+                        </h2>
+                    </div>
+                    <label for="default_prompt" string="System Prompt for Composer"/>
                     <field name="default_prompt"/>
-                    <field name="system_prompt"/>
                 </sheet>
             </form>
         </field>
@@ -22,7 +25,7 @@
         <field name="model">ai.composer</field>
         <field name="arch" type="xml">
             <list string="AI Composer Prompts">
-                <field name="key" readonly="1"/>
+                <field name="composer_name" readonly="1"/>
                 <field name="default_prompt"/>
             </list>
         </field>
@@ -36,7 +39,7 @@
             <kanban>
                 <templates>
                     <t t-name="card">
-                        <field name="key" class="fw-bolder" string="Name"/>
+                        <field name="composer_name" class="fw-bolder" string="Name"/>
                         <div class="d-flex">
                             <field name="default_prompt" string="Default Prompt"/>
                         </div>

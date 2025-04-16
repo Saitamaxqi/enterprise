@@ -2,7 +2,7 @@
 <odoo>
     <record id="group_ai_manager" model="res.groups">
         <field name="name">Administrator</field>
-        <field name="comment">Administrator can use the AI app the manage the ai prompts</field>
+        <field name="comment">Administrator can use the AI app to manage the ai prompts</field>
         <field name="sequence">20</field>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
