@@ -10,7 +10,7 @@
     'depends': ['l10n_be_hr_payroll'],
     'data': [
         'security/ir.model.access.csv',
-        'views/hr_contract_views.xml',
+        # 'views/hr_contract_views.xml',
         'views/hr_work_entry_type_views.xml',
         'views/res_config_settings_views.xml',
         'views/hr_payroll_export_acerta_views.xml',

@@ -17,7 +17,7 @@
                                 <td><strong>Employee Name</strong></td>
                                 <td><span t-field="employee.name">Lakshya</span></td>
                                 <td><strong>Date of Joining</strong></td>
-                                <td><span t-field="employee.contract_id.date_start">01/01/2024</span></td>
+                                <td><span t-field="employee.version_id.date_start">01/01/2024</span></td>
                             </tr>
                             <tr>
                                 <td><strong>Designation</strong></td>

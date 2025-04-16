@@ -18,20 +18,20 @@ class HrContractSalaryOffer(models.Model):
         for field in fields:
             if field.startswith('x_') and 'active_id' in self.env.context:
                 model = self.env.context.get('active_model')
-                if model == "hr.contract" and field in self.env[model]:
-                    contract = self.env[model].browse(self.env.context['active_id'])
-                    result[field] = contract[field]
-                elif model == "hr.applicant" and field in self.env["hr.contract"] and "default_contract_template_id" in self.env.context:
-                    contract = self.env["hr.contract"].browse(self.env.context['default_contract_template_id'])
-                    result[field] = contract[field]
+                if model == "hr.version" and field in self.env[model]:
+                    version = self.env[model].browse(self.env.context['active_id'])
+                    result[field] = version[field]
+                elif model == "hr.applicant" and field in self.env["hr.version"] and "default_contract_template_id" in self.env.context:
+                    version = self.env["hr.version"].browse(self.env.context['default_contract_template_id'])
+                    result[field] = version[field]
         return result
 
     display_name = fields.Char(string="Title", readonly=False)  # TODO read-only=False, but not inversed?
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id, required=True)
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(
-        'hr.contract',
-        domain="['|', ('employee_id', '=', False), ('id', '=', employee_contract_id)]", required=True, tracking=True)
+        'hr.version',
+        domain="['|', ('employee_id', '=', False), ('id', '=', employee_version_id)]", required=True, tracking=True)
     state = fields.Selection([
         ('open', 'In Progress'),
         ('half_signed', 'Partially Signed'),
@@ -44,10 +44,10 @@ class HrContractSalaryOffer(models.Model):
     offer_create_date = fields.Date("Offer Create Date", compute="_compute_offer_create_date", readonly=True)
     refusal_date = fields.Date("Refusal Date")
     sign_request_ids = fields.Many2many('sign.request', string='Requested Signatures')
-    employee_contract_id = fields.Many2one('hr.contract', tracking=True,
-        store=True, compute="_compute_employee_contract_id", inverse='_inverse_employee_contract_id',
+    employee_version_id = fields.Many2one('hr.version', tracking=True,
+        store=True, compute="_compute_employee_version_id", inverse='_inverse_employee_version_id',
         index='btree_not_null')
-    employee_id = fields.Many2one('hr.employee', tracking=True, domain=[('contract_ids', '!=', False)])
+    employee_id = fields.Many2one('hr.employee', tracking=True, domain=[('version_ids', '!=', False)])
     applicant_id = fields.Many2one('hr.applicant', index=True, tracking=True)
     applicant_name = fields.Char(related='applicant_id.partner_name')
     final_yearly_costs = fields.Monetary("Employer Budget", aggregator="avg", tracking=True)
@@ -65,6 +65,7 @@ class HrContractSalaryOffer(models.Model):
     url = fields.Char('Link', compute='_compute_url')
     is_half_sign_state_required = fields.Boolean(
         compute="_compute_is_half_sign_state_required",
+        compute_sudo=True,
         export_string_translation=False
     )
 
@@ -82,7 +83,7 @@ class HrContractSalaryOffer(models.Model):
                       + f"?final_yearly_costs={round(offer.final_yearly_costs, 2)}" \
                       + (f"&token={offer.access_token}" if offer.applicant_id else "")
 
-    @api.depends('applicant_id', 'employee_contract_id', 'employee_id')
+    @api.depends('applicant_id', 'employee_version_id', 'employee_id')
     def _compute_display_name(self):
         for offer in self:
             if offer.applicant_id:
@@ -90,7 +91,7 @@ class HrContractSalaryOffer(models.Model):
                     offer.applicant_id.partner_id.name or \
                     offer.applicant_id.partner_name
             else:
-                name = offer.employee_contract_id.employee_id.name or \
+                name = offer.employee_version_id.employee_id.name or \
                     offer.employee_id.name
             offer.display_name = _("Offer for %(recipient)s", recipient=name) if name else ""
 
@@ -106,7 +107,7 @@ class HrContractSalaryOffer(models.Model):
                 ]),
             "&",
                 ('applicant_id', '=', False),
-                ('employee_contract_id.employee_id.name', operator, value),
+                ('employee_version_id.employee_id.name', operator, value),
         ]
 
     @api.depends('create_date')
@@ -121,31 +122,30 @@ class HrContractSalaryOffer(models.Model):
                 if offer.offer_end_date else False
 
     @api.depends('employee_id')
-    def _compute_employee_contract_id(self):
+    def _compute_employee_version_id(self):
         for offer in self:
             if offer.employee_id:
-                contracts = offer.employee_id.contract_ids.sorted("create_date")
+                versions = offer.employee_id.version_ids.sorted("create_date")
 
-                if len(contracts) == 1:
-                    offer.employee_contract_id = contracts[0]
+                if len(versions) == 1:
+                    offer.employee_version_id = versions[0]
                     continue
 
-                # Filter active contracts based on offer's creation date
-                active_contracts = contracts.filtered(
+                # Filter active versions based on offer's creation date
+                active_versions = versions.filtered(
                     lambda c: c.date_start <= offer.offer_create_date and
                     (not c.date_end or c.date_end >= offer.offer_create_date)
                 )
 
-                if active_contracts:
-                    running_contracts = active_contracts.filtered(lambda c: c.state == "open")
-                    offer.employee_contract_id = running_contracts[0] if running_contracts else active_contracts[0]
+                if active_versions:
+                    offer.employee_version_id = active_versions[0]
                 else:
-                    # No active or running contract, so pick the first created contract
-                    offer.employee_contract_id = contracts[0]
+                    # No active or running version, so pick the first created version
+                    offer.employee_version_id = versions[0]
 
-    def _inverse_employee_contract_id(self):
+    def _inverse_employee_version_id(self):
         for offer in self:
-            offer.employee_id = offer.employee_contract_id.employee_id
+            offer.employee_id = offer.employee_version_id.employee_id
 
     @api.onchange('employee_job_id')
     def _onchange_employee_job_id(self):
@@ -154,16 +154,16 @@ class HrContractSalaryOffer(models.Model):
             self.department_id = self.employee_job_id.department_id
 
         if (
-            self.employee_contract_id and
+            self.employee_version_id and
             (
-                self.employee_job_id == self.employee_contract_id.job_id or
-                not self.employee_job_id.default_contract_id
+                self.employee_job_id == self.employee_version_id.job_id or
+                not self.employee_job_id.contract_template_id
             )
         ):
-            self.contract_template_id = self.employee_contract_id
+            self.contract_template_id = self.employee_version_id
 
-        elif self.employee_job_id.default_contract_id:
-            self.contract_template_id = self.employee_job_id.default_contract_id
+        elif self.employee_job_id.contract_template_id:
+            self.contract_template_id = self.employee_job_id.contract_template_id
 
     @api.onchange('contract_template_id')
     def _onchange_contract_template_id(self):
@@ -184,7 +184,7 @@ class HrContractSalaryOffer(models.Model):
         }
 
     def action_refuse_offer(self, message=None, refusal_reason=None):
-        self.applicant_id.unlink_archived_contracts()
+        self.applicant_id.unlink_archived_versions()
         if not message:
             message = _("%s manually set the Offer to Refused", self.env.user.name)
         self.write({
@@ -207,7 +207,7 @@ class HrContractSalaryOffer(models.Model):
         }
 
     def unlink(self):
-        self.applicant_id.unlink_archived_contracts()
+        self.applicant_id.unlink_archived_versions()
         return super().unlink()
 
     def _cron_update_state(self):
@@ -258,14 +258,14 @@ class HrContractSalaryOffer(models.Model):
 
     def action_view_contract(self):
         self.ensure_one()
-        contract_id = self.employee_contract_id.id or self.env['hr.contract'].search([("applicant_id", "=", self.applicant_id.id)], limit=1).id
+        version_id = self.employee_version_id.id or self.env['hr.version'].search([("applicant_id", "=", self.applicant_id.id)], limit=1).id
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Contract'),
             'view_mode': 'form',
-            'res_model': 'hr.contract',
-            'res_id': contract_id,
+            'res_model': 'hr.employee',
+            'res_id': self.employee_id.id,
             'target': 'current',
+            'context': {'version_id': version_id}
         }
 
     def _mail_get_partners(self, introspect_fields=False):

@@ -179,7 +179,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_003_internet_allowance(self):
         self.contract.write({
-            'date_start': date(2023, 1, 10),
+            'date_version': date(2023, 1, 10),
+            'contract_date_start': date(2023, 1, 10),
         })
         self._generate_leave(
             datetime(2023, 1, 18),
@@ -218,7 +219,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_004_b_mpf_first_contribution(self):
         self.contract.write({
-            'date_start': date(2023, 2, 1),
+            'date_version': date(2023, 2, 1),
+            'contract_date_start': date(2023, 2, 1),
         })
         payslip_results = {
             2: {'BASIC': 20000.0, 'ALW.INT': 200.0, '713_GROSS': 20200.0, 'MPF_GROSS': 20200.0, 'GROSS': 20200.0, 'NET': 20200.0, 'MEA': 20200.0},
@@ -344,7 +346,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_004_e_mpf_first_contribution_special_case(self):
         self.contract.write({
-            'date_start': date(2023, 7, 3),
+            'date_version': date(2023, 7, 3),
+            'contract_date_start': date(2023, 7, 3),
         })
         payslip_results = {
             7: {'BASIC': 18709.68, 'ALW.INT': 187.1, '713_GROSS': 18896.78, 'MPF_GROSS': 18896.78, 'GROSS': 18896.78, 'NET': 18896.78, 'MEA': 18896.78},
@@ -397,7 +400,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_005_b_incomplete_year_end_of_year_payment(self):
         self.contract.write({
-            'date_start': date(2023, 7, 3),
+            'date_version': date(2023, 7, 3),
+            'contract_date_start': date(2023, 7, 3),
         })
         for month in range(7, 12):
             self._generate_payslip(

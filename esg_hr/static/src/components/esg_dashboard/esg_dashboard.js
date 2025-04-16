@@ -1,11 +1,11 @@
 import { EsgDashboard } from "@esg/components/esg_dashboard/esg_dashboard";
-import { EsgHrGenderParityBox } from "@esg_hr/components/esg_dashboard/esg_hr_gender_parity_box/esg_hr_gender_parity_box";
+import { EsgHrSexParityBox } from "@esg_hr/components/esg_dashboard/esg_hr_sex_parity_box/esg_hr_sex_parity_box";
 import { patch } from "@web/core/utils/patch";
 
 patch(EsgDashboard, {
     components: {
         ...EsgDashboard.components,
-        EsgHrGenderParityBox,
+        EsgHrSexParityBox,
     },
 });
 
@@ -14,9 +14,9 @@ patch(EsgDashboard.prototype, {
         return {
             ...super.dashboardComponents,
             4: {
-                component: EsgHrGenderParityBox,
+                component: EsgHrSexParityBox,
                 props: {
-                    data: this.data.gender_parity_box,
+                    data: this.data.sex_parity_box,
                 },
             },
         };

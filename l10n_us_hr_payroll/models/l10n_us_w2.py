@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -90,9 +89,9 @@ class L10nUsW2(models.Model):
             return abs(sum(line_values[code]['sum']['total'] for code in colorado_local_income_tax_codes))
         return ""
 
-    def _get_box20_locality_name(self, employee):
-        if (employee.address_id.state_id.code == 'CO' and employee.address_id.city in ('Aurora', 'Denver', 'Glendale', 'Greenwood Village', 'Sheridan')):
-            return employee.address_id.city
+    def _get_box20_locality_name(self, version):
+        if (version.address_id.state_id.code == 'CO' and version.address_id.city in ('Aurora', 'Denver', 'Glendale', 'Greenwood Village', 'Sheridan')):
+            return version.address_id.city
         return ""
 
     def action_generate_csv(self):
@@ -179,6 +178,8 @@ class L10nUsW2(models.Model):
                 'COOPTAURORA', 'COOPTDENVER', 'COOPTGLENDALE', 'COOPTGREENWOODVILLAGE', 'COOPTSHERIDAN',
             ], compute_sum=True)
 
+            version = employee._get_version(self.date_start)
+
             writer.writerow([
                 self.company_id.vat or "",
                 self.company_id.name or "",
@@ -190,16 +191,16 @@ class L10nUsW2(models.Model):
                 self.company_id.zip or "",
                 self.company_id.phone or "",
                 self.company_id.email or "",
-                employee.ssnid or "",
+                version.ssnid or "",
                 employee.name or "",
                 "",
                 employee.name or "",
-                employee.private_street or "",
-                employee.private_street2 or "",
-                employee.private_city or "",
-                employee.private_state_id.code or "",
-                employee.private_country_id.name or "",
-                employee.private_zip or "",
+                version.private_street or "",
+                version.private_street2 or "",
+                version.private_city or "",
+                version.private_state_id.code or "",
+                version.private_country_id.name or "",
+                version.private_zip or "",
                 employee.private_phone or "",
                 employee.private_email or "",
                 "",
@@ -221,23 +222,23 @@ class L10nUsW2(models.Model):
                 abs(line_values['ROTH401K']['sum']['total']),
                 "",
                 "",
-                "TRUE" if employee.l10n_us_statutory_employee else "FALSE",
-                "TRUE" if employee.l10n_us_retirement_plan else "FALSE",
-                "TRUE" if employee.l10n_us_third_party_sick_pay else "FALSE",
-                _("%s SDI Tax", employee.address_id.state_id.code) if employee.address_id.state_id.code in ['NY', 'CA'] else "",
+                "TRUE" if version.l10n_us_statutory_employee else "FALSE",
+                "TRUE" if version.l10n_us_retirement_plan else "FALSE",
+                "TRUE" if version.l10n_us_third_party_sick_pay else "FALSE",
+                _("%s SDI Tax", version.address_id.state_id.code) if version.address_id.state_id.code in ['NY', 'CA'] else "",
                 abs(line_values['CASDITAX']['sum']['total'] + line_values['NYSDITAX']['sum']['total']),
                 "",
                 "",
                 "",
                 "",
                 "",
-                employee.address_id.state_id.code or "",
+                version.address_id.state_id.code or "",
                 self.company_id.company_registry or "",
                 abs(line_values['TAXABLE']['sum']['total']),
                 self._get_box17_state_income_tax(line_values),
-                self._get_box18_local_wage(employee.address_id.state_id.code, line_values),
-                self._get_box19_local_income_tax(employee.address_id.state_id.code, line_values),
-                self._get_box20_locality_name(employee),
+                self._get_box18_local_wage(version.address_id.state_id.code, line_values),
+                self._get_box19_local_income_tax(version.address_id.state_id.code, line_values),
+                self._get_box20_locality_name(version),
                 "",
                 "R",
                 "N",

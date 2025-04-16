@@ -12,12 +12,15 @@ class L10nChLocationUnit(models.Model):
     _description = 'Work Place - Swiss Payroll'
     _rec_name = 'partner_id'
 
+    active = fields.Boolean(default=True)
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     partner_id = fields.Many2one('res.partner', string="Address", required=True)
     bur_ree_number = fields.Char(
         string="BUR-REE-Number",
-        required=True,
+        required=False,
         help="Depending on the structure of the company and the number of workplaces, there are one or more REE numbers.")
+    in_house_id = fields.Char(string="InHouseID")
+
     canton = fields.Selection([
         ('AG', 'Argovie'),
         ('AI', 'Appenzell Rhodes-Intérieures'),
@@ -45,9 +48,9 @@ class L10nChLocationUnit(models.Model):
         ('VS', 'Valais'),
         ('ZG', 'Zoug'),
         ('ZH', 'Zurich'),
-    ], required=True)
-    dpi_number = fields.Char('DPI Number', required=True)  # Equivalent to SSL nummer
-    municipality = fields.Char(string="Municipality ID", required=True)
+    ], required=False, compute="_compute_autocomplete_canton_municipality", store=True, readonly=False)
+    dpi_number = fields.Char('DPI Number', required=False)  # Equivalent to SSL nummer
+    municipality = fields.Char(string="Municipality ID", required=False, compute="_compute_autocomplete_canton_municipality", store=True, readonly=False)
     weekly_hours = fields.Float(string="Weekly Hours", default=40)
     weekly_lessons = fields.Float(string="Weekly Lessons")
 
@@ -66,3 +69,14 @@ class L10nChLocationUnit(models.Model):
                         raise ValidationError(_("BUR-REE-Number checksum is not correct"))
                 else:
                     raise ValidationError(_("BUR-REE-Number does not match the right format"))
+
+    @api.depends("partner_id.zip")
+    def _compute_autocomplete_canton_municipality(self):
+        ZIP_DATA = self.env['hr.rule.parameter']._get_parameter_from_code("l10n_ch_bfs_municipalities", fields.Date.today(), raise_if_not_found=False)
+        if ZIP_DATA:
+            for record in self:
+                if record.partner_id.zip:
+                    data = ZIP_DATA.get(record.partner_id.zip)
+                    if data:
+                        record.municipality = data[1]
+                        record.canton = data[2]

@@ -323,7 +323,7 @@ class L10n_AuSuperStreamLine(models.Model):
     amount_total = fields.Monetary("Total Contribution", compute="_compute_amount_total", currency_field='currency_id')
 
     # Registration
-    employment_start_date = fields.Date(related="payslip_id.contract_id.date_start", store=True, readonly=False)
+    employment_start_date = fields.Date(related="payslip_id.version_id.date_start", store=True, readonly=False)
     annual_salary_for_benefits_amount = fields.Monetary()
     annual_salary_for_contributions_amount = fields.Monetary()
     annual_salary_for_contributions_effective_start_date = fields.Date()
@@ -360,7 +360,7 @@ class L10n_AuSuperStreamLine(models.Model):
         for rec in self:
             if rec.state != 'draft':
                 continue
-            contract = rec.payslip_id.contract_id
+            contract = rec.payslip_id.version_id
             rec.superannuation_guarantee_amount = super_lines_total['SUPER'][rec.payslip_id.id]['total'] * rec.proportion
             rec.salary_sacrificed_amount = contract.l10n_au_salary_sacrifice_superannuation * rec.proportion
             ote_amount = super_lines_total['OTE'][rec.payslip_id.id]['total']
@@ -381,14 +381,14 @@ class L10n_AuSuperStreamLine(models.Model):
             rec.amount_total = sum(rec.mapped(itemgetter(*fields))[0])
 
     def _get_data_line(self, idx) -> list[str]:
-        if self.employee_id.gender == "male":
-            gender = '1'
-        elif self.employee_id.gender == "female":
-            gender = '2'
-        elif self.employee_id.gender == "other":
-            gender = '3'
+        if self.employee_id.sex == "male":
+            sex = '1'
+        elif self.employee_id.sex == "female":
+            sex = '2'
+        elif self.employee_id.sex == "other":
+            sex = '3'
         else:
-            gender = '0'
+            sex = '0'
         is_smsf = self.payee_id.fund_type == "SMSF"
         line = [
             # name | excel columns ( inclusive ) | number of columns | 0-index of columns
@@ -440,7 +440,7 @@ class L10n_AuSuperStreamLine(models.Model):
             ' '.join(self.employee_id.name.split(' ')[1:]),
             self.employee_id.name.split(' ')[0],
             self.employee_id.l10n_au_other_names or "",  # Other given name
-            gender,
+            sex,
             fields.Date.to_string(self.employee_id.birthday) or "",
             # contains "PO box", "P.O. Box", "PObox" ...
             "POS" if "pobox" in re.sub(r'\W+', '', self.employee_id.private_street.lower()) else "RES",

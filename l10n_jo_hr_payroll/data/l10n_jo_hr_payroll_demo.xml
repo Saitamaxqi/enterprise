@@ -120,7 +120,6 @@
 
     <record id="hr_employee_hana" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_jo_hr_payroll.res_partner_hana')).name"/>
-        <field name="job_title">Marketing Manager</field>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">99 123 0987</field>
@@ -139,7 +138,7 @@
         <field name="distance_home_work">1</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_jo_hr_payroll.res_partner_hana')).country_id"/>
         <field name="identification_id">97720300002</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1977, 3, 7).date()"/>
         <field name="place_of_birth">Amman</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_jo_hr_payroll.res_partner_hana')).country_id"/>
@@ -149,10 +148,22 @@
         <field name="study_field">Mathematics</field>
         <field name="study_school">University of Jordan</field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_jo_hr_payroll.res_partner_bank_account_hana"/>
+        <field name="department_id" ref="l10n_jo_hr_payroll.jo_hr_department_marketing"/>
+        <field name="structure_type_id" ref="l10n_jo_hr_payroll.structure_type_employee_jo"/>
+        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">1500</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="l10n_jo_housing_allowance">400</field>
+        <field name="l10n_jo_transportation_allowance">50</field>
+        <field name="l10n_jo_other_allowances">300</field>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
+        <field name="date_version" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
     </record>
+
     <record id="hr_employee_jad" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_jo_hr_payroll.res_partner_jad')).name"/>
-        <field name="job_title">Accounting Manager</field>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">99 329 1469</field>
@@ -172,7 +183,7 @@
         <field name="distance_home_work">3</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_jo_hr_payroll.res_partner_jad')).country_id"/>
         <field name="identification_id">96510500001</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1965, 8, 27).date()"/>
         <field name="place_of_birth">Amman</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_jo_hr_payroll.res_partner_jad')).country_id"/>
@@ -182,48 +193,14 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">University of Jordan</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_hana" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_jo_hr_payroll.res_partner_bank_account_hana"/>
-    </record>
-
-    <record id="hr_employee_jad" model="hr.employee">
         <field name="bank_account_id" ref="l10n_jo_hr_payroll.res_partner_bank_account_jad"/>
-    </record>
-
-    <record id="hr_contract_hana" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Temporary Employment Contract - ' + obj(ref('l10n_jo_hr_payroll.hr_employee_hana')).name + ' - ' + obj(ref('l10n_jo_hr_payroll.hr_employee_hana')).job_title"/>
-        <field name="employee_id" ref="l10n_jo_hr_payroll.hr_employee_hana"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_jo_hr_payroll.jo_hr_department_marketing"/>
-        <field name="company_id" ref="base.demo_company_jo"/>
-        <field name="structure_type_id" ref="l10n_jo_hr_payroll.structure_type_employee_jo"/>
-        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">1500</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-
-        <field name="l10n_jo_housing_allowance">400</field>
-        <field name="l10n_jo_transportation_allowance">50</field>
-        <field name="l10n_jo_other_allowances">300</field>
-        <field name="date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
-    </record>
-
-    <record id="hr_contract_jad" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_jo_hr_payroll.hr_employee_hana')).name + ' - ' + obj(ref('l10n_jo_hr_payroll.hr_employee_hana')).job_title"/>
-        <field name="employee_id" ref="l10n_jo_hr_payroll.hr_employee_jad"/>
-        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_jo_hr_payroll.jo_hr_department_accounting"/>
-        <field name="company_id" ref="base.demo_company_jo"/>
         <field name="structure_type_id" ref="l10n_jo_hr_payroll.structure_type_employee_jo"/>
         <field name="contract_type_id" ref="hr.contract_type_full_time"/>
         <field name="wage">2000</field>
-        <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime.today() + relativedelta(years=-3,month=2,day=25)"/>
-
+        <field name="date_version" eval="DateTime.today() + relativedelta(years=-3,month=2,day=25)"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-3,month=2,day=25)"/>
         <field name="l10n_jo_housing_allowance">150</field>
         <field name="l10n_jo_transportation_allowance">0</field>
         <field name="l10n_jo_other_allowances">100</field>

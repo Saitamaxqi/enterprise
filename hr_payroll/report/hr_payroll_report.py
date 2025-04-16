@@ -69,10 +69,10 @@ class HrPayrollReport(models.Model):
                 p.date_from as date_from,
                 p.date_to as date_to,
                 e.id as employee_id,
-                e.department_id as department_id,
+                v.department_id as department_id,
                 d.master_department_id as master_department_id,
-                c.job_id as job_id,
-                c.work_entry_source as work_entry_source,
+                v.job_id as job_id,
+                v.work_entry_source as work_entry_source,
                 e.company_id as company_id,
                 wet.id as work_code,
                 CASE WHEN wet.is_leave IS NOT TRUE THEN '1' WHEN wd.amount = 0 THEN '3' ELSE '2' END as work_type,
@@ -105,8 +105,8 @@ class HrPayrollReport(models.Model):
                 left join hr_payslip_line pln on (pln.slip_id = p.id and pln.code = 'NET')
                 left join hr_payslip_line plb on (plb.slip_id = p.id and plb.code = 'BASIC')
                 left join hr_payslip_line plg on (plg.slip_id = p.id and plg.code = 'GROSS')
-                left join hr_contract c on (p.contract_id = c.id)
-                left join hr_department d on (e.department_id = d.id)"""
+                left join hr_version v on (p.version_id = v.id)
+                left join hr_department d on (v.department_id = d.id)"""
         handled_fields = []
         for rule in additional_rules:
             field_name = rule._get_report_field_name()
@@ -122,7 +122,7 @@ class HrPayrollReport(models.Model):
         group_by_str = """
             GROUP BY
                 e.id,
-                e.department_id,
+                v.department_id,
                 d.master_department_id,
                 e.company_id,
                 wd.id,
@@ -136,7 +136,7 @@ class HrPayrollReport(models.Model):
                 plb.total,
                 plg.total,
                 min_id.min_line,
-                c.id"""
+                v.id"""
         return group_by_str
 
     def init(self):

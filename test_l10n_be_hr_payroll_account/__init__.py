@@ -15,9 +15,12 @@ def _generate_payslips(env):
     if env.ref('base.demo_company_be', raise_if_not_found=False):
         if not env['hr.payslip'].sudo().search_count([('employee_id.name', '=', 'Marian Weaver')]):
             _logger.info('Generating payslips')
+            joseph = env.ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck', raise_if_not_found=False)
+            if not joseph:
+                return
             employees = env['hr.employee'].search([
                 ('company_id', '=', env.ref('base.demo_company_be').id),
-                ('id', '!=', env.ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck').id),
+                ('id', '!=', joseph.id),
             ])
             # Everyone was on training 1 week
             leaves = env['hr.leave']

@@ -7,15 +7,14 @@
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')
-ip_eligible_contract = self.env['hr.contract'].search([
+ip_eligible_version = self.env['hr.version'].search([
     ('job_id.l10n_be_contract_ip', '=', True),
     ('ip', '=', False),
-    ('state', 'in', ['draft', 'open']),
     ('company_id', 'in', belgian_companies.ids),
 ])
-if ip_eligible_contract:
-    warning_count = len(ip_eligible_contract)
-    warning_records = ip_eligible_contract
+if ip_eligible_version:
+    warning_count = len(ip_eligible_version)
+    warning_records = ip_eligible_version
             </field>
         </record>
 
@@ -24,16 +23,15 @@ if ip_eligible_contract:
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')
-tax_exemption_eligible_contract = self.env['hr.contract'].search([
+tax_exemption_eligible_version = self.env['hr.version'].search([
     ('rd_percentage', '=', 0),
     ('job_id.l10n_be_contract_withholding_taxes_exemption', '=', True),
     ('employee_id.certificate', 'in', ['bachelor', 'master', 'doctor', 'civil_engineer']),
-    ('state', 'in', ['draft', 'open']),
     ('company_id', 'in', belgian_companies.ids),
 ])
-if tax_exemption_eligible_contract:
-    warning_count = len(tax_exemption_eligible_contract)
-    warning_records = tax_exemption_eligible_contract
+if tax_exemption_eligible_version:
+    warning_count = len(tax_exemption_eligible_version)
+    warning_records = tax_exemption_eligible_version
             </field>
         </record>
     </data>

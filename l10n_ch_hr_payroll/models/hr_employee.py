@@ -3,98 +3,20 @@
 
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError, UserError
 
 import re
-
-CANTONS = [
-    ('EX', 'EX - Foreign'),
-    ('AG', 'Argovie'),
-    ('AI', 'Appenzell Rhodes-Intérieures'),
-    ('AR', 'Appenzell Rhodes-Extérieures'),
-    ('BE', 'Berne'),
-    ('BL', 'Bâle-Campagne'),
-    ('BS', 'Bâle-Ville'),
-    ('FR', 'Fribourg'),
-    ('GE', 'Genève'),
-    ('GL', 'Glaris'),
-    ('GR', 'Grisons'),
-    ('JU', 'Jura'),
-    ('LU', 'Lucerne'),
-    ('NE', 'Neuchâtel'),
-    ('NW', 'Nidwald'),
-    ('OW', 'Obwald'),
-    ('SG', 'Saint-Gall'),
-    ('SH', 'Schaffhouse'),
-    ('SO', 'Soleure'),
-    ('SZ', 'Schwytz'),
-    ('TG', 'Thurgovie'),
-    ('TI', 'Tessin'),
-    ('UR', 'Uri'),
-    ('VD', 'Vaud'),
-    ('VS', 'Valais'),
-    ('ZG', 'Zoug'),
-    ('ZH', 'Zurich'),
-]
 
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    l10n_ch_canton = fields.Selection(selection=CANTONS, string="Canton", groups="hr.group_hr_user", tracking=True)
-    l10n_ch_tax_scale = fields.Selection([
-        ('A', 'A - Scale for single people'),
-        ('B', 'B - Scale for married couples living in a common household with only one spouse is gainfully employed'),
-        ('C', 'C - Scale for married couples with two incomes'),
-        ('D', 'D - Scale for people whose AVS contributions are reimbursed'),
-        ('E', 'E - Scale for income taxed under the procedure of simplified count'),
-        ('F', 'F - Scale for Italian cross-border commuters whose spouse is working lucrative outside Switzerland'),
-        ('G', 'G - Scale for income acquired as compensation which is paid to persons subject to withholding tax by a person other than that the employer'),
-        ('H', 'H - Scale for single people living together with children or needy persons whom they take on maintenance essentials'),
-        ('L', 'L - Scale for German cross-border commuters who fulfill the conditions of the scale A'),
-        ('M', 'M - Scale for German cross-border commuters who fulfill the conditions of the scale B'),
-        ('N', 'N - Scale for German cross-border commuters who fulfill the conditions of the scale C'),
-        ('P', 'P - Scale for German cross-border commuters who fulfill the conditions of the scale H'),
-        ('Q', 'Q - Scale for German cross-border commuters who fulfill the conditions of the scale G'),
-        ('R', 'R - Scale for Italian cross-border commuters who fulfill the conditions of the scale A'),
-        ('S', 'S - Scale for Italian cross-border commuters who fulfill the conditions of the scale B'),
-        ('T', 'T - Scale for Italian cross-border commuters who fulfill the conditions of the scale C'),
-        ('U', 'U - Scale for Italian cross-border commuters who fulfill the conditions of the scale H'),
-    ], string="Swiss Tax Scale", groups="hr.group_hr_user", tracking=True, default='A')
-    l10n_ch_municipality = fields.Char(string="Municipality ID", groups="hr.group_hr_user", tracking=True)
-    l10n_ch_religious_denomination = fields.Selection([
-        ('romanCatholic', 'Roman Catholic'),
-        ('christianCatholic', 'Christian Catholic'),
-        ('reformedEvangelical', 'Reformed Evangelical'),
-        ('jewishCommunity', 'Jewish Community'),
-        ('otherOrNone', 'Other or None'),
-    ], default='otherOrNone', string="Religious Denomination", groups="hr.group_hr_user", tracking=True)
-    l10n_ch_church_tax = fields.Boolean(string="Swiss Church Tax", groups="hr.group_hr_user", tracking=True)
     l10n_ch_sv_as_number = fields.Char(
         string="Social Insurance N°",
         groups="hr.group_hr_user",
         help="Thirteen-digit AS number assigned by the Central Compensation Office (CdC)", tracking=True)
-    marital = fields.Selection(selection='_get_marital_status_selection')
-    l10n_ch_marital_from = fields.Date(string="Marital Status Start Date", groups="hr.group_hr_user", tracking=True)
-    l10n_ch_spouse_sv_as_number = fields.Char(string="Spouse SV-AS-Number", groups="hr.group_hr_user", tracking=True)
-    l10n_ch_spouse_work_canton = fields.Selection(string="Spouse Work Canton", selection=CANTONS, groups="hr.group_hr_user", tracking=True)
-    l10n_ch_spouse_work_start_date = fields.Date(string="Spouse Work Start Date", groups="hr.group_hr_user", tracking=True)
+
     l10n_ch_children = fields.One2many('l10n.ch.hr.employee.children', 'employee_id', groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_has_withholding_tax = fields.Boolean(
-        string="Pay Withholding Taxes", compute='_compute_l10n_ch_has_withholding_tax', store=True, readonly=False, groups="hr.group_hr_user", tracking=True)
-    l10n_ch_residence_category = fields.Selection([
-        ('shortTerm-L', 'Short Term (Cat. L)'),
-        ('annual-B', 'Annual (Cat. B)'),
-        ('settled-C', 'Settled (Cat. C)'),
-        ('crossBorder-G', 'Cross Border (Cat. G)'),
-        ('asylumSeeker-N', 'Asylum Seeker (Cat. N)'),
-        ('needForProtection-S', 'Need For Protection (Cat. S)'),
-        ('NotificationProcedureForShorttermWork90Days', 'Notification Procedure for Short Term Work (90 days)'),
-        ('NotificationProcedureForShorttermWork120Days', 'Notification Procedure for Short Term Work (120 days)'),
-        ('ProvisionallyAdmittedForeigners-F', 'Provisionally Admitted Foreigners (Cat. F)'),
-        ('ResidentForeignNationalWithGainfulEmployment-Ci', 'Residence Permit with Gainful Employment (Ci)'),
-        ('othersNotSwiss', 'Other (Without Swiss)'),
-    ], string="Residence Category", groups="hr.group_hr_user", tracking=True)
     certificate = fields.Selection(selection_add=[
         ('universityBachelor', 'Swiss: University College Bachelor (university, ETH)'),
         ('universityMaster', 'Swiss: University College Master (university, ETH)'),
@@ -125,44 +47,124 @@ class HrEmployee(models.Model):
         'doctorate': 'set default'
     }, default='mandatorySchoolOnly')
 
-    # YTI TO Display on res.users + check 13 digits
-    l10n_ch_retirement_insurance_number = fields.Char(
-        string="Retirement insurance number", groups="hr.group_hr_user",
-        help="The Central Compensation Office in Geneva assigns a retirement insurance (RI) number to all newborns and immigrants, which is valid for the rest of your life and remains the same even after a name change. Further information on the structure of the RI number can be found on theSwiss Federal Social Insurance Office website (in Germnan).", tracking=True)
+    l10n_ch_legal_first_name = fields.Char(string="First Name", compute="_compute_l10n_ch_legal_name", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
+    l10n_ch_legal_last_name = fields.Char(string="Last Name", compute="_compute_l10n_ch_legal_name", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
+    l10n_ch_is_mutations = fields.One2many('l10n.ch.is.mutation', 'employee_id', groups="hr.group_hr_user")
+    l10n_ch_salary_certificate_profiles = fields.One2many("l10n.ch.salary.certificate.profile", "employee_id", groups="hr.group_hr_user")
 
-    @api.depends('is_non_resident')
-    def _compute_l10n_ch_has_withholding_tax(self):
+    @api.constrains('birthday')
+    def _check_birthday(self):
+        today = fields.Datetime.now().date()
         for employee in self:
-            employee.l10n_ch_has_withholding_tax = employee.is_non_resident
+            if employee.birthday and employee.birthday > today:
+                raise ValidationError(_("Employee's Birthday cannot be greater than today."))
 
-    def _get_marital_status_selection(self):
-        if self.env.company.country_id.code != "CH":
-            return super()._get_marital_status_selection()
-        return super()._get_marital_status_selection() + [
-            ("separated", _("Separated")),
-            ("registered_partnership", _("Registered Partnership")),
-            ("partnership_dissolved_by_law", _("Partnership Dissolved By Law")),
-            ("partnership_dissolved_by_death", _("Partnership Dissolved By Death")),
-            ("partnership_dissolved_by_declaration_of_lost", _("Partnership Dissolved By Declaration of Lost")),
-        ]
+    @api.model_create_multi
+    def create(self, vals_list):
+        employees = super().create(vals_list)
+        employees._create_or_update_snapshot()
+        return employees
 
-    def _get_l10n_ch_declaration_marital(self):
-        self.ensure_one()
-        mapped_marital = {
-            'unknown': "unknown",
-            'single': 'single',
-            'married': 'married',
-            'widower': 'widowed',
-            'divorced': 'divorced',
-            'separated': 'separated',
-            'registered_partnership': 'registeredPartnership',
-            'partnership_dissolved_by_law': 'partnershipDissolvedByLaw',
-            'partnership_dissolved_by_death': 'partnershipDissolvedByDeath',
-            'partnership_dissolved_by_declaration_of_lost': 'partnershipDissolvedByDeclarationOfLost',
+    def write(self, vals):
+        vals = super().write(vals)
+        self._create_or_update_snapshot()
+        return vals
+
+    @api.depends("name")
+    def _compute_l10n_ch_legal_name(self):
+        for employee in self:
+            if employee.name:
+                first_name = ' '.join(re.sub(r"\([^()]*\)", "", employee.name).strip().split()[:-1])
+                last_name = re.sub(r"\([^()]*\)", "", employee.name).strip().split()[-1]
+                if not employee.l10n_ch_legal_last_name:
+                    employee.l10n_ch_legal_last_name = first_name
+                if not employee.l10n_ch_legal_first_name:
+                    employee.l10n_ch_legal_first_name = last_name
+
+    @api.model
+    def _create_or_update_snapshot(self):
+
+        swiss_employees = self.filtered(lambda e: e.company_id.country_id.code == "CH")
+        if not swiss_employees:
+            return
+
+        self.env.flush_all()
+        now = fields.Datetime.now().date()
+        month = now.month
+        year = now.year
+        existing_snapshots = self.env["l10n.ch.employee.yearly.values"].search([
+            ('year', '=', year),
+            ('employee_id', 'in', swiss_employees.ids)
+        ])
+        snapshots_to_update = existing_snapshots.mapped('employee_id')
+        snapshots_to_create = swiss_employees - snapshots_to_update
+        vals = []
+        for employee in snapshots_to_create:
+            vals.append({
+                'employee_id': employee.id,
+                'year': year
+            })
+
+        if vals:
+            existing_snapshots += self.env['l10n.ch.employee.yearly.values'].create(vals)
+
+        existing_snapshots += self.env["l10n.ch.employee.yearly.values"].search([
+            ('year', '>', year),
+            ('employee_id', 'in', self.ids)
+        ])
+
+        # Mutation insensitive informations, these have to be updated even if the payroll month is closed
+        monthly_persons_to_update = existing_snapshots.monthly_value_ids.filtered(lambda s: not s.payroll_month_closed or (s.month >= month and s.year >= year)).sorted(lambda s: (s.year, s.month))
+        self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['person'], monthly_persons_to_update)
+        monthly_persons_to_update._recompute_recordset(['person'])
+
+        # Mutation sensitive informations, these should not be recomputed once payroll month is closed
+        monthly_values_to_update = existing_snapshots.monthly_value_ids.filtered(lambda s: not s.payroll_month_closed).sorted(lambda s: (s.year, s.month))
+
+        if self.env.context.get('update_salaries'):
+            self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['bvg_lpp_annual_basis'], monthly_values_to_update)
+            monthly_values_to_update._recompute_recordset(['bvg_lpp_annual_basis'])
+
+        self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['employee_meta_data'], monthly_values_to_update)
+        self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['additional_particular'], monthly_values_to_update)
+        monthly_values_to_update._recompute_recordset(['employee_meta_data', 'additional_particular'])
+
+        self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['lpp_mutations'], monthly_values_to_update)
+        self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['is_mutations'], monthly_values_to_update)
+        monthly_values_to_update._recompute_recordset(['lpp_mutations', 'is_mutations'])
+
+        self.env.add_to_compute(self.env['l10n.ch.employee.monthly.values']._fields['monthly_statistics'], monthly_values_to_update)
+        monthly_values_to_update._recompute_recordset(['monthly_statistics'])
+
+        if self.env.context.get('lock_pay_period'):
+            existing_snapshots._toggle_pay_period_lock(lock=True)
+
+        if self.env.context.get('unlock_pay_period'):
+            existing_snapshots._toggle_pay_period_lock(lock=False)
+
+        # Recompute open payslips automatically on each update since almost all fields cause a change in computation
+        pending_computation_slips = self.slip_ids.filtered(lambda p: p.state in ['draft', 'verify'] and p.struct_id.code == "CHMONTHLYELM")
+        if pending_computation_slips:
+            pending_computation_slips.action_refresh_from_work_entries()
+
+    def action_absence_swiss_employee(self):
+        return {
+            'name': _('Absences'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.leave',
+            'views': [[self.env.ref('l10n_ch_hr_payroll.l10n_ch_hr_leave_employee_view_dashboard').id, 'calendar']],
+            'domain': [('employee_id', 'in', self.ids)],
+            'context': {
+                'employee_id': self.ids,
+            },
         }
-        if self.marital not in mapped_marital:
-            raise UserError(_('Invalid marital status for employee %s', self.name))
-        return mapped_marital[self.marital]
+
+    def action_view_wages(self):
+        self.ensure_one()
+        if self.version_id:
+            return self.version_id.action_view_wages()
+        else:
+            raise UserError(_("Oops, this employee has no contract yet."))
 
     @api.model
     def _validate_sv_as_number(self, sv_as_number):
@@ -192,10 +194,3 @@ class HrEmployee(models.Model):
             if not employee.l10n_ch_sv_as_number:
                 continue
             self._validate_sv_as_number(employee.l10n_ch_sv_as_number)
-
-    @api.constrains('l10n_ch_spouse_sv_as_number')
-    def _check_l10n_ch_spouse_sv_as_number(self):
-        for employee in self:
-            if not employee.l10n_ch_spouse_sv_as_number:
-                continue
-            self._validate_sv_as_number(employee.l10n_ch_spouse_sv_as_number)

@@ -114,8 +114,8 @@ class L10n_HkIr56f(models.Model):
             }
             area_code = AREA_CODE_MAP.get(employee.private_state_id.code, 'F')
 
-            start_date = self.start_period if self.start_period > employee.first_contract_date else employee.first_contract_date
-            end_date = employee.contract_id.date_end if employee.contract_id.date_end else self.end_period
+            start_date = self.start_period if self.start_period > employee.contract_date_start else employee.contract_date_start
+            end_date = employee.version_id.date_end if employee.version_id.date_end else self.end_period
 
             rental_ids = employee.l10n_hk_rental_ids.filtered_domain([
                 ('state', 'in', ['open', 'close']),
@@ -147,7 +147,7 @@ class L10n_HkIr56f(models.Model):
                 'Surname': employee.l10n_hk_surname,
                 'GivenName': employee.l10n_hk_given_name,
                 'NameInChinese': employee.l10n_hk_name_in_chinese,
-                'Sex': 'M' if employee.gender == 'male' else 'F',
+                'Sex': 'M' if employee.sex == 'male' else 'F',
                 'MaritalStatus': 2 if employee.marital == 'married' else 1,
                 'PpNum': ppnum,
                 'SpouseName': spouse_name,
@@ -250,4 +250,4 @@ class L10n_HkIr56f(models.Model):
         return result
 
     def _get_posted_document_owner(self, employee):
-        return employee.contract_id.hr_responsible_id or self.env.user
+        return employee.version_id.hr_responsible_id or self.env.user

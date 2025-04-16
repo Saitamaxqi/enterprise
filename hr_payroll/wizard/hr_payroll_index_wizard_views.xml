@@ -9,7 +9,7 @@
                     <field name="display_warning" invisible="1"/>
                     <span role="status" class="alert alert-warning d-block" invisible="not display_warning">You have selected contracts that are not running, this wizard can only index running contracts.</span>
                     <group colspan="4">
-                        <field name="contract_ids" widget="many2many_tags"/>
+                        <field name="version_ids" widget="many2many_tags"/>
                         <field name="percentage" widget="percentage"/>
                         <field name="description"/>
                     </group>
@@ -32,8 +32,8 @@
 
         <record model="ir.actions.server" id="action_index_contracts">
             <field name="name">Index contract(s)</field>
-            <field name="model_id" ref="hr_contract.model_hr_contract"/>
-            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="binding_model_id" ref="hr.model_hr_version"/>
             <field name="state">code</field>
             <field name="code">
 if records:

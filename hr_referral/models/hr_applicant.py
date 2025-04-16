@@ -8,7 +8,7 @@ from odoo.exceptions import AccessError, UserError
 from odoo.tools.misc import str2bool
 
 REFERRAL_FIELDS = {
-    'partner_name', 'job_id', 'referral_points_ids', 'earned_points', 'max_points', 'active', 'response_id',
+    'sequence', 'partner_name', 'job_id', 'referral_points_ids', 'earned_points', 'max_points', 'active', 'response_id',
     'shared_item_infos', 'referral_state', 'user_id', 'friend_id', 'write_date', 'ref_user_id', 'id',
 }
 

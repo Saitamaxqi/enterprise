@@ -17,7 +17,7 @@ class HrApplicant(models.Model):
             if self.env.user.has_group('sign.group_sign_user'):
                 view_id = self.env.ref("sign.sign_request_view_kanban").id
             else:
-                view_id = self.env.ref("hr_contract_sign.sign_request_employee_view_kanban").id
+                view_id = self.env.ref("hr_sign.sign_request_employee_view_kanban").id
 
             return {
                 'type': 'ir.actions.act_window',

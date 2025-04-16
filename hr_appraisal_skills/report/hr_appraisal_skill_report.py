@@ -41,7 +41,7 @@ class HrAppraisalSkillReport(models.BaseModel):
                 e.id AS employee_id,
                 date(s.create_date) as create_date,
                 e.company_id AS company_id,
-                e.department_id AS department_id,
+                v.department_id AS department_id,
                 s.skill_id AS skill_id,
                 s.justification AS justification,
                 sl.skill_type_id AS skill_type_id,
@@ -63,6 +63,7 @@ class HrAppraisalSkillReport(models.BaseModel):
                 WHEN sl.level_progress = sl_p.level_progress THEN 4
             END AS evolution_sequence
             FROM hr_employee e
+            JOIN hr_version v ON v.id = e.current_version_id
             JOIN hr_appraisal_skill s ON e.id = s.employee_id
             JOIN hr_skill_level sl ON sl.id = s.skill_level_id
             LEFT JOIN hr_skill_level sl_p ON sl_p.id = s.previous_skill_level_id

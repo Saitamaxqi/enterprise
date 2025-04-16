@@ -384,7 +384,7 @@
                                 <td><t t-esc="round(data['113']['fte'], 2)"/></td>
                               </tr>
                               <tr style="color:#875A7B;">
-                                <th>By gender</th>
+                                <th>By sex</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>

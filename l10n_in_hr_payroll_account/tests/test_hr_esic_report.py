@@ -27,13 +27,13 @@ class TestHrESICReport(TestPayrollAccountCommon):
         payslips = self.env['hr.payslip'].create([{
                 'name': 'Jethalal Payslip',
                 'employee_id': self.jethalal_emp.id,
-                'contract_id': self.contract_jethalal.id,
+                'version_id': self.contract_jethalal.id,
                 'date_from': date(2023, 1, 1),
                 'date_to': date(2023, 1, 31),
             }, {
                 'name': 'Rahul Payslip',
                 'employee_id': self.rahul_emp.id,
-                'contract_id': self.contract_rahul.id,
+                'version_id': self.contract_rahul.id,
                 'date_from': date(2023, 1, 1),
                 'date_to': date(2023, 1, 31),
             }

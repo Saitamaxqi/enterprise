@@ -17,20 +17,17 @@ class TestPayrollPerformance(TestPayslipBase):
         cls.user_admin = cls.env.ref('base.user_admin')
         cls.user_admin.company_ids |= cls.company_us
 
-        cls.env['hr.contract'].create([{
-            'date_start': date(2018, 1, 1),
-            'date_end': date(2018, 2, 1),
-            'name': 'Contract for %s' % employee.name,
+        cls.employees.write({
+            'date_version': date(2018, 1, 1),
+            'contract_date_start': date(2018, 1, 1),
+            'contract_date_end': date(2018, 2, 1),
+            'name': 'Test Contract',
             'wage': 5000.0,
-            'state': 'open',
-            'employee_id': employee.id,
             'structure_type_id': cls.structure_type.id,
-            'date_generated_from': datetime(2018, 1, 1, 0, 0),
-            'date_generated_to': datetime(2018, 1, 1, 0, 0),
-        } for employee in cls.employees])
+        })
 
     def reset_work_entries(self):
-        self.employees.contract_id.write({
+        self.employees.version_id.write({
             'date_generated_from': datetime(2018, 1, 1, 0, 0),
             'date_generated_to': datetime(2018, 1, 1, 0, 0),
         })
@@ -39,7 +36,7 @@ class TestPayrollPerformance(TestPayslipBase):
     @warmup
     def test_performance_work_entry_generation(self):
         """ Work entry generation """
-        with self.assertQueryCount(__system__=16, admin=18):
+        with self.assertQueryCount(__system__=21, admin=23):
             self.employees.generate_work_entries(date(2018, 1, 1), date(2018, 1, 2))
         self.reset_work_entries()
 

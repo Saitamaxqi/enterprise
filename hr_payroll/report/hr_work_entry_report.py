@@ -44,7 +44,7 @@ class HrWorkEntryReport(models.Model):
             SELECT
                 id,
                 employee_id,
-                contract_id,
+                version_id,
                 date_start,
                 date_stop,
                 work_entry_type_id,
@@ -61,20 +61,20 @@ class HrWorkEntryReport(models.Model):
         ) we
         LEFT JOIN (
             SELECT
-                contract.id AS contract_id,
-                contract.resource_calendar_id,
+                version.id AS version_id,
+                version.resource_calendar_id,
                 calendar.hours_per_day,
-                contract.work_entry_source
+                version.work_entry_source
             FROM
-                hr_contract contract
+                hr_version version
             LEFT JOIN (
                 SELECT
                     id,
                     hours_per_day
                 FROM
                     resource_calendar
-            ) calendar ON calendar.id = contract.resource_calendar_id
-        ) work_schedule ON we.contract_id = work_schedule.contract_id
+            ) calendar ON calendar.id = version.resource_calendar_id
+        ) work_schedule ON we.version_id = work_schedule.version_id
         """
 
         drop_view_if_exists(self.env.cr, self._table)

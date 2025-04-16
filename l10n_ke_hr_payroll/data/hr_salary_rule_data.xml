@@ -21,11 +21,11 @@ result = payslip.paid_amount
         <field name="sequence">11</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 0 &lt; contract.l10n_ke_food_allowance &lt;= payslip._rule_parameter('l10n_ke_food_alw_max')
+result = 0 &lt; version.l10n_ke_food_allowance &lt;= payslip._rule_parameter('l10n_ke_food_alw_max')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_food_allowance
+result = version.l10n_ke_food_allowance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
     </record>
@@ -37,11 +37,11 @@ result = contract.l10n_ke_food_allowance
         <field name="sequence">13</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 0 &lt; contract.l10n_ke_airtime_allowance &lt;= payslip._rule_parameter('l10n_ke_airtime_alw_max')
+result = 0 &lt; version.l10n_ke_airtime_allowance &lt;= payslip._rule_parameter('l10n_ke_airtime_alw_max')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_airtime_allowance
+result = version.l10n_ke_airtime_allowance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
     </record>
@@ -53,12 +53,12 @@ result = contract.l10n_ke_airtime_allowance
         <field name="sequence">14</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = bool(contract.l10n_ke_pension_allowance)
+result = bool(version.l10n_ke_pension_allowance)
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 maximum = payslip._rule_parameter('l10n_ke_pension_alw_max')
-result = min(maximum, contract.l10n_ke_pension_allowance)
+result = min(maximum, version.l10n_ke_pension_allowance)
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
     </record>
@@ -83,11 +83,11 @@ result = min(maximum, contract.l10n_ke_pension_allowance)
         <field name="sequence">21</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_food_allowance &gt; payslip._rule_parameter('l10n_ke_food_alw_max')
+result = version.l10n_ke_food_allowance &gt; payslip._rule_parameter('l10n_ke_food_alw_max')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_food_allowance
+result = version.l10n_ke_food_allowance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
     </record>
@@ -99,11 +99,11 @@ result = contract.l10n_ke_food_allowance
         <field name="sequence">23</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_airtime_allowance &gt; payslip._rule_parameter('l10n_ke_airtime_alw_max')
+result = version.l10n_ke_airtime_allowance &gt; payslip._rule_parameter('l10n_ke_airtime_alw_max')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_airtime_allowance
+result = version.l10n_ke_airtime_allowance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
     </record>
@@ -115,11 +115,11 @@ result = contract.l10n_ke_airtime_allowance
         <field name="sequence">24</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_pension_allowance &gt;= payslip._rule_parameter('l10n_ke_pension_alw_max')
+result = version.l10n_ke_pension_allowance &gt;= payslip._rule_parameter('l10n_ke_pension_alw_max')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max')
+result = version.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max')
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
     </record>
@@ -181,10 +181,10 @@ result = categories['BASIC'] + categories['ALW']
         <field name="code">PENSION</field>
         <field name="sequence">35</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_pension_contribution
+result = version.l10n_ke_pension_contribution
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
@@ -197,7 +197,7 @@ result = contract.l10n_ke_pension_contribution
         <field name="sequence">33</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.l10n_ke_mortgage and not contract.l10n_ke_is_secondary
+result = employee.l10n_ke_mortgage and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -215,7 +215,7 @@ result = employee.l10n_ke_mortgage
         <field name="code">NSSF_EMPLOYEE_TIER_1</field>
         <field name="sequence">37</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 lower_limit = payslip._rule_parameter('l10n_ke_nssf_lower_limit')
@@ -234,7 +234,7 @@ result_rate = 6
         <field name="code">NSSF_EMPLOYEE_TIER_2</field>
         <field name="sequence">38</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 lower_limit = payslip._rule_parameter('l10n_ke_nssf_lower_limit')
@@ -260,7 +260,7 @@ result_rate = 6
         <field name="code">NHIF_AMOUNT_HIDDEN</field>
         <field name="sequence">40</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary and payslip._rule_parameter('l10n_ke_nhif')</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary and payslip._rule_parameter('l10n_ke_nhif')</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 basic = categories['BASIC']
@@ -282,7 +282,7 @@ for high, rate in payslip._rule_parameter('l10n_ke_nhif'):
         <field name="sequence">41</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = result_rules['NHIF_AMOUNT_HIDDEN']['total'] and not contract.l10n_ke_is_secondary
+result = result_rules['NHIF_AMOUNT_HIDDEN']['total'] and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -300,11 +300,11 @@ result_rate = -15
         <field name="sequence">43</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_voluntary_medical_insurance and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_voluntary_medical_insurance and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_voluntary_medical_insurance
+result = version.l10n_ke_voluntary_medical_insurance
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
@@ -318,11 +318,11 @@ result_rate = -15
         <field name="sequence">44</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_life_insurance and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_life_insurance and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_life_insurance
+result = version.l10n_ke_life_insurance
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
@@ -336,11 +336,11 @@ result_rate = -15
         <field name="sequence">45</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_education and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_education and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_education
+result = version.l10n_ke_education
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
@@ -369,7 +369,7 @@ result_rate = payslip._rule_parameter('l10n_ke_ahl_employee') * 100
         <field name="sequence">47</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = payslip.date_from &gt;= datetime(2024, 3, 19).date() and payslip.date_to &lt; datetime(2024,12,27).date() and not contract.l10n_ke_is_secondary
+result = payslip.date_from &gt;= datetime(2024, 3, 19).date() and payslip.date_to &lt; datetime(2024,12,27).date() and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -390,7 +390,7 @@ else:
         <field name="sequence">48</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = categories['INS_RELIEF'] and not contract.l10n_ke_is_secondary
+result = categories['INS_RELIEF'] and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -411,7 +411,7 @@ result = - min(
         <field name="sequence">49</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = payslip._rule_parameter('l10n_ke_personal_relief') and not contract.l10n_ke_is_secondary
+result = payslip._rule_parameter('l10n_ke_personal_relief') and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -429,7 +429,7 @@ result = - payslip._rule_parameter('l10n_ke_personal_relief')
         <field name="code">NSSF_AMOUNT</field>
         <field name="sequence">53</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['NSSF_EMPLOYEE_TIER_1']['total'] + result_rules['NSSF_EMPLOYEE_TIER_2']['total']
@@ -445,7 +445,7 @@ result = result_rules['NSSF_EMPLOYEE_TIER_1']['total'] + result_rules['NSSF_EMPL
         <field name="code">NHIF_AMOUNT</field>
         <field name="sequence">54</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary and result_rules['NHIF_AMOUNT_HIDDEN']['total']</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary and result_rules['NHIF_AMOUNT_HIDDEN']['total']</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['NHIF_AMOUNT_HIDDEN']['total']
@@ -460,7 +460,7 @@ result = result_rules['NHIF_AMOUNT_HIDDEN']['total']
         <field name="code">SHIF_AMOUNT</field>
         <field name="sequence">54</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary and payslip._rule_parameter('l10n_ke_shif_rate')</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary and payslip._rule_parameter('l10n_ke_shif_rate')</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 gross = result_rules['GROSS']['total']
@@ -482,9 +482,9 @@ else:
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-total_pension = result_rules['NSSF_AMOUNT']['total'] + contract.l10n_ke_pension_contribution
+total_pension = result_rules['NSSF_AMOUNT']['total'] + version.l10n_ke_pension_contribution
 max_pension_contribution = payslip._rule_parameter('l10n_ke_max_pension_contribution')
-non_taxable_pension = min(total_pension, max_pension_contribution) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
+non_taxable_pension = min(total_pension, max_pension_contribution) - max(0, version.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
 result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - employee.l10n_ke_mortgage - non_taxable_pension
 if payslip.date_to &gt;= datetime(2024,12,27).date():
     result -= result_rules['SHIF_AMOUNT']['total'] + result_rules['AHL_AMOUNT']['total']
@@ -501,7 +501,7 @@ if payslip.date_to &gt;= datetime(2024,12,27).date():
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-if contract.l10n_ke_is_secondary:
+if version.l10n_ke_is_secondary:
     result = remaining_gross
     result_rate = payslip._rule_parameter('l10n_ke_income_tax_secondary')
 else:
@@ -558,7 +558,7 @@ result = categories['STATUTORY_DED']
         <field name="sequence">61</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 'HELB' in inputs and not contract.l10n_ke_is_secondary
+result = 'HELB' in inputs and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_ke_hr_payroll.input_helb"/>
@@ -573,11 +573,11 @@ result = 'HELB' in inputs and not contract.l10n_ke_is_secondary
         <field name="sequence">62</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_voluntary_medical_insurance and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_voluntary_medical_insurance and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_voluntary_medical_insurance
+result = version.l10n_ke_voluntary_medical_insurance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
@@ -590,11 +590,11 @@ result = contract.l10n_ke_voluntary_medical_insurance
         <field name="sequence">63</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_life_insurance and not contract.l10n_ke_is_li_managed_by_employee and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_life_insurance and not version.l10n_ke_is_li_managed_by_employee and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_life_insurance
+result = version.l10n_ke_life_insurance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
@@ -607,11 +607,11 @@ result = contract.l10n_ke_life_insurance
         <field name="sequence">64</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_education and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_education and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_ke_education
+result = version.l10n_ke_education
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
@@ -640,10 +640,10 @@ result = categories['OTHER_DED']
         <field name="sequence">72</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_ke_pension_contribution and not contract.l10n_ke_is_secondary
+result = version.l10n_ke_pension_contribution and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">percentage</field>
-        <field name="amount_percentage_base">contract.l10n_ke_pension_contribution</field>
+        <field name="amount_percentage_base">version.l10n_ke_pension_contribution</field>
         <field name="amount_percentage">100</field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
@@ -656,7 +656,7 @@ result = contract.l10n_ke_pension_contribution and not contract.l10n_ke_is_secon
         <field name="sequence">73</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 'FRINGE_BENEFIT' in inputs and not contract.l10n_ke_is_secondary
+result = 'FRINGE_BENEFIT' in inputs and not version.l10n_ke_is_secondary
         </field>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_ke_hr_payroll.input_fringe_benefit"/>
@@ -700,7 +700,7 @@ result = payslip._rule_parameter('l10n_ke_nita')
         <field name="code">NSSF_EMP</field>
         <field name="sequence">120</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not contract.l10n_ke_is_secondary</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['NSSF_AMOUNT']['total']

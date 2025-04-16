@@ -12,9 +12,9 @@ class HrFonacot(models.Model):
         ('closed', 'Closed'),
     ], string="Status", required=True, default='in_progress')
 
-    contract_id = fields.Many2one('hr.contract')
-    currency_id = fields.Many2one(related='contract_id.currency_id')
-    company_id = fields.Many2one(related='contract_id.company_id')
+    version_id = fields.Many2one('hr.version')
+    currency_id = fields.Many2one(related='version_id.currency_id')
+    company_id = fields.Many2one(related='version_id.company_id')
 
     extra_fixed_monthly_contribution = fields.Monetary(string="Extra Fixed Monthly Contribution")
     monthly_import = fields.Monetary(string="Import")

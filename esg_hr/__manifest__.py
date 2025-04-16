@@ -1,7 +1,7 @@
 {
     'name': 'ESG HR',
     'version': '1.0',
-    'summary': "Use your employee data to measure important ESG metrics (e.g. employee commuting, gender parity).",
+    'summary': "Use your employee data to measure important ESG metrics (e.g. employee commuting, sex parity).",
     'depends': [
         'esg',
         'hr',

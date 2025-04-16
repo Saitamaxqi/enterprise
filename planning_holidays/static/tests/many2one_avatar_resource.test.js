@@ -28,10 +28,12 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
         {
             name: "Lucinda",
             partner_id: lucindaPartnerId,
+            im_status: "leave_online",
         },
         {
             name: "Cardenio",
             partner_id: cardenioPartnerID,
+            im_status: "leave_away",
         },
     ]);
 
@@ -40,32 +42,35 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
         {
             name: "Dorothea",
             resource_type: "user",
-            hr_icon_display: "presence_holiday_present",
-            show_hr_icon_display: true,
         },
         {
             name: "Fernando",
             resource_type: "user",
-            hr_icon_display: "presence_holiday_absent",
-            show_hr_icon_display: true,
+
         },
         {
             name: "Lucinda",
             resource_type: "user",
             user_id: lucindaUserId,
-            im_status: "leave_online",
         },
         {
             name: "Cardenio",
             resource_type: "user",
             user_id: cardenioUserId,
-            im_status: "leave_away",
         },
     ]);
 
     // Employees
-    const employeeDorotheaData = { name: "Dorothea" };
-    const employeeFernandoData = { name: "Fernando" };
+    const employeeDorotheaData = {
+        name: "Dorothea",
+        hr_icon_display: "presence_holiday_present",
+        show_hr_icon_display: true,
+    };
+    const employeeFernandoData = {
+        name: "Fernando",
+        hr_icon_display: "presence_holiday_absent",
+        show_hr_icon_display: true,
+    };
     const employeeLucindaData = {
         name: "Lucinda",
         user_id: lucindaUserId,

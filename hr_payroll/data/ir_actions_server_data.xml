@@ -18,7 +18,7 @@ action = env['hr.payroll.report']._get_action()
 # Don't call this server action if you don't want to loose all your work entries
 env['hr.work.entry'].search([]).unlink()
 now = datetime.datetime.now()
-env['hr.contract'].write({
+env['hr.version'].write({
     'date_generated_from': now,
     'date_generated_to': now
 })

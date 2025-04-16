@@ -50,8 +50,10 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
             'date_to': date_to,
         })
         self.employee_withholding_taxes_contracts.generate_work_entries(date_from, date_to)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
+        self.employee_withholding_taxes_payslip.write({
+            'date_from': date_from,
+            'date_to': date_to
+        })
         self.employee_withholding_taxes_payslip.compute_sheet()
 
         withholding_tax_line = self.employee_withholding_taxes_payslip.line_ids.filtered(
@@ -95,8 +97,10 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
             'date_to': date_to,
         })
         self.employee_withholding_taxes_contracts.generate_work_entries(date_from, date_to)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
+        self.employee_withholding_taxes_payslip.write({
+            'date_from': date_from,
+            'date_to': date_to
+        })
 
         self.employee_withholding_taxes_payslip.compute_sheet()
 

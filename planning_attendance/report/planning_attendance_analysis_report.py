@@ -40,18 +40,23 @@ class PlanningAttendanceAnalysisReport(models.Model):
                    SELECT -A.id AS id,
                           A.check_in::date AS entry_date,
                           A.employee_id AS employee_id,
-                          E.department_id AS department_id,
+                          V.department_id AS department_id,
                           E.company_id AS company_id,
                           E.hourly_cost AS hourly_cost,
                           A.worked_hours AS worked_hours,
                           0.0 AS allocated_hours
                      FROM hr_attendance A
                 LEFT JOIN hr_employee E ON E.id = A.employee_id
+                LEFT JOIN (
+                    SELECT DISTINCT ON (employee_id) *
+                    FROM hr_version
+                    ORDER BY employee_id, date_version DESC
+                ) V ON V.employee_id = E.id
                 UNION ALL
                    SELECT S.id AS id,
                           d::date AS entry_date,
                           S.employee_id AS employee_id,
-                          E.department_id AS department_id,
+                          V.department_id AS department_id,
                           S.company_id AS company_id,
                           E.hourly_cost AS hourly_cost,
                           0.0 AS worked_hours,
@@ -64,8 +69,12 @@ class PlanningAttendanceAnalysisReport(models.Model):
                 LEFT JOIN planning_slot S
                     ON d::date >= S.start_datetime::date
                     AND d::date <= S.end_datetime::date
-                LEFT JOIN hr_employee E
-                    ON E.id = S.employee_id
+                LEFT JOIN hr_employee E ON E.id = S.employee_id
+                LEFT JOIN (
+                    SELECT DISTINCT ON (employee_id) *
+                    FROM hr_version
+                    ORDER BY employee_id, date_version DESC
+                ) V ON V.employee_id = E.id
                ) AS t
          WHERE t.employee_id IS NOT NULL
            AND entry_date <= CURRENT_DATE

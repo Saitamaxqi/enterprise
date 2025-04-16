@@ -29,7 +29,7 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
             'address_id': cls.work_address.id,
             'birthday': '1984-05-01',
             'children': 0.0,
-            'gender': 'male',
+            'sex': 'male',
             'marital': 'single',
             'name': 'John',
         })
@@ -39,7 +39,7 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
             'address_id': cls.work_address.id,
             'birthday': '1984-05-01',
             'children': 0.0,
-            'gender': 'male',
+            'sex': 'male',
             'marital': 'single',
             'name': 'Mark',
         })
@@ -65,7 +65,7 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
                     'amount_select': 'percentage',
                     'sequence': 120,
                     'amount_percentage': -12.5,
-                    'amount_percentage_base': 'contract.wage',
+                    'amount_percentage_base': 'version.wage',
                     'code': 'PF',
                     'category_id': cls.env.ref('hr_payroll.DED').id,
                 }), (0, 0, {
@@ -87,7 +87,7 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
                     'name': 'House Rent Allowance',
                     'amount_select': 'percentage',
                     'amount_percentage': 40,
-                    'amount_percentage_base': 'contract.wage',
+                    'amount_percentage_base': 'version.wage',
                     'code': 'HRA',
                     'category_id': cls.env.ref('hr_payroll.ALW').id,
                     'sequence': 5,
@@ -102,33 +102,32 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
             'default_struct_id': cls.hr_structure_softwaredeveloper.id,
         })
 
-        cls.hr_contract_john = cls.env['hr.contract'].create({
-            'date_end': fields.Date.to_string(datetime.now() + timedelta(days=365)),
-            'date_start': date(2010, 1, 1),
-            'name': 'Contract for John',
+        cls.hr_employee_john.version_id.write({
+            'contract_date_end': fields.Date.to_string(datetime.now() + timedelta(days=365)),
+            'contract_date_start': date(2010, 1, 1),
+            'date_version': date(2010, 1, 1),
             'wage': 5000.0,
             'employee_id': cls.hr_employee_john.id,
             'structure_type_id': cls.hr_structure_type.id,
-            'state': 'open',
         })
+        cls.hr_contract_john = cls.hr_employee_john.version_id
 
         cls.hr_payslip_john = cls.env['hr.payslip'].create({
             'employee_id': cls.hr_employee_john.id,
             'struct_id' : cls.hr_structure_softwaredeveloper.id,
-            'contract_id': cls.hr_contract_john.id,
+            'version_id': cls.hr_contract_john.id,
             'journal_id': cls.account_journal.id,
             'name': 'Test Payslip John',
         })
 
-        cls.hr_contract_mark = cls.env['hr.contract'].create({
-            'date_end': fields.Date.to_string(datetime.now() + timedelta(days=365)),
-            'date_start': date(2010, 1, 1),
-            'name': 'Contract for Mark',
+        cls.hr_employee_mark.version_id.write({
+            'contract_date_end': fields.Date.to_string(datetime.now() + timedelta(days=365)),
+            'contract_date_start': date(2010, 1, 1),
+            'date_version': date(2010, 1, 1),
             'wage': 5000.0,
-            'employee_id': cls.hr_employee_mark.id,
             'structure_type_id': cls.hr_structure_type.id,
-            'state': 'open',
         })
+        cls.hr_contract_mark = cls.hr_employee_mark.version_id
 
         cls.hr_payslip_john.date_from = time.strftime('%Y-%m-01')
         # YTI Clean that brol
@@ -477,7 +476,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # Verify that there are 2 invoice lines
         # 1. amount = -2000, credit = 2000, debit = 0
         # 2. amount = 2000, credit = 0, debit = 2000
-        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.contract_id.wage
+        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.version_id.wage
 
         self.assertEqual(len(invoice_lines), 2, 'There should be 2 invoice lines')
 
@@ -510,7 +509,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # Check that there are 2 invoice lines, and they are the inverse of the original payslip
         # 1. amount = -2000, credit = 2000, debit = 0
         # 2. amount = 2000, credit = 0, debit = 2000
-        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.contract_id.wage
+        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.version_id.wage
 
         self.assertEqual(len(invoice_lines), 2, 'There should be 2 invoice lines')
         self.assertEqual(invoice_lines[0].amount_currency, -line_amount)
@@ -580,7 +579,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.hr_payslip_john.action_payslip_cancel()
         self.assertTrue(invoice.exists(), 'Invoice has been deleted')
 
-        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.contract_id.wage
+        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.version_id.wage
         reverse_invoice = self.env['account.move.line'].search([
             ('amount_currency', '=', line_amount),
             ('move_id', '!=', invoice.id),

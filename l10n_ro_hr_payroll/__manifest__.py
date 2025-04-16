@@ -8,7 +8,6 @@
     'version': '1.0',
     'depends': [
         'hr_payroll',
-        'hr_contract_reports',
         'hr_work_entry_holidays',
         'hr_payroll_holidays',
     ],
@@ -16,7 +15,8 @@
     'data': [
         'views/report_payslip_templates.xml',
         'views/hr_payroll_report.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_contract_template_views.xml',
+        'views/hr_employee_views.xml',
         'data/hr_salary_rule_category_data.xml',
         'data/hr_payroll_structure_type_data.xml',
         'data/hr_payroll_structure_data.xml',

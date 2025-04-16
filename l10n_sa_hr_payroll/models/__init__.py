@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from . import hr_contract
+from . import hr_version
 from . import hr_departure_reason
 from . import hr_payslip
 from . import hr_employee

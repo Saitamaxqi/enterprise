@@ -17,44 +17,12 @@ all_employees = self.env['hr.employee'].search([
 ])
 today = date.today()
 for employee in all_employees:
-    contract = employee.contract_id.sudo()
-    if contract and contract.date_end and contract.date_end &lt; today:
+    version = employee.version_id.sudo()
+    if not version.contract_date_start or (version.contract_date_end and version.contract_date_end &lt; today):
         employees_without_contracts += employee
-    elif not contract:
-        existing_draft_contract = self.env['hr.contract'].search([
-            ('employee_id', '=', employee.id),
-            ('company_id', '=', employee.company_id.id),
-            ('state', '=', 'draft'),
-            ('kanban_state', '=', 'done'),
-        ])
-        if not existing_draft_contract:
-            employees_without_contracts += employee
 if employees_without_contracts:
     warning_count = len(employees_without_contracts)
     warning_records = employees_without_contracts
-            </field>
-        </record>
-
-        <record id="hr_payroll_dashboard_warning_employee_with_different_company_on_contract" model="hr.payroll.dashboard.warning">
-            <field name="name">Employee whose contracts and company are differents</field>
-            <field name="country_id" eval="False"/>
-            <field name="color">2</field>
-            <field name="evaluation_code">
-employee_with_different_company_on_contract = self.env['hr.employee']
-all_employees = self.env['hr.employee'].search([
-    ('employee_type', '=', 'employee'),
-    ('company_id', 'in', self.env.companies.ids),
-])
-contracts = self.sudo().env['hr.contract'].search([
-    ('state', 'in', ['draft', 'open']),
-    ('employee_id', 'in', all_employees.ids),
-])
-for contract in contracts:
-    if contract.employee_id.company_id != contract.company_id:
-        employee_with_different_company_on_contract |= contract.employee_id
-if employee_with_different_company_on_contract:
-    warning_count = len(employee_with_different_company_on_contract)
-    warning_records = employee_with_different_company_on_contract
             </field>
         </record>
 
@@ -92,38 +60,10 @@ if employees_multiple_payslips:
             <field name="evaluation_code">
 employees_missing_payslip = self.env['hr.employee'].search([
     ('company_id', 'in', last_batches.company_id.ids),
-    ('id', 'not in', last_batches.slip_ids.employee_id.ids),
-    ('contract_warning', '=', False)])
+    ('id', 'not in', last_batches.slip_ids.employee_id.ids)]).filtered(lambda e: e.is_in_contract)
 if employees_missing_payslip:
     warning_count = len(employees_missing_payslip)
-    warning_records = employees_missing_payslip.contract_id
-            </field>
-        </record>
-
-        <record id="hr_payroll_dashboard_warning_employee_ambiguous_contract" model="hr.payroll.dashboard.warning">
-            <field name="name">Employees With Both New And Running Contracts</field>
-            <field name="country_id" eval="False"/>
-            <field name="evaluation_code">
-# Retrieve employees with both draft and running contracts
-ambiguous_domain = [
-    ('company_id', 'in', self.env.companies.ids),
-    ('employee_id', '!=', False),
-    '|',
-        '&amp;',
-            ('state', '=', 'draft'),
-            ('kanban_state', '!=', 'done'),
-        ('state', '=', 'open')]
-employee_contract_groups = self.env['hr.contract']._read_group(
-    ambiguous_domain,
-    groupby=['employee_id'],
-    having=[('state:count_distinct', '=', 2)])
-ambiguous_employee_ids = [employee.id for [employee] in employee_contract_groups]
-if ambiguous_employee_ids:
-    ambiguous_contracts = self.env['hr.contract'].search(
-        ambiguous_domain + [('employee_id', 'in', ambiguous_employee_ids)])
-    warning_count = len(ambiguous_employee_ids)
-    warning_records = ambiguous_contracts
-    additional_context = {'search_default_group_by_employee': 1}
+    warning_records = employees_missing_payslip
             </field>
         </record>
 
@@ -144,46 +84,19 @@ if work_entries_in_conflict:
             </field>
         </record>
 
-        <record id="hr_payroll_dashboard_warning_working_schedule_change" model="hr.payroll.dashboard.warning">
-            <field name="name">Working Schedule Changes</field>
-            <field name="country_id" eval="False"/>
-            <field name="color">11</field>
-            <field name="evaluation_code">
-employee_calendar_contracts = defaultdict(lambda: defaultdict(lambda: self.env['hr.contract']))
-for slip in last_batches.slip_ids:
-    if slip.state == 'cancel':
-        continue
-    employee = slip.employee_id
-    contract = slip.contract_id
-    calendar = contract.resource_calendar_id
-    employee_calendar_contracts[employee][calendar] |= contract
-
-multiple_schedule_contracts = self.env['hr.contract']
-for employee, calendar_contracts in employee_calendar_contracts.items():
-    if len(calendar_contracts) &gt; 1:
-        for dummy, contracts in calendar_contracts.items():
-            multiple_schedule_contracts |= contracts
-
-if multiple_schedule_contracts:
-    warning_count = len(multiple_schedule_contracts.employee_id)
-    warning_records = multiple_schedule_contracts
-    additional_context = {'search_default_group_by_employee': 1}
-            </field>
-        </record>
-
         <record id="hr_payroll_dashboard_warning_nearly_expired_contracts" model="hr.payroll.dashboard.warning">
             <field name="name">Employees with running contracts coming to an end</field>
             <field name="country_id" eval="False"/>
             <field name="color">5</field>
             <field name="evaluation_code">
 # Nearly expired contracts
-nearly_expired_contracts = self.env['hr.contract']
+nearly_expired_contracts = self.env['hr.version']
 for company in self.env.companies:
     outdated_days = date.today() + relativedelta(days=company.contract_expiration_notice_period)
-    nearly_expired_contracts += self.env['hr.contract']._get_nearly_expired_contracts(outdated_days, company.id)
+    nearly_expired_contracts += self.env['hr.version']._get_nearly_expired_contracts(outdated_days, company.id)
 if nearly_expired_contracts:
-    warning_count = len(nearly_expired_contracts)
-    warning_records = nearly_expired_contracts
+    warning_count = len(nearly_expired_contracts.employee_id)
+    warning_records = nearly_expired_contracts.employee_id
             </field>
         </record>
 
@@ -192,17 +105,17 @@ if nearly_expired_contracts:
             <field name="country_id" eval="False"/>
             <field name="color">6</field>
             <field name="evaluation_code">
-employee_payslip_contracts = defaultdict(lambda: self.env['hr.contract'])
+employee_payslip_contracts = defaultdict(lambda: self.env['hr.version'])
 for slip in last_batches.slip_ids:
     if slip.state == 'cancel':
         continue
     employee = slip.employee_id
-    contract = slip.contract_id
+    contract = slip.version_id
     employee_payslip_contracts[employee] |= contract
 
 employees_previous_contract = self.env['hr.employee']
 for employee, used_contracts in employee_payslip_contracts.items():
-    if employee.contract_id not in used_contracts:
+    if employee.version_id not in used_contracts:
         employees_previous_contract |= employee
 
 if employees_previous_contract:
@@ -230,21 +143,6 @@ if payslips_with_negative_net:
             </field>
         </record>
 
-        <record id="hr_payroll_dashboard_warning_new_contracts" model="hr.payroll.dashboard.warning">
-            <field name="name">New Contracts</field>
-            <field name="country_id" eval="False"/>
-            <field name="color">7</field>
-            <field name="evaluation_code">
-new_contracts = self.env['hr.contract'].search([
-    ('state', '=', 'draft'),
-    ('employee_id', '!=', False),
-    ('kanban_state', '=', 'normal')])
-if new_contracts:
-    warning_count = len(new_contracts)
-    warning_records = new_contracts
-            </field>
-        </record>
-
         <record id="hr_payroll_dashboard_warning_employee_without_identification" model="hr.payroll.dashboard.warning">
             <field name="name">Employees Without Identification Number</field>
             <field name="country_id" eval="False"/>
@@ -267,7 +165,6 @@ if employees_wo_id:
             <field name="evaluation_code">
 employees_wo_bnk_acc = self.env['hr.employee'].search([
     ('bank_account_id', '=', False),
-    ('contract_id', '!=', False),
     ('company_id', 'in', self._context.get('allowed_company_ids')),
 ])
 if employees_wo_bnk_acc:

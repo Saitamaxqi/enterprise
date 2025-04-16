@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_template_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.template.view.form.inherit.l10_eg_hr_payroll</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="arch" type="xml">
+            <group name="salary" position="inside">
+                <field name="country_code" invisible="1"/>
+                <label for="l10n_eg_housing_allowance" invisible="country_code != 'EG'" string="Housing Allowance"/>
+                <div class="o_row mw-50" name="l10n_eg_housing_allowance" invisible="country_code != 'EG'" >
+                    <field name="l10n_eg_housing_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                    <span>/ month</span>
+                </div>
+                <label for="l10n_eg_transportation_allowance" invisible="country_code != 'EG'" string="Transportation Allowance"/>
+                <div class="o_row mw-50" name="l10n_eg_transportation_allowance" invisible="country_code != 'EG'">
+                    <field name="l10n_eg_transportation_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                    <span>/ month</span>
+                </div>
+                <label for="l10n_eg_other_allowances" invisible="country_code != 'EG'" string="Other Allowances"/>
+                <div class="o_row mw-50" name="l10n_eg_other_allowances" invisible="country_code != 'EG'">
+                    <field name="l10n_eg_other_allowances" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                    <span>/ month</span>
+                </div>
+            </group>
+            <group name="salary_info" position="after">
+                <group name="annual_leave_provision" string="Annual Leave Provision" invisible="country_code != 'EG'">
+                    <field name="l10n_eg_total_leave_days"/>
+                </group>
+            </group>
+            <group name="salary" position="inside">
+                <group name="end_of_service_benefit" string="End Of Service benefit" invisible="country_code != 'EG'">
+                    <field name="l10n_eg_number_of_days"/>
+                    <field name="l10n_eg_total_number_of_days"/>
+                    <field name="l10n_eg_total_eos_benefit" invisible="active_employee"/>
+                </group>
+                <group name="social_insurance_reference" string="Social Insurance Reference" invisible="country_code != 'EG'">
+                    <field name="l10n_eg_social_insurance_reference"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

@@ -15,18 +15,17 @@ class L10nBeDimonaWizard(models.TransientModel):
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         return super().default_get(field_list)
 
-    contract_id = fields.Many2one(
-        'hr.contract', string='Contract',
-        default=lambda self: self.env.context.get('active_id'))
+    version_id = fields.Many2one(
+        'hr.version', string='Version', compute='_compute_version_id', store=True, readonly=False)
     employee_id = fields.Many2one(
-        'hr.employee', string='Employee', related='contract_id.employee_id', readonly=True)
+        'hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'))
     employee_birthday = fields.Date(related='employee_id.birthday')
-    contract_date_start = fields.Date(related='contract_id.date_start')
-    contract_date_end = fields.Date(related='contract_id.date_end')
-    contract_is_student = fields.Boolean(related='contract_id.l10n_be_is_student')
-    contract_wage_type = fields.Selection(related='contract_id.wage_type')
-    contract_country_code = fields.Char(related='contract_id.country_code')
-    contract_planned_hours = fields.Integer(related='contract_id.l10n_be_dimona_planned_hours')
+    contract_date_start = fields.Date(related='version_id.contract_date_start')
+    contract_date_end = fields.Date(related='version_id.contract_date_end')
+    contract_is_student = fields.Boolean(related='version_id.l10n_be_is_student')
+    contract_wage_type = fields.Selection(related='version_id.wage_type')
+    contract_country_code = fields.Char(related='version_id.country_code')
+    contract_planned_hours = fields.Integer(related='version_id.l10n_be_dimona_planned_hours')
     without_niss = fields.Boolean(string="Employee Without NISS")
 
     declaration_type = fields.Selection(
@@ -38,39 +37,39 @@ class L10nBeDimonaWizard(models.TransientModel):
         ], default='in')
 
     @api.depends('employee_id')
-    def _compute_contract_id(self):
+    def _compute_version_id(self):
         for wizard in self:
-            wizard.contract_id = wizard.employee_id.contract_id
+            wizard.version_id = wizard.employee_id.version_id
 
     def submit_declaration(self):
         self.ensure_one()
-        if not self.contract_id:
+        if not self.version_id:
             raise UserError(_('There is no contract defined on the employee form.'))
         if self.declaration_type == 'in':
-            if self.contract_id.l10n_be_dimona_in_declaration_number:
+            if self.version_id.l10n_be_dimona_in_declaration_number:
                 raise UserError(_('There is already a IN declaration for this contract.'))
-            if self.contract_id.l10n_be_is_student:
-                if not self.contract_id.l10n_be_dimona_planned_hours:
+            if self.version_id.l10n_be_is_student:
+                if not self.version_id.l10n_be_dimona_planned_hours:
                     raise UserError(_('There is no defined planned hours on the student contract.'))
-                if not self.contract_id.date_end:
+                if not self.version_id.date_end:
                     raise UserError(_('There is no defined end date on the student contract.'))
-                if (self.contract_id.date_end.month - 1) // 3 + 1 != (self.contract_id.date_start.month - 1) // 3 + 1:
+                if (self.version_id.date_end.month - 1) // 3 + 1 != (self.version_id.date_start.month - 1) // 3 + 1:
                     raise UserError(_('Start date and end date should belong to the same quarter.'))
-                if self.contract_id.date_start < fields.Date.today():
+                if self.version_id.date_start < fields.Date.today():
                     raise UserError(_('The DIMONA should be introduced before start date for students.'))
-            self.contract_id._action_open_dimona(foreigner=self.without_niss)
+            self.version_id._action_open_dimona(foreigner=self.without_niss)
         elif self.declaration_type == 'out':
             if not self.contract_date_end:
                 raise UserError(_('There is not end date defined on the employee contract.'))
-            self.contract_id._action_close_dimona()
+            self.version_id._action_close_dimona()
         elif self.declaration_type == 'update':
-            self.contract_id._action_update_dimona()
+            self.version_id._action_update_dimona()
         elif self.declaration_type == 'cancel':
-            self.contract_id._action_cancel_dimona()
+            self.version_id._action_cancel_dimona()
         return {
             'name': self.employee_id.name,
             'type': 'ir.actions.act_window',
-            'res_model': 'hr.contract',
-            'res_id': self.contract_id.id,
+            'res_model': 'hr.version',
+            'res_id': self.version_id.id,
             'views': [(False, 'form')]
         }

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="hr.view_hr_job_form"/>
         <field name="arch" type="xml">
             <field name="company_id" position="before">
-                <field name="default_contract_id" context="{'form_view_ref': 'hr_contract_salary.hr_contract_view_form_contract_templates'}" options="{'no_create': True}"/>
+                <field name="contract_template_id" context="{'form_view_ref': 'hr_contract_salary.hr_contract_view_form_contract_templates'}" options="{'no_create': True}"/>
             </field>
         </field>
     </record>

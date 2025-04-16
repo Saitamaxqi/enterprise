@@ -49,7 +49,7 @@ Prerequisites:
     'data':[
         'security/ir.model.access.csv',
         'data/ir_cron_data.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_employee_views.xml',
         'wizard/l10n_be_dimona_wizard_views.xml',
     ],
     'author': 'Odoo S.A.',

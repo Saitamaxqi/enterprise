@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="hr_work_entry_contract_attendance.hr_contract_hne" model="hr.contract">
-        <field name="hourly_wage" eval="20"/>
-    </record>
+    <function model="hr.version" name="write">
+        <value model="hr.version" search="[('employee_id', '=', ref('hr.employee_hne'))]"/>
+        <value eval="{'hourly_wage': 20}"/>
+    </function>
 </odoo>

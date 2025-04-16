@@ -20,7 +20,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             structure_type=cls.env.ref('l10n_mx_hr_payroll.l10n_mx_employee'),
             contract_fields={
                 'wage': 50000.0,
-                'date_start': date(2021, 5, 31),
+                'contract_date_start': date(2021, 5, 31),
+                'date_version': date(2021, 5, 31),
             }
         )
 
@@ -134,7 +135,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(last_christmas_provision, christmas_bonus)
 
     def test_10_christmas_bonus_4(self):
-        self.contract.date_start = date(2024, 6, 18)
+        self.contract.contract_date_start = date(2024, 6, 18)
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 12, 31), self.env.ref('l10n_mx_hr_payroll.l10n_mx_christmas_bonus').id)
         payslip_results = {'BASIC': 13456.28, 'EXEMPT': 1628.55, 'GROSS': 11827.73, 'ISR': -3548.32, 'NET': 9907.96}
         self._validate_payslip(payslip, payslip_results)

@@ -18,32 +18,26 @@ class TestPayrollHolidaysBase(TransactionCase):
             'name': 'Research & Development - Test',
         })
 
-        # Create employee
-        cls.vlad = new_test_user(cls.env, login='vlad', groups='base.group_user')
-        cls.emp = cls.env['hr.employee'].create({
-            'name': 'Donald',
-            'gender': 'male',
-            'birthday': '1946-06-14',
-            'department_id': cls.dep_rd.id,
-            'user_id': cls.vlad.id,
-        })
-
-        cls.joseph = new_test_user(cls.env, login='joseph', groups='base.group_user,hr_holidays.group_hr_holidays_user')
-
         cls.structure_type = cls.env['hr.payroll.structure.type'].create({
             'name': 'Test - Developer',
         })
 
-        # Create his contract
-        cls.env['hr.contract'].create({
-            'date_end': Date.today() + relativedelta(years=2),
-            'date_start': Date.to_date('2018-01-01'),
-            'name': 'Contract for Donald',
+        # Create employee
+        cls.vlad = new_test_user(cls.env, login='vlad', groups='base.group_user')
+        cls.emp = cls.env['hr.employee'].create({
+            'name': 'Donald',
+            'sex': 'male',
+            'birthday': '1946-06-14',
+            'department_id': cls.dep_rd.id,
+            'user_id': cls.vlad.id,
+            'date_version': Date.to_date('2018-01-01'),
+            'contract_date_start': Date.to_date('2018-01-01'),
+            'contract_date_end': Date.today() + relativedelta(years=2),
             'wage': 5000.0,
-            'employee_id': cls.emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
         })
+
+        cls.joseph = new_test_user(cls.env, login='joseph', groups='base.group_user,hr_holidays.group_hr_holidays_user')
 
         cls.work_entry_type_unpaid = cls.env['hr.work.entry.type'].create({
             'name': 'Unpaid Leave',

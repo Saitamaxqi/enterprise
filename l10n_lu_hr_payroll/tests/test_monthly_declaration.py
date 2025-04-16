@@ -73,39 +73,31 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'name': 'Madison',
             'company_id': self.lux_company.id,
             'identification_id': 987654321,
-        })
-        madison_contract1 = self.env['hr.contract'].create({
-            'name': 'Madison Contract',
-            'employee_id': madison_employee.id,
-            'company_id': self.lux_company.id,
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
-            'date_start': '2022-1-1',
-            'date_end': '2022-3-11',
+            'date_version': '2022-1-1',
+            'contract_date_start': '2022-1-1',
+            'contract_date_end': '2022-3-11',
             'wage': 4000.0,
-            'state': 'close',
         })
+        madison_contract1 = madison_employee.version_id
 
         madison_contract2 = madison_contract1.copy({
-            'date_start': '2022-3-21',
-            'date_end': False,
+            'date_version': '2022-3-21',
+            'contract_date_start': '2022-3-21',
+            'contract_date_end': False,
             'wage': 4400.0,
-            'state': 'open',
         })
         laura_employee = self.env['hr.employee'].create({
             'name': 'laura',
             'company_id': self.lux_company.id,
             'identification_id': 143111140,
-        })
-        laura_contract1 = self.env['hr.contract'].create({
-            'name': 'laura Contract',
-            'employee_id': laura_employee.id,
-            'company_id': self.lux_company.id,
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
-            'date_start': '2022-3-4',
-            'date_end': '2022-3-15',
+            'date_version': '2022-3-4',
+            'contract_date_start': '2022-3-4',
+            'contract_date_end': '2022-3-15',
             'wage': 4000.0,
-            'state': 'close',
         })
+        laura_contract1 = laura_employee.version_id
         contracts = madison_contract1 | madison_contract2 | laura_contract1 | self.contract_david
 
         self.env['hr.leave'].create({
@@ -205,22 +197,19 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'name': 'Jade',
             'company_id': self.lux_company.id,
             'identification_id': 987654321,
-        })
-        jade_contract1 = self.env['hr.contract'].create({
-            'name': 'Jade Contract',
-            'employee_id': jade_employee.id,
-            'company_id': self.lux_company.id,
             'structure_type_id': structure_type.id,
-            'date_start': '2022-1-1',
-            'date_end': '2022-3-11',
+            'date_version': '2022-1-1',
+            'contract_date_start': '2022-1-1',
+            'contract_date_end': '2022-3-11',
             'wage': 3000.0,
-            'state': 'close',
         })
+        jade_contract1 = jade_employee.version_id
         jade_contract2 = jade_contract1.copy({
-            'date_start': '2022-3-21',
-            'date_end': False,
+            'name': 'Jade Contract 2',
+            'date_version': '2022-3-21',
+            'contract_date_start': '2022-3-21',
+            'contract_date_end': False,
             'wage': 4400.0,
-            'state': 'open',
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
         })
         contracts = jade_contract1 | jade_contract2
@@ -264,31 +253,28 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
         self.assertEqual(jade_entries[1][14], "31")
 
     def test_05_hourly_worker(self):
+        structure_type = self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux')
+        structure_type.wage_type = 'hourly'
         hourly_employee = self.env['hr.employee'].create({
             'name': 'Alice Smith',
             'company_id': self.lux_company.id,
             'identification_id': '1234567890123',
-        })
-
-        structure_type = self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux')
-        structure_type.wage_type = 'hourly'
-        hourly_contract = self.env['hr.contract'].create({
-            'name': 'Hourly Contract for Alice',
-            'employee_id': hourly_employee.id,
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
             'hourly_wage': 25.0,
             'wage_type': 'hourly',
             'wage': 4000.0,
-            'date_start': '2022-01-01',
-            'state': 'open',
+            'date_version': '2022-01-01',
+            'contract_date_start': '2022-01-01',
         })
+
+        hourly_contract = hourly_employee.version_id
 
         hourly_contract.generate_work_entries(date(2022, 1, 1), date(2022, 1, 31))
 
         payslip = self.env['hr.payslip'].create({
             'name': 'Test Hourly Payslip',
             'employee_id': hourly_employee.id,
-            'contract_id': hourly_contract.id,
+            'version_id': hourly_contract.id,
             'date_from': '2022-01-01',
             'date_to': '2022-01-31',
             'struct_id': self.env.ref('l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary').id,

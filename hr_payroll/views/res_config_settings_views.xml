@@ -13,7 +13,7 @@
             <field name="name">res.config.settings.view.form.inherit.hr.payroll</field>
             <field name="model">res.config.settings</field>
             <field name="priority" eval="45"/>
-            <field name="inherit_id" ref="hr_contract.res_config_settings_view_form"/>
+            <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form" position="inside">
                     <app data-string="Payroll" string="Payroll" name="hr_payroll" groups="hr_payroll.group_hr_payroll_manager">
@@ -51,9 +51,6 @@
                             </setting>
                         </block>
                     </app>
-                </xpath>
-                <xpath expr="//block[@id='hr_contract']" position="attributes">
-                    <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
         </record>

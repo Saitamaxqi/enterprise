@@ -11,8 +11,6 @@ class TestPayslipFlow(TestPayslipBase):
 
     def test_00_payslip_flow(self):
         """ Testing payslip flow and report printing """
-        # activate Richard's contract
-        self.richard_emp.contract_ids[0].state = 'open'
 
         # I create an employee Payslip
         richard_payslip = self.env['hr.payslip'].create({
@@ -76,24 +74,21 @@ class TestPayslipFlow(TestPayslipBase):
             'type_id': specific_structure_type.id,
         })
 
-        self.richard_emp.contract_ids[0].state = 'open'
-
         # 13th month pay
         payslip_run = self.env['hr.payslip.run'].create({
             'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
             'date_end': datetime.date.today() + relativedelta(years=-1, month=8, day=31),
             'name': 'End of the year bonus',
         })
-        # I create record for generating the payslip for this Payslip run.
         payslip_employee = self.env['hr.payslip.employees'].create({
             'structure_id': specific_structure.id,
         })
 
-        self.assertFalse(payslip_employee.employee_ids)
+        self.assertFalse(len(payslip_employee.employee_ids))
 
         # Update the structure type and generate payslips again
         specific_structure_type.default_struct_id = specific_structure.id
-        self.richard_emp.contract_ids[0].structure_type_id = specific_structure_type.id
+        self.richard_emp.version_ids[0].structure_type_id = specific_structure_type.id
 
         payslip_run = self.env['hr.payslip.run'].create({
             'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
@@ -118,8 +113,6 @@ class TestPayslipFlow(TestPayslipBase):
         self.assertEqual(payslip_run.slip_ids.struct_id.id, specific_structure.id)
 
     def test_02_payslip_batch_with_archived_employee(self):
-        # activate Richard's contract
-        self.richard_emp.contract_ids[0].state = 'open'
         # archive his contact
         self.richard_emp.action_archive()
 
@@ -144,14 +137,12 @@ class TestPayslipFlow(TestPayslipBase):
             the batch status can be updated to 'paid' without affecting
             those already paid payslips.
         '''
-
-        self.richard_emp.contract_ids[0].state = 'open'
-        self.contract_jules = self.env['hr.contract'].create({
-            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+        self.contract_jules = self.jules_emp.version_id.write({
+            'date_version': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+            'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
             'name': 'Contract for Jules',
             'wage': 5000.33,
             'employee_id': self.jules_emp.id,
-            'state': 'open',
             'structure_type_id': self.structure_type.id,
         })
 
@@ -190,15 +181,12 @@ class TestPayslipFlow(TestPayslipBase):
             Test employee_ids selection in batch payslip generating wizard
             based on employee selection mode fields
         '''
-
-        self.richard_emp.contract_ids[0].state = 'open'
-        self.richard_emp.contract_ids[0].date_end = False
-        self.contract_jules = self.env['hr.contract'].create({
-            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+        self.richard_emp.version_ids[0].contract_date_end = False
+        self.contract_jules = self.jules_emp.version_id.write({
+            'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
             'name': 'Contract for Jules',
             'wage': 5000.33,
             'employee_id': self.jules_emp.id,
-            'state': 'open',
         })
 
         payslip_employee = self.env['hr.payslip.employees'].create({
@@ -214,15 +202,12 @@ class TestPayslipFlow(TestPayslipBase):
             Test employee_ids selection in batch payslip generating wizard
             based on department selection mode fields
         '''
-
-        self.richard_emp.contract_ids[0].state = 'open'
-        self.richard_emp.contract_ids[0].date_end = False
-        self.contract_jules = self.env['hr.contract'].create({
-            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+        self.richard_emp.version_ids[0].date_end = False
+        self.contract_jules = self.jules_emp.version_id.write({
+            'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
             'name': 'Contract for Jules',
             'wage': 5000.33,
             'employee_id': self.jules_emp.id,
-            'state': 'open',
         })
         self.richard_emp.department_id = False
         payslip_employee = self.env['hr.payslip.employees'].create({
@@ -238,9 +223,7 @@ class TestPayslipFlow(TestPayslipBase):
             Test employee_ids selection in batch payslip generating wizard
             based on job selection mode fields
         '''
-
-        self.richard_emp.contract_ids[0].state = 'open'
-        self.richard_emp.contract_ids[0].date_end = False
+        self.richard_emp.version_ids[0].date_end = False
         job_developer = self.env['hr.job'].create({
             'name': 'Experienced Developer',
             'department_id': self.dep_rd.id,
@@ -254,22 +237,19 @@ class TestPayslipFlow(TestPayslipBase):
         })
 
         self.assertEqual(len(payslip_employee.employee_ids), 1)
-        self.assertEqual(payslip_employee.employee_ids[0], self.richard_emp)
+        self.assertTrue(self.richard_emp in payslip_employee.employee_ids)
 
     def test_07_payslip_batch_wizard_for_category_selection_mode(self):
         '''
             Test employee_ids selection in batch payslip generating wizard
             based on category selection mode fields
         '''
-
-        self.richard_emp.contract_ids[0].state = 'open'
-        self.richard_emp.contract_ids[0].date_end = False
-        self.contract_jules = self.env['hr.contract'].create({
-            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+        self.richard_emp.version_ids[0].date_end = False
+        self.contract_jules = self.jules_emp.version_id.write({
+            'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
             'name': 'Contract for Jules',
             'wage': 5000.33,
             'employee_id': self.jules_emp.id,
-            'state': 'open',
         })
         category_tag = self.env['hr.employee.category'].create({'name': 'Test category'})
         self.jules_emp.category_ids = [Command.link(category_tag.id)]
@@ -320,57 +300,42 @@ class TestPayslipFlow(TestPayslipBase):
         employee_timmy, employee_gerard, employee_michel = self.env['hr.employee'].create([
             {
                 'name': 'Timmy',
-                'gender': 'male',
+                'sex': 'male',
                 'birthday': '1984-05-01',
+                'date_version': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
+                'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
+                'contract_date_end': datetime.date.today() + relativedelta(years=-1, month=3, day=15),
+                'wage': 5000.33,
+                'structure_type_id': structure_typeA.id,
             },
             {
                 'name': 'Gerard',
-                'gender': 'male',
+                'sex': 'male',
                 'birthday': '1964-01-23',
+                'date_version': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
+                'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
+                'wage': 5000.33,
+                'structure_type_id': structure_typeA.id,
             },
             {
                 'name': 'Michel',
-                'gender': 'male',
+                'sex': 'male',
                 'birthday': '1975-10-06',
+                'date_version': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
+                'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
+                'wage': 7000.33,
+                'structure_type_id': structure_typeB.id,
             },
         ])
 
-        self.env['hr.contract'].create([
-            {
-                'date_start': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
-                'date_end': datetime.date.today() + relativedelta(years=-1, month=3, day=15),
-                'name': 'Contract A for Timmy',
-                'wage': 5000.33,
-                'employee_id': employee_timmy.id,
-                'structure_type_id': structure_typeA.id,
-                'state': 'open',
-            },
-            {
-                'date_start': datetime.date.today() + relativedelta(years=-1, month=3, day=16),
-                'date_end': datetime.date.today() + relativedelta(years=1, month=3, day=31),
-                'name': 'Contract B for Timmy',
-                'wage': 7000.33,
-                'employee_id': employee_timmy.id,
-                'structure_type_id': structure_typeB.id,
-                'state': 'close',
-            },
-            {
-                'date_start': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
-                'name': 'Contract A for Gerard',
-                'wage': 5000.33,
-                'employee_id': employee_gerard.id,
-                'structure_type_id': structure_typeA.id,
-                'state': 'open',
-            },
-            {
-                'date_start': datetime.date.today() + relativedelta(years=-1, month=1, day=1),
-                'name': 'Contract B for Michel',
-                'wage': 7000.33,
-                'employee_id': employee_michel.id,
-                'structure_type_id': structure_typeB.id,
-                'state': 'open',
-            },
-        ])
+        employee_timmy.create_version({
+            'date_version': datetime.date.today() + relativedelta(years=-1, month=3, day=16),
+            'contract_date_start': datetime.date.today() + relativedelta(years=-1, month=3, day=16),
+            'contract_date_end': datetime.date.today() + relativedelta(years=1, month=3, day=31),
+            'wage': 7000.33,
+            'employee_id': employee_timmy.id,
+            'structure_type_id': structure_typeB.id,
+        })
 
         # Batch A for only structure A
         # For february YEAR-1
@@ -385,7 +350,7 @@ class TestPayslipFlow(TestPayslipBase):
         self.assertEqual(len(payslip_runA.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runA.slip_ids.ids), 2)
         self.assertTrue(all(
-            payslip.contract_id.structure_type_id == payslip.struct_id.type_id and
+            payslip.version_id.structure_type_id == payslip.struct_id.type_id and
             payslip.struct_id.type_id == a.structure_id.type_id
         for payslip in payslip_runA.slip_ids))
 
@@ -402,7 +367,7 @@ class TestPayslipFlow(TestPayslipBase):
         self.assertEqual(len(payslip_runB.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runB.slip_ids.ids), 2)
         self.assertTrue(all(
-            payslip.contract_id.structure_type_id == payslip.struct_id.type_id and
+            payslip.version_id.structure_type_id == payslip.struct_id.type_id and
             payslip.struct_id.type_id == b.structure_id.type_id
         for payslip in payslip_runB.slip_ids))
 
@@ -421,7 +386,7 @@ class TestPayslipFlow(TestPayslipBase):
         self.assertEqual(len(payslip_runC.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runC.slip_ids.ids), 2)
         self.assertTrue(all(
-            payslip.contract_id.structure_type_id == payslip.struct_id.type_id and
+            payslip.version_id.structure_type_id == payslip.struct_id.type_id and
             payslip.struct_id.type_id == c.structure_id.type_id
         for payslip in payslip_runC.slip_ids))
 
@@ -432,5 +397,5 @@ class TestPayslipFlow(TestPayslipBase):
         d.compute_sheet()
         self.assertEqual(len(payslip_runC.slip_ids.employee_id.ids), 3)
         self.assertEqual(len(payslip_runC.slip_ids.ids), 4)
-        self.assertTrue(all(payslip.contract_id.structure_type_id == payslip.struct_id.type_id
+        self.assertTrue(all(payslip.version_id.structure_type_id == payslip.struct_id.type_id
             for payslip in payslip_runC.slip_ids))

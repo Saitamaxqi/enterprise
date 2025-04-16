@@ -315,7 +315,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_end_of_contract(self):
         """ Contract lasts until end of August (17) """
-        self.contract.date_end = date(2024, 8, 31)
+        self.contract.contract_date_end = date(2024, 8, 31)
 
         for i in range(1, 9):
             drange = PERIOD[i]
@@ -333,7 +333,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_end_of_contract_2(self):
         """ 15 Jan - 31 Dec + get the December's payslip (19) """
-        self.contract.date_start = date(2024, 1, 15)
+        self.contract.contract_date_start = date(2024, 1, 15)
 
         for i in range(1, 13):
             drange = PERIOD[i]
@@ -351,7 +351,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_end_of_contract_3(self):
         """15 Jan - end of year, payroll cycle at 15th"""
-        self.contract.date_start = date(2024, 1, 15)
+        self.contract.contract_date_start = date(2024, 1, 15)
 
         for i in range(1, 12):
             slip = self._generate_payslip(
@@ -368,7 +368,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_end_of_year_with_allowance(self):
         """ End of year testing with transport allowance (21) """
-        self.contract.date_start = date(2024, 10, 1)
+        self.contract.contract_date_start = date(2024, 10, 1)
         self.contract.wage = 2e7
         for i in range(10, 12):
             drange = PERIOD[i]
@@ -403,7 +403,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_new_joiner(self):
         """ New joiner starting in 15 January, payslip for January (22)"""
         self.contract.wage = 2e7
-        self.contract.date_start = date(2024, 1, 15)
+        self.contract.contract_date_start = date(2024, 1, 15)
 
         payslip = self._generate_payslip(
             date(2024, 1, 1),
@@ -460,7 +460,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_pkp_above_zero(self):
         """ Test that PKP is non-negative and when PKP is 0, then return all paid PPH21 amount """
         # joins november, pph21 of december is supposed to be -(pph21 of nov)
-        self.contract.date_start = date(2024, 11, 1)
+        self.contract.contract_date_start = date(2024, 11, 1)
 
         nov_pslip = self._generate_payslip(
             date(2024, 11, 1),

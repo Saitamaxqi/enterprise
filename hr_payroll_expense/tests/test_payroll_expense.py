@@ -29,27 +29,24 @@ class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
         cls.payslip_run.env = cls.env
 
         cls.expense_employee.update({
-            'gender': 'male',
+            'sex': 'male',
             'birthday': '1984-05-01',
             'company_id': cls.company_data['company'].id,
             'country_id': cls.company_data['company'].country_id.id,
             'department_id': cls.dep_rd.id,
-        })
-        cls.expense_contract = cls.env['hr.contract'].create({
-            'date_end': cls.frozen_today + relativedelta(years=2),
-            'date_start': cls.frozen_today - relativedelta(years=2),
-            'name': 'Contract for expense employee',
+            'date_version': cls.frozen_today - relativedelta(years=2),
+            'contract_date_start': cls.frozen_today - relativedelta(years=2),
+            'contract_date_end': cls.frozen_today + relativedelta(years=2),
             'wage': 5000.33,
-            'employee_id': cls.expense_employee.id,
             'structure_type_id': cls.hr_structure_type.id,
-            'state': 'open',
         })
+        cls.expense_contract = cls.expense_employee.version_id
         cls.expense_work_entry = cls.env['hr.work.entry'].create({
             'name': 'Work Entry',
             'employee_id': cls.expense_employee.id,
             'date_start': cls.frozen_today - relativedelta(days=1),
             'date_stop': cls.frozen_today,
-            'contract_id': cls.expense_contract.id,
+            'version_id': cls.expense_contract.id,
             'state': 'validated',
         })
         cls.expense_payslip_input = cls.env.ref('hr_payroll_expense.expense_other_input')
@@ -97,7 +94,7 @@ class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
             'rule_ids': [Command.create({
                 'name': 'Basic Salary',
                 'amount_select': 'code',
-                'amount_python_compute': 'result = contract.wage',
+                'amount_python_compute': 'result = version.wage',
                 'code': 'BASIC',
                 'category_id': cls.env.ref('hr_payroll.BASIC').id,
                 'sequence': 1,
@@ -106,7 +103,7 @@ class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
                 'name': 'House Rent Allowance',
                 'amount_select': 'percentage',
                 'amount_percentage': 40,
-                'amount_percentage_base': 'contract.wage',
+                'amount_percentage_base': 'version.wage',
                 'code': 'HRA',
                 'category_id': cls.env.ref('hr_payroll.ALW').id,
                 'sequence': 5,
@@ -138,7 +135,7 @@ class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
             'name': 'Payslip',
             'employee_id': self.expense_employee.id,
             'struct_id': self.expense_hr_structure.id,
-            'contract_id': self.expense_contract.id,
+            'version_id': self.expense_contract.id,
             'payslip_run_id': self.payslip_run.id,
             'date_from': self.frozen_today - relativedelta(months=1),
             'date_to': self.frozen_today,

@@ -54,24 +54,20 @@ class HrPayrollHeadcount(models.Model):
         self.ensure_one()
         if not self.date_to:
             self.date_to = self.date_from
-        contracts = self.env['hr.contract'].search([
+        versions = self.env['hr.version'].search([
             ('company_id', '=', self.company_id.id),
             '|',
-                ('date_end', '=', False),
-                ('date_end', '>=', self.date_from),
-            ('date_start', '<=', self.date_to),
-            '|',
-                ('state', 'in', ['open', 'close']),
-                '&',
-                    ('state', '=', 'draft'),
-                    ('kanban_state', '=', 'done'),
-        ], order='employee_id, date_start DESC')
+                ('contract_date_end', '=', False),
+                ('contract_date_end', '>=', self.date_from),
+            ('contract_date_start', '!=', False),
+            ('contract_date_start', '<=', self.date_to),
+        ], order='employee_id, contract_date_start DESC')
 
-        contracts_by_employee_id = defaultdict(lambda: self.env['hr.contract'])
+        versions_by_employee_id = defaultdict(lambda: self.env['hr.version'])
         working_rates = set()
-        for contract in contracts:
-            contracts_by_employee_id[contract.employee_id.id] |= contract
-            working_rates.add(round(contract.hours_per_week, 2))
+        for version in versions:
+            versions_by_employee_id[version.employee_id.id] |= version
+            working_rates.add(round(version.hours_per_week, 2))
 
         existing_working_rates = self.env['hr.payroll.headcount.working.rate']\
             .search([('rate', 'in', list(working_rates))])
@@ -87,13 +83,13 @@ class HrPayrollHeadcount(models.Model):
 
         lines = [
             (0, 0, {
-                'contract_id': contracts[0].id,
+                'version_id': versions[0].id,
                 'working_rate_ids': [
-                    (6, 0, [working_rate_id_by_value[round(contract.hours_per_week, 2)] for contract in contracts]),
+                    (6, 0, [working_rate_id_by_value[round(version.hours_per_week, 2)] for version in versions]),
                 ],
-                'contract_names': ', '.join(contract.name for contract in contracts),
+                'version_names': ', '.join(version.name or version.employee_id.name for version in versions),
             })
-            for contracts in contracts_by_employee_id.values()]
+            for versions in versions_by_employee_id.values()]
         self.line_ids = [(5, 0, 0)] + lines
         self.employee_count = len(self.line_ids)
 
@@ -118,19 +114,19 @@ class HrPayrollHeadcountLine(models.Model):
 
     headcount_id = fields.Many2one('hr.payroll.headcount', string='headcount_id', required=True, index=True, ondelete='cascade')
     working_rate_ids = fields.Many2many('hr.payroll.headcount.working.rate', required=True, string='Working Rate')
-    contract_names = fields.Char(string='Contract Names', required=True, readonly=True)
-    contract_id = fields.Many2one('hr.contract', string='Contract', required=True, readonly=True)
-    department_id = fields.Many2one(related='contract_id.department_id', string='Department')
-    job_id = fields.Many2one(related='contract_id.job_id', string='Job Title')
-    currency_id = fields.Many2one(related='contract_id.currency_id', string='Currency')
+    version_names = fields.Char(string='Version Names', required=True, readonly=True)
+    version_id = fields.Many2one('hr.version', string='Version', required=True, readonly=True)
+    department_id = fields.Many2one(related='version_id.department_id', string='Department')
+    job_id = fields.Many2one(related='version_id.job_id', string='Job Title')
+    currency_id = fields.Many2one(related='version_id.currency_id', string='Currency')
     wage_on_payroll = fields.Monetary(string='Wage On Payroll', currency_field='currency_id', compute='_compute_wage_on_payroll')
-    employee_id = fields.Many2one(related="contract_id.employee_id", required=True, readonly=True)
-    employee_type = fields.Selection(related='employee_id.employee_type', string='Employee Type')
+    employee_id = fields.Many2one(related="version_id.employee_id", required=True, readonly=True)
+    employee_type = fields.Selection(related='version_id.employee_type', string='Employee Type')
 
-    @api.depends('contract_id')
+    @api.depends('version_id')
     def _compute_wage_on_payroll(self):
         for line in self:
-            line.wage_on_payroll = line.contract_id._get_contract_wage()
+            line.wage_on_payroll = line.version_id._get_contract_wage()
 
 
 class HrPayrollHeadcountWorkingRate(models.Model):

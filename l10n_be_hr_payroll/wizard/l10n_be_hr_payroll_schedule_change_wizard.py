@@ -13,13 +13,13 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
     _name = 'l10n_be.hr.payroll.schedule.change.wizard'
     _description = 'Change contract working schedule'
 
-    contract_id = fields.Many2one(
-        'hr.contract', string='Contract', readonly=True,
+    version_id = fields.Many2one(
+        'hr.version', string='Contract', readonly=True,
         default=lambda self: self.env.context.get('active_id'),
     )
-    company_id = fields.Many2one(related='contract_id.company_id', readonly=True)
-    employee_id = fields.Many2one(related='contract_id.employee_id', readonly=True)
-    structure_type_id = fields.Many2one(related='contract_id.structure_type_id', readonly=True)
+    company_id = fields.Many2one(related='version_id.company_id', readonly=True)
+    employee_id = fields.Many2one(related='version_id.employee_id', readonly=True)
+    structure_type_id = fields.Many2one(related='version_id.structure_type_id', readonly=True)
     date_start = fields.Date('Start Date', help='Start date of the new contract.', required=True)
     date_end = fields.Date('End Date', help='End date of the new contract.')
     work_time_rate = fields.Float(related='resource_calendar_id.work_time_rate', readonly=True)
@@ -40,7 +40,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
     current_resource_calendar_id = fields.Many2one(
         'resource.calendar',
         'Current Working Schedule',
-        related='contract_id.resource_calendar_id')
+        related='version_id.resource_calendar_id')
     resource_calendar_id = fields.Many2one(
         'resource.calendar', 'New Working Schedule', required=True,
         default=lambda self: self.env.company.resource_calendar_id.id,
@@ -71,7 +71,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
     def _compute_wages(self):
         for wizard in self:
             #Compute full wage first since wage depends on it
-            wizard.current_wage = wizard.contract_id._get_contract_wage()
+            wizard.current_wage = wizard.version_id._get_contract_wage()
             work_time_rate = wizard.current_resource_calendar_id.work_time_rate
             wizard.full_wage = wizard.current_wage / ((work_time_rate / 100) if work_time_rate else 1)
             wizard.wage = wizard.full_wage * float(wizard.work_time_rate) / 100
@@ -128,7 +128,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
                 continue
             leave_allocation = self.env['hr.leave.allocation'].search([
                 ('holiday_status_id', '=', wizard.leave_type_id.id),
-                ('employee_id', '=', wizard.contract_id.employee_id.id),
+                ('employee_id', '=', wizard.version_id.employee_id.id),
                 ('state', 'in', ['validate'])], limit=1)
             if not leave_allocation or len(leave_allocation) > 1:
                 no_leave_wizards |= wizard
@@ -144,13 +144,13 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             'initial_time_off_allocation': False,
         })
 
-    @api.depends('contract_id', 'date_start')
+    @api.depends('version_id', 'date_start')
     def _compute_requires_new_contract(self):
         # NOTE: this might need more checks
         requires_new_contract = self.filtered(lambda w: (
             not w.date_start or
-            not w.contract_id or
-            w.date_start <= w.contract_id.date_start
+            not w.version_id or
+            w.date_start <= w.version_id.date_start
         ))
         requires_new_contract.write({'requires_new_contract': True})
         (self - requires_new_contract).write({'requires_new_contract': False})
@@ -170,7 +170,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             # Schedule for cron
             self.env['l10n_be.schedule.change.allocation'].create({
                 'effective_date': date,
-                'contract_id': contract.id,
+                'version_id': contract.id,
                 'current_resource_calendar_id': current.id,
                 'new_resource_calendar_id': new.id,
                 'leave_allocation_id': self.leave_allocation_id.id,
@@ -181,7 +181,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             #  previous period is pretty weird something like this might be needed:
             # not self.date_end or self.date_end >= fields.Date.today()
             # Update directly, use initial time off allocation if this is the continuation contract
-            new_total = self.time_off_allocation if new != self.contract_id.resource_calendar_id else self.initial_time_off_allocation
+            new_total = self.time_off_allocation if new != self.version_id.resource_calendar_id else self.initial_time_off_allocation
             self.leave_allocation_id.write({
                 'number_of_days': new_total,
             })
@@ -190,33 +190,34 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
 
     def action_validate(self):
         self.ensure_one()
-        if self.contract_id.resource_calendar_id == self.resource_calendar_id:
+        if self.version_id.resource_calendar_id == self.resource_calendar_id:
             raise ValidationError(_('Working schedule would stay unchanged by this action. Please select another working schedule.'))
         if self.date_end and self.date_start > self.date_end:
             raise ValidationError(_('Start date must be earlier than end date.'))
-        if self.date_start < self.contract_id.date_start:
+        if self.date_start < self.version_id.contract_date_start:
             raise ValidationError(_('Start date must be later than the current contract\'s start date.'))
-        if self.contract_id.date_end and self.date_end and self.contract_id.date_end < self.date_end:
+        if self.version_id.contract_date_end and self.date_end and self.version_id.contract_date_end < self.date_end:
             raise ValidationError(_('Current contract is finished before the end of the new contract.'))
 
         if self.part_time and self.work_time_rate >= 100:
             self.part_time = False
 
-        if self.part_time:
-            name = _('%(employee)s - Part Time %(calendar)s', employee=self.employee_id.name, calendar=self.resource_calendar_id.name)
-        else:
-            name = f'{self.employee_id.name} - {self.resource_calendar_id.name}'
+        # Set a closing date on the current contract
+        previous_contract_date_end = self.version_id.contract_date_end
+        contract_date_end = self.date_start
+        if self.date_start != self.version_id.date_start:
+            contract_date_end -= timedelta(days=1)
+        self.with_context(close_contract=False).version_id.contract_date_end = contract_date_end
 
-        new_contracts = self.contract_id.copy({
-            'name': name,
-            'date_start': self.date_start,
-            'date_end': self.date_end,
-            self.contract_id._get_contract_wage_field(): self.wage,
+        new_contracts = self.version_id.employee_id.create_version({
+            'date_version': self.date_start,
+            'contract_date_start': self.date_start,
+            'contract_date_end': self.date_end,
+            self.version_id._get_contract_wage_field(): self.wage,
             'resource_calendar_id': self.resource_calendar_id.id,
             'standard_calendar_id': self.full_resource_calendar_id.id,
             'time_credit': self.part_time,
             'work_time_rate': self.work_time_rate / 100 if self.part_time else False,
-            'state': 'draft',
             'time_credit_type_id': self.absence_work_entry_type_id.id if self.part_time else None
         })
         # Since _get_contract_wage_field is not always 'wage' we also want to change the original wage
@@ -234,35 +235,30 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
                 self.full_time_off_allocation,
             )
 
-        if self.date_end and (
-            not self.contract_id.date_end
-            or (self.date_end + timedelta(days=1)) < self.contract_id.date_end):
-
+        if self.date_end:
             # Create a contract for the rest of the original contrat's time period if it exists
-            if self.previous_contract_creation:
-                post_contract = self.contract_id.copy({
-                    'date_start': (self.date_end + timedelta(days=1)),
+            if self.previous_contract_creation and (not previous_contract_date_end or self.date_end < previous_contract_date_end):
+                post_contract = self.version_id.employee_id.create_version({
+                    'date_version': self.date_end + timedelta(days=1),
+                    'contract_date_start': self.date_end + timedelta(days=1),
+                    'contract_date_end': previous_contract_date_end,
                     # resource_calendar_id is copy=False
-                    'resource_calendar_id': self.contract_id.resource_calendar_id.id,
-                    'state': 'draft',
+                    'resource_calendar_id': self.version_id.resource_calendar_id.id,
+                    'time_credit': self.version_id.time_credit,
+                    'work_time_rate': self.version_id.work_time_rate,
+                    'time_credit_type_id': self.version_id.time_credit_type_id.id,
                 })
                 new_contracts |= post_contract
                 # We also need to update the allocation when this contract starts,
                 #  basically revert back changes
                 if self.leave_allocation_id:
                     self._update_allocation_or_schedule(
-                        post_contract.date_start,
+                        post_contract.contract_date_start,
                         post_contract,
                         self.resource_calendar_id,
                         self.current_resource_calendar_id,
                         original_allocated_days,
                     )
-
-        # Set a closing date on the current contract
-        contract_date_end = self.date_start
-        if self.date_start != self.contract_id.date_start:
-            contract_date_end -= timedelta(days=1)
-        self.with_context(close_contract=False).contract_id.date_end = contract_date_end
 
         # When changing the schedule from the contract history we can just reload the view instead of going on to a separate view
         if self.env.context.get('from_history', False):
@@ -270,8 +266,8 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
         else:
             return {
                 'name': _('Credit time contract'),
-                'domain': [('id', 'in', (new_contracts | self.contract_id).ids)],
-                'res_model': 'hr.contract',
+                'domain': [('id', 'in', (new_contracts | self.version_id).ids)],
+                'res_model': 'hr.version',
                 'view_id': False,
                 'view_mode': 'list,form',
                 'type': 'ir.actions.act_window',

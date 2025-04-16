@@ -25,15 +25,11 @@ class TestLuPayrollCommon(TransactionCase):
             'private_country_id': cls.env.ref('base.lu').id,
             'company_id': cls.lux_company.id,
             'identification_id': 111111111,
+            'structure_type_id': cls.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
+            'contract_date_start': '2021-1-1',
+            'date_version': '2021-1-1',
+            'wage': 6000.0,
         })
         cls.employee_david.resource_calendar_id.tz = "Europe/Brussels"
         cls.lux_company.resource_calendar_id.tz = "Europe/Brussels"
-        cls.contract_david = cls.env['hr.contract'].create({
-            'name': 'david Contract',
-            'employee_id': cls.employee_david.id,
-            'company_id': cls.lux_company.id,
-            'structure_type_id': cls.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
-            'date_start': '2021-1-1',
-            'wage': 6000.0,
-            'state': 'open',
-        })
+        cls.contract_david = cls.employee_david.version_id

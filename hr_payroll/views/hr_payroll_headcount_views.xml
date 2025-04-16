@@ -75,7 +75,7 @@
                 <field name="currency_id" column_invisible="True"/>
                 <field name="wage_on_payroll"/>
                 <field name="employee_type" optional="hide"/>
-                <field name="contract_names" optional="hide"/>
+                <field name="version_names" optional="hide"/>
                 <field name="working_rate_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
             </list>
         </field>

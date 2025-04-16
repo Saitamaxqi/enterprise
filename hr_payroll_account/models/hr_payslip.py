@@ -127,7 +127,7 @@ class HrPayslip(models.Model):
             'debit': debit,
             'credit': credit,
             'analytic_distribution': (line.salary_rule_id.analytic_account_id and {line.salary_rule_id.analytic_account_id.id: 100}) or
-                                     (line.slip_id.contract_id.analytic_account_id.id and {line.slip_id.contract_id.analytic_account_id.id: 100}),
+                                     (line.slip_id.version_id.analytic_account_id.id and {line.slip_id.version_id.analytic_account_id.id: 100}),
             'tax_tag_ids': line.debit_tag_ids.ids if account_id == line.salary_rule_id.account_debit.id else line.credit_tag_ids.ids,
         }
 
@@ -220,10 +220,10 @@ class HrPayslip(models.Model):
                     (
                         not line_id['analytic_distribution'] and
                         not line.salary_rule_id.analytic_account_id.id and
-                        not line.slip_id.contract_id.analytic_account_id.id
+                        not line.slip_id.version_id.analytic_account_id.id
                     )
                     or line_id['analytic_distribution'] and line.salary_rule_id.analytic_account_id.id in line_id['analytic_distribution']
-                    or line_id['analytic_distribution'] and line.slip_id.contract_id.analytic_account_id.id in line_id['analytic_distribution']
+                    or line_id['analytic_distribution'] and line.slip_id.version_id.analytic_account_id.id in line_id['analytic_distribution']
 
                 )
             and self._check_debit_credit_tags(line_id, line, account_id)

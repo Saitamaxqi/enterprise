@@ -30,14 +30,14 @@ class HrPayslipLine(models.Model):
             else:
                 record.credit_tag_ids = tag_ids
 
-    @api.depends('salary_rule_id.debit_tag_ids', 'contract_id.l10n_au_report_to_w3')
+    @api.depends('salary_rule_id.debit_tag_ids', 'version_id.l10n_au_report_to_w3')
     def _compute_debit_tags(self):
-        lines_to_report_in_w3 = self.filtered(lambda record: record.contract_id.l10n_au_report_to_w3)
+        lines_to_report_in_w3 = self.filtered(lambda record: record.version_id.l10n_au_report_to_w3)
         lines_to_report_in_w3._adapt_records_to_w3('debit')
         super(HrPayslipLine, self - lines_to_report_in_w3)._compute_debit_tags()
 
-    @api.depends('salary_rule_id.credit_tag_ids', 'contract_id.l10n_au_report_to_w3')
+    @api.depends('salary_rule_id.credit_tag_ids', 'version_id.l10n_au_report_to_w3')
     def _compute_credit_tags(self):
-        lines_to_report_in_w3 = self.filtered(lambda record: record.contract_id.l10n_au_report_to_w3)
+        lines_to_report_in_w3 = self.filtered(lambda record: record.version_id.l10n_au_report_to_w3)
         lines_to_report_in_w3._adapt_records_to_w3('credit')
         super(HrPayslipLine, self - lines_to_report_in_w3)._compute_credit_tags()

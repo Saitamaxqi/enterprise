@@ -137,40 +137,32 @@ class TestDashboard(TransactionCase):
 
     def _test_dashboard_stats(self):
         # Tests that the result inside of the stats dashboard is somewhat coherent
-        emp_1, emp_2, emp_3 = self.env['hr.employee'].create([
-            {'name': 'Employee 1', 'company_id': self.company.id},
-            {'name': 'Employee 2', 'company_id': self.company.id},
-            {'name': 'Employee 3', 'company_id': self.company.id}
-        ])
         today = date.today()
-        self.env['hr.contract'].create([
-            {
-                'name': 'Contract 1',
-                'employee_id': emp_1.id,
-                'date_start': today - relativedelta(months=1, day=1),
-                'state': 'open',
-                'wage': 1000,
-                'company_id': self.company.id,
-            },
-            {
-                'name': 'Contract 2',
-                'employee_id': emp_2.id,
-                'date_start': today - relativedelta(day=1),
-                'state': 'open',
-                'wage': 2000,
-                'company_id': self.company.id,
-            },
-            {
-                'name': 'Contract 3',
-                'employee_id': emp_3.id,
-                'date_start': today + relativedelta(months=1, day=1),
-                'state': 'open',
-                'wage': 4500,
-                'company_id': self.company.id,
-            }
-        ])
+        self.env['hr.employee'].create([{
+            'name': 'Employee 1',
+            'company_id': self.company.id,
+            'date_version': today - relativedelta(months=1, day=1),
+            'contract_date_start': today - relativedelta(months=1, day=1),
+            'contract_date_end': False,
+            'wage': 1000,
+        }, {
+            'name': 'Employee 2',
+            'company_id': self.company.id,
+            'date_version': today - relativedelta(day=1),
+            'contract_date_start': today - relativedelta(day=1),
+            'contract_date_end': False,
+            'wage': 2000,
+        }, {
+            'name': 'Employee 3',
+            'company_id': self.company.id,
+            'date_version': today + relativedelta(months=1, day=1),
+            'contract_date_start': today + relativedelta(months=1, day=1),
+            'contract_date_end': False,
+            'wage': 4500,
+        }])
+
         self.env['hr.employee'].flush_model()
-        self.env['hr.contract'].flush_model()
+        self.env['hr.version'].flush_model()
 
         dashboard = self.env['hr.payslip'].with_user(self.user).get_payroll_dashboard_data(sections=['stats'])
         # Identify the different sections

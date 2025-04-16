@@ -55,12 +55,12 @@
                                     <td>
                                         <span t-esc="o.employee_id.id or '_'"/><br/>
                                         <span t-esc="o.employee_id.identification_id or '_'"/><br/>
-                                        <span t-esc="o.contract_id.job_id.name or '_'"/><br/>
-                                        <span t-esc="o.contract_id.qualif or '_'"/><br/>
-                                        <span t-esc="o.contract_id.niveau or '_'"/><br/>
-                                        <span t-esc="o.contract_id.coef or '_'"/><br/>
-                                        <span t-esc="o.contract_id.date_start or '_'"/><br/>
-                                        <span t-esc="o.contract_id.date_end or '_'"/><br/>
+                                        <span t-esc="o.version_id.job_id.name or '_'"/><br/>
+                                        <span t-esc="o.version_id.qualif or '_'"/><br/>
+                                        <span t-esc="o.version_id.niveau or '_'"/><br/>
+                                        <span t-esc="o.version_id.coef or '_'"/><br/>
+                                        <span t-esc="o.version_id.date_start or '_'"/><br/>
+                                        <span t-esc="o.version_id.date_end or '_'"/><br/>
                                         <span t-esc="o.employee_id.company_id.org_ss or '_'"/>
                                     </td>
                                 </tr>

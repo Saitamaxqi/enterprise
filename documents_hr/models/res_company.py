@@ -14,6 +14,7 @@ class ResCompany(models.Model):
                                           compute='_compute_documents_hr_folder', store=True, readonly=False)
     documents_employee_folder_id = fields.Many2one('documents.document', string="Employees Folder",
         domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)], check_company=True)
+    documents_hr_contracts_tags = fields.Many2many('documents.tag', 'documents_hr_contracts_tags_table')
 
     @api.depends('documents_hr_settings')
     def _compute_documents_hr_folder(self):

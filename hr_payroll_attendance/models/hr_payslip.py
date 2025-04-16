@@ -30,7 +30,7 @@ class HrPayslip(models.Model):
         slip_by_employee = defaultdict(lambda: self.env['hr.payslip'])
         attendance_domains = []
         for slip in self:
-            if slip.contract_id.work_entry_source != 'attendance':
+            if slip.version_id.work_entry_source != 'attendance':
                 continue
             slip_by_employee[slip.employee_id.id] |= slip
             attendance_domains.append([
@@ -49,7 +49,7 @@ class HrPayslip(models.Model):
                     attendance_by_payslip[slip] |= attendance
         return attendance_by_payslip
 
-    @api.depends('date_from', 'date_to', 'contract_id')
+    @api.depends('date_from', 'date_to', 'version_id')
     def _compute_attendance_count(self):
         attendance_by_payslip = self._get_attendance_by_payslip()
         for slip in self:

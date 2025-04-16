@@ -4,7 +4,7 @@ from collections import defaultdict
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
+from odoo.addons.l10n_au_hr_payroll.models.hr_version import INCOME_STREAM_TYPES
 from odoo.tools import create_index
 
 
@@ -87,7 +87,7 @@ class L10n_AuPayslipYtd(models.Model):
     @api.depends("employee_id")
     def _compute_struct_id(self):
         for rec in self:
-            rec.struct_id = rec.employee_id.contract_id.structure_type_id.default_struct_id
+            rec.struct_id = rec.employee_id.version_id.structure_type_id.default_struct_id
 
     @api.constrains("employee_id", "rule_id", "start_value")
     def _check_unique_rule(self):

@@ -16,10 +16,6 @@
         'data/hr_contract_salary_personal_info_data.xml',
         'data/cp200/employee_termination_fees_data.xml',
         'data/hr_payroll_dashboard_warning_data.xml',
-
-        'report/hr_contract_history_report_views.xml',
-
-        'views/hr_contract_views.xml',
         'views/hr_job_views.xml',
         'views/hr_payroll_menu.xml',
         'views/res_config_settings_views.xml',

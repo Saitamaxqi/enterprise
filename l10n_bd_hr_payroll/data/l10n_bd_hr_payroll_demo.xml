@@ -118,12 +118,10 @@
 
     <record id="hr_employee_rahmat" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_rahmat')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">09932-914693</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_rahmat')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="work_contact_id" ref="l10n_bd_hr_payroll.res_partner_rahmat"/>
-        <field name="company_id" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_rahmat')).company_id"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="tz">Asia/Dhaka</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_rahmat')).street"/>
@@ -136,7 +134,7 @@
         <field name="distance_home_work">1</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_rahmat')).country_id"/>
         <field name="identification_id">327 950 2884</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1985, 5, 12).date()"/>
         <field name="place_of_birth">Dhaka</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_rahmat')).country_id"/>
@@ -146,13 +144,21 @@
         <field name="study_field">Engineering</field>
         <field name="study_school">Bangladesh University of Engineering and Technology</field>
         <field name="marital">single</field>
-
         <field name="l10n_bd_gazetted_war_founded_freedom_fighter">False</field>
+        <field name="bank_account_id" ref="l10n_bd_hr_payroll.res_partner_bank_account_rahmat"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_bd_hr_payroll.bd_hr_department_rd"/>
+        <field name="company_id" ref="base.demo_company_bd"/>
+        <field name="structure_type_id" ref="l10n_bd_hr_payroll.structure_type_employee_bd"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">35000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="datetime(2020, 3, 16).date()"/>
+        <field name="date_version" eval="datetime(2020, 3, 16).date()"/>
     </record>
 
     <record id="hr_employee_tarek" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_tarek')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">09932-914693</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_tarek')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -171,7 +177,7 @@
         <field name="distance_home_work">3</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_tarek')).country_id"/>
         <field name="identification_id">709-369-9959</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1972, 4, 18).date()"/>
         <field name="place_of_birth">Dhaka</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_bd_hr_payroll.res_partner_tarek')).country_id"/>
@@ -181,50 +187,15 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Bangladesh University of Engineering and Technology</field>
         <field name="marital">single</field>
-
         <field name="l10n_bd_gazetted_war_founded_freedom_fighter">False</field>
-    </record>
-
-    <record id="hr_employee_rahmat" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_bd_hr_payroll.res_partner_bank_account_rahmat"/>
-    </record>
-
-    <record id="hr_employee_tarek" model="hr.employee">
         <field name="bank_account_id" ref="l10n_bd_hr_payroll.res_partner_bank_account_tarek"/>
-    </record>
-
-    <record id="hr_contract_rahmat" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_bd_hr_payroll.hr_employee_rahmat')).name + ' - ' + obj(ref('l10n_bd_hr_payroll.hr_employee_rahmat')).job_title"/>
-        <field name="employee_id" ref="l10n_bd_hr_payroll.hr_employee_rahmat"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_bd_hr_payroll.bd_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_bd"/>
-        <field name="structure_type_id" ref="l10n_bd_hr_payroll.structure_type_employee_bd"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">35000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="datetime(2020, 3, 16).date()"/>
-    </record>
-
-    <record id="hr_contract_tarek" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_bd_hr_payroll.hr_employee_tarek')).name + ' - ' + obj(ref('l10n_bd_hr_payroll.hr_employee_tarek')).job_title"/>
-        <field name="employee_id" ref="l10n_bd_hr_payroll.hr_employee_tarek"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_bd_hr_payroll.bd_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_bd"/>
         <field name="structure_type_id" ref="l10n_bd_hr_payroll.structure_type_employee_bd"/>
         <field name="wage_type">monthly</field>
         <field name="wage">30000</field>
-        <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="datetime(2022, 6, 1).date()"/>
-    </record>
-
-    <record id="hr_employee_rahmat" model="hr.employee">
-        <field name="contract_id" ref="l10n_bd_hr_payroll.hr_contract_rahmat"/>
-    </record>
-    <record id="hr_employee_tarek" model="hr.employee">
-        <field name="contract_id" ref="l10n_bd_hr_payroll.hr_contract_tarek"/>
+        <field name="contract_date_start" eval="datetime(2022, 6, 1).date()"/>
+        <field name="date_version" eval="datetime(2022, 6, 1).date()"/>
     </record>
 </odoo>

@@ -13,7 +13,7 @@
             </xpath>
             <xpath expr="//field[@name='work_entry_type_id']" position="after">
                 <field name="leave_id" invisible="not leave_id"/>
-                <field name="contract_id" invisible="1"/>
+                <field name="version_id" invisible="1"/>
             </xpath>
         </field>
     </record>
@@ -21,7 +21,7 @@
     <record id="payroll_hr_work_entry_view_form_inherit_contract" model="ir.ui.view">
       <field name="name">payroll.hr.work.entry.view.form.inherit.contract</field>
       <field name="model">hr.work.entry</field>
-      <field name="inherit_id" ref="hr_work_entry_contract.hr_work_entry_contract_view_form_inherit"/>
+      <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_form"/>
       <field name="arch" type="xml">
         <xpath expr="//div[@name='work_entry_undefined']" position="after">
           <div invisible="not work_entry_type_id">

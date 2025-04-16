@@ -18,7 +18,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         cls.richard_payslip = cls.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': cls.richard_emp.id,
-            'contract_id': cls.contract_cdi.id,  # wage = 5000 => average/day (over 3months/13weeks): 230.77
+            'version_id': cls.contract_cdi.id,  # wage = 5000 => average/day (over 3months/13weeks): 230.77
             'struct_id': cls.developer_pay_structure.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31)
@@ -28,7 +28,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         cls.richard_payslip_quarter = cls.env['hr.payslip'].create({
             'name': 'Payslip of Richard Quarter',
             'employee_id': cls.richard_emp.id,
-            'contract_id': cls.contract_cdi.id,
+            'version_id': cls.contract_cdi.id,
             'struct_id': cls.developer_pay_structure.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 3, 31)
@@ -51,7 +51,7 @@ class TestPayslipComputation(TestPayslipContractBase):
     def test_unpaid_amount(self):
         self.assertAlmostEqual(self.richard_payslip._get_unpaid_amount(), 0, places=2, msg="It should be paid the full wage")
 
-        self._reset_work_entries(self.richard_payslip.contract_id)
+        self._reset_work_entries(self.richard_payslip.version_id)
         self.env['resource.calendar.leaves'].create({
             'name': 'Doctor Appointment',
             'date_from': datetime.strptime('2016-1-11 07:00:00', '%Y-%m-%d %H:%M:%S'),
@@ -62,7 +62,7 @@ class TestPayslipComputation(TestPayslipContractBase):
             'time_type': 'leave',
         })
 
-        self.richard_emp.contract_ids.generate_work_entries(date(2016, 1, 1), date(2016, 2, 1))
+        self.richard_emp.version_ids.generate_work_entries(date(2016, 1, 1), date(2016, 2, 1))
         self.richard_payslip._compute_worked_days_line_ids()
         # TBE: In master the Monetary field were not rounded because the currency_id wasn't computed yet.
         # The test was incorrect using the value 238.09, with 238.11 it is ok
@@ -89,8 +89,8 @@ class TestPayslipComputation(TestPayslipContractBase):
             'time_type': 'leave',
         })
 
-        self._reset_work_entries(self.richard_payslip.contract_id)
-        work_entries = self.richard_emp.contract_ids.generate_work_entries(date(2016, 1, 1), date(2016, 2, 1))
+        self._reset_work_entries(self.richard_payslip.version_id)
+        work_entries = self.richard_emp.version_ids.generate_work_entries(date(2016, 1, 1), date(2016, 2, 1))
         work_entries.action_validate()
 
         self.richard_payslip._compute_worked_days_line_ids()
@@ -125,8 +125,8 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'time_type': 'leave',
             })
 
-        self._reset_work_entries(self.richard_payslip_quarter.contract_id)
-        work_entries = self.richard_emp.contract_ids.generate_work_entries(date(2016, 1, 1), date(2016, 3, 31))
+        self._reset_work_entries(self.richard_payslip_quarter.version_id)
+        work_entries = self.richard_emp.version_ids.generate_work_entries(date(2016, 1, 1), date(2016, 3, 31))
         work_entries.action_validate()
 
         self.richard_payslip_quarter._compute_worked_days_line_ids()
@@ -155,9 +155,9 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'work_entry_type_id': self.work_entry_type_unpaid.id,
                 'time_type': 'leave',
             })
-        self._reset_work_entries(self.richard_payslip_quarter.contract_id)
+        self._reset_work_entries(self.richard_payslip_quarter.version_id)
 
-        work_entries = self.richard_emp.contract_ids.generate_work_entries(date(2016, 1, 1), date(2016, 3, 31))
+        work_entries = self.richard_emp.version_ids.generate_work_entries(date(2016, 1, 1), date(2016, 3, 31))
         work_entries.action_validate()
 
         self.richard_payslip_quarter._compute_worked_days_line_ids()
@@ -187,8 +187,8 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'time_type': 'leave',
             })
 
-        self._reset_work_entries(self.richard_payslip_quarter.contract_id)
-        work_entries = self.richard_emp.contract_ids.generate_work_entries(date(2016, 1, 1), date(2016, 3, 31))
+        self._reset_work_entries(self.richard_payslip_quarter.version_id)
+        work_entries = self.richard_emp.version_ids.generate_work_entries(date(2016, 1, 1), date(2016, 3, 31))
         work_entries.action_validate()
 
         self.richard_payslip_quarter._compute_worked_days_line_ids()
@@ -207,7 +207,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         self.richard_payslip2 = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'struct_id': self.developer_pay_structure.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31)
@@ -225,7 +225,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         work_entry = self.env['hr.work.entry'].create({
             'name': 'Extra',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdd.id,
+            'version_id': self.contract_cdd.id,
             'work_entry_type_id': self.work_entry_type.id,
             'date_start': start,
             'date_stop': end,
@@ -265,7 +265,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         entry_exceeding_lower_bound = self.env['hr.work.entry'].create({
             'name': 'Attendance',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdd.id,
+            'version_id': self.contract_cdd.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_attendance').id,
             'date_start': datetime(2015, 12, 12, 18, 0),  # 19:00 local time
             'date_stop': datetime(2015, 12, 13, 2, 0),    # 03:00 local time
@@ -279,7 +279,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         entry_exceeding_upper_bound = self.env['hr.work.entry'].create({
             'name': 'Attendance',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdd.id,
+            'version_id': self.contract_cdd.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_attendance').id,
             'date_start': datetime(2015, 12, 14, 18, 0),  # 19:00 local time
             'date_stop': datetime(2015, 12, 15, 2, 0),    # 03:00 local time
@@ -298,8 +298,8 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_from': date(2015, 11, 1),
             'date_to': date(2015, 11, 30)
         })
-        self.assertTrue(payslip.contract_id)
-        payslip.contract_id = False
+        self.assertTrue(payslip.version_id)
+        payslip.version_id = False
         self.assertEqual(payslip._get_contract_wage(), 0, "It should have a default wage of 0")
         self.assertEqual(payslip.basic_wage, 0, "It should have a default wage of 0")
         self.assertEqual(payslip.gross_wage, 0, "It should have a default wage of 0")
@@ -341,7 +341,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31)
         })
@@ -362,7 +362,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31)
         })
@@ -372,14 +372,14 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'sequence': 1,
                 'input_type_id': self.env.ref("hr_payroll.BASIC").id,
                 'amount': 100,
-                'contract_id': self.contract_cdi.id
+                'version_id': self.contract_cdi.id
             },
             {
                 'payslip_id': payslip.id,
                 'sequence': 2,
                 'input_type_id': self.env.ref("hr_payroll.BASIC").id,
                 'amount': 200,
-                'contract_id': self.contract_cdi.id
+                'version_id': self.contract_cdi.id
             },
         ])
         payslip.compute_sheet()
@@ -390,7 +390,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31)
         })
@@ -400,7 +400,7 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'sequence': 1,
                 'input_type_id': self.env.ref("hr_payroll.BASIC").id,
                 'amount': 300,
-                'contract_id': self.contract_cdi.id,
+                'version_id': self.contract_cdi.id,
                 'code': 'DED'
             },
             {
@@ -408,7 +408,7 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'sequence': 1,
                 'input_type_id': self.env.ref("hr_payroll.BASIC").id,
                 'amount': 200,
-                'contract_id': self.contract_cdi.id,
+                'version_id': self.contract_cdi.id,
                 'code': 'DED'
             },
         ])
@@ -446,7 +446,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31)
         })
@@ -457,14 +457,14 @@ class TestPayslipComputation(TestPayslipContractBase):
                 'sequence': 1,
                 'input_type_id': input_type.id,
                 'amount': 300,
-                'contract_id': self.contract_cdi.id,
+                'version_id': self.contract_cdi.id,
             },
             {
                 'payslip_id': payslip.id,
                 'sequence': 2,
                 'input_type_id': input_type.id,
                 'amount': 200,
-                'contract_id': self.contract_cdi.id,
+                'version_id': self.contract_cdi.id,
             },
         ])
         self.developer_pay_structure.write({'rule_ids': [
@@ -504,7 +504,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'date_from': date(2016, 1, 1),
             'date_to': date(2016, 1, 31),
         })

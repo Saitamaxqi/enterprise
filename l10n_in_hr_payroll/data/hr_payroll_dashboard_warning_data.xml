@@ -62,11 +62,11 @@ if indian_companies:
     # Employees who are on the probation and their contracts expire within a week
     probation_contract_type = self.env.ref('l10n_in_hr_payroll.l10n_in_contract_type_probation', raise_if_not_found=False)
     if probation_contract_type:
-        nearly_expired_contracts = self.env['hr.contract'].search([
+        nearly_expired_contracts = self.env['hr.version'].search([
             ('contract_type_id', '=', probation_contract_type.id),
-            ('state', '=', 'open'), ('kanban_state', '!=', 'blocked'),
-            ('date_end', '&lt;=', date.today() + relativedelta(days=7)),
-            ('date_end', '&gt;=', date.today() + relativedelta(days=1)),
+            ('contract_date_end', '!=', False),
+            ('contract_date_end', '&lt;=', date.today() + relativedelta(days=7)),
+            ('contract_date_end', '&gt;=', date.today() + relativedelta(days=1)),
         ])
         if nearly_expired_contracts:
             warning_count = len(nearly_expired_contracts.employee_id)

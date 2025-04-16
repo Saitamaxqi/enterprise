@@ -272,7 +272,7 @@
 
         <record id="employee_aka" model="hr.employee">
             <field name="name">Aka Foster</field>
-            <field name="gender">female</field>
+            <field name="sex">female</field>
             <field name="department_id" ref="hr.dep_ps"/>
             <field name="parent_id" ref="hr.employee_admin"/>
             <field name="job_id" ref="job_quality_control"/>
@@ -296,7 +296,7 @@
 
         <record id="employee_cry" model="hr.employee">
             <field name="name">Cherry Nelson</field>
-            <field name="gender">male</field>
+            <field name="sex">male</field>
             <field name="department_id" ref="hr.dep_ps"/>
             <field name="parent_id" ref="hr.employee_admin"/>
             <field name="job_id" ref="job_maintenance_technician"/>
@@ -319,7 +319,7 @@
 
         <record id="employee_oza" model="hr.employee">
             <field name="name">Suman Oza</field>
-            <field name="gender">male</field>
+            <field name="sex">male</field>
             <field name="department_id" ref="hr.dep_ps"/>
             <field name="parent_id" ref="hr.employee_admin"/>
             <field name="job_id" ref="job_maintenance_technician"/>
@@ -331,7 +331,7 @@
             <field name="image_1920" type="base64" file="planning/static/img/sumanoza.jpg"/>
             <field name="create_date">2023-01-01 00:00:00</field>
             <!-- Set resource calendar to False for fully flexible working hours -->
-            <field name="resource_calendar_id" eval="False"/>
+            <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
             <field name="default_planning_role_id" ref="planning.planning_maintenance_technician"></field>
             <field name="planning_role_ids" eval="[Command.set([ref('planning.planning_maintenance_technician'), ref('planning.planning_furniture_assembler')])]"/>
             <field name="hourly_cost">20</field>
@@ -2137,4 +2137,134 @@
             <field name="state">published</field>
         </record>
     </data>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_stw')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-12-2',
+            'contract_date_start': time.strftime('%Y')+'-12-2',
+            'contract_date_end': False,
+            'wage': 5500.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_niv')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-12-2',
+            'contract_date_start': time.strftime('%Y')+'-12-2',
+            'contract_date_end': False,
+            'wage': 5000.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_jth')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-12-2',
+            'contract_date_start': time.strftime('%Y')+'-12-2',
+            'contract_date_end': False,
+            'wage': 5200.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_chs')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-12-2',
+            'contract_date_start': time.strftime('%Y')+'-12-2',
+            'contract_date_end': False,
+            'wage': 3750.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_jve')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-12-2',
+            'contract_date_start': time.strftime('%Y')+'-12-2',
+            'contract_date_end': False,
+            'wage': 4250.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_fme')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(days=1),
+            'contract_date_start': DateTime.today() + relativedelta(days=1),
+            'contract_date_end': False,
+            'wage': 3650.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_fpi')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 4000.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_vad')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 4250.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_jep')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 4500.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_jod')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 3550.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_jog')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 4350.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_jgo')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 4350.00
+        }"/>
+    </function>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('hr.employee_lur')]"/>
+        <value eval="{
+            'date_version': time.strftime('%Y')+'-1-1',
+            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'contract_date_end': False,
+            'wage': 4350.00
+        }"/>
+    </function>
 </odoo>

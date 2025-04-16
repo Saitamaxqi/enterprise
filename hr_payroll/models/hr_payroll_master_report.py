@@ -104,7 +104,7 @@ class HrPayrollMasterReport(models.Model):
             structure_labels = labels + ordered_rules.mapped('name')
             i = 1
             for employee, slips in employee_slips.items():
-                joining_date = datetime.strptime(employee.first_contract_date.strftime('%Y-%m-%d'), '%Y-%m-%d').date()
+                joining_date = datetime.strptime(employee.contract_date_start.strftime('%Y-%m-%d'), '%Y-%m-%d').date()
 
                 rows = [
                     (XLSX_FORMAT['TEXT'], employee.id),

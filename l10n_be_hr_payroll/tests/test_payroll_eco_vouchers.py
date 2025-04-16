@@ -16,6 +16,7 @@ class TestPayrollEcoVouchers(TestPayrollCommon):
             "struct_id": cls.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary').id,
             "name": "Test Eco-Vouchers",
             "employee_id": cls.employee_georges.id,
+            "version_id": cls.employee_georges.version_id.id,
             "date_from": date(2024, 9, 1),
             "date_to": date(2024, 9, 30),
             "company_id": cls.belgian_company.id
@@ -25,6 +26,7 @@ class TestPayrollEcoVouchers(TestPayrollCommon):
             "struct_id": cls.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary').id,
             "name": "Test Eco-Vouchers Edited Payslip",
             "employee_id": cls.employee_john.id,
+            "version_id": cls.employee_john.version_id.id,
             "date_from": date(2024, 9, 1),
             "date_to": date(2024, 9, 30),
             "company_id": cls.belgian_company.id,

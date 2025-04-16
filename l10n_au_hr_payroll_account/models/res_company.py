@@ -25,7 +25,7 @@ class ResCompany(models.Model):
     def _create_ytd_values(self, prev_pay_transfer_employees, start_date):
         values = []
         for employee_transfer in prev_pay_transfer_employees:
-            if not employee_transfer.employee_id.contract_ids:
+            if not employee_transfer.employee_id.version_ids:
                 raise UserError(_("The contract for employee %(employee)s might be archived or deleted. "
                     "Please unarchive it first to proceed.", employee=employee_transfer.employee_id.name))
 

@@ -13,8 +13,7 @@ class TestPayslipLineEdit(TestPayslipBase, HttpCase):
             'company_id': self.env.company.id,
             'email': 'mitchell.admin@example.com',
         })
-        self.richard_emp.contract_ids[0].state = 'open'
-        self.richard_emp.contract_ids[0].wage = 1234
+        self.richard_emp.version_ids[0].wage = 1234
 
         richard_payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',

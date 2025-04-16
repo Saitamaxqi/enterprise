@@ -14,27 +14,27 @@
         <field name="helper">(Lastname Firstname)</field>
     </record>
 
-    <record id="hr_contract_salary_personal_info_gender" model="hr.contract.salary.personal.info">
-        <field name="name">Gender</field>
-        <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'gender')])"/>
+    <record id="hr_contract_salary_personal_info_sex" model="hr.contract.salary.personal.info">
+        <field name="name">Sex</field>
+        <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'sex')])"/>
         <field name="info_type_id" ref="hr_contract_salary_personal_info_type_general"/>
         <field name="applies_on">employee</field>
         <field name="display_type">radio</field>
     </record>
-    <record id="hr_contract_salary_personal_info_gender_male" model="hr.contract.salary.personal.info.value">
+    <record id="hr_contract_salary_personal_info_sex_male" model="hr.contract.salary.personal.info.value">
         <field name="name">Male</field>
         <field name="value">male</field>
-        <field name="personal_info_id" ref="hr_contract_salary_personal_info_gender"/>
+        <field name="personal_info_id" ref="hr_contract_salary_personal_info_sex"/>
     </record>
-    <record id="hr_contract_salary_personal_info_gender_female" model="hr.contract.salary.personal.info.value">
+    <record id="hr_contract_salary_personal_info_sex_female" model="hr.contract.salary.personal.info.value">
         <field name="name">Female</field>
         <field name="value">female</field>
-        <field name="personal_info_id" ref="hr_contract_salary_personal_info_gender"/>
+        <field name="personal_info_id" ref="hr_contract_salary_personal_info_sex"/>
     </record>
-    <record id="hr_contract_salary_personal_info_gender_other" model="hr.contract.salary.personal.info.value">
+    <record id="hr_contract_salary_personal_info_sex_other" model="hr.contract.salary.personal.info.value">
         <field name="name">Other</field>
         <field name="value">other</field>
-        <field name="personal_info_id" ref="hr_contract_salary_personal_info_gender"/>
+        <field name="personal_info_id" ref="hr_contract_salary_personal_info_sex"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_birthdate" model="hr.contract.salary.personal.info">

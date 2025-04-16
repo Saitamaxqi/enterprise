@@ -57,12 +57,12 @@ result = payslip.paid_amount
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
             <field name="condition_python">
-months = (payslip.date_from.year - contract.first_contract_date.year) * 12 + (payslip.date_from.month - contract.first_contract_date.month)
+months = (payslip.date_from.year - employee._get_first_version_date().year) * 12 + (payslip.date_from.month - employee._get_first_version_date().month)
 result = months >= 24
             </field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-months = (payslip.date_from.year - contract.first_contract_date.year) * 12 + (payslip.date_from.month - contract.first_contract_date.month)
+months = (payslip.date_from.year - employee._get_first_version_date().year) * 12 + (payslip.date_from.month - employee._get_first_version_date().month)
 years = months / 12
 
 basic_salary = categories['BASIC']
@@ -80,10 +80,10 @@ for low, high, rate in payslip._rule_parameter('l10n_ma_seniority'):
             <field name="sequence">5</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = contract.l10n_ma_kilometric_exemption</field>
+            <field name="condition_python">result = version.l10n_ma_kilometric_exemption</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = contract.l10n_ma_kilometric_exemption
+result = version.l10n_ma_kilometric_exemption
             </field>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>
         </record>
@@ -93,10 +93,10 @@ result = contract.l10n_ma_kilometric_exemption
             <field name="sequence">6</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = contract.l10n_ma_transport_exemption</field>
+            <field name="condition_python">result = version.l10n_ma_transport_exemption</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = contract.l10n_ma_transport_exemption
+result = version.l10n_ma_transport_exemption
             </field>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>
         </record>
@@ -107,9 +107,9 @@ result = contract.l10n_ma_transport_exemption
             <field name="sequence">7</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = contract.l10n_ma_hra</field>
+            <field name="condition_python">result = version.l10n_ma_hra</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.l10n_ma_hra</field>
+            <field name="amount_python_compute">result = version.l10n_ma_hra</field>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>
         </record>
 
@@ -119,9 +119,9 @@ result = contract.l10n_ma_transport_exemption
             <field name="sequence">8</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = contract.l10n_ma_da</field>
+            <field name="condition_python">result = version.l10n_ma_da</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.l10n_ma_da</field>
+            <field name="amount_python_compute">result = version.l10n_ma_da</field>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>
         </record>
 
@@ -131,10 +131,10 @@ result = contract.l10n_ma_transport_exemption
             <field name="sequence">9</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = contract.l10n_ma_meal_allowance</field>
+            <field name="condition_python">result = version.l10n_ma_meal_allowance</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = min(contract.l10n_ma_meal_allowance, 0.2 * result_rules['BASIC']['total'])
+result = min(version.l10n_ma_meal_allowance, 0.2 * result_rules['BASIC']['total'])
             </field>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>
         </record>
@@ -145,9 +145,9 @@ result = min(contract.l10n_ma_meal_allowance, 0.2 * result_rules['BASIC']['total
             <field name="sequence">10</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = contract.l10n_ma_medical_allowance</field>
+            <field name="condition_python">result = version.l10n_ma_medical_allowance</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.l10n_ma_medical_allowance</field>
+            <field name="amount_python_compute">result = version.l10n_ma_medical_allowance</field>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>
         </record>
 
@@ -312,10 +312,10 @@ for max_gross, coef, deduction in tax_breakdown:
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
 result = 0
-if contract.employee_id.marital == 'married':
+if version.employee_id.marital == 'married':
     result+=30
-if contract.employee_id.children:
-    result+=min(180, 30*contract.employee_id.children)
+if version.employee_id.children:
+    result+=min(180, 30*version.employee_id.children)
             </field>
             <field name="appears_on_payslip" eval="False"/>
             <field name="struct_id" ref="hr_payroll_salary_ma_structure_base"/>

@@ -22,18 +22,18 @@ class HrContractSalaryResume(models.Model):
     _order = 'sequence'
 
     def _get_available_fields(self):
-        return [(field, description['string']) for field, description in self.env['hr.contract'].fields_get().items()]
+        return [(field, description['string']) for field, description in self.env['hr.version'].fields_get().items()]
 
     name = fields.Char()
     sequence = fields.Integer(default=100)
     value_type = fields.Selection([
         ('fixed', 'Fixed Value'),
-        ('contract', 'Contract Value'),
+        ('version', 'Version Value'),
         ('sum', 'Sum of Benefits Values'),
         ('monthly_total', 'Monthly Total')], required=True, default='fixed',
         help='Pick how the value of the information is computed:\n'
              'Fixed value: Set a determined value static for all links\n'
-             'Contract value: Get the value from a field on the contract record\n'
+             'Version value: Get the value from a field on the version record\n'
              'Sum of Benefits value: You can pick in all benefits and compute a sum of them\n'
              'Monthly Total: The information will be a total of all the information in the category Monthly Benefits')
     benefit_ids = fields.Many2many('hr.contract.salary.benefit')

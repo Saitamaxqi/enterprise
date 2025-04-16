@@ -36,17 +36,11 @@
         <field name="private_country_id" ref="base.ae"/>
         <field name="birthday" eval="datetime(1985, 5, 12).date()"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_jgo-image.jpg"/>
-        <field name="gender">male</field>
-    </record>
-
-    <record id="hr_contract_ae" model="hr.contract">
-        <field name="company_id" ref="base.demo_company_ae"/>
-        <field name="employee_id" ref="l10n_ae_hr_payroll_account.hr_employee_ae"/>
-        <field name="name">Jake Cypher Contract</field>
-        <field name="date_start" eval="datetime(2020, 1, 1).date()"/>
+        <field name="sex">male</field>
+        <field name="contract_date_start" eval="datetime(2020, 1, 1).date()"/>
+        <field name="date_version" eval="datetime(2020, 1, 1).date()"/>
         <field name="wage">25000</field>
         <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
-        <field name="state">open</field>
         <field name="l10n_ae_transportation_allowance">200</field>
         <field name="l10n_ae_housing_allowance">5000</field>
         <field name="l10n_ae_other_allowances">600</field>

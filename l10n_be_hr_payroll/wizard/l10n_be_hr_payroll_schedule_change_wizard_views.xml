@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Working Schedule Change">
                 <h1><field name="employee_id" options="{'no_open' : True}"/></h1>
-                <field name="contract_id" invisible="1"/>
+                <field name="version_id" invisible="1"/>
                 <field name="company_id" invisible="1"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="leave_allocation_id" invisible="1"/>

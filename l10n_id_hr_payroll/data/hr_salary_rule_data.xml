@@ -128,10 +128,10 @@ result = categories['BASIC'] + categories['ALW']
         <field name="code">BPJS_JKK</field>
         <field name="sequence">4</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_id_bpjs_jkk and payslip.l10n_id_include_jkk_jkm</field>
+        <field name="condition_python">result = version.l10n_id_bpjs_jkk and payslip.l10n_id_include_jkk_jkm</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = payslip._l10n_id_get_worked_days_rate() * contract.wage * contract.l10n_id_bpjs_jkk
+result = payslip._l10n_id_get_worked_days_rate() * version.wage * version.l10n_id_bpjs_jkk
         </field>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
     </record>
@@ -145,7 +145,7 @@ result = payslip._l10n_id_get_worked_days_rate() * contract.wage * contract.l10n
         <field name="condition_python">result = payslip.l10n_id_include_jkk_jkm</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = payslip._l10n_id_get_worked_days_rate() * contract.wage
+result = payslip._l10n_id_get_worked_days_rate() * version.wage
 result_rate = payslip._rule_parameter('l10n_id_jkm_percentage')
         </field>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
@@ -160,7 +160,7 @@ result_rate = payslip._rule_parameter('l10n_id_jkm_percentage')
         <field name="condition_python">result = payslip.l10n_id_include_bpjs_kesehatan</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = min(payslip._l10n_id_get_worked_days_rate() * contract.wage, payslip._rule_parameter('l10n_id_bpjs_salary_threshold'))
+result = min(payslip._l10n_id_get_worked_days_rate() * version.wage, payslip._rule_parameter('l10n_id_bpjs_salary_threshold'))
 result_rate = payslip._rule_parameter('l10n_id_alw_bpjs_kesehatan_percent')
         </field>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
@@ -191,7 +191,7 @@ result = categories['BASE'] + categories['COMP']
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_rate = payslip._rule_parameter('l10n_id_jht_percent')
-result = - payslip._l10n_id_get_worked_days_rate() * contract.wage
+result = - payslip._l10n_id_get_worked_days_rate() * version.wage
         </field>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
     </record>
@@ -205,7 +205,7 @@ result = - payslip._l10n_id_get_worked_days_rate() * contract.wage
         <field name="condition_python">result = payslip.l10n_id_include_bpjs_kesehatan</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = - min(payslip._l10n_id_get_worked_days_rate() * contract.wage, payslip._rule_parameter('l10n_id_bpjs_salary_threshold'))
+result = - min(payslip._l10n_id_get_worked_days_rate() * version.wage, payslip._rule_parameter('l10n_id_bpjs_salary_threshold'))
 result_rate = payslip._rule_parameter('l10n_id_ded_bpjs_kesehatan_percent')
         </field>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
@@ -220,7 +220,7 @@ result_rate = payslip._rule_parameter('l10n_id_ded_bpjs_kesehatan_percent')
         <field name="condition_python">result = payslip.l10n_id_include_jkk_jkm</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = - min(payslip._l10n_id_get_worked_days_rate() * contract.wage, payslip._rule_parameter('l10n_id_jp_threshold'))
+result = - min(payslip._l10n_id_get_worked_days_rate() * version.wage, payslip._rule_parameter('l10n_id_jp_threshold'))
 result_rate = payslip._rule_parameter('l10n_id_jp_percent')
         </field>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>

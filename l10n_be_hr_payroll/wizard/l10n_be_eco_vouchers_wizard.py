@@ -78,7 +78,7 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
         ).unpaid_work_entry_type_ids.filtered(lambda wet: wet.code not in ['LEAVE210', 'LEAVE230', 'LEAVE250'])
 
         for wizard in self:
-            all_contracts = self.env['hr.employee']._get_all_contracts(wizard.date_start, wizard.date_end, ['open', 'close'])
+            all_contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(wizard.date_start, wizard.date_end)
             # Coming from out batch, restrict to out employees
             batch_specific = 'employee_ids' in self.env.context
             if batch_specific:
@@ -100,8 +100,8 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
                 all_employees -= already_paid_employees
                 all_payslips = all_payslips.filtered(lambda p: p.employee_id not in already_paid_employees)
 
-            employee_contracts = defaultdict(lambda: self.env['hr.contract'])
-            for contract in all_contracts.filtered(lambda c: c.active and c.company_id == wizard.company_id and c.eco_checks):
+            employee_contracts = defaultdict(lambda: self.env['hr.version'])
+            for contract in all_contracts.filtered(lambda c: c.company_id == wizard.company_id and c.eco_checks):
                 employee_contracts[contract.employee_id] |= contract
 
             result = [(5, 0, 0)]
@@ -199,7 +199,7 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
                 payslip = self.env['hr.payslip'].create({
                     'name': _('Eco-Vouchers'),
                     'employee_id': line.employee_id.id,
-                    'contract_id': line.employee_id.contract_id.id,
+                    'version_id': line.employee_id.version_id.id,
                     'struct_id': payslip_structure_type.id,
                     'worked_days_line_ids': [(5, 0, 0)],
                     'input_line_ids': [(0, 0, {
@@ -209,10 +209,8 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
                     'payslip_run_id': batch.id,
                 })
                 payslip.update({'worked_days_line_ids': payslip._get_new_worked_days_lines()})
-                if not payslip.contract_id:
-                    history = self.env['hr.contract.history'].search([('employee_id', '=', payslip.employee_id.id)], limit=1)
-                    contracts = history.contract_ids.filtered(lambda c: c.active and c.state in ['open', 'close'])[0]
-                    payslip.contract_id = contracts[0] if contracts else False
+                if not payslip.version_id:
+                    payslip.version_id = payslip.employee_id._get_version(payslip.date_from)
                 payslips |= payslip
             payslip.compute_sheet()
         action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_view_hr_payslip_month_form")

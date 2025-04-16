@@ -4,7 +4,7 @@ import math
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.addons.l10n_au_hr_payroll.models.hr_contract import CESSATION_TYPE_CODE
+from odoo.addons.l10n_au_hr_payroll.models.hr_version import CESSATION_TYPE_CODE
 from odoo.exceptions import UserError
 
 
@@ -13,8 +13,8 @@ class L10n_AuTerminationPayment(models.TransientModel):
     _description = "Termination Payment"
 
     employee_id = fields.Many2one("hr.employee")
-    contract_id = fields.Many2one(
-        "hr.contract",
+    version_id = fields.Many2one(
+        "hr.version",
         compute="_compute_contract_id"
     )
     contract_end_date = fields.Date(
@@ -44,23 +44,23 @@ class L10n_AuTerminationPayment(models.TransientModel):
     @api.depends('employee_id', 'contract_end_date')
     def _compute_contract_id(self):
         for record in self:
-            contracts = record.employee_id._get_contracts(
+            contracts = record.employee_id._get_versions_with_contract_overlap_with_period(
                 date_from=record.contract_end_date,
                 date_to=record.contract_end_date,
             ) or record.employee_id._get_incoming_contracts(
                 date_from=record.contract_end_date,
                 date_to=record.contract_end_date,
             )
-            record.contract_id = contracts and contracts[0]
+            record.version_id = contracts and contracts[0]
 
-    @api.depends("employee_id", "contract_id", "contract_end_date")
+    @api.depends("employee_id", "version_id", "contract_end_date")
     def _compute_unused_leaves(self):
         for record in self:
             leaves = self.env["hr.leave.allocation"].search([
                 ("state", "=", "validate"),
                 ("holiday_status_id.l10n_au_leave_type", "in", ['annual', 'long_service']),
                 ("employee_id", "=", self.employee_id.id),
-                ("date_from", "<=", record.contract_id.date_end or record.contract_end_date),
+                ("date_from", "<=", record.version_id.date_end or record.contract_end_date),
             ])
 
             annual_leaves = leaves.filtered(lambda l: l.holiday_status_id.l10n_au_leave_type == 'annual')
@@ -71,10 +71,10 @@ class L10n_AuTerminationPayment(models.TransientModel):
 
     def button_terminate(self):
         self.ensure_one()
-        if not self.contract_id:
+        if not self.version_id:
             raise UserError(_("You cannot terminate an employee if there is no contract running at this time."))
 
-        self.contract_id.write({
+        self.version_id.write({
             'l10n_au_cessation_type_code':  self.cessation_type_code,
             'date_end':  self.contract_end_date,
         })
@@ -82,7 +82,7 @@ class L10n_AuTerminationPayment(models.TransientModel):
         payslip = self.env["hr.payslip"].create({
             "name": f"Termination Salary Slip - {self.employee_id.name}",
             "employee_id": self.employee_id.id,
-            "contract_id": self.contract_id.id,
+            "version_id": self.version_id.id,
             "date_from": self._get_termination_payslip_period_start(),
             "date_to": self.contract_end_date,
             "l10n_au_termination_type": self.termination_type})
@@ -99,7 +99,7 @@ class L10n_AuTerminationPayment(models.TransientModel):
     @api.model
     def _get_termination_payslip_period_start(self):
         self.ensure_one()
-        schedule = self.contract_id.schedule_pay or self.contract_id.structure_type_id.default_schedule_pay
+        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
         date_to = self.contract_end_date
         week_start = self.env["res.lang"]._lang_get(self.env.user.lang).week_start
 
@@ -125,6 +125,6 @@ class L10n_AuTerminationPayment(models.TransientModel):
         else:  # if not handled, put the monthly behaviour
             date_from = date_to.replace(day=1)
 
-        if self.contract_id.date_start and date_from < self.contract_id.date_start:
-            date_from = self.contract_id.date_start
+        if self.version_id.date_start and date_from < self.version_id.date_start:
+            date_from = self.version_id.date_start
         return date_from

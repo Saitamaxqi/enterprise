@@ -6,7 +6,6 @@
         <field name="arch" type="xml">
             <list string="Accident Insurances">
                 <field name="name"/>
-                <field name="insurance_company"/>
                 <field name="customer_number"/>
                 <field name="contract_number"/>
             </list>
@@ -25,20 +24,18 @@
                     </div>
                     <group>
                         <group string="Insurer Information">
+                            <field name="company_id" required="1" groups="base.group_multi_company"/>
+                            <field name="insurance_code" string="Insurance Number" required="1"/>
+                            <field name="uid_bfs_number" string="UID-BFS Number" placeholder="Unknown"/>
                             <field name="customer_number"/>
                             <field name="contract_number"/>
-                            <field name="insurance_company"/>
-                            <field name="insurance_code"/>
-                            <field name="insurance_company_address_id"/>
                         </group>
                     </group>
-                    <group string="LAA Solution" colspan="2">
-                        <field name="line_ids" nolabel="1" colspan="2">
+                    <group string="LAA Groups" colspan="2">
+                        <field name="laa_group_ids" nolabel="1" colspan="2">
                             <list>
-                                <field name="solution_name"/>
-                                <field name="solution_type"/>
-                                <field name="solution_number"/>
-                                <field name="rate_ids"/>
+                                <field name="name"/>
+                                <field name="group_unit"/>
                             </list>
                         </field>
                     </group>
@@ -97,8 +94,34 @@
         </field>
     </record>
 
+    <record id="l10n_ch_accident_insurance_group_view_form" model="ir.ui.view">
+        <field name="name">l10n.ch.accident.group.view.form</field>
+        <field name="model">l10n.ch.accident.group</field>
+        <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="group_unit"/>
+                            <field name="line_ids" nolabel="1" colspan="2">
+                                <list editable="bottom">
+                                    <field name="date_from" required="1"/>
+                                    <field name="date_to"/>
+                                    <field name="threshold"/>
+                                    <field name="occupational_male_rate" string="Occupational Rate (%)"/>
+                                    <field name="non_occupational_male_rate" string="Non-Occupational Rate (%)"/>
+                                    <field name="employer_aanp_part" string="Company Part (%)" required="1"/>
+                                </list>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+
     <record id="action_l10n_ch_accident_insurance" model="ir.actions.act_window">
-        <field name="name">AAP/AANP Insurances</field>
+        <field name="name">LAA Insurances</field>
         <field name="res_model">l10n.ch.accident.insurance</field>
         <field name="view_mode">list,form</field>
     </record>

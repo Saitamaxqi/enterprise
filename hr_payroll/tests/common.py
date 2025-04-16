@@ -26,37 +26,32 @@ class TestPayslipBase(TransactionCase):
             'name': 'Research & Development - Test',
         })
 
-        # I create a new employee "Richard"
-        cls.richard_emp = cls.env['hr.employee'].create({
-            'name': 'Richard',
-            'gender': 'male',
-            'birthday': '1984-05-01',
-            'country_id': cls.env.ref('base.us').id,
-            'department_id': cls.dep_rd.id,
-        })
-
-        # I create a new employee "Jules"
-        cls.jules_emp = cls.env['hr.employee'].create({
-            'name': 'Jules',
-            'gender': 'male',
-            'birthday': '1984-05-01',
-            'country_id': cls.env.ref('base.us').id,
-            'department_id': cls.dep_rd.id,
-        })
-
         cls.structure_type = cls.env['hr.payroll.structure.type'].create({
             'name': 'Test - Developer',
         })
 
-        # I create a contract for "Richard"
-        cls.richard_contract = cls.env['hr.contract'].create({
-            'date_end': Date.today() + relativedelta(years=2),
-            'date_start': Date.to_date('2018-01-01'),
-            'name': 'Contract for Richard',
+        cls.richard_emp = cls.env['hr.employee'].create({
+            'name': 'Richard',
+            'sex': 'male',
+            'birthday': '1984-05-01',
+            'country_id': cls.env.ref('base.us').id,
+            'department_id': cls.dep_rd.id,
+            'date_version': Date.to_date('2018-01-01'),
+            'contract_date_start': Date.to_date('2018-01-01'),
+            'contract_date_end': Date.today() + relativedelta(years=2),
             'wage': 5000.33,
-            'employee_id': cls.richard_emp.id,
             'structure_type_id': cls.structure_type.id,
         })
+
+        cls.jules_emp = cls.env['hr.employee'].create({
+            'name': 'Jules',
+            'sex': 'male',
+            'birthday': '1984-05-01',
+            'country_id': cls.env.ref('base.us').id,
+            'department_id': cls.dep_rd.id,
+        })
+
+        cls.richard_contract = cls.richard_emp.version_id
 
         cls.work_entry_type = cls.env['hr.work.entry.type'].create({
             'name': 'Extra attendance',
@@ -90,7 +85,7 @@ class TestPayslipBase(TransactionCase):
             'sequence': 5,
             'amount_select': 'percentage',
             'amount_percentage': 40.0,
-            'amount_percentage_base': 'contract.wage',
+            'amount_percentage_base': 'version.wage',
             'code': 'HRA',
             'category_id': cls.env.ref('hr_payroll.ALW').id,
             'struct_id': cls.developer_pay_structure.id,
@@ -133,7 +128,7 @@ class TestPayslipBase(TransactionCase):
             'sequence': 120,
             'amount_select': 'percentage',
             'amount_percentage': -12.5,
-            'amount_percentage_base': 'contract.wage',
+            'amount_percentage_base': 'version.wage',
             'code': 'PF',
             'category_id': cls.env.ref('hr_payroll.DED').id,
             'struct_id': cls.developer_pay_structure.id,
@@ -153,7 +148,7 @@ class TestPayslipBase(TransactionCase):
     def create_work_entry(self, start, stop, work_entry_type=None):
         work_entry_type = work_entry_type or self.work_entry_type
         return self.env['hr.work.entry'].create({
-            'contract_id': self.richard_emp.contract_ids[0].id,
+            'version_id': self.richard_emp.version_ids[0].id,
             'name': "Work entry %s-%s" % (start, stop),
             'date_start': start,
             'date_stop': stop,
@@ -263,41 +258,38 @@ class TestPayslipContractBase(TestPayslipBase):
         })
 
         # This contract ends at the 15th of the month
-        cls.contract_cdd = cls.env['hr.contract'].create({ # Fixed term contract
-            'date_end': datetime.strptime('2015-11-15', '%Y-%m-%d'),
-            'date_start': datetime.strptime('2015-01-01', '%Y-%m-%d'),
-            'name': 'First CDD Contract for Richard',
+        cls.contract_cdd = cls.richard_emp.create_version({  # Fixed term contract
+            'contract_date_end': datetime.strptime('2015-11-15', '%Y-%m-%d'),
+            'contract_date_start': datetime.strptime('2015-01-01', '%Y-%m-%d'),
+            'date_version': datetime.strptime('2015-01-01', '%Y-%m-%d'),
             'resource_calendar_id': cls.calendar_40h.id,
             'wage': 5000.33,
-            'employee_id': cls.richard_emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
-            'kanban_state': 'blocked',
             'date_generated_from': datetime.strptime('2015-11-16', '%Y-%m-%d'),
             'date_generated_to': datetime.strptime('2015-11-16', '%Y-%m-%d'),
         })
 
         # This contract starts the next day
-        cls.contract_cdi = cls.env['hr.contract'].create({
-            'date_start': datetime.strptime('2015-11-16', '%Y-%m-%d'),
-            'name': 'Contract for Richard',
+        cls.contract_cdi = cls.richard_contract
+        cls.richard_contract.write({
+            'contract_date_start': datetime.strptime('2015-11-16', '%Y-%m-%d'),
+            'contract_date_end': False,
+            'date_version': datetime.strptime('2015-11-16', '%Y-%m-%d'),
             'resource_calendar_id': cls.calendar_35h.id,
             'wage': 5000.33,
-            'employee_id': cls.richard_emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
-            'kanban_state': 'normal',
             'date_generated_from': datetime.strptime('2015-11-15', '%Y-%m-%d'),
             'date_generated_to': datetime.strptime('2015-11-15', '%Y-%m-%d'),
         })
 
         # Contract for Jules
-        cls.contract_jules = cls.env['hr.contract'].create({
-            'date_start': datetime.strptime('2015-01-01', '%Y-%m-%d'),
+        cls.jules_emp.version_id.write({
+            'contract_date_start': datetime.strptime('2015-01-01', '%Y-%m-%d'),
+            'date_version': datetime.strptime('2015-01-01', '%Y-%m-%d'),
             'name': 'Contract for Jules',
             'resource_calendar_id': cls.calendar_2_weeks.id,
             'wage': 5000.33,
             'employee_id': cls.jules_emp.id,
             'structure_type_id': cls.developer_pay_structure.type_id.id,
-            'state': 'open',
         })
+        cls.contract_jules = cls.jules_emp.version_id

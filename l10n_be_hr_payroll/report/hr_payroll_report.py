@@ -17,7 +17,7 @@ class HrPayrollReport(models.Model):
         return super()._select(additional_rules) + """,
                 p.struct_id as struct_id,
                 CASE WHEN wd.id = min_id.min_line THEN l10n_be_meal_voucher_count.quantity ELSE 0 END as l10n_be_meal_voucher_count,
-                CASE WHEN wd.id = min_id.min_line THEN (c.meal_voucher_amount - 1.09) * l10n_be_meal_voucher_count.quantity ELSE 0 END as l10n_be_meal_voucher_employer,
+                CASE WHEN wd.id = min_id.min_line THEN (v.meal_voucher_amount - 1.09) * l10n_be_meal_voucher_count.quantity ELSE 0 END as l10n_be_meal_voucher_employer,
                 CASE WHEN wd.id = min_id.min_line THEN -SUM(COALESCE(l10n_be_deduction_atn.total, 0)) ELSE 0 END as l10n_be_atn_deduction,
                 l10n_be_274_xx_line.amount as l10n_be_withholding_taxes_exemption
                 """

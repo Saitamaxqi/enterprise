@@ -1,441 +1,332 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import fields, models, _
+from ..api.swissdec_declarations import SwissdecDeclaration, SwissdecInstitution
+import re
 import base64
-
-from collections import defaultdict
-from datetime import date
-from dateutil.relativedelta import relativedelta
-
-from odoo import api, fields, models, _
-from odoo.exceptions import UserError
-from odoo.tools.misc import format_date
+import math
 
 
-class ChYearlyReport(models.Model):
+class L10nCHInsuranceReport(models.Model):
     _name = 'ch.yearly.report'
-    _description = 'AVS / LAA / LAAC / IJM Yearly Report'
+    _inherit = ['l10n.ch.swissdec.transmitter']
+    _description = "CH Yearly Report"
 
-    @api.model
-    def default_get(self, field_list=None):
-        if self.env.company.country_id.code != "CH":
-            raise UserError(_('You must be logged in a Swiss company to use this feature'))
-        return super().default_get(field_list)
-
-    name = fields.Char(required=True)
-    year = fields.Integer(required=True, default=lambda self: fields.Date.today().year)
-
+    incomplete_declaration = fields.Boolean()
+    tax_cross_border_institutions = fields.Many2many('l10n.ch.source.tax.institution')
+    tax_certificates = fields.Boolean()
+    wage_statement_count = fields.Integer(compute="_compute_wage_statement_count")
     avs_institution_ids = fields.Many2many('l10n.ch.social.insurance')
     laa_institution_ids = fields.Many2many('l10n.ch.accident.insurance')
     laac_institution_ids = fields.Many2many('l10n.ch.additional.accident.insurance')
     ijm_institution_ids = fields.Many2many('l10n.ch.sickness.insurance')
     caf_institution_ids = fields.Many2many('l10n.ch.compensation.fund')
 
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
-    currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
+    def _compute_actionable_warnings(self):
+        for declaration in self:
+            actionable_warnings = {}
+            i = 0
+            if declaration.l10n_ch_declare_salary_data:
+                for person in declaration.l10n_ch_declare_salary_data["Staff"]["Person"]:
+                    if "AHV-AVS-Salaries" in person:
+                        for salary_object in person["AHV-AVS-Salaries"]["AHV-AVS-Salary"]:
+                            avs_salary = float(salary_object.get("AHV-AVS-Income", "0.00"))
+                            if avs_salary < 0 and "AHV-AVS-IncomeSplits" not in salary_object:
+                                actionable_warnings[f"negative_avs_{i}"] = {
+                                    'message': f"{person['Particulars']['Firstname']} {person['Particulars']['Lastname']} has negative AVS-Salary of {avs_salary} for this year, a split or an additional delivery date is required",
+                                    'action': self.env['l10n.ch.avs.splits']._get_records_action(name=_("New OASI Split"), context={
+                                        "default_employee_id": self.env['hr.employee'].search([('registration_number', '=', person['Particulars'].get("EmployeeNumber", False))], limit=1).id,
+                                        "default_year": declaration.year,
+                                        "default_income_to_split": avs_salary
+                                    }),
+                                    'blocking': "all",
+                                    "action_text": _("Split AVS Salary"),
+                                }
+                                i += 1
 
-    report_line_ids = fields.One2many('ch.yearly.report.line', 'report_id')
+            declaration.actionable_warnings = actionable_warnings
 
-    def _get_employee_entry_withdrawals(self):
-        """
-        The logic is, we retrieve all contracts, if two contracts follow eachother by 1 day, we do not
-        consider it a withdrawal from the company.
-        """
-        january_1 = date(self.year, 1, 1)
-        december_31 = date(self.year, 12, 31)
-        emp_contracts = self.env['hr.contract']._read_group(
-            domain=[
-                ('state', 'in', ['open', 'close']),
-                ('company_id', '=', self.company_id.id),
-            ],
-            groupby=['employee_id'],
-            aggregates=['id:recordset'])
-        aggregated_entry_withdrawals = {}
-        for emp in sorted(emp_contracts, key=lambda x: x[0].name):
-            periods = []
-            start_end_dates = [d + relativedelta(days=-1) for d in emp[1].mapped('date_start')] + [d for d in emp[1].mapped('date_end') if d]
-            if start_end_dates:
-                start_end_dates = sorted(start_end_dates, reverse=True)
-                current_entry = start_end_dates.pop()
-                current_withdrawal = start_end_dates.pop() if start_end_dates else date(self.year, 12, 31)
-                periods = []
-                if start_end_dates:
-                    while start_end_dates:
-                        # We check the next contract start
-                        next_entry = start_end_dates.pop()
-                        # If they are successive contracts we extend the current period
-                        if next_entry == current_withdrawal:
-                            current_withdrawal = start_end_dates.pop() if start_end_dates else date(self.year, 12, 31)
-                        # We have a leap in time between contracts, this is considered as a withdrawal from the company and a new entry
-                        else:
-                            periods.append((max(current_entry + relativedelta(days=1), january_1), min(current_withdrawal, december_31)))
-                            current_entry = next_entry
-                            current_withdrawal = start_end_dates.pop() if start_end_dates else date(self.year, 12, 31)
-                        if not start_end_dates:
-                            periods.append((max(current_entry + relativedelta(days=1), january_1), min(current_withdrawal, december_31)))
-                else:
-                    periods.append((max(current_entry + relativedelta(days=1), january_1), min(current_withdrawal, december_31)))
-            if periods:
-                aggregated_entry_withdrawals[emp[0].id] = {emp[1].filtered(lambda c: max(current_entry + relativedelta(days=1), january_1) >= p[0] and max(current_entry + relativedelta(days=1), january_1) <= p[1]): p for p in periods}
-        return aggregated_entry_withdrawals
-
-    def _get_avs_rendering_data(self, employee_moves, avs_institution):
+    def action_prepare_data(self):
         self.ensure_one()
-        payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('company_id', '=', self.company_id.id),
-            ('date_from', '>=', date(self.year, 1, 1)),
-            ('date_to', '<=', date(self.year, 12, 31)),
-            ('l10n_ch_social_insurance_id', '=', avs_institution.id),
-            ('l10n_ch_avs_status', 'not in', ['young', 'exempted'])
-        ])
-        line_values = payslips._get_line_values(['AVSSALARY', 'ACSALARY', 'ACCSALARY'], compute_sum=True)
+        super().action_prepare_data()
+        declaration, institutions = self.env["l10n.ch.employee.yearly.values"]._get_yearly_retrospective(year=self.year, month=int(self.month), company_id=self.company_id, incomplete_declaration=self.incomplete_declaration)
+        self.l10n_ch_declare_salary_data = declaration
+        self.avs_institution_ids = self.env['l10n.ch.social.insurance'].browse(institutions.get("AVS", []))
+        self.caf_institution_ids = self.env['l10n.ch.compensation.fund'].browse(institutions.get("CAF", []))
+        self.laa_institution_ids = self.env['l10n.ch.accident.insurance'].browse(institutions.get("LAA", []))
+        self.laac_institution_ids = self.env['l10n.ch.additional.accident.insurance'].browse(institutions.get("LAAC", []))
+        self.ijm_institution_ids = self.env['l10n.ch.sickness.insurance'].browse(institutions.get("IJM", []))
+        self.tax_cross_border_institutions = self.env['l10n.ch.source.tax.institution'].browse(institutions.get("TXB", []))
+        self.tax_certificates = institutions.get("Tax", False)
+        self._compute_actionable_warnings()
 
-        mapped_salaries = defaultdict(lambda: defaultdict(lambda: [0, 0, 0]))
-        for payslip in payslips.sudo():
-            avs_salary = line_values['AVSSALARY'][payslip.id]['total']
-            ac_salary = line_values['ACSALARY'][payslip.id]['total']
-            acc_salary = line_values['ACCSALARY'][payslip.id]['total']
-            if avs_salary or acc_salary or acc_salary:
-                for contracts_per_period in employee_moves.get(payslip.employee_id.id, []):
-                    if payslip.contract_id.id in contracts_per_period.ids:
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][0] += avs_salary
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][1] += ac_salary
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][2] += acc_salary
+    def _get_institutions(self):
+        institutions = list(self.avs_institution_ids) + list(self.caf_institution_ids) + list(self.laa_institution_ids) + list(self.laac_institution_ids) + list(self.ijm_institution_ids) + list(self.tax_cross_border_institutions)
+        if self.tax_certificates:
+            institutions += [SwissdecInstitution("Tax")]
+        return institutions
 
-        reporting_data = {
-            'report_name': "Attestation AVS",
-            'institution': avs_institution.insurance_code,
-            'company': self.company_id,
-            'year': self.year,
-            'columns': [
-                _("SV-AS Number"), _('Birthday'), _('Name'), _('From'), _('To'), _('AVS Salary'), _('AC Salary'), _('ACC Salary'), _('M/F')
-            ],
-            'employee_data': sorted([
-                [
-                    employee.l10n_ch_sv_as_number,
-                    format_date(self.env, employee.birthday),
-                    employee.name,
-                    format_date(self.env, period[0]),
-                    format_date(self.env, period[1]),
-                    '%.2f %s' % (mapped_salaries[employee][period][0], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][1], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][2], self.currency_id.symbol),
-                    'M' if employee.gender == 'male' else 'F'
-                ] for employee in mapped_salaries for period in mapped_salaries[employee]
-            ], key=lambda e: (bool(e[0]), e[2], e[3])),
-            'to_monetary': lambda amount: '%.2f %s' % (amount, self.currency_id.symbol),
-        }
-        return reporting_data
-
-    def _get_avs_open_rendering_data(self, employee_moves, avs_institution):
+    def _get_declaration(self):
         self.ensure_one()
-        payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('company_id', '=', self.company_id.id),
-            ('date_from', '>=', date(self.year, 1, 1)),
-            ('date_to', '<=', date(self.year, 12, 31)),
-            ('l10n_ch_social_insurance_id', '=', avs_institution.id),
-        ])
-        line_values = payslips._get_line_values(['AVSOPEN', 'ACOPEN'], compute_sum=True)
+        swissdec_declaration = SwissdecDeclaration()
+        return swissdec_declaration.create_declare_salary(
+            institutions_to_process=self._get_institutions(),
+            company_id=self.company_id,
+            staff=self.l10n_ch_declare_salary_data,
+            declaration_year=self.year,
+            test_case=self.test_transmission,
+            substitution_declaration_id=self.substituted_declaration_id.swissdec_declaration_id,
+            CurrentMonth=(self.year, int(self.month), False)
+        )
 
-        mapped_salaries = defaultdict(lambda: defaultdict(lambda: [0, 0]))
-        for payslip in payslips.sudo():
-            avs_open = line_values['AVSOPEN'][payslip.id]['total']
-            ac_open = line_values['ACOPEN'][payslip.id]['total']
-            if avs_open or ac_open:
-                for contracts_per_period in employee_moves.get(payslip.employee_id.id, []):
-                    if payslip.contract_id.id in contracts_per_period.ids:
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][0] += avs_open
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][1] += ac_open
-
-        reporting_data = {
-            'report_name': "AVS Exempted Salaries",
-            'institution': avs_institution.insurance_code,
-            'company': self.company_id,
-            'year': self.year,
-            'columns': [
-                _("SV-AS Number"), _('Birthday'), _('Name'), _('From'), _('To'), _('AVS Open'), _('AC Open'), _('M/F')
-            ],
-            'employee_data': sorted([
-                [
-                    employee.l10n_ch_sv_as_number,
-                    format_date(self.env, employee.birthday),
-                    employee.name,
-                    format_date(self.env, period[0]),
-                    format_date(self.env, period[1]),
-                    '%.2f %s' % (mapped_salaries[employee][period][0], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][1], self.currency_id.symbol),
-                    'M' if employee.gender == 'male' else 'F'
-                ] for employee in mapped_salaries for period in mapped_salaries[employee]
-            ], key=lambda e: (not e[0], e[2], e[3])),
-            'to_monetary': lambda amount: '%.2f %s' % (amount, self.currency_id.symbol),
-        }
-        return reporting_data
-
-    def _get_laa_rendering_data(self, employee_moves, laa_institution):
+    def generate_ahv_report(self):
         self.ensure_one()
-        payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('company_id', '=', self.company_id.id),
-            ('date_from', '>=', date(self.year, 1, 1)),
-            ('date_to', '<=', date(self.year, 12, 31)),
-            ('l10n_ch_accident_insurance_line_id', 'in', laa_institution.line_ids.ids),
-        ])
-        line_values = payslips._get_line_values(['GROSS', 'LAABASE', 'LAASALARY'], compute_sum=True)
-        mapped_salaries = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: [0, 0, 0, False])))
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="AhvReport"
+        )
+        report_pdf = report.get("AhvReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"AVS_Report_{self.year}.pdf",
+                'datas': report_pdf,  # Must be base64-encoded already
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
 
-        periods_per_solutions = defaultdict(lambda: defaultdict(lambda: self.env['hr.payslip']))
-        for payslip in payslips.sudo():
-            periods_per_solutions[payslip.employee_id][payslip.l10n_ch_accident_insurance_line_id.solution_code] |= payslip
-
-        for payslip in payslips.sudo():
-            current_solution = payslip.l10n_ch_accident_insurance_line_id.solution_code
-            gross = line_values['GROSS'][payslip.id]['total']
-            laa_base = line_values['LAABASE'][payslip.id]['total']
-            laa_salary = line_values['LAASALARY'][payslip.id]['total']
-            if gross or laa_base or laa_salary:
-                for contracts_per_period in employee_moves.get(payslip.employee_id.id, []):
-                    if payslip.contract_id.id in contracts_per_period.ids:
-                        current_period = employee_moves[payslip.employee_id.id][contracts_per_period]
-                        ajusted_period = (max(min(periods_per_solutions[payslip.employee_id][current_solution].mapped('date_from')), current_period[0]),
-                                          min(max(periods_per_solutions[payslip.employee_id][current_solution].mapped('date_to')), current_period[1]))
-                        mapped_salaries[payslip.employee_id][ajusted_period][current_solution][0] += gross
-                        mapped_salaries[payslip.employee_id][ajusted_period][current_solution][1] += laa_base
-                        mapped_salaries[payslip.employee_id][ajusted_period][current_solution][2] += laa_salary
-        reporting_data = {
-            'report_name': 'LAA Statement',
-            'institution': laa_institution.insurance_code,
-            'company': self.company_id,
-            'year': self.year,
-            'columns': [
-                _("Employee Number"), _('Name'), _('From'), _('To'), _('Gross Salary'), _('LAA Base'), _('LAA Salary'), _('M/F'), _('LAA Code')
-            ],
-            'employee_data': sorted([
-                [
-                    employee.id,
-                    employee.name,
-                    format_date(self.env, period[0]),
-                    format_date(self.env, period[1]),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][0], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][1], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][2], self.currency_id.symbol),
-                    'M' if employee.gender == 'male' else 'F',
-                    solution,
-                ] for employee in mapped_salaries for period in mapped_salaries[employee] for solution in mapped_salaries[employee][period]
-            ], key=lambda e: (e[1], e[2])),
-        }
-        return reporting_data
-
-    def _get_laac_rendering_data(self, employee_moves, laac_institution):
+    def generate_free_ahv_report(self):
         self.ensure_one()
-        payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('company_id', '=', self.company_id.id),
-            ('date_from', '>=', date(self.year, 1, 1)),
-            ('date_to', '<=', date(self.year, 12, 31)),
-            ('l10n_ch_additional_accident_insurance_line_ids', 'in', laac_institution.line_ids.ids),
-        ])
-        line_values = payslips._get_line_values(['LAACBASE', 'LAACSALARY1', 'LAACSALARY2'], compute_sum=True)
-        mapped_salaries = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: [0, 0, False])))
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="AhvFreeReport"
+        )
+        report_pdf = report.get("AhvFreeReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"AVS_Free_Report_{self.year}.pdf",
+                'datas': report_pdf,
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
 
-        periods_per_solutions = defaultdict(lambda: defaultdict(lambda: self.env['hr.payslip']))
-        for payslip in payslips.sudo():
-            for solution in payslip.l10n_ch_additional_accident_insurance_line_ids:
-                periods_per_solutions[payslip.employee_id][solution.solution_name] |= payslip
-
-        for payslip in payslips.sudo():
-            main_solution = payslip.l10n_ch_additional_accident_insurance_line_ids[0].solution_name
-            second_solution = payslip.l10n_ch_additional_accident_insurance_line_ids[1].solution_name if len(payslip.l10n_ch_additional_accident_insurance_line_ids) > 1 else False
-            laac_base = line_values['LAACBASE'][payslip.id]['total']
-            laac_main_salary = line_values['LAACSALARY1'][payslip.id]['total']
-            laac_second_salary = line_values['LAACSALARY2'][payslip.id]['total']
-            if laac_base or laac_main_salary or laac_second_salary:
-                for contracts_per_period in employee_moves.get(payslip.employee_id.id, []):
-                    if payslip.contract_id.id in contracts_per_period.ids:
-                        current_period = employee_moves[payslip.employee_id.id][contracts_per_period]
-                        ajusted_period = (max(min(periods_per_solutions[payslip.employee_id][main_solution].mapped('date_from')), current_period[0]),
-                                          min(max(periods_per_solutions[payslip.employee_id][main_solution].mapped('date_to')), current_period[1]))
-                        mapped_salaries[payslip.employee_id][ajusted_period][main_solution][0] += laac_base
-                        mapped_salaries[payslip.employee_id][ajusted_period][main_solution][1] += laac_main_salary
-
-                        if laac_second_salary:
-                            ajusted_period = (max(min(periods_per_solutions[payslip.employee_id][second_solution].mapped('date_from')), current_period[0]),
-                                              min(max(periods_per_solutions[payslip.employee_id][second_solution].mapped('date_to')), current_period[1]))
-                            mapped_salaries[payslip.employee_id][ajusted_period][second_solution][0] += laac_base
-                            mapped_salaries[payslip.employee_id][ajusted_period][second_solution][1] += laac_second_salary
-
-        reporting_data = {
-            'report_name': 'LAAC Statement',
-            'institution': laac_institution.insurance_code,
-            'company': self.company_id,
-            'year': self.year,
-            'columns': [
-                _("Employee Number"), _('Name'), _('From'), _('To'), _('LAAC Base'), _('LAAC Salary'), _('M/F'), _('LAAC Code')
-            ],
-            'employee_data': sorted([
-                [
-                    employee.id,
-                    employee.name,
-                    format_date(self.env, period[0]),
-                    format_date(self.env, period[1]),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][0], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][1], self.currency_id.symbol),
-                    'M' if employee.gender == 'male' else 'F',
-                    solution,
-                ] for employee in mapped_salaries for period in mapped_salaries[employee] for solution in mapped_salaries[employee][period]
-            ], key=lambda e: (e[1], e[2])),
-        }
-        return reporting_data
-
-    def _get_ijm_rendering_data(self, employee_moves, ijm_institution):
+    def generate_fak_report(self):
         self.ensure_one()
-        payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('company_id', '=', self.company_id.id),
-            ('date_from', '>=', date(self.year, 1, 1)),
-            ('date_to', '<=', date(self.year, 12, 31)),
-            ('l10n_ch_sickness_insurance_line_ids', 'in', ijm_institution.line_ids.ids),
-        ])
-        line_values = payslips._get_line_values(['IJMBASE', 'IJMSALARY1', 'IJMSALARY2'], compute_sum=True)
-        mapped_salaries = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: [0, 0, False])))
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="FakReport"
+        )
+        report_pdf = report.get("FakReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"FAK_Report_{self.year}.pdf",
+                'datas': report_pdf,
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
 
-        periods_per_solutions = defaultdict(lambda: defaultdict(lambda: self.env['hr.payslip']))
-        for payslip in payslips.sudo():
-            for solution in payslip.l10n_ch_sickness_insurance_line_ids:
-                periods_per_solutions[payslip.employee_id][solution.solution_name] |= payslip
-
-        for payslip in payslips.sudo():
-            main_solution = payslip.l10n_ch_sickness_insurance_line_ids[0].solution_name
-            second_solution = payslip.l10n_ch_sickness_insurance_line_ids[1].solution_name if len(payslip.l10n_ch_sickness_insurance_line_ids) > 1 else False
-            ijm_base = line_values['IJMBASE'][payslip.id]['total']
-            ijm_main_salary = line_values['IJMSALARY1'][payslip.id]['total']
-            ijm_second_salary = line_values['IJMSALARY2'][payslip.id]['total']
-            if ijm_base or ijm_main_salary or ijm_second_salary:
-                for contracts_per_period in employee_moves.get(payslip.employee_id.id, []):
-                    if payslip.contract_id.id in contracts_per_period.ids:
-                        current_period = employee_moves[payslip.employee_id.id][contracts_per_period]
-                        ajusted_period = (max(min(periods_per_solutions[payslip.employee_id][main_solution].mapped('date_from')), current_period[0]),
-                                          min(max(periods_per_solutions[payslip.employee_id][main_solution].mapped('date_to')), current_period[1]))
-                        mapped_salaries[payslip.employee_id][ajusted_period][main_solution][0] += ijm_base
-                        mapped_salaries[payslip.employee_id][ajusted_period][main_solution][1] += ijm_main_salary
-
-                        if ijm_second_salary:
-                            ajusted_period = (max(min(periods_per_solutions[payslip.employee_id][second_solution].mapped('date_from')), current_period[0]),
-                                              min(max(periods_per_solutions[payslip.employee_id][second_solution].mapped('date_to')), current_period[1]))
-                            mapped_salaries[payslip.employee_id][ajusted_period][second_solution][0] += ijm_base
-                            mapped_salaries[payslip.employee_id][ajusted_period][second_solution][1] += ijm_second_salary
-
-        reporting_data = {
-            'report_name': 'LAAC Statement',
-            'institution': ijm_institution.insurance_code,
-            'company': self.company_id,
-            'year': self.year,
-            'columns': [
-                _("Employee Number"), _('Name'), _('From'), _('To'), _('IJM Base'), _('IJM Salary'), _('M/F'), _('IJM Code')
-            ],
-            'employee_data': sorted([
-                [
-                    employee.id,
-                    employee.name,
-                    format_date(self.env, period[0]),
-                    format_date(self.env, period[1]),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][0], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][solution][1], self.currency_id.symbol),
-                    'M' if employee.gender == 'male' else 'F',
-                    solution,
-                ] for employee in mapped_salaries for period in mapped_salaries[employee] for solution in mapped_salaries[employee][period]
-            ], key=lambda e: (e[1], e[2])),
-        }
-        return reporting_data
-
-    def _get_caf_rendering_data(self, employee_moves, caf_institution):
+    def generate_ktg_report(self):
         self.ensure_one()
-        payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('company_id', '=', self.company_id.id),
-            ('date_from', '>=', date(self.year, 1, 1)),
-            ('date_to', '<=', date(self.year, 12, 31)),
-            ('l10n_ch_compensation_fund_id', '=', caf_institution.id),
-        ])
-        line_values = payslips._get_line_values(['AVSSALARY', 'CHILDALW', 'BIRTHALW'], compute_sum=True)
-        mapped_salaries = defaultdict(lambda: defaultdict(lambda: [0, 0]))
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="KtgReport"
+        )
+        report_pdf = report.get("KtgReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"KTG_Report_{self.year}.pdf",
+                'datas': report_pdf,
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
 
-        for payslip in payslips.sudo():
-            avs_salary = line_values['AVSSALARY'][payslip.id]['total']
-            child_alw = line_values['CHILDALW'][payslip.id]['total']
-            birth_alw = line_values['BIRTHALW'][payslip.id]['total']
-            if avs_salary or child_alw or birth_alw:
-                for contracts_per_period in employee_moves.get(payslip.employee_id.id, []):
-                    if payslip.contract_id.id in contracts_per_period.ids:
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][0] += avs_salary
-                        mapped_salaries[payslip.employee_id][employee_moves[payslip.employee_id.id][contracts_per_period]][1] += child_alw + birth_alw
+    def generate_laa_report(self):
+        self.ensure_one()
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="UvgReport"
+        )
+        report_pdf = report.get("UvgReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"LAA_Report_{self.year}.pdf",
+                'datas': report_pdf,
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
 
-        reporting_data = {
-            'report_name': 'CAF Statement',
-            'institution': caf_institution.insurance_code,
-            'company': self.company_id,
-            'year': self.year,
-            'columns': [
-                _("SV-AS Number"), _('Name'), _('From'), _('To'), _('AVS Salary'), _('Child Allowances')
-            ],
-            'employee_data': sorted([
-                [
-                    employee.l10n_ch_sv_as_number,
-                    employee.name,
-                    format_date(self.env, period[0]),
-                    format_date(self.env, period[1]),
-                    '%.2f %s' % (mapped_salaries[employee][period][0], self.currency_id.symbol),
-                    '%.2f %s' % (mapped_salaries[employee][period][1], self.currency_id.symbol),
-                ] for employee in mapped_salaries for period in mapped_salaries[employee]
-            ], key=lambda e: (e[1], e[2])),
-        }
-        return reporting_data
+    def generate_laac_report(self):
+        self.ensure_one()
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="UvgzReport"
+        )
+        report_pdf = report.get("UvgzReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"LAAC_Report_{self.year}.pdf",
+                'datas': report_pdf,
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
 
-    def _get_rendering_data(self):
-        employee_moves = self._get_employee_entry_withdrawals()
+    def generate_txb_report(self):
+        self.ensure_one()
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            report_type="TxbReport"
+        )
+        report_pdf = report.get("TxbReport")
+        if report_pdf:
+            attachment = self.env['ir.attachment'].create({
+                'name': f"TXB_Report_{self.year}.pdf",
+                'datas': report_pdf,
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
+
+    def generate_tax_accounting_reports(self):
+        self.ensure_one()
+        declaration = self._get_declaration()
+        report = self.company_id._l10n_ch_swissdec_request(
+            route='generate_tax_accounting_report',
+            data=declaration,
+            is_test=self.test_transmission,
+            split_files=False
+        )
+        report_pdf = report.get("tax_accounting_reports")
+        if report_pdf.get('tax_accounting_global.pdf'):
+            attachment = self.env['ir.attachment'].create({
+                'name': f"Tax_Accounting_Report_{self.year}.pdf",
+                'datas': report_pdf.get('tax_accounting_global.pdf'),
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id])
+
+    def send_tax_accounting_reports(self):
+        self.ensure_one()
+        declaration = self._get_declaration()
+
+        persons = declaration.get('SalaryDeclaration', {}).get('Company', {}).get("Staff", {}).get('Person', [])
+        total_persons = len(persons)
+        batch_size = 10
+        tax_accounting_reports = {}
+
+        num_batches = math.ceil(total_persons / batch_size)
+
+        for batch_num in range(num_batches):
+            start_index = batch_num * batch_size
+            end_index = start_index + batch_size
+
+            from_person = start_index + 1
+            to_person = min(end_index + 1, total_persons + 1)
+
+            report = self.company_id._l10n_ch_swissdec_request(
+                route='generate_tax_accounting_report',
+                data=declaration,
+                is_test=self.test_transmission,
+                from_person=from_person,
+                to_person=to_person
+            )
+
+            tax_accounting_reports.update(report.get("tax_accounting_reports", {}))
+
+        pattern = re.compile(r"_pers_([A-Za-z0-9_]+)\.pdf$")
+
+        # Let's assume we have employees grouped by registration_number
+        employees_mapped_by_registration_number = dict(
+            self.env['hr.employee']._read_group(
+                domain=[],
+                groupby=['registration_number'],
+                aggregates=['id:recordset']
+            )
+        )
+
+        employee_declaration_vals = []
+
+        for file_name, pdf_b64 in tax_accounting_reports.items():
+
+            match = pattern.search(file_name)
+            if not match:
+                continue
+            registration = match.group(1)
+
+            employee = employees_mapped_by_registration_number.get(registration, self.env['hr.employee'])
+
+            if employee:
+                employee_declaration_vals.append({
+                    'employee_id': employee.id,
+                    'res_model': self._name,
+                    'res_id': self.id,
+                    'pdf_filename': _("Wage_statement_%(year)s_%(name)s", year=self.year, name=employee.name),
+                    'pdf_to_generate': False,
+                    'state': 'pdf_generated',
+                    'pdf_file': pdf_b64
+                })
+            else:
+                attachment = self.env['ir.attachment'].create({
+                    'name': f"Tax_Accounting_Report_{self.year}_{registration}.pdf",
+                    'datas': pdf_b64,
+                    'res_id': self.id,
+                    'res_model': self._name,
+                })
+                self.message_post(body=_("Employee with number %s was either archived or deleted. Wage statement will not be sent automatically.", registration), attachment_ids=[attachment.id])
+
+        self.env['hr.payroll.employee.declaration'].create(employee_declaration_vals)
+
+    def _compute_wage_statement_count(self):
+        mapped_employee_declarations = dict(self.env['hr.payroll.employee.declaration']._read_group(domain=[('res_model', '=', self._name)], groupby=['res_id'], aggregates=['__count']))
+
+        for declaration in self:
+            declaration.wage_statement_count = mapped_employee_declarations.get(declaration.id, 0)
+
+    def action_open_wage_statements(self):
+        self.ensure_one()
         return {
-            'avs': [self._get_avs_rendering_data(employee_moves, avs) for avs in self.avs_institution_ids],
-            'avs_open': [self._get_avs_open_rendering_data(employee_moves, avs) for avs in self.avs_institution_ids],
-            'laa': [self._get_laa_rendering_data(employee_moves, laa) for laa in self.laa_institution_ids],
-            'laac': [self._get_laac_rendering_data(employee_moves, laac) for laac in self.laac_institution_ids],
-            'ijm': [self._get_ijm_rendering_data(employee_moves, ijm) for ijm in self.ijm_institution_ids],
-            'caf': [self._get_caf_rendering_data(employee_moves, caf) for caf in self.caf_institution_ids]
+            'name': _('Wage Statements %s', self.year),
+            'res_model': 'hr.payroll.employee.declaration',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list,form',
+            'domain': [('res_model', '=', self._name), ('res_id', '=', self.id)],
         }
 
-    def action_generate_pdf(self):
-        self.ensure_one()
-        rendering_data = self._get_rendering_data()
-        report_vals = []
-        for report_type in rendering_data:
-            for institution_data in rendering_data[report_type]:
-                export_insurance_pdf = self.env["ir.actions.report"].sudo()._render_qweb_pdf(
-                    self.env.ref('l10n_ch_hr_payroll.action_insurance_yearly_report'),
-                    res_ids=self.ids, data=institution_data)[0]
-
-                report_vals.append({
-                        'report_type': report_type,
-                        'pdf_file': base64.encodebytes(export_insurance_pdf),
-                        'pdf_filename': f"{report_type}-{institution_data['institution']}-{self.year}.pdf"
-                    })
-        self.report_line_ids.unlink()
-        self.report_line_ids = self.env['ch.yearly.report.line'].create(report_vals)
-
-    def action_validate(self):
-        self.ensure_one()
-
-
-class ChYearlyReportLine(models.Model):
-    _name = 'ch.yearly.report.line'
-    _description = 'Insurance Reports'
-
-    report_id = fields.Many2one('ch.yearly.report')
-    report_type = fields.Selection([
-        ("avs", "AVS Statement"),
-        ("avs_open", "AVS Exempted Statement"),
-        ("laa", "LAA Statement"),
-        ("laac", "LAAC Statement"),
-        ("ijm", "IJM Statement"),
-        ("caf", "CAF Statement")
-    ])
-    pdf_file = fields.Binary(string="PDF File")
-    pdf_filename = fields.Char(string="PDF Filename")
+    def create_eiv_file(self):
+        declare_salary = self._get_declaration()
+        result = self.company_id._l10n_ch_swissdec_request(route="create_eiv_file", data=declare_salary, is_test=self.test_transmission)
+        message = result['eiv_file']
+        if message:
+            attachment = self.env['ir.attachment'].create({
+                'name': _("EIV_%s.xml", self.name),
+                'datas': base64.encodebytes(message.encode()),
+                'res_id': self.id,
+                'res_model': self._name,
+            })
+            self.message_post(attachment_ids=[attachment.id], body=_('EIV File Successfully Generated'))

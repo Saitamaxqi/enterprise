@@ -14,32 +14,7 @@ class HrEmployee(models.Model):
     niss = fields.Char(
         'NISS Number', compute="_compute_niss", store=True, readonly=False,
         groups="hr.group_hr_user", tracking=True, index=True)
-    spouse_fiscal_status = fields.Selection([
-        ('high_income', 'With High Income'),
-        ('low_income', 'With Low Income'),
-        ('without_income', 'Without Income'),
-        ('high_pension', 'With High Pensions'),
-        ('low_pension', 'With Low Pensions')
-    ], string='Tax status for spouse', groups="hr.group_hr_user", default='high_income', required=False, tracking=True)
     spouse_fiscal_status_explanation = fields.Char(compute='_compute_spouse_fiscal_status_explanation', groups="hr.group_hr_user")
-    disabled_spouse_bool = fields.Boolean(string='Disabled Spouse', help='if recipient spouse is declared disabled by law', groups="hr.group_hr_user", tracking=True)
-    disabled_children_bool = fields.Boolean(string='Disabled Children', help='if recipient children is/are declared disabled by law', groups="hr.group_hr_user", tracking=True)
-    disabled_children_number = fields.Integer('Number of disabled children', groups="hr.group_hr_user", tracking=True)
-    dependent_children = fields.Integer(compute='_compute_dependent_children', string='Considered number of dependent children', groups="hr.group_hr_user", tracking=True)
-    l10n_be_dependent_children_attachment = fields.Integer(
-        string="# dependent children for salary attachement", groups="hr.group_hr_user", tracking=True,
-        help="""To benefit from this increase in the elusive or non-transferable quotas, the worker whose remuneration is subject to seizure or transfer, must declare it using a form, the model of which has been published in the Belgian Official Gazette. of 30 November 2006.
-
-He must attach to this form the documents establishing the reality of the charge invoked.
-
-Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, of the Royal Decree of 27 December 2004 implementing Articles 1409, § 1, paragraph 4, and 1409, § 1 bis, paragraph 4 , of the Judicial Code relating to the limitation of seizure when there are dependent children, MB, December 13, 2019.""")
-    other_dependent_people = fields.Boolean(string="Other Dependent People", help="If other people are dependent on the employee", groups="hr.group_hr_user", tracking=True)
-    other_senior_dependent = fields.Integer('# seniors (>=66)', help="Number of seniors dependent on the employee, including the disabled ones", groups="hr.group_hr_user", tracking=True)
-    other_disabled_senior_dependent = fields.Integer('# disabled seniors (>=66)', groups="hr.group_hr_user", tracking=True)
-    other_juniors_dependent = fields.Integer('# people (<66)', help="Number of juniors dependent on the employee, including the disabled ones", groups="hr.group_hr_user", tracking=True)
-    other_disabled_juniors_dependent = fields.Integer('# disabled people (<66)', groups="hr.group_hr_user", tracking=True)
-    dependent_seniors = fields.Integer(compute='_compute_dependent_people', string="Considered number of dependent seniors", groups="hr.group_hr_user")
-    dependent_juniors = fields.Integer(compute='_compute_dependent_people', string="Considered number of dependent juniors", groups="hr.group_hr_user")
 
     start_notice_period = fields.Date("Start notice period", groups="hr.group_hr_user", copy=False, tracking=True)
     end_notice_period = fields.Date("End notice period", groups="hr.group_hr_user", copy=False, tracking=True)
@@ -88,40 +63,12 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     double_pay_line_ids = fields.One2many(
         'l10n.be.double.pay.recovery.line', 'employee_id',
         string='Previous Occupations', groups="hr_payroll.group_hr_payroll_user")
-    fiscal_voluntarism = fields.Monetary(
-        string="Fiscal Voluntarism",
-        tracking=True,
-        groups="hr_payroll.group_hr_payroll_user")
 
-    _positive_fiscal_voluntarism = models.Constraint(
-        'CHECK(fiscal_voluntarism >= 0)',
-        'The fiscal voluntarism should be above 0.')
-
-    @api.constrains('children', 'disabled_children_number',
-                    'other_senior_dependent', 'other_disabled_senior_dependent',
-                    'other_juniors_dependent', 'other_disabled_juniors_dependent',
-                    'l10n_be_dependent_children_attachment')
-    def _check_dependent(self):
-        validation_error_message = []
-        for employee in self:
-            if (employee.children < 0 or employee.disabled_children_number < 0 or
-               employee.other_senior_dependent < 0 or employee.other_disabled_senior_dependent < 0 or
-               employee.other_juniors_dependent < 0 or employee.other_disabled_juniors_dependent < 0 or
-               employee.l10n_be_dependent_children_attachment < 0):
-                validation_error_message.append(_("Count of dependent people/children or disabled dependent people/children must be positive."))
-            if ((employee.disabled_children_number > 0 and employee.disabled_children_number > employee.children) or
-               (employee.other_disabled_senior_dependent > 0 and employee.other_disabled_senior_dependent > employee.other_senior_dependent) or
-               (employee.other_disabled_juniors_dependent > 0 and employee.other_disabled_juniors_dependent > employee.other_juniors_dependent) or
-               (employee.l10n_be_dependent_children_attachment > 0 and employee.l10n_be_dependent_children_attachment > employee.children)):
-                validation_error_message.append(_("Count of disabled dependent people/children must be less or equal to the number of dependent people/children."))
-            if validation_error_message:
-                raise ValidationError("\n".join(validation_error_message))
-
-    @api.depends('first_contract_date')
+    @api.depends('version_ids.date_version', 'version_ids.contract_date_start', 'version_ids.contract_date_end')
     def _compute_first_contract_year(self):
-        current_year = fields.Datetime.today().date().year
         for employee in self:
-            year = employee.first_contract_date.year if employee.first_contract_date else current_year
+            version_date = employee._get_first_version_date()
+            year = (version_date or fields.Date.today()).year
             employee.first_contract_year = year
             employee.first_contract_year_n = year
             employee.first_contract_year_n1 = year - 1
@@ -231,26 +178,19 @@ Earnings are made of professional income, remuneration, unemployment allocations
         self.other_juniors_dependent = 0.0
         self.other_disabled_juniors_dependent = 0.0
 
-    @api.depends('disabled_children_bool', 'disabled_children_number', 'children')
-    def _compute_dependent_children(self):
-        for employee in self:
-            if employee.disabled_children_bool:
-                employee.dependent_children = employee.children + employee.disabled_children_number
-            else:
-                employee.dependent_children = employee.children
-
-    @api.depends('other_dependent_people', 'other_senior_dependent',
-        'other_disabled_senior_dependent', 'other_juniors_dependent', 'other_disabled_juniors_dependent')
-    def _compute_dependent_people(self):
-        for employee in self:
-            employee.dependent_seniors = employee.other_senior_dependent + employee.other_disabled_senior_dependent
-            employee.dependent_juniors = employee.other_juniors_dependent + employee.other_disabled_juniors_dependent
-
     @api.model
     def _get_invalid_niss_employee_ids(self):
         res = self.search_read([
             ('company_id', 'in', self.env.companies.filtered(lambda c: c.country_id.code == 'BE').ids),
             ('employee_type', 'in', ('employee', 'student')),
-            ('contract_ids.state', 'in', ('open', 'close'))
         ], ['id', 'niss'])
         return [row['id'] for row in res if not row['niss'] or not self._validate_niss(row['niss'])]
+
+    def _get_first_versions(self):
+        self.ensure_one()
+        versions = super()._get_first_versions()
+        pfi = self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_pfi', raise_if_not_found=False)
+        if not pfi:
+            return versions
+        return versions.filtered(
+            lambda c: c.company_id.country_id.code != 'BE' or (c.company_id.country_id.code == 'BE' and c.contract_type_id != pfi))

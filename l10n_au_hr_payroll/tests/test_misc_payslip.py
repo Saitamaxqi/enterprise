@@ -700,7 +700,7 @@ class TestPayrollMisc(TestPayrollCommon):
             'l10n_au_training_loan': False,
             'l10n_au_tax_free_threshold': True,
             'medicare_reduction': '3'})
-
+        employee.l10n_au_medicare_reduction = '3'
         self._test_payslip(
             employee,
             contract,

@@ -203,7 +203,7 @@ result = average_monthly_salary * prorata_rate
         <field name="sequence">111</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-first_mpf_date = employee.first_contract_date + relativedelta(days=30)
+first_mpf_date = employee.contract_date_start + relativedelta(days=30)
 is_above_mpf_threshold = result_rules['MPF_GROSS']['total'] &gt;= payslip._rule_parameter('l10n_hk_mpf_threshold')
 result = is_above_mpf_threshold and first_mpf_date &lt;= payslip.date_from
         </field>
@@ -222,25 +222,25 @@ result = -min(0.05 * result_rules['MPF_GROSS']['total'], payslip._rule_parameter
         <field name="sequence">111</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-first_mpf_date = employee.first_contract_date + relativedelta(days=30)
+first_mpf_date = employee.contract_date_start + relativedelta(days=30)
 if first_mpf_date.day != 1:
     first_mpf_date = first_mpf_date + relativedelta(months=1, day=payslip.date_from.day)
-    if (first_mpf_date - employee.first_contract_date).days + 1 &gt; 60:
+    if (first_mpf_date - employee.contract_date_start).days + 1 &gt; 60:
         first_mpf_date = first_mpf_date - relativedelta(months=1)
 result = first_mpf_date &lt;= payslip.date_from
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = -min(0.05 * result_rules['MPF_GROSS']['total'], payslip._rule_parameter('l10n_hk_mpf_maximum'))
-first_mpf_date = employee.first_contract_date + relativedelta(days=30)
+first_mpf_date = employee.contract_date_start + relativedelta(days=30)
 if first_mpf_date.day != 1:
     first_mpf_date = first_mpf_date + relativedelta(months=1, day=payslip.date_from.day)
-    if (first_mpf_date - employee.first_contract_date).days + 1 &gt; 60:
+    if (first_mpf_date - employee.contract_date_start).days + 1 &gt; 60:
         first_mpf_date = first_mpf_date - relativedelta(months=1)
 if first_mpf_date == payslip.date_from:
     past_payslip_ids = payslip.env['hr.payslip'].search([
         ('state', 'in', ['paid', 'done']),
-        ('date_to', '&gt;=', employee.first_contract_date),
+        ('date_to', '&gt;=', employee.contract_date_start),
         ('date_to', '&lt;', payslip.date_from),
         ('employee_id', '=', employee.id),
     ])
@@ -411,10 +411,10 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED'] + categorie
         <field name="sequence">220</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-is_same_month = employee.first_contract_date.month == payslip.date_from.month if employee.first_contract_date else False
-is_same_year = employee.first_contract_date.year == payslip.date_from.year if employee.first_contract_date else False
+is_same_month = employee.contract_date_start.month == payslip.date_from.month if employee.contract_date_start else False
+is_same_year = employee.contract_date_start.year == payslip.date_from.year if employee.contract_date_start else False
 new_join = is_same_month and is_same_year
-result = employee.first_contract_date.day &lt;= 15 or not new_join
+result = employee.contract_date_start.day &lt;= 15 or not new_join
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -431,10 +431,10 @@ result = result_rules['NET']['total']
         <field name="sequence">220</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-is_same_month = employee.first_contract_date.month == payslip.date_from.month if employee.first_contract_date else False
-is_same_year = employee.first_contract_date.year == payslip.date_from.year if employee.first_contract_date else False
+is_same_month = employee.contract_date_start.month == payslip.date_from.month if employee.contract_date_start else False
+is_same_year = employee.contract_date_start.year == payslip.date_from.year if employee.contract_date_start else False
 new_join = is_same_month and is_same_year
-result = employee.first_contract_date.day &gt; 15 and new_join
+result = employee.contract_date_start.day &gt; 15 and new_join
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">

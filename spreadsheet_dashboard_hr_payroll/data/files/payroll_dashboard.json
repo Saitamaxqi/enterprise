@@ -496,17 +496,15 @@
     "5": {
       "type": "ODOO",
       "fieldMatching": {},
-      "context": { "search_default_group_by_state": 1 },
+      "context": {},
       "domain": [
-        "&",
-        ["employee_id", "!=", false],
-        ["state", "=", "open"]
+        ["employee_id", "!=", false]
       ],
       "id": "5",
       "measures": [
         { "id": "__count", "fieldName": "__count" }
       ],
-      "model": "hr.contract",
+      "model": "hr.version",
       "name": "Employee Contract",
       "sortedColumn": null,
       "formulaId": "5",
@@ -516,17 +514,15 @@
     "7": {
       "type": "ODOO",
       "fieldMatching": {},
-      "context": { "search_default_group_by_state": 1 },
+      "context": {},
       "domain": [
-        "&",
-        ["employee_id", "!=", false],
-        ["state", "=", "open"]
+        ["employee_id", "!=", false]
       ],
       "id": "7",
       "measures": [
         { "id": "work_time_rate", "fieldName": "work_time_rate" }
       ],
-      "model": "hr.contract",
+      "model": "hr.version",
       "name": "Employee Contract",
       "sortedColumn": null,
       "formulaId": "7",
@@ -564,7 +560,6 @@
   "lists": {},
   "listNextId": 1,
   "chartOdooMenusReferences": {
-    "cdb5d177-1c7b-4e89-9fb2-6f12ba98807c": "hr_work_entry_contract_enterprise.menu_hr_payroll_root",
-    "1020f2c2-4cb2-4713-8a4d-2d22a3e30008": "hr_payroll.hr_menu_all_contracts"
+    "cdb5d177-1c7b-4e89-9fb2-6f12ba98807c": "hr_work_entry_enterprise.menu_hr_payroll_root"
   }
 }

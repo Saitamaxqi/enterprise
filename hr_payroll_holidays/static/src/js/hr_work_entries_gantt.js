@@ -1,6 +1,6 @@
 import { patch } from "@web/core/utils/patch";
 import { TimeOffToDeferWarning, useTimeOffToDefer } from "@hr_payroll_holidays/views/hooks";
-import { WorkEntriesGanttController } from '@hr_work_entry_contract_enterprise/work_entries_gantt_controller';
+import { WorkEntriesGanttController } from '@hr_work_entry_enterprise/work_entries_gantt_controller';
 
 patch(WorkEntriesGanttController.prototype, {
     setup() {

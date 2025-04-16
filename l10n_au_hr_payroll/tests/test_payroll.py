@@ -43,7 +43,7 @@ class TestPayroll(TestPayrollCommon):
         for period, sample_data in self.schedule_1_withholding_sample_data.items():
             for row in sample_data:
                 earnings = row[0]
-                self.contract_ids[0].wage = earnings
+                self.version_ids[0].wage = earnings
                 for idx, test_data in enumerate(row[1:]):
                     with self.subTest(earnings=earnings, scale=test_scales[idx]):
                         with closing(self.env.cr.savepoint()):
@@ -75,7 +75,7 @@ class TestPayroll(TestPayrollCommon):
             for period, sample_data in self.medicare_adjustment_sample_data.items():
                 for row in sample_data:
                     earnings = row[0]
-                    self.contract_ids[0].wage = earnings
+                    self.version_ids[0].wage = earnings
                     amount = payslip._l10n_au_compute_medicare_adjustment(earnings, period, params)
                     self.assertEqual(amount, row[children + 1], f"weekly earnings of {earnings} children {self.employee_id.children}: expected {row[children + 1]} got {-amount}")
 
@@ -110,15 +110,15 @@ class TestPayroll(TestPayrollCommon):
     def test_general_cases(self):
         # https://www.ato.gov.au/rates/schedule-1---statement-of-formulas-for-calculating-amounts-to-be-withheld/?page=6#General_examples
         # EXAMPLE 1
-        self.contract_ids[0].wage = 1103.45
-        self.contract_ids[0].schedule_pay = "weekly"
+        self.version_ids[0].wage = 1103.45
+        self.version_ids[0].schedule_pay = "weekly"
         self.employee_id.marital = "married"
         self.employee_id.children = 5
         self.employee_id.l10n_au_tax_free_threshold = True
         payslip_id = self.env["hr.payslip"].create({
             "name": "payslip",
             "employee_id": self.employee_id.id,
-            "contract_id": self.contract_ids[0].id,
+            "version_id": self.version_ids[0].id,
             "struct_id": self.default_payroll_structure.id,
             "date_from": date(2023, 9, 18),
             "date_to": date(2023, 9, 23),
@@ -131,8 +131,8 @@ class TestPayroll(TestPayrollCommon):
         self.assertEqual(adjustment_amount, 20)
 
         # EXAMPLE 2
-        self.contract_ids[0].wage = 1110.30
-        self.contract_ids[0].schedule_pay = "bi-weekly"
+        self.version_ids[0].wage = 1110.30
+        self.version_ids[0].schedule_pay = "bi-weekly"
         self.employee_id.marital = "single"
         self.employee_id.children = 0
         self.employee_id.l10n_au_medicare_exemption = "F"
@@ -141,7 +141,7 @@ class TestPayroll(TestPayrollCommon):
         payslip_id = self.env["hr.payslip"].create({
             "name": "payslip",
             "employee_id": self.employee_id.id,
-            "contract_id": self.contract_ids[0].id,
+            "version_id": self.version_ids[0].id,
             "struct_id": self.default_payroll_structure.id,
             "date_from": date(2023, 9, 18),
             "date_to": date(2023, 9, 30),
@@ -155,8 +155,8 @@ class TestPayroll(TestPayrollCommon):
 
         # EXAMPLE 3
 
-        self.contract_ids[0].wage = 4500.33
-        self.contract_ids[0].schedule_pay = "monthly"
+        self.version_ids[0].wage = 4500.33
+        self.version_ids[0].schedule_pay = "monthly"
         self.employee_id.marital = "married"
         self.employee_id.children = 1
         self.employee_id.l10n_au_medicare_exemption = "X"
@@ -165,7 +165,7 @@ class TestPayroll(TestPayrollCommon):
         payslip_id = self.env["hr.payslip"].create({
             "name": "payslip",
             "employee_id": self.employee_id.id,
-            "contract_id": self.contract_ids[0].id,
+            "version_id": self.version_ids[0].id,
             "struct_id": self.default_payroll_structure.id,
             "date_from": date(2023, 9, 1),
             "date_to": date(2023, 9, 30),
@@ -187,11 +187,11 @@ class TestPayroll(TestPayrollCommon):
 
     def test_withholding_monthly_regular_employee(self):
         self.tax_treatment_category = 'R'
-        employee_id, contract_id = self.create_employee_and_contract(5000, {'schedule_pay': 'monthly', "l10n_au_training_loan": False, "l10n_au_tax_free_threshold": True})
+        employee_id, version_id = self.create_employee_and_contract(5000, {'schedule_pay': 'monthly', "l10n_au_training_loan": False, "l10n_au_tax_free_threshold": True})
         payslip_id = self.env["hr.payslip"].create({
             "name": "payslip",
             "employee_id": employee_id.id,
-            "contract_id": contract_id.id,
+            "version_id": version_id.id,
             "struct_id": self.default_payroll_structure.id,
             "date_from": date(2023, 7, 1),
             "date_to": date(2023, 7, 31),
@@ -301,11 +301,11 @@ class TestPayroll(TestPayrollCommon):
         })
 
     def test_withholding_weekly_regular_employee(self):
-        employee_id, contract_id = self.create_employee_and_contract(1000, {'schedule_pay': 'weekly', "l10n_au_training_loan": False, 'l10n_au_tax_free_threshold': True})
+        employee_id, version_id = self.create_employee_and_contract(1000, {'schedule_pay': 'weekly', "l10n_au_training_loan": False, 'l10n_au_tax_free_threshold': True})
         payslip_id = self.env["hr.payslip"].create({
             "name": "payslip",
             "employee_id": employee_id.id,
-            "contract_id": contract_id.id,
+            "version_id": version_id.id,
             "struct_id": self.default_payroll_structure.id,
             "date_from": date(2023, 7, 1),
             "date_to": date(2023, 7, 7),
@@ -367,7 +367,7 @@ class TestPayroll(TestPayrollCommon):
         employee_id.l10n_au_tfn_declaration = "111111111"
         # structure_type was no tfn from previous test, make sure that changing declaration to a valid tfn does not change the structure
         # because this has to be done manually by the payroll agent
-        payslip_id.contract_id.schedule_pay = "weekly"
+        payslip_id.version_id.schedule_pay = "weekly"
         payslip_id.date_from = date(2023, 7, 3)
         payslip_id.date_to = date(2023, 7, 7)
         payslip_id.compute_sheet()
@@ -421,7 +421,7 @@ class TestPayroll(TestPayrollCommon):
         })
 
     def test_termination_payment_unused_leaves(self):
-        employee_id, contract_id = self.create_employee_and_contract(5000, {'schedule_pay': 'monthly', 'scale': '2'})
+        employee_id, version_id = self.create_employee_and_contract(5000, {'schedule_pay': 'monthly', 'scale': '2'})
         # Allocate Holidays
         self.env['hr.leave.allocation'].create([{
             'name': 'Paid Time Off 2023-24',
@@ -434,12 +434,12 @@ class TestPayroll(TestPayrollCommon):
         }]).action_approve()
 
         # This would be done by the wizard.
-        contract_id.date_end = date(2023, 8, 31)
+        version_id.date_end = date(2023, 8, 31)
 
         payslip_term = self.env["hr.payslip"].create({
             "name": "Termination Payment",
             "employee_id": employee_id.id,
-            "contract_id": contract_id.id,
+            "version_id": version_id.id,
             "struct_id": self.env.ref("l10n_au_hr_payroll.hr_payroll_structure_au_regular").id,
             "l10n_au_termination_type": "genuine",
             "date_from": date(2023, 8, 1),

@@ -105,13 +105,13 @@ result_name = inputs['CHILD_SUPPORT'].name
         <field name="condition_python">result = employee.departure_date</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-difference = relativedelta(employee.departure_date, employee.first_contract_date)
+difference = relativedelta(employee.departure_date, employee.contract_date_start)
 years = difference.years
 if difference.months &gt;= 6:
     years += 1
 result = 0
 if years &gt;= 5:
-    compensation_per_year = (contract.wage * 30)
+    compensation_per_year = (version.wage * 30)
     result = (compensation_per_year * years) / 26
     result = payslip.company_id.currency_id.round(ceil(result))
 </field>

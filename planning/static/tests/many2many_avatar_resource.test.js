@@ -2,7 +2,6 @@ import { describe, expect, test } from "@odoo/hoot";
 import { click, queryAll } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
-import { mailModels } from "@mail/../tests/mail_test_helpers";
 import {
     defineActions,
     defineModels,
@@ -11,10 +10,11 @@ import {
     models,
     mountWithCleanup,
     onRpc,
+    makeMockServer,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 
-import { definePlanningModels, planningModels } from "./planning_mock_models";
+import { definePlanningModels } from "./planning_mock_models";
 
 describe.current.tags("desktop");
 
@@ -43,13 +43,6 @@ class ResourceTask extends models.Model {
     display_name = fields.Char();
     resource_ids = fields.One2many({ relation: "resource.resource" });
 
-    _records = [
-        {
-            display_name: "Task with four resources",
-            resource_ids: [1, 2, 3, 4],
-        },
-    ];
-
     _views = {
         form: `
             <form string="Tasks">
@@ -60,93 +53,10 @@ class ResourceTask extends models.Model {
     };
 }
 
-class PlanningRole extends planningModels.PlanningRole {
-    _records = [
-        {
-            id: 1,
-            name: "Tester",
-            color: 1,
-        },
-        {
-            id: 2,
-            name: "It Specialist",
-            color: 2,
-        },
-    ];
-}
-
-class ResourceResource extends planningModels.ResourceResource {
-    color = fields.Integer({ default: () => Math.floor(Math.random() * 10) });
-    _records = [
-        {
-            id: 1,
-            name: "Continuity testing computer",
-            resource_type: "material",
-            role_ids: [1],
-        },
-        {
-            id: 2,
-            name: "Integration testing computer",
-            resource_type: "material",
-            role_ids: [1, 2],
-        },
-        {
-            id: 3,
-            name: "Marie",
-            resource_type: "user",
-            role_ids: [1],
-        },
-        {
-            id: 4,
-            name: "Pierre",
-            resource_type: "user",
-            role_ids: [2],
-            user_id: 1,
-            im_status: "online",
-        },
-    ];
-}
-
 onRpc("get_avatar_card_data", function ({ args }) {
     const [ids, fields] = args[0];
     return this.env["resource.resource"].read(ids, fields);
 });
-
-class HrEmployee extends planningModels.HrEmployee {
-    _records = [
-        {
-            id: 1,
-            name: "Marie",
-            resource_id: 3,
-        },
-        {
-            id: 2,
-            name: "Pierre",
-            resource_id: 4,
-        },
-    ];
-}
-
-// Imitating the server behavior by creating an hr.employee.public record with the same data and same id
-class HrEmployeePublic extends planningModels.HrEmployeePublic {
-    _records = [
-        {
-            id: 1,
-            name: "Marie",
-        },
-        {
-            id: 2,
-            name: "Pierre",
-            user_id: 1,
-            user_partner_id: 1,
-        },
-    ];
-}
-
-planningModels.PlanningRole = PlanningRole;
-planningModels.ResourceResource = ResourceResource;
-planningModels.HrEmployee = HrEmployee;
-planningModels.HrEmployeePublic = HrEmployeePublic;
 
 defineModels([ResourceTask]);
 definePlanningModels();
@@ -161,11 +71,74 @@ defineActions([
 ]);
 
 test("many2many_avatar_resource widget in form view", async () => {
-    mailModels.ResUsers._records.push({
-        id: 1,
+    const { env } = await makeMockServer();
+    const [roleId1, roleId2] = env["planning.role"].create([
+        {
+            name: "Tester",
+            color: 1,
+        },
+        {
+            name: "It Specialist",
+            color: 2,
+        }
+    ]);
+    const userId = env["res.users"].create({
         name: "Pierre",
         partner_id: 1,
     });
+    const [resourceId1, resourceId2, resourceId3, resourceId4] = env["resource.resource"].create([
+        {
+            name: "Continuity testing computer",
+            resource_type: "material",
+            role_ids: [roleId1],
+        },
+        {
+            name: "Integration testing computer",
+            resource_type: "material",
+            role_ids: [roleId1, roleId2],
+        },
+        {
+            name: "Marie",
+            resource_type: "user",
+            role_ids: [roleId1],
+        },
+        {
+            name: "Pierre",
+            resource_type: "user",
+            role_ids: [roleId2],
+            im_status: "online",
+            user_id: userId,
+        },
+    ]);
+    env["hr.employee"].create([
+        {
+            name: "Marie",
+            resource_id: resourceId3,
+        },
+        {
+            name: "Pierre",
+            resource_id: resourceId4,
+        },
+    ]);
+
+    env["hr.employee"].create([
+        {
+            name: "Marie",
+            resource_id: 3,
+        },
+        {
+            name: "Pierre",
+            resource_id: 4,
+            user_id: userId,
+            user_partner_id: 1,
+        },
+    ]);
+
+    env["resource.task"].create({
+        display_name: "Task with four resources",
+        resource_ids: [resourceId1, resourceId2, resourceId3, resourceId4],
+    });
+
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
 

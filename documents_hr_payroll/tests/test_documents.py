@@ -31,12 +31,11 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
             'work_contact_id': cls.doc_user_2.partner_id.id
         })
         cls.richard_emp.user_id = cls.doc_user
-        cls.contract = cls.richard_emp.contract_ids[0]
-        cls.contract.state = 'open'
+        cls.contract = cls.richard_emp.version_ids[0]
         cls.payslip = cls.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': cls.richard_emp.id,
-            'contract_id': cls.contract.id,
+            'version_id': cls.contract.id,
         })
 
     def test_payslip_document_creation(self):

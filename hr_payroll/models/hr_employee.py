@@ -21,12 +21,9 @@ class HrEmployee(models.Model):
     salary_attachment_count = fields.Integer(
         compute='_compute_salary_attachment_count', string="Salary Attachment Count",
         groups="hr_payroll.group_hr_payroll_user")
-    mobile_invoice = fields.Binary(string="Mobile Subscription Invoice", groups="hr_contract.group_hr_contract_manager")
-    sim_card = fields.Binary(string="SIM Card Copy", groups="hr_contract.group_hr_contract_manager")
-    internet_invoice = fields.Binary(string="Internet Subscription Invoice", groups="hr_contract.group_hr_contract_manager")
-    is_non_resident = fields.Boolean(string='Non-resident', help='If recipient lives in a foreign country', groups="hr.group_hr_user")
-    disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr.group_hr_user", tracking=True)
-    structure_type_id = fields.Many2one(string="Salary Structure Type", related="contract_ids.structure_type_id", groups="hr.group_hr_user")
+    mobile_invoice = fields.Binary(string="Mobile Subscription Invoice", groups="hr.group_hr_manager")
+    sim_card = fields.Binary(string="SIM Card Copy", groups="hr.group_hr_manager")
+    internet_invoice = fields.Binary(string="Internet Subscription Invoice", groups="hr.group_hr_manager")
 
     _unique_registration_number = models.Constraint(
         'UNIQUE(registration_number, company_id)',
@@ -41,6 +38,25 @@ class HrEmployee(models.Model):
         for employee in self:
             employee.salary_attachment_count = len(employee.salary_attachment_ids)
 
+    def action_open_payslips(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_view_hr_payslip_month_form")
+        action.update({
+            'domain': [('employee_id', '=', self.id)],
+            'context': {
+                'search_default_version_id': self.version_id.id,
+                'default_version_id': self.version_id.id,
+            },
+        })
+        return action
+
+    def action_open_salary_attachments(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.hr_salary_attachment_action")
+        action.update({'domain': [('employee_ids', 'in', self.ids)],
+                       'context': {'default_employee_ids': self.ids}})
+        return action
+
     @api.model
     def _get_account_holder_employees_data(self):
         # as acc_type isn't stored we can not use a domain to retrieve the employees
@@ -51,6 +67,8 @@ class HrEmployee(models.Model):
                 not self.env['res.partner.bank'].has_access('read')):
             return []
 
+        # [XBO] TODO: to check the query before we filtered to only get the employee with running contract.
+        # Maybe using current_version_id?
         self.env.cr.execute('''
             SELECT emp.id,
                    acc.acc_number,
@@ -58,11 +76,10 @@ class HrEmployee(models.Model):
               FROM hr_employee emp
          LEFT JOIN res_partner_bank acc
                 ON acc.id=emp.bank_account_id
-              JOIN hr_contract con
-                ON con.employee_id=emp.id
+              JOIN hr_version ver
+                ON ver.employee_id=emp.id
              WHERE emp.company_id IN %s
                AND emp.active=TRUE
-               AND con.state='open'
                AND emp.bank_account_id is not NULL
         ''', (tuple(self.env.companies.ids),))
 

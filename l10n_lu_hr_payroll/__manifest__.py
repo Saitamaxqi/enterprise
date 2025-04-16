@@ -5,7 +5,7 @@
     'name': 'Luxembourg - Payroll',
     'countries': ['lu'],
     'category': 'Human Resources/Payroll',
-    'depends': ['hr_payroll', 'hr_contract_reports', 'hr_work_entry_holidays', 'hr_payroll_holidays'],
+    'depends': ['hr_payroll', 'hr_work_entry_holidays', 'hr_payroll_holidays'],
     'auto_install': ['hr_payroll'],
     'version': '1.0',
     'description': """
@@ -35,7 +35,7 @@ Luxembourg Payroll Rules.
         'data/salary_rules/hr_salary_rule_data.xml',
         'data/salary_rules/hr_gratification_rule_data.xml',
         'data/salary_rules/hr_13th_month_rule_data.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_contract_template_views.xml',
         'views/hr_employee_views.xml',
         'views/hr_payroll_views.xml',
         'views/res_config_settings_views.xml',

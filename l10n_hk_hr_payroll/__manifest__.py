@@ -6,7 +6,6 @@
     'category': 'Human Resources/Payroll',
     'depends': [
         'hr_payroll',
-        'hr_contract_reports',
         'hr_work_entry_holidays',
         'hr_payroll_holidays',
     ],
@@ -36,7 +35,7 @@ Hong Kong Payroll Rules.
         "data/cap57/employee_payment_in_lieu_of_notice_data.xml",
         "data/cap57/employee_long_service_payment_data.xml",
         "data/cap57/employee_severance_payment_data.xml",
-        "views/hr_contract_views.xml",
+        "views/hr_contract_template_views.xml",
         "views/hr_departure_reason_views.xml",
         "views/hr_employee_views.xml",
         "views/hr_payslip_run_views.xml",

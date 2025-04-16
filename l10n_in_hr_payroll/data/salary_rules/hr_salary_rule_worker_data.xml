@@ -29,9 +29,9 @@ result = payslip.paid_amount
         <field name="name">Special</field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_supplementary_allowance)</field>
+        <field name="condition_python">result = bool(version.l10n_in_supplementary_allowance)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_in_supplementary_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_in_supplementary_allowance</field>
         <field name="sequence" eval="20"/>
         <field name="note">This allowance is normally given as an additional benefit to worker and is fully taxable.</field>
         <field name="struct_id" ref="structure_worker_0001"/>

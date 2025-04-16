@@ -94,20 +94,15 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             'resource_calendar_id': cls.resource_calendar.id,
             'company_id': cls.env.company.id,
             'country_id': country.id,
+            'structure_type_id': structure_type.id,
+            'contract_date_start': date(2016, 1, 1),
+            'date_version': date(2016, 1, 1),
+            'wage': 1000.0,
         })
         if employee_fields:
             cls.employee.write(employee_fields)
 
-        cls.contract = cls.env['hr.contract'].create({
-            'name': country_code + " Employee's contract",
-            'employee_id': cls.employee.id,
-            'resource_calendar_id': cls.resource_calendar.id,
-            'company_id': cls.env.company.id,
-            'structure_type_id': structure_type.id,
-            'date_start': date(2016, 1, 1),
-            'state': "open",
-            'wage': 1000.0,
-        })
+        cls.contract = cls.employee.version_id
         if contract_fields:
             cls.contract.write(contract_fields)
 
@@ -118,12 +113,12 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             cls.contract.write({'car_id': cls.car.id})
 
     @classmethod
-    def _generate_payslip(cls, date_from, date_to, struct_id=False, input_line_ids=False, contract_id=False, employee_id=False):
+    def _generate_payslip(cls, date_from, date_to, struct_id=False, input_line_ids=False, version_id=False, employee_id=False):
         work_entries = cls.contract.generate_work_entries(date_from, date_to)
         payslip = cls.env['hr.payslip'].create([{
             'name': "Test Payslip",
             'employee_id': employee_id or cls.employee.id,
-            'contract_id': contract_id or cls.contract.id,
+            'version_id': version_id or cls.contract.id,
             'company_id': cls.env.company.id,
             'struct_id': struct_id or cls.structure.id,
             'date_from': date_from,

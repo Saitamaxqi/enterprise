@@ -5,9 +5,32 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="payroll_group" position="after">
+            <group name="salary" position="inside">
                 <group string='Saudi Payroll Information' name="l10n_sa_payroll_group" invisible="company_country_code != 'SA'" >
                     <field name="l10n_sa_employee_code" />
+                </group>
+                <group string="Allowances">
+                    <label for="l10n_sa_housing_allowance" string="Housing Allowance" invisible="country_code != 'SA'"/>
+                    <div class="o_row mw-50" name="l10n_sa_housing_allowance" invisible="country_code != 'SA'">
+                        <field class="oe_inline o_hr_narrow_field" name="l10n_sa_housing_allowance" nolabel="1"/>
+                        <span class="mb-3">/ month</span>
+                    </div>
+                    <label for="l10n_sa_transportation_allowance" string="Transportation Allowance" invisible="country_code != 'SA'"/>
+                    <div class="o_row mw-50" name="l10n_sa_transportation_allowance" invisible="country_code != 'SA'">
+                        <field class="oe_inline o_hr_narrow_field" name="l10n_sa_transportation_allowance" nolabel="1"/>
+                        <span class="mb-3">/ month</span>
+                    </div>
+                    <label for="l10n_sa_other_allowances" string="Other Allowances" invisible="country_code != 'SA'"/>
+                    <div class="o_row mw-50" name="l10n_sa_other_allowances" invisible="country_code != 'SA'">
+                        <field class="oe_inline o_hr_narrow_field" name="l10n_sa_other_allowances" nolabel="1"/>
+                        <span class="mb-3">/ month</span>
+                    </div>
+                </group>
+                <group name="end_of_service_provision" string="End Of Service Provision" invisible="country_code != 'SA'">
+                    <field name="l10n_sa_number_of_days" string="Number of Days"/>
+                </group>
+                <group name="wps_info" string="WPS Information" invisible="country_code != 'SA'">
+                    <field name="l10n_sa_wps_description" />
                 </group>
             </group>
         </field>

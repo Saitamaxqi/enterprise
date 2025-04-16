@@ -42,7 +42,7 @@ class HrPayslip(models.Model):
              'of the employee\'s contracts will be applied.')
     structure_code = fields.Char(related="struct_id.code")
     struct_type_id = fields.Many2one('hr.payroll.structure.type', related='struct_id.type_id')
-    wage_type = fields.Selection(related='contract_id.wage_type')
+    wage_type = fields.Selection(related='version_id.wage_type')
     name = fields.Char(
         string='Payslip Name', required=True,
         compute='_compute_name', store=True, readonly=False)
@@ -97,11 +97,9 @@ class HrPayslip(models.Model):
         string='Made Payment Order? ', copy=False)
     paid_date = fields.Date(string="Payment Date")
     note = fields.Text(string='Internal Note')
-    contract_domain_ids = fields.Many2many('hr.contract', compute='_compute_contract_domain_ids')
-    contract_id = fields.Many2one(
-        'hr.contract', string='Contract', precompute=True,
-        domain="[('id', 'in', contract_domain_ids)]", tracking=True,
-        compute='_compute_contract_id', store=True, readonly=False, index=True)
+    version_id = fields.Many2one(
+        'hr.version', string='Version', precompute=True, tracking=True,
+        compute='_compute_version_id', store=True, readonly=False, index=True)
     credit_note = fields.Boolean(
         string='Credit Note',
         help="Indicates this payslip has a refund of another")
@@ -115,7 +113,7 @@ class HrPayslip(models.Model):
     basic_wage = fields.Monetary(compute='_compute_basic_net', store=True)
     gross_wage = fields.Monetary(compute='_compute_basic_net', store=True)
     net_wage = fields.Monetary(compute='_compute_basic_net', store=True)
-    currency_id = fields.Many2one(related='contract_id.currency_id')
+    currency_id = fields.Many2one(related='version_id.currency_id')
     warning_message = fields.Char(compute='_compute_warning_message', store=True, readonly=True)
     is_wrong_duration = fields.Boolean(compute='_compute_is_wrong_duration', compute_sudo=True)
     is_regular = fields.Boolean(compute='_compute_is_regular')
@@ -146,7 +144,7 @@ class HrPayslip(models.Model):
     ytd_computation = fields.Boolean(related='struct_id.ytd_computation')
 
     def _get_schedule_period_start(self):
-        schedule = self.contract_id.schedule_pay or self.contract_id.structure_type_id.default_schedule_pay
+        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
         today = date.today()
         week_start = self.env["res.lang"]._get_data(code=self.env.user.lang).week_start
         date_from = today
@@ -172,11 +170,9 @@ class HrPayslip(models.Model):
             date_from = today.replace(day=1, month=(current_year_slice - 1) * 2 + 1)
         else:  # if not handled, put the monthly behaviour
             date_from = today.replace(day=1)
-        if self.contract_id and date_from < self.contract_id.date_start:
-            date_from = self.contract_id.date_start
         return date_from
 
-    @api.depends('contract_id', 'struct_id')
+    @api.depends('version_id', 'struct_id')
     def _compute_date_from(self):
         for payslip in self:
             if self.env.context.get('default_date_from'):
@@ -186,7 +182,7 @@ class HrPayslip(models.Model):
 
     def _get_schedule_timedelta(self):
         self.ensure_one()
-        schedule = self.contract_id.schedule_pay or self.contract_id.structure_type_id.default_schedule_pay
+        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
         if schedule == 'quarterly':
             timedelta = relativedelta(months=3, days=-1)
         elif schedule == 'semi-annually':
@@ -207,29 +203,15 @@ class HrPayslip(models.Model):
             timedelta = relativedelta(months=1, days=-1)
         return timedelta
 
-    @api.depends('date_from', 'contract_id', 'struct_id')
+    @api.depends('date_from', 'version_id', 'struct_id')
     def _compute_date_to(self):
         for payslip in self:
             if self.env.context.get('default_date_to'):
                 payslip.date_to = self.env.context.get('default_date_to')
             else:
                 payslip.date_to = payslip.date_from and payslip.date_from + payslip._get_schedule_timedelta()
-            if payslip.contract_id and payslip.contract_id.date_end and payslip.date_from\
-                    and payslip.date_from >= payslip.contract_id.date_start\
-                    and payslip.date_from < payslip.contract_id.date_end\
-                    and payslip.date_to > payslip.contract_id.date_end:
-                payslip.date_to = payslip.contract_id.date_end
 
-    @api.depends('company_id', 'employee_id')
-    def _compute_contract_domain_ids(self):
-        for payslip in self:
-            payslip.contract_domain_ids = self.env['hr.contract'].search([
-                ('company_id', '=', payslip.company_id.id),
-                ('employee_id', '=', payslip.employee_id.id),
-                ('state', 'in', ['open', 'close']),
-            ])
-
-    @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to', 'struct_id')
+    @api.depends('employee_id', 'version_id', 'struct_id', 'date_from', 'date_to', 'struct_id')
     def _compute_input_line_ids(self):
         attachment_type_ids = self.env['hr.payslip.input.type'].search([('available_in_attachments', '=', True)]).ids
         for slip in self:
@@ -294,13 +276,13 @@ class HrPayslip(models.Model):
                 payslip.negative_net_to_report_message = _(
                     'Note: There are previous payslips with a negative amount for a total of %s to report.',
                     round(payslip.negative_net_to_report_amount, 2))
-                if payslips_to_report and payslip.state == 'verify' and payslip.contract_id and not payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type):
+                if payslips_to_report and payslip.state == 'verify' and payslip.version_id and not payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type):
                     payslip.activity_schedule(
                         'hr_payroll.mail_activity_data_hr_payslip_negative_net',
                         summary=_('Previous Negative Payslip to Report'),
                         note=_('At least one previous negative net could be reported on this payslip for %s',
                                 payslip.employee_id._get_html_link()),
-                        user_id=payslip.contract_id.hr_responsible_id.id or self.env.ref('base.user_admin').id)
+                        user_id=payslip.version_id.hr_responsible_id.id or self.env.ref('base.user_admin').id)
             else:
                 payslip.negative_net_to_report_display = False
                 payslip.negative_net_to_report_amount = False
@@ -346,13 +328,13 @@ class HrPayslip(models.Model):
         payslips = self.filtered(lambda p: p.line_ids and p.state in ['draft', 'verify'])
         for payslip in payslips:
             lines_vals = []
-            if payslip.employee_id and payslip.contract_id and payslip.date_from and payslip.date_to and payslip.struct_id:
+            if payslip.employee_id and payslip.version_id and payslip.date_from and payslip.date_to and payslip.struct_id:
                 lines_vals = [(0, 0, line_vals) for line_vals in payslip._get_payslip_lines()]
             payslip.line_ids = [(5, 0, 0)] + lines_vals
 
     def _get_recomputing_fields(self):
         return [
-            'employee_id', 'contract_id', 'struct_id',
+            'employee_id', 'version_id', 'struct_id',
             'date_from', 'date_to', 'worked_days_line_ids',
             'input_line_ids'
         ]
@@ -381,7 +363,7 @@ class HrPayslip(models.Model):
                 ('employee_id', '=', payslip.employee_id.id),
                 ('date_from', '=', payslip.date_from),
                 ('date_to', '=', payslip.date_to),
-                ('contract_id', '=', payslip.contract_id.id),
+                ('version_id', '=', payslip.version_id.id),
                 ('struct_id', '=', payslip.struct_id.id),
                 ('credit_note', '=', True),
                 ('state', '!=', 'cancel'),
@@ -390,13 +372,13 @@ class HrPayslip(models.Model):
             else:
                 payslip.has_refund_slip = False
 
-    @api.constrains('contract_id', 'date_from', 'date_to')
-    def _check_contract_dates(self):
+    @api.constrains('version_id', 'date_from', 'date_to')
+    def _check_version_dates(self):
         for slip in self:
-            contract = slip.contract_id
-            if not contract or not slip.date_from:
+            version = slip.version_id
+            if not version or not slip.date_from:
                 continue
-            if (contract.date_end and contract.date_end < slip.date_from) or contract.date_start > slip.date_to:
+            if not version._is_overlapping_period(slip.date_from, slip.date_to):
                 raise ValidationError(_("Employee must have a running contract for payslip duration"))
 
     @api.constrains('date_from', 'date_to')
@@ -473,15 +455,13 @@ class HrPayslip(models.Model):
             for payslip in payslips:
                 template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
 
-    def _filter_out_of_contracts_payslips(self):
-        return self.filtered(lambda p: p.contract_id and (p.contract_id.date_start > p.date_to or (p.contract_id.date_end and p.contract_id.date_end < p.date_from)))
+    def _filter_out_of_versions_payslips(self):
+        return self.filtered(lambda p: p.version_id and not p.version_id._is_overlapping_period(p.date_from, p.date_to))
 
     def action_payslip_done(self):
-        invalid_payslips = self._filter_out_of_contracts_payslips()
+        invalid_payslips = self._filter_out_of_versions_payslips()
         if invalid_payslips:
             raise ValidationError(_('The following employees have a contract outside of the payslip period:\n%s', '\n'.join(invalid_payslips.mapped('employee_id.name'))))
-        if any(slip.contract_id.state == 'cancel' for slip in self):
-            raise ValidationError(_('You cannot validate a payslip on which the contract is cancelled'))
         if any(slip.state == 'cancel' for slip in self):
             raise ValidationError(_("You can't validate a cancelled payslip."))
         self.write({'state' : 'done'})
@@ -653,24 +633,24 @@ class HrPayslip(models.Model):
 
     def _get_worked_day_lines_hours_per_day(self):
         self.ensure_one()
-        return self.contract_id.resource_calendar_id.hours_per_day
+        return self.version_id.resource_calendar_id.hours_per_day
 
     def _get_worked_day_lines_hours_per_week(self):
         self.ensure_one()
-        calendar = self.contract_id.resource_calendar_id or self.employee_id._get_calendars()[self.employee_id.id]
+        calendar = self.version_id.resource_calendar_id or self.employee_id._get_calendars()[self.employee_id.id]
         return calendar.hours_per_week
 
-    def _get_out_of_contract_calendar(self):
+    def _get_out_of_version_calendar(self):
         self.ensure_one()
-        if self.contract_id.time_credit:
-            return self.contract_id.standard_calendar_id
-        return self.contract_id.resource_calendar_id
+        if self.version_id.time_credit:
+            return self.version_id.standard_calendar_id
+        return self.version_id.resource_calendar_id
 
     def _get_worked_day_lines_values(self, domain=None):
         self.ensure_one()
         res = []
         hours_per_day = self._get_worked_day_lines_hours_per_day()
-        work_hours = self.contract_id.get_work_hours(self.date_from, self.date_to, domain=domain)
+        work_hours = self.version_id.get_work_hours(self.date_from, self.date_to, domain=domain)
         work_hours_ordered = sorted(work_hours.items(), key=lambda x: x[1])
         biggest_work = work_hours_ordered[-1][0] if work_hours_ordered else 0
         add_days_rounding = 0
@@ -693,31 +673,31 @@ class HrPayslip(models.Model):
         work_entry_type = self.env['hr.work.entry.type']
         return sorted(res, key=lambda d: work_entry_type.browse(d['work_entry_type_id']).sequence)
 
-    def _get_worked_day_lines(self, domain=None, check_out_of_contract=True):
+    def _get_worked_day_lines(self, domain=None, check_out_of_version=True):
         """
         :returns: a list of dict containing the worked days values that should be applied for the given payslip
         """
         res = []
-        # fill only if the contract as a working schedule linked
+        # fill only if the version as a working schedule linked
         self.ensure_one()
-        contract = self.contract_id
-        if contract.resource_calendar_id:
+        version = self.version_id
+        if version.resource_calendar_id:
             res = self._get_worked_day_lines_values(domain=domain)
-            if not check_out_of_contract:
+            if not check_out_of_version:
                 return res
 
-            # If the contract doesn't cover the whole month, create
+            # If the version doesn't cover the whole month, create
             # worked_days lines to adapt the wage accordingly
             out_days, out_hours = 0, 0
-            reference_calendar = self._get_out_of_contract_calendar()
-            if self.date_from < contract.date_start:
+            reference_calendar = self._get_out_of_version_calendar()
+            if self.date_from < version.date_start:
                 start = fields.Datetime.to_datetime(self.date_from)
-                stop = fields.Datetime.to_datetime(contract.date_start) + relativedelta(days=-1, hour=23, minute=59)
+                stop = fields.Datetime.to_datetime(version.date_start) + relativedelta(days=-1, hour=23, minute=59)
                 out_time = reference_calendar.get_work_duration_data(start, stop, compute_leaves=False, domain=['|', ('work_entry_type_id', '=', False), ('work_entry_type_id.is_leave', '=', False)])
                 out_days += out_time['days']
                 out_hours += out_time['hours']
-            if contract.date_end and contract.date_end < self.date_to:
-                start = fields.Datetime.to_datetime(contract.date_end) + relativedelta(days=1)
+            if version.date_end and version.date_end < self.date_to:
+                start = fields.Datetime.to_datetime(version.date_end) + relativedelta(days=1)
                 stop = fields.Datetime.to_datetime(self.date_to) + relativedelta(hour=23, minute=59)
                 out_time = reference_calendar.get_work_duration_data(start, stop, compute_leaves=False, domain=['|', ('work_entry_type_id', '=', False), ('work_entry_type_id.is_leave', '=', False)])
                 out_days += out_time['days']
@@ -848,7 +828,7 @@ class HrPayslip(models.Model):
                 'worked_days': {line.code: line for line in self.worked_days_line_ids if line.code},
                 'inputs': {line.code: line for line in self.input_line_ids if line.code},
                 'employee': self.employee_id,
-                'contract': self.contract_id,
+                'version': self.version_id,
                 'result_rules': DefaultDictPayroll(lambda: dict(total=0, amount=0, quantity=0, rate=0, ytd=0)),
                 'same_type_input_lines': same_type_input_lines,
             }
@@ -928,7 +908,7 @@ class HrPayslip(models.Model):
         line_values = ytd_payslips._get_line_values(code_set, ['ytd'])
 
         for payslip in self:
-            if not payslip.contract_id:
+            if not payslip.version_id:
                 raise UserError(_(
                     'There\'s no contract set on payslip %(payslip_name)s for %(employee_name)s. '
                     'Check that there is at least a contract set on the employee form.',
@@ -976,7 +956,7 @@ class HrPayslip(models.Model):
                                 'code': rule.code,
                                 'name':  get_rule_name(localdict, rule),
                                 'salary_rule_id': rule.id,
-                                'contract_id': localdict['contract'].id,
+                                'version_id': localdict['version'].id,
                                 'employee_id': localdict['employee'].id,
                                 'amount': amount,
                                 'quantity': qty,
@@ -1008,7 +988,7 @@ class HrPayslip(models.Model):
                             'code': rule.code,
                             'name': get_rule_name(localdict, rule),
                             'salary_rule_id': rule.id,
-                            'contract_id': localdict['contract'].id,
+                            'version_id': localdict['version'].id,
                             'employee_id': localdict['employee'].id,
                             'amount': amount,
                             'quantity': qty,
@@ -1041,25 +1021,16 @@ class HrPayslip(models.Model):
         for slip in self.filtered(lambda p: p.employee_id):
             slip.company_id = slip.employee_id.company_id
 
-    @api.depends('employee_id', 'contract_domain_ids')
-    def _compute_contract_id(self):
+    @api.depends('employee_id')
+    def _compute_version_id(self):
         for slip in self:
-            if slip.contract_id and slip.employee_id == slip.contract_id.employee_id:
-                continue
-            slip.contract_id = False
-            if not slip.employee_id or not slip.contract_domain_ids:
-                continue
-            # Add a default contract if not already defined or invalid
-            contracts = slip.contract_domain_ids.filtered(lambda c: c.state == 'open')
-            if not contracts:
-                continue
-            slip.contract_id = contracts[0]._origin
+            slip.version_id = slip.employee_id.current_version_id if slip.employee_id else False
 
-    @api.depends('contract_id')
+    @api.depends('version_id')
     def _compute_struct_id(self):
         for slip in self.filtered(lambda p: not p.struct_id):
-            slip.struct_id = slip.contract_id.structure_type_id.default_struct_id\
-                or slip.employee_id.contract_id.structure_type_id.default_struct_id
+            slip.struct_id = slip.version_id.structure_type_id.default_struct_id\
+                or slip.employee_id.version_id.structure_type_id.default_struct_id
 
     def _get_period_name(self, cache):
         self.ensure_one()
@@ -1073,7 +1044,7 @@ class HrPayslip(models.Model):
         end_date = self.date_to
         lang = self.employee_id.lang or self.env.user.lang
         week_start = self.env["res.lang"]._get_data(code=lang).week_start
-        schedule = self.contract_id.schedule_pay or self.contract_id.structure_type_id.default_schedule_pay
+        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
         if schedule == 'monthly':
             period_name = self._format_date_cached(cache, start_date, "MMMM Y")
         elif schedule == 'quarterly':
@@ -1130,8 +1101,8 @@ class HrPayslip(models.Model):
             if not slip.date_from or not slip.date_to:
                 continue
             warnings = []
-            if slip.contract_id and (slip.date_from < slip.contract_id.date_start
-                    or (slip.contract_id.date_end and slip.date_to > slip.contract_id.date_end)):
+            if slip.version_id and (slip.date_from < slip.version_id.date_start
+                    or (slip.version_id.date_end and slip.date_to > slip.version_id.date_end)):
                 warnings.append(_("The period selected does not match the contract validity period."))
 
             if slip.date_to > date_utils.end_of(fields.Date.today(), 'month'):
@@ -1142,7 +1113,7 @@ class HrPayslip(models.Model):
                 ))
 
             if slip.struct_id.use_worked_day_lines \
-                    and (slip.contract_id.schedule_pay or slip.contract_id.structure_type_id.default_schedule_pay) \
+                    and (slip.version_id.schedule_pay or slip.version_id.structure_type_id.default_schedule_pay) \
                     and slip.date_from + slip._get_schedule_timedelta() != slip.date_to:
                 warnings.append(_("The duration of the payslip is not accurate according to the structure type."))
 
@@ -1154,17 +1125,17 @@ class HrPayslip(models.Model):
     def _compute_is_wrong_duration(self):
         for slip in self:
             slip.is_wrong_duration = slip.date_to and (
-                slip.contract_id.schedule_pay
-                or slip.contract_id.structure_type_id.default_schedule_pay
+                slip.version_id.schedule_pay
+                or slip.version_id.structure_type_id.default_schedule_pay
             ) and (
                 slip.date_from + slip._get_schedule_timedelta() != slip.date_to
             )
 
-    @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to')
+    @api.depends('employee_id', 'version_id', 'struct_id', 'date_from', 'date_to')
     def _compute_worked_days_line_ids(self):
         if not self or self.env.context.get('salary_simulation'):
             return
-        valid_slips = self.filtered(lambda p: p.employee_id and p.date_from and p.date_to and p.contract_id and p.struct_id and p.struct_id.use_worked_day_lines)
+        valid_slips = self.filtered(lambda p: p.employee_id and p.date_from and p.date_to and p.version_id and p.struct_id and p.struct_id.use_worked_day_lines)
         if not valid_slips:
             return
         # Make sure to reset invalid payslip's worked days line
@@ -1172,27 +1143,27 @@ class HrPayslip(models.Model):
         # Ensure work entries are generated for all contracts
         generate_from = min(p.date_from for p in valid_slips) + relativedelta(days=-1)
         generate_to = max(p.date_to for p in valid_slips) + relativedelta(days=1)
-        self.contract_id.generate_work_entries(generate_from, generate_to)
+        self.version_id.filtered('resource_calendar_id').generate_work_entries(generate_from, generate_to)
 
         work_entries = self.env['hr.work.entry'].search([
             ('date_stop', '<=', generate_to),
             ('date_start', '>=', generate_from),
-            ('contract_id', 'in', self.contract_id.ids),
+            ('version_id', 'in', self.version_id.ids),
         ])
-        work_entries_by_contract = defaultdict(lambda: self.env['hr.work.entry'])
+        work_entries_by_version = defaultdict(lambda: self.env['hr.work.entry'])
         for work_entry in work_entries:
-            work_entries_by_contract[work_entry.contract_id.id] += work_entry
+            work_entries_by_version[work_entry.version_id.id] += work_entry
 
         for slip in valid_slips:
             if not slip.struct_id.use_worked_day_lines:
                 continue
 
             # convert slip.date_to to a datetime with max time to compare correctly in filtered_domain.
-            slip_tz = pytz.timezone(slip.contract_id.resource_calendar_id.tz or slip.employee_id.tz or slip.company_id.resource_calendar_id.tz or 'UTC')
+            slip_tz = pytz.timezone(slip.version_id.resource_calendar_id.tz or slip.employee_id.tz or slip.company_id.resource_calendar_id.tz or 'UTC')
             utc = pytz.timezone('UTC')
             date_from = slip_tz.localize(datetime.combine(slip.date_from, time.min)).astimezone(utc).replace(tzinfo=None)
             date_to = slip_tz.localize(datetime.combine(slip.date_to, time.max)).astimezone(utc).replace(tzinfo=None)
-            payslip_work_entries = work_entries_by_contract[slip.contract_id].filtered_domain([
+            payslip_work_entries = work_entries_by_version[slip.version_id].filtered_domain([
                 ('date_stop', '<=', date_to),
                 ('date_start', '>=', date_from),
             ])
@@ -1201,14 +1172,14 @@ class HrPayslip(models.Model):
             slip.update({'worked_days_line_ids': slip._get_new_worked_days_lines()})
 
     def _get_credit_time_lines(self):
-        lines_vals = self._get_worked_day_lines(domain=[('is_credit_time', '=', True)], check_out_of_contract=False)
+        lines_vals = self._get_worked_day_lines(domain=[('is_credit_time', '=', True)], check_out_of_version=False)
         for line_vals in lines_vals:
             line_vals['is_credit_time'] = True
         return lines_vals
 
     def _get_new_worked_days_lines(self):
         if self.struct_id.use_worked_day_lines:
-            if not self.contract_id.time_credit:
+            if not self.version_id.time_credit:
                 return [(0, 0, vals) for vals in self._get_worked_day_lines()]
             worked_days_line_values = self._get_worked_day_lines(domain=[('is_credit_time', '=', False)])
             for vals in worked_days_line_values:
@@ -1385,7 +1356,7 @@ class HrPayslip(models.Model):
 
     def _get_contract_wage(self):
         self.ensure_one()
-        return self.contract_id._get_contract_wage()
+        return self.version_id._get_contract_wage()
 
     def _get_paid_amount(self):
         self.ensure_one()
@@ -1405,7 +1376,7 @@ class HrPayslip(models.Model):
     def _is_outside_contract_dates(self):
         self.ensure_one()
         payslip = self
-        contract = self.contract_id
+        contract = self.version_id
         return contract.date_start > payslip.date_to or (contract.date_end and contract.date_end < payslip.date_from)
 
     def _get_data_files_to_update(self):
@@ -1433,7 +1404,7 @@ class HrPayslip(models.Model):
                 'code': line.code,
                 'name': line.name,
                 'salary_rule_id': line.salary_rule_id.id,
-                'contract_id': line.contract_id.id,
+                'version_id': line.version_id.id,
                 'employee_id': line.employee_id.id,
                 'amount': line.amount,
                 'quantity': line.quantity,
@@ -1617,34 +1588,31 @@ class HrPayslip(models.Model):
     def _get_employee_stats_actions(self):
         result = []
         today = fields.Date.today()
-        HRContract = self.env['hr.contract']
-        new_contracts = HRContract.search([
-            ('state', '=', 'open'),
-            ('kanban_state', '=', 'normal'),
-            ('date_start', '>=', today + relativedelta(months=-3, day=1))])
+        HrVersion = self.env['hr.version']
+        new_versions = HrVersion.search([]).filtered(
+            lambda c: c.date_start >= today + relativedelta(months=-3, day=1))
 
-        past_contracts_grouped_by_employee_id = {
+        past_versions_grouped_by_employee_id = {
             employee.id
-            for [employee] in HRContract._read_group([
-                ('employee_id', 'in', new_contracts.employee_id.ids),
-                ('date_end', '<', today),
-                ('state', 'in', ['open', 'close']),
-                ('id', 'not in', new_contracts.ids)
+            for [employee] in HrVersion._read_group([
+                ('employee_id', 'in', new_versions.employee_id.ids),
+                # ('date_end', '<', today),  # TODO: filter after
+                ('id', 'not in', new_versions.ids)
             ], groupby=['employee_id'])
         }
 
-        new_contracts_without_past_contract = HRContract
-        for new_contract in new_contracts:
-            if new_contract.employee_id.id not in past_contracts_grouped_by_employee_id:
-                new_contracts_without_past_contract |= new_contract
+        new_versions_without_past_version = HrVersion
+        for new_version in new_versions:
+            if new_version.employee_id.id not in past_versions_grouped_by_employee_id:
+                new_versions_without_past_version |= new_version
 
-        if new_contracts_without_past_contract:
-            new_contracts_str = _('New Employees')
-            employees_from_new_contracts = new_contracts_without_past_contract.mapped('employee_id')
+        if new_versions_without_past_version:
+            new_versions_str = _('New Employees')
+            employees_from_new_versions = new_versions_without_past_version.mapped('employee_id')
             new_employees = {
-                'string': new_contracts_str,
-                'count': len(employees_from_new_contracts),
-                'action': self._dashboard_default_action(new_contracts_str, 'hr.employee', employees_from_new_contracts.ids),
+                'string': new_versions_str,
+                'count': len(employees_from_new_versions),
+                'action': self._dashboard_default_action(new_versions_str, 'hr.employee', employees_from_new_versions.ids),
             }
             new_employees['action']['views'][0] = [self.env.ref('hr_payroll.payroll_hr_employee_view_tree_employee_trends').id, 'list']
             result.append(new_employees)
@@ -1796,6 +1764,7 @@ class HrPayslip(models.Model):
         # Contracts are joined by our period using the usual state/date conditions
         # and aggregates are used to collect data directly from our database
         # avoiding unnecessary orm overhead
+        # TODO: should filter with date_start, date_end via orm or is it already good ? will this stay at all ?
         self.env.cr.execute("""
         WITH periods AS (
             SELECT *
@@ -1803,17 +1772,15 @@ class HrPayslip(models.Model):
               ) x(start, _end, _type)
         )
         -- fetch all contracts matching periods from `periods`
-        SELECT p.start, p._end, p._type, ARRAY_AGG(c.id),
-               COUNT (DISTINCT c.employee_id) as employee_count
+        SELECT p.start, p._end, p._type, ARRAY_AGG(v.id),
+               COUNT (DISTINCT v.employee_id) as employee_count
           FROM periods p
-          JOIN hr_contract c
-            ON (c.date_end >= p.start OR c.date_end IS NULL)
-           AND c.date_start <= p._end
-           AND (c.state IN ('open', 'close')
-            OR (c.state = 'done' AND c.kanban_state='normal'))
-           AND c.employee_id IS NOT NULL
-           AND c.active = TRUE
-           AND c.company_id IN %%s
+          JOIN hr_version v
+            ON (v.contract_date_end >= p.start OR v.contract_date_end IS NULL)
+           AND v.contract_date_start <= p._end
+          JOIN hr_employee e
+            ON e.id = v.employee_id
+           AND e.company_id IN %%s
       GROUP BY p.start, p._end, p._type
         """ % (periods_str), (tuple(self.env.companies.ids),))
         period_indexes = {

@@ -105,9 +105,11 @@
                 </div>
                 <group col="4">
                     <field name="company_id" invisible="1"/>
-                    <field name="contract_id" context="{'default_employee_id': employee_id}"
-                        required="1" readonly="state in ['cancel', 'done', 'paid']"
+                    <field name="version_id" context="{'default_employee_id': employee_id}"
+                        required="1" readonly="state in ['cancel', 'done', 'paid']" string="Version"
+                        domain="[('employee_id', '=', employee_id)]"
                         options="{
+                            'no_open': True,
                             'no_create': True,
                             'no_create_edit': True,
                         }"/>
@@ -156,7 +158,7 @@
                                     <field name="amount"/>
                                     <field name="ytd" readonly="1" invisible="not parent.ytd_computation"/>
                                     <field name="is_paid"/>
-                                    <field name="contract_id"/>
+                                    <field name="version_id"/>
                                     <field name="currency_id" invisible="1"/>
                                 </group>
                             </form>
@@ -178,7 +180,7 @@
                                 <field name="input_type_id"/>
                                 <field name="name"/>
                                 <field name="amount" widget="float_without_trailing_zeros"/>
-                                <field name="contract_id" column_invisible="True"/>
+                                <field name="version_id" column_invisible="True"/>
                                 <field name="sequence" column_invisible="True"/>
                             </list>
                             <form string="Payslip Line">
@@ -189,7 +191,7 @@
                                     <field name="name"/>
                                     <field name="sequence"/>
                                     <field name="amount"/>
-                                    <field name="contract_id"/>
+                                    <field name="version_id"/>
                                 </group>
                             </form>
                         </field>
@@ -232,7 +234,6 @@
                         <group>
                             <group>
                                 <field name="name" readonly="state in ['cancel', 'done', 'paid']"/>
-                                <field name="contract_domain_ids" invisible="1"/>
                                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                             </group>
                             <group name="accounting">
@@ -274,7 +275,7 @@
                 <field name="employee_id" string="Employee Reference" filter_domain="[('employee_id.registration_number', 'ilike', self)]"/>
                 <field name="name" string="Payslips" filter_domain="[('name', 'ilike', self)]"/>
                 <field name="date_from"/>
-                <field name="contract_id"/>
+                <field name="version_id"/>
                 <field name="payslip_run_id"/>
                 <field name="struct_id"/>
                 <field name="activity_user_id" string="Activities of"/>

@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.hr_work_entry_contract_attendance.tests.common import HrWorkEntryAttendanceCommon
+from odoo.addons.hr_work_entry_attendance.tests.common import HrWorkEntryAttendanceCommon
 
 from datetime import datetime, date
 

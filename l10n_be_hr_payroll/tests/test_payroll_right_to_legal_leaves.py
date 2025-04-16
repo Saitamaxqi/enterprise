@@ -178,15 +178,16 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
         """
         employee_test_first_contract = self.test_contracts[-1]
         employee_test_first_contract.write({
-            'date_end': date(2017, 5, 31),
-            'state': 'close'
+            'contract_date_end': date(2017, 5, 31)
         })
+        self.env.flush_all()  # Otherwise write cannot be seen by the query in _compute_alloc_employee_ids
         self.test_contracts |= employee_test_first_contract.copy({
             'name': "Employee Test's Contract",
             'employee_id': self.employee_test.id,
             'resource_calendar_id': self.resource_calendar_24_hours_per_week_5_days_per_week.id,
-            'date_start': date(2017, 6, 1),
-            'date_end': date(2017, 7, 31),
+            'date_version': date(2017, 6, 1),
+            'contract_date_start': date(2017, 6, 1),
+            'contract_date_end': date(2017, 7, 31),
             'wage': employee_test_first_contract.wage / 24 * 38
         })
 
@@ -194,21 +195,21 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
             'name': "Employee Test's Contract",
             'employee_id': self.employee_test.id,
             'resource_calendar_id': self.resource_calendar_20_hours_per_week.id,
-            'date_start': date(2017, 8, 1),
-            'date_end': date(2017, 12, 31),
+            'date_version': date(2017, 8, 1),
+            'contract_date_start': date(2017, 8, 1),
+            'contract_date_end': date(2017, 12, 31),
             'wage': employee_test_first_contract.wage / 20 * 38
         })
-        self.test_contracts.write({'state': 'close'})
 
         employee_test_current_contract = employee_test_first_contract.copy({
             'name': "Employee Test's Contract",
             'employee_id': self.employee_test.id,
             'resource_calendar_id': self.resource_calendar_20_hours_per_week.id,
-            'date_start': date(2018, 1, 1),
-            'date_end': False,
+            'date_version': date(2018, 1, 1),
+            'contract_date_start': date(2018, 1, 1),
+            'contract_date_end': False,
             'wage': employee_test_first_contract.wage / 20 * 38
         })
-        employee_test_current_contract.write({'state': 'open'})
         self.test_contracts |= employee_test_current_contract
 
         wizard = self.env['hr.payroll.alloc.paid.leave'].new({

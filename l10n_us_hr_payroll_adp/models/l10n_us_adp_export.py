@@ -153,8 +153,8 @@ class L10nUsAdpExport(models.Model):
         employees = self.work_entry_ids.mapped('employee_id')
 
         for emp in employees:
-            employee_info[emp.id]['Rate'] = emp.contract_id.hourly_wage if emp.contract_id.wage_type == 'hourly' else emp.contract_id.wage
-            employee_info[emp.id]['is_monthly'] = emp.contract_id.wage_type == 'monthly'
+            employee_info[emp.id]['Rate'] = emp.version_id.hourly_wage if emp.version_id.wage_type == 'hourly' else emp.version_id.wage
+            employee_info[emp.id]['is_monthly'] = emp.version_id.wage_type == 'monthly'
             employee_info[emp.id]['Employee Name'] = emp.name
             employee_info[emp.id]['File  #'] = emp.l10n_us_adp_code
 

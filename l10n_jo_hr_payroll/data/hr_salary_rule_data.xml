@@ -19,9 +19,9 @@ result = payslip.paid_amount
         <field name="code">HOUALLOW</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_jo_housing_allowance)</field>
+        <field name="condition_python">result = bool(version.l10n_jo_housing_allowance)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_jo_housing_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_jo_housing_allowance</field>
         <field name="struct_id" ref="l10n_jo_hr_payroll.hr_payroll_structure_jo_employee_salary"/>
     </record>
 
@@ -31,9 +31,9 @@ result = payslip.paid_amount
         <field name="code">TRAALLOW</field>
         <field name="sequence">20</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_jo_transportation_allowance)</field>
+        <field name="condition_python">result = bool(version.l10n_jo_transportation_allowance)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_jo_transportation_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_jo_transportation_allowance</field>
         <field name="struct_id" ref="l10n_jo_hr_payroll.hr_payroll_structure_jo_employee_salary"/>
     </record>
 
@@ -43,9 +43,9 @@ result = payslip.paid_amount
         <field name="code">OTALLOW</field>
         <field name="sequence">30</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_jo_other_allowances)</field>
+        <field name="condition_python">result = bool(version.l10n_jo_other_allowances)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_jo_other_allowances</field>
+        <field name="amount_python_compute">result = version.l10n_jo_other_allowances</field>
         <field name="struct_id" ref="l10n_jo_hr_payroll.hr_payroll_structure_jo_employee_salary"/>
     </record>
 
@@ -95,7 +95,7 @@ result_rate = payslip._rule_parameter('l10n_jo_ssc_rate')
         <field name="sequence">115</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = (GROSS * 12) - contract.l10n_jo_tax_exemption
+result = (GROSS * 12) - version.l10n_jo_tax_exemption
         </field>
         <field name="struct_id" ref="l10n_jo_hr_payroll.hr_payroll_structure_jo_employee_salary"/>
     </record>

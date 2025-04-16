@@ -4,7 +4,7 @@
     'name': 'Mexico - Payroll',
     'countries': ['mx'],
     'category': 'Human Resources/Payroll',
-    'depends': ['hr_payroll', 'hr_contract_reports', 'hr_work_entry_holidays', 'hr_payroll_holidays'],
+    'depends': ['hr_payroll', 'hr_work_entry_holidays', 'hr_payroll_holidays'],
     'auto_install': ['hr_payroll'],
     'version': '1.0',
     'description': """
@@ -31,7 +31,8 @@ Mexican Payroll Rules.
         'data/salary_rules/hr_salary_rule_christmas_bonus_data.xml',
         'views/report_payslip_templates.xml',
         'views/l10n_mx_hr_infonavit_views.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_contract_template_views.xml',
+        'views/hr_employee_views.xml',
         'views/hr_payroll_structure_type_views.xml',
         'views/hr_payroll_structure_views.xml',
     ],

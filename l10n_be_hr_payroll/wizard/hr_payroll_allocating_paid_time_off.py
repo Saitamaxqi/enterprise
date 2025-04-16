@@ -56,31 +56,30 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
         period_work_days_count = len(list(rrule(DAILY, dtstart=period_start, until=period_end, byweekday=[0, 1, 2, 3, 4, 5])))
 
         if self.structure_type_id:
-            structure = "AND c.structure_type_id = %(structure)s"
+            structure = "AND v.structure_type_id = %(structure)s"
         else:
             structure = ""
 
         employee_check = ""
         if self.department_id:
-            employee_check = "AND e.department_id = %(department)s"
+            employee_check = "AND v.department_id = %(department)s"
 
         if self.employee_ids:
             employee_check += "AND e.id in %(employee_ids)s "
 
         query = """
-            SELECT c.id AS contract_id,
-                   c.employee_id AS employee_id,
-                   c.date_start AS date_start,
-                   c.date_end AS date_end,
-                   c.resource_calendar_id AS resource_calendar_id
-              FROM hr_contract c
-              JOIN hr_employee e ON c.employee_id = e.id
-             WHERE c.state IN ('open', 'pending', 'close')
-               AND c.date_start <= %(stop)s
-               AND (c.date_end IS NULL OR c.date_end >= %(start)s)
+            SELECT v.id AS version_id,
+                   v.employee_id AS employee_id,
+                   v.contract_date_start AS date_start,
+                   v.contract_date_end AS date_end,
+                   v.resource_calendar_id AS resource_calendar_id
+              FROM hr_version v
+              JOIN hr_employee e ON v.employee_id = e.id
+             WHERE v.contract_date_start <= %(stop)s
+               AND (v.contract_date_end IS NULL OR v.contract_date_end >= %(start)s)
                AND e.active IS TRUE
-               AND e.employee_type = 'employee'
-               AND c.company_id IN %(company)s
+               AND v.employee_type = 'employee'
+               AND v.company_id IN %(company)s
                    {where_structure}
                    {where_employee_in_department}
         """.format(where_structure=structure, where_employee_in_department=employee_check)
@@ -94,9 +93,9 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
             'employee_ids': tuple(self.employee_ids.ids),
         })
 
-        alloc_employees = defaultdict(lambda: (0, None))  # key = employee_id and value contains paid_time_off and contract_id in Tuple
+        alloc_employees = defaultdict(lambda: (0, None))  # key = employee_id and value contains paid_time_off and version_id in Tuple
         for vals in self.env.cr.dictfetchall():
-            paid_time_off, contract_id = alloc_employees[vals['employee_id']]
+            paid_time_off, version_id = alloc_employees[vals['employee_id']]
 
             date_start = vals['date_start']
             date_end = vals['date_end']
@@ -107,29 +106,29 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
                 date_start = period_start
             if date_end is None or date_end > period_end:
                 if date_end is None:
-                    contract_id = vals['contract_id']
+                    version_id = vals['version_id']
                 date_end = period_end
 
             work_days_count = len(list(rrule(DAILY, dtstart=date_start, until=date_end, byweekday=[0, 1, 2, 3, 4, 5])))
             work_days_ratio = work_days_count / period_work_days_count  # In case the employee didn't work over the whole period
             paid_time_off += work_days_ratio * work_time_rate * max_leaves_count
 
-            alloc_employees[vals['employee_id']] = (paid_time_off, contract_id)
+            alloc_employees[vals['employee_id']] = (paid_time_off, version_id)
 
         # Add employee attestation days to the paid time off
 
         employees = self.env['hr.employee'].browse(alloc_employees.keys())  # prefetch the employee records
 
-        for employee_id, (paid_time_off, contract_id) in alloc_employees.items():
+        for employee_id, (paid_time_off, version_id) in alloc_employees.items():
             employee = employees.browse(employee_id)
 
-            if self.year == employee.first_contract_date.year:
+            if self.year == employee._get_first_version_date().year:
                 for double_pay_line in employee.double_pay_line_n_ids:
                     work_months_ratio = double_pay_line.months_count / 12
                     work_months_rate = double_pay_line.occupation_rate / 100
                     paid_time_off += work_months_ratio * work_months_rate * max_leaves_count
 
-                alloc_employees[employee_id] = (paid_time_off, contract_id)
+                alloc_employees[employee_id] = (paid_time_off, version_id)
 
         alloc_employee_ids = []
 
@@ -142,22 +141,17 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
                 domains = [
                     ('employee_id', '=', employee_id),
                     ('company_id', 'in', self.env.companies.ids),
-                    ('date_start', '<=', next_period_end),
+                    ('contract_date_start', '<=', next_period_end),
                     '|',
-                        ('date_end', '=', False),
-                        ('date_end', '>=', next_period_start),
-                    '|',
-                        ('state', 'in', ('open', 'pending')),
-                        '&',  # domain to seach state = 'incoming'
-                            ('state', '=', 'draft'),
-                            ('kanban_state', '=', 'done')
+                        ('contract_date_end', '=', False),
+                        ('contract_date_end', '>=', next_period_start),
                 ]
                 if self.structure_type_id:
                     domains.append(('structure_type_id', '=', self.structure_type_id.id))
                 # We need the contract currently active for the next period for each employee to allocate the correct time off based on this contract.
-                contract_next_period = self.env['hr.contract'].search(domains, limit=1, order='date_start desc')
+                contract_next_period = self.env['hr.version'].search(domains, limit=1, order='contract_date_start desc')
             else:
-                contract_next_period = self.env['hr.contract'].browse(contract_next_period)
+                contract_next_period = self.env['hr.version'].browse(contract_next_period)
 
             if contract_next_period.id:
                 calendar = self.env.context.get('forced_calendar', contract_next_period.resource_calendar_id)
@@ -226,6 +220,6 @@ class HrPayrollAllocEmployee(models.TransientModel):
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True)
     paid_time_off = fields.Float("Paid Time Off For The Period", required=True, help="1 day is 7 hours and 36 minutes")
     paid_time_off_to_allocate = fields.Float("Paid Time Off To Allocate", required=True, help="1 day is the number of the amount of hours per day in the working schedule")
-    contract_next_year_id = fields.Many2one('hr.contract', string="Contract Active Next Year")
+    contract_next_year_id = fields.Many2one('hr.version', string="Contract Active Next Year")
     resource_calendar_id = fields.Many2one(related='contract_next_year_id.resource_calendar_id', string="Current Working Schedule", readonly=True)
     alloc_paid_leave_id = fields.Many2one('hr.payroll.alloc.paid.leave')

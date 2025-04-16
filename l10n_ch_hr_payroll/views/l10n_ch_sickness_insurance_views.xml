@@ -6,7 +6,6 @@
         <field name="arch" type="xml">
             <list string="Sickness Insurances">
                 <field name="name"/>
-                <field name="insurance_company"/>
                 <field name="customer_number"/>
                 <field name="contract_number"/>
             </list>
@@ -25,11 +24,10 @@
                     </div>
                     <group>
                         <group string="Insurer Information">
+                            <field name="company_id" required="1" groups="base.group_multi_company"/>
                             <field name="insurance_code"/>
                             <field name="customer_number"/>
                             <field name="contract_number"/>
-                            <field name="insurance_company"/>
-                            <field name="insurance_company_address_id"/>
                         </group>
                     </group>
                     <group string="IJM Solution" colspan="2">

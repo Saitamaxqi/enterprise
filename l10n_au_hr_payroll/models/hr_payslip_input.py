@@ -32,15 +32,15 @@ class HrPayslipInput(models.Model):
     def _l10n_au_get_leave_loading_lump_sums(self, payslips):
         res = {}
         for payslip in payslips:
-            start_year = payslip.contract_id._l10n_au_get_financial_year_start(fields.Date.today())
+            start_year = payslip.version_id._l10n_au_get_financial_year_start(fields.Date.today())
             employee_allocations = self.env["hr.leave.allocation"].search_read([
                 ("employee_id", "=", payslip.employee_id.id),
                 ("date_from", ">=", start_year),
-                ("holiday_status_id", "in", payslip.contract_id.l10n_au_leave_loading_leave_types.ids),
-                ("date_from", "<=", payslip.contract_id.date_end or payslip.date_to),
+                ("holiday_status_id", "in", payslip.version_id.l10n_au_leave_loading_leave_types.ids),
+                ("date_from", "<=", payslip.version_id.date_end or payslip.date_to),
             ], ["number_of_days_display"])
             year_expected_leaves = sum(allocation['number_of_days_display'] for allocation in employee_allocations)
-            leave_rate = payslip.contract_id.l10n_au_leave_loading_rate
+            leave_rate = payslip.version_id.l10n_au_leave_loading_rate
             usual_daily_wage = round(payslip._get_daily_wage(), 2)
             res[payslip.id] = year_expected_leaves * (usual_daily_wage * (1 + leave_rate / 100))
         return res

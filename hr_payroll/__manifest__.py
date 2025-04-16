@@ -8,7 +8,7 @@
     'installable': True,
     'application': True,
     'depends': [
-        'hr_work_entry_contract_enterprise',
+        'hr_work_entry_enterprise',
         'mail',
         'web_editor',
     ],
@@ -64,7 +64,6 @@
         'views/hr_payroll_headcount_views.xml',
         'views/hr_payroll_menu.xml',
         'views/hr_work_entry_export_mixin_views.xml',
-        'report/hr_contract_history_report_views.xml',
         'wizard/hr_payroll_payment_report_wizard.xml',
     ],
     'demo': ['data/hr_payroll_demo.xml'],

@@ -1,4 +1,3 @@
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { planningModels } from "@planning/../tests/planning_mock_models";
 import { projectModels } from "@project/../tests/project_models";
 import { defineModels, fields } from "@web/../tests/web_test_helpers";
@@ -11,7 +10,6 @@ export class PlanningSlot extends planningModels.PlanningSlot {
 planningModels.PlanningSlot = PlanningSlot;
 
 export function defineProjectForecastModels() {
-    defineMailModels();
     defineModels({
         ...planningModels,
         ...projectModels,

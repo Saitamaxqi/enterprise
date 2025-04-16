@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.hr_work_entry_contract_attendance.tests.common import HrWorkEntryAttendanceCommon
+from odoo.addons.hr_work_entry_attendance.tests.common import HrWorkEntryAttendanceCommon
 
 from datetime import datetime, date
 
@@ -81,22 +81,21 @@ class TestPayslipAttendance(HrWorkEntryAttendanceCommon):
         self.assertEqual(attendance_by_payslip[self.payslip], attendance_A) # Correct
 
     def test_compute_payslip_no_worked_hours(self):
-        employee = self.env['hr.employee'].create({'name': 'John'})
-        contract = self.env['hr.contract'].create({
-            'name': 'Contract for John',
+        employee = self.env['hr.employee'].create({
+            'name': 'John',
             'wage': 5000,
-            'employee_id': employee.id,
-            'date_start': date(2024, 10, 1),
-            'date_end': date(2024, 10, 31),
+            'date_version': date(2024, 10, 1),
+            'contract_date_start': date(2024, 10, 1),
+            'contract_date_end': date(2024, 10, 31),
             'work_entry_source': 'attendance',
             'structure_type_id': self.struct_type.id,
-            'state': 'open',
         })
+        contract = employee.version_id
 
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of John',
             'employee_id': employee.id,
-            'contract_id': contract.id,
+            'version_id': contract.id,
             'struct_id': self.struct.id,
             'date_from': date(2024, 10, 1),
             'date_to': date(2024, 10, 31)

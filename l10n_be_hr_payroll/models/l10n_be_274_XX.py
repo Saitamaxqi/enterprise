@@ -147,11 +147,11 @@ class L10n_Be274_Xx(models.Model):
             payslips = payslips.filtered(lambda p: line_values['PPTOTAL'][p.id]['total'])
 
             # Valid payslips for exemption
-            payslips = payslips.filtered(lambda p: p.contract_id.rd_percentage and p.struct_id == monthly_pay)
+            payslips = payslips.filtered(lambda p: p.version_id.rd_percentage and p.struct_id == monthly_pay)
 
             for payslip in payslips:
-                if payslip.contract_id.rd_percentage:
-                    mapped_pp[payslip.employee_id] += payslip.contract_id.rd_percentage / 100 * 0.8 * line_values['PPTOTAL'][payslip.id]['total']
+                if payslip.version_id.rd_percentage:
+                    mapped_pp[payslip.employee_id] += payslip.version_id.rd_percentage / 100 * 0.8 * line_values['PPTOTAL'][payslip.id]['total']
                     mapped_taxable_amount[payslip.employee_id] += line_values['GROSS'][payslip.id]['total']
 
             sheet.line_ids = [(5, 0, 0)] + [(0, 0, {
@@ -178,7 +178,7 @@ class L10n_Be274_Xx(models.Model):
             sheet.taxable_amount = line_values['GROSS']['sum']['total'] + line_values['DOUBLE.DECEMBER.GROSS']['sum']['total']
             sheet.pp_amount = line_values['PPTOTAL']['sum']['total'] - line_values['DOUBLE.DECEMBER.P.P']['sum']['total']
             # Valid payslips for exemption
-            payslips = payslips.filtered(lambda p: p.contract_id.rd_percentage and p.struct_id == monthly_pay)
+            payslips = payslips.filtered(lambda p: p.version_id.rd_percentage and p.struct_id == monthly_pay)
             # 32 : Civil Engineers / Doctors
             payslips_32 = payslips.filtered(lambda p: p.employee_id.certificate in ['doctor', 'civil_engineer'])
             sheet.taxable_amount_32 = sum(line_values['GROSS'][p.id]['total'] for p in payslips_32)
@@ -198,8 +198,8 @@ class L10n_Be274_Xx(models.Model):
             sheet.deducted_amount_34 = 0
 
             for payslip in payslips:
-                if payslip.contract_id.rd_percentage:
-                    deducted_amount = payslip.contract_id.rd_percentage / 100 * 0.8 * line_values['PPTOTAL'][payslip.id]['total']
+                if payslip.version_id.rd_percentage:
+                    deducted_amount = payslip.version_id.rd_percentage / 100 * 0.8 * line_values['PPTOTAL'][payslip.id]['total']
                     if payslip.employee_id.certificate in ['doctor', 'civil_engineer']:
                         sheet.deducted_amount_32 += deducted_amount
                     elif payslip.employee_id.certificate == 'master':
@@ -359,9 +359,9 @@ class L10n_Be274_Xx(models.Model):
                 declaration_10['taxable_revenue'] += taxable_eurocent
                 result['positive_total'] += pp_total_eurocent
 
-            if payslip.struct_id == monthly_pay and payslip.contract_id.rd_percentage:
+            if payslip.struct_id == monthly_pay and payslip.version_id.rd_percentage:
                 employee = payslip.employee_id
-                deduction = - payslip.contract_id.rd_percentage / 100 * 0.8 * line_values['PPTOTAL'][payslip.id]['total']
+                deduction = - payslip.version_id.rd_percentage / 100 * 0.8 * line_values['PPTOTAL'][payslip.id]['total']
                 if deduction:
                     pp_total_eurocent = deduction
                     taxable_eurocent = line_values['GROSS'][payslip.id]['total']
@@ -448,12 +448,12 @@ class L10n_Be274_Xx(models.Model):
             rows.append((
                 employee.legal_name,
                 employee.identification_id,
-                employee.department_id.name or employee.contract_id.department_id.name,
-                employee.first_contract_date.strftime("%d-%m-%Y") if employee.first_contract_date else '',
+                employee.department_id.name or employee.version_id.department_id.name,
+                employee.contract_date_start.strftime("%d-%m-%Y") if employee.contract_date_start else '',
                 employee.departure_date.strftime("%d-%m-%Y") if employee.departure_date else '',
                 certificate_selection_vals[employee.certificate],
                 employee.job_title or employee.job_id.name,
-                employee.contract_id.rd_percentage,
+                employee.version_id.rd_percentage,
                 line.taxable_amount,
                 line.amount,
             ))

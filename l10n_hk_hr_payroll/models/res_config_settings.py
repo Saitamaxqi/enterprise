@@ -9,7 +9,7 @@ class ResConfigSettings(models.TransientModel):
 
     default_l10n_hk_internet = fields.Float(
         string="HK: Internet Subscription",
-        default_model="hr.contract",
+        default_model="hr.version",
     )
     l10n_hk_autopay = fields.Boolean(
         related='company_id.l10n_hk_autopay',

@@ -54,7 +54,7 @@
                             <field name="structure_type_id"/>
                         	<field name="value_type"/>
                             <field name="benefit_ids" invisible="value_type != 'sum'" widget="many2many_tags"/>
-                            <field name="code" invisible="value_type != 'contract'" required="value_type == 'contract'"/>
+                            <field name="code" invisible="value_type != 'version'" required="value_type == 'version'"/>
                             <field name="fixed_value" invisible="value_type != 'fixed'"/>
                         </group>
                     </group>

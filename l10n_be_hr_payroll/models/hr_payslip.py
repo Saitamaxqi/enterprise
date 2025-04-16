@@ -29,7 +29,7 @@ class HrPayslip(models.Model):
     l10n_be_is_december = fields.Boolean(compute='_compute_l10n_be_is_december')
     l10n_be_has_eco_vouchers = fields.Boolean(compute='_compute_l10n_be_has_eco_vouchers', search='_search_l10n_be_has_eco_vouchers')
 
-    @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to')
+    @api.depends('employee_id', 'version_id', 'struct_id', 'date_from', 'date_to')
     def _compute_input_line_ids(self):
         res = super()._compute_input_line_ids()
         balance_by_employee = self._get_salary_advance_balances()
@@ -94,11 +94,10 @@ class HrPayslip(models.Model):
         # double remunerations for some line codes
         self.ensure_one()
         if self.env.context.get('salary_simulation'):
-            return self.env.context['origin_contract_id']
-        contracts = self.employee_id._get_contracts(
+            return self.env.context['origin_version_id']
+        contracts = self.employee_id._get_versions_with_contract_overlap_with_period(
             self.date_from,
             self.date_to,
-            states=['open', 'close']
         ).sorted('date_start')
         return contracts.ids
 
@@ -156,7 +155,7 @@ class HrPayslip(models.Model):
             # {(calendar, date_from, date_to): resources}
             mapped_resources = defaultdict(lambda: self.env['resource.resource'])
             for payslip in self:
-                contract = payslip.contract_id
+                contract = payslip.version_id
                 calendar = contract.resource_calendar_id if not contract.time_credit else contract.standard_calendar_id
                 mapped_resources[(calendar, payslip.date_from, payslip.date_to)] |= contract.employee_id.resource_id
             # {(calendar, date_from, date_to): intervals}}
@@ -169,7 +168,7 @@ class HrPayslip(models.Model):
                     resources=resources, tz=tz)
 
             for payslip in self:
-                contract = payslip.contract_id
+                contract = payslip.version_id
                 benefits = dict.fromkeys(all_benefits, 0)
                 date_from = max(payslip.date_from, contract.date_start)
                 date_to = min(payslip.date_to, contract.date_end or payslip.date_to)
@@ -183,7 +182,7 @@ class HrPayslip(models.Model):
                     else:
                         benefits[work_entries_benefits_right['benefit_name']] += 1
 
-                contract = payslip.contract_id
+                contract = payslip.version_id
                 resource = contract.employee_id.resource_id
                 calendar = contract.resource_calendar_id if not contract.time_credit else contract.standard_calendar_id
                 intervals = mapped_intervals[(calendar, payslip.date_from, payslip.date_to)][resource.id]
@@ -218,16 +217,6 @@ class HrPayslip(models.Model):
                  LIMIT  1)
         """))
         return [('id', 'in', [r[0] for r in rows])]
-
-    @api.depends('struct_id')
-    def _compute_contract_domain_ids(self):
-        reimbursement_payslips = self.filtered(lambda p: p.struct_id.code == "CP200REIMBURSEMENT")
-        for payslip in reimbursement_payslips:
-            payslip.contract_domain_ids = self.env['hr.contract'].search([
-                ('company_id', '=', payslip.company_id.id),
-                ('employee_id', '=', payslip.employee_id.id),
-                ('state', '!=', 'cancel')])
-        super(HrPayslip, self - reimbursement_payslips)._compute_contract_domain_ids()
 
     @api.depends('date_to', 'line_ids.total', 'input_line_ids.code')
     def _compute_l10n_be_max_seizable_amount(self):
@@ -307,8 +296,8 @@ class HrPayslip(models.Model):
         return balance_by_employee
     def _get_worked_day_lines_hours_per_day(self):
         self.ensure_one()
-        if self.contract_id.time_credit:
-            return self.contract_id.standard_calendar_id.hours_per_day
+        if self.version_id.time_credit:
+            return self.version_id.standard_calendar_id.hours_per_day
         return super()._get_worked_day_lines_hours_per_day()
 
     def _get_worked_day_lines_values(self, domain=None):
@@ -318,7 +307,7 @@ class HrPayslip(models.Model):
             return super()._get_worked_day_lines_values(domain=domain)
         # If a belgian payslip has half-day attendances/time off, it the worked days lines should
         # be separated
-        work_hours = self.contract_id._get_work_hours_split_half(self.date_from, self.date_to, domain=domain)
+        work_hours = self.version_id._get_work_hours_split_half(self.date_from, self.date_to, domain=domain)
         work_hours_ordered = sorted(work_hours.items(), key=lambda x: x[1])
         for worked_days_data, duration_data in work_hours_ordered:
             duration_type, work_entry_type_id = worked_days_data
@@ -333,21 +322,21 @@ class HrPayslip(models.Model):
             res.append(attendance_line)
         # If there is a public holiday less than 30 days after the end of the contract
         # this public holiday should be taken into account in the worked days lines
-        if self.contract_id.date_end and self.date_from <= self.contract_id.date_end <= self.date_to:
+        if self.version_id.date_end and self.date_from <= self.version_id.date_end <= self.date_to:
             # If the contract is followed by another one (eg. after an appraisal)
-            if self.contract_id.employee_id.contract_ids.filtered(lambda c: c.state in ['open', 'close'] and c.date_start > self.contract_id.date_end):
+            if self.version_id.employee_id.version_ids.filtered(lambda v: v.date_start > self.version_id.date_end):
                 return res
             public_holiday_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday')
-            public_leaves = self.contract_id.resource_calendar_id.global_leave_ids.filtered(
+            public_leaves = self.version_id.resource_calendar_id.global_leave_ids.filtered(
                 lambda l: l.work_entry_type_id == public_holiday_type)
             # If less than 15 days under contract, the public holidays is not reimbursed
             public_leaves = public_leaves.filtered(
-                lambda l: (l.date_from.date() - self.employee_id.first_contract_date).days >= 15)
+                lambda l: (l.date_from.date() - self.employee_id.contract_date_start).days >= 15)
             # If less than 15 days of occupation -> no payment of the time off after contract
             # If less than 1 month of occupation -> payment of the time off occurring within 15 days after contract.
             # Occupation = duration since the start of the contract, from date to date
             public_leaves = public_leaves.filtered(
-                lambda l: 0 < (l.date_from.date() - self.contract_id.date_end).days <= (30 if self.employee_id.first_contract_date + relativedelta(months=1) <= self.contract_id.date_end else 15))
+                lambda l: 0 < (l.date_from.date() - self.version_id.date_end).days <= (30 if self.employee_id.contract_date_start + relativedelta(months=1) <= self.version_id.date_end else 15))
             if public_leaves:
                 input_type_id = self.env.ref('l10n_be_hr_payroll.cp200_other_input_after_contract_public_holidays').id
                 if input_type_id not in self.input_line_ids.mapped('input_type_id').ids:
@@ -373,13 +362,13 @@ class HrPayslip(models.Model):
         return res
 
     def _get_last_year_average_variable_revenues(self):
-        if not self.contract_id.commission_on_target:
+        if not self.version_id.commission_on_target:
             return 0
         date_from = self.env.context.get('variable_revenue_date_from', self.date_from)
-        first_contract_date = self.employee_id.first_contract_date
-        if not first_contract_date:
+        first_version_date = self.employee_id._get_first_version_date()
+        if not first_version_date:
             return 0
-        start = first_contract_date
+        start = first_version_date
         end = date_from + relativedelta(day=31, months=-1)
         number_of_month = (end.year - start.year) * 12 + (end.month - start.month) + 1
         number_of_month = min(12, number_of_month)
@@ -403,14 +392,14 @@ class HrPayslip(models.Model):
             ('date_from', '<', self.date_from),
         ], order="date_from asc")
         total_amount = warrant_payslips._get_line_values(['BASIC'], compute_sum=True)['BASIC']['sum']['total']
-        first_contract_date = self.employee_id.first_contract_date
-        if not first_contract_date:
+        first_version_date = self.employee_id._get_first_version_date()
+        if not first_version_date:
             return 0
         # Only complete months count
-        if first_contract_date.day != 1:
-            start = first_contract_date + relativedelta(day=1, months=1)
+        if first_version_date.day != 1:
+            start = first_version_date + relativedelta(day=1, months=1)
         else:
-            start = first_contract_date
+            start = first_version_date
         end = self.date_from + relativedelta(day=31, months=-1)
         number_of_month = (end.year - start.year) * 12 + (end.month - start.month) + 1
         number_of_month = min(12, number_of_month)
@@ -487,21 +476,21 @@ class HrPayslip(models.Model):
         return paid_hours / (paid_hours + unpaid_hours) if paid_hours or unpaid_hours else 0
 
     def _get_paid_amount_13th_month(self):
-        contracts = self.employee_id.contract_ids.filtered(lambda c: c.state not in ['draft', 'cancel'] and c.structure_type_id == self.struct_id.type_id).sorted(key=lambda c: c.date_start)
-        first_contract_date = self.contract_id.employee_id._get_first_contract_date(no_gap=False)
-        if not contracts or not first_contract_date:
+        versions = self.employee_id.version_ids.filtered(lambda v: v.structure_type_id == self.struct_id.type_id).sorted(key=lambda v: v.date_start)
+        first_version_date = self.employee_id._get_first_version_date(no_gap=False)
+        if not versions or not first_version_date:
             return 0.0
 
-        if first_contract_date.year == self.date_from.year and first_contract_date.month > 6:
+        if first_version_date.year == self.date_from.year and first_version_date.month > 6:
             return 0.0
 
-        date_from = max(first_contract_date, self.date_from + relativedelta(day=1, month=1))
+        date_from = max(first_version_date, self.date_from + relativedelta(day=1, month=1))
         date_to = self.date_to + relativedelta(day=31)
 
-        basic = self.contract_id._get_contract_wage()
+        basic = self.version_id._get_contract_wage()
 
         force_months = self.input_line_ids.filtered(lambda l: l.code == 'MONTHS')
-        work_time_rates = [c.resource_calendar_id.work_time_rate for c in contracts if c.resource_calendar_id.work_time_rate]
+        work_time_rates = [c.resource_calendar_id.work_time_rate for c in versions if c.resource_calendar_id.work_time_rate]
         if not work_time_rates:
             return 0.0
         current_work_rate = work_time_rates[-1] / 100.0
@@ -513,14 +502,14 @@ class HrPayslip(models.Model):
             fixed_salary = basic * n_months / 12
         else:
             # Number of complete months (any work rate)
-            months_worked = self._compute_number_complete_months_of_work(date_from, date_to, contracts)
+            months_worked = self._compute_number_complete_months_of_work(date_from, date_to, versions)
             if months_worked < 6:
                 return 0.0
 
             # Quantity of months worked equivalently in full-time
-            full_time_months = self._compute_number_complete_months_of_work(date_from, date_to, contracts, True)
+            full_time_months = self._compute_number_complete_months_of_work(date_from, date_to, versions, True)
             # Deduct absences
-            presence_prorata = self._compute_presence_prorata(date_from, date_to, contracts)
+            presence_prorata = self._compute_presence_prorata(date_from, date_to, versions)
 
             fixed_salary = basic * full_time_months / 12 * presence_prorata / current_work_rate
 
@@ -540,11 +529,11 @@ class HrPayslip(models.Model):
 
     def _get_paid_double_holiday(self):
         self.ensure_one()
-        contracts = self.employee_id.contract_ids.filtered(lambda c: c.state not in ['draft', 'cancel'] and c.structure_type_id == self.struct_id.type_id)
+        contracts = self.employee_id.version_ids.filtered(lambda v: v.structure_type_id == self.struct_id.type_id)
         if not contracts:
             return 0.0
 
-        basic = self.contract_id._get_contract_wage()
+        basic = self.version_id._get_contract_wage()
         force_months = self.input_line_ids.filtered(lambda l: l.code == 'MONTHS')
 
         year = self.date_from.year - 1
@@ -724,7 +713,7 @@ class HrPayslip(models.Model):
         def convert_to_month(value):
             return float_round(value / 12.0, precision_rounding=0.01, rounding_method='DOWN')
 
-        employee = self.contract_id.employee_id
+        employee = self.version_id.employee_id
         # PART 1: Withholding tax amount computation
         withholding_tax_amount = 0.0
 
@@ -810,7 +799,7 @@ class HrPayslip(models.Model):
             return 0, 0, 0, 0, 0, 0
 
         categories = localdict['categories']
-        employee = self.contract_id.employee_id
+        employee = self.version_id.employee_id
         wage = categories['BASIC']
         if not wage or employee.is_non_resident:
             return 0.0
@@ -850,7 +839,7 @@ class HrPayslip(models.Model):
 
     def _get_be_ip(self, localdict):
         self.ensure_one()
-        contract = self.contract_id
+        contract = self.version_id
         if not contract.ip:
             return 0.0
         return self._get_paid_amount() * contract.ip_wage_rate / 100.0
@@ -1023,9 +1012,9 @@ class HrPayslip(models.Model):
         children_exoneration = self._rule_parameter('holiday_pay_pp_exoneration')
         children_reduction = self._rule_parameter('holiday_pay_pp_rate_reduction')
 
-        employee = self.contract_id.employee_id
+        employee = self.version_id.employee_id
 
-        contract = self.contract_id
+        contract = self.version_id
         monthly_revenue = contract._get_contract_wage()
         # Count ANT in yearly remuneration
         if contract.internet:
@@ -1114,13 +1103,13 @@ class HrPayslip(models.Model):
 
     def _get_impulsion_plan_amount(self, localdict):
         self.ensure_one()
-        start = self.employee_id.first_contract_date
+        start = self.employee_id.contract_date_start
         end = self.date_to
         number_of_months = (end.year - start.year) * 12 + (end.month - start.month)
         numerator = sum(wd.number_of_hours for wd in self.worked_days_line_ids if wd.amount > 0)
-        denominator = 4 * self.contract_id.resource_calendar_id.hours_per_week
+        denominator = 4 * self.version_id.resource_calendar_id.hours_per_week
         coefficient = numerator / denominator
-        if self.contract_id.l10n_be_impulsion_plan == '25yo':
+        if self.version_id.l10n_be_impulsion_plan == '25yo':
             if 0 <= number_of_months <= 23:
                 theorical_amount = 500.0
             elif 24 <= number_of_months <= 29:
@@ -1130,7 +1119,7 @@ class HrPayslip(models.Model):
             else:
                 theorical_amount = 0
             return min(theorical_amount, theorical_amount * coefficient)
-        if self.contract_id.l10n_be_impulsion_plan == '12mo':
+        if self.version_id.l10n_be_impulsion_plan == '12mo':
             if 0 <= number_of_months <= 11:
                 theorical_amount = 500.0
             elif 12 <= number_of_months <= 17:
@@ -1199,10 +1188,10 @@ class HrPayslip(models.Model):
         if not self.worked_days_line_ids:
             return 0
 
-        employee = self.contract_id.employee_id
-        first_contract_date = employee.first_contract_date
+        employee = self.version_id.employee_id
+        contract_date_start = employee.contract_date_start
         birthdate = employee.birthday
-        age = relativedelta(first_contract_date, birthdate).years
+        age = relativedelta(contract_date_start, birthdate).years
         if age < 30:
             threshold = self._rule_parameter('onss_restructuring_before_30')
         else:
@@ -1218,7 +1207,7 @@ class HrPayslip(models.Model):
         total_hours = sum(self.worked_days_line_ids.mapped('number_of_hours'))
         ratio = paid_hours / total_hours if total_hours else 0
 
-        start = first_contract_date
+        start = contract_date_start
         end = self.date_to
         number_of_months = (end.year - start.year) * 12 + (end.month - start.month)
         if 0 <= number_of_months <= 6:
@@ -1237,7 +1226,7 @@ class HrPayslip(models.Model):
             not all(day.work_entry_type_id.is_leave for day in worked_days.values())
             or self.env.context.get('salary_simulation')
         ):
-            contract = self.contract_id
+            contract = self.version_id
             calendar = contract.resource_calendar_id
             days_per_week = calendar._get_days_per_week()
             incapacity_attendances = calendar.attendance_ids.filtered(lambda a: a.work_entry_type_id.code == 'LEAVE281')
@@ -1345,12 +1334,12 @@ class HrPayslip(models.Model):
         if remaining_day <= 0:
             return 0
         if self.wage_type == 'hourly':
-            employee_hourly_cost = self.contract_id.hourly_wage
+            employee_hourly_cost = self.version_id.hourly_wage
         else:
             if self.date_from.year < 2024:
-                employee_hourly_cost = self.contract_id.contract_wage / self.sum_worked_hours
+                employee_hourly_cost = self.version_id.contract_wage / self.sum_worked_hours
             else:
-                employee_hourly_cost = self.contract_id.contract_wage * 3 / 13 / self.contract_id.resource_calendar_id.hours_per_week
+                employee_hourly_cost = self.version_id.contract_wage * 3 / 13 / self.version_id.resource_calendar_id.hours_per_week
         remaining_day_amount = min(remaining_day, number_of_days) * employee_hourly_cost * 7.6
         days_to_recover = employee['l10n_be_holiday_pay_to_recover_' + recovery_type]
         max_amount_to_recover = min(days_to_recover, employee_hourly_cost * number_of_days * 7.6)

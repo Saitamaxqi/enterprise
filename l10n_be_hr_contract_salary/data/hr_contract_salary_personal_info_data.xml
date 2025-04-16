@@ -8,7 +8,7 @@
         <field name="display_type">integer</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_address"/>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_id_card" model="hr.contract.salary.personal.info">
@@ -17,7 +17,7 @@
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_documents"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_driving_license" model="hr.contract.salary.personal.info">
@@ -26,7 +26,7 @@
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_documents"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_mobile_invoice" model="hr.contract.salary.personal.info">
@@ -35,7 +35,7 @@
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_documents"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_sim_card" model="hr.contract.salary.personal.info">
@@ -44,7 +44,7 @@
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_documents"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_internet_invoice" model="hr.contract.salary.personal.info">
@@ -53,7 +53,7 @@
         <field name="applies_on">employee</field>
         <field name="display_type">document</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_documents"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_personal_info_disabled" model="hr.contract.salary.personal.info">
@@ -64,7 +64,7 @@
         <field name="display_type">checkbox</field>
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">10</field>
     </record>
 
@@ -78,7 +78,7 @@
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="applies_on">employee</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">20</field>
     </record>
     <record id="hr_contract_salary_personal_info_marital_single" model="hr.contract.salary.personal.info.value">
@@ -118,7 +118,7 @@
         <field name="display_type">checkbox</field>
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
         <field name="sequence">30</field>
     </record>
@@ -133,7 +133,7 @@
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="applies_on">employee</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
         <field name="sequence">40</field>
     </record>
@@ -174,7 +174,7 @@
         <field name="applies_on">employee</field>
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
         <field name="sequence">50</field>
     </record>
@@ -186,7 +186,7 @@
         <field name="display_type">date</field>
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
         <field name="sequence">60</field>
     </record>
@@ -200,7 +200,7 @@
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">15</field>
     </record>
 
@@ -212,7 +212,7 @@
         <field name="impacts_net_salary" eval="True"/>
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">80</field>
     </record>
 
@@ -225,7 +225,7 @@
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_disabled_children_bool"/>
         <field name="sequence">90</field>
     </record>
@@ -238,7 +238,7 @@
         <field name="impacts_net_salary" eval="True"/>
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">100</field>
     </record>
 
@@ -252,7 +252,7 @@
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_other_dependent_people"/>
         <field name="sequence">110</field>
     </record>
@@ -267,7 +267,7 @@
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_other_dependent_people"/>
         <field name="sequence">120</field>
     </record>
@@ -282,7 +282,7 @@
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_other_dependent_people"/>
         <field name="sequence">130</field>
     </record>
@@ -297,7 +297,7 @@
         <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_other_dependent_people"/>
         <field name="sequence">140</field>
     </record>

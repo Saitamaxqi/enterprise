@@ -48,25 +48,25 @@ class TestNacha(TransactionCase):
             employee_id.bank_account_id = bank_account.id
             return employee_id
 
-        def create_contract(contract_name, state, wage, start, employee_id):
-            return cls.env['hr.contract'].create({
+        def create_contract(contract_name, state, wage, start, employee):
+            employee.version_id.write({
                 'name': contract_name,
-                'employee_id': employee_id.id,
-                'state': state,
                 'wage': wage,
-                'date_start': start,
+                'contract_date_start': start,
+                'date_version': start,
             })
+            return employee.version_id
 
         def create_employees_with_contracts(no_employees):
-            employee_ids = cls.env['hr.employee']
-            contract_ids = cls.env['hr.contract']
+            employees = cls.env['hr.employee']
+            versions = cls.env['hr.version']
             contract_start_date = fields.Date.start_of(fields.Date.today(), "year")
             for i in range(1, no_employees + 1):
-                employee_id = create_employee_with_bank_account('employee_' + str(i))
-                contract_id = create_contract('contract_' + str(i), 'open', i * 2000, contract_start_date, employee_id)
-                employee_ids |= employee_id
-                contract_ids |= contract_id
-            return employee_ids, contract_ids
+                employee = create_employee_with_bank_account('employee_' + str(i))
+                version = create_contract('contract_' + str(i), 'open', i * 2000, contract_start_date, employee)
+                employees |= employee
+                versions |= version
+            return employees, versions
 
         def create_and_compute_payslip_run(employee_ids):
             payslip_date = fields.Date.today() + relativedelta(day=1)
@@ -87,7 +87,7 @@ class TestNacha(TransactionCase):
                 payslip_id.action_payslip_done()
             return payslip_run_id
 
-        cls.employee_ids, cls.contract_ids = create_employees_with_contracts(no_employees=2)
+        cls.employee_ids, cls.version_ids = create_employees_with_contracts(no_employees=2)
         cls.payslip_run_id = create_and_compute_payslip_run(cls.employee_ids)
 
     def convert_payslip_to_payment(self, payslip):
@@ -224,6 +224,8 @@ class TestNacha(TransactionCase):
         journal = self.default_journal_bank
         employee = self.env['hr.employee'].create({
             'name': 'test emp',
+            'date_version': fields.Date.today(),
+            'contract_date_start': fields.Date.today(),
         })
         # Setting nacha_effective_date on the payslip means that a NACHA file has been generated for that payslip
         self.env['hr.payslip'].create({

@@ -67,7 +67,7 @@ class ResCompany(models.Model):
     @api.model
     def _get_employee_start_date_field(self):
         self.ensure_one()
-        return 'create_date'
+        return 'contract_date_start'
 
     # CRON job
     def _run_employee_appraisal_plans(self):

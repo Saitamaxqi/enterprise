@@ -32,7 +32,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
     net_n1 = fields.Monetary(
         'Gross Annual Remuneration Previous Year',
         compute='_compute_net_n1', store=True, readonly=False)
-    currency_id = fields.Many2one(related='employee_id.contract_id.currency_id')
+    currency_id = fields.Many2one(related='employee_id.version_id.currency_id')
 
     time_off_n_ids = fields.Many2many(
         'hr.leave', string='Time Off N', compute='_compute_history', readonly=False, store=False)
@@ -167,10 +167,10 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
         termination_payslip_n = self.env['hr.payslip'].create({
             'name': '%s - %s' % (struct_n_id.payslip_name, self.employee_id.legal_name),
             'employee_id': self.employee_id.id,
-            'contract_id': self.employee_id.contract_id.id,
+            'version_id': self.employee_id.version_id.id,
             'struct_id': struct_n_id.id,
-            'date_from': (self.employee_id.contract_id.date_end or fields.Date.today()) + relativedelta(day=1),
-            'date_to': (self.employee_id.contract_id.date_end or fields.Date.today()) + relativedelta(day=31),
+            'date_from': (self.employee_id.version_id.contract_date_end or fields.Date.today()) + relativedelta(day=1),
+            'date_to': (self.employee_id.version_id.contract_date_end or fields.Date.today()) + relativedelta(day=31),
         })
         termination_payslip_n.worked_days_line_ids = [(5, 0, 0)]
 
@@ -214,37 +214,37 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             'sequence': 2,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_gross_ref').id,
             'amount': self.net_n + self.fictitious_remuneration_n,
-            'contract_id': termination_payslip_n.contract_id.id
+            'version_id': termination_payslip_n.version_id.id
         }, {
             'payslip_id': termination_payslip_n.id,
             'sequence': 3,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_allocation').id,
             'amount': 0,
-            'contract_id': termination_payslip_n.contract_id.id
+            'version_id': termination_payslip_n.version_id.id
         }, {
             'payslip_id': termination_payslip_n.id,
             'sequence': 4,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_time_off_taken').id,
             'amount': 0,
-            'contract_id': termination_payslip_n.contract_id.id
+            'version_id': termination_payslip_n.version_id.id
         }, {
             'payslip_id': termination_payslip_n.id,
             'sequence': 5,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount').id,
             'amount': annual_gross,
-            'contract_id': termination_payslip_n.contract_id.id
+            'version_id': termination_payslip_n.version_id.id
         }, {
             'payslip_id': termination_payslip_n.id,
             'sequence': 6,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave').id,
             'amount': european_amount_to_deduct,
-            'contract_id': termination_payslip_n.contract_id.id
+            'version_id': termination_payslip_n.version_id.id
         }, {
             'payslip_id': termination_payslip_n.id,
             'sequence': 7,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave_days').id,
             'amount': european_leaves_days,
-            'contract_id': termination_payslip_n.contract_id.id
+            'version_id': termination_payslip_n.version_id.id
         }])
         termination_payslip_n.compute_sheet()
         termination_payslip_n.name = '%s - %s' % (struct_n_id.payslip_name, self.employee_id.legal_name)
@@ -252,10 +252,10 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
         termination_payslip_n1 = self.env['hr.payslip'].create({
             'name': '%s - %s' % (struct_n1_id.payslip_name, self.employee_id.legal_name),
             'employee_id': self.employee_id.id,
-            'contract_id': self.employee_id.contract_id.id,
+            'version_id': self.employee_id.version_id.id,
             'struct_id': struct_n1_id.id,
-            'date_from': (self.employee_id.contract_id.date_end or fields.Date.today) + relativedelta(day=1),
-            'date_to': (self.employee_id.contract_id.date_end or fields.Date.today) + relativedelta(day=31),
+            'date_from': (self.employee_id.version_id.contract_date_end or fields.Date.today()) + relativedelta(day=1),
+            'date_to': (self.employee_id.version_id.contract_date_end or fields.Date.today()) + relativedelta(day=31),
         })
         termination_payslip_n1.worked_days_line_ids = [(5, 0, 0)]
 
@@ -294,37 +294,37 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             'sequence': 1,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_gross_ref').id,
             'amount': self.net_n1 + self.fictitious_remuneration_n1,
-            'contract_id': termination_payslip_n1.contract_id.id
+            'version_id': termination_payslip_n1.version_id.id
         }, {
             'payslip_id': termination_payslip_n1.id,
             'sequence': 3,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_allocation').id,
             'amount': self.time_off_allocated,
-            'contract_id': termination_payslip_n1.contract_id.id
+            'version_id': termination_payslip_n1.version_id.id
         }, {
             'payslip_id': termination_payslip_n1.id,
             'sequence': 4,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_time_off_taken').id,
             'amount': self.time_off_taken,
-            'contract_id': termination_payslip_n1.contract_id.id
+            'version_id': termination_payslip_n1.version_id.id
         }, {
             'payslip_id': termination_payslip_n1.id,
             'sequence': 5,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount').id,
             'amount': annual_gross,
-            'contract_id': termination_payslip_n1.contract_id.id
+            'version_id': termination_payslip_n1.version_id.id
         }, {
             'payslip_id': termination_payslip_n1.id,
             'sequence': 6,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave').id,
             'amount': european_amount_to_deduct,
-            'contract_id': termination_payslip_n1.contract_id.id
+            'version_id': termination_payslip_n1.version_id.id
         }, {
             'payslip_id': termination_payslip_n1.id,
             'sequence': 7,
             'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave_days').id,
             'amount': european_leaves_days,
-            'contract_id': termination_payslip_n1.contract_id.id
+            'version_id': termination_payslip_n1.version_id.id
         }])
         termination_payslip_n1.compute_sheet()
         termination_payslip_n1.name = '%s - %s' % (struct_n1_id.payslip_name, self.employee_id.legal_name)

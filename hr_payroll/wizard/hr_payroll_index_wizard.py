@@ -13,23 +13,23 @@ class HrPayrollIndex(models.TransientModel):
     def _get_default_contract_ids(self):
         if self.env.context.get("active_ids"):
             return self.env.context.get("active_ids")
-        return self.env['hr.contract'].search([('state', '=', 'open')])
+        return self.env['hr.version'].search([('state', '=', 'open')])
 
     percentage = fields.Float("Percentage")
     description = fields.Char(
         "Description", compute='_compute_description', store=True, readonly=False,
         help="Will be used as the message specifying why the wage on the contract has been modified")
-    contract_ids = fields.Many2many(
-        'hr.contract', string="Contracts",
+    version_ids = fields.Many2many(
+        'hr.version', string="Contracts",
         default=_get_default_contract_ids,
     )
     display_warning = fields.Boolean("Error", compute='_compute_display_warning')
 
-    @api.depends('contract_ids')
+    @api.depends('version_ids')
     def _compute_display_warning(self):
         for index in self:
-            contracts = index.contract_ids
-            index.display_warning = any(contract.state != 'open' for contract in contracts)
+            contracts = index.version_ids
+            index.display_warning = any(not contract.is_current for contract in contracts)
 
     @api.depends('percentage')
     def _compute_description(self):
@@ -41,10 +41,10 @@ class HrPayrollIndex(models.TransientModel):
             )
 
     @api.model
-    def _index_wage(self, contract):
-        wage_field = contract._get_contract_wage_field()
-        wage = contract[wage_field]
-        contract.write({wage_field: wage * (1 + self.percentage)})
+    def _index_wage(self, version):
+        wage_field = version._get_contract_wage_field()
+        wage = version[wage_field]
+        version.write({wage_field: wage * (1 + self.percentage)})
 
     def action_confirm(self):
         self.ensure_one()
@@ -53,6 +53,6 @@ class HrPayrollIndex(models.TransientModel):
             raise UserError(_('You have selected non running contracts, if you really need to index them, please do it by hand'))
 
         if self.percentage:
-            for contract in self.contract_ids:
-                self._index_wage(contract)
-                contract.with_context(mail_post_autofollow_author_skip=True).message_post(body=self.description, message_type="comment", subtype_xmlid="mail.mt_note")
+            for version in self.version_ids:
+                self._index_wage(version)
+                version.with_context(mail_post_autofollow_author_skip=True).message_post(body=self.description, message_type="comment", subtype_xmlid="mail.mt_note")

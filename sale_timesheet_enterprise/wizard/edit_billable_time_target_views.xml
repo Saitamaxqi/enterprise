@@ -57,7 +57,7 @@
                                     style="font-size: min(4vw, 2.6rem);"/>
                             </h1>
                             <h2>
-                                <field name="job_title" placeholder="Job Title" />
+                                <field name="job_id" placeholder="Job Position"/>
                             </h2>
                         </div>
                         <div class="o_employee_avatar m-0 p-0">
@@ -162,7 +162,7 @@
                                     <field name="hr_icon_display" widget="hr_presence_status" />
                                 </div>
                             </div>
-                            <field t-if="record.job_title.raw_value" name="job_title"/>
+                            <field t-if="record.job_id.raw_value" name="job_id"/>
                             <div t-if="record.work_email.raw_value" class="o_text_overflow">
                                 <i class="fa fa-fw me-2 fa-envelope text-primary" title="Email"/>
                                 <field name="work_email" />

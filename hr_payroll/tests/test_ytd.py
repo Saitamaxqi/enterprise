@@ -11,38 +11,30 @@ class TestYTD(TestPayslipContractBase):
 
     @classmethod
     def setUpClass(cls):
-
         super().setUpClass()
-
         # A new company (and a new employee)
         cls.company_2 = cls.env['res.company'].create({'name': 'Odooo'})
         cls.shrek_emp = cls.env['hr.employee'].create({
             'name': 'Shrek',
             'company_id': cls.company_2.id,
-        })
-        cls.shrek_contract = cls.env['hr.contract'].create({
-            'date_start': date(2000, 4, 22),
-            'name': 'Contract for Shrek',
+            'date_version': date(2000, 4, 22),
+            'contract_date_start': date(2000, 4, 22),
             'wage': 5000.33,
-            'employee_id': cls.shrek_emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
         })
+        cls.shrek_contract = cls.shrek_emp.version_id
 
         # A new company (and a new employee)
         cls.company_3 = cls.env['res.company'].create({'name': 'Odooooooo'})
         cls.donkey_emp = cls.env['hr.employee'].create({
             'name': 'Donkey',
             'company_id': cls.company_3.id,
-        })
-        cls.donkey_contract = cls.env['hr.contract'].create({
-            'date_start': date(2000, 4, 22),
-            'name': 'Contract for Donkey',
+            'date_version': date(2000, 4, 22),
+            'contract_date_start': date(2000, 4, 22),
             'wage': 5000.33,
-            'employee_id': cls.donkey_emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
         })
+        cls.donkey_contract = cls.donkey_emp.version_id
 
     def _generate_payslip(self, date_from, struct, line_value, no_confirm=False,
             no_compute=False, employee=None, contract=None):
@@ -56,7 +48,7 @@ class TestYTD(TestPayslipContractBase):
         test_payslip = self.env['hr.payslip'].create({
             'name': 'Payslip for YTD tests - ' + str(date_from),
             'employee_id': employee.id if employee else self.richard_emp.id,
-            'contract_id': contract.id if contract else self.contract_cdi.id,
+            'version_id': contract.id if contract else self.contract_cdi.id,
             'company_id': employee.company_id.id if employee else self.richard_emp.company_id.id,
             'struct_id': struct.id,
             'date_from': date_from,

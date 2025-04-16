@@ -126,7 +126,6 @@
 
     <record id="hr_employee_linas" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_linas')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="l10n_lt_hr_payroll/static/img/hr_employee_linas.jpg"/>
         <field name="work_phone">09 944 7104</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_linas')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -144,7 +143,7 @@
         <field name="distance_home_work">5</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_linas')).country_id"/>
         <field name="identification_id">A7802201584</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1978, 2, 20).date()"/>
         <field name="place_of_birth">Lithuania</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_linas')).country_id"/>
@@ -154,12 +153,24 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Vilnius University</field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_lt_hr_payroll.res_partner_bank_account_linas"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_lt_hr_payroll.lt_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_lt_hr_payroll.structure_type_employee_lt"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">3250</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="date_generated_from" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field name="date_generated_to" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lt').id)], limit=1)"/>
+        <field name="l10n_lt_benefits_in_kind">400</field>
     </record>
 
     <record id="hr_employee_norberta" model="hr.employee">
         <field name="address_id" ref="l10n_lt_hr_payroll.res_partner_norberta_work_address"/>
         <field name="name" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_norberta')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="l10n_lt_hr_payroll/static/img/hr_employe_norberta.jpg"/>
         <field name="work_phone">09 943 9451</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_norberta')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -178,7 +189,7 @@
         <field name="distance_home_work">13</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_norberta')).country_id"/>
         <field name="identification_id">E9102112013</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1991, 2, 11).date()"/>
         <field name="place_of_birth">Vilnius</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_lt_hr_payroll.res_partner_norberta')).country_id"/>
@@ -188,72 +199,27 @@
         <field name="study_field">Electrical Engineering</field>
         <field name="study_school">Université Catholique de Louvain-la-Neuve</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_linas" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_lt_hr_payroll.res_partner_bank_account_linas"/>
-    </record>
-
-    <record id="hr_employee_norberta" model="hr.employee">
         <field name="bank_account_id" ref="l10n_lt_hr_payroll.res_partner_bank_account_norberta"/>
-    </record>
-
-    <record id="hr_contract_linas" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_lt_hr_payroll.hr_employee_linas')).name + ' - ' + obj(ref('l10n_lt_hr_payroll.hr_employee_linas')).job_title"/>
-        <field name="employee_id" ref="hr_employee_linas"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_lt_hr_payroll.lt_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_lt"/>
-        <field name="structure_type_id" ref="l10n_lt_hr_payroll.structure_type_employee_lt"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">3250</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
-        <field name="date_generated_from" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="date_generated_to" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lt').id)], limit=1)"/>
-
-        <field name="l10n_lt_benefits_in_kind">400</field>
-    </record>
-
-    <record id="hr_contract_norberta_previous" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_lt_hr_payroll.hr_employee_norberta')).name + ' - ' + obj(ref('l10n_lt_hr_payroll.hr_employee_norberta')).job_title"/>
-        <field name="employee_id" ref="hr_employee_norberta"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_lt_hr_payroll.lt_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_lt_hr_payroll.structure_type_employee_lt"/>
         <field name="wage_type">monthly</field>
         <field name="wage">3000</field>
-        <field name="state">close</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_lt"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lt').id)], limit=1)"/>
         <field name="l10n_lt_benefits_in_kind">400</field>
     </record>
 
-    <record id="hr_contract_norberta" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_lt_hr_payroll.hr_employee_norberta')).name + ' - ' + obj(ref('l10n_lt_hr_payroll.hr_employee_norberta')).job_title"/>
-        <field name="employee_id" ref="hr_employee_norberta"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_lt_hr_payroll.lt_hr_department_rd"/>
-        <field name="structure_type_id" ref="l10n_lt_hr_payroll.structure_type_employee_lt"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">3600</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_lt"/>
-        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_lt_hr_payroll.hr_contract_norberta_previous')).date_end + relativedelta(days=1)"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lt').id)], limit=1)"/>
-        <field name="l10n_lt_benefits_in_kind">400</field>
-    </record>
-
-    <record id="hr_employee_linas" model="hr.employee">
-        <field name="contract_id" ref="l10n_lt_hr_payroll.hr_contract_linas"/>
-    </record>
-    <record id="hr_employee_norberta" model="hr.employee">
-        <field name="contract_id" ref="l10n_lt_hr_payroll.hr_contract_norberta"/>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_lt_hr_payroll.hr_employee_norberta')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_end': False,
+            'wage': 3600.00
+        }"/>
+    </function>
 </odoo>

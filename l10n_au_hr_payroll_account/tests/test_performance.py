@@ -97,7 +97,7 @@ class TestPerformance(AccountTestInvoicingCommon):
             'country_id': cls.env.ref('base.au').id,
             'lang': 'en_US',
             'spouse_birthdate': datetime.today() + relativedelta(years=-25, month=1, day=1),
-            'gender': 'male',
+            'sex': 'male',
             'birthday': "1990-01-01",
             'private_email': "test%i@example.com" % i,
             'private_phone': '123456789',
@@ -106,6 +106,12 @@ class TestPerformance(AccountTestInvoicingCommon):
             'private_zip': '2000',
             "private_state_id": cls.env.ref("base.state_au_2").id,
             'private_country_id': cls.env.ref('base.au').id,
+            'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
+            'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
+            'structure_type_id': cls.env.ref('l10n_au_hr_payroll.structure_type_schedule_1').id,
+            'date_version': date(2018, 12, 31),
+            'contract_date_start': date(2018, 12, 31),
+            'wage': 10000,
         } for i in range(cls.EMPLOYEES_COUNT)])
 
         cls.super_fund = cls.env['l10n_au.super.fund'].create({
@@ -124,18 +130,7 @@ class TestPerformance(AccountTestInvoicingCommon):
         cls.company.l10n_au_hr_super_responsible_id = cls.employees[1]
         cls.company.l10n_au_stp_responsible_id = cls.employees[1]
 
-        cls.contracts = cls.env['hr.contract'].create([{
-            'name': "Contract For Payslip Test %i" % i,
-            'employee_id': cls.employees[i].id,
-            'resource_calendar_id': cls.resource_calendar_40_hours_per_week.id,
-            'company_id': cls.company.id,
-            'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
-            'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
-            'structure_type_id': cls.env.ref('l10n_au_hr_payroll.structure_type_schedule_1').id,
-            'date_start': date(2018, 12, 31),
-            'wage': 10000,
-            'state': "open",
-        } for i in range(cls.EMPLOYEES_COUNT)])
+        cls.contracts = cls.employees.version_id
 
         # Public Holiday (global)
         cls.env['resource.calendar.leaves'].create([{
@@ -199,7 +194,7 @@ class TestPerformance(AccountTestInvoicingCommon):
         payslips_values = [{
             'name': "Test Payslip %i" % i,
             'employee_id': self.employees[i].id,
-            'contract_id': self.contracts[i].id,
+            'version_id': self.contracts[i].id,
             'company_id': self.company.id,
             'struct_id': structure.id,
             'date_from': self.date_from,
@@ -207,7 +202,7 @@ class TestPerformance(AccountTestInvoicingCommon):
         } for i in range(self.EMPLOYEES_COUNT)]
 
         # Payslip Creation
-        with self.assertQueryCount(admin=1300):  # randomness
+        with self.assertQueryCount(admin=1400):  # randomness
             self.env.user.partner_id.email = "admin@example.com"
             start_time = time.time()
             payslips = self.env['hr.payslip'].with_context(allowed_company_ids=self.company.ids).create(payslips_values)

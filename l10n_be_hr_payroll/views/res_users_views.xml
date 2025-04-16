@@ -17,7 +17,7 @@
                 </div>
                 <field name="disabled_spouse_bool" invisible="marital not in ['married', 'cohabitant']" readonly="not can_edit"/>
             </xpath>
-            <xpath expr="//field[@name='gender']" position="after">
+            <xpath expr="//field[@name='sex']" position="after">
                 <field name="disabled" readonly="not can_edit"/>
             </xpath>
             <xpath expr="//field[@name='children']" position="after">

@@ -27,7 +27,7 @@ result = payslip.paid_amount
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = 'WORK100' in worked_days and worked_days['WORK100'].number_of_days
-result = contract.l10n_sk_meal_voucher_employee
+result = version.l10n_sk_meal_voucher_employee
         </field>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_sk_hr_payroll.hr_payroll_structure_sk_employee_salary"/>
@@ -42,7 +42,7 @@ result = contract.l10n_sk_meal_voucher_employee
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = 'WORK100' in worked_days and worked_days['WORK100'].number_of_days
-result = -contract.l10n_sk_meal_voucher_employer
+result = -version.l10n_sk_meal_voucher_employer
         </field>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_sk_hr_payroll.hr_payroll_structure_sk_employee_salary"/>

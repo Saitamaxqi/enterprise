@@ -26,6 +26,7 @@ class HrEmployee(models.Model):
              "Leave empty for the employee to be assigned shifts regardless of the role.")
     employee_token = fields.Char('Security Token', default=_default_employee_token, groups='hr.group_hr_user',
                                  copy=False, readonly=True, export_string_translation=False)
+    has_slots = fields.Boolean(compute='_compute_has_slots')
 
     _employee_token_unique = models.Constraint(
         'unique(employee_token)',
@@ -85,12 +86,6 @@ class HrEmployee(models.Model):
         ])
         planning_slots._manage_archived_resources(departure_date)
         return res
-
-
-class HrEmployeeBase(models.AbstractModel):
-    _inherit = "hr.employee.base"
-
-    has_slots = fields.Boolean(compute='_compute_has_slots')
 
     def _compute_has_slots(self):
         result = set()

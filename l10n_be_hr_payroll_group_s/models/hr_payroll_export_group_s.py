@@ -180,10 +180,10 @@ class L10nBeHrPayrollExportGroupS(models.Model):
     def _generate_employee_entries(self, reference_contract, employee_line):
         we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
         employee_entries = ''
-        for contract in employee_line.contract_ids:
+        for contract in employee_line.version_ids:
             if not contract.schedule_pay == reference_contract.schedule_pay:
                 raise UserError(_('The pay schedule of the contracts must be the same to export to Group S.'))
-            if len(employee_line.contract_ids) > 1:
+            if len(employee_line.version_ids) > 1:
                 we_by_day_and_code_in_contract = {
                     date: we_by_code for date, we_by_code in we_by_day_and_code.items()
                     if date >= contract.date_start and (not contract.date_end or date <= contract.date_end)
@@ -212,7 +212,7 @@ class L10nBeHrPayrollExportGroupS(models.Model):
         for employee_type, employee_lines in employee_lines_by_employee_type.items():
             if not employee_lines:
                 continue
-            reference_contract = employee_lines[0].contract_ids[0]
+            reference_contract = employee_lines[0].version_ids[0]
             file += self._compose_group_s_info(reference_contract, employee_type)
             for employee_line in employee_lines:
                 file += self._generate_employee_entries(reference_contract, employee_line)

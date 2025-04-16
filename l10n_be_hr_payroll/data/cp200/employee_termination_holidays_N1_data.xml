@@ -194,7 +194,7 @@ result = result_rules['PAY_SIMPLE']['total'] + result_rules['PAY DOUBLE']['total
         <field name="code">ONSS1</field>
         <field name="sequence">70</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result=not contract.no_onss</field>
+        <field name="condition_python">result=not version.no_onss</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">PAY_SIMPLE</field>
         <field name="amount_percentage">-13.07</field>
@@ -208,7 +208,7 @@ result = result_rules['PAY_SIMPLE']['total'] + result_rules['PAY DOUBLE']['total
         <field name="code">ONSS2</field>
         <field name="sequence">80</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result=not contract.no_onss</field>
+        <field name="condition_python">result=not version.no_onss</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['PAY DOUBLE']['total']
@@ -250,7 +250,7 @@ result = BASIC + result_rules['ONSS1']['total'] + result_rules['ONSS2']['total']
         <field name="code">PROF_TAX</field>
         <field name="sequence">95</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result=not contract.no_withholding_taxes</field>
+        <field name="condition_python">result=not version.no_withholding_taxes</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = GROSS

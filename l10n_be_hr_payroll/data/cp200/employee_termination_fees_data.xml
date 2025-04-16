@@ -9,7 +9,7 @@
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = 12.92
-result = contract._get_contract_wage()
+result = version._get_contract_wage()
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees"/>
     </record>
@@ -66,7 +66,7 @@ if 'EXPATRIATE' in inputs:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = 220
-result = contract.meal_voucher_amount * (1 - 0.1463)
+result = version.meal_voucher_amount * (1 - 0.1463)
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees"/>
     </record>
@@ -79,7 +79,7 @@ result = contract.meal_voucher_amount * (1 - 0.1463)
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.eco_checks
+result = version.eco_checks
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees"/>
     </record>
@@ -135,11 +135,11 @@ result_qty = 12.92
         <field name="amount_python_compute">
 result_qty = 12.92
 result = 0
-if contract.internet:
+if version.internet:
     result += 5.0
-if contract.mobile and not contract.internet:
+if version.mobile and not version.internet:
     result += 4.0 + 5.0
-if contract.mobile and contract.internet:
+if version.mobile and version.internet:
     result += 4.0
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees"/>
@@ -154,7 +154,7 @@ if contract.mobile and contract.internet:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = 12
-result = contract.car_atn if contract.transport_mode_car else 0
+result = version.car_atn if version.transport_mode_car else 0
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees"/>
     </record>
@@ -513,7 +513,7 @@ result = TOTALFEES - OUTPLACEMENT
         <field name="code">ONSS</field>
         <field name="sequence">60</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result=not contract.no_onss</field>
+        <field name="condition_python">result=not version.no_onss</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['BASIC']['total']
@@ -555,7 +555,7 @@ result = result_rules['BASIC']['total'] - result_rules['ONSSTOTAL']['total']
         <field name="code">P.P</field>
         <field name="sequence">75</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result=not contract.no_withholding_taxes</field>
+        <field name="condition_python">result=not version.no_withholding_taxes</field>
         <field name="appears_on_payslip" eval="True"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = payslip._get_termination_fees_withholding_taxes(localdict)

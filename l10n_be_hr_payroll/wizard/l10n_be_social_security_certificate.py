@@ -157,7 +157,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
             else:
                 co2_fees = 0
             structural_reductions = 0
-            meal_voucher_employer = sum(all_values['MEAL_V_EMP'][p.id]['quantity'] * p.contract_id.meal_voucher_paid_by_employer for p in monthly_slips + student_slips)
+            meal_voucher_employer = sum(all_values['MEAL_V_EMP'][p.id]['quantity'] * p.version_id.meal_voucher_paid_by_employer for p in monthly_slips + student_slips)
             withholding_taxes_deduction = _get_total(monthly_slips, all_values, ['P.P.DED'])
             total_employer_cost = emp_onss + emp_termination_onss + closure_fund + charges_redistribution + co2_fees + structural_reductions + meal_voucher_employer + withholding_taxes_deduction
             holiday_pay_provision = 0

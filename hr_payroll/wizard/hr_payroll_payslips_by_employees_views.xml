@@ -60,9 +60,6 @@
                 <field name="activity_date_deadline" position="attributes">
                     <attribute name="optional">hide</attribute>
                 </field>
-                <field name="first_contract_date" position="attributes">
-                    <attribute name="optional">hide</attribute>
-                </field>
                 <field name="company_id" position="attributes">
                     <attribute name="optional">hide</attribute>
                 </field>

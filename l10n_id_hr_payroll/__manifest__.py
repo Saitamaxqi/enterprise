@@ -9,7 +9,6 @@
     """,
     'depends': [
         'hr_payroll',
-        'hr_contract_reports',
         'hr_work_entry_holidays',
         'hr_payroll_holidays',
     ],
@@ -23,7 +22,7 @@
         "data/hr_rule_parameter_data.xml",
         "data/hr_salary_rule_data.xml",
         "views/hr_employee_views.xml",
-        "views/hr_contract_views.xml",
+        "views/hr_contract_template_views.xml",
         "views/res_config_settings_views.xml",
         "views/hr_payslip_views.xml",
         "views/hr_payslip_line_views.xml",

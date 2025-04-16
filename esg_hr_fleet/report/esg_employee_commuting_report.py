@@ -27,7 +27,7 @@ class EsgEmployeeCommutingReport(models.Model):
                     (month_start + INTERVAL '1 month - 1 day')::DATE AS date_to,
                     v.co2,
                     SUM(
-                        e.distance_home_work * 2 * (
+                        ve.distance_home_work * 2 * (
                             EXTRACT(DAY FROM (
                                 LEAST(month_start + INTERVAL '1 month - 1 day', COALESCE(log.date_end, NOW() AT TIME ZONE 'utc'))
                                 - GREATEST(month_start, log.date_start)
@@ -35,7 +35,7 @@ class EsgEmployeeCommutingReport(models.Model):
                         ) * v.co2 / 1e6
                     ) * rc.weekly_days_at_office / 7 AS total_co2,
                     SUM(
-                        e.distance_home_work * 2 * (
+                        ve.distance_home_work * 2 * (
                             EXTRACT(DAY FROM (
                                 LEAST(month_start + INTERVAL '1 month - 1 day', COALESCE(log.date_end, NOW() AT TIME ZONE 'utc'))
                                 - GREATEST(month_start, log.date_start)
@@ -46,11 +46,12 @@ class EsgEmployeeCommutingReport(models.Model):
                 JOIN fleet_vehicle v ON v.id = log.vehicle_id
                 JOIN res_company rc ON rc.id = v.company_id
                 JOIN hr_employee e ON e.work_contact_id = log.driver_id
+                JOIN hr_version ve ON ve.id = e.current_version_id
                 JOIN LATERAL (SELECT generate_series(
                     date_trunc('month', log.date_start),
                     date_trunc('month', COALESCE(log.date_end, NOW() AT TIME ZONE 'utc')),
                     '1 month'::INTERVAL
                 )) g(month_start) ON TRUE
-                GROUP BY log.driver_id, log.vehicle_id, month_start, v.co2, e.distance_home_work, rc.weekly_days_at_office
+                GROUP BY log.driver_id, log.vehicle_id, month_start, v.co2, ve.distance_home_work, rc.weekly_days_at_office
             )
         """)

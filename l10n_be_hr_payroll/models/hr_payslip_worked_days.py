@@ -23,7 +23,7 @@ class HrPayslipWorkedDays(models.Model):
         # You add, to the JF, the following amount: 1212/25 = 48.48 + 20% = € 58.17.
         self.ensure_one()
         amount = self.payslip_id._get_last_year_average_variable_revenues() / 25.0
-        work_time_rate = self.contract_id.resource_calendar_id.work_time_rate
+        work_time_rate = self.version_id.resource_calendar_id.work_time_rate
         if not float_compare(work_time_rate, 100, precision_digits=2):
             amount *= 1.2
         if self.payslip_id.id:
@@ -41,8 +41,8 @@ class HrPayslipWorkedDays(models.Model):
         # In that case we have to adapt the wage.
         self.ensure_one()
         wage_to_deduct = 0
-        max_hours_per_week = self.contract_id.standard_calendar_id.hours_per_week \
-                                or self.contract_id.resource_calendar_id.hours_per_week
+        max_hours_per_week = self.version_id.standard_calendar_id.hours_per_week \
+                                or self.version_id.resource_calendar_id.hours_per_week
         training_ratio = 3 / (13 * max_hours_per_week) if max_hours_per_week else 0
         training_hours = sum(self.payslip_id.worked_days_line_ids.filtered(
             lambda wd: wd.work_entry_type_id.code == 'LEAVE260'
@@ -109,7 +109,7 @@ class HrPayslipWorkedDays(models.Model):
         out_worked_day = self.payslip_id.worked_days_line_ids.filtered(lambda wd: wd.code == 'OUT')
         if out_worked_day:
             out_hours = sum(out_worked_day.mapped('number_of_hours'))
-            out_hours_per_week = self.payslip_id._get_out_of_contract_calendar().hours_per_week
+            out_hours_per_week = self.payslip_id._get_out_of_version_calendar().hours_per_week
             return 1 - 3 / (13 * out_hours_per_week) * out_hours if out_hours_per_week else 1
         return 1
 
@@ -117,7 +117,7 @@ class HrPayslipWorkedDays(models.Model):
         computed_by_super = self.env['hr.payslip.worked_days']
         for worked_day in self:
 
-            wage = worked_day.contract_id._get_contract_wage() if worked_day.contract_id else 0
+            wage = worked_day.version_id._get_contract_wage() if worked_day.version_id else 0
 
             if worked_day._l10n_be_skip_amount_computation():
                 computed_by_super += worked_day

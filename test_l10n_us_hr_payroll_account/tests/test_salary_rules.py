@@ -95,7 +95,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.env['hr.work.entry'].create([{
             'name': 'Overtime',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_overtime').id,
             'date_start': datetime.datetime(2023, 1, 1, 9),
             'date_stop': datetime.datetime(2023, 1, 1, 9) + relativedelta(hours=10, minutes=43, seconds=48),
@@ -104,7 +104,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }, {
             'name': 'Double Time',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.l10n_us_work_entry_type_double').id,
             'date_start': datetime.datetime(2023, 1, 7, 9),
             'date_stop': datetime.datetime(2023, 1, 7, 9) + relativedelta(hours=1, minutes=10, seconds=12),
@@ -113,7 +113,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }, {
             'name': 'Retro Overtime',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.l10n_us_work_entry_type_retro_overtime').id,
             'date_start': datetime.datetime(2023, 1, 7, 11),
             'date_stop': datetime.datetime(2023, 1, 7, 11) + relativedelta(hours=2, minutes=59, seconds=24),
@@ -122,7 +122,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }, {
             'name': 'Retro Regular Pay',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.l10n_us_work_entry_type_retro_regular').id,
             'date_start': datetime.datetime(2023, 1, 8, 8),
             'date_stop': datetime.datetime(2023, 1, 9, 0),
@@ -131,7 +131,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }, {
             'name': 'Retro Regular Pay',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.l10n_us_work_entry_type_retro_regular').id,
             'date_start': datetime.datetime(2023, 1, 14, 8),
             'date_stop': datetime.datetime(2023, 1, 15, 0),

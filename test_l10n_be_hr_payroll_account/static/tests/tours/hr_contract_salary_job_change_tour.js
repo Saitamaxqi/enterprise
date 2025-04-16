@@ -34,11 +34,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             run: "click",
         },
         {
-            content: "Go on contract",
-            trigger: "button[name='action_open_contract']",
-            run: "click",
-        },
-        {
             content: "Generate offer",
             trigger: ".o_statusbar_buttons > button > span:contains(Generate Offer)",
             run: "click",

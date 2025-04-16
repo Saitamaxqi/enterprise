@@ -31,7 +31,6 @@ class EditBillableTimeTarget(models.Model):
     avatar_128 = fields.Image("Avatar 128", related='employee_id.avatar_128', compute_sudo=True)
     avatar_1920 = fields.Image("Avatar 1920", related='employee_id.avatar_1920', compute_sudo=True)
     image_1024 = fields.Image("Image 1024", related='employee_id.image_1024', compute_sudo=True)
-    job_title = fields.Char(readonly=True)
     work_email = fields.Char(readonly=True)
     work_phone = fields.Char(readonly=True)
     mobile_phone = fields.Char(readonly=True)
@@ -56,22 +55,25 @@ class EditBillableTimeTarget(models.Model):
         return res
 
     def _get_fields(self):
-        return ",".join([
-            f'emp.{name}'
+        return 'e.id AS id,e.name AS name,' + ','.join(
+            ('v.%s' if name in self.env['hr.version']._fields and self.env['hr.version']._fields[name].store else 'e.%s') % name
             for name, field in self._fields.items()
-            if field.name != 'employee_id' and field.store and field.type not in ['many2many', 'one2many']
-        ])
+            if field.store and field.type not in ['many2many', 'one2many'] and name not in ['id', 'name'])
 
     def init(self):
         tools.drop_view_if_exists(self._cr, self._table)
         self.env.cr.execute(
             f"""
                 CREATE OR REPLACE VIEW {self._table} AS (
-                        SELECT emp.id as employee_id,
-                               {self._get_fields()}
-                          FROM hr_employee emp
+                        SELECT {self._get_fields()}
+                          FROM hr_employee e
+                          JOIN (
+                              SELECT DISTINCT ON (employee_id) *
+                              FROM hr_version
+                              ORDER BY employee_id, date_version DESC
+                          ) v ON v.employee_id = e.id
                     INNER JOIN res_company company
-                            ON emp.company_id = company.id
+                            ON e.company_id = company.id
                          WHERE company.timesheet_show_rates IS TRUE
                 )
             """

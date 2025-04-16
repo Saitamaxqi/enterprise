@@ -198,9 +198,8 @@
         <field name="currency_id" ref="base.MXN"/>
     </record>
 
-    <record id="hr_employee_cesar" model="hr.employee" >
+    <record id="base.hr_employee_cesar" model="hr.employee" forcecreate="1">
         <field name="name" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cesar')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_cesar.jpg"/>
         <field name="work_phone">99 9900 0001</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cesar')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -219,7 +218,7 @@
         <field name="distance_home_work">4</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cesar')).country_id"/>
         <field name="identification_id">9999820710G01234Z9</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1982, 7, 10).date()"/>
         <field name="place_of_birth">Cancun</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cesar')).country_id"/>
@@ -229,19 +228,31 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Universidad Nacional Autónoma de México</field>
         <field name="marital">single</field>
-
         <field name="ssnid">20008509461</field>
         <field name="registration_number">001</field>
+        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_cesar"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
+        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
+        <field name="wage">50000</field>
+        <field name="wage_type">monthly</field>
+        <field name="schedule_pay">monthly</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-5, month=1, day=1))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-5, month=1, day=1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
+        <field name="work_entry_source">calendar</field>
+        <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
-    <record id="hr_employee_cecilia" model="hr.employee" >
+    <record id="base.hr_employee_cecilia" model="hr.employee" forcecreate="1">
         <field name="name" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_cecilia.jpg"/>
         <field name="work_phone">99 9900 0002</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="address_id" ref="l10n_mx_hr_payroll.res_partner_mx_work_address"/>
-        <field name="parent_id" ref="l10n_mx_hr_payroll.hr_employee_cesar"/>
+        <field name="parent_id" ref="base.hr_employee_cesar"/>
         <field name="user_id" ref="l10n_mx_hr_payroll.user_cecilia"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
@@ -256,7 +267,7 @@
         <field name="distance_home_work">87</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).country_id"/>
         <field name="identification_id">9999911205G01234Z9</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1991, 12, 5).date()"/>
         <field name="place_of_birth">Mexico</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).country_id"/>
@@ -266,19 +277,48 @@
         <field name="study_field">Business Administration</field>
         <field name="study_school">Instituto Tecnológico Autónomo de México</field>
         <field name="marital">single</field>
-
         <field name="ssnid">20804909461</field>
         <field name="registration_number">002</field>
+        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_cecilia"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
+        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
+        <field name="wage">23000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
+        <field name="work_entry_source">calendar</field>
+        <field name="l10n_mx_holiday_bonus_rate">25</field>
+        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="l10n_mx_payment_period_vouchers">in_period</field>
+        <field name="l10n_mx_meal_voucher_amount">3000</field>
+        <field name="l10n_mx_transport_amount">2000</field>
+        <field name="l10n_mx_gasoline_amount">1000</field>
+        <field name="l10n_mx_savings_fund">4000</field>
+        <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
-    <record id="hr_employee_xochitl" model="hr.employee">
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('base.hr_employee_cecilia')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1),
+            'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1),
+            'contract_date_end': False,
+            'wage': 50000.00
+        }"/>
+    </function>
+
+    <record id="base.hr_employee_xochilt" model="hr.employee" forcecreate="1">
         <field name="name" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).name"/>
         <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_xochitl.jpg"/>
         <field name="work_phone">99 9900 0003</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="address_id" ref="l10n_mx_hr_payroll.res_partner_mx_work_address"/>
-        <field name="parent_id" ref="l10n_mx_hr_payroll.hr_employee_cesar"/>
+        <field name="parent_id" ref="base.hr_employee_cesar"/>
         <field name="user_id" ref="l10n_mx_hr_payroll.user_xochitl"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
@@ -293,7 +333,7 @@
         <field name="distance_home_work">87</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).country_id"/>
         <field name="identification_id">9999911205G01234Z9</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1976, 5, 1).date()"/>
         <field name="place_of_birth">Peru</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).country_id"/>
@@ -303,19 +343,32 @@
         <field name="study_field">Industrial Design</field>
         <field name="study_school">Universidad Nacional Autónoma de México</field>
         <field name="marital">single</field>
-
         <field name="ssnid">20997609461</field>
         <field name="registration_number">003</field>
+        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_xochitl"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
+        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
+        <field name="wage">75000</field>
+        <field name="wage_type">monthly</field>
+        <field name="schedule_pay">bi-weekly</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-7, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-7, month=1, day=1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
+        <field name="work_entry_source">calendar</field>
+        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
-    <record id="hr_employee_karla" model="hr.employee">
+    <record id="base.hr_employee_karla" model="hr.employee" forcecreate="1">
         <field name="name" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_karla.jpg"/>
         <field name="work_phone">99 9900 0004</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="address_id" ref="l10n_mx_hr_payroll.res_partner_mx_work_address"/>
-        <field name="parent_id" ref="l10n_mx_hr_payroll.hr_employee_cesar"/>
+        <field name="parent_id" ref="base.hr_employee_cesar"/>
         <field name="user_id" ref="l10n_mx_hr_payroll.user_karla"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
@@ -330,7 +383,7 @@
         <field name="distance_home_work">87</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).country_id"/>
         <field name="identification_id">98481986115</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1967, 12, 28).date()"/>
         <field name="place_of_birth">Mexico</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).country_id"/>
@@ -340,137 +393,27 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Universidad de Guadalajara</field>
         <field name="marital">single</field>
-
-
         <field name="ssnid">20926709461</field>
         <field name="registration_number">004</field>
-    </record>
-
-
-    <record id="hr_employee_cesar" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_cesar"/>
-    </record>
-
-    <record id="hr_employee_cecilia" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_cecilia"/>
-    </record>
-
-    <record id="hr_employee_xochitl" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_xochitl"/>
-    </record>
-
-    <record id="hr_employee_karla" model="hr.employee">
         <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_karla"/>
-    </record>
-
-    <record id="hr_contract_cesar" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cesar')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).job_title"/>
-        <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_cesar"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
-        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
-        <field name="wage">50000</field>
-        <field name="wage_type">monthly</field>
-        <field name="schedule_pay">monthly</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-5, month=1, day=1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
-        <field name="work_entry_source">calendar</field>
-
-        <field name="l10n_mx_holiday_bonus_rate">25</field>
-    </record>
-
-   <record id="hr_contract_cecilia_previous" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).job_title"/>
-        <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_cecilia"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
-        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
-        <field name="wage">23000</field>
-        <field name="state">close</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
-        <field name="work_entry_source">calendar</field>
-
-        <field name="l10n_mx_holiday_bonus_rate">25</field>
-    </record>
-
-    <record id="hr_contract_cecilia" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).job_title"/>
-        <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_cecilia"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
-        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
-        <field name="wage">50000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
-        <field name="work_entry_source">calendar</field>
-
-        <field name="l10n_mx_schedule_pay">bi_weekly</field>
-        <field name="l10n_mx_payment_period_vouchers">in_period</field>
-        <field name="l10n_mx_meal_voucher_amount">3000</field>
-        <field name="l10n_mx_transport_amount">2000</field>
-        <field name="l10n_mx_gasoline_amount">1000</field>
-        <field name="l10n_mx_savings_fund">4000</field>
-        <field name="l10n_mx_holiday_bonus_rate">25</field>
-    </record>
-
-    <record id="hr_contract_xochitl" model="hr.contract">
-         <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_xochitl')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_xochitl')).job_title"/>
-        <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_xochitl"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
-        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
-        <field name="wage">75000</field>
-        <field name="wage_type">monthly</field>
-        <field name="schedule_pay">bi-weekly</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-7, month=1, day=1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
-        <field name="work_entry_source">calendar</field>
-
-        <field name="l10n_mx_schedule_pay">bi_weekly</field>
-        <field name="l10n_mx_holiday_bonus_rate">25</field>
-    </record>
-
-    <record id="hr_contract_karla" model="hr.contract">
-       <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_karla')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_karla')).job_title"/>
-        <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_karla"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
         <field name="contract_type_id" ref="hr.contract_type_permanent"/>
         <field name="wage">30000</field>
         <field name="wage_type">monthly</field>
         <field name="schedule_pay">bi-weekly</field>
-        <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
         <field name="work_entry_source">calendar</field>
-
         <field name="l10n_mx_schedule_pay">bi_weekly</field>
         <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
     <record id="hr_infonavit_discount" model="l10n.mx.hr.infonavit">
-        <field name="contract_id" ref="hr_contract_cecilia"/>
+        <field name="version_id" model="hr.version" search="[('employee_id', '=', ref('base.hr_employee_cecilia'))]"/>
         <field name="monthly_insurance">50</field>
         <field name="extra_fixed_monthly_contribution">100</field>
         <field name="infonavit_type">discount_factor</field>
@@ -478,7 +421,7 @@
     </record>
 
     <record id="hr_infonavit_fixed_monetary_fee" model="l10n.mx.hr.infonavit">
-        <field name="contract_id" ref="hr_contract_cecilia"/>
+        <field name="version_id" model="hr.version" search="[('employee_id', '=', ref('base.hr_employee_cecilia'))]"/>
         <field name="monthly_insurance">50</field>
         <field name="extra_fixed_monthly_contribution">100</field>
         <field name="infonavit_type">fixed_monetary_fee</field>
@@ -486,7 +429,7 @@
     </record>
 
     <record id="hr_infonavit_percentage" model="l10n.mx.hr.infonavit">
-        <field name="contract_id" ref="hr_contract_cecilia"/>
+        <field name="version_id" model="hr.version" search="[('employee_id', '=', ref('base.hr_employee_cecilia'))]"/>
         <field name="monthly_insurance">50</field>
         <field name="extra_fixed_monthly_contribution">100</field>
         <field name="infonavit_type">percentage</field>
@@ -494,30 +437,14 @@
     </record>
 
     <record id="hr_fonacot_1000" model="l10n.mx.hr.fonacot">
-        <field name="contract_id" ref="hr_contract_cecilia"/>
+        <field name="version_id" model="hr.version" search="[('employee_id', '=', ref('base.hr_employee_cecilia'))]"/>
         <field name="extra_fixed_monthly_contribution">50</field>
         <field name="monthly_import">1000</field>
     </record>
 
     <record id="hr_fonacot_200" model="l10n.mx.hr.fonacot">
-        <field name="contract_id" ref="hr_contract_cecilia"/>
+        <field name="version_id" model="hr.version" search="[('employee_id', '=', ref('base.hr_employee_cecilia'))]"/>
         <field name="extra_fixed_monthly_contribution">50</field>
         <field name="monthly_import">200</field>
-    </record>
-
-    <record id="hr_employee_cesar" model="hr.employee">
-        <field name="contract_id" ref="l10n_mx_hr_payroll.hr_contract_cesar"/>
-    </record>
-
-    <record id="hr_employee_cecilia" model="hr.employee">
-        <field name="contract_id" ref="l10n_mx_hr_payroll.hr_contract_cecilia"/>
-    </record>
-
-    <record id="hr_employee_xochitl" model="hr.employee">
-        <field name="contract_id" ref="l10n_mx_hr_payroll.hr_contract_xochitl"/>
-    </record>
-
-    <record id="hr_employee_karla" model="hr.employee">
-        <field name="contract_id" ref="l10n_mx_hr_payroll.hr_contract_karla"/>
     </record>
 </odoo>

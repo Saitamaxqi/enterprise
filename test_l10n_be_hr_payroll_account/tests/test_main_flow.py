@@ -45,7 +45,7 @@ class TestHR(AccountTestInvoicingCommon):
 
         cls.hr_fleet_manager = cls.create_user_employee(login='leh', groups='fleet.fleet_group_manager')
 
-        cls.hr_contract_manager = cls.create_user_employee(login='nfz', groups='hr_contract.group_hr_contract_manager,sign.group_sign_manager')
+        cls.hr_contract_manager = cls.create_user_employee(login='nfz', groups='hr.group_hr_manager,sign.group_sign_manager')
         cls.hr_payroll_user = cls.create_user_employee(login='ldj', groups='hr_payroll.group_hr_payroll_user,hr_holidays.group_hr_holidays_user')
         cls.hr_payroll_manager = cls.create_user_employee(login='lxt', groups='hr_payroll.group_hr_payroll_manager')
 
@@ -109,8 +109,8 @@ class TestHR(AccountTestInvoicingCommon):
         #         if len(allocation.employee_ids) == 1:
         #             allocation.employee_id = allocation.employee_ids[0]._origin
         allocation_form.employee_id = employee
-        allocation_form.date_from = time.strftime('2015-1-1')
-        allocation_form.date_to = time.strftime('%Y-12-31')
+        allocation_form.date_from = Date.today().replace(day=1, month=1, year=2015)
+        allocation_form.date_to = Date.today().replace(day=31, month=12)
         allocation_form.holiday_status_id = leave_type
         if leave_type.request_unit == 'hour':
             allocation_form.number_of_hours_display = \
@@ -253,25 +253,22 @@ class TestHR(AccountTestInvoicingCommon):
         struct_form.type_id = structure_type
         return struct_form.save()
 
-    def create_contract(self, user, name, structure, wage, employee, state, start, end=None, car=None):
-        contract_form = Form(self.env['hr.contract'].with_user(user))
-        contract_form.name = name
-        contract_form.employee_id = employee
-        contract_form.structure_type_id = structure.type_id
-        contract_form.date_start = start
-        contract_form.date_end = end
+    def create_version(self, structure, wage, start, end=None, car=None):
+        version_vals = {
+            'employee_id': self.user.employee_id.id,
+            'date_version': start,
+            'contract_date_start': start,
+            'contract_date_end': end,
+            'structure_type_id': structure.type_id.id,
+            'wage': wage,
+            'hr_responsible_id': self.user.id,
+            'sign_template_id': self.template.id,
+            'contract_update_template_id': self.template.id
+        }
         if car:  # only for fleet manager
-            # invisible="not transport_mode_car"
-            contract_form.transport_mode_car = True
-            contract_form.car_id = car
-        contract_form.wage = wage
-        sign_template = self.template
-        contract_form.hr_responsible_id = self.user
-        contract_form.sign_template_id = sign_template
-        contract_form.contract_update_template_id = sign_template
-        contract = contract_form.save()
-        contract.state = state
-        return contract
+            version_vals['transport_mode_car'] = True
+            version_vals['car_id'] = car.id
+        return self.user.employee_id.create_version(version_vals)
 
     def create_work_entry_type(self, user, name, code, is_leave=False, leave_type=None):
         work_entry_type_form = Form(self.env['hr.work.entry.type'].with_user(user))
@@ -304,41 +301,31 @@ class TestHR(AccountTestInvoicingCommon):
     def create_structure(self, user, name, code):
         struct_form = Form(self.env['hr.payroll.structure'].with_user(user))
         struct_form.name = name
-        struct_form.type_id = self.env.ref('hr_contract.structure_type_employee_cp200')
+        struct_form.type_id = self.env.ref('hr.structure_type_employee_cp200')
         return struct_form.save()
 
     def _test_contract(self):
         struct = self.create_salary_structure(self.hr_payroll_user, 'Salary Structure', 'SOO1')
 
-
-        # Contract without car and without fleet access rights
-        contract_cdd = self.create_contract(
-            user=self.hr_contract_manager,
-            name="%s's CDD" % self.user.employee_id,
-            employee=self.user.employee_id,
+        # Contract version without car and without fleet access rights
+        self.create_version(
             structure=struct,
             start=Date.today() + relativedelta(day=1, months=-1),
             end=Date.today().replace(day=15),
             wage=1500,
-            state='close',
         )
 
-        # Contract with a car and with access rights
+        # Contract version with a car and with access rights
         with additional_groups(self.hr_contract_manager, 'fleet.fleet_group_manager'):
-            contract_cdi = self.create_contract(
-                user=self.hr_contract_manager,
-                name="%s's CDD" % self.user.employee_id,
+            self.create_version(
                 structure=struct,
-                employee=self.user.employee_id,
                 start=Date.today().replace(day=16),
                 car=self.env['fleet.vehicle'].search([
                     ('driver_id', '=', self.user.employee_id.work_contact_id.id),
                     ('company_id', '=', self.user.employee_id.company_id.id),
                 ], limit=1),
                 wage=2500,
-                state='draft',
             )
-            contract_cdi.state = 'open'
 
     def _test_work_entries(self):
         work_entry_type = self.create_work_entry_type(

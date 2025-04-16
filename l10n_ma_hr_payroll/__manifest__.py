@@ -24,7 +24,7 @@ Morocco Payroll Rules.
         'data/hr_rule_parameters_data.xml',
         'data/hr_payslip_input_type_data.xml',
         'data/hr_salary_rule_data.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_contract_template_views.xml',
         'views/hr_employee_views.xml',
         'views/res_config_settings_views.xml',
         'views/report_payslip_templates.xml',

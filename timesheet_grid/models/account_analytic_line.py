@@ -194,7 +194,9 @@ class AccountAnalyticLine(models.Model):
             })
             return notification
 
-        analytic_lines = self.filtered_domain(self._get_domain_for_validation_timesheets())
+        # filter in sudo to access employee manager (in domain)
+        # The rest of the method and calls are anyway sudoing analytic_lines everywhere so no real impact here.
+        analytic_lines = self.sudo().filtered_domain(self._get_domain_for_validation_timesheets())
         if not analytic_lines:
             notification['params'].update({
                 'message': _("You cannot validate the selected timesheets as they either belong to employees who are not part of your team or are not in a state that can be validated. This may be due to the fact that they are dated in the future."),
@@ -237,7 +239,7 @@ class AccountAnalyticLine(models.Model):
             raise AccessError(_("You can only reset to draft the timesheets of employees of whom you are the manager or the timesheet approver."))
         #Use the same domain for validation but change validated = False to validated = True
         domain = self._get_domain_for_validation_timesheets(validated=True)
-        analytic_lines = self.filtered_domain(domain)
+        analytic_lines = self.sudo().filtered_domain(domain)
         if not analytic_lines:
             notification['params'].update({
                 'message': _('There are no timesheets to reset to draft or they have already been invoiced.'),

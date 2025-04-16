@@ -15,10 +15,10 @@ class HrPayslip(models.Model):
 
     planning_slot_count = fields.Integer(compute='_compute_planning_slot_count', groups="planning.group_planning_manager")
 
-    @api.depends('date_from', 'date_to', 'contract_id')
+    @api.depends('date_from', 'date_to', 'version_id')
     def _compute_planning_slot_count(self):
         self.planning_slot_count = 0
-        planning_slips = self.filtered(lambda p: p.contract_id.work_entry_source == 'planning')
+        planning_slips = self.filtered(lambda p: p.version_id.work_entry_source == 'planning')
         if not planning_slips:
             return
         domains = []

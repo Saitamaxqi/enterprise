@@ -106,20 +106,12 @@ class L10n_HkIrd(models.AbstractModel):
         invalid_employees = employees.filtered(lambda e: not e.private_street or not e.private_state_id)
         if invalid_employees:
             error_messages.append(_("The following employees don't have a valid private address (with a street and a state): %s", ', '.join(invalid_employees.mapped('name'))))
-        invalid_employees = employees.filtered(lambda e: not e.l10n_hk_surname or not e.l10n_hk_given_name or not e.gender)
+        invalid_employees = employees.filtered(lambda e: not e.l10n_hk_surname or not e.l10n_hk_given_name or not e.sex)
         if invalid_employees:
-            error_messages.append(_("Please configure a surname, a given name and a gender for the following employees: %s", ', '.join(invalid_employees.mapped('name'))))
+            error_messages.append(_("Please configure a surname, a given name and a sex for the following employees: %s", ', '.join(invalid_employees.mapped('name'))))
         invalid_employees = employees.filtered(lambda e: not e.identification_id and not e.passport_id)
         if invalid_employees:
             error_messages.append(_("Please configure a HKID or a passport number for the following employees: %s", ', '.join(invalid_employees.mapped('name'))))
-        invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
-        for employee in invalid_employees:
-            history = self.env['hr.contract.history'].search([('employee_id', '=', employee.id)], limit=1)
-            contracts = history.contract_ids.filtered(lambda c: c.active and c.state in ['open', 'close'])[0]
-            employee.contract_id = contracts[0] if contracts else False
-        invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
-        if invalid_employees:
-            error_messages.append(_("Some employee don't have any contract.:\n%s", '\n'.join(invalid_employees.mapped('name'))))
         invalid_employees = employees.filtered(lambda emp: len(emp.l10n_hk_rental_ids.filtered_domain([
             ('state', 'in', ['open', 'close']),
             ('date_start', '<=', self.end_period),

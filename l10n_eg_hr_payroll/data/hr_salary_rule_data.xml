@@ -20,7 +20,7 @@ result = payslip.paid_amount
         <field name="sequence">2</field>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_eg_housing_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_eg_housing_allowance</field>
         <field name="struct_id" ref="hr_payroll_structure_eg_employee_salary"/>
     </record>
 
@@ -30,7 +30,7 @@ result = payslip.paid_amount
         <field name="code">TA</field>
         <field name="sequence">3</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_eg_transportation_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_eg_transportation_allowance</field>
         <field name="struct_id" ref="l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary"/>
     </record>
 
@@ -40,7 +40,7 @@ result = payslip.paid_amount
         <field name="code">OA</field>
         <field name="sequence">4</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_eg_other_allowances</field>
+        <field name="amount_python_compute">result = version.l10n_eg_other_allowances</field>
         <field name="struct_id" ref="l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary"/>
     </record>
 
@@ -67,7 +67,7 @@ result = - worked_days['OUT'].number_of_days * (salary / number_of_days_in_month
         <field name="sequence">20</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_eg_social_insurance_reference
+result = version.l10n_eg_social_insurance_reference
 result_rate = 18.75
         </field>
         <field name="struct_id" ref="l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary"/>
@@ -80,7 +80,7 @@ result_rate = 18.75
         <field name="sequence">25</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_eg_social_insurance_reference
+result = version.l10n_eg_social_insurance_reference
 result_rate = -11
         </field>
         <field name="struct_id" ref="l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary"/>
@@ -139,13 +139,13 @@ result = - worked_days['EGSICKLEAVE0'].number_of_days * (salary / 30)
         <field name="struct_id" ref="hr_payroll_structure_eg_employee_salary"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 'OVTWD' in inputs and inputs['OVTWD'].amount and contract.resource_calendar_id.hours_per_day
+result = 'OVTWD' in inputs and inputs['OVTWD'].amount and version.resource_calendar_id.hours_per_day
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 salary = categories['BASIC'] + categories['BASICALW']
 result = 1.35 * inputs['OVTWD'].amount * salary / ((payslip.date_to - payslip.date_from).days + 1) / \
-         contract.resource_calendar_id.hours_per_day
+         version.resource_calendar_id.hours_per_day
         </field>
     </record>
 
@@ -157,13 +157,13 @@ result = 1.35 * inputs['OVTWD'].amount * salary / ((payslip.date_to - payslip.da
         <field name="struct_id" ref="hr_payroll_structure_eg_employee_salary"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 'OVTWDN' in inputs and inputs['OVTWDN'].amount and contract.resource_calendar_id.hours_per_day
+result = 'OVTWDN' in inputs and inputs['OVTWDN'].amount and version.resource_calendar_id.hours_per_day
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 salary = categories['BASIC'] + categories['BASICALW']
 result = 1.70 * inputs['OVTWDN'].amount * salary / ((payslip.date_to - payslip.date_from).days + 1) / \
-         contract.resource_calendar_id.hours_per_day
+         version.resource_calendar_id.hours_per_day
         </field>
     </record>
 
@@ -175,13 +175,13 @@ result = 1.70 * inputs['OVTWDN'].amount * salary / ((payslip.date_to - payslip.d
         <field name="struct_id" ref="hr_payroll_structure_eg_employee_salary"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = 'OVTPUB' in inputs and inputs['OVTPUB'].amount and contract.resource_calendar_id.hours_per_day
+result = 'OVTPUB' in inputs and inputs['OVTPUB'].amount and version.resource_calendar_id.hours_per_day
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 salary = categories['BASIC'] + categories['BASICALW']
 result = 2 * inputs['OVTPUB'].amount * salary / ((payslip.date_to - payslip.date_from).days + 1) / \
-         contract.resource_calendar_id.hours_per_day
+         version.resource_calendar_id.hours_per_day
         </field>
     </record>
 
@@ -191,10 +191,10 @@ result = 2 * inputs['OVTPUB'].amount * salary / ((payslip.date_to - payslip.date
         <field name="code">EOSP</field>
         <field name="sequence">45</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = employee.departure_date and contract.l10n_eg_number_of_days</field>
+        <field name="condition_python">result = employee.departure_date and version.l10n_eg_number_of_days</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = (contract.l10n_eg_number_of_days / 12) * ((categories['BASIC'] + categories['BASICALW']) / 30)
+result = (version.l10n_eg_number_of_days / 12) * ((categories['BASIC'] + categories['BASICALW']) / 30)
         </field>
         <field name="struct_id" ref="l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary"/>
     </record>
@@ -209,7 +209,7 @@ result = (contract.l10n_eg_number_of_days / 12) * ((categories['BASIC'] + catego
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 salary = categories['BASIC'] + categories['BASICALW']
-result = (salary / 30) * contract.l10n_eg_total_leave_days / 12
+result = (salary / 30) * version.l10n_eg_total_leave_days / 12
         </field>
     </record>
 
@@ -236,11 +236,11 @@ result = daily_salary * employee._l10n_eg_get_annual_remaining_leaves()[employee
         <field name="code">EOSB</field>
         <field name="sequence">60</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = employee.departure_date and contract.l10n_eg_total_number_of_days</field>
+        <field name="condition_python">result = employee.departure_date and version.l10n_eg_total_number_of_days</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 compensation = categories['BASIC'] + categories['BASICALW']
-result = (compensation / 30) * (contract.l10n_eg_total_number_of_days)
+result = (compensation / 30) * (version.l10n_eg_total_number_of_days)
         </field>
         <field name="struct_id" ref="l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary"/>
     </record>

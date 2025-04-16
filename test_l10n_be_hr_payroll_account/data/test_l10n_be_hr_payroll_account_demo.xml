@@ -9,9 +9,9 @@
         <field name="partena_code">800000</field>
     </record>
 
-    <function model="hr.contract" name="write">
-        <value model='hr.contract' eval="obj().search([]).ids"/>
-        <value model="hr.contract" eval="{
+    <function model="hr.version" name="write">
+        <value model='hr.version' eval="obj().search([]).ids"/>
+        <value model="hr.version" eval="{
             'sign_template_id': obj().env.ref('hr_contract_salary.sign_template_cdi_developer').id,
             'contract_update_template_id': obj().env.ref('hr_contract_salary.sign_template_cdi_developer').id,
             'hr_responsible_id': obj().env.ref('base.user_admin').id,
@@ -59,6 +59,24 @@
         <field name="icon_id" ref="hr_holidays.icon_26"/>
     </record>
 
+    <record id="resource_calendar_4_5_wednesday_off" model="resource.calendar">
+        <field name="name">30.4 Hours/Week : Wednesday Off</field>
+        <field name="company_id" ref="base.demo_company_be"/>
+        <field name="full_time_required_hours">38</field>
+        <field name="attendance_ids"
+            eval="[(5, 0, 0),
+                (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'})
+            ]"
+        />
+    </record>
+
     <!-- ++++++++++++++ June ++++++++++++++ -->
 
     <!-- Payslip batch -->
@@ -72,7 +90,6 @@
     <!-- Payslip Admin -->
     <record id="hr_payslip_admin" model="hr.payslip">
         <field name="name" eval="'Mitchell Admin ' + time.strftime('Week 2 %Y')"/>
-        <field name="contract_id" ref="hr_contract.hr_contract_admin"/>
         <field name="date_from" eval="time.strftime('%Y-%m-8')"/>
         <field name="date_to" eval="time.strftime('%Y-%m-14')"/>
         <field name="employee_id" ref="hr.employee_admin"/>
@@ -84,7 +101,6 @@
     <!-- Payslip Demo  -->
     <record id="hr_payslip_demo" model="hr.payslip">
         <field name="name" eval="'Marc Demo ' + time.strftime('June %Y')"/>
-        <field name="contract_id" ref="hr_contract.hr_contract_qdp"/>
         <field name="date_from" eval="time.strftime('%Y-6-1')"/>
         <field name="date_to" eval="time.strftime('%Y-6-30')"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -106,7 +122,6 @@
     <!-- Payslip Admin  -->
     <record id="hr_payslip_admin_may" model="hr.payslip">
         <field name="name" eval="'Mitchell Admin ' + time.strftime('Week 1 %Y')"/>
-        <field name="contract_id" ref="hr_contract.hr_contract_admin"/>
         <field name="date_from" eval="time.strftime('%Y-%m-1')"/>
         <field name="date_to" eval="time.strftime('%Y-%m-7')"/>
         <field name="employee_id" ref="hr.employee_admin"/>
@@ -118,7 +133,6 @@
     <!-- Payslip Demo  -->
     <record id="hr_payslip_demo_may" model="hr.payslip">
         <field name="name" eval="'Marc Demo ' + time.strftime('May %Y')"/>
-        <field name="contract_id" ref="hr_contract.hr_contract_qdp"/>
         <field name="date_from" eval="time.strftime('%Y-5-1')"/>
         <field name="date_to" eval="time.strftime('%Y-5-31')"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -129,16 +143,27 @@
 
     <!-- Work Entries for Laurie -->
 
-    <record id="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret" model="hr.contract">
-        <field name="group_s_code">000017</field>
-    </record>
+    <function model="hr.version" name="write">
+        <value model="hr.version" eval="obj().search([
+            ('employee_id', '=', ref('l10n_be_hr_contract_salary.hr_employee_laurie_poiret')),
+            ('date_version', '=', DateTime.today() + relativedelta(years=-2, month=1, day=1)),
+        ]).id"/>
+        <value eval="{'group_s_code': '000018'}"/>
+    </function>
 
-    <record id="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret_previous" model="hr.contract">
-        <field name="group_s_code">000018</field>
-    </record>
+    <function model="hr.version" name="write">
+        <value model="hr.version" eval="obj().search([
+            ('employee_id', '=', ref('l10n_be_hr_contract_salary.hr_employee_laurie_poiret')),
+            ('date_version', '=', DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1)),
+        ]).id"/>
+        <value eval="{'group_s_code': '000017'}"/>
+    </function>
 
-    <function model="hr.contract" name="generate_work_entries">
-        <value eval="[ref('l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret')]"/>
+    <function model="hr.version" name="generate_work_entries">
+        <value model="hr.version" eval="obj().search([
+            ('employee_id', '=', ref('l10n_be_hr_contract_salary.hr_employee_laurie_poiret')),
+            ('date_version', '=', DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1)),
+        ]).id"/>
         <value eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1)).date()"/>
         <value eval="DateTime.today().date()"/>
     </function>
@@ -151,7 +176,6 @@
 
     <record id="hr_payslip_demo_lap_january" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=1)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=2, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -162,7 +186,6 @@
 
     <record id="hr_payslip_demo_lap_february" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=2)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=2, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=3, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -173,7 +196,6 @@
 
     <record id="hr_payslip_demo_lap_march" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=3)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=3, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=4, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -184,7 +206,6 @@
 
     <record id="hr_payslip_demo_lap_april" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=4)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=4, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=5, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -195,7 +216,6 @@
 
     <record id="hr_payslip_demo_lap_may" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=5)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=5, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=6, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -206,7 +226,6 @@
 
     <record id="hr_payslip_demo_lap_june" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=6)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=6, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=7, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -217,7 +236,6 @@
 
     <record id="hr_payslip_demo_lap_july" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=7)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=7, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=8, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -228,7 +246,6 @@
 
     <record id="hr_payslip_demo_lap_august" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=8)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=8, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=9, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -239,7 +256,6 @@
 
     <record id="hr_payslip_demo_lap_september" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=9)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=9, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=10, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -250,7 +266,6 @@
 
     <record id="hr_payslip_demo_lap_october" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=10)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=10, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=11, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -261,7 +276,6 @@
 
     <record id="hr_payslip_demo_lap_november" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=11)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=11, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=12, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -272,7 +286,6 @@
 
     <record id="hr_payslip_demo_lap_december" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) ' + (DateTime.today() + relativedelta(years=-1, month=12)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=12, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=0, month=1, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -283,7 +296,6 @@
 
     <record id="hr_payslip_demo_lap_13th_month" model="hr.payslip">
         <field name="name" eval="'Laurie Poiret (lap) - 13th Month - ' + (DateTime.today() + relativedelta(years=-1, month=12)).strftime('%B %Y')"/>
-        <field name="contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_laurie_poiret"/>
         <field name="date_from" eval="(DateTime.today() + relativedelta(years=-1, month=12, day=1))"/>
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=0, month=1, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
@@ -699,6 +711,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_admin"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_admin" model="hr.employee">
@@ -723,11 +736,21 @@
         <field name="private_phone">+1 555-555-5555</field>
         <field name="private_email">admin@yourcompany.example.com</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_admin"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">civil_engineer</field>
         <field name="sdworx_code">0000001</field>
         <field name="ucm_code">3</field>
         <field name="partena_code">000003</field>
+        <field name="date_version" eval="DateTime.today() + relativedelta(years=-1, month=1, day=1)"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-1, month=1, day=1)"/>
+        <field name="wage">7540</field>
+        <field name="wage_on_signature">7540</field>
+        <field name="ip_wage_rate">25</field>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000001</field>
     </record>
 
     <record id="res_partner_employee_al" model="res.partner">
@@ -741,6 +764,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_al"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_al" model="hr.employee">
@@ -763,11 +787,24 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_al"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000002</field>
         <field name="ucm_code">4</field>
         <field name="partena_code">000004</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field eval="4000.0" name="wage"/>
+        <field eval="4000.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000002</field>
     </record>
 
     <record id="res_partner_employee_mit" model="res.partner">
@@ -781,6 +818,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_mit"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_mit" model="hr.employee">
@@ -805,11 +843,24 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_mit"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_mit"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000003</field>
         <field name="ucm_code">5</field>
         <field name="partena_code">000005</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field eval="4500.0" name="wage"/>
+        <field eval="4500.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000003</field>
     </record>
 
     <record id="res_partner_employee_niv" model="res.partner">
@@ -823,6 +874,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_niv"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_niv" model="hr.employee">
@@ -846,11 +898,28 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_niv"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_niv"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000004</field>
         <field name="ucm_code">6</field>
         <field name="partena_code">000006</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="time.strftime('%Y')+'-12-1'"/>
+        <field eval="4000.0" name="wage"/>
+        <field eval="4000.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="standard_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
+        <field name="time_credit" eval="True"/>
+        <field name="work_time_rate">0.80</field>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000007</field>
     </record>
 
     <record id="res_partner_employee_stw" model="res.partner">
@@ -864,6 +933,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_stw"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_stw" model="hr.employee">
@@ -887,11 +957,25 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_stw"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_stw"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">doctor</field>
         <field name="sdworx_code">0000005</field>
         <field name="ucm_code">7</field>
         <field name="partena_code">000007</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+        <field name="contract_date_end" eval="time.strftime('%Y')+'-12-1'"/>
+        <field eval="4500.0" name="wage"/>
+        <field eval="4500.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000004</field>
     </record>
 
     <record id="res_partner_employee_chs" model="res.partner">
@@ -905,6 +989,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_chs"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_chs" model="hr.employee">
@@ -928,11 +1013,24 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_chs"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_chs"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">doctor</field>
         <field name="sdworx_code">0000006</field>
         <field name="ucm_code">8</field>
         <field name="partena_code">000008</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field eval="3750.0" name="wage"/>
+        <field eval="3750.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000009</field>
     </record>
 
     <record id="res_partner_employee_qdp" model="res.partner">
@@ -946,6 +1044,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_qdp"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_qdp" model="hr.employee">
@@ -971,11 +1070,21 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_qdp"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_qdp"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000007</field>
         <field name="ucm_code">9</field>
         <field name="partena_code">000009</field>
+        <field eval="3750.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000005</field>
     </record>
 
     <record id="res_partner_employee_fme" model="res.partner">
@@ -989,6 +1098,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_fme"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_fme" model="hr.employee">
@@ -1012,11 +1122,25 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_fme"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000008</field>
         <field name="ucm_code">10</field>
         <field name="partena_code">000010</field>
+        <field name="date_version" eval="'2015-1-1'"/>
+        <field name="contract_date_start" eval="'2015-1-1'"/>
+        <field name="contract_date_end" eval="time.strftime('%Y-%m-%d')"/>
+        <field eval="3650.0" name="wage"/>
+        <field eval="3650.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000011</field>
     </record>
 
     <record id="res_partner_employee_fpi" model="res.partner">
@@ -1030,6 +1154,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_fpi"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_fpi" model="hr.employee">
@@ -1053,11 +1178,25 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_fpi"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_fpi"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000009</field>
         <field name="ucm_code">11</field>
         <field name="partena_code">000011</field>
+        <field name="date_version" eval="'2015-1-1'"/>
+        <field name="contract_date_start" eval="'2015-1-1'"/>
+        <field name="contract_date_end" eval="'2017-12-1'"/>
+        <field eval="3750.0" name="wage"/>
+        <field eval="3750.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000012</field>
     </record>
 
     <record id="res_partner_employee_jth" model="res.partner">
@@ -1071,6 +1210,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jth"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_jth" model="hr.employee">
@@ -1094,11 +1234,25 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jth"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jth"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000010</field>
         <field name="ucm_code">12</field>
         <field name="partena_code">000012</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="time.strftime('%Y')+'-12-1'"/>
+        <field eval="4200.0" name="wage"/>
+        <field eval="4200.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000008</field>
     </record>
 
     <record id="res_partner_employee_ngh" model="res.partner">
@@ -1112,6 +1266,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_ngh"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_ngh" model="hr.employee">
@@ -1135,7 +1290,7 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_ngh"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_ngh"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000011</field>
         <field name="ucm_code">13</field>
@@ -1153,6 +1308,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_vad"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_vad" model="hr.employee">
@@ -1176,11 +1332,25 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_vad"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_vad"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000012</field>
         <field name="ucm_code">14</field>
         <field name="partena_code">000014</field>
+        <field name="date_version" eval="'2015-1-1'"/>
+        <field name="contract_date_start" eval="'2015-1-1'"/>
+        <field name="contract_date_end" eval="'2018-2-1'"/>
+        <field eval="3750.0" name="wage"/>
+        <field eval="3750.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000013</field>
     </record>
 
     <record id="res_partner_employee_han" model="res.partner">
@@ -1194,6 +1364,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_han"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_han" model="hr.employee">
@@ -1215,11 +1386,27 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_han"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_han"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000013</field>
         <field name="ucm_code">15</field>
         <field name="partena_code">000015</field>
+        <field name="date_version" eval="DateTime.today() + relativedelta(years=-2, month=1, day=1)"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-2, month=1, day=1)"/>
+        <field eval="4600.0" name="wage"/>
+        <field eval="4600.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="standard_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
+        <field name="time_credit" eval="True"/>
+        <field name="work_time_rate">0.80</field>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000006</field>
     </record>
 
     <record id="res_partner_employee_jve" model="res.partner">
@@ -1233,6 +1420,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jve"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_jve" model="hr.employee">
@@ -1254,11 +1442,24 @@
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jve"/>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jve"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000014</field>
         <field name="ucm_code">16</field>
         <field name="partena_code">000016</field>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field eval="3950.0" name="wage"/>
+        <field eval="3950.0" name="wage_on_signature"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
+        <field name="ip_wage_rate">25</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
+        <field name="rd_percentage">100</field>
+        <field name="group_s_code">000010</field>
     </record>
 
     <record id="res_partner_employee_jep" model="res.partner">
@@ -1272,6 +1473,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jep"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_jep" model="hr.employee">
@@ -1293,7 +1495,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jep"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000015</field>
         <field name="ucm_code">17</field>
@@ -1311,6 +1513,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jod"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_jod" model="hr.employee">
@@ -1332,7 +1535,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jod"/>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000016</field>
         <field name="ucm_code">18</field>
@@ -1350,6 +1553,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jog"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_jog" model="hr.employee">
@@ -1371,7 +1575,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jog"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000017</field>
         <field name="ucm_code">19</field>
@@ -1389,6 +1593,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jgo"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_jgo" model="hr.employee">
@@ -1410,7 +1615,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jgo"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000018</field>
         <field name="ucm_code">20</field>
@@ -1428,6 +1633,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_lur"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_lur" model="hr.employee">
@@ -1449,7 +1655,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_lur"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000019</field>
         <field name="ucm_code">21</field>
@@ -1467,6 +1673,7 @@
         <field name="bank_id" ref="base.bank_ing"/>
         <field name="partner_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_hne"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="allow_out_payment">True</field>
     </record>
 
     <record id="employee_hne" model="hr.employee">
@@ -1488,327 +1695,11 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_hne"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000020</field>
         <field name="ucm_code">22</field>
         <field name="partena_code">000022</field>
-    </record>
-
-    <record id="hr_contract_admin" model="hr.contract">
-        <field name="name">Mitchell Admin Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_admin"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_admin').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_admin').department_id.id"/>
-        <field eval="7540.0" name="wage"/>
-        <field eval="7540.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000001</field>
-    </record>
-
-    <record id="hr_contract_al" model="hr.contract">
-        <field name="name">Marian Weaver Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_al"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_al').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_al').department_id.id"/>
-        <field eval="4000.0" name="wage"/>
-        <field eval="4000.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000002</field>
-    </record>
-
-    <record id="hr_contract_mit" model="hr.contract">
-        <field name="name">Bernice Jensen Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_mit"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_mit').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_mit').department_id.id"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field eval="4500.0" name="wage"/>
-        <field eval="4500.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000003</field>
-    </record>
-
-    <record id="hr_contract_stw" model="hr.contract">
-        <field name="name">Jack Mccoy Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="date_end" eval="time.strftime('%Y')+'-12-1'"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_stw"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_stw').job_id.id"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_stw').department_id.id"/>
-        <field eval="4500.0" name="wage"/>
-        <field eval="4500.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000004</field>
-    </record>
-
-    <record id="hr_contract_qdp" model="hr.contract">
-        <field name="name">Marc Demo Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_qdp"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_qdp').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_qdp').department_id.id"/>
-        <field eval="3750.0" name="wage"/>
-        <field eval="3750.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000005</field>
-    </record>
-
-    <record id="resource_calendar_4_5_wednesday_off" model="resource.calendar">
-        <field name="name">30.4 Hours/Week : Wednesday Off</field>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="full_time_required_hours">38</field>
-        <field name="attendance_ids"
-            eval="[(5, 0, 0),
-                (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'})
-            ]"
-        />
-    </record>
-
-    <record id="hr_contract_han" model="hr.contract">
-        <field name="name">Eduardo Kelley Contract</field>
-        <field name="date_start" eval="DateTime.today() + relativedelta(years=-2, month=1, day=1)"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_han"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_han').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_han').department_id.id"/>
-        <field eval="4600.0" name="wage"/>
-        <field eval="4600.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="standard_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
-        <field name="time_credit" eval="True"/>
-        <field name="work_time_rate">0.80</field>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000006</field>
-    </record>
-
-    <record id="hr_contract_niv" model="hr.contract">
-        <field name="name">Ramona Franklin Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="date_end" eval="time.strftime('%Y')+'-12-1'"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_niv"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_niv').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_niv').department_id.id"/>
-        <field eval="4000.0" name="wage"/>
-        <field eval="4000.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="standard_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
-        <field name="time_credit" eval="True"/>
-        <field name="work_time_rate">0.80</field>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000007</field>
-    </record>
-
-    <record id="hr_contract_jth" model="hr.contract">
-        <field name="name">Manuel Shelton Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="date_end" eval="time.strftime('%Y')+'-12-1'"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_jth"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_jth').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_jth').department_id.id"/>
-        <field eval="4200.0" name="wage"/>
-        <field eval="4200.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000008</field>
-    </record>
-
-    <record id="hr_contract_chs" model="hr.contract">
-        <field name="name">Mario Lambert Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_chs"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_chs').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_chs').department_id.id"/>
-        <field eval="3750.0" name="wage"/>
-        <field eval="3750.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000009</field>
-    </record>
-
-    <record id="hr_contract_jve" model="hr.contract">
-        <field name="name">Michael Lambert Contract</field>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_jve"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_jve').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_jve').department_id.id"/>
-        <field eval="3950.0" name="wage"/>
-        <field eval="3950.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000010</field>
-    </record>
-
-    <record id="hr_contract_fme" model="hr.contract">
-        <field name="name">Michael Crawford Contract</field>
-        <field name="date_start" eval="'2015-1-1'"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="date_end" eval="time.strftime('%Y-%m-%d')"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_fme"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_fme').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_fme').department_id.id"/>
-        <field eval="3650.0" name="wage"/>
-        <field eval="3650.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">blocked</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000011</field>
-    </record>
-
-    <record id="hr_contract_fpi" model="hr.contract">
-        <field name="name">Rene Chapman Contract</field>
-        <field name="date_start" eval="'2015-1-1'"/>
-        <field name="date_end" eval="'2017-12-1'"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_fpi"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_fpi').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_fpi').department_id.id"/>
-        <field eval="3750.0" name="wage"/>
-        <field eval="3750.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000012</field>
-    </record>
-
-    <record id="hr_contract_vad" model="hr.contract">
-        <field name="name">Sarah Meyer Contract</field>
-        <field name="date_start" eval="'2015-1-1'"/>
-        <field name="date_end" eval="'2018-2-1'"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="employee_id" ref="test_l10n_be_hr_payroll_account.employee_vad"/>
-        <field name="job_id" model="hr.job" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_vad').job_id.id"/>
-        <field name="department_id" model="hr.department" eval="obj().env.ref('test_l10n_be_hr_payroll_account.employee_vad').department_id.id"/>
-        <field eval="3750.0" name="wage"/>
-        <field eval="3750.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="ip_wage_rate">25</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="rd_percentage">100</field>
-        <field name="group_s_code">000013</field>
     </record>
 
     <!--Leave Type-->
@@ -2099,11 +1990,25 @@
         <field name="company_id" ref="base.demo_company_be"/>
     </record>
 
+    <record id="fleet_vehicle_golf_8_joseph_noluck" model="fleet.vehicle">
+        <field name="model_id" ref="fleet.model_golf_8"/>
+        <field name="license_plate">1-HGN-535</field>
+        <field name="acquisition_date" eval="time.strftime('2019-01-01')"/>
+        <field name="co2">88</field>
+        <field name="car_value">38000</field>
+        <field name="company_id" ref="base.demo_company_be"/>
+    </record>
+
+    <record id="fleet_vehicle_log_contract_golf_8_joseph_noluck" model="fleet.vehicle.log.contract">
+        <field name="recurring_cost_amount_depreciated">450.0</field>
+        <field name="state">open</field>
+        <field name="vehicle_id" ref="fleet_vehicle_golf_8_joseph_noluck"/>
+    </record>
+
     <record id="hr_employee_joseph_noluck" model="hr.employee">
         <field name="name">Joseph Noluck (jon)</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="marital">single</field>
-        <field name="job_title">Software Developer</field>
         <field name="private_street">47 Chemin de la malchance</field>
         <field name="work_contact_id" ref="res_partner_joseph_noluck"/>
         <field name="private_city">Libramont-Chevigny</field>
@@ -2121,7 +2026,6 @@
         <field name="certificate">master</field>
         <field name="study_field">Civil Engineering</field>
         <field name="study_school">Université Catholique de Louvain-la-Neuve</field>
-        <field name="department_id" ref="hr_department_2"/>
         <field name="parent_id" ref="l10n_be_hr_contract_salary.employee_max"/>
         <field name="country_id" ref="base.be"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
@@ -2130,83 +2034,45 @@
         <field name="bank_account_id" ref="res_partner_bank_account_joseph_noluck"/>
         <field name="image_1920" type="base64" file="test_l10n_be_hr_payroll_account/static/img/employee_jon-image.jpg"/>
         <field name="company_id" ref="base.demo_company_be"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="sdworx_code">0000021</field>
         <field name="ucm_code">23</field>
         <field name="partena_code">000023</field>
-    </record>
-
-    <record id="fleet_vehicle_golf_8_joseph_noluck" model="fleet.vehicle">
-        <field name="model_id" ref="fleet.model_golf_8"/>
-        <field name="license_plate">1-HGN-535</field>
-        <field name="acquisition_date" eval="time.strftime('2019-01-01')"/>
-        <field name="co2">88</field>
-        <field name="driver_employee_id" ref="hr_employee_joseph_noluck"/>
-        <field name="car_value">38000</field>
-        <field name="company_id" ref="base.demo_company_be"/>
-    </record>
-
-    <record id="fleet_vehicle_log_contract_golf_8_joseph_noluck" model="fleet.vehicle.log.contract">
-        <field name="recurring_cost_amount_depreciated">450.0</field>
-        <field name="state">open</field>
-        <field name="vehicle_id" ref="fleet_vehicle_golf_8_joseph_noluck"/>
-    </record>
-
-    <record id="hr_contract_cdi_joseph_noluck_1" model="hr.contract">
-        <field name="name">CDI - Joseph Noluck - Experienced Developer - 2019</field>
         <field name="department_id" ref="hr_department_2"/>
-        <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="job_id" ref="hr.job_developer"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="wage">3000</field>
         <field name="wage_on_signature">3000</field>
         <field name="commission_on_target">1500</field>
         <field name="transport_mode_car" eval="True"/>
         <field name="new_car" eval="False"/>
         <field name="car_id" ref="fleet_vehicle_golf_8_joseph_noluck"/>
-        <field name="state">close</field>
         <field name="ip_wage_rate">25</field>
         <field name="ip" eval="True"/>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
+        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
         <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
         <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
         <field name="company_id" ref="base.demo_company_be"/>
-        <field name="date_start" eval="time.strftime('2019-01-01')"/>
-        <field name="date_end" eval="time.strftime('2019-12-31')"/>
+        <field name="date_version" eval="time.strftime('2019-01-01')"/>
+        <field name="contract_date_start" eval="time.strftime('2019-01-01')"/>
+        <field name="contract_date_end" eval="time.strftime('2019-12-31')"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
         <field name="group_s_code">000014</field>
     </record>
 
-    <record id="hr_contract_cdi_joseph_noluck_2" model="hr.contract">
-        <field name="name">CDI - Joseph Noluck - Experienced Developer - 2020</field>
-        <field name="department_id" ref="hr_department_2"/>
-        <field name="employee_id" ref="hr_employee_joseph_noluck"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
-        <field name="wage_on_signature">3200</field>
-        <field name="wage">3200</field>
-        <field name="commission_on_target">1500</field>
-        <field name="transport_mode_car" eval="True"/>
-        <field name="new_car" eval="False"/>
-        <field name="car_id" ref="fleet_vehicle_golf_8_joseph_noluck"/>
-        <field name="state">open</field>
-        <field name="ip_wage_rate">25</field>
-        <field name="ip" eval="True"/>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="date_start" eval="time.strftime('2020-01-01')"/>
-        <field name="date_end" eval="False"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
-        <field name="group_s_code">000015</field>
-    </record>
-
-    <record id="hr_employee_joseph_noluck" model="hr.employee">
-        <field name="contract_id" ref="hr_contract_cdi_joseph_noluck_2"/>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck')]"/>
+        <value eval="{
+            'date_version': '2020-01-01',
+            'contract_date_start': '2020-01-01',
+            'contract_date_end': False,
+            'contract_type_id': ref('hr.contract_type_permanent'),
+            'wage': 3200.00,
+            'wage_on_signature': 3200.00,
+            'group_s_code': '000015'
+        }"/>
+    </function>
 
     <record id="hr_holidays_allocation_joseph_noluck_2019" model="hr.leave.allocation">
         <field name="name">Paid Time Off Joseph Noluck - 2019</field>
@@ -2277,14 +2143,17 @@
         ]).ids"/>
     </function>
 
-    <function model="hr.contract" name="generate_work_entries">
-        <value eval="[ref('test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1')]"/>
+    <function model="hr.version" name="generate_work_entries">
+        <value model="hr.version" eval="[obj().search([('employee_id', '=', ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck'))], limit=1).id]"/>
         <value eval="DateTime(2019, 1, 1).date()"/>
         <value eval="DateTime(2019, 12, 31).date()"/>
     </function>
 
-    <function model="hr.contract" name="generate_work_entries">
-        <value eval="[ref('test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_2')]"/>
+    <function model="hr.version" name="generate_work_entries">
+        <value model="hr.version" eval="obj().search([
+            ('employee_id', '=', ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck')),
+            ('date_version', '=', '2020-01-01')
+        ]).id"/>
         <value eval="DateTime(2020, 1, 1).date()"/>
         <value eval="DateTime(2020, 3, 31).date()"/>
     </function>
@@ -2298,7 +2167,6 @@
 
     <record id="hr_payslip_demo_jon_january_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - January 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-01-01')"/>
         <field name="date_to" eval="time.strftime('2019-01-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2306,6 +2174,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
     <record id="hr_payslip_input_commission_january_2019" model="hr.payslip.input">
         <field name="payslip_id" ref="hr_payslip_demo_jon_january_2019"/>
@@ -2315,7 +2184,6 @@
 
     <record id="hr_payslip_demo_jon_february_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - February 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-02-01')"/>
         <field name="date_to" eval="time.strftime('2019-02-28')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2323,11 +2191,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_march_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - March 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-03-01')"/>
         <field name="date_to" eval="time.strftime('2019-03-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2335,11 +2203,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_april_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - April 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-04-01')"/>
         <field name="date_to" eval="time.strftime('2019-04-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2347,11 +2215,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_warrant_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - Warrant - 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-04-01')"/>
         <field name="date_to" eval="time.strftime('2019-04-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2359,11 +2227,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_may_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - May 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-05-01')"/>
         <field name="date_to" eval="time.strftime('2019-05-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2371,11 +2239,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_june_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - June 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-06-01')"/>
         <field name="date_to" eval="time.strftime('2019-06-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2383,11 +2251,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_double_holiday_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - Double Holidays - 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-06-01')"/>
         <field name="date_to" eval="time.strftime('2019-06-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2395,11 +2263,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_july_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - July 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-07-01')"/>
         <field name="date_to" eval="time.strftime('2019-07-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2407,6 +2275,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
     <record id="hr_payslip_input_commission_july_2019" model="hr.payslip.input">
         <field name="payslip_id" ref="hr_payslip_demo_jon_july_2019"/>
@@ -2416,7 +2285,6 @@
 
     <record id="hr_payslip_demo_jon_august_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - August 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-08-01')"/>
         <field name="date_to" eval="time.strftime('2019-08-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2424,11 +2292,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_september_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - September 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-09-01')"/>
         <field name="date_to" eval="time.strftime('2019-09-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2436,11 +2304,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_october_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - October 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-10-01')"/>
         <field name="date_to" eval="time.strftime('2019-10-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2448,6 +2316,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
     <record id="hr_payslip_input_commission_october_2019" model="hr.payslip.input">
         <field name="payslip_id" ref="hr_payslip_demo_jon_october_2019"/>
@@ -2457,7 +2326,6 @@
 
     <record id="hr_payslip_demo_jon_november_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - November 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-11-01')"/>
         <field name="date_to" eval="time.strftime('2019-11-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2465,11 +2333,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.version" eval="obj().search([('employee_id', '=', ref('hr_employee_joseph_noluck')), ('date_version', '=', '2019-01-01')])"/>
     </record>
 
     <record id="hr_payslip_demo_jon_december_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - December 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-12-01')"/>
         <field name="date_to" eval="time.strftime('2019-12-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2477,11 +2345,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_13th_month_2019" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - Thirteen Month 2019"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_1"/>
         <field name="date_from" eval="time.strftime('2019-12-01')"/>
         <field name="date_to" eval="time.strftime('2019-12-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2489,11 +2357,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2019-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_january_2020" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - January 2020"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_2"/>
         <field name="date_from" eval="time.strftime('2020-01-01')"/>
         <field name="date_to" eval="time.strftime('2020-01-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2501,6 +2369,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2020-01-01')"/>
     </record>
     <record id="hr_payslip_input_commission_january_2020" model="hr.payslip.input">
         <field name="payslip_id" ref="hr_payslip_demo_jon_january_2020"/>
@@ -2510,7 +2379,6 @@
 
     <record id="hr_payslip_demo_jon_february_2020" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - February 2020"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_2"/>
         <field name="date_from" eval="time.strftime('2020-02-01')"/>
         <field name="date_to" eval="time.strftime('2020-02-29')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2518,11 +2386,11 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2020-01-01')"/>
     </record>
 
     <record id="hr_payslip_demo_jon_march_2020" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - March 2020"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_2"/>
         <field name="date_from" eval="time.strftime('2020-03-01')"/>
         <field name="date_to" eval="time.strftime('2020-03-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2530,6 +2398,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2020-01-01')"/>
     </record>
 
     <function model="hr.payslip" name="action_refresh_from_work_entries" eval="[[p.id for p in [
@@ -2612,7 +2481,6 @@
 
     <record id="hr_payslip_demo_jon_april_2020" model="hr.payslip">
         <field name="name">Joseph Noluck (jon) - April 2020"</field>
-        <field name="contract_id" ref="test_l10n_be_hr_payroll_account.hr_contract_cdi_joseph_noluck_2"/>
         <field name="date_from" eval="time.strftime('2020-04-01')"/>
         <field name="date_to" eval="time.strftime('2020-04-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2620,6 +2488,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('hr_employee_joseph_noluck'))._get_version('2020-01-01')"/>
     </record>
     <function model="hr.payslip" name="action_refresh_from_work_entries" eval="[[p.id for p in [
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_april_2020')
@@ -2653,9 +2522,17 @@
         <field name="company_id" ref="base.demo_company_be"/>
     </record>
 
+    <record id="hr_job_student" model="hr.job">
+        <field name="name">Student</field>
+        <field name="department_id" ref="hr_department_2"/>
+        <field name="company_id" ref="base.demo_company_be"/>
+        <field name="description">Student hired during company events.</field>
+        <field name="l10n_be_scale_category">A</field>
+    </record>
+
     <record id="hr_employee_clemence_student" model="hr.employee">
         <field name="name">Clemence Student (cst)</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="marital">single</field>
         <field name="job_title">Student</field>
         <field name="private_street">20 rue de la Crochette</field>
@@ -2686,20 +2563,7 @@
         <field name="sdworx_code">0000022</field>
         <field name="ucm_code">24</field>
         <field name="partena_code">000024</field>
-    </record>
-
-    <record id="hr_job_student" model="hr.job">
-        <field name="name">Student</field>
         <field name="department_id" ref="hr_department_2"/>
-        <field name="company_id" ref="base.demo_company_be"/>
-        <field name="description">Student hired during company events.</field>
-        <field name="l10n_be_scale_category">A</field>
-    </record>
-
-    <record id="hr_contract_clemence_student" model="hr.contract">
-        <field name="name">Contract - Clemence Student</field>
-        <field name="department_id" ref="hr_department_2"/>
-        <field name="employee_id" ref="hr_employee_clemence_student"/>
         <field name="job_id" ref="hr_job_student"/>
         <field name="structure_type_id" ref="l10n_be_hr_payroll.structure_type_student"/>
         <field name="wage">0</field>
@@ -2710,9 +2574,9 @@
         <field name="distance_home_work">30</field>
         <field name="internet">0</field>
         <field name="mobile">0</field>
-        <field name="state">open</field>
         <field name="company_id" ref="base.demo_company_be"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(months=-6))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(months=-6))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(months=-6))"/>
         <field name="resource_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_1_5_monday_student"/>
         <field name="group_s_code">000016</field>
     </record>
@@ -2734,6 +2598,7 @@
                 'bank_id': obj().env.ref('base.bank_bnp').id,
                 'partner_id': obj().env.ref('base.demo_company_be').partner_id.id,
                 'company_id': obj().env.ref('base.demo_company_be').id,
+                'allow_out_payment': True,
             }).id}"/>
         </function>
     </data>
@@ -2750,7 +2615,7 @@
                 'documents_hr_settings': True,
                 'documents_hr_folder': obj().env.ref('documents_hr.document_hr_folder').id,
                 'documents_hr_payslips_tags': [(4, obj().env.ref('documents_hr_payroll.documents_tag_payslips').id)],
-                'documents_hr_contracts_tags': [(4, obj().env.ref('documents_hr_contract.documents_hr_tag_contracts').id)],
+                'documents_hr_contracts_tags': [(4, obj().env.ref('documents_hr.documents_hr_tag_contracts').id)],
                 'documents_recruitment_settings': True,
                 'recruitment_folder_id': obj().env.ref('documents_hr_recruitment.document_recruitment_folder').id,
             })"/>

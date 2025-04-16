@@ -51,7 +51,7 @@ class L10n_HkIr56e(models.Model):
                 'Surname': employee.l10n_hk_surname,
                 'GivenName': employee.l10n_hk_given_name,
                 'NameInChinese': employee.l10n_hk_name_in_chinese,
-                'Sex': 'M' if employee.gender == 'male' else 'F',
+                'Sex': 'M' if employee.sex == 'male' else 'F',
                 'MaritalStatus': 2 if employee.marital == 'married' else 1,
                 'PpNum': ppnum,
                 'SpouseName': spouse_name,
@@ -59,8 +59,8 @@ class L10n_HkIr56e(models.Model):
                 'SpousePpNum': spouse_passport,
                 'employee_address': employee_address,
                 'Capacity': employee.job_title,
-                'date_of_commencement': employee.first_contract_date,
-                'monthly_salary': employee.contract_id.wage,
+                'date_of_commencement': employee.contract_date_start,
+                'monthly_salary': employee.version_id.wage,
                 'PlaceOfResInd': int(bool(employee.l10n_hk_rental_id)),
             }
 
@@ -90,4 +90,4 @@ class L10n_HkIr56e(models.Model):
         return result
 
     def _get_posted_document_owner(self, employee):
-        return employee.contract_id.hr_responsible_id or self.env.user
+        return employee.version_id.hr_responsible_id or self.env.user

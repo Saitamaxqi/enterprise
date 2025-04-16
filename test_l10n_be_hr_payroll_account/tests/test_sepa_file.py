@@ -2,7 +2,7 @@
 
 import base64
 
-from datetime import date, datetime
+from datetime import date
 from odoo.tests import tagged
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -61,21 +61,14 @@ class TestSEPAFile(AccountTestInvoicingCommon):
             'company_id': cls.env.company.id,
             'distance_home_work': 75,
             'private_country_id': cls.env.ref('base.be').id,
-        })
-
-        cls.contract = cls.env['hr.contract'].create({
-            'name': "Test Contract",
-            'employee_id': cls.employee.id,
-            'resource_calendar_id': cls.company.resource_calendar_id.id,
-            'company_id': cls.company.id,
-            'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
-            'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
-            'structure_type_id': cls.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': date(2018, 12, 31),
+            'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
+            'date_version': date(2018, 12, 31),
+            'contract_date_start': date(2018, 12, 31),
             'wage': 2400,
             'wage_on_signature': 2400,
-            'state': "open",
         })
+
+        cls.contract = cls.employee.version_id
 
     def test_sepa_file(self):
         payslip_run = self.env['hr.payslip.run'].create({

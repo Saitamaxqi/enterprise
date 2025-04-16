@@ -131,8 +131,8 @@ class L10n_HkManulifeMpf(models.Model):
                 'amount_ervc': abs(mapped_total['ERVC']),
                 'surcharge_percentage': line.surcharge_percentage,
                 'amount_surcharge': line.amount_surcharge,
-                'basic_salary': employee.contract_id.wage,
-                'last_date_of_employment': employee.contract_id.date_end.strftime('%m/%d/%Y') if employee.contract_id.date_end and employee.contract_id.date_end <= end_period else '',
+                'basic_salary': employee.version_id.wage,
+                'last_date_of_employment': employee.version_id.date_end.strftime('%m/%d/%Y') if employee.version_id.date_end and employee.version_id.date_end <= end_period else '',
             }
             if not employee_data['member_acount'] and employee_data['hkid']:
                 employee_data['surname'] = ''
@@ -145,7 +145,7 @@ class L10n_HkManulifeMpf(models.Model):
             'total_amount_eevc': abs(sum(all_line_values['EEVC'][p.id]['total'] for p in all_payslips)),
             'total_amount_ervc': abs(sum(all_line_values['ERVC'][p.id]['total'] for p in all_payslips)),
             'total_amount_surcharge': sum(self.line_ids.mapped('amount_surcharge')),
-            'total_basic_salary': sum(all_employees.contract_id.mapped('wage')),
+            'total_basic_salary': sum(all_employees.version_id.mapped('wage')),
         }
         return {'data': main_data, 'employees_data': employees_data, 'total_data': total_data}
 

@@ -15,6 +15,9 @@ class ResConfigSettings(models.TransientModel):
     documents_employee_folder_id = fields.Many2one(
         'documents.document', domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],
         related='company_id.documents_employee_folder_id', readonly=False)
+    documents_hr_contracts_tags = fields.Many2many(
+        'documents.tag', 'documents_hr_contracts_tags_table', related='company_id.documents_hr_contracts_tags',
+        readonly=False, string="Contracts")
 
     @api.onchange('documents_hr_folder')
     def _onchange_documents_hr_folder(self):

@@ -5,32 +5,32 @@ from odoo.addons.esg.controllers.esg_dashboard import EsgDashboard
 
 class EsgHrDashboard(EsgDashboard):
 
-    def _get_gender_distribution_data(self):
-        gender_selection = dict(request.env['esg.employee.report']._get_gender_selection())
+    def _get_sex_distribution_data(self):
+        sex_selection = dict(request.env['esg.employee.report']._get_sex_selection())
         is_sample = False
 
-        employee_count_per_gender = {
-            gender_selection.get(gender): count
-            for gender, count in request.env['hr.employee']._read_group(
+        employee_count_per_sex = {
+            sex_selection.get(sex): count
+            for sex, count in request.env['hr.employee']._read_group(
                 domain=[
                     ('company_id', 'in', request.env.companies.ids),
-                    ('gender', '!=', False),
+                    ('sex', '!=', False),
                 ],
-                groupby=['gender'],
+                groupby=['sex'],
                 aggregates=['id:count'],
             )
         }
-        if not employee_count_per_gender:
-            employee_count_per_gender = dict.fromkeys(gender_selection.values(), 3)
+        if not employee_count_per_sex:
+            employee_count_per_sex = dict.fromkeys(sex_selection.values(), 3)
             is_sample = True
 
         return {
-            'data': employee_count_per_gender,
+            'data': employee_count_per_sex,
             'is_sample': is_sample,
         }
 
     def _build_graph_config(self, data, is_sample=False):
-        # Pie chart showing gender distribution
+        # Pie chart showing sex distribution
         config = {
             'type': 'pie',
             'data': {
@@ -60,11 +60,12 @@ class EsgHrDashboard(EsgDashboard):
         data = super()._get_dashboard_data()
         if not self.env.user.has_group('hr.group_hr_user'):
             return data
-        gender_distribution_data = self._get_gender_distribution_data()
-        graph_config = self._build_graph_config(gender_distribution_data['data'], gender_distribution_data['is_sample'])
+        sex_distribution_data = self._get_sex_distribution_data()
+        graph_config = self._build_graph_config(sex_distribution_data['data'], sex_distribution_data['is_sample'])
         return {
             **data,
-            'gender_parity_box': {
+            'sex_parity_box': {
                 'graph_config': graph_config,
+                'overall_pay_gap': request.env['esg.employee.report'].get_overall_pay_gap(),
             },
         }

@@ -13,18 +13,18 @@ if invalid_niss_employee_ids:
             </field>
         </record>
 
-        <record id="hr_payroll_dashboard_warning_invalid_gender" model="hr.payroll.dashboard.warning">
-            <field name="name">Employees With Invalid Configured Gender</field>
+        <record id="hr_payroll_dashboard_warning_invalid_sex" model="hr.payroll.dashboard.warning">
+            <field name="name">Employees With Invalid Configured sex</field>
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')
-invalid_gender_employees = self.env['hr.employee'].search([
-    ('gender', 'not in', ['male', 'female']),
+invalid_sex_employees = self.env['hr.employee'].search([
+    ('sex', 'not in', ['male', 'female']),
     ('company_id', 'in', belgian_companies.ids)
 ])
-if invalid_gender_employees:
-    warning_count = len(invalid_gender_employees)
-    warning_records = invalid_gender_employees
+if invalid_sex_employees:
+    warning_count = len(invalid_sex_employees)
+    warning_records = invalid_sex_employees
             </field>
         </record>
 
@@ -54,9 +54,11 @@ belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == '
 address_employees = self.env['hr.employee'].search([
     ('company_id', 'in', belgian_companies.ids),
     ('employee_type', 'in', ['employee', 'student']),
-    ('contract_id.state', 'in', ['open', 'close']),
 ])
-work_addresses = address_employees.mapped('address_id')
+past_or_in_contract_employees = address_employees.filtered(
+    lambda emp: emp.current_version_id.is_past or emp.current_version_id.is_in_contract
+)
+work_addresses = past_or_in_contract_employees.mapped('address_id')
 location_units = self.env['l10n_be.dmfa.location.unit'].search([('partner_id', 'in', work_addresses.ids)])
 invalid_addresses = work_addresses - location_units.mapped('partner_id')
 if invalid_addresses:

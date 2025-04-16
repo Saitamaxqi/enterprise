@@ -834,7 +834,7 @@ class TestPayrollUnusedLeaves(TestPayrollCommon):
         payslip = self.env["hr.payslip"].create({
             "name": "payslip",
             "employee_id": employee.id,
-            "contract_id": contract.id,
+            "version_id": contract.id,
             "struct_id": self.default_payroll_structure.id,
             "date_from": fields.Date.from_string("2014-12-25"),
             "date_to": contract.date_end,

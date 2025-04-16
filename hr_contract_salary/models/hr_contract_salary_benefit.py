@@ -11,15 +11,15 @@ class HrContractSalaryBenefit(models.Model):
     _order = 'sequence'
 
     def _get_field_domain(self):
-        fields_ids = self.env['hr.contract']._get_benefit_fields(triggers=False)
+        fields_ids = self.env['hr.version']._get_benefit_fields(triggers=False)
         return [
-            ('model', '=', 'hr.contract'),
+            ('model', '=', 'hr.version'),
             ('name', 'in', fields_ids),
             ('ttype', 'not in', ('one2many', 'many2one', 'many2many'))]
 
     def _get_binary_field_domain(self):
         return [
-            ('model', '=', 'hr.contract'),
+            ('model', '=', 'hr.version'),
             ('ttype', '=', 'binary')]
 
     def _get_public_field_names(self):

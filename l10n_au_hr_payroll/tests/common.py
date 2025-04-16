@@ -56,15 +56,10 @@ class TestPayrollCommon(TransactionCase):
             "l10n_au_child_support_deduction": 0,
             "l10n_au_withholding_variation": 'none',
             "l10n_au_withholding_variation_amount": 0,
-        })
-
-        first_contract_id = cls.env["hr.contract"].create({
-            "name": "Mel's contract",
-            "employee_id": cls.employee_id.id,
             "resource_calendar_id": cls.resource_calendar.id,
-            "company_id": cls.australian_company.id,
-            "date_start": date(2023, 1, 1),
-            "date_end": False,
+            "date_version": date(2023, 1, 1),
+            "contract_date_start": date(2023, 1, 1),
+            "contract_date_end": False,
             "wage_type": "monthly",
             "wage": 5000.0,
             "l10n_au_casual_loading": 0.0,
@@ -74,8 +69,9 @@ class TestPayrollCommon(TransactionCase):
             "l10n_au_workplace_giving": 0,
         })
 
-        cls.contract_ids = first_contract_id
-        cls.contract_ids.write({"state": "open"})
+        first_contract_id = cls.employee_id.version_id
+
+        cls.version_ids = first_contract_id
 
         cls.schedule_1_withholding_sample_data = {
             # earnings, schedule 1, schedule 2, schedule 3, schedule 5, schedule 6
@@ -479,15 +475,9 @@ class TestPayrollCommon(TransactionCase):
             "l10n_au_less_than_3_performance": contract_info.get('less_than_3_performance', False),
             "l10n_au_income_stream_type": contract_info.get('income_stream_type', 'SAW'),
             "l10n_au_comissioners_installment_rate": contract_info.get('comissioners_installment_rate', 0),
-        })
-
-        contract_id = self.env["hr.contract"].create({
-            "name": f"{contract_info.get('employee', 'Mel')}'s contract",
-            "employee_id": employee_id.id,
-            "resource_calendar_id": self.resource_calendar.id,
-            "company_id": self.australian_company.id,
-            "date_start": contract_info.get('contract_date_start', date(2023, 7, 1)),
-            "date_end": contract_info.get('contract_date_end', False),
+            "date_version": contract_info.get('contract_date_start', date(2023, 7, 1)),
+            "contract_date_start": contract_info.get('contract_date_start', date(2023, 7, 1)),
+            "contract_date_end": contract_info.get('contract_date_end', False),
             "wage_type": contract_info.get('wage_type', 'monthly'),
             "wage": contract_info.get('wage', wage),
             "l10n_au_casual_loading": contract_info.get('casual_loading', 0),
@@ -501,12 +491,12 @@ class TestPayrollCommon(TransactionCase):
             "l10n_au_salary_sacrifice_superannuation": contract_info.get('salary_sacrifice_superannuation', 0),
             "l10n_au_salary_sacrifice_other": contract_info.get('salary_sacrifice_other', 0),
             "l10n_au_performances_per_week": contract_info.get('performances_per_week', 0),
-            "state": 'open'
         })
+
+        version_id = employee_id.version_id
         if contract_info.get('wage_type') == 'hourly':
-            contract_id.write({'hourly_wage': contract_info.get('hourly_wage')})
-        employee_id.contract_id = contract_id
-        return employee_id, contract_id
+            version_id.write({'hourly_wage': contract_info.get('hourly_wage')})
+        return employee_id, version_id
 
     def _create_employee(self, contract_info):
         employee, contract = self.create_employee_and_contract(5000, contract_info)
@@ -525,7 +515,7 @@ class TestPayrollCommon(TransactionCase):
             payslip = self.env["hr.payslip"].create({
                 "name": "payslip",
                 "employee_id": employee.id,
-                "contract_id": contract.id,
+                "version_id": contract.id,
                 "struct_id": self.default_payroll_structure.id,
                 "date_from": payslip_date_from or date(2023, 7, 1),
                 "date_to": payslip_date_to or date(2023, 7, 31),

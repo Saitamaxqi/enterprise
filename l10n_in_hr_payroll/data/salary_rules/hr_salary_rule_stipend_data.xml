@@ -8,7 +8,7 @@
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result=(contract.wage - worked_days['LEAVE90'].amount) if 'LEAVE90' in worked_days else contract.wage
+result=(version.wage - worked_days['LEAVE90'].amount) if 'LEAVE90' in worked_days else version.wage
         </field>
         <field name="struct_id" ref="hr_payroll_structure_in_stipend"/>
     </record>

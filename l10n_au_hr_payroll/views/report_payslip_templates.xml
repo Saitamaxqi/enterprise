@@ -15,7 +15,7 @@
                     <div class="col-8">
                         <span>
                             <strong>Pay Frequency: </strong>
-                            <t t-esc="o.contract_id.schedule_pay.capitalize()"/>
+                            <t t-esc="o.version_id.schedule_pay.capitalize()"/>
                         </span><br/>
                         <span>
                             <strong>Pay Period: </strong>
@@ -23,7 +23,7 @@
                         </span><br/>
                         <span>
                             <strong>Annual Salary: </strong>
-                            <t t-esc="o.contract_id.l10n_au_yearly_wage"
+                            <t t-esc="o.version_id.l10n_au_yearly_wage"
                                 t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                         </span><br/>
                         <t t-set="attendance" t-value="o.worked_days_line_ids.filtered(lambda line: line.code == 'WORK100')"/>
@@ -34,7 +34,7 @@
                         </span><br/>
                         <span>
                             <strong>Employment Classification: </strong>
-                            <t t-esc="o.contract_id.job_id.name or o.employee_id.job_id.name"/>
+                            <t t-esc="o.version_id.job_id.name or o.employee_id.job_id.name"/>
                         </span><br/>
                         <strong>Superannuation Fund(s): </strong>
                         <t t-foreach="o.employee_id._get_active_super_accounts()" t-as="super_account">

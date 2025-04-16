@@ -8,9 +8,7 @@
                 <field name="name"/>
                 <field name="customer_number"/>
                 <field name="contract_number"/>
-                <field name="insurance_company"/>
                 <field name="insurance_code"/>
-                <field name="insurance_company_address_id"/>
                 <field name="fund_number"/>
             </list>
         </field>
@@ -22,22 +20,27 @@
         <field name="arch" type="xml">
             <form string="LPP Insurances">
                 <sheet>
-                    <div role="alert" class="alert alert-warning text-center">
-                        The LPP amounts to pay (by the employee or the employer) are to be defined by hand from the <a type="action" name="%(hr_payroll.hr_salary_attachment_action)s" role="button">Salary Attachments</a>.
-                    </div>
                     <div class="oe_title">
                         <label for="name"/>
                         <h1><field name="name" placeholder='e.g. "LPP Insurance AK Bern"'/></h1>
                     </div>
                     <group>
                         <group>
+                            <field name="company_id" required="1" groups="base.group_multi_company"/>
+                            <field name="insurance_code"/>
+                            <field name="uid_bfs" placeholder="Unknown"/>
                             <field name="customer_number"/>
                             <field name="contract_number"/>
-                            <field name="insurance_company"/>
-                            <field name="insurance_code"/>
-                            <field name="insurance_company_address_id"/>
-                            <field name="fund_number"/>
+                            <field name="fund_number" string="Payroll Unit"/>
                         </group>
+                    </group>
+                    <group string="LPP Solution" colspan="2">
+                        <field name="solutions_ids" nolabel="1" colspan="2">
+                            <list editable="top">
+                                <field name="name"/>
+                                <field name="code"/>
+                            </list>
+                        </field>
                     </group>
                 </sheet>
             </form>

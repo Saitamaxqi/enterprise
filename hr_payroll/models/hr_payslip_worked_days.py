@@ -20,7 +20,7 @@ class HrPayslipWorkedDays(models.Model):
     number_of_hours = fields.Float(string='Number of Hours')
     is_paid = fields.Boolean(compute='_compute_is_paid', store=True)
     amount = fields.Monetary(string='Amount', compute='_compute_amount', store=True, copy=True)
-    contract_id = fields.Many2one(related='payslip_id.contract_id', string='Contract',
+    version_id = fields.Many2one(related='payslip_id.version_id', string='Contract',
         help="The contract this worked days should be applied to")
     currency_id = fields.Many2one('res.currency', related='payslip_id.currency_id')
     is_credit_time = fields.Boolean(string='Credit Time')
@@ -28,24 +28,24 @@ class HrPayslipWorkedDays(models.Model):
 
     @api.depends(
         'work_entry_type_id', 'payslip_id', 'payslip_id.struct_id',
-        'payslip_id.employee_id', 'payslip_id.contract_id', 'payslip_id.struct_id', 'payslip_id.date_from', 'payslip_id.date_to')
+        'payslip_id.employee_id', 'payslip_id.version_id', 'payslip_id.struct_id', 'payslip_id.date_from', 'payslip_id.date_to')
     def _compute_is_paid(self):
         unpaid = {struct.id: struct.unpaid_work_entry_type_ids.ids for struct in self.mapped('payslip_id.struct_id')}
         for worked_days in self:
             worked_days.is_paid = (worked_days.work_entry_type_id.id not in unpaid[worked_days.payslip_id.struct_id.id]) if worked_days.payslip_id.struct_id.id in unpaid else False
 
-    @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'contract_id.wage', 'payslip_id.sum_worked_hours')
+    @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'version_id.wage', 'payslip_id.sum_worked_hours')
     def _compute_amount(self):
         for worked_days in self:
             if worked_days.payslip_id.edited or worked_days.payslip_id.state not in ['draft', 'verify']:
                 continue
-            if not worked_days.contract_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
+            if not worked_days.version_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
                 worked_days.amount = 0
                 continue
             if worked_days.payslip_id.wage_type == "hourly":
-                worked_days.amount = worked_days.payslip_id.contract_id.hourly_wage * worked_days.number_of_hours if worked_days.is_paid else 0
+                worked_days.amount = worked_days.payslip_id.version_id.hourly_wage * worked_days.number_of_hours if worked_days.is_paid else 0
             else:
-                worked_days.amount = worked_days.payslip_id.contract_id.contract_wage * worked_days.number_of_hours / (worked_days.payslip_id.sum_worked_hours or 1) if worked_days.is_paid else 0
+                worked_days.amount = worked_days.payslip_id.version_id.contract_wage * worked_days.number_of_hours / (worked_days.payslip_id.sum_worked_hours or 1) if worked_days.is_paid else 0
 
     def _is_half_day(self):
         self.ensure_one()
@@ -74,7 +74,7 @@ class HrPayslipWorkedDays(models.Model):
         for worked_days in self:
             public_holidays = to_check_public_holiday.get(worked_days.work_entry_type_id, '')
             holidays = public_holidays and public_holidays.filtered(lambda p:
-               (p.calendar_id.id == worked_days.payslip_id.contract_id.resource_calendar_id.id or not p.calendar_id.id)
+               (p.calendar_id.id == worked_days.payslip_id.version_id.resource_calendar_id.id or not p.calendar_id.id)
                 and p.date_from.date() <= worked_days.payslip_id.date_to
                 and p.date_to.date() >= worked_days.payslip_id.date_from
                 and p.company_id == worked_days.payslip_id.company_id)

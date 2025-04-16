@@ -33,7 +33,7 @@
         <field name="arch" type="xml">
             <list string="Salary Package Offers" default_order="id desc">
                 <field name="display_name" optional="show"/>
-                <field name="employee_id" invisible="not employee_contract_id" optional="show"/>
+                <field name="employee_id" invisible="not employee_version_id" optional="show"/>
                 <field name="applicant_id" invisible="not applicant_id" optional="show" context="{'show_partner_name': True}"/>
                 <field name="contract_start_date" optional="show"/>
                 <field name="final_yearly_costs" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
@@ -51,7 +51,7 @@
                 decoration-danger="state in ('expired', 'refused', 'cancelled')"
                 optional="hide"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="employee_contract_id" column_invisible="True"/>
+                <field name="employee_version_id" column_invisible="True"/>
             </list>
         </field>
     </record>
@@ -121,7 +121,7 @@
                     <group>
                         <group name="group_offer">
                             <field name="contract_template_id" readonly="state in ['cancelled', 'full_signed']"
-                                context="{'form_view_ref': 'hr_contract.hr_contract_view_form_contract_templates'}"/>
+                                context="{'form_view_ref': 'hr.hr_contract_template_form_view'}"/>
                             <field name="final_yearly_costs" readonly="state in ['cancelled', 'full_signed']"/>
                             <field name="job_title" readonly="state == 'cancelled'"/>
                             <field name="employee_job_id" readonly="state in ['cancelled', 'full_signed']"/>
@@ -134,11 +134,7 @@
                         <group name="group_offer_to">
                             <field name="employee_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"
                                 readonly="not context.get('is_hr_payroll', False) or state == 'full_signed'" placeholder="Select an employee..."/>
-                            <field name="employee_contract_id" invisible="applicant_id or not context.get('is_hr_payroll', True) or employee_id"
-                                readonly="not context.get('is_hr_payroll', False) or state == 'full_signed'"/>
-                            <field name="employee_contract_id" invisible="applicant_id or not context.get('is_hr_payroll', True) or not employee_id"
-                                readonly="not context.get('is_hr_payroll', False) or state == 'full_signed'" domain="[('employee_id', '=', employee_id)]"/>
-                            <field name="applicant_id" invisible="employee_contract_id or context.get('is_hr_payroll', False)"
+                            <field name="applicant_id" invisible="employee_version_id or context.get('is_hr_payroll', False)"
                                 readonly="context.get('is_hr_payroll', True) or state == 'full_signed'"
                                 context="{'show_partner_name': True}" placeholder="Select an applicant..."/>
                             <field name="company_id" groups="base.group_multi_company" readonly="state in ['cancelled', 'full_signed']"/>

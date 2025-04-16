@@ -10,7 +10,7 @@ class ProjectProject(models.Model):
 
     @api.depends('account_id')
     def _compute_contracts_count(self):
-        contracts_data = self.env['hr.contract']._read_group([
+        contracts_data = self.env['hr.version']._read_group([
             ('analytic_account_id', '!=', False),
             ('analytic_account_id', 'in', self.account_id.ids)
         ], ['analytic_account_id'], ['__count'])
@@ -23,8 +23,8 @@ class ProjectProject(models.Model):
     # -------------------------------------------
 
     def action_open_project_contracts(self):
-        contracts = self.env['hr.contract'].search([('analytic_account_id', '!=', False), ('analytic_account_id', 'in', self.account_id.ids)])
-        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_hr_contract_repository")
+        contracts = self.env['hr.version'].search([('analytic_account_id', '!=', False), ('analytic_account_id', 'in', self.account_id.ids)])
+        action = self.env["ir.actions.actions"]._for_xml_id("hr.action_hr_version")
         action.update({
             'views': [[False, 'list'], [False, 'form'], [False, 'kanban']],
             'context': {'default_analytic_account_id': self.account_id.id},

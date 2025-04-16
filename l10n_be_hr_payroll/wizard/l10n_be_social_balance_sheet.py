@@ -49,10 +49,10 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
     def _get_report_data(self):
         self.ensure_one()
         number_of_months_period = (self.date_to.year - self.date_from.year) * 12 + self.date_to.month - self.date_from.month + 1
-        contracts = self.env['hr.employee']._get_all_contracts(self.date_from, self.date_to, states=['open', 'close'])
-        invalid_employees = contracts.employee_id.filtered(lambda e: e.gender not in ['male', 'female'])
+        contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(self.date_from, self.date_to, states=['open', 'close'])
+        invalid_employees = contracts.employee_id.filtered(lambda e: e.sex not in ['male', 'female'])
         if invalid_employees:
-            raise UserError(_('Please configure a gender (either male or female) for the following employees:\n\n%s', '\n'.join(invalid_employees.mapped('name'))))
+            raise UserError(_('Please configure a sex (either male or female) for the following employees:\n\n%s', '\n'.join(invalid_employees.mapped('name'))))
 
         reports_data = {}
         max_int_len = len(str(number_of_months_period + 1))
@@ -68,11 +68,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             payslips = self.env['hr.payslip'].search([
                 ('state', 'in', ['done', 'paid']),
-                ('struct_id.type_id', '=', self.env.ref('hr_contract.structure_type_employee_cp200').id),
+                ('struct_id.type_id', '=', self.env.ref('hr.structure_type_employee_cp200').id),
                 ('company_id', '=', self.company_id.id),
                 ('date_from', '>=', date_from),
                 ('date_to', '<=', date_to),
-                ('contract_id.contract_type_id', '!=', cip.id)])
+                ('version_id.contract_type_id', '!=', cip.id)])
 
             # SECTION 100
             # Calculated as the average of number of workers entered in the personnel register at
@@ -90,17 +90,17 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             for employee_payslips in mapped_payslips.values():
                 if len(employee_payslips) > 1:
                     # What matters is the occupation at the end of the month. Take the most recent contract
-                    payslip = employee_payslips.sorted(lambda p: p.contract_id.date_start, reverse=True)[-1]
+                    payslip = employee_payslips.sorted(lambda p: p.version_id.date_start, reverse=True)[-1]
                 else:
                     payslip = employee_payslips
-                gender = payslip.employee_id.gender
-                calendar = payslip.contract_id.resource_calendar_id
+                sex = payslip.employee_id.sex
+                calendar = payslip.version_id.resource_calendar_id
                 if calendar.full_time_required_hours == calendar.hours_per_week:
-                    workers_data[gender]['full'] += 1
-                    workers_data[gender]['fte'] += 1
+                    workers_data[sex]['full'] += 1
+                    workers_data[sex]['fte'] += 1
                 else:
-                    workers_data[gender]['part'] += 1
-                    workers_data[gender]['fte'] += 1 * calendar.work_time_rate / 100.0
+                    workers_data[sex]['part'] += 1
+                    workers_data[sex]['fte'] += 1 * calendar.work_time_rate / 100.0
 
             report_data.update({
                 '1001_male': round(workers_data['male']['full'] / 12.0, 2),
@@ -132,19 +132,19 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             workers_data = collections.defaultdict(lambda: dict(full=0, part=0, fte=0))
 
             for payslip in payslips:
-                gender = payslip.employee_id.gender
+                sex = payslip.employee_id.sex
                 lines = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id in attendances)
                 if lines:
                     worked_paid_hours = sum(l.number_of_hours for l in lines)
                 else:
                     continue
-                calendar = payslip.contract_id.resource_calendar_id
+                calendar = payslip.version_id.resource_calendar_id
                 if calendar.full_time_required_hours == calendar.hours_per_week:
-                    workers_data[gender]['full'] += worked_paid_hours
-                    workers_data[gender]['fte'] += worked_paid_hours
+                    workers_data[sex]['full'] += worked_paid_hours
+                    workers_data[sex]['fte'] += worked_paid_hours
                 else:
-                    workers_data[gender]['part'] += worked_paid_hours
-                    workers_data[gender]['fte'] += worked_paid_hours
+                    workers_data[sex]['part'] += worked_paid_hours
+                    workers_data[sex]['fte'] += worked_paid_hours
             report_data.update({
                 '1011_male': round(workers_data['male']['full'], 2),
                 '1011_female': round(workers_data['female']['full'], 2),
@@ -173,25 +173,25 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             line_values = payslips._get_line_values(
                 ['GROSS', 'CAR.PRIV', 'ONSSEMPLOYER', 'MEAL_V_EMP', 'PUB.TRANS', 'REP.FEES', 'IP.PART'], vals_list=['total', 'quantity'])
             for payslip in payslips:
-                gender = payslip.employee_id.gender
-                if gender not in ['male', 'female']:
-                    raise UserError(_('Please configure a gender (either male or female) for the following employee: %s', payslip.employee_id.name))
-                calendar = payslip.contract_id.resource_calendar_id
+                sex = payslip.employee_id.sex
+                if sex not in ['male', 'female']:
+                    raise UserError(_('Please configure a sex (either male or female) for the following employee: %s', payslip.employee_id.name))
+                calendar = payslip.version_id.resource_calendar_id
                 contract_type = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
                 gross = round(line_values['GROSS'][payslip.id]['total'], 2) - round(line_values['IP.PART'][payslip.id]['total'], 2)
                 private_car = round(line_values['CAR.PRIV'][payslip.id]['total'], 2)
                 public_transport = round(line_values['PUB.TRANS'][payslip.id]['total'], 2)
                 onss_employer = round(line_values['ONSSEMPLOYER'][payslip.id]['total'], 2)
                 reimbursed_expenses = round(line_values['REP.FEES'][payslip.id]['total'], 2)
-                workers_data['total_gross'][gender][contract_type] += gross
-                workers_data['private_car'][gender][contract_type] += private_car
-                workers_data['public_transport'][gender][contract_type] += public_transport
-                workers_data['onss_employer'][gender][contract_type] += onss_employer
-                workers_data['reimbursed_expenses'][gender][contract_type] += reimbursed_expenses
-                workers_data['total'][gender][contract_type] += gross + private_car + onss_employer + public_transport + reimbursed_expenses
+                workers_data['total_gross'][sex][contract_type] += gross
+                workers_data['private_car'][sex][contract_type] += private_car
+                workers_data['public_transport'][sex][contract_type] += public_transport
+                workers_data['onss_employer'][sex][contract_type] += onss_employer
+                workers_data['reimbursed_expenses'][sex][contract_type] += reimbursed_expenses
+                workers_data['total'][sex][contract_type] += gross + private_car + onss_employer + public_transport + reimbursed_expenses
 
-                employer_amount = payslip.contract_id.meal_voucher_paid_by_employer
-                meal_voucher[gender] += round(employer_amount * line_values['MEAL_V_EMP'][payslip.id]['quantity'], 2)
+                employer_amount = payslip.version_id.meal_voucher_paid_by_employer
+                meal_voucher[sex] += round(employer_amount * line_values['MEAL_V_EMP'][payslip.id]['quantity'], 2)
 
             report_data['102'] = workers_data
             report_data['103'] = meal_voucher
@@ -199,7 +199,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             # SECTION 105-113, 120, 121, 130-134: At the end of the exercice
             workers_data = collections.defaultdict(lambda: dict(full=0, part=0, fte=0))
 
-            end_contracts = self.env['hr.employee']._get_all_contracts(self.date_to, self.date_to, states=['open', 'close'])
+            end_contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(self.date_to, self.date_to, states=['open', 'close'])
             end_contracts = end_contracts.filtered(lambda c: c.contract_type_id != cip)
 
             cdi = self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cdi')
@@ -228,7 +228,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 ('female', 'civil_engineer'): '1213',
             }
 
-            cp200_employees = self.env.ref('hr_contract.structure_type_employee_cp200')
+            cp200_employees = self.env.ref('hr.structure_type_employee_cp200')
             cp200_students = self.env.ref('l10n_be_hr_payroll.structure_type_student')
             mapped_categories = {
                 cp200_employees: '134',
@@ -247,7 +247,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CP200 Employees or Student", contract_name=contract.name, employee=contract.employee_id.name))
                     continue
 
-                gender = contract.employee_id.gender
+                sex = contract.employee_id.sex
                 calendar = contract.resource_calendar_id
                 contract_time = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
 
@@ -258,14 +258,14 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 workers_data[contract_type][contract_time] += 1
                 workers_data[contract_type]['fte'] += 1 * calendar.work_time_rate / 100.0
 
-                if (gender, contract.employee_id.certificate) not in mapped_certificates:
+                if (sex, contract.employee_id.certificate) not in mapped_certificates:
                     raise UserError(_("The employee %s doesn't have a specified certificate", contract.employee_id.name))
-                gender_code = '120' if gender == 'male' else '121'
-                workers_data[gender_code][contract_time] += 1
-                workers_data[gender_code]['fte'] += 1 * calendar.work_time_rate / 100.0
-                gender_certificate_code = mapped_certificates[(gender, contract.employee_id.certificate)]
-                workers_data[gender_certificate_code][contract_time] += 1
-                workers_data[gender_certificate_code]['fte'] += 1 * calendar.work_time_rate / 100.0
+                sex_code = '120' if sex == 'male' else '121'
+                workers_data[sex_code][contract_time] += 1
+                workers_data[sex_code]['fte'] += 1 * calendar.work_time_rate / 100.0
+                sex_certificate_code = mapped_certificates[sex, contract.employee_id.certificate]
+                workers_data[sex_certificate_code][contract_time] += 1
+                workers_data[sex_certificate_code]['fte'] += 1 * calendar.work_time_rate / 100.0
 
                 category_code = mapped_categories[structure_type]
                 workers_data[category_code][contract_time] += 1
@@ -299,17 +299,17 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             for employee_payslips in mapped_payslips.values():
                 if len(employee_payslips) > 1:
                     # What matters is the occupation at the end of the month. Take the most recent contract
-                    payslip = employee_payslips.sorted(lambda p: p.contract_id.date_start, reverse=True)[-1]
+                    payslip = employee_payslips.sorted(lambda p: p.version_id.date_start, reverse=True)[-1]
                 else:
                     payslip = employee_payslips
                 employee = payslip.employee_id
-                contract = payslip.contract_id
+                contract = payslip.version_id
                 if contract.contract_type_id not in in_mapped_types:
                     _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
                     continue
                 calendar = contract.resource_calendar_id
                 contract_time = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
-                if employee not in in_employees and employee.first_contract_date and (date_from <= employee.first_contract_date <= date_to):
+                if employee not in in_employees and employee.contract_date_start and (date_from <= employee.contract_date_start <= date_to):
                     in_employees |= employee
 
                     workers_data['205'][contract_time] += 1
@@ -344,7 +344,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             training_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_training')
             training_code = training_type.code
             training_payslips = payslips.filtered(lambda p: training_code in p.worked_days_line_ids.mapped('work_entry_type_id.code'))
-            male_payslips = training_payslips.filtered(lambda p: p.employee_id.gender == 'male')
+            male_payslips = training_payslips.filtered(lambda p: p.employee_id.sex == 'male')
             female_payslips = training_payslips - male_payslips
             male_training_data = male_payslips._get_worked_days_line_values([training_code], ['amount', 'number_of_hours'], True)[training_code]['sum']
             female_training_data = female_payslips._get_worked_days_line_values([training_code], ['amount', 'number_of_hours'], True)[training_code]['sum']
@@ -850,9 +850,9 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                 },
-                'by_gender': {
-                    'by_gender': {
-                        'header': _('By Gender'),
+                'by_sex': {
+                    'by_sex': {
+                        'header': _('By sex'),
                         'values': ['', '', '', ''],
                     },
                 },

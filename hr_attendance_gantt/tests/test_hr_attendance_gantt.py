@@ -8,7 +8,6 @@ from odoo.tests.common import tagged, TransactionCase
 @tagged('-at_install', 'post_install')
 class TestHrAttendanceGantt(TransactionCase):
     def test_gantt_progress_bar(self):
-        contracts_installed = 'hr.contract' in self.env
         calendar_8 = self.env['resource.calendar'].create({
             'name': 'Calendar 8h',
             'tz': 'UTC',
@@ -39,70 +38,54 @@ class TestHrAttendanceGantt(TransactionCase):
             ]
         })
 
-        no_contract_emp = self.env['hr.employee'].create({
-            'name': "Johnny NoContract",
-            'resource_calendar_id': calendar_8.id
-        })
-
         contract_emp = self.env['hr.employee'].create({
             'name': "Johhny Contract",
-            'resource_calendar_id': calendar_10.id
+            'date_version': date(2024, 1, 1),
+            'contract_date_start': date(2024, 1, 1),
+            'wage': 10,
+            'resource_calendar_id': calendar_8.id,
         })
 
-        if contracts_installed:
-            self.env['hr.contract'].create([
-                {
-                    'name': 'Johnny Contract 8 hours',
-                    'employee_id': contract_emp.id,
-                    'date_start': date(2024, 1, 1),
-                    'date_end': date(2024, 2, 29),
-                    'resource_calendar_id': calendar_8.id,
-                    'wage': 10,
-                    'state': 'close'
-                },
-                {
-                    'name': 'Johnny Contract 12 hours',
-                    'employee_id': contract_emp.id,
-                    'date_start': date(2024, 3, 1),
-                    'resource_calendar_id': calendar_12.id,
-                    'wage': 10,
-                    'state': 'open'
-                }
-            ])
+        contract_emp.create_version({
+            'date_version': date(2024, 2, 1),
+            'resource_calendar_id': calendar_10.id,
+            'wage': 10,
+        })
+        contract_emp.create_version({
+            'date_version': date(2024, 3, 1),
+            'resource_calendar_id': calendar_12.id,
+            'wage': 10,
+        })
 
         # First Interval in January
-        # No contract should have 8 hours
-        # Contract should have 10 hours if contracts is not installed
-        # Contract should have 8 hours if contracts is installed
+        # should have 8 hours
 
         interval_1 = self.env['hr.attendance']._gantt_progress_bar('employee_id',
-                                                                  [no_contract_emp.id, contract_emp.id],
+                                                                  [contract_emp.id],
                                                                   datetime(2024, 1, 8),
                                                                   datetime(2024, 1, 14))
 
-        self.assertEqual(interval_1[no_contract_emp.id]['max_value'], 8)
+        self.assertEqual(interval_1[contract_emp.id]['max_value'], 8)
 
-        if contracts_installed:
-            self.assertEqual(interval_1[contract_emp.id]['max_value'], 8)
-        else:
-            self.assertEqual(interval_1[contract_emp.id]['max_value'], 10)
+        # Second Interval in January
+        # should have 10 hours
 
-        # Second Interval in March
-        # No contract should have 8 hours
-        # Contract employee should have 10 hours if contracts is not installed
-        # Contract employee should have 12 hours if contracts is installed
+        interval_1 = self.env['hr.attendance']._gantt_progress_bar('employee_id',
+                                                                   [contract_emp.id],
+                                                                   datetime(2024, 2, 8),
+                                                                   datetime(2024, 2, 14))
+
+        self.assertEqual(interval_1[contract_emp.id]['max_value'], 10)
+
+        # Third Interval in March
+        # should have 12 hours
 
         interval_2 = self.env['hr.attendance']._gantt_progress_bar('employee_id',
-                                                                  [no_contract_emp.id, contract_emp.id],
+                                                                  [contract_emp.id],
                                                                   datetime(2024, 3, 4),
                                                                   datetime(2024, 3, 10))
 
-        self.assertEqual(interval_2[no_contract_emp.id]['max_value'], 8)
-
-        if contracts_installed:
-            self.assertEqual(interval_2[contract_emp.id]['max_value'], 12)
-        else:
-            self.assertEqual(interval_2[contract_emp.id]['max_value'], 10)
+        self.assertEqual(interval_2[contract_emp.id]['max_value'], 12)
 
     def test_gantt_progress_with_flexible_employees(self):
         flexible_calendar, calendar = self.env['resource.calendar'].create([

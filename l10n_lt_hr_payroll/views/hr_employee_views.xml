@@ -8,6 +8,15 @@
              <xpath expr="//field[@name='registration_number']" position="after">
                 <field name="l10n_lt_working_capacity" invisible="company_country_code != 'LT'"/>
             </xpath>
+            <group name="salary" position="inside">
+                <label for="l10n_lt_benefits_in_kind" invisible="country_code != 'LT'"/>
+                <div class="o_row" invisible="country_code != 'LT'">
+                    <field name="l10n_lt_benefits_in_kind" class="o_hr_narrow_field" nolabel="1"/>
+                    <span>/ month</span>
+                </div>
+                <field name="l10n_lt_time_limited" invisible="country_code != 'LT'"/>
+                <field name="l10n_lt_pension" invisible="country_code != 'LT'"/>
+            </group>
         </field>
     </record>
 </odoo>

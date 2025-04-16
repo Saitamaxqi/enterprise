@@ -37,15 +37,8 @@ class TestStudent(AccountTestInvoicingCommon):
             'name': 'Jean-Pol Student',
             'company_id': cls.env.company.id,
             'resource_calendar_id': cls.new_calendar.id,
-        })
-
-        cls.contract = cls.env['hr.contract'].create({
-            'employee_id': cls.employee.id,
-            'company_id': cls.env.company.id,
-            'name': 'Jean-Pol Student Contract',
-            'state': 'open',
-            'date_start': date(2015, 1, 1),
-            'resource_calendar_id': cls.new_calendar.id,
+            'date_version': date(2015, 1, 1),
+            'contract_date_start': date(2015, 1, 1),
             'structure_type_id': cls.env.ref('l10n_be_hr_payroll.structure_type_student').id,
             'wage': 0,
             'wage_type': 'hourly',
@@ -61,7 +54,8 @@ class TestStudent(AccountTestInvoicingCommon):
             'internet': 0,
             'mobile': 0,
         })
-        cls.env.invalidate_all()
+
+        cls.contract = cls.employee.version_id
 
     def test_student(self):
         # CASE: Worked 6 days
@@ -77,7 +71,7 @@ class TestStudent(AccountTestInvoicingCommon):
         work_entries = self.env['hr.work.entry'].create([{
             'name': 'Attendance',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'work_entry_type_id': attendance_work_entry_type.id,
             'date_start': vals[0],
             'date_stop': vals[1],

@@ -8,7 +8,7 @@ registry.category("web_tour.tours").add('payroll_dashboard_ui_tour', {
     stepUtils.showAppsMenuItem(),
     {
         content: "Open payroll app",
-        trigger: '.o_app[data-menu-xmlid="hr_work_entry_contract_enterprise.menu_hr_payroll_root"]',
+        trigger: '.o_app[data-menu-xmlid="hr_work_entry_enterprise.menu_hr_payroll_root"]',
         run: "click",
     },
     {
@@ -22,30 +22,14 @@ registry.category("web_tour.tours").add('payroll_dashboard_ui_tour', {
         run: "click",
     },
     {
-        content: "Open new contract form",
-        trigger: 'button[name="action_open_contract"]',
+        content: "Open contract tab",
+        trigger: 'a[name="contract_information"]',
         run: "click",
     },
     {
-        content: "Save contract with no data",
-        trigger: "button.o_form_button_save:enabled",
-        run: "click",
-    },
-    {
-        content: "Input contract name",
-        trigger: '.o_field_char[name="name"] input',
-        id: "input_contract_name",
-        run: "edit Laurie's Contract",
-    },
-    {
-        content: "Save contract",
-        trigger: "button.o_form_button_save:enabled",
-        run: "click",
-    },
-    {
-        content: "Set contract as running",
-        trigger: 'button[data-value="open"]',
-        run: "click",
+        content: "Input contract date start",
+        trigger: '.o_field_widget[name="contract_date_start"] input',
+        run: "edit 17/09/2018",
     },
     {
         content: "Go back to dashboard",

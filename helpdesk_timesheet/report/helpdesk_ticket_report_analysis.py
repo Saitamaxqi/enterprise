@@ -39,6 +39,7 @@ class HelpdeskTicketReportAnalysis(models.Model):
         from_str += """
             LEFT JOIN res_users U ON T.user_id = U.id
             LEFT JOIN hr_employee EMP ON EMP.user_id = U.id AND T.company_id = EMP.company_id
-            LEFT JOIN hr_department DEP ON EMP.department_id = DEP.id
+            LEFT JOIN hr_version VER ON VER.id = EMP.current_version_id
+            LEFT JOIN hr_department DEP ON VER.department_id = DEP.id
         """
         return from_str

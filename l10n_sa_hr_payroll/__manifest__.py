@@ -24,7 +24,7 @@ Saudi Arabia Payroll and End of Service rules.
         "data/hr_payroll_structure_data.xml",
         "data/hr_salary_rule_saudi_data.xml",
         "data/hr_salary_rule_expat_data.xml",
-        "views/hr_contract_view.xml",
+        "views/hr_contract_template_views.xml",
         "views/hr_leave_type_views.xml",
         "data/res_bank_data.xml",
         "data/ir_sequence_data.xml",

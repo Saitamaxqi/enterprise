@@ -85,7 +85,14 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "l10n_au_tfn_declaration": "provided",
             "l10n_au_tfn": "999999661",
             "l10n_au_tax_free_threshold": True,
-            "l10n_au_previous_payroll_id": "12312321"
+            "l10n_au_previous_payroll_id": "12312321",
+            "date_version": date(2023, 1, 1),
+            "contract_date_start": date(2023, 1, 1),
+            "contract_date_end": date(2024, 5, 31),
+            "wage_type": "monthly",
+            "wage": 5000.0,
+            "structure_type_id": schedule.id,
+            "schedule_pay": "monthly",
         })
         cls.employee_2 = cls.env["hr.employee"].create({
             "name": "Harry Potter",
@@ -105,7 +112,14 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "l10n_au_tfn_declaration": "provided",
             "l10n_au_tfn": "999999661",
             "l10n_au_tax_free_threshold": True,
-            "l10n_au_previous_payroll_id": "12312321"
+            "l10n_au_previous_payroll_id": "12312321",
+            "date_version": date(2023, 1, 1),
+            "contract_date_start": date(2023, 1, 1),
+            "contract_date_end": False,
+            "wage_type": "monthly",
+            "wage": 7000.0,
+            "structure_type_id": schedule.id,
+            "schedule_pay": "monthly",
         })
         super_fund = cls.env['l10n_au.super.fund'].create({
             'display_name': 'Fund A',
@@ -125,32 +139,8 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             }
         ])
 
-        cls.contract_1 = cls.env["hr.contract"].create({
-            "name": "Mel's contract",
-            "employee_id": cls.employee_1.id,
-            "resource_calendar_id": cls.resource_calendar.id,
-            "company_id": cls.company.id,
-            "date_start": date(2023, 1, 1),
-            "date_end": date(2024, 5, 31),
-            "wage_type": "monthly",
-            "wage": 5000.0,
-            "structure_type_id": schedule.id,
-            "schedule_pay": "monthly",
-            "state": "open"
-        })
-        cls.contract_2 = cls.env["hr.contract"].create({
-            "name": "Harry's contract",
-            "employee_id": cls.employee_2.id,
-            "resource_calendar_id": cls.resource_calendar.id,
-            "company_id": cls.company.id,
-            "date_start": date(2023, 1, 1),
-            "date_end": False,
-            "wage_type": "monthly",
-            "wage": 7000.0,
-            "structure_type_id": schedule.id,
-            "schedule_pay": "monthly",
-            "state": "open"
-        })
+        cls.contract_1 = cls.employee_1.version_id
+        cls.contract_2 = cls.employee_2.version_id
         cls.company.l10n_au_hr_super_responsible_id = cls.employee_1
         cls.company.l10n_au_stp_responsible_id = cls.employee_1
         cls.company.ytd_reset_month = "7"

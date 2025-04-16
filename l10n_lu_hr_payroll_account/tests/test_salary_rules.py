@@ -21,7 +21,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             contract_fields={
                 'wage': 4000,
                 'l10n_lu_meal_voucher_amount': 50.4,
-                'date_start': date(2024, 1, 1),
+                'contract_date_start': date(2024, 1, 1),
+                'date_version': date(2024, 1, 1),
             },
             employee_fields={
                 'l10n_lu_tax_credit_cis': True,

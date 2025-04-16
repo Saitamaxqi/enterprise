@@ -15,8 +15,9 @@ class TestPaymentInLieuOfNotice(TestL10NHkHrPayrollAccountCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.contract.write({
-            'date_start': date(2022, 1, 1),
-            'date_end': date(2023, 4, 21),
+            'date_version': date(2022, 1, 1),
+            'contract_date_start': date(2022, 1, 1),
+            'contract_date_end': date(2023, 4, 21),
         })
 
     def test_regular(self):

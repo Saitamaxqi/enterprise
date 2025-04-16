@@ -135,9 +135,9 @@ else:
         x = payslip._rule_parameter('l10n_bd_gazetted_fighter_yearly_exempt')
     elif employee.disabled:
         x = payslip._rule_parameter('l10n_bd_disabled_yearly_exempt')
-    elif employee.gender in ('female', 'other') or _is_senior():
+    elif employee.sex in ('female', 'other') or _is_senior():
         x = payslip._rule_parameter('l10n_bd_female_senior_yearly_exempt')
-    elif employee.gender == 'male':
+    elif employee.sex == 'male':
         x = payslip._rule_parameter('l10n_bd_male_yearly_exempt')
     if employee.l10n_bd_disabled_dependent:
         x += payslip._rule_parameter('l10n_bd_per_disabled_dependent_yearly_exempt') * employee.l10n_bd_disabled_dependent

@@ -66,8 +66,8 @@ class HrPayslip(models.Model):
             period_taxable_days = 0
             month_taxable_days = 0
             date_to = payslip.date_to
-            if payslip.contract_id.date_end and payslip.contract_id.date_end < date_to:
-                date_to = payslip.contract_id.date_end
+            if payslip.version_id.date_end and payslip.version_id.date_end < date_to:
+                date_to = payslip.version_id.date_end
             for d in rrule(DAILY, dtstart=start_month, until=end_month):
                 if d.weekday() != SUNDAY:
                     month_taxable_days += 1
@@ -85,10 +85,10 @@ class HrPayslip(models.Model):
     @api.depends('date_from', 'date_to', 'employee_id', 'worked_days_line_ids')
     def _compute_prorated_wage(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" and payslip.contract_id.wage_type == "hourly":
+            if payslip.company_id.country_id.code != "LU" and payslip.version_id.wage_type == "hourly":
                 continue
             payslip.l10n_lu_presence_prorata = payslip._get_month_presence_prorata()
-            payslip.l10n_lu_prorated_wage = payslip.contract_id.l10n_lu_indexed_wage * payslip.l10n_lu_presence_prorata
+            payslip.l10n_lu_prorated_wage = payslip.version_id.l10n_lu_indexed_wage * payslip.l10n_lu_presence_prorata
 
     @api.depends('employee_id.l10n_lu_tax_id_number', 'state')
     def _compute_l10n_lu_tax_id_number(self):
@@ -218,7 +218,7 @@ class HrPayslip(models.Model):
 
     def _get_paid_amount(self):
         self.ensure_one()
-        if self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_MONTHLY' and self.contract_id.wage_type == 'monthly':
+        if self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_MONTHLY' and self.version_id.wage_type == 'monthly':
             return self.l10n_lu_prorated_wage
         elif self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_13TH_MONTH':
             return self._get_paid_amount_l10n_lu_13th_month()

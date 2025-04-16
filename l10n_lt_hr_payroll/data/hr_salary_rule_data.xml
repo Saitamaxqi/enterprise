@@ -25,10 +25,10 @@ result = payslip.paid_amount
         <field name="code">BIK</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lt_benefits_in_kind</field>
+        <field name="condition_python">result = version.l10n_lt_benefits_in_kind</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_lt_benefits_in_kind
+result = version.l10n_lt_benefits_in_kind
         </field>
         <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
@@ -152,7 +152,7 @@ result_rate = -payslip._rule_parameter('l10n_lt_pit_rate_high')
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = max(result_rules["TAXABLEAMOUNT"]['total'] - result_rules["SICKAMOUNT"]['total'], 0)
-if contract.l10n_lt_pension:
+if version.l10n_lt_pension:
     result_rate = -payslip._rule_parameter('l10n_lt_ssc_rate_high')
 else:
     result_rate = -payslip._rule_parameter('l10n_lt_ssc_rate')
@@ -167,7 +167,7 @@ else:
         <field name="code">PENSION</field>
         <field name="sequence">120</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lt_pension</field>
+        <field name="condition_python">result = version.l10n_lt_pension</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = max(result_rules["TAXABLEAMOUNT"]['total'] - result_rules["SICKAMOUNT"]['total'], 0)
@@ -275,7 +275,7 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED']
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = max(result_rules["TAXABLEAMOUNT"]['total'] - result_rules["SICKAMOUNT"]['total'], 0)
-if contract.l10n_lt_time_limited:
+if version.l10n_lt_time_limited:
     result_rate = payslip._rule_parameter('l10n_lt_sscemp_rate_high')
 else:
     result_rate = payslip._rule_parameter('l10n_lt_sscemp_rate')

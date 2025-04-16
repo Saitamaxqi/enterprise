@@ -71,14 +71,9 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             'l10n_au_child_support_garnishee_amount': 0.1,
             'l10n_au_child_support_deduction': 150,
             'l10n_au_payroll_id': 'odoo_f47ac10b_001',
-            'gender': 'male',
-        })
-        cls.env['hr.contract'].create({
-            'company_id': cls.australian_company.id,
-            'resource_calendar_id': cls.australian_company.resource_calendar_id.id,
-            'employee_id': cls.employee.id,
-            'name': 'Roger Contract',
-            'date_start': date(1975, 1, 1),
+            'sex': 'male',
+            'date_version': date(1975, 1, 1),
+            'contract_date_start': date(1975, 1, 1),
             'wage': 5000,
             'l10n_au_yearly_wage': 60000,
             'structure_type_id': cls.env.ref('l10n_au_hr_payroll.structure_type_schedule_1').id,
@@ -87,7 +82,6 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             'l10n_au_workplace_giving': 100,
             'l10n_au_salary_sacrifice_superannuation': 20,
             'l10n_au_salary_sacrifice_other': 20,
-            'state': 'open',
         })
 
         cls.super_fund = cls.env['l10n_au.super.fund'].create({
@@ -170,7 +164,6 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             self.assertEqual(133, len(saff_line),
                 "Expected %s Columns but found %s in the payslip." % (133, len(saff_line)))
             for expected_val, saff_val, header in zip_longest(expected_line, saff_line, values[2]):
-                # print(f"{header}: {expected_val} - {saff_val}")
                 self.assertEqual(expected_val, saff_val, "%s was expected but %s is found at header %s!" % (expected_val, saff_val, header))
 
         # Post Payslip Journal Entries

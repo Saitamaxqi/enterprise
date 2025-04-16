@@ -7,8 +7,8 @@
             <form string="Manage DIMONA">
                 <group>
                     <group>
-                        <field name="contract_id"/>
                         <field name="employee_id"/>
+                        <field name="version_id"/>
                         <field name="without_niss"/>
                         <field name="declaration_type"/>
                     </group>
@@ -35,7 +35,7 @@
         <field name="res_model">l10n.be.dimona.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="binding_model_id" ref="hr.model_hr_version"/>
         <field name="binding_view_types">form</field>
     </record>
 

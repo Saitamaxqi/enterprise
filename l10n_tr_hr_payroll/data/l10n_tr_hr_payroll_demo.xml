@@ -123,14 +123,12 @@
 
     <record id="hr_employee_deniz" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).name"/>
-        <field name="job_title">Marketing Manager</field>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_marketing"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">0999-1230001</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="work_contact_id" ref="l10n_tr_hr_payroll.res_partner_deniz"/>
-        <field name="company_id" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).company_id"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="tz">Asia/Istanbul</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).street"/>
@@ -143,7 +141,7 @@
         <field name="distance_home_work">1</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).country_id"/>
         <field name="identification_id">98765432109</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1996, 7, 3).date()"/>
         <field name="place_of_birth">Istanbul</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).country_id"/>
@@ -153,11 +151,19 @@
         <field name="study_field">Digital Communication</field>
         <field name="study_school">Boğaziçi University </field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_tr_hr_payroll.res_partner_bank_account_deniz"/>
+        <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_marketing"/>
+        <field name="company_id" ref="base.demo_company_tr"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">15000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
+        <field name="date_version" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
+        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
     </record>
 
     <record id="hr_employee_narin" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_narin')).name"/>
-        <field name="job_title">Accounting Manager</field>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_accounting"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
@@ -178,7 +184,7 @@
         <field name="distance_home_work">3</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_narin')).country_id"/>
         <field name="identification_id">12345678901</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1999, 3, 28).date()"/>
         <field name="place_of_birth">Ankara</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_narin')).country_id"/>
@@ -188,47 +194,14 @@
         <field name="study_field">Accountancy</field>
         <field name="study_school">Middle East Technical University (METU)</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_deniz" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_tr_hr_payroll.res_partner_bank_account_deniz"/>
-    </record>
-    <record id="hr_employee_narin" model="hr.employee">
         <field name="bank_account_id" ref="l10n_tr_hr_payroll.res_partner_bank_account_narin"/>
-    </record>
-
-    <record id="hr_contract_deniz" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Temporary Contract - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_deniz')).name + ' - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_deniz')).job_title"/>
-        <field name="employee_id" ref="l10n_tr_hr_payroll.hr_employee_deniz"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_marketing"/>
-        <field name="company_id" ref="base.demo_company_tr"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">15000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
-        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
-    </record>
-
-    <record id="hr_contract_narin" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Full-Time Contract - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_narin')).name + ' - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_narin')).job_title"/>
-        <field name="employee_id" ref="l10n_tr_hr_payroll.hr_employee_narin"/>
-        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_accounting"/>
         <field name="company_id" ref="base.demo_company_tr"/>
         <field name="wage_type">monthly</field>
         <field name="wage">20000</field>
-        <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
+        <field name="contract_date_start" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
+        <field name="date_version" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
         <field name="contract_type_id" ref="hr.contract_type_full_time"/>
-    </record>
-
-    <record id="hr_employee_deniz" model="hr.employee">
-        <field name="contract_id" ref="l10n_tr_hr_payroll.hr_contract_deniz"/>
-    </record>
-    <record id="hr_employee_narin" model="hr.employee">
-        <field name="contract_id" ref="l10n_tr_hr_payroll.hr_contract_narin"/>
     </record>
 </odoo>

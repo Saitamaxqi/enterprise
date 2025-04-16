@@ -47,8 +47,8 @@ result_name = inputs['LAI'].name
         <field name="code">HRAMN</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-nonmetro_alw = contract.l10n_in_house_rent_allowance_metro_nonmetro / 100
-result = contract.wage * nonmetro_alw
+nonmetro_alw = version.l10n_in_house_rent_allowance_metro_nonmetro / 100
+result = version.wage * nonmetro_alw
         </field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">House Rent Allowance</field>
@@ -63,9 +63,9 @@ result = contract.wage * nonmetro_alw
         <field name="name">Grade/Special/Management/Supplementary Allowance</field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_supplementary_allowance)</field>
+        <field name="condition_python">result = bool(version.l10n_in_supplementary_allowance)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = contract.l10n_in_supplementary_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_in_supplementary_allowance</field>
         <field name="sequence" eval="20"/>
         <field name="note">This allowance is normally given as an additional benefit to employees and is fully taxable.</field>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
@@ -118,7 +118,7 @@ else:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 city_alw_percent = payslip._rule_parameter('l10n_in_city_alw_percent')
-result = contract.wage * city_alw_percent
+result = version.wage * city_alw_percent
         </field>
         <field name="note">This allowance is paid to Employees who are posted in big cities. The purpose is to compensate the high cost of living in cities like Mumbai, Delhi, etc. However it is Fully Taxable.</field>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
@@ -214,7 +214,7 @@ result = gross * esicf_percent
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 pf_ctb_percent = payslip._rule_parameter('l10n_in_pf_percent')
-result = -contract.wage * pf_ctb_percent
+result = -version.wage * pf_ctb_percent
         </field>
         <field name="sequence" eval="37"/>
         <field name="partner_id" ref="hr_register_provident_fund"/>
@@ -306,7 +306,7 @@ result_name = 'IE' in inputs and inputs['IE'].name
         <field name="name">Driver Salary</field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_driver_salay)</field>
+        <field name="condition_python">result = bool(version.l10n_in_driver_salay)</field>
         <field name="amount_select">fix</field>
         <field eval="900.0" name="amount_fix"/>
         <field name="sequence" eval="40"/>
@@ -332,11 +332,11 @@ result = categories['BASIC'] + categories['ALW']
         <field name="name">Provident fund</field>
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_provident_fund)</field>
+        <field name="condition_python">result = bool(version.l10n_in_provident_fund)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 PF = payslip._rule_parameter('l10n_in_pf_percent')
-result = -contract.wage * PF
+result = -version.wage * PF
         </field>
         <field name="sequence" eval="107"/>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
@@ -351,7 +351,7 @@ result = -contract.wage * PF
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 pf_ctb_percent = payslip._rule_parameter('l10n_in_pf_percent')
-result = -contract.wage * pf_ctb_percent
+result = -version.wage * pf_ctb_percent
         </field>
         <field name= "note">Employer contribution does not become part of employee’s income and hence income tax is not payable on this part.</field>
         <field name="partner_id" ref="hr_register_provident_fund"/>
@@ -366,7 +366,7 @@ result = -contract.wage * pf_ctb_percent
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 pf_ctb_percent = payslip._rule_parameter('l10n_in_cbda_percent')
-result = -contract.wage * pf_ctb_percent
+result = -version.wage * pf_ctb_percent
         </field>
         <field name="sequence" eval="155"/>
         <field name="partner_id" ref="hr_nps_contribution_register"/>
@@ -379,11 +379,11 @@ result = -contract.wage * pf_ctb_percent
         <field name="name">Voluntary Provident Fund Contribution</field>
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_voluntary_provident_fund)</field>
+        <field name="condition_python">result = bool(version.l10n_in_voluntary_provident_fund)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-VPF = contract.l10n_in_voluntary_provident_fund
-result = -contract.wage * VPF / 100
+VPF = version.l10n_in_voluntary_provident_fund
+result = -version.wage * VPF / 100
         </field>
         <field name="sequence" eval="160"/>
         <field name="partner_id" ref="hr_vpf_contribution_register"/>
@@ -422,9 +422,9 @@ result = -contract.wage * VPF / 100
         <field name="sequence" eval="168"/>
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_esic_amount)</field>
+        <field name="condition_python">result = bool(version.l10n_in_esic_amount)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = -contract.l10n_in_esic_amount</field>
+        <field name="amount_python_compute">result = -version.l10n_in_esic_amount</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
     </record>
@@ -435,9 +435,9 @@ result = -contract.wage * VPF / 100
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="sequence" eval="169"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_gratuity)</field>
+        <field name="condition_python">result = bool(version.l10n_in_gratuity)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = -contract.l10n_in_gratuity</field>
+        <field name="amount_python_compute">result = -version.l10n_in_gratuity</field>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
      </record>
 
@@ -527,10 +527,10 @@ result_name = inputs['CHILD_SUPPORT'].name
         <field name="name">Deduction Towards Company Provided Medical Insurance</field>
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_medical_insurance)</field>
+        <field name="condition_python">result = bool(version.l10n_in_medical_insurance)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = -contract.l10n_in_medical_insurance
+result = -version.l10n_in_medical_insurance
         </field>
         <field eval="-50.0" name="amount_fix"/>
         <field name="partner_id" ref="hr_medical_insurance_register"/>
@@ -556,7 +556,7 @@ result = -contract.l10n_in_medical_insurance
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 pf_ctb_percent = payslip._rule_parameter('l10n_in_cbda_percent')
-result = -contract.wage * pf_ctb_percent
+result = -version.wage * pf_ctb_percent
         </field>
         <field name="sequence" eval="190"/>
         <field name="partner_id" ref="hr_nps_contribution_register"/>
@@ -571,7 +571,7 @@ result = -contract.wage * pf_ctb_percent
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 pf_ctb_percent = payslip._rule_parameter('l10n_in_pf_percent')
-result = -contract.wage * pf_ctb_percent
+result = -version.wage * pf_ctb_percent
         </field>
         <field name="sequence" eval="195"/>
         <field name="partner_id" ref="hr_register_provident_fund"/>

@@ -106,6 +106,6 @@ class HrContractSalaryOffer(models.Model):
         for offer in self:
             if offer.contract_template_id.available_cars_amount >= offer.contract_template_id.max_unused_cars:
                 offer.wishlist_car_warning = _("We already have %s car(s) without driver(s) available",
-                                              offer.employee_contract_id.available_cars_amount)
+                                              offer.employee_version_id.available_cars_amount)
             else:
                 offer.wishlist_car_warning = False

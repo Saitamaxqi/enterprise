@@ -145,7 +145,7 @@
         <field name="distance_home_work">1</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_nura')).country_id"/>
         <field name="identification_id">9900321987</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1989, 12, 28).date()"/>
         <field name="place_of_birth">Lahore</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_nura')).country_id"/>
@@ -155,6 +155,16 @@
         <field name="study_field">Human Resources Management</field>
         <field name="study_school">King Saud University</field>
         <field name="marital">single</field>
+        <field name="wage_type">monthly</field>
+        <field name="wage">7000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
+        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
+
+        <field name="l10n_sa_housing_allowance">2000</field>
+        <field name="l10n_sa_transportation_allowance">1000</field>
+        <field name="l10n_sa_other_allowances">500</field>
+        <field name="l10n_sa_number_of_days">30</field>
     </record>
 
     <record id="hr_employee_salem" model="hr.employee">
@@ -180,7 +190,7 @@
         <field name="distance_home_work">3</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_salem')).country_id"/>
         <field name="identification_id">9900456789</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1987, 7, 27).date()"/>
         <field name="place_of_birth">Jakarta</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_salem')).country_id"/>
@@ -190,6 +200,16 @@
         <field name="study_field">Communication Studies</field>
         <field name="study_school">University of Business and Technology</field>
         <field name="marital">single</field>
+        <field name="wage_type">monthly</field>
+        <field name="wage">4500</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-3,months=2,days=25)"/>
+        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
+
+        <field name="l10n_sa_housing_allowance">1700</field>
+        <field name="l10n_sa_transportation_allowance">250</field>
+        <field name="l10n_sa_other_allowances">550</field>
+        <field name="l10n_sa_number_of_days">23</field>
     </record>
 
     <record id="hr_employee_nura" model="hr.employee">
@@ -197,49 +217,5 @@
     </record>
     <record id="hr_employee_salem" model="hr.employee">
         <field name="bank_account_id" ref="l10n_sa_hr_payroll.res_partner_bank_account_salem"/>
-    </record>
-
-    <record id="hr_contract_nura" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_sa_hr_payroll.hr_employee_nura')).name + ' - ' + obj(ref('l10n_sa_hr_payroll.hr_employee_nura')).job_title"/>
-        <field name="employee_id" ref="l10n_sa_hr_payroll.hr_employee_nura"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_sa_hr_payroll.sa_hr_department_human_resources"/>
-        <field name="company_id" ref="base.demo_company_sa"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">7000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
-        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
-
-        <field name="l10n_sa_housing_allowance">2000</field>
-        <field name="l10n_sa_transportation_allowance">1000</field>
-        <field name="l10n_sa_other_allowances">500</field>
-        <field name="l10n_sa_number_of_days">30</field>
-    </record>
-    <record id="hr_contract_salem" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_sa_hr_payroll.hr_employee_salem')).name + ' - ' + obj(ref('l10n_sa_hr_payroll.hr_employee_salem')).job_title"/>
-        <field name="employee_id" ref="l10n_sa_hr_payroll.hr_employee_salem"/>
-        <field name="job_id" ref="hr.job_consultant"/>
-        <field name="department_id" ref="l10n_sa_hr_payroll.sa_hr_department_administration"/>
-        <field name="company_id" ref="base.demo_company_sa"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">4500</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime.today() + relativedelta(years=-3,months=2,days=25)"/>
-        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
-
-        <field name="l10n_sa_housing_allowance">1700</field>
-        <field name="l10n_sa_transportation_allowance">250</field>
-        <field name="l10n_sa_other_allowances">550</field>
-        <field name="l10n_sa_number_of_days">23</field>
-    </record> 
-
-    <record id="hr_employee_nura" model="hr.employee">
-        <field name="contract_id" ref="l10n_sa_hr_payroll.hr_contract_nura"/>
-    </record>
-    <record id="hr_employee_salem" model="hr.employee">
-        <field name="contract_id" ref="l10n_sa_hr_payroll.hr_contract_salem"/>
     </record>
 </odoo>

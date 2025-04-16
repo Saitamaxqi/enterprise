@@ -22,7 +22,7 @@ class L10nBeDecemberSlipWizard(models.TransientModel):
 
     payslip_id = fields.Many2one('hr.payslip')
     employee_id = fields.Many2one('hr.employee', related="payslip_id.employee_id")
-    contract_id = fields.Many2one('hr.contract', related="payslip_id.contract_id")
+    version_id = fields.Many2one('hr.version', related="payslip_id.version_id")
     company_id = fields.Many2one('res.company', default=lambda self: self.env.user.company_id)
     currency_id = fields.Many2one('res.currency', related="company_id.currency_id")
     remuneration_n1 = fields.Monetary(

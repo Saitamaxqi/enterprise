@@ -98,7 +98,7 @@ class DMFAWorker(DMFANode):
             self.occupations = []
             skip_remun = False
         else:
-            self.occupations = self._prepare_occupations(self.payslips.mapped('contract_id'), self.quarter_start, self.quarter_end)
+            self.occupations = self._prepare_occupations(self.payslips.mapped('version_id'), self.quarter_start, self.quarter_end)
             skip_remun = all(o.skip_remun for o in self.occupations)
 
         self._prepare_occupation_deductions(self.occupations)
@@ -231,7 +231,7 @@ class DMFAWorker(DMFANode):
         termination_occupations = []
         for data in occupation_data:
             occupation_contracts, date_from, date_to = data
-            payslips = self.payslips.filtered(lambda p: p.contract_id in occupation_contracts)
+            payslips = self.payslips.filtered(lambda p: p.version_id in occupation_contracts)
             termination_payslips = payslips.filtered(lambda p: p.struct_id.code == 'CP200TERM')
             if termination_payslips:
                 # Le salaire et les données relatives aux prestations se rapportant à une indemnité
@@ -362,7 +362,7 @@ class DMFAStudentContribution(DMFANode):
     """
     def __init__(self, payslips, basis, sequence=None):
         super().__init__(payslips.env, sequence=sequence)
-        work_address = payslips.mapped('contract_id.employee_id.address_id')[0]
+        work_address = payslips.mapped('version_id.employee_id.address_id')[0]
         location_unit = self.env['l10n_be.dmfa.location.unit'].search([
             ('partner_id', '=', work_address.id)])
         self.local_unit_id = format_amount(location_unit._get_code(), width=10, hundredth=False)
@@ -741,8 +741,8 @@ class DMFAOccupationInformation(DMFANode):
         self.career_measure = -1
         self.sector_detail = -1
         self.mobility_budget = -1
-        if 'mobility_budget' in infos_to_declare and 'l10n_be_mobility_budget_amount' in payslips.env['hr.contract']:
-            self.mobility_budget = format_amount(max(payslips.contract_id.mapped('l10n_be_mobility_budget_amount')))
+        if 'mobility_budget' in infos_to_declare and 'l10n_be_mobility_budget_amount' in payslips.env['hr.version']:
+            self.mobility_budget = format_amount(max(payslips.version_id.mapped('l10n_be_mobility_budget_amount')))
         self.flemish_training_hours = -1
         self.flemish_training_hours = -1
         self.regional_aid_measure = -1
@@ -757,7 +757,7 @@ class DMFAService(DMFANode):
         if len(list(set(worked_days.mapped('work_entry_type_id.dmfa_code')))) > 1:
             raise ValueError("Cannot mix work of different types.")
 
-        self.contract = worked_days.mapped('contract_id').sorted(key='date_start', reverse=True)[0]
+        self.contract = worked_days.mapped('version_id').sorted(key='date_start', reverse=True)[0]
 
         work_entry_type = worked_days[0].work_entry_type_id
         self.code = work_entry_type.dmfa_code.zfill(3)
@@ -1025,10 +1025,10 @@ class L10n_BeDmfa(models.Model):
         ])
         # Exclude CIP contracts from DmfA, as they only have a DIMONA
         contract_type_cip = self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cip')
-        valid_structure_types = self.env.ref('hr_contract.structure_type_employee_cp200_pfi') \
-                              + self.env.ref('hr_contract.structure_type_employee_cp200') \
+        valid_structure_types = self.env.ref('hr.structure_type_employee_cp200_pfi') \
+                              + self.env.ref('hr.structure_type_employee_cp200') \
                               + self.env.ref('l10n_be_hr_payroll.structure_type_student')
-        payslips = payslips.filtered(lambda p: p.contract_id.contract_type_id != contract_type_cip and p.contract_id.structure_type_id in valid_structure_types)
+        payslips = payslips.filtered(lambda p: p.version_id.contract_type_id != contract_type_cip and p.version_id.structure_type_id in valid_structure_types)
         employees = payslips.mapped('employee_id')
         worker_count = len(employees)
 
@@ -1167,7 +1167,7 @@ class L10n_BeDmfa(models.Model):
     def _get_double_holiday_pay_contribution(self, payslips):
         """ Some contribution are not specified at the worker level but globally for the whole company """
         # Montant de la cotisation exeptionnelle (code 870)
-        payslips = payslips.filtered(lambda p: not p.contract_id.no_onss)
+        payslips = payslips.filtered(lambda p: not p.version_id.no_onss)
 
         basis_lines = {
             'CP200MONTHLY': 'DOUBLE.DECEMBER.SALARY',

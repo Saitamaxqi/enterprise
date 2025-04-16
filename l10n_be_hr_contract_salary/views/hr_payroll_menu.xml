@@ -3,7 +3,7 @@
     <menuitem
         id="menu_hr_job_configuration"
         name="Jobs"
-        parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+        parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
         sequence="100"
         groups="hr_payroll.group_hr_payroll_user"/>
 

@@ -19,10 +19,13 @@
             <form string="Children">
                 <sheet>
                     <group>
-                        <field name="employee_id"/>
-                        <field name="name"/>
+                        <field name="name" string="First Name"/>
+                        <field name="last_name"/>
                         <field name="birthdate"/>
+                        <field name="sex"/>
+                        <field name="l10n_ch_sv_as_number" placeholder="Unknown"/>
                         <field name="deduction_start"/>
+                        <field name="deduction_end"/>
                     </group>
                 </sheet>
             </form>

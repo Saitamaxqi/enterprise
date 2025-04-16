@@ -55,13 +55,13 @@ class L10nBeHrPayrollExportAcerta(models.Model):
     def _generate_employee_entries(self, employee_line):
         we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
         employee_entries = ''
-        for contract in employee_line.contract_ids:
+        for contract in employee_line.version_ids:
             if not contract.acerta_code:
                 raise UserError(_(
                     'Acerta code is missing for contract: %(contract)s',
                     contract=contract.name
                 ))
-            if len(employee_line.contract_ids) > 1:
+            if len(employee_line.version_ids) > 1:
                 we_by_day_and_code_in_contract = {
                     date: we_by_code for date, we_by_code in we_by_day_and_code.items()
                     if date >= contract.date_start and (not contract.date_end or date <= contract.date_end)

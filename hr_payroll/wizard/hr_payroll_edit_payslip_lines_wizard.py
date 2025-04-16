@@ -165,8 +165,8 @@ class HrPayrollEditPayslipLine(models.TransientModel):
         'hr.salary.rule', string='Rule',
         domain="[('struct_id', '=', struct_id)]")
     code = fields.Char(related='salary_rule_id.code')
-    contract_id = fields.Many2one(related='slip_id.contract_id', string='Contract')
-    employee_id = fields.Many2one(related='contract_id.employee_id', string='Employee')
+    version_id = fields.Many2one(related='slip_id.version_id', string='Contract')
+    employee_id = fields.Many2one(related='version_id.employee_id', string='Employee')
     rate = fields.Float(string='Rate (%)', digits='Payroll Rate', default=100.0)
     amount = fields.Float(digits='Payroll')
     quantity = fields.Float(digits='Payroll', default=1.0)
@@ -189,7 +189,7 @@ class HrPayrollEditPayslipLine(models.TransientModel):
             'code': line.code,
             'name': line.name,
             'salary_rule_id': line.salary_rule_id.id,
-            'contract_id': line.contract_id.id,
+            'version_id': line.version_id.id,
             'employee_id': line.employee_id.id,
             'amount': line.amount,
             'quantity': line.quantity,

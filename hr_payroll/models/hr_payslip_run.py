@@ -61,15 +61,15 @@ class HrPayslipRun(models.Model):
 
     def action_close(self):
         if self._are_payslips_ready():
-            self.write({'state' : 'close'})
+            self.write({'state': 'close'})
 
     def action_payment_report(self, export_format='csv'):
         self.ensure_one()
-        self.env['hr.payroll.payment.report.wizard'].create({
+        self.env['hr.payroll.payment.report.wizard'].create([{
             'payslip_ids': self.slip_ids.ids,
             'payslip_run_id': self.id,
             'export_format': export_format
-        }).generate_payment_report()
+        }]).generate_payment_report()
 
     def action_paid(self):
         self.mapped('slip_ids').action_payslip_paid()

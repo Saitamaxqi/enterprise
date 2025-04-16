@@ -23,7 +23,7 @@ hrContractSalary.include({
 
     getBenefits() {
         var res = this._super.apply(this, arguments);
-        res.contract.l10n_be_canteen_cost = parseFloat(
+        res.version.l10n_be_canteen_cost = parseFloat(
             this.el.querySelector("input[name='l10n_be_canteen_cost']").value || "0.0"
         );
         return res

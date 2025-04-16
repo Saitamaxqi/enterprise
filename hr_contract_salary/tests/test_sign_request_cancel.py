@@ -28,8 +28,8 @@ class TestSignRequestCancel(TransactionCase):
 
         cls.structure_type = cls.env['hr.payroll.structure.type'].create({'name': 'struct'})
         cls.job = cls.env['hr.job'].create({'name': 'Software Developer'})
-        cls.contract = cls.env['hr.contract'].create({
-            'name': "Contract",
+        cls.contract_template = cls.env['hr.version'].create({
+            'name': "Contract Template",
             'wage': 6500,
             'structure_type_id': cls.structure_type.id,
             'job_id': cls.job.id,
@@ -58,7 +58,7 @@ class TestSignRequestCancel(TransactionCase):
         })
 
         cls.salary_offer = cls.env['hr.contract.salary.offer'].create({
-            'contract_template_id': cls.contract.id,
+            'contract_template_id': cls.contract_template.id,
             'sign_request_ids': cls.sign_request,
         })
 

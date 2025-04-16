@@ -12,13 +12,13 @@ class L10nInTdsComputationWizard(models.TransientModel):
         res = super().default_get(fields)
         if self.env.company.country_id.code != "IN":
             raise UserError(_('You must be logged in a Indian company to use this feature'))
-        if not res.get('contract_id') and self.env.context.get('active_id') and self.env.context.get('active_model') == 'hr.contract':
-            res['contract_id'] = self.env.context['active_id']
-            contract_id = self.env['hr.contract'].browse(res['contract_id'])
+        if not res.get('version_id') and self.env.context.get('active_id') and self.env.context.get('active_model') == 'hr.version':
+            res['version_id'] = self.env.context['active_id']
+            version_id = self.env['hr.version'].browse(res['version_id'])
             res['payslip_id'] = self.env['hr.payslip'].search([
-                ('contract_id', '=', contract_id.id),
-                ('employee_id', '=', contract_id.employee_id.id),
-                ('date_from', '>=', contract_id.date_start),
+                ('version_id', '=', version_id.id),
+                ('employee_id', '=', version_id.employee_id.id),
+                ('date_from', '>=', version_id.date_start),
                 ('state', 'in', ['done', 'paid']),
             ], limit=1, order='date_from desc').id
         if not res.get('currency_id') and self.env.company.currency_id:
@@ -29,7 +29,7 @@ class L10nInTdsComputationWizard(models.TransientModel):
             res['standard_deduction'] = self.env['hr.rule.parameter']._get_parameter_from_code('l10n_in_standard_deduction')
         return res
 
-    contract_id = fields.Many2one('hr.contract')
+    version_id = fields.Many2one('hr.version')
     payslip_id = fields.Many2one('hr.payslip')
     currency_id = fields.Many2one("res.currency", string='Currency')
     total_income = fields.Float(string="Total Income(Year)", compute="_compute_total_income", readonly=False)
@@ -45,7 +45,7 @@ class L10nInTdsComputationWizard(models.TransientModel):
     net_monthly = fields.Float(string="Monthly Net Payable", compute="_compute_net_monthly")
     tds_monthly = fields.Float(string="Monthly TDS Payable", compute="_compute_tds_monthly", readonly=False, store=True)
 
-    @api.depends('contract_id', 'total_income')
+    @api.depends('version_id', 'total_income')
     def _compute_net_monthly(self):
         for record in self:
             record.net_monthly = record.payslip_id.net_wage or record.total_income / 12
@@ -119,4 +119,4 @@ class L10nInTdsComputationWizard(models.TransientModel):
 
     def set_tds_on_contracts(self):
         for record in self:
-            record.contract_id.l10n_in_tds = record.tds_monthly
+            record.version_id.l10n_in_tds = record.tds_monthly

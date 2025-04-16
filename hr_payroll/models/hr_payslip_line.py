@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class HrPayslipLine(models.Model):
     _name = 'hr.payslip.line'
     _description = 'Payslip Line'
-    _order = 'contract_id, sequence, code'
+    _order = 'version_id, sequence, code'
 
     name = fields.Char(required=True)
     sequence = fields.Integer(required=True, index=True, default=5,
@@ -18,7 +18,7 @@ class HrPayslipLine(models.Model):
                        "In that case, it is case sensitive.")
     slip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, index=True, ondelete='cascade')
     salary_rule_id = fields.Many2one('hr.salary.rule', string='Rule', required=True)
-    contract_id = fields.Many2one('hr.contract', string='Contract', required=True, index=True)
+    version_id = fields.Many2one('hr.version', string='Contract', required=True, index=True)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
     rate = fields.Float(string='Rate (%)', digits='Payroll Rate', default=100.0)
     amount = fields.Monetary()
@@ -43,11 +43,11 @@ class HrPayslipLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for values in vals_list:
-            if 'employee_id' not in values or 'contract_id' not in values:
+            if 'employee_id' not in values or 'version_id' not in values:
                 payslip = self.env['hr.payslip'].browse(values.get('slip_id'))
                 values['employee_id'] = values.get('employee_id') or payslip.employee_id.id
-                values['contract_id'] = values.get('contract_id') or payslip.contract_id and payslip.contract_id.id
-                if not values['contract_id']:
+                values['version_id'] = values.get('version_id') or payslip.version_id and payslip.version_id.id
+                if not values['version_id']:
                     raise UserError(_('You must set a contract to create a payslip line.'))
         return super(HrPayslipLine, self).create(vals_list)
 

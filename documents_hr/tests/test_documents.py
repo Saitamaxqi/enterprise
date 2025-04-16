@@ -16,8 +16,10 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         cls.employee = cls.env['hr.employee'].create({
             'name': 'Employee (related to doc_user)',
             'user_id': cls.doc_user.id,
-            'work_contact_id': cls.doc_user.partner_id.id
+            'work_contact_id': cls.doc_user.partner_id.id,
+            'wage': 1,
         })
+        cls.contract = cls.employee.version_id
 
     def test_employee_subfolder_generation_renaming_and_access(self):
         # hr_employee_folder_id should have been created at employee creation
@@ -224,3 +226,24 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
                 'folder_id': False,
                 'owner_id': normal_portal_user.id
             })
+
+    def test_contract_document_creation(self):
+        attachment = self.env['ir.attachment'].create({
+            'datas': self.TEXT,
+            'name': 'fileText_test.txt',
+            'mimetype': 'text/plain',
+            'res_model': self.contract._name,
+            'res_id': self.contract.id,
+        })
+
+        document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
+        self.assertTrue(document.exists(), "There should be a new document created from the attachment")
+        self.assertFalse(document.owner_id)
+        self.assertEqual(document.partner_id, self.employee.work_contact_id, "The partner_id should be the employee's work contact")
+        self.assertEqual(document.access_via_link, "none")
+        self.assertEqual(document.access_internal, "none")
+        self.assertTrue(document.is_access_via_link_hidden)
+
+    def test_hr_contract_document_creation_permission_employee_only(self):
+        """ Test that created hr.contract documents are only viewable by the employee and editable by hr managers. """
+        self.check_document_creation_permission(self.contract)

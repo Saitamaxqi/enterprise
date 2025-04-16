@@ -54,7 +54,7 @@
                             <a title="Chat" icon="fa-comments" href="#" class="ml8 o_employee_chat_btn" invisible="not context.get('chat_icon') or not user_id" role="button"><i class="fa fa-comments"/></a>
                         </h1>
                         <h2>
-                            <field name="job_title" placeholder="Job Title" />
+                            <field name="job_id" placeholder="Job Position" options="{'no_open': True}"/>
                         </h2>
                     </div>
                     <group>

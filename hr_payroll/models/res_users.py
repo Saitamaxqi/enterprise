@@ -14,10 +14,10 @@ class ResUsers(models.Model):
     is_non_resident = fields.Boolean(related='employee_ids.is_non_resident', readonly=False)
 
     def _get_personal_info_partner_ids_to_notify(self, employee):
-        if employee.contract_id.hr_responsible_id:
+        if employee.version_id.hr_responsible_id:
             return (
                 _("You are receiving this message because you are the HR Responsible of this employee."),
-                employee.contract_id.hr_responsible_id.partner_id.ids,
+                employee.version_id.hr_responsible_id.partner_id.ids,
             )
         return ('', [])
 

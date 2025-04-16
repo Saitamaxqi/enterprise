@@ -11,14 +11,16 @@ from . import common
 
 @odoo.tests.tagged('-at_install', 'post_install', 'salary')
 class TestEmployeeJobChange(common.TestPayrollAccountCommon):
+
     @classmethod
+    @freeze_time('2022-01-01 09:00:00')
     def setUpClass(cls):
         super().setUpClass()
 
         cls.env['hr.job'].create({
             'name': 'Senior Developer BE',
             'company_id': cls.company_id.id,
-            'default_contract_id': cls.senior_dev_contract.id,
+            'contract_template_id': cls.senior_dev_contract.id,
             'l10n_be_contract_ip': True,
         })
         partner = cls.env['res.partner'].create({
@@ -52,7 +54,7 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
             'company_id': cls.company_id.id,
             'country_id': cls.env.ref('base.be').id,
             'bank_account_id': account.id,
-            'gender': 'male',
+            'sex': 'male',
             'children': 0,
             'km_home_work': 0,
             'place_of_birth': 'Charleroi',
@@ -75,6 +77,14 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
             'private_email': 'jeanjasse@doublehelice.be',
             'lang': 'en_US',
             'id_card': cls.pdf_content,
+            'wage': 3000,
+            'hr_responsible_id': cls.env.ref('base.user_admin').id,
+            'contract_template_id': cls.new_dev_contract.id,
+            'sign_template_id': cls.template.id,
+            'ip_wage_rate': 25,
+            'internet': 0,
+            'date_version': datetime.date(2015, 1, 1),
+            'contract_date_start': datetime.date(2015, 1, 1),
         })
         cls.env['res.users'].create({
             'create_employee_id': employee.id,
@@ -86,19 +96,6 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
             'company_id': cls.company_id.id,
             'company_ids': cls.company_id.ids,
         })
-        contract = cls.env['hr.contract'].create({
-            'name': "Jean Jasse's old contract",
-            'employee_id': employee.id,
-            'company_id': cls.company_id.id,
-            'wage': 3000,
-            'hr_responsible_id': cls.env.ref('base.user_admin').id,
-            'default_contract_id': cls.new_dev_contract.id,
-            'sign_template_id': cls.template.id,
-            'ip_wage_rate': 25,
-            'internet': 0,
-            'date_start': datetime.date(2015, 1, 1),
-        })
-        contract.write({'state': 'open'})
         cls.env.flush_all()
 
     def test_employee_job_change(self):
@@ -109,11 +106,10 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
         with freeze_time("2022-01-01"):
             self.start_tour("/", 'hr_contract_salary_tour_job_change', login='admin')
         job_changing_employee = self.env['hr.employee'].search([('name', '=', 'Jean Jasse')])
-        new_contract = self.env['hr.contract'].search([
+        new_version = self.env['hr.version'].search([
             ('employee_id', '=', job_changing_employee.id),
-            ('state', '=', 'draft'),
             ('active', '=', False),
         ])
         self.assertTrue(job_changing_employee.active, 'Employee is active')
-        self.assertTrue(new_contract.ip, 'The new contract should have an IP')
-        self.assertEqual(new_contract.ip_wage_rate, 50, 'The new contract should have an ip_wage_rate of 50')
+        self.assertTrue(new_version.ip, 'The new contract should have an IP')
+        self.assertEqual(new_version.ip_wage_rate, 50, 'The new contract should have an ip_wage_rate of 50')

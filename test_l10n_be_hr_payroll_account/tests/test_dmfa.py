@@ -108,19 +108,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'attendance_ids': [(5, 0, 0)],
         }])
 
-        cls.employee = cls.env['hr.employee'].create({
-            'name': 'Laurie Poiret',
-            'niss': '91111111192',
-            'marital': 'single',
-            'private_street': '58 rue des Wallons',
-            'private_city': 'Louvain-la-Neuve',
-            'private_zip': '1348',
-            'private_country_id': cls.env.ref("base.be").id,
-            'private_phone': '+0032476543210',
-            'private_email': 'laurie.poiret@example.com',
-            'resource_calendar_id': cls.calendar_38h.id,
-            'company_id': cls.belgian_company.id,
-        })
+        cls.work_contact = cls.env['res.partner'].create({'name': 'Test Work Contact'})
 
         cls.brand = cls.env['fleet.vehicle.model.brand'].create({
             'name': "Test Brand"
@@ -134,10 +122,10 @@ class TestDMFA(AccountTestInvoicingCommon):
         cls.car = cls.env['fleet.vehicle'].create({
             'name': "Test Car",
             'license_plate': "TEST",
-            'driver_id': cls.employee.work_contact_id.id,
+            'driver_id': cls.work_contact.id,
             'company_id': cls.belgian_company.id,
             'model_id': cls.model.id,
-            'first_contract_date': date(2020, 10, 8),
+            'contract_date_start': date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
             'fuel_type': "diesel",
@@ -156,19 +144,27 @@ class TestDMFA(AccountTestInvoicingCommon):
             'recurring_cost_amount_depreciated': 450.0
         })
 
-        cls.contract = cls.env['hr.contract'].create({
-            'name': "Contract For Payslip Test",
-            'employee_id': cls.employee.id,
+        cls.employee = cls.env['hr.employee'].create({
+            'name': 'Laurie Poiret',
+            'work_contact_id': cls.work_contact.id,
+            'niss': '91111111192',
+            'marital': 'single',
+            'private_street': '58 rue des Wallons',
+            'private_city': 'Louvain-la-Neuve',
+            'private_zip': '1348',
+            'private_country_id': cls.env.ref("base.be").id,
+            'private_phone': '+0032476543210',
+            'private_email': 'laurie.poiret@example.com',
             'resource_calendar_id': cls.calendar_38h.id,
             'company_id': cls.belgian_company.id,
             'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
             'car_id': cls.car.id,
-            'structure_type_id': cls.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': date(2018, 12, 31),
+            'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
+            'contract_date_start': date(2018, 12, 31),
+            'date_version': date(2018, 12, 31),
             'wage': 3000,
             'wage_on_signature': 3000,
-            'state': "open",
             'transport_mode_car': True,
             'fuel_card': 150.0,
             'internet': 38.0,
@@ -177,6 +173,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'meal_voucher_amount': 7.45,
             'eco_checks': 250.0,
         })
+        cls.contract = cls.employee.version_id
 
         company = cls.employee.company_id
         cls.payroll_manager.company_ids = [(4, company.id)]
@@ -215,7 +212,7 @@ class TestDMFA(AccountTestInvoicingCommon):
     def test_02_declaration_classic_employee_with_commissions(self):
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -227,7 +224,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -235,7 +232,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -250,8 +247,8 @@ class TestDMFA(AccountTestInvoicingCommon):
 
     @freeze_time("2025-04-10 10:00:00")
     def test_03_declaration_employee_partial_credit_time(self):
-        self.contract.date_end = date(2025, 2, 28)
-        contract_credit_time = self.env['hr.contract'].create({
+        self.contract.contract_date_end = date(2025, 2, 28)
+        contract_credit_time = self.env['hr.version'].create({
             'name': "Contract Credit Time",
             'employee_id': self.employee.id,
             'resource_calendar_id': self.calendar_4_5_wednesday_off.id,
@@ -263,11 +260,11 @@ class TestDMFA(AccountTestInvoicingCommon):
             'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
             'car_id': self.car.id,
-            'structure_type_id': self.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': date(2025, 3, 1),
+            'structure_type_id': self.env.ref('hr.structure_type_employee_cp200').id,
+            'date_version': date(2025, 3, 1),
+            'contract_date_start': date(2025, 3, 1),
             'wage': 3000 * 4 / 5,
             'wage_on_signature': 3000 * 4 / 5,
-            'state': "open",
             'transport_mode_car': True,
             'fuel_card': 150.0,
             'internet': 38.0,
@@ -278,7 +275,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         })
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -290,7 +287,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -298,7 +295,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': contract_credit_time.id,
+            'version_id': contract_credit_time.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -313,8 +310,8 @@ class TestDMFA(AccountTestInvoicingCommon):
 
     @freeze_time("2025-04-10 10:00:00")
     def test_04_declaration_employee_full_credit_time(self):
-        self.contract.date_end = date(2025, 2, 28)
-        contract_credit_time = self.env['hr.contract'].create({
+        self.contract.contract_date_end = date(2025, 2, 28)
+        contract_credit_time = self.env['hr.version'].create({
             'name': "Contract Credit Time",
             'employee_id': self.employee.id,
             'resource_calendar_id': self.calendar_0_hours_per_week.id,
@@ -326,11 +323,11 @@ class TestDMFA(AccountTestInvoicingCommon):
             'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
             'car_id': self.car.id,
-            'structure_type_id': self.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': date(2025, 3, 1),
+            'structure_type_id': self.env.ref('hr.structure_type_employee_cp200').id,
+            'date_version': date(2025, 3, 1),
+            'contract_date_start': date(2025, 3, 1),
             'wage': 3000 * 4 / 5,
             'wage_on_signature': 3000 * 4 / 5,
-            'state': "open",
             'transport_mode_car': True,
             'fuel_card': 150.0,
             'internet': 38.0,
@@ -341,7 +338,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         })
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -353,7 +350,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -361,7 +358,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': contract_credit_time.id,
+            'version_id': contract_credit_time.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -376,8 +373,8 @@ class TestDMFA(AccountTestInvoicingCommon):
 
     @freeze_time("2025-04-10 10:00:00")
     def test_05_declaration_employee_partial_incapacity(self):
-        self.contract.date_end = date(2025, 2, 28)
-        contract_credit_time = self.env['hr.contract'].create({
+        self.contract.contract_date_end = date(2025, 2, 28)
+        contract_credit_time = self.env['hr.version'].create({
             'name': "Contract Credit Time",
             'employee_id': self.employee.id,
             'resource_calendar_id': self.calendar_0_hours_per_week.id,
@@ -389,11 +386,11 @@ class TestDMFA(AccountTestInvoicingCommon):
             'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
             'car_id': self.car.id,
-            'structure_type_id': self.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': date(2025, 3, 1),
+            'structure_type_id': self.env.ref('hr.structure_type_employee_cp200').id,
+            'date_version': date(2025, 3, 1),
+            'contract_date_start': date(2025, 3, 1),
             'wage': 3000 * 4 / 5,
             'wage_on_signature': 3000 * 4 / 5,
-            'state': "open",
             'transport_mode_car': True,
             'fuel_card': 150.0,
             'internet': 38.0,
@@ -404,7 +401,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         })
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -416,7 +413,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -424,7 +421,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': contract_credit_time.id,
+            'version_id': contract_credit_time.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -446,11 +443,11 @@ class TestDMFA(AccountTestInvoicingCommon):
             'notice_respect': 'without',
             'departure_description': 'foo',
         })
-        self.contract.date_end = date(2025, 10, 2)
+        self.contract.contract_date_end = date(2025, 10, 2)
 
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -462,7 +459,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -483,7 +480,7 @@ class TestDMFA(AccountTestInvoicingCommon):
 
         thirteen_month_payslip = self.env['hr.payslip'].create({
             'name': 'Thirteen Month Departure',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -510,11 +507,11 @@ class TestDMFA(AccountTestInvoicingCommon):
             'notice_respect': 'with',
             'departure_description': 'foo',
         })
-        self.contract.date_end = date(2025, 10, 2)
+        self.contract.contract_date_end = date(2025, 10, 2)
 
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -526,7 +523,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -547,7 +544,7 @@ class TestDMFA(AccountTestInvoicingCommon):
 
         thirteen_month_payslip = self.env['hr.payslip'].create({
             'name': 'Thirteen Month Departure',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -570,7 +567,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         self.contract.wage_on_signature = 2000
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -582,7 +579,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -590,7 +587,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -607,7 +604,7 @@ class TestDMFA(AccountTestInvoicingCommon):
     def test_90_dmfa_sftp_flow_invalid_acrf(self):
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -619,7 +616,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -627,7 +624,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -729,7 +726,7 @@ class TestDMFA(AccountTestInvoicingCommon):
     def test_91_dmfa_sftp_flow_invalid_noti(self):
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -741,7 +738,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -749,7 +746,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,
@@ -946,7 +943,7 @@ class TestDMFA(AccountTestInvoicingCommon):
     def test_92_dmfa_sftp_flow_valid_noti(self):
         payslips = self.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2025 %s',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 1, 1),
             'date_to': datetime(2025, 1, 31),
             'employee_id': self.employee.id,
@@ -958,7 +955,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             })],
         }, {
             'name': 'Payslip Feb 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 2, 1),
             'date_to': datetime(2025, 2, 28),
             'employee_id': self.employee.id,
@@ -966,7 +963,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             'company_id': self.belgian_company.id,
         }, {
             'name': 'Payslip Mar 2025',
-            'contract_id': self.contract.id,
+            'version_id': self.contract.id,
             'date_from': datetime(2025, 3, 1),
             'date_to': datetime(2025, 3, 31),
             'employee_id': self.employee.id,

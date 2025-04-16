@@ -22,22 +22,20 @@ class TestContractScheduleChange(TransactionCase):
         ])
 
     def test_base_case(self):
-        contract_1 = self.env['hr.contract'].create({
-            'name': 'Richard First',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-01-01'),
-            'date_end': Date.to_date('2020-01-31'),
+        self.employee.version_id.write({
+            'date_version': Date.to_date('2020-01-01'),
+            'contract_date_start': Date.to_date('2020-01-01'),
+            'contract_date_end': Date.to_date('2020-01-31'),
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'close',
             'wage': 1337,
         })
-        contract_2 = self.env['hr.contract'].create({
-            'name': 'Richard Second',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-02-01'),
-            'date_end': Date.to_date('2020-02-28'),
+        contract_1 = self.employee.version_id
+
+        contract_2 = self.employee.create_version({
+            'date_version': Date.to_date('2020-02-01'),
+            'contract_date_start': Date.to_date('2020-02-01'),
+            'contract_date_end': Date.to_date('2020-02-28'),
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'close',
             'wage': 1337,
         })
 
@@ -63,21 +61,19 @@ class TestContractScheduleChange(TransactionCase):
 
     def test_future_contract(self):
         # This test is the same as the base case except the second contract is set in the futur
-        contract_1 = self.env['hr.contract'].create({
-            'name': 'Richard First',
-            'employee_id': self.employee.id,
-            'date_start': Date.today() + relativedelta(months=-1),
-            'date_end': Date.today() + relativedelta(months=1),
+        self.employee.version_id.write({
+            'date_version': Date.today() + relativedelta(months=-1),
+            'contract_date_start': Date.today() + relativedelta(months=-1),
+            'contract_date_end': Date.today() + relativedelta(months=1),
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'open',
             'wage': 1337,
         })
-        contract_2 = self.env['hr.contract'].create({
-            'name': 'Richard Second',
-            'employee_id': self.employee.id,
-            'date_start': Date.today() + relativedelta(months=1, days=1),
+        contract_1 = self.employee.version_id
+        contract_2 = self.employee.create_version({
+            'date_version': Date.today() + relativedelta(months=1, days=1),
+            'contract_date_start': Date.today() + relativedelta(months=1, days=1),
+            'contract_date_end': False,
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'draft',
             'wage': 1337,
         })
 
@@ -104,31 +100,27 @@ class TestContractScheduleChange(TransactionCase):
     def test_triple_contract(self):
         #Simulates a temporary part time
         #For this test we will have 3 contracts, the one in the middle will have the different schedule
-        contract_1 = self.env['hr.contract'].create({
-            'name': 'Richard First',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-01-01'),
-            'date_end': Date.to_date('2020-01-31'),
+        self.employee.version_id.write({
+            'date_version': Date.to_date('2020-01-01'),
+            'contract_date_start': Date.to_date('2020-01-01'),
+            'contract_date_end': Date.to_date('2020-01-31'),
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'close',
             'wage': 1337,
         })
-        contract_2 = self.env['hr.contract'].create({
-            'name': 'Richard Second',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-02-01'),
-            'date_end': Date.to_date('2020-02-28'),
+        contract_1 = self.employee.version_id
+
+        contract_2 = self.employee.create_version({
+            'date_version': Date.to_date('2020-02-01'),
+            'contract_date_start': Date.to_date('2020-02-01'),
+            'contract_date_end': Date.to_date('2020-02-28'),
             'resource_calendar_id': self.calendars[1].id,
-            'state': 'close',
             'wage': 1337,
         })
-        contract_3 = self.env['hr.contract'].create({
-            'name': 'Richard Third',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-03-01'),
-            'date_end': Date.to_date('2020-03-31'),
+        contract_3 = self.employee.create_version({
+            'date_version': Date.to_date('2020-03-01'),
+            'contract_date_start': Date.to_date('2020-03-01'),
+            'contract_date_end': Date.to_date('2020-03-31'),
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'close',
             'wage': 1337,
         })
 
@@ -151,48 +143,40 @@ class TestContractScheduleChange(TransactionCase):
         self.assertTrue(contract_1.calendar_changed)
         self.assertTrue(contract_3.calendar_changed)
         #The same should also happen if the contract is cancelled
-        contract_2.state = 'cancel'
-        self.assertFalse(contract_2.calendar_changed)
+        contract_2.unlink()
         #There is a change in calendar due to the gap between the contracts
         self.assertTrue(contract_1.calendar_changed)
         self.assertTrue(contract_3.calendar_changed)
 
     def test_four_contracts(self):
         #All four contracts will have different schedules
-        contract_1 = self.env['hr.contract'].create({
-            'name': 'Richard First',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-01-01'),
-            'date_end': Date.to_date('2020-01-31'),
+        self.employee.version_id.write({
+            'date_version': Date.to_date('2020-01-01'),
+            'contract_date_start': Date.to_date('2020-01-01'),
+            'contract_date_end': Date.to_date('2020-01-31'),
             'resource_calendar_id': self.calendars[0].id,
-            'state': 'close',
             'wage': 1337,
         })
-        contract_2 = self.env['hr.contract'].create({
-            'name': 'Richard Second',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-02-01'),
-            'date_end': Date.to_date('2020-02-28'),
+        contract_1 = self.employee.version_id
+        contract_2 = self.employee.create_version({
+            'date_version': Date.to_date('2020-02-01'),
+            'contract_date_start': Date.to_date('2020-02-01'),
+            'contract_date_end': Date.to_date('2020-02-28'),
             'resource_calendar_id': self.calendars[1].id,
-            'state': 'close',
             'wage': 1337,
         })
-        contract_3 = self.env['hr.contract'].create({
-            'name': 'Richard Third',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-03-01'),
-            'date_end': Date.to_date('2020-03-31'),
+        contract_3 = self.employee.create_version({
+            'date_version': Date.to_date('2020-03-01'),
+            'contract_date_start': Date.to_date('2020-03-01'),
+            'contract_date_end': Date.to_date('2020-03-31'),
             'resource_calendar_id': self.calendars[2].id,
-            'state': 'close',
             'wage': 1337,
         })
-        contract_4 = self.env['hr.contract'].create({
-            'name': 'Richard Fourth',
-            'employee_id': self.employee.id,
-            'date_start': Date.to_date('2020-04-01'),
-            'date_end': Date.to_date('2020-04-30'),
+        contract_4 = self.employee.create_version({
+            'date_version': Date.to_date('2020-04-01'),
+            'contract_date_start': Date.to_date('2020-04-01'),
+            'contract_date_end': Date.to_date('2020-04-30'),
             'resource_calendar_id': self.calendars[3].id,
-            'state': 'close',
             'wage': 1337,
         })
 
@@ -211,9 +195,8 @@ class TestContractScheduleChange(TransactionCase):
         self.assertFalse(contract_4.calendar_changed)
 
         #Cancel the second and have the same schedule on the first as third and fourth
-        contract_2.state = 'cancel'
+        contract_2.unlink()
         contract_1.resource_calendar_id = self.calendars[3]
-        self.assertFalse(contract_2.calendar_changed) # Cancelled
         self.assertTrue(contract_1.calendar_changed) # True due to gap being big enough
         self.assertTrue(contract_3.calendar_changed) # True due to gap
         self.assertFalse(contract_4.calendar_changed) # Simply false

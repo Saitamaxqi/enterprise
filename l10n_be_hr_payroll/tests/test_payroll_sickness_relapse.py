@@ -75,7 +75,7 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
 
         (first_leave + second_leave).action_approve()
 
-        work_entries = self.employee_test.contract_ids.generate_work_entries(
+        work_entries = self.employee_test.version_ids.generate_work_entries(
             date(2024, 8, 8), date(2024, 8, 8)
         )
         work_entries.action_validate()
@@ -114,10 +114,10 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
 
         (first_leave + second_leave).action_approve()
 
-        work_entry_paid = self.employee_test.contract_ids.generate_work_entries(
+        work_entry_paid = self.employee_test.version_ids.generate_work_entries(
             date(2024, 8, 7), date(2024, 8, 7)
         )
-        work_entry_unpaid = self.employee_test.contract_ids.generate_work_entries(
+        work_entry_unpaid = self.employee_test.version_ids.generate_work_entries(
             date(2024, 8, 8), date(2024, 8, 8)
         )
 
@@ -213,7 +213,7 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
             + seventh_leave
         ).action_approve()
 
-        work_entries = self.employee_test.contract_ids.generate_work_entries(
+        work_entries = self.employee_test.version_ids.generate_work_entries(
             date(2024, 8, 12), date(2024, 8, 12)
         )
         work_entries.action_validate()
@@ -308,7 +308,7 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
             + seventh_leave
         ).action_approve()
 
-        work_entries = self.employee_test.contract_ids.generate_work_entries(
+        work_entries = self.employee_test.version_ids.generate_work_entries(
             date(2024, 8, 12), date(2024, 8, 12)
         )
         work_entries.action_validate()
@@ -345,7 +345,7 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
             )
             short_leave.action_approve()
 
-        work_entries = self.employee_test.contract_ids.generate_work_entries(
+        work_entries = self.employee_test.version_ids.generate_work_entries(
             date(2024, 7, 15), date(2024, 7, 29)
         )
 
@@ -428,7 +428,7 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
         )
         (first_leave + second_leave + third_leave + fourth_leave).action_approve()
 
-        work_entries = self.employee_test.contract_ids.generate_work_entries(
+        work_entries = self.employee_test.version_ids.generate_work_entries(
             date(2024, 8, 9), date(2024, 8, 12)
         )
 

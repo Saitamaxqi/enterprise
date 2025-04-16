@@ -9,81 +9,80 @@ from odoo.tests import tagged
 @tagged('post_install_l10n', 'post_install', '-at_install')
 class TestPayrollCommon(TransactionCase):
 
-    def setUp(self):
-        super().setUp()
-
-        Bank = self.env['res.partner.bank']
-        Employee = self.env['hr.employee']
-        in_country = self.env.ref('base.in')
-        rd_dept = self.env['hr.department'].create({
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.Bank = cls.env['res.partner.bank']
+        cls.Employee = cls.env['hr.employee']
+        cls.PayslipRun = cls.env['hr.payslip.run']
+        cls.PayslipEmployee = cls.env['hr.payslip.employees']
+        cls.Company = cls.env['res.company']
+        cls.partner = cls.env.ref('base.partner_admin')
+        cls.bank_1 = cls.env.ref('base.res_bank_1')
+        cls.in_country = cls.env.ref('base.in')
+        cls.rd_dept = cls.env['hr.department'].create({
             'name': 'Research and Development',
         })
-        employee_fp = self.env.ref('hr.employee_admin')
+        cls.employee_fp = cls.env.ref('hr.employee_admin')
+        cls.employee_al = cls.env.ref('hr.employee_al')
 
-        self.company_in = self.env['res.company'].create({
+        cls.company_in = cls.Company.create({
             'name': 'Company IN',
-            'country_id': self.env.ref('base.in').id,
+            'country_id': cls.env.ref('base.in').id,
         })
 
-        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.company_in.ids))
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company_in.ids))
 
-        in_bank = self.env['res.bank'].create({
+        cls.in_bank = cls.env['res.bank'].create({
             'name': 'Bank IN',
             'bic': 'ABCD0123456'
         })
 
-        self.rahul_emp = Employee.create({
+        cls.rahul_emp = cls.Employee.create({
             'name': 'Rahul',
-            'country_id': in_country.id,
-            'department_id': rd_dept.id,
-            'company_id': self.company_in.id,
+            'country_id': cls.in_country.id,
+            'department_id': cls.rd_dept.id,
+            'company_id': cls.company_in.id,
             'l10n_in_esic_number': 93874944361284657,
+            'date_version': date(2023, 1, 1),
+            'contract_date_start': date(2023, 1, 1),
+            'contract_date_end':  date(2023, 1, 31),
+            'wage': 5000.0,
+            'l10n_in_esic_amount': 20.0,
+            'hr_responsible_id': cls.employee_fp.id,
         })
 
-        self.jethalal_emp = Employee.create({
+        cls.jethalal_emp = cls.Employee.create({
             'name': 'Jethalal',
-            'country_id': in_country.id,
-            'department_id': rd_dept.id,
-            'company_id': self.company_in.id,
+            'country_id': cls.in_country.id,
+            'department_id': cls.rd_dept.id,
+            'company_id': cls.company_in.id,
             'l10n_in_esic_number': 93487475100284657,
+            'date_version': date(2023, 1, 1),
+            'contract_date_start': date(2023, 1, 1),
+            'contract_date_end':  date(2023, 1, 31),
+            'wage': 5000.0,
+            'l10n_in_esic_amount': 20.0,
+            'hr_responsible_id': cls.employee_fp.id,
         })
 
-        res_bank = Bank.create({
+        cls.res_bank = cls.Bank.create({
             'acc_number': '3025632343043',
-            'partner_id': self.rahul_emp.work_contact_id.id,
+            'partner_id': cls.rahul_emp.work_contact_id.id,
             'acc_type': 'bank',
-            'bank_id': in_bank.id,
+            'bank_id': cls.in_bank.id,
             'allow_out_payment': True,
         })
-        self.rahul_emp.bank_account_id = res_bank
+        cls.rahul_emp.bank_account_id = cls.res_bank
 
-        res_bank_1 = Bank.create({
+        cls.res_bank_1 = cls.Bank.create({
             'acc_number': '3025632343044',
-            'partner_id': self.jethalal_emp.work_contact_id.id,
+            'partner_id': cls.jethalal_emp.work_contact_id.id,
             'acc_type': 'bank',
-            'bank_id': in_bank.id,
+            'bank_id': cls.in_bank.id,
             'allow_out_payment': True,
         })
-        self.jethalal_emp.bank_account_id = res_bank_1
+        cls.jethalal_emp.bank_account_id = cls.res_bank_1
 
-        self.contract_rahul = self.env['hr.contract'].create({
-            'date_start': date(2023, 1, 1),
-            'date_end':  date(2023, 1, 31),
-            'name': 'Rahul Probation contract',
-            'wage': 5000.0,
-            'l10n_in_esic_amount': 20.0,
-            'employee_id': self.rahul_emp.id,
-            'state': 'open',
-            'hr_responsible_id': employee_fp.id,
-        })
-
-        self.contract_jethalal = self.env['hr.contract'].create({
-            'date_start': date(2023, 1, 1),
-            'date_end':  date(2023, 1, 31),
-            'name': 'Jethalal Probation contract',
-            'wage': 5000.0,
-            'employee_id': self.jethalal_emp.id,
-            'state': 'open',
-            'l10n_in_esic_amount': 20.0,
-            'hr_responsible_id': employee_fp.id,
-        })
+        cls.contract_rahul = cls.rahul_emp.version_id
+        cls.contract_jethalal = cls.jethalal_emp.version_id

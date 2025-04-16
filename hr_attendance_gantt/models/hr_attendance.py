@@ -45,9 +45,9 @@ class HrAttendance(models.Model):
         """
         # number of days between the start and stop and take the stop into account.
         num_days = (stop.date() - start.date()).days
-        if employee.is_fully_flexible:
+        if employee.sudo().is_fully_flexible:
             return num_days * 24
-        if not employee.is_flexible:
+        if not employee.sudo().is_flexible:
             return self.env['resource.calendar']._get_attendance_intervals_days_data(employee._get_expected_attendances(start, stop))['hours']
         if num_days == 1:
             return employee.resource_id.calendar_id.hours_per_day

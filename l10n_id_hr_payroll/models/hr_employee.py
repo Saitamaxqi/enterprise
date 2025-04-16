@@ -1,23 +1,23 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import models
 
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    l10n_id_kode_ptkp = fields.Selection(
-        selection=[
-            ('tk0', "TK/0"),
-            ('tk1', "TK/1"),
-            ('tk2', "TK/2"),
-            ('tk3', "TK/3"),
-            ('k0', "K/0"),
-            ('k1', "K/1"),
-            ('k2', "K/2"),
-            ('k3', "K/3")],
-        string="PTKP Code",
-        default="tk0",
-        required=True,
-        groups="hr.group_hr_user",
-        help="Employee's tax category that depends on their marital status and number of children")
+    def l10n_id_action_view_historical_lines(self):
+        """ As the historical payslip line values of 'GROSS' and 'PPH21' is used to calculate
+        for the end of year/contract payment, HR team likes to cross-check the values manually
+
+        Show all payslip lines that are in validated/paid for code: 'GROSS" or 'PPH21'"""
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.act_contribution_reg_payslip_lines")
+        action.update(
+            {
+                'domain': [('version_id', '=', self.version_id.id), ('code', 'in', ('GROSS', 'PPH21'))],
+                'context': "{'search_default_category_id': 1}",
+                'views': [(self.env.ref('l10n_id_hr_payroll.hr_payslip_line_view_tree_id_history').id, 'list'), (False, 'form')]
+            }
+        )
+        return action

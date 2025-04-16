@@ -22,7 +22,7 @@ class HrPayslipWorkedDays(models.Model):
             if worked_day.work_entry_type_id != work_entry_type_overtime or worked_day.payslip_id.wage_type != 'hourly':
                 continue
             overtime_worked_days |= worked_day
-            amount = worked_day.payslip_id.contract_id.hourly_wage * worked_day.number_of_hours if worked_day.is_paid else 0
+            amount = worked_day.payslip_id.version_id.hourly_wage * worked_day.number_of_hours if worked_day.is_paid else 0
             worked_day.amount = amount * overtime_pay_percent
         super(HrPayslipWorkedDays, self - overtime_worked_days)._compute_amount()
 

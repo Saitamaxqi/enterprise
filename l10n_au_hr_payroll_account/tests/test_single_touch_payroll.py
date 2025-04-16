@@ -167,7 +167,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             slip_month = start_date.month + i if (start_date.month + i) <= 12 else 1
             slip_vals.append({
                 "employee_id": employee.id,
-                "contract_id": employee.contract_id.id,
+                "version_id": employee.version_id.id,
                 "date_from": start_date.replace(month=slip_month),
                 "date_to": start_date.replace(month=slip_month) + relativedelta(day=31),
                 "name": f"January Payslip {i + 1}",
@@ -329,7 +329,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         payslip = self.env["hr.payslip"].create({
                 "name": "payslip",
                 "employee_id": self.employee_1.id,
-                "contract_id": self.contract_1.id,
+                "version_id": self.contract_1.id,
                 "date_from": "2024-05-01",
                 "date_to": "2024-05-31",
                 "input_line_ids": [(0, 0, {
@@ -386,7 +386,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         payslip = self.env["hr.payslip"].create({
                 "name": "payslip",
                 "employee_id": self.employee_1.id,
-                "contract_id": self.contract_1.id,
+                "version_id": self.contract_1.id,
                 "date_from": "2024-10-28",
                 "date_to": "2024-11-01",
                 "input_line_ids": [(0, 0, {
@@ -511,7 +511,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                 "name": f"Work Entry {self.env.ref(work_entry_type).name}",
                 "work_entry_type_id": self.env.ref(work_entry_type).id,
                 "employee_id": self.employee_2.id,
-                "contract_id": self.contract_2.id,
+                "version_id": self.contract_2.id,
                 "date_start": start,
                 "date_stop": start + relativedelta(hours=duration),
                 "duration": duration,
@@ -579,7 +579,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         ]
         slip = self.env['hr.payslip'].create({
                 "employee_id": self.employee_2.id,
-                "contract_id": self.employee_2.contract_id.id,
+                "version_id": self.employee_2.version_id.id,
                 "date_from": datetime(2024, 10, 1),
                 "date_to":  datetime(2024, 10, 31),
                 "name": "OCT Payslip Test",
@@ -642,7 +642,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             # payslips = self.create_payslips(self.employee_2, 2, date(2024, 7, 1))
             slip = self.env["hr.payslip"].create({
                 "employee_id": self.employee_2.id,
-                "contract_id": self.employee_2.contract_id.id,
+                "version_id": self.employee_2.version_id.id,
                 "date_from": date(2024, 7, 1),
                 # "date_to": start_date.replace(day=31, month=slip_month),
                 "name": "Test Payslip",
@@ -856,7 +856,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                 line.employee_id = self.employee_1
             action.save().submit_to_ato()
         # Create data to finalise
-        self.contract_1.date_end = "2024-11-30"
+        self.contract_1.contract_date_end = "2024-11-30"
         with freeze_time("2024-11-30"):
             batch = self._prepare_payslip_run(self.employee_1 + self.employee_2, start_date="2024-11-01", end_date="2024-11-30")
             batch.action_validate()
@@ -970,7 +970,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             payslip = self.env["hr.payslip"].create({
                 "name": "payslip",
                 "employee_id": self.employee_1.id,
-                "contract_id": self.contract_1.id,
+                "version_id": self.contract_1.id,
                 "date_from": "2024-05-01",
                 "date_to": "2024-05-31",
             })

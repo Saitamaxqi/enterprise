@@ -10,8 +10,8 @@ class L10n_BeScheduleChangeAllocation(models.Model):
     _description = 'Update allocation on schedule change'
 
     effective_date = fields.Date(required=True)
-    contract_id = fields.Many2one(
-        'hr.contract',
+    version_id = fields.Many2one(
+        'hr.version',
         required=True,
         ondelete='cascade',
     )
@@ -34,19 +34,16 @@ class L10n_BeScheduleChangeAllocation(models.Model):
 
     def apply_directly(self):
         for record in self:
-            # Avoid updating the number of days if the contract has been cancelled
-            # Contrat may not be open already, it depends on another cron
-            if record.contract_id.state in ['draft', 'open']:
-                number_of_days = self.env['l10n_be.hr.payroll.schedule.change.wizard']\
-                    .with_company(record.contract_id.company_id)._compute_new_allocation(
-                        record.leave_allocation_id, record.current_resource_calendar_id,
-                        record.new_resource_calendar_id, record.effective_date,
-                )
-                record.leave_allocation_id.write({
-                    'number_of_days': number_of_days,
-                })
-                record.leave_allocation_id._message_log(body=Markup(_('New working schedule on %(contract_name)s.<br/>'
-                'New total: %(days)s')) % {'contract_name': record.contract_id.name, 'days': number_of_days})
+            number_of_days = self.env['l10n_be.hr.payroll.schedule.change.wizard']\
+                .with_company(record.version_id.company_id)._compute_new_allocation(
+                    record.leave_allocation_id, record.current_resource_calendar_id,
+                    record.new_resource_calendar_id, record.effective_date,
+            )
+            record.leave_allocation_id.write({
+                'number_of_days': number_of_days,
+            })
+            record.leave_allocation_id._message_log(body=Markup(_('New working schedule on %(contract_name)s.<br/>'
+            'New total: %(days)s')) % {'contract_name': record.version_id.name, 'days': number_of_days})
 
     @api.model
     def _cron_update_allocation_from_new_schedule(self, date=None):

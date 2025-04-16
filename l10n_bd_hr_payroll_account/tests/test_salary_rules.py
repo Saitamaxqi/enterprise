@@ -18,7 +18,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             structure=cls.env.ref('l10n_bd_hr_payroll.hr_payroll_structure_bd_employee_salary'),
             structure_type=cls.env.ref('l10n_bd_hr_payroll.structure_type_employee_bd'),
             employee_fields={
-                'gender': 'male',
+                'sex': 'male',
             }
         )
 
@@ -41,21 +41,21 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip, payslip_results)
 
     def test_female_payslip_1(self):
-        self.employee.gender = 'female'
+        self.employee.sex = 'female'
         self.contract.wage = 40000.0
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
         payslip_results = {'BASIC': 40000.0, 'GROSS': 40000.0, 'TAXABLE_AMOUNT': 26666.67, 'TAXES': -416.67, 'NET': 39583.33}
         self._validate_payslip(payslip, payslip_results)
 
     def test_female_payslip_2(self):
-        self.employee.gender = 'female'
+        self.employee.sex = 'female'
         self.contract.wage = 60000.0
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
         payslip_results = {'BASIC': 60000.0, 'GROSS': 60000.0, 'TAXABLE_AMOUNT': 40000.0, 'TAXES': -416.67, 'NET': 59583.33}
         self._validate_payslip(payslip, payslip_results)
 
     def test_female_payslip_3(self):
-        self.employee.gender = 'female'
+        self.employee.sex = 'female'
         self.contract.wage = 80000.0
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
         payslip_results = {'BASIC': 80000.0, 'GROSS': 80000.0, 'TAXABLE_AMOUNT': 53333.33, 'TAXES': -1583.33, 'NET': 78416.67}

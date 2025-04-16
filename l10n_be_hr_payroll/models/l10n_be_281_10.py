@@ -120,15 +120,6 @@ class L10n_Be281_10(models.Model):
         if invalid_employees:
             raise UserError(_("The following employees don't have a valid private address (with a street, a zip, a city and a country):\n%s", '\n'.join(invalid_employees.mapped('name'))))
 
-        invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
-        for employee in invalid_employees:
-            history = self.env['hr.contract.history'].search([('employee_id', '=', employee.id)], limit=1)
-            contracts = history.contract_ids.filtered(lambda c: c.active and c.state in ['open', 'close'])
-            employee.contract_id = contracts[0] if contracts else False
-        invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
-        if invalid_employees:
-            raise UserError(_("Some employee don't have any contract.:\n%s", '\n'.join(invalid_employees.mapped('name'))))
-
         invalid_employees = employees.filtered(lambda e: e.employee_type != 'trainee' and not e._is_niss_valid())
         if invalid_employees:
             raise UserError(_('Invalid NISS number for those employees:\n %s', '\n'.join(invalid_employees.mapped('name'))))
@@ -154,13 +145,13 @@ class L10n_Be281_10(models.Model):
     @api.model
     def _get_atn_nature(self, payslips):
         result = ''
-        if any(payslip.vehicle_id or payslip.contract_id.car_id for payslip in payslips):
+        if any(payslip.vehicle_id or payslip.version_id.car_id for payslip in payslips):
             result += 'F'
-        if any(payslip.contract_id.has_laptop for payslip in payslips):
+        if any(payslip.version_id.has_laptop for payslip in payslips):
             result += 'H'
-        if any(payslip.contract_id.internet for payslip in payslips):
+        if any(payslip.version_id.internet for payslip in payslips):
             result += 'I'
-        if any(payslip.contract_id.mobile for payslip in payslips):
+        if any(payslip.version_id.mobile for payslip in payslips):
             result += 'K'
         return result
 
@@ -285,7 +276,7 @@ class L10n_Be281_10(models.Model):
                 raise UserError(_("The employee first name shouldn't exceed 30 characters for employee %s", employee.name))
 
             first_contract_date = employee.with_context(
-                before_date=date(int(self.year), 12, 31))._get_first_contract_date()
+                before_date=date(int(self.year), 12, 31))._get_first_version_date()
             if not first_contract_date:
                 raise UserError(_("No first contract date found for employee %s", employee.name))
 

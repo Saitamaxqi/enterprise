@@ -37,6 +37,7 @@ class HelpdeskSlaReportAnalysis(models.Model):
         from_str += """
             LEFT JOIN "res_users" U on T.user_id = U.id AND U.company_id = T.company_id
             LEFT JOIN "hr_employee" EMP on EMP.user_id = U.id AND EMP.company_id = T.company_id
-            LEFT JOIN "hr_department" DEP on EMP.department_id = DEP.id AND DEP.company_id = T.company_id
+            LEFT JOIN hr_version VER ON VER.id = EMP.current_version_id
+            LEFT JOIN "hr_department" DEP on VER.department_id = DEP.id AND DEP.company_id = T.company_id
         """
         return from_str

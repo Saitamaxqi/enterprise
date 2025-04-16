@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from . import account_chart_template
-from . import hr_contract
+from . import hr_version
 from . import l10n_au_super_stream
 from . import l10n_au_super_fund
 from . import l10n_au_stp

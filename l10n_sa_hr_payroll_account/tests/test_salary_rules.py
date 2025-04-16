@@ -42,42 +42,32 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'address_id': cls.saudi_work_contact.id,
             'company_id': cls.env.company.id,
             'country_id': cls.env.ref('base.sa').id,
+            'structure_type_id': cls.env.ref('l10n_sa_hr_payroll.ksa_employee_payroll_structure_type').id,
+            'date_version': date(2024, 1, 1),
+            'contract_date_start': date(2024, 1, 1),
+            'wage': 12000,
+            'l10n_sa_housing_allowance': 1000,
+            'l10n_sa_transportation_allowance': 200,
+            'l10n_sa_other_allowances': 500,
+            'l10n_sa_number_of_days': 21,
         })
+        cls.saudi_contract = cls.saudi_employee.version_id
 
         cls.expat_employee = cls.env['hr.employee'].create({
             'name': 'KSA Expat Employee',
             'address_id': cls.expat_work_contact.id,
             'company_id': cls.env.company.id,
             'country_id': cls.env.ref('base.in').id,  # any other nationality
-        })
-
-        cls.saudi_contract = cls.env['hr.contract'].create({
-            'name': "KSA Local Employee's contract",
-            'employee_id': cls.saudi_employee.id,
-            'company_id': cls.env.company.id,
             'structure_type_id': cls.env.ref('l10n_sa_hr_payroll.ksa_employee_payroll_structure_type').id,
-            'date_start': date(2024, 1, 1),
-            'wage': 12000,
-            'l10n_sa_housing_allowance': 1000,
-            'l10n_sa_transportation_allowance': 200,
-            'l10n_sa_other_allowances': 500,
-            'l10n_sa_number_of_days': 21,
-            'state': "open",
-        })
-
-        cls.expat_contract = cls.env['hr.contract'].create({
-            'name': "KSA Expat Employee's contract",
-            'employee_id': cls.expat_employee.id,
-            'company_id': cls.env.company.id,
-            'structure_type_id': cls.env.ref('l10n_sa_hr_payroll.ksa_employee_payroll_structure_type').id,
-            'date_start': date(2024, 1, 1),
+            'date_version': date(2024, 1, 1),
+            'contract_date_start': date(2024, 1, 1),
             'wage': 5000,
             'l10n_sa_housing_allowance': 1000,
             'l10n_sa_transportation_allowance': 200,
             'l10n_sa_other_allowances': 300,
             'l10n_sa_number_of_days': 21,
-            'state': "open",
         })
+        cls.expat_contract = cls.expat_employee.version_id
 
         cls.compensable_timeoff_type = cls.env['hr.leave.type'].create({
             'name': "KSA Compensable Leaves",
@@ -101,13 +91,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'departure_reason_id': reason,
             'departure_date': date(2024, 3, 31)
         })
-        (cls.saudi_contract if saudi_or_expat == 'saudi' else cls.expat_contract).date_end = date(2024, 3, 31)
+        (cls.saudi_contract if saudi_or_expat == 'saudi' else cls.expat_contract).contract_date_end = date(2024, 3, 31)
 
     def test_saudi_payslip(self):
         payslip = self._generate_payslip(
             date(2024, 1, 1), date(2024, 1, 31),
             employee_id=self.saudi_employee.id,
-            contract_id=self.saudi_contract.id,
+            version_id=self.saudi_employee.version_id.id,
             struct_id=self.env.ref('l10n_sa_hr_payroll.ksa_saudi_employee_payroll_structure').id)
         payslip_results = {
             'BASIC': 12000.0,
@@ -126,7 +116,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(
             date(2024, 1, 1), date(2024, 1, 31),
             employee_id=self.expat_employee.id,
-            contract_id=self.expat_contract.id,
+            version_id=self.expat_employee.version_id.id,
             struct_id=self.env.ref('l10n_sa_hr_payroll.ksa_expat_employee_payroll_structure').id)
         payslip_results = {
             'BASIC': 5000.0,
@@ -145,7 +135,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(
             date(2024, 3, 1), date(2024, 3, 31),
             employee_id=self.saudi_employee.id,
-            contract_id=self.saudi_contract.id,
+            version_id=self.saudi_employee.version_id.id,
             struct_id=self.env.ref('l10n_sa_hr_payroll.ksa_saudi_employee_payroll_structure').id)
         payslip_results = {
             'BASIC': 12000.0,
@@ -167,7 +157,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(
             date(2024, 3, 1), date(2024, 3, 31),
             employee_id=self.expat_employee.id,
-            contract_id=self.expat_contract.id,
+            version_id=self.expat_employee.version_id.id,
             struct_id=self.env.ref('l10n_sa_hr_payroll.ksa_expat_employee_payroll_structure').id)
         payslip_results = {
             'BASIC': 5000.0,
@@ -185,8 +175,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
         work_entry = self.env['hr.work.entry'].create({
             'name': 'OT',
-            'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'employee_id': self.saudi_employee.id,
+            'version_id': self.saudi_employee.version_id.id,
             'date_start': datetime(2024, 1, 1, 18, 0, tzinfo=timezone(self.tz)).astimezone(tz=UTC).replace(tzinfo=None),
             'date_stop': datetime(2024, 1, 1, 22, 0, tzinfo=timezone(self.tz)).astimezone(tz=UTC).replace(tzinfo=None),
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_overtime').id,

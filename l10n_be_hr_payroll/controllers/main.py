@@ -78,10 +78,10 @@ class L10nBeHrPayrollEcoVoucherController(http.Controller):
                 amount,
                 quantity * amount,
                 f'{birthdate:%m/%d/%Y}',
-                'F' if employee.gender == 'female' else 'M',
+                'F' if employee.sex == 'female' else 'M',
                 lang,
                 ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-                'Actif' if employee.contract_id.state == 'open' else 'Fin de la collaboration',
+                'Actif' if employee.version_id.state == 'open' else 'Fin de la collaboration',
             ))
 
         col = 0

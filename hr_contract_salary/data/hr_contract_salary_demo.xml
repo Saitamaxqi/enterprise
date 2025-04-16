@@ -6,10 +6,10 @@
 
     <record id="benefit_extra_time_off" model="hr.contract.salary.benefit">
         <field name="name">Extra Time Off</field>
-        <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.contract'), ('name', '=', 'holidays')])"/>
+        <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.version'), ('name', '=', 'holidays')])"/>
         <field name="sequence">35</field>
         <field name="benefit_type_id" ref="hr_contract_salary.l10n_be_monthly_benefit"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee"/>
         <field name="icon">fa fa-suitcase</field>
         <field name="display_type">slider</field>
         <field name="uom">days</field>
@@ -109,7 +109,7 @@
         <field name="type_id" ref="sign.sign_item_type_date"/>
         <field name="name"></field>
         <field name="required" eval="True"/>
-        <field name="responsible_id" ref="hr_contract_sign.sign_item_role_job_responsible"/>
+        <field name="responsible_id" ref="hr_sign.sign_item_role_job_responsible"/>
         <field name="page">2</field>
         <field name="posX">0.649</field>
         <field name="posY">0.613</field>
@@ -122,7 +122,7 @@
         <field name="type_id" ref="sign.sign_item_type_signature"/>
         <field name="name"></field>
         <field name="required" eval="True"/>
-        <field name="responsible_id" ref="hr_contract_sign.sign_item_role_job_responsible"/>
+        <field name="responsible_id" ref="hr_sign.sign_item_role_job_responsible"/>
         <field name="page">2</field>
         <field name="posX">0.287</field>
         <field name="posY">0.579</field>
@@ -157,11 +157,11 @@
         <field name="height">0.015</field>
     </record>
 
-    <record id="hr_contract_cdi_experienced_developer" model="hr.contract">
+    <record id="contract_template_cdi_experienced_developer" model="hr.version">
         <field name="name">Experienced Developer</field>
         <field name="department_id" ref="hr.dep_rd"/>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="wage">2650</field>
         <field name="wage_on_signature">2650</field>
@@ -170,7 +170,7 @@
     </record>
 
     <record id="hr.job_developer" model="hr.job">
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
+        <field name="contract_template_id" ref="contract_template_cdi_experienced_developer"/>
     </record>
 
     <record id="partner_developper" model="res.partner">
@@ -221,23 +221,6 @@
     <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_applicant_developper')]]"/>
     <function model="hr.applicant" name="create_employee_from_applicant" eval="[[ref('hr_applicant_developper')]]"/>
 
-    <record id="hr_contract_applicant_developer" model="hr.contract">
-        <field name="name">Billy Kyle Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'Billy Kyle')]"/>
-        <field eval="3100.0" name="wage"/>
-        <field eval="3100.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_applicant_developper"/>
-    </record>
-
     <function model="hr.contract.salary.offer" name="write">
         <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_applicant_developper'))]"/>
         <value eval="{'state': 'full_signed'}"/>
@@ -248,230 +231,19 @@
         <value model="res.partner" eval="{'image_1920': obj(ref('partner_developper')).image_1920}"/>
     </function>
 
-    <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_recruitment.hr_case_traineemca0')]]"/>
-    <function model="hr.applicant" name="create_employee_from_applicant" eval="[[ref('hr_recruitment.hr_case_traineemca0')]]"/>
-
-    <record id="hr_contract_trainee_developer" model="hr.contract">
-        <field name="name">Marie Justine Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'Marie Justine')]"/>
-        <field eval="3599.0" name="wage"/>
-        <field eval="3599.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_recruitment.hr_case_traineemca0"/>
-    </record>
-
-    <function model="hr.contract.salary.offer" name="write">
-        <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_recruitment.hr_case_traineemca0'))]"/>
-        <value eval="{'state': 'refused'}"/>
-    </function>
-
-    <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_recruitment.hr_case_mkt0')]]"/>
-    <function model="hr.applicant" name="create_employee_from_applicant" eval="[[ref('hr_recruitment.hr_case_mkt0')]]"/>
-
-    <record id="hr_contract_mrk_applicant_1" model="hr.contract">
-        <field name="name">Yin Lee Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'Yin Lee')]"/>
-        <field eval="4500.0" name="wage"/>
-        <field eval="4500.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_admin"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_recruitment.hr_case_mkt0"/>
-    </record>
-
-    <function model="hr.contract.salary.offer" name="write">
-        <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_recruitment.hr_case_mkt0'))]"/>
-        <value eval="{'state': 'expired'}"/>
-    </function>
-
-    <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_recruitment.hr_case_financejob0')]]"/>
-    <function model="hr.applicant" name="create_employee_from_applicant" eval="[[ref('hr_recruitment.hr_case_financejob0')]]"/>
-
-    <record id="hr_sign_request_hrm_applicant_1" model="sign.request" >
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="reference">Applicant David Armstrong Sign Request</field>
-        <field name="subject">Applicant David Armstrong Sign Request</field>
-        <field name="state">sent</field>
-        <field name="request_item_ids" eval="[Command.clear(), Command.create({
-            'role_id': ref('sign.sign_item_role_employee'),
-            'partner_id': ref('partner_hrm_1'),
-            'signer_email': 'david.strongarm@gmail.example.com',
-            'state': 'completed',
-            'signing_date': DateTime.now(),
-        }), Command.create({
-            'role_id': ref('hr_contract_sign.sign_item_role_job_responsible'),
-            'partner_id': ref('base.partner_admin'),
-            'signer_email': 'admin@yourcompany.example.com',
-            'state': 'sent'
-        })]"/>
-    </record>
-
-    <record id="hr_contract_hrm_applicant_1" model="hr.contract">
-        <field name="name">David Armstrong Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'David Armstrong')]"/>
-        <field eval="3400.0" name="wage"/>
-        <field eval="3400.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_recruitment.hr_case_financejob0"/>
-    </record>
-
-    <function model="hr.contract.salary.offer" name="write">
-        <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_recruitment.hr_case_financejob0'))]"/>
-        <value eval="{'sign_request_ids': [Command.link(ref('hr_sign_request_hrm_applicant_1'))], 'state': 'half_signed'}"/>
-    </function>
-
-    <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_recruitment.hr_case_dev3')]]"/>
-
-    <record id="hr_sign_request_developer_1" model="sign.request" >
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="reference">Applicant Ohen Rizome Sign Request</field>
-        <field name="subject">Applicant Ohen Rizome Sign Request</field>
-        <field name="state">signed</field>
-        <field name="request_item_ids" eval="[Command.clear(), Command.create({
-            'role_id': ref('sign.sign_item_role_employee'),
-            'partner_id': ref('partner_developer_2'),
-            'signer_email': 'ohen@yahoo.example.com',
-            'state': 'completed',
-            'signing_date': (DateTime.now() - timedelta(days=1)),
-        }), Command.create({
-            'role_id': ref('hr_contract_sign.sign_item_role_job_responsible'),
-            'partner_id': ref('base.partner_admin'),
-            'signer_email': 'admin@yourcompany.example.com',
-            'state': 'completed',
-            'signing_date': DateTime.now(),
-        })]"/>
-    </record>
-
-    <record id="hr_contract_developer_1" model="hr.contract">
-        <field name="name">Ohen Rizome Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'Ohen Rizome')]"/>
-        <field eval="3400.0" name="wage"/>
-        <field eval="3400.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_recruitment.hr_case_dev3"/>
-    </record>
-
-    <function model="hr.contract.salary.offer" name="write">
-        <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_recruitment.hr_case_dev3'))]"/>
-        <value eval="{'sign_request_ids': [Command.link(ref('hr_sign_request_developer_1'))], 'state': 'full_signed'}"/>
-    </function>
-
-    <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_recruitment.hr_case_marketingjob0')]]"/>
-    <function model="hr.applicant" name="create_employee_from_applicant" eval="[[ref('hr_recruitment.hr_case_marketingjob0')]]"/>
-
-    <record id="hr_sign_request_developer_2" model="sign.request" >
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="reference">Applicant Sandra Elvis Request</field>
-        <field name="subject">Applicant Sandra Elvis Request</field>
-        <field name="state">sent</field>
-        <field name="request_item_ids" eval="[Command.clear(), Command.create({
-            'role_id': ref('sign.sign_item_role_employee'),
-            'partner_id': ref('partner_developer_1'),
-            'signer_email': 'sandra.elvis.the.king25@gmail.example.com',
-            'state': 'completed',
-            'signing_date': (DateTime.now() - timedelta(days=2)),
-        }), Command.create({
-            'role_id': ref('hr_contract_sign.sign_item_role_job_responsible'),
-            'partner_id': ref('base.partner_admin'),
-            'signer_email': 'admin@yourcompany.example.com',
-            'state': 'sent'
-        })]"/>
-    </record>
-
-    <record id="hr_contract_developer_1" model="hr.contract">
-        <field name="name">Sandra Elvis Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'Sandra Elvis')]"/>
-        <field eval="7400.0" name="wage"/>
-        <field eval="7400.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_recruitment.hr_case_marketingjob0"/>
-    </record>
-
-    <function model="hr.contract.salary.offer" name="write">
-        <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_recruitment.hr_case_marketingjob0'))]"/>
-        <value eval="{'sign_request_ids': [Command.link(ref('hr_sign_request_developer_2'))], 'state': 'half_signed'}"/>
-    </function>
-
-    <function model="hr.applicant" name="action_generate_offer" eval="[[ref('hr_recruitment.hr_case_cto1')]]"/>
-    <function model="hr.applicant" name="create_employee_from_applicant" eval="[[ref('hr_recruitment.hr_case_cto1')]]"/>
-
-    <record id="hr_sign_request_cto_1" model="sign.request" >
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="reference">Emily Brooks Sign Request</field>
-        <field name="subject">Emily Brooks Sign Request</field>
-        <field name="state">signed</field>
-        <field name="request_item_ids" eval="[Command.clear(), Command.create({
-            'role_id': ref('sign.sign_item_role_employee'),
-            'partner_id': ref('partner_cto_1'),
-            'signer_email': 'emily.brooks@example.com',
-            'state': 'completed',
-            'signing_date': (DateTime.now() - timedelta(days=15)),
-        }), Command.create({
-            'role_id': ref('hr_contract_sign.sign_item_role_job_responsible'),
-            'partner_id': ref('base.partner_admin'),
-            'signer_email': 'admin@yourcompany.example.com',
-            'state': 'completed',
-            'signing_date': (DateTime.now() - timedelta(days=2)),
-        })]"/>
-    </record>
-
-    <record id="hr_contract_applicant_cto_1" model="hr.contract">
-        <field name="name">Emily Brooks Contract</field>
-        <field name="date_start" eval="(DateTime.now())"/>
-        <field name="employee_id" model="hr.employee" search="[('name', '=', 'Emily Brooks')]"/>
-        <field eval="8900.0" name="wage"/>
-        <field eval="8900.0" name="wage_on_signature"/>
-        <field name="state">open</field>
-        <field name="kanban_state">normal</field>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-        <field name="hr_responsible_id" ref="base.user_admin"/>
-        <field name="default_contract_id" ref="hr_contract_cdi_experienced_developer"/>
-        <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
-        <field name="applicant_id" ref="hr_recruitment.hr_case_cto1"/>
-    </record>
-
-    <function model="hr.contract.salary.offer" name="write">
-        <value model="hr.contract.salary.offer" search="[('applicant_id','=',ref('hr_recruitment.hr_case_cto1'))]"/>
-        <value eval="{'sign_request_ids': [Command.link(ref('hr_sign_request_cto_1'))], 'state': 'full_signed'}"/>
+    <function model="hr.employee" name="write">
+        <value model="hr.employee" search="[('name', '=', 'Billy Kyle')]"/>
+        <value eval="{
+            'contract_date_start': DateTime.today(),
+            'wage': 3100.0,
+            'wage_on_signature': 3100.0,
+            'structure_type_id': ref('hr.structure_type_employee'),
+            'hr_responsible_id': ref('base.user_demo'),
+            'contract_template_id': ref('contract_template_cdi_experienced_developer'),
+            'sign_template_id': ref('hr_contract_salary.sign_template_cdi_developer'),
+            'contract_update_template_id': ref('hr_contract_salary.sign_template_cdi_developer'),
+            'resource_calendar_id': ref('resource.resource_calendar_std_38h'),
+            'applicant_id': ref('hr_applicant_developper'),
+        }"/>
     </function>
 </odoo>

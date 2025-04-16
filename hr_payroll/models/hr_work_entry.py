@@ -26,7 +26,7 @@ class HrWorkEntry(models.Model):
         """
         Returns the amount of hours worked from date_start to date_stop related to the work entry.
 
-        This method is meant to be overriden, see hr_work_entry_contract_attendance
+        This method is meant to be overriden, see hr_work_entry_attendance
         """
         dt = date_stop - date_start
         return dt.days * 24 + dt.seconds / 3600
@@ -37,7 +37,7 @@ class HrWorkEntry(models.Model):
         """
         work_entries_by_contract = defaultdict(lambda: self.env['hr.work.entry'])
         for work_entry in self:
-            work_entries_by_contract[work_entry.contract_id] |= work_entry
+            work_entries_by_contract[work_entry.version_id] |= work_entry
 
         for contract, work_entries in work_entries_by_contract.items():
             if contract.work_entry_source != 'calendar':

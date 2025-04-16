@@ -142,7 +142,7 @@
         <!-- Employee -->
         <record id="l10n_in_hr_employee_vihaan" model="hr.employee">
             <field name="name">Vihaan Sengupta</field>
-            <field name="gender">male</field>
+            <field name="sex">male</field>
             <field name="marital">single</field>
             <field name="work_phone">+91 8765432109</field>
             <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_rd"/>
@@ -175,11 +175,43 @@
             <field name="l10n_in_uan">124567334654</field>
             <field name="l10n_in_esic_number">93874947361284657</field>
             <field name="l10n_in_pan">HDIUE8765M</field>
+            <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
+            <field name="wage">40000</field>
+            <field name="l10n_in_tds">4000</field>
+            <field name="l10n_in_gratuity">1142</field>
+            <field name="l10n_in_medical_insurance">5100</field>
+            <field name="l10n_in_voluntary_provident_fund">12</field>
+            <field name="l10n_in_house_rent_allowance_metro_nonmetro">16</field>
+            <field name="l10n_in_supplementary_allowance">5560</field>
+            <field name="l10n_in_leave_allowance">2000</field>
+            <field name="l10n_in_esic_amount">1160</field>
+            <field name="hr_responsible_id" ref="base.user_demo"/>
+            <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+            <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+            <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
         </record>
+
+        <function name="create_version" model="hr.employee">
+            <value eval="[ref('l10n_in_hr_payroll.l10n_in_hr_employee_vihaan')]"/>
+            <value eval="{
+                'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1),
+                'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1),
+                'contract_date_end': False,
+                'l10n_in_tds': 5000,
+                'l10n_in_gratuity': 1442.50,
+                'l10n_in_medical_insurance': 6550,
+                'l10n_in_voluntary_provident_fund': 12,
+                'l10n_in_house_rent_allowance_metro_nonmetro': 12,
+                'l10n_in_supplementary_allowance': 6850,
+                'l10n_in_leave_allowance': 2750,
+                'l10n_in_esic_amount': 1560,
+            }"/>
+        </function>
+
         <record id="l10n_in_hr_employee_shaurya" model="hr.employee">
             <field name="name">Shaurya Khurana</field>
             <field name="job_id" ref="hr.job_developer"/>
-            <field name="gender">male</field>
+            <field name="sex">male</field>
             <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_tech_support"/>
             <field name="work_contact_id" ref="l10n_in_hr_payroll.l10n_in_partner_shaurya_khurana"/>
             <field name="marital">single</field>
@@ -205,13 +237,22 @@
             <field name="l10n_in_uan">387438790384</field>
             <field name="l10n_in_esic_number">93487475300284657</field>
             <field name="l10n_in_pan">KUPYH9876I</field>
+            <field name="structure_type_id" ref="hr.structure_type_worker"/>
+            <field name="wage_type">hourly</field>
+            <field name="hourly_wage">250</field>
+            <field name="wage" eval="15000"/>
+            <field name="time_credit" eval="True"/>
+            <field name="time_credit_type_id" ref="hr_work_entry.work_entry_type_unpaid_leave"/>
+            <field name="hr_responsible_id" ref="base.user_demo"/>
+            <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+            <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
         </record>
+
         <record id="l10n_in_hr_employee_alisha_sharma" model="hr.employee">
             <field name="name">Alisha Sharma</field>
             <field name="job_id" ref="hr.job_hrm"/>
-            <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_marketing"/>
             <field name="work_contact_id" ref="l10n_in_hr_payroll.l10n_in_partner_aisha_sharma"/>
-            <field name="gender">female</field>
+            <field name="sex">female</field>
             <field name="tz">Asia/Kolkata</field>
             <field name="work_phone">+91 9887756789</field>
             <field name="private_email">alisha.sharma@example.com</field>
@@ -226,77 +267,13 @@
             <field name="l10n_in_esic_number">4658302649025064783</field>
             <field name="l10n_in_pan">GUNI5723P</field>
             <field name="create_date" eval="(DateTime.today() + relativedelta(months=-6))"/>
-        </record>
-
-         <!-- Running  Contract-->
-         <record id="l10n_in_hr_contract_alisha_sharma" model="hr.contract">
-            <field name="name">Alisha Sharma</field>
             <field name="department_id" ref="l10n_in_hr_department_rd"/>
-            <field name="employee_id" ref="l10n_in_hr_employee_alisha_sharma"/>
             <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_intern"/>
             <field name="wage" eval="25000"/>
-            <field name="state">open</field>
-            <field name="company_id" ref="base.demo_company_in"/>
             <field name="hr_responsible_id" ref="base.user_demo"/>
             <field name="l10n_in_esic_amount">1200</field>
-            <field name="date_start" eval="(DateTime.today() + relativedelta(months=-6))"/>
-        </record>
-        <record id="l10n_in_hr_contract_shaurya" model="hr.contract">
-            <field name="name">Shaurya Contract</field>
-            <field name="department_id" ref="l10n_in_hr_department_rd"/>
-            <field name="employee_id" ref="l10n_in_hr_employee_shaurya"/>
-            <field name="structure_type_id" ref="hr_contract.structure_type_worker"/>
-            <field name="wage_type">hourly</field>
-            <field name="hourly_wage">250</field>
-            <field name="wage" eval="15000"/>
-            <field name="time_credit" eval="True"/>
-            <field name="time_credit_type_id" ref="hr_work_entry.work_entry_type_unpaid_leave"/>
-            <field name="resource_calendar_id" ref="l10n_in_resource_calendar_part_time"/>
-            <field name="state">open</field>
-            <field name="company_id" ref="base.demo_company_in"/>
-            <field name="hr_responsible_id" ref="base.user_demo"/>
-            <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        </record>
-        <record id="l10n_in_hr_contract_vihaan" model="hr.contract">
-            <field name="name">Vihaan Sengupta Contract</field>
-            <field name="department_id" ref="l10n_in_hr_department_rd"/>
-            <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
-            <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
-            <field name="wage">50000</field>
-            <field name="state">open</field>
-            <field name="company_id" ref="base.demo_company_in"/>
-            <field name="l10n_in_tds">5000</field>
-            <field name="l10n_in_gratuity">1442.50</field>
-            <field name="l10n_in_medical_insurance">6550</field>
-            <field name="l10n_in_voluntary_provident_fund">12</field>
-            <field name="l10n_in_house_rent_allowance_metro_nonmetro">12</field>
-            <field name="l10n_in_supplementary_allowance">6850</field>
-            <field name="l10n_in_leave_allowance">2750</field>
-            <field name="l10n_in_esic_amount">1560</field>
-            <field name="hr_responsible_id" ref="base.user_demo"/>
-            <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
-        </record>
-
-        <!-- Expired Contract-->
-        <record id="l10n_in_hr_contract_vihaan_expired" model="hr.contract">
-            <field name="name">Vihaan Sengupta Contract</field>
-            <field name="department_id" ref="l10n_in_hr_department_rd"/>
-            <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
-            <field name="structure_type_id" ref="hr_contract.structure_type_employee"/>
-            <field name="wage">40000</field>
-            <field name="state">close</field>
-            <field name="company_id" ref="base.demo_company_in"/>
-            <field name="hr_responsible_id" ref="base.user_demo"/>
-            <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-            <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
-            <field name="l10n_in_tds">4000</field>
-            <field name="l10n_in_gratuity">1142</field>
-            <field name="l10n_in_medical_insurance">5100</field>
-            <field name="l10n_in_voluntary_provident_fund">12</field>
-            <field name="l10n_in_house_rent_allowance_metro_nonmetro">16</field>
-            <field name="l10n_in_supplementary_allowance">5560</field>
-            <field name="l10n_in_leave_allowance">2000</field>
-            <field name="l10n_in_esic_amount">1160</field>
+            <field name="date_version" eval="(DateTime.today() + relativedelta(months=-6))"/>
+            <field name="contract_date_start" eval="(DateTime.today() + relativedelta(months=-6))"/>
         </record>
 
         <!-- allocation -->
@@ -357,7 +334,7 @@
             ref('l10n_in_hr_payroll.l10n_in_alisha_half_time_off'),
         ]"/>
         </function>
-    
+
          <!-- salary attachment  -->
          <record id="l10n_in_salary_attachement_in_health_insurance" model="hr.salary.attachment">
             <field name="employee_ids" eval="[(4, ref('l10n_in_hr_employee_vihaan'))]"/>

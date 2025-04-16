@@ -8,9 +8,10 @@
             <field name="evaluation_code">
 employee_bank_data = self.env['hr.employee']._get_account_holder_employees_data()
 invalid_iban_emp_ids = self.env['hr.employee']._get_invalid_iban_employee_ids(employee_bank_data)
-if invalid_iban_emp_ids:
-    warning_count = len(invalid_iban_emp_ids)
-    warning_records = self.env['hr.employee'].browse(invalid_iban_emp_ids)
+employees = self.env['hr.employee'].browse(invalid_iban_emp_ids).filtered(lambda e: e.is_in_contract)
+if employees:
+    warning_count = len(employees)
+    warning_records = employees
             </field>
         </record>
 

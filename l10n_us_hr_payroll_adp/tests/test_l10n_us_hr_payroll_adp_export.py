@@ -30,32 +30,25 @@ class TestL10nUsHrPayrollADPExport(TransactionCase):
         cls.hourly_employee = cls.env['hr.employee'].create({
             'name': "John Hourly",
             'l10n_us_adp_code': "ABC1",
-            'company_id': cls.us_company.id
+            'company_id': cls.us_company.id,
+            'wage_type': 'hourly',
+            'hourly_wage': 40,
+            'wage': 1000,
+            'date_version': date(2023, 1, 1),
+            'contract_date_start': date(2023, 1, 1),
         })
         cls.monthly_employee = cls.env['hr.employee'].create({
             'name': "John Monthly",
             'l10n_us_adp_code': "ABC2",
-            'company_id': cls.us_company.id
-        })
-
-        cls.hourly_contract = cls.env['hr.contract'].create({
-            'name': "Hourly Contract",
-            'employee_id': cls.hourly_employee.id,
-            'wage_type': 'hourly',
-            'hourly_wage': 40,
-            'wage': 1000,
-            'date_start': date(2023, 1, 1),
-            'state': 'open'
-        })
-
-        cls.hourly_contract = cls.env['hr.contract'].create({
-            'name': "Monthly Contract",
-            'employee_id': cls.monthly_employee.id,
+            'company_id': cls.us_company.id,
             'wage_type': 'monthly',
             'wage': 10000,
-            'date_start': date(2023, 1, 1),
-            'state': 'open'
+            'date_version': date(2023, 1, 1),
+            'contract_date_start': date(2023, 1, 1),
         })
+
+        cls.hourly_contract = cls.hourly_employee.version_id
+        cls.monthly_contract = cls.monthly_employee.version_id
 
         cls.work_100_work_entry = cls.env['hr.work.entry.type'].search([('code', '=', 'WORK100')])
         cls.overtime_work_entry = cls.env['hr.work.entry.type'].search([('code', '=', 'OVERTIME')])

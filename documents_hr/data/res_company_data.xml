@@ -3,6 +3,7 @@
     <data noupdate="1">
         <record id="base.main_company" model="res.company">
             <field name="documents_hr_folder" ref="document_hr_folder"/>
+            <field name="documents_hr_contracts_tags" eval="[(6,0,[ref('documents_hr_tag_contracts')])]"/>
         </record>
     </data>
 </odoo>

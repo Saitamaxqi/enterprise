@@ -118,7 +118,6 @@
 
     <record id="hr_employee_siti" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_siti')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">0999-1234-0001</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_siti')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -136,7 +135,7 @@
         <field name="distance_home_work">1</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_siti')).country_id"/>
         <field name="identification_id">3174990907961234</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1996, 7, 9).date()"/>
         <field name="place_of_birth">Surabaya</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_siti')).country_id"/>
@@ -146,11 +145,19 @@
         <field name="study_field">Engineering</field>
         <field name="study_school">Airlangga University</field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_id_hr_payroll.res_partner_bank_account_siti"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">12550000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_version" eval="datetime(2020, 3, 16).date()"/>
+        <field name="contract_date_start" eval="datetime(2020, 3, 16).date()"/>
     </record>
 
     <record id="hr_employee_agus" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_agus')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">0999-1234-0002</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_agus')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -169,7 +176,7 @@
         <field name="distance_home_work">3</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_agus')).country_id"/>
         <field name="identification_id">3174991701932345</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1993, 1, 17).date()"/>
         <field name="place_of_birth">Jakarta</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_id_hr_payroll.res_partner_agus')).country_id"/>
@@ -179,14 +186,15 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">University of Indonesia</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_siti" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_id_hr_payroll.res_partner_bank_account_siti"/>
-    </record>
-
-    <record id="hr_employee_agus" model="hr.employee">
         <field name="bank_account_id" ref="l10n_id_hr_payroll.res_partner_bank_account_agus"/>
+        <field name="job_id" ref="hr.job_consultant"/>
+        <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">8750000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="datetime(2022, 6, 1).date()"/>
+        <field name="date_version" eval="datetime(2022, 6, 1).date()"/>
     </record>
 
     <record id="l10n_id_hr_payroll.structure_type_employee_id" model="hr.payroll.structure.type">
@@ -196,40 +204,4 @@
     <record id="l10n_id_hr_payroll.resource_calendar_standard" model="resource.calendar">
         <field name="company_id" ref="base.demo_company_id" />
     </record>
-
-    <record id="hr_contract_siti" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_id_hr_payroll.hr_employee_siti')).name + ' - ' + obj(ref('l10n_id_hr_payroll.hr_employee_siti')).job_title"/>
-        <field name="employee_id" ref="l10n_id_hr_payroll.hr_employee_siti"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_id"/>
-        <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">12550000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="datetime(2020, 3, 16).date()"/>
-    </record>
-
-    <record id="hr_contract_agus" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_id_hr_payroll.hr_employee_agus')).name + ' - ' + obj(ref('l10n_id_hr_payroll.hr_employee_agus')).job_title"/>
-        <field name="employee_id" ref="l10n_id_hr_payroll.hr_employee_agus"/>
-        <field name="job_id" ref="hr.job_consultant"/>
-        <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_id"/>
-        <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">8750000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="datetime(2022, 6, 1).date()"/>
-    </record>
-
-    <record id="hr_employee_siti" model="hr.employee">
-        <field name="contract_id" ref="l10n_id_hr_payroll.hr_contract_siti"/>
-    </record>
-    <record id="hr_employee_agus" model="hr.employee">
-        <field name="contract_id" ref="l10n_id_hr_payroll.hr_contract_agus"/>
-    </record>
-
 </odoo>

@@ -54,7 +54,7 @@ class PlanningAnalysisReport(models.Model):
                 S.department_id AS department_id,
                 S.employee_id AS employee_id,
                 S.end_datetime AS end_datetime,
-                E.job_title AS job_title,
+                J.name AS job_title,
                 S.manager_id AS manager_id,
                 S.name AS name,
                 S.publication_warning AS publication_warning,
@@ -78,6 +78,12 @@ class PlanningAnalysisReport(models.Model):
     def _join(self):
         return """
             LEFT JOIN hr_employee E ON E.id = S.employee_id
+            LEFT JOIN (
+                SELECT DISTINCT ON (employee_id) *
+                FROM hr_version
+                ORDER BY employee_id, date_version DESC
+            ) V ON V.employee_id = E.id
+            LEFT JOIN hr_job J ON J.id = V.job_id
             LEFT JOIN resource_resource R ON R.id = S.resource_id
         """
 
@@ -91,7 +97,7 @@ class PlanningAnalysisReport(models.Model):
                      S.department_id,
                      S.employee_id,
                      S.end_datetime,
-                     E.job_title,
+                     J.name,
                      S.manager_id,
                      S.name,
                      S.publication_warning,

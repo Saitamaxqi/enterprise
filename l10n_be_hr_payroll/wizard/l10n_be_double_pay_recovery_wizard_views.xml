@@ -9,7 +9,7 @@
                     <group>
                         <group>
                             <field name="employee_id"/>
-                            <field name="contract_id"/>
+                            <field name="version_id"/>
                             <field name="payslip_id" invisible="1"/>
                             <field name="gross_salary"/>
                             <field name="months_count"/>

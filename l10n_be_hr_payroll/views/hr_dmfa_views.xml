@@ -56,7 +56,7 @@
     <menuitem
         id="menu_l10n_be_hr_payroll_configuration"
         name="Belgium"
-        parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+        parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
         sequence="500"
         groups="hr_payroll.group_hr_payroll_user"
     />

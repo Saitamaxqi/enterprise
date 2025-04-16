@@ -25,15 +25,11 @@ class TestPayrollExpenseBatched(TestPayrollExpense):
                 'country_id': cls.company_data['company'].country_id.id,
                 'department_id': cls.dep_rd.id,
                 'work_contact_id': new_partner.id,
-            })
-            new_contract = cls.env['hr.contract'].create({
-                'date_start': '2020-01-01',
-                'date_end': '2062-01-25',
-                'name': 'Contract for expense employee',
+                'date_version': '2020-01-01',
+                'contract_date_start': '2020-01-01',
+                'contract_date_end': '2062-01-25',
                 'wage': 5000.33,
-                'employee_id': new_employee.id,
                 'structure_type_id': cls.hr_structure_type.id,
-                'state': 'open',
             })
             expenses_vals.append({
                 'name': f"Test Expense {employee_vals['name']}",
@@ -47,7 +43,7 @@ class TestPayrollExpenseBatched(TestPayrollExpense):
                     'name': f"Payslip for {employee_vals['name']}",
                     'employee_id': new_employee.id,
                     'struct_id': cls.expense_hr_structure.id,
-                    'contract_id': new_contract.id,
+                    'version_id': new_employee.version_id.id,
                     'payslip_run_id': cls.payslip_run.id,
                     'date_from': '2022-01-01',
                     'date_to': '2022-01-25',

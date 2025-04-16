@@ -28,7 +28,7 @@
         <field name="country_id" ref="base.my"/>
         <field name="company_id" ref="base.demo_company_my"/>
         <field name="image_1920" type="base64" file="l10n_my_hr_payroll/static/img/hr_employee_kah_yoon_ooi.jpg"/>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
     </record>
 
     <record id="res_partner_xiu_mei_lee" model="res.partner">
@@ -76,9 +76,8 @@
 
     <record id="hr_employee_xiu_mei_lee" model="hr.employee">
         <field name="name">Xiu Mei Lee (XML)</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="marital">single</field>
-        <field name="job_title">Software Developer</field>
         <field name="private_street">no 15-1 kuchai business centre jalan kuchai lama</field>
         <field name="private_city">Kuala Lumpur</field>
         <field name="private_zip">58200</field>
@@ -97,44 +96,29 @@
         <field name="study_school">Kuala Lumpur University</field>
         <field name="parent_id" ref="l10n_my_hr_payroll.hr_employee_kah_yoon_ooi"/>
         <field name="country_id" ref="base.my"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="identification_id">8752027365496</field>
         <field name="bank_account_id" ref="l10n_my_hr_payroll.res_partner_bank_account_norberta"/>
         <field name="image_1920" type="base64" file="l10n_my_hr_payroll/static/img/hr_employe_xiu_mei_lee.jpg"/>
         <field name="company_id" ref="base.demo_company_my"/>
         <field name="user_id" ref="l10n_my_hr_payroll.user_xiu_mei_lee"/>
-    </record>
-
-    <record id="hr_contract_cdi_xiu_mei_lee_previous" model="hr.contract">
-        <field name="name">CDI - Xiu Mei Lee - Experienced Developer</field>
         <field name="department_id" ref="hr_department_rdmy"/>
-        <field name="employee_id" ref="hr_employee_xiu_mei_lee"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="l10n_my_hr_payroll.structure_type_employee_my"/>
         <field name="wage">7000</field>
-        <field name="state">close</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_my"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_my').id)], limit=1)"/>
     </record>
 
-    <record id="hr_contract_cdi_xiu_mei_lee" model="hr.contract">
-        <field name="name">CDI - Xiu Mei Lee - Experienced Developer</field>
-        <field name="department_id" ref="hr_department_rdmy"/>
-        <field name="employee_id" ref="hr_employee_xiu_mei_lee"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="structure_type_id" ref="l10n_my_hr_payroll.structure_type_employee_my"/>
-        <field name="wage">10000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_my"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_my').id)], limit=1)"/>
-    </record>
-
-    <record id="hr_employee_xiu_mei_lee" model="hr.employee">
-        <field name="contract_id" ref="l10n_my_hr_payroll.hr_contract_cdi_xiu_mei_lee"/>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_my_hr_payroll.hr_employee_xiu_mei_lee')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1),
+            'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1),
+            'contract_date_end': False,
+            'wage': 10000.00
+        }"/>
+    </function>
 </odoo>

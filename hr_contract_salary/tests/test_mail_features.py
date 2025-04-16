@@ -12,7 +12,7 @@ class TestOfferMailFeatures(MailCommon):
         cls.user_contract_manager = mail_new_test_user(
             cls.env,
             email='user_contract_manager@test.example.com',
-            groups='hr_contract.group_hr_contract_manager,base.group_partner_manager',
+            groups='hr.group_hr_manager,base.group_partner_manager',
             name='Contract Manager',
             notification_type='email',
             login='contract_manager',
@@ -44,17 +44,14 @@ class TestOfferMailFeatures(MailCommon):
             'email': 'private@test.example.com',
             'name': 'Mr Employee',
             'work_email': 'hr.employee@test.example.com',
-        })
-
-        cls.contract_template = cls.env['hr.contract'].create({
             'job_id': cls.job.id,
-            'name': "Template Maze Runner Contract",
             'wage': 6500,
         })
-        cls.contract_employee = cls.env['hr.contract'].create({
-            'employee_id': cls.employee.id,
+        cls.contract_employee = cls.employee.version_id
+
+        cls.contract_template = cls.env['hr.version'].create({
             'job_id': cls.job.id,
-            'name': "Specific Maze Runner Contract",
+            'name': "Template Maze Runner Contract",
             'wage': 6500,
         })
 
@@ -69,7 +66,7 @@ class TestOfferMailFeatures(MailCommon):
                 'contract_template_id': cls.contract_template.id,
             }, {
                 'contract_template_id': cls.contract_template.id,
-                'employee_contract_id': cls.contract_employee.id,
+                'employee_version_id': cls.contract_employee.id,
             },
         ])
 

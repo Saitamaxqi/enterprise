@@ -92,7 +92,7 @@ class L10n_BeExportSdworxLeavesWizard(models.TransientModel):
         first_day = date(int(self.reference_year), current_month, 1)
         last_day = first_day + relativedelta(day=31)
         employees = self.leave_ids.employee_id
-        employee_contracts = employees.sudo()._get_contracts(
+        employee_contracts = employees.sudo()._get_versions_with_contract_overlap_with_period(
             first_day, last_day, states=['open', 'close'])
         prestations = {employee: {} for employee in employees}
 

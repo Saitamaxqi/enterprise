@@ -23,6 +23,7 @@ This module was not done by the R&D Payroll team. We can't promise you the accur
         'data/l10n_fr_hr_payroll_data.xml',
         'data/l10n_fr_hr_payroll_employe_cadre_data.xml',
         'data/l10n_fr_hr_payroll_employe_non_cadre_data.xml',
+        'views/hr_employee_views.xml',
         'views/l10n_fr_hr_payroll_view.xml',
         'views/res_config_settings_views.xml',
         'report/report_l10n_fr_fiche_paye.xml',

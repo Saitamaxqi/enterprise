@@ -7,7 +7,7 @@ class SignRequest(models.Model):
     def cancel(self):
         super().cancel()
         offers = self.env['hr.contract.salary.offer'].search([('sign_request_ids', 'in', self.ids)])
-        offers.applicant_id.unlink_archived_contracts()
+        offers.applicant_id.unlink_archived_versions()
         offers.write({'state': 'cancelled'})
         for offer in offers:
             offer.message_post(body=_("The offer has been cancelled due to the signature request cancellation."))

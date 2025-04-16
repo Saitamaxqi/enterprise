@@ -118,8 +118,6 @@
         <field name="work_phone">999/093-7982</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_richard')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="work_contact_id" ref="l10n_sk_hr_payroll.res_partner_richard"/>
-        <field name="company_id" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_richard')).company_id"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="tz">Europe/Bratislava</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_richard')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_richard')).city"/>
@@ -131,7 +129,7 @@
         <field name="distance_home_work">12</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_richard')).country_id"/>
         <field name="identification_id">9609130123</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1996, 9, 13).date()"/>
         <field name="place_of_birth">Martin</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_richard')).country_id"/>
@@ -141,18 +139,27 @@
         <field name="study_field">Frontend developer</field>
         <field name="study_school">Univerzita Komenského</field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_sk_hr_payroll.res_partner_bank_account_richard"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
+        <field name="company_id" ref="base.demo_company_sk"/>
+        <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">14000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_sk').id)], limit=1)"/>
     </record>
 
     <record id="hr_employee_frantiska" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_frantiska')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="l10n_sk_hr_payroll/static/img/hr_employe_frantiska.jpg"/>
         <field name="work_phone">999/093-7983</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_frantiska')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="parent_id" ref="l10n_sk_hr_payroll.hr_employee_richard"/>
         <field name="user_id" ref="l10n_sk_hr_payroll.user_frantiska"/>
         <field name="company_id" ref="base.demo_company_sk"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="tz">Europe/Bratislava</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_frantiska')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_frantiska')).city"/>
@@ -164,7 +171,7 @@
         <field name="distance_home_work">27</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_frantiska')).country_id"/>
         <field name="identification_id">9401190123</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1994, 1, 19).date()"/>
         <field name="place_of_birth">Trnava</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_sk_hr_payroll.res_partner_frantiska')).country_id"/>
@@ -174,71 +181,28 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Comenius University Bratislava</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_richard" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_sk_hr_payroll.res_partner_bank_account_richard"/>
-    </record>
-
-    <record id="hr_employee_frantiska" model="hr.employee">
         <field name="bank_account_id" ref="l10n_sk_hr_payroll.res_partner_bank_account_frantiska"/>
-    </record>
-
-    <record id="hr_contract_richard" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'ZDN - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_richard')).name + ' - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_richard')).job_title"/>
-        <field name="employee_id" ref="l10n_sk_hr_payroll.hr_employee_richard"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_sk"/>
-        <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">14000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_sk').id)], limit=1)"/>
-    </record>
-
-    <record id="hr_contract_frantiska_previous" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'ZDN - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).name + ' - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).job_title"/>
-        <field name="employee_id" ref="l10n_sk_hr_payroll.hr_employee_frantiska"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_sk"/>
         <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>
         <field name="wage_type">monthly</field>
         <field name="wage">3000</field>
-        <field name="state">close</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_sk').id)], limit=1)"/>
         <field name="l10n_sk_meal_voucher_employee">6.40</field>
         <field name="l10n_sk_meal_voucher_employer">3.52</field>
     </record>
 
-    <record id="hr_contract_frantiska" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'ZDN - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).name + ' - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).job_title"/>
-        <field name="employee_id" ref="l10n_sk_hr_payroll.hr_employee_frantiska"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_sk"/>
-        <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">3600</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_sk"/>
-        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_sk_hr_payroll.hr_contract_frantiska_previous')).date_end + relativedelta(days=1)"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_sk').id)], limit=1)"/>
-        <field name="l10n_sk_meal_voucher_employee">6.40</field>
-        <field name="l10n_sk_meal_voucher_employer">3.52</field>
-    </record>
-
-    <record id="hr_employee_richard" model="hr.employee">
-        <field name="contract_id" ref="l10n_sk_hr_payroll.hr_contract_richard"/>
-    </record>
-    <record id="hr_employee_frantiska" model="hr.employee">
-        <field name="contract_id" ref="l10n_sk_hr_payroll.hr_contract_frantiska"/>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_sk_hr_payroll.hr_employee_frantiska')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_end': False,
+            'wage': 3600.00
+        }"/>
+    </function>
 </odoo>

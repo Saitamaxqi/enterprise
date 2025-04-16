@@ -151,7 +151,6 @@
 
     <record id="hr_employee_tom" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_tom')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="l10n_lu_hr_payroll/static/img/hr_employee_tom_schmit.jpg"/>
         <field name="work_phone">999 197 093</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_tom')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -168,7 +167,7 @@
         <field name="distance_home_work">5</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_tom')).country_id"/>
         <field name="identification_id">1978022001234</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1978, 2, 20).date()"/>
         <field name="place_of_birth">Rumelange</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_tom')).country_id"/>
@@ -178,11 +177,24 @@
         <field name="study_field">Mechanical Engineering</field>
         <field name="study_school">University of Luxembourg</field>
         <field name="marital">single</field>
-
+        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_tom"/>
         <field name="l10n_lu_deduction_fd_daily">8.58</field>
         <field name="l10n_lu_deduction_ac_ae_daily">7.26</field>
         <field name="l10n_lu_tax_id_number">24961437</field>
         <field name="l10n_lu_tax_credit_cis">True</field>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">7500</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lu').id)], limit=1)"/>
+        <field name="l10n_lu_alw_vehicle">300</field>
+        <field name="l10n_lu_bik_vehicle">500</field>
+        <field name="l10n_lu_bik_vehicle_vat_included">False</field>
+        <field name="l10n_lu_meal_voucher_amount">2.8</field>
     </record>
 
     <record id="hr_employee_frida" model="hr.employee">
@@ -206,7 +218,7 @@
         <field name="distance_home_work">2</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_frida')).country_id"/>
         <field name="identification_id">1984093001234</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1984, 9, 30).date()"/>
         <field name="place_of_birth">Luxembourg</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_frida')).country_id"/>
@@ -216,16 +228,39 @@
         <field name="study_field">Computer Programming</field>
         <field name="study_school">University of Luxembourg</field>
         <field name="marital">single</field>
-
+        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_frida"/>
         <field name="l10n_lu_deduction_fd_daily">8.58</field>
         <field name="l10n_lu_deduction_ac_ae_daily">7.26</field>
         <field name="l10n_lu_tax_id_number">29489284</field>
         <field name="l10n_lu_tax_credit_cis">True</field>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
+        <field name="wage">4250</field>
+        <field name="l10n_lu_alw_vehicle">300</field>
+        <field name="l10n_lu_bik_vehicle">500</field>
+        <field name="l10n_lu_bik_vehicle_vat_included">False</field>
+        <field name="l10n_lu_meal_voucher_amount">2.8</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_version" eval="DateTime.today() + relativedelta(years=-2, month=1, day=1)"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-2, month=1, day=1)"/>
+        <field name="contract_date_end" eval="DateTime.today() + relativedelta(day=1, days=-1)"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lu').id)], limit=1)"/>
     </record>
+
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_lu_hr_payroll.hr_employee_frida')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(day=1, days=-1) + relativedelta(days=1),
+            'contract_date_start': DateTime.today() + relativedelta(day=1, days=-1) + relativedelta(days=1),
+            'contract_date_end': False,
+            'wage': 5000.00,
+        }"/>
+    </function>
+
 
     <record id="hr_employee_simone" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_simone')).name"/>
-        <field name="job_title">Chef</field>
         <field name="image_1920" type="base64" file="l10n_lu_hr_payroll/static/img/hr_employee_simon_jambon.jpg"/>
         <field name="work_phone">999 197 095</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_simone')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -242,7 +277,7 @@
         <field name="distance_home_work">5</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_simone')).country_id"/>
         <field name="identification_id">1982070501234</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1982, 7, 5).date()"/>
         <field name="place_of_birth">Diekirch</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_lu_hr_payroll.res_partner_simone')).country_id"/>
@@ -252,99 +287,17 @@
         <field name="study_field">Chef</field>
         <field name="study_school">EHTL</field>
         <field name="marital">single</field>
-
+        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_simone"/>
         <field name="l10n_lu_tax_id_number">35135122</field>
         <field name="l10n_lu_tax_credit_cip">True</field>
-    </record>
-
-    <record id="hr_employee_tom" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_tom"/>
-    </record>
-
-    <record id="hr_employee_frida" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_frida"/>
-    </record>
-
-    <record id="hr_employee_simone" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_simone"/>
-    </record>
-
-    <record id="hr_contract_tom" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_tom')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_tom')).job_title"/>
-        <field name="employee_id" ref="hr_employee_tom"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_lu"/>
-        <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">7500</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lu').id)], limit=1)"/>
-        <field name="l10n_lu_alw_vehicle">300</field>
-        <field name="l10n_lu_bik_vehicle">500</field>
-        <field name="l10n_lu_bik_vehicle_vat_included">False</field>
-        <field name="l10n_lu_meal_voucher_amount">2.8</field>
-    </record>
-
-    <record id="hr_contract_frida_previous" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).job_title"/>
-        <field name="employee_id" ref="hr_employee_frida"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_lu"/>
-        <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
-        <field name="wage">5000</field>
-        <field name="state">close</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime.today() + relativedelta(years=-2, month=1, day=1)"/>
-        <field name="date_end" eval="DateTime.today() + relativedelta(day=1, days=-1)"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lu').id)], limit=1)"/>
-    </record>
-
-    <record id="hr_contract_frida" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).job_title"/>
-        <field name="employee_id" ref="hr_employee_frida"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_lu"/>
-        <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">4250</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_lu_hr_payroll.hr_contract_frida_previous')).date_end + relativedelta(days=1)"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lu').id)], limit=1)"/>
-
-        <field name="l10n_lu_alw_vehicle">300</field>
-        <field name="l10n_lu_bik_vehicle">500</field>
-        <field name="l10n_lu_bik_vehicle_vat_included">False</field>
-        <field name="l10n_lu_meal_voucher_amount">2.8</field>
-    </record>
-
-    <record id="hr_contract_simone" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_simone')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_simone')).job_title"/>
-        <field name="employee_id" ref="hr_employee_simone"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_kitchen"/>
-        <field name="company_id" ref="base.demo_company_lu"/>
         <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
         <field name="wage_type">monthly</field>
         <field name="wage">2000</field>
-        <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_lu').id)], limit=1)"/>
-    </record>
-
-    <record id="hr_employee_tom" model="hr.employee">
-        <field name="contract_id" ref="l10n_lu_hr_payroll.hr_contract_tom"/>
-    </record>
-    <record id="hr_employee_frida" model="hr.employee">
-        <field name="contract_id" ref="l10n_lu_hr_payroll.hr_contract_frida"/>
-    </record>
-    <record id="hr_employee_simone" model="hr.employee">
-        <field name="contract_id" ref="l10n_lu_hr_payroll.hr_contract_simone"/>
     </record>
 </odoo>

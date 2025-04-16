@@ -19,7 +19,7 @@ result = payslip.paid_amount
         <field name="code">ONSS</field>
         <field name="sequence">18</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result=not contract.no_onss</field>
+        <field name="condition_python">result=not version.no_onss</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">BASIC</field>
         <field name="amount_percentage">-2.71</field>
@@ -47,13 +47,13 @@ result = categories['BASIC'] + categories['ALW']
         <field name="amount_select">code</field>
         <field name="sequence">170</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.transport_mode_private_car</field>
+        <field name="condition_python">result = version.transport_mode_private_car</field>
         <field name="amount_python_compute">
 if not categories['BASIC']:
     result = 0
     result_qty = 0
 else:
-    result = contract.with_context(payslip_date=payslip.date_from)._get_private_car_reimbursed_amount(contract.km_home_work) * 3 / (13 * 5)
+    result = version.with_context(payslip_date=payslip.date_from)._get_private_car_reimbursed_amount(version.km_home_work) * 3 / (13 * 5)
     result_qty = worked_days['WORK100'].number_of_days if 'WORK100' in worked_days else 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_student_regular_pay"/>
@@ -110,10 +110,10 @@ result_name = inputs['CHILD_SUPPORT'].name
         <field name="code">MEAL_V_EMP</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.meal_voucher_amount)</field>
+        <field name="condition_python">result = bool(version.meal_voucher_amount)</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage">-100.0</field>
-        <field name="amount_percentage_base">contract.meal_voucher_amount - contract.meal_voucher_paid_by_employer</field>
+        <field name="amount_percentage_base">version.meal_voucher_amount - version.meal_voucher_paid_by_employer</field>
         <field name="quantity">payslip.meal_voucher_count</field>
         <field name="appears_on_payslip" eval="True"/>
         <field name="partner_id" ref="l10n_be_hr_payroll.res_partner_meal_vouchers"/>

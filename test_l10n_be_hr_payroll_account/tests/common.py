@@ -98,7 +98,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'type_id': cls.env.ref('sign.sign_item_type_signature').id,
                 'name': False,
                 'required': True,
-                'responsible_id': cls.env.ref('hr_contract_sign.sign_item_role_job_responsible').id,
+                'responsible_id': cls.env.ref('hr_sign.sign_item_role_job_responsible').id,
                 'page': 2,
                 'posX': 0.333,
                 'posY': 0.575,
@@ -281,10 +281,10 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
         })
         cls.env.ref('base.main_partner').email = "info@yourcompany.example.com"
 
-        cls.new_dev_contract = cls.env['hr.contract'].create({
+        cls.new_dev_contract = cls.env['hr.version'].create({
             'name': 'New Developer Template Contract',
             'wage': 3000,
-            'structure_type_id': cls.env.ref('hr_contract.structure_type_employee_cp200').id,
+            'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
             'ip_wage_rate': 25,
             'sign_template_id': cls.template.id,
             'contract_update_template_id': cls.template.id,
@@ -299,10 +299,10 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'car_id': False
         })
 
-        cls.senior_dev_contract = cls.env['hr.contract'].create({
+        cls.senior_dev_contract = cls.env['hr.version'].create({
             'name': 'Senior Developer Template Contract',
             'wage': 6000,
-            'structure_type_id': cls.env.ref('hr_contract.structure_type_employee_cp200').id,
+            'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
             'ip': True,
             'ip_wage_rate': 50,
             'sign_template_id': cls.template.id,

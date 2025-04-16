@@ -32,7 +32,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
         compute='_compute_start_notice_period')
     end_notice_period = fields.Date('End Notice Period', compute='_compute_end_notice_period', store=True, readonly=False)
     departure_description = fields.Char('Departure Description', required=True)
-    oldest_contract_id = fields.Many2one('hr.contract', string='Oldest Contract', compute='_compute_oldest_contract_id')
+    oldest_contract_id = fields.Many2one('hr.version', string='Oldest Contract', compute='_compute_oldest_contract_id')
     first_contract = fields.Date(
         string='In the Company Since',
         help='First contract start date.',
@@ -63,11 +63,12 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
     def _compute_oldest_contract_id(self):
         """ get the oldest contract """
         for notice in self:
-            notice.oldest_contract_id = self.env['hr.contract'].search([
-                ('employee_id', '=', notice.employee_id.id),
-                ('state', '!=', 'cancel')
-            ], order='date_start asc', limit=1)
-            notice.first_contract = notice.oldest_contract_id.date_start
+            if notice.employee_id:
+                notice.oldest_contract_id = notice.employee_id.version_ids[0]
+                notice.first_contract = notice.oldest_contract_id.contract_date_start
+            else:
+                notice.oldest_contract_id = False
+                notice.first_contract = False
 
     @api.depends('start_notice_period', 'end_notice_period')
     def _compute_actual_notice_duration(self):
@@ -93,7 +94,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
             elif notice.departure_reason_code == 342:
                 # We can only take the next monday that has at least 3 calendar days (Monday to Saturday except public
                 # holidays) between the departure date and the start of the notice period
-                public_leaves = self.employee_id.contract_id.resource_calendar_id.global_leave_ids.filtered(
+                public_leaves = self.employee_id.version_id.resource_calendar_id.global_leave_ids.filtered(
                     lambda l: l.work_entry_type_id == public_holiday_type)
                 public_holidays_dates = (d.date() for d in public_leaves.mapped('date_from'))
                 calendar_days = 0
@@ -187,16 +188,16 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
             'departure_date': self.end_notice_period,
             'first_contract_in_company': self.first_contract
         })
-        if self.employee_id.contract_id:
-            self.employee_id.contract_id.write({
-                'date_end': self.end_notice_period,
+        if self.employee_id.version_id:
+            self.employee_id.version_id.write({
+                'contract_date_end': self.end_notice_period,
             })
 
     def _get_input_type(self, name, cp='cp200'):
         input_type = self.env.ref('l10n_be_hr_payroll.%s_other_input_%s' % (cp, name), raise_if_not_found=False)
         return input_type.id if input_type else False
 
-    def _create_input(self, payslip_id, sequence, input_type, amount, contract_id):
+    def _create_input(self, payslip_id, sequence, input_type, amount, version_id):
         input_type_id = self._get_input_type(input_type)
         if not input_type_id:
             return
@@ -205,29 +206,23 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
             'sequence': sequence,
             'input_type_id': input_type_id,
             'amount': amount,
-            'contract_id': contract_id
+            'version_id': version_id
         })
 
     def compute_termination_fee(self):
         self.validate_termination()
         struct_id = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees')
 
-        last_contract = self.env['hr.contract'].search([
-            ('employee_id', '=', self.employee_id.id),
-            ('state', '!=', 'cancel')
-        ], order='date_start desc', limit=1)
-
         termination_payslip = self.env['hr.payslip'].create({
             'name': '%s - %s' % (struct_id.payslip_name, self.employee_id.legal_name),
             'employee_id': self.employee_id.id,
             'date_from': self.start_notice_period,
             'date_to': self.start_notice_period,
-            'contract_id': last_contract.id,
             'struct_id': struct_id.id,
         })
         termination_payslip.worked_days_line_ids = [(5, 0, 0)]
 
-        contract = termination_payslip.contract_id
+        contract = termination_payslip.version_id
         payslip_id = termination_payslip.id
 
         weeks = self.notice_duration_week_after_2014

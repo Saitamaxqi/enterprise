@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, Command, fields, models, _
-from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
+from odoo.addons.l10n_au_hr_payroll.models.hr_version import INCOME_STREAM_TYPES
 
 
 class L10n_AuPreviousPayrollTransfer(models.TransientModel):
@@ -34,7 +34,7 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
                     [
                         ("id", "not in", rec.l10n_au_previous_payroll_transfer_employee_ids.employee_id.ids),
                         ("company_id", "=", rec.company_id.id),
-                        ("contract_id", "!=", False)
+                        ("version_id", "!=", False)
                     ]
                 )
             )

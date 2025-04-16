@@ -6,7 +6,7 @@
     'category': 'Productivity/Dashboard',
     'summary': 'Spreadsheet',
     'description': 'Spreadsheet',
-    'depends': ['spreadsheet_dashboard', 'hr_payroll', 'hr_contract_reports'],
+    'depends': ['spreadsheet_dashboard', 'hr_payroll'],
     'data': [
         "data/dashboards.xml",
     ],

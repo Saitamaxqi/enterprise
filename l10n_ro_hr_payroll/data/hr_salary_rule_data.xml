@@ -99,7 +99,7 @@ result = categories['GROSS']
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-number_of_employees = len(contract.employee_id._get_all_contracts(payslip.date_from, payslip.date_to, ['open', 'close']))
+number_of_employees = len(version.employee_id._get_all_versions_with_contract_overlap_with_period(payslip.date_from, payslip.date_to))
 result_rate = 4 if number_of_employees &gt; 50 else 0
 result = categories['GROSS']
         </field>
@@ -116,9 +116,9 @@ result = categories['GROSS']
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-if contract.l10n_ro_work_type == "2":
+if version.l10n_ro_work_type == "2":
     result_rate = 4
-elif contract.l10n_ro_work_type == "3":
+elif version.l10n_ro_work_type == "3":
     result_rate = 8
 else:
     result_rate = 0

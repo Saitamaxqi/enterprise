@@ -6,13 +6,8 @@
         <field name="arch" type="xml">
             <list string="Work addresses">
                 <field name="partner_id"/>
-                <field name="bur_ree_number"/>
                 <field name="canton"/>
-                <field name="dpi_number"/>
                 <field name="municipality"/>
-                <field name="weekly_hours"/>
-                <field name="weekly_lessons"/>
-                <field name="company_id"/>
             </list>
         </field>
     </record>
@@ -24,14 +19,18 @@
             <form string="Work address">
                 <sheet>
                     <group>
-                        <field name="partner_id"/>
-                        <field name="bur_ree_number"/>
-                        <field name="canton"/>
-                        <field name="dpi_number"/>
-                        <field name="municipality"/>
-                        <field name="company_id"/>
-                        <field name="weekly_hours"/>
-                        <field name="weekly_lessons"/>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="partner_id" context="{'show_address': 1}" required="1"/>
+                            <field name="canton" required="1"/>
+                            <field name="municipality" required="1"/>
+                        </group>
+                        <group>
+                            <field name="bur_ree_number" placeholder="e.g. A92978109"/>
+                            <field name="in_house_id"/>
+                            <field name="weekly_hours"/>
+                            <field name="weekly_lessons"/>
+                        </group>
                     </group>
                 </sheet>
             </form>

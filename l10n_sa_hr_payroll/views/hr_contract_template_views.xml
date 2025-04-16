@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hr_contract_template_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.template.view.form.inherit.l10_sa_hr_payroll</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="model">hr.version</field>
+        <field name="arch" type="xml">
+            <group name="salary" position="inside">
+                <label for="l10n_sa_housing_allowance" string="Housing Allowance" invisible="country_code != 'SA'"/>
+                <div class="o_row mw-50" name="l10n_sa_housing_allowance" invisible="country_code != 'SA'">
+                    <field class="oe_inline o_hr_narrow_field" name="l10n_sa_housing_allowance" nolabel="1"/>
+                    <span class="mb-3">/ month</span>
+                </div>
+                <label for="l10n_sa_transportation_allowance" string="Transportation Allowance" invisible="country_code != 'SA'"/>
+                <div class="o_row mw-50" name="l10n_sa_transportation_allowance" invisible="country_code != 'SA'">
+                    <field class="oe_inline o_hr_narrow_field" name="l10n_sa_transportation_allowance" nolabel="1"/>
+                    <span class="mb-3">/ month</span>
+                </div>
+                <label for="l10n_sa_other_allowances" string="Other Allowances" invisible="country_code != 'SA'"/>
+                <div class="o_row mw-50" name="l10n_sa_other_allowances" invisible="country_code != 'SA'">
+                    <field class="oe_inline o_hr_narrow_field" name="l10n_sa_other_allowances" nolabel="1"/>
+                    <span class="mb-3">/ month</span>
+                </div>
+            </group>
+            <group name="salary_info" position="after">
+                <group name="end_of_service_provision" string="End Of Service Provision" invisible="country_code != 'SA'">
+                    <field name="l10n_sa_number_of_days" string="Number of Days"/>
+                </group>
+                <group name="wps_info" string="WPS Information" invisible="country_code != 'SA'">
+                    <field name="l10n_sa_wps_description" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

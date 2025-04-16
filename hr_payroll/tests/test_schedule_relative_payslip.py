@@ -55,18 +55,15 @@ class TestScheduleRelativePayslip(TransactionCase):
 
         cls.billy_emp = cls.env['hr.employee'].create({
             'name': 'Billy Bones',
-            'gender': 'male',
+            'sex': 'male',
             'birthday': '1982-03-29',
-        })
-        cls.billy_contract = cls.env['hr.contract'].create({
-            'date_end': Date.to_date('2023-12-31'),
-            'date_start': Date.to_date('2023-01-01'),
-            'name': 'Contract for Billy Bones',
+            'date_version': Date.to_date('2023-01-01'),
+            'contract_date_start': Date.to_date('2023-01-01'),
+            'contract_date_end': Date.to_date('2023-12-31'),
             'wage': 5000.33,
-            'employee_id': cls.billy_emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
         })
+        cls.billy_contract = cls.billy_emp.version_id
 
     def test_payslip_computes(self):
         with freeze_time('2023-03-12'):
@@ -74,7 +71,7 @@ class TestScheduleRelativePayslip(TransactionCase):
                 'name': 'Black Spot',
                 'employee_id': self.billy_emp.id,
             })
-            self.assertEqual(payslip.contract_id, self.billy_contract)
+            self.assertEqual(payslip.version_id, self.billy_contract)
             self.assertEqual(payslip.struct_id, self.structure)
             self.assertEqual(payslip.date_from, Date.to_date('2023-03-01'))
             self.assertEqual(payslip.date_to, Date.to_date('2023-03-31'))

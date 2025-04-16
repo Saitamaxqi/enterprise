@@ -12,7 +12,7 @@ class TestPayslipMultiContract(TestPayslipContractBase):
     def test_multi_contract(self):
         start = date(2015, 11, 1)
         end = date(2015, 11, 30)
-        work_entries = self.richard_emp.contract_ids.generate_work_entries(start, end)
+        work_entries = self.richard_emp.version_ids.generate_work_entries(start, end)
         work_entries.action_validate()
 
         # First contact: 40h, start of the month
@@ -21,7 +21,7 @@ class TestPayslipMultiContract(TestPayslipContractBase):
             'employee_id': self.richard_emp.id,
             'date_from': start,
             'date_to': end,
-            'contract_id': self.contract_cdd.id,
+            'version_id': self.contract_cdd.id,
             'struct_id': self.developer_pay_structure.id,
         })
         attendance_line = payslip.worked_days_line_ids[0]
@@ -37,7 +37,7 @@ class TestPayslipMultiContract(TestPayslipContractBase):
             'employee_id': self.richard_emp.id,
             'date_from': start,
             'date_to': end,
-            'contract_id': self.contract_cdi.id,
+            'version_id': self.contract_cdi.id,
             'struct_id': self.developer_pay_structure.id,
         })
         attendance_line = payslip.worked_days_line_ids[0]

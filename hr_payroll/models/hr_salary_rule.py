@@ -38,7 +38,7 @@ class HrSalaryRule(models.Model):
         ('input', 'Other Input'),
         ('python', 'Python Expression')
     ], string="Condition Based on", default='none', required=True)
-    condition_range = fields.Char(string='Range Based on', default='contract.wage',
+    condition_range = fields.Char(string='Range Based on', default='version.wage',
         help='This will be used to compute the % fields values; in general it is on basic, '
              'but you can also use categories code fields in lowercase as a variable names '
              '(hra, ma, lta, etc.) and the variable basic.')
@@ -49,7 +49,7 @@ class HrSalaryRule(models.Model):
 #----------------------
 # payslip: hr.payslip object
 # employee: hr.employee object
-# contract: hr.contract object
+# version: hr.version object
 # result_rules: dict containing the rules amounts, quantities, rates and totals (previously computed)
 # categories: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).
 # worked_days: dict containing the computed worked days
@@ -79,7 +79,7 @@ result = result_rules['NET']['total'] > categories['NET'] * 0.10''',
 #----------------------
 # payslip: hr.payslip object
 # employee: hr.employee object
-# contract: hr.contract object
+# version: hr.version object
 # result_rules: dict containing the rules amounts, quantities, rates and totals (previously computed)
 # categories: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).
 # worked_days: dict containing the computed worked days
@@ -95,7 +95,7 @@ result = result_rules['NET']['total'] > categories['NET'] * 0.10''',
 # The total returned by the salary rule is calculated as:
 # total = result * result_rate / 100 * result_qty
 
-result = contract.wage
+result = version.wage
 result_rate = 10''')
     amount_percentage_base = fields.Char(string='Percentage based on', help='result will be affected to a variable')
     partner_id = fields.Many2one('res.partner', string='Partner',
@@ -117,13 +117,13 @@ result_rate = 10''')
     def _raise_error(self, localdict, error_type, e):
         raise UserError(_("""%(error_type)s
 - Employee: %(employee)s
-- Contract: %(contract)s
+- Version: %(version)s
 - Payslip: %(payslip)s
 - Salary rule: %(name)s (%(code)s)
 - Error: %(error_message)s""",
             error_type=error_type,
             employee=localdict['employee'].name,
-            contract=localdict['contract'].name,
+            version=localdict['version'].name,
             payslip=localdict['payslip'].name,
             name=self.name,
             code=self.code,

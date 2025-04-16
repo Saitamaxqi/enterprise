@@ -50,7 +50,7 @@ class HrESICReport(models.Model):
     def _get_period_payslips_with_employees(self):
         self.ensure_one()
         indian_employees = self.env['hr.employee'].search([
-            ('contract_id.l10n_in_esic_amount', '>', 0),
+            ('version_id.l10n_in_esic_amount', '>', 0),
             ('company_id', '=', self.company_id.id)
         ]).filtered(lambda e: e.company_country_code == 'IN')
         end_date = calendar.monthrange(int(self.year), int(self.month))[1]
@@ -93,7 +93,7 @@ class HrESICReport(models.Model):
                 working_days,
                 gross_wage,
                 0,
-                employee.contract_id.date_end.strftime('%d-%m-%Y') if employee.contract_id.date_end else ''
+                employee.version_id.date_end.strftime('%d-%m-%Y') if employee.version_id.date_end else ''
             ))
         return result
 

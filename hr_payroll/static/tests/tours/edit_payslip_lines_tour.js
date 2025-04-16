@@ -7,7 +7,7 @@ registry.category("web_tour.tours").add('hr_payroll_edit_payslip_lines_tour', {
     stepUtils.showAppsMenuItem(),
     {
         content: "Open Payroll app",
-        trigger: '.o_app[data-menu-xmlid="hr_work_entry_contract_enterprise.menu_hr_payroll_root"]',
+        trigger: '.o_app[data-menu-xmlid="hr_work_entry_enterprise.menu_hr_payroll_root"]',
         run: "click",
     },
     {

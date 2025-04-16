@@ -8,25 +8,25 @@ class ResConfigSettings(models.TransientModel):
 
     default_commission_on_target = fields.Float(
         string="Commission on Target",
-        default_model="hr.contract")
+        default_model="hr.version")
     default_fuel_card = fields.Float(
         string="Fuel Card",
-        default_model="hr.contract")
+        default_model="hr.version")
     default_representation_fees = fields.Float(
         string="Representation Fees",
-        default_model="hr.contract")
+        default_model="hr.version")
     default_internet = fields.Float(
         string="Internet",
-        default_model="hr.contract")
+        default_model="hr.version")
     default_mobile = fields.Float(
         string="Mobile",
-        default_model="hr.contract")
+        default_model="hr.version")
     default_meal_voucher_amount = fields.Float(
         string="Meal Vouchers",
-        default_model="hr.contract")
+        default_model="hr.version")
     default_eco_checks = fields.Float(
         string="Eco Vouchers",
-        default_model="hr.contract")
+        default_model="hr.version")
     onss_company_id = fields.Char(
         related='company_id.onss_company_id',
         readonly=False)
@@ -52,7 +52,7 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='hr_contract_salary.hospital_insurance_amount_adult')
     default_l10n_be_canteen_cost = fields.Float(
         string="Canteen Cost",
-        default_model="hr.contract")
+        default_model="hr.version")
     l10n_be_ffe_employer_type = fields.Selection(
         related='company_id.l10n_be_ffe_employer_type', string='Ffe Employer Type',
         readonly=False)

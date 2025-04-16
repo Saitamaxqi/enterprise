@@ -19,24 +19,22 @@ class TestWorkEntry(TestPayslipBase):
         cls.start = datetime(2015, 11, 1, 1, 0, 0)
         cls.end = datetime(2015, 11, 30, 23, 59, 59)
         cls.resource_calendar_id = cls.env['resource.calendar'].create({'name': 'Zboub'})
-        contract = cls.env['hr.contract'].create({
-            'date_start': cls.start.date() - relativedelta(days=5),
+        cls.richard_emp.version_id.write({
+            'date_version': cls.start.date() - relativedelta(days=5),
+            'contract_date_start': cls.start.date() - relativedelta(days=5),
+            'contract_date_end': False,
             'name': 'dodo',
             'resource_calendar_id': cls.resource_calendar_id.id,
             'wage': 1000,
-            'employee_id': cls.richard_emp.id,
             'structure_type_id': cls.structure_type.id,
-            'state': 'open',
             'date_generated_from': cls.end.date() + relativedelta(days=5),
         })
-        cls.richard_emp.resource_calendar_id = cls.resource_calendar_id
-        cls.richard_emp.contract_id = contract
 
     def test_time_normal_work_entry(self):
         # Normal attendances (global to all employees)
-        work_entries = self.richard_emp.contract_id.generate_work_entries(self.start.date(), self.end.date())
+        work_entries = self.richard_emp.version_id.generate_work_entries(self.start.date(), self.end.date())
         work_entries.action_validate()
-        hours = self.richard_emp.contract_id.get_work_hours(self.start.date(), self.end.date())
+        hours = self.richard_emp.version_id.get_work_hours(self.start.date(), self.end.date())
         sum_hours = sum(v for k, v in hours.items() if k in self.env.ref('hr_work_entry.work_entry_type_attendance').ids)
 
         self.assertEqual(sum_hours, 168.0)
@@ -47,16 +45,16 @@ class TestWorkEntry(TestPayslipBase):
         work_entry = self.env['hr.work.entry'].create({
             'name': '1',
             'employee_id': self.richard_emp.id,
-            'contract_id': self.richard_emp.contract_id.id,
+            'version_id': self.richard_emp.version_id.id,
             'work_entry_type_id': self.work_entry_type.id,
             'date_start': start,
             'date_stop': end,
         })
         work_entry.action_validate()
 
-        work_entries = self.richard_emp.contract_id.generate_work_entries(self.start.date(), self.end.date())
+        work_entries = self.richard_emp.version_id.generate_work_entries(self.start.date(), self.end.date())
         work_entries.action_validate()
-        hours = self.richard_emp.contract_id.get_work_hours(self.start.date(), self.end.date())
+        hours = self.richard_emp.version_id.get_work_hours(self.start.date(), self.end.date())
         sum_hours = sum(v for k, v in hours.items() if k in self.work_entry_type.ids)
 
         self.assertEqual(sum_hours, 7.0)
@@ -81,20 +79,15 @@ class TestWorkEntry(TestPayslipBase):
         })
         hk_employee = self.env['hr.employee'].create({
             'name': 'HK Employee',
-            'resource_calendar_id': hk_resource_calendar_id.id,
-        })
-        self.env.company.resource_calendar_id = hk_resource_calendar_id
-        self.env['hr.contract'].create({
-            'date_start': date(2023, 8, 1),
-            'name': 'Test Contract',
+            'date_version': date(2023, 8, 1),
+            'contract_date_start': date(2023, 8, 1),
             'resource_calendar_id': hk_resource_calendar_id.id,
             'wage': 1000,
-            'employee_id': hk_employee.id,
-            'state': 'open',
             'structure_type_id': self.structure_type.id,
         })
-        work_entries = hk_employee.contract_id.generate_work_entries(date(2023, 8, 1), date(2023, 8, 31))
+        self.env.company.resource_calendar_id = hk_resource_calendar_id
+        work_entries = hk_employee.version_id.generate_work_entries(date(2023, 8, 1), date(2023, 8, 31))
         work_entries.action_validate()
-        hours = hk_employee.contract_id.get_work_hours(date(2023, 8, 1), date(2023, 8, 31))
+        hours = hk_employee.version_id.get_work_hours(date(2023, 8, 1), date(2023, 8, 31))
         sum_hours = sum(v for k, v in hours.items() if k in self.env.ref('hr_work_entry.work_entry_type_attendance').ids)
         self.assertAlmostEqual(sum_hours, 184.0, places=2)

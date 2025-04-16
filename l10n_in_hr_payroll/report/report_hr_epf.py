@@ -58,7 +58,7 @@ class L10nInHrPayrollEpfReport(models.Model):
         self.ensure_one()
         # Get the relevant records based on the year and month
         indian_employees = self.env['hr.employee'].search([
-            ('contract_id.l10n_in_provident_fund', '=', True),
+            ('version_id.l10n_in_provident_fund', '=', True),
             ('company_id', '=', self.company_id.id)
         ]).filtered(lambda e: e.company_country_code == 'IN')
 

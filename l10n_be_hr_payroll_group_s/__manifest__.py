@@ -11,7 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/hr_work_entry_type_data.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_employee_views.xml',
         'views/hr_work_entry_type_views.xml',
         'views/res_config_settings_views.xml',
         'views/hr_payroll_export_group_s_views.xml',

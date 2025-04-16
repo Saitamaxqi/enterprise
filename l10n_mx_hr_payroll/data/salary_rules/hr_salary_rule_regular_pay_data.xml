@@ -37,13 +37,13 @@ for code in unpaid_work_entry_type_ids.mapped('code'):
     unpaid_days_in_period += worked_days[code].number_of_days if code in worked_days else 0
 accrued_days_in_period = days_in_period - unpaid_days_in_period
 
-hours = contract.get_work_hours(first_day, last_day)
+hours = version.get_work_hours(first_day, last_day)
 unpaid_hours = 0
 for work_entry_type, work_hours in hours.items():
     if work_entry_type in unpaid_work_entry_type_ids.ids:
         unpaid_hours += work_hours
-average_hours_per_work_day = contract.resource_calendar_id.hours_per_day
-work_time_rate = contract.resource_calendar_id.work_time_rate
+average_hours_per_work_day = version.resource_calendar_id.hours_per_day
+work_time_rate = version.resource_calendar_id.work_time_rate
 
 unpaid_days_in_month = unpaid_hours / (average_hours_per_work_day * work_time_rate / 100)
 accrued_days_in_month = total_days_in_month - unpaid_days_in_month
@@ -98,7 +98,7 @@ result = payslip.l10n_mx_daily_salary
         <field name="sequence">5</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_gasoline_amount or contract.l10n_mx_transport_amount or contract.l10n_mx_meal_voucher_amount
+result = version.l10n_mx_gasoline_amount or version.l10n_mx_transport_amount or version.l10n_mx_meal_voucher_amount
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -115,18 +115,18 @@ result = payslip._rule_parameter('l10n_mx_uma') * 7 * 30.4 * 12
         <field name="sequence">6</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_gasoline_amount or contract.l10n_mx_transport_amount or contract.l10n_mx_meal_voucher_amount
+result = version.l10n_mx_gasoline_amount or version.l10n_mx_transport_amount or version.l10n_mx_meal_voucher_amount
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-schedule_number_days = payslip._rule_parameter('l10n_mx_schedule_table')[contract.l10n_mx_schedule_pay]
+schedule_number_days = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay]
 
-if contract.wage * 12 >= result_rules['ANNUAL_SOCIAL_PROVISION']['total']:
+if version.wage * 12 >= result_rules['ANNUAL_SOCIAL_PROVISION']['total']:
     monthly_amount = payslip._rule_parameter('l10n_mx_uma') * 30.4
 else:
-    monthly_amount = max(result_rules['ANNUAL_SOCIAL_PROVISION']['total'] - contract.wage * 12, payslip._rule_parameter('l10n_mx_uma') * 30.4 * 12) / 12
+    monthly_amount = max(result_rules['ANNUAL_SOCIAL_PROVISION']['total'] - version.wage * 12, payslip._rule_parameter('l10n_mx_uma') * 30.4 * 12) / 12
 
-if contract.l10n_mx_payment_period_vouchers == 'in_period':
+if version.l10n_mx_payment_period_vouchers == 'in_period':
     schedule_factor = schedule_number_days / payslip._rule_parameter('l10n_mx_days_per_month')
 else:
     schedule_factor = 1
@@ -145,15 +145,15 @@ result = monthly_amount * schedule_factor
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_gasoline_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_gasoline_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_mx_gasoline_amount
-if contract.l10n_mx_payment_period_vouchers == 'in_period':
+result = version.l10n_mx_gasoline_amount
+if version.l10n_mx_payment_period_vouchers == 'in_period':
     result *= days_in_month_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -168,15 +168,15 @@ if contract.l10n_mx_payment_period_vouchers == 'in_period':
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_transport_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_transport_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_mx_transport_amount
-if contract.l10n_mx_payment_period_vouchers == 'in_period':
+result = version.l10n_mx_transport_amount
+if version.l10n_mx_payment_period_vouchers == 'in_period':
     result *= days_in_month_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -191,15 +191,15 @@ if contract.l10n_mx_payment_period_vouchers == 'in_period':
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_meal_voucher_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_meal_voucher_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_mx_meal_voucher_amount
-if contract.l10n_mx_payment_period_vouchers == 'in_period':
+result = version.l10n_mx_meal_voucher_amount
+if version.l10n_mx_payment_period_vouchers == 'in_period':
     result *= days_in_month_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -214,10 +214,10 @@ if contract.l10n_mx_payment_period_vouchers == 'in_period':
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_gasoline_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_gasoline_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -236,10 +236,10 @@ result = min(gasoline_period_amount, gasoline_period_amount / categories['VOUCHE
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_transport_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_transport_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -258,10 +258,10 @@ result = min(transport_period_amount, transport_period_amount / categories['VOUC
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_meal_voucher_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_meal_voucher_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -280,15 +280,15 @@ result = min(meal_voucher_period_amount, meal_voucher_period_amount / categories
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_gasoline_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_gasoline_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['GAS_PERIOD']['total'] - result_rules['NO_TAX_GAS']['total']
-accrued_days_gasoline = accrued_days_in_month if contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' else accrued_days_in_period
+accrued_days_gasoline = accrued_days_in_month if version.l10n_mx_payment_period_vouchers == 'last_day_of_month' else accrued_days_in_period
 taxable_daily_amount_gasoline = result / accrued_days_gasoline
         </field>
         <field name="appears_on_payslip" eval="True"/>
@@ -303,15 +303,15 @@ taxable_daily_amount_gasoline = result / accrued_days_gasoline
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_transport_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_transport_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['TRANSPORT_PERIOD']['total'] - result_rules['NO_TAX_TRANSPORT']['total']
-accrued_days_transport = accrued_days_in_month if contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' else accrued_days_in_period
+accrued_days_transport = accrued_days_in_month if version.l10n_mx_payment_period_vouchers == 'last_day_of_month' else accrued_days_in_period
 taxable_daily_amount_transport = result / accrued_days_transport
         </field>
         <field name="appears_on_payslip" eval="True"/>
@@ -326,15 +326,15 @@ taxable_daily_amount_transport = result / accrued_days_transport
         <field name="condition_select">python</field>
         <field name="condition_python">
 last_day = payslip.date_from + relativedelta(day=31)
-last_payslip_for_the_month = contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
+last_payslip_for_the_month = version.l10n_mx_payment_period_vouchers == 'last_day_of_month' and \
                              payslip.date_from &lt;= last_day &lt;= payslip.date_to
-result = contract.l10n_mx_meal_voucher_amount and \
-         (last_payslip_for_the_month or contract.l10n_mx_payment_period_vouchers == 'in_period')
+result = version.l10n_mx_meal_voucher_amount and \
+         (last_payslip_for_the_month or version.l10n_mx_payment_period_vouchers == 'in_period')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['MEAL_VOUCHER_PERIOD']['total'] - result_rules['NO_TAX_MEAL_VOUCHER']['total']
-accrued_days_meal = accrued_days_in_month if contract.l10n_mx_payment_period_vouchers == 'last_day_of_month' else accrued_days_in_period
+accrued_days_meal = accrued_days_in_month if version.l10n_mx_payment_period_vouchers == 'last_day_of_month' else accrued_days_in_period
 taxable_daily_amount_meal = result / accrued_days_meal
         </field>
         <field name="appears_on_payslip" eval="True"/>
@@ -348,13 +348,13 @@ taxable_daily_amount_meal = result / accrued_days_meal
         <field name="sequence">25</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-this_year_anniversary = employee.first_contract_date + relativedelta(year=payslip.date_from.year)
-result = payslip.date_from &lt;= this_year_anniversary &lt;= payslip.date_to and this_year_anniversary != employee.first_contract_date
+this_year_anniversary = employee._get_first_version_date() + relativedelta(year=payslip.date_from.year)
+result = payslip.date_from &lt;= this_year_anniversary &lt;= payslip.date_to and this_year_anniversary != employee._get_first_version_date()
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 holidays_count = payslip._rule_parameter('l10n_mx_holiday_tables')[payslip.l10n_mx_years_worked - 1]
-result = payslip.l10n_mx_daily_salary * holidays_count * contract.l10n_mx_holiday_bonus_rate / 100
+result = payslip.l10n_mx_daily_salary * holidays_count * version.l10n_mx_holiday_bonus_rate / 100
         </field>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
@@ -407,12 +407,12 @@ result = - days * payslip.l10n_mx_daily_salary
         <field name="sequence">80</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_savings_fund
+result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[contract.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
-result = contract.wage * payslip._rule_parameter('l10n_mx_exemption_saving_fund_salary') * month_to_period_ratio
+month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
+result = version.wage * payslip._rule_parameter('l10n_mx_exemption_saving_fund_salary') * month_to_period_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
@@ -425,11 +425,11 @@ result = contract.wage * payslip._rule_parameter('l10n_mx_exemption_saving_fund_
         <field name="sequence">81</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_savings_fund
+result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[contract.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
+month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
 result = payslip._rule_parameter('l10n_mx_uma') * 30.4 * payslip._rule_parameter('l10n_mx_exemption_saving_fund_monthly_uma') * month_to_period_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -443,12 +443,12 @@ result = payslip._rule_parameter('l10n_mx_uma') * 30.4 * payslip._rule_parameter
         <field name="sequence">83</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_savings_fund
+result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[contract.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
-result = min(contract.l10n_mx_savings_fund * month_to_period_ratio, result_rules['SAVINGS_FUND_SALARY_LIMIT']['total'], result_rules['SAVINGS_FUND_LIMIT_UMA']['total'])
+month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
+result = min(version.l10n_mx_savings_fund * month_to_period_ratio, result_rules['SAVINGS_FUND_SALARY_LIMIT']['total'], result_rules['SAVINGS_FUND_LIMIT_UMA']['total'])
         </field>
         <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
@@ -540,28 +540,28 @@ if gross:
 
     first_day_of_year = payslip.date_from + relativedelta(day=1, month=1)
     last_day_of_year = payslip.date_from + relativedelta(day=31, month=12)
-    end_of_year = (not contract.l10n_mx_external_annual_declaration and
+    end_of_year = (not version.l10n_mx_external_annual_declaration and
                    payslip.date_from &lt;= last_day_of_year &lt;= payslip.date_to and
-                   (contract.wage * 12) &lt;= payslip._rule_parameter('l10n_mx_salary_limit_annual_declaration') and
-                   employee.first_contract_date &lt;= first_day_of_year)
+                   (version.wage * 12) &lt;= payslip._rule_parameter('l10n_mx_salary_limit_annual_declaration') and
+                   employee._get_first_version_date() &lt;= first_day_of_year)
 
     if end_of_year or end_of_month:
         if end_of_year:
-            payslips = contract.env['hr.payslip'].search([
-                ('employee_id', '=', contract.employee_id.id),
+            payslips = version.env['hr.payslip'].search([
+                ('employee_id', '=', version.employee_id.id),
                 ('state', 'in', ['done', 'paid']),
                 ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
                 ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-                ('company_id', '=', contract.company_id.id),
+                ('company_id', '=', version.company_id.id),
             ])
             period = 'yearly'
         else:
-            payslips = contract.env['hr.payslip'].search([
-                ('employee_id', '=', contract.employee_id.id),
+            payslips = version.env['hr.payslip'].search([
+                ('employee_id', '=', version.employee_id.id),
                 ('state', 'in', ['done', 'paid']),
                 ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1)),
                 ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-                ('company_id', '=', contract.company_id.id),
+                ('company_id', '=', version.company_id.id),
             ])
             period = 'monthly'
         previous_gross = payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)['GROSS']['sum']['amount']
@@ -575,7 +575,7 @@ if gross:
         result = - (amount + previous_ISR)
     else:
         # without adjustment
-        isr_table = isr_tables[contract.l10n_mx_schedule_pay]
+        isr_table = isr_tables[version.l10n_mx_schedule_pay]
         low, high, fix, rate = find_rates(gross, isr_table)
         result = -((categories['GROSS'] - low) * rate + fix)
 else:
@@ -602,8 +602,8 @@ https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;fecha=12/01/2022#gsc.
         <field name="sequence">115</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-this_year_anniversary = employee.first_contract_date + relativedelta(year=payslip.date_from.year)
-result = payslip.date_from &lt;= this_year_anniversary &lt;= payslip.date_to and this_year_anniversary != employee.first_contract_date
+this_year_anniversary = employee._get_first_version_date() + relativedelta(year=payslip.date_from.year)
+result = payslip.date_from &lt;= this_year_anniversary &lt;= payslip.date_to and this_year_anniversary != employee._get_first_version_date()
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -612,7 +612,7 @@ def find_rates(x, rates):
         if low &lt;= x &lt;= high:
             return low, high, fix, rate
 
-wage = contract._get_contract_wage()
+wage = version._get_contract_wage()
 isr_table_monthly = payslip._rule_parameter('l10n_mx_isr_tables')['monthly']
 
 holiday_bonus_exemption = 15 * payslip._rule_parameter('l10n_mx_uma')
@@ -643,7 +643,7 @@ else:
         <field name="sequence">117</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_savings_fund
+result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -660,7 +660,7 @@ result = - result_rules['SAVINGS_FUND_EMPLOYER_ALW']['total']
         <field name="sequence">117</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_savings_fund
+result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -678,7 +678,7 @@ result = - result_rules['SAVINGS_FUND_EMPLOYER_ALW']['total']
         <field name="condition_select">python</field>
         <field name="condition_python">
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-result = 0 &lt; contract.wage &lt;= limit_salary_subsidy
+result = 0 &lt; version.wage &lt;= limit_salary_subsidy
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -686,9 +686,9 @@ daily_uma = payslip._rule_parameter('l10n_mx_uma')
 uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
 daily_subsidy = uma_percentage_for_subsidy * daily_uma
 
-if contract.l10n_mx_schedule_pay == 'monthly':
+if version.l10n_mx_schedule_pay == 'monthly':
     result = round(daily_subsidy * 30.4)
-elif contract.l10n_mx_schedule_pay == 'bi_monthly':
+elif version.l10n_mx_schedule_pay == 'bi_monthly':
     result = round(daily_subsidy * 30.4) * 2
 else:
     last_day_of_month = payslip.date_from + relativedelta(day=31)
@@ -710,7 +710,7 @@ else:
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
 last_day_of_month = payslip.date_from + relativedelta(day=31)
 split_two_months = payslip.date_from &lt;= last_day_of_month &lt; payslip.date_to
-result = 0 &lt; contract.wage &lt;= limit_salary_subsidy and split_two_months
+result = 0 &lt; version.wage &lt;= limit_salary_subsidy and split_two_months
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -718,7 +718,7 @@ daily_uma = payslip._rule_parameter('l10n_mx_uma')
 uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
 daily_subsidy = uma_percentage_for_subsidy * daily_uma
 
-if contract.l10n_mx_schedule_pay in ['monthly', 'bi_monthly']:
+if version.l10n_mx_schedule_pay in ['monthly', 'bi_monthly']:
     result = 0
 else:
     first_day_of_month = payslip.date_to + relativedelta(day=1)
@@ -739,7 +739,7 @@ else:
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
 last_day_of_month = payslip.date_from + relativedelta(day=31)
 end_of_month = payslip.date_from &lt;= last_day_of_month &lt;= payslip.date_to
-result = 0 &lt; contract.wage &lt;= limit_salary_subsidy and end_of_month
+result = 0 &lt; version.wage &lt;= limit_salary_subsidy and end_of_month
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -747,15 +747,15 @@ daily_uma = payslip._rule_parameter('l10n_mx_uma')
 uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
 monthly_subsidy = round(uma_percentage_for_subsidy * daily_uma * 30.4)
 
-if contract.l10n_mx_schedule_pay in ['monthly', 'bi_monthly']:
+if version.l10n_mx_schedule_pay in ['monthly', 'bi_monthly']:
     result = 0
 else:
-    payslips = contract.env['hr.payslip'].search([
-        ('employee_id', '=', contract.employee_id.id),
+    payslips = version.env['hr.payslip'].search([
+        ('employee_id', '=', version.employee_id.id),
         ('state', 'in', ['done', 'paid']),
         ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1)),
         ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-        ('company_id', '=', contract.company_id.id),
+        ('company_id', '=', version.company_id.id),
     ], order='date_from')
     if payslips:
         current_subsidy = result_rules['SUBSIDY_CURRENT_MONTH']['total']
@@ -781,7 +781,7 @@ else:
         <field name="condition_select">python</field>
         <field name="condition_python">
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-result = 0 &lt; contract.wage &lt;= limit_salary_subsidy
+result = 0 &lt; version.wage &lt;= limit_salary_subsidy
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -869,11 +869,11 @@ result = min(imss_contribution_limit, categories['INT_DAY_WAGE'])
         <field name="sequence">125</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_infonavit.filtered(lambda f: f.status == 'in_progress')
+result = version.l10n_mx_infonavit.filtered(lambda f: f.status == 'in_progress')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-infonavit_line_ids = contract.l10n_mx_infonavit.filtered(lambda f: f.status == 'in_progress')
+infonavit_line_ids = version.l10n_mx_infonavit.filtered(lambda f: f.status == 'in_progress')
 fixed_line_ids = infonavit_line_ids.filtered(lambda f: f.infonavit_type == 'fixed_monetary_fee')
 percentage_line_ids = infonavit_line_ids.filtered(lambda f: f.infonavit_type == 'percentage')
 discount_line_ids = infonavit_line_ids.filtered(lambda f: f.infonavit_type == 'discount_factor')
@@ -908,11 +908,11 @@ result = - (fixed_amount + percentage_amount + discount_amount)
         <field name="sequence">126</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_mx_fonacot.filtered(lambda f: f.status == 'in_progress')
+result = version.l10n_mx_fonacot.filtered(lambda f: f.status == 'in_progress')
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-fonacot_line_ids = contract.l10n_mx_fonacot.filtered(lambda f: f.status == 'in_progress')
+fonacot_line_ids = version.l10n_mx_fonacot.filtered(lambda f: f.status == 'in_progress')
 amount = 0
 for line in fonacot_line_ids:
     amount += line.extra_fixed_monthly_contribution + line.monthly_import
@@ -1388,12 +1388,12 @@ result = christmas_bonus_provision - provisioned_to_date
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-last_anniversary = employee.first_contract_date + relativedelta(year=payslip.date_to.year)
+last_anniversary = employee._get_first_version_date() + relativedelta(year=payslip.date_to.year)
 if last_anniversary >= payslip.date_to:
     last_anniversary += relativedelta(years=-1)
 days_since_last_anniversary = (payslip.date_to - last_anniversary).days
 holidays_count = payslip._rule_parameter('l10n_mx_holiday_tables')[payslip.l10n_mx_years_worked]
-result = payslip.l10n_mx_daily_salary * holidays_count * contract.l10n_mx_holiday_bonus_rate / 100 * days_since_last_anniversary / payslip.l10n_mx_days_of_year
+result = payslip.l10n_mx_daily_salary * holidays_count * version.l10n_mx_holiday_bonus_rate / 100 * days_since_last_anniversary / payslip.l10n_mx_days_of_year
         </field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
@@ -1430,7 +1430,7 @@ result = holiday_bonus_provision - provisioned_to_date
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-last_anniversary = employee.first_contract_date + relativedelta(year=payslip.date_to.year)
+last_anniversary = employee._get_first_version_date() + relativedelta(year=payslip.date_to.year)
 if last_anniversary >= payslip.date_to:
     last_anniversary += relativedelta(years=-1)
 days_since_last_anniversary = (payslip.date_to - last_anniversary).days

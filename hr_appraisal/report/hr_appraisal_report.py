@@ -38,17 +38,18 @@ class HrAppraisalReport(models.Model):
     def init(self):
         tools.drop_view_if_exists(self.env.cr, 'hr_appraisal_report')
         self.env.cr.execute("""
-            create or replace view hr_appraisal_report as (
-                 select
-                     min(a.id) as id,
-                     date(a.create_date) as create_date,
+            CREATE OR REPLACE VIEW hr_appraisal_report AS (
+                 SELECT
+                     min(a.id) AS id,
+                     date(a.create_date) AS create_date,
                      a.employee_id,
-                     e.department_id as department_id,
-                     a.date_close as deadline,
+                     v.department_id AS department_id,
+                     a.date_close AS deadline,
                      CASE WHEN min(ce.start) >= NOW() AT TIME ZONE 'UTC' THEN min(ce.start) ELSE max(ce.start) END AS final_interview,
-                     CASE WHEN a.state = '1_new' THEN 'new' WHEN a.state = '2_pending' THEN 'pending' ELSE 'done' END as state
-                     from hr_appraisal a
-                        left join hr_employee e on (e.id=a.employee_id)
+                     CASE WHEN a.state = '1_new' THEN 'new' WHEN a.state = '2_pending' THEN 'pending' ELSE 'done' END AS state
+                     FROM hr_appraisal a
+                        JOIN hr_employee e ON e.id = a.employee_id
+                        JOIN hr_version v ON v.id = e.current_version_id
                         LEFT OUTER JOIN calendar_event ce ON ce.res_id = a.id AND ce.res_model = 'hr.appraisal'
                  GROUP BY
                      a.id,
@@ -56,6 +57,6 @@ class HrAppraisalReport(models.Model):
                      a.state,
                      a.employee_id,
                      a.date_close,
-                     e.department_id
+                     v.department_id
                 )
             """)

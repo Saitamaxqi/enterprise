@@ -19,10 +19,10 @@ result = payslip.paid_amount
         <field name="code">VEHICLE_ALLOWANCE</field>
         <field name="sequence">5</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_alw_vehicle &gt; 0</field>
+        <field name="condition_python">result = version.l10n_lu_alw_vehicle &gt; 0</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_lu_alw_vehicle
+result = version.l10n_lu_alw_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -33,10 +33,10 @@ result = contract.l10n_lu_alw_vehicle
         <field name="code">BIK_VEHICLE</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_vehicle &gt; 0 and not contract.l10n_lu_bik_vehicle_vat_included</field>
+        <field name="condition_python">result = version.l10n_lu_bik_vehicle &gt; 0 and not version.l10n_lu_bik_vehicle_vat_included</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_lu_bik_vehicle
+result = version.l10n_lu_bik_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -47,11 +47,11 @@ result = contract.l10n_lu_bik_vehicle
         <field name="code">BIK_VEHICLE_NO_VAT</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_vehicle &gt; 0 and contract.l10n_lu_bik_vehicle_vat_included</field>
+        <field name="condition_python">result = version.l10n_lu_bik_vehicle &gt; 0 and version.l10n_lu_bik_vehicle_vat_included</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_rate = 100 / (1 + payslip._rule_parameter('l10n_vat_rate'))
-result = contract.l10n_lu_bik_vehicle
+result = version.l10n_lu_bik_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -62,11 +62,11 @@ result = contract.l10n_lu_bik_vehicle
         <field name="code">BIK_VEHICLE_VAT</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_vehicle &gt; 0 and contract.l10n_lu_bik_vehicle_vat_included</field>
+        <field name="condition_python">result = version.l10n_lu_bik_vehicle &gt; 0 and version.l10n_lu_bik_vehicle_vat_included</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_rate = 100 - result_rules['BIK_VEHICLE_NO_VAT']['rate']
-result = contract.l10n_lu_bik_vehicle
+result = version.l10n_lu_bik_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -77,10 +77,10 @@ result = contract.l10n_lu_bik_vehicle
         <field name="code">BIK_OTHER_BENEFITS</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_other_benefits &gt; 0</field>
+        <field name="condition_python">result = version.l10n_lu_bik_other_benefits &gt; 0</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_lu_bik_other_benefits
+result = version.l10n_lu_bik_other_benefits
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -91,7 +91,7 @@ result = contract.l10n_lu_bik_other_benefits
         <field name="code">BIK_MEAL_VOUCHERS</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_meal_voucher_amount and contract.l10n_lu_meal_voucher_employee_computation == 'consider_as_bik'</field>
+        <field name="condition_python">result = version.l10n_lu_meal_voucher_amount and version.l10n_lu_meal_voucher_employee_computation == 'consider_as_bik'</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 if 'WORK100' not in worked_days:
@@ -110,7 +110,7 @@ result = 2.8
         <field name="code">BIK_MEAL_VOUCHERS_EXCEEDING_AMOUNT</field>
         <field name="sequence">10</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_meal_voucher_exceeding_amount &gt; 0</field>
+        <field name="condition_python">result = version.l10n_lu_bik_meal_voucher_exceeding_amount &gt; 0</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 if 'WORK100' not in worked_days:
@@ -118,7 +118,7 @@ if 'WORK100' not in worked_days:
 else:
     max_number_of_days = payslip._rule_parameter('l10n_lu_meal_voucher_max_days')
     result_qty = min(worked_days['WORK100'].number_of_days, max_number_of_days)
-result = contract.l10n_lu_bik_meal_voucher_exceeding_amount
+result = version.l10n_lu_bik_meal_voucher_exceeding_amount
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -133,10 +133,10 @@ result = contract.l10n_lu_bik_meal_voucher_exceeding_amount
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = inputs['WAGE_SUPPLEMENT_70'].amount
-if contract.wage_type == 'monthly':
-    result = contract.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 0.7
+if version.wage_type == 'monthly':
+    result = version.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 0.7
 else:
-    result = contract.l10n_lu_indexed_wage
+    result = version.l10n_lu_indexed_wage
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -151,10 +151,10 @@ else:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = inputs['OVERTIME'].amount
-if contract.wage_type == 'monthly':
-    result = contract.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month')
+if version.wage_type == 'monthly':
+    result = version.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month')
 else:
-    result = contract.l10n_lu_indexed_wage
+    result = version.l10n_lu_indexed_wage
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -169,10 +169,10 @@ else:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = inputs['OVERTIME_SUPPLEMENT_40'].amount
-if contract.wage_type == 'monthly':
-    result = contract.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 0.4
+if version.wage_type == 'monthly':
+    result = version.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 0.4
 else:
-    result = contract.l10n_lu_indexed_wage
+    result = version.l10n_lu_indexed_wage
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -187,10 +187,10 @@ else:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = inputs['OVERTIME_SUPPLEMENT_150'].amount
-if contract.wage_type == 'monthly':
-    result = contract.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 1.5
+if version.wage_type == 'monthly':
+    result = version.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 1.5
 else:
-    result = contract.l10n_lu_indexed_wage
+    result = version.l10n_lu_indexed_wage
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -205,10 +205,10 @@ else:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = inputs['OVERTIME_SUPPLEMENT_150'].amount
-if contract.wage_type == 'monthly':
-    result = contract.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 2
+if version.wage_type == 'monthly':
+    result = version.l10n_lu_indexed_wage / payslip._rule_parameter('l10n_lu_hours_per_month') * 2
 else:
-    result = contract.l10n_lu_indexed_wage
+    result = version.l10n_lu_indexed_wage
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -669,13 +669,13 @@ lower_bound = payslip._rule_parameter('l10n_lu_cissm_lower_bound')
 middle_bound = payslip._rule_parameter('l10n_lu_cissm_middle_bound')
 upper_bound = payslip._rule_parameter('l10n_lu_cissm_upper_bound')
 
-if contract.wage_type == 'monthly':
-    fte_monthly_wage = int(contract.l10n_lu_indexed_wage / contract.work_time_rate) if contract.work_time_rate else 0
+if version.wage_type == 'monthly':
+    fte_monthly_wage = int(version.l10n_lu_indexed_wage / version.work_time_rate) if version.work_time_rate else 0
 else:
     unpaid_codes = payslip.struct_id.unpaid_work_entry_type_ids.mapped('code')
     paid_lines = payslip.worked_days_line_ids.filtered(lambda wd: wd.code not in unpaid_codes)
     worked_hours = sum(paid_lines.mapped('number_of_hours'))
-    fte_monthly_wage = int(contract.l10n_lu_indexed_wage * worked_hours / contract.work_time_rate) if contract.work_time_rate else 0
+    fte_monthly_wage = int(version.l10n_lu_indexed_wage * worked_hours / version.work_time_rate) if version.work_time_rate else 0
 
 if lower_bound &lt;= fte_monthly_wage &lt;= middle_bound:
     cissm = max_amount
@@ -683,7 +683,7 @@ elif middle_bound &lt; fte_monthly_wage &lt; upper_bound:
     cissm = (max_amount / (upper_bound - middle_bound)) * (upper_bound - fte_monthly_wage)
 else:
     cissm = 0
-result = - cissm * contract.work_time_rate
+result = - cissm * version.work_time_rate
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -752,10 +752,10 @@ result_name = inputs['CHILD_SUPPORT'].name
         <field name="code">BIK_VEHICLE_NET</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_vehicle &gt; 0 and not contract.l10n_lu_bik_vehicle_vat_included</field>
+        <field name="condition_python">result = version.l10n_lu_bik_vehicle &gt; 0 and not version.l10n_lu_bik_vehicle_vat_included</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_lu_bik_vehicle
+result = version.l10n_lu_bik_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -766,11 +766,11 @@ result = contract.l10n_lu_bik_vehicle
         <field name="code">BIK_VEHICLE_NET_NO_VAT</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_vehicle &gt; 0 and contract.l10n_lu_bik_vehicle_vat_included</field>
+        <field name="condition_python">result = version.l10n_lu_bik_vehicle &gt; 0 and version.l10n_lu_bik_vehicle_vat_included</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_rate = 100 / (1 + payslip._rule_parameter('l10n_vat_rate'))
-result = contract.l10n_lu_bik_vehicle
+result = version.l10n_lu_bik_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -781,11 +781,11 @@ result = contract.l10n_lu_bik_vehicle
         <field name="code">BIK_VEHICLE_NET_VAT</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_vehicle &gt; 0 and contract.l10n_lu_bik_vehicle_vat_included</field>
+        <field name="condition_python">result = version.l10n_lu_bik_vehicle &gt; 0 and version.l10n_lu_bik_vehicle_vat_included</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_rate = 100 - result_rules['BIK_VEHICLE_NET_NO_VAT']['rate']
-result = contract.l10n_lu_bik_vehicle
+result = version.l10n_lu_bik_vehicle
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -796,10 +796,10 @@ result = contract.l10n_lu_bik_vehicle
         <field name="code">BIK_OTHER_BENEFITS_NET</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_other_benefits &gt; 0</field>
+        <field name="condition_python">result = version.l10n_lu_bik_other_benefits &gt; 0</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = contract.l10n_lu_bik_other_benefits
+result = version.l10n_lu_bik_other_benefits
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
@@ -810,7 +810,7 @@ result = contract.l10n_lu_bik_other_benefits
         <field name="code">MEAL_VOUCHERS</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_meal_voucher_amount</field>
+        <field name="condition_python">result = version.l10n_lu_meal_voucher_amount</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 if 'WORK100' not in worked_days:
@@ -829,7 +829,7 @@ result = 2.8
         <field name="code">BIK_MEAL_VOUCHERS_EXCEEDING_AMOUNT_NET</field>
         <field name="sequence">175</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_lu_bik_meal_voucher_exceeding_amount &gt; 0</field>
+        <field name="condition_python">result = version.l10n_lu_bik_meal_voucher_exceeding_amount &gt; 0</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 if 'WORK100' not in worked_days:
@@ -837,7 +837,7 @@ if 'WORK100' not in worked_days:
 else:
     max_number_of_days = payslip._rule_parameter('l10n_lu_meal_voucher_max_days')
     result_qty = min(worked_days['WORK100'].number_of_days, max_number_of_days)
-result = contract.l10n_lu_bik_meal_voucher_exceeding_amount
+result = version.l10n_lu_bik_meal_voucher_exceeding_amount
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>

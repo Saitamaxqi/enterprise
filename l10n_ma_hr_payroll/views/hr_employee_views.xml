@@ -6,7 +6,7 @@
         <field name="priority">30</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="payroll_group" position="inside">
+            <group name="citizenship" position="inside">
                 <field name="l10n_ma_cin_number"
                     invisible="company_country_code != 'MA'"/>
                 <field name="l10n_ma_cnss_number"
@@ -15,6 +15,23 @@
                     invisible="company_country_code != 'MA'"/>
                 <field name="l10n_ma_mut_number"
                     invisible="company_country_code != 'MA'"/>
+            </group>
+            <group name="salary" position="inside">
+                <group name="untaxed" string="Moroccan Localization"
+                    invisible="country_code != 'MA'">
+                    <field name="l10n_ma_hra"
+                        class="o_hr_narrow_field"/>
+                    <field name="l10n_ma_da"
+                        class="o_hr_narrow_field"/>
+                    <field name="l10n_ma_meal_allowance"
+                        class="o_hr_narrow_field"/>
+                    <field name="l10n_ma_medical_allowance"
+                        class="o_hr_narrow_field"/>
+                    <field name="l10n_ma_kilometric_exemption"
+                        class="o_hr_narrow_field"/>
+                    <field name="l10n_ma_transport_exemption"
+                        class="o_hr_narrow_field"/>
+                </group>
             </group>
         </field>
     </record>

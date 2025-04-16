@@ -211,7 +211,7 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
 
     getBenefits() {
         const benefits = {
-            'contract': {},
+            'version': {},
             'employee': {},
             'address': {},
             'bank_account': {},
@@ -490,7 +490,7 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
             const result = await rpc('/salary_package/onchange_benefit', {
                 'benefit_field': benefitField,
                 'new_value': newValue,
-                'contract_id': parseInt($("input[name='contract']").val()),
+                'version_id': parseInt($("input[name='version']").val()),
                 'benefits': this.getBenefits({includeFiles: false}),
             });
             if (type !== 'select') {
@@ -533,7 +533,7 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
 
         return this.keepLast.add(
             rpc('/salary_package/update_salary', {
-                'contract_id': parseInt($("input[name='contract']").val()),
+                'version_id': parseInt($("input[name='version']").val()),
                 'offer_id': parseInt($("input[name='offer_id']").val()),
                 'benefits': self.getBenefits({includeFiles: false}),
                 'simulation_working_schedule': $("select[name='simulation_working_schedule']").val(),
@@ -684,13 +684,13 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         let benefits = this.getBenefits();
         benefits = {
             'employee': Object.assign(benefits.employee, personalDocuments.employee),
-            'contract': Object.assign(benefits.contract, personalDocuments.contract),
+            'version': Object.assign(benefits.version, personalDocuments.version),
             'address': Object.assign(benefits.address, personalDocuments.address),
             'bank_account': Object.assign(benefits.bank_account, personalDocuments.bank_account),
         }
 
         return {
-            'contract_id': parseInt($("input[name='contract']").val()),  /* YTI TO REMOVE*/
+            'version_id': parseInt($("input[name='version']").val()),  /* YTI TO REMOVE*/
             'token': $("input[name='token']").val(),
             'benefits': benefits,
             'offer_id': parseInt($("input[name='offer_id']").val()) || false,

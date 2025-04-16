@@ -1,4 +1,6 @@
-from odoo import fields, models, tools
+import statistics
+
+from odoo import api, fields, models, tools
 
 
 class EsgEmployeeReport(models.Model):
@@ -6,25 +8,28 @@ class EsgEmployeeReport(models.Model):
     _description = "ESG Employee Report"
     _auto = False
 
-    def _get_gender_selection(self):
-        return self.env["hr.employee"]._fields["gender"]._description_selection(self.env)
+    def _get_sex_selection(self):
+        return self.env["hr.employee"]._fields["sex"]._description_selection(self.env)
 
     count = fields.Integer(readonly=True)
-    gender = fields.Selection(selection=_get_gender_selection, readonly=True, groups="hr.group_hr_user")
+    sex = fields.Selection(selection=_get_sex_selection, readonly=True, groups="hr.group_hr_user")
     company_id = fields.Many2one("res.company", readonly=True)
     department_id = fields.Many2one("hr.department", readonly=True)
     is_team_leader = fields.Boolean(readonly=True, groups="hr.group_hr_user")
     is_full_time = fields.Boolean(readonly=True, groups="hr.group_hr_user")
     leadership_level = fields.Integer(readonly=True, groups="hr.group_hr_user")
     country_id = fields.Many2one("res.country", readonly=True)
+    wage = fields.Float("Wage", aggregator="avg", readonly=True, groups="hr.group_hr_user")
+    job_id = fields.Many2one("hr.job", string="Job Position", readonly=True, groups="hr.group_hr_user")
+    contract_type_id = fields.Many2one("hr.contract.type", string="Contract Type", readonly=True, groups="hr.group_hr_user")
 
     def _select(self):
         return """
             e.id,
-            e.gender,
+            v.sex,
             e.company_id,
-            e.department_id,
-            e.work_location_id,
+            v.department_id,
+            v.work_location_id,
             1 AS count,
             CASE
                 WHEN COUNT(ee.id) > 0 THEN TRUE
@@ -37,14 +42,18 @@ class EsgEmployeeReport(models.Model):
                 ELSE FALSE
             END as is_full_time,
             MAX(ll.level) AS leadership_level,
-            comprp.country_id
+            comprp.country_id,
+            v.wage,
+            v.job_id,
+            v.contract_type_id
         """
 
     def _from(self):
         return f"""
             hr_employee e
-                LEFT JOIN hr_employee ee ON ee.parent_id = e.id
-                LEFT JOIN resource_calendar rc ON e.resource_calendar_id = rc.id
+                LEFT JOIN hr_version v ON v.id = e.current_version_id
+                LEFT JOIN hr_employee ee ON e.id = ee.parent_id
+                LEFT JOIN resource_calendar rc ON v.resource_calendar_id = rc.id
                 LEFT JOIN ({self._leadership_level_subquery()}) ll ON e.id = ll.employee_id
                 LEFT JOIN res_company rcomp ON e.company_id = rcomp.id
                 LEFT JOIN res_partner comprp ON rcomp.partner_id = comprp.id
@@ -58,14 +67,17 @@ class EsgEmployeeReport(models.Model):
     def _group_by(self):
         return """
             e.id,
-            e.gender,
+            v.sex,
             e.company_id,
-            e.department_id,
-            e.work_location_id,
+            v.department_id,
+            v.work_location_id,
             rc.full_time_required_hours,
             rc.hours_per_week,
             ll.level,
-            comprp.country_id
+            comprp.country_id,
+            v.wage,
+            v.job_id,
+            v.contract_type_id
         """
 
     def _leadership_level_subquery(self):
@@ -105,3 +117,34 @@ class EsgEmployeeReport(models.Model):
                 GROUP BY {self._group_by()}
             )
         """)
+
+    @api.model
+    def get_overall_pay_gap(self):
+        if not self.env.user.has_group("hr.group_hr_user"):
+            return None
+        emp_by_sex = dict(self.env["hr.employee"]._read_group(
+            domain=[("company_id", "in", self.env.companies.ids)],
+            groupby=["sex"],
+            aggregates=["id:recordset"],
+        ))
+        male_employees = emp_by_sex.get("male", self.env["hr.employee"])
+        female_employees = emp_by_sex.get("female", self.env["hr.employee"])
+
+        # Normalize wages to a hourly wage
+        def get_wages(employees):
+            wages = []
+            for emp in employees:
+                if wage := emp.version_id._get_normalized_wage():
+                    wages.append(wage)
+            return wages
+
+        male_wages = get_wages(male_employees)
+        female_wages = get_wages(female_employees)
+
+        male_median = statistics.median(male_wages) if male_wages else 0
+        female_median = statistics.median(female_wages) if female_wages else 0
+
+        if not male_median or not female_median:
+            return False
+
+        return round((male_median - female_median) / male_median * 100, 2)

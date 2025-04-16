@@ -5,7 +5,7 @@
     'version': '1.0',
     'category': 'Human Resources/Recruitment',
     'summary': 'Manage the signatures to send to your applicants',
-    'depends': ['hr_recruitment', 'hr_contract_sign'],
+    'depends': ['hr_recruitment', 'hr_sign'],
     'data': [
         'security/ir.model.access.csv',
         'data/mail_templates_chatter.xml',

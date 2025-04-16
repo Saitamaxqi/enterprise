@@ -10,7 +10,6 @@
         'hr_holidays',
     ],
     'data': [
-        'views/hr_contract_views.xml',
         'views/res_config_settings_views.xml',
     ],
     'author': 'Odoo S.A.',

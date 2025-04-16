@@ -132,7 +132,7 @@ class HrPayslip(models.Model):
         date_to = datetime.combine(self.date_to, datetime.max.time())
         remainig_work_entries_domain = expression.AND([domain, [('leave_id.date_from', '<', self.date_from)]])
         work_entries_dict = self.env['hr.work.entry']._read_group(
-            self.contract_id._get_work_hours_domain(date_from, date_to, domain=remainig_work_entries_domain, inside=True),
+            self.version_id._get_work_hours_domain(date_from, date_to, domain=remainig_work_entries_domain, inside=True),
             ['leave_id', 'work_entry_type_id'],
             ['duration:sum'],
         )
@@ -155,20 +155,20 @@ class HrPayslip(models.Model):
             })
         return res
 
-    def _get_worked_day_lines(self, domain=None, check_out_of_contract=True):
+    def _get_worked_day_lines(self, domain=None, check_out_of_version=True):
         self.ensure_one()
-        res = super()._get_worked_day_lines(domain, check_out_of_contract)
+        res = super()._get_worked_day_lines(domain, check_out_of_version)
         if self.struct_id.country_id.code != 'HK':
             return res
 
         if domain is None:
             domain = []
-        contract = self.contract_id
+        contract = self.version_id
         if contract.resource_calendar_id:
-            if not check_out_of_contract:
+            if not check_out_of_version:
                 return res
             out_days, out_hours = 0, 0
-            reference_calendar = self._get_out_of_contract_calendar()
+            reference_calendar = self._get_out_of_version_calendar()
             domain = expression.AND([domain, [('work_entry_type_id.is_leave', '=', True)]])
             if self.date_from < contract.date_start:
                 start = fields.Datetime.to_datetime(self.date_from)

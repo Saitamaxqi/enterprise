@@ -104,7 +104,7 @@
         <menuitem id="menu_report_contract_recruitment_all"
             name="Offer Analysis"
             action="contract_recruitment_report_action"
-            groups="hr_contract.group_hr_contract_manager"
+            groups="hr.group_hr_manager"
             parent="hr_recruitment.report_hr_recruitment"
         />
     </data>

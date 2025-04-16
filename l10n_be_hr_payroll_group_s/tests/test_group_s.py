@@ -20,17 +20,13 @@ class TestHrContractGroupSCode(TransactionCase):
 
         cls.employee = cls.env['hr.employee'].create({
             'name': 'Test Employee',
-        })
-
-        cls.contract = cls.env['hr.contract'].create({
-            'name': 'Test Contract',
-            'employee_id': cls.employee.id,
             'company_id': cls.company.id,
             'wage': 3000,
             'group_s_code': '123456',
             'country_code': 'BE',
-            'state': 'open',
         })
+
+        cls.contract = cls.employee.version_id
 
     def test_invalid_group_s_code_length(self):
         """Test invalid Group S code length (Belgium)"""
@@ -40,14 +36,14 @@ class TestHrContractGroupSCode(TransactionCase):
     def test_unique_group_s_code(self):
         """Test Group S code uniqueness within the same company"""
         with self.assertRaises(ValidationError):
-            self.env['hr.contract'].create({
+            self.env['hr.version'].create({
                 'name': 'Duplicate Group S Code Contract',
+            'date_version': '2020-01-01',
                 'employee_id': self.employee.id,
                 'company_id': self.company.id,
                 'wage': 3000,
                 'group_s_code': '123456',
                 'country_code': 'BE',
-                'state': 'open',
             })
 
     def test_group_s_code_in_different_company(self):
@@ -56,14 +52,14 @@ class TestHrContractGroupSCode(TransactionCase):
             'name': 'Other Company',
             'country_id': self.belgium.id,
         })
-        other_contract = self.env['hr.contract'].create({
+        other_contract = self.env['hr.version'].create({
             'name': 'Contract in Other Company',
+            'date_version': '2020-01-01',
             'employee_id': self.employee.id,
             'company_id': other_company.id,
             'wage': 2000,
             'group_s_code': '123456',
             'country_code': 'BE',
-            'state': 'open',
         })
         self.assertEqual(other_contract.group_s_code, '123456', "Group S code should be valid in a different company.")
 

@@ -29,11 +29,15 @@ class TestPayrollCommission(TestPayslipContractBase):
         })
         employee = self.env['hr.employee'].create({
             'name': 'Salesman',
-            'gender': 'male',
+            'sex': 'male',
             'birthday': '1984-05-01',
             'country_id': self.env.ref('base.be').id,
             'department_id': self.dep_rd.id,
             'user_id': employee_user.id,
+            'contract_date_end': today + relativedelta(years=2),
+            'contract_date_start': today - relativedelta(years=2),
+            'wage': 5000.33,
+            'structure_type_id': self.structure_type.id,
         })
 
         # Commission
@@ -62,17 +66,6 @@ class TestPayrollCommission(TestPayslipContractBase):
             'plan_id': commission_plan.id,
         }])
         commission_plan.action_approve()
-
-        # Payslip
-        self.env['hr.contract'].create({
-            'date_end': today + relativedelta(years=2),
-            'date_start': today - relativedelta(years=2),
-            'name': 'Contract for Richard',
-            'wage': 5000.33,
-            'employee_id': employee.id,
-            'structure_type_id': self.structure_type.id,
-            'state': 'open',
-        })
 
         # Sale order
         partner = self.env["res.partner"].create({"name": 'Buyer', "company_id": self.env.company.id})

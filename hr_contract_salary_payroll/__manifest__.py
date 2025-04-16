@@ -13,7 +13,7 @@
         'data/hr_contract_salary_resume_data.xml',
         'views/menuitems.xml',
         'views/hr_contract_salary_resume_views.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_employee_views.xml',
         'views/hr_contract_salary_template.xml',
         'views/hr_payroll_headcount.xml',
     ],
@@ -27,9 +27,6 @@
         ],
         'web.assets_backend': [
             'hr_contract_salary_payroll/static/src/js/tours/*.js',
-        ],
-        'web.assets_tests': [
-            'hr_contract_salary_payroll/static/tests/**/*.js',
         ],
     }
 }

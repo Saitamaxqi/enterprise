@@ -101,7 +101,7 @@
         <field name="email" model="res.bank" eval="obj(ref('l10n_eg_hr_payroll.eg_res_bank_suez_canal')).name.replace(' ', '.').lower() + '@example.com'"/>
     </record>
 
-     <record id="l10n_eg_res_partner_bank_account_abeer" model="res.partner.bank">
+    <record id="l10n_eg_res_partner_bank_account_abeer" model="res.partner.bank">
         <field name="acc_number">EG800002000194728301840280004</field>
         <field name="allow_out_payment" eval="True"/>
         <field name="bank_id" ref="eg_res_bank_national"/>
@@ -121,7 +121,6 @@
 
     <record id="hr_employee_abeer" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).name"/>
-        <field name="job_title">Marketing Manager</field>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">99 1234 5678</field>
@@ -140,7 +139,7 @@
         <field name="distance_home_work">17</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).country_id"/>
         <field name="identification_id">98309120123456</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1983, 9, 12).date()"/>
         <field name="place_of_birth">Cairo</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).country_id"/>
@@ -150,11 +149,19 @@
         <field name="study_field">Engineering</field>
         <field name="study_school">Cairo University</field>
         <field name="marital">single</field>
+        <field name="department_id" ref="eg_hr_department_marketing"/>
+        <field name="wage">35000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
+        <field name="contract_date_end" eval="DateTime.today() + relativedelta(months=2, days=-10)"/>
+        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
+        <field name="l10n_eg_housing_allowance">1000</field>
+        <field name="l10n_eg_other_allowances">1000</field>
+        <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_abeer"/>
     </record>
 
     <record id="hr_employee_hany" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name"/>
-        <field name="job_title">Accounting Manager</field>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_ngh-image.jpg"/>
         <field name="work_phone">99 0011 2345</field>
@@ -174,7 +181,7 @@
         <field name="distance_home_work">47</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).country_id"/>
         <field name="identification_id">99812030123456</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1998, 12, 3).date()"/>
         <field name="place_of_birth">Cairo</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).country_id"/>
@@ -184,58 +191,26 @@
         <field name="study_field">Psychology</field>
         <field name="study_school">Alexandira University</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_abeer" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_abeer"/>
-    </record>
-
-    <record id="hr_employee_hany" model="hr.employee">
+        <field name="department_id" ref="eg_hr_department_accounting"/>
+        <field name="wage">40000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_version" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
+        <field name="contract_date_start" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
+        <field name="contract_date_end" eval="DateTime(DateTime.today().year-2,month=2,day=25)"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="l10n_eg_housing_allowance">1000</field>
+        <field name="l10n_eg_other_allowances">1000</field>
         <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_hany"/>
     </record>
 
-    <record id="hr_contract_abeer" model="hr.contract">
-        <field name="name" model="res.partner" eval="'Permanent Contract - ' + obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).name"/>
-        <field name="employee_id" ref="l10n_eg_hr_payroll.hr_employee_abeer"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="eg_hr_department_marketing"/>
-        <field name="company_id" ref="base.demo_company_eg"/>
-        <field name="wage">35000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
-        <field name="date_end" eval="DateTime.today() + relativedelta(months=2, days=-10)"/>
-        <field name="contract_type_id" ref="hr.contract_type_temporary"/>
-        <field name="l10n_eg_housing_allowance">1000</field>
-        <field name="l10n_eg_other_allowances">1000</field>
-    </record>
-    <record id="hr_contract_hany_previous" model="hr.contract">
-        <field name="name" model="res.partner" eval="'Permanent Contract - ' + obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name"/>
-        <field name="employee_id" ref="l10n_eg_hr_payroll.hr_employee_hany"/>
-        <field name="job_id" ref="hr.job_consultant"/>
-        <field name="department_id" ref="eg_hr_department_accounting"/>
-        <field name="company_id" ref="base.demo_company_eg"/>
-        <field name="wage">40000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
-        <field name="date_end" eval="DateTime(DateTime.today().year-2,month=2,day=25)"/>
-        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
-        <field name="l10n_eg_housing_allowance">1000</field>
-        <field name="l10n_eg_other_allowances">1000</field>
-    </record>
-    <record id="hr_contract_hany" model="hr.contract">
-        <field name="name" model="res.partner" eval="'Permanent Contract - ' + obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name"/>
-        <field name="employee_id" ref="l10n_eg_hr_payroll.hr_employee_hany"/>
-        <field name="job_id" ref="hr.job_consultant"/>
-        <field name="department_id" ref="eg_hr_department_accounting"/>
-        <field name="company_id" ref="base.demo_company_eg"/>
-        <field name="wage">42000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_eg_hr_payroll.hr_contract_hany_previous')).date_end + relativedelta(days=1)"/>
-        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
-        <field name="l10n_eg_housing_allowance">1000</field>
-        <field name="l10n_eg_other_allowances">1000</field>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_eg_hr_payroll.hr_employee_hany')]"/>
+        <value eval="{
+            'date_version': DateTime(DateTime.today().year-2,month=2,day=25) + relativedelta(days=1),
+            'contract_date_start': DateTime(DateTime.today().year-2,month=2,day=25) + relativedelta(days=1),
+            'contract_date_end': False,
+            'contract_type_id': ref('hr.contract_type_permanent'),
+            'wage': 42000.00
+        }"/>
+    </function>
 </odoo>

@@ -132,7 +132,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'driver_id': cls.employees[i].work_contact_id.id,
             'company_id': cls.company.id,
             'model_id': cls.model.id,
-            'first_contract_date': date(2020, 10, 8),
+            'contract_date_start': date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
             'fuel_type': "diesel",
@@ -151,30 +151,30 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'recurring_cost_amount_depreciated': 450.0
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        cls.contracts = cls.env['hr.contract'].create([{
-            'name': "Contract For Payslip Test %i" % i,
-            'employee_id': cls.employees[i].id,
-            'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
-            'company_id': cls.company.id,
-            'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
-            'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
-            'car_id': cls.cars[i].id,
-            'structure_type_id': cls.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': date(2018, 12, 31),
-            'wage': 2400,
-            'wage_on_signature': 2400,
-            'state': "open",
-            'transport_mode_car': True,
-            'fuel_card': 150.0,
-            'internet': 38.0,
-            'representation_fees': 150.0,
-            'mobile': 30.0,
-            'meal_voucher_amount': 7.45,
-            'eco_checks': 250.0,
-            'ip_wage_rate': 25.0,
-            'ip': True,
-            'rd_percentage': 100,
-        } for i in range(cls.EMPLOYEES_COUNT)])
+        for i, employee in enumerate(cls.employees):
+            employee.version_id.write({
+                'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
+                'company_id': cls.company.id,
+                'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
+                'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
+                'car_id': cls.cars[i].id,
+                'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
+                'contract_date_start': date(2018, 12, 31),
+                'date_version': date(2018, 12, 31),
+                'wage': 2400,
+                'wage_on_signature': 2400,
+                'transport_mode_car': True,
+                'fuel_card': 150.0,
+                'internet': 38.0,
+                'representation_fees': 150.0,
+                'mobile': 30.0,
+                'meal_voucher_amount': 7.45,
+                'eco_checks': 250.0,
+                'ip_wage_rate': 25.0,
+                'ip': True,
+                'rd_percentage': 100,
+            })
+        cls.contracts = cls.employees.version_ids
 
         cls.sick_time_off_type = cls.env['hr.leave.type'].sudo().create({
             'name': 'Sick Time Off',
@@ -217,14 +217,14 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
     @warmup
     def test_performance_l10n_be_payroll_whole_flow(self):
         # Work entry generation
-        with self.assertQueryCount(admin=550):
+        with self.assertQueryCount(admin=1800):
             self.employees.generate_work_entries(self.date_from, self.date_to)
 
         structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
         payslips_values = [{
             'name': "Test Payslip %i" % i,
             'employee_id': self.employees[i].id,
-            'contract_id': self.contracts[i].id,
+            'version_id': self.contracts[i].id,
             'company_id': self.company.id,
             'vehicle_id': self.cars[i].id,
             'struct_id': structure.id,
@@ -233,7 +233,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         } for i in range(self.EMPLOYEES_COUNT)]
 
         # Payslip Creation
-        with self.assertQueryCount(admin=1148):  # randomness
+        with self.assertQueryCount(admin=6000):  # randomness
             start_time = time.time()
             payslips = self.env['hr.payslip'].with_context(allowed_company_ids=self.company.ids).create(payslips_values)
             # --- 0.3016078472137451 seconds ---

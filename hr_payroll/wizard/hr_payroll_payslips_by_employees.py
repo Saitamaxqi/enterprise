@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -16,8 +15,8 @@ class HrPayslipEmployees(models.TransientModel):
     _name = 'hr.payslip.employees'
     _description = 'Generate payslips for all selected employees'
 
-    employee_ids = fields.Many2many('hr.employee', 'hr_employee_group_rel', 'payslip_id', 'employee_id', 'Employees', required=True,
-                                    compute='_compute_employee_ids', store=True, readonly=False)
+    employee_ids = fields.Many2many('hr.employee', 'hr_employee_group_rel', 'payslip_id', 'employee_id', 'Employees',
+                                    required=True, compute='_compute_employee_ids', store=True, readonly=False)
     selection_mode = fields.Selection([
         ('employee', 'By Employee'),
         ('department', 'By Department'),
@@ -37,42 +36,25 @@ class HrPayslipEmployees(models.TransientModel):
     select_employee_ids = fields.Many2many('hr.employee', string='Select Employees', domain="[('company_id', 'in', allowed_company_ids)]")
     category_ids = fields.Many2many('hr.employee.category', string='Employee Tag')
 
-    def _get_available_contracts_domain(self):
-        contract_domain = [('state', 'in', ('open', 'close')), ('company_id', 'in', self.env.companies.ids)]
+    def _get_employees_in_contract(self):
+        employees = self.env['hr.employee'].search(self.get_employees_domain())
         payslip_run = self.env['hr.payslip.run'].browse(self.env.context.get('active_id'))
         if payslip_run:
-            add_domain = [
-                '&',
-                    ('date_start', '<=', payslip_run.date_end),
-                    '|',
-                        ('date_end', '=', False),
-                        ('date_end', '>=', payslip_run.date_start),
-            ]
-            contract_domain = expression.AND([contract_domain, add_domain])
-        if self.structure_id:
-            structure_domain = [
-                ('structure_type_id', 'in', self.structure_id.type_id.ids)
-            ]
-            contract_domain = expression.AND([contract_domain, structure_domain])
-        if self.selection_mode == 'structure' and self.structure_type_ids:
-            structure_domain = [('structure_type_id', 'in', self.structure_type_ids.ids)]
-            contract_domain = expression.AND([contract_domain, structure_domain])
-        return contract_domain
+            return employees.filtered(lambda e: not e.date_end or e.date_end >= payslip_run.date_start)
+        return employees
 
     @api.depends('structure_id', 'department_ids', 'structure_type_ids', 'job_ids', 'selection_mode', 'select_employee_ids', 'category_ids')
     def _compute_employee_ids(self):
         for wizard in self:
-            wizard.employee_ids = self.env['hr.employee'].search(wizard.get_employees_domain())
+            wizard.employee_ids = self._get_employees_in_contract()
 
     @api.depends('structure_type_ids')
     def _compute_structure_id(self):
         for wizard in self:
-            wizard.structure_id = wizard.structure_type_ids[0].default_struct_id if len(wizard.structure_type_ids) == 1 else False
+            wizard.structure_id = wizard.structure_type_ids[0].default_struct_id if wizard.structure_type_ids else False
 
     def get_employees_domain(self):
-        contract_domain = self._get_available_contracts_domain()
-        contract_ids = self.env['hr.contract']._search(contract_domain)
-        domain = [('contract_ids', 'in', contract_ids)]
+        domain = [('company_id', '=', self.env.company.id)]
         if self.selection_mode == 'employee' and self.select_employee_ids:
             domain = expression.AND([
                 domain,
@@ -82,6 +64,11 @@ class HrPayslipEmployees(models.TransientModel):
             domain = expression.AND([
                 domain,
                 [('department_id', 'child_of', self.department_ids.ids)]
+            ])
+        elif self.selection_mode == 'structure' and self.structure_type_ids:
+            domain = expression.AND([
+                domain,
+                [('version_ids.structure_type_id', 'in', self.structure_type_ids.ids)]
             ])
         elif self.selection_mode == 'job' and self.job_ids:
             domain = expression.AND([
@@ -93,11 +80,20 @@ class HrPayslipEmployees(models.TransientModel):
                 domain,
                 [('category_ids', 'in', self.category_ids.ids)]
             ])
+        if self.structure_id:
+            domain = expression.AND([
+                domain,
+                [('version_ids.structure_type_id', '=', self.structure_id.type_id.id)]
+            ])
         return domain
 
-    def _filter_contracts(self, contracts):
+    def _filter_versions(self, versions):
         # Could be overriden to avoid having 2 'end of the year bonus' payslips, etc.
-        return contracts
+        if self.structure_type_ids:
+            versions = versions.filtered(lambda v: v.structure_type_id in self.structure_type_ids)
+        if self.structure_id:
+            versions = versions.filtered(lambda v: v.structure_type_id in self.structure_id.type_id)
+        return versions
 
     def compute_sheet(self):
         self.ensure_one()
@@ -111,11 +107,11 @@ class HrPayslipEmployees(models.TransientModel):
                 batch_name = from_date.strftime('%B %Y')
             else:
                 batch_name = _('From %(from_date)s to %(end_date)s', from_date=format_date(self.env, from_date), end_date=format_date(self.env, end_date))
-            payslip_run = self.env['hr.payslip.run'].create({
+            payslip_run = self.env['hr.payslip.run'].create([{
                 'name': batch_name,
                 'date_start': from_date,
                 'date_end': end_date,
-            })
+            }])
         else:
             payslip_run = self.env['hr.payslip.run'].browse(self.env.context.get('active_id'))
 
@@ -129,28 +125,21 @@ class HrPayslipEmployees(models.TransientModel):
             'views': [[False, 'form']],
             'res_id': payslip_run.id,
         }
-        payslips = self.env['hr.payslip']
-        Payslip = self.env['hr.payslip']
 
-        contracts = employees._get_contracts(
-            payslip_run.date_start, payslip_run.date_end, states=['open', 'close']
-        )
-        target_structure_types = self.structure_id.type_id + self.structure_type_ids
-        if target_structure_types:
-            contracts = contracts.filtered(lambda c: c.structure_type_id in target_structure_types)
-        contracts.generate_work_entries(payslip_run.date_start, payslip_run.date_end)
+        versions = employees._get_versions_with_contract_overlap_with_period(payslip_run.date_start, payslip_run.date_end)
+        versions.generate_work_entries(payslip_run.date_start, payslip_run.date_end)
         work_entries = self.env['hr.work.entry'].search([
             ('date_start', '<=', payslip_run.date_end + relativedelta(days=1)),
             ('date_stop', '>=', payslip_run.date_start + relativedelta(days=-1)),
             ('employee_id', 'in', employees.ids),
         ])
         for slip in payslip_run.slip_ids:
-            slip_tz = pytz.timezone(slip.contract_id.resource_calendar_id.tz or slip.employee_id.tz or slip.company_id.resource_calendar_id.tz or 'UTC')
+            slip_tz = pytz.timezone(slip.version_id.resource_calendar_id.tz or slip.employee_id.tz or slip.company_id.resource_calendar_id.tz or 'UTC')
             utc = pytz.timezone('UTC')
             date_from = slip_tz.localize(datetime.combine(slip.date_from, time.min)).astimezone(utc).replace(tzinfo=None)
             date_to = slip_tz.localize(datetime.combine(slip.date_to, time.max)).astimezone(utc).replace(tzinfo=None)
             payslip_work_entries = work_entries.filtered_domain([
-                ('contract_id', '=', slip.contract_id.id),
+                ('version_id', '=', slip.version_id.id),
                 ('date_stop', '<=', date_to),
                 ('date_start', '>=', date_from),
             ])
@@ -162,7 +151,7 @@ class HrPayslipEmployees(models.TransientModel):
                 work_entries_by_contract = defaultdict(lambda: self.env['hr.work.entry'])
 
                 for work_entry in work_entries.filtered(lambda w: w.state == 'conflict'):
-                    work_entries_by_contract[work_entry.contract_id] |= work_entry
+                    work_entries_by_contract[work_entry.version_id] |= work_entry
 
                 for work_entries in work_entries_by_contract.values():
                     conflicts = work_entries._to_intervals()
@@ -177,18 +166,18 @@ class HrPayslipEmployees(models.TransientModel):
                     }
                 }
 
-
+        Payslip = self.env['hr.payslip']
         default_values = Payslip.default_get(Payslip.fields_get())
         payslips_vals = []
-        for contract in self._filter_contracts(contracts):
+        for version in self._filter_versions(versions):
             values = dict(default_values, **{
                 'name': _('New Payslip'),
-                'employee_id': contract.employee_id.id,
+                'employee_id': version.employee_id.id,
                 'payslip_run_id': payslip_run.id,
                 'date_from': payslip_run.date_start,
                 'date_to': payslip_run.date_end,
-                'contract_id': contract.id,
-                'struct_id': self.structure_id.id or contract.structure_type_id.default_struct_id.id,
+                'version_id': version.id,
+                'struct_id': self.structure_id.id or version.structure_type_id.default_struct_id.id,
             })
             payslips_vals.append(values)
         payslips = Payslip.with_context(tracking_disable=True).create(payslips_vals)

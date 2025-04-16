@@ -144,7 +144,7 @@
         <field name="distance_home_work">1</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_ae_hr_payroll.res_partner_aisha')).country_id"/>
         <field name="identification_id">784-1979-7890123-9</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1979, 1, 10).date()"/>
         <field name="place_of_birth">Abu Dhabi</field>
         <field name="country_of_birth" ref="base.ae"/>
@@ -158,7 +158,6 @@
 
     <record id="hr_employee_saeed" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_ae_hr_payroll.res_partner_saeed')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">099-456 0002</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_ae_hr_payroll.res_partner_saeed')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -177,7 +176,7 @@
         <field name="distance_home_work">3</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_ae_hr_payroll.res_partner_saeed')).country_id"/>
         <field name="identification_id">784-1983-4567890-9</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1983, 9, 14).date()"/>
         <field name="place_of_birth">Dubai</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_ae_hr_payroll.res_partner_saeed')).country_id"/>
@@ -187,53 +186,33 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">American University of Sharjah</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_aisha" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_aisha"/>
-    </record>
-
-    <record id="hr_employee_saeed" model="hr.employee">
         <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_saeed"/>
-    </record>
-
-    <record id="hr_contract_aisha" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_aisha')).name + ' - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_aisha')).job_title"/>
-        <field name="employee_id" ref="l10n_ae_hr_payroll.hr_employee_aisha"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_ae"/>
-        <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">20000</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="datetime(2020, 3, 16).date()"/>
-    </record>
-
-    <record id="hr_contract_saeed" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).name + ' - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).job_title"/>
-        <field name="employee_id" ref="l10n_ae_hr_payroll.hr_employee_saeed"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ae"/>
         <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
         <field name="wage_type">monthly</field>
         <field name="wage">16500</field>
-        <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="datetime(2022, 6, 1).date()"/>
+        <field name="contract_date_start" eval="datetime(2022, 6, 1).date()"/>
+        <field name="date_version" eval="datetime(2022, 6, 1).date()"/>
     </record>
 
     <record id="hr_employee_aisha" model="hr.employee">
-        <field name="contract_id" ref="l10n_ae_hr_payroll.hr_contract_aisha"/>
-    </record>
-    <record id="hr_employee_saeed" model="hr.employee">
-        <field name="contract_id" ref="l10n_ae_hr_payroll.hr_contract_saeed"/>
+        <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_aisha"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
+        <field name="company_id" ref="base.demo_company_ae"/>
+        <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">20000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="datetime(2020, 3, 16).date()"/>
+        <field name="date_version" eval="datetime(2020, 3, 16).date()"/>
     </record>
 
-    <function model="hr.contract" name="generate_work_entries">
-        <value eval="[ref('l10n_ae_hr_payroll.hr_contract_saeed')]"/>
+    <function model="hr.version" name="generate_work_entries">
+        <value model="hr.employee" eval="[obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).version_id.id]"/>
         <value eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1)).date()"/>
         <value eval="DateTime.today().date()"/>
     </function>
@@ -244,7 +223,7 @@
 
     <record id="hr_payslip_saeed_june" model="hr.payslip">
         <field name="name" eval="'Mitchell Admin ' + time.strftime('June %Y')"/>
-        <field name="contract_id" ref="l10n_ae_hr_payroll.hr_contract_saeed"/>
+        <field name="version_id" model="hr.employee" eval="obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).version_id.id"/>
         <field name="date_from" eval="time.strftime('%Y-6-1')"/>
         <field name="date_to" eval="time.strftime('%Y-6-30')"/>
         <field name="employee_id" ref="l10n_ae_hr_payroll.hr_employee_saeed"/>

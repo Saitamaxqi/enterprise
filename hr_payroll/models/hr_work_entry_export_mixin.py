@@ -94,7 +94,7 @@ class HrWorkEntryExportMixin(models.AbstractModel):
     @api.depends('eligible_employee_line_ids')
     def _compute_eligible_employee_count(self):
         for export in self:
-            export.eligible_employee_line_ids.filtered(lambda line: not line.work_entry_ids or not line.contract_ids).unlink()
+            export.eligible_employee_line_ids.filtered(lambda line: not line.work_entry_ids or not line.version_ids).unlink()
             export.eligible_employee_count = len(export.eligible_employee_line_ids)
 
     @api.model
@@ -127,14 +127,14 @@ class HrWorkEntryExportMixin(models.AbstractModel):
     def _get_contracts_by_employee(self, employee_ids=None):
         if employee_ids is None:
             employee_ids = self._get_employee_ids()
-        contracts_by_employee = dict(self.env['hr.contract']._read_group(
+        contracts_by_employee = dict(self.env['hr.version']._read_group(
             domain=[
                 ('employee_id', 'in', employee_ids),
-                ('date_start', '<=', self.period_stop),
-                ('state', 'in', ['open', 'close']),
+                ('contract_date_start', '!=', False),
+                ('contract_date_start', '<=', self.period_stop),
                 '|',
-                    ('date_end', '>=', self.period_start),
-                    ('date_end', '=', False),
+                    ('contract_date_end', '>=', self.period_start),
+                    ('contract_date_end', '=', False),
             ],
             groupby=['employee_id'],
             aggregates=['id:recordset'],
@@ -176,7 +176,7 @@ class HrWorkEntryExportMixin(models.AbstractModel):
                 lines.append((0, 0, {
                     'export_id': self.id,
                     'employee_id': employee.id,
-                    'contract_ids': [(6, 0, contracts.ids)],
+                    'version_ids': [(6, 0, contracts.ids)],
                 }))
         self.eligible_employee_line_ids = lines
         return {
@@ -205,14 +205,14 @@ class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
 
     export_id = fields.Many2one('hr.work.entry.export.mixin', required=True, index=True, ondelete='cascade')
     employee_id = fields.Many2one('hr.employee', required=True, ondelete='cascade')
-    contract_ids = fields.Many2many('hr.contract', compute="_compute_contract_ids", store=True, required=True, ondelete='cascade', readonly=False)
+    version_ids = fields.Many2many('hr.version', compute="_compute_contract_ids", store=True, required=True, ondelete='cascade', readonly=False)
     work_entry_ids = fields.Many2many('hr.work.entry', compute='_compute_work_entry_ids')
 
     @api.depends('employee_id')
     def _compute_contract_ids(self):
         contracts_by_employee = self.export_id._get_contracts_by_employee(employee_ids=self.employee_id.ids)
         for line in self:
-            line.contract_ids = contracts_by_employee.get(line.employee_id)
+            line.version_ids = contracts_by_employee.get(line.employee_id)
 
     @api.depends('export_id.period_start', 'export_id.period_stop', 'employee_id')
     def _compute_work_entry_ids(self):

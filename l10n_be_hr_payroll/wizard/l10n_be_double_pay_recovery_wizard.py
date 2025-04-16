@@ -21,12 +21,12 @@ class L10nBeDoublePayRecoveryWizard(models.TransientModel):
             payslip = self.env['hr.payslip'].browse(payslip_id)
             result['payslip_id'] = payslip_id
             result['employee_id'] = payslip.employee_id.id
-            result['contract_id'] = payslip.contract_id.id
+            result['version_id'] = payslip.version_id.id
         return result
 
     payslip_id = fields.Many2one('hr.payslip')
     employee_id = fields.Many2one('hr.employee')
-    contract_id = fields.Many2one('hr.contract')
+    version_id = fields.Many2one('hr.version')
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     currency_id = fields.Many2one(related='company_id.currency_id')
     line_ids = fields.One2many('l10n.be.double.pay.recovery.line.wizard', 'wizard_id', string="Occupation Lines",
@@ -42,7 +42,7 @@ class L10nBeDoublePayRecoveryWizard(models.TransientModel):
     @api.depends('payslip_id.date_to', 'employee_id')
     def _compute_months_count(self):
         for wizard in self:
-            date_from = wizard.employee_id.first_contract_date + relativedelta(day=1)
+            date_from = wizard.employee_id.contract_date_start + relativedelta(day=1)
             if not date_from:
                 raise UserError(_("This employee doesn't have a first contract date"))
             date_to = wizard.payslip_id.date_to + relativedelta(years=-1, month=12, day=31) + relativedelta(days=1)
@@ -62,10 +62,10 @@ class L10nBeDoublePayRecoveryWizard(models.TransientModel):
             wizard.write({'line_ids': [fields.Command.clear()] + [fields.Command.create(read_result)\
                 for read_result in wizard.employee_id.double_pay_line_ids.filtered(lambda d: d.year and d.year == previous_year and d.year <= d.employee_id.first_contract_year).read(fields=fields_to_copy)]})
 
-    @api.depends('contract_id')
+    @api.depends('version_id')
     def _compute_gross_salary(self):
         for wizard in self:
-            wizard.gross_salary = wizard.contract_id._get_contract_wage()
+            wizard.gross_salary = wizard.version_id._get_contract_wage()
 
     @api.depends(
         'gross_salary', 'months_count', 'line_ids.months_count', 'line_ids.occupation_rate')

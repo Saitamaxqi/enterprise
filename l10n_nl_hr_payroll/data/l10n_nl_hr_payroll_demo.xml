@@ -118,7 +118,6 @@
 
     <record id="hr_employee_wouter" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_nl_hr_payroll.res_partner_wouter')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="l10n_nl_hr_payroll/static/img/hr_employee_wouter.jpg"/>
         <field name="work_phone">09 99437379</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_nl_hr_payroll.res_partner_wouter')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -136,7 +135,7 @@
         <field name="distance_home_work">52</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_nl_hr_payroll.res_partner_wouter')).country_id"/>
         <field name="identification_id">9999.67.890</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1967, 1, 12).date()"/>
         <field name="place_of_birth">Arnhem</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_nl_hr_payroll.res_partner_wouter')).country_id"/>
@@ -146,6 +145,16 @@
         <field name="study_field">Mechanical Engineering</field>
         <field name="study_school">TU Delft</field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_nl_hr_payroll.res_partner_bank_account_wouter"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_nl_hr_payroll.nl_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_nl_hr_payroll.structure_type_employee_nl"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">3800</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_nl').id)], limit=1)"/>
     </record>
 
     <record id="hr_employee_lotte" model="hr.employee">
@@ -169,7 +178,7 @@
         <field name="distance_home_work">22</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_nl_hr_payroll.res_partner_lotte')).country_id"/>
         <field name="identification_id">9999.23.987</field>
-        <field name="gender">female</field>
+        <field name="sex">female</field>
         <field name="birthday" eval="datetime(1993, 10, 30).date()"/>
         <field name="place_of_birth">Maastricht</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_nl_hr_payroll.res_partner_lotte')).country_id"/>
@@ -179,66 +188,26 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Utrecht University</field>
         <field name="marital">single</field>
-    </record>
-
-    <record id="hr_employee_wouter" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_nl_hr_payroll.res_partner_bank_account_wouter"/>
-    </record>
-
-    <record id="hr_employee_lotte" model="hr.employee">
         <field name="bank_account_id" ref="l10n_nl_hr_payroll.res_partner_bank_account_lotte"/>
-    </record>
-
-    <record id="hr_contract_wouter" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'AVOT - ' + obj(ref('l10n_nl_hr_payroll.hr_employee_wouter')).name + ' - ' + obj(ref('l10n_nl_hr_payroll.hr_employee_wouter')).job_title"/>
-        <field name="employee_id" ref="l10n_nl_hr_payroll.hr_employee_wouter"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_nl_hr_payroll.nl_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_nl"/>
-        <field name="structure_type_id" ref="l10n_nl_hr_payroll.structure_type_employee_nl"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">3800</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_nl').id)], limit=1)"/>
-    </record>
-
-    <record id="hr_contract_lotte_previous" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'AVOT - ' + obj(ref('l10n_nl_hr_payroll.hr_employee_lotte')).name + ' - ' + obj(ref('l10n_nl_hr_payroll.hr_employee_lotte')).job_title"/>
-        <field name="employee_id" ref="l10n_nl_hr_payroll.hr_employee_lotte"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_nl_hr_payroll.nl_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_nl"/>
         <field name="structure_type_id" ref="l10n_nl_hr_payroll.structure_type_employee_nl"/>
         <field name="wage_type">monthly</field>
         <field name="wage">3000</field>
-        <field name="state">close</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_nl').id)], limit=1)"/>
     </record>
 
-    <record id="hr_contract_lotte" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'AVOT - ' + obj(ref('l10n_nl_hr_payroll.hr_employee_lotte')).name + ' - ' + obj(ref('l10n_nl_hr_payroll.hr_employee_lotte')).job_title"/>
-        <field name="employee_id" ref="l10n_nl_hr_payroll.hr_employee_lotte"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_nl_hr_payroll.nl_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_nl"/>
-        <field name="structure_type_id" ref="l10n_nl_hr_payroll.structure_type_employee_nl"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">3600</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_nl_hr_payroll.hr_contract_lotte_previous')).date_end + relativedelta(days=1)"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_nl').id)], limit=1)"/>
-    </record>
-
-    <record id="hr_employee_wouter" model="hr.employee">
-        <field name="contract_id" ref="l10n_nl_hr_payroll.hr_contract_wouter"/>
-    </record>
-    <record id="hr_employee_lotte" model="hr.employee">
-        <field name="contract_id" ref="l10n_nl_hr_payroll.hr_contract_lotte"/>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_nl_hr_payroll.hr_employee_lotte')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_end': False,
+            'wage': 3600.00
+        }"/>
+    </function>
 </odoo>

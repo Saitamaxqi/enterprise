@@ -7,10 +7,17 @@
         parent="esg.menu_esg_measure"
     >
         <menuitem
-            id="menu_esg_gender_parity"
-            name="Gender Parity"
+            id="menu_esg_sex_parity"
+            name="Sex Parity"
             sequence="10"
-            action="action_esg_employee_report_gender_parity"
+            action="action_esg_employee_report_sex_parity"
+            groups="hr.group_hr_user"
+        />
+        <menuitem
+            id="menu_esg_pay_gap"
+            name="Pay Gap"
+            sequence="20"
+            action="action_esg_employee_report_pay_gap"
             groups="hr.group_hr_user"
         />
     </menuitem>

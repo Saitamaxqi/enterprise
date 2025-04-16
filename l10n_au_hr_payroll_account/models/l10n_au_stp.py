@@ -346,12 +346,12 @@ class L10n_AuStp(models.Model):
             employee_input_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
             employee_input_totals_ungrouped = payslips._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
 
-            start_date = max(min_date, employee.first_contract_date) or unknown_date
+            start_date = max(min_date, employee._get_first_version_date()) or unknown_date
             remunerations = []
             deductions = []
             for income_stream_type, employee_ytd in employee_ytd_totals.items():
                 Remuneration = defaultdict(lambda: False)
-                contract_id = payslips.contract_id
+                version_id = payslips.version_id
                 # == Gross, income type, paygw ==
                 Remuneration["IncomeStreamTypeC"] = income_stream_type
                 # == Foreign income == (required for FEI, IAA, WHM )
@@ -562,7 +562,7 @@ class L10n_AuStp(models.Model):
                 "Deduction": deductions,
                 "contributions": contributions,
                 "benefits": benefits,
-                "contract": contract_id,
+                "contract": version_id,
                 "payslip": payslips,
             }
 
@@ -653,9 +653,9 @@ class L10n_AuStp(models.Model):
                 "ElectronicMailAddressT": employee.private_email,
                 "TelephoneMinimalN": strip_phonenumber(employee.private_phone),
                 "EmploymentStartD": extra_data[employee.id]["EmploymentStartD"],
-                "EmploymentEndD": payslip.contract_id.date_end or False,
+                "EmploymentEndD": payslip.version_id.date_end or False,
                 "PaymentBasisC": employee.l10n_au_employment_basis_code,
-                "CessationTypeC": payslip.contract_id.l10n_au_cessation_type_code,
+                "CessationTypeC": payslip.version_id.l10n_au_cessation_type_code,
                 "TaxTreatmentC": employee.l10n_au_tax_treatment_code,
                 "TaxOffsetClaimTotalA": None if self.is_zeroing else employee.l10n_au_nat_3093_amount,
                 "StartD": start_date,

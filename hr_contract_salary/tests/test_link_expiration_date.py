@@ -42,10 +42,10 @@ class TestLinkExpirationDate(HttpCase):
         Applicant should be able to access salary configurator before the link Expires.
         After the link expiration date, applicant should be redirected to the invalid link page.
         """
-        # If there is no demo contract templates, then creating a contract as follows will be necessary.
-        # Otherwise, the following contract creation can be deleted.
-        self.env['hr.contract'].create({
-            'name': "Contract",
+        # If there is no demo version templates, then creating a version as follows will be necessary.
+        # Otherwise, the following version creation can be deleted.
+        self.env['hr.version'].create({
+            'name': "Contract Template",
             'wage': 6500,
             'structure_type_id': self.structure_type.id,
             'job_id': self.job.id,
@@ -72,17 +72,16 @@ class TestLinkExpirationDate(HttpCase):
                         'The applicant should be redirected to the invalid link page')
 
     def test_link_for_employee(self):
-        employee_contract = self.env['hr.contract'].create({
-            'name': "Contract",
-            'employee_id': self.employee.id,
+        self.employee.version_id.write({
             'wage': 6500,
             'structure_type_id': self.structure_type.id,
             'job_id': self.job.id,
         })
+        employee_version = self.employee.version_id
 
         with freeze_time(self.offer_date):
-            employee_contract.action_generate_offer()
-            offer = employee_contract.salary_offer_ids
+            employee_version.action_generate_offer()
+            offer = employee_version.salary_offer_ids
             offer.offer_end_date = self.offer_date + relativedelta(days=30)
             url = f'/salary_package/simulation/offer/{offer.id}'
             self.authenticate(self.simple_user.login, self.simple_user.login)
@@ -95,24 +94,3 @@ class TestLinkExpirationDate(HttpCase):
             late_res = self.url_open(url)
         self.assertTrue(self.fail_text in str(late_res.content),
                         'The Employee should be redirected to the invalid link page')
-
-    def test_applicant_with_archived_contract(self):
-        applicant = self.env["hr.applicant"].create({"partner_name": "demo"})
-
-        applicant_contract = self.env['hr.contract'].create({
-            'name': "Contract",
-            'applicant_id': applicant.id,
-            'wage': 6500,
-            'structure_type_id': self.structure_type.id,
-            'job_id': self.job.id,
-        })
-
-        applicant_contract.copy({
-            'active': False,
-        })
-
-        proposed_contract = applicant.action_show_proposed_contracts()
-
-        self.assertEqual(applicant.proposed_contracts_count, 1)
-        self.assertEqual(proposed_contract.get('views'), [[False, 'form']])
-        self.assertEqual(proposed_contract.get('res_id'), applicant_contract.id)

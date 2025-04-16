@@ -34,7 +34,7 @@
                             <field name="l10n_au_payroll_finalisation_emp_ids" widget="one2many_list" force_save="1">
                                 <list editable="bottom">
                                     <field name="employee_id" options="{'no_create': True}"/>
-                                    <field name="contract_id" />
+                                    <field name="version_id" />
                                     <field name="contract_active" optional="hide"/>
                                     <field name="contract_start_date" />
                                     <field name="contract_end_date" />

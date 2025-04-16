@@ -1,5 +1,6 @@
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { defineModels, fields, models } from "@web/../tests/web_test_helpers";
+import { Domain } from "@web/core/domain";
+import { defineModels, fields, getKwArgs, models } from "@web/../tests/web_test_helpers";
+import { hrModels } from "@hr/../tests/hr_test_helpers";
 
 export class PlanningSlot extends models.Model {
     _name = "planning.slot";
@@ -40,6 +41,63 @@ export class PlanningSlot extends models.Model {
     conflicting_slot_ids = fields.Many2many({ relation: "planning.slot" });
     resource_roles = fields.Many2many({ relation: "resource.resource" });
     resource_color = fields.Integer({ related: 'resource_id.color' })
+
+    gantt_resource_employees_working_periods(rows) {
+        const kwargs = getKwArgs(arguments, "rows");
+        const { context } = kwargs
+        const start_time = context.default_start_datetime;
+        const end_time = context.default_end_datetime;
+        const workingPeriodsPerEmployeeId = {};
+        const employeeIds = new Set();
+        for (const row of rows) {
+            if ("rows" in row) {
+                row["rows"] = this.gantt_resource_employees_working_periods(row.rows, kwargs);
+                continue;
+            }
+            const [resource_id] = JSON.parse(row.id)[0].resource_id || [false];
+            if (!resource_id) {
+                continue;
+            }
+            const [resource] = this.env["resource.resource"].browse([resource_id]);
+            if (!resource.employee_id) {
+                continue;
+            }
+            row.working_periods = new Array();
+            const employeeId = resource.employee_id[0] || false;
+            if (employeeId) {
+                employeeIds.add(employeeId);
+            }
+            workingPeriodsPerEmployeeId[employeeId] = row;
+        }
+        if (employeeIds.size) {
+            const employeeIdsList = [...employeeIds];
+            const hr_contract_read_group = this.env["hr.version"].formatted_read_group(
+                new Domain([
+                    ["employee_id", "in", employeeIdsList],
+                ]).toList(),
+                ["employee_id", "contract_date_start:day", "contract_date_end:day"],
+                [],
+                "",
+                "",
+                "",
+            );
+            hr_contract_read_group.forEach((contract) => {
+                workingPeriodsPerEmployeeId[contract.employee_id[0]]["working_periods"].push({
+                    start: contract["contract_date_start:day"][1],
+                    end: contract["contract_date_end:day"][1],
+                });
+            });
+            employeeIds
+                .difference(new Set(hr_contract_read_group.map((a) => a.employee_id[0])))
+                .forEach((employee) => {
+                    workingPeriodsPerEmployeeId[employee]["working_periods"].push({
+                        start: start_time,
+                        end: end_time,
+                    });
+                });
+        }
+        return workingPeriodsPerEmployeeId;
+    }
 }
 
 export class PlanningRecurrency extends models.Model {
@@ -48,61 +106,12 @@ export class PlanningRecurrency extends models.Model {
     repeat_interval = fields.Integer();
 }
 
-export class ResourceResource extends models.Model {
+export class ResourceResource extends models.ServerModel {
     _name = "resource.resource";
-
-    name = fields.Char();
-    resource_type = fields.Selection({
-        selection: [
-            ["user", "Human"],
-            ["material", "Material"],
-        ],
-    });
-    role_ids = fields.One2many({ relation: "planning.role" });
-    employee_id = fields.Many2one({ relation: "hr.employee" });
-    user_id = fields.Many2one({ relation: "res.users" });
-    im_status = fields.Char();
-    hr_icon_display = fields.Selection({
-        selection: [
-            ["presence_holiday_absent", "On leave"],
-            ["presence_holiday_present", "Present but on leave"],
-        ],
-    });
-    show_hr_icon_display = fields.Boolean();
-    color = fields.Integer();
 }
 
-export class PlanningRole extends models.Model {
+export class PlanningRole extends models.ServerModel {
     _name = "planning.role";
-
-    name = fields.Char();
-    color = fields.Integer();
-}
-
-export class HrEmployee extends models.Model {
-    _name = "hr.employee";
-
-    name = fields.Char();
-    user_id = fields.Many2one({ relation: "res.users" });
-    partner_id = fields.Many2one({ relation: "res.partner" });
-    resource_id = fields.Many2one({ relation: "resource.resource" });
-    user_partner_id = fields.Many2one({ relation: "res.partner" });
-}
-
-export class HrEmployeePublic extends models.Model {
-    _name = "hr.employee.public";
-
-    name = fields.Char();
-    user_id = fields.Many2one({ relation: "res.users" });
-    partner_id = fields.Many2one({ relation: "res.partner" });
-    resource_id = fields.Many2one({ relation: "resource.resource" });
-    user_partner_id = fields.Many2one({ relation: "res.partner" });
-}
-
-export class HrDepartment extends models.Model {
-    _name = "hr.department";
-
-    name = fields.Char();
 }
 
 export const planningModels = {
@@ -110,12 +119,9 @@ export const planningModels = {
     PlanningRecurrency,
     ResourceResource,
     PlanningRole,
-    HrEmployee,
-    HrEmployeePublic,
-    HrDepartment,
+    ...hrModels,
 };
 
 export function definePlanningModels() {
-    defineMailModels();
     defineModels(planningModels);
 }

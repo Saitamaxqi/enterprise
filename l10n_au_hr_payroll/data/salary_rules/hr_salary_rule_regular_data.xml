@@ -58,12 +58,12 @@ result = sum(payslip.input_line_ids.filtered(lambda i: i.code == 'EXTRA.INPUT').
         <field name="condition_select">python</field>
         <field name="condition_python">
 sacrifice_other = "SS.O" in inputs and inputs["SS.O"].amount or 0
-result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_giving_employer - contract.l10n_au_salary_sacrifice_superannuation - sacrifice_other
+result = -version.l10n_au_salary_sacrifice_other - version.l10n_au_workplace_giving_employer - version.l10n_au_salary_sacrifice_superannuation - sacrifice_other
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 sacrifice_other = "SS.O" in inputs and inputs["SS.O"].amount or 0
-result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_giving_employer - contract.l10n_au_salary_sacrifice_superannuation - sacrifice_other
+result = -version.l10n_au_salary_sacrifice_other - version.l10n_au_workplace_giving_employer - version.l10n_au_salary_sacrifice_superannuation - sacrifice_other
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -155,11 +155,11 @@ result = sum(payslip.input_line_ids.filtered(lambda x: x.code == 'BACKPAY.INPUT'
         <field name="code">SALARY.SACRIFICE.OTHER</field>
         <field name="sequence">75</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = (-contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_giving_employer) or "SS.O" in inputs</field>
+        <field name="condition_python">result = (-version.l10n_au_salary_sacrifice_other - version.l10n_au_workplace_giving_employer) or "SS.O" in inputs</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 sacrifice_other = "SS.O" in inputs and inputs["SS.O"].amount or 0
-result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_giving_employer - sacrifice_other
+result = -version.l10n_au_salary_sacrifice_other - version.l10n_au_workplace_giving_employer - sacrifice_other
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -169,11 +169,11 @@ result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_g
         <field name="name">Workplace Giving</field>
         <field name="code">WORKPLACE.GIVING</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.l10n_au_workplace_giving</field>
+        <field name="condition_python">result = version.l10n_au_workplace_giving</field>
         <field name="sequence">80</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = -contract.l10n_au_workplace_giving
+result = -version.l10n_au_workplace_giving
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -292,10 +292,10 @@ if employee.l10n_au_tax_treatment_category == 'H' and payslip.company_id.l10n_au
     result = categories['GROSS']
 elif employee.l10n_au_tax_treatment_category in ["W", "H", "V"]:
     gross = categories['GROSS']
-    result = -payslip._l10n_au_compute_withholding_amount(categories['GROSS'], contract.schedule_pay, coefficients)
+    result = -payslip._l10n_au_compute_withholding_amount(categories['GROSS'], version.schedule_pay, coefficients)
 else:
     gross = categories['GROSS'] - categories['RTW'] - result_rules['BACKPAY']['total']
-    result = -payslip._l10n_au_compute_withholding_amount(gross, contract.schedule_pay, coefficients)
+    result = -payslip._l10n_au_compute_withholding_amount(gross, version.schedule_pay, coefficients)
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -337,17 +337,17 @@ result, backpay_stsl = payslip._l10n_au_compute_backpay_withhold(net_salary, res
         <field name="sequence">109</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-if contract.schedule_pay not in ["weekly", "fortnightly"] or not employee.l10n_au_extra_pay or not payslip._l10n_au_has_extra_pay():
+if version.schedule_pay not in ["weekly", "fortnightly"] or not employee.l10n_au_extra_pay or not payslip._l10n_au_has_extra_pay():
     result = False
 else:
-    weekly_min_amount = payslip._rule_parameter("l10n_au_extra_withholding")[contract.schedule_pay][0][0]
-    weekly_earnings = payslip._l10n_au_compute_weekly_earning(categories['GROSS'], contract.schedule_pay)
+    weekly_min_amount = payslip._rule_parameter("l10n_au_extra_withholding")[version.schedule_pay][0][0]
+    weekly_earnings = payslip._l10n_au_compute_weekly_earning(categories['GROSS'], version.schedule_pay)
     result = weekly_earnings &gt; weekly_min_amount
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-weekly_earnings = payslip._l10n_au_compute_weekly_earning(categories['GROSS'], contract.schedule_pay)
-brackets = payslip._rule_parameter("l10n_au_extra_withholding")[contract.schedule_pay]
+weekly_earnings = payslip._l10n_au_compute_weekly_earning(categories['GROSS'], version.schedule_pay)
+brackets = payslip._rule_parameter("l10n_au_extra_withholding")[version.schedule_pay]
 for bracket in brackets:
     if bracket[0] &lt;= weekly_earnings &lt;= float(bracket[1]):
         result = -bracket[2]
@@ -390,7 +390,7 @@ result = RTW
         <field name="condition_python">result = inputs.get("LEAVE.LOAD") and inputs.get("LEAVE.LOAD").amount</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = compute_leave_loading_withhold(payslip, employee, inputs["LEAVE.LOAD"].amount, contract.schedule_pay)
+result = compute_leave_loading_withhold(payslip, employee, inputs["LEAVE.LOAD"].amount, version.schedule_pay)
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -410,7 +410,7 @@ result = employee.l10n_au_training_loan and tax_treatment
 if employee.l10n_au_tax_treatment_category in ['R', 'S', 'F'] and employee.l10n_au_medicare_reduction == 'X' and employee.l10n_au_employment_basis_code != 'C':
     coefficients = payslip._rule_parameter("l10n_au_stsl")["tax-free" if employee.l10n_au_tax_free_threshold or employee.is_non_resident else "no-tax-free"]
     gross = categories['GROSS'] - result_rules['BACKPAY']['total']
-    result = -payslip._l10n_au_compute_loan_withhold(gross, contract.schedule_pay, coefficients)
+    result = -payslip._l10n_au_compute_loan_withhold(gross, version.schedule_pay, coefficients)
 if "BACKPAY.INPUT" in inputs:
     result += backpay_stsl
         </field>
@@ -427,13 +427,13 @@ if "BACKPAY.INPUT" in inputs:
         <field name="condition_python">result = employee.l10n_au_nat_3093_amount</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-if contract.schedule_pay == "weekly":
+if version.schedule_pay == "weekly":
     result = round(0.019 * employee.l10n_au_nat_3093_amount)
-elif contract.schedule_pay == "bi-weekly":
+elif version.schedule_pay == "bi-weekly":
     result = round(0.038 * employee.l10n_au_nat_3093_amount)
-elif contract.schedule_pay == "monthly":
+elif version.schedule_pay == "monthly":
     result = round(0.083 * employee.l10n_au_nat_3093_amount)
-elif contract.schedule_pay == "quarterly":
+elif version.schedule_pay == "quarterly":
     result = round(0.25 * employee.l10n_au_nat_3093_amount)
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
@@ -451,10 +451,10 @@ elif contract.schedule_pay == "quarterly":
 rates = payslip._rule_parameter("l10n_au_withholding_schedule_1")['medicare']
 if employee.l10n_au_medicare_exemption == "H":
     params = rates['half-exemption']
-    result = payslip._l10n_au_compute_medicare_adjustment(categories['GROSS'], contract.schedule_pay, params)
+    result = payslip._l10n_au_compute_medicare_adjustment(categories['GROSS'], version.schedule_pay, params)
 elif employee.l10n_au_tax_free_threshold:
     params = rates['tax-free']
-    result = payslip._l10n_au_compute_medicare_adjustment(categories['GROSS'], contract.schedule_pay, params)
+    result = payslip._l10n_au_compute_medicare_adjustment(categories['GROSS'], version.schedule_pay, params)
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -641,15 +641,15 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED'] + categorie
         <field name="sequence">220</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = contract.l10n_au_salary_sacrifice_superannuation or contract.l10n_au_extra_negotiated_super \
-    or contract.l10n_au_extra_compulsory_super or "SS.S" in inputs or "VSC" in inputs
+result = version.l10n_au_salary_sacrifice_superannuation or version.l10n_au_extra_negotiated_super \
+    or version.l10n_au_extra_compulsory_super or "SS.S" in inputs or "VSC" in inputs
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 sacrifice = "SS.S" in inputs and inputs["SS.S"].amount or 0
 sacrifice += "VSC" in inputs and inputs["VSC"].amount or 0
 extra_super = categories['OTE'] * (payslip.l10n_au_extra_negotiated_super + payslip.l10n_au_extra_compulsory_super)
-result = contract.l10n_au_salary_sacrifice_superannuation + extra_super + sacrifice
+result = version.l10n_au_salary_sacrifice_superannuation + extra_super + sacrifice
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>

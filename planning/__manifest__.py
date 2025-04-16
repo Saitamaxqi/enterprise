@@ -45,11 +45,14 @@ Schedule your teams and employees with shift.
             ('remove', 'planning/static/src/views/planning_graph/**'),
             ('remove', 'planning/static/src/views/planning_pivot/**'),
             ('remove', 'planning/static/src/views/planning_gantt/**'),
+            ('remove', 'planning/static/src/views/planning_contract_gantt/**'),
         ],
         'web.assets_backend_lazy': [
             'planning/static/src/views/planning_graph/**',
             'planning/static/src/views/planning_pivot/**',
             'planning/static/src/views/planning_gantt/**',
+            'planning/static/src/views/planning_contract_gantt/**',
+            'planning/static/src/scss/planning_contract_gantt.scss',
         ],
         'web.assets_frontend': [
             'planning/static/src/scss/planning_calendar_report.scss',

@@ -133,13 +133,11 @@
 
     <record id="hr_employee_roger" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_roger')).name"/>
-        <field name="job_title">Technical Lead</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_han-image.jpg"/>
         <field name="work_contact_id" ref="l10n_au_hr_payroll.res_partner_roger"/>
         <field name="work_phone">0991 642 183</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_roger')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="company_id" ref="base.demo_company_au"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="tz">Australia/Adelaide</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_roger')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_roger')).city"/>
@@ -151,7 +149,7 @@
         <field name="distance_home_work">5</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_roger')).country_id"/>
         <field name="identification_id">271828182</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1970, 3, 21).date()"/>
         <field name="place_of_birth">Adelaide</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_roger')).country_id"/>
@@ -160,18 +158,29 @@
         <field name="certificate">bachelor</field>
         <field name="study_field">Electrical Engineering</field>
         <field name="study_school">Central Queensland University</field>
-
         <field name="l10n_au_tfn_declaration">provided</field>
         <field name="l10n_au_tfn">999999846</field>
         <field name="l10n_au_training_loan">True</field>
         <field name="l10n_au_nat_3093_amount">150</field>
         <field name="l10n_au_child_support_garnishee_amount">0.1</field>
         <field name="l10n_au_child_support_deduction">150</field>
+        <field name="bank_account_id" ref="l10n_au_hr_payroll.res_partner_bank_account_roger"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
+        <field name="wage">5000</field>
+        <field name="date_version" eval="datetime(1975, 1, 1).date()"/>
+        <field name="contract_date_start" eval="datetime(1975, 1, 1).date()"/>
+        <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
+        <field name="l10n_au_leave_loading">regular</field>
+        <field name="l10n_au_leave_loading_rate">5</field>
+        <field name="l10n_au_workplace_giving">100</field>
+        <field name="l10n_au_salary_sacrifice_superannuation">20</field>
+        <field name="l10n_au_salary_sacrifice_other">20</field>
     </record>
 
     <record id="hr_employee_dennis" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_dennis')).name"/>
-        <field name="job_title">Software Developer</field>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">0431 415 926</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_dennis')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -191,7 +200,7 @@
         <field name="distance_home_work">27</field>
         <field name="country_id" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_dennis')).country_id"/>
         <field name="identification_id">314159265</field>
-        <field name="gender">male</field>
+        <field name="sex">male</field>
         <field name="birthday" eval="datetime(1991, 7, 28).date()"/>
         <field name="place_of_birth">Sweden</field>
         <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_au_hr_payroll.res_partner_dennis')).country_id"/>
@@ -201,75 +210,31 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Australian National University</field>
         <field name="marital">single</field>
-
         <field name="l10n_au_tfn_declaration">provided</field>
         <field name="l10n_au_tfn">999999846</field>
-    </record>
-
-    <record id="hr_employee_roger" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_au_hr_payroll.res_partner_bank_account_roger"/>
-    </record>
-
-    <record id="hr_employee_dennis" model="hr.employee">
         <field name="bank_account_id" ref="l10n_au_hr_payroll.res_partner_bank_account_dennis"/>
-    </record>
-
-    <record id="hr_contract_roger" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employement Contract - ' + obj(ref('l10n_au_hr_payroll.hr_employee_roger')).name + ' - ' + obj(ref('l10n_au_hr_payroll.hr_employee_roger')).job_title"/>
-        <field name="employee_id" ref="l10n_au_hr_payroll.hr_employee_roger"/>
-        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_au"/>
-        <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
-        <field name="wage">5000</field>
-        <field name="state">open</field>
-        <field name="date_start" eval="datetime(1975, 1, 1).date()"/>
-        <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
-        <field name="l10n_au_leave_loading">regular</field>
-        <field name="l10n_au_leave_loading_rate">5</field>
-        <field name="l10n_au_workplace_giving">100</field>
-        <field name="l10n_au_salary_sacrifice_superannuation">20</field>
-        <field name="l10n_au_salary_sacrifice_other">20</field>
-    </record>
-
-    <record id="hr_contract_cdi_dennis_previous" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employement Contract - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).name + ' - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).job_title"/>
-        <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
-        <field name="employee_id" ref="hr_employee_dennis"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
         <field name="wage">4940</field>
         <field name="wage_type">hourly</field>
         <field name="hourly_wage">30</field>
         <field name="l10n_au_casual_loading">.25</field>
-        <field name="state">close</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_au"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
+        <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
+        <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
     </record>
 
-    <record id="hr_contract_cdi_dennis" model="hr.contract">
-        <field name="name" model="hr.employee" eval="'Permanent Employement Contract - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).name + ' - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).job_title"/>
-        <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
-        <field name="employee_id" ref="hr_employee_dennis"/>
-        <field name="job_id" ref="hr.job_hrm"/>
-        <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
-        <field name="wage">4940</field>
-        <field name="wage_type">hourly</field>
-        <field name="hourly_wage">30</field>
-        <field name="l10n_au_casual_loading">.25</field>
-        <field name="state">open</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_au"/>
-        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_au_hr_payroll.hr_contract_cdi_dennis_previous')).date_end + relativedelta(days=1)"/>
-        <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
-    </record>
-
-    <record id="hr_employee_dennis" model="hr.employee">
-        <field name="contract_id" ref="l10n_au_hr_payroll.hr_contract_cdi_dennis"/>
-    </record>
+    <function name="create_version" model="hr.employee">
+        <value eval="[ref('l10n_au_hr_payroll.hr_employee_dennis')]"/>
+        <value eval="{
+            'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
+            'contract_date_end': False,
+        }"/>
+    </function>
 
     <function model="hr.employee" name="generate_work_entries">
         <value model="hr.employee" eval="obj().search([]).ids"/>

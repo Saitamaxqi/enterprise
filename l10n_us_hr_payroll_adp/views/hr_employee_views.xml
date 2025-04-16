@@ -6,13 +6,13 @@
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="priority">40</field>
         <field name="arch" type="xml">
-            <page name="hr_settings" position="inside">
+            <group name="salary" position="inside">
                 <group string="ADP Information" invisible="company_country_code != 'US'">
                     <group>
                         <field name="l10n_us_adp_code"/>
                     </group>
                 </group>
-            </page>
+            </group>
         </field>
     </record>
 </odoo>

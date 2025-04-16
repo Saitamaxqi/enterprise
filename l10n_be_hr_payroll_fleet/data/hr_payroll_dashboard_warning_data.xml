@@ -9,7 +9,7 @@
 self.env.cr.execute("""
     SELECT p.id
       FROM hr_payslip AS p
-INNER JOIN hr_contract AS c ON c.id = p.contract_id
+INNER JOIN hr_version AS c ON c.id = p.version_id
      WHERE p.vehicle_id != c.car_id
         OR c.car_id IS NOT NULL AND p.vehicle_id IS NULL
         OR p.vehicle_id IS NOT NULL AND c.car_id IS NULL

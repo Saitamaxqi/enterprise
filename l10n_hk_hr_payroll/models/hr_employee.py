@@ -53,25 +53,6 @@ class HrEmployee(models.Model):
         groups="hr.group_hr_user",
         tracking=True,
         copy=False)
-    l10n_hk_mpf_vc_option = fields.Selection(
-        selection=[
-            ("none", "Only Mandatory Contribution"),
-            ("custom", "With Fixed %VC"),
-            ("max", "Cap 5% VC")],
-        string="Volunteer Contribution Option", groups="hr.group_hr_user",
-        tracking=True,
-        copy=False)
-    l10n_hk_mpf_vc_percentage = fields.Float(
-        string="Volunteer Contribution %",
-        groups="hr.group_hr_user",
-        tracking=True,
-        copy=False)
-    l10n_hk_rental_id = fields.Many2one(
-        'l10n_hk.rental',
-        string='Current Rental',
-        groups="hr.group_hr_user",
-        copy=False,
-    )
     l10n_hk_rental_ids = fields.One2many(
         'l10n_hk.rental',
         'employee_id',
@@ -105,12 +86,6 @@ class HrEmployee(models.Model):
     l10n_hk_autopay_mobn = fields.Char(string='Autopay Mobile Number', groups="hr.group_hr_user")
     l10n_hk_autopay_ref = fields.Char(string='Autopay Reference', groups="hr.group_hr_user")
 
-    @api.constrains('l10n_hk_mpf_vc_percentage')
-    def _check_l10n_hk_mpf_vc_percentage(self):
-        for employee in self:
-            if employee.l10n_hk_mpf_vc_percentage > 0.05 or employee.l10n_hk_mpf_vc_percentage < 0:
-                raise ValidationError(_('Enter VC Percentage between 0% and 5%.'))
-
     @api.constrains('l10n_hk_autopay_emal')
     def _check_l10n_hk_autopay_emal(self):
         for employee in self:
@@ -133,10 +108,10 @@ class HrEmployee(models.Model):
 
     def _compute_l10n_hk_years_of_service(self):
         for employee in self:
-            contracts = employee.contract_ids.filtered(lambda c: c.state not in ['draft', 'cancel']).sorted('date_start', reverse=True)
+            contracts = employee.version_ids.sorted('date_start', reverse=True)
             if contracts:
                 contract_end_date = contracts[0].date_end or fields.Date.today()
-                employee.l10n_hk_years_of_service = ((contract_end_date - employee.first_contract_date).days + 1) / 365
+                employee.l10n_hk_years_of_service = ((contract_end_date - employee.contract_date_start).days + 1) / 365
 
     def get_l10n_hk_autopay_bank_code(self) -> str:
         self.ensure_one()

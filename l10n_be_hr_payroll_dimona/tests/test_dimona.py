@@ -7,14 +7,14 @@ from dateutil.relativedelta import relativedelta
 
 import requests
 
-from odoo.addons.l10n_be_hr_payroll_dimona.models.hr_contract import HrContract
+from odoo.addons.l10n_be_hr_payroll_dimona.models.hr_version import HrVersion
 from odoo.tests.common import TransactionCase
 from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install', 'post_install_l10n', 'dimona')
-@patch.object(HrContract, '_dimona_authenticate', lambda contract: 'dummy-token')
-@patch.object(HrContract, '_cron_l10n_be_check_dimona', lambda contract: True)
+@patch.object(HrVersion, '_dimona_authenticate', lambda version: 'dummy-token')
+@patch.object(HrVersion, '_cron_l10n_be_check_dimona', lambda version: True)
 class TestDimona(TransactionCase):
 
     @classmethod
@@ -34,19 +34,17 @@ class TestDimona(TransactionCase):
             'private_city': 'Test City',
             'private_zip': '6800',
             'private_country_id': cls.belgium.id,
+            'wage': 2000,
+            'date_version': date.today() + relativedelta(day=1, months=1),
+            'contract_date_start': date.today() + relativedelta(day=1, months=1),
         })
 
-        cls.contract = cls.env['hr.contract'].create({
-            'name': 'Test Contract',
-            'employee_id': cls.employee.id,
-            'wage': 2000,
-            'date_start': date.today() + relativedelta(day=1, months=1),
-        })
+        cls.version = cls.employee.version_id
 
     def test_dimona_open_classic(self):
         wizard = self.env['l10n.be.dimona.wizard'].create({
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.version.id,
             'declaration_type': 'in',
         })
 
@@ -59,9 +57,9 @@ class TestDimona(TransactionCase):
         with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
-        self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_last_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_declaration_state, 'waiting')
+        self.assertEqual(self.version.l10n_be_dimona_in_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_last_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_declaration_state, 'waiting')
 
     def test_dimona_open_foreigner(self):
         self.employee.write({
@@ -69,12 +67,12 @@ class TestDimona(TransactionCase):
             'place_of_birth': 'Paris',
             'country_of_birth': self.env.ref('base.fr').id,
             'country_id': self.env.ref('base.fr').id,
-            'gender': 'male',
+            'sex': 'male',
         })
 
         wizard = self.env['l10n.be.dimona.wizard'].create({
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.version.id,
             'declaration_type': 'in',
             'without_niss': True,
         })
@@ -88,19 +86,19 @@ class TestDimona(TransactionCase):
         with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
-        self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_last_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_declaration_state, 'waiting')
+        self.assertEqual(self.version.l10n_be_dimona_in_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_last_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_declaration_state, 'waiting')
 
     def test_dimona_open_student(self):
-        self.contract.write({
+        self.version.write({
             'structure_type_id': self.env.ref('l10n_be_hr_payroll.structure_type_student').id,
             'l10n_be_dimona_planned_hours': 130,
             'date_end': date.today() + relativedelta(months=1, day=31),
         })
         wizard = self.env['l10n.be.dimona.wizard'].create({
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.version.id,
             'declaration_type': 'in',
         })
 
@@ -113,19 +111,19 @@ class TestDimona(TransactionCase):
         with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
-        self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_last_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_declaration_state, 'waiting')
+        self.assertEqual(self.version.l10n_be_dimona_in_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_last_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_declaration_state, 'waiting')
 
     def test_dimona_close(self):
-        self.contract.write({
+        self.version.write({
             'l10n_be_dimona_in_declaration_number': '2029409422',
-            'date_end': date.today() + relativedelta(months=1, day=31),
+            'contract_date_end': date.today() + relativedelta(months=1, day=31),
         })
 
         wizard = self.env['l10n.be.dimona.wizard'].create({
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.version.id,
             'declaration_type': 'out',
         })
 
@@ -138,19 +136,19 @@ class TestDimona(TransactionCase):
         with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
-        self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_last_declaration_number, '309320239')
-        self.assertEqual(self.contract.l10n_be_dimona_declaration_state, 'waiting')
+        self.assertEqual(self.version.l10n_be_dimona_in_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_last_declaration_number, '309320239')
+        self.assertEqual(self.version.l10n_be_dimona_declaration_state, 'waiting')
 
     def test_dimona_update(self):
-        self.contract.write({
+        self.version.write({
             'l10n_be_dimona_in_declaration_number': '2029409422',
             'date_end': date.today() + relativedelta(months=1, day=31),
         })
 
         wizard = self.env['l10n.be.dimona.wizard'].create({
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.version.id,
             'declaration_type': 'update',
         })
 
@@ -163,16 +161,16 @@ class TestDimona(TransactionCase):
         with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
-        self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_last_declaration_number, '309320239')
-        self.assertEqual(self.contract.l10n_be_dimona_declaration_state, 'waiting')
+        self.assertEqual(self.version.l10n_be_dimona_in_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_last_declaration_number, '309320239')
+        self.assertEqual(self.version.l10n_be_dimona_declaration_state, 'waiting')
 
     def test_dimona_cancel(self):
-        self.contract.l10n_be_dimona_in_declaration_number = '2029409422'
+        self.version.l10n_be_dimona_in_declaration_number = '2029409422'
 
         wizard = self.env['l10n.be.dimona.wizard'].create({
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
+            'version_id': self.version.id,
             'declaration_type': 'cancel',
         })
 
@@ -185,6 +183,6 @@ class TestDimona(TransactionCase):
         with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
-        self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
-        self.assertEqual(self.contract.l10n_be_dimona_last_declaration_number, '309320239')
-        self.assertEqual(self.contract.l10n_be_dimona_declaration_state, 'waiting')
+        self.assertEqual(self.version.l10n_be_dimona_in_declaration_number, '2029409422')
+        self.assertEqual(self.version.l10n_be_dimona_last_declaration_number, '309320239')
+        self.assertEqual(self.version.l10n_be_dimona_declaration_state, 'waiting')

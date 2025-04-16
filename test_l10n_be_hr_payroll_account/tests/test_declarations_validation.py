@@ -9,7 +9,7 @@ from odoo.tools.float_utils import float_compare
 
 
 @tagged('post_install', '-at_install', 'declarations_validation')
-class TestPayslipValidation(AccountTestInvoicingCommon):
+class TestDeclarationsValidation(AccountTestInvoicingCommon):
 
     @classmethod
     @AccountTestInvoicingCommon.setup_country('be')
@@ -62,21 +62,11 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
                 ("4", 8.0, 12.0, "morning"),
                 ("4", 12.0, 13.0, "lunch"),
                 ("4", 13.0, 16.6, "afternoon"),
-
             ]],
         }])
 
-        cls.employees = cls.env['hr.employee'].create([{
-            'name': "Test Employee %s" % (i),
-            'private_street': 'Employee Street %s' %(i),
-            'private_zip': '100%s' % (i),
-            'private_city': 'Employee City %s' %(i),
-            'private_country_id': cls.env.ref('base.be').id,
-            'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
-            'company_id': cls.env.company.id,
-            'distance_home_work': 75,
-            'certificate': 'master',
-            'niss': '91072800%s' % (i) + str(97 - int('91072800%s' % (i)) % 97),
+        cls.work_contacts = cls.env['res.partner'].create([{
+            'name': "Test Work Contact %s" % (i),
         } for i in range(cls.EMPLOYEES_COUNT)])
 
         cls.brand = cls.env['fleet.vehicle.model.brand'].create([{
@@ -91,10 +81,10 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         cls.cars = cls.env['fleet.vehicle'].create([{
             'name': "Test Car %s" % (i),
             'license_plate': "TEST%s" % (i),
-            'driver_id': cls.employees[i].work_contact_id.id,
+            'driver_id': cls.work_contacts[i].id,
             'company_id': cls.env.company.id,
             'model_id': cls.model.id,
-            'first_contract_date': datetime.date(2020, 10, 8),
+            'contract_date_start': datetime.date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
             'fuel_type': "diesel",
@@ -113,19 +103,26 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'recurring_cost_amount_depreciated': 450.0
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        cls.contracts = cls.env['hr.contract'].create([{
-            'name': "Contract For Payslip Test %s" % (i),
-            'employee_id': cls.employees[i].id,
+        cls.employees = cls.env['hr.employee'].create([{
+            'name': "Test Employee %s" % i,
+            'work_contact_id': cls.work_contacts[i].id,
+            'private_street': 'Employee Street %s' % i,
+            'private_zip': '100%s' % i,
+            'private_city': 'Employee City %s' % i,
+            'private_country_id': cls.env.ref('base.be').id,
             'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
             'company_id': cls.env.company.id,
+            'distance_home_work': 75,
+            'certificate': 'master',
+            'niss': '91072800%s' % i + str(97 - int('91072800%s' % i) % 97),
             'date_generated_from': datetime.datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime.datetime(2020, 9, 1, 0, 0, 0),
             'car_id': cls.cars[i].id,
-            'structure_type_id': cls.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': datetime.date(2018, 12, 31),
+            'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
+            'contract_date_start': datetime.date(2018, 12, 31),
+            'date_version': datetime.date(2018, 12, 31),
             'wage': 2650.0,
             'wage_on_signature': 2650.0 + i * 100,
-            'state': "open",
             'transport_mode_car': True,
             'fuel_card': 150.0,
             'internet': 38.0,
@@ -137,6 +134,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'ip': True,
             'rd_percentage': 100,
         } for i in range(cls.EMPLOYEES_COUNT)])
+        cls.contracts = cls.employees.version_id
 
         cls.contracts.generate_work_entries(datetime.date(2021, 1, 1), datetime.date(2021, 12, 31))
 
@@ -164,7 +162,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Janvier 2021: Salary + Commissions
         cls.january_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Jan 2021 %s' % (i),
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 1, 1),
             'date_to': datetime.datetime(2021, 1, 31),
             'employee_id': cls.employees[i].id,
@@ -181,7 +179,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Février 2021: Salary
         cls.february_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Feb 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 2, 1),
             'date_to': datetime.datetime(2021, 2, 28),
             'employee_id': cls.employees[i].id,
@@ -194,7 +192,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Mars 2021: Salary (10 unpaid days)
         cls.march_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Mar 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 3, 1),
             'date_to': datetime.datetime(2021, 3, 31),
             'employee_id': cls.employees[i].id,
@@ -207,7 +205,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Avril 2021: Salary + Warrants (2 payslips)
         cls.april_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Apr 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 4, 1),
             'date_to': datetime.datetime(2021, 4, 30),
             'employee_id': cls.employees[i].id,
@@ -219,7 +217,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
 
         cls.warrant_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Warrant 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 4, 1),
             'date_to': datetime.datetime(2021, 4, 30),
             'employee_id': cls.employees[i].id,
@@ -236,7 +234,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Mai 2021: Salary (20 legal days)
         cls.may_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip May 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 5, 1),
             'date_to': datetime.datetime(2021, 5, 31),
             'employee_id': cls.employees[i].id,
@@ -249,7 +247,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Juin 2021: Salary + Double Holiday Pay (2 payslips)
         cls.june_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Jun 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 6, 1),
             'date_to': datetime.datetime(2021, 6, 30),
             'employee_id': cls.employees[i].id,
@@ -261,7 +259,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
 
         cls.double_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Double 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 6, 1),
             'date_to': datetime.datetime(2021, 6, 30),
             'employee_id': cls.employees[i].id,
@@ -274,7 +272,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Juillet 2021: Salary + Commissions
         cls.july_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Jul 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 7, 1),
             'date_to': datetime.datetime(2021, 7, 31),
             'employee_id': cls.employees[i].id,
@@ -291,7 +289,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Aout 2021: Salary
         cls.august_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Aug 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 8, 1),
             'date_to': datetime.datetime(2021, 8, 31),
             'employee_id': cls.employees[i].id,
@@ -304,7 +302,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Septembre 2021: Salary
         cls.september_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Sep 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 9, 1),
             'date_to': datetime.datetime(2021, 9, 30),
             'employee_id': cls.employees[i].id,
@@ -317,7 +315,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Octobre 2021: Salary + Commissions
         cls.october_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Oct 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 10, 1),
             'date_to': datetime.datetime(2021, 10, 31),
             'employee_id': cls.employees[i].id,
@@ -334,7 +332,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Novembre 2021: Salary
         cls.november_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Nov 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 11, 1),
             'date_to': datetime.datetime(2021, 11, 30),
             'employee_id': cls.employees[i].id,
@@ -347,7 +345,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         # Décembre 2021: Salary + 13eme mois (2 payslips)
         cls.december_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Dec 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 12, 1),
             'date_to': datetime.datetime(2021, 12, 31),
             'employee_id': cls.employees[i].id,
@@ -367,7 +365,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
 
         cls.thirteen_2021 = cls.env['hr.payslip'].create([{
             'name': 'Payslip Thirteen Month 2021',
-            'contract_id': cls.contracts[i].id,
+            'version_id': cls.contracts[i].id,
             'date_from': datetime.datetime(2021, 12, 1),
             'date_to': datetime.datetime(2021, 12, 31),
             'employee_id': cls.employees[i].id,
@@ -575,38 +573,19 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         self.assertAlmostEqual(total_declared_pp, declared_pp, places=2)
 
     def test_281_10_comeback(self):
-        # Check that we use the old first_contract_date instead of
+        # Check that we use the old first_version_date instead of
         # the new one
-        self.assertEqual(self.employees[0].first_contract_date, datetime.date(2018, 12, 31))
+        self.assertEqual(self.employees[0]._get_first_version_date(), datetime.date(2018, 12, 31))
         self.contracts[0].write({
-            'date_end': datetime.date(2021, 12, 31),
-            'state': 'close',
+            'contract_date_end': datetime.date(2021, 12, 31),
         })
-        self.env['hr.contract'].create({
+        self.contracts[0].copy({
             'name': "New Contract For Payslip Test 0",
-            'employee_id': self.employees[0].id,
-            'resource_calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'company_id': self.env.company.id,
-            'date_generated_from': datetime.datetime(2020, 9, 1, 0, 0, 0),
-            'date_generated_to': datetime.datetime(2020, 9, 1, 0, 0, 0),
-            'car_id': self.cars[0].id,
-            'structure_type_id': self.env.ref('hr_contract.structure_type_employee_cp200').id,
-            'date_start': datetime.date(2022, 3, 1),
-            'wage': 2650.0,
-            'wage_on_signature': 2650.0,
-            'state': "open",
-            'transport_mode_car': True,
-            'fuel_card': 150.0,
-            'internet': 38.0,
-            'representation_fees': 150.0,
-            'mobile': 30.0,
-            'meal_voucher_amount': 7.45,
-            'eco_checks': 250.0,
-            'ip_wage_rate': 25.0,
-            'ip': True,
-            'rd_percentage': 100,
+            'date_version': datetime.date(2022, 3, 1),
+            'contract_date_start': datetime.date(2022, 3, 1),
+            'contract_date_end': False,
         })
-        self.assertEqual(self.employees[0].first_contract_date, datetime.date(2022, 3, 1))
+        self.assertEqual(self.employees[0]._get_first_version_date(), datetime.date(2022, 3, 1))
         declaration_281 = self.env['l10n_be.281_10'].create({
             'year': '2021',
         })
@@ -656,7 +635,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
                     termination_fees._get_line_values(['GROSS'], compute_sum=True)['GROSS']['sum']['total'])
 
     def test_notice_duration_fired(self):
-        self.contracts[0].date_start = datetime.date(2014, 1, 1)
+        self.contracts[0].contract_date_start = datetime.date(2014, 1, 1)
         departure_notice = self.env['hr.payslip.employee.depature.notice'].create({
             'employee_id': self.employees[0].id,
             'leaving_type_id': self.env.ref('hr.departure_fired').id,

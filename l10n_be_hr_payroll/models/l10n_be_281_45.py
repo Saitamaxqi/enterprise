@@ -144,7 +144,7 @@ class L10n_Be281_45(models.Model):
         if invalid_employees:
             raise UserError(_("The following employees don't have a valid private address (with a street, a zip, a city and a country):\n%s", '\n'.join(invalid_employees.mapped('name'))))
 
-        invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
+        invalid_employees = employees.filtered(lambda emp: not emp.version_ids or not emp.version_id)
         if invalid_employees:
             raise UserError(_('Some employee has no contract:\n%s', '\n'.join(invalid_employees.mapped('name'))))
 

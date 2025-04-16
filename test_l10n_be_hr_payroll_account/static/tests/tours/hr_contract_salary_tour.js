@@ -56,7 +56,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
         },
         {
             content: "Contract Template",
-            trigger: ".o_field_widget.o_field_many2one[name=default_contract_id] input",
+            trigger: ".o_field_widget.o_field_many2one[name=contract_template_id] input",
             run: `edit New Developer Template Contract`,
         },
         {
@@ -387,8 +387,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             },
         },
         {
-            content: "Gender",
-            trigger: '[name="gender"] input[value="female"]:not(:visible)',
+            content: "sex",
+            trigger: '[name="sex"] input[value="female"]:not(:visible)',
             run: "check",
         },
         {
@@ -951,7 +951,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         },
         {
             content: "Add Manager",
-            trigger: ".nav-link:contains('Work Information')",
+            trigger: ".nav-link:contains('Contract Information')",
             run: "click",
         },
         {
@@ -963,6 +963,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             isActive: ["auto"],
             trigger: ".ui-autocomplete > li > a:contains(Mitchell)",
+            run: "click",
+        },
+        {
+            content: "Add Manager",
+            trigger: ".nav-link:contains('Global Information')",
             run: "click",
         },
         {
@@ -982,35 +987,25 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             trigger: ".o_form_saved",
         },
         {
-            content: "Create Contract",
-            trigger: '.o-form-buttonbox .oe_stat_button:contains("Contracts")',
+            content: "Add Manager",
+            trigger: ".nav-link:contains('Contract Information')",
             run: "click",
         },
         {
             content: "Salary Structure Type",
             trigger: ".o_field_widget.o_field_many2one[name=structure_type_id] input",
-            run: `edit CP200: Belgian Employee`,
+            run: `edit CP200 BE`,
         },
         {
             isActive: ["auto"],
-            trigger: ".ui-autocomplete > li > a:contains('CP200: Belgian Employee')",
-            run: "click",
-        },
-        {
-            content: "Contract Reference",
-            trigger: '.o_field_widget.o_field_char[name="name"] input',
-            run: "edit Mitchell Admin PFI Contract",
-        },
-        {
-            content: "Select Contract Details Tab",
-            trigger: ".o_notebook ul > li > a:contains(Details)",
+            trigger: ".ui-autocomplete > li > a:contains('CP200 BE')",
             run: "click",
         },
         {
             content: "HR Responsible",
             trigger:
                 "div.o_field_widget.o_required_modifier.o_field_many2one_avatar_user.o_field_many2one_avatar[name=hr_responsible_id] input",
-            run: `edit Mitchell`,
+            run: `edit Mitchell Admin`,
         },
         {
             isActive: ["auto"],
@@ -1038,8 +1033,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             run: `edit test_employee_contract`,
         },
         {
-            content: "Select Contract Details Tab",
-            trigger: ".o_notebook ul > li > a:contains(Details)",
+            isActive: ["auto"],
+            trigger: ".ui-autocomplete > li > a:contains('test_employee_contract')",
             run: "click",
         },
         {
@@ -1098,14 +1093,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             run: "click",
         },
         {
-            content: "Go on Contract",
-            trigger: '.o-form-buttonbox .oe_stat_button:contains("In Contract Since")',
-            run: "click",
-        },
-        {
-            trigger: ".o_statusbar_buttons",
-        },
-        {
             content: "Generate Offer",
             trigger: ".o_statusbar_buttons > button:contains('Generate Offer')",
             run: "click",
@@ -1117,7 +1104,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         },
         {
             isActive: ["auto"],
-            trigger: ".ui-autocomplete > li > a:contains('Mitchell Admin PFI Contract')",
+            trigger: ".ui-autocomplete > li > a:contains('2022')",
             run: "click",
         },
         {
@@ -1181,8 +1168,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             },
         },
         {
-            content: "Gender",
-            trigger: "input[name=gender]:not(:visible)",
+            content: "sex",
+            trigger: "input[name=sex]:not(:visible)",
             run: function () {
                 document.querySelector('input[value="female"]').checked = true;
             },

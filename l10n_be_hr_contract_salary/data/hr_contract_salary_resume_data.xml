@@ -3,10 +3,10 @@
     <data noupdate="1">
     <record id="hr_contract_salary_payroll_resume_gross_cp200" model="hr.contract.salary.resume">
         <field name="name">Gross</field>
-        <field name="value_type">contract</field>
+        <field name="value_type">version</field>
         <field name="code">l10n_be_wage_with_mobility_budget</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_salary"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="impacts_monthly_total" eval="False"/>
     </record>
 
@@ -16,7 +16,7 @@
         <field name="code">NET</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_salary"/>
         <field name="impacts_monthly_total" eval="True"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_resume_gross_with_commission" model="hr.contract.salary.resume">
@@ -24,15 +24,15 @@
         <field name="value_type">payslip</field>
         <field name="code">SALARY</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_salary"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_resume_final_yearly_costs" model="hr.contract.salary.resume">
         <field name="name">Employer Cost</field>
-        <field name="value_type">contract</field>
+        <field name="value_type">version</field>
         <field name="code">final_yearly_costs</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_total"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="hr_contract_salary_resume_monthly_benefit" model="hr.contract.salary.resume">
@@ -48,7 +48,7 @@
             (4, ref('l10n_be_hr_contract_salary.l10n_be_mobile')),
         ]"/>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_benefits"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="impacts_monthly_total" eval="True"/>
     </record>
 
@@ -63,7 +63,7 @@
             (4, ref('l10n_be_hr_contract_salary.l10n_be_mobility_budget_amount')),
         ]"/>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_benefits"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="impacts_monthly_total" eval="True"/>
     </record>
 
@@ -77,7 +77,7 @@
             (4, ref('l10n_be_hr_contract_salary.l10n_be_double_holiday')),
         ]"/>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_yearly_benefits"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="impacts_monthly_total" eval="True"/>
     </record>
 
@@ -87,16 +87,16 @@
         <field name="value_type">fixed</field>
         <field name="fixed_value">20</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_yearly_benefits"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="uom">days</field>
     </record>
 
     <record id="hr_contract_salary_resume_extra_time_off" model="hr.contract.salary.resume">
         <field name="name">Extra Time Off</field>
-        <field name="value_type">contract</field>
+        <field name="value_type">version</field>
         <field name="code">holidays</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_yearly_benefits"/>
-        <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="uom">days</field>
     </record>
     </data>

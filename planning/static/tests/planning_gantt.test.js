@@ -32,10 +32,14 @@ import { WebClient } from "@web/webclient/webclient";
 
 import {
     definePlanningModels,
-    HrEmployee,
+    planningModels
+} from "./planning_mock_models";
+
+const {
     PlanningSlot,
     ResourceResource,
-} from "./planning_mock_models";
+    HrEmployee,
+} = planningModels;
 
 describe.current.tags("desktop");
 
@@ -153,7 +157,7 @@ function _getCreateViewArgsForGanttViewTotalsTests() {
 }
 
 beforeEach(() => {
-    ResourceResource._records = [{ id: 1, name: "Resource 1", employee_id: 1 }];
+    ResourceResource._records = [{ id: 1, name: "Resource 1" }];
     HrEmployee._records = [{ id: 1, name: "Employee 1" }];
     PlanningSlot._views = {
         form: `<form>
