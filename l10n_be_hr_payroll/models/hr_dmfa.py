@@ -993,6 +993,12 @@ class L10n_BeDmfa(models.Model):
     _description = 'DMFA xml report'
     _order = "year desc, quarter desc"
 
+    @api.model
+    def default_get(self, field_list=None):
+        if self.env.company.country_id.code != "BE":
+            raise UserError(_('You must be logged in a Belgian company to use this feature'))
+        return super().default_get(field_list)
+
     name = fields.Char(compute='_compute_name', store=True)
     reference = fields.Char(required=True)
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)

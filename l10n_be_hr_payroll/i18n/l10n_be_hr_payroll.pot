@@ -8980,6 +8980,7 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
+#: code:addons/l10n_be_hr_payroll/models/hr_dmfa.py:0
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_273S.py:0
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_274_XX.py:0
 #: code:addons/l10n_be_hr_payroll/wizard/hr_payroll_allocating_paid_time_off.py:0
