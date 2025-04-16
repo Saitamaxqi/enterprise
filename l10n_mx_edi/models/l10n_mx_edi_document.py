@@ -159,7 +159,7 @@ class L10n_Mx_EdiDocument(models.Model):
     @api.depends('attachment_id.raw')
     def _compute_from_attachment(self):
         """ Decode the CFDI document and extract some valuable information such as the UUID or the origin. """
-        for doc in self:
+        for doc in self.with_context(bin_size=False):
             doc.attachment_uuid = None
             doc.attachment_origin = None
             if doc.attachment_id:
