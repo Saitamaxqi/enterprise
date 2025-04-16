@@ -1,5 +1,8 @@
+import { Component } from "@odoo/owl";
+
 import { Call } from "@voip/core/call_model";
-import { CallView } from "@voip/softphone/call_view";
+import { ActionButton } from "@voip/softphone/action_button";
+import { UserInfo } from "@voip/softphone/user_info";
 
 import { useService } from "@web/core/utils/hooks";
 
@@ -7,7 +10,8 @@ import { useService } from "@web/core/utils/hooks";
  * Incoming call screen. Displays information about the caller, along with a
  * series of actions, and buttons to accept or reject the call.
  */
-export class CallInvitation extends CallView {
+export class CallInvitation extends Component {
+    static components = { ActionButton, UserInfo };
     static props = { call: Call };
     static template = "voip.CallInvitation";
 

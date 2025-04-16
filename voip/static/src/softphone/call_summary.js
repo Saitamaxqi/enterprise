@@ -1,6 +1,7 @@
+import { Component } from "@odoo/owl";
+
 import { Call } from "@voip/core/call_model";
 import { ActionButton } from "@voip/softphone/action_button";
-import { CallView } from "@voip/softphone/call_view";
 import { UserInfo } from "@voip/softphone/user_info";
 
 import { _t } from "@web/core/l10n/translation";
@@ -8,7 +9,7 @@ import { useService } from "@web/core/utils/hooks";
 
 const { TIME_SIMPLE } = luxon.DateTime;
 
-export class CallSummary extends CallView {
+export class CallSummary extends Component {
     static components = { ActionButton, UserInfo };
     static props = { call: Call };
     static template = "voip.CallSummary";

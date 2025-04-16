@@ -1,10 +1,14 @@
-import { useEffect } from "@odoo/owl";
+import { Component, useEffect } from "@odoo/owl";
 
-import { CallView } from "@voip/softphone/call_view";
+import { Call } from "@voip/core/call_model";
+import { ActionButton } from "@voip/softphone/action_button";
+import { UserInfo } from "@voip/softphone/user_info";
 
 import { useService } from "@web/core/utils/hooks";
 
-export class InCallView extends CallView {
+export class InCallView extends Component {
+    static components = { ActionButton, UserInfo };
+    static props = { call: Call };
     static template = "voip.InCallView";
 
     setup() {

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <templates>
 <t t-name="voip.UserInfo">
-    <div t-attf-class="o-voip-UserInfo w-100 d-flex flex-column align-items-center gap-2 {{ props.extraClass }}">
-        <img t-if="!props.hideAvatar" t-att-src="props.avatarUrl" t-att-alt="props.avatarAlt" aria-hidden="true" t-attf-class="o_avatar rounded-2 object-fit-contain {{ props.avatarUrl != '/base/static/img/avatar_grey.png' and 'o-voip-avatar-bg' }} {{ props.avatarClass }}"/>
+    <div class="o-voip-UserInfo w-100 d-flex flex-column align-items-center gap-2">
+        <img class="o_avatar rounded-2 object-fit-contain" t-att-class="{ 'o-voip-avatar-bg': avatarUrl !== '/base/static/img/avatar_grey.png' }" t-att-src="avatarUrl" t-att-alt="avatarAlt" aria-hidden="true"/>
         <div class="w-100 text-center">
-            <p class="mb-0 fs-4 fw-bold text-truncate" t-esc="props.name"/>
-            <p t-if="props.subtitle" class="mb-0 opacity-75 text-truncate" t-esc="props.subtitle"/>
+            <p class="mb-0 fs-4 fw-bold text-truncate" t-esc="contactName"/>
+            <p t-if="contactInfo" class="mb-0 opacity-75 text-truncate" t-esc="contactInfo"/>
         </div>
     </div>
 </t>
