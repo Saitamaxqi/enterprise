@@ -52,16 +52,13 @@
                 </div>
             </div>
             <div t-if="state.firstLoad" class="d-flex align-items-center justify-content-center overflow-hidden">
-                <div class="o_mrp_display_onboarding_image position-relative ms-5">
+                <div class="o_mrp_display_onboarding_image position-relative">
                     <img class="position-absolute z-n1" src="/mrp_workorder/static/img/op_sidebar.png" alt="Shop Floor Onboarding Image"/>
                     <span class="o_annotation o_annotation_1 o_annotation_end position-absolute fw-bolder">Time Clock</span>
                     <span class="o_annotation o_annotation_2 o_annotation_end position-absolute fw-bolder">Quality Control</span>
-                    <span class="o_annotation o_annotation_3 position-absolute fw-bolder">Work Orders</span>
-                    <span class="o_annotation o_annotation_4 o_annotation_start position-absolute fw-bolder">Track Materials</span>
-                    <span class="o_annotation o_annotation_5 o_annotation_start position-absolute fw-bolder">Multi Operators</span>
-                    <span class="o_annotation o_annotation_6 o_annotation_end position-absolute fw-bolder">Maintenance</span>
-                    <span class="o_annotation o_annotation_7 o_annotation_start position-absolute fw-bolder">Feedback Loop</span>
-
+                    <span class="o_annotation o_annotation_3 o_annotation_start position-absolute fw-bolder">Feedback Loop</span>
+                    <span class="o_annotation o_annotation_4 o_annotation_start position-absolute fw-bolder">Register Materials</span>
+                    <span class="o_annotation o_annotation_5 o_annotation_start position-absolute fw-bolder">Select Operator</span>
                 </div>
                 <div class="o_mrp_display_onboarding_button_container position-fixed bottom-0 w-100 text-center">
                     <button class="btn btn-lg btn-primary my-5" t-on-click="() => this.toggleWorkcenterDialog()">Activate your Work Centers</button>

@@ -84,6 +84,10 @@ body:has(.o_mrp_display) {
     min-height: 1080px;
     background: url('/mrp_workorder/static/img/drawing.svg') no-repeat top / 1920px 1080px;
 
+    @include media-breakpoint-down(md) {
+        margin-left: 22rem;
+    }
+
     img {
         left: 34.5%;
         top: 31.8%;
@@ -112,64 +116,48 @@ body:has(.o_mrp_display) {
     }
 
     .o_annotation_1 {
-        top: 24%;
-        left: 42.5%;
+        top: 25%;
+        left: 42%;
 
         &:before {
-            height: 8rem;
+            height: 7.6rem;
         }
     }
 
     .o_annotation_2 {
         top: 27.5%;
-        left: 44%;
+        left: 44.2%;
 
         &:before {
-            height: 7rem;
+            height: 7.2rem;
         }
     }
 
     .o_annotation_3 {
-        top: 18%;
-        left: 36.9%;
+        top: 27%;
+        left: 31.9%;
 
         &:before {
-            top: 100%;
-            right: 50%;
-            border-top: none;
-            border-left: none;
-            border-bottom: none;
-            width: 0;
-            height: 10.5rem;
+            height: 5.3rem;
         }
     }
 
     .o_annotation_4 {
-        top: 28.8%;
-        left: 30.6%;
+        top: 31.2%;
+        left: 29.8%;
 
         &:before {
-            height: 7rem;
+            height: 5.9rem;
         }
     }
 
     .o_annotation_5 {
-        top: 34%;
+        top: 35%;
         left: 27.8%;
 
         &:before {
-            height: 4rem;
+            height: 3.5rem;
         }
-    }
-
-    .o_annotation_6 {
-        top: 21%;
-        left: 41%;
-    }
-
-    .o_annotation_7 {
-        top: 24%;
-        left: 31.7%;
     }
 }
 
