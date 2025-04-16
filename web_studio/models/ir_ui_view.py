@@ -1174,7 +1174,7 @@ class IrUiView(models.Model):
         Converts a node into its string representation
 
         Example::
-        
+
             from: <field name='color'/>
               to: "/field[@name='color']\n"
 
