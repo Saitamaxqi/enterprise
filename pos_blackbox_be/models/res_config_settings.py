@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class ResConfigSettings(models.TransientModel):
@@ -9,3 +9,21 @@ class ResConfigSettings(models.TransientModel):
     iface_fiscal_data_module = fields.Many2one(
         related="pos_config_id.iface_fiscal_data_module", readonly=False
     )
+
+    def _compute_pos_iface_available_categ_ids(self):
+        super()._compute_pos_iface_available_categ_ids()
+        for res_config in self:
+            if res_config.iface_fiscal_data_module and res_config.pos_limit_categories:
+                res_config.pos_iface_available_categ_ids += self.env.ref("pos_blackbox_be.pos_category_fdm")
+
+    @api.onchange('iface_fiscal_data_module')
+    def _onchange_iface_fiscal_data_module_default(self):
+        for res_config in self:
+            if res_config.iface_fiscal_data_module:
+                cash_rounding = self.env['pos.config']._create_default_cashrounding()
+                if cash_rounding:
+                    res_config.pos_cash_rounding = True
+                    res_config.pos_rounding_method = cash_rounding
+                    res_config.pos_only_round_cash_method = True
+                res_config.pos_iface_print_auto = True
+                res_config.pos_iface_print_skip_screen = True

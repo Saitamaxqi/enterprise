@@ -23,7 +23,7 @@ class PosConfig(models.Model):
 
     def _check_before_creating_new_session(self):
         """Override."""
-        super()._check_before_creating_new_session()
+        res = super()._check_before_creating_new_session()
         if self.l10n_br_is_nfce:
             company = self.company_id
             missing_fields = []
@@ -51,6 +51,7 @@ class PosConfig(models.Model):
                     self.env.ref("point_of_sale.action_pos_configuration").id,
                     _("Go to Point of Sale settings"),
                 )
+        return res
 
     def _create_journal_and_payment_methods(self, cash_ref=None, cash_journal_vals=None):
         """Override."""

@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="hr.view_employee_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='pin']" position="before">
-                    <field name="insz_or_bis_number"/>
+                    <field name="insz_or_bis_number" placeholder="98031845556"/>
                 </xpath>
             </field>
         </record>²

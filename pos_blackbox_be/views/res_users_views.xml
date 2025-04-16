@@ -6,10 +6,15 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form" />
             <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-warning" role="alert" invisible="not context.get('insz_required')">
+                        In order to open a certified POS session, you need to enter your INSZ or BIS number.
+                    </div>
+                </xpath>
                 <xpath expr="//h3[.//field[@name='login']]" position="after">
                     <h3 class="d-flex align-items-baseline w-sm-50 mb-0">
                         <i class="fa fa-fw me-1 fa-id-card text-primary" title="INSZ Number"/>
-                        <field name="insz_or_bis_number" class="w-100" placeholder="INSZ Number"/>
+                        <field name="insz_or_bis_number" class="w-100" placeholder="98031845556" required="context.get('insz_required')"/>
                     </h3>
                 </xpath>
             </field>

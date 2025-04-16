@@ -54,6 +54,19 @@ class PosConfig(models.Model):
                         'company_id': config.company_id.id,
                     })
 
+    def write(self, vals):
+        if (vals.get('iface_fiscal_data_module') or self.certified_blackbox_identifier):
+            if vals.get('limit_categories') or self.limit_categories:
+                vals['iface_available_categ_ids'] = vals.get('iface_available_categ_ids', []) + [(4, self.env.ref("pos_blackbox_be.pos_category_fdm").id)]
+            cash_rounding = self._create_default_cashrounding()
+            if cash_rounding:
+                vals['cash_rounding'] = True
+                vals['rounding_method'] = cash_rounding.id
+                vals['only_round_cash_method'] = True
+            vals['iface_print_auto'] = True
+            vals['iface_print_skip_screen'] = True
+        return super().write(vals)
+
     def _check_is_certified_pos(self):
         if self.certified_blackbox_identifier and not self.iface_fiscal_data_module:
             raise UserError(
@@ -86,14 +99,15 @@ class PosConfig(models.Model):
         self._check_is_certified_pos()
         if self.iface_fiscal_data_module:
             self._check_loyalty()
-            self._check_insz_user()
+            res = self._check_insz_user()
+            if res:
+                return res
             self._check_company_address()
             self._check_work_product_taxes_and_categories()
             self._check_employee_insz_or_bis_number()
             self._check_pos_category()
             self._check_cash_rounding()
             self._check_printer_connected()
-            self._check_floor_plan_ids()
         return super()._check_before_creating_new_session()
 
     def _check_loyalty(self):
@@ -130,7 +144,15 @@ class PosConfig(models.Model):
 
     def _check_insz_user(self):
         if not self.env.user.insz_or_bis_number:
-            raise ValidationError(_("The user must have a INSZ or BIS number."))
+            action = self.env['ir.actions.actions']._for_xml_id('base.action_res_users')
+            action['res_id'] = self.env.user.id
+            action['views'] = [[self.env.ref('base.view_users_form').id, 'form']]
+            action['target'] = 'new'
+            action['context'] = {
+                'insz_required': True,
+            }
+            return action
+        return False
 
     def _check_company_address(self):
         if not self.company_id.street:
@@ -165,13 +187,6 @@ class PosConfig(models.Model):
 
         if invalid_tax_lines:
             raise ValidationError(_("Fiscal Position %(fp_name)s (tax %(tax_dest_name)s) has an invalid tax amount. Only 21%%, 12%%, 6%% and 0%% are allowed.", fp_name=invalid_tax_lines[0][0], tax_dest_name=invalid_tax_lines[0][1]))
-
-    @api.constrains('iface_fiscal_data_module', 'floor_ids')
-    def _check_floor_plan_ids(self):
-        if self.iface_fiscal_data_module and self.floor_ids:
-            for floor in self.floor_ids:
-                if len(floor.pos_config_ids) > 1:
-                    raise ValidationError(_("Floor plans cannot be shared in different POS configurations when using the Blackbox module."))
 
     def _check_employee_insz_or_bis_number(self):
         for config in self:
@@ -221,6 +236,32 @@ class PosConfig(models.Model):
 
     def get_PS_sequence_next(self):
         return self.env['ir.sequence'].next_by_code(f'pos_blackbox_be.PS_blackbox_{self.certified_blackbox_identifier}')
+
+    @api.model
+    def _create_default_cashrounding(self):
+        cash_rounding = self.env.ref('pos_blackbox_be.default_l10n_be_cash_rounding', raise_if_not_found=False)
+        if cash_rounding:
+            return cash_rounding
+        if self.env.company.chart_template == "be_comp":
+            profit_account = self.env.ref(f'account.{self.env.company.id}_a743', raise_if_not_found=False)
+            loss_account = self.env.ref(f'account.{self.env.company.id}_a643', raise_if_not_found=False)
+            if profit_account and loss_account:
+                cash_rounding = self.env['account.cash.rounding'].create({
+                    'name': _('Belgian Cash Rounding'),
+                    'rounding_method': 'HALF-UP',
+                    'rounding': 0.05,
+                    'profit_account_id': profit_account.id,
+                    'loss_account_id': loss_account.id,
+                })
+                self.env['ir.model.data']._update_xmlids([
+                    {
+                        'xml_id': 'pos_blackbox_be.default_l10n_be_cash_rounding',
+                        'record': cash_rounding,
+                        'noupdate': True,
+                    }
+                ])
+            return cash_rounding
+        return False
 
     @api.model
     def _send_order_to_blackbox(self, order, clock=False, clock_in=True):
