@@ -170,7 +170,7 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
         self.ensure_one()
         move_vals = self._get_move_vals()
         if move_vals['line_ids']:
-            move = self.env['account.move'].create(move_vals)
+            move = self.env['account.move'].with_context(skip_invoice_sync=True).create(move_vals)
             move.action_post()
             reverse_move = move._reverse_moves(default_values_list=[{
                 'ref': _("Reversal of: %s", move.ref),
