@@ -658,7 +658,7 @@ class TestStudioApprovalPost(TransactionCase):
             self.env['studio.approval.rule'].create({
                 'active': True,
                 'model_id': self.env.ref('base.model_res_partner').id,
-                'method': '_get_gravatar_image',
+                'method': '_fields_sync',
                 'message': "You didn't say the magic word!",
                 'approval_group_id': self.group_manager.id,
             })

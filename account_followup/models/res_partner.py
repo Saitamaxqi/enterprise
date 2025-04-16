@@ -53,7 +53,6 @@ class ResPartner(models.Model):
         groups='account.group_account_readonly,account.group_account_invoice',
     )
     followup_reminder_type = fields.Selection([('automatic', 'Automatic'), ('manual', 'Manual')], string="Reminders", default='automatic')
-    type = fields.Selection(selection_add=[('followup', 'Follow-up Address'), ('other',)])
     followup_responsible_id = fields.Many2one(
         comodel_name='res.users',
         string='Responsible',
@@ -64,10 +63,6 @@ class ResPartner(models.Model):
         groups='account.group_account_readonly,account.group_account_invoice',
     )
     has_moves = fields.Boolean(compute='_compute_has_moves')
-
-    @property
-    def _complete_name_displayed_types(self):
-        return super()._complete_name_displayed_types + ('followup',)
 
     def _search_status(self, operator, value):
         """
@@ -231,16 +226,10 @@ class ResPartner(models.Model):
         return super()._get_followup_responsible()
 
     def _get_all_followup_contacts(self):
-        """ Returns every contact of type 'followup' in the children of self.
-        If no followup contacts are found, use the billing address
-        and default to contact if there isn't any for invoice
-        """
+        """ Followup contacts are defined as billing address and defaults to
+        contact as defined in 'address_get' """
         self.ensure_one()
-        followup_contacts = self.child_ids.filtered(lambda partner: partner.type == 'followup')
-        if not followup_contacts:
-            followup_contacts = self.env['res.partner'].browse(self.address_get(['invoice'])['invoice'])
-        return followup_contacts
-
+        return self.env['res.partner'].browse(self.address_get(['invoice'])['invoice'])
 
     def _get_invoices_to_print(self, options):
         self.ensure_one()
@@ -572,11 +561,6 @@ class ResPartner(models.Model):
         invoice_online_payment = bool(self.env['ir.config_parameter'].sudo().get_param('account_payment.enable_portal_payment'))
         payment_method_available = bool(self.env['payment.method'].sudo().search_count([('active', '=', 'True')]))
         return invoice_online_payment and payment_method_available
-
-    def _avatar_get_placeholder_path(self):
-        if self.type == 'followup':
-            return "account_followup/static/img/cycle.png"
-        return super()._avatar_get_placeholder_path()
 
     def _compute_has_moves(self):
         query = self.env['res.partner']._search([('id', 'in', self.ids)])

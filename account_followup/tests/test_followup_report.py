@@ -278,23 +278,6 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
         self.assertTrue(mail, "The payment reminder email should have been sent to the invoice partner.")
         mail.unlink()
 
-        # Testing followup partner priority
-
-        followup_partner = Partner.create({
-            'name' : "Child contact followup",
-            'type' : "followup",
-            'email' : "test-followup@example.com",
-            'parent_id': self.partner_a.id,
-        })
-
-        self.partner_a._compute_unpaid_invoices()
-        with patch.object(type(self.env['mail.mail']), 'unlink', lambda self: None):
-            with patch.object(self.env.registry['account.report'], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'fake_partner_ledger.pdf', 'file_content': b'', 'file_type': 'pdf'}):
-                self.env['account.followup.report']._send_email(options)
-
-        mail = self.env['mail.mail'].search([('recipient_ids', '=', followup_partner.id)])
-        self.assertTrue(mail, "The payment reminder email should have been sent to the followup partner.")
-
     def test_followup_invoice_no_amount(self):
         # Init options.
         report = self.env['account.followup.report']

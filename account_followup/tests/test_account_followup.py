@@ -278,20 +278,6 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
         billing_contact = self.env['res.partner'].browse(self.partner_a.address_get(['invoice'])['invoice'])
         self.assertEqual(billing_contact, followup_contacts)
 
-        followup_partner_1 = self.env['res.partner'].create({
-            'name': 'followup partner 1',
-            'parent_id': self.partner_a.id,
-            'type': 'followup',
-        })
-        followup_partner_2 = self.env['res.partner'].create({
-            'name': 'followup partner 2',
-            'parent_id': self.partner_a.id,
-            'type': 'followup',
-        })
-        expected_partners = followup_partner_1 + followup_partner_2
-        followup_contacts = self.partner_a._get_all_followup_contacts()
-        self.assertEqual(expected_partners, followup_contacts)
-
     def test_followup_cron(self):
         cron = self.env.ref('account_followup.ir_cron_follow_up')
         followup_10 = self.create_followup(delay=10)
