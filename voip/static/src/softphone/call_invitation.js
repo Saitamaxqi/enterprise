@@ -2,7 +2,7 @@ import { Component } from "@odoo/owl";
 
 import { Call } from "@voip/core/call_model";
 import { ActionButton } from "@voip/softphone/action_button";
-import { UserInfo } from "@voip/softphone/user_info";
+import { ContactInfo } from "@voip/softphone/contact_info";
 
 import { useService } from "@web/core/utils/hooks";
 
@@ -11,7 +11,7 @@ import { useService } from "@web/core/utils/hooks";
  * series of actions, and buttons to accept or reject the call.
  */
 export class CallInvitation extends Component {
-    static components = { ActionButton, UserInfo };
+    static components = { ActionButton, ContactInfo };
     static props = { call: Call };
     static template = "voip.CallInvitation";
 

@@ -9,9 +9,9 @@ import { url } from "@web/core/utils/urls";
  * Displays general information (avatar, name, etc.) about the contact
  * associated with the given call.
  */
-export class UserInfo extends Component {
+export class ContactInfo extends Component {
     static props = { call: Call };
-    static template = "voip.UserInfo";
+    static template = "voip.ContactInfo";
 
     /** @returns {string} */
     get avatarAlt() {
