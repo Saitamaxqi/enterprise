@@ -11,6 +11,7 @@
             <field name="value">20.5</field>
         </record>
 
+        <!-- YTI TODO Master: Remove me  -->
         <record id="ir_config_parameter_dmfa_expeditor_nbr" model="ir.config_parameter">
             <field name="key">l10n_be.dmfa_expeditor_nbr</field>
             <field name="value">000000</field>

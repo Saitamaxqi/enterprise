@@ -1068,12 +1068,12 @@ class L10n_BeDmfa(models.Model):
     @api.depends('dmfa_xml')
     def _compute_xml_filename(self):
         # https://www.socialsecurity.be/site_fr/general/helpcentre/batch/files/directives.htm
-        num_expedition = self.env["ir.config_parameter"].sudo().get_param("l10n_be.dmfa_expeditor_nbr", False)
         now = fields.Date.today()
-        if not num_expedition:
-            raise UserError(_('There is no defined expeditor number for the company.'))
 
         for dmfa in self:
+            onss_expeditor_number = dmfa.company_id.onss_expeditor_number
+            if not onss_expeditor_number:
+                raise UserError(_('There is no defined expeditor number for the company.'))
             # Declaration File
             if not dmfa._origin.dmfa_xml_filename:
                 num_suite = 0
@@ -1083,7 +1083,7 @@ class L10n_BeDmfa(models.Model):
             num_suite = str(num_suite).zfill(5)
             file_type = dmfa.file_type
 
-            filename_common = '.DMFA.%s.%s.%s.%s.1' % (num_expedition, now.strftime('%Y%m%d'), num_suite, file_type)
+            filename_common = '.DMFA.%s.%s.%s.%s.1' % (onss_expeditor_number, now.strftime('%Y%m%d'), num_suite, file_type)
 
             filename = 'FI' + filename_common + '.1'
             dmfa.dmfa_xml_filename = filename
@@ -1096,12 +1096,12 @@ class L10n_BeDmfa(models.Model):
 
     @api.depends('dmfa_pdf')
     def _compute_pdf_filename(self):
-        num_expedition = self.env["ir.config_parameter"].sudo().get_param("l10n_be.dmfa_expeditor_nbr", False)
         now = fields.Date.today()
-        if not num_expedition:
-            raise UserError(_('There is no defined expeditor number for the company.'))
 
         for dmfa in self:
+            onss_expeditor_number = dmfa.company_id.onss_expeditor_number
+            if not onss_expeditor_number:
+                raise UserError(_('There is no defined expeditor number for the company.'))
             if not dmfa._origin.dmfa_pdf_filename:
                 num_suite = 0
             else:
@@ -1110,7 +1110,7 @@ class L10n_BeDmfa(models.Model):
             num_suite = str(num_suite).zfill(5)
             file_type = dmfa.file_type
 
-            filename = 'FI.DMFA.%s.%s.%s.%s.1.1.pdf' % (num_expedition, now.strftime('%Y%m%d'), num_suite, file_type)
+            filename = 'FI.DMFA.%s.%s.%s.%s.1.1.pdf' % (onss_expeditor_number, now.strftime('%Y%m%d'), num_suite, file_type)
             dmfa.dmfa_pdf_filename = filename
 
     @api.depends('year', 'quarter')

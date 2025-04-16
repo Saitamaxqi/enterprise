@@ -6,6 +6,7 @@
         <field name="currency_id" ref="base.EUR"/>
         <field name="l10n_be_company_number">0477472701</field>
         <field name="l10n_be_revenue_code">1293</field>
+        <field name="onss_expeditor_number">123456</field>
         <field name="street">Rue du Paradis</field>
         <field name="zip">6870</field>
         <field name="city">Eghezee</field>

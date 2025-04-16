@@ -21,6 +21,7 @@ class TestPayrollCommon(TransactionCase):
             'currency_id': cls.env.ref('base.EUR').id,
             'l10n_be_company_number': '0477472701',
             'l10n_be_revenue_code': '1293',
+            'onss_expeditor_number': '123456',
             'street': 'Rue du Paradis',
             'zip': '6870',
             'city': 'Eghezee',
