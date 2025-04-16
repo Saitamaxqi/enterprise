@@ -239,3 +239,36 @@ class TestSaleOrder(TestCommissionsSetup):
 
         self.assertEqual(len(purchase_orders), 1, "Only one PO should be created.")
         self.assertEqual(len(purchase_orders.order_line), 2, "Two Sale Order line should be linked to a PO line.")
+
+    def test_invoice_with_referrer(self):
+        product = self.worker
+        self.referrer.commission_plan_id = self.env['commission.plan'].create({
+            'name': 'Test Plan',
+            'product_id': product.id,
+            'commission_rule_ids': [
+                (0, 0, {
+                    'category_id': product.categ_id.id,
+                    'rate': 10,
+                }),
+            ],
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.customer.id,
+            'referrer_id': self.referrer.id,
+            'invoice_line_ids': [
+                (0, 0, {
+                    'product_id': product.id,
+                    'quantity': 1,
+                    'price_unit': 100,
+                }),
+            ],
+        })
+        invoice.action_post()
+        action_register_payment = invoice.action_force_register_payment()
+        wizard = self.env[action_register_payment['res_model']].with_context(action_register_payment['context']).create({})
+        action_create_payment = wizard.action_create_payments()
+        payment = self.env[action_create_payment['res_model']].browse(action_create_payment['res_id'])
+
+        self.assertTrue(payment)
+        self.assertEqual(payment.invoice_ids, invoice)

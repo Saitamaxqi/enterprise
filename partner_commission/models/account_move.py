@@ -122,7 +122,7 @@ class AccountMove(models.Model):
                         desc += _(' (%d month(s))', n_months)
 
             purchase = move._get_commission_purchase_order()
-            purchase.message_subscribe(partner_ids=move._get_sales_representative().partner_id.ids)
+            purchase.message_subscribe(partner_ids=(move._get_sales_representative() or purchase).partner_id.ids)
 
             line = self.env['purchase.order.line'].sudo().create({
                 'name': desc,
