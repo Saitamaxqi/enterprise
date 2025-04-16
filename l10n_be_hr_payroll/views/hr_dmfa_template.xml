@@ -61,7 +61,7 @@
                     . SS sont les secondes
                     . SSS sont les millièmes de secondes
                 -->
-                <FormCreationHour t-esc="time.strftime('%H:%M:%S.000')"/>
+                <FormCreationHour t-esc="datetime.datetime.now().strftime('%H:%M:%S.000')"/>
 
                 <!-- 00110
                     DESCRIPTION:
