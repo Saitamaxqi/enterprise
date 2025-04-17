@@ -45,7 +45,7 @@ class WhatsAppApi:
                     f"Data: {data}"
                 )
                 wa_account_id._add_ir_log('WA Api Call', message, '__api_requests')
-            res = requests.request(request_type, call_url, params=params, headers=headers, data=data, files=files, timeout=10)
+            res = requests.request(request_type, call_url, params=params, headers=headers, data=data, files=files, timeout=(10, 30))
             # Log the response details for debugging purposes if debug logging is enabled
             if wa_account_id.debug_logging:
                 message = (
