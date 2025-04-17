@@ -17,6 +17,8 @@ for IoT Box config.
         'views/preparation_display_view.xml',
         'wizard/preparation_display_reset_wizard.xml',
         'data/preparation_display_cron.xml',
+        'views/pos_order_view.xml',
+        'views/pos_preparation_time_report_view.xml',
     ],
     'depends': ['web_enterprise', 'point_of_sale'],
     'auto_install': True,
@@ -63,6 +65,9 @@ for IoT Box config.
         'web.assets_tests': [
             'pos_enterprise/static/tests/tours/point_of_sale/**/*',
         ],
-
+        'web.assets_backend': [
+            'pos_enterprise/static/src/backend/components/fields/duration_field.js',
+            'pos_enterprise/static/src/backend/components/fields/duration_field.xml',
+        ],
     },
 }

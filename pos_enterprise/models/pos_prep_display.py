@@ -20,6 +20,14 @@ class PosPrepDisplay(models.Model):
     ])
     contains_bar_restaurant = fields.Boolean("Is a Bar/Restaurant", compute='_compute_contains_bar_restaurant', store=True)
     access_token = fields.Char("Access Token", default=lambda self: self._ensure_access_token())
+    auto_clear = fields.Boolean(string='Auto clear', help='Time after which ready order will be removed from Order Status Screen.', default=False)
+    clear_time_interval = fields.Integer(string='Interval auto clear time', default=10, help="Interval in minutes")
+
+    @api.constrains('clear_time_interval')
+    def _check_clear_time_interval_positive(self):
+        for record in self:
+            if record.clear_time_interval <= 0:
+                raise ValidationError(_("The interval auto clear time must be positive."))
 
     def _load_preparation_data_models(self):
         return ['pos.category', 'pos.prep.order', 'pos.order', 'pos.prep.state', 'pos.prep.line', 'pos.prep.stage', 'product.product', 'pos.preset', 'product.attribute', 'product.template.attribute.value']

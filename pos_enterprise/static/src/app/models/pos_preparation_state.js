@@ -1,5 +1,6 @@
 import { registry } from "@web/core/registry";
 import { Base } from "@point_of_sale/app/models/related_models";
+import { computeDurationSinceDate } from "@pos_enterprise/app/utils/utils";
 export class PosPreparationState extends Base {
     static pythonModel = "pos.prep.state";
 
@@ -16,11 +17,7 @@ export class PosPreparationState extends Base {
     }
 
     computeDuration() {
-        return this.computeDurationSinceDate(this.write_date);
-    }
-    computeDurationSinceDate(startDateTime) {
-        const timeDiff = ((luxon.DateTime.now().ts - startDateTime.ts) / 1000).toFixed(0);
-        return Math.round(timeDiff / 60);
+        return computeDurationSinceDate(this.write_date);
     }
 }
 

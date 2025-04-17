@@ -12,6 +12,7 @@ class PosPrepOrder(models.Model):
     order_name = fields.Char(compute='_compute_order_name')
     pdis_general_customer_note = fields.Text("General Customer Note", help="Current general-customer-note displayed on preparation display")
     pdis_internal_note = fields.Text("General Note", help="Current general-note displayed on preparation display")
+    completion_time = fields.Integer("Completion Time", help="Time in minutes to complete the order (preparation + service time)")
 
     @api.depends('pos_order_id.floating_order_name')
     def _compute_order_name(self):

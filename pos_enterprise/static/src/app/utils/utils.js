@@ -30,3 +30,8 @@ export function useDelayedValueChange(getCurrentValue, duration = 5000) {
         },
     };
 }
+
+export const computeDurationSinceDate = (startDateTime) => {
+    const timeDiff = (luxon.DateTime.now().ts - startDateTime.ts) / 1000;
+    return Math.floor(timeDiff / 60);
+};

@@ -47,8 +47,8 @@ export class PrepDisplay extends WithLazyGetterTrap {
                 this.notification.add(data.notification);
             }
         });
-        this.onNotified("CHANGE_STATE_STAGE", (stages) => {
-            for (const stage of stages) {
+        this.onNotified("CHANGE_STATE_STAGE", (data) => {
+            for (const stage of data["pdis_state_stages"]) {
                 const state = this.data.models["pos.prep.state"].get(stage.id);
                 if (!state) {
                     continue;
@@ -57,6 +57,15 @@ export class PrepDisplay extends WithLazyGetterTrap {
                 state.stage_id = this.data.models["pos.prep.stage"].get(stage.stage_id);
                 state.todo = true;
                 state.write_date = stage.last_stage_change;
+            }
+            for (const [orderId, completion_time] of Object.entries(
+                data["prep_order_completion_time"]
+            )) {
+                const order = this.data.models["pos.prep.order"].get(orderId);
+                if (!order) {
+                    continue;
+                }
+                order.completion_time = completion_time;
             }
         });
         this.onNotified("CHANGE_STATE_STATUS", (lineStatus) => {
@@ -285,7 +294,7 @@ export class PrepDisplay extends WithLazyGetterTrap {
         );
     }
     async doneOrders(states) {
-        states.forEach((sate) => (sate.todo = false));
+        states.forEach((state) => (state.todo = false));
         this.syncStateStatus(states);
     }
     async changeStateStage(states, direction = 1) {

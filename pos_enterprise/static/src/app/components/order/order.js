@@ -112,7 +112,7 @@ export class Order extends Component {
     }
 
     _getOrderDuration() {
-        return Math.max(...this.props.order.states.map((sate) => sate.computeDuration()));
+        return Math.max(...this.props.order.states.map((state) => state.computeDuration()));
     }
 
     async doneOrder() {

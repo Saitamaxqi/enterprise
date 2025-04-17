@@ -1,4 +1,5 @@
 from odoo import models
+from odoo.addons.pos_enterprise.utils.date_utils import compute_seconds_since
 
 
 class PosPrepDisplay(models.Model):
@@ -13,6 +14,7 @@ class PosPrepDisplay(models.Model):
 
         orders_completed = set()
         orders_not_completed = set()
+        orders_completed_ready_date = {}
         pdis_line_ids = self._get_open_orderlines_in_display().filtered(lambda o: o.stage_id != last_stage)
 
         for pdis_line_id in pdis_line_ids:
@@ -27,12 +29,18 @@ class PosPrepDisplay(models.Model):
                 for line in pdis_line_ids
             )
             if order_stage_id == second_last_stage and not any(unfinished_pdis_orders):
-                orders_completed.add(pos_order_tracking_ref)
+                order_ready_date = pdis_line_id.last_stage_change
+                order_ready_delay = int(compute_seconds_since(order_ready_date) / 60)
+                is_order_visible = not self.auto_clear or order_ready_delay < self.clear_time_interval
+                if is_order_visible:
+                    orders_completed.add(pos_order_tracking_ref)
+                    orders_completed_ready_date[pos_order_tracking_ref] = str(order_ready_date)
             elif order_stage_id != last_stage:
                 orders_not_completed.add(pos_order_tracking_ref)
         return {
             "done": list(orders_completed),
             "notDone": list(orders_not_completed),
+            "ordersCompletedReadyDate": orders_completed_ready_date,
         }
 
     def _send_orders_to_customer_display(self):

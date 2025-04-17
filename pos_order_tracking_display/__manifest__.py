@@ -19,6 +19,7 @@
             'point_of_sale/static/src/utils.js',
             "point_of_sale/static/src/app/components/odoo_logo/*",
             'pos_order_tracking_display/static/src/**/*',
+            'pos_enterprise/static/src/app/utils/utils.js'
         ],
     },
     'author': 'Odoo S.A.',

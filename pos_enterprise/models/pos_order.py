@@ -1,11 +1,20 @@
 import json
 
-from odoo import models, api
+from odoo import models, api, fields
 from functools import reduce
 
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
+    avg_preparation_time = fields.Float(string="Preparation Time", compute="_compute_avg_time", help="Average preparation time of the order")
+    avg_service_time = fields.Float(string="Service Time", compute="_compute_avg_time", help="Average service time of the order")
+
+    def _compute_avg_time(self):
+        for rec in self:
+            prep_times = rec.lines.filtered(lambda line: line.preparation_time >= 0).mapped('preparation_time')
+            service_times = rec.lines.filtered(lambda line: line.service_time >= 0).mapped('service_time')
+            rec.avg_preparation_time = sum(prep_times) / len(prep_times) if prep_times else -1
+            rec.avg_service_time = sum(service_times) / len(service_times) if service_times else -1
 
     @api.model
     def _load_pos_preparation_data_fields(self):
@@ -189,7 +198,8 @@ class PosOrder(models.Model):
                             'quantity': line_qty,
                             'prep_order_id': pdis_ticket.id,
                             'pos_order_line_uuid': line.uuid,
-                            'combo_parent_id': parent.id if parent else False
+                            'combo_parent_id': parent.id if parent else False,
+                            'pos_order_line_id': line.id,
                         })
                         if not line.combo_line_ids:
                             pdis = self.env['pos.prep.display']._get_preparation_displays(self, pline.product_id.pos_categ_ids.ids)
@@ -232,3 +242,10 @@ class PosOrder(models.Model):
                     category_ids.update(pdis_lines[0].product_id.pos_categ_ids.ids)  # necessary to send when only ordernote changed
 
         return {'change': flag_change, 'sound': sound, 'category_ids': category_ids, 'order_added': flag_order_added}
+
+
+class PosOrderLine(models.Model):
+    _inherit = 'pos.order.line'
+
+    preparation_time = fields.Integer("Preparation Time", help="Time to prepare the order line", default=-1, readonly=True)
+    service_time = fields.Integer("Service Time", help="Time to serve the order line", default=-1, readonly=True)

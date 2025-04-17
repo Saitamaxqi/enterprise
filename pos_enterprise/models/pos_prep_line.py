@@ -15,3 +15,4 @@ class PosPrepLine(models.Model):
     attribute_value_ids = fields.Many2many('product.template.attribute.value', 'pos_prep_line_product_template_attribute_value_rel', string="Selected Attributes")
     combo_line_ids = fields.One2many('pos.prep.line', 'combo_parent_id', string="Combo Lines")
     combo_parent_id = fields.Many2one('pos.prep.line', string="Parent Combo Line", help="Indicates the parent line if this is part of a combo", index='btree_not_null')
+    pos_order_line_id = fields.Many2one('pos.order.line', string="Original pos order line")

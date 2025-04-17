@@ -26,13 +26,21 @@
                     <div class="o_pdis_table-info d-flex justify-content-between align-items-center">
                         <div t-esc="this.props.order.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill"
                             t-att-style="`background-color: ${this.props.order.stage.color} !important; color: ${this.fontColor}`"/>
-                        <div class="o_pdis_alert-timer" t-attf-class="{{ this.prepDisplay.lastStage.id !== this.props.order.stage.id ? '' : 'd-none' }}">
+                        <div t-if="this.order.pos_order_id.preset_time">
+                            <span t-esc="presetTime"/>
+                        </div>
+                        <t t-set="isLastStage" t-value="this.prepDisplay.lastStage.id === this.props.order.stage.id"/>
+                        <t t-set="displayAlert" t-value="this.isAlert and !isLastStage"/>
+                        <div class="o_pdis_alert-timer">
                             <div class="rounded-pill py-1 px-3"
-                                t-att-class="{ 'bg-white': !this.isAlert, 'o_pdis_is_alert text-bg-danger': this.isAlert, 'o_pdis_archive-order cursor-pointer': this.prepDisplay.lastStage.id === this.props.order.stage.id }">
-                                <div t-if="this.prepDisplay.lastStage.id !== this.props.order.stage.id">
+                                t-att-class="{
+                                    'bg-white': !displayAlert,
+                                    'o_pdis_is_alert text-bg-danger': displayAlert,
+                                    'o_pdis_archive-order cursor-pointer': isLastStage
+                                }">
+                                <div>
                                     <i class="fa fa-clock-o pe-1" aria-hidden="true"></i>
-                                    <span
-                                        t-esc="this.state.duration"/>'
+                                    <span t-esc="isLastStage ? this.props.order.prepOrder.completion_time : this.state.duration"/>
                                 </div>
                             </div>
                         </div>

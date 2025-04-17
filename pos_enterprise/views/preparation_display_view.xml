@@ -56,6 +56,17 @@
                             <field name="pos_config_ids" widget="many2many_tags" options="{'create':false}" placeholder="All PoS"/>
                             <field name="category_ids" widget="many2many_tags" options="{'create':false}" placeholder="All categories"/>
                         </group>
+                        <group>
+                            <div class="o_row">
+                                <label class="o_form_label" for="auto_clear"/>
+                                <field name="auto_clear" />
+                                <div invisible="not auto_clear">
+                                    <label for="clear_time_interval" string="After" style="font-weight:bold;"/>
+                                    <field name="clear_time_interval" class="oe_inline border-bottom text-center"/>
+                                    <label for="clear_time_interval" string="minutes" style="font-weight:bold;"/>
+                                </div>
+                            </div>
+                        </group>
                     </group>
                     <notebook>
                         <page name="stages" string="Stages">

@@ -17,3 +17,6 @@ class PosPrepStage(models.Model):
     def _load_pos_preparation_data_domain(self, data):
         stage_ids = data['pos.prep.display'][0]['stage_ids']
         return [('id', 'in', stage_ids)]
+
+    def is_stage_position(self, position):
+        return self.id == self.prep_display_id.stage_ids[position].id
