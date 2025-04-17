@@ -31,7 +31,7 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
     def _compute_show_prorata(self):
         for record in self:
             date_to = record.return_id.date_to
-            record.show_prorata = date_to.month in (1, 2, 3) or (date_to.year == 2024 and date_to.month in (4, 5, 6))
+            record.show_prorata = date_to.month in (1, 2, 3) or (date_to.year in (2024, 2025) and date_to.month in (4, 5, 6))
 
     @api.depends('is_prorata_necessary', 'return_id')
     def _compute_prorata_year(self):
