@@ -113,13 +113,20 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
 
     def action_generate_export(self):
         self.ensure_one()
-        move = self.env[self._context['active_model']].browse(self._context['active_id'])
-        options = move._get_tax_closing_report_options(move.company_id, move.fiscal_position_id, move.tax_closing_report_id, move.date)
+        ctx = self._context
+        report_id = ctx.get("l10n_it_xml_export_monthly_tax_report_options", {}).get("report_id")
+        if report_id:
+            options = self.env["account.report"].browse(report_id).get_options({})
+        else:
+            move = self.env[ctx["active_model"]].browse(ctx["active_id"])
+            options = move._get_tax_closing_report_options(move.company_id, move.fiscal_position_id, move.tax_closing_report_id, move.date)
+        options.update(ctx.get("l10n_it_xml_export_monthly_tax_report_options", {}))
         options.update(self._get_wizard_field_dict())
+
         return {
             'type': 'ir_actions_account_report_download',
             'data': {
-                'model': self.env.context.get('model'),
+                'model': ctx.get('model'),
                 'options': json.dumps(options),
                 'file_generator': 'export_tax_report_to_xml',
             }
