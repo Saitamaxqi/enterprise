@@ -34,6 +34,16 @@ class DiscussChannel(models.Model):
         "Group authorization and group auto-subscription are only supported on channels and whatsapp.",
     )
 
+    @api.depends('whatsapp_partner_id', 'whatsapp_number')
+    def _compute_display_name(self):
+        whatsapp_channels = self.filtered('whatsapp_partner_id')
+        for channel in whatsapp_channels:
+            number = channel.whatsapp_number
+            partner = channel.whatsapp_partner_id
+            partner_name = partner.name if partner.name != partner.phone else False
+            channel.display_name = f'{partner_name} ({number})' if partner_name else number
+        super(DiscussChannel, self - whatsapp_channels)._compute_display_name()
+
     @api.constrains('channel_type', 'whatsapp_number')
     def _check_whatsapp_number(self):
         # constraint to check the whatsapp number for channel with type 'whatsapp'
@@ -205,15 +215,14 @@ class DiscussChannel(models.Model):
             channel = channel.filtered(lambda c: all(r in c.channel_member_ids.partner_id for r in responsible_partners))
 
         partners_to_notify = responsible_partners
-        record_name = related_message.record_name
-        if not record_name and related_message.res_id:
-            record_name = self.env[related_message.model].browse(related_message.res_id).display_name
         if not channel and create_if_not_found:
+            recipient_partner = self.env['res.partner']._find_or_create_from_number(wa_formatted, sender_name)
+            recipient_name = recipient_partner.name if recipient_partner.name != recipient_partner.phone else False
             channel = self.sudo().with_context(tools.clean_context(self.env.context)).create({
-                'name': f"{wa_formatted} ({record_name})" if record_name else wa_formatted,
+                'name': f"{recipient_name} ({wa_formatted})" if recipient_name else wa_formatted,
                 'channel_type': 'whatsapp',
                 'whatsapp_number': wa_formatted,
-                'whatsapp_partner_id': self.env['res.partner']._find_or_create_from_number(wa_formatted, sender_name).id,
+                'whatsapp_partner_id': recipient_partner.id,
                 'wa_account_id': wa_account_id.id,
             })
             partners_to_notify += channel.whatsapp_partner_id

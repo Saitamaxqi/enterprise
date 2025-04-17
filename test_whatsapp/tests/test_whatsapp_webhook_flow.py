@@ -139,6 +139,30 @@ class WhatsAppWebhookCase(WhatsAppFullCase, MockIncomingWhatsApp):
         })
 
     @users('user_wa_admin')
+    def test_conversation_name(self):
+        """Test conversation name with or without sender name given to the process."""
+        with self.mockWhatsappGateway():
+            self._receive_whatsapp_message(self.whatsapp_account, "Hello! I have no name.", "32476012987")
+        discuss_channel = self.assertWhatsAppDiscussChannel("32476012987")
+        self.assertEqual(discuss_channel.name, "32476012987")
+        self.assertEqual(discuss_channel.display_name, "32476012987")
+
+        discuss_channel.whatsapp_partner_id.name = "Bob"
+        discuss_channel.invalidate_recordset(["display_name"])
+        self.assertEqual(
+            discuss_channel.display_name, "Bob (32476012987)",
+            "Channel display name should match current name of the partner"
+        )
+
+        with self.mockWhatsappGateway():
+            self._receive_whatsapp_message(self.whatsapp_account,
+                                           "Hello! I'm Sarah Croche. So don't call, because I won't pickup. lolilol",
+                                           "32476012654",
+                                           sender_name="Sarah Croche")
+        discuss_channel = self.assertWhatsAppDiscussChannel("32476012654")
+        self.assertEqual(discuss_channel.name, "%s (32476012654)" % "Sarah Croche")
+
+    @users('user_wa_admin')
     def test_conversation_match(self):
         """ Test a conversation with multiple channels and messages. Received
         messages should all be linked to the document if there is a suitable
