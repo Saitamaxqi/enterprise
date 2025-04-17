@@ -21,10 +21,10 @@ registry.category("web_tour.tours").add('knowledge_properties_tour', {
 }, { // wait ChildArticle loading
     trigger: '.o_hierarchy_article_name input:value("ChildArticle")',
 }, { // click on add properties button in dropdown
-    trigger: '#dropdown_tools_panel',
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: 'click',
 }, {
-    trigger: 'button.o_knowledge_add_properties',
+    trigger: '.dropdown-item:contains("Add Properties")',
     run: 'click',
 }, {
     trigger: '.o_field_property_add button',
@@ -51,6 +51,6 @@ registry.category("web_tour.tours").add('knowledge_properties_tour', {
         );
     },
 }, { // verify property
-    trigger: '.o_knowledge_properties .o_field_property_label:contains("myproperty")',
+    trigger: '.o_widget_knowledge_properties_panel .o_field_property_label:contains("myproperty")',
 }, ...endKnowledgeTour()
 ]});

@@ -16,11 +16,11 @@ registry.category("web_tour.tours").add('knowledge_pick_emoji_tour', {
     trigger: 'section[data-section="private"] .o_article .o_article_name:contains("Untitled")',
  // check that the article is correctly created (private section)
 }, {
-    trigger: '#dropdown_tools_panel',
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
     // add a random emoji
-    trigger: '.o_knowledge_add_icon',
+    trigger: '.dropdown-item:contains("Add Icon")',
     run: 'click',
 }, {
     trigger: '.o_knowledge_body .o_article_emoji',

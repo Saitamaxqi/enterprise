@@ -202,7 +202,7 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
             self.assertEqual(child.inherited_permission_parent_id, writable_root)
 
         # downgrade write global perm to read
-        writable_as1._set_internal_permission('none')
+        writable_as1.set_internal_permission('none')
         writable_as1.flush_model()  # ACLs are done using SQL
         self.assertMembers(
             writable_as1, 'none',
@@ -234,7 +234,7 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
             self.assertEqual(child.inherited_permission_parent_id, writable_root)
 
         # downgrade write global perm to read
-        writable_as1._set_internal_permission('read')
+        writable_as1.set_internal_permission('read')
         writable_as1.flush_model()  # ACLs are done using SQL
         self.assertMembers(
             writable_as1, 'read',
@@ -276,7 +276,7 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
                 child._get_article_member_permissions()[child.id],
                 'Share Panel: if an article inherits a permission, its children should inherit that permission too')
         manager_member = writable_root.article_member_ids.filtered(lambda m: m.partner_id == self.partner_employee_manager)
-        writable._remove_member(manager_member)
+        writable.remove_member(manager_member.id)
         self.assertTrue(writable.is_desynchronized,
                         'Permission: when removing a member having inherited rights it has be be desynchronized')
         self.assertMembers(writable, 'write',
@@ -295,9 +295,23 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
 
         # remove portal partner that has rights based on membership
         portal_member = writable.article_member_ids.filtered(lambda m: m.partner_id == self.partner_portal)
-        writable._remove_member(portal_member)
+        writable.remove_member(portal_member.id)
         self.assertFalse(writable.is_desynchronized)
         self.assertMembers(writable, False, {})
+
+    @mute_logger('odoo.addons.base.models.ir_rule', 'odoo.models.unlink')
+    @users('employee')
+    def test_remove_member_leave_article(self):
+        """ You can remove your member if its permission level is the same as the linked article"""
+        readable_root = self.article_roots[1].with_env(self.env)
+        readable_root.action_join()
+        self.assertMembers(readable_root, 'read',
+                           {self.env.user.partner_id: 'read',
+                            self.partner_employee_manager: 'write'})
+        user_member_id = readable_root.article_member_ids.filtered(
+            lambda m: m.partner_id == self.env.user.partner_id)
+        readable_root.remove_member(user_member_id.id)
+        self.assertMembers(readable_root, 'read', {self.partner_employee_manager: 'write'})
 
     @mute_logger('odoo.addons.base.models.ir_rule', 'odoo.models.unlink')
     @users('employee')
@@ -311,7 +325,7 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
 
         my_member = shared_article.article_member_ids.filtered(
             lambda m: m.partner_id == self.env.user.partner_id)
-        shared_article._remove_member(my_member)
+        shared_article.remove_member(my_member.id)
 
         self.assertMembers(shared_article, 'none', {self.partner_employee_manager: 'write'})
 
@@ -331,13 +345,13 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
 
         # update a member permission directly
         portal_member = writable.article_member_ids.filtered(lambda m: m.partner_id == self.partner_portal)
-        writable._set_member_permission(portal_member, 'none')
+        writable.set_member_permission(portal_member.id, 'none')
         self.assertMembers(writable, False,
                            {self.partner_portal: 'none'})
 
         # upgrade a permission based on inheritance
         manager_member_root = writable_root.article_member_ids.filtered(lambda m: m.partner_id == self.partner_employee_manager)
-        writable._set_member_permission(manager_member_root, 'write', is_based_on=True)
+        writable.set_member_permission(manager_member_root.id, 'write')
         self.assertFalse(writable.is_desynchronized)
         self.assertMembers(writable, False,
                            {self.partner_portal: 'none',
@@ -345,8 +359,8 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
 
         # now test downgrading
         manager_member = writable.article_member_ids.filtered(lambda m: m.partner_id == self.partner_employee_manager)
-        writable_root._set_member_permission(manager_member_root, 'write')
-        writable._remove_member(manager_member)
+        writable_root.set_member_permission(manager_member_root.id, 'write')
+        writable.remove_member(manager_member.id)
         self.assertMembers(writable_root, 'write',
                            {self.partner_employee_manager: 'write'})
         self.assertMembers(writable, False,
@@ -359,8 +373,8 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
                 child._get_article_member_permissions()[child.id][self.partner_employee_manager.id]['permission'],
                 'write',
                 'Share Panel: if an article inherits a permission, its children should inherit that permission too')
-        writable_root._set_member_permission(manager_member_root, 'write')
-        writable._set_member_permission(manager_member_root, 'read', is_based_on=True)
+        writable_root.set_member_permission(manager_member_root.id, 'write')
+        writable.set_member_permission(manager_member_root.id, 'read')
         self.assertTrue(writable.is_desynchronized,
                         'Permission: when removing a member having inherited rights it has be be desynchronized')
         self.assertMembers(writable, 'write',
@@ -401,7 +415,7 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
             readonly.write({'internal_permission': 'write'})
         with self.assertRaises(exceptions.AccessError,
                                msg='Permission: do not allow privilege escalation'):
-            readonly._set_internal_permission('write')
+            readonly.set_internal_permission('write')
 
     @mute_logger('odoo.addons.base.models.ir_rule', 'odoo.models.unlink')
     @users('employee')
@@ -416,12 +430,12 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
             readonly.write({'internal_permission': 'write'})
         with self.assertRaises(exceptions.AccessError,
                                msg='Permission: do not allow privilege escalation'):
-            readonly._set_internal_permission('write')
+            readonly.set_internal_permission('write')
 
         other_member = readonly.article_member_ids.filtered(lambda m: m.partner_id == self.partner_portal)
         with self.assertRaises(exceptions.AccessError,
                                msg='Permission: do not allow to remove other members when having only read access'):
-            readonly._remove_member(other_member)
+            readonly.remove_member(other_member.id)
         self.assertMembers(readonly, 'write',
                            {self.env.user.partner_id: 'read',
                             self.partner_portal: 'read'})
@@ -431,7 +445,7 @@ class TestKnowledgeArticlePermissionsTools(KnowledgeArticlePermissionsCase):
             lambda m: m.partner_id == self.env.user.partner_id)
         with self.assertRaises(exceptions.AccessError,
                                msg='Permission: do not allow to remove yourself when having only read access'):
-            readonly._remove_member(my_member)
+            readonly.remove_member(my_member.id)
         self.assertMembers(readonly, 'write',
                            {self.env.user.partner_id: 'read',
                             self.partner_portal: 'read'})
@@ -502,8 +516,8 @@ class TestKnowledgeArticlePortal(KnowledgeArticlePermissionsCase):
             # cannot leave an article, as it may interfere with the desync status of an article
             # and we do not want portal users messing with that
             portal_member = article_root.sudo().article_member_ids.filtered(
-                lambda m: m.partner_id == self.user_portal.partner_id)
-            article_root._remove_member(portal_member)
+                lambda m: m.partner_id == self.user_portal.partner_id).id
+            article_root.remove_member(portal_member)
 
     @users('portal_test')
     def test_article_membership_access(self):
@@ -552,7 +566,7 @@ class TestKnowledgeArticlePortal(KnowledgeArticlePermissionsCase):
 
         with self.assertRaises(exceptions.AccessError):
             # cannot set someone else as read access
-            article_root._set_member_permission(employee_member, 'read')
+            article_root.set_member_permission(employee_member.id, 'read')
 
         with self.assertRaises(exceptions.AccessError):
             # cannot invite other people to access the article
@@ -564,7 +578,7 @@ class TestKnowledgeArticlePortal(KnowledgeArticlePermissionsCase):
 
         with self.assertRaises(exceptions.AccessError):
             # cannot remove members
-            article_root._remove_member(employee_member)
+            article_root.remove_member(employee_member.id)
 
     @users('portal_test')
     def test_article_reorganize_private(self):
@@ -619,7 +633,7 @@ class TestKnowledgeArticlePortal(KnowledgeArticlePermissionsCase):
 
         with self.assertRaises(exceptions.AccessError):
             # cannot change the internal permission
-            article_root._set_internal_permission({'internal_permission': 'read'})
+            article_root.set_internal_permission({'internal_permission': 'read'})
 
         with self.assertRaises(exceptions.AccessError):
             # cannot change the visibility

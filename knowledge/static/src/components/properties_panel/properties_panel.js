@@ -1,52 +1,49 @@
-import { registry } from '@web/core/registry';
-import { standardWidgetProps } from '@web/views/widgets/standard_widget_props';
+import { registry } from "@web/core/registry";
+import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
+import { PropertiesField } from "@web/views/fields/properties/properties_field";
+import { user } from "@web/core/user";
+import { useService } from "@web/core/utils/hooks";
 
-import { PropertiesField } from '@web/views/fields/properties/properties_field';
-
-import { Component, useRef, useState } from '@odoo/owl';
+import { Component, onWillStart, useEffect, useState } from "@odoo/owl";
 
 export class KnowledgeArticleProperties extends Component {
-    static template = 'knowledge.KnowledgeArticleProperties';
+    static template = "knowledge.KnowledgeArticleProperties";
     static props = { ...standardWidgetProps };
     static components = { PropertiesField };
 
     setup() {
-        this.state = useState({
-            displayPropertyPanel: false,
-        });
-
-        this.root = useRef('root');
-
-        this.env.bus.addEventListener('KNOWLEDGE:TOGGLE_PROPERTIES', this.toggleProperties.bind(this));
+        this.state = useState(this.env.propertiesPanelState);
+        this.ui = useService("ui");
+        // open/close the panel based on the existence of properties
+        useEffect(
+            () => {
+                if (!this.ui.isSmall && this.hasProperties && !this.state.isDisplayed) {
+                    this.state.isDisplayed = true;
+                } else if (this.state.isDisplayed && !this.hasProperties) {
+                    this.state.isDisplayed = false;
+                }
+            },
+            () => [this.props.record.resId, this.hasProperties]
+        );
+        onWillStart(async () => (this.userIsInternal = await user.hasGroup("base.group_user")));
     }
 
-    get showNoContentHelper() {
-        return this.props.record.data.article_properties.every((prop) => prop.definition_deleted);
-    }
-
-    toggleProperties(event) {
-        this.state.displayPropertyPanel = event.detail.displayPropertyPanel;
-        if (this.state.displayPropertyPanel) {
-            this.root.el?.parentElement?.classList.remove('d-none');
-        } else {
-            this.root.el?.parentElement?.classList.add('d-none');
-        }
+    get hasProperties() {
+        return this.props.record.data.article_properties.some((prop) => !prop.definition_deleted);
     }
 }
-
 
 export const knowledgePropertiesPanel = {
     component: KnowledgeArticleProperties,
     additionalClasses: [
-        'o_knowledge_properties',
-        'o_field_highlight',
-        'col-12',
-        'col-lg-2',
-        'position-relative',
-        'd-none',
-        'p-0',
-        'border-start'
-    ]
+        "col-12",
+        "col-lg-2",
+        "p-0",
+        "border-start",
+        "position-relative",
+        "border-top",
+    ],
+    fieldDependencies: [{ name: "article_properties", type: "jsonb" }],
 };
 
-registry.category('view_widgets').add('knowledge_properties_panel', knowledgePropertiesPanel);
+registry.category("view_widgets").add("knowledge_properties_panel", knowledgePropertiesPanel);

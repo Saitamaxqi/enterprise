@@ -1,0 +1,16 @@
+.o_knowledge_options_dropdown {
+    min-width: 250px;
+    max-width: 100vw;
+    .o_knowledge_options_dropdown_image {
+        width: 3rem;
+        height: 3rem;
+        object-fit: cover;
+        &:hover {
+            cursor: pointer;
+            filter: brightness(75%);
+        }
+    }
+    .o_disabled_option {
+        cursor: not-allowed !important;
+    }
+}

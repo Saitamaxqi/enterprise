@@ -27,11 +27,6 @@
     .o_knowledge_toggle_sidebar i.oi-panel-right {
         transform: scaleX(-1);
     }
-
-    span.o_knowledge_add_properties {
-        cursor: not-allowed;
-    }
-
     .o_knowledge_editor .o_field_html .note-editable{
         padding-top: 0px;
     }
@@ -190,134 +185,6 @@
             margin-top: -0.7em;
         }
     }
-
-    .o_knowledge_chatter {
-        .o_FormRenderer_chatterContainer {
-            padding: 0;
-        }
-        li.nav-item {
-            display: none;
-        }
-    }
-
-    .dropdown-menu.o_knowledge_more_options_panel {
-        min-width: 250px;
-        transform: translate3d(0px, 30px, 0px) !important;
-        .o_knowledge_more_options_panel_image,
-        .o_knowledge_more_options_panel_icon {
-            width: 3rem;
-            height: 3rem;
-            object-fit: cover;
-        }
-        .o_knowledge_more_options_panel_image:hover {
-            cursor: pointer;
-            filter: brightness(75%);
-        }
-    }
-    .dropdown-menu.o_knowledge_share_panel {
-        width: 420px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        right: 0;
-        .form-switch .form-check-input {
-            margin-left: 0;
-            cursor: pointer;
-        }
-        .o_knowledge_share_panel_image,
-        .o_knowledge_share_panel_icon {
-            width: 30px;
-            height: 30px;
-        }
-        .o_knowledge_share_panel_image {
-            object-fit: cover;
-        }
-        .o_knowledge_share_panel_invite .form-control {
-            color: $gray-400 !important;
-        }
-    }
-    .dropdown-menu.o_knowledge_more_options_panel,
-    .dropdown-menu.o_knowledge_share_panel {
-        max-width: 100vw;
-    }
-
-    .o_knowledge_properties {
-        min-width: 250px;
-        width: 25%;
-        background: var(--knowledge-properties-bg, $o-gray-100);
-
-        .o_properties_helper {
-            height: 60%;
-            min-height: 300px;
-            background: var(--knowledge-properties-bg, $o-gray-100);
-            .o_view_nocontent_smiling_face:before {
-                @extend %o-nocontent-init-image;
-                width: 120px;
-                height: 140px;
-                background: transparent url(/web/static/img/smiling_face.svg) no-repeat center;
-            }
-        }
-
-        .o_properties_helper + .o_field_properties {
-            .o_field_property_add {
-                text-align: center;
-            }
-        }
-
-        .o_inner_group {
-            width: 100%;
-            display: block;
-        }
-        .o_input,
-        .o_field_property_tag,
-        .o_field_property_many2one_value:not(:empty),
-        .o_field_property_many2many_value:not(:empty) {
-            border-bottom: $input-border-width solid $o-gray-300;
-        }
-        .o_input:focus,
-        .o_field_property_tag:focus-within,
-        .o_field_property_many2one_value:not(:empty):focus-within,
-        .o_field_property_many2many_value:not(:empty):focus-within {
-            border-bottom: $input-border-width solid $o-brand-primary;
-        }
-        .o_input_dropdown {
-            input {
-                border: 0 !important;
-            }
-        }
-        .o_property_field {
-            display: block !important;
-            &.o_property_folded {
-                display: none !important;
-            }
-        }
-        .o_field_property_add {
-            margin-left: 0 !important;
-            button {
-                background-color: transparent;
-                border-color: transparent;
-                &:hover {
-                    background-color: var(--knowledge-properties-btn-bg, $o-gray-200);
-                    border-color: var(--knowledge-properties-btn-bg, $o-gray-200);
-                }
-            }
-        }
-        .o_properties_external_button {
-            background: transparent;
-            border: 0;
-        }
-    }
-    .o_knowledge_comments_panel {
-        .o_comments_helper {
-            height: 60%;
-            min-height: 300px;
-            .o_view_nocontent_smiling_face:before {
-                @extend %o-nocontent-init-image;
-                width: 120px;
-                height: 140px;
-                background: transparent url(/web/static/img/smiling_face.svg) no-repeat center;
-            }
-        }
-    }
 }
 
 .o_knowledge_select_menu,
@@ -386,31 +253,13 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
-        .o_knowledge_chatter {
-            border-left: 1px solid $border-color;
-            min-width: 400px;
-        }
-        .o_widget_knowledge_comments_panel {
-            height: 100%;
-            overflow-y: auto;
-        }
     }
 }
 
 @include media-breakpoint-down(xl) {
     .o_knowledge_form_view {
-        .o_scroll_view_lg, .o_knowledge_properties {
+        .o_scroll_view_lg {
             width: 100%;
-        }
-        .o_knowledge_chatter, .o_knowledge_properties, .o_knowledge_comments_panel {
-            border-top: 1px solid $border-color;
-        }
-        .o_knowledge_properties {
-            .o_property_field {
-                label {
-                    font-size: $o-font-size-base;
-                }
-            }
         }
     }
 }

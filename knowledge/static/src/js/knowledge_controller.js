@@ -4,11 +4,10 @@ import { _t } from "@web/core/l10n/translation";
 import { FormController } from '@web/views/form/form_controller';
 import { KnowledgeSidebar } from '@knowledge/components/sidebar/sidebar';
 import { useBus, useService } from "@web/core/utils/hooks";
-import { Deferred } from "@web/core/utils/concurrency";
 
 import {
-    onMounted,
     onWillStart,
+    reactive,
     useChildSubEnv,
     useEffect,
     useExternalListener,
@@ -17,10 +16,6 @@ import {
 
 export class KnowledgeArticleFormController extends FormController {
     static template = "knowledge.ArticleFormView";
-    // Open articles in edit mode by default
-    static defaultProps = {
-        ...FormController.defaultProps,
-    };
     static components = {
         ...FormController.components,
         KnowledgeSidebar,
@@ -33,23 +28,17 @@ export class KnowledgeArticleFormController extends FormController {
         this.actionService = useService('action');
         this.dialogService = useService("dialog");
 
-        /*
-            Because of the way OWL is designed we are never sure when OWL finishes mounting this component.
-            Thus, we added this deferred promise in order for us to know when it is done.
-            It is necessary to have this because the comments handler needs to notify the topbar when
-            it has detected comments so that it can show the comments panel's button.
-        */
-        this.topbarMountedPromise = new Deferred();
-
         useChildSubEnv({
             createArticle: this.createArticle.bind(this),
             ensureArticleName: this.ensureArticleName.bind(this),
             openArticle: this.openArticle.bind(this),
             renameArticle: this.renameArticle.bind(this),
+            sendArticleToTrash: this.sendArticleToTrash.bind(this),
             toggleAsideMobile: this.toggleAsideMobile.bind(this),
-            topbarMountedPromise: this.topbarMountedPromise,
             save: this.save.bind(this),
             discard: this.discard.bind(this),
+            propertiesPanelState: reactive({ isDisplayed: false }),
+            chatterPanelState: reactive({ isDisplayed: false }),
         });
 
         useBus(this.env.bus, 'KNOWLEDGE:OPEN_ARTICLE', (event) => {
@@ -68,9 +57,6 @@ export class KnowledgeArticleFormController extends FormController {
                 // breadcrumbs mismatch.
                 this.knowledgeCommandsService.unregisterCommandsRecordInfo(this.env.config.breadcrumbs);
             }
-        });
-        onMounted(() => {
-            this.topbarMountedPromise.resolve();
         });
 
         useExternalListener(document.documentElement, 'mouseleave', async () => {
@@ -234,8 +220,10 @@ export class KnowledgeArticleFormController extends FormController {
                 ),
                 confirmLabel: _t("Close"),
             });
+            return false;
         }
         this.toggleAsideMobile(false);
+        return true;
     }
 
     /*
@@ -253,6 +241,14 @@ export class KnowledgeArticleFormController extends FormController {
             name = title;
         }
         return this.model.root.update({ name });
+    }
+
+    async sendArticleToTrash() {
+        await this.orm.call("knowledge.article", "action_send_to_trash", [this.resId]);
+        await this.actionService.doAction(
+            await this.orm.call("knowledge.article", "action_redirect_to_parent", [this.resId]),
+            { stackPosition: "replaceCurrentAction" },
+        );
     }
 
     /**

@@ -6,10 +6,27 @@ import { Component, xml } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
 import { ReadonlyEmbeddedViewComponent } from "@knowledge/editor/embedded_components/backend/view/readonly_embedded_view";
 
+const permissions = { none: "No Access", read: "Can Read", write: "Can Edit" };
+
 export const changeInternalPermission = (permission) => {
-    const target = document.querySelector('.o_permission[aria-label="Internal Permission"]');
-    target.value = permission;
-    target.dispatchEvent(new Event("change"));
+    return [
+        {
+            trigger: ".o_knowledge_header button:contains('Share')",
+            run: "click",
+        },
+        {
+            trigger: ".o_knowledge_permission_panel .o_internal_permission .dropdown-toggle",
+            run: "click",
+        },
+        {
+            trigger: `.o-dropdown-item:contains('${permissions[permission]}')`,
+            run: "click",
+        },
+        {
+            trigger: "body",
+            run: "click",
+        },
+    ];
 };
 
 function getOffset(element) {

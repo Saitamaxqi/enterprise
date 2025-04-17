@@ -424,7 +424,7 @@ class TestKnowledgeArticleConstraints(KnowledgeCommon):
                 'article_member_ids': [(2, membership_sudo.id)]
             })
         # Special Case: can leave own private article via _remove_member: will archive the article.
-        article_private.sudo()._remove_member(membership_sudo)
+        article_private.sudo().remove_member(membership_sudo.id)
         self.assertFalse(article_private.active)
         self.assertMembers(article_private, 'none', {self.env.user.partner_id: 'write'})
 

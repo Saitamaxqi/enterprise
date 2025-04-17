@@ -1,36 +1,20 @@
-import { registry } from '@web/core/registry';
-import { standardWidgetProps } from '@web/views/widgets/standard_widget_props';
+import { registry } from "@web/core/registry";
+import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 
 import { useService } from "@web/core/utils/hooks";
-import { Chatter } from '@mail/chatter/web_portal/chatter';
+import { Chatter } from "@mail/chatter/web_portal/chatter";
 import { SIZES } from "@web/core/ui/ui_service";
 
-
-import { Component, useRef, useState } from '@odoo/owl';
+import { Component, useState } from "@odoo/owl";
 
 export class KnowledgeArticleChatter extends Component {
-    static template = 'knowledge.KnowledgeArticleChatter';
+    static template = "knowledge.KnowledgeArticleChatter";
     static components = { Chatter };
     static props = { ...standardWidgetProps };
 
     setup() {
-        this.state = useState({
-            displayChatter: false,
-        });
-
-        this.root = useRef('root')
+        this.state = useState(this.env.chatterPanelState);
         this.ui = useService("ui");
-
-        this.env.bus.addEventListener('KNOWLEDGE:TOGGLE_CHATTER', this.toggleChatter.bind(this));
-    }
-
-    toggleChatter(event) {
-        this.state.displayChatter = event.detail.displayChatter;
-        if (this.state.displayChatter) {
-            this.root.el?.parentElement?.classList.remove('d-none');
-        } else {
-            this.root.el?.parentElement?.classList.add('d-none');
-        }
     }
 
     get isChatterAside() {
@@ -40,16 +24,7 @@ export class KnowledgeArticleChatter extends Component {
 
 export const knowledgeChatterPanel = {
     component: KnowledgeArticleChatter,
-    additionalClasses: [
-        'o_knowledge_chatter',
-        'border-top',
-        'col-12',
-        'col-lg-4',
-        'position-relative',
-        'd-none',
-        'p-0',
-        'test'
-    ]
+    additionalClasses: ["border-top", "col-12", "col-lg-4", "position-relative", "p-0"],
 };
 
-registry.category('view_widgets').add('knowledge_chatter_panel', knowledgeChatterPanel);
+registry.category("view_widgets").add("knowledge_chatter_panel", knowledgeChatterPanel);

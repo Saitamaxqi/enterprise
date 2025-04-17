@@ -1,27 +1,21 @@
 .o_knowledge_permission_panel {
-    .text-muted {
-        font-size: 0.85rem;
+    width: 420px;
+    font-size: var(--body-font-size); // This used to be the font size for the old permission panel
+    max-height: 50vh;
+    .o_knowledge_permission_panel_members img, .o_knowledge_share_panel_icon {
+        height: 30px;
+        width: 30px;
+        object-fit: cover;
     }
-    .o_permission {
-        cursor: pointer;
-        &:disabled {
-            cursor: not-allowed;
-            &.o_knowledge_share_partner {
-                background-image: none;
-            }
+    .o-dropdown-caret:not(.o-dropdown-no-caret) {
+        &:after {
+            transform: rotate(-90deg);
+        }
+        &.show:after {
+            transform: rotate(0deg);
         }
     }
 }
-
-@media (hover: hover) { // Devices supporting hover
-    .o_knowledge_permission_panel {
-        .o_delete {
-            display: none;
-        }
-        div:hover {
-            .o_delete {
-                display: inline;
-            }
-        }
-    }
+.o_knowledge_permission_panel_remove_member.focus {
+    color: $danger;
 }
