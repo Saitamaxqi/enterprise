@@ -272,11 +272,15 @@ export class BankRecKanbanController extends KanbanController {
     // -----------------------------------------------------------------------------
 
     /** override **/
-    get modelOptions() {
-        return {
-            ...super.modelOptions,
-            onWillStartAfterLoad: this.onWillStartAfterLoad.bind(this),
+    get modelParams() {
+        const params = super.modelParams;
+        params.hooks.onRootLoaded = () => {
+            if (!this._rootLoadedOnce) {
+                this._rootLoadedOnce = true;
+                return this.onFirstRootLoaded();
+            }
         }
+        return params;
     }
 
     /**
@@ -311,7 +315,7 @@ export class BankRecKanbanController extends KanbanController {
     }
 
     /** Called when the kanban is initialized. **/
-    async onWillStartAfterLoad(){
+    async onFirstRootLoaded(){
         // Fetch groups.
         this.hasGroupAnalyticAccounting = await user.hasGroup("analytic.group_analytic_accounting");
         this.hasGroupReadOnly = await user.hasGroup("account.group_account_readonly");
