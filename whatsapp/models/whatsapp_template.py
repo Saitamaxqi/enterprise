@@ -61,7 +61,7 @@ class WhatsappTemplate(models.Model):
 
     wa_account_id = fields.Many2one(
         comodel_name='whatsapp.account', string="Account", compute="_compute_wa_account_id",
-        ondelete="cascade", precompute=True, store=True)
+        ondelete="cascade", precompute=True, readonly=False, store=True)
     wa_template_uid = fields.Char(string="WhatsApp Template ID", copy=False)
     error_msg = fields.Char(string="Error Message")
 

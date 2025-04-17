@@ -115,6 +115,16 @@ class WhatsAppTemplate(WhatsAppTemplateCommon):
             'Expected fall-back on no account when name already exists for default account'
         )
 
+        # check we can still select a specific account
+        new_account = self.whatsapp_account.copy({'phone_uid': 'test_template_create_existing_name_no_account'})
+        fourth_template = self.env['whatsapp.template'].create({
+            'template_name': common_template_name,
+            'wa_account_id': new_account.id,
+        })
+        self.assertEqual(
+            fourth_template.wa_account_id, new_account
+        )
+
     @users('user_wa_admin')
     def test_template_content_dynamic(self):
         """ Test body with multiple variables """
