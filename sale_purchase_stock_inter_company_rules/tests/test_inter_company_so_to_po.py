@@ -12,6 +12,7 @@ class TestInterCompanySaleToPurchaseWithStock(TestInterCompanyRulesCommonStock):
             reserve on Inter-Company transit location as if it was an internal location, so that serial delivered
             before the PO validation can still be fetched.
         """
+        self.env.user.group_ids |= self.env.ref('stock.group_production_lot')
         self.company_b.write({
             'intercompany_generate_purchase_orders': True,
             'intercompany_sync_delivery_receipt': True,

@@ -355,6 +355,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
             Follows the trail of a serial-tracked product along the following flow:
             Vendor -> Company A -> Company B -> Customer
         """
+        self.env.user.group_ids |= self.env.ref('stock.group_production_lot')
         (self.company_a | self.company_b).write({
             'intercompany_generate_sales_orders': True,
             'intercompany_generate_purchase_orders': True,
