@@ -159,6 +159,7 @@
                                         <field name="filter_unfold_all"/>
                                         <field name="filter_growth_comparison"/>
                                         <field name="filter_period_comparison"/>
+                                        <field name="integer_rounding" placeholder="None"/>
                                         <field name="currency_translation" required="1" groups="base.group_multi_currency"/>
                                     </group>
                                     <group string="Filters" class="oe_edit_only">
