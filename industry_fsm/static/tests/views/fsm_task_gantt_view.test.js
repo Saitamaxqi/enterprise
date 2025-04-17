@@ -2,7 +2,7 @@ import { expect, test, beforeEach } from "@odoo/hoot";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { click, queryFirst } from "@odoo/hoot-dom";
 
-import { onRpc, mountView, mockService } from "@web/../tests/web_test_helpers";
+import { mountView, mockService } from "@web/../tests/web_test_helpers";
 
 import { defineProjectModels, projectModels } from "@project/../tests/project_models";
 
@@ -21,7 +21,6 @@ function mockActionService(doActionStep) {
 const { ProjectTask } = projectModels;
 
 beforeEach(() => {
-    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
     mockDate("2024-01-03 07:00:00");
     ProjectTask._records = [
         {

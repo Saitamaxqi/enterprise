@@ -26,7 +26,7 @@ beforeEach(() => {
             id: 1,
             name: "Task 1",
             planned_date_begin: "2019-03-12 06:30:00",
-            planned_date_end: "2019-03-12 12:30:00",
+            date_deadline: "2019-03-12 12:30:00",
             project_id: 1,
             user_ids: [1],
             planning_overlap: "Task 1 has 1 tasks at the same time.",
@@ -35,7 +35,7 @@ beforeEach(() => {
             id: 2,
             name: "Task 2",
             planned_date_begin: "2019-03-12 06:30:00",
-            planned_date_end: "2019-03-12 12:30:00",
+            date_deadline: "2019-03-12 12:30:00",
             project_id: 1,
             user_ids: [1],
             planning_overlap: "Task 2 has 1 tasks at the same time.",
@@ -44,7 +44,7 @@ beforeEach(() => {
             id: 3,
             name: "Task 3",
             planned_date_begin: "2019-03-11 10:30:00",
-            planned_date_end: "2019-03-11 12:30:00",
+            date_deadline: "2019-03-11 12:30:00",
             project_id: 1,
             user_ids: [2],
         },
@@ -52,7 +52,7 @@ beforeEach(() => {
             id: 4,
             name: "Task 4",
             planned_date_begin: "2019-03-14 10:30:00",
-            planned_date_end: "2019-03-14 12:30:00",
+            date_deadline: "2019-03-14 12:30:00",
             project_id: 2,
             user_ids: [2],
         },
@@ -60,17 +60,15 @@ beforeEach(() => {
             id: 5,
             name: "Task 5",
             planned_date_begin: "2019-03-13 10:30:00",
-            planned_date_end: "2019-03-13 12:30:00",
+            date_deadline: "2019-03-13 12:30:00",
             project_id: 2,
         },
     ];
 });
 
 test("Unassigned tasks will show when search for assignee", async () => {
-    onRpc(async (args) => {
-        if (args.method === "get_all_deadlines") {
-            return { milestone_id: [], project_id: [1, "Project 1"] };
-        } else if (args.method === "get_gantt_data") {
+    onRpc("project.task", "get_gantt_data", async (args) => {
+        if (args.method === "get_gantt_data") {
             const domain = (args.kwargs.domain || []).map((d) => {
                 if (d instanceof Array && d.length === 3 && d[0] === "user_ids.name") {
                     return ["user_ids", "=", 1];
@@ -88,7 +86,7 @@ test("Unassigned tasks will show when search for assignee", async () => {
             <gantt
                 js_class="task_gantt"
                 date_start="planned_date_begin"
-                date_stop="planned_date_end"
+                date_stop="date_deadline"
                 default_scale="week"
             />
         `,
@@ -187,12 +185,6 @@ test("Tasks in conflicting are highlighted, while non-conflicting tasks are in m
         `,
     };
 
-    onRpc(async (args) => {
-        if (args.method === "get_all_deadlines") {
-            return { milestone_id: [], project_id: [1, "Project 1"] };
-        }
-    });
-
     await mountGanttView({
         resModel: "project.task",
         type: "gantt",
@@ -200,7 +192,7 @@ test("Tasks in conflicting are highlighted, while non-conflicting tasks are in m
             <gantt
                 js_class="task_gantt"
                 date_start="planned_date_begin"
-                date_stop="planned_date_end"
+                date_stop="date_deadline"
                 default_scale="week"
             />
         `,

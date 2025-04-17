@@ -1,4 +1,4 @@
-import { defineMailModels, mailModels } from "@mail/../tests/mail_test_helpers";
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, destroy, expect, test } from "@odoo/hoot";
 import { hover, keyDown, queryAll, queryAllTexts, queryOne } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
@@ -20,65 +20,47 @@ import {
     mountGanttView,
 } from "@web_gantt/../tests/web_gantt_test_helpers";
 
+import {
+    projectModels,
+    defineProjectModels,
+    ProjectProject,
+} from "@project/../tests/project_models";
+
 describe.current.tags("desktop");
 
-onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
-
 const ganttViewParams = {
-    arch: '<gantt js_class="task_gantt" date_start="start" date_stop="stop"/>',
+    arch: '<gantt js_class="task_gantt" date_start="planned_date_begin" date_stop="date_deadline"/>',
     resModel: "project.task",
-    groupBy: [],
+    groupBy: ["user_ids"],
 };
 
 beforeEach(() => {
     mockDate("2021-06-22 08:00:00");
+    mailModels.ResUsers._records.push({ id: 100, name: "Jane Doe" }, { id: 101, name: "John Doe" });
+    ProjectProject._records = [
+        { id: 1, name: "My Project", date_start: "2021-01-01", date: "2021-06-24" },
+    ];
 });
-class Task extends models.Model {
-    _name = "project.task";
 
-    id = fields.Integer();
-    name = fields.Char();
-    start = fields.Datetime({ string: "Start Date" });
-    stop = fields.Datetime({ string: "Start Date" });
-    time = fields.Float();
-    user_ids = fields.Many2one({
-        string: "Assigned to",
-        relation: "res.users",
-        falsy_value_label: "👤 Unassigned",
-    });
-    stuff_id = fields.Many2one({
-        string: "Stuff",
-        relation: "stuff",
-    });
-    active = fields.Boolean({ default: true });
-    is_closed = fields.Boolean();
-    project_id = fields.Many2one({
-        string: "Project",
-        relation: "project.project",
-        falsy_value_label: "🔒 Private",
-    });
-    milestone_id = fields.Many2one({
-        string: "Milestone",
-        relation: "project.milestone",
-    });
-    is_template = fields.Boolean({ string: "Is Template", default: false });
+class Task extends projectModels.ProjectTask {
+    stuff_id = fields.Many2one({ string: "Stuff", relation: "stuff" });
 
     _records = [
         {
             id: 1,
             name: "Blop",
-            start: "2021-06-14 08:00:00",
-            stop: "2021-06-24 08:00:00",
-            user_ids: 100,
+            planned_date_begin: "2021-06-14 08:00:00",
+            date_deadline: "2021-06-24 08:00:00",
+            user_ids: [100],
             project_id: 1,
             milestone_id: 3,
         },
         {
             id: 2,
             name: "Yop",
-            start: "2021-06-02 08:00:00",
-            stop: "2021-06-12 08:00:00",
-            user_ids: 101,
+            planned_date_begin: "2021-06-02 08:00:00",
+            date_deadline: "2021-06-12 08:00:00",
+            user_ids: [101],
             stuff_id: 1,
             project_id: 1,
         },
@@ -90,68 +72,15 @@ class Task extends models.Model {
 }
 
 class Stuff extends models.Model {
-    id = fields.Integer();
     name = fields.Char();
 
     _records = [{ id: 1, name: "Bruce Willis" }];
 }
 
-class Project extends models.Model {
-    _name = "project.project";
+projectModels.ProjectTask = Task;
 
-    id = fields.Integer();
-    name = fields.Char();
-    date = fields.Date();
-    date_start = fields.Date();
-
-    get_template_tasks(projectId) {
-        return this.env["project.task"].search_read(
-            [
-                ["project_id", "=", projectId],
-                ["is_template", "=", true],
-            ],
-            ["id", "name"]
-        );
-    }
-
-    _records = [{ id: 1, name: "My Project" }];
-}
-
-class Milestone extends models.Model {
-    _name = "project.milestone";
-
-    id = fields.Integer();
-    name = fields.Char();
-    deadline = fields.Date();
-    is_deadline_exceeded = fields.Boolean({ string: "Is Deadline Exceeded" });
-    is_reached = fields.Boolean({ string: "Is Reached" });
-    project_id = fields.Many2one({ string: "Project", relation: "project.project" });
-
-    _records = [
-        {
-            id: 1,
-            name: "Milestone 1",
-            deadline: "2021-06-01",
-            project_id: 1,
-            is_reached: true,
-        },
-        {
-            id: 2,
-            name: "Milestone 2",
-            deadline: "2021-06-12",
-            project_id: 1,
-            is_deadline_exceeded: true,
-        },
-        { id: 3, name: "Milestone 3", deadline: "2021-06-24", project_id: 1 },
-    ];
-}
-
-defineMailModels();
-defineModels([Task, Stuff, Project, Milestone]);
-
-beforeEach(() => {
-    mailModels.ResUsers._records.push({ id: 100, name: "Jane Doe" }, { id: 101, name: "John Doe" });
-});
+defineModels([Stuff]);
+defineProjectModels();
 
 test("not user_ids grouped: empty groups are displayed first and user avatar is not displayed", async () => {
     await mountGanttView({ ...ganttViewParams, groupBy: ["stuff_id"] });
@@ -171,7 +100,7 @@ test("Unschedule button is displayed", async () => {
     });
     await mountGanttView({
         arch: `
-            <gantt date_start="start" date_stop="stop">
+            <gantt date_start="planned_date_begin" date_stop="date_deadline">
                 <templates>
                     <t t-name="gantt-popover">
                         <footer>
@@ -199,7 +128,7 @@ test("not user_ids grouped: no empty group if no records", async () => {
 });
 
 test("user_ids grouped: specific empty group added, even if no records", async () => {
-    await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids"] });
+    await mountGanttView(ganttViewParams);
     expect(queryAllTexts(".o_gantt_row_headers .o_gantt_row_title")).toEqual(
         ["👤 Unassigned", "Jane Doe", "John Doe"],
         {
@@ -215,8 +144,8 @@ test("[user_ids, ...] grouped", async () => {
     Task._records.push({
         id: 3,
         name: "Gnop",
-        start: "2021-06-02 08:00:00",
-        stop: "2021-06-12 08:00:00",
+        planned_date_begin: "2021-06-02 08:00:00",
+        date_deadline: "2021-06-12 08:00:00",
         stuff_id: 1,
     });
     await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids", "stuff_id"] });
@@ -253,7 +182,6 @@ test('Empty groupby "Assigned To" and "Project" can be rendered', async function
 });
 
 test("progress bar has the correct unit", async () => {
-    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
     onRpc("get_gantt_data", async ({ kwargs, parent }) => {
         const result = await parent();
         expect(kwargs.progress_bar_fields).toEqual(["user_ids"]);
@@ -263,7 +191,7 @@ test("progress bar has the correct unit", async () => {
         return result;
     });
     await mountGanttView({
-        arch: '<gantt js_class="task_gantt" date_start="start" date_stop="stop" progress_bar="user_ids"/>',
+        arch: '<gantt js_class="task_gantt" date_start="planned_date_begin" date_stop="date_deadline" progress_bar="user_ids"/>',
         resModel: "project.task",
         type: "gantt",
         groupBy: ["user_ids"],
@@ -278,22 +206,18 @@ test("progress bar has the correct unit", async () => {
 });
 
 test("open a dialog to schedule task", async () => {
-    Task._views = {
-        list: '<list><field name="name"/></list>',
-    };
     Task._records.push({
         id: 51,
         name: "Task 51",
         project_id: 1,
-        user_ids: 100,
+        user_ids: [100],
     });
-    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
     onRpc("schedule_tasks", () => {
         expect.step("schedule_tasks");
         return {};
     });
     await mountGanttView({
-        arch: '<gantt date_start="start" date_stop="stop" js_class="task_gantt" />',
+        arch: '<gantt date_start="planned_date_begin" date_stop="date_deadline" js_class="task_gantt" />',
         resModel: "project.task",
         type: "gantt",
     });
@@ -317,13 +241,13 @@ test("Lines are displayed in alphabetic order, except for the first one", async 
         Task._records.push({
             id: user.id,
             name: "Citron en Suédois",
-            start: "2021-06-02 08:00:00",
-            stop: "2021-06-12 08:00:00",
+            planned_date_begin: "2021-06-02 08:00:00",
+            date_deadline: "2021-06-12 08:00:00",
             project_id: 1,
-            user_ids: user.id,
+            user_ids: [user.id],
         });
     }
-    await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids"] });
+    await mountGanttView(ganttViewParams);
     expect(queryAllTexts(".o_gantt_row_headers .o_gantt_row_title")).toEqual(
         ["👤 Unassigned", "Jane Doe", "John Doe", "Kappa", "Omega", "Rho", "Theta", "Zeta"],
         {
@@ -335,7 +259,7 @@ test("Lines are displayed in alphabetic order, except for the first one", async 
 
 test("Display milestones deadline in project.task gantt view", async () => {
     onRpc("get_all_deadlines", () => {
-        const [milestone1, milestone2] = Milestone._records;
+        const [milestone1, milestone2] = projectModels.ProjectMilestone._records;
         return {
             milestone_id: [
                 {
@@ -352,7 +276,6 @@ test("Display milestones deadline in project.task gantt view", async () => {
     });
     await mountGanttView({
         ...ganttViewParams,
-        groupBy: ["user_ids"],
     });
     expect(".o_project_milestone_diamond").toHaveCount(2);
     expect(".o_project_milestone_diamond .o_milestones_reached").toHaveCount(1);
@@ -375,7 +298,7 @@ test("Display milestones deadline in project.task gantt view", async () => {
 
 test("Display milestones deadline in gantt view of tasks in a project", async () => {
     onRpc("get_all_deadlines", () => {
-        const [milestone1, milestone2] = Milestone._records;
+        const [milestone1, milestone2] = projectModels.ProjectMilestone._records;
         return {
             milestone_id: [
                 {
@@ -392,7 +315,6 @@ test("Display milestones deadline in gantt view of tasks in a project", async ()
     });
     await mountGanttView({
         ...ganttViewParams,
-        groupBy: ["user_ids"],
         context: {
             default_project_id: 1,
         },
@@ -415,28 +337,13 @@ test("Display milestones deadline in gantt view of tasks in a project", async ()
 });
 
 test("Display project deadline in the gantt view of task", async () => {
-    const myProject = Project._records[0];
-    Project._records[0] = {
-        ...myProject,
-        date_start: "2021-01-01",
-        date: "2021-06-24",
-    };
-    Project._records.push({
+    ProjectProject._records.push({
         id: 2,
         name: "Other Project",
         date_start: "2021-06-12",
         date: "2021-06-28",
     });
-    onRpc("get_all_deadlines", function () {
-        return {
-            milestone_id: [],
-            project_id: this.env["project.project"].search_read(),
-        };
-    });
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(".o_gantt_header_cell .o_project_startdate_circle").toHaveCount(1);
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(2);
@@ -466,20 +373,14 @@ test("Display project deadline in the gantt view of task", async () => {
 });
 
 test("Display project and milestones deadline in the gantt view of task", async () => {
-    const myProject = Project._records[0];
-    Project._records[0] = {
-        ...myProject,
-        date_start: "2021-01-01",
-        date: "2021-06-24",
-    };
-    Project._records.push({
+    ProjectProject._records.push({
         id: 2,
         name: "Other Project",
         date_start: "2021-06-12",
         date: "2021-06-28",
     });
     onRpc("get_all_deadlines", function () {
-        const [milestone1, milestone2] = Milestone._records;
+        const [milestone1, milestone2] = projectModels.ProjectMilestone._records;
         return {
             milestone_id: [
                 {
@@ -494,7 +395,7 @@ test("Display project and milestones deadline in the gantt view of task", async 
             project_id: this.env["project.project"].search_read(),
         };
     });
-    await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids"] });
+    await mountGanttView(ganttViewParams);
 
     expect(".o_project_milestone_diamond").toHaveCount(2);
     expect(".o_project_milestone_diamond .o_milestones_reached").toHaveCount(1);
@@ -541,14 +442,8 @@ test("Display project and milestones deadline in the gantt view of task", async 
 });
 
 test("Display project deadline and milestone date in the same date", async () => {
-    const myProject = Project._records[0];
-    Project._records[0] = {
-        ...myProject,
-        date_start: "2021-01-01",
-        date: "2021-06-24",
-    };
     onRpc("get_all_deadlines", function () {
-        const milestone3 = Milestone._records[2];
+        const milestone3 = projectModels.ProjectMilestone._records[2];
         return {
             milestone_id: [
                 {
@@ -559,7 +454,7 @@ test("Display project deadline and milestone date in the same date", async () =>
             project_id: this.env["project.project"].search_read(),
         };
     });
-    await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids"] });
+    await mountGanttView(ganttViewParams);
 
     expect(
         ".o_gantt_header_cell .o_project_milestone_diamond.o_project_deadline_milestone"
@@ -575,19 +470,19 @@ test("Display project deadline and milestone date in the same date", async () =>
 });
 
 test("Display 2 milestones in different project at the same date", async () => {
-    Project._records.push({
+    ProjectProject._records.push({
         id: 2,
         name: "Other Project",
     });
-    Milestone._records.push({
+    projectModels.ProjectMilestone._records.push({
         id: 4,
         name: "Milestone 4",
         deadline: "2021-06-24",
         project_id: 2,
     });
     onRpc("get_all_deadlines", () => {
-        const milestone3 = Milestone._records[2];
-        const milestone4 = Milestone._records[3];
+        const milestone3 = projectModels.ProjectMilestone._records[2];
+        const milestone4 = projectModels.ProjectMilestone._records[3];
         return {
             milestone_id: [
                 {
@@ -603,10 +498,7 @@ test("Display 2 milestones in different project at the same date", async () => {
         };
     });
 
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(".o_project_milestone_diamond").toHaveCount(1);
     await hover(".o_project_milestone_diamond");
@@ -626,29 +518,14 @@ test("Display 2 milestones in different project at the same date", async () => {
 });
 
 test("Display project deadline of 2 projects with the same deadline", async () => {
-    const myProject = Project._records[0];
-    Project._records[0] = {
-        ...myProject,
-        date_start: "2021-01-01",
-        date: "2021-06-24",
-    };
-    Project._records.push({
+    ProjectProject._records.push({
         id: 2,
         name: "Other Project",
         date_start: "2021-05-12",
         date: "2021-06-24",
     });
-    onRpc("get_all_deadlines", function () {
-        return {
-            milestone_id: [],
-            project_id: this.env["project.project"].search_read(),
-        };
-    });
 
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(1);
     await hover(".o_gantt_header_cell .o_project_deadline_circle");
@@ -664,30 +541,14 @@ test("Display project deadline of 2 projects with the same deadline", async () =
 });
 
 test("Display project deadline one day before the start date of the other project", async () => {
-    const myProject = Project._records[0];
-    Project._records[0] = {
-        ...myProject,
-        date_start: "2021-01-01",
-        date: "2021-06-24",
-    };
-    Project._records.push({
+    ProjectProject._records.push({
         id: 2,
         name: "Other Project",
         date_start: "2021-06-25",
         date: "2021-10-01",
     });
 
-    onRpc("get_all_deadlines", function () {
-        return {
-            milestone_id: [],
-            project_id: this.env["project.project"].search_read(),
-        };
-    });
-
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(1);
     await hover(".o_gantt_header_cell .o_project_deadline_circle");
@@ -703,10 +564,7 @@ test("Display project deadline one day before the start date of the other projec
 });
 
 test("Copy pill in another row", async () => {
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(getGridContent().rows).toEqual([
         {
@@ -754,7 +612,7 @@ test("Smart scheduling", async () => {
     Task._records.push({
         id: 3,
         name: "Gnop",
-        user_ids: 100,
+        user_ids: [100],
     });
 
     onRpc("schedule_tasks", function (request) {
@@ -762,10 +620,7 @@ test("Smart scheduling", async () => {
         return this.env["project.task"].write(...request.args);
     });
 
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(getGridContent().rows).toEqual([
         {
@@ -808,7 +663,7 @@ test("Smart scheduling: display warnings", async () => {
     Task._records.push({
         id: 3,
         name: "Gnop",
-        user_ids: 100,
+        user_ids: [100],
     });
 
     onRpc("schedule_tasks", () => {
@@ -841,10 +696,7 @@ test("Smart scheduling: display warnings", async () => {
         },
     });
 
-    const ganttView = await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    const ganttView = await mountGanttView(ganttViewParams);
 
     await clickCell("10", "June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
@@ -860,22 +712,23 @@ test("Schedule a task and verify its display in the gantt view", async () => {
     Task._records.push({
         id: 3,
         name: "Gnop",
-        user_ids: 100,
+        user_ids: [100],
     });
 
     onRpc("web_gantt_write", ({ args }) => {
         expect.step("web_gantt_write");
         expect(args[0]).toEqual([3], { message: "should write on the correct record" });
         expect(args[1]).toEqual(
-            { start: "2021-06-09 23:00:00", stop: "2021-06-10 23:00:00", user_ids: 100 },
+            {
+                planned_date_begin: "2021-06-09 23:00:00",
+                date_deadline: "2021-06-10 23:00:00",
+                user_ids: [100],
+            },
             { message: "should write these changes" }
         );
     });
 
-    await mountGanttView({
-        ...ganttViewParams,
-        groupBy: ["user_ids"],
-    });
+    await mountGanttView(ganttViewParams);
 
     expect(getGridContent().rows).toEqual([
         {
@@ -923,7 +776,6 @@ test("Should open the list dialog with 'Open Tasks' filter on Gantt cell click",
                 <search>
                     <filter string="Open Tasks" name="open_tasks" domain="[('is_closed', '=', False)]"/>
                 </search>`,
-        groupBy: ["user_ids"],
     });
 
     await clickCell("10", "June 2021", "Jane Doe");
@@ -957,16 +809,16 @@ test("template dropdown in gantt view of a project with one template", async () 
             name: "Template Task 1",
             project_id: 1,
             is_template: true,
-            start: "2021-06-02 08:00:00",
-            stop: "2021-06-12 08:00:00",
+            planned_date_begin: "2021-06-02 08:00:00",
+            date_deadline: "2021-06-12 08:00:00",
         },
         {
             id: 4,
             name: "Template Task 2",
             project_id: 1,
             is_template: true,
-            start: "2021-06-02 08:00:00",
-            stop: "2021-06-12 08:00:00",
+            planned_date_begin: "2021-06-02 08:00:00",
+            date_deadline: "2021-06-12 08:00:00",
         }
     );
     await mountGanttView({

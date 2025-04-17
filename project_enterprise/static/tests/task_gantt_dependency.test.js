@@ -1,16 +1,9 @@
-import { defineMailModels, mailModels } from "@mail/../tests/mail_test_helpers";
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { queryAll } from "@odoo/hoot-dom";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { mockDate } from "@odoo/hoot-mock";
 import { TaskGanttRenderer } from "@project_enterprise/views/task_gantt/task_gantt_renderer";
-import {
-    defineModels,
-    fields,
-    findComponent,
-    models,
-    onRpc,
-    mockService,
-} from "@web/../tests/web_test_helpers";
+import { findComponent, onRpc, mockService } from "@web/../tests/web_test_helpers";
 import {
     getConnector,
     getConnectorMap,
@@ -19,24 +12,36 @@ import {
 import { SELECTORS, mountGanttView } from "@web_gantt/../tests/web_gantt_test_helpers";
 import { COLORS } from "@web_gantt/gantt_connector";
 
+import { projectModels, defineProjectModels } from "@project/../tests/project_models";
+
 describe.current.tags("desktop");
 
-class ProjectTask extends models.Model {
-    _name = "project.task";
+const ganttViewParams = {
+    resModel: "project.task",
+    arch: `
+        <gantt
+            js_class="task_gantt"
+            date_start="planned_date_begin"
+            date_stop="date_deadline"
+            default_scale="month"
+            dependency_field="depend_on_ids"
+        />
+    `,
+    groupBy: ["user_ids"],
+};
 
-    name = fields.Char();
-    planned_date_begin = fields.Datetime();
-    date_deadline = fields.Datetime();
-    project_id = fields.Many2one({ relation: "project" });
-    user_ids = fields.Many2many({ relation: "res.users" });
-    allow_task_dependencies = fields.Boolean({ string: "Allow Task Dependencies", default: true });
-    depend_on_ids = fields.One2many({ string: "Depends on", relation: "project.task" });
-    display_warning_dependency_in_gantt = fields.Boolean({
-        string: "Display warning dependency in Gantt",
-        default: true,
-    });
+defineProjectModels();
 
-    _records = [
+beforeEach(() => {
+    mailModels.ResUsers._records = [
+        { id: 1, name: "User 1" },
+        { id: 2, name: "User 2" },
+        { id: 3, name: "User 3" },
+        { id: 4, name: "User 4" },
+        ...mailModels.ResUsers._records,
+    ];
+    projectModels.ProjectProject._records = [{ id: 1, name: "Project 1" }];
+    projectModels.ProjectTask._records = [
         {
             id: 1,
             name: "Task 1",
@@ -112,46 +117,12 @@ class ProjectTask extends models.Model {
             depend_on_ids: [7],
         },
     ];
-}
-
-class Project extends models.Model {
-    name = fields.Char();
-
-    _records = [{ id: 1, name: "Project 1" }];
-}
-
-const ganttViewParams = {
-    resModel: "project.task",
-    arch: `
-        <gantt
-            js_class="task_gantt"
-            date_start="planned_date_begin"
-            date_stop="date_deadline"
-            default_scale="month"
-            dependency_field="depend_on_ids"
-        />
-    `,
-    groupBy: ["user_ids"],
-};
-
-defineMailModels();
-defineModels([ProjectTask, Project]);
-
-beforeEach(() => {
-    mailModels.ResUsers._records = [
-        { id: 1, name: "User 1" },
-        { id: 2, name: "User 2" },
-        { id: 3, name: "User 3" },
-        { id: 4, name: "User 4" },
-        ...mailModels.ResUsers._records,
-    ];
 });
 
 test("Connectors are correctly computed and rendered.", async () => {
     expect.assertions(14);
 
     mockDate("2021-10-10 7:00:00");
-    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
 
     /** @type {Map<ConnectorTaskIds, keyof typeof COLORS>} */
     const testMap = new Map([
@@ -205,25 +176,18 @@ test("Connector buttons: reschedule task backward date.", async () => {
         },
     });
 
-    onRpc(({ method, model, args }) => {
-        if (model === "project.task" && method === "web_gantt_reschedule") {
-            expect.step([method, args]);
-            return {
-                type: "success",
-                message: "Reschedule done successfully.",
-                old_vals_per_pill_id: {
-                    2: {
-                        planned_date_begin: "2021-10-12 11:30:00",
-                        date_deadline: "2021-10-12 12:29:59",
-                    },
+    onRpc("project.task", "web_gantt_reschedule", ({ args }) => {
+        expect.step(["web_gantt_reschedule", args]);
+        return {
+            type: "success",
+            message: "Reschedule done successfully.",
+            old_vals_per_pill_id: {
+                2: {
+                    planned_date_begin: "2021-10-12 11:30:00",
+                    date_deadline: "2021-10-12 12:29:59",
                 },
-            };
-        } else if (method === "get_all_deadlines") {
-            return {
-                milestone_id: [],
-                project_id: [],
-            };
-        }
+            },
+        };
     });
     await mountGanttView({
         ...ganttViewParams,
@@ -254,25 +218,18 @@ test("Connector buttons: reschedule task forward date.", async () => {
             expect(options["buttons"][0].name).toBe("Undo");
         },
     });
-    onRpc(({ args, method, model }) => {
-        if (model === "project.task" && method === "web_gantt_reschedule") {
-            expect.step([method, args]);
-            return {
-                type: "success",
-                message: "Reschedule done successfully.",
-                old_vals_per_pill_id: {
-                    1: {
-                        planned_date_begin: "2021-10-12 11:30:00",
-                        date_deadline: "2021-10-12 12:29:59",
-                    },
+    onRpc("project.task", "web_gantt_reschedule", ({ args }) => {
+        expect.step(["web_gantt_reschedule", args]);
+        return {
+            type: "success",
+            message: "Reschedule done successfully.",
+            old_vals_per_pill_id: {
+                1: {
+                    planned_date_begin: "2021-10-12 11:30:00",
+                    date_deadline: "2021-10-12 12:29:59",
                 },
-            };
-        } else if (method === "get_all_deadlines") {
-            return {
-                milestone_id: [],
-                project_id: [],
-            };
-        }
+            },
+        };
     });
     await mountGanttView({
         ...ganttViewParams,
