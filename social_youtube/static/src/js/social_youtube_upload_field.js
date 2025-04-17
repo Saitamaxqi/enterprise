@@ -365,6 +365,9 @@ export class YoutubeUploadField extends CharField {
 export const youtubeUploadField = {
     ...charField,
     component: YoutubeUploadField,
+    fieldDependencies: [
+        { name: "youtube_video_category_id", type: "char" },
+    ],
 };
 
 registry.category("fields").add("youtube_upload", youtubeUploadField);
