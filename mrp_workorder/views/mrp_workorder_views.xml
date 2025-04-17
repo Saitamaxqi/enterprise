@@ -278,7 +278,9 @@
                                 <label for="finished_lot_id" string="Lot" invisible="product_tracking != 'lot'"/>
                                 <label for="finished_lot_id" string="Serial" invisible="product_tracking != 'serial'"/>
                                 <field name="finished_lot_id" context="{'default_product_id': product_id, 'default_company_id': company_id}" domain="[('product_id', '=', product_id)]"/>
-                                <button name="action_generate_serial" type="object" class="btn btn-secondary fa fa-plus" aria-label="Creates a new serial/lot number" title="Creates a new serial/lot number" role="img" invisible="finished_lot_id"/>
+                                <button name="action_generate_serial" type="object" class="o_btn_icon btn btn-secondary" aria-label="Creates a new serial/lot number" title="Creates a new serial/lot number" invisible="finished_lot_id">
+                                    <i class="fa fa-plus" role="img"/>
+                                </button>
                             </div>
                         </div>
                     </div>

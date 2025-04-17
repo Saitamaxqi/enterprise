@@ -51,7 +51,6 @@ class MrpWorkorder(models.Model):
     worksheet_page = fields.Integer('Worksheet page')
     picture = fields.Binary(related='current_quality_check_id.picture', readonly=False)
     product_description_variants = fields.Char(related='production_id.product_description_variants')
-    has_operation_note = fields.Boolean("Has Description", compute='_compute_has_operation_note')
 
     # used to display the connected employee that will start a workorder on the tablet view
     employee_id = fields.Many2one('hr.employee', string="Employee", compute='_compute_employee_id')
@@ -192,8 +191,8 @@ class MrpWorkorder(models.Model):
                 and all(c.quality_state != 'fail' for c in checks_to_consider)
                 and self.is_first_started_wo,
             'current_quality_check_id': check.id,
-            'worksheet_page': check.point_id.worksheet_page,
         })
+        return check.id
 
     def action_menu(self):
         return {
@@ -323,12 +322,6 @@ class MrpWorkorder(models.Model):
     def _compute_quality_alert_count(self):
         for workorder in self:
             workorder.quality_alert_count = len(workorder.quality_alert_ids)
-
-    def _compute_has_operation_note(self):
-        relevant_workorders = self.env['mrp.workorder'].search_fetch(
-            ['&', ('id', 'in', self.ids), ('operation_note', '!=', False)], ['id'])
-        for workorder in self:
-            workorder.has_operation_note = workorder.id in relevant_workorders.ids
 
     def _create_checks(self):
         for wo in self:
@@ -510,37 +503,6 @@ class MrpWorkorder(models.Model):
         # workorder list view action should redirect to the same view instead of workorder kanban view when WO mark as done.
         return self.action_back()
 
-    def get_workorder_data(self):
-        # order quality check chain
-        ele = self.check_ids.filtered(lambda check: not check.previous_check_id)
-        sorted_check_list = []
-        while ele:
-            sorted_check_list += ele.ids
-            ele = ele.next_check_id
-        data = {
-            'mrp.workorder': self.read(self._get_fields_for_tablet(), load=False)[0],
-            'quality.check': self.check_ids._get_fields_for_tablet(sorted_check_list),
-            'operation': self.operation_id.read(self.operation_id._get_fields_for_tablet())[0] if self.operation_id else {},
-            'working_state': self.workcenter_id.working_state,
-            'has_bom': bool(self.production_id.bom_id),
-            'views': {
-                'workorder': self.env.ref('mrp_workorder.mrp_workorder_view_form_tablet').id,
-                'check': self.env.ref('mrp_workorder.quality_check_view_form_tablet').id,
-            },
-        }
-        employee_domain = [('company_id', '=', self.company_id.id)]
-        if self.workcenter_id.employee_ids:
-            employee_domain = [('id', 'in', self.workcenter_id.employee_ids.ids)]
-        fields_to_read = self.env['hr.employee']._get_employee_fields_for_tablet()
-        working_state = self.working_state
-        data.update({
-            "working_state": working_state,
-            "employee_id": self.employee_id.id,
-            "employee_ids": self.employee_ids.ids,
-            "employee_list": self.env['hr.employee'].search_read(employee_domain, fields_to_read, load=False),
-        })
-        return data
-
     def get_summary_data(self):
         self.ensure_one()
         # show rainbow man only the first time
@@ -665,22 +627,6 @@ class MrpWorkorder(models.Model):
         for workcenter in workcenters:
             result[workcenter.id] = [{'start': interval[0], 'stop': interval[1]} for interval in unavailability_mapping[workcenter.id]]
         return result
-
-    def _get_fields_for_tablet(self):
-        """ List of fields on the workorder object that are needed by the tablet
-        client action. The purpose of this function is to be overridden in order
-        to inject new fields to the client action.
-        """
-        return [
-            'production_id',
-            'name',
-            'qty_producing',
-            'state',
-            'company_id',
-            'workcenter_id',
-            'current_quality_check_id',
-            'operation_note',
-        ]
 
     def _should_be_pending(self):
         return self.is_user_working and self.working_state != 'blocked' and len(self.employee_ids.ids) == 0

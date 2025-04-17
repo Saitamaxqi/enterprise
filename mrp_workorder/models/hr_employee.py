@@ -79,24 +79,24 @@ class HrEmployee(models.Model):
         workorders = self.env['mrp.workorder'].search([('state', '=', 'progress')])
         time_ids = self.env['mrp.workcenter.productivity']._read_group(
             ['&', ('employee_id', 'in', employees_ids), ('workorder_id', 'in', workorders.ids)],
-            ['employee_id', 'workorder_id'],
+            ['employee_id', 'workcenter_id'],
             ['duration:sum', 'date_end:array_agg', 'date_start:array_agg'],
         )
 
         for emp in employees:
-            emp["workorder"] = []
-        for employee, workorder, duration, end_dates, start_dates in time_ids:
+            emp["workcenters"] = []
+        for employee, workcenter, duration, end_dates, start_dates in time_ids:
+            for end_date, start_date in zip(end_dates, start_dates):
+                if not end_date:
+                    duration += int((datetime.now() - start_date).total_seconds()) / 60
             if any(not date for date in end_dates):
-                duration = int((datetime.now() - (max(start_dates))).total_seconds()) / 60
-
                 employee = [emp for emp in employees if emp['id'] == employee.id][0]
-                employee["workorder"].append(
+                employee["workcenters"].append(
                     {
-                        'id': workorder.id,
-                        'work_order_name': workorder.production_id.name,
+                        'id': workcenter.id,
+                        'name': workcenter.name,
                         'duration': duration,
-                        'operation_name': workorder.operation_id.name,
-                        'ongoing': True
+                        'ongoing': True,
                     })
         return employees
 
@@ -130,6 +130,12 @@ class HrEmployee(models.Model):
             # Test cases
             return [self.env.user.employee_id.id]
 
+    def set_employees_connected(self, ids):
+        new_employees = self.browse(ids)
+        old_employees = self.browse(request.session.get(EMPLOYEES_CONNECTED, []))
+        (old_employees - new_employees).stop_all_workorder_from_employee()
+        request.session[EMPLOYEES_CONNECTED] = new_employees.ids
+
     def get_session_owner(self):
         if request:
             return request.session.get(SESSION_OWNER, [])
@@ -156,8 +162,8 @@ class HrEmployee(models.Model):
         if login:
             self.login_user_employee()
 
-        companies_ids = self.env.companies.ids
-        all_employees = self.search_read(['|', ('company_id', '=', False), ('company_id', 'in', companies_ids)], fields=['id', 'name'])
+        domain = ['|', ('company_id', '=', False), ('company_id', 'in', self.env.companies.ids)]
+        all_employees = self.search_read(domain, fields=['id', 'name', 'barcode'])
 
         all_employees_ids = {employee['id'] for employee in all_employees}
         employees_connected = list(filter(

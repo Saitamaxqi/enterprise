@@ -81,10 +81,10 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
             employees.all = res.all;
         }
         res.connected.sort(function (emp1, emp2) {
-            if (emp1.workorder.length === 0) {
+            if (emp1.workcenters.length === 0) {
                 return 1;
             }
-            if (emp2.workorder.length === 0) {
+            if (emp2.workcenters.length === 0) {
                 return -1;
             }
             return 0;
@@ -139,6 +139,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         if (employees.admin.id === employee_id) {
             await orm.call("hr.employee", "remove_session_owner", [employee_id]);
             await getConnectedEmployees();
+            employees.connected.find((e) => e.id === employee_id).isPreviousAdmin = true;
         } else {
             await setSessionOwner(employee_id, pin);
         }
@@ -167,12 +168,13 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         await orm.call("hr.employee", "stop_all_workorder_from_employee", [employeeId]);
     };
 
-    const popupAddEmployee = () => {
-        actionService.doAction("mrp_workorder.action_open_employee_list", {
-            props: {
-                selectEmployee: (id) => selectEmployee(id),
-            },
-        });
+    const setConnectedEmployees = async (ids) => {
+        if (employees.admin) {
+            await stopAllWorkorderFromEmployee(employees.admin.id);
+            await orm.call("hr.employee", "logout", [employees.admin.id, false, true]);
+        }
+        await orm.call("hr.employee", "set_employees_connected", [null, ids]);
+        await getConnectedEmployees();
     };
 
     const pinValidation = async (employeeId, pin) =>
@@ -207,7 +209,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         setSessionOwner,
         stopAllWorkorderFromEmployee,
         toggleSessionOwner,
-        popupAddEmployee,
+        setConnectedEmployees,
         checkPin,
         closePopup,
         pinValidation,

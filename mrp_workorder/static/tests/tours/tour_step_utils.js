@@ -1,6 +1,15 @@
 /* @odoo-module */
 
 export const stepUtils = {
+    addWorkcenterToDisplay(workcenterName) {
+        return [
+            {
+                trigger: `.o_mrp_workcenter_dialog .btn:contains(${workcenterName}):not(.active)`,
+                run: "click",
+            },
+            { trigger: `.o_mrp_workcenter_dialog .btn:contains(${workcenterName}).active` },
+        ];
+    },
     enterPIN(code) {
         const steps = [];
         for (const c of code) {
@@ -17,5 +26,11 @@ export const stepUtils = {
             run: "click",
         });
         return steps;
+    },
+    openEmployeesList() {
+        return [
+            { trigger: "button.o_edit_operators", run: "click" },
+            { trigger: ".modal-body .o_mrp_operatos_dialog" },
+        ];
     },
 };

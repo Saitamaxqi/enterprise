@@ -86,7 +86,7 @@
                 <field name="potential_failure_location_ids" invisible="1"/>
                 <field name="product_id" invisible="1"/>
                 <group>
-                    <group>
+                    <group invisible="measure_on != 'move_line' and not potential_failure_location_ids">
                         <label for="qty_failed" string="Quantity Failed" invisible="measure_on != 'move_line'"/>
                         <div invisible="measure_on != 'move_line'">
                             <field name="qty_failed" required="True" class="oe_inline"/>

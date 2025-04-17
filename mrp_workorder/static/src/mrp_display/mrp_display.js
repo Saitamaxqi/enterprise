@@ -1,4 +1,3 @@
-import { Layout } from "@web/search/layout";
 import { user } from "@web/core/user";
 import { session } from "@web/session";
 import { Pager } from "@web/core/pager/pager";
@@ -23,11 +22,16 @@ import {
     useState,
     useSubEnv,
 } from "@odoo/owl";
+import { MrpEmployeeDialog } from "./dialog/mrp_employee_dialog";
+
+const defaultWorkcenterButtons = [
+    { id: 0, display_name: _t("Overview") },
+    { id: -1, display_name: _t("My WO") },
+];
 
 export class MrpDisplay extends Component {
     static template = "mrp_workorder.MrpDisplay";
     static components = {
-        Layout,
         ControlPanelButtons,
         MrpDisplayRecord,
         MrpDisplayEmployeesPanel,
@@ -54,10 +58,8 @@ export class MrpDisplay extends Component {
         this.dialogService = useService("dialog");
         this.pwaService = useService("pwa");
         this.overlayService = useService("overlay");
-
-        this.display = {
-            ...this.props.display,
-        };
+        this.menu = useService("menu");
+        this.ui = useService("ui");
 
         this.adminId = false;
         this.barcodeTargetRecordId = false;
@@ -71,7 +73,9 @@ export class MrpDisplay extends Component {
             localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}.picking_type_${this.pickingTypeId}`,
         });
 
-        const workcenters = JSON.parse(localStorage.getItem(this.env.localStorageName)) || [];
+        const localStoredWC = JSON.parse(localStorage.getItem(this.env.localStorageName));
+        const firstLoad = !localStoredWC;
+        const workcenters = [...defaultWorkcenterButtons, ...(firstLoad ? [] : localStoredWC)];
         let activeWorkcenter = this.props.context.workcenter_id || false;
         // If no workcenter by default but some WC were already selected, selects the first one.
         if (!activeWorkcenter && workcenters.length) {
@@ -82,10 +86,10 @@ export class MrpDisplay extends Component {
             activeResModel: activeWorkcenter ? "mrp.workorder" : this.props.resModel,
             activeWorkcenter,
             workcenters,
-            showEmployeesPanel: localStorage.getItem("mrp_workorder.show_employees") === "true",
             canLoadSamples: false,
             offset: 0,
             limit: 40,
+            firstLoad: firstLoad,
         });
         this.recordCacheIds = [];
 
@@ -134,7 +138,6 @@ export class MrpDisplay extends Component {
                 timer: await user.hasGroup("mrp_workorder.group_mrp_wo_tablet_timer"),
             };
             this.env.searchModel.workorders = this.groups.workorders;
-            this.group_mrp_routings = await user.hasGroup("mrp.group_mrp_routings");
             this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
             await this.useEmployee.getConnectedEmployees(true);
             // select the workcenter received in the context
@@ -183,7 +186,13 @@ export class MrpDisplay extends Component {
     }
 
     async _onBarcodeScanned(barcode) {
-        if (barcode.startsWith("OBT") || barcode.startsWith("OCD")) {
+        if (
+            barcode.startsWith("OBT") ||
+            barcode.startsWith("OCD") ||
+            Object.values(this.overlayService.overlays).find(
+                (o) => o.component.name === "DialogWrapper"
+            )
+        ) {
             return;
         }
         const production = this.productions.find((mo) => mo.data.name === barcode);
@@ -200,13 +209,7 @@ export class MrpDisplay extends Component {
         if (employee) {
             return this.useEmployee.setSessionOwner(employee, undefined);
         }
-        if (
-            !Object.values(this.overlayService.overlays).filter(
-                (o) => o.component.name === "DialogWrapper"
-            ).length
-        ) {
-            this._onProductBarcodeScanned(barcode);
-        }
+        return this._onProductBarcodeScanned(barcode);
     }
 
     _onProductBarcodeScanned(barcode) {
@@ -215,7 +218,7 @@ export class MrpDisplay extends Component {
                 // 1. Check if there is a quality check with this product (WO only)
                 for (const check of record.data.check_ids.records) {
                     if (check.data.component_barcode === barcode) {
-                        return record.component.displayInstruction(check);
+                        return check.component.onClick();
                     }
                 }
             }
@@ -226,7 +229,7 @@ export class MrpDisplay extends Component {
                     move.data.manual_consumption &&
                     !move.data.scrapped
                 ) {
-                    return record.component.displayRegisterConsumedComponent(move);
+                    return move.component.onClick();
                 }
             }
             if (this.state.activeResModel === "mrp.workorder") {
@@ -239,7 +242,7 @@ export class MrpDisplay extends Component {
                         !move.data.operation_id &&
                         move.data.workorder_id[0] !== record.data.id
                     ) {
-                        return record.component.displayRegisterConsumedComponent(move);
+                        return move.component.onClick();
                     }
                 }
                 // 4. Check if there is a byproduct move on this WO or on the MO but not any WO with this product
@@ -249,14 +252,14 @@ export class MrpDisplay extends Component {
                         (move.data.operation_id[0] === undefined ||
                             move.data.operation_id[0] === record.data.operation_id[0])
                     ) {
-                        return record.component.displayRegisterConsumedComponent(move);
+                        return move.component.onClick();
                     }
                 }
             } else {
                 // 5. Check if there is a byproduct move with this product (MO only)
                 for (const move of record.data.move_byproduct_ids.records) {
                     if (move.data.product_barcode === barcode) {
-                        return record.component.displayRegisterConsumedComponent(move);
+                        return move.component.onClick();
                     }
                 }
             }
@@ -326,15 +329,10 @@ export class MrpDisplay extends Component {
     }
 
     async toggleWorkcenter(workcenters) {
-        const localStorageName = this.env.localStorageName;
-        localStorage.setItem(localStorageName, JSON.stringify(workcenters));
-        this.state.workcenters = workcenters;
-        this.env.searchModel.setWorkcenterFilter(workcenters);
-    }
-
-    toggleEmployeesPanel() {
-        this.state.showEmployeesPanel = !this.state.showEmployeesPanel;
-        localStorage.setItem("mrp_workorder.show_employees", String(this.state.showEmployeesPanel));
+        this.state.firstLoad = false;
+        localStorage.setItem(this.env.localStorageName, JSON.stringify(workcenters));
+        this.state.workcenters = [...defaultWorkcenterButtons, ...workcenters];
+        this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
     }
 
     getProduction(record) {
@@ -409,51 +407,36 @@ export class MrpDisplay extends Component {
     }
 
     get adminWorkorderIds() {
-        const admin_id = this.useEmployee.employees.admin.id;
-        if (!admin_id) {
-            return [];
-        }
-        const admin = this.useEmployee.employees.connected.find((emp) => emp.id === admin_id);
-        const workorderIds = admin ? new Set(admin.workorder.map((wo) => wo.id)) : new Set([]);
-        for (const workorder of this.workorders) {
-            if (workorder.data.employee_assigned_ids.resIds.includes(admin_id)) {
-                workorderIds.add(workorder.resId);
-            }
-        }
-        return [...workorderIds];
+        const adminId =
+            this.useEmployee.employees.admin.id ||
+            this.useEmployee.employees.connected.find((e) => e.isPreviousAdmin)?.id;
+        return !adminId
+            ? []
+            : this.workorders.reduce(
+                  (idList, wo) =>
+                      wo.data.employee_assigned_ids.resIds.includes(adminId) ||
+                      wo.data.employee_ids.resIds.includes(adminId)
+                          ? [...idList, wo.resId]
+                          : idList,
+                  []
+              );
     }
 
-    async selectWorkcenter(workcenterId, filterMO = false) {
+    async selectWorkcenter(workcenterId, showcaseId = false) {
+        this.invalidateRecordIdsCache();
         await this.useEmployee.getConnectedEmployees();
-        if (filterMO) {
-            await this._onProductionBarcodeScanned(filterMO);
-        } else {
-            this.invalidateRecordIdsCache();
+        if (showcaseId) {
+            this.recordCacheIds.push(showcaseId);
         }
-        const workcenterIds = this.state.workcenters.map((wc) => wc.id);
         this.state.activeWorkcenter = Number(workcenterId);
         this.state.activeResModel = this.state.activeWorkcenter
             ? "mrp.workorder"
             : "mrp.production";
-        if (
-            this.state.activeWorkcenter > 0 &&
-            !workcenterIds.includes(this.state.activeWorkcenter)
-        ) {
-            const workcenters = await this.orm.searchRead("mrp.workcenter", [], ["display_name"]);
-            const workcenterToToggle = [...workcenterIds, this.state.activeWorkcenter].reduce(
-                (acc, id) => {
-                    const res = workcenters.find((wc) => wc.id === id);
-                    return res ? [...acc, res] : acc;
-                },
-                []
-            );
-            await this.toggleWorkcenter(workcenterToToggle);
-        }
     }
 
     toggleWorkcenterDialog(showWarning = true) {
         const params = {
-            title: _t("Select Work Centers for this station"),
+            title: _t("Activate your Work Centers"),
             confirm: this.toggleWorkcenter.bind(this),
             disabled: [],
             active: this.state.workcenters.map((wc) => wc.id),
@@ -486,6 +469,13 @@ export class MrpDisplay extends Component {
             fields: moveFields,
             activeFields: moveFields,
         };
+        const moveLineFields = this.props.models.find(
+            (m) => m.resModel === "stock.move.line"
+        ).fields;
+        moveFieldsRelated.activeFields.move_line_ids.related = {
+            fields: moveLineFields,
+            activeFields: moveLineFields,
+        };
         params.config.activeFields.move_raw_ids.related = moveFieldsRelated;
         params.config.activeFields.move_byproduct_ids.related = moveFieldsRelated;
         params.config.activeFields.move_finished_ids.related = moveFieldsRelated;
@@ -505,30 +495,9 @@ export class MrpDisplay extends Component {
         return params;
     }
 
-    async onClickRefresh() {
-        this.env.reload();
+    onClickRefresh() {
         this.invalidateRecordIdsCache();
-    }
-
-    login() {
-        this.useEmployee.popupAddEmployee();
-        if (this.state.activeWorkcenter === -1) {
-            this.invalidateRecordIdsCache();
-        }
-    }
-
-    async logout(id) {
-        await this.useEmployee.logout(id);
-        if (this.state.activeWorkcenter === -1) {
-            this.invalidateRecordIdsCache();
-        }
-    }
-
-    async changeAdmin(id) {
-        await this.useEmployee.toggleSessionOwner(id);
-        if (this.state.activeWorkcenter === -1) {
-            this.invalidateRecordIdsCache();
-        }
+        this.env.reload();
     }
 
     _onPagerChanged({ offset, limit }) {
@@ -547,6 +516,30 @@ export class MrpDisplay extends Component {
         }
         this.env.reload();
         this.state.canLoadSamples = false;
+    }
+
+    get appName() {
+        return encodeURIComponent(this.menu.getCurrentApp().name);
+    }
+
+    get displayBackButton() {
+        return this.env.config.breadcrumbs.length > 2;
+    }
+
+    onClickBack() {
+        const crumbs = this.env.config.breadcrumbs;
+        crumbs[crumbs.length - 2].onSelected();
+    }
+
+    popupAddEmployee() {
+        this.dialogService.add(
+            MrpEmployeeDialog,
+            {
+                setConnectedEmployees: this.useEmployee.setConnectedEmployees,
+                employees: this.useEmployee.employees,
+            },
+            { onClose: this.env.reload }
+        );
     }
 
     demoMORecords = [
@@ -569,6 +562,12 @@ export class MrpDisplay extends Component {
                                 product_uom_qty: 8,
                                 product_uom: [1, "Units"],
                                 manual_consumption: true,
+                                move_line_ids: {
+                                    records: [],
+                                },
+                            },
+                            _parentRecord: {
+                                data: {},
                             },
                         },
                     ],

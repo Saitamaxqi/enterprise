@@ -15,6 +15,7 @@ export class MrpMenuDialog extends Component {
         reload: Function,
         title: String,
         removeFromCache: Function,
+        registerProduction: Function,
     };
     static template = "mrp_workorder.MrpDisplayMenuDialog";
     static components = { Dialog };
@@ -47,6 +48,14 @@ export class MrpMenuDialog extends Component {
 
     async callAddComponentAction() {
         return this.callAction("action_add_component", {
+            onCatalogUpdated: async () => {
+                await this.props.reload(this.props.record);
+            },
+        });
+    }
+
+    async callAddByProductAction() {
+        return this.callAction("action_add_byproduct", {
             onCatalogUpdated: async () => {
                 await this.props.reload(this.props.record);
             },

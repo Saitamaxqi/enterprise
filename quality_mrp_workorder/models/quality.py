@@ -43,7 +43,12 @@ class QualityCheck(models.Model):
     def do_measure(self):
         self.ensure_one()
         res = super().do_measure()
-        return self._next() if self.workorder_id else res
+        if not self.workorder_id:
+            return res
+        next_res = self._next()
+        if isinstance(next_res, dict):
+            return next_res
+        return {'next_check_id': self._next()}
 
 
     def _next(self):
@@ -64,6 +69,7 @@ class QualityCheck(models.Model):
                     'default_failure_message': self.failure_message,
                     'default_warning_message': self.warning_message,
                 },
+                'next_check_id': result,
             }
         return result
 
@@ -81,9 +87,9 @@ class QualityCheck(models.Model):
     def action_pass_and_next(self):
         self.ensure_one()
         super().do_pass()
-        return self._next()
+        return {'next_check_id': self._next()}
 
     def action_fail_and_next(self):
         self.ensure_one()
         super().do_fail()
-        return self._next()
+        return {'next_check_id': self._next()}

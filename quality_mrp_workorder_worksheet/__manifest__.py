@@ -14,6 +14,9 @@ Create customizable quality worksheet for workorder.
         'data/mrp_workorder_demo.xml',
     ],
     'assets': {
+        'web.assets_backend': [
+            'quality_mrp_workorder_worksheet/static/src/**/*.js',
+        ],
         'web.assets_tests': [
             'quality_mrp_workorder_worksheet/static/tests/tours/**/*',
         ],

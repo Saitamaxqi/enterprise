@@ -76,17 +76,6 @@ class MrpRoutingWorkcenter(models.Model):
         action.update({'context': ctx, 'domain': [('operation_id', '=', self.id)]})
         return action
 
-    def _get_fields_for_tablet(self):
-        """ List of fields on the operation object that are needed by the tablet
-        client action. The purpose of this function is to be overridden in order
-        to inject new fields to the client action.
-        """
-        return [
-            'worksheet',
-            'worksheet_google_slide',
-            'id',
-        ]
-
 
 class QualityPoint(models.Model):
     _inherit = "quality.point"
@@ -112,13 +101,7 @@ class QualityPoint(models.Model):
         'quality.point.test_type',
         domain="[('allow_registration', '=', operation_id and is_workorder_step)]")
     test_report_type = fields.Selection([('pdf', 'PDF'), ('zpl', 'ZPL')], string="Report Type", default="pdf", required=True)
-    source_document = fields.Selection(
-        selection=[('operation', 'Specific Page of Operation Worksheet'), ('step', 'Custom')],
-        string="Step Document",
-        default='operation')
-    worksheet_page = fields.Integer('Worksheet Page', default=1)
     worksheet_document = fields.Binary('Image/PDF')
-    worksheet_url = fields.Char('Google doc URL', tracking=True)
     # Used with type register_consumed_materials the product raw to encode.
     component_id = fields.Many2one('product.product', 'Product To Register', check_company=True)
 
@@ -233,9 +216,6 @@ class QualityCheck(models.Model):
     # We use a float because it is actually filled in by the produced quantity at the step creation.
     finished_product_sequence = fields.Float('Finished Product Sequence Number')
     worksheet_document = fields.Binary('Image/PDF')
-    worksheet_url = fields.Char(related='point_id.worksheet_url')
-    worksheet_page = fields.Integer(related='point_id.worksheet_page')
-    source_document = fields.Selection(related='point_id.source_document')
 
     # Employees
     employee_id = fields.Many2one('hr.employee', string="Employee")
@@ -293,7 +273,7 @@ class QualityCheck(models.Model):
                                 'the final product'))
 
         # The button goes immediately to the next step
-        self._next()
+        res['next_check_id'] = self._next()
         return res
 
     def _get_print_qty(self):
@@ -327,7 +307,7 @@ class QualityCheck(models.Model):
 
     def action_next(self):
         self.ensure_one()
-        return self._next()
+        return {'next_check_id': self._next()}
 
     def add_check_in_chain(self, notify_bom=True):
         self.ensure_one()
@@ -345,18 +325,17 @@ class QualityCheck(models.Model):
             attachments = []
             if self.worksheet_document:
                 attachments = [('document', base64.b64decode(self.worksheet_document))]
-            if self.worksheet_url:
-                body += Markup("<br/><a href='%s'>%s</a>") % (self.worksheet_url, _("Google Doc"))
             self.workorder_id.production_id.bom_id.message_post(body=body, attachments=attachments)
 
-    def action_generate_serial(self):
+    def action_register_production(self):
         self.ensure_one()
-        self.production_id.action_generate_serial()
-        self.lot_id = self.production_id.lot_producing_id
-
-    def action_generate_serial_number_and_pass(self):
-        self.action_generate_serial()
-        return self._next()
+        if self.product_tracking in ('lot', 'serial'):
+            self.production_id.action_generate_serial()
+            self.lot_id = self.production_id.lot_producing_id
+        else:
+            self.production_id.qty_producing = self.production_id.product_qty
+            self.production_id._set_qty_producing(False)
+        return {'next_check_id': self._next()}
 
     def _next(self):
         """ This function:
@@ -374,7 +353,7 @@ class QualityCheck(models.Model):
         if self.quality_state == 'none':
             self.do_pass()
 
-        self.workorder_id._change_quality_check(position='next')
+        return self.workorder_id._change_quality_check(position='next')
 
     def _insert_in_chain(self, position, relative):
         """Insert the quality check `self` in a chain of quality checks.

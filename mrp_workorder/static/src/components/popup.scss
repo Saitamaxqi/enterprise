@@ -60,33 +60,16 @@ $wo-border-separation: $border-width solid $border-color;
                 }
             }
         }
-
         .popup-input {
-            width: 70%;
-            margin: 20px auto;
-            padding: 10px;
-            box-shadow: 0 0 0 3px #6ec89b;
-            min-height: 50px;
-            background: white;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 20px;
-            font-family: "Lato";
-        }
+            height: 4rem;
 
-        .popup-numpad {
-            width: 70%;
-            margin: 12px auto;
-
-            button {
-                height: 50px;
-                width: 50px;
-                border-radius: 25px;
-                margin: 4px;
-                border: 1px solid #cacaca;
-                background: none;
-                font-size: large;
+            .popup-input-text {
+                font-size: 4rem;
             }
+        }
+        .popup-numpad {
+            grid-template-columns: repeat(3, 1fr);
+            width: 70%;
         }
     }
 }

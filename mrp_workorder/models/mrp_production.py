@@ -77,8 +77,10 @@ class MrpProduction(models.Model):
         action = self.env['ir.actions.actions']._for_xml_id('mrp_workorder.action_mrp_display')
         action['context'] = literal_eval(action['context']) | {
             'search_default_name': self.name,
+            'search_default_blocked': True,
             'shouldHideNewWorkcenterButton': True,
         }
+        del action['context']['search_default_filter_ready']
         return action
 
     @api.depends('workorder_ids', 'workorder_ids.employee_ids')
@@ -106,16 +108,6 @@ class MrpProduction(models.Model):
                 'manual_consumption': True,
             })
         return values
-
-    def set_qty_producing(self, check_id=False):
-        super().set_qty_producing()
-        if check_id:
-            self.workorder_ids.check_ids.filtered(lambda c: c.id == check_id and c.test_type == 'register_production').do_pass()
-
-    def action_generate_serial(self, check_id=False):
-        super().action_generate_serial()
-        if check_id:
-            self.workorder_ids.check_ids.filtered(lambda c: c.id == check_id and c.test_type == 'register_production').do_pass()
 
     def can_load_samples(self):
         return self.sudo().env['mrp.production'].search_count([]) == 0
@@ -211,10 +203,6 @@ class MrpProduction(models.Model):
                     'time_cycle': 120,
                     'sequence': 10,
                     'name': 'Assembly',
-                    'worksheet_type': 'pdf',
-                    'worksheet': base64.b64encode(
-                        file_open('mrp/static/img/cutting-worksheet.pdf', "rb").read()
-                    )
                 }
             }], True)
             bom_lines.operation_id = routing
@@ -226,16 +214,13 @@ class MrpProduction(models.Model):
                 'test_type_id': self.env.ref(testtype).id,
                 'note': note,
                 'title': title,
-                'worksheet_page': page,
                 'sequence': seq,
                 'component_id': comp,
-            }} for (xmlid, testtype, note, title, page, seq, comp) in (
+            }} for (xmlid, testtype, note, title, seq, comp) in (
                 (
                     'mrp_workorder.quality_point_register_serial_production',
                     'mrp_workorder.test_type_register_production',
-                    'Register the produced quantity.',
                     'Register production',
-                    0,
                     5,
                     None,
                 ),
@@ -244,7 +229,6 @@ class MrpProduction(models.Model):
                     'mrp_workorder.test_type_register_consumed_materials',
                     'Please register consumption of the table top.',
                     'Component Registration: Table Head',
-                    1,
                     20,
                     tabletop.id,
                 ),
@@ -253,7 +237,6 @@ class MrpProduction(models.Model):
                     'quality.test_type_instructions',
                     'Please ensure you are using the new SRX679 screwdriver.',
                     'Choice of screwdriver',
-                    1,
                     30,
                     None,
                 ),
@@ -262,7 +245,6 @@ class MrpProduction(models.Model):
                     'mrp_workorder.test_type_register_consumed_materials',
                     'Please register consumption of the table legs.',
                     'Component Registration: Table Legs',
-                    4,
                     70,
                     tableleg.id,
                 ),
@@ -271,7 +253,6 @@ class MrpProduction(models.Model):
                     'quality.test_type_instructions',
                     'Please attach the legs to the table as shown below.',
                     'Table Legs',
-                    4,
                     60,
                     None,
                 ),
@@ -280,7 +261,6 @@ class MrpProduction(models.Model):
                     'mrp_workorder.test_type_print_label',
                     None,
                     'Print Labels',
-                    0,
                     90,
                     None,
                 ),

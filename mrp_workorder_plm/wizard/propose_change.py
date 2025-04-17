@@ -92,9 +92,7 @@ class ProposeChange(models.TransientModel):
                 new_step.note = existing_text + image
             else:
                 new_step.note = image
-            new_step.source_document = 'step'
             new_step.worksheet_document = False
-            new_step.worksheet_url = False
             # Write reason in chatter for record keeping in case of multiple suggestions before approval
             new_step.message_post(body=self._get_set_picture_note())
         else:
