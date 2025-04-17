@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 
-from odoo import api, fields, models, modules
+from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 _logger = logging.getLogger(__name__)
@@ -40,17 +41,15 @@ class PurchaseOrder(models.Model):
     def _cron_confirm_purchase_orders(self):
         # Frequency is company dependent.
         template = self.env.ref('purchase.email_template_edi_purchase_done')
-        companies = self.env['res.company'].search([])
-        purchases = self.env['purchase.order']
-        for company in companies:
+        companies = self.env['res.company']
+        today = fields.Date.today()
+        for company in companies.search([]):
             frequency = company.commission_automatic_po_frequency
-            minimum_amount_total = company.commission_po_minimum
 
             # noop
             if frequency == 'manually':
                 continue
 
-            today = fields.Date.today()
             monday = frequency == 'weekly' and today.isoweekday() == 1
             first_of_the_month = frequency == 'monthly' and today.day == 1
             new_quarter = frequency == 'quarterly' and today.day == 1 and today.month in [1, 4, 7, 10]
@@ -59,28 +58,31 @@ class PurchaseOrder(models.Model):
             if not run:
                 continue
 
-            pos = self.env['purchase.order'].search([
-                ('company_id', '=', company.id),
-                ('date_order', '<', today),
-                ('state', '=', 'draft'),
-                ('purchase_type', '=', 'commission'),
-            ])
+            companies += company
 
-            purchases |= pos.filtered(lambda p: (
-                p.invoice_commission_count > 0 and
-                p.currency_id._convert(p.amount_total, company.currency_id, company, today) >= minimum_amount_total
-            ))
+        precondition = Domain([
+            ('company_id', 'in', companies.ids),
+            ('date_order', '<', today),
+            ('state', '=', 'draft'),
+            ('purchase_type', '=', 'commission'),
+        ])
+        purchases = self.env['purchase.order'].search(precondition).filtered(
+            lambda p: p.invoice_commission_count > 0
+            and p.currency_id._convert(p.amount_total, p.company_id.currency_id, p.company_id, today) >= p.company_id.commission_po_minimum
+        )
+        self.env['ir.cron']._commit_progress(remaining=len(purchases))
 
-        for i, po in enumerate(purchases, start=1):
+        for purchase in purchases:
+            purchase = purchase.try_lock_for_update(allow_referencing=True).filtered_domain(precondition)
+            if not purchase:
+                continue
             try:
-                po.button_confirm()
+                purchase.button_confirm()
 
-                if po.state == 'purchase':
-                    template.send_mail(po.id)
+                if purchase.state == 'purchase':
+                    template.send_mail(purchase.id)
 
-                auto_commit = not modules.module.current_test
-                if auto_commit:
-                    self.env['ir.cron']._notify_progress(done=i, remaining=len(purchases) - i)
-                    self.env.cr.commit()
+                self.env['ir.cron']._commit_progress(1)
             except Exception:
-                _logger.exception('_cron_confirm_purchase_orders: PO (id=%s) could not be confirmed', po.id)
+                self.env.rollback()
+                _logger.exception('_cron_confirm_purchase_orders: PO (id=%s) could not be confirmed', purchase.id)

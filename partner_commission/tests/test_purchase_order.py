@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
@@ -7,7 +6,7 @@ from unittest.mock import patch
 from odoo import fields
 from odoo.exceptions import AccessError
 from odoo.tools import format_date, get_timedelta
-from odoo.tests import Form, tagged
+from odoo.tests import Form, freeze_time, tagged
 from odoo.addons.partner_commission.tests.setup import Line, Spec, TestCommissionsSetup
 from odoo.tools.misc import NON_BREAKING_SPACE
 
@@ -33,47 +32,46 @@ class TestPurchaseOrder(TestCommissionsSetup):
             return po
 
         # Stub today's date.
-        def today(*args, **kwargs):
-            return fields.Date.to_date('2020-01-06')
+        today_date = fields.Date.to_date('2020-01-06')
 
         def _patched_send_mail(*args, **kwargs):
             nonlocal send_mail_count
             send_mail_count += 1
 
         # Case: OK.
-        with patch('odoo.fields.Date.today', today):
+        with freeze_time(today_date), self.enter_registry_test_mode():
             with patch('odoo.addons.mail.models.mail_template.MailTemplate.send_mail', _patched_send_mail):
                 # We test the non recurring flow: recurring_invoice is False on the product
                 self.crm.recurring_invoice = False
                 po = make_po(days_offset=-1)
-                self.env['purchase.order']._cron_confirm_purchase_orders()
+                self.env.ref('partner_commission.cron_confirm_purchase_orders').method_direct_trigger()
                 self.assertEqual(po.state, 'purchase')
                 self.assertEqual(send_mail_count, 1)
 
         # Case: NOK: standard purchase order.
         # Should not be confirmed because it's not a commission purchase: commission_po_line_id is not set on the account.move.
-        with patch('odoo.fields.Date.today', today):
+        with freeze_time(today_date), self.enter_registry_test_mode():
             po = self.env['purchase.order'].create({
                 'partner_id': self.customer.id,
                 'company_id': self.company.id,
                 'currency_id': self.company.currency_id.id,
                 'date_order': fields.Date.subtract(fields.Date.today(), days=1),
             })
-            self.env['purchase.order']._cron_confirm_purchase_orders()
+            self.env.ref('partner_commission.cron_confirm_purchase_orders').method_direct_trigger()
             self.assertEqual(po.state, 'draft')
 
         # Set a minimum amount_total to auto confirm the PO
         self.company.commission_po_minimum = 50
         # Case: OK. amount_total = 80 > 50
-        with patch('odoo.fields.Date.today', today):
+        with freeze_time(today_date), self.enter_registry_test_mode():
             po = make_po(days_offset=-1, qty=20)
-            self.env['purchase.order']._cron_confirm_purchase_orders()
+            self.env.ref('partner_commission.cron_confirm_purchase_orders').method_direct_trigger()
             self.assertEqual(po.state, 'purchase')
 
         # Case: NOK: amount_total = 8 < 50
-        with patch('odoo.fields.Date.today', today):
+        with freeze_time(today_date), self.enter_registry_test_mode():
             po = make_po(days_offset=-1, qty=2)
-            self.env['purchase.order']._cron_confirm_purchase_orders()
+            self.env.ref('partner_commission.cron_confirm_purchase_orders').method_direct_trigger()
             self.assertEqual(po.state, 'draft')
 
     def test_vendor_bill_description_multi_line_format(self):
