@@ -201,29 +201,21 @@ class ResPartner(models.Model):
         if responsible_type == 'account_manager' and self.user_id:
             return self.user_id
 
-        all_aml_responsible = self.env['res.users']
-        max_amount_aml = self.env['account.move.line']
-        for aml in self.unreconciled_aml_ids:
-            all_aml_responsible += aml.move_id.invoice_user_id
-            if max_amount_aml.amount_residual < aml.amount_residual:
-                max_amount_aml = aml
-
-        if responsible_type == 'salesperson' and max_amount_aml:
-            if multiple_responsible:
-                return all_aml_responsible
-            else:
-                return max_amount_aml.move_id.invoice_user_id
-
-        if self.followup_responsible_id:
-            return self.followup_responsible_id
-
-        if self.user_id:
-            return self.user_id
-
-        if max_amount_aml and max_amount_aml.move_id.invoice_user_id:
-            return max_amount_aml.move_id.invoice_user_id
-
-        return super()._get_followup_responsible()
+        all_aml_responsible = self.unreconciled_aml_ids.move_id.invoice_user_id
+        max_amount_aml = max(
+            self.unreconciled_aml_ids.filtered('move_id.invoice_user_id'),
+            default=self.env['account.move.line'],
+            key=lambda l: l.amount_residual,
+        )
+        return (
+            (responsible_type == 'salesperson' and (
+                all_aml_responsible if multiple_responsible else max_amount_aml.move_id.invoice_user_id
+            ))
+            or self.followup_responsible_id
+            or self.user_id
+            or max_amount_aml.move_id.invoice_user_id
+            or super()._get_followup_responsible()
+        )
 
     def _get_all_followup_contacts(self):
         """ Followup contacts are defined as billing address and defaults to

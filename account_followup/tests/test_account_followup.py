@@ -113,6 +113,15 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
             self.partner_a._execute_followup_partner(options={'snailmail': False})
             self.assertEqual(self.partner_a.activity_ids.user_id, (user1 + user2))
 
+    def test_followup_no_invoice_user_id(self):
+        first_followup_line = self.create_followup(delay=10)
+        first_followup_line.create_activity = True
+        first_followup_line.activity_default_responsible_type = 'salesperson'
+        inv1 = self.create_invoice('2022-01-02')
+        inv1.invoice_user_id = None
+        with freeze_time('2022-01-13'):
+            self.assertEqual(self.partner_a._get_followup_responsible(), self.user)
+
     def test_followup_line_and_status(self):
         self.first_followup_line = self.create_followup(delay=-10)
         self.second_followup_line = self.create_followup(delay=10)
