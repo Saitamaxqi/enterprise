@@ -495,7 +495,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 
         action = mo.action_split()
         wizard = Form.from_action(self.env, action)
-        wizard.counter = 2
+        wizard.max_batch_size = 1
         action = wizard.save().action_split()
         # Should have 2 mos w/ 2 wos each
         self.assertEqual(len(mo.procurement_group_id.mrp_production_ids), 2)
