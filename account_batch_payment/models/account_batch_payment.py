@@ -142,26 +142,51 @@ class AccountBatchPayment(models.Model):
                 if payment.move_id:
                     liquidity_lines, _counterpart_lines, _writeoff_lines = payment._seek_for_lines()
                     for line in liquidity_lines:
-                        amount += line.currency_id._convert(
-                            from_amount=line.amount_currency,
-                            to_currency=batch.currency_id,
-                            company=line.company_id,
-                            date=line.date,
-                        )
+                        if line.currency_id != batch.currency_id:
+                            amount += line.currency_id._convert(
+                                from_amount=line.amount_currency,
+                                to_currency=batch.currency_id,
+                                company=line.company_id,
+                                date=line.date,
+                            )
+                        else:
+                            amount += line.amount_currency
+
                         if payment.state in valid_payment_states:
                             amount_residual += line.amount_residual
-                            amount_residual_currency += line.amount_residual_currency
+                            if line.currency_id != batch.currency_id:
+                                amount_residual_currency += line.currency_id._convert(
+                                    from_amount=line.amount_residual_currency,
+                                    to_currency=batch.currency_id,
+                                    company=line.company_id,
+                                    date=line.date,
+                                )
+                            else:
+                                amount_residual_currency += line.amount_residual_currency
+
                 else:
-                    converted_amount = payment.currency_id._convert(
-                        from_amount=payment.amount_signed,
-                        to_currency=batch.currency_id,
-                        company=payment.company_id,
-                        date=payment.date,
-                    )
-                    amount += converted_amount
+                    if payment.currency_id != batch.currency_id:
+                        amount_in_batch_currency = payment.currency_id._convert(
+                            from_amount=payment.amount_signed,
+                            to_currency=batch.currency_id,
+                            company=payment.company_id,
+                            date=payment.date,
+                        )
+                    else:
+                        amount_in_batch_currency = payment.amount_signed
                     if payment.state in valid_payment_states:
-                        amount_residual += converted_amount
-                        amount_residual_currency += payment.amount_signed
+                        if payment.currency_id != batch.company_id.currency_id:
+                            amount_in_company_currency = payment.currency_id._convert(
+                                from_amount=payment.amount_signed,
+                                to_currency=batch.company_id.currency_id,
+                                company=payment.company_id,
+                                date=payment.date,
+                            )
+                        else:
+                            amount_in_company_currency = payment.amount_signed
+                        amount += amount_in_batch_currency
+                        amount_residual += amount_in_company_currency
+                        amount_residual_currency += amount_in_batch_currency
 
             batch.amount_residual = amount_residual
             batch.amount = amount

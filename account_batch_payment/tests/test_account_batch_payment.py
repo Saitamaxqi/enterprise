@@ -222,6 +222,8 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         batch_payment_action = payments.create_batch_payment()
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
         self.assertEqual(batch_payment.amount, 110)
+        self.assertEqual(batch_payment.amount_residual, 110)
+        self.assertEqual(batch_payment.amount_residual_currency, 110)
 
     def test_batch_payment_journal_foreign_currency(self):
         """
@@ -263,6 +265,8 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         batch_payment_action = payments.create_batch_payment()
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
         self.assertEqual(batch_payment.amount, 1100)
+        self.assertEqual(batch_payment.amount_residual, 110)
+        self.assertEqual(batch_payment.amount_residual_currency, 1100)
 
     def test_create_batch_from_payment_already_in_batch(self):
         payment = self.env['account.payment'].create({
