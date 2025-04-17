@@ -757,21 +757,17 @@ export class KnowledgeSidebar extends Component {
                     let searchFunction = "get_user_sorted_articles";
                     if (searchValue) {
                         searchFunction = "get_sorted_articles";
-                        params.domain = [
-                            "|",
-                            "|",
-                            ["is_article_visible", "=", true],
-                            ["is_user_favorite", "=", true],
-                            "&",
-                            ["website_published", "=", true],
-                            ["id", "child_of", this.props.record.data.root_article_id.id],
-                        ];
+                        params.domain = this.searchDomain;
                     }
                     return this.orm.call("knowledge.article", searchFunction, [[]], params);
                 },
                 select: (article) => this.env.openArticle(article.id),
             });
         }
+    }
+
+    get searchDomain() {
+        return ["|", ["is_article_visible", "=", true], ["is_user_favorite", "=", true]];
     }
 
     /**
