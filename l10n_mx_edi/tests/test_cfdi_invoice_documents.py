@@ -4,6 +4,8 @@ from odoo import Command, fields
 from odoo.addons.mail.tools.discuss import Store
 from odoo.exceptions import UserError
 from odoo.tests import tagged
+from odoo.tools import misc
+from odoo.tools.misc import file_open
 
 from freezegun import freeze_time
 
@@ -2055,3 +2057,21 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
         with self.with_mocked_pac_sign_success():
             invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
         self.assertRecordValues(invoice, [{'l10n_mx_edi_cfdi_state': 'global_sent'}])
+
+    def test_import_bill_write_l10n_mx_edi_cfdi_sat_state(self):
+        """
+        Test that when importing a cfdi bill, the field l10n_mx_edi_cfdi_sat_state is correctly computed
+        """
+        file_name = "test_import_bill"
+        full_file_path = misc.file_path(f'{self.test_module}/tests/test_files/{file_name}.xml')
+
+        self.env.company.partner_id.company_id = self.env.company
+
+        with file_open(full_file_path, "rb") as file:
+            file_content = file.read()
+        new_bill = self._upload_document_on_journal(
+            journal=self.company_data['default_journal_purchase'],
+            content=file_content,
+            filename=file_name,
+        )
+        self.assertEqual(new_bill.l10n_mx_edi_cfdi_sat_state, 'not_defined')

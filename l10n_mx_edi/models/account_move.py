@@ -544,6 +544,7 @@ class AccountMove(models.Model):
                     'invoice_sent',
                     'invoice_cancel_requested',
                     'invoice_cancel',
+                    'invoice_received',
                     'ginvoice_sent',
                     'ginvoice_cancel',
                     'invoice_received',
