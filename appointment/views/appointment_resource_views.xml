@@ -38,11 +38,11 @@
                         </h1>
                     </div>
                     <group>
-                        <group>
+                        <group class="px-0">
                             <field name="capacity"/>
                             <field name="shareable" invisible="capacity &lt;= 1"/>
                             <field name="linked_resource_ids" widget="many2many_tags" options="{'no_create': True}"
-                                domain="[('id', '!=', id)]"/>
+                                domain="[('id', '!=', id)]" placeholder="Does not combine"/>
                         </group>
                         <group>
                             <field name="resource_calendar_id" string="Opening Hours" groups="base.group_no_one"/>

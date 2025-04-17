@@ -56,7 +56,7 @@ class AppointmentType(models.Model):
         help="""Do not automatically accept meetings created from the appointment.
             The appointment is still considered as reserved for the slots availability.""")
     appointment_tz = fields.Selection(
-        _tz_get, string='Timezone', required=True, default=lambda self: self.env.user.tz,
+        _tz_get, string='Timezone', required=True, default=lambda self: self.env.user.tz or 'UTC',
         help="Timezone where appointment take place")
     image_1920 = fields.Image("Background Image")  # image.mixin override
     location_id = fields.Many2one('res.partner', string='Location')

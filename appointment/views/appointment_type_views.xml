@@ -235,8 +235,8 @@
                                 options="{'no_open': False}"
                                 placeholder="Select Users..."/>
                             <!-- Resources Details-->
-                            <field name="resource_ids" string="Resources" widget="many2many_tags_avatar"
-                                options="{'no_quick_create': True, 'edit_tags': True,}"
+                            <field name="resource_ids" string="Resources" widget="many2many_tags"
+                                options="{'no_quick_create': True, 'edit_tags': True}"
                                 invisible="schedule_based_on == 'users'"
                                 placeholder="Select Resources..."/>
                             <label for="resource_manage_capacity" invisible="schedule_based_on == 'users'"/>
@@ -258,7 +258,7 @@
                                         column_invisible="parent.category == 'custom'"/>
                                     <field name="start_hour" string="From" widget="float_time"
                                         column_invisible="parent.category == 'custom'"/>
-                                    <button name="durationArrow" class="fa fa-long-arrow-right text-center" title="Until (max)"
+                                    <button name="durationArrow" class="fa fa-long-arrow-right text-center text-secondary" title="Until (max)"
                                         column_invisible="parent.category == 'custom'"/>
                                     <field name="end_hour" string="To" widget="float_time"
                                         column_invisible="parent.category == 'custom'"/>

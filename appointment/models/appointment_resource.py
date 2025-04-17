@@ -23,8 +23,7 @@ class AppointmentResource(models.Model):
             self.env.ref('appointment.appointment_default_resource_calendar', raise_if_not_found=False) or
             self.env.company.resource_calendar_id),
         help="If kept empty, the working schedule of the company set on the resource will be used")
-    capacity = fields.Integer("Capacity", default=1, required=True,
-        help="""Maximum amount of people for this resource (e.g. Table for 6 persons, ...)""")
+    capacity = fields.Integer("Capacity", default=1, required=True)
     shareable = fields.Boolean("Shareable",
         help="""This allows to share the resource with multiple attendee for a same time slot (e.g. a bar counter)""")
     source_resource_ids = fields.Many2many(
