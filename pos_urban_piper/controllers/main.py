@@ -112,6 +112,13 @@ class PosUrbanPiperController(http.Controller):
         customer = data['customer']
         customer_address = customer['address']
         details = order['details']
+        PosOrder = request.env['pos.order'].sudo()
+        existing_order = PosOrder.search([
+            ('delivery_identifier', '=', details['id']),
+        ])
+        if existing_order:
+            _logger.info("UrbanPiper: Order %r already exists.", details['id'])
+            return False
         pos_config_sudo = request.env['pos.config'].sudo().search([
             ('urbanpiper_store_identifier', '=', order['store']['merchant_ref_id'])
         ])
@@ -194,7 +201,6 @@ class PosUrbanPiperController(http.Controller):
             }))
         pos_reference, order_sequence_number, tracking_number = pos_config_sudo.current_session_id.get_next_order_refs(ref_prefix=pos_delivery_provider.name)
         discounts = details.get('ext_platforms', [{}])[0].get('discounts', [])
-        discount_amt = sum(discount['value'] for discount in discounts if discount['is_merchant_discount'])
         general_note = "\n".join([
             f"{pos_delivery_provider.name} Discount: {pos_config_sudo.company_id.currency_id.symbol} {discount.get('value')}"
             for discount in discounts if not discount.get('is_merchant_discount')
@@ -220,7 +226,7 @@ class PosUrbanPiperController(http.Controller):
                     'note': self.reframe_notes('\n'.join([discount.get('code', ''), discount.get('title', '')])),
                     'uuid': str(uuid.uuid4()),
                 }))
-        delivery_order = request.env["pos.order"].sudo().create({
+        delivery_order = PosOrder.create({
             'partner_id': customer_sudo.id,
             'pos_reference': pos_reference,
             'sequence_number': order_sequence_number,
