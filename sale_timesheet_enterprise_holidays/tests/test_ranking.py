@@ -13,7 +13,8 @@ class TestSaleTimesheetEnterpriseHolidaysRanking(TestTimesheetHolidays, TestSale
         """ This test will check that timeoffs are excluded from the ranking calculation e.g. an user has timesheeted
             16 hours and 8 of them is a timeoff entry ; the user's total timesheeted time should be 8h and not 16h
         """
-        self.employee_user.leave_manager_id = self.Requests.env.user
+        self.env.user.group_ids |= self.env.ref("hr_holidays.group_hr_holidays_user")
+        self.employee_user.leave_manager_id = self.env.user
         holiday = self.Requests.create({
             'name': 'Time Off 1',
             'employee_id': self.employee_user.id,
