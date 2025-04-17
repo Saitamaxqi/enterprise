@@ -41,7 +41,7 @@ class ProductProduct(models.Model):
 
     # String representing price including taxes
     # Used in requests sent to the Pricer API and displayed on tags
-    pricer_display_price = fields.Char(compute='_compute_pricer_display_price')
+    pricer_display_price = fields.Char()
 
     pricer_sale_pricelist_id = fields.Many2one(
         'product.pricelist',
