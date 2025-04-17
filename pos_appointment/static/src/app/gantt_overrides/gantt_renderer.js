@@ -5,6 +5,7 @@ const { DateTime } = luxon;
 
 patch(AppointmentBookingGanttRenderer, {
     pillTemplate: "pos_gantt.GanttRenderer.Pill",
+    rowHeaderTemplate: "pos_gantt.GanttRenderer.RowHeader",
 });
 
 patch(AppointmentBookingGanttRenderer.prototype, {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+    <t t-name="pos_restaurant_appointment.KanbanController" t-inherit="web.KanbanView" t-inherit-mode="primary">
+        <xpath expr="//SearchBar" position="before">
+            <button class="btn text-nowrap me-2 bg-200 px-3 d-flex align-items-center" t-attf-class="{{ env.isSmall ? 'mt-1' : '' }}">
+                <div t-if="state.date" class="d-flex justify-content-between align-items-center">
+                    <div t-on-click="(ev) => this.onClickDateBtn(ev)">
+                        <span><t t-out="state.date.toFormat('ccc')"/> <t t-out="state.date.toFormat(localization.dateFormat)"/></span>
+                    </div>
+                    <i class="fa fa-close ps-2 pb-1" t-on-click="onRemove"/>
+                </div>
+                <t t-else="">
+                    <div t-on-click="(ev) => this.onClickDateBtn(ev)">
+                        Select Date
+                    </div>
+                </t>
+            </button>
+            <div class="me-2 pe-none" t-attf-class="{{ env.isSmall ? 'mt-1' : '' }}">
+                <t t-out="totalPersonCount"/>p
+            </div>
+        </xpath>
+    </t>
+
+</templates>

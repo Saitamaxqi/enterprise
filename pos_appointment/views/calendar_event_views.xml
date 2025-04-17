@@ -6,6 +6,9 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="appointment.calendar_event_view_form_gantt_booking"/>
         <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('alert-warning')]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <xpath expr='//field[@name="name"]' position="attributes">
                 <attribute name="placeholder">e.g. "John Doe"</attribute>
             </xpath>
@@ -25,7 +28,7 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//div[hasclass('oe_title')]" position="before">
-                <div class="mb-3">
+                <div class="mb-3" invisible="not id">
                     <button name="set_attended" type="object" string="Check In" class="btn-secondary mx-1"/>
                     <button name="set_cancelled" type="object" string="Cancel" class="btn-secondary"/>
                     <field name="appointment_status" widget="statusbar" invisible="not appointment_type_id" required="appointment_type_id" style="float:right;"/>
@@ -34,6 +37,32 @@
             <xpath expr='//field[@name="description"]' position="after">
                 <field name="answers"/>
             </xpath>
+            <xpath expr="//group/div/label[@for='resource_total_capacity_reserved']" position="attributes">
+                <attribute name="class">me-1</attribute>
+            </xpath>
+            <field name="resource_total_capacity_reserved" position="attributes">
+                <attribute name="string">Reservation for</attribute>
+            </field>
+            <field name="resource_total_capacity_reserved" position="attributes">
+                <attribute name="class" separator=" " add="ms-1" />
+            </field>
+            <xpath expr="//group/div[@colspan='2']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group/div[@colspan='2']" position="after">
+                <div colspan="2">
+                    <label for="waiting_list_capacity" class="me-2"/>
+                    <field name="waiting_list_capacity" string="Reservation for" class="oe_inline ms-1"/>
+                    <span>people</span>
+                </div>
+                <field name="phone_number" widget="phone"/>
+            </xpath>
+            <field name="resource_ids" position="attributes">
+                <attribute name="invisible">not id and context.get('default_resource_ids')</attribute>
+            </field>
+            <field name="appointment_type_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
     <record id="calendar_event_view_gantt_booking_resource_inherited_pos_appointment" model="ir.ui.view">
@@ -47,6 +76,8 @@
             </xpath>
             <xpath expr="//field[@name='partner_ids']" position="after">
                 <field name="duration"/>
+                <field name="waiting_list_capacity"/>
+                <field name="resource_ids"/>
             </xpath>
             <xpath expr="//templates/div[@t-name='gantt-popover']" position="replace">
                 <div t-name="gantt-popover">
@@ -61,7 +92,7 @@
                             <strong t-if="appointment_type_id">Booking Details</strong>
                             <strong t-else="">Event Details</strong>
                         </t>
-                        <li t-if="appointment_type_manage_capacity"><strong><t t-out="appointment_type_id[1]"/></strong> for: <t t-out="resource_total_capacity_reserved"/></li>
+                        <li t-if="appointment_type_manage_capacity"><strong><t t-out="appointment_type_id[1]"/></strong> for: <t t-out="waiting_list_capacity"/></li>
                         <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
                         <t t-set="hours" t-value="Math.floor(duration)"/>
                         <t t-set="minutes" t-value="Math.floor((duration - hours) * 60)"/>
@@ -71,4 +102,55 @@
             </xpath>
         </field>
     </record>
+    <record id="calendar_event_view_tree_inherited_restaurant_appointment" model="ir.ui.view">
+        <field name="name">calendar.event.view.tree.inherited.restaurant.appointment</field>
+        <field name="model">calendar.event</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="create">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="calendar_event_view_kanban_pos_restaurant_appointment" model="ir.ui.view">
+    <field name="name">calendar.event.view.kanban.pos.restaurant.appointment</field>
+    <field name="model">calendar.event</field>
+    <field name="arch" type="xml">
+        <kanban default_group_by="appointment_status" js_class="pos_kanban">
+            <field name="name" />
+            <field name="duration" />
+            <field name="appointment_type_id" />
+            <field name="appointment_status" />
+            <field name="resource_ids" />
+            <field name="start" />
+            <field name="id" />
+            <templates>
+                <t t-name="card">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <span>
+                                <field name="waiting_list_capacity"/>
+                                <span>p</span>
+                            </span>
+                            <div class="ms-2">
+                                <div><t t-out="luxon.DateTime.fromISO(record.start.raw_value).toFormat('HH:mm')"/></div>
+                                <strong><field name="name" class="fs-3"/></strong>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-end">
+                            <div class="px-2 py-1 rounded"
+                                t-attf-class="{{ {'booked': 'o_kanban_color_3', 'attended': 'o_kanban_color_10', 'no_show': 'o_kanban_color_1 text-white'}[record.appointment_status.raw_value] }}">
+                                <t t-if="record.appointment_status.raw_value == 'booked'">Waiting</t>
+                                <t t-elif="record.appointment_status.raw_value == 'attended'">Check In</t>
+                                <t t-elif="record.appointment_status.raw_value == 'no_show'">No show</t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
 </odoo>
