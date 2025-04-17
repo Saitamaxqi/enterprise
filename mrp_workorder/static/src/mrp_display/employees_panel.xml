@@ -5,7 +5,7 @@
             <li t-foreach="props.employees.connected" t-as="employee" t-key="employee.id"
                 class="list-group-item d-flex gap-2 py-2 cursor-pointer border-end-0 border-top-0"
                 t-on-click="() => props.setSessionOwner(employee.id,pin)"
-                t-att-class="{'o_admin_user': employee.id === props.employees.admin.id, 'o_previous_admin_user': employee.isPreviousAdmin}">
+                t-att-class="{'o_admin_user': employee.id === props.employees.admin.id}">
                 <img t-attf-src="/web/image/hr.employee/{{employee.id}}/avatar_128"
                     class="o_avatar rounded-circle"
                     t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}"/>
@@ -14,7 +14,6 @@
                         <span class="fw-bold text-truncate"
                          t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}" t-esc="employee.name"/>
                         <i class="fa fa-unlock-alt" t-if="employee.id === props.employees.admin.id" role="img"/>
-                        <i class="fa fa-lock" t-if="employee.isPreviousAdmin" role="img"/>
                     </div>
                     <div t-foreach="employee.workcenters" t-as="wc" t-key="wc.id" class="d-flex justify-content-between">
                         <span t-attf-class="o_tag o_tag_color_{{wc.id % 11}} badge rounded" t-esc="wc.name"/>

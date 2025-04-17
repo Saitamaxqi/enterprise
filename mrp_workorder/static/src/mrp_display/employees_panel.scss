@@ -8,10 +8,6 @@
         background-color: $list-group-active-bg;
         box-shadow: inset map-get($spacers, 1) 0 0 $list-group-active-border-color;
     }
-
-    .o_previous_admin_user {
-        box-shadow: inset map-get($spacers, 1) 0 0 $warning;
-    }
 }
 
 .o_mrp_employees_panel_btn {
