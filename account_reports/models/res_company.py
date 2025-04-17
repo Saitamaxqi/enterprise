@@ -9,6 +9,7 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     totals_below_sections = fields.Boolean(
+        compute='_compute_totals_below_sections', store=True,
         string='Add totals below sections',
         help='When ticked, totals and subtotals appear below the sections of the report.')
 
@@ -35,6 +36,11 @@ class ResCompany(models.Model):
         country_set = self._get_countries_allowing_tax_representative()
         for record in self:
             record.account_display_representative_field = record.account_fiscal_country_id.code in country_set
+
+    @api.depends('anglo_saxon_accounting')
+    def _compute_totals_below_sections(self):
+        for company in self:
+            company.totals_below_sections = company.anglo_saxon_accounting
 
     def _get_countries_allowing_tax_representative(self):
         """ Returns a set containing the country codes of the countries for which

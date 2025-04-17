@@ -1,4 +1,3 @@
-# coding: utf-8
 from odoo import models, _
 
 
@@ -27,6 +26,5 @@ class AccountChartTemplate(models.AbstractModel):
                 }])
 
             company.update({
-                'totals_below_sections': company.anglo_saxon_accounting,
                 'account_tax_return_journal_id': closing_journal.id,
             })

@@ -18,7 +18,6 @@ from . import account_trial_balance_report
 from . import account_aged_partner_balance
 from . import account_partner_ledger
 from . import res_config_settings
-from . import chart_template
 from . import account_journal_dashboard
 from . import ir_actions
 from . import ir_ui_menu
