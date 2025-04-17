@@ -71,9 +71,9 @@ class StockMoveLine(models.Model):
 
     def _inverse_qty_done(self):
         for line in self.with_context({'preserve_state': True}):
+            line.quantity = line.qty_done
             if line.qty_done:
-                line.quantity = line.qty_done
-            line.picked = line.qty_done > 0
+                line.picked = True
 
     @api.model_create_multi
     def create(self, vals_list):

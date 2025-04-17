@@ -3175,12 +3175,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.picking_type_out.show_reserved_sns = True
 
         lots = self.env['stock.lot'].create([
-            {'name': 'SN001', 'product_id': self.productserial1.id},
-            {'name': 'SN002', 'product_id': self.productserial1.id},
+            {'name': 'LN001', 'product_id': self.productlot1.id},
+            {'name': 'LN002', 'product_id': self.productlot1.id},
         ])
         for lot in lots:
-            self.env['stock.quant']._update_available_quantity(self.productserial1, self.stock_location, 1, lot_id=lot)
-        # Creates a delivery for 2 x productserial1 initially reserved with SN001 and SN002
+            self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 2, lot_id=lot)
+        # Creates a delivery for 2 x productlot1 initially reserved with SN001 and SN002
         delivery = self.env['stock.picking'].create({
             'name': "SUMOEWNC",
             'location_id': self.stock_location.id,
@@ -3189,30 +3189,31 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'move_ids': [Command.create({
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
-                'name': "productserial1 x2",
-                'product_id': self.productserial1.id,
-                'product_uom_qty': 2,
+                'name': "productlot1 x2",
+                'product_id': self.productlot1.id,
+                'product_uom_qty': 4,
             })]
         })
         delivery.action_confirm()
         self.assertRecordValues(delivery.move_ids, [
-            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'lot_ids': lots.ids }
+            {'product_uom_qty': 4.0, 'quantity': 4.0, 'picked': False, 'lot_ids': lots.ids},
         ])
         self.assertRecordValues(delivery.move_line_ids, [
-            {'quantity': 1.0, 'picked': False, 'lot_id': lots[0].id },
-            {'quantity': 1.0, 'picked': False, 'lot_id': lots[1].id },
+            {'quantity': 2.0, 'picked': False, 'lot_id': lots[0].id},
+            {'quantity': 2.0, 'picked': False, 'lot_id': lots[1].id},
         ])
 
         action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = f"/web#action={action.id}"
         self.start_tour(url, 'test_split_uncomplete_moves_on_exit_with_neutral_changes', login='admin')
-        # Checks the values haven't changed
+        # Checks the reservation state is essentially equivalent
         self.assertRecordValues(delivery.move_ids, [
-            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'lot_ids': lots.ids }
+            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'lot_ids': lots[1].ids},
+            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'lot_ids': lots[0].ids},
         ])
         self.assertRecordValues(delivery.move_line_ids, [
-            {'quantity': 1.0, 'picked': False, 'lot_id': lots[0].id },
-            {'quantity': 1.0, 'picked': False, 'lot_id': lots[1].id },
+            {'quantity': 2.0, 'picked': False, 'lot_id': lots[1].id},
+            {'quantity': 2.0, 'picked': False, 'lot_id': lots[0].id},
         ])
 
     def test_barcode_create_serials_in_batch_with_single_scan(self):

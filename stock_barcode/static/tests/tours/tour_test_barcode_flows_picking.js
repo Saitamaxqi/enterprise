@@ -313,16 +313,17 @@ registry
                 trigger: ".o_barcode_line",
                 run: () => {
                     helper.assertLinesCount(1);
-                    helper.assertLineQty(0, "0/2");
+                    helper.assertLineQty(0, "0/4");
                     const [subLine1, subLine2] = helper.getSublines();
-                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "SN001");
-                    helper.assertLineQty(subLine1, "0/1");
-                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "SN002");
-                    helper.assertLineQty(subLine2, "0/1");
+                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "LN001");
+                    helper.assertLineQty(subLine1, "0/2");
+                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "LN002");
+                    helper.assertLineQty(subLine2, "0/2");
                 },
             },
             // Scans SN01 and remove it
-            { trigger: ".o_barcode_client_action", run: "scan SN001" },
+            { trigger: ".o_barcode_client_action", run: "scan LN001" },
+            { trigger: ".o_barcode_client_action", run: "scan LN001" },
             {
                 trigger: ".o_barcode_line.o_line_completed .o_edit",
                 run: "click",
@@ -339,31 +340,31 @@ registry
                 trigger: ".o_barcode_line",
                 run: () => {
                     helper.assertLinesCount(1);
-                    helper.assertLineQty(0, "0/2");
+                    helper.assertLineQty(0, "0/4");
                     const [subLine1, subLine2] = helper.getSublines();
-                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "SN001");
-                    helper.assertLineQty(subLine1, "0/1");
-                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "SN002");
-                    helper.assertLineQty(subLine2, "0/1");
+                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "LN001");
+                    helper.assertLineQty(subLine1, "0/2");
+                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "LN002");
+                    helper.assertLineQty(subLine2, "0/2");
                 },
             },
             // Leave and re-open the picking it directly
             { trigger: "button.o_exit", run: "click" },
             { trigger: ".o_stock_barcode_main_menu", run: "scan SUMOEWNC" },
             {
-                trigger: ".o_barcode_line  .o_line_button.o_toggle_sublines",
+                trigger: ".o_barcode_line .o_toggle_sublines",
                 run: "click",
             },
             {
                 trigger: ".o_barcode_line",
                 run: () => {
                     helper.assertLinesCount(1);
-                    helper.assertLineQty(0, "0/2");
+                    helper.assertLineQty(0, "0/4");
                     const [subLine1, subLine2] = helper.getSublines();
-                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "SN001");
-                    helper.assertLineQty(subLine1, "0/1");
-                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "SN002");
-                    helper.assertLineQty(subLine2, "0/1");
+                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "LN002");
+                    helper.assertLineQty(subLine1, "0/2");
+                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "LN001");
+                    helper.assertLineQty(subLine2, "0/2");
                 },
             },
         ],
