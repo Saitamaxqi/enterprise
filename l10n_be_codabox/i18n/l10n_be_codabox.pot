@@ -441,6 +441,18 @@ msgid "Original CodaBox Payroll Statement.pdf"
 msgstr ""
 
 #. module: l10n_be_codabox
+#. odoo-python
+#: code:addons/l10n_be_codabox/models/account_journal.py:0
+msgid "Original CodaBox SODA.xml"
+msgstr ""
+
+#. module: l10n_be_codabox
+#. odoo-python
+#: code:addons/l10n_be_codabox/models/account_journal.py:0
+msgid "Original CodaBox.coda"
+msgstr ""
+
+#. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fidu_password
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__fidu_password
 msgid "Password"

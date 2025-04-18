@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+import base64
 from unittest.mock import patch
 
 from odoo.tests import tagged
@@ -22,9 +22,9 @@ class TestCodabox(AccountTestInvoicingCommon):
         cls.bank_journal_1.bank_account_id = bank_1
         cls.bank_journal_2 = cls.bank_journal_1.copy({'bank_account_id': bank_2.id})
         with file_open('l10n_be_coda/test_coda_file/Ontvangen_CODA.2013-01-11-18.59.15.txt', 'rb') as coda_file:
-            cls.coda_file = coda_file.read()
+            cls.coda_file = base64.b64encode(coda_file.read())
         with file_open('l10n_be_coda/test_coda_file/multi_accounts.COD', 'rb') as coda_file:
-            cls.coda_file_multi_accounts = coda_file.read()
+            cls.coda_file_multi_accounts = base64.b64encode(coda_file.read())
 
     @patch('odoo.addons.l10n_be_codabox.models.account_journal.AccountJournal._l10n_be_codabox_fetch_transactions_from_iap')
     def test_codabox_file_import(self, patched_l10n_be_codabox_fetch_transactions_from_iap):

@@ -124,7 +124,12 @@ class AccountJournal(models.Model):
         for coda in codas:
             try:
                 coda_raw_b64, coda_pdf_b64 = coda
-                bank_statement_file_data = self._parse_bank_statement_file(coda_raw_b64)
+                coda_attachment = self.env["ir.attachment"].create({
+                    "name": _("Original CodaBox.coda"),
+                    'type': 'binary',
+                    'datas': coda_raw_b64,
+                })
+                bank_statement_file_data = self._parse_bank_statement_file(coda_attachment.raw)
                 statement_ids = []
                 for currency, account_number, stmt_vals in bank_statement_file_data:
                     journal = next((
@@ -150,7 +155,7 @@ class AccountJournal(models.Model):
                         'res_model': 'account.bank.statement',
                         'res_id': statement_ids[0],
                     })
-                    self.env['account.bank.statement'].browse(statement_ids).attachment_ids |= pdf
+                    self.env['account.bank.statement'].browse(statement_ids).attachment_ids |= pdf + coda_attachment
                     # We may have a lot of statements to import, so we commit after each so that a later error doesn't discard previous work
                     if not modules.module.current_test:
                         self.env.cr.commit()
@@ -197,7 +202,7 @@ class AccountJournal(models.Model):
             try:
                 soda_raw_b64, soda_pdf_b64 = soda
                 attachment_soda = self.env["ir.attachment"].create({
-                    "name": "soda.xml",
+                    "name": _("Original CodaBox SODA.xml"),
                     'type': 'binary',
                     'datas': soda_raw_b64,
                 })
@@ -211,7 +216,7 @@ class AccountJournal(models.Model):
                         'res_model': move._name,
                         'res_id': move.id,
                     })
-                    move.attachment_ids += attachment_pdf
+                    move.attachment_ids += attachment_pdf + attachment_soda
                     moves += move
                     # We may have a lot of files to import, so we commit after each file so that a later error doesn't discard previous work
                     self.env.cr.commit()
