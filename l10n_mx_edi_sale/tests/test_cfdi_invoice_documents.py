@@ -11,6 +11,7 @@ class TestCFDIInvoiceDocuments(TestMxEdiCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.env['product.pricelist'].search([]).unlink()
+        cls.env.user.group_ids |= cls.env.ref('sales_team.group_sale_salesman')
 
     def test_payment_policy_preserved_from_sale_order_to_invoice(self):
         sale_order = self.env['sale.order'].create({
