@@ -7,7 +7,8 @@ from odoo.tests.common import TransactionCase
 from odoo.tools import mute_logger
 from odoo.tests import tagged
 
-@tagged('post_install', '-at_install')
+
+@tagged('post_install', '-at_install', 'mail_activity')
 class TestStudioApproval(TransactionCase):
 
     @classmethod

@@ -11,8 +11,7 @@ class MailActivity(models.Model):
     def _action_done(self, feedback=False, attachment_ids=False):
         approval_activities = self.filtered(lambda a: a.activity_category == 'grant_approval')
         if approval_activities:
-            ApprovalRequestSudo = self.env["studio.approval.request"].sudo()
-            approval_requests = ApprovalRequestSudo.search([("mail_activity_id", "in", approval_activities.ids)])
+            approval_requests = self.env["studio.approval.request"].sudo().search([("mail_activity_id", "in", approval_activities.ids)])
             domains = []
             pairs = set()
             for request in approval_requests:
@@ -23,7 +22,8 @@ class MailActivity(models.Model):
                     ("rule_id", "=", request.rule_id.id)
                 ])
             domain = expression.OR(domains)
-            extra_activities_to_mark_as_done = ApprovalRequestSudo.search(domain).mail_activity_id - approval_activities
+            extra_requests = self.env["studio.approval.request"].sudo().search(domain)
+            extra_activities_to_mark_as_done = extra_requests.mail_activity_id - approval_activities
             extra_activities_to_mark_as_done = self.env['mail.activity'].browse(extra_activities_to_mark_as_done.ids)
             super(MailActivity, extra_activities_to_mark_as_done)._action_done(feedback=feedback, attachment_ids=attachment_ids)
             for (res_id, rule) in pairs:
@@ -37,4 +37,7 @@ class MailActivity(models.Model):
                     rule.with_context(
                         prevent_approval_request_unlink=True
                     ).set_approval(res_id, True)
+            # since 18.3 activities are not unlinked, but archived -> old ondelete cascade
+            # behavior of requests should be done manually
+            (approval_requests | extra_requests).unlink()
         return super()._action_done(feedback=feedback, attachment_ids=attachment_ids)

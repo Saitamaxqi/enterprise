@@ -36,6 +36,7 @@ class TestPlanningLeaves(TestCommon):
         self.assertNotEqual(slot_1.leave_warning, False,
                             "employee is on leave, should have a warning")
         # The warning should display the whole concerned leave period
+        (slot_1 + slot_2).invalidate_recordset(fnames=["leave_warning"])
         self.assertEqual(slot_1.leave_warning,
                          "bert is on time off on 01/01/2020. \n")
 

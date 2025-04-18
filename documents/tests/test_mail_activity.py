@@ -1,6 +1,8 @@
 from odoo.addons.documents.tests.test_documents_common import TransactionCaseDocuments, GIF, TEXT
+from odoo.tests.common import tagged
 
 
+@tagged('mail_activity')
 class TestDocumentsMailActivity(TransactionCaseDocuments):
 
     def test_request_activity(self):
@@ -44,8 +46,8 @@ class TestDocumentsMailActivity(TransactionCaseDocuments):
         document_2.write({'datas': TEXT, 'name': 'new filename'})
         self.assertEqual(document_1.attachment_id.id, attachment.id,
                          'the document should have the newly added attachment')
-        self.assertFalse(activity.exists(), 'the activity should be done')
-        self.assertFalse(activity_2.exists(), 'the activity_2 should be done')
+        self.assertFalse(activity.active, 'the activity should be done')
+        self.assertFalse(activity_2.active, 'the activity_2 should be done')
 
     def test_recurring_document_request(self):
         """
@@ -77,7 +79,7 @@ class TestDocumentsMailActivity(TransactionCaseDocuments):
         # Simulate the document upload controller which create the attachment
         document.write({'attachment_id': self.env['ir.attachment'].create({'datas': GIF, 'name': 'testGif.gif'}).id})
 
-        self.assertFalse(activity.exists(), 'the activity should be removed after file upload')
+        self.assertFalse(activity.active, 'the activity should be removed after file upload')
         self.assertEqual(document.type, 'binary', 'document 1 type should be binary')
         self.assertFalse(document.request_activity_id, 'document 1 should have no activity remaining')
 

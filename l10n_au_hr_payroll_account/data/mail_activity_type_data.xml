@@ -6,7 +6,6 @@
         <field name="res_model">l10n_au.stp</field>
         <field name="icon">fa-gavel</field>
         <field name="summary">Submit to ATO</field>
-        <field name="keep_done" eval="True"/>
     </record>
 
 </odoo>
