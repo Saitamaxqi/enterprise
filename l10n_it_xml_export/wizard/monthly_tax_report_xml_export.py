@@ -123,6 +123,9 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
         options.update(ctx.get("l10n_it_xml_export_monthly_tax_report_options", {}))
         options.update(self._get_wizard_field_dict())
 
+        if ctx.get("l10n_it_moves_to_post"):
+            self.env["account.move"].browse(ctx["l10n_it_moves_to_post"]).action_post()
+
         return {
             'type': 'ir_actions_account_report_download',
             'data': {

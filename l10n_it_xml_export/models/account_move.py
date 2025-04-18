@@ -18,6 +18,13 @@ class AccountMove(models.Model):
             and "l10n_it_xml_export_monthly_tax_report_options" not in self.env.context
         ):
             view_id = self.env.ref('l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view').id
+            ctx = self.env.context.copy()
+            ctx.update({
+                'l10n_it_moves_to_post': self.ids,
+                'l10n_it_xml_export_monthly_tax_report_options': {
+                    'date': {'date_to': max(closing_moves.mapped('date'))},
+                },
+            })
 
             return {
                 'name': _('Post a tax report entry'),
@@ -26,12 +33,7 @@ class AccountMove(models.Model):
                 'res_model': 'l10n_it_xml_export.monthly.tax.report.xml.export.wizard',
                 'type': 'ir.actions.act_window',
                 'target': 'new',
-                'context': {
-                    **self.env.context,
-                    'l10n_it_xml_export_monthly_tax_report_options': {
-                        'date': {'date_to': max(closing_moves.mapped('date'))}
-                    },
-                },
+                'context': ctx,
             }
 
         return super().action_post()
