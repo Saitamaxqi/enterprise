@@ -56,7 +56,7 @@ class ResCompany(models.Model):
     def _get_tax_closing_journal(self):
         journals = self.env['account.journal']
         for company in self:
-            journals |= company.account_tax_return_journal_id or company._get_default_misc_journal()
+            journals |= company.account_tax_return_journal_id or company.sudo()._get_default_misc_journal()
 
         return journals
 
