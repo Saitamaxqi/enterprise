@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 from pytz import timezone, UTC, utc
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import float_is_zero
 from odoo.tools.intervals import Intervals
 from odoo.tools.date_utils import localized
@@ -75,19 +75,17 @@ class HrAttendance(models.Model):
         We also want to add in the gantt rows, the active emloyees that have a check in in the previous 60 days
         """
 
-        domain = expression.AND([domain, self.env.context.get('active_domain', [])])
+        domain = Domain(domain) & Domain(self.env.context.get('active_domain') or Domain.TRUE)
         open_ended_gantt_data = super().get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
 
         if self.env.context.get('gantt_start_date') and groupby and groupby[0] == 'employee_id':
-            user_domain = self.env.context.get('user_domain')
-            active_employees_domain = expression.AND([
-                user_domain,
-                [
-                    '&',
-                    ('check_out', '<', start_date),
-                    ('check_in', '>', fields.Datetime.from_string(start_date) - relativedelta(days=60)),
-                    ('employee_id', 'not in', [group['employee_id'][0] for group in open_ended_gantt_data['groups']])
-                ]])
+            user_domain = Domain(self.env.context.get('user_domain'))
+            active_employees_domain = user_domain & Domain([
+                '&',
+                ('check_out', '<', start_date),
+                ('check_in', '>', fields.Datetime.from_string(start_date) - relativedelta(days=60)),
+                ('employee_id', 'not in', [group['employee_id'][0] for group in open_ended_gantt_data['groups']])
+            ])
             previously_active_employees = super().get_gantt_data(active_employees_domain, groupby, read_specification, limit=None, offset=0, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
             for group in previously_active_employees['groups']:
                 del group['__record_ids']  # Records are not needed here

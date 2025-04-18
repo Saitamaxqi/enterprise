@@ -1,13 +1,11 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 
-from datetime import datetime
 import pytz
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class HrPayslip(models.Model):
@@ -30,10 +28,7 @@ class HrPayslip(models.Model):
                 ('start_datetime', '<=', slip.date_to),
                 ('end_datetime', '>=', slip.date_from),
             ])
-        domain = expression.AND([
-            [('state', '=', 'published')],
-            expression.OR(domains),
-        ])
+        domain = Domain('state', '=', 'published') & Domain.OR(domains)
         read_group = self.env['planning.slot']._read_group(domain, groupby=['employee_id', 'start_datetime:day'], aggregates=['__count'])
         for employee, start_datetime_utc, count in read_group:
             slips = slip_by_employee[employee.id]
@@ -45,7 +40,7 @@ class HrPayslip(models.Model):
     def action_open_planning_slots(self):
         self.ensure_one()
         action = self.employee_id.action_view_planning()
-        action['domain'] = expression.AND([
+        action['domain'] = Domain.AND([
             action['domain'],
             [
                 ('state', '=', 'published'),

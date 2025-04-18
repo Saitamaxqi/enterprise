@@ -1,9 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from dateutil.relativedelta import relativedelta
-
 from odoo import api, fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 from werkzeug.urls import url_encode
 
 
@@ -96,7 +94,7 @@ class HrContractSalaryOffer(models.Model):
             offer.display_name = _("Offer for %(recipient)s", recipient=name) if name else ""
 
     def _search_display_name(self, operator, value):
-        if operator in expression.NEGATIVE_TERM_OPERATORS:
+        if Domain.is_negative_operator(operator):
             return NotImplemented
         return [
             "|",

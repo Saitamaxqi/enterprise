@@ -1,7 +1,9 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from datetime import date, datetime
 from collections import defaultdict
 from odoo import _, api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 import pytz
 
@@ -268,18 +270,15 @@ class HrVersion(models.Model):
         return action
 
     def _get_work_hours_domain(self, date_from, date_to, domain=None, inside=True):
-        if domain is None:
-            domain = []
-        domain = expression.AND([domain, [
-            ('state', 'in', ['validated', 'draft']),
-            ('version_id', 'in', self.ids),
-        ]])
+        domain = Domain.AND([
+            domain or Domain.TRUE,
+            Domain('state', 'in', ['validated', 'draft']),
+            Domain('version_id', 'in', self.ids),
+        ])
         if inside:
-            domain = expression.AND([domain, [
-                ('date_start', '>=', date_from),
-                ('date_stop', '<=', date_to)]])
+            domain &= Domain('date_start', '>=', date_from) & Domain('date_stop', '<=', date_to)
         else:
-            domain = expression.AND([domain, [
+            domain &= Domain([
                 '|', '|',
                 '&', '&',
                     ('date_start', '>=', date_from),
@@ -291,7 +290,8 @@ class HrVersion(models.Model):
                     ('date_stop', '>', date_from),
                 '&',
                     ('date_start', '<', date_from),
-                    ('date_stop', '>', date_to)]])
+                    ('date_stop', '>', date_to),
+            ])
         return domain
 
     def _preprocess_work_hours_data(self, work_data, date_from, date_to):

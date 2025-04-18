@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.survey.controllers.main import Survey
 from odoo import http
 from odoo.exceptions import AccessDenied
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv import expression
 
 
 class AppraisalSurvey(Survey):
@@ -40,12 +39,9 @@ class AppraisalSurvey(Survey):
         appraisal = request.env['hr.appraisal'].sudo().browse(int(post.get('appraisal_id')))
         user = request.env.user
         if user in appraisal.manager_ids.mapped('user_id') or user.has_group('hr_appraisal.group_hr_appraisal_user'):
-            return expression.AND([[('appraisal_id', '=', appraisal.id)], user_input_domain])
+            return Domain('appraisal_id', '=', appraisal.id) & user_input_domain
         if user in appraisal.employee_feedback_ids.mapped('user_id'):
-            return expression.AND([[
-                ('appraisal_id', '=', appraisal.id),
-                ('partner_id', '=', user.partner_id.id)
-            ], user_input_domain])
+            return Domain('appraisal_id', '=', appraisal.id) & Domain('partner_id', '=', user.partner_id.id) & user_input_domain
         raise AccessDenied()
 
     @http.route('/appraisal/<int:appraisal_id>/results', type='http', auth='user', website=True)
@@ -64,9 +60,9 @@ class AppraisalSurvey(Survey):
         survey_sudo = request.env['survey.survey']
         if user.has_group('hr_appraisal.group_hr_appraisal_user') or user.has_group('base.group_system') \
                 or user in appraisal.manager_ids.mapped('user_id'):
-            domain = [('appraisal_id', '=', appraisal.id)]
+            domain = Domain('appraisal_id', '=', appraisal.id)
             if survey_id:
-                domain = expression.AND([[('survey_id', '=', int(survey_id))], domain])
+                domain = Domain('survey_id', '=', int(survey_id)) & domain
             survey_sudo = request.env['survey.user_input'].sudo().search(domain, limit=1).survey_id
         if user in appraisal.employee_feedback_ids.mapped('user_id') and not survey_id:
             answer = request.env['survey.user_input'].sudo().search([

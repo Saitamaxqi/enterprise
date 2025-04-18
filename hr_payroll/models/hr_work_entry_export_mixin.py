@@ -9,7 +9,7 @@ from typing import NamedTuple
 
 from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
-from odoo.osv.expression import AND, OR
+from odoo.fields import Domain
 from odoo.tools import format_date
 
 
@@ -44,9 +44,9 @@ class HrWorkEntryExportMixin(models.AbstractModel):
         return super().default_get(field_list)
 
     def _get_company_domain(self):
-        domain = [('id', '=', self.env.company.id)]
+        domain = Domain('id', '=', self.env.company.id)
         if restriction := self._country_restriction():
-            domain = AND([domain, [('country_id.code', '=', restriction)]])
+            domain &= Domain('country_id.code', '=', restriction)
         return domain
 
     create_uid = fields.Many2one('res.users', index=True)
@@ -103,10 +103,10 @@ class HrWorkEntryExportMixin(models.AbstractModel):
 
     def _get_employee_ids(self):
         return self.env['hr.employee']._search(
-            domain=AND([
-                [('company_id', '=', self.company_id.id)],
-                [('employee_type', 'in', self._get_authorized_employee_types())],
-            ]),
+            domain=[
+                ('company_id', '=', self.company_id.id),
+                ('employee_type', 'in', self._get_authorized_employee_types()),
+            ],
         )
 
     def _get_relevant_work_entries_by_employee(self, employee_ids=None):
@@ -280,20 +280,21 @@ class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
 
     def check_work_entries(self):
         if any(work_entry.state == 'conflict' for work_entry in self.work_entry_ids):
-            base_domain = [
-                ('employee_id', 'in', self.employee_id.ids),
-                ('state', '=', 'conflict'),
-            ]
-            time_domain = OR([[
-                ('date_start', '>=', datetime.combine(export.period_start, time.min)),
-                ('date_start', '<=', datetime.combine(export.period_stop, time.max)),
-            ] for export in self.export_id])
+            base_domain = (
+                Domain('employee_id', 'in', self.employee_id.ids)
+                & Domain('state', '=', 'conflict')
+            )
+            time_domain = Domain.OR(
+                Domain('date_start', '>=', datetime.combine(export.period_start, time.min))
+                & Domain('date_start', '<=', datetime.combine(export.period_stop, time.max))
+                for export in self.export_id
+            )
 
             raise RedirectWarning(
                 message=_('Some work entries are in conflict. Please resolve the conflicts before exporting.'),
                 action=self.env.ref('hr_work_entry.hr_work_entry_action_conflict').id,
                 button_text=_('Resolve Conflicts'),
-                additional_context={'domain': AND([base_domain, time_domain])}
+                additional_context={'domain': base_domain & time_domain}
             )
 
     def action_open_work_entries(self):

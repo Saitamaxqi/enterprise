@@ -1,13 +1,9 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 
-from datetime import datetime
-import pytz
-
 from odoo import api, fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class HrPayslip(models.Model):
@@ -39,7 +35,7 @@ class HrPayslip(models.Model):
                 ('check_out', '>=', slip.date_from),
             ])
         attendance_group = self.env['hr.attendance']._read_group(
-            expression.OR(attendance_domains),
+            Domain.OR(attendance_domains),
             groupby=['employee_id', 'check_in:day'],
             aggregates=['id:recordset'],
         )
