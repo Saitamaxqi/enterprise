@@ -4,8 +4,9 @@
     z-index: $o-voip-softphone-z-index;
 
     &:not(.o-mobile) {
-        width: $o-voip-softphone-width;
-        height: $o-voip-softphone-height;
+        width: 380px;
+        height: 95vh;
+        max-height: 640px;
     }
 
     .o-voip-avatar-bg {
