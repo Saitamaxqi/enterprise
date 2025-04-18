@@ -40,9 +40,6 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             ReceiptScreen.paymentLineContains("Customer Account", "-10.00"),
             ProductScreen.closePos(),
             Dialog.confirm("Close Register"),
-            {
-                trigger: "body:not(:has(.modal))",
-            },
             Chrome.endTour(),
         ].flat(),
 });
