@@ -66,7 +66,7 @@ export class DocumentsSearchModel extends SearchModel {
             }
         }
         super._createCategoryTree(...arguments);
-        const findRootId = (folder)=> {
+        const findRootId = (folder) => {
             if (!folder.parentId) {
                 return folder.id;
             }
@@ -81,7 +81,7 @@ export class DocumentsSearchModel extends SearchModel {
                 parent.rootId = rootId;
                 return rootId;
             }
-        }
+        };
         for (const [, folder] of category.values) {
             if (!folder.rootId) {
                 folder.rootId = findRootId(folder);
@@ -305,24 +305,29 @@ export class DocumentsSearchModel extends SearchModel {
         return result;
     }
 
+    /**
+     * @override Force specific ordering in RECENT and TRASH
+     * and use write_date desc as default otherwise.
+     */
     get orderBy() {
-        const order = super.orderBy;
-        if (!order?.length && this.sections.get(1).activeValueId === "TRASH") {
+        if (this.sections.get(1).activeValueId === "TRASH") {
             return [
                 { name: "write_date", asc: false },
                 { name: "is_folder", asc: false },
             ];
         }
-        if (!order?.length && this.sections.get(1).activeValueId === "RECENT") {
+        if (this.sections.get(1).activeValueId === "RECENT") {
             return [
                 { name: "is_folder", asc: true },
                 { name: "last_access_date_group", asc: false },
+                { name: "write_date", asc: false },
             ];
         }
-        if (this.sections.get(1).activeValueId === false) {
-            order.push({ name: "write_date", asc: false });
+        const orderBy = super.orderBy;
+        if (!orderBy.length) {
+            orderBy.push({ name: "write_date", asc: false });
         }
-        return order;
+        return orderBy;
     }
 
     get groupBy() {

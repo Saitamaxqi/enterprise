@@ -25,14 +25,16 @@ export const DocumentsControllerMixin = (component) =>
          */
         getEmbeddedActions() {
             const embeddedActions = getCommonEmbeddedActions(this.model.targetRecords);
-            return Object.fromEntries(embeddedActions.map(e => [
-                e.id,
-                {
-                    description: e.name,
-                    callback: () => this.model.onDoAction(e.id),
-                    groupNumber: 0
-                }
-            ]));
+            return Object.fromEntries(
+                embeddedActions.map((e) => [
+                    e.id,
+                    {
+                        description: e.name,
+                        callback: () => this.model.onDoAction(e.id),
+                        groupNumber: 0,
+                    },
+                ])
+            );
         }
 
         getTopBarActionMenuItems() {
@@ -84,11 +86,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 1,
                 },
                 trash: {
-                    isAvailable: () =>
-                        userIsInternal &&
-                        editMode &&
-                        someActive &&
-                        someUnlocked,
+                    isAvailable: () => userIsInternal && editMode && someActive && someUnlocked,
                     sequence: 55,
                     description: _t("Move to Trash"),
                     icon: "fa fa-trash",
