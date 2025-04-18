@@ -21,6 +21,7 @@ class IotBox(models.Model):
     drivers_auto_update = fields.Boolean('Automatic drivers update', help='Automatically update drivers when the IoT Box boots', default=True)
     version = fields.Char('Image Version', readonly=True)
     company_id = fields.Many2one('res.company', 'Company')
+    ssl_certificate_end_date = fields.Datetime('SSL Certificate End Date', readonly=True)
 
     def _default_token(self):
         """Generate a token used in the iot box "token" field or by the wizards used to connect a new IoT Box.
@@ -50,14 +51,24 @@ class IotBox(models.Model):
         """Compute HMAC signature for the url and the payload of a request with
         the IoT Box `token` as key.
 
+        In order not to multiply orm requests, we also check the SSL certificate validity
+        in the same method.
+
         :param iot_box_ip: ip of the ioT box
         :param url: url of the request
         :param payload: payload of the request
-        :return: HMAC signature of the timestamp, url and payload
+        :return: HMAC signature of the timestamp, url and payload, and a boolean
+            indicating if the SSL certificate is valid
+        :rtype: dict
         """
         iot_id = self.env['iot.box'].search([('ip', '=', iot_box_ip)], limit=1)
 
-        return hmac_sign(url, payload, iot_id.token)
+        return {
+            "signature": hmac_sign(url, payload, iot_id.token),
+            "isSslCertificateValid": (
+                iot_id.ssl_certificate_end_date and iot_id.ssl_certificate_end_date > fields.Datetime.now()
+            ),
+        }
 
     def _compute_ip_url(self):
         for box in self:

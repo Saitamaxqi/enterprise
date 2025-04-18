@@ -24,6 +24,7 @@ _iot_logger.setLevel(logging.DEBUG)
 
 _logger = logging.getLogger(__name__)
 
+
 class IoTController(http.Controller):
     def _search_box(self, mac_address):
         return request.env['iot.box'].sudo().search([('identifier', '=', mac_address)], limit=1)
@@ -114,23 +115,16 @@ class IoTController(http.Controller):
             }, message_type='print_confirmation')
 
     @http.route('/iot/setup', type='jsonrpc', auth='public')
-    def update_box(self, **kwargs):
-        """
-        This function receives a dict from the iot box with information from it 
+    def update_box(self, iot_box, devices):
+        """This function receives a dict from the iot box with information from it
         as well as devices connected and supported by this box.
         This function create the box and the devices and set the status (connected / disconnected)
          of devices linked with this box
-        """
-        if kwargs:
-            # Box > V19
-            iot_box = kwargs['iot_box']
-            devices = kwargs['devices']
-        else:
-            # Box < V19
-            data = request.jsonrequest
-            iot_box = data
-            devices = data['devices']
 
+        :param dict iot_box: IoT Box information
+        :param dict devices: IoT devices information
+        :return: IoT websocket channel
+        """
         # Update or create box
         iot_identifier = iot_box['identifier']  # IoT Mac Address
         box = self._search_box(iot_identifier)
@@ -154,7 +148,7 @@ class IoTController(http.Controller):
                 icp_sudo.set_param('iot.iot_token', '')
             else:
                 _logger.warning('Token mismatch for IoT %s expected %s got %s', iot_identifier, iot_token, iot_box['token'])
-                return
+                return None
 
         _logger.info('IoT %s devices:\n%s', box, pprint.pformat(devices))
         # Update or create devices
@@ -200,6 +194,7 @@ class IoTController(http.Controller):
             (previously_connected_iot_devices - connected_iot_devices).write({'connected_status': 'disconnected'})
             iot_channel = request.env['iot.channel'].sudo().get_iot_channel()
             return iot_channel
+        return None
 
     def _is_iot_log_enabled(self):
         return str2bool(request.env['ir.config_parameter'].sudo().get_param('iot.should_log_iot_logs', True))
@@ -253,3 +248,17 @@ class IoTController(http.Controller):
             log_current_level()
 
         return finish_request()
+
+    @http.route('/iot/box/update_certificate_status', type='jsonrpc', auth='public')
+    def update_certificate_status(self, iot_mac, ssl_certificate_end_date):
+        """Update the SSL certificate end date for the IoT Box.
+
+        :param str iot_mac: IoT Box mac address
+        :param str ssl_certificate_end_date: SSL certificate end date
+        """
+        box = self._search_box(iot_mac)
+        if not box:
+            _logger.warning("No IoT Box found with mac '%s'. Request ignored", iot_mac)
+            return
+
+        box.write({'ssl_certificate_end_date': ssl_certificate_end_date})

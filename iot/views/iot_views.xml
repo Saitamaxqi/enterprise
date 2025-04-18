@@ -61,6 +61,7 @@
                                 <field name="ip"/>
                                 <field name="version"/>
                                 <field name="drivers_auto_update"/>
+                                <field name="ssl_certificate_end_date" invisible="not ssl_certificate_end_date"/>
                             </group>
                         </page>
                     </notebook>
