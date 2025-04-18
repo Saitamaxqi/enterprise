@@ -36,6 +36,7 @@ class AccountMove(models.Model):
                     act_type_xmlid='l10n_be_reports.ec_sales_list_activity',
                     summary=_( 'Generate the EC Sales List: %s', ec_sales_list_deadline.strftime("&B &y")),
                     date_deadline=ec_sales_list_deadline,
+                    user_id=self.env.uid,
                 )
 
             if record.date.month in {10, 11, 12} and self.env.context.get('l10n_be_reports_generation_options', {}).get('client_nihil'):
@@ -43,6 +44,7 @@ class AccountMove(models.Model):
                     act_type_xmlid='l10n_be_reports.partner_vat_listing_report_activity',
                     summary=_( 'Generate the Partner VAT Listing: %s', partner_vat_listing_deadline.strftime("&y")),
                     date_deadline=partner_vat_listing_deadline,
+                    user_id=self.env.uid,
                 )
 
         return action
