@@ -97,3 +97,14 @@
         }
     }
 }
+
+@media (hover: hover) { // Devices supporting hover
+    .o_widget_knowledge_properties_panel {
+        .o_field_property_label:not(:hover) {
+            .o_field_property_open_popover,
+            .oi-draggable {
+                opacity: 0;
+            }
+        }
+    }
+}

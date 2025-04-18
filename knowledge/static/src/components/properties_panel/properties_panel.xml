@@ -14,7 +14,7 @@
             <div class='o_field_widget o_field_properties'>
                 <PropertiesField
                     columns="1"
-                    showAddButton="userIsInternal"
+                    editMode="userIsInternal"
                     name="'article_properties'"
                     record="this.props.record"
                     readonly="this.props.record.data.is_locked || !this.props.record.data.user_can_write"
