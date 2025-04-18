@@ -77,7 +77,12 @@ class IoTDeviceController extends formView.Controller {
 
     async onClickButtonTest(params) {
         if (params.clickParams.name === "test_printer") {
-            this.getIotDevice(this.model.root.data).action({ action: "status" });
+            const device = this.getIotDevice(this.model.root.data);
+            device.addListener(() => {
+                this.notificationService.add(_t("Test page printed"), {type: "info"});
+                device.removeListener();
+            });
+            device.action({ action: "status" });
         }
     }
 }
