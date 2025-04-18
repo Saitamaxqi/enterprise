@@ -13,7 +13,6 @@ export class FieldMany2OneIoTScale extends Component {
     static components = { Many2One };
     static props = {
         ...Many2OneField.props,
-        manual_measurement_field: { type: String },
         ip_field: { type: String },
         identifier_field: { type: String },
         value_field: { type: String },
@@ -24,12 +23,12 @@ export class FieldMany2OneIoTScale extends Component {
             getIdentifier: () => this.props.record.data[this.props.identifier_field],
             onValueChange: (data) => this.props.record.update({ [this.props.value_field]: data.value }),
             onStartListening: () => {
-                if (this.getIotDevice() && !this.manualMeasurement) {
+                if (this.getIotDevice()) {
                     this.getIotDevice().action({ action: 'start_reading' });
                 }
             },
             onStopListening: () => {
-                if (this.getIotDevice() && !this.manualMeasurement) {
+                if (this.getIotDevice()) {
                     this.getIotDevice().action({ action: 'stop_reading' });
                 }
             }
@@ -38,12 +37,6 @@ export class FieldMany2OneIoTScale extends Component {
 
     get m2oProps() {
         return computeM2OProps(this.props);
-    }
-    get showManualReadButton() {
-        return this.getIotDevice() && this.manualMeasurement && this.env.model.root.isInEdition;
-    }
-    get manualMeasurement() {
-        return this.props.record.data[this.props.manual_measurement_field];
     }
     onClickReadWeight() {
         return this.getIotDevice().action({ action: 'read_once' });
@@ -54,7 +47,6 @@ registry.category("fields").add("field_many2one_iot_scale", {
     ...buildM2OFieldDescription(FieldMany2OneIoTScale),
     extractProps({ options }) {
         const props = extractM2OFieldProps(...arguments);
-        props.manual_measurement_field = options.manual_measurement_field;
         props.ip_field = options.ip_field;
         props.identifier_field = options.identifier;
         props.value_field = options.value_field;

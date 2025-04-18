@@ -54,11 +54,6 @@ class IotDevice(models.Model):
             "leave empty to use the customer facing display of the POS."
         )
     )
-    manual_measurement = fields.Boolean(
-        'Manual Measurement',
-        compute="_compute_manual_measurement",
-        help="Manually read the measurement from the device"
-    )
     is_scanner = fields.Boolean(
         string='Is Scanner',
         compute="_compute_is_scanner",
@@ -88,11 +83,6 @@ class IotDevice(models.Model):
     def _set_scanner(self):
         for device in self:
             device.type = 'scanner' if device.is_scanner else 'keyboard'
-
-    @api.depends('manufacturer')
-    def _compute_manual_measurement(self):
-        for device in self:
-            device.manual_measurement = device.manufacturer == 'Adam'
 
 
 class IotKeyboardLayout(models.Model):

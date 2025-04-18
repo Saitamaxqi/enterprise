@@ -10,10 +10,9 @@
                 <field name="iot_ip" invisible="1"/>
                 <field name="available_scale_ids" invisible="1"/>
                 <field name="iot_device_identifier" invisible="1"/>
-                <field name="manual_measurement" invisible="1"/>
                 <field name="iot_device_id" widget="field_many2one_iot_scale"
                     invisible="not delivery_package_type_id"
-                    options="{'value_field': 'shipping_weight', 'identifier': 'iot_device_identifier', 'ip_field': 'iot_ip', 'manual_measurement_field': 'manual_measurement'}"
+                    options="{'value_field': 'shipping_weight', 'identifier': 'iot_device_identifier', 'ip_field': 'iot_ip'}"
                     domain="[('id', 'in', available_scale_ids)]"/>
             </xpath>
         </field>

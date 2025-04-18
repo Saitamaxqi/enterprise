@@ -10,7 +10,6 @@ class ChooseDeliveryPackage(models.TransientModel):
     iot_device_id = fields.Many2one('iot.device', "Scale", compute='_compute_iot_device_id', store=True, readonly=False)
     iot_device_identifier = fields.Char(related='iot_device_id.identifier')
     iot_ip = fields.Char(related='iot_device_id.iot_ip')
-    manual_measurement = fields.Boolean(related='iot_device_id.manual_measurement')
 
     @api.depends('move_line_ids')
     def _compute_iot_device_id(self):
