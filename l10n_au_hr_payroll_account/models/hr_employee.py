@@ -7,7 +7,7 @@ from odoo import models, fields
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    ytd_balance_ids = fields.One2many("l10n_au.payslip.ytd", "employee_id", string="YTD Balances")
+    ytd_balance_ids = fields.One2many("l10n_au.payslip.ytd", "employee_id", string="YTD Balances", groups="hr.group_hr_user")
 
     def _get_fiscal_year_data(self, date_start: date, date_end: date, finalised=False):
         self.ensure_one()
