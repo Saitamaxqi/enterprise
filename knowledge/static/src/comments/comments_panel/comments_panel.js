@@ -174,7 +174,7 @@ export class KnowledgeCommentsPanel extends Component {
 
 export const knowledgeCommentsPanel = {
     component: KnowledgeCommentsPanel,
-    additionalClasses: ["col-12", "col-lg-4", "border-start", "border-top", "d-print-none"],
+    additionalClasses: ["col-12", "col-lg-4", "border-top", "d-print-none"],
 };
 
 registry.category("view_widgets").add("knowledge_comments_panel", knowledgeCommentsPanel);

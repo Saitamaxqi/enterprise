@@ -39,7 +39,6 @@ export const knowledgePropertiesPanel = {
         "col-12",
         "col-lg-2",
         "p-0",
-        "border-start",
         "position-relative",
         "border-top",
     ],

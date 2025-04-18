@@ -254,13 +254,18 @@
             overflow-x: hidden;
         }
     }
+    .o_widget_knowledge_chatter_panel,
+    .o_widget_knowledge_comments_panel,
+    .o_widget_knowledge_properties_panel {
+        border-left: 1px solid $border-color;
+    }
 }
 
-@include media-breakpoint-down(xl) {
-    .o_knowledge_form_view {
-        .o_scroll_view_lg {
-            width: 100%;
-        }
+@include media-breakpoint-down(lg) {
+    .o_widget_knowledge_chatter_panel,
+    .o_widget_knowledge_comments_panel,
+    .o_widget_knowledge_properties_panel {
+        width: 100% !important;
     }
 }
 
