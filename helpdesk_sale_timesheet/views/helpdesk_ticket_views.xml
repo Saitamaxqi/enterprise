@@ -12,13 +12,13 @@
                 <field name="helpdesk_ticket_id" column_invisible="True"/>
             </xpath>
             <xpath expr="//field[@name='timesheet_ids']/list/field[@name='unit_amount']" position="before">
-                <field name="so_line"
+                <field name="so_line" widget="so_line_field"
                     groups="!sales_team.group_sale_salesman"
                     column_invisible="not parent.use_helpdesk_sale_timesheet or not parent.partner_id"
                     readonly="readonly_timesheet"
                     domain="[('is_service', '=', True), ('order_partner_id', 'child_of', parent.commercial_partner_id), ('is_expense', '=', False), ('state', '=', 'sale'), ('is_downpayment', '=', False)]"
                     optional="show" options="{'no_create': True, 'no_open': True}"/>
-                <field name="so_line"
+                <field name="so_line" widget="so_line_field"
                     groups="sales_team.group_sale_salesman"
                     column_invisible="not parent.use_helpdesk_sale_timesheet or not parent.partner_id"
                     readonly="readonly_timesheet"
