@@ -91,6 +91,7 @@ class TestKeEdiStock(TestKeEdiCommon):
             We do this sequentially (first the invoice, its stock IO and stock master,
             then the credit note, its stock IO and stock master).
         """
+        self.env.user.group_ids |= self.env.ref('sales_team.group_sale_salesman')
         # Step 1: create invoice
         invoice = self.init_invoice(
             'out_invoice',
@@ -158,6 +159,7 @@ class TestKeEdiStock(TestKeEdiCommon):
             4) Now send Invoice n.1.
             5) Stock IO and Stock Master should be sent with the quantities in Sale Order n.1.
         """
+        self.env.user.group_ids |= self.env.ref('sales_team.group_sale_salesman')
         # Step 1: create invoice 1 and sale order, and validate picking.
         invoice_1 = self.init_invoice(
             'out_invoice',
