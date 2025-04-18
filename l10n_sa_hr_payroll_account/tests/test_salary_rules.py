@@ -26,6 +26,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'l10n_sa_number_of_days': 20.0,
             }
         )
+        cls.env.user.group_ids |= cls.env.ref('hr_holidays.group_hr_holidays_manager')
 
         cls.saudi_work_contact = cls.env['res.partner'].create({
             'name': 'KSA Local Employee',
