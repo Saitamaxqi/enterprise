@@ -6,11 +6,11 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form" />
             <field name="arch" type="xml">
-                <xpath expr="//h2//field[@name='login']" position="after">
-                    <label for="insz_or_bis_number" string="INSZ Number"/>
-                    <h2>
-                        <field name="insz_or_bis_number"/>
-                    </h2>
+                <xpath expr="//h3[.//field[@name='login']]" position="after">
+                    <h3 class="d-flex align-items-baseline w-sm-50 mb-0">
+                        <i class="fa fa-fw me-1 fa-id-card text-primary" title="INSZ Number"/>
+                        <field name="insz_or_bis_number" class="w-100" placeholder="INSZ Number"/>
+                    </h3>
                 </xpath>
             </field>
         </record>
