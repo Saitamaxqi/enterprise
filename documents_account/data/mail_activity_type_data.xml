@@ -3,6 +3,7 @@
     <data noupdate="1">
         <record id="mail_documents_activity_data_vat" model="mail.activity.type">
             <field name="name">Tax Statement</field>
+            <field name="summary">Tax Statement</field>
             <field name="delay_count">3</field>
             <field name="delay_unit">months</field>
             <field name="res_model">documents.document</field>
@@ -17,6 +18,7 @@
 
         <record id="mail_documents_activity_data_fs" model="mail.activity.type">
             <field name="name">Financial Statement</field>
+            <field name="summary">Financial Statement</field>
             <field name="delay_count">12</field>
             <field name="delay_unit">months</field>
             <field name="res_model">res.partner</field>

@@ -102,7 +102,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                     <field name="name">Add "To Validate" activity</field>
                     <field name="state">next_activity</field>
                     <field name="usage">documents_embedded</field>
-                    <field name="activity_type_id" ref="documents.mail_documents_activity_data_tv"/>
+                    <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
                 </record>
             </field>
         </record>

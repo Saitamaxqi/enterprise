@@ -3,6 +3,7 @@
     <data noupdate="1">
         <record id="mail_activity_data_approve" model="mail.activity.type">
             <field name="name">Grant Approval</field>
+            <field name="summary">Grant Approval</field>
             <field name="icon">fa-check</field>
             <field name="delay_count">0</field>
             <field name="category">grant_approval</field>
