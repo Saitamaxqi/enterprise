@@ -12,7 +12,7 @@ class TestAccountMoveFleet(AccountTestInvoicingCommon):
         cls.batmobile = cls.env['fleet.vehicle'].create({
             'model_id': cls.env['fleet.vehicle.model'].create({
                 'name': 'Batmobile',
-                'brand_id': cls.env['fleet.vehicle.model.brand'].create({
+                'brand_id': cls.env['fleet.vehicle.model.brand'].sudo().create({
                     'name': 'Wayne Enterprises',
                 }).id,
                 'vehicle_type': 'car',
