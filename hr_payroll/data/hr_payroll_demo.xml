@@ -23,6 +23,7 @@
         <!-- Contribution Register -->
         <record id="hr_houserent_register" model="res.partner">
             <field name="name">House Rent Allowance Register</field>
+            <field name="is_company">1</field>
         </record>
 
         <record id="hr_provident_fund_register" model="res.partner">

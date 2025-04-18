@@ -7,7 +7,7 @@ registry.category("web_tour.tours").add("whatsapp_partner_tour", {
     steps: () => [
         ...stepUtils.goToAppSteps("contacts.menu_contacts", "Open the contacts menu"),
         {
-            trigger: ".o_kanban_record:contains('32499123456')",
+            trigger: ".o_data_cell:contains('32499123456')",
             content: _t("Open the form view of partner 32499123456"),
             run: "click",
         },
