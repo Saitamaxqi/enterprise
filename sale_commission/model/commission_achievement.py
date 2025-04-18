@@ -25,7 +25,7 @@ class SaleCommissionAchievement(models.Model):
             else:
                 achievement.display_name = _("Adjustment %s", achievement.id)
 
-    @api.depends('currency_id')
+    @api.depends('currency_id', 'date')
     def _compute_currency_rate(self):
         for achievement in self:
             achievement.currency_rate = self.env['res.currency']._get_conversion_rate(
