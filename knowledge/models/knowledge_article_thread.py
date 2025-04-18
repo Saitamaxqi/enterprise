@@ -97,7 +97,7 @@ class KnowledgeArticleThread(models.Model):
             return action
         return super()._get_access_action(access_uid=access_uid, force_website=force_website)
 
-    def _notify_thread_by_email(self, message, recipients_data, msg_vals=False, **kwargs):
+    def _notify_thread_by_email(self, message, recipients_data, *, msg_vals=False, **kwargs):
         # Use knowledge specific template which is a simple template comprised of the
         # # comment sent and the person that tagged the notified user.
         msg_vals = msg_vals or {}

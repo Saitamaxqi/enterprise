@@ -20,8 +20,7 @@ class SpreadsheetCellThread(models.Model):
             SpreadsheetCellThread, self.with_context(mail_create_nolog=True)
         ).create(vals_list)
 
-
-    def _notify_thread_by_email(self, message, recipients_data, msg_vals=False, **kwargs):
+    def _notify_thread_by_email(self, message, recipients_data, *, msg_vals=False, **kwargs):
         # Set a specific mail template to be sent to users that have been tagged inside a comment.
         # It is a simple template comprised of the comment sent and the person that tagged the notified user.
         msg_vals = msg_vals or {}

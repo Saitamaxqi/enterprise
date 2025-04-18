@@ -868,10 +868,10 @@ class HelpdeskTicket(models.Model):
         return email_keys_to_values
 
     @api.model
-    def message_new(self, msg, custom_values=None):
-        values = dict(custom_values or {}, partner_email=msg.get('from'), partner_name=msg.get('from'), partner_id=msg.get('author_id'))
-        ticket = super(HelpdeskTicket, self.with_context(mail_notify_author=True)).message_new(msg, custom_values=values)
-        partner_ids = ticket._partner_find_from_emails_single(tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or ''))).ids
+    def message_new(self, msg_dict, custom_values=None):
+        values = dict(custom_values or {}, partner_email=msg_dict.get('from'), partner_name=msg_dict.get('from'), partner_id=msg_dict.get('author_id'))
+        ticket = super(HelpdeskTicket, self.with_context(mail_notify_author=True)).message_new(msg_dict, custom_values=values)
+        partner_ids = ticket._partner_find_from_emails_single(tools.email_split((msg_dict.get('to') or '') + ',' + (msg_dict.get('cc') or ''))).ids
         customer_ids = ticket._partner_find_from_emails_single(tools.email_split(values['partner_email'])).ids
         partner_ids += customer_ids
         if customer_ids and not values.get('partner_id'):
@@ -880,11 +880,11 @@ class HelpdeskTicket(models.Model):
             ticket.message_subscribe(partner_ids)
         return ticket
 
-    def message_update(self, msg, update_vals=None):
+    def message_update(self, msg_dict, update_vals=None):
         for ticket in self:
-            if partners := ticket._partner_find_from_emails_single(tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or '')), no_create=True):
+            if partners := ticket._partner_find_from_emails_single(tools.email_split((msg_dict.get('to') or '') + ',' + (msg_dict.get('cc') or '')), no_create=True):
                 self.message_subscribe(partners.ids)
-        return super().message_update(msg, update_vals=update_vals)
+        return super().message_update(msg_dict, update_vals=update_vals)
 
     def _message_compute_subject(self):
         """ Override the display name by the actual name field for communication."""

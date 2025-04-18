@@ -27,12 +27,12 @@ class ProjectTask(models.Model):
         return users.filtered(lambda l: not l.share).ids
 
     @api.model
-    def message_new(self, msg, custom_values=None):
+    def message_new(self, msg_dict, custom_values=None):
         if custom_values is None:
             custom_values = {}
-        if not custom_values.get('project_id', True) and msg.get('email_from'):
-            user_ids = self._find_internal_users_from_address_mail(msg.get('email_from'))
+        if not custom_values.get('project_id', True) and msg_dict.get('email_from'):
+            user_ids = self._find_internal_users_from_address_mail(msg_dict.get('email_from'))
             if user_ids:
                 custom_values['user_ids'] = user_ids
 
-        return super(ProjectTask, self.with_context(create_todo=True)).message_new(msg, custom_values)
+        return super(ProjectTask, self.with_context(create_todo=True)).message_new(msg_dict, custom_values)
