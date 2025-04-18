@@ -9,6 +9,9 @@ class HrWorkEntry(models.Model):
     # speeds up `l10n_be.work.entry.daily.benefit.report`
     _daily_benefit_idx = models.Index("(active, employee_id) WHERE state IN ('draft', 'validated')")
 
+    def _get_leaves_entries_outside_schedule(self):
+        return super()._get_leaves_entries_outside_schedule().filtered(lambda w: not w.work_entry_type_id.l10n_be_is_time_credit)
+
     @api.model_create_multi
     def create(self, vals_list):
         res = super().create(vals_list)

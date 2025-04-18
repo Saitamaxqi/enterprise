@@ -283,8 +283,6 @@
             <field name="l10n_in_esic_employee_amount">338.025</field>
             <field name="l10n_in_esic_employer_amount">1464.77</field>
             <field name="pt_rule_parameter_id" ref="l10n_in_hr_payroll.l10n_in_rule_parameter_pt_gujarat"/>
-            <field name="time_credit" eval="True"/>
-            <field name="time_credit_type_id" ref="hr_work_entry.work_entry_type_unpaid_leave"/>
             <field name="hr_responsible_id" ref="base.user_demo"/>
             <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
             <field name="date_version" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>

@@ -51,7 +51,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
             'date_end': date(2023, 4, 30),
             'resource_calendar_id': self.resource_calendar_mid_time.id,
             'leave_type_id': self.paid_time_off_type.id,
-            'part_time': True,
             'previous_contract_creation': True,
         })
         self.assertEqual(wizard.time_off_allocation, 10)
@@ -67,7 +66,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
         # Apply allocation changes directly - Credit time exit
         full_time_contract = self.employee_georges.version_ids[-1]
         self.env['l10n_be.schedule.change.allocation']._cron_update_allocation_from_new_schedule(full_time_contract.contract_date_start)
-        self.assertEqual(full_time_contract.time_credit, False)
         self.assertEqual(georges_allocation.number_of_days, 14.5)
 
     def test_credit_time_for_john_doe(self):
@@ -86,7 +84,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
             'date_end': date(2023, 4, 30),
             'resource_calendar_id': self.resource_calendar_9_10.id,
             'leave_type_id': self.paid_time_off_type.id,
-            'part_time': True,
             'previous_contract_creation': True,
         })
         self.assertEqual(wizard.time_off_allocation, 16)  # John may have 88% of 20 days this year -> ~17.5
@@ -102,7 +99,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
         # Apply allocation changes directly - Credit time exit
         continuation_contract = self.employee_john.version_ids[-1]
         self.env['l10n_be.schedule.change.allocation']._cron_update_allocation_from_new_schedule(continuation_contract.contract_date_start)
-        self.assertEqual(continuation_contract.time_credit, True)  # Wizard is part_time
         self.assertEqual(john_allocation.number_of_days, 10)
 
     def test_credit_time_for_a(self):
@@ -123,7 +119,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
             'date_end': date(2023, 4, 30),
             'resource_calendar_id': self.resource_calendar_4_5.id,
             'leave_type_id': self.paid_time_off_type.id,
-            'part_time': True,
             'previous_contract_creation': True,
         })
         self.assertEqual(wizard.time_off_allocation, 16)
@@ -136,7 +131,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
 
         # Apply allocation changes directly
         full_time_contract = self.employee_a.version_ids[-1]
-        self.assertEqual(full_time_contract.time_credit, False)
         self.env['l10n_be.schedule.change.allocation']._cron_update_allocation_from_new_schedule(full_time_contract.contract_date_start)
         self.assertEqual(a_allocation.number_of_days, 20)
 
@@ -175,7 +169,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
                 'date_start': date(2023, 6, 1),
                 'resource_calendar_id': self.resource_calendar_4_5.id,
                 'leave_type_id': self.paid_time_off_type.id,
-                'part_time': True,
                 'previous_contract_creation': True,
             })
             self.assertEqual(wizard.time_off_allocation, 16)  # 16 max
@@ -205,7 +198,6 @@ class TestPayrollCreditTime(TestPayrollCommon):
                 'date_end': date(2023, 12, 31),
                 'resource_calendar_id': self.resource_calendar_mid_time.id,
                 'leave_type_id': self.paid_time_off_type.id,
-                'part_time': True,
                 'previous_contract_creation': True,
             })
 

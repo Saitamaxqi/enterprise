@@ -263,7 +263,7 @@ class HrPayslip(models.Model):
             if not check_out_of_version:
                 return res
             out_days, out_hours = 0, 0
-            reference_calendar = self._get_out_of_version_calendar()
+            reference_calendar = self._get_out_of_contract_calendar()
             domain &= Domain('work_entry_type_id.is_leave', '=', True)
             if self.date_from < contract.date_start:
                 start = fields.Datetime.to_datetime(self.date_from)

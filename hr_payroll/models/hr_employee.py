@@ -35,7 +35,6 @@ class HrEmployee(models.Model):
     wage_type = fields.Selection(readonly=False, related="version_id.wage_type", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     hourly_wage = fields.Monetary(readonly=False, related="version_id.hourly_wage", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     payslips_count = fields.Integer(related="version_id.payslips_count", inherited=True, groups="hr_payroll.group_hr_payroll_user")
-    time_credit = fields.Boolean(readonly=False, related="version_id.time_credit", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     work_time_rate = fields.Float(related="version_id.work_time_rate", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     disabled = fields.Boolean(readonly=False, related="version_id.disabled", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     date_start = fields.Date(related="version_id.date_start", inherited=True, groups="hr_payroll.group_hr_payroll_user")

@@ -565,8 +565,9 @@ class DMFAOccupation(DMFANode):
             self.date_stop = contract.date_end
 
         # See: https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/fill_in_dmfa/dmfa_fillinrules/workerrecord_occupationrecords/occupationrecord.html
-        if contract.time_credit or contract.resource_calendar_id.work_time_rate < 100:
-            if contract.time_credit and contract.time_credit_type_id.code in ['LEAVE300', 'LEAVE301', 'LEAVE281', 'MEDIC01']:
+        time_credit_type_ids = calendar.attendance_ids.work_entry_type_id.filtered('l10n_be_is_time_credit')
+        if contract.l10n_be_time_credit or contract.resource_calendar_id.work_time_rate < 100:
+            if contract.l10n_be_time_credit and any(t.code in ['LEAVE300', 'LEAVE301', 'LEAVE281', 'MEDIC01'] for t in time_credit_type_ids):
                 hours_per_week = contract.standard_calendar_id.hours_per_week
             else:
                 hours_per_week = contract.company_id.resource_calendar_id.hours_per_week
@@ -575,12 +576,12 @@ class DMFAOccupation(DMFANode):
         self.ref_mean_working_hours = ('%.2f' % hours_per_week).replace('.', '').zfill(4)
 
         # Voir Annexe 44: Réorganisation du temps de travail
-        if contract.time_credit and contract.time_credit_type_id.code in ['LEAVE300', 'LEAVE301', 'MEDIC01']:
+        if contract.l10n_be_time_credit and any(t.code in ['LEAVE300', 'LEAVE301', 'MEDIC01'] for t in time_credit_type_ids):
             if not contract.resource_calendar_id.hours_per_week:
                 self.reorganisation_measure = 3
             else:
                 self.reorganisation_measure = 4
-        elif contract.time_credit and contract.time_credit_type_id.code == "LEAVE281":
+        elif contract.l10n_be_time_credit and any(t.code == "LEAVE281" for t in time_credit_type_ids):
             self.reorganisation_measure = 5
         else:
             self.reorganisation_measure = -1
@@ -596,7 +597,7 @@ class DMFAOccupation(DMFANode):
         self.ActivityCode = -1  # Facultative
         self.days_justification = -1 # YTI: Will be useful for payroll based on attendances
 
-        if contract.time_credit and contract.time_credit_type_id.code == 'LEAVE281':
+        if contract.l10n_be_time_credit and any(t.code == 'LEAVE281' for t in time_credit_type_ids):
             days_per_week = 5.0
             mean_working_hours = 38.0
         else:
@@ -606,7 +607,7 @@ class DMFAOccupation(DMFANode):
         self.days_per_week = format_amount(days_per_week, width=3)
         self.mean_working_hours = ('%.2f' % mean_working_hours).replace('.', '').zfill(4)
 
-        self.is_parttime = 1 if (not calendar.is_fulltime and not contract.time_credit) else 0
+        self.is_parttime = 1 if (not calendar.is_fulltime and not contract.l10n_be_time_credit) else 0
 
         self.commission = 200  # only CP200 currently supported
         self.services, self.skip_remun = self._prepare_services()

@@ -1,8 +1,6 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
 
 
 class HrWorkEntryType(models.Model):
@@ -81,6 +79,7 @@ class HrWorkEntryType(models.Model):
     leave_right = fields.Boolean(
         string="Keep Time Off Right", default=False,
         help="Work entries counts for time off right for next year.")
+    l10n_be_is_time_credit = fields.Boolean(string="Time Credit", default=False)
 
     @api.model
     def get_work_entry_type_benefits(self):

@@ -63,7 +63,7 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
             ]],
         }]).sudo(False)
 
-        part_time_calendar_3_5 = self.env['resource.calendar'].sudo().create([{
+        credit_time_calendar_3_5 = self.env['resource.calendar'].sudo().create([{
             'name': "Test Calendar: 3/5 Tuesday/Wednesday Off",
             'company_id': self.env.company.id,
             'tz': "Europe/Brussels",
@@ -88,6 +88,20 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
                 ("4", 8.0, 12.0, "morning"),
                 ("4", 12.0, 13.0, "lunch"),
                 ("4", 13.0, 16.6, "afternoon"),
+            ]] + [(0, 0, {
+                'name': "Attendance",
+                'dayofweek': dayofweek,
+                'hour_from': hour_from,
+                'hour_to': hour_to,
+                'day_period': day_period,
+                'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+            }) for dayofweek, hour_from, hour_to, day_period in [
+                ("1", 8.0, 12.0, "morning"),
+                ("1", 12.0, 13.0, "lunch"),
+                ("1", 13.0, 16.6, "afternoon"),
+                ("2", 8.0, 12.0, "morning"),
+                ("2", 12.0, 13.0, "lunch"),
+                ("2", 13.0, 16.6, "afternoon"),
             ]],
         }]).sudo(False)
 
@@ -106,11 +120,8 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
             'contract_date_start': date(2020, 11, 1),
             'contract_date_end': date(2021, 12, 31),
             'employee_id': employee.id,
-            'resource_calendar_id': part_time_calendar_3_5.id,
+            'resource_calendar_id': credit_time_calendar_3_5.id,
             'standard_calendar_id': full_time_calendar.id,
-            'time_credit': True,
-            'work_time_rate': 0.6,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 1000,
         })
 

@@ -2,7 +2,6 @@
 
 from datetime import date, datetime
 from collections import defaultdict
-import pytz
 
 from odoo import _, api, fields, models
 from odoo.fields import Domain
@@ -46,18 +45,12 @@ class HrVersion(models.Model):
     ], compute='_compute_wage_type', store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
     hourly_wage = fields.Monetary('Hourly Wage', tracking=True, help="Employee's hourly gross wage.", groups="hr_payroll.group_hr_payroll_user")
     payslips_count = fields.Integer("# Payslips", compute='_compute_payslips_count', groups="hr_payroll.group_hr_payroll_user")
-
-    time_credit = fields.Boolean('Part Time', readonly=False, groups="hr_payroll.group_hr_payroll_user")
     work_time_rate = fields.Float(
         compute='_compute_work_time_rate', store=True, readonly=True,
         string='Work time rate', help='Work time rate versus full time working schedule.', groups="hr_payroll.group_hr_payroll_user")
     standard_calendar_id = fields.Many2one(
         'resource.calendar', default=lambda self: self.env.company.resource_calendar_id, readonly=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", groups="hr.group_hr_user")
-    time_credit_type_id = fields.Many2one(
-        'hr.work.entry.type', string='Part Time Work Entry Type',
-        domain=[('is_leave', '=', True)],
-        help="The work entry type used when generating work entries to fit full time working schedule.", groups="hr_payroll.group_hr_payroll_user")
     is_non_resident = fields.Boolean(string='Non-resident', help='If the employee is not a legal resident of the country where they are employed', groups="hr.group_hr_user")
     disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr_payroll.group_hr_payroll_user", tracking=True)
 
@@ -75,15 +68,11 @@ class HrVersion(models.Model):
         for version in self:
             version.wage_type = version.structure_type_id.wage_type
 
-    @api.depends('time_credit', 'resource_calendar_id.hours_per_week', 'standard_calendar_id.hours_per_week')
+    @api.depends('resource_calendar_id.hours_per_week', 'standard_calendar_id.hours_per_week')
     def _compute_work_time_rate(self):
         for version in self:
-            if version.time_credit and version.structure_type_id.default_resource_calendar_id:
-                hours_per_week = version.resource_calendar_id.hours_per_week
-                hours_per_week_ref = version.structure_type_id.default_resource_calendar_id.hours_per_week
-            else:
-                hours_per_week = version.resource_calendar_id.hours_per_week
-                hours_per_week_ref = version.company_id.resource_calendar_id.hours_per_week
+            hours_per_week = version.resource_calendar_id.hours_per_week
+            hours_per_week_ref = version.company_id.resource_calendar_id.hours_per_week
             if not hours_per_week and not hours_per_week_ref:
                 version.work_time_rate = 1
             else:
@@ -143,8 +132,7 @@ class HrVersion(models.Model):
         self.ensure_one()
         contract_type = self.contract_type_id
         work_time_rate = self.resource_calendar_id.work_time_rate
-        same_type = contract_type == version.contract_type_id and work_time_rate == version.resource_calendar_id.work_time_rate
-        return same_type
+        return contract_type == version.contract_type_id and work_time_rate == version.resource_calendar_id.work_time_rate
 
     def _get_occupation_dates(self, include_future_contracts=False):
         # Takes several versions and returns all the versions under the same occupation (i.e. the same
@@ -211,56 +199,6 @@ class HrVersion(models.Model):
             return wage
         else:
             return wage * self._get_salary_costs_factor() / 52 / self.resource_calendar_id.hours_per_week
-
-    def _get_version_work_entries_values(self, date_start, date_stop):
-        version_vals = super()._get_version_work_entries_values(date_start, date_stop)
-        version_vals += self._get_version_credit_time_values(date_start, date_stop)
-        return version_vals
-
-    def _get_version_credit_time_values(self, date_start, date_stop):
-        version_vals = []
-        for version in self:
-            if not version.time_credit or not version.time_credit_type_id:
-                continue
-
-            employee = version.employee_id
-            resource = employee.resource_id
-            calendar = version.resource_calendar_id
-            standard_calendar = version.standard_calendar_id
-
-            standard_attendances = standard_calendar._work_intervals_batch(
-                pytz.utc.localize(date_start) if not date_start.tzinfo else date_start,
-                pytz.utc.localize(date_stop) if not date_stop.tzinfo else date_stop,
-                resources=resource,
-                compute_leaves=False)[resource.id]
-
-            attendances = calendar._work_intervals_batch(
-                pytz.utc.localize(date_start) if not date_start.tzinfo else date_start,
-                pytz.utc.localize(date_stop) if not date_stop.tzinfo else date_stop,
-                resources=resource,
-                compute_leaves=False)[resource.id]
-
-            credit_time_intervals = standard_attendances - attendances
-
-            for interval in credit_time_intervals:
-                work_entry_type_id = version.time_credit_type_id
-                new_vals = {
-                    'name': "%s: %s" % (work_entry_type_id.name, employee.name),
-                    'date_start': interval[0].astimezone(pytz.utc).replace(tzinfo=None),
-                    'date_stop': interval[1].astimezone(pytz.utc).replace(tzinfo=None),
-                    'work_entry_type_id': work_entry_type_id.id,
-                    'employee_id': employee.id,
-                    'version_id': version.id,
-                    'company_id': version.company_id.id,
-                    'state': 'draft',
-                    'is_credit_time': True,
-                }
-                version_vals.append(new_vals)
-        return version_vals
-
-    def _get_work_time_rate(self):
-        self.ensure_one()
-        return self.work_time_rate if self.time_credit else 1.0
 
     def _get_contract_wage_field(self):
         self.ensure_one()

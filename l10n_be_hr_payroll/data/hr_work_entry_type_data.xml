@@ -178,10 +178,12 @@
 
     <record id="hr_work_entry.l10n_be_work_entry_type_credit_time" model="hr.work.entry.type">
         <field name="dmfa_code">-1</field>
+        <field name="l10n_be_is_time_credit" eval="True"/>
     </record>
 
     <record id="hr_work_entry.l10n_be_work_entry_type_parental_time_off" model="hr.work.entry.type">
         <field name="dmfa_code">-1</field>
+        <field name="l10n_be_is_time_credit" eval="True"/>
     </record>
 
     <record id="hr_work_entry.l10n_be_work_entry_type_simple_holiday_pay_variable_salary" model="hr.work.entry.type">
@@ -196,6 +198,7 @@
         <field name="is_unforeseen" eval="False"/>
         <field name="leave_right" eval="True"/>
         <field name="dmfa_code">50</field>
+        <field name="l10n_be_is_time_credit" eval="True"/>
     </record>
 
     <record id="hr_work_entry.l10n_be_work_entry_type_strike" model="hr.work.entry.type">

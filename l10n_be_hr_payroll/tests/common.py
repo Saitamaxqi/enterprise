@@ -184,7 +184,6 @@ class TestPayrollCommon(TransactionCase):
                 'contract_date_start': date(today.year - 1, 4, 1),
                 'contract_date_end': date(today.year - 1, 6, 30),
                 'resource_calendar_id': cls.resource_calendar_9_10.id,
-                'time_credit': True
             })
 
             cls.john_contracts |= cls.employee_john.create_version({
@@ -192,7 +191,6 @@ class TestPayrollCommon(TransactionCase):
                 'contract_date_start': date(today.year - 1, 7, 1),
                 'contract_date_end': date(today.year - 1, 9, 30),
                 'resource_calendar_id': cls.resource_calendar_4_5.id,
-                'time_credit': True
             })
 
             cls.john_contracts |= cls.employee_john.create_version({
@@ -200,7 +198,6 @@ class TestPayrollCommon(TransactionCase):
                 'contract_date_start': date(today.year - 1, 10, 1),
                 'contract_date_end': False,
                 'resource_calendar_id': cls.resource_calendar_mid_time.id,
-                'time_credit': True
             })
 
             cls.employee_a = cls.create_employee({
@@ -299,7 +296,6 @@ class TestPayrollCommon(TransactionCase):
             'eco_checks': 250.0,
             'ip': False,
             'ip_wage_rate': 25.0,
-            'time_credit': False,
             'has_bicycle': False,
         }
         default_values.update(values)

@@ -917,7 +917,6 @@
         <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
         <field name="standard_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
-        <field name="time_credit" eval="True"/>
         <field name="work_time_rate">0.80</field>
         <field name="rd_percentage">100</field>
         <field name="group_s_code">000007</field>
@@ -1404,7 +1403,6 @@
         <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
         <field name="standard_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_4_5_wednesday_off"/>
-        <field name="time_credit" eval="True"/>
         <field name="work_time_rate">0.80</field>
         <field name="rd_percentage">100</field>
         <field name="group_s_code">000006</field>

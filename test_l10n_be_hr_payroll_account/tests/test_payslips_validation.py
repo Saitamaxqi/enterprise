@@ -24,6 +24,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         cls.resource_calendar_38_hours_per_week, \
         cls.resource_calendar_38_hours_per_week_odoo, \
         cls.resource_calendar_4_5_wednesday_off, \
+        cls.resource_calendar_4_5_wednesday_off_time_credit, \
         cls.resource_calendar_4_5_thurday_off, \
         cls.resource_calendar_4_5_friday_off, \
         cls.resource_calendar_half_time, \
@@ -31,6 +32,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         cls.resource_calendar_0_hours_per_week, \
         cls.resource_calendar_19_part_time_sick, \
         cls.resource_calendar_9_10_monday_off, \
+        cls.resource_calendar_9_10_monday_off_credit_time, \
         cls.resource_calendar_9_10_strange, \
         cls.resource_calendar_4_5_monday_off_equal_morning_afternoon, \
         = cls.env['resource.calendar'].sudo().create([
@@ -128,6 +130,46 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 ]],
             }],
             *[{
+                'name': "Test Calendar: 4/5 Wednesday Off Credit Time",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
+                ]] + [(0, 0, {
+                    'name': "Time credit",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                ]],
+            }],
+            *[{
                 'name': "Test Calendar: 4/5 Thursday Off",
                 'company_id': cls.env.company.id,
                 'hours_per_day': 7.6,
@@ -154,6 +196,17 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                     ("4", 8.0, 12.0, "morning"),
                     ("4", 12.0, 13.0, "lunch"),
                     ("4", 13.0, 16.6, "afternoon"),
+                ]] + [(0, 0, {
+                    'name': "Time credit",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
                 ]],
             }],
             *[{
@@ -183,6 +236,17 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                     ("3", 8.0, 12.0, "morning"),
                     ("3", 12.0, 13.0, "lunch"),
                     ("3", 13.0, 16.6, "afternoon"),
+                ]] + [(0, 0, {
+                    'name': "Time credit",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
                 ]],
             }],
             *[{
@@ -236,7 +300,30 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
                 'full_time_required_hours': 38,
-                'attendance_ids': [(5, 0, 0)],
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
+                ]],
             }],
             *[{
                 'name': "Test Calendar: 19 Hours/Week Part Time Sick PM",
@@ -271,6 +358,71 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                     ("2", 13.8, 17.6, "afternoon"),
                     ("3", 13.8, 17.6, "afternoon"),
                     ("4", 13.8, 17.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 9/10 Hours/Week 1 Monday over 2 Off",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': True,
+                'work_time_rate': 90,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': 'First week',
+                    'dayofweek': '0',
+                    'sequence': '0',
+                    'hour_from': 0,
+                    'day_period': 'morning',
+                    'week_type': '0',
+                    'hour_to': 0,
+                    'display_type': 'line_section'
+                }), (0, 0, {
+                    'name': 'Second week',
+                    'dayofweek': '0',
+                    'sequence': '25',
+                    'hour_from': 0,
+                    'day_period': 'morning',
+                    'week_type': '1',
+                    'hour_to': 0,
+                    'display_type': 'line_section'
+                })] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'sequence': sequence,
+                    'week_type': week_type,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
+                    ("0", 8.0, 12.0, "morning", "0", "1"),
+                    ("0", 12.0, 13.0, "lunch", "0", "2"),
+                    ("0", 13.0, 16.6, "afternoon", "0", "3"),
+                    ("1", 8.0, 12.0, "morning", "0", "4"),
+                    ("1", 12.0, 13.0, "lunch", "0", "5"),
+                    ("1", 13.0, 16.6, "afternoon", "0", "6"),
+                    ("2", 8.0, 12.0, "morning", "0", "7"),
+                    ("2", 12.0, 13.0, "lunch", "0", "8"),
+                    ("2", 13.0, 16.6, "afternoon", "0", "9"),
+                    ("3", 8.0, 12.0, "morning", "0", "10"),
+                    ("3", 12.0, 13.0, "lunch", "0", "11"),
+                    ("3", 13.0, 16.6, "afternoon", "0", "12"),
+                    ("4", 8.0, 12.0, "morning", "0", "13"),
+                    ("4", 12.0, 13.0, "lunch", "0", "14"),
+                    ("4", 13.0, 16.6, "afternoon", "0", "15"),
+                    ("1", 8.0, 12.0, "morning", "1", "26"),
+                    ("1", 12.0, 13.0, "lunch", "1", "27"),
+                    ("1", 13.0, 16.6, "afternoon", "1", "28"),
+                    ("2", 8.0, 12.0, "morning", "1", "29"),
+                    ("2", 12.0, 13.0, "lunch", "1", "30"),
+                    ("2", 13.0, 16.6, "afternoon", "1", "31"),
+                    ("3", 8.0, 12.0, "morning", "1", "32"),
+                    ("3", 12.0, 13.0, "lunch", "1", "33"),
+                    ("3", 13.0, 16.6, "afternoon", "1", "34"),
+                    ("4", 8.0, 12.0, "morning", "1", "35"),
+                    ("4", 12.0, 13.0, "lunch", "1", "36"),
+                    ("4", 13.0, 16.6, "afternoon", "1", "37"),
                 ]],
             }],
             *[{
@@ -336,8 +488,21 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                         ("3", 13.0, 16.6, "afternoon", "1", "34"),
                         ("4", 8.0, 12.0, "morning", "1", "35"),
                         ("4", 12.0, 13.0, "lunch", "1", "36"),
-                        ("4", 13.0, 16.6, "afternoon", "1", "37"),
-                ]],
+                        ("4", 13.0, 16.6, "afternoon", "1", "37")
+                    ]] + [(0, 0, {
+                        'name': "Attendance",
+                        'dayofweek': dayofweek,
+                        'hour_from': hour_from,
+                        'hour_to': hour_to,
+                        'day_period': day_period,
+                        'sequence': sequence,
+                        'week_type': week_type,
+                        'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                    }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
+                        ("0", 8.0, 12.0, "morning", "1", "23"),
+                        ("0", 12.0, 13.0, "lunch", "1", "24"),
+                        ("0", 13.0, 16.6, "afternoon", "1", "25"),
+                    ]],
             }],
             *[{
                 'name': "Test Calendar: 9/10 Hours/Week 1 hour less every day on second week + 1 wed pm off",
@@ -394,17 +559,34 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                         ("0", 9.0, 12.8, "morning", "1", "26"),
                         ("0", 12.8, 13.8, "lunch", "1", "27"),
                         ("0", 13.8, 16.6, "afternoon", "1", "28"),
-                        ("1", 9.0, 12.8, "morning", "1", "29"),
-                        ("1", 12.8, 13.8, "lunch", "1", "30"),
-                        ("1", 13.8, 16.6, "afternoon", "1", "31"),
-                        ("2", 9.0, 12.8, "morning", "1", "32"),
-                        ("3", 9.0, 12.8, "morning", "1", "33"),
-                        ("3", 12.8, 13.8, "lunch", "1", "34"),
-                        ("3", 13.8, 16.6, "afternoon", "1", "35"),
-                        ("4", 9.0, 12.8, "morning", "1", "36"),
-                        ("4", 12.8, 13.8, "lunch", "1", "37"),
-                        ("4", 13.8, 16.6, "afternoon", "1", "38"),
-                ]],
+                        ("1", 9.0, 12.8, "morning", "1", "30"),
+                        ("1", 12.8, 13.8, "lunch", "1", "31"),
+                        ("1", 13.8, 16.6, "afternoon", "1", "32"),
+                        ("2", 9.0, 12.8, "morning", "1", "34"),
+                        ("3", 9.0, 12.8, "morning", "1", "38"),
+                        ("3", 12.8, 13.8, "lunch", "1", "39"),
+                        ("3", 13.8, 16.6, "afternoon", "1", "40"),
+                        ("4", 9.0, 12.8, "morning", "1", "42"),
+                        ("4", 12.8, 13.8, "lunch", "1", "43"),
+                        ("4", 13.8, 16.6, "afternoon", "1", "44")
+                    ]] + [(0, 0, {
+                        'name': "Attendance",
+                        'dayofweek': dayofweek,
+                        'hour_from': hour_from,
+                        'hour_to': hour_to,
+                        'day_period': day_period,
+                        'sequence': sequence,
+                        'week_type': week_type,
+                        'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                    }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
+                        ("0", 16.6, 17.6, "afternoon", "1", "29"),
+                        ("1", 16.6, 17.6, "afternoon", "1", "33"),
+                        ("2", 12.8, 13.8, "lunch", "1", "35"),
+                        ("2", 13.8, 16.6, "afternoon", "1", "36"),
+                        ("2", 16.6, 17.6, "afternoon", "1", "37"),
+                        ("3", 16.6, 17.6, "afternoon", "1", "41"),
+                        ("4", 16.6, 17.6, "afternoon", "1", "45"),
+                    ]]
             }],
             *[{
                 'name': "Test Calendar: 4/5 Monday/Friday Afternoon Off (equal morning/afternoon)",
@@ -1008,11 +1190,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_out_of_contract_credit_time(self):
         # The employee is on 4/5 credit time (wednesday off) from the 16 of September 2020
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
             'contract_date_start': datetime.date(2020, 9, 16),
@@ -1254,15 +1434,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_classic_credit_time(self):
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 8, 1),
             'contract_date_end': datetime.date(2020, 11, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -1281,7 +1459,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_credit_time_paid_time_off(self):
         self.env['resource.calendar.leaves'].create([{
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'resource_id': self.employee.resource_id.id,
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
@@ -1290,7 +1468,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'resource_id': self.employee.resource_id.id,
             'date_from': datetime.datetime(2020, 9, 17, 6, 0, 0),
@@ -1300,15 +1478,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }])
 
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 8, 1),
             'contract_date_end': datetime.date(2020, 11, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1329,7 +1505,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_credit_time_unpaid(self):
         self.env['resource.calendar.leaves'].create([{
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'resource_id': self.employee.resource_id.id,
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
@@ -1339,15 +1515,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }])
 
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 8, 1),
             'contract_date_end': datetime.date(2020, 11, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1368,7 +1542,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_credit_time_sick(self):
         self.env['resource.calendar.leaves'].create([{
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'resource_id': self.employee.resource_id.id,
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
@@ -1378,15 +1552,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }])
 
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 8, 1),
             'contract_date_end': datetime.date(2020, 11, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1413,9 +1585,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage': 0.0,
             'wage_on_signature': 0.0,
             'ip': False,
-            'time_credit': True,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -2244,15 +2414,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_relapse_without_guaranteed_salary_credit_time(self):
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 1, 1),
             'contract_date_end': datetime.date(2021, 9, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         sick_leave_1 = self.env['hr.leave'].new({
@@ -2384,15 +2552,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # Sick 2.5 weeks (21 septembeer - 7 october)
         # No part time sick as there is at least 15 days between the 2 sick time offs
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 1, 1),
             'contract_date_end': datetime.date(2021, 9, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         sick_leave_1 = self.env['hr.leave'].new({
@@ -2517,15 +2683,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # Sick 1 september - 15 october
         # Part time sick from the 31th day
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 1, 1),
             'contract_date_end': datetime.date(2021, 9, 30),
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         sick_leave = self.env['hr.leave'].new({
@@ -2736,9 +2900,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'contract_date_end': datetime.date(2020, 11, 30),
             'wage': 0.0,
             'wage_on_signature': 0.0,
-            'time_credit': True,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -2811,9 +2973,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'mobile': 0.0,
             'ip': True,
             'ip_wage_rate': 25.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 5, 1), datetime.date(2020, 5, 31))
@@ -2892,9 +3052,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'mobile': 0.0,
             'ip': True,
             'ip_wage_rate': 25.0,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 5, 1), datetime.date(2020, 5, 31))
@@ -2988,9 +3146,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_time_off.action_approve()
 
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
-            'time_credit': True,
             'work_time_rate': "0.8",
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
@@ -3360,13 +3517,11 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_credit_time_representation_fees(self):
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 12, 1),
             'contract_date_end': datetime.date(2021, 2, 28),
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2021, 1, 1), datetime.date(2021, 1, 31))
@@ -3384,13 +3539,11 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_credit_time_representation_fees_prorated(self):
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2020, 12, 1),
             'contract_date_end': datetime.date(2021, 2, 28),
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'representation_fees': 400,
         })
 
@@ -3570,7 +3723,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_work_incapacity_due_to_illness(self):
         self.contract.write({
-            'wage_on_signature': 3548.6,
+            'wage_on_signature': 1774.3,
             'wage': 3548.6,
             'resource_calendar_id': self.resource_calendar_19_part_time_sick.id,
             'contract_date_start': datetime.date(2021, 3, 27),
@@ -3600,7 +3753,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.contract.write({
             'resource_calendar_id': self.resource_calendar_19_part_time_sick.id,
             'wage': 1774.30,
-            'wage_on_signature': 1774.30,
+            'wage_on_signature': 887.15,
             'date_generated_from': datetime.datetime(2021, 4, 1, 0, 0, 0),
             'date_generated_to': datetime.datetime(2021, 4, 1, 0, 0, 0),
             'holidays': 5.0,
@@ -3643,13 +3796,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(len(payslip.line_ids), 30)
 
         self._validate_worked_days(payslip, {
-            'WORK100': (10.0, 76.0, 791.61),
+            'WORK100': (10.0, 76.0, 805.26),
             'LEAVE213': (0.5, 3.8, 40.95),
             'LEAVE281': (11.0, 83.6, 0.0),
             'LEAVE500': (0.5, 3.8, 40.95),
         })
 
-        payslip_results = {'BASIC': 873.51, 'SALARY': 873.51, 'ONSS': -114.17, 'EmpBonus.1': 94.87, 'ONSSTOTAL': 19.3, 'ATN.CAR': 150.53, 'GROSSIP': 1004.74, 'IP.PART': -174.7, 'GROSS': 830.04, 'P.P': 0.0, 'P.P.DED': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -150.53, 'M.ONSS': 0.0, 'MEAL_V_EMP': -21.8, 'CAR.PRIV': 77.54, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 59.85, 'IP': 174.7, 'IP.DED': -13.1, 'NET': 1236.01, 'REMUNERATION': 698.81, 'ONSSEMPLOYERBASIC': 218.55, 'ONSSEMPLOYERFFE': 1.14, 'ONSSEMPLOYERMFFE': 0.87, 'ONSSEMPLOYERCPAE': 2.01, 'ONSSEMPLOYERRESTREINT': 14.76, 'ONSSEMPLOYERUNEMP': 0.87, 'ONSSEMPLOYER': 238.21, 'CO2FEE': 21.16}
+        payslip_results = {'BASIC': 887.16, 'SALARY': 887.16, 'ONSS': -115.95, 'EmpBonus.1': 91.87, 'ONSSTOTAL': 24.08, 'ATN.CAR': 150.53, 'GROSSIP': 1013.62, 'IP.PART': -177.43, 'GROSS': 836.18, 'P.P': 0.0, 'P.P.DED': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -150.53, 'M.ONSS': 0.0, 'MEAL_V_EMP': -21.8, 'CAR.PRIV': 77.54, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 59.85, 'IP': 177.43, 'IP.DED': -13.31, 'NET': 1244.67, 'REMUNERATION': 709.73, 'ONSSEMPLOYERBASIC': 221.97, 'ONSSEMPLOYERFFE': 1.15, 'ONSSEMPLOYERMFFE': 0.89, 'ONSSEMPLOYERCPAE': 2.04, 'ONSSEMPLOYERRESTREINT': 14.99, 'ONSSEMPLOYERUNEMP': 0.89, 'ONSSEMPLOYER': 241.93, 'CO2FEE': 21.16}
         self._validate_payslip(payslip, payslip_results)
 
     def test_double_holidays(self):
@@ -3725,11 +3878,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_double_holidays_complete_year_credit_time(self):
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
             'transport_mode_car': False,
@@ -3754,11 +3905,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_double_holidays_incomplete_year_credit_time(self):
         self.contract.write({
             'contract_date_start': datetime.date(2020, 3, 15),
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
             'transport_mode_car': False,
@@ -4446,9 +4595,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage': 0.0,
             'wage_on_signature': 0.0,
             'ip': False,
-            'time_credit': True,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         self.env['resource.calendar.leaves'].create([{
@@ -4493,20 +4640,18 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_public_holiday_right_maternity_credit_time_less_1_month(self):
         # Note: Unpaid
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2021, 5, 1),
             'wage': 2120,
             'wage_on_signature': 2120,
             'ip': False,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         self.env['resource.calendar.leaves'].create([{
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'date_from': datetime.datetime(2021, 5, 4, 4, 0, 0),
             'date_to': datetime.datetime(2021, 5, 4, 21, 0, 0),
@@ -4549,20 +4694,18 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_public_holiday_right_maternity_credit_time_less_3_month(self):
         # Note: Paid the first 14 days
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'contract_date_start': datetime.date(2021, 4, 1),
             'wage': 2120,
             'wage_on_signature': 2120,
             'ip': False,
-            'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         self.env['resource.calendar.leaves'].create([{
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'date_from': datetime.datetime(2021, 5, 4, 4, 0, 0),
             'date_to': datetime.datetime(2021, 5, 4, 21, 0, 0),
@@ -4571,7 +4714,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'date_from': datetime.datetime(2021, 5, 13, 4, 0, 0),
             'date_to': datetime.datetime(2021, 5, 13, 21, 0, 0),
@@ -4580,7 +4723,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'date_from': datetime.datetime(2021, 5, 17, 4, 0, 0),
             'date_to': datetime.datetime(2021, 5, 17, 21, 0, 0),
@@ -4903,10 +5046,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'marital': 'cohabitant',
             'spouse_fiscal_status': 'high_income',
             'children': 0,
-            'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'wage_on_signature': 2821.00,
             'wage': 2821.00,
             'resource_calendar_id': self.resource_calendar_0_hours_per_week.id,
@@ -4935,10 +5076,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'spouse_fiscal_status': 'high_income',
             'employee_id': self.employee.id,
             'resource_calendar_id': self.resource_calendar_4_5_friday_off.id,
-            'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'company_id': self.env.company.id,
             'date_generated_from': datetime.datetime(2022, 9, 1, 0, 0, 0),
             'date_generated_to': datetime.datetime(2022, 9, 1, 0, 0, 0),
@@ -5057,11 +5196,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_representation_fees_two_weeks_calendar_credit_time(self):
         self.contract.write({
-            'resource_calendar_id': self.resource_calendar_9_10_monday_off.id,
+            'resource_calendar_id': self.resource_calendar_9_10_monday_off_credit_time.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
-            'time_credit': True,
             'work_time_rate': 90,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'representation_fees': 399,
         })
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
@@ -5077,9 +5214,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.contract.write({
             'resource_calendar_id': self.resource_calendar_9_10_strange.id,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
-            'time_credit': True,
             'work_time_rate': 90,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'representation_fees': 399,
         })
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
@@ -5425,10 +5560,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # on the number of occupation months
         self.contract.write({
             'name': "Full Time Parental Time Off",
-            'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'resource_calendar_id': self.resource_calendar_0_hours_per_week.id,
             'contract_date_start': datetime.date(2021, 1, 1),
         })
@@ -6514,10 +6647,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_parental_time_off_out_of_contract(self):
         self.contract.write({
             'name': "4/5 Parental Time Off",
-            'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'resource_calendar_id': self.resource_calendar_4_5_friday_off.id,
             'date_version': datetime.date(2023, 4, 1),
             'contract_date_start': datetime.date(2023, 4, 1),
@@ -6543,7 +6673,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_worked_days(payslip, {
             'OUT': (14.0, 106.4, 0.0),
             'LEAVE213': (7.0, 53.2, 906.83),
-            'LEAVE301': (2.0, 15.2, 0.0),
+            'LEAVE300': (2.0, 15.2, 0.0),
         })
 
         payslip_results = {'BASIC': 906.83, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 915.83, 'ONSS': -119.7, 'EmpBonus.1': 30.81, 'ONSSTOTAL': 88.89, 'ATN.CAR': 169.15, 'GROSSIP': 996.09, 'IP.PART': -226.71, 'GROSS': 769.38, 'P.P': 0, 'P.P.DED': 0, 'PPTOTAL': 0, 'ATN.CAR.2': -169.15, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': 0, 'MEAL_V_EMP': 0, 'REP.FEES': 11.54, 'IP': 226.71, 'IP.DED': -17.0, 'NET': 812.47, 'REMUNERATION': 680.12, 'ONSSEMPLOYERBASIC': 229.23, 'ONSSEMPLOYERFFE': 0.64, 'ONSSEMPLOYERMFFE': 0.92, 'ONSSEMPLOYERCPAE': 2.11, 'ONSSEMPLOYERRESTREINT': 15.48, 'ONSSEMPLOYERUNEMP': 0.92, 'ONSSEMPLOYER': 249.29, 'CO2FEE': 31.34}
@@ -6553,7 +6683,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_version': datetime.date(2023, 8, 14),
             'contract_date_start': datetime.date(2023, 8, 14),
             'contract_date_end': datetime.date(2023, 12, 21),
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
         })
 
         # Public Holiday
@@ -6571,7 +6701,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # Paid Time Off
         self.env['resource.calendar.leaves'].create([{
             'name': "Paid Time Off",
-            'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'company_id': self.env.company.id,
             'resource_id': self.employee.resource_id.id,
             'date_from': datetime.datetime(2023, 8, 14, 6, 0, 0),
@@ -6586,7 +6716,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'WORK100': (9.0, 68.4, 1202.54),
             'OUT': (9.0, 68.4, 0.0),
             'LEAVE120': (1.0, 7.6, 147.85),
-            'LEAVE301': (3.0, 22.8, 0.0),
+            'LEAVE300': (3.0, 22.8, 0.0),
             'LEAVE500': (1.0, 7.6, 147.85),
         })
 
@@ -6595,10 +6725,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_bik_first_payslip_unpaid(self):
         self.contract.write({
-            'name': "Full Time Parental Time Off", 'time_credit': True,
+            'name': "Full Time Parental Time Off",
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'resource_calendar_id': self.resource_calendar_0_hours_per_week.id,
             'date_version': datetime.date(2023, 10, 1),
             'contract_date_start': datetime.date(2023, 10, 1),
@@ -6613,7 +6742,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'contract_date_start': datetime.date(2023, 10, 11),
             'contract_date_end': False,
             'work_time_rate': 80,
-            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
+            'resource_calendar_id': self.resource_calendar_4_5_wednesday_off_time_credit.id,
             'wage': 3000,
             'wage_on_signature': 3000,
         })

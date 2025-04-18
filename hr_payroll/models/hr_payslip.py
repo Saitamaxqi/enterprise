@@ -460,10 +460,10 @@ class HrPayslip(models.Model):
                 'employer_cost': employer_cost_total,
             })
 
-    @api.depends('worked_days_line_ids.number_of_hours', 'worked_days_line_ids.is_paid', 'worked_days_line_ids.is_credit_time')
+    @api.depends('worked_days_line_ids.number_of_hours', 'worked_days_line_ids.is_paid')
     def _compute_worked_hours(self):
         for payslip in self:
-            payslip.sum_worked_hours = sum([line.number_of_hours for line in payslip.worked_days_line_ids if not line.is_credit_time])
+            payslip.sum_worked_hours = sum(line.number_of_hours for line in payslip.worked_days_line_ids)
 
     def _get_regular_worked_hours(self):
         # To be overridden by localization modules. Used for the amount computation for each worked days type.
@@ -827,10 +827,8 @@ class HrPayslip(models.Model):
         calendar = self.version_id.resource_calendar_id or self.employee_id._get_calendars()[self.employee_id.id]
         return calendar.hours_per_week
 
-    def _get_out_of_version_calendar(self):
+    def _get_out_of_contract_calendar(self):
         self.ensure_one()
-        if self.version_id.time_credit:
-            return self.version_id.standard_calendar_id
         return self.version_id.resource_calendar_id
 
     def _get_worked_day_lines_values(self, domain=None):
@@ -876,7 +874,7 @@ class HrPayslip(models.Model):
             # If the version doesn't cover the whole month, create
             # worked_days lines to adapt the wage accordingly
             out_days, out_hours = 0, 0
-            reference_calendar = self._get_out_of_version_calendar()
+            reference_calendar = self._get_out_of_contract_calendar()
             if self.date_from < version.date_start:
                 start = fields.Datetime.to_datetime(self.date_from)
                 stop = fields.Datetime.to_datetime(version.date_start) + relativedelta(days=-1, hour=23, minute=59)
@@ -1444,12 +1442,6 @@ class HrPayslip(models.Model):
             # YTI Note: We can't use a batched create here as the payslip may not exist
             slip.update({'worked_days_line_ids': slip._get_new_worked_days_lines()})
 
-    def _get_credit_time_lines(self):
-        lines_vals = self._get_worked_day_lines(domain=[('is_credit_time', '=', True)], check_out_of_version=False)
-        for line_vals in lines_vals:
-            line_vals['is_credit_time'] = True
-        return lines_vals
-
     def _get_similar_payslips(self):
         done_payslips = self.filtered(lambda p: p.employee_id and p.struct_id and p.date_from and p.date_to)
         search_domain = [
@@ -1471,13 +1463,7 @@ class HrPayslip(models.Model):
 
     def _get_new_worked_days_lines(self):
         if self.struct_id.use_worked_day_lines:
-            if not self.version_id.time_credit:
-                return [(0, 0, vals) for vals in self._get_worked_day_lines()]
-            worked_days_line_values = self._get_worked_day_lines(domain=[('is_credit_time', '=', False)])
-            for vals in worked_days_line_values:
-                vals['is_credit_time'] = False
-            credit_time_line_values = self._get_credit_time_lines()
-            return [(0, 0, vals) for vals in worked_days_line_values + credit_time_line_values]
+            return [(0, 0, vals) for vals in self._get_worked_day_lines()]
         return []
 
     def _get_salary_line_total(self, code):

@@ -6,13 +6,13 @@ from odoo import api, models
 class HrPayslipWorkedDays(models.Model):
     _inherit = 'hr.payslip.worked_days'
 
-    @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'version_id.wage', 'version_id.l10n_lu_indexed_wage', 'payslip_id.sum_worked_hours')
+    @api.depends('is_paid', 'number_of_hours', 'payslip_id', 'version_id.wage', 'version_id.l10n_lu_indexed_wage', 'payslip_id.sum_worked_hours')
     def _compute_amount(self):
         lu_worked_days = self.filtered(lambda wd: wd.payslip_id.struct_id.country_id.code == "LU")
         for worked_days in lu_worked_days:
             if worked_days.payslip_id.edited or worked_days.payslip_id.state != 'draft':
                 continue
-            if not worked_days.version_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
+            if not worked_days.version_id or worked_days.code == 'OUT':
                 worked_days.amount = 0
                 continue
             amount_rate = worked_days.work_entry_type_id.amount_rate

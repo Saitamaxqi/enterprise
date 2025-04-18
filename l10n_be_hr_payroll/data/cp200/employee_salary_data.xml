@@ -595,7 +595,7 @@ else:
     if not salary_simulation:
         first_period_contract_ids = payslip._get_period_contracts()
         first_period_contracts = version.browse(first_period_contract_ids).filtered(
-            lambda c: (c.transport_mode_public or c.transport_mode_train) and not (c.time_credit and not c.work_time_rate)
+            lambda c: (c.transport_mode_public or c.transport_mode_train) and not (c.l10n_be_time_credit and not c.work_time_rate)
         )
         if first_period_contracts:
             first_period_contract = first_period_contracts

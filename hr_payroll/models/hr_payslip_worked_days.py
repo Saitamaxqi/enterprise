@@ -23,7 +23,6 @@ class HrPayslipWorkedDays(models.Model):
     version_id = fields.Many2one(related='payslip_id.version_id', string='Contract',
         help="The contract this worked days should be applied to")
     currency_id = fields.Many2one('res.currency', related='payslip_id.currency_id')
-    is_credit_time = fields.Boolean(string='Credit Time')
     ytd = fields.Monetary(string='YTD')
 
     @api.depends(
@@ -35,13 +34,13 @@ class HrPayslipWorkedDays(models.Model):
             worked_days.is_paid = (worked_days.work_entry_type_id.id not in unpaid[worked_days.payslip_id.struct_id.id]) if worked_days.payslip_id.struct_id.id in unpaid else False
 
     @api.depends(
-        'is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'version_id.wage', 'version_id.hourly_wage', 'payslip_id.sum_worked_hours',
+        'is_paid', 'number_of_hours', 'payslip_id', 'version_id.wage', 'version_id.hourly_wage', 'payslip_id.sum_worked_hours',
         'work_entry_type_id.amount_rate', 'work_entry_type_id.is_extra_hours')
     def _compute_amount(self):
         for worked_days in self:
             if worked_days.payslip_id.edited or worked_days.payslip_id.state != 'draft':
                 continue
-            if not worked_days.version_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
+            if not worked_days.version_id or worked_days.code == 'OUT':
                 worked_days.amount = 0
                 continue
             version = worked_days.payslip_id.version_id

@@ -378,7 +378,6 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'eco_checks': 250.0,
             'ip': False,
             'ip_wage_rate': 25.0,
-            'time_credit': False,
             'has_bicycle': False,
         }
         default_values.update(values)

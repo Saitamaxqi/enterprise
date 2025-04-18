@@ -29,3 +29,4 @@ from . import l10n_be_281_45
 from . import l10n_be_double_pay_recovery_line
 from . import l10n_be_schedule_change_allocation
 from . import l10n_be_individual_account
+from . import resource_calendar

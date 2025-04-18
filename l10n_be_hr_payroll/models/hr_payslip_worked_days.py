@@ -109,7 +109,7 @@ class HrPayslipWorkedDays(models.Model):
         out_worked_day = self.payslip_id.worked_days_line_ids.filtered(lambda wd: wd.code == 'OUT')
         if out_worked_day:
             out_hours = sum(out_worked_day.mapped('number_of_hours'))
-            out_hours_per_week = self.payslip_id._get_out_of_version_calendar().hours_per_week
+            out_hours_per_week = self.payslip_id._get_out_of_contract_calendar().hours_per_week
             return 1 - 3 / (13 * out_hours_per_week) * out_hours if out_hours_per_week else 1
         return 1
 
@@ -122,7 +122,7 @@ class HrPayslipWorkedDays(models.Model):
             if worked_day._l10n_be_skip_amount_computation():
                 computed_by_super += worked_day
                 continue
-            if worked_day.is_credit_time or worked_day.code == 'OUT':
+            if worked_day.work_entry_type_id.l10n_be_is_time_credit or worked_day.code == 'OUT':
                 worked_day.amount = 0
                 continue
             if worked_day.code == 'LEAVE1731':
@@ -164,7 +164,7 @@ class HrPayslipWorkedDays(models.Model):
                 wd.number_of_hours
                 for wd in worked_days_line_ids
                 if wd.code not in [main_worked_day, 'OUT']
-                and not wd.is_credit_time
+                and not wd.work_entry_type_id.l10n_be_is_time_credit
                 and not wd.work_entry_type_id.is_extra_hours
             )
 

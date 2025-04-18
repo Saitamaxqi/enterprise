@@ -202,6 +202,10 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     l10n_be_is_below_scale_warning = fields.Char(
         compute='_compute_l10n_be_is_below_scale', compute_sudo=True, groups="hr.group_hr_user")
     l10n_be_canteen_cost = fields.Monetary(string="Canteen Cost", groups="hr_payroll.group_hr_payroll_user")
+    l10n_be_time_credit = fields.Boolean(
+        string="Credit time",
+        compute='_compute_l10n_be_time_credit',
+        groups="hr.group_hr_user")
 
     _check_percentage_ip_rate = models.Constraint(
         'CHECK(ip_wage_rate >= 0 AND ip_wage_rate <= 100)',
@@ -267,9 +271,27 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
             version.dependent_seniors = version.other_senior_dependent + version.other_disabled_senior_dependent
             version.dependent_juniors = version.other_juniors_dependent + version.other_disabled_juniors_dependent
 
+    @api.depends('resource_calendar_id.attendance_ids.work_entry_type_id.l10n_be_is_time_credit')
+    def _compute_l10n_be_time_credit(self):
+        for version in self:
+            time_credit = any(attendance.work_entry_type_id.l10n_be_is_time_credit for attendance in version.resource_calendar_id.attendance_ids)
+            version.l10n_be_time_credit = time_credit
+
+    @api.depends('l10n_be_time_credit')
+    def _compute_work_time_rate(self):
+        computed_by_super = self.env['hr.version']
+        for version in self:
+            if not version.l10n_be_time_credit or not version.structure_type_id.default_resource_calendar_id:
+                computed_by_super |= version
+                continue
+            hours_per_week = version.resource_calendar_id.hours_per_week
+            hours_per_week_ref = version.structure_type_id.default_resource_calendar_id.hours_per_week
+            version.work_time_rate = hours_per_week / hours_per_week_ref if hours_per_week_ref else 1
+        super(HrVersion, computed_by_super)._compute_work_time_rate()
+
     @api.depends(
         'wage', 'contract_date_start', 'contract_date_end', 'employee_id.l10n_be_scale_seniority', 'job_id.l10n_be_scale_category',
-        'work_time_rate', 'time_credit', 'resource_calendar_id.work_time_rate')
+        'work_time_rate', 'l10n_be_time_credit', 'resource_calendar_id.work_time_rate')
     def _compute_l10n_be_is_below_scale(self):
         # Source: https://emploi.belgique.be/fr/themes/remuneration/salaires-minimums-par-sous-commission-paritaire/banque-de-donnees-salaires
         student_stucture_type = self.env.ref('hr.structure_type_employee_cp200')
@@ -305,7 +327,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
             category_index = category_mapping.get(contract.job_id.l10n_be_scale_category, 2)
             seniority_scale = scales.get(seniority, scales[26])
             min_wage = seniority_scale[category_index]
-            if contract.time_credit:
+            if contract.l10n_be_time_credit:
                 min_wage = min_wage * contract.work_time_rate
             else:
                 min_wage = min_wage * contract.resource_calendar_id.work_time_rate / 100
@@ -652,7 +674,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
                 # X >= 3 months -> Paid the first 30 days
                 # Alway unpaid for full time credit time
                 paid_duration = 30
-                if self.time_credit:
+                if self.l10n_be_time_credit:
                     if not self.work_time_rate:
                         return absent_less_than_X_days_before[0].holiday_status_id.work_entry_type_id
                     duration_start = self._get_occupation_dates()[0][1]
@@ -769,6 +791,8 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         return super()._get_bypassing_work_entry_type_codes() + [
             'LEAVE280',  # Long term sick
             'LEAVE281',  # Partial Incapacity
+            'LEAVE301',  # Parental Time Off
+            'LEAVE300',  # Time credit
             # 'LEAVE110', # Sick Leave - Actually Sick Leave < Public Time Off
                           # If the employee does not have to work on a public
                           # holiday but falls ill when he could have benefited
@@ -779,12 +803,12 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
                           # within 30 calendar days of the onset of his illness.
         ]
 
-    def _is_same_occupation(self, contract):
+    def _is_same_occupation(self, version):
         self.ensure_one()
-        res = super()._is_same_occupation(contract)
-        time_credit = self.time_credit
-        time_credit_type = self.time_credit_type_id
-        return res and time_credit == contract.time_credit and (not time_credit or (time_credit_type == contract.time_credit_type_id))
+        res = super()._is_same_occupation(version)
+        time_credit_type = self.resource_calendar_id.attendance_ids.work_entry_type_id.filtered('l10n_be_is_time_credit')
+        version_time_credit_type = version.resource_calendar_id.attendance_ids.work_entry_type_id.filtered('l10n_be_is_time_credit')
+        return res and self.l10n_be_time_credit == version.l10n_be_time_credit and time_credit_type == version_time_credit_type
 
     def _create_credit_time_next_activity(self):
         self.ensure_one()
@@ -820,7 +844,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         for version in self:
             if not version._is_struct_from_country('BE'):
                 continue
-            if version.time_credit:
+            if version.l10n_be_time_credit:
                 version._create_credit_time_next_activity()
             if version.employee_id not in employees_already_started:
                 version._create_dimona_next_activity()
@@ -841,8 +865,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
 
     def _get_fields_that_recompute_we(self):
         return super()._get_fields_that_recompute_we() + [
-            'time_credit',
-            'time_credit_type_id',
+            'l10n_be_time_credit',
             'standard_calendar_id',
         ]
 

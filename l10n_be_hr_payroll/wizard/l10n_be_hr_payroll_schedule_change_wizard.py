@@ -45,13 +45,6 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
         'resource.calendar', 'New Working Schedule', required=True,
         default=lambda self: self.env.company.resource_calendar_id.id,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
-    part_time = fields.Boolean()
-    presence_work_entry_type_id = fields.Many2one(
-        'hr.work.entry.type',
-        related='structure_type_id.default_work_entry_type_id')
-    absence_work_entry_type_id = fields.Many2one(
-        'hr.work.entry.type', string='Absence Work Entry Type',
-        help='The work entry type used when generating work entries to fit full time working schedule.')
 
     leave_type_id = fields.Many2one(
         'hr.leave.type', string='Time Off Type', required=True,
@@ -155,13 +148,6 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
         requires_new_contract.write({'requires_new_contract': True})
         (self - requires_new_contract).write({'requires_new_contract': False})
 
-    @api.onchange('work_time_rate')
-    def _onchange_work_time_rate(self):
-        #This case will be checked again when validating, onchange is ok
-        self.filtered(lambda w: w.part_time and w.work_time_rate >= 100).write({
-            'part_time': False,
-        })
-
     def _update_allocation_or_schedule(self, date, contract, current, new, max_days):
         self.ensure_one()
         if not self.leave_allocation_id:
@@ -199,9 +185,6 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
         if self.version_id.contract_date_end and self.date_end and self.version_id.contract_date_end < self.date_end:
             raise ValidationError(_('Current contract is finished before the end of the new contract.'))
 
-        if self.part_time and self.work_time_rate >= 100:
-            self.part_time = False
-
         # Set a closing date on the current contract
         previous_contract_date_end = self.version_id.contract_date_end
         contract_date_end = self.date_start
@@ -216,9 +199,6 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             self.version_id._get_contract_wage_field(): self.wage,
             'resource_calendar_id': self.resource_calendar_id.id,
             'standard_calendar_id': self.full_resource_calendar_id.id,
-            'time_credit': self.part_time,
-            'work_time_rate': self.work_time_rate / 100 if self.part_time else False,
-            'time_credit_type_id': self.absence_work_entry_type_id.id if self.part_time else None
         })
         # Since _get_contract_wage_field is not always 'wage' we also want to change the original wage
         if new_contracts._get_contract_wage_field() != 'wage':
@@ -244,9 +224,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
                     'contract_date_end': previous_contract_date_end,
                     # resource_calendar_id is copy=False
                     'resource_calendar_id': self.version_id.resource_calendar_id.id,
-                    'time_credit': self.version_id.time_credit,
                     'work_time_rate': self.version_id.work_time_rate,
-                    'time_credit_type_id': self.version_id.time_credit_type_id.id,
                 })
                 new_contracts |= post_contract
                 # We also need to update the allocation when this contract starts,

@@ -120,11 +120,15 @@ class HrPayslip(models.Model):
                 return contract
         return contracts[0]
 
-    @api.depends('worked_days_line_ids.number_of_hours', 'worked_days_line_ids.is_paid', 'worked_days_line_ids.is_credit_time')
+    @api.depends('worked_days_line_ids.number_of_hours', 'worked_days_line_ids.is_paid',
+                'worked_days_line_ids.work_entry_type_id.l10n_be_is_time_credit')
     def _compute_worked_hours(self):
         super()._compute_worked_hours()
         for payslip in self:
-            payslip.sum_worked_hours -= sum([line.number_of_hours for line in payslip.worked_days_line_ids if line.is_credit_time])
+            payslip.sum_worked_hours -= sum(
+                line.number_of_hours for line in payslip.worked_days_line_ids
+                    if line.work_entry_type_id.l10n_be_is_time_credit
+            )
 
     @api.depends('struct_id', 'date_from')
     def _compute_l10n_be_is_december(self):
@@ -156,7 +160,7 @@ class HrPayslip(models.Model):
             mapped_resources = defaultdict(lambda: self.env['resource.resource'])
             for payslip in self:
                 contract = payslip.version_id
-                calendar = contract.resource_calendar_id if not contract.time_credit else contract.standard_calendar_id
+                calendar = contract.resource_calendar_id if not contract.l10n_be_time_credit else contract.standard_calendar_id
                 mapped_resources[(calendar, payslip.date_from, payslip.date_to)] |= contract.employee_id.resource_id
             # {(calendar, date_from, date_to): intervals}}
             mapped_intervals = {}
@@ -184,7 +188,7 @@ class HrPayslip(models.Model):
 
                 contract = payslip.version_id
                 resource = contract.employee_id.resource_id
-                calendar = contract.resource_calendar_id if not contract.time_credit else contract.standard_calendar_id
+                calendar = contract.resource_calendar_id if not contract.l10n_be_time_credit else contract.standard_calendar_id
                 intervals = mapped_intervals[(calendar, payslip.date_from, payslip.date_to)][resource.id]
 
                 nb_of_days_to_work = len({dt_from.date(): True for (dt_from, dt_to, attendance) in intervals})
@@ -298,9 +302,15 @@ class HrPayslip(models.Model):
 
     def _get_worked_day_lines_hours_per_day(self):
         self.ensure_one()
-        if self.version_id.time_credit:
+        if self.version_id.l10n_be_time_credit:
             return self.version_id.standard_calendar_id.hours_per_day
         return super()._get_worked_day_lines_hours_per_day()
+
+    def _get_out_of_contract_calendar(self):
+        self.ensure_one()
+        if self.version_id.l10n_be_time_credit:
+            return self.version_id.standard_calendar_id
+        return super()._get_out_of_contract_calendar()
 
     def _get_worked_day_lines_values(self, domain=None):
         self.ensure_one()
@@ -423,7 +433,7 @@ class HrPayslip(models.Model):
                 day = day.date()
 
                 # Full time credit time doesn't count
-                if contract.time_credit and not contract.work_time_rate:
+                if contract.l10n_be_time_credit and not contract.work_time_rate:
                     continue
                 if contract.date_start <= day <= (contract.date_end or date.max):
                     days_by_contract_by_year[day.year][day.month][day] = contract
@@ -1231,14 +1241,7 @@ class HrPayslip(models.Model):
             version = self.version_id
             calendar = version.resource_calendar_id
             days_per_week = calendar._get_days_per_week()
-            incapacity_attendances = calendar.attendance_ids.filtered(lambda a: a.work_entry_type_id.code == 'LEAVE281')
-            if incapacity_attendances:
-                incapacity_hours = sum((attendance.hour_to - attendance.hour_from) for attendance in incapacity_attendances)
-                incapacity_hours = incapacity_hours / 2 if calendar.two_weeks_calendar else incapacity_hours
-                incapacity_rate = (1 - incapacity_hours / calendar.hours_per_week) if calendar.hours_per_week else 0
-                work_time_rate = version.resource_calendar_id.work_time_rate * incapacity_rate
-            else:
-                work_time_rate = version.resource_calendar_id.work_time_rate
+            work_time_rate = version.resource_calendar_id.work_time_rate
 
             threshold = 0 if ('OUT' in worked_days and worked_days['OUT'].number_of_hours) else self._get_representation_fees_threshold(localdict)
             if days_per_week and self.env.context.get('salary_simulation_full_time'):
@@ -1258,10 +1261,11 @@ class HrPayslip(models.Model):
                 # +-120 € of representation expenses which is then subject to prorating.
 
                 # Credit time, but with only half days (otherwise it's taken into account)
-                if version.time_credit and work_time_rate and work_time_rate < 100 and (days_per_week == 5 or not self.representation_fees_missing_days):
-                    total_amount = threshold + (version.representation_fees - threshold) * work_time_rate / 100
+                is_credit_time_only_half_days = version.l10n_be_time_credit and work_time_rate and \
+                    work_time_rate < 100 and (days_per_week == 5 or not self.representation_fees_missing_days)
                 # Contractual part time
-                elif not version.time_credit and work_time_rate < 100:
+                is_contractual_part_time = not version.l10n_be_time_credit and work_time_rate < 100
+                if is_credit_time_only_half_days or is_contractual_part_time:
                     total_amount = threshold + (version.representation_fees - threshold) * work_time_rate / 100
                 else:
                     total_amount = version.representation_fees

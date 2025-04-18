@@ -105,16 +105,38 @@ class TestCreditTime(AccountTestInvoicingCommon):
             'company_id': self.env.company.id,
             'hours_per_day': 0,
             'full_time_required_hours': 40,
-            'attendance_ids': [(5, 0, 0)],
+            'attendance_ids': [(5, 0, 0)] +
+                [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
+                ]],
         })
 
         wizard = self.env['l10n_be.hr.payroll.schedule.change.wizard'].with_context(allowed_company_ids=self.env.company.ids).new({
             'version_id': self.original_contract.id,
-            'absence_work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'date_start': datetime.date(2020, 3, 5),
             'date_end': datetime.date(2020, 4, 30),
             'resource_calendar_id': new_calendar.id,
-            'part_time': True,
             'previous_contract_creation': True,
         })
         wizard.action_validate()
@@ -154,11 +176,11 @@ class TestCreditTime(AccountTestInvoicingCommon):
         # Check Payslip 1
         self.assertEqual(payslip_original_contract.version_id, self.original_contract)
         self.assertEqual(len(payslip_original_contract.worked_days_line_ids), 2) # One attendance line, One out of contract
-        attendance_line = payslip_original_contract.worked_days_line_ids[0]
+        attendance_line = payslip_original_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'WORK100')
         self.assertAlmostEqual(attendance_line.amount, 415.38, places=2)
         self.assertEqual(attendance_line.number_of_days, 3.0)
         self.assertAlmostEqual(attendance_line.number_of_hours, 22.8, places=2)
-        out_of_contract_line = payslip_original_contract.worked_days_line_ids[1]
+        out_of_contract_line = payslip_original_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'OUT')
         self.assertEqual(out_of_contract_line.amount, 0)
         self.assertEqual(out_of_contract_line.number_of_days, 19.0)
         self.assertEqual(float_compare(out_of_contract_line.number_of_hours, 144.4, 2), 0)
@@ -166,11 +188,11 @@ class TestCreditTime(AccountTestInvoicingCommon):
         # Check Payslip 2
         self.assertEqual(payslip_new_contract.version_id, new_contract)
         self.assertEqual(len(payslip_new_contract.worked_days_line_ids), 2) # One credit time, one out of contract
-        out_of_contract_line = payslip_new_contract.worked_days_line_ids[0]
+        out_of_contract_line = payslip_new_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'OUT')
         self.assertEqual(out_of_contract_line.amount, 0)
         self.assertEqual(out_of_contract_line.number_of_days, 3)
         self.assertEqual(float_compare(out_of_contract_line.number_of_hours, 22.8, 2), 0)
-        credit_time_line = payslip_new_contract.worked_days_line_ids[1]
+        credit_time_line = payslip_new_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'LEAVE300')
         self.assertEqual(credit_time_line.amount, 0)
         self.assertEqual(credit_time_line.number_of_days, 19.0)
         self.assertEqual(float_compare(credit_time_line.number_of_hours, 144.4, 2), 0)
@@ -235,16 +257,27 @@ class TestCreditTime(AccountTestInvoicingCommon):
                 (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
                 (0, 0, {'name': 'Friday Lunch', 'dayofweek': '4', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
                 (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 16.6, 'day_period': 'afternoon'})
+            ] + [
+                (0, 0, {
+                    'name': "Credit time",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                ]
             ],
         })
 
         wizard = self.env['l10n_be.hr.payroll.schedule.change.wizard'].with_context(allowed_company_ids=self.env.company.ids).new({
             'version_id': self.original_contract.id,
-            'absence_work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'date_start': datetime.date(2020, 3, 5),
             'date_end': datetime.date(2020, 4, 30),
             'resource_calendar_id': new_calendar.id,
-            'part_time': True,
             'previous_contract_creation': True,
         })
         wizard.action_validate()
@@ -334,15 +367,15 @@ class TestCreditTime(AccountTestInvoicingCommon):
         # Check Payslip 2
         self.assertEqual(payslip_new_contract.version_id, new_contract)
         self.assertEqual(len(payslip_new_contract.worked_days_line_ids), 3) # Attendance, credit time, out of contract
-        attendance_line = payslip_new_contract.worked_days_line_ids[0]
+        attendance_line = payslip_new_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'WORK100')
         self.assertAlmostEqual(attendance_line.amount, 2067.69, places=2)
         self.assertEqual(attendance_line.number_of_days, 16.0)
         self.assertEqual(float_compare(attendance_line.number_of_hours, 121.6, 2), 0)
-        out_of_contract_line = payslip_new_contract.worked_days_line_ids[1]
+        out_of_contract_line = payslip_new_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'OUT')
         self.assertEqual(out_of_contract_line.amount, 0.0)
         self.assertEqual(out_of_contract_line.number_of_days, 3)
         self.assertEqual(float_compare(out_of_contract_line.number_of_hours, 22.8, 2), 0)
-        credit_time_line = payslip_new_contract.worked_days_line_ids[2]
+        credit_time_line = payslip_new_contract.worked_days_line_ids.filtered(lambda wd: wd.code == 'LEAVE300')
         self.assertEqual(credit_time_line.amount, 0)
         self.assertEqual(credit_time_line.number_of_days, 3)
         self.assertEqual(float_compare(credit_time_line.number_of_hours, 22.8, 2), 0)

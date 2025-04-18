@@ -32,17 +32,6 @@
             <group name="salary_right" position="attributes">
                 <attribute name="invisible">wage_type == 'hourly'</attribute>
             </group>
-            <group name="other" position="after">
-                <group name="part_time" string="Part time" groups="hr_payroll.group_hr_payroll_user">
-                    <label for="time_credit"/>
-                    <div class="o_row">
-                        <field name="time_credit"/>
-                        <field name="work_time_rate" invisible="not time_credit" widget="percentage"/>
-                    </div>
-                    <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
-                    <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
-                </group>
-            </group>
         </field>
     </record>
 

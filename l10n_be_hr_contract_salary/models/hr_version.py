@@ -93,7 +93,7 @@ class HrVersion(models.Model):
     @api.depends(
         'wage_with_holidays', 'wage_on_signature',
         'employee_id.l10n_be_scale_seniority', 'job_id.l10n_be_scale_category',
-        'work_time_rate', 'time_credit', 'resource_calendar_id.work_time_rate')
+        'work_time_rate', 'l10n_be_time_credit', 'resource_calendar_id.work_time_rate')
     def _compute_l10n_be_is_below_scale(self):
         super()._compute_l10n_be_is_below_scale()
 

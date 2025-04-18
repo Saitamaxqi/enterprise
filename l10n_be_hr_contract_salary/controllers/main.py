@@ -63,7 +63,7 @@ class HrContractSalary(main.HrContractSalary):
         if not has_access:
             return has_access, error_page
 
-        if version.sudo()._get_work_time_rate() == 0:
+        if version.sudo().l10n_be_time_credit and version.sudo()._get_work_time_rate() == 0:
             return False, request.render('http_routing.http_error', {
                 'status_code': self.env._('Oops'),
                 'status_message': self.env._('This contract is a full time credit time... No simulation can be done for this type of contract as its wage is equal to 0.')})
@@ -360,16 +360,12 @@ class HrContractSalary(main.HrContractSalary):
     def _get_new_version_values(self, version_vals, employee, benefits, offer):
         res = super()._get_new_version_values(version_vals, employee, benefits, offer)
         fields_to_copy = [
-            'has_laptop', 'time_credit', 'work_time_rate',
+            'has_laptop', 'work_time_rate',
             'rd_percentage', 'no_onss', 'no_withholding_taxes', 'meal_voucher_amount',
         ]
         for field_to_copy in fields_to_copy:
             if field_to_copy in version_vals:
                 res[field_to_copy] = version_vals.get(field_to_copy)
-        field_ids_to_copy = ['time_credit_type_id']
-        for field_id_to_copy in field_ids_to_copy:
-            if field_id_to_copy in version_vals:
-                res[field_id_to_copy] = version_vals.get(field_id_to_copy)
         res['has_hospital_insurance'] = float(benefits['has_hospital_insurance_radio']) == 1.0 if 'has_hospital_insurance_radio' in benefits else False
         res['l10n_be_has_ambulatory_insurance'] = float(benefits['l10n_be_has_ambulatory_insurance_radio']) == 1.0 if 'l10n_be_has_ambulatory_insurance_radio' in benefits else False
         res['l10n_be_canteen_cost'] = benefits['l10n_be_canteen_cost'] if 'l10n_be_canteen_cost' in benefits else False
@@ -380,7 +376,7 @@ class HrContractSalary(main.HrContractSalary):
     def create_new_version(self, version_vals, offer_id, benefits, no_write=False, **kw):
         new_version, version_diff = super().create_new_version(version_vals, offer_id, benefits, no_write=no_write, **kw)
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id).exists()
-        if new_version.time_credit:
+        if new_version.l10n_be_time_credit:
             new_version.date_end = version_vals.get('date_end')
         if new_version.car_id.id != version_vals.get('car_id'):
             # If the chosen car is different from the one in the current version, add the car model name to the diff

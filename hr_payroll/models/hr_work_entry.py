@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -11,9 +10,6 @@ from odoo.exceptions import UserError
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
     has_payslip = fields.Boolean(compute='_compute_has_payslip')
-    is_credit_time = fields.Boolean(
-        string='Credit time', readonly=True,
-        help="This is a credit time work entry.")
 
     @api.depends('state')
     def _compute_has_payslip(self):
@@ -29,9 +25,6 @@ class HrWorkEntry(models.Model):
                 slip.employee_id == work_entry.employee_id
                 and slip.date_from <= work_entry.date <= slip.date_to
                 for slip in all_payslips)
-
-    def _get_leaves_entries_outside_schedule(self):
-        return super()._get_leaves_entries_outside_schedule().filtered(lambda w: not w.is_credit_time)
 
     def _check_undefined_slots(self, interval_start, interval_end):
         """

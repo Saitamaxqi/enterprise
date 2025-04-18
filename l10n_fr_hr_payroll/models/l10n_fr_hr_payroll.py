@@ -27,8 +27,8 @@ class HrPayslip(models.Model):
 
     payment_mode = fields.Char(string='Mode de paiement')
 
-    def _get_out_of_version_calendar(self):
+    def _get_out_of_contract_calendar(self):
         self.ensure_one()
         if not self.company_id.country_id.code == 'FR':
-            return super()._get_out_of_version_calendar()
+            return super()._get_out_of_contract_calendar()
         return self.company_id.resource_calendar_id

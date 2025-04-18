@@ -6,13 +6,13 @@ from odoo import api, models
 class HrPayslipWorkedDays(models.Model):
     _inherit = 'hr.payslip.worked_days'
 
-    @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'version_id.wage', 'payslip_id.sum_worked_hours')
+    @api.depends('is_paid', 'number_of_hours', 'payslip_id', 'version_id.wage', 'payslip_id.sum_worked_hours')
     def _compute_amount(self):
         mx_worked_days = self.filtered(lambda wd: wd.payslip_id.struct_id.country_id.code == "MX")
         for worked_days in mx_worked_days:
             if worked_days.payslip_id.edited or worked_days.payslip_id.state != 'draft':
                 continue
-            if not worked_days.version_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
+            if not worked_days.version_id or worked_days.code == 'OUT':
                 worked_days.amount = 0
                 continue
             if not worked_days.payslip_id.date_from or not worked_days.payslip_id.date_to:
@@ -38,6 +38,6 @@ class HrPayslipWorkedDays(models.Model):
         else:
             attendance_hours = sum(
                 line.number_of_hours for line in self.payslip_id.worked_days_line_ids
-                if not line.is_credit_time and line.code != 'OUT' and not line.work_entry_type_id.is_extra_hours
+                if line.code != 'OUT' and not line.work_entry_type_id.is_extra_hours
             ) or 1
             return self.version_id.wage * self.number_of_hours / attendance_hours
