@@ -4118,3 +4118,21 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         picking = self.env['stock.picking'].search([('move_ids.product_id.id', '=', product.id), ('state', '=', 'done')])
 
         self.assertEqual(picking.move_ids.description_picking, 'receipt')
+
+    def test_no_validate_no_dest_package(self):
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0), (4, grp_multi_loc.id, 0)]})
+        picking_type = self.env.ref('stock.picking_type_internal')
+        picking_type.write({
+            'restrict_scan_source_location': 'mandatory',
+            'restrict_scan_dest_location': 'mandatory',
+            'active': True,
+        })
+        pack1 = self.env['stock.quant.package'].create({
+                'name': 'Pack1',
+            })
+        self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5, package_id=pack1)
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+        self.start_tour(url, 'test_no_validate_no_dest_package', login='admin')

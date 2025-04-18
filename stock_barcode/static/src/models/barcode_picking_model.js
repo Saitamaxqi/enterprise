@@ -769,7 +769,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         if (
             this.config.restrict_scan_dest_location == "mandatory" &&
             !this.lastScanned.destLocation &&
-            this.selectedLine
+            (this.selectedLine || this.lastScanned.packageId)
         ) {
             return false;
         }
@@ -974,7 +974,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         if (
             this.config.restrict_scan_dest_location == "mandatory" &&
             !this.lastScanned.destLocation &&
-            this.selectedLine
+            (this.selectedLine || this.lastScanned.packageId)
         ) {
             return this.notification(_t("Destination location must be scanned"), {
                 type: "danger",

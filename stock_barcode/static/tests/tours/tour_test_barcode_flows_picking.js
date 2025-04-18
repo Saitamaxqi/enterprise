@@ -6517,3 +6517,37 @@ registry.category("web_tour.tours").add("test_description_picking_tour", {
         ...stepUtils.validateBarcodeOperation(),
     ],
 });
+
+registry.category("web_tour.tours").add("test_no_validate_no_dest_package", {
+    steps: () => [
+    {
+        trigger: "button.o_button_operations",
+        run: "click",
+    },
+    {
+        trigger: ".o_kanban_record:contains(Internal)",
+        run: "click",
+    },
+    {
+        trigger: "button.o-kanban-button-new",
+        run: "click",
+    },
+    {
+        trigger: ".o_barcode_client_action",
+        run: "scan LOC-01-00-00"
+    },
+    {
+        trigger: ".o_barcode_client_action",
+        run: "scan Pack1"
+    },
+    {
+        trigger: ".btn.o_validate_page",
+        run: "click",
+    },
+    {
+        trigger: ".o_notification_bar.bg-danger",
+        run: () => {
+            helper.assertErrorMessage("Destination location must be scanned");
+        },
+    },
+]});
