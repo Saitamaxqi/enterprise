@@ -1,4 +1,5 @@
-from odoo import models, _, osv
+from odoo import models, _
+from odoo.fields import Domain
 from odoo.tools import groupby, SQL
 from odoo.tools.float_utils import float_repr
 
@@ -53,10 +54,11 @@ class AccountCashFlowReportHandler(models.AbstractModel):
         options['journals'] = [journal for journal in options.get('journals', []) if journal.get('type') == 'cash']
 
         # Prepare query to get lines
-        domain = osv.expression.AND([
+        domain = Domain.AND((
             report._get_options_domain(options, 'strict_range'),
-            [('statement_line_id', '!=', False), ('matching_number', '=', False)],
-        ])
+            Domain('statement_line_id', '!=', False),
+            Domain('matching_number', '=', False),
+        ))
         self.env['account.move.line'].check_access('read')
         query = self.env['account.move.line']._where_calc(domain)
         journal_alias = query.join(lhs_alias='account_move_line', lhs_column='journal_id', rhs_table='account_journal', rhs_column='id', link='journal_id')
@@ -176,10 +178,11 @@ class AccountCashFlowReportHandler(models.AbstractModel):
         options['journals'] = [journal for journal in options.get('journals', []) if journal.get('type') == 'bank']
 
         # Prepare query to get lines
-        domain = osv.expression.AND([
+        domain = Domain.AND((
             report._get_options_domain(options, 'strict_range'),
-            [('statement_line_id', '!=', False), ('matching_number', '=', False)],
-        ])
+            Domain('statement_line_id', '!=', False),
+            Domain('matching_number', '=', False),
+        ))
         self.env['account.move.line'].check_access('read')
         query = self.env['account.move.line']._where_calc(domain)
 

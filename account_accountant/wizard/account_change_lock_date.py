@@ -1,6 +1,6 @@
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import date_utils
 
 from odoo.addons.account.models.company import SOFT_LOCK_DATE_FIELDS, LOCK_DATE_FIELDS
@@ -192,11 +192,11 @@ class AccountChangeLockDate(models.TransientModel):
             lock_date_domains.append([
                 ('date', '<=', self.purchase_lock_date),
                 ('journal_id.type', '=', 'purchase')])
-        return [
-            ('company_id', 'child_of', self.env.company.id),
-            ('state', '=', 'draft'),
-            *expression.OR(lock_date_domains),
-        ]
+        return (
+            Domain('company_id', 'child_of', self.env.company.id)
+            & Domain('state', '=', 'draft')
+            & Domain.OR(lock_date_domains)
+        )
 
     @api.depends('fiscalyear_lock_date', 'tax_lock_date', 'sale_lock_date', 'purchase_lock_date', 'hard_lock_date')
     def _compute_show_draft_entries_warning(self):

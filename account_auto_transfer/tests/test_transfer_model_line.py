@@ -120,13 +120,13 @@ class MoveModelLineTestCase(AccountAutoTransferTestCase):
                                                              analytic_account_ids=[aaccount_1.id, aaccount_2.id])
         percent_transfer_model_line = self._add_transfer_model_line(self.destination_accounts[1].id, percent=percent)
 
-        anal_res = analytic_transfer_model_line._get_move_lines_domain(*args)
+        anal_res = list(analytic_transfer_model_line._get_move_lines_domain(*args))
         anal_expected = return_val
         patched.assert_called_once_with(*args)
         self.assertListEqual(anal_res, anal_expected)
         patched.reset_mock()
 
-        perc_res = percent_transfer_model_line._get_move_lines_domain(*args)
+        perc_res = list(percent_transfer_model_line._get_move_lines_domain(*args))
         patched.assert_called_once_with(*args)
         self.assertListEqual(perc_res, patched.return_value)
 

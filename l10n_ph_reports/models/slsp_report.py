@@ -7,8 +7,8 @@ from importlib import metadata
 from PIL import ImageFont
 
 from odoo import api, models, _, fields
-from odoo.osv import expression
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 from odoo.tools import date_utils, float_repr, SQL, parse_version
 from odoo.tools.misc import format_date, file_path
 
@@ -294,7 +294,7 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
     def _get_grand_total_line_domain(self, options):
         domain = super()._get_grand_total_line_domain(options)
         if not options.get("include_no_tin"):
-            domain = expression.AND([domain, [("partner_id.vat", "!=", False)]])
+            domain = Domain.AND([domain, [("partner_id.vat", "!=", False)]])
         return domain
 
     # xlsx export methods

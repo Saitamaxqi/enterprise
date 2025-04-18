@@ -1,4 +1,5 @@
-from odoo import models, osv
+from odoo import models
+from odoo.fields import Domain
 
 
 class AccountReport(models.Model):
@@ -7,5 +8,5 @@ class AccountReport(models.Model):
     def _get_audit_line_domain(self, column_group_options, expression, params):
         res = super()._get_audit_line_domain(column_group_options, expression, params)
         if expression.formula == '_report_custom_engine_total_disallowed_expenses':
-            res = osv.expression.AND([res, [('account_id.disallowed_expenses_category_id.id', '!=', False)]])
+            res = Domain.AND([res, [('account_id.disallowed_expenses_category_id.id', '!=', False)]])
         return res

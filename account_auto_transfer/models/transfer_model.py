@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date
@@ -7,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools.float_utils import float_compare, float_is_zero
 
 
@@ -166,15 +165,14 @@ class AccountTransferModel(models.Model):
         :param start_date: the start date of the period
         :param end_date: the end date of the period
         :return: the computed domain
-        :rtype: list
         """
         self.ensure_one()
-        return [
+        return Domain([
             ('account_id', 'in', self.account_ids.ids),
             ('date', '>=', start_date),
             ('date', '<=', end_date),
             ('parent_state', '=', 'posted')
-        ]
+        ])
 
     # PROTECTEDS
 
@@ -272,11 +270,11 @@ class AccountTransferModel(models.Model):
         :rtype: list
         """
         self.ensure_one()
-        domain = expression.AND([
-            self._get_move_lines_base_domain(start_date, end_date),
-            [('partner_id', 'not in', self.line_ids.partner_ids.ids)],
-            [('analytic_distribution', 'not in', self.line_ids.analytic_account_ids.ids)],
-        ])
+        domain = (
+            self._get_move_lines_base_domain(start_date, end_date)
+            & Domain('partner_id', 'not in', self.line_ids.partner_ids.ids)
+            & Domain('analytic_distribution', 'not in', self.line_ids.analytic_account_ids.ids)
+        )
         total_balance_account = self.env['account.move.line']._read_group(
             domain,
             ['account_id'],
@@ -391,10 +389,7 @@ class AccountTransferModelLine(models.Model):
             domain = transfer_model_line._get_move_lines_domain(start_date, end_date, already_handled_move_line_ids)
 
             if transfer_model_line.analytic_account_ids:
-                domain = expression.AND([
-                    domain,
-                    [('analytic_distribution', 'in', transfer_model_line.analytic_account_ids.ids)],
-                ])
+                domain &= Domain('analytic_distribution', 'in', transfer_model_line.analytic_account_ids.ids)
 
             total_balances = self.env['account.move.line']._read_group(
                 domain,
@@ -418,14 +413,13 @@ class AccountTransferModelLine(models.Model):
         :param end_date: the end date of the targeted period
         :param avoid_move_line_ids: the account.move.line ids that should be excluded from the domain
         :return: the computed domain
-        :rtype: list
         """
         self.ensure_one()
         move_lines_domain = self.transfer_model_id._get_move_lines_base_domain(start_date, end_date)
         if avoid_move_line_ids:
-            move_lines_domain.append(('id', 'not in', avoid_move_line_ids))
+            move_lines_domain &= Domain('id', 'not in', avoid_move_line_ids)
         if self.partner_ids:
-            move_lines_domain.append(('partner_id', 'in', self.partner_ids.ids))
+            move_lines_domain &= Domain('partner_id', 'in', self.partner_ids.ids)
         return move_lines_domain
 
     def _get_transfer_values(self, account, amount, is_debit, write_date):

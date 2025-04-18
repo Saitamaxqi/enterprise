@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class L10n_HkRental(models.Model):
@@ -74,7 +73,7 @@ class L10n_HkRental(models.Model):
                 start_domain = [('date_start', '<=', rental.date_end)]
                 end_domain = ['|', ('date_end', '>', rental.date_start), ('date_end', '=', False)]
 
-            domain = expression.AND([domain, start_domain, end_domain])
+            domain = Domain.AND([domain, start_domain, end_domain])
             if self.search_count(domain):
                 raise ValidationError(_(
                     'Rental %(rental)s: employee %(employee)s already has a rental running during this period.',

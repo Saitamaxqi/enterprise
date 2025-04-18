@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import re
 from json import dumps, loads
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
-from odoo.tools import get_lang, SQL, formatLang
+from odoo.fields import Domain
+from odoo.tools import formatLang, get_lang, SQL
 
 _merchandise_export_code = {
     'BE': '29',
@@ -487,7 +486,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             domain_dict['transport_code'] = [('move_id.intrastat_transport_mode_id', '=', False)]
 
         if grouping_key_dict['incoterm_code']:
-            domain_dict['incoterm_code'] = expression.OR([
+            domain_dict['incoterm_code'] = Domain.OR([
                 [('move_id.invoice_incoterm_id.code', '=', grouping_key_dict['incoterm_code'])],
                 [
                     ('move_id.invoice_incoterm_id', '=', False),
@@ -500,7 +499,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
         return domain_dict
 
     def _build_custom_domain(self, grouping_key):
-        return expression.AND(self._build_intrastat_custom_domain_blocks(loads(grouping_key)).values())
+        return Domain.AND(self._build_intrastat_custom_domain_blocks(loads(grouping_key)).values())
 
     ####################################################
     # REPORT LINES: HELPERS

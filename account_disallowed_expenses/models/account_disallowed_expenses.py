@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, api, _
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import SQL
 
 
@@ -52,13 +51,13 @@ class AccountDisallowedExpensesCategory(models.Model):
 
     @api.model
     def _search_display_name(self, operator, value):
-        if operator in expression.NEGATIVE_TERM_OPERATORS:
+        if Domain.is_negative_operator(operator):
             return NotImplemented
         if operator == 'in':
-            return expression.OR(self._search_display_name('=', v) for v in value)
+            return Domain.OR(self._search_display_name('=', v) for v in value)
         if value and isinstance(value, str):
             code_value = value.split(' ')[0]
-            return ['|', ('code', '=ilike', f'{code_value}%'), ('name', operator, value)]
+            return Domain('code', '=ilike', f'{code_value}%') | Domain('name', operator, value)
         if operator == '=':
             operator = 'in'
             value = [value]

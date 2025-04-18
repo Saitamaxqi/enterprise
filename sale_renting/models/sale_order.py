@@ -233,19 +233,12 @@ class SaleOrder(models.Model):
             return super()._get_portal_return_action()
 
     def _get_product_catalog_domain(self):
-        """ Override of `_get_product_catalog_domain` to extend the domain to rental-only products.
-
-        :returns: A list of tuples that represents a domain.
-        :rtype: list
-        """
         domain = super()._get_product_catalog_domain()
         if self.is_rental_order:
-            return Domain.OR([
-                domain, [
-                    ('rent_ok', '=', True),
-                    ('company_id', 'in', [self.company_id.id, False]),
-                    ('type', '!=', 'combo'),
-                ]
+            return domain | Domain([
+                ('rent_ok', '=', True),
+                ('company_id', 'in', [self.company_id.id, False]),
+                ('type', '!=', 'combo'),
             ])
         return domain
 

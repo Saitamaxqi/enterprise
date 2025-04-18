@@ -1,7 +1,7 @@
 from itertools import product
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools.sql import column_exists, create_column
 
 
@@ -75,7 +75,7 @@ class AccountMoveLine(models.Model):
             ('account_id', 'in', self.account_id.ids),
         ]
         if factors:
-            domain = expression.AND([domain, [('esg_emission_factor_id', 'in', factors.ids)]])
+            domain = Domain.AND([domain, [('esg_emission_factor_id', 'in', factors.ids)]])
         factor_per_rule = {
             (rule.product_id.id, rule.partner_id.id, rule.account_id.id): rule.esg_emission_factor_id.id
             for rule in self.env['esg.assignation.line'].search(domain)

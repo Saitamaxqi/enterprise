@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, api
-from odoo.osv import expression
 
 SUPPLEMENTARY_UNITS = [
     ('c/k', 'c/k'),                     # Carats (1 metric carat = 2 × 10–4 kg)

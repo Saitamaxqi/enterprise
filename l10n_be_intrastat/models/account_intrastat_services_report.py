@@ -1,8 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import SQL
 from odoo.tools.float_utils import float_round
+
 
 class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
     _name = 'account.intrastat.services.be.report.handler'
@@ -68,7 +69,7 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
                             # When extending a CN line, search for refunds only and add CN to returned code.
                             # and remove 'CN' from commodity_code in domain as no CN code exists in DB
                             options['forced_domain'][i] = (domain[0], domain[1], domain[2][:-2])
-                            options['forced_domain'] = expression.AND([
+                            options['forced_domain'] = Domain.AND([
                                 options['forced_domain'],
                                 is_refund_domain,
                             ])
@@ -83,7 +84,7 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
                     report, options, current_groupby, query_params,
                     warnings=warnings, order_by=False,
                 )
-                options['forced_domain'] = expression.AND([
+                options['forced_domain'] = Domain.AND([
                     options.get('forced_domain') or [],
                     is_refund_domain,
                     [('product_id.product_tmpl_id.type', '=', 'service')],
@@ -119,7 +120,7 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
     def _build_intrastat_custom_domain_blocks(self, grouping_key_dict):
         res = super()._build_intrastat_custom_domain_blocks(grouping_key_dict)
         # get country name from non intrastat partner also for F01DGS or F02CMS
-        res['country_code'] = expression.OR([
+        res['country_code'] = Domain.OR([
             res['country_code'],
             [('move_id.partner_id.country_id.code', '=', grouping_key_dict['country_code'])],
         ])

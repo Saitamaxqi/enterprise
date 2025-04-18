@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.addons.fleet.models.fleet_vehicle_model import FUEL_TYPES
 
 
@@ -8,20 +8,20 @@ class HrVersion(models.Model):
 
     @api.model
     def _get_available_vehicles_domain(self, driver_ids=None, vehicle_type='car'):
-        domain = expression.AND([
-            expression.OR([
+        domain = Domain.AND([
+            Domain.OR([
                 [('company_id', '=', False)],
                 [('company_id', '=', self.company_id.id)]
             ]),
-            expression.AND([
-                expression.AND([
-                    expression.OR([
+            Domain.AND([
+                Domain.AND([
+                    Domain.OR([
                         [('future_driver_id', '=', False)],
                         [('future_driver_id', 'in', driver_ids.ids if driver_ids else [])],
                     ]),
                     [('model_id.vehicle_type', '=', vehicle_type)],
                 ]),
-                expression.OR([
+                Domain.OR([
                     [('driver_id', '=', False)],
                     [('driver_id', 'in', driver_ids.ids if driver_ids else [])],
                     [('plan_to_change_car', '=', True)] if vehicle_type == 'car' else [('plan_to_change_bike', '=', True)]
@@ -31,7 +31,7 @@ class HrVersion(models.Model):
         ])
         waiting_stage = self.env.ref('fleet.fleet_vehicle_state_waiting_list', raise_if_not_found=False)
         if waiting_stage:
-            domain = expression.AND([[('state_id', '!=', waiting_stage.id)], domain])
+            domain = Domain('state_id', '!=', waiting_stage.id) & domain
         return domain
 
     @api.model
@@ -41,16 +41,16 @@ class HrVersion(models.Model):
             that it excludes vehicles that have a driver currently even if the current driver is the
             employee under the contract or the current driver plans to change the car in the future.
         """
-        domain = [
+        domain = Domain([
             '|', ('company_id', '=', False), ('company_id', '=', self.company_id.id),
             '|', ('future_driver_id', '=', False), ('future_driver_id', 'in', driver_ids.ids),
             ('model_id.vehicle_type', '=', vehicle_type),
             ('driver_id', '=', False),
             ('write_off_date', '=', False),
-        ]
+        ])
         waiting_stage = self.env.ref('fleet.fleet_vehicle_state_waiting_list', raise_if_not_found=False)
         if waiting_stage:
-            domain = expression.AND([[('state_id', '!=', waiting_stage.id)], domain])
+            domain = Domain('state_id', '!=', waiting_stage.id) & domain
         return domain
 
     def _get_possible_model_domain(self, vehicle_type='car'):
@@ -218,7 +218,7 @@ class HrVersion(models.Model):
     def _compute_available_cars_amount(self):
         for version in self:
             version.available_cars_amount = self.env['fleet.vehicle'].sudo().search_count(
-                expression.AND([
+                Domain.AND([
                     version._get_vehicles_without_current_drivers_domain(
                         version.employee_id.work_contact_id
                     ),

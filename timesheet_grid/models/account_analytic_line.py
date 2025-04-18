@@ -7,7 +7,7 @@ from collections import defaultdict
 
 from odoo import models, fields, api, _
 from odoo.exceptions import RedirectWarning, UserError, AccessError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import format_date
 from odoo.tools.date_utils import localized
 
@@ -642,18 +642,15 @@ class AccountAnalyticLine(models.Model):
 
             2. Manager (Administrator): with this access right, the user can validate all timesheets.
         """
-        domain = [('project_id', '!=', False), ('validated', '=', validated)]
+        domain = Domain('project_id', '!=', False) & Domain('validated', '=', validated)
         if not validated:
-            domain = expression.AND([
-                domain,
-                [("date", "<=", fields.Date.today())],
-            ])
+            domain &= Domain("date", "<=", fields.Date.today())
 
         if not self.env.user.has_group('hr_timesheet.group_timesheet_manager'):
-            return expression.AND([
+            return Domain.AND([
                 domain,
+                Domain('user_id', '!=', self.env.uid),
                 [
-                    ('user_id', '!=', self.env.uid),
                     '|', ('employee_id.timesheet_manager_id', 'in', [False, self.env.uid]),
                     '|', ('employee_id', 'in', self.env.user.employee_id.subordinate_ids.ids),
                     '|', ('employee_id.parent_id.user_id', '=', self.env.uid),

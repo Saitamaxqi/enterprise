@@ -3,7 +3,7 @@
 from collections import defaultdict
 
 from odoo import api, fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.exceptions import ValidationError
 from odoo.tools.sql import column_exists, create_column
 
@@ -147,7 +147,7 @@ class AccountAnalyticLine(models.Model):
     def _timesheet_get_portal_domain(self):
         domain = super()._timesheet_get_portal_domain()
         if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_user'):
-            domain = expression.OR([domain, self._timesheet_in_helpdesk_get_portal_domain()])
+            domain = Domain.OR([domain, self._timesheet_in_helpdesk_get_portal_domain()])
         return domain
 
     def _timesheet_in_helpdesk_get_portal_domain(self):
@@ -174,7 +174,7 @@ class AccountAnalyticLine(models.Model):
         }
 
     def _get_last_timesheet_domain(self):
-        return expression.AND([
+        return Domain.AND([
             super()._get_last_timesheet_domain(),
             [('helpdesk_ticket_id', '=', self.helpdesk_ticket_id.id)],
         ])

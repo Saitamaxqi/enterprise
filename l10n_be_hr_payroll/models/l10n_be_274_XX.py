@@ -10,7 +10,7 @@ from lxml import etree
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import format_date
 from odoo.tools.misc import file_path
 
@@ -115,14 +115,14 @@ class L10n_Be274_Xx(models.Model):
                     sheet.error_message = str(err)
 
     def _get_valid_payslips(self):
-        domain = [
+        domain = Domain([
             ('state', 'in', ['paid', 'done']),
             ('company_id', '=', self.company_id.id),
             ('date_from', '>=', self.date_start),
             ('date_to', '<=', self.date_end),
-        ]
+        ])
         if self.env.context.get('wizard_274xx_force_employee_ids'):
-            domain += expression.AND([domain, [('employee_id', 'in', self.env.context['wizard_274xx_force_employee_ids'])]])
+            domain &= Domain('employee_id', 'in', self.env.context['wizard_274xx_force_employee_ids'])
         return self.env['hr.payslip'].search(domain)
 
     @api.constrains('company_id')

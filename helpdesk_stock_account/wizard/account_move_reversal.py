@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class AccountMoveReversal(models.TransientModel):
@@ -27,7 +26,7 @@ class AccountMoveReversal(models.TransientModel):
     def _get_default_so_domain(self, ticket):
         domain = super()._get_default_so_domain(ticket)
         if ticket.product_id:
-            domain = expression.AND([
+            domain = Domain.AND([
                 domain,
                 [('order_line.product_id', '=', ticket.product_id.id)]
             ])
@@ -36,7 +35,7 @@ class AccountMoveReversal(models.TransientModel):
     def _get_default_moves_domain(self, ticket):
         domain = super()._get_default_moves_domain(ticket)
         if ticket.product_id:
-            domain = expression.AND([
+            domain = Domain.AND([
                 domain,
                 [('line_ids.product_id', '=', ticket.product_id.id)]
             ])
@@ -45,7 +44,7 @@ class AccountMoveReversal(models.TransientModel):
     def _get_suitable_move_domain(self):
         domain = super()._get_suitable_move_domain()
         if self.helpdesk_ticket_id.product_id:
-            domain = expression.AND([
+            domain = Domain.AND([
                 domain,
                 [('invoice_line_ids.product_id', '=', self.helpdesk_ticket_id.product_id.id)]
             ])
@@ -54,7 +53,7 @@ class AccountMoveReversal(models.TransientModel):
     def _get_suitable_so_domain(self):
         domain = super()._get_suitable_so_domain()
         if self.helpdesk_ticket_id.product_id:
-            domain = expression.AND([
+            domain = Domain.AND([
                 domain,
                 [('order_line.product_id', '=', self.helpdesk_ticket_id.product_id.id)]
             ])

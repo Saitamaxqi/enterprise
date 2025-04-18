@@ -1,9 +1,9 @@
 import logging
 import uuid
-import random
 import json
 
-from odoo import http, Command
+from odoo import http
+from odoo.fields import Command, Domain
 from odoo.http import request
 from odoo.tools import consteq
 from odoo.tools.json import scriptsafe as json
@@ -280,7 +280,7 @@ class PosUrbanPiperController(http.Controller):
         return taxes
 
     def _get_tax_domain(self, pos_config, tax_percentage):
-        return [('company_id', '=', pos_config.company_id.id), ('amount', '=', tax_percentage)]
+        return Domain('company_id', '=', pos_config.company_id.id) & Domain('amount', '=', tax_percentage)
 
     def _create_order_line(self, line_data, pos_config_sudo):
         value_ids_lst = []

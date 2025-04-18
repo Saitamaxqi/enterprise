@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import base64
 import json
 import random
@@ -15,7 +14,7 @@ from odoo.tools.zeep import Client, Transport
 from pytz import timezone
 
 from odoo import _, api, models, modules, fields, tools
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import frozendict
 from odoo.tools.float_utils import float_is_zero, float_round
 
@@ -2438,10 +2437,10 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         :param from_cron:       Indicate if the call is from the CRON or not.
         :return:                An odoo domain.
         """
-        domain = expression.OR(self._get_update_sat_status_domains(from_cron=from_cron))
-        if extra_domain:
-            domain = expression.AND([domain, extra_domain])
-        return domain
+        return Domain.AND([
+            Domain.OR(self._get_update_sat_status_domains(from_cron=from_cron)),
+            extra_domain or Domain.TRUE,
+        ])
 
     @api.model
     def _fetch_and_update_sat_status(self, batch_size=100, extra_domain=None):

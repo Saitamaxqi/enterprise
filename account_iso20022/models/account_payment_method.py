@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, osv
+from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class AccountPaymentMethod(models.Model):
@@ -43,9 +44,9 @@ class AccountPaymentMethod(models.Model):
             # To prevent ISO20022 to be automatically added to the journals to which SEPA has to be added when updating
             # the payment methods of the existing journals, at module install
             eur_currency = self.env.ref("base.EUR")
-            domain = osv.expression.AND([domain, [
+            domain &= Domain([
                 '|',
                 '&', ('currency_id', '=', False), ('company_id.currency_id', '!=', eur_currency.id),
                 '&', ('currency_id', '!=', False), ('currency_id', '!=', eur_currency.id),
-            ]])
+            ])
         return domain

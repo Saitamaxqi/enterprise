@@ -14,8 +14,7 @@ class PosUrbanPiperInController(PosUrbanPiperController):
         return taxes
 
     def _get_tax_domain(self, pos_config, tax_percentage):
-        base_domain = super()._get_tax_domain(pos_config, tax_percentage)
-        domain = Domain(base_domain)
+        domain = super()._get_tax_domain(pos_config, tax_percentage)
         if pos_config.company_id.country_id.code == "IN":
             domain &= Domain("tax_group_id.name", "=", "GST")
         return domain

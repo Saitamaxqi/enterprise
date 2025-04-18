@@ -19,10 +19,10 @@ import markupsafe
 from dateutil.relativedelta import relativedelta
 from PIL import ImageFont
 
-from odoo import Command, models, fields, api, _, osv
+from odoo import api, fields, models, _
 from odoo.addons.web.controllers.utils import clean_action
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
-from odoo.fields import Domain
+from odoo.fields import Command, Domain
 from odoo.service.model import get_public_method
 from odoo.tools import date_utils, get_lang, float_is_zero, float_repr, SQL, parse_version, Query
 from odoo.tools.float_utils import float_round, float_compare
@@ -462,7 +462,7 @@ class AccountReport(models.Model):
     def _get_options_journals_domain(self, options):
         # Make sure to return an empty array when nothing selected to handle archived journals.
         selected_journals = self._get_options_journals(options)
-        return selected_journals and [('journal_id', 'in', [j['id'] for j in selected_journals])] or []
+        return Domain('journal_id', 'in', [j['id'] for j in selected_journals]) if selected_journals else Domain.TRUE
 
     # ####################################################
     # OPTIONS: USER DEFINED FILTERS ON AML
@@ -495,10 +495,10 @@ class AccountReport(models.Model):
         ]
 
         if not selected_filters_ids:
-            return []
+            return Domain.TRUE
 
         selected_ir_filters = self.env['ir.filters'].browse(selected_filters_ids)
-        return osv.expression.OR([filter_record._get_eval_domain() for filter_record in selected_ir_filters])
+        return Domain.OR(filter_record._get_eval_domain() for filter_record in selected_ir_filters)
 
     ####################################################
     # OPTIONS: date + comparison
@@ -885,9 +885,9 @@ class AccountReport(models.Model):
     def _get_options_date_domain(self, options, date_scope):
         date_from, date_to = self._get_date_bounds_info(options, date_scope)
 
-        scope_domain = [('date', '<=', date_to)]
+        scope_domain = Domain('date', '<=', date_to)
         if date_from:
-            scope_domain += [('date', '>=', date_from)]
+            scope_domain &= Domain('date', '>=', date_from)
 
         return scope_domain
 
@@ -975,14 +975,14 @@ class AccountReport(models.Model):
 
     @api.model
     def _get_options_partner_domain(self, options):
-        domain = []
+        domains = []
         if options.get('partner_ids'):
             partner_ids = [int(partner) for partner in options['partner_ids']]
-            domain.append(('partner_id', 'in', partner_ids))
+            domains.append(Domain('partner_id', 'in', partner_ids))
         if options.get('partner_categories'):
             partner_category_ids = [int(category) for category in options['partner_categories']]
-            domain.append(('partner_id.category_id', 'in', partner_category_ids))
-        return domain
+            domains.append(Domain('partner_id.category_id', 'in', partner_category_ids))
+        return Domain.AND(domains)
 
     ####################################################
     # OPTIONS: all_entries
@@ -991,9 +991,9 @@ class AccountReport(models.Model):
     @api.model
     def _get_options_all_entries_domain(self, options):
         if not options.get('all_entries'):
-            return [('parent_state', '=', 'posted')]
+            return Domain('parent_state', '=', 'posted')
         else:
-            return [('parent_state', '!=', 'cancel')]
+            return Domain('parent_state', '!=', 'cancel')
 
     ####################################################
     # OPTIONS: not reconciled entries
@@ -1007,8 +1007,8 @@ class AccountReport(models.Model):
     @api.model
     def _get_options_unreconciled_domain(self, options):
         if options.get('unreconciled'):
-            return ['&', ('full_reconcile_id', '=', False), ('balance', '!=', '0')]
-        return []
+            return Domain('full_reconcile_id', '=', False) & Domain('balance', '!=', '0')
+        return Domain.TRUE
 
     ####################################################
     # OPTIONS: account_type
@@ -1048,7 +1048,7 @@ class AccountReport(models.Model):
         all_domains = []
         selected_domains = []
         if not options.get('account_type') or len(options.get('account_type')) == 0:
-            return []
+            return Domain.TRUE
         for opt in options.get('account_type', []):
             if opt['id'] == 'trade_receivable':
                 domain = [('account_id.non_trade', '=', False), ('account_id.account_type', '=', 'asset_receivable')]
@@ -1061,7 +1061,7 @@ class AccountReport(models.Model):
             if opt['selected']:
                 selected_domains.append(domain)
             all_domains.append(domain)
-        return osv.expression.OR(selected_domains or all_domains)
+        return Domain.OR(selected_domains or all_domains)
 
     ####################################################
     # OPTIONS: order column
@@ -2106,56 +2106,53 @@ class AccountReport(models.Model):
             self._init_options_readonly_query: 1070,
         }
 
-    def _get_options_domain(self, options, date_scope):
+    def _get_options_domain(self, options, date_scope) -> Domain:
         self.ensure_one()
 
         available_scopes = dict(self.env['account.report.expression']._fields['date_scope'].selection)
         if date_scope and date_scope not in available_scopes: # date_scope can be passed to None explicitly to ignore the dates
             raise UserError(_("Unknown date scope: %s", date_scope))
 
-        domain = [
-            ('display_type', 'not in', ('line_section', 'line_note')),
-            ('company_id', 'in', self.get_report_company_ids(options)),
-        ]
-        if not options.get('compute_budget'):
-            domain += self._get_options_journals_domain(options)
-        if date_scope:
-            domain += self._get_options_date_domain(options, date_scope)
-        domain += self._get_options_partner_domain(options)
-        domain += self._get_options_all_entries_domain(options)
-        domain += self._get_options_unreconciled_domain(options)
-        domain += self._get_options_account_type_domain(options)
-        domain += self._get_options_aml_ir_filters(options)
-
-        if self.only_tax_exigible:
-            domain += self.env['account.move.line']._get_tax_exigible_domain()
-
-        if options.get('forced_domain'):
+        domains = [
+            Domain('display_type', 'not in', ('line_section', 'line_note')),
+            Domain('company_id', 'in', self.get_report_company_ids(options)),
+            self._get_options_journals_domain(options)
+            if not options.get('compute_budget') else Domain.TRUE,
+            self._get_options_date_domain(options, date_scope)
+            if date_scope else Domain.TRUE,
+            self._get_options_partner_domain(options),
+            self._get_options_all_entries_domain(options),
+            self._get_options_unreconciled_domain(options),
+            self._get_options_account_type_domain(options),
+            self._get_options_aml_ir_filters(options),
+            self.env['account.move.line']._get_tax_exigible_domain()
+            if self.only_tax_exigible else Domain.TRUE,
             # That option key is set when splitting options between column groups
-            domain += options['forced_domain']
+            options.get('forced_domain') or Domain.TRUE,
+        ]
 
         # Handle foreign VAT
         if self.allow_foreign_vat:
             if self.country_id == self.env.company.account_fiscal_country_id:
                 # It's a domestic report
-                domain += [
+                domains.append([
                     '|', '|',
                     ('move_id.fiscal_position_id', '=', False),
                     ('move_id.fiscal_position_id.foreign_vat', '=', False),
                     ('tax_tag_ids.country_id', '=', self.country_id.id),  # To allow setting loca tags on an operation made nor another country (sometimes legally necessary)
-                ]
+                ])
             elif self.country_id:
                 # It's a foreign report
-                domain += [
+                domains.append([
                     '|',
                     ('tax_tag_ids.country_id', '=', self.country_id.id),  # To allow setting loca tags on an operation made nor another country (sometimes legally necessary)
                     '&',
                     ('move_id.fiscal_position_id.country_id', '=', self.country_id.id),
                     ('move_id.fiscal_position_id.foreign_vat', '!=', False),
-                ]
+                ])
             # else: don't filter anything; the report has no county and should have access to all the data
 
-        return domain
+        return Domain.AND(domains)
 
     ####################################################
     # QUERIES
@@ -2163,7 +2160,7 @@ class AccountReport(models.Model):
 
     def _get_report_query(self, options, date_scope, domain=None) -> Query:
         """ Get a Query object that references the records needed for this report. """
-        domain = self._get_options_domain(options, date_scope) + (domain or [])
+        domain = self._get_options_domain(options, date_scope) & Domain(domain or Domain.TRUE)
 
         self.env['account.move.line'].check_access('read')
 
@@ -2171,7 +2168,6 @@ class AccountReport(models.Model):
             # remove required columns that are not filled from the domain
             # these qre not in the budget table
             aml_required_columns = {'move_id', 'currency_id', 'journal_id', 'display_type'}
-            domain = Domain(domain)
             domain = domain.map_conditions(lambda condition: Domain.TRUE if condition.field_expr in aml_required_columns else condition)
 
         query = self.env['account.move.line']._where_calc(domain)
@@ -4477,9 +4473,9 @@ class AccountReport(models.Model):
         }
 
     def _get_audit_line_domain(self, column_group_options, expression, params):
-        groupby_domain = self._get_audit_line_groupby_domain(params['calling_line_dict_id'])
+        groupby_domain = Domain(self._get_audit_line_groupby_domain(params['calling_line_dict_id']))
         # Aggregate all domains per date scope, then create the final domain.
-        audit_or_domains_per_date_scope = {}
+        audit_or_domains_per_date_scope = defaultdict(list)
         for expression_to_audit in expression._expand_aggregations():
             expression_domain = self._get_expression_audit_aml_domain(expression_to_audit, column_group_options)
 
@@ -4487,34 +4483,21 @@ class AccountReport(models.Model):
                 continue
 
             date_scope = expression.date_scope if expression.subformula and expression.subformula.startswith('cross_report') else expression_to_audit.date_scope
-            audit_or_domains = audit_or_domains_per_date_scope.setdefault(date_scope, [])
-            audit_or_domains.append(osv.expression.AND([
-                expression_domain,
-                groupby_domain,
-            ]))
+            audit_or_domains_per_date_scope[date_scope].append(expression_domain)
 
         if audit_or_domains_per_date_scope:
-            domain = osv.expression.OR([
-                osv.expression.AND([
-                    osv.expression.OR(audit_or_domains),
-                    self._get_options_domain(column_group_options, date_scope),
-                    groupby_domain,
-                ])
+            domain = Domain.OR(
+                Domain.OR(audit_or_domains) & self._get_options_domain(column_group_options, date_scope)
                 for date_scope, audit_or_domains in audit_or_domains_per_date_scope.items()
-            ])
+            )
         else:
             # Happens when no expression was provided (empty recordset), or if none of the expressions had a standard engine
-            domain = osv.expression.AND([
-                self._get_options_domain(column_group_options, 'strict_range'),
-                groupby_domain,
-            ])
+            domain = self._get_options_domain(column_group_options, 'strict_range')
+        domain &= groupby_domain
 
         # Analytic Filter
         if column_group_options.get("analytic_accounts"):
-            domain = osv.expression.AND([
-                domain,
-                [("analytic_distribution", "in", column_group_options["analytic_accounts"])],
-            ])
+            domain &= Domain("analytic_distribution", "in", column_group_options["analytic_accounts"])
 
         return domain
 
@@ -4567,7 +4550,7 @@ class AccountReport(models.Model):
 
                     account_codes_domains.append(account_codes_domain)
 
-            return osv.expression.OR(account_codes_domains)
+            return Domain.OR(account_codes_domains)
 
         if expression_to_audit.engine == 'tax_tags':
             tags = self.env['account.account.tag']._get_tax_tags(expression_to_audit.formula, expression_to_audit.report_line_id.report_id.country_id.id)
@@ -5144,32 +5127,22 @@ class AccountReport(models.Model):
         comparison_filter = options.get('comparison', {}).get('filter')
         if comparison_filter and comparison_filter not in {'no_comparison', 'previous_period'}:
             unlinked_comparison_periods_domains_list = [
-                ['&', ('date', '>=', period['date_from']), ('date', '<=', period['date_to'])]
+                Domain('date', '>=', period['date_from']) & Domain('date', '<=', period['date_to'])
                 for period in options['comparison']['periods']
             ]
-            dates_domain = osv.expression.OR([dates_domain, *unlinked_comparison_periods_domains_list])
+            unlinked_comparison_periods_domains_list.insert(0, dates_domain)
+            dates_domain = Domain.OR(unlinked_comparison_periods_domains_list)
 
         return dates_domain
 
     def _build_annotations_domain(self, options):
-        domain = [('report_id', '=', options['report_id'])]
+        domain = Domain('report_id', '=', options['report_id'])
         if options.get('date'):
             period_date_from = self._get_annotations_domain_date_from(options)
             period_date_from = self._adjust_date_for_joined_comparison(options, period_date_from)
-            dates_domain = osv.expression.AND([
-                [('date', '>=', period_date_from)],
-                [('date', '<=', options['date']['date_to'])],
-            ])
+            dates_domain = Domain('date', '>=', period_date_from) & Domain('date', '<=', options['date']['date_to'])
             dates_domain = self._adjust_domain_for_unjoined_comparison(options, dates_domain)
-
-            domain = osv.expression.AND([
-                domain,
-                osv.expression.OR([
-                    [('date', '=', False)],
-                    dates_domain,
-                ]),
-            ])
-
+            domain &= Domain('date', '=', False) | dates_domain
         return domain
 
     def get_annotations(self, options):

@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import SQL
 
 
@@ -35,11 +34,10 @@ class AccountJournal(models.Model):
             ('invoice_date_due', '<', fields.Date.today()),
             ('release_to_pay', '=', 'yes')
         ]
-        domain = expression.AND([
-            [('state', '=', 'draft'), ('payment_state', 'in', ('not_paid', 'partial'))],
-            expression.OR([domain_sale, domain_purchase])
+        domain = Domain.AND([
+            self.env['account.move']._check_company_domain(self.env.companies),
+            Domain('state', '=', 'draft'),
+            Domain('payment_state', 'in', ('not_paid', 'partial')),
+            Domain.OR([domain_sale, domain_purchase]),
         ])
-        return self.env['account.move']._where_calc([
-            *self.env['account.move']._check_company_domain(self.env.companies),
-            *domain
-        ])
+        return self.env['account.move']._where_calc(domain)

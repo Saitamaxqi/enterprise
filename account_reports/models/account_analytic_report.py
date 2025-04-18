@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, models, fields, api, osv
+from odoo import _, models, fields, api
+from odoo.fields import Domain
 from odoo.addons.web.controllers.utils import clean_action
 from odoo.tools import SQL, Query
 
@@ -195,7 +196,7 @@ class AccountReport(models.AbstractModel):
                 elif field.split('.')[0] not in AccountAnalyticLine._fields:
                     expression = [(f'move_line_id.{field}', operator, right_term)]
                     if options.get('include_analytic_without_aml'):
-                        expression = osv.expression.OR([
+                        expression = Domain.OR([
                             [('move_line_id', '=', False)],
                             expression,
                         ])
@@ -209,13 +210,10 @@ class AccountReport(models.AbstractModel):
 
     @api.model
     def _get_options_journals_domain(self, options):
-        domain = super(AccountReport, self)._get_options_journals_domain(options)
+        domain = super()._get_options_journals_domain(options)
         # Add False to the domain in order to select lines without journals for analytics columns.
         if options.get('include_analytic_without_aml'):
-            domain = osv.expression.OR([
-                domain,
-                [('journal_id', '=', False)],
-            ])
+            domain |= Domain('journal_id', '=', False)
         return domain
 
     def _get_options_domain(self, options, date_scope):
@@ -224,10 +222,7 @@ class AccountReport(models.AbstractModel):
 
         # Get the analytic accounts that we need to filter on from the options and add a domain for them.
         if 'analytic_accounts_list' in options:
-            domain = osv.expression.AND([
-                domain,
-                [('analytic_distribution', 'in', options.get('analytic_accounts_list', []))],
-            ])
+            domain &= Domain('analytic_distribution', 'in', options.get('analytic_accounts_list', []))
 
         return domain
 

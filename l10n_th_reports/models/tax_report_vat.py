@@ -2,7 +2,7 @@
 import io
 
 from odoo import _, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class L10n_ThTaxReportHandler(models.AbstractModel):
@@ -60,7 +60,10 @@ class L10n_ThTaxReportHandler(models.AbstractModel):
         date_from = options['date'].get('date_from')
         date_to = options['date'].get('date_to')
         # We find the related move lines based on the report options and provided tags.
-        domain = expression.AND([self.env.ref('account.generic_tax_report')._get_options_domain(options, 'strict_range'), [('tax_tag_ids', 'in', (base_tags | tax_tags).ids)]])
+        domain = Domain.AND((
+            self.env.ref('account.generic_tax_report')._get_options_domain(options, 'strict_range'),
+            Domain('tax_tag_ids', 'in', (base_tags | tax_tags).ids),
+        ))
         move_lines_per_move = self.env['account.move.line'].search(domain).grouped('move_id')
 
         file_data = io.BytesIO()

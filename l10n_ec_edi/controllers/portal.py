@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import _, http
 from odoo.exceptions import AccessError, MissingError
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv import expression
 
 from odoo.addons.account.controllers.portal import PortalAccount
 from odoo.addons.portal.controllers.portal import pager as portal_pager
@@ -41,7 +41,7 @@ class PortalWithholding(PortalAccount):
 
         if not self._is_ecuador_company():
             return res
-        return expression.OR([res, [('state', 'not in', ('cancel', 'draft')), ('move_type', '=', 'entry')]])
+        return Domain.OR([res, [('state', 'not in', ('cancel', 'draft')), ('move_type', '=', 'entry')]])
 
     def _get_account_searchbar_sortings(self):
         values = super()._get_account_searchbar_sortings()
@@ -52,7 +52,7 @@ class PortalWithholding(PortalAccount):
     def _get_account_searchbar_filters(self):
         values = super()._get_account_searchbar_filters()
         if self._is_ecuador_company():
-            values['all']['domain'] = expression.AND([values['all']['domain'], [('move_type', '!=', 'entry')]])
+            values['all']['domain'] = Domain.AND([values['all']['domain'], [('move_type', '!=', 'entry')]])
             values['withholdings'] = {'label': _('Withholdings'), 'domain': [('l10n_ec_withhold_type', '=', 'in_withhold')]}
         return values
 

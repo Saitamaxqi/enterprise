@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
 from ast import literal_eval
 from datetime import datetime
 
-from odoo import api, models, osv, _
+from odoo import api, models, _
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -177,7 +177,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 return []
 
             hsn_base_line_expression_domain = literal_eval(hsn_base_line_expression.formula)
-            aml_domain = osv.expression.AND([
+            aml_domain = Domain.AND([
                 options_domain,
                 hsn_base_line_expression_domain,
             ])

@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.addons.sale_timesheet_enterprise.models.sale_order_line import DEFAULT_INVOICED_TIMESHEET
 
 
@@ -51,7 +51,7 @@ class AccountAnalyticLine(models.Model):
         if not invoice_ids:
             return domain
 
-        return expression.OR([domain, [
+        return Domain.OR([domain, [
             '&',
                 '&',
                     ('task_id', '=', False),

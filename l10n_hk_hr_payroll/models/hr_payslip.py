@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -10,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools.float_utils import float_compare
 
 
@@ -62,14 +61,14 @@ class HrPayslip(models.Model):
 
     @api.model
     def _get_last_year_payslips_domain(self, date_from, date_to, employee_ids=None):
-        domain = [
+        domain = Domain([
             ('state', 'in', ['paid', 'done']),
             ('date_from', '>=', date_from + relativedelta(months=-12, day=1)),
             ('date_to', '<', date_to + relativedelta(day=1)),
             ('struct_id', '=', self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary').id),
-        ]
+        ])
         if employee_ids:
-            domain = expression.AND([domain, [('employee_id', 'in', employee_ids)]])
+            domain &= Domain('employee_id', 'in', employee_ids)
         return domain
 
     def _get_moving_daily_wage(self):
@@ -121,16 +120,17 @@ class HrPayslip(models.Model):
         if self.struct_id.country_id.code != 'HK':
             return res
 
-        if domain is None:
-            domain = []
-        current_month_domain = expression.AND(
-            [domain, ['|', ('leave_id', '=', False), ('leave_id.date_from', '>=', self.date_from)]])
+        domain = Domain(domain or Domain.TRUE)
+        current_month_domain = domain & (
+            Domain('leave_id', '=', False)
+            | Domain('leave_id.date_from', '>=', self.date_from)
+        )
         res = super()._get_worked_day_lines_values(current_month_domain)
 
         hours_per_day = self._get_worked_day_lines_hours_per_day()
         date_from = datetime.combine(self.date_from, datetime.min.time())
         date_to = datetime.combine(self.date_to, datetime.max.time())
-        remainig_work_entries_domain = expression.AND([domain, [('leave_id.date_from', '<', self.date_from)]])
+        remainig_work_entries_domain = domain & Domain('leave_id.date_from', '<', self.date_from)
         work_entries_dict = self.env['hr.work.entry']._read_group(
             self.version_id._get_work_hours_domain(date_from, date_to, domain=remainig_work_entries_domain, inside=True),
             ['leave_id', 'work_entry_type_id'],
@@ -157,19 +157,18 @@ class HrPayslip(models.Model):
 
     def _get_worked_day_lines(self, domain=None, check_out_of_version=True):
         self.ensure_one()
+        domain = Domain(domain or Domain.TRUE)
         res = super()._get_worked_day_lines(domain, check_out_of_version)
         if self.struct_id.country_id.code != 'HK':
             return res
 
-        if domain is None:
-            domain = []
         contract = self.version_id
         if contract.resource_calendar_id:
             if not check_out_of_version:
                 return res
             out_days, out_hours = 0, 0
             reference_calendar = self._get_out_of_version_calendar()
-            domain = expression.AND([domain, [('work_entry_type_id.is_leave', '=', True)]])
+            domain &= Domain('work_entry_type_id.is_leave', '=', True)
             if self.date_from < contract.date_start:
                 start = fields.Datetime.to_datetime(self.date_from)
                 stop = fields.Datetime.to_datetime(contract.date_start) + relativedelta(days=-1, hour=23, minute=59)

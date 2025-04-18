@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class YearlySalaryDetail(models.TransientModel):
@@ -56,7 +56,7 @@ class YearlySalaryDetail(models.TransientModel):
             date_to = fields.Date.today() + relativedelta(day=31, month=12, year=int(wizard.year))
             payslip_domain = [('date_from', '>=', date_from), ('date_to', '<=', date_to), ('state', '=', 'paid')]
             payslip_ids = payslip.search(payslip_domain)
-            employee_domain = expression.AND([wizard._get_domain(), [('slip_ids', 'in', payslip_ids.ids)]])
+            employee_domain = Domain.AND([wizard._get_domain(), [('slip_ids', 'in', payslip_ids.ids)]])
             wizard.employee_ids = employee.search(employee_domain)
 
     def print_report(self):

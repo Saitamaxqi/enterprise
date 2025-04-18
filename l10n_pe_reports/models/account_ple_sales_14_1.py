@@ -2,6 +2,7 @@
 
 from odoo import _, api, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class AccountReport(models.Model):
@@ -14,8 +15,8 @@ class AccountReport(models.Model):
         if self and self != self.env.ref("l10n_pe_reports.tax_report_ple_sales_14_1"):
             return result
         if options.get("all_entries"):
-            return []
-        return [("parent_state", "in", ("posted", "cancel"))]
+            return Domain.TRUE
+        return Domain("parent_state", "in", ("posted", "cancel"))
 
 
 class L10n_PeTaxPle141ReportHandler(models.AbstractModel):

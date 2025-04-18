@@ -2,7 +2,7 @@
 
 from odoo import api, models, _, fields
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import SQL
 
 from datetime import timedelta
@@ -80,9 +80,9 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         matched_prefix = report._get_prefix_groups_matched_prefix_from_line_id(line_dict_id)
 
-        prefix_domain = [('partner_id.name', '=ilike', f'{matched_prefix}%')]
+        prefix_domain = Domain('partner_id.name', '=ilike', f'{matched_prefix}%')
         if self._get_no_partner_line_label().upper().startswith(matched_prefix):
-            prefix_domain = expression.OR([prefix_domain, [('partner_id', '=', None)]])
+            prefix_domain |= Domain('partner_id', '=', None)
 
         expand_options = {
             **options,
@@ -156,7 +156,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 partner_ids_to_expand.append(None)
 
         if partner_prefix_domains:
-            partner_ids_to_expand += self.env['res.partner'].with_context(active_test=False).search(expression.OR(partner_prefix_domains)).ids
+            partner_ids_to_expand += self.env['res.partner'].with_context(active_test=False).search(Domain.OR(partner_prefix_domains)).ids
 
         return {
             'initial_balances': self._get_initial_balance_values(partner_ids_to_expand, options) if partner_ids_to_expand else {},

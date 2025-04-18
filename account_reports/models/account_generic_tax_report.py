@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import ast
 from collections import defaultdict
 
-from odoo import models, api, fields, Command, _
-from odoo.addons.web.controllers.utils import clean_action
-from odoo.exceptions import UserError, RedirectWarning
-from odoo.osv import expression
+from odoo import models, api, _
+from odoo.exceptions import UserError
+from odoo.fields import Domain
 from odoo.tools import SQL
 
 
@@ -658,7 +655,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 ('tax_repartition_line_id', '!=', False),
             ]
 
-        domain = report._get_options_domain(options, 'strict_range') + expression.OR((
+        domain = Domain(report._get_options_domain(options, 'strict_range')) & Domain.OR((
             # Base lines
             [
                 ('tax_ids', 'in', tax.ids),

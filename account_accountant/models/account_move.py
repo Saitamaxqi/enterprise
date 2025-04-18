@@ -6,9 +6,9 @@ import logging
 import markupsafe
 import re
 
-from odoo import fields, models, api, _, Command
+from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools import SQL, float_compare
 from odoo.tools.misc import formatLang
 
@@ -686,7 +686,7 @@ class AccountMoveLine(models.Model):
         id_model2attachments = {
             (res_model, res_id): attachments
             for res_model, res_id, attachments in self.env['ir.attachment']._read_group(
-                domain=expression.OR(self._get_attachment_domains()),
+                domain=Domain.OR(self._get_attachment_domains()),
                 groupby=['res_model', 'res_id'],
                 aggregates=['id:recordset'],
             )
