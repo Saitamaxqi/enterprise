@@ -82,13 +82,6 @@
             </div>
         </t>
 
-        <!-- Fiscal position filter -->
-        <t t-if="hasFiscalPositionFilter">
-            <div id="filter_fiscal_position">
-                <t t-call="account_reports.AccountReportFilterFiscalPosition"/>
-            </div>
-        </t>
-
         <!-- Budget filter -->
         <t t-if="'budgets' in controller.options">
             <div id="filter_budget">

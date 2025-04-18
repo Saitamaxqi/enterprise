@@ -13,6 +13,7 @@ Accounting reports for the Vietnam
         "account_reports",
     ],
     "data": [
+        "data/account_return_data.xml",
         "data/account_tax_report_data.xml",
     ],
     "installable": True,

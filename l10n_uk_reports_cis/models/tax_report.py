@@ -5,18 +5,6 @@ from odoo.tools import SQL
 class AccountTaxReportHandler(models.AbstractModel):
     _inherit = 'account.tax.report.handler'
 
-    def _get_vat_closing_entry_additional_domain(self):
-        purchase_tax_tags = self.env.ref('l10n_uk_reports_cis.account_uk_cis_report_line_purchase_expr_deduction')._get_matching_tags()
-        sales_tax_tags = self.env.ref('l10n_uk_reports_cis.account_uk_cis_report_line_sale_expr_deduction')._get_matching_tags()
-        tags = purchase_tax_tags + sales_tax_tags
-
-        # EXTENDS account_reports
-        domain = super()._get_vat_closing_entry_additional_domain()
-        domain += [
-            ('tax_tag_ids', 'not in', tags.ids),  # Exclude CIS taxes lines from tax closing.
-        ]
-        return domain
-
 
 class BritishCISTaxReportCustomHandler(models.AbstractModel):
     _name = 'cis.tax.report.handler'
@@ -27,10 +15,12 @@ class BritishCISTaxReportCustomHandler(models.AbstractModel):
         super()._custom_options_initializer(report, options, previous_options)
         options['ignore_totals_below_sections'] = True
 
-        options['buttons'] = [button for button in options['buttons'] if button['action'] != 'action_periodic_vat_entries']
         if self.env.user.has_group('account.group_account_manager'):
             options['buttons'].append({'name': _("Send to HMRC"), 'sequence': 40, 'action': 'action_open_monthly_return_wizard', 'always_show': True})
             options['buttons'].append({'name': _("Refresh HMRC request"), 'sequence': 40, 'action': 'action_refresh_hmrc_request'})
+
+        # filter out return button as we do not generate returns yet for cis
+        options['buttons'] = [button for button in options['buttons'] if button.get('action') != 'action_open_returns']
 
         purchase_base_tags = self.env.ref('l10n_uk_reports_cis.account_uk_cis_report_line_purchase_expr_base')._get_matching_tags()
         sales_base_tags = self.env.ref('l10n_uk_reports_cis.account_uk_cis_report_line_sale_expr_base')._get_matching_tags()

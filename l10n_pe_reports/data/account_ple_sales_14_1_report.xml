@@ -5,7 +5,7 @@
         <field name="name@es_419">RVIE Registro de Ventas 14.4</field>
         <field name="root_report_id" ref="account.generic_tax_report" />
         <field name="country_id" ref="base.pe" />
-        <field name="filter_fiscal_position" eval="True" />
+        <field name="allow_foreign_vat" eval="True" />
         <field name="availability_condition">country</field>
         <field name="custom_handler_model_id" ref="model_l10n_pe_tax_ple_14_1_report_handler" />
         <field name="column_ids">

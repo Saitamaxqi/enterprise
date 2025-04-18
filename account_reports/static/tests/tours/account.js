@@ -14,6 +14,10 @@ patch(accountTourSteps, {
                 run: "click",
             },
             {
+                trigger: "input[data-field=opening_date]",
+                run: "edit 2025-01-01",
+            },
+            {
                 trigger: "button[name=action_save_onboarding_fiscal_year]",
                 content: _t("Save Fiscal Year end"),
                 run: "click",

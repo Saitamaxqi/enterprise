@@ -1,6 +1,6 @@
 from odoo import api, Command, fields, models, _
 from odoo.tools import cleanup_xml_node, float_repr, float_compare, format_date
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import ValidationError, UserError, RedirectWarning
 from odoo.addons.l10n_fr_reports.models.account_report_async_export import ENDPOINT
 
 from lxml import etree
@@ -405,7 +405,19 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             :param options: dict - Report options for the VAT period selection.
             :return: account.move - Represents the carryover reimbursement.
         """
-        tax_closing_entry = self.env[self.report_id.custom_handler_model_name]._get_periodic_vat_entries(options)
+        account_return = self.env['account.return']._get_return_from_report_options(options)
+        tax_closing_entry = account_return.closing_move_ids if account_return else None
+        if not tax_closing_entry:
+            raise RedirectWarning(
+                _("No closing entry was found. Please create one it before sending your report."),
+                self.env['account.return'].action_open_tax_return_view(additional_return_domain=[
+                    ('date_to', '<=', options['date']['date_to']),
+                    ('date_from', '>=', options['date']['date_from']),
+                    ('type_id.report_id', '=', options['report_id']),
+                ]),
+                _("Create Closing Entry"),
+            )
+
         tax_receivable_account_ids = self.env['account.tax.group'].search(
             [('tax_receivable_account_id', '!=', False)]
         ).tax_receivable_account_id

@@ -17,7 +17,7 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
         cls.company_2 = cls.company_data_2['company']
 
         cls.company_2.currency_id = cls.company_1.currency_id
-        cls.company_1.account_tax_periodicity = cls.company_2.account_tax_periodicity = 'year'
+        cls.company_1.account_return_periodicity = cls.company_2.account_return_periodicity = 'year'
 
         cls.report = cls.env['account.report'].create({
             'name': 'Test report',
@@ -42,7 +42,7 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
                     'label': '_applied_carryover_balance',
                     'engine': 'external',
                     'formula': 'most_recent',
-                    'date_scope': 'previous_tax_period',
+                    'date_scope': 'previous_return_period',
                 }),
                 Command.create({
                     'label': 'balance_unbound',
@@ -64,9 +64,12 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
             ],
         })
 
-    def test_tax_report_carry_over(self):
-        options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        cls.tax_return_type = cls.env['account.return.type'].create({
+            'name': "The Return of the King",
+            'report_id': cls.report.id,
+        })
 
+    def test_tax_report_carry_over(self):
         move = self.env['account.move'].create({
             'move_type': 'entry',
             'date': '2021-03-01',
@@ -89,9 +92,16 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
 
         self.env.flush_all()
 
-        with patch.object(type(self.env['account.move']), '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
-            vat_closing_move = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.report, options)
-            vat_closing_move.action_post()
+        tax_return = self.env['account.return'].create({
+            'name': "Tax return",
+            'type_id': self.tax_return_type.id,
+            'company_id': self.env.company.id,
+            'date_from': '2021-01-01',
+            'date_to': '2021-12-31',
+        })
+        tax_return.action_review()
+        with self.allow_pdf_render():
+            tax_return.action_submit()
 
         # There should be an external value of -1000.0
         external_value = self.env['account.report.external.value'].search([('company_id', '=', self.company_1.id)])
@@ -101,6 +111,7 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
         self.assertEqual(external_value.value, -1000.0)
 
         # There should be no value in the report since there is a carryover
+        options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
         lines = self.report._get_lines(options)
         self.assertLinesValues(
             lines,
@@ -136,7 +147,7 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
         self.assertEqual(info_popup_data['applied_carryover'], '-1,000.00')
 
     def test_tax_report_carry_over_tax_unit(self):
-        self.env['account.tax.unit'].create({
+        tax_unit = self.env['account.tax.unit'].create({
             'name': 'Test tax unit',
             'country_id': self.company_1.account_fiscal_country_id.id,
             'vat': 'DW1234567890',
@@ -186,21 +197,26 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
 
         self.env.flush_all()
 
-        with patch.object(type(self.env['account.move']), '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
-            # There should be no external value for company 1 at this point
-            external_value_company_1 = self.env['account.report.external.value'].search_count([('company_id', '=', self.company_1.id)])
-            self.assertEqual(external_value_company_1, 0)
+        # There should be no external value for company 1 at this point
+        external_value_company_1 = self.env['account.report.external.value'].search_count([('company_id', '=', self.company_1.id)])
+        self.assertEqual(external_value_company_1, 0)
 
-            # Closes both companies
-            options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
-            vat_closing_moves = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.report, options)
-            main_closing_move = vat_closing_moves.filtered(lambda x: x.company_id == self.company_1)
-            (vat_closing_moves - main_closing_move).action_post()
-            main_closing_move.action_post()
-            self.assertTrue(all(move.state == 'posted' for move in vat_closing_moves))
+        # Closes both companies
+        tax_return = self.env['account.return'].create({
+            'name': "Tax return",
+            'type_id': self.tax_return_type.id,
+            'company_id': self.company_1.id,
+            'tax_unit_id': tax_unit.id,
+            'date_from': '2021-01-01',
+            'date_to': '2021-12-31',
+        })
+        tax_return.action_review()
+        with self.allow_pdf_render():
+            tax_return.action_submit()
 
-        self.assertEqual(len(vat_closing_moves), 2, "There should be one closing per company in the tax unit")
-        self.assertTrue(all(closing.state == 'posted' for closing in vat_closing_moves), "Posting the main company's closing should post every other closing of this unit")
+        self.assertTrue(all(move.state == 'posted' for move in tax_return.closing_move_ids))
+        self.assertEqual(len(tax_return.closing_move_ids), 2, "There should be one closing per company in the tax unit")
+        self.assertTrue(all(closing.state == 'posted' for closing in tax_return.closing_move_ids), "Posting the main company's closing should post every other closing of this unit")
 
         # There should be two external value for company_1: -1000.0 and 1000.0
         external_value_company_1 = self.env['account.report.external.value'].search([('company_id', '=', self.company_1.id)])

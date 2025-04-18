@@ -1,0 +1,27 @@
+.o_account-return-kanban {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 5px;
+
+    .o_kanban_record {
+        width: 80%;
+        background-color: white;
+        border: 1px solid #dfdfdf;
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+    }
+
+    .return-group-header {
+        width: 80%;
+        display: block;
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 10px 10px;
+    }
+}

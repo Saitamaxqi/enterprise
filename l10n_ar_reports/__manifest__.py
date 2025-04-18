@@ -29,6 +29,7 @@ Official Documentation AFIP
     ],
     'data': [
         'data/account_financial_report_data.xml',
+        'data/account_return_data.xml',
         'report/account_ar_vat_line_views.xml',
         'views/res_config_settings_view.xml',
         'security/ir.model.access.csv',

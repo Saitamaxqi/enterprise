@@ -103,7 +103,7 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
     def _compute_show_method(self):
         self.show_method = False
 
-        submissions_periodicity = hasattr(self.env.company, "account_tax_periodicity") and self.env.company.account_tax_periodicity
+        submissions_periodicity = hasattr(self.env.company, "account_return_periodicity") and self.env.company.account_return_periodicity
         date_to = fields.Date.from_string(self.env.context['l10n_it_xml_export_monthly_tax_report_options']['date']['date_to'])
         for wizard in self:
             if submissions_periodicity == "trimester" and (date_to.month - 1) // 3 == 3:

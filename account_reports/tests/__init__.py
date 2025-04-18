@@ -6,8 +6,8 @@ from . import account_sales_report_common
 from . import test_account_reports_annotations_export
 from . import test_account_reports_filters
 from . import test_account_reports_journal_filter
-from . import test_account_reports_tax_reminder
 from . import test_account_reports_tours
+from . import test_account_returns
 from . import test_account_sales_report_generic
 from . import test_general_ledger_report
 from . import test_trial_balance_report

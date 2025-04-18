@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="account_return_kanban_view" model="ir.ui.view">
+            <field name="name">account.return.kanban</field>
+            <field name="model">account.return</field>
+            <field name="arch" type="xml">
+                <kanban js_class="account_return_kanban" can_open="false" create="0" edit="0">
+                    <field name="state"/>
+                    <field name="is_tax_return"/>
+                    <field name="check_ids"/>
+                    <field name="is_completed"/>
+                    <field name="type_external_id"/>
+                    <field name="report_opened_once"/>
+                    <field name="is_report_set"/>
+                    <field name="has_move_entries"/>
+                    <field name="is_main_company_active"/>
+                    <field name="show_companies"/>
+                    <field name="show_amount_to_pay"/>
+
+                    <t t-name="card" class="p-0 border-start-0">
+                        <div class="border-start border-3" t-att-class="{'border-dark': !record.is_completed.raw_value, 'border-success': record.is_completed.raw_value}"/>
+                        <div class="container w-100 p-2" >
+                            <div class="row h-full position-relative">
+                                <div class="col-12 col-lg-3">
+                                    <div class="row">
+                                        <div class="o_field_widget">
+                                            <field class="oe_state_value pe-2" name="name"/>
+                                            <field invisible="unresolved_check_count &lt;= 0" class="oe_state_value pe-1 text-danger" name="unresolved_check_count"/>
+                                            <span invisible="unresolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-danger">Failed</span>
+                                            <field invisible="unresolved_check_count != 0 or resolved_check_count &lt;= 0" class="oe_state_value pe-1 text-success" name="resolved_check_count"/>
+                                            <span invisible="unresolved_check_count != 0 or resolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-success">Passed</span>
+                                        </div>
+                                    </div>
+                                    <div class="row o_field_widget">
+                                        <t t-if="!date_submission">
+                                            <span class="oe_stat_text pe-1 text-info">Deadline: </span><field class="oe_stat_value ps-0 text-info" name="date_deadline"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="oe_stat_text pe-1 text-info">Submitted on: </span><field class="oe_stat_value ps-0 text-info" name="date_submission"/>
+                                        </t>
+                                    </div>
+                                    
+                                    <div class="row" invisible="not show_companies">
+                                        <field name="company_ids" widget="many2many_tags"/>
+                                    </div>
+                                </div>
+
+                                <div id="account_tax_return_amount" class="col-12 col-lg-2 px-lg-0 d-flex align-items-center" >
+                                    <field name="amount_to_pay_currency_id" invisible="1"/>
+                                    <h2 id="return_amount_to_pay" class="o_account_return_amount" invisible="not show_amount_to_pay or not is_main_company_active"><field name="amount_to_pay"/></h2>
+                                </div>
+
+                                <!-- States bar -->
+                                <div class="col-12 col-lg-3 o_account_return_state">
+                                    <t t-set="reviewedLabel">Review</t>
+                                    <t t-set="submittedLabel">Submit</t>
+                                    <t t-set="paidLabel">Pay</t>
+                                    <t id="account_tax_return_states" t-set="states" t-value="[{value: 'reviewed', display:reviewedLabel}, {value: 'submitted', display:submittedLabel}, {value: 'paid', display:paidLabel}]"/>
+
+                                    <t t-set="index" t-value="states.findIndex((state) => state.value === record.state.raw_value)"/>
+                                    <t t-foreach="states" t-as="state" t-key="state.value">
+                                        <div class="state-container" t-att-class="{'active': index &gt;= state_index || record.is_completed.raw_value}">
+                                            <div class="state-bubble"/>
+                                            <span class="state-label" t-esc="state.display"/>
+                                        </div>
+                                    </t>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="col-12 col-lg-4 o_account_return_buttons">
+                                    <button type="object" name="action_open_attachments" invisible="attachment_count &lt;= 0 or not is_main_company_active">
+                                        <i class="fa fa-paperclip fa-lg" title="Open Attachments"/>
+                                        <sup><field name="attachment_count"/></sup>
+                                    </button>
+
+                                    <t t-if="record.state.raw_value == 'reviewed' and !record.report_opened_once.raw_value and record.is_report_set.raw_value and record.is_main_company_active.raw_value">
+                                        <button class="btn btn-primary" type="object" name="action_open_report"><field name="report_name"/></button>
+                                        <button invisible="is_completed" class="btn btn-secondary" type="object" name="action_submit">Submit</button>
+                                    </t>
+                                    <t t-else="">
+                                        <button invisible="not is_report_set" class="btn btn-secondary" type="object" name="action_open_report"><field name="report_name"/></button>
+                                        <button invisible="state != 'reviewed' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_submit">Submit</button>
+                                    </t>
+                                    
+                                    <t t-if="0">
+                                    </t>
+                                    <t id="default_buttons" t-else="">
+                                        <button invisible="state != 'new' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_review">Review Issues</button>
+                                        <button invisible="state != 'submitted' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_pay">Pay</button>
+                                    </t>
+
+                                    <div class="dropdown show dropdown-sm" invisible="not is_main_company_active">
+                                        <button class="btn border-0" type="button" data-bs-toggle="dropdown">
+                                            <i class="fa fa-ellipsis-v" title="Dropdown Menu"/>
+                                        </button>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" role="menu">
+                                            <a invisible="state != 'new' or is_completed" class="dropdown-item" type="object" name="action_mark_completed" string="Mark as Completed"/>
+                                            <a invisible="not check_ids" class="dropdown-item" type="object" name="action_review_all_checks" string="Review Checks"/>
+                                            <a invisible="not has_move_entries or state not in ('submitted', 'paid')" class="dropdown-item" type="object" name="action_view_entry" string="View Entry"/>
+
+                                            <!-- Reset should be last-->
+                                            <a invisible="state != 'reviewed' or is_completed" class="dropdown-item" type="object" name="action_reset_to_new" string="Reset"/>
+                                            <a invisible="state != 'submitted' or is_completed" class="dropdown-item" type="object" name="action_reset_to_reviewed" string="Reset"/>
+                                            <a invisible="state != 'new' or not is_completed" class="dropdown-item" type="object" name="action_reset_is_completed" string="Reset"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="account_return_calendar_view" model="ir.ui.view">
+            <field name="name">account.return.calendar</field>
+            <field name="model">account.return</field>
+            <field name="arch" type="xml">
+                <calendar
+                    string="Tax Return"
+                    create="False"
+                    edit="False"
+                    delete="False"
+                    date_start="date_deadline"
+                    mode="year"
+                    quick_create="0"
+                    color="type_id">
+                    <field name="name"/>
+                    <field name="type_id" filters="1"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="account_return_search_view" model="ir.ui.view">
+            <field name="name">account.return</field>
+            <field name="model">account.return</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="date_to"/>
+                    <field name="date_from"/>
+                    <field name="date_deadline"/>
+                    <field name="type_id"/>
+                    <field name="state"/>
+                    <field name="date_submission"/>
+                    <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False)]"/>
+                    <filter name="done_returns" string="Done" domain="[('is_completed', '=', True)]"/>
+                    <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Will open a wizard if tax return config is not setup otherwise it will return action_view_account_return-->
+        <record id="action_open_view_account_return" model="ir.actions.client">
+            <field name="name">Open Tax Return</field>
+            <field name="tag">action_open_view_account_return</field>
+        </record>
+
+        <record id="action_view_account_return" model="ir.actions.act_window">
+            <field name="name">Tax Return</field>
+            <field name="res_model">account.return</field>
+            <field name="view_mode">kanban,calendar,search</field>
+            <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1}</field>
+        </record>
+
+        <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_open_view_account_return" name="Tax Returns" sequence="100"/>
+    </data>
+</odoo>

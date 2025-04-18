@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cz_tax_return_type" model="account.return.type">
+            <field name="name">Tax Return (CZ)</field>
+            <field name="report_id" ref="l10n_cz.l10n_cz_vat_declaration"/>
+        </record>
+    </data>
+</odoo>

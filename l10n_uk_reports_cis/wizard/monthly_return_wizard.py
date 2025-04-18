@@ -31,7 +31,7 @@ class MontlhyReturnWizard(models.TransientModel):
 
         if 'use_wrong_period' in fields_list:
             if options['date']['period_type'] != 'tax_period':
-                period_start, period_end = self.env.company._get_tax_closing_period_boundaries(date_to, self.env.ref('l10n_uk_reports_cis.tax_report_cis'))
+                period_start, period_end = self.env.ref('l10n_uk_reports_cis.uk_cis_tax_return_type')._get_period_boundaries(self.env.company, date_to)
                 res['use_wrong_period'] = period_start != date_from or period_end != date_to
             else:
                 res['use_wrong_period'] = False

@@ -11,6 +11,7 @@ Contains Balance sheet, Profit and Loss reports
     'category': 'Accounting/Localizations/Reporting',
     'depends': ['l10n_kz', 'account_reports'],
     'data': [
+        'data/account_return_data.xml',
         'data/balance_sheet.xml',
         'data/profit_loss.xml',
     ],

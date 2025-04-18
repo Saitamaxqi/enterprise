@@ -84,22 +84,6 @@ export class AccountReportFilters extends Component {
         }
     }
 
-    get selectedFiscalPositionName() {
-        switch (this.controller.options.fiscal_position) {
-            case "domestic":
-                return _t("Domestic");
-            case "all":
-                return _t("All");
-            default:
-                for (const fiscalPosition of this.controller.options.available_vat_fiscal_positions) {
-                    if (fiscalPosition.id === this.controller.options.fiscal_position) {
-                        return fiscalPosition.name;
-                    }
-                }
-        }
-        return _t("None");
-    }
-
     get selectedHorizontalGroupName() {
         for (const horizontalGroup of this.controller.options.available_horizontal_groups) {
             if (horizontalGroup.id === this.controller.options.selected_horizontal_group_id) {
@@ -357,14 +341,6 @@ export class AccountReportFilters extends Component {
                      .some(([option, data]) => data.ui_filter && this.isExtraOptionFilterShown(option));
     }
 
-    get hasFiscalPositionFilter() {
-        const isMultiCompany = this.controller.options.companies.length > 1;
-        const minimumFiscalPosition = this.controller.options.allow_domestic ? 0 : 1;
-        const hasFiscalPositions =
-            this.controller.options.available_vat_fiscal_positions.length > minimumFiscalPosition;
-        return hasFiscalPositions && isMultiCompany;
-    }
-
     get isBudgetSelected() {
         return this.controller.options.budgets?.some((budget) => {
             return budget.selected;
@@ -453,7 +429,7 @@ export class AccountReportFilters extends Component {
             month: 0,
             quarter: 0,
             year: 0,
-            tax_period: 0,
+            return_period: 0,
             editing: false,
         };
 
@@ -518,8 +494,8 @@ export class AccountReportFilters extends Component {
             dateFilterOffset = this._parseQuarterOffset(enteredValue);
         } else if (periodType === "year") {
             dateFilterOffset = this._parseYearOffset(enteredValue);
-        } else if (periodType === "tax_period") {
-            dateFilterOffset = this._parseTaxPeriodOffset(enteredValue);
+        } else if (periodType === "return_period") {
+            dateFilterOffset = this._parseReturnPeriodOffset(enteredValue);
         }
         if (dateFilterOffset !== false) {
             dateFilterOffset -= this.dateFilter[periodType];
@@ -568,15 +544,15 @@ export class AccountReportFilters extends Component {
         }
     }
 
-    _parseTaxPeriodOffset(input) {
+    _parseReturnPeriodOffset(input) {
         try {
             const dateTo = parseDate(input.split("-").pop().trim());
             if (!dateTo.isValid) {
                 return false;
             }
-            const periodicitySettings = this.controller.options.tax_periodicity;
-            const [, compareTo] = this._computeTaxPeriodDates(periodicitySettings, DateTime.now());
-            const [, taxPeriodTo] = this._computeTaxPeriodDates(periodicitySettings, dateTo);
+            const periodicitySettings = this.controller.options.return_periodicity;
+            const [, compareTo] = this._computeReturnPeriodDates(periodicitySettings, DateTime.now());
+            const [, taxPeriodTo] = this._computeReturnPeriodDates(periodicitySettings, dateTo);
             return (
                 taxPeriodTo.startOf("month").diff(compareTo.startOf("month"), "months").months /
                 periodicitySettings.months_per_period
@@ -604,11 +580,23 @@ export class AccountReportFilters extends Component {
     }
 
     isPeriodSelected(periodType) {
-        return this.controller.options.date.filter.includes(periodType)
+        return this.controller.options.date.filter.endsWith(periodType)
+    }
+
+    get shouldDisplayReturnPeriod() {
+        const periodicitySettings = this.controller.options.return_periodicity;
+        if (periodicitySettings) {
+            return periodicitySettings.start_day !== 1 || periodicitySettings.start_month !== 1 || ![1, 3, 12].includes(periodicitySettings.months_per_period);
+        }
+
+        return false;
     }
 
     displayPeriod(periodType) {
         const dateTo = DateTime.now();
+
+        if (periodType === "return_period" && !this.controller.options.return_periodicity)
+            periodType = "month";
 
         switch (periodType) {
             case "month":
@@ -617,8 +605,8 @@ export class AccountReportFilters extends Component {
                 return this._displayQuarter(dateTo);
             case "year":
                 return this._displayYear(dateTo);
-            case "tax_period":
-                return this._displayTaxPeriod(dateTo);
+            case "return_period":
+                return this._displayReturnPeriod(dateTo);
             default:
                 throw new Error(`Invalid period type in displayPeriod(): ${ periodType }`);
         }
@@ -648,17 +636,17 @@ export class AccountReportFilters extends Component {
         return dateTo.plus({ years: this.dateFilter.year }).toFormat("yyyy");
     }
 
-    _displayTaxPeriod(dateTo) {
-        const periodicitySettings = this.controller.options.tax_periodicity;
-        const targetDateInPeriod = dateTo.plus({months: periodicitySettings.months_per_period * this.dateFilter['tax_period']})
-        const [start, end] = this._computeTaxPeriodDates(periodicitySettings, targetDateInPeriod);
+    _displayReturnPeriod(dateTo) {
+        const periodicitySettings = this.controller.options.return_periodicity;
+        const targetDateInPeriod = dateTo.plus({months: periodicitySettings.months_per_period * this.dateFilter['return_period']})
+        const [start, end] = this._computeReturnPeriodDates(periodicitySettings, targetDateInPeriod);
         return formatDate(start) + ' - ' + formatDate(end);
     }
 
-    _computeTaxPeriodDates(periodicitySettings, dateInsideTargettesPeriod) {
+    _computeReturnPeriodDates(periodicitySettings, dateInsideTargettesPeriod) {
         /**
-         * This function need to stay consitent with the one inside res_company from module account_reports.
-         * function_name = _get_tax_closing_period_boundaries
+         * This function need to stay consitent with the one inside account_return_type from module account_reports.
+         * function_name = _get_period_boundaries
          */
         const startMonth = periodicitySettings.start_month;
         const startDay = periodicitySettings.start_day

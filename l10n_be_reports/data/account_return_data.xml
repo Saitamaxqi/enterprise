@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- VAT return -->
+        <record id="partner_fps_belgium" model="res.partner">
+            <field name="name">FPS Finance - VAT Revenue Service Brussels</field>
+        </record>
+
+        <data noupdate="1">
+            <record id="fps_vat_current_account" model="res.partner.bank">
+                <field name="acc_number">BE22679200300047</field>
+                <field name="partner_id" ref="partner_fps_belgium"/>
+                <field name="allow_out_payment">True</field>
+            </record>
+        </data>
+
+        <record id="be_vat_return_type" model="account.return.type">
+            <field name="name">VAT Return (BE)</field>
+            <field name="report_id" ref="l10n_be.tax_report_vat"/>
+            <field name="payment_partner_bank_id" ref="l10n_be_reports.fps_vat_current_account"/>
+        </record>
+
+        <!-- VAT listing -->
+        <record id="be_vat_listing_return_type" model="account.return.type">
+            <field name="name">VAT Listing (BE)</field>
+            <field name="report_id" ref="l10n_be_reports.l10n_be_partner_vat_listing"/>
+            <field name="deadline_periodicity">year</field>
+        </record>
+
+        <!-- EC sales list -->
+        <record id="be_ec_sales_list_return_type" model="account.return.type">
+            <field name="name">EC Sales List (BE)</field>
+            <field name="report_id" ref="account_reports.generic_ec_sales_report"/>
+        </record>
+
+        <!-- ISOC Prepayment-->
+        <record id="partner_centre_de_perception_belgium" model="res.partner">
+            <field name="name">Centre de Perception - Service des versements anticipés</field>
+        </record>
+
+        <data noupdate="1">
+            <record id="centre_de_perception_current_account" model="res.partner.bank">
+                <field name="acc_number">BE61679200229117</field>
+                <field name="partner_id" ref="partner_centre_de_perception_belgium"/>
+                <field name="allow_out_payment">True</field>
+            </record>
+        </data>
+
+        <record id="be_isoc_prepayment_return_type" model="account.return.type">
+            <field name="name">ISOC Prepayment (BE)</field>
+            <field name="deadline_periodicity">trimester</field>
+            <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
+        </record>
+
+        <!-- Annual Corporate Tax-->
+        <record id="be_annual_corporate_tax_return_type" model="account.return.type">
+            <field name="name">Annual Closing: Corporate Tax (BE)</field>
+            <field name="deadline_periodicity">year</field>
+        </record>
+    </data>
+</odoo>

@@ -35,6 +35,7 @@ The report uses tax tags ``Service`` and ``Tax Withheld`` in order to find adequ
         'account_reports_cash_basis',
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/tpar_report.xml',
         'views/menuitems.xml',
     ],

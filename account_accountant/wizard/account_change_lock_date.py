@@ -157,6 +157,8 @@ class AccountChangeLockDate(models.TransientModel):
         compute='_compute_show_draft_entries_warning',
     )
 
+    show_posted_tax_closing_warning = fields.Boolean(compute='_compute_show_posted_tax_closing_warning')
+
     @api.depends('company_id')
     @api.depends_context('user', 'company')
     def _compute_lock_date_exceptions(self):
@@ -201,6 +203,19 @@ class AccountChangeLockDate(models.TransientModel):
         for wizard in self:
             draft_entries = self.env['account.move'].search(self._get_draft_moves_in_locked_period_domain(), limit=1)
             wizard.show_draft_entries_warning = bool(draft_entries)
+
+    def _get_posted_tax_closings_in_locked_period_domain(self):
+        self.ensure_one()
+        return [
+            ('date', '>', self.tax_lock_date),
+            ('closing_return_id.type_id.report_id.root_report_id', '=', self.env.ref('account.generic_tax_report').id),
+            ('state', '=', 'posted'),
+        ]
+
+    @api.depends('tax_lock_date')
+    def _compute_show_posted_tax_closing_warning(self):
+        for wizard in self:
+            wizard.show_posted_tax_closing_warning = bool(self.env['account.move'].search(wizard._get_posted_tax_closings_in_locked_period_domain(), limit=1))
 
     def _get_changes_needing_exception(self):
         self.ensure_one()
@@ -362,6 +377,11 @@ class AccountChangeLockDate(models.TransientModel):
             'search_view_id': [self.env.ref('account.view_account_move_filter').id, 'search'],
             'views': [[self.env.ref('account.view_move_tree_multi_edit').id, 'list'], [self.env.ref('account.view_move_form').id, 'form']],
         }
+
+    def action_show_posted_tax_closing_in_locked_period(self):
+        self.ensure_one()
+        posted_closings = self.env['account.move'].search(self._get_posted_tax_closings_in_locked_period_domain())
+        return self.env['account.return'].action_open_tax_return_view(additional_return_domain=[('id', 'in', posted_closings.closing_return_id.ids)])
 
     def action_reopen_wizard(self):
         # This action can be used to keep the wizard open after doing something else

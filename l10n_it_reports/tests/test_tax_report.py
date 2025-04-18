@@ -177,13 +177,19 @@ class TestItalianTaxReport(TestAccountReportsCommon):
 
         self.env.flush_all()
 
-        with patch.object(type(self.env['account.move']), '_get_vat_report_attachments', autospec=True, side_effect=_get_attachment):
-            vat_closing_move = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.report, first_month_options)
-            # with_context() is needed to avoid opening the tax report export wizard like it should when posting a closing entry.
-            vat_closing_move.with_context({"l10n_it_xml_export_monthly_tax_report_options": True}).action_post()
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': first_month_options['date']['date_from'],
+            'date_to': first_month_options['date']['date_to'],
+            'type_id': self.env.ref('l10n_it_reports.it_tax_return_type').id,
+            'company_id': self.env.company.id,
+        })
+        tax_return.action_review()
+        with self.allow_pdf_render():
+            tax_return.action_submit()
 
-            # Get to the next month
-            report_lines = self.report._get_lines(second_month_options)
-            line = [line for line in report_lines if target_line_code in line['name']][0]
+        # Get to the next month
+        report_lines = self.report._get_lines(second_month_options)
+        line = next(line for line in report_lines if target_line_code in line['name'])
 
-            self.assertEqual(line['columns'][0]['no_format'], target_line_value)
+        self.assertEqual(line['columns'][0]['no_format'], target_line_value)

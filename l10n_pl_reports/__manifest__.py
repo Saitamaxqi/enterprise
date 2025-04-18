@@ -23,6 +23,7 @@ Accounting reports for Poland
     'data': [
         'security/ir.model.access.csv',
         'views/l10n_pl_wizard_xml_export_options_views.xml',
+        'data/account_return_data.xml',
         'data/jpk_export_templates.xml',
         'data/tax_report.xml',
         'data/profit_loss_small.xml',

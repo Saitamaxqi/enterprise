@@ -6,7 +6,7 @@ from odoo.tools import float_compare, float_is_zero, float_repr
 
 
 class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
-    _inherit = "l10n_be_reports.periodic.vat.xml.export"
+    _inherit = "l10n_be_reports.vat.return.submission.wizard"
 
     show_prorata = fields.Boolean(compute="_compute_show_prorata")
     is_prorata_necessary = fields.Boolean(string="Prorata")
@@ -27,35 +27,21 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
     special_prorata_5 = fields.Float("Special Prorata 5")
     submit_more = fields.Boolean("I want to submit more than 5 specific prorata")
 
-    @api.depends('create_date')
+    @api.depends('return_id')
     def _compute_show_prorata(self):
-        date_to = fields.Date.to_date(
-            self.env.context.get('l10n_be_reports_closing_date')
-            or self.env.context.get('l10n_be_reports_generation_options', {}).get('date', {}).get('date_to')
-        )
-        if date_to and (
-            date_to.month in (1, 2, 3)  # Only appears for first Quarter
-            or (date_to.year == 2024 and date_to.month in (4, 5, 6))  # Exception for year of law's implementation
-        ):
-            self.show_prorata = True
-        else:
-            self.show_prorata = False
+        for record in self:
+            date_to = record.return_id.date_to
+            record.show_prorata = date_to.month in (1, 2, 3) or (date_to.year == 2024 and date_to.month in (4, 5, 6))
 
-    @api.depends('is_prorata_necessary')
+    @api.depends('is_prorata_necessary', 'return_id')
     def _compute_prorata_year(self):
-        date_to = fields.Date.to_date(
-            self.env.context.get('l10n_be_reports_closing_date')
-            or self.env.context.get('l10n_be_reports_generation_options', {}).get('date', {}).get('date_to')
-        )
-        if date_to:
-            for wizard in self:
-                if wizard.is_prorata_necessary and not wizard.prorata_year:
-                    wizard.prorata_year = date_to.year
-        else:
-            self.prorata_year = False
+        for record in self:
+            date_to = record.return_id.date_to
+            if record.is_prorata_necessary and not record.prorata_year:
+                record.prorata_year = date_to.year
 
-    def _l10n_be_reports_vat_export_generate_options(self):
-        options = super()._l10n_be_reports_vat_export_generate_options()
+    def _get_submission_options_to_inject(self):
+        options = super()._get_submission_options_to_inject()
         if self.is_prorata_necessary:
             if not re.match(r'\d{4}', self.prorata_year) or int(self.prorata_year) < 2000:
                 raise UserError(_("Please enter a valid pro rata year (after 2000)"))

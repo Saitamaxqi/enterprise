@@ -136,20 +136,27 @@ class OSSTaxReportTest(TestAccountReportsCommon):
         )
 
     def test_tax_report_oss_closing(self):
-        report = self.env.ref('l10n_eu_oss_reports.oss_sales_report')
-        options = self._generate_options(report, '2021-04-01', '2021-06-30')
-        tax_closing_entries = self.env[report.custom_handler_model_name]._generate_tax_closing_entries(report, options)
-        self.assertEqual(len(tax_closing_entries), 1)
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': '2021-04-01',
+            'date_to': '2021-06-30',
+            'type_id': self.env.ref('l10n_eu_oss_reports.eu_oss_sales_tax_return_type').id,
+            'company_id': self.env.company.id,
+        })
+        tax_return.action_review()
+        with self.allow_pdf_render():
+            tax_return.action_submit()
+        self.assertEqual(len(tax_return.closing_move_ids), 1)
 
         self._assert_closing_lines(
-            tax_closing_entries[0],
+            tax_return.closing_move_ids,
             [
                 {'account_id.code':     '251002',        'debit': 200,       'credit': 0},
                 {'account_id.code':     '251002',        'debit': 0,         'credit': 0},
                 {'account_id.code':     '251002',        'debit': 0,         'credit': 240},
                 {'account_id.code':     '251002',        'debit': 170,       'credit': 0},
                 {'account_id.code':     '251002',        'debit': 0,         'credit': 40},
-                {'account_id.code':     '252000',        'debit': 0,         'credit': 90},
+                {'account_id.code':     '252001',        'debit': 0,         'credit': 90},
             ]
         )
 
@@ -230,6 +237,10 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'country_id': cls.company_data['company'].account_fiscal_country_id.id,
             'root_report_id': cls.env.ref("account.generic_tax_report").id,
             'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance',})],
+        })
+        cls.tax_return_type = cls.env['account.return.type'].create({
+            'name': "Fictive Return Type",
+            'report_id': cls.tax_report.id,
         })
         report_line_invoice_base_line = cls._create_tax_report_line('Invoice base', cls.tax_report, sequence=1, tag_name='invoice_base_line')
         report_line_refund_base_line = cls._create_tax_report_line('Refund base', cls.tax_report, sequence=2, tag_name='refund_base_line')
@@ -323,7 +334,19 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             fields.Date.from_string('2022-02-01'),
             fields.Date.from_string('2022-02-28'),
         )
-        tax_closing_entry_lines = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.tax_report, options).line_ids.filtered(lambda l: l.balance != 0.0)
+
+        oss_return = self.env['account.return'].create({
+            'name': "OSS return",
+            'date_from': '2022-02-01',
+            'date_to': '2022-02-28',
+            'type_id': self.tax_return_type.id,
+            'company_id': self.env.company.id,
+        })
+        oss_return.action_review()
+        with self.allow_pdf_render():
+            oss_return.action_submit()
+
+        tax_closing_entry_lines = oss_return.closing_move_ids.line_ids.filtered(lambda l: l.balance != 0.0)
 
         self.assertEqual(len(tax_closing_entry_lines), 0, "The tax closing entry shouldn't take amls wearing the OSS tag into account")
 

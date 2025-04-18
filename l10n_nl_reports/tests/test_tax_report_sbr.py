@@ -114,7 +114,7 @@ class TestNlTaxReportSBR(TestAccountReportsCommon):
 class TestNlSBR(TransactionCase):
     def test_root_certificate_url(self):
         try:
-            root_cert = self.env.company._l10n_nl_reports_get_server_root_certificate_bytes()
+            root_cert = self.env.company._l10n_nl_get_server_root_certificate_bytes()
             self.assertTrue(root_cert)
             self.assertEqual(base64.b64encode(root_cert), self.env.company.l10n_nl_reports_sbr_server_root_cert_id.pem_certificate)
         except UserError:

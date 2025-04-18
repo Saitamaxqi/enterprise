@@ -143,17 +143,16 @@ class AccountReportAsyncExport(models.Model):
 
             if export.state == 'rejected':
                 report_closing_entry = export.env['account.move'].search([
-                    ('tax_closing_report_id', '=', export.report_id.id),
+                    ('closing_return_id', '=', export.report_id.id),
                     ('date', '=', export.date_to),
                 ])
-                period_desc = report_closing_entry._get_tax_period_description()
                 act_type_xmlid = 'account_reports.mail_activity_type_tax_report_error'
                 report_closing_entry.activity_reschedule(
                     act_type_xmlids=[act_type_xmlid],
                     date_deadline=fields.Date.context_today(report_closing_entry)
                 ) or report_closing_entry.activity_schedule(
                     act_type_xmlid=act_type_xmlid,
-                    summary=_("Tax Report Error: %s", period_desc),
+                    summary=_("Tax Report Error: %s", report_closing_entry.closing_return_id.name),
                 )
 
     # ------------------------------------------------------------

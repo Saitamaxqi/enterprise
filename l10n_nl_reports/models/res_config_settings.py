@@ -19,6 +19,3 @@ class ResConfigSettings(models.TransientModel):
         string="Dutch VAT Rounding Profit Account",
         help="Account used for profits from rounding the lines of Dutch tax reports",
     )
-
-    def _get_country_codes_with_another_tax_closing_start_date(self):
-        return super()._get_country_codes_with_another_tax_closing_start_date() | {'NL'}

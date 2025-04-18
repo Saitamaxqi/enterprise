@@ -15,12 +15,7 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
     _inherit = ['account.generic.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler'
 
-    def _get_vat_closing_entry_additional_domain(self):
-        return [
-            *self._get_oss_custom_domain(),
-            ('tax_line_id', '!=', False),
-        ]
-
+    @api.model
     def _get_oss_custom_domain(self):
         """
         To be overridden by OSS specific reports
@@ -249,23 +244,12 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
         return None
 
 
-class AccountTaxReportHandler(models.AbstractModel):
-    _inherit = 'account.tax.report.handler'
-
-    def _get_vat_closing_entry_additional_domain(self):
-        # EXTENDS account_reports
-        domain = super()._get_vat_closing_entry_additional_domain()
-        domain += [
-            ('tax_tag_ids', 'not in', self.env.ref('l10n_eu_oss.tag_oss').ids),
-        ]
-        return domain
-
-
 class L10n_Eu_OssSalesTaxReportHandler(models.AbstractModel):
     _name = 'l10n_eu_oss.sales.tax.report.handler'
     _inherit = ['l10n_eu_oss.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler (Sales)'
 
+    @api.model
     def _get_oss_custom_domain(self):
         return [
             ('tax_tag_ids', 'in', self.env.ref('l10n_eu_oss.tag_oss').ids),
@@ -278,6 +262,7 @@ class L10n_Eu_OssImportsTaxReportHandler(models.AbstractModel):
     _inherit = ['l10n_eu_oss.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler (Imports)'
 
+    @api.model
     def _get_oss_custom_domain(self):
         return [
             ('tax_tag_ids', 'in', self.env.ref('l10n_eu_oss.tag_oss').ids),

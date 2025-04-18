@@ -13,11 +13,6 @@ class L10n_LuAnnualTaxReportHandler(models.AbstractModel):
     _inherit = ['l10n_lu.tax.report.handler']
     _description = 'Luxembourgish Annual Tax Report Custom Handler'
 
-    def _custom_options_initializer(self, report, options, previous_options):
-        super()._custom_options_initializer(report, options, previous_options=previous_options)
-        # closing entry button shouldn't be visible in the annual tax report
-        options['buttons'] = [button for button in options['buttons'] if button['action'] != 'action_periodic_vat_entries']
-
     def _get_field_values(self, lines):
         field_types_dict = {
             'string': 'char',
@@ -258,7 +253,7 @@ class L10n_LuAppendixOpexTaxReportHandler(models.AbstractModel):
 
     def _get_custom_display_config(self):
         parent_config = super()._get_custom_display_config()
-        parent_config['components']['AccountReportLineName'] = 'l10n_lu_reports.AppendixLineName'
+        parent_config.setdefault('components', {})['AccountReportLineName'] = 'l10n_lu_reports.AppendixLineName'
         return parent_config
 
     def action_open_appendix_view(self, options, params=None):

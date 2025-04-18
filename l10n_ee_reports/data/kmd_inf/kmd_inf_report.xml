@@ -7,7 +7,7 @@
         <field name="availability_condition">country</field>
         <field name="custom_handler_model_id" ref="model_l10n_ee_kmd_inf_report_handler"/>
         <field name="filter_unfold_all" eval="True"/>
-        <field name="filter_fiscal_position" eval="True"/>
+        <field name="allow_foreign_vat" eval="True"/>
         <field name="filter_multi_company">tax_units</field>
         <field name="filter_hierarchy">never</field>
         <field name="use_sections" eval="True"/>

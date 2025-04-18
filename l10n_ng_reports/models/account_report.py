@@ -14,14 +14,3 @@ class L10n_NgTaxReportHandler(models.AbstractModel):
                 'warning_message': _("Choose a month in the filter to display the VAT report correctly."),
                 'alert_type': 'warning',
             }
-
-
-class L10n_NgWithholdingReportHandler(models.AbstractModel):
-    _name = 'l10n_ng.withholding.report.handler'
-    _inherit = ['l10n_ng.tax.report.handler']
-    _description = 'Nigerian Withholding Tax Report Custom Handler'
-
-    def _custom_options_initializer(self, report, options, previous_options):
-        super()._custom_options_initializer(report, options, previous_options=previous_options)
-        # closing entry button shouldn't be visible in the withholding reports
-        options['buttons'] = [button for button in options['buttons'] if button['action'] != 'action_periodic_vat_entries']

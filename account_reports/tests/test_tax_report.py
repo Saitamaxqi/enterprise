@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=bad-whitespace
-from datetime import date
-from unittest.mock import patch
 from freezegun import freeze_time
 
 from .common import TestAccountReportsCommon
 from odoo import fields, Command
 from odoo.tests import Form, tagged
-from odoo.exceptions import UserError
 
 
 @tagged('post_install', '-at_install')
@@ -18,22 +15,9 @@ class TestTaxReport(TestAccountReportsCommon):
         super().setUpClass()
 
         # Create country data
-
         cls.fiscal_country = cls.env['res.country'].create({
             'name': "Discworld",
             'code': 'DW',
-        })
-
-        cls.country_state_1 = cls.env['res.country.state'].create({
-            'name': "Ankh Morpork",
-            'code': "AM",
-            'country_id': cls.fiscal_country.id,
-        })
-
-        cls.country_state_2 = cls.env['res.country.state'].create({
-            'name': "Counterweight Continent",
-            'code': "CC",
-            'country_id': cls.fiscal_country.id,
         })
 
         cls.foreign_country = cls.env['res.country'].create({
@@ -43,8 +27,7 @@ class TestTaxReport(TestAccountReportsCommon):
 
         # Setup fiscal data
         cls.company_data['company'].write({
-            'state_id': cls. country_state_1.id, # Not necessary at the moment; put there for consistency and robustness with possible future changes
-            'account_tax_periodicity': 'trimester',
+            'account_return_periodicity': 'trimester',
         })
         cls.change_company_country(cls.company_data['company'], cls.fiscal_country)
 
@@ -52,6 +35,7 @@ class TestTaxReport(TestAccountReportsCommon):
         cls.tax_group_1 = cls._instantiate_basic_test_tax_group()
         cls.tax_group_2 = cls._instantiate_basic_test_tax_group()
         cls.tax_group_3 = cls._instantiate_basic_test_tax_group(country=cls.foreign_country)
+        cls.tax_group_4 = cls._instantiate_basic_test_tax_group(country=cls.foreign_country)
 
         # Prepare tax accounts
         cls.tax_account_1 = cls.env['account.account'].create({
@@ -195,52 +179,81 @@ class TestTaxReport(TestAccountReportsCommon):
         # Create a foreign partner
         cls.test_fpos_foreign_partner = cls.env['res.partner'].create({
             'name': "Mare Cel",
-            'country_id': cls.fiscal_country.id,
-            'state_id': cls.country_state_2.id,
+            'country_id': cls.foreign_country.id,
         })
 
-        # Create a tax report and some taxes for it
-        cls.basic_tax_report = cls.env['account.report'].create({
+        # Create both a domestic and foreign tax report, and some taxes for them
+        cls.domestic_tax_report = cls.env['account.report'].create({
             'name': "The Unseen Tax Report",
             'country_id': cls.fiscal_country.id,
             'root_report_id': cls.env.ref("account.generic_tax_report").id,
-            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance',})],
+            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})],
         })
 
-        cls.test_fpos_tax_sale = cls._add_basic_tax_for_report(
-            cls.basic_tax_report, 50, 'sale', cls.tax_group_1,
-            [(30, cls.tax_account_1, False), (70, cls.tax_account_1, True), (-100, cls.tax_account_2, True)]
+        cls.domestic_sale_tax = cls._add_basic_tax_for_report(
+            cls.domestic_tax_report, 50, 'sale', cls.tax_group_1,
+            [(30, cls.tax_account_1, False), (70, cls.tax_account_1, True), (-100, cls.tax_account_2, False)]
         )
 
-        cls.test_fpos_tax_purchase = cls._add_basic_tax_for_report(
-            cls.basic_tax_report, 50, 'purchase', cls.tax_group_2,
-            [(40, cls.tax_account_1, False), (60, cls.tax_account_1, True), (-100, cls.tax_account_2, True)]
+        cls.domestic_purchase_tax = cls._add_basic_tax_for_report(
+            cls.domestic_tax_report, 50, 'purchase', cls.tax_group_2,
+            [(40, cls.tax_account_1, False), (60, cls.tax_account_1, True), (-100, cls.tax_account_2, False)]
+        )
+
+        cls.foreign_tax_report = cls.env['account.report'].create({
+            'name': "Miller's Report",
+            'country_id': cls.foreign_country.id,
+            'root_report_id': cls.env.ref("account.generic_tax_report").id,
+            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})],
+        })
+
+        cls.foreign_sale_tax = cls._add_basic_tax_for_report(
+            cls.foreign_tax_report, 60, 'sale', cls.tax_group_3,
+            [(80, cls.tax_account_1, False), (20, cls.tax_account_1, True), (-100, cls.tax_account_2, False)]
+        )
+
+        cls.foreign_purchase_tax = cls._add_basic_tax_for_report(
+            cls.foreign_tax_report, 60, 'purchase', cls.tax_group_4,
+            [(51, cls.tax_account_1, False), (49, cls.tax_account_1, True), (-100, cls.tax_account_2, False)]
         )
 
         # Create a fiscal_position to automatically map the default tax for partner "Mare Cel" to our test tax
         cls.foreign_vat_fpos = cls.env['account.fiscal.position'].create({
             'name': "Test fpos",
             'auto_apply': True,
-            'country_id': cls.fiscal_country.id,
-            'state_ids': cls.country_state_2.ids,
+            'country_id': cls.foreign_country.id,
             'foreign_vat': '12345',
         })
 
+        cls.domestic_tax_return_type = cls.env['account.return.type'].create({
+            'name': "Domestic Tax Return",
+            'report_id': cls.domestic_tax_report.id,
+            'deadline_periodicity': 'trimester',
+            'deadline_start_date': '2020-01-01',
+        })
+
+        cls.foreign_tax_return_type = cls.env['account.return.type'].create({
+            'name': "Foreign Tax Return",
+            'report_id': cls.foreign_tax_report.id,
+            'deadline_periodicity': 'trimester',
+            'deadline_start_date': '2020-01-01',
+        })
+
         # Create some domestic invoices (not all in the same closing period)
-        cls.init_invoice('out_invoice', partner=cls.partner_a, invoice_date='2020-12-22', post=True, amounts=[28000], taxes=cls.test_fpos_tax_sale)
-        cls.init_invoice('out_invoice', partner=cls.partner_a, invoice_date='2021-01-22', post=True, amounts=[200], taxes=cls.test_fpos_tax_sale)
-        cls.init_invoice('out_refund', partner=cls.partner_a, invoice_date='2021-01-12', post=True, amounts=[20], taxes=cls.test_fpos_tax_sale)
-        cls.init_invoice('in_invoice', partner=cls.partner_a, invoice_date='2021-03-12', post=True, amounts=[400], taxes=cls.test_fpos_tax_purchase)
-        cls.init_invoice('in_refund', partner=cls.partner_a, invoice_date='2021-03-20', post=True, amounts=[60], taxes=cls.test_fpos_tax_purchase)
-        cls.init_invoice('in_invoice', partner=cls.partner_a, invoice_date='2021-04-07', post=True, amounts=[42000], taxes=cls.test_fpos_tax_purchase)
+        cls.init_invoice('out_invoice', partner=cls.partner_a, invoice_date='2020-12-22', post=True, amounts=[28000], taxes=cls.domestic_sale_tax)
+        cls.init_invoice('out_invoice', partner=cls.partner_a, invoice_date='2021-01-22', post=True, amounts=[200], taxes=cls.domestic_sale_tax)
+        cls.init_invoice('out_refund', partner=cls.partner_a, invoice_date='2021-01-12', post=True, amounts=[20], taxes=cls.domestic_sale_tax)
+        cls.init_invoice('in_invoice', partner=cls.partner_a, invoice_date='2021-03-12', post=True, amounts=[400], taxes=cls.domestic_purchase_tax)
+        cls.init_invoice('in_refund', partner=cls.partner_a, invoice_date='2021-03-20', post=True, amounts=[60], taxes=cls.domestic_purchase_tax)
+        cls.init_invoice('in_invoice', partner=cls.partner_a, invoice_date='2021-04-07', post=True, amounts=[42000], taxes=cls.domestic_purchase_tax)
 
         # Create some foreign invoices (not all in the same closing period)
-        cls.init_invoice('out_invoice', partner=cls.test_fpos_foreign_partner, invoice_date='2020-12-13', post=True, amounts=[26000], taxes=cls.test_fpos_tax_sale)
-        cls.init_invoice('out_invoice', partner=cls.test_fpos_foreign_partner, invoice_date='2021-01-16', post=True, amounts=[800], taxes=cls.test_fpos_tax_sale)
-        cls.init_invoice('out_refund', partner=cls.test_fpos_foreign_partner, invoice_date='2021-01-30', post=True, amounts=[200], taxes=cls.test_fpos_tax_sale)
-        cls.init_invoice('in_invoice', partner=cls.test_fpos_foreign_partner, invoice_date='2021-02-01', post=True, amounts=[1000], taxes=cls.test_fpos_tax_purchase)
-        cls.init_invoice('in_refund', partner=cls.test_fpos_foreign_partner, invoice_date='2021-03-02', post=True, amounts=[600], taxes=cls.test_fpos_tax_purchase)
-        cls.init_invoice('in_refund', partner=cls.test_fpos_foreign_partner, invoice_date='2021-05-02', post=True, amounts=[10000], taxes=cls.test_fpos_tax_purchase)
+        cls.init_invoice('out_invoice', partner=cls.test_fpos_foreign_partner, invoice_date='2020-12-13', post=True, amounts=[26000], taxes=cls.foreign_sale_tax)
+        cls.init_invoice('out_invoice', partner=cls.test_fpos_foreign_partner, invoice_date='2021-01-16', post=True, amounts=[800], taxes=cls.foreign_sale_tax)
+        cls.init_invoice('out_refund', partner=cls.test_fpos_foreign_partner, invoice_date='2021-01-30', post=True, amounts=[200], taxes=cls.foreign_sale_tax)
+        cls.init_invoice('in_invoice', partner=cls.test_fpos_foreign_partner, invoice_date='2021-02-01', post=True, amounts=[1000], taxes=cls.foreign_purchase_tax)
+        cls.init_invoice('in_refund', partner=cls.test_fpos_foreign_partner, invoice_date='2021-03-02', post=True, amounts=[600], taxes=cls.foreign_purchase_tax)
+        cls.init_invoice('in_refund', partner=cls.test_fpos_foreign_partner, invoice_date='2021-05-02', post=True, amounts=[10000], taxes=cls.foreign_purchase_tax)
 
     @classmethod
     def _instantiate_basic_test_tax_group(cls, company=None, country=None):
@@ -318,347 +331,129 @@ class TestTaxReport(TestAccountReportsCommon):
 
         return tax
 
-    def _assert_vat_closing(self, report, options, closing_vals_by_fpos):
-        """ Checks the result of the VAT closing
-
-        :param options: the tax report options to make the closing for
-        :param closing_vals_by_fpos: A list of dict(fiscal_position: [dict(line_vals)], where fiscal_position is (possibly empty)
-                                     account.fiscal.position record, and line_vals, the expected values for each closing move lines.
-                                     In case the option 'companies' contains more than 1 company, a tuple (company, fiscal_position)
-                                     replaces the fiscal_position key
-        """
-        with patch.object(type(self.env['account.move']), '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
-            vat_closing_moves = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(report, options)
-
-            if len(options['companies']) > 1:
-                closing_moves_by_fpos = {(move.company_id, move.fiscal_position_id): move for move in vat_closing_moves}
-            else:
-                closing_moves_by_fpos = {move.fiscal_position_id: move for move in vat_closing_moves}
-
-            for key, closing_vals in closing_vals_by_fpos.items():
-                vat_closing_move = closing_moves_by_fpos[key]
-                self.assertRecordValues(vat_closing_move.line_ids, closing_vals)
-            self.assertEqual(len(closing_vals_by_fpos), len(vat_closing_moves), "Exactly one move should have been generated per fiscal position; nothing else.")
-
-    def test_vat_closing_single_fpos(self):
-        """ Tests the VAT closing when a foreign VAT fiscal position is selected on the tax report
-        """
-        options = self._generate_options(
-            self.basic_tax_report, fields.Date.from_string('2021-01-15'), fields.Date.from_string('2021-02-01'),
-            {'fiscal_position': self.foreign_vat_fpos.id}
-        )
-
-        self._assert_vat_closing(self.basic_tax_report, options, {
-            self.foreign_vat_fpos: [
-                # sales: 800 * 0.5 * 0.7 - 200 * 0.5 * 0.7
-                {'debit': 210,      'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 800 * 0.5 * -1 - 200 * 0.5 * -1
-                {'debit': 0,        'credit': 300,      'account_id': self.tax_account_2.id},
-                # purchases: 1000 * 0.5 * 0.6 - 600 * 0.5 * 0.6
-                {'debit': 0,        'credit': 120,      'account_id': self.tax_account_1.id},
-                # purchases: 1000 * 0.5 * -1 - 600 * 0.5 * -1
-                {'debit': 200,      'credit': 0,        'account_id': self.tax_account_2.id},
-                # For sales operations
-                {'debit': 90,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
-                # For purchase operations
-                {'debit': 0,        'credit': 80,       'account_id': self.tax_group_2.tax_payable_account_id.id},
-            ]
+    def _assert_tax_closing(self, company, date_from, date_to, return_type, closing_vals_by_company, tax_unit=None):
+        tax_return = self.env['account.return'].create({
+            'name': "Return",
+            'date_from': date_from,
+            'date_to': date_to,
+            'type_id': return_type.id,
+            'company_id': company.id,
+            'tax_unit_id': tax_unit.id if tax_unit else False,
         })
+        tax_return.action_review()
+        with self.allow_pdf_render():
+            tax_return.action_submit()
 
-    def test_vat_closing_moves_with_lock_date(self):
-        """
-        Check that we are still able to create a tax closing event if the lock date is set as the closing move
-        is not dependent of the lock date.
-        This also ensures that if we try to close again this period with a move already posted we get the same
-        """
-        self.env.company.tax_lock_date = fields.Date.from_string('2021-12-31')
+        self.assertEqual(len(closing_vals_by_company), len(tax_return.closing_move_ids))
+        for closing_move in tax_return.closing_move_ids:
+            expected_vals = closing_vals_by_company[closing_move.company_id]
+            self.assertRecordValues(closing_move.line_ids, expected_vals)
 
-        options = self._generate_options(
-            self.basic_tax_report, '2021-01-15', '2021-02-01',
-            {'fiscal_position': 'domestic'}
-        )
+    def test_tax_report_domestic_monocompany(self):
+        options = self._generate_options(self.domestic_tax_report, '2021-01-01', '2021-03-31')
 
-        action = self.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        move = self.env['account.move'].browse(action['res_id'])
-        with patch.object(self.registry['account.move'], '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
-            move.action_post()
-
-        action = self.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        same_move = self.env['account.move'].browse(action['res_id'])
-        self.assertEqual(move.id, same_move.id)
-
-    def test_vat_closing_domestic(self):
-        """ Tests the VAT closing when a foreign VAT fiscal position is selected on the tax report
-        """
-        options = self._generate_options(
-            self.basic_tax_report, fields.Date.from_string('2021-01-15'), fields.Date.from_string('2021-02-01'),
-            {'fiscal_position': 'domestic'}
-        )
-
-        self._assert_vat_closing(self.basic_tax_report, options, {
-            self.env['account.fiscal.position']: [
-                # sales: 200 * 0.5 * 0.7 - 20 * 0.5 * 0.7
-                {'debit': 63,       'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 200 * 0.5 * -1 - 20 * 0.5 * -1
-                {'debit': 0,        'credit': 90,       'account_id': self.tax_account_2.id},
-                # purchases: 400 * 0.5 * 0.6 - 60 * 0.5 * 0.6
-                {'debit': 0,        'credit': 102,      'account_id': self.tax_account_1.id},
-                # purchases: 400 * 0.5 * - 60 * 0.5
-                {'debit': 170,      'credit': 0,        'account_id': self.tax_account_2.id},
-                # For sales operations
-                {'debit': 27,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
-                # For purchase operations
-                {'debit': 0,        'credit': 68,       'account_id': self.tax_group_2.tax_payable_account_id.id},
-            ]
-        })
-
-    def test_vat_closing_everything(self):
-        """ Tests the VAT closing when the option to show all foreign VAT fiscal positions is activated.
-        One closing move should then be generated per fiscal position.
-        """
-        options = self._generate_options(
-            self.basic_tax_report, fields.Date.from_string('2021-01-15'), fields.Date.from_string('2021-02-01'),
-            {'fiscal_position': 'all'}
-        )
-
-        self._assert_vat_closing(self.basic_tax_report, options, {
-            # From test_vat_closing_domestic
-            self.env['account.fiscal.position']: [
-                # sales: 200 * 0.5 * 0.7 - 20 * 0.5 * 0.7
-                {'debit': 63,       'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 200 * 0.5 * -1 - 20 * 0.5 * -1
-                {'debit': 0,        'credit': 90,       'account_id': self.tax_account_2.id},
-                # purchases: 400 * 0.5 * 0.6 - 60 * 0.5 * 0.6
-                {'debit': 0,        'credit': 102,      'account_id': self.tax_account_1.id},
-                # purchases: 400 * 0.5 * -1 - 60 * 0.5 * -1
-                {'debit': 170,      'credit': 0,        'account_id': self.tax_account_2.id},
-                # For sales operations
-                {'debit': 27,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
-                # For purchase operations
-                {'debit': 0,        'credit': 68,       'account_id': self.tax_group_2.tax_payable_account_id.id},
-            ],
-
-            # From test_vat_closing_single_fpos
-            self.foreign_vat_fpos: [
-                # sales: 800 * 0.5 * 0.7 - 200 * 0.5 * 0.7
-                {'debit': 210,      'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 800 * 0.5 * -1 - 200 * 0.5 * -1
-                {'debit': 0,        'credit': 300,      'account_id': self.tax_account_2.id},
-                # purchases: 1000 * 0.5 * 0.6 - 600 * 0.5 * 0.6
-                {'debit': 0,        'credit': 120,      'account_id': self.tax_account_1.id},
-                # purchases: 1000 * 0.5 * -1 - 600 * 0.5 * -1
-                {'debit': 200,      'credit': 0,        'account_id': self.tax_account_2.id},
-                # For sales operations
-                {'debit': 90,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
-                # For purchase operations
-                {'debit': 0,        'credit': 80,       'account_id': self.tax_group_2.tax_payable_account_id.id},
-            ],
-        })
-
-    def test_vat_closing_generic(self):
-        """ VAT closing for the generic report should create one closing move per fiscal position + a domestic one.
-        One closing move should then be generated per fiscal position.
-        """
-        for generic_report_xml_id in ('account.generic_tax_report', 'account.generic_tax_report_account_tax', 'account.generic_tax_report_tax_account'):
-            generic_report = self.env.ref(generic_report_xml_id)
-            options = self._generate_options(generic_report, fields.Date.from_string('2021-01-15'), fields.Date.from_string('2021-02-01'))
-
-            self._assert_vat_closing(generic_report, options, {
-                # From test_vat_closing_domestic
-                self.env['account.fiscal.position']: [
-                    # sales: 200 * 0.5 * 0.7 - 20 * 0.5 * 0.7
-                    {'debit': 63,       'credit': 0.0,      'account_id': self.tax_account_1.id},
-                    # sales: 200 * 0.5 * -1 - 20 * 0.5 * -1
-                    {'debit': 0,        'credit': 90,       'account_id': self.tax_account_2.id},
-                    # purchases: 400 * 0.5 * 0.6 - 60 * 0.5 * 0.6
-                    {'debit': 0,        'credit': 102,      'account_id': self.tax_account_1.id},
-                    # purchases: 400 * 0.5 * -1 - 60 * 0.5 * -1
-                    {'debit': 170,      'credit': 0,        'account_id': self.tax_account_2.id},
-                    # For sales operations
-                    {'debit': 27,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
-                    # For purchase operations
-                    {'debit': 0,        'credit': 68,       'account_id': self.tax_group_2.tax_payable_account_id.id},
-                ],
-
-                # From test_vat_closing_single_fpos
-                self.foreign_vat_fpos: [
-                    # sales: 800 * 0.5 * 0.7 - 200 * 0.5 * 0.7
-                    {'debit': 210,      'credit': 0.0,      'account_id': self.tax_account_1.id},
-                    # sales: 800 * 0.5 * -1 - 200 * 0.5 * -1
-                    {'debit': 0,        'credit': 300,      'account_id': self.tax_account_2.id},
-                    # purchases: 1000 * 0.5 * 0.6 - 600 * 0.5 * 0.6
-                    {'debit': 0,        'credit': 120,      'account_id': self.tax_account_1.id},
-                    # purchases: 1000 * 0.5 * -1 - 600 * 0.5 * -1
-                    {'debit': 200,      'credit': 0,        'account_id': self.tax_account_2.id},
-                    # For sales operations
-                    {'debit': 90,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
-                    # For purchase operations
-                    {'debit': 0,        'credit': 80,       'account_id': self.tax_group_2.tax_payable_account_id.id},
-                ],
-            })
-
-    def test_vat_closing_button_availability(self):
-        def assertTaxClosingAvailable(is_enabled, active_companies, export_main_company=None):
-            options = tax_report.with_context(allowed_company_ids=active_companies.ids).get_options({})
-            closing_button_dict = next(filter(lambda x: x['action'] == 'action_periodic_vat_entries', options['buttons']))
-            self.assertEqual(closing_button_dict.get('error_action'), None if is_enabled else 'show_error_branch_allowed')
-            if is_enabled:
-                self.assertEqual(tax_report._get_sender_company_for_export(options), export_main_company)
-
-        tax_report = self.env.ref('account.generic_tax_report')
-
-        main_company = self.company_data['company']
-        main_company.vat = '123'
-        branch_1 = self.env['res.company'].create({'name': "Branch 1", 'parent_id': main_company.id})
-        branch_1_1 = self.env['res.company'].create({'name': "Branch 1 sub-branch 1", 'parent_id': branch_1.id})
-        branch_2 = self.env['res.company'].create({'name': "Branch 2", 'parent_id': main_company.id, 'vat': '456'})
-        branch_2_1 = self.env['res.company'].create({'name': "Branch 2 sub-branch 1", 'parent_id': branch_2.id})
-
-        assertTaxClosingAvailable(False, main_company)
-        assertTaxClosingAvailable(True, main_company + branch_1 + branch_1_1 + branch_2 + branch_2_1, export_main_company=main_company)
-        assertTaxClosingAvailable(True, branch_2 + branch_2_1 + main_company + branch_1 + branch_1_1, export_main_company=branch_2)
-        assertTaxClosingAvailable(True, main_company + branch_1 + branch_1_1, export_main_company=main_company)
-        assertTaxClosingAvailable(False, main_company + branch_1)
-        assertTaxClosingAvailable(False, branch_1 + branch_1_1)
-        assertTaxClosingAvailable(True, branch_1 + main_company + branch_1_1, export_main_company=main_company)
-        assertTaxClosingAvailable(True, branch_2 + main_company + branch_2_1, export_main_company=branch_2)
-        assertTaxClosingAvailable(False, branch_2_1)
-
-    def test_tax_report_fpos_domestic(self):
-        """ Test tax report's content for 'domestic' foreign VAT fiscal position option.
-        """
-        options = self._generate_options(
-            self.basic_tax_report, fields.Date.from_string('2021-01-01'), fields.Date.from_string('2021-03-31'),
-            {'fiscal_position': 'domestic'}
-        )
         self.assertLinesValues(
-            self.basic_tax_report._get_lines(options),
+            self.domestic_tax_report._get_lines(options),
             #   Name                                                          Balance
             [0,                                                               1],
             [
                 # out_invoice
-                (f'{self.test_fpos_tax_sale.id}-invoice-base',             200),
-                (f'{self.test_fpos_tax_sale.id}-invoice-30',                30),
-                (f'{self.test_fpos_tax_sale.id}-invoice-70',                70),
-                (f'{self.test_fpos_tax_sale.id}-invoice--100',            -100),
+                (f'{self.domestic_sale_tax.id}-invoice-base',             200),
+                (f'{self.domestic_sale_tax.id}-invoice-30',                30),
+                (f'{self.domestic_sale_tax.id}-invoice-70',                70),
+                (f'{self.domestic_sale_tax.id}-invoice--100',            -100),
 
                 # out_refund
-                (f'{self.test_fpos_tax_sale.id}-refund-base',              -20),
-                (f'{self.test_fpos_tax_sale.id}-refund-30',                 -3),
-                (f'{self.test_fpos_tax_sale.id}-refund-70',                 -7),
-                (f'{self.test_fpos_tax_sale.id}-refund--100',               10),
+                (f'{self.domestic_sale_tax.id}-refund-base',              -20),
+                (f'{self.domestic_sale_tax.id}-refund-30',                 -3),
+                (f'{self.domestic_sale_tax.id}-refund-70',                 -7),
+                (f'{self.domestic_sale_tax.id}-refund--100',               10),
 
                 # in_invoice
-                (f'{self.test_fpos_tax_purchase.id}-invoice-base',         400),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-40',            80),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-60',           120),
-                (f'{self.test_fpos_tax_purchase.id}-invoice--100',        -200),
+                (f'{self.domestic_purchase_tax.id}-invoice-base',         400),
+                (f'{self.domestic_purchase_tax.id}-invoice-40',            80),
+                (f'{self.domestic_purchase_tax.id}-invoice-60',           120),
+                (f'{self.domestic_purchase_tax.id}-invoice--100',        -200),
 
                 # in_refund
-                (f'{self.test_fpos_tax_purchase.id}-refund-base',          -60),
-                (f'{self.test_fpos_tax_purchase.id}-refund-40',            -12),
-                (f'{self.test_fpos_tax_purchase.id}-refund-60',            -18),
-                (f'{self.test_fpos_tax_purchase.id}-refund--100',           30),
+                (f'{self.domestic_purchase_tax.id}-refund-base',          -60),
+                (f'{self.domestic_purchase_tax.id}-refund-40',            -12),
+                (f'{self.domestic_purchase_tax.id}-refund-60',            -18),
+                (f'{self.domestic_purchase_tax.id}-refund--100',           30),
             ],
             options,
         )
 
-    def test_tax_report_fpos_foreign(self):
+        self._assert_tax_closing(
+            self.env.company,
+            '2021-01-01',
+            '2021-03-31',
+            self.domestic_tax_return_type,
+            {
+                self.env.company: [
+                    # 0.5 * 0.7 * (200 - 20) = 63
+                    {'debit': 63.0,      'credit': 0.0,      'account_id': self.tax_account_1.id},
+                    # 0.5 * 0.6 * (400 - 60) = 102
+                    {'debit': 0.0,       'credit': 102.0,    'account_id': self.tax_account_1.id},
+                    {'debit': 0.0,       'credit': 63.0,     'account_id': self.tax_group_1.tax_payable_account_id.id},
+                    {'debit': 102.0,     'credit': 0.0,      'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                ],
+            }
+        )
+
+    def test_tax_report_foreign_monocompany(self):
         """ Test tax report's content with a foreign VAT fiscal position.
         """
-        options = self._generate_options(
-            self.basic_tax_report, fields.Date.from_string('2021-01-01'), fields.Date.from_string('2021-03-31'),
-            {'fiscal_position': self.foreign_vat_fpos.id}
-        )
+        options = self._generate_options(self.foreign_tax_report, '2021-01-01', '2021-03-31')
+
         self.assertLinesValues(
-            self.basic_tax_report._get_lines(options),
+            self.foreign_tax_report._get_lines(options),
             #   Name                                                          Balance
             [0,                                                               1],
             [
                 # out_invoice
-                (f'{self.test_fpos_tax_sale.id}-invoice-base',              800),
-                (f'{self.test_fpos_tax_sale.id}-invoice-30',                120),
-                (f'{self.test_fpos_tax_sale.id}-invoice-70',                280),
-                (f'{self.test_fpos_tax_sale.id}-invoice--100',             -400),
+                (f'{self.foreign_sale_tax.id}-invoice-base',              800),
+                (f'{self.foreign_sale_tax.id}-invoice-80',                384),
+                (f'{self.foreign_sale_tax.id}-invoice-20',                 96),
+                (f'{self.foreign_sale_tax.id}-invoice--100',             -480),
 
                 # out_refund
-                (f'{self.test_fpos_tax_sale.id}-refund-base',              -200),
-                (f'{self.test_fpos_tax_sale.id}-refund-30',                 -30),
-                (f'{self.test_fpos_tax_sale.id}-refund-70',                 -70),
-                (f'{self.test_fpos_tax_sale.id}-refund--100',               100),
+                (f'{self.foreign_sale_tax.id}-refund-base',              -200),
+                (f'{self.foreign_sale_tax.id}-refund-80',                 -96),
+                (f'{self.foreign_sale_tax.id}-refund-20',                 -24),
+                (f'{self.foreign_sale_tax.id}-refund--100',               120),
 
                 # in_invoice
-                (f'{self.test_fpos_tax_purchase.id}-invoice-base',         1000),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-40',            200),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-60',            300),
-                (f'{self.test_fpos_tax_purchase.id}-invoice--100',         -500),
+                (f'{self.foreign_purchase_tax.id}-invoice-base',         1000),
+                (f'{self.foreign_purchase_tax.id}-invoice-51',            306),
+                (f'{self.foreign_purchase_tax.id}-invoice-49',            294),
+                (f'{self.foreign_purchase_tax.id}-invoice--100',         -600),
 
                 # in_refund
-                (f'{self.test_fpos_tax_purchase.id}-refund-base',          -600),
-                (f'{self.test_fpos_tax_purchase.id}-refund-40',            -120),
-                (f'{self.test_fpos_tax_purchase.id}-refund-60',            -180),
-                (f'{self.test_fpos_tax_purchase.id}-refund--100',           300),
+                (f'{self.foreign_purchase_tax.id}-refund-base',          -600),
+                (f'{self.foreign_purchase_tax.id}-refund-51',            -183.6),
+                (f'{self.foreign_purchase_tax.id}-refund-49',            -176.4),
+                (f'{self.foreign_purchase_tax.id}-refund--100',           360),
             ],
             options,
         )
 
-    def test_tax_report_fpos_everything(self):
-        """ Test tax report's content for 'all' foreign VAT fiscal position option.
-        """
-        options = self._generate_options(
-            self.basic_tax_report, fields.Date.from_string('2021-01-01'), fields.Date.from_string('2021-03-31'),
-            {'fiscal_position': 'all'}
+        self._assert_tax_closing(
+            self.env.company,
+            '2021-01-01',
+            '2021-03-31',
+            self.foreign_tax_return_type,
+            {
+                self.env.company: [
+                    # 0.6 * 0.2 * (800 - 200) = 72
+                    {'debit': 72.0,      'credit': 0.0,      'account_id': self.tax_account_1.id},
+                    # 0.6 * 0.49 * (1000 - 600) = 117.6
+                    {'debit': 0.0,       'credit': 117.6,    'account_id': self.tax_account_1.id},
+                    {'debit': 0.0,       'credit': 72.0,     'account_id': self.tax_group_3.tax_payable_account_id.id},
+                    {'debit': 117.6,     'credit': 0.0,      'account_id': self.tax_group_4.tax_receivable_account_id.id},
+                ],
+            }
         )
-        self.assertLinesValues(
-            self.basic_tax_report._get_lines(options),
-            #   Name                                                          Balance
-            [0,                                                               1],
-            [
-                # out_invoice
-                (f'{self.test_fpos_tax_sale.id}-invoice-base',            1000),
-                (f'{self.test_fpos_tax_sale.id}-invoice-30',               150),
-                (f'{self.test_fpos_tax_sale.id}-invoice-70',               350),
-                (f'{self.test_fpos_tax_sale.id}-invoice--100',            -500),
-
-                # out_refund
-                (f'{self.test_fpos_tax_sale.id}-refund-base',             -220),
-                (f'{self.test_fpos_tax_sale.id}-refund-30',                -33),
-                (f'{self.test_fpos_tax_sale.id}-refund-70',                -77),
-                (f'{self.test_fpos_tax_sale.id}-refund--100',              110),
-
-                # in_invoice
-                (f'{self.test_fpos_tax_purchase.id}-invoice-base',        1400),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-40',           280),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-60',           420),
-                (f'{self.test_fpos_tax_purchase.id}-invoice--100',        -700),
-
-                # in_refund
-                (f'{self.test_fpos_tax_purchase.id}-refund-base',         -660),
-                (f'{self.test_fpos_tax_purchase.id}-refund-40',           -132),
-                (f'{self.test_fpos_tax_purchase.id}-refund-60',           -198),
-                (f'{self.test_fpos_tax_purchase.id}-refund--100',          330),
-            ],
-            options,
-        )
-
-    def test_tax_report_single_fpos(self):
-        """ When opening the tax report from a foreign country for which there exists only one
-        foreing VAT fiscal position, this fiscal position should be selected by default in the
-        report's options.
-        """
-        new_tax_report = self.env['account.report'].create({
-            'name': "",
-            'country_id': self.foreign_country.id,
-            'root_report_id': self.env.ref("account.generic_tax_report").id,
-            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})]
-        })
-        foreign_vat_fpos = self.env['account.fiscal.position'].create({
-            'name': "Test fpos",
-            'country_id': self.foreign_country.id,
-            'foreign_vat': '422211',
-        })
-        options = self._generate_options(new_tax_report, fields.Date.from_string('2021-01-01'), fields.Date.from_string('2021-03-31'))
-        self.assertEqual(options['fiscal_position'], foreign_vat_fpos.id, "When only one VAT fiscal position is available for a non-domestic country, it should be chosen by default")
 
     def test_tax_report_grid(self):
         company = self.company_data['company']
@@ -1642,40 +1437,6 @@ class TestTaxReport(TestAccountReportsCommon):
             invoice_generator=neg_line_invoice_generator,
         )
 
-    def test_fiscal_position_switch_all_option_flow(self):
-        """ 'all' fiscal position option sometimes must be reset or enforced in order to keep
-        the report consistent. We check those cases here.
-        """
-        foreign_tax_report = self.env['account.report'].create({
-            'name': "",
-            'country_id': self.foreign_country.id,
-            'root_report_id': self.env.ref("account.generic_tax_report").id,
-            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})],
-        })
-        foreign_vat_fpos = self.env['account.fiscal.position'].create({
-            'name': "Test fpos",
-            'country_id': self.foreign_country.id,
-            'foreign_vat': '422211',
-        })
-
-        # Case 1: 'all' allowed if multiple fpos
-        to_check = self.basic_tax_report.get_options({'fiscal_position': 'all', 'selected_variant_id': self.basic_tax_report.id})
-        self.assertEqual(to_check['fiscal_position'], 'all', "Opening the report with 'all' fiscal_position option should work if there are fiscal positions for different states in that country")
-
-        # Case 2: 'all' not allowed if domestic and no fpos
-        self.foreign_vat_fpos.foreign_vat = None # No unlink because setupClass created some moves with it
-        to_check = self.basic_tax_report.get_options({'fiscal_position': 'all', 'selected_variant_id': self.basic_tax_report.id})
-        self.assertEqual(to_check['fiscal_position'], 'domestic', "Opening the domestic report with 'all' should change to 'domestic' if there's no state-specific fiscal position in the country")
-
-        # Case 3: 'all' not allowed on foreign report with 1 fpos
-        to_check = foreign_tax_report.get_options({'fiscal_position': 'all', 'selected_variant_id': foreign_tax_report.id})
-        self.assertEqual(to_check['fiscal_position'], foreign_vat_fpos.id, "Opening a foreign report with only one single fiscal position with 'all' option should change if to only select this fiscal position")
-
-        # Case 4: always 'all' on generic report
-        generic_tax_report = self.env.ref("account.generic_tax_report")
-        to_check = generic_tax_report.get_options({'fiscal_position': foreign_vat_fpos.id, 'selected_variant_id': generic_tax_report.id})
-        self.assertEqual(to_check['fiscal_position'], 'all', "The generic report should always use 'all' fiscal position option.")
-
     def test_tax_report_multi_inv_line_no_rep_account(self):
         """ Tests the behavior of the tax report when using a tax without any
         repartition account (hence doing its tax lines on the base account),
@@ -1797,12 +1558,13 @@ class TestTaxReport(TestAccountReportsCommon):
             'company_ids': [Command.set(unit_companies.ids)],
             'main_company_id': company_1.id,
         })
-        tax_group_2 = self._instantiate_basic_test_tax_group(company_2)
+        self._instantiate_basic_test_tax_group(company_2)
         self._instantiate_basic_test_tax_group(company_3)
 
         created_taxes = {}
         tax_accounts = {}
         invoice_date = fields.Date.from_string('2018-01-01')
+        tax_accounts_map = {}
         for index, company in enumerate(all_companies):
             # Make sure the fiscal country is what we want
             self.change_company_country(company, self.fiscal_country)
@@ -1815,6 +1577,12 @@ class TestTaxReport(TestAccountReportsCommon):
                 'company_ids': [Command.link(company.id)],
             })
             tax_group = self.env['account.tax.group'].search([('company_id', '=', company.id), ('name', '=', 'Test tax group')], limit=1)
+
+            tax_accounts_map[company] = {
+                'tax': tax_account,
+                'payable': tax_group.tax_payable_account_id,
+                'receivable': tax_group.tax_receivable_account_id,
+            }
 
             test_tax = self._add_basic_tax_for_report(tax_unit_report, 42, 'sale', tax_group, [(100, tax_account, True)], company=company)
             created_taxes[company] = test_tax
@@ -1840,7 +1608,6 @@ class TestTaxReport(TestAccountReportsCommon):
                 tax_unit_report.with_context(allowed_company_ids=active_companies.ids),
                 invoice_date,
                 invoice_date,
-                {'fiscal_position': 'domestic'}
             )
 
             target_unit = tax_unit if company_3 != active_companies[0] else None
@@ -1882,31 +1649,18 @@ class TestTaxReport(TestAccountReportsCommon):
                 options,
             )
 
-        # Check closing for the vat unit
-        options = self._generate_options(
-            tax_unit_report.with_context(allowed_company_ids=unit_companies.ids),
-            invoice_date,
-            invoice_date,
-            {'tax_report': tax_unit_report.id, 'fiscal_position': 'all'}
-        )
+        # Test tax closing for the tax unit
+        self._assert_tax_closing(company_1, '2018-01-01', '2018-03-31', self.domestic_tax_return_type, {
+                company_1: [
+                    {'debit':  42.0,      'credit':   0.0,     'account_id': tax_accounts_map[company_1]['tax'].id},
+                    {'debit':   0.0,      'credit':  42.0,     'account_id': tax_accounts_map[company_1]['payable'].id},
+                ],
 
-        self._assert_vat_closing(tax_unit_report, options, {
-            (company_1, self.env['account.fiscal.position']): [
-                {'debit': 42,       'credit':  0,       'account_id': tax_accounts[company_1].id},
-                {'debit':  0,       'credit': 42,       'account_id': self.tax_group_1.tax_payable_account_id.id},
-            ],
-
-            (company_1, self.foreign_vat_fpos): [
-                # Don't check accounts here; they are gotten by searching on taxes, basically we don't care about them as it's 0-balanced.
-                {'debit':  0,       'credit':  0,},
-                {'debit':  0,       'credit':  0,},
-            ],
-
-            (company_2, self.env['account.fiscal.position']): [
-                {'debit': 84,       'credit':  0,       'account_id': tax_accounts[company_2].id},
-                {'debit':  0,       'credit': 84,       'account_id': tax_group_2.tax_payable_account_id.id},
-            ],
-        })
+                company_2: [
+                    {'debit': 84,      'credit':   0.0,     'account_id': tax_accounts_map[company_2]['tax'].id},
+                    {'debit':   0.0,      'credit': 84.0,     'account_id': tax_accounts_map[company_2]['payable'].id},
+                ],
+        }, tax_unit=tax_unit)
 
     def test_tax_unit_create_horizontal_group(self):
         """ This test will try to create two tax units to see if the creation of horizontal group works as expected """
@@ -2021,12 +1775,11 @@ class TestTaxReport(TestAccountReportsCommon):
         for company in all_companies:
             self.assertFalse(all_companies.partner_id.with_company(company).property_account_position_id)
 
-    def test_vat_unit_with_foreign_vat_fpos(self):
+    def test_tax_unit_with_foreign_vat_fpos(self):
         # Company 1 has the test country as domestic country, and a foreign VAT fpos in a different province
         company_1 = self.company_data['company']
 
-        # Company 2 belongs to a different country, and has a foreign VAT fpos to the test country, with just one
-        # move adding 1000 in the first line of the report.
+        # Company 2 belongs to a different country, and has a foreign VAT fpos to the test country
         company_2 = self.company_data_2['company']
         company_2.currency_id = company_1.currency_id
 
@@ -2035,34 +1788,20 @@ class TestTaxReport(TestAccountReportsCommon):
             'foreign_vat': 'tagada tsoin tsoin',
             'country_id': self.fiscal_country.id,
             'company_id': company_2.id,
+            'auto_apply': True,
         })
 
-        report_line = self.env['account.report.line'].search([
-            ('report_id', '=', self.basic_tax_report.id),
-            ('name', '=', f'{self.test_fpos_tax_sale.id}-invoice-base'),
-        ])
+        self.partner_a.country_id = self.fiscal_country.id
 
-        plus_tag = report_line.expression_ids._get_matching_tags("+")
-
-        comp2_move = self.env['account.move'].create({
-            'journal_id': self.company_data_2['default_journal_misc'].id,
-            'date': '2021-02-02',
-            'fiscal_position_id': foreign_vat_fpos.id,
-            'line_ids': [
-                Command.create({
-                    'account_id': self.company_data_2['default_account_assets'].id,
-                    'credit': 1000,
-                }),
-
-                Command.create({
-                    'account_id': self.company_data_2['default_account_expense'].id,
-                    'debit': 1000,
-                    'tax_tag_ids': [Command.set(plus_tag.ids)],
-                }),
-            ]
+        company_2_tax_account = self.env['account.account'].create({
+            'name': 'Tax Account',
+            'code': 'comp.2.tax',
+            'account_type': 'liability_current',
+            'company_ids': company_2.ids,
         })
-
-        comp2_move.action_post()
+        company_2_tax_group = self._instantiate_basic_test_tax_group(company=company_2, country=self.fiscal_country)
+        company_2_tax = self._add_basic_tax_for_report(self.domestic_tax_report, 11, 'sale', company_2_tax_group, [(100, company_2_tax_account, True)], company=company_2)
+        self.init_invoice('out_invoice', partner=self.partner_a, invoice_date='2021-02-02', post=True, amounts=[1000], taxes=company_2_tax, company=company_2)
 
         # Both companies belong to a tax unit in test country
         tax_unit = self.env['account.tax.unit'].create({
@@ -2077,46 +1816,66 @@ class TestTaxReport(TestAccountReportsCommon):
 
         # Varying the order of the two companies (and hence changing the "main" active one) should make no difference.
         for unit_companies in ((company_1 + company_2), (company_2 + company_1)):
-            options = self._generate_options(
-                self.basic_tax_report.with_context(allowed_company_ids=unit_companies.ids),
-                fields.Date.from_string('2021-01-01'),
-                fields.Date.from_string('2021-03-31'),
-                {'fiscal_position': 'all'}
-            )
+            options = self._generate_options(self.domestic_tax_report.with_context(allowed_company_ids=unit_companies.ids), '2021-01-01', '2021-03-31')
 
             self.assertEqual(options['tax_unit'], tax_unit.id, "The tax unit should have been auto-detected.")
 
             self.assertLinesValues(
-                self.basic_tax_report._get_lines(options),
+                self.domestic_tax_report._get_lines(options),
                 #   Name                                                          Balance
                 [   0,                                                            1],
                 [
                     # out_invoice + 1000 from company_2 on the first line
-                    (f'{self.test_fpos_tax_sale.id}-invoice-base',          2000),
-                    (f'{self.test_fpos_tax_sale.id}-invoice-30',             150),
-                    (f'{self.test_fpos_tax_sale.id}-invoice-70',             350),
-                    (f'{self.test_fpos_tax_sale.id}-invoice--100',          -500),
+                    (f'{self.domestic_sale_tax.id}-invoice-base',           200),
+                    (f'{self.domestic_sale_tax.id}-invoice-30',              30),
+                    (f'{self.domestic_sale_tax.id}-invoice-70',              70),
+                    (f'{self.domestic_sale_tax.id}-invoice--100',          -100),
 
                     #out_refund
-                    (f'{self.test_fpos_tax_sale.id}-refund-base',           -220),
-                    (f'{self.test_fpos_tax_sale.id}-refund-30',              -33),
-                    (f'{self.test_fpos_tax_sale.id}-refund-70',              -77),
-                    (f'{self.test_fpos_tax_sale.id}-refund--100',            110),
+                    (f'{self.domestic_sale_tax.id}-refund-base',            -20),
+                    (f'{self.domestic_sale_tax.id}-refund-30',               -3),
+                    (f'{self.domestic_sale_tax.id}-refund-70',               -7),
+                    (f'{self.domestic_sale_tax.id}-refund--100',             10),
 
                     #in_invoice
-                    (f'{self.test_fpos_tax_purchase.id}-invoice-base',      1400),
-                    (f'{self.test_fpos_tax_purchase.id}-invoice-40',         280),
-                    (f'{self.test_fpos_tax_purchase.id}-invoice-60',         420),
-                    (f'{self.test_fpos_tax_purchase.id}-invoice--100',      -700),
+                    (f'{self.domestic_purchase_tax.id}-invoice-base',       400),
+                    (f'{self.domestic_purchase_tax.id}-invoice-40',          80),
+                    (f'{self.domestic_purchase_tax.id}-invoice-60',         120),
+                    (f'{self.domestic_purchase_tax.id}-invoice--100',      -200),
 
                     #in_refund
-                    (f'{self.test_fpos_tax_purchase.id}-refund-base',       -660),
-                    (f'{self.test_fpos_tax_purchase.id}-refund-40',         -132),
-                    (f'{self.test_fpos_tax_purchase.id}-refund-60',         -198),
-                    (f'{self.test_fpos_tax_purchase.id}-refund--100',        330),
+                    (f'{self.domestic_purchase_tax.id}-refund-base',        -60),
+                    (f'{self.domestic_purchase_tax.id}-refund-40',          -12),
+                    (f'{self.domestic_purchase_tax.id}-refund-60',          -18),
+                    (f'{self.domestic_purchase_tax.id}-refund--100',         30),
+
+                    # out_invoice, company 2
+                    (f'{company_2_tax.id}-invoice-base',                   1000),
+                    (f'{company_2_tax.id}-invoice-100',                     110),
+
+                    # out_refund, company 2
+                    (f'{company_2_tax.id}-refund-base',                       0),
+                    (f'{company_2_tax.id}-refund-100',                        0),
                 ],
                 options,
             )
+
+        self._assert_tax_closing(company_1, '2021-01-01', '2021-03-31', self.domestic_tax_return_type, {
+                company_1: [
+                    # 0.5 * 0.7 * (200 - 20) = 63
+                    {'debit':  63.0,      'credit':   0.0,     'account_id': self.tax_account_1.id},
+                    # 0.5 * 0.6 * (400 - 60) = 102
+                    {'debit':   0.0,      'credit': 102.0,     'account_id': self.tax_account_1.id},
+                    {'debit':   0.0,      'credit':  63.0,     'account_id': self.tax_group_1.tax_payable_account_id.id},
+                    {'debit': 102.0,      'credit':   0.0,     'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                ],
+
+                company_2: [
+                    # 0.11 * 1 * 1000 = 110
+                    {'debit': 110.0,      'credit':   0.0,     'account_id': company_2_tax_account.id},
+                    {'debit':   0.0,      'credit': 110.0,     'account_id': company_2_tax_group.tax_payable_account_id.id},
+                ],
+        }, tax_unit=tax_unit)
 
     @freeze_time('2023-10-05 02:00:00')
     def test_tax_report_with_entries_with_sale_and_purchase_taxes(self):
@@ -2322,30 +2081,11 @@ class TestTaxReport(TestAccountReportsCommon):
             report_options,
         )
 
-    def test_tax_report_get_past_closing_entry(self):
-        options = self._generate_options(self.basic_tax_report, '2021-01-01', '2021-12-31')
-
-        with patch.object(type(self.env['account.move']), '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
-            # Generate the tax closing entry and close the period without posting it, so that we can assert on the exception
-            vat_closing_move = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.basic_tax_report, options)
-            vat_closing_move.action_post()
-
-        # Calling the action_periodic_vat_entries method should return the existing tax closing entry.
-        vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        self.assertEqual(vat_closing_move.id, vat_closing_action['res_id'])
-
     def setup_multi_vat_context(self):
         """Setup 2 tax reports, taxes and partner to represent a multiVat context in which both taxes affect both tax report"""
 
         def get_positive_tag(report_line):
             return report_line.expression_ids._get_matching_tags().filtered(lambda x: not x.tax_negate)
-
-        self.env['account.fiscal.position'].create({
-            'name': "FP With foreign VAT number",
-            'country_id': self.foreign_country.id,
-            'foreign_vat': '422211',
-            'auto_apply': True,
-        })
 
         local_tax_report, foreign_tax_report = self.env['account.report'].create([
             {
@@ -2376,6 +2116,7 @@ class TestTaxReport(TestAccountReportsCommon):
             base_line, tax_line = tax.invoice_repartition_line_ids
             base_line.tag_ids = get_positive_tag(local_tax_report_base_line) + get_positive_tag(foreign_tax_report_base_line)
             tax_line.tag_ids = get_positive_tag(local_tax_report_tax_line) + get_positive_tag(foreign_tax_report_tax_line)
+            tax_line.account_id = self.tax_account_1
 
         local_partner = self.partner_a
         foreign_partner = self.partner_a.copy()
@@ -2394,7 +2135,7 @@ class TestTaxReport(TestAccountReportsCommon):
         local_partner, _ = setup_data['partners']
 
         invoice = self.init_invoice('out_invoice', partner=local_partner, invoice_date='2022-12-01', post=True, amounts=[100], taxes=local_tax_affecting_foreign_tax_report)
-        options = self._generate_options(local_tax_report, invoice.date, invoice.date)
+        options = self._generate_options(local_tax_report, '2022-10-01', '2022-12-31')
         self.assertLinesValues(
             local_tax_report._get_lines(options),
             #   Name                                        Balance
@@ -2448,230 +2189,6 @@ class TestTaxReport(TestAccountReportsCommon):
             ],
             options,
         )
-    def test_engine_external_many_fiscal_positions(self):
-        # Create a tax report that contains default manual expressions
-        self.basic_tax_report_2 = self.env['account.report'].create({
-            'name': "The Other Tax Report",
-            'country_id': self.fiscal_country.id,
-            'root_report_id': self.env.ref("account.generic_tax_report").id,
-            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})],
-            'line_ids': [
-                Command.create({
-                    'name': "test_line_1",
-                    'code': "test_line_1",
-                    'sequence': 1,
-                    'expression_ids': [
-                        Command.create({
-                            'date_scope': 'strict_range',
-                            'engine': 'external',
-                            'formula': 'sum',
-                            'label': 'balance',
-                        }),
-                        Command.create({
-                            'date_scope': 'strict_range',
-                            'engine': 'account_codes',
-                            'formula': '101',
-                            'label': '_default_balance',
-                        })
-                    ]
-                }),
-                Command.create({
-                    'name': "test_line_2",
-                    'code': "test_line_2",
-                    'sequence': 2,
-                    'expression_ids': [
-                        Command.create({
-                            'date_scope': 'strict_range',
-                            'engine': 'account_codes',
-                            'formula': '101',
-                            'label': 'balance',
-                        })
-                    ],
-                })
-            ]
-        })
-
-        company_2 = self.company_data_2['company']
-        company_2.country_id = self.fiscal_country
-        company_2.currency_id = self.company_data['company'].currency_id
-
-        # create two foreign fiscal positions (FPs), so we could create moves for each of them
-        foreign_vat_fpos = self.env['account.fiscal.position'].create([
-            {
-                'name': 'fpos 1',
-                'foreign_vat': 'A Swallow from Africa',
-                'country_id': self.fiscal_country.id,
-                'company_id': company_2.id,
-                'state_ids': self.country_state_1,
-            },
-            {
-                'name': 'fpos 2',
-                'foreign_vat': 'A Swallow from Europe',
-                'country_id': self.fiscal_country.id,
-                'company_id': company_2.id,
-                'state_ids': self.country_state_2,
-            },
-        ])
-
-        test_account_1 = self.env['account.account'].create({
-            'code': "101007",
-            'name': "test account",
-            'account_type': "asset_current",
-            'company_ids': [Command.link(company_2.id)],
-        })
-
-        test_account_2 = self.env['account.account'].create({
-            'code': "test",
-            'name': "test",
-            'account_type': "asset_current",
-            'company_ids': [Command.link(company_2.id)],
-        })
-
-        move_vals = [{
-            'date': fields.Date.from_string('2020-01-01'),
-            'fiscal_position_id': fp.id,
-            'company_id': company_2.id,
-            'line_ids': [
-                Command.create({
-                    'name': 'line 1',
-                    'account_id': test_account_1.id,
-                    'debit': 1000 * (i + 1),
-                    'credit': 0.0,
-                }),
-                Command.create({
-                    'name': 'line 2',
-                    'account_id': test_account_2.id,
-                    'debit': 0.0,
-                    'credit': 1000 * (i + 1),
-                }),
-            ]
-        } for i, fp in enumerate(foreign_vat_fpos)]
-
-        # create a move that includes an account starting with '101'
-        # to make sure its amount does not appear in the tax report for company_2
-        other_company_move_vals = {
-            'date': fields.Date.from_string('2020-01-01'),
-            'company_id': self.company_data['company'].id,
-            'line_ids': [
-                Command.create({
-                    'name': 'line 1',
-                    'account_id': self.company_data['default_account_revenue'].id,
-                    'debit': 1200,
-                    'credit': 0.0,
-                }),
-                Command.create({
-                    'name': 'line 2',
-                    'account_id': self.company_data['default_account_assets'].id,
-                    'debit': 0.0,
-                    'credit': 1200,
-                }),
-            ]
-        }
-
-        moves = self.env['account.move'].create(move_vals)
-        moves.action_post()
-        other_company_move = self.env['account.move'].create(other_company_move_vals)
-        other_company_move.action_post()
-
-        # we need to create different options per FP
-        fiscal_positions = ['all'] + foreign_vat_fpos.ids
-        report_options = {}
-        for fp in fiscal_positions:
-            fp_options = self._generate_options(
-                self.basic_tax_report_2.with_context(allowed_company_ids=[company_2.id]),
-                '2020-01-01', '2020-01-04',
-                default_options={
-                    'fiscal_position': fp,
-                }
-            )
-            report_options[fp] = fp_options
-
-        # when we filter by all FPs, the result on the second line
-        # should be the sum of the moves
-        # the first line contains a default expression and remains empty
-        # until we set a lock date
-        total_amount = sum([1000 * (i + 1) for i in range(len(foreign_vat_fpos.ids))])
-        report_lines = self.basic_tax_report_2\
-            .with_company(company_2)._get_lines(report_options['all'])
-        self.assertLinesValues(
-            # pylint: disable=bad-whitespace
-            report_lines,
-            [0,                             1],
-            [
-                ('test_line_1',           0.0),
-                ('test_line_2',  total_amount),
-            ],
-            report_options['all'],
-        )
-
-        # subsequently, line 2 should only contain the amount for the selected FP
-        for i, fp in enumerate(foreign_vat_fpos.ids):
-            report_lines = self.basic_tax_report_2\
-                .with_company(company_2)._get_lines(report_options[fp])
-            self.assertLinesValues(
-                # pylint: disable=bad-whitespace
-                report_lines,
-                [0,                               1],
-                [
-                    ('test_line_1',            0.0),
-                    ('test_line_2', 1000 * (i + 1)),
-                ],
-                report_options[fp],
-            )
-
-        # the default values shouldn't be created if the general lock date is set
-        lock_date_wizard = self.env['account.change.lock.date']\
-            .with_company(company_2).create({
-            'fiscalyear_lock_date': fields.Date.from_string('2020-01-04'),
-        })
-        lock_date_wizard.change_lock_date()
-
-        report_lines = self.basic_tax_report_2\
-            .with_company(company_2)._get_lines(report_options['all'])
-        self.assertLinesValues(
-            # pylint: disable=bad-whitespace
-            report_lines,
-            [0,                             1],
-            [
-                ('test_line_1',           0.0),
-                ('test_line_2',  total_amount),
-            ],
-            report_options['all'],
-        )
-
-        # if we change the tax_lock_date, the default values should be created
-        lock_date_wizard = self.env['account.change.lock.date']\
-            .with_company(company_2).create({
-            'tax_lock_date': fields.Date.from_string('2020-01-04'),
-        })
-        lock_date_wizard.change_lock_date()
-
-        report_lines = self.basic_tax_report_2\
-            .with_company(company_2)._get_lines(report_options['all'])
-        self.assertLinesValues(
-            # pylint: disable=bad-whitespace
-            report_lines,
-            [0,                             1],
-            [
-                ('test_line_1',  total_amount),
-                ('test_line_2',  total_amount),
-            ],
-            report_options['all'],
-        )
-
-        for i, fp in enumerate(foreign_vat_fpos.ids):
-            report_lines = self.basic_tax_report_2\
-                .with_company(company_2)._get_lines(report_options[fp])
-            self.assertLinesValues(
-                # pylint: disable=bad-whitespace
-                report_lines,
-                [0,                               1],
-                [
-                    ('test_line_1', 1000 * (i + 1)),
-                    ('test_line_2', 1000 * (i + 1)),
-                ],
-                report_options[fp],
-            )
 
     def test_tax_report_w_rounding_line(self):
         """Check that the tax report is correct when a rounding line is added to an invoice."""
@@ -2801,189 +2318,67 @@ class TestTaxReport(TestAccountReportsCommon):
             options
         )
 
-    def test_tax_report_closing_entry_reset_to_draft(self):
+    def test_multivat_multi_fpos(self):
+        """ Tests the tax report and closing in a multivat setup, with multiple foreign VAT fiscal positions defined for the same country, with
+        the same VAT number, ensuring all of them are properly taken into account.
         """
-        Test the reset to draft functionality to ensure no duplicate closing entry is created.
-
-        This test checks that when a tax report closing entry is posted and then reset to draft,
-        creating a subsequent closing entry will not result in a duplicate. Instead, the same
-        initial closing entry will be reused.
-        """
-        options = self._generate_options(self.basic_tax_report, '2021-03-01', '2021-03-31')
-        vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        initial_closing_entry = self.env['account.move'].browse(vat_closing_action['res_id'])
-        with self.allow_pdf_render():
-            initial_closing_entry.action_post()
-        initial_closing_entry.button_draft()
-        vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        subsequent_closing_entry  = self.env['account.move'].browse(vat_closing_action['res_id'])
-        self.assertEqual(initial_closing_entry, subsequent_closing_entry)
-
-    def test_tax_report_closing_entry_draft_with_new_entries(self):
-        """
-        Test whether the tax closing entry gets untouched when reset to draft and the VAT closing button is clicked again.
-        """
-        options = self._generate_options(self.basic_tax_report, '2023-01-01', '2023-03-31')
-        self.init_invoice('out_invoice', partner=self.partner_a, invoice_date='2023-03-22', post=True, amounts=[200], taxes=self.tax_sale_a)
-        initial_vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        initial_closing_entry = self.env['account.move'].browse(initial_vat_closing_action['res_id'])
-        initial_values = []
-        for aml in initial_closing_entry.line_ids:
-            self.assertEqual(aml.balance, 30 if aml.balance > 0 else -30)
-            initial_values.append({'account_id': aml.account_id.id, 'balance': aml.balance})
-        self.init_invoice('out_invoice', partner=self.partner_a, invoice_date='2023-03-22', post=True, amounts=[1000], taxes=self.tax_sale_a)
-        subsequent_vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        subsequent_closing_entry  = self.env['account.move'].browse(subsequent_vat_closing_action['res_id'])
-        self.assertRecordValues(subsequent_closing_entry.line_ids, [
-            {'account_id': initial_values[0]['account_id'], 'balance': initial_values[0]['balance']},
-            {'account_id': initial_values[1]['account_id'], 'balance': initial_values[1]['balance']},
-        ])
-
-    def test_tax_report_multi_company_post_closing(self):
-        # Branches
-        root_company = self.setup_other_company(name="Root Company")['company']
-        branch_1 = self.env['res.company'].create({'name': "Branch 1", 'parent_id': root_company.id})
-        branch_1_1 = self.env['res.company'].create({'name': "Branch 1.1", 'parent_id': branch_1.id})
-        branch_2 = self.env['res.company'].create({'name': "Branch 2", 'parent_id': root_company.id})
-        branch_companies = root_company + branch_1 + branch_1_1 + branch_2
-        branch_companies.account_tax_periodicity_journal_id = root_company.account_tax_periodicity_journal_id.id
-
-        # Tax unit
-        unit_part_1 = self.setup_other_company(name="Unit part 1")['company']
-        unit_part_2 = self.setup_other_company(name="Unit part 2")['company']
-
-        tax_unit = self.env['account.tax.unit'].create({
-            'name': "One unit to rule them all",
-            'country_id': unit_part_1.account_fiscal_country_id.id,
-            'vat': "123",
-            'company_ids': (unit_part_1 + unit_part_2).ids,
-            'main_company_id': unit_part_1.id,
+        self.foreign_vat_fpos.auto_apply = False
+        self.env['account.fiscal.position'].create({
+            'name': "Another test fpos",
+            'auto_apply': True,
+            'country_id': self.foreign_vat_fpos.country_id.id,
+            'foreign_vat': self.foreign_vat_fpos.foreign_vat,
         })
 
-        tax_report = self.env['account.report'].create({
-            'name': "My Onw Particular Tax Report",
-            'country_id': unit_part_1.account_fiscal_country_id.id,
-            'root_report_id': self.env.ref("account.generic_tax_report").id,
-            'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance',})],
-        })
+        self.init_invoice('out_invoice', partner=self.test_fpos_foreign_partner, invoice_date='2021-01-01', post=True, amounts=[100], taxes=self.foreign_sale_tax)
 
-        for test_type, main_company, active_companies in [('branches', root_company, branch_companies), ('tax units', tax_unit.main_company_id, tax_unit.company_ids)]:
-            with self.subTest(f"Post multicompany closing - {test_type}"):
-                tax_report_with_companies = tax_report.with_context(allowed_company_ids=active_companies.ids)
-                options = self._generate_options(tax_report_with_companies, '2023-01-01', '2023-01-01')
-                closing_moves = self.env['account.generic.tax.report.handler'].with_context(allowed_company_ids=active_companies.ids)._generate_tax_closing_entries(tax_report_with_companies, options)
+        options = self._generate_options(self.foreign_tax_report, '2021-01-01', '2021-03-31')
 
-                self.assertEqual(len(closing_moves), len(active_companies), "One closing move should have been created per company")
-                self.assertTrue(all(move.state == 'draft' for move in closing_moves), "All generated closing moves should be in draft")
-                main_closing_move = closing_moves.filtered(lambda x: x.company_id == main_company)
-                self.assertEqual(len(main_closing_move), 1)
+        self.assertLinesValues(
+            self.foreign_tax_report._get_lines(options),
+            #   Name                                                          Balance
+            [0,                                                               1],
+            [
+                # out_invoice
+                (f'{self.foreign_sale_tax.id}-invoice-base',              900),
+                (f'{self.foreign_sale_tax.id}-invoice-80',                432),
+                (f'{self.foreign_sale_tax.id}-invoice-20',                108),
+                (f'{self.foreign_sale_tax.id}-invoice--100',             -540),
 
-                with self.allow_pdf_render():
-                    action = main_closing_move.action_post()
-                    self.assertTrue(action['params']['depending_action'])
-                    # When posting the main closing move a component will open to propose you to post the depending moves.
-                    # So while the depending moves are not posted the main closing will not be posted.
-                    self.assertTrue(main_closing_move.state == 'draft')
-                    (closing_moves - main_closing_move).action_post()
-                    self.assertTrue(all(move.state == 'posted' for move in (closing_moves - main_closing_move)))
-                    main_closing_move.action_post()
-                    self.assertTrue(main_closing_move.state == 'posted')
-    def test_tax_report_prevent_draft_if_subsequent_posted(self):
-        """
-        Test the reset to draft functionality to ensure it is not possible to reset to draft a closing entry
-        if subsequent closing entries are already posted.
-        """
-        options = self._generate_options(self.basic_tax_report, '2023-01-01', '2023-03-31')
-        vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        Q1_closing_entry = self.env['account.move'].browse(vat_closing_action['res_id'])
-        with self.allow_pdf_render():
-            Q1_closing_entry.action_post()
+                # out_refund
+                (f'{self.foreign_sale_tax.id}-refund-base',              -200),
+                (f'{self.foreign_sale_tax.id}-refund-80',                 -96),
+                (f'{self.foreign_sale_tax.id}-refund-20',                 -24),
+                (f'{self.foreign_sale_tax.id}-refund--100',               120),
 
-        options = self._generate_options(self.basic_tax_report, '2023-04-01', '2023-06-30')
-        vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
-        Q2_closing_entry = self.env['account.move'].browse(vat_closing_action['res_id'])
+                # in_invoice
+                (f'{self.foreign_purchase_tax.id}-invoice-base',         1000),
+                (f'{self.foreign_purchase_tax.id}-invoice-51',            306),
+                (f'{self.foreign_purchase_tax.id}-invoice-49',            294),
+                (f'{self.foreign_purchase_tax.id}-invoice--100',         -600),
 
-        # We need to force recompute the entry as it is already generated from posting the Q1 entry.
-        Q2_closing_entry = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.basic_tax_report, options, closing_moves=Q2_closing_entry)
-        with self.allow_pdf_render():
-            Q2_closing_entry.action_post()
+                # in_refund
+                (f'{self.foreign_purchase_tax.id}-refund-base',          -600),
+                (f'{self.foreign_purchase_tax.id}-refund-51',            -183.6),
+                (f'{self.foreign_purchase_tax.id}-refund-49',            -176.4),
+                (f'{self.foreign_purchase_tax.id}-refund--100',           360),
+            ],
+            options,
+        )
 
-        with self.assertRaises(UserError):
-            Q1_closing_entry.button_draft()
-
-    def assert_period(self, input_date, expected_start, expected_end):
-        period_start, period_end = self.env.company._get_tax_closing_period_boundaries(input_date, self.basic_tax_report)
-        self.assertEqual(period_start, expected_start, f"Period start date ({fields.Date.to_string(period_start)}) doesn't match the expected period start date: ({fields.Date.to_string(expected_start)})")
-        self.assertEqual(period_end, expected_end, f"Period end date ({fields.Date.to_string(period_end)}) doesn't match the expected period end date: ({fields.Date.to_string(expected_end)})")
-
-    @freeze_time('2024-09-01')
-    def test_tax_report_start_date(self):
-        # Periodicity only with default start_date
-        self.env.company.account_tax_periodicity = 'monthly'
-        self.assert_period(date(2024, 1, 1), expected_start=date(2024, 1, 1), expected_end=date(2024, 1, 31))
-        self.assert_period(date(2024, 9, 30), expected_start=date(2024, 9, 1), expected_end=date(2024, 9, 30))
-        self.assert_period(date(2024, 10, 1), expected_start=date(2024, 10, 1), expected_end=date(2024, 10, 31))
-
-        self.env.company.account_tax_periodicity = 'trimester'
-        self.assert_period(date(2024, 1, 1), expected_start=date(2024, 1, 1), expected_end=date(2024, 3, 31))
-        self.assert_period(date(2024, 5, 1), expected_start=date(2024, 4, 1), expected_end=date(2024, 6, 30))
-        self.assert_period(date(2024, 9, 30), expected_start=date(2024, 7, 1), expected_end=date(2024, 9, 30))
-        self.assert_period(date(2024, 10, 1), expected_start=date(2024, 10, 1), expected_end=date(2024, 12, 31))
-
-        self.env.company.account_tax_periodicity = 'year'
-        self.assert_period(date(2024, 1, 1), expected_start=date(2024, 1, 1), expected_end=date(2024, 12, 31))
-        self.assert_period(date(2023, 12, 31), expected_start=date(2023, 1, 1), expected_end=date(2023, 12, 31))
-
-        # Basic start dates
-        self.env.company.account_tax_periodicity = 'trimester'
-        self.basic_tax_report.tax_closing_start_date = '2024-01-01'
-        self.assert_period(date(2024, 1, 1), expected_start=date(2024, 1, 1), expected_end=date(2024, 3, 31))
-        self.assert_period(date(2024, 4, 1), expected_start=date(2024, 4, 1), expected_end=date(2024, 6, 30))
-        self.assert_period(date(2024, 5, 1), expected_start=date(2024, 4, 1), expected_end=date(2024, 6, 30))
-        self.assert_period(date(2024, 9, 30), expected_start=date(2024, 7, 1), expected_end=date(2024, 9, 30))
-        self.assert_period(date(2024, 10, 1), expected_start=date(2024, 10, 1), expected_end=date(2024, 12, 31))
-
-        self.basic_tax_report.tax_closing_start_date = '2024-02-01'
-        self.assert_period(date(2024, 1, 1), expected_start=date(2023, 11, 1), expected_end=date(2024, 1, 31))
-        self.assert_period(date(2024, 1, 31), expected_start=date(2023, 11, 1), expected_end=date(2024, 1, 31))
-        self.assert_period(date(2024, 2, 1), expected_start=date(2024, 2, 1), expected_end=date(2024, 4, 30))
-        self.assert_period(date(2024, 6, 1), expected_start=date(2024, 5, 1), expected_end=date(2024, 7, 31))
-        self.assert_period(date(2024, 10, 31), expected_start=date(2024, 8, 1), expected_end=date(2024, 10, 31))
-        self.assert_period(date(2024, 11, 1), expected_start=date(2024, 11, 1), expected_end=date(2025, 1, 31))
-
-        self.env.company.account_tax_periodicity = 'monthly'
-        self.assert_period(date(2024, 2, 1), expected_start=date(2024, 2, 1), expected_end=date(2024, 2, 29))
-        self.assert_period(date(2024, 1, 31), expected_start=date(2024, 1, 1), expected_end=date(2024, 1, 31))
-        self.assert_period(date(2024, 1, 1), expected_start=date(2024, 1, 1), expected_end=date(2024, 1, 31))
-        self.assert_period(date(2024, 4, 1), expected_start=date(2024, 4, 1), expected_end=date(2024, 4, 30))
-        self.assert_period(date(2024, 12, 31), expected_start=date(2024, 12, 1), expected_end=date(2024, 12, 31))
-        self.assert_period(date(2024, 12, 1), expected_start=date(2024, 12, 1), expected_end=date(2024, 12, 31))
-
-        # Complexe start dates
-        self.env.company.account_tax_periodicity = 'trimester'
-
-        self.basic_tax_report.tax_closing_start_date = '2024-02-06'
-        self.assert_period(date(2024, 2, 5), expected_start=date(2023, 11, 6), expected_end=date(2024, 2, 5))
-        self.assert_period(date(2024, 2, 1), expected_start=date(2023, 11, 6), expected_end=date(2024, 2, 5))
-        self.assert_period(date(2023, 11, 7), expected_start=date(2023, 11, 6), expected_end=date(2024, 2, 5))
-
-        self.assert_period(date(2024, 2, 6), expected_start=date(2024, 2, 6), expected_end=date(2024, 5, 5))
-        self.assert_period(date(2024, 5, 5), expected_start=date(2024, 2, 6), expected_end=date(2024, 5, 5))
-        self.assert_period(date(2024, 4, 5), expected_start=date(2024, 2, 6), expected_end=date(2024, 5, 5))
-
-        self.assert_period(date(2024, 5, 6), expected_start=date(2024, 5, 6), expected_end=date(2024, 8, 5))
-        self.assert_period(date(2024, 11, 5), expected_start=date(2024, 8, 6), expected_end=date(2024, 11, 5))
-        self.assert_period(date(2024, 11, 6), expected_start=date(2024, 11, 6), expected_end=date(2025, 2, 5))
-
-        self.basic_tax_report.tax_closing_start_date = '2024-06-06'
-        self.assert_period(date(2024, 3, 5), expected_start=date(2023, 12, 6), expected_end=date(2024, 3, 5))
-        self.assert_period(date(2024, 6, 5), expected_start=date(2024, 3, 6), expected_end=date(2024, 6, 5))
-        self.assert_period(date(2024, 9, 5), expected_start=date(2024, 6, 6), expected_end=date(2024, 9, 5))
-        self.assert_period(date(2024, 12, 5), expected_start=date(2024, 9, 6), expected_end=date(2024, 12, 5))
-
-        self.env.company.account_tax_periodicity = 'monthly'
-        self.assert_period(date(2024, 3, 5), expected_start=date(2024, 2, 6), expected_end=date(2024, 3, 5))
-        self.assert_period(date(2024, 3, 6), expected_start=date(2024, 3, 6), expected_end=date(2024, 4, 5))
-        self.assert_period(date(2024, 12, 5), expected_start=date(2024, 11, 6), expected_end=date(2024, 12, 5))
-        self.assert_period(date(2024, 12, 6), expected_start=date(2024, 12, 6), expected_end=date(2025, 1, 5))
-        self.assert_period(date(2025, 1, 5), expected_start=date(2024, 12, 6), expected_end=date(2025, 1, 5))
+        self._assert_tax_closing(
+            self.env.company,
+            '2021-01-01',
+            '2021-03-31',
+            self.foreign_tax_return_type,
+            {
+                self.env.company: [
+                    # 0.6 * 0.2 * (800 - 200 + 100) = 84
+                    {'debit': 84.0,      'credit': 0.0,      'account_id': self.tax_account_1.id},
+                    # 0.6 * 0.49 * (1000 - 600) = 117.6
+                    {'debit': 0.0,       'credit': 117.6,    'account_id': self.tax_account_1.id},
+                    {'debit': 0.0,       'credit': 84.0,     'account_id': self.tax_group_3.tax_payable_account_id.id},
+                    {'debit': 117.6,     'credit': 0.0,      'account_id': self.tax_group_4.tax_receivable_account_id.id},
+                ],
+            }
+        )

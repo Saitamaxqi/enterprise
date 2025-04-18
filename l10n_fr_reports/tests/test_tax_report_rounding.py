@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from unittest.mock import patch
 
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.tests import tagged
@@ -25,7 +24,6 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
         cls.difference_profit_acc = cls.company_data['company'].l10n_fr_rounding_difference_profit_account_id
 
         cls.report = cls.env.ref('l10n_fr_account.tax_report').with_company(cls.company_data['company'])
-        cls.handler = cls.env['l10n_fr.report.handler']
 
         cls._standard_line_dict = {
             'name': 'In-Sewer-Ants-Polly-Sea',
@@ -56,7 +54,6 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
                 (0, 0, {**self._standard_line_dict, 'quantity': 2, 'tax_ids': [(6, 0, self.tva_8pt5_percent_vente.ids)]}),
             ]
         }
-        options = self._generate_options(self.report, '2021-05-01', '2021-05-31')
         self.env['account.move'].create(invoice_dict).action_post()
         # In this case, each tax report line is rounded up, resulting in a rounding cost of 0.31 + 0.01 = 0.32.
         expected_closing_entry_lines = [
@@ -64,7 +61,14 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
             (0, 0, {'name': '8.5% G', 'debit': 20.99, 'credit': 0, 'account_id': self.tva_collected.id}),
             (0, 0, {'name': 'Difference from rounding taxes', 'debit': 0.32, 'credit': 0, 'account_id': self.difference_loss_acc.id}),
         ]
-        lines, _ = self.handler._compute_vat_closing_entry(self.company_data['company'], options)
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': '2021-05-01',
+            'date_to': '2021-05-31',
+            'type_id': self.report.return_type_ids.id,
+            'company_id': self.env.company.id,
+        })
+        lines, _tax_subtotals = tax_return._compute_tax_closing_entry(self.company_data['company'], tax_return._get_closing_report_options())
         self.assertEqual(lines, expected_closing_entry_lines)
 
     def test_closing_entry_tax_belonging_to_same_line_rounding(self):
@@ -78,7 +82,6 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
                 (0, 0, {**self._standard_line_dict, 'tax_ids': [(6, 0, self.tva_20_percent_ttc_vente.ids)]}),
             ],
         }
-        options = self._generate_options(self.report, '2021-05-01', '2021-05-31')
         self.env['account.move'].create(invoice_dict).action_post()
 
         # We expect one row for each tax, but the rounding should be on the some of the taxes, since they
@@ -88,7 +91,14 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
             (0, 0, {'name': '20% G INC', 'debit': 20.58, 'credit': 0, 'account_id': self.tva_collected.id}),
             (0, 0, {'name': 'Difference from rounding taxes', 'debit': 0, 'credit': 0.27, 'account_id': self.difference_profit_acc.id}),
         ]
-        lines, _ = self.handler._compute_vat_closing_entry(self.company_data['company'], options)
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': '2021-05-01',
+            'date_to': '2021-05-31',
+            'type_id': self.report.return_type_ids.id,
+            'company_id': self.env.company.id,
+        })
+        lines, _tax_subtotals = tax_return._compute_tax_closing_entry(self.company_data['company'], tax_return._get_closing_report_options())
         self.assertEqual(lines, expected_closing_entry_lines)
 
     def test_closing_entry_tax_deductible_rounding_and_carryover(self):
@@ -112,7 +122,14 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
             # Since the credit is being rounded up, the total difference credited increases
             (0, 0, {'name': 'Difference from rounding taxes', 'debit': 0, 'credit': 0.31, 'account_id': self.difference_profit_acc.id}),
         ]
-        lines, _ = self.handler._compute_vat_closing_entry(self.company_data['company'], options)
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': '2021-05-01',
+            'date_to': '2021-05-31',
+            'type_id': self.report.return_type_ids.id,
+            'company_id': self.env.company.id,
+        })
+        lines, _tax_subtotals = tax_return._compute_tax_closing_entry(self.company_data['company'], tax_return._get_closing_report_options())
         self.assertEqual(lines, expected_closing_entry_lines)
 
         carryover_line_id = self.env.ref('l10n_fr_account.tax_report_27').id
@@ -122,9 +139,9 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
         self.assertEqual(25.00, carryover_line['columns'][0]['no_format'])
 
         # Suppress the pdf output
-        with patch.object(type(move), '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
-            closing_move = self.handler._generate_tax_closing_entries(self.report, options)
-            closing_move._post()
+        tax_return.action_review()
+        with self.allow_pdf_render():
+            tax_return.action_submit()
 
         options = self._generate_options(self.report, '2021-06-01', '2021-06-30')
         report_lines = self.report._get_lines(options)

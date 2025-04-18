@@ -14,6 +14,7 @@ Accounting reports for Zambia
         'account_reports'
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/profit_loss.xml',
         'data/balance_sheet.xml',
     ],

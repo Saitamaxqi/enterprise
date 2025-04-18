@@ -17,3 +17,15 @@ access_account_report_budget_ac_user,account.report.budget.ac.user,model_account
 access_account_report_budget_item_readonly,account.report.budget.item.readonly,model_account_report_budget_item,account.group_account_readonly,1,0,0,0
 access_account_report_budget_item_ac_user,account.report.budget.item.ac.user,model_account_report_budget_item,account.group_account_manager,1,1,1,1
 access_account_report_send,access.account.report.send,model_account_report_send,account.group_account_invoice,1,1,1,1
+access_account_return_basic,account.return.basic,model_account_return,account.group_account_basic,1,0,0,0
+access_account_return_readonly,account.return.readonly,model_account_return,account.group_account_readonly,1,0,0,0
+access_account_return_acc_user,account.return.acc.user,model_account_return,account.group_account_user,1,1,1,1
+access_account_return_check_basic,account.return.check.basic,model_account_return_check,account.group_account_basic,1,0,0,0
+access_account_return_check_readonly,account.return.check.readonly,model_account_return_check,account.group_account_readonly,1,0,0,0
+access_account_return_check_acc_user,account.return.check.acc.user,model_account_return_check,account.group_account_user,1,1,1,1
+access_account_return_type_basic,account.return.type.basic,model_account_return_type,account.group_account_basic,1,0,0,0
+access_account_return_type_readonly,account.return.type.readonly,model_account_return_type,account.group_account_readonly,1,0,0,0
+access_account_return_type_acc_manager,account.return.type.acc.manager,model_account_return_type,account.group_account_manager,1,1,1,1
+access_account_return_submission_wizard_acc_user,account.return.submission.wizard.acc.user,model_account_return_submission_wizard,account.group_account_user,1,1,1,1
+access_account_return_payment_wizard_acc_user,account.return.payment.wizard.acc.user,model_account_return_payment_wizard,account.group_account_user,1,1,1,1
+account_reports.access_qr_code_payment_wizard_user,access.qr.code.payment.wizard.user,account_reports.model_qr_code_payment_wizard,base.group_user,1,0,0,0

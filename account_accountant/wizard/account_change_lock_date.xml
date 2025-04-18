@@ -22,6 +22,18 @@
                                     Review
                                 </a>
                             </div>
+                            <field name="show_posted_tax_closing_warning" invisible="True"/>
+                            <div class="alert alert-warning mb-0 d-flex" role="alert"
+                                 colspan="2"
+                                 invisible="not show_posted_tax_closing_warning">
+                                A posted tax return closing entry exists after this tax lock date. You might want to reset the related tax return to non-submitted.
+                                <a type="object"
+                                   class="oe_link fw-bold"
+                                   name="action_show_posted_tax_closing_in_locked_period"
+                                   icon="oi-arrow-right">
+                                    Review
+                                </a>
+                            </div>
                             <div class="text-muted mb-1" colspan="2">
                                 <i>Lock transactions up to specific dates, inclusive</i>
                             </div>
@@ -229,7 +241,7 @@
             id="menu_action_change_lock_date"
             name="Lock Dates…"
             action="action_view_account_change_lock_date"
-            parent="account.menu_finance_entries"
+            parent="account.account_closing_menu"
             sequence="70"
             groups="account.group_account_manager"/>
     </data>

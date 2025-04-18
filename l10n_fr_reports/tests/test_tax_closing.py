@@ -3,7 +3,6 @@ from unittest.mock import patch
 from odoo import Command
 from odoo.tests import tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
-from odoo.addons.iap.tools import iap_tools
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -86,17 +85,19 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             ),
         ])._post()
 
-        options = self._generate_options(
-            self.report,
-            date_from='2024-04-01',
-            date_to='2024-04-30',
-        )
-        with patch.object(self.env.registry['account.move'], '_get_vat_report_attachments', return_value=[]):
-            april_closing_entry = self.report_handler._get_periodic_vat_entries(options)
-            april_closing_entry._post()
+        april_return = self.env['account.return'].create({
+            'name': "April return",
+            'date_from': '2024-04-01',
+            'date_to': '2024-04-30',
+            'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
+            'company_id': self.env.company.id,
+        })
+        april_return.action_review()
+        with self.allow_pdf_render():
+            april_return.action_submit()
 
         self.assertRecordValues(
-            april_closing_entry.line_ids,
+            april_return.closing_move_ids.line_ids,
             [
                 {
                     'account_id': self.tax_20_g_purchase.repartition_line_ids.account_id.id,
@@ -124,18 +125,19 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             ),
         ])._post()
 
-        options = self._generate_options(
-            self.report,
-            date_from='2024-05-01',
-            date_to='2024-05-31',
-        )
-        with patch.object(self.env.registry['account.move'], '_get_vat_report_attachments', return_value=[]):
-            may_closing_entry = self.report_handler._get_periodic_vat_entries(options)
-            may_closing_entry.refresh_tax_entry()
-            may_closing_entry._post()
+        may_return = self.env['account.return'].create({
+            'name': "May return",
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
+            'company_id': self.env.company.id,
+        })
+        may_return.action_review()
+        with self.allow_pdf_render():
+            may_return.action_submit()
 
         self.assertRecordValues(
-            may_closing_entry.line_ids,
+            may_return.closing_move_ids.line_ids,
             [
                 {
                     'account_id': self.tax_20_g_sale.repartition_line_ids.account_id.id,
@@ -235,10 +237,16 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             edi_vals['declarations'][0]['identif']['zones'],
         )
 
-        with patch.object(self.env.registry['account.move'], '_get_vat_report_attachments', return_value=[]):
-            may_closing_entry = self.report_handler._get_periodic_vat_entries(options)
-            may_closing_entry.refresh_tax_entry()
-            may_closing_entry._post()
+        may_return = self.env['account.return'].create({
+            'name': "May return",
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
+            'company_id': self.env.company.id,
+        })
+        may_return.action_review()
+        with self.allow_pdf_render():
+            may_return.action_submit()
 
         with patch.object(self.env.registry['l10n_fr_reports.send.vat.report'], '_send_xml_to_aspone', return_value=[]):
             send_vat_wizard.send_vat_return()
@@ -462,62 +470,3 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             },
             edi_vals_6['declarations'][0]['form']['zones'],
         )
-
-    def test_activity_created_on_tax_report_error(self):
-        """ The aim of this test is to verify that
-        an activity is created when VAT edi is in error state.
-        """
-        options = self._generate_options(
-            self.report,
-            date_from='2024-05-01',
-            date_to='2024-05-31',
-        )
-        with patch.object(self.env.registry['account.move'], '_get_vat_report_attachments', return_value=[]):
-            may_closing_entry = self.report_handler._get_periodic_vat_entries(options)
-            may_closing_entry._post()
-        send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
-            'date_from': '2024-05-01',
-            'date_to': '2024-05-31',
-            'report_id': self.report.id,
-            'test_interchange': True,
-        })
-
-        def mock_success_iap_jsonrpc(*args, **kwargs):
-            return {
-                'responseType': 'SUCCESS',
-                'response': {
-                    'errorResponse': False,
-                    'successfullResponse': {
-                        'depositId': 123,
-                    },
-                },
-                'xml_content': '',
-            }
-        with patch.object(iap_tools, 'iap_jsonrpc', side_effect=mock_success_iap_jsonrpc):
-            send_vat_wizard.send_vat_return()
-
-        def mock_failure_iap_jsonrpc(*args, **kwargs):
-            return {
-                'responseType': 'SUCCESS',
-                'response': {
-                    'errorResponse': False,
-                    'successfullResponse': {
-                        'interchanges': {'interchange': [{
-                            'declarationIds': {'declarationId': [1]},
-                            'statesHistory': {'stateHistory': [{
-                                'name': 'history',
-                                'label': 'history',
-                                'isError': True,
-                                'isFinal': True,
-                                'stateDetailsHistory': False,
-                            }]},
-                        }]},
-                    },
-                },
-            }
-        with patch.object(iap_tools, 'iap_jsonrpc', side_effect=mock_failure_iap_jsonrpc), self.enter_registry_test_mode():
-            self.env['account.report.async.export'].button_process_report()
-        self.env['mail.activity'].search([
-            ('res_id', '=', may_closing_entry.id),
-            ('activity_type_id', '=', self.env.ref('account_reports.mail_activity_type_tax_report_error').id),
-        ]).ensure_one()

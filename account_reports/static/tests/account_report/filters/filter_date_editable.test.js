@@ -29,7 +29,6 @@ test("can change the date filter by editing textually", async () => {
             options: {
                 available_horizontal_groups: [],
                 available_variants: [],
-                available_vat_fiscal_positions: [],
                 companies: [],
                 date: date,
                 rounding_unit: "decimals",

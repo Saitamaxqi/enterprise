@@ -103,7 +103,7 @@ class CzechControlStatementTest(CzechReportsCommon):
         }).action_post()
 
         report = self.env.ref('l10n_cz_reports.control_statement_report')
-        options = report.get_options({})
+        options = self._generate_options(report, '2024-01-01', '2024-01-31')
 
         self.assertLinesValues(
             report._get_lines(options),

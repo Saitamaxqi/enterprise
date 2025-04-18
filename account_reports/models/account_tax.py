@@ -52,7 +52,15 @@ class AccountTaxUnit(models.Model):
                 }
             )
 
+        self.env['account.return.type']._generate_or_refresh_all_returns(res.company_ids.root_id)
         return res
+
+    def write(self, values):
+        root_companies_before = self.company_ids.root_id
+        result = super().write(values)
+        if any(return_field in values for return_field in ('main_company_id', 'company_ids', 'country_id')):
+            self.env['account.return.type']._generate_or_refresh_all_returns(root_companies_before | self.company_ids.root_id)
+        return result
 
     @api.depends('company_ids')
     def _compute_fiscal_position_completion(self):

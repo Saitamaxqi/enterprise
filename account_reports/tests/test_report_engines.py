@@ -1411,10 +1411,21 @@ class TestReportEngines(TestAccountReportsCommon):
 
     def test_engine_external_default_value_tax_closing(self):
         def lock_via_tax_closing(non_tax_report, tax_report, report_options_map):
-            tax_closing_action = self.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(report_options_map[tax_report])
-            closing_move_id = tax_closing_action['res_id']
+            return_type = self.env['account.return.type'].create({
+                'name': "Bat-report",
+                'report_id': tax_report.id,
+            })
+            tax_return = self.env['account.return'].create({
+                'name': "Bat-return",
+                'company_id': self.env.company.id,
+                'type_id': return_type.id,
+                'date_from': report_options_map[tax_report]['date']['date_from'],
+                'date_to': report_options_map[tax_report]['date']['date_to'],
+            })
+            tax_return.action_review()
+
             with self.allow_pdf_render():
-                self.env['account.move'].browse(closing_move_id).action_post()
+                tax_return.action_submit()
 
         self._run_external_engine_default_test_case(True, False, lock_via_tax_closing)
 

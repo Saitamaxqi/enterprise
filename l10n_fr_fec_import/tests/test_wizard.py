@@ -174,7 +174,7 @@ class AccountTestFecImport(AccountTestInvoicingCommon):
         # Verify moves data
         new_moves = self.env['account.move'].search([
             ('company_id', '=', self.company_export.id),
-            ('tax_closing_report_id', '=', False),  # exclude automatic tax closing  entries
+            ('closing_return_id', '=', False),  # exclude automatic tax closing  entries
         ], order="name")
         columns = ['company_id', 'name', 'journal_id', 'partner_id', 'date']
         moves_data = [

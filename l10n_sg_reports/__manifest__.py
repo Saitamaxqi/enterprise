@@ -17,6 +17,7 @@ This module allow to generate the IRAS Audit File.
     ],
     'data': [
         'security/ir.model.access.csv',
+        'data/account_return_data.xml',
         'data/account_iras_audit_file_data.xml',
         'views/iaf_template.xml'
     ],

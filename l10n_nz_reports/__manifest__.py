@@ -1,16 +1,19 @@
 {
-    'name': 'NZ - Accounting Reports',
+    'name': 'New Zealand - Accounting Reports',
     'version': '1.0',
-    'category': 'Accounting/Localizations/Reporting',
     'description': """
-Accounting reports for NZ
+Accounting reports for New Zealand
+============================================
+- Corporate tax report
     """,
-    'website': 'https://www.odoo.com/app/accounting',
     'depends': [
-        'l10n_nz', 'account_reports'
+        'account_reports',
+        'l10n_nz',
     ],
-    'installable': True,
-    'auto_install': ['l10n_nz', 'account_reports'],
+    'data': [
+        'data/account_return_data.xml',
+    ],
+    'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

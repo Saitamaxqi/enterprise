@@ -23,6 +23,7 @@ Accounting Reports for Estonia
         'data/kmd_inf/kmd_inf_report_part_a.xml',
         'data/kmd_inf/kmd_inf_report_part_b.xml',
         'data/kmd_inf/kmd_inf_report.xml',
+        'data/account_return_data.xml',
     ],
     'installable': True,
     'auto_install': [

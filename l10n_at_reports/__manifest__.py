@@ -31,6 +31,7 @@ Accounting reports for Austria.
         'data/account_financial_html_report_profit_loss.xml',
         'data/account_financial_html_report_balance.xml',
         'data/account_report_ec_sales_list_report.xml',
+        'data/account_return_data.xml'
     ],
     'installable': True,
     'auto_install': ['l10n_at', 'account_reports'],

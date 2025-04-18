@@ -43,6 +43,7 @@ class ResPartner(models.Model):
         required=True,
         readonly=False,
         store=True,
+        default='unmatched',
     )
 
     @api.constrains('l10n_uk_reports_cis_verification_number')

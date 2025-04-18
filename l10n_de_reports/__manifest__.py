@@ -14,6 +14,7 @@ Also adds DATEV export options to general ledger
         'l10n_de', 'account_reports'
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/balance_sheet.xml',
         'data/profit_and_loss.xml',
         'data/ec_sales_list_report.xml',

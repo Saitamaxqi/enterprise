@@ -13,6 +13,7 @@ Base module for Malaysian reports
         'account_reports',
     ],
     'data': [
+        "data/account_return_data.xml",
         "views/account_followup_views.xml",
         'views/res_config_settings_view.xml',
         "report/statement_account_templates.xml",

@@ -27,23 +27,6 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
             'file_export_type': _('XML'),
         })
 
-    def _postprocess_vat_closing_entry_results(self, company, options, results):
-        # OVERRIDE 'account_reports'
-        """ Apply the rounding from the Estonian tax report to account for rounding differences between line-level
-        tax calculations and the Estonian government's total tax computation (base_amount * tax_rate).
-        """
-        rounding_accounts = {
-            'profit': company.l10n_ee_rounding_difference_profit_account_id,
-            'loss': company.l10n_ee_rounding_difference_loss_account_id,
-        }
-
-        vat_results_summary = [
-            ('due', self.env.ref('l10n_ee.tax_report_line_12').id, 'balance'),
-            ('deductible', self.env.ref('l10n_ee.tax_report_line_13').id, 'balance'),
-        ]
-
-        return self._vat_closing_entry_results_rounding(company, options, results, rounding_accounts, vat_results_summary)
-
     def action_audit_cell(self, options, params):
         # OVERRIDES 'account_reports'
         """ The lines of the Estonian VAT report are rounded to the unit and use the
@@ -76,7 +59,7 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         date_to = fields.Date.from_string(options['date'].get('date_to'))
 
-        if options['date']['period_type'] != 'month' and options['tax_periodicity']['periodicity'] != 'monthly':
+        if options['date']['period_type'] != 'month' and options['return_periodicity']['periodicity'] != 'monthly':
             raise UserError(_('Choose a month to export the VAT Report'))
 
         sender_company = report._get_sender_company_for_export(options)

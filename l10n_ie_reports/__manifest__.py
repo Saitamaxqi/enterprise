@@ -10,6 +10,7 @@
         "account_reports",
     ],
     "data": [
+        "data/account_return_data.xml",
         "data/profit_and_loss-ie.xml",
         "data/balance_sheet-ie.xml",
         "data/ec_sales_list_report-ie.xml",

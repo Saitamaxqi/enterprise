@@ -16,6 +16,7 @@ This module includes accounting reports for Czech Republic, including:
     'category': 'Accounting/Localizations/Reporting',
     'depends': ['l10n_cz', 'account_reports'],
     'data': [
+        'data/account_return_data.xml',
         'data/profit_loss.xml',
         'data/balance_sheet.xml',
         'data/tax_report.xml',

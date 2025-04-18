@@ -52,17 +52,7 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
         """
         super()._init_core_custom_options(report, options, previous_options)
         ec_operation_category = options.get('sales_report_taxes', {'goods': tuple(), 'triangular': tuple(), 'services': tuple()})
-
-        report_46L_expression = self.env.ref('l10n_be.tax_report_line_46L_tag')
-        report_46T_expression = self.env.ref('l10n_be.tax_report_line_46T_tag')
-        report_44_expression = self.env.ref('l10n_be.tax_report_line_44_tag')
-        report_48s44_expression = self.env.ref('l10n_be.tax_report_line_48s44_tag')
-        report_48s46T_expression = self.env.ref('l10n_be.tax_report_line_48s46T_tag')
-        report_48s46L_expression = self.env.ref('l10n_be.tax_report_line_48s46L_tag')
-
-        ec_operation_category['goods'] = tuple((report_46L_expression + report_48s46L_expression)._get_matching_tags().ids)
-        ec_operation_category['triangular'] = tuple((report_46T_expression + report_48s46T_expression)._get_matching_tags().ids)
-        ec_operation_category['services'] = tuple((report_44_expression + report_48s44_expression)._get_matching_tags().ids)
+        ec_operation_category.update(self._get_tax_tags_for_belgian_sales_report())
 
         # Change the names of the taxes to specific ones that are dependant to the tax type
         ec_operation_category['operation_category'] = {
@@ -80,6 +70,20 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
             'action_param': 'export_to_xml_sales_report',
             'file_export_type': _('XML'),
         })
+
+    def _get_tax_tags_for_belgian_sales_report(self):
+        report_46L_expression = self.env.ref('l10n_be.tax_report_line_46L_tag')
+        report_46T_expression = self.env.ref('l10n_be.tax_report_line_46T_tag')
+        report_44_expression = self.env.ref('l10n_be.tax_report_line_44_tag')
+        report_48s44_expression = self.env.ref('l10n_be.tax_report_line_48s44_tag')
+        report_48s46T_expression = self.env.ref('l10n_be.tax_report_line_48s46T_tag')
+        report_48s46L_expression = self.env.ref('l10n_be.tax_report_line_48s46L_tag')
+
+        return {
+            'goods': tuple((report_46L_expression + report_48s46L_expression)._get_matching_tags().ids),
+            'triangular':  tuple((report_46T_expression + report_48s46T_expression)._get_matching_tags().ids),
+            'services': tuple((report_44_expression + report_48s44_expression)._get_matching_tags().ids),
+        }
 
     def total_consistent_with_tax_report(self, options, total):
         """ Belgian EC Sales taxes report total must match

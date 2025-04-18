@@ -1,0 +1,98 @@
+.o_account_return_state {
+    display: flex;
+    justify-content: center;
+
+    .state-container {
+        width:75px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 5;
+    }
+    .state-container::after {
+        content: '';
+        width: 100%;
+        position: absolute;
+        height: 3px;
+        background-color: #ddd;
+        top: 11.5px;
+        left: calc(-50% + 12.5px);
+        z-index: -5;
+    }
+    .state-container:first-child:after {
+        content: none;
+    }
+
+    .state-bubble {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: #ddd;
+    }
+
+    .active {
+        .state-bubble {
+            background-color: rgb(27, 182, 79);
+        }
+    }
+
+    .active::after {
+        background-color: rgb(27, 182, 79);
+    }
+
+    .state-label {
+        font-size: .8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        width: 100%;
+        padding: 0px 4px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .o_account_return_state {
+        justify-content: center;
+    }
+}
+
+.o_account_return_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 5px;
+}
+
+@media (max-width: 992px) {
+    .o_account_return_buttons {
+        button {
+            padding: 5px !important;
+            font-size: 0.875rem;
+        }
+    }
+
+    .dropdown-sm {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 15px;
+    }
+}
+
+.o_account_return_amount {
+    white-space: nowrap;
+}
+
+.o_account-return-kanban {
+    .o_return_check_kanban_card {
+        width: calc(100% - 40px);
+        min-width: 300px;
+        min-height: 64px;
+        padding: 0;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}

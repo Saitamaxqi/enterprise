@@ -53,7 +53,7 @@ class EstonianTaxReportTest(AccountSalesReportCommon):
         cls.vat_in_0_kms_41_2 = cls.env['account.chart.template'].ref('l10n_ee_vat_in_0_kms_41_2')
         cls.vat_in_22_s.l10n_ee_kmd_inf_code = '11'  # added to test if the special comments column is filled
         cls.vat_in_13_s = cls.env['account.chart.template'].ref('l10n_ee_vat_in_13_s')
-        
+
         # Sales Taxes
         cls.vat_out_22_g = cls.env['account.chart.template'].ref('l10n_ee_vat_out_22_g')
         cls.vat_out_9_g = cls.env['account.chart.template'].ref('l10n_ee_vat_out_9_g')
@@ -334,9 +334,9 @@ class EstonianTaxReportTest(AccountSalesReportCommon):
             ],
         )
 
-        options_kmd = self.kmd_report.get_options({})
-        options_kmd_inf_a = self.kmd_inf_a_report.get_options({})
-        options_kmd_inf_b = self.kmd_inf_b_report.get_options({})
+        options_kmd = self._generate_options(self.kmd_report, '2023-01-01', '2023-01-31')
+        options_kmd_inf_a = self._generate_options(self.kmd_inf_a_report, '2023-01-01', '2023-01-31')
+        options_kmd_inf_b = self._generate_options(self.kmd_inf_b_report, '2023-01-01', '2023-01-31')
 
         self.assertLinesValues(
             self.kmd_inf_a_report._get_lines(options_kmd_inf_a),

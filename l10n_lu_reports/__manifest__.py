@@ -30,6 +30,7 @@ Necessary master data is also included.
         'data/tax_report.xml',
         'data/saft_report.xml',
         'data/ec_sales_list_report.xml',
+        'data/account_return_data.xml',
         'views/account_ec_sales_xml_template.xml',
         'views/electronic_report_template.xml',
         'views/res_company_views.xml',

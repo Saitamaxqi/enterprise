@@ -1,6 +1,5 @@
 {
     'name': 'UK - Construction Industry Scheme',
-    'countries': ['gb'],
     'author': 'Odoo',
     'version': '1.0',
     'category': 'Accounting/Localizations/UK/CIS',
@@ -15,6 +14,7 @@ Construction Industry Scheme for United Kingdom
     'data': [
         'security/ir.model.access.csv',
         'data/cis_report.xml',
+        'data/account_return_data.xml',
         'data/ir_cron.xml',
         'data/mail_template_data.xml',
         'views/res_partner_views.xml',

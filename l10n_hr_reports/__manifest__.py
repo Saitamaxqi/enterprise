@@ -12,6 +12,7 @@ Accounting reports for Croatia
         'l10n_hr', 'account_reports'
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/balance_sheet.xml',
         'data/profit_loss.xml',
     ],

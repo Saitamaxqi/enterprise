@@ -172,7 +172,7 @@
         </field>
     </record>
 
-    <menuitem parent="account.menu_finance_entries"
+    <menuitem parent="account.account_transactions_menu"
               id="menu_act_budget_analytic_view"
               name="Analytic Budget"
               action="act_budget_analytic_view" sequence="55"

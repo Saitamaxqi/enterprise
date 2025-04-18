@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ie_tax_return_type" model="account.return.type">
+            <field name="name">Tax Return (IE)</field>
+            <field name="report_id" ref="l10n_ie.l10n_ie_tr"/>
+        </record>
+    </data>
+</odoo>

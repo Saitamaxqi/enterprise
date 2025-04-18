@@ -471,7 +471,7 @@
         </field>
     </record>
 
-    <menuitem parent="account.menu_finance_entries" id="menu_action_account_asset_form" action="action_account_asset_form" sequence="60" groups="account.group_account_readonly"/>
+    <menuitem parent="accountant.account_assets_liabilities_menu" id="menu_action_account_asset_form" action="action_account_asset_form" sequence="60" groups="account.group_account_readonly"/>
     <menuitem parent="account.account_account_menu" id="menu_action_account_asset_model_form" action="action_account_asset_model_form" groups="account.group_account_readonly"/>
 
     <record model="ir.actions.server" id="action_account_asset_run">

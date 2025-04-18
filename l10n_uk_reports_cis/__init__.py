@@ -11,6 +11,3 @@ def _l10n_uk_reports_cis_post_init(env):
             'account.tax': ChartTemplate._get_uk_account_tax(),
             'account.tax.group': ChartTemplate._get_uk_account_tax_group(),
         })
-
-        # Replace the start date for the cis report
-        cis_report.with_company(company).tax_closing_start_date = cis_report.with_company(company).tax_closing_start_date.replace(day=6)

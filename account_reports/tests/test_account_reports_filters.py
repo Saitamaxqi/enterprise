@@ -1566,8 +1566,30 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
     ####################################################
 
     @freeze_time('2024-09-01')
-    def test_tax_period_filter(self):
+    def test_returns_period_filter(self):
         generic_tax_report = self.env.ref('account.generic_tax_report')
+
+        # By default, the generic tax report isn't linked to a return type (only localized tax reports are) ; it should fallback on 'this_month'
+        self._assert_filter_date(
+            generic_tax_report,
+            {},
+            {
+                'string': 'Sep 2024',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'this_month',
+                'date_from': '2024-09-01',
+                'date_to': '2024-09-30',
+                'currency_table_period_key': '2024-09-01_2024-09-30',
+            },
+        )
+
+        # Assigning a return type without periodicity should now make use of the periodicity set on the company (monthly, by default),
+        return_type = self.env['account.return.type'].create({
+            'name': "Zaphod Beeblebrox",
+            'report_id': generic_tax_report.id,
+        })
+
         self._assert_filter_date(
             generic_tax_report,
             {},
@@ -1585,7 +1607,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'period': -8, 'filter': 'previous_tax_period'}},
+            {'date': {'period': -8, 'filter': 'previous_return_period'}},
             {
                 'string': 'Jan 2024',
                 'period_type': 'month',
@@ -1598,19 +1620,37 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             },
         )
 
-        self.env.company.account_tax_periodicity = 'year'
+        self.env.company.account_return_periodicity = 'year'
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'period': -1, 'filter': 'previous_tax_period'}},
+            {'date': {'period': -1, 'filter': 'previous_return_period'}},
             {
                 'string': '2023',
-                'period_type': 'year',
+                'period_type': 'fiscalyear',
                 'mode': 'range',
                 'filter': 'previous_year',
                 'period': -1,
                 'date_from': '2023-01-01',
                 'date_to': '2023-12-31',
                 'currency_table_period_key': '2023-01-01_2023-12-31',
+            },
+        )
+
+        # Setting a periodicity on the return type should take precedence over the company setting
+        return_type.deadline_periodicity = 'semester'
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {},
+            {
+                'string': '01/01/2024 - 06/30/2024',
+                'period_type': 'return_period',
+                'mode': 'range',
+                'filter': 'previous_return_period',
+                'period': -1,
+                'date_from': '2024-01-01',
+                'date_to': '2024-06-30',
+                'currency_table_period_key': '2024-01-01_2024-06-30',
             },
         )

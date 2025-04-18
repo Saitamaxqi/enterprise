@@ -22,8 +22,15 @@ class TestBelgiumTaxReportProrata(AccountSalesReportCommon):
         report = self.env.ref('l10n_be.tax_report_vat')
         options = report.get_options({})
 
-        wizard_action = handler.print_tax_report_to_xml(options)
-        wizard = self.env[wizard_action['res_model']].with_context(wizard_action['context']).browse(wizard_action['res_id'])
+        account_return = self.env['account.return'].create({
+            'name': 'BE Tax Return',
+            'type_id': self.env.ref('l10n_be_reports.be_vat_return_type').id,
+            'company_id': company.id,
+            'date_from': '2019-03-01',
+            'date_to': '2019-03-31',
+        })
+        wizard_action = self.env['l10n_be_reports.vat.return.submission.wizard']._open_submission_wizard(account_return)
+        wizard = self.env['l10n_be_reports.vat.return.submission.wizard'].browse(wizard_action['res_id'])
         wizard.write({
             'is_prorata_necessary': True,
             'prorata_year': 2019,
@@ -31,6 +38,8 @@ class TestBelgiumTaxReportProrata(AccountSalesReportCommon):
             'prorata_at_100': 50,
             'prorata_at_0': 50,
         })
+
+        options = {**options, **(wizard._get_submission_options_to_inject() or {})}
 
         wizard.print_xml()
 
@@ -69,7 +78,7 @@ class TestBelgiumTaxReportProrata(AccountSalesReportCommon):
                 <ns2:Data>
                     <ns2:Amount GridNumber="71">0.00</ns2:Amount>
                 </ns2:Data>
-                <ns2:ClientListingNihil>NO</ns2:ClientListingNihil>
+                <ns2:ClientListingNihil>YES</ns2:ClientListingNihil>
                 <ns2:Ask Restitution="NO"/>
                 <ns2:Comment>/</ns2:Comment>
             </ns2:VATDeclaration>

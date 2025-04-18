@@ -52,21 +52,28 @@ class L10n_Nl_ReportsSbrIcpWizard(models.TransientModel):
         # The wsdl address points to a wsdl file on the government server.
         # It contains the definition of the 'aanleveren' function, which actually sends the message.
         options = self.env.context['options']
-        closing_move = self.env['l10n_nl_reports.tax.report.handler']._get_tax_closing_entries_for_closed_period(self.env.ref('account.generic_tax_report'), options, self.env.company, posted_only=False)
+        account_return = self.env['account.return']._get_return_from_report_options(options)
+        closing_move = account_return.closing_move_ids if account_return else None
         if not self.is_test:
             if not closing_move:
                 raise RedirectWarning(
                     _("No closing entry was found for the selected period. Please create one and post it before sending your report."),
-                    self.env.ref('l10n_nl_reports.action_open_closing_entry').id,
+                    self.env['account.return'].action_open_tax_return_view(additional_return_domain=[
+                        ('date_to', '<=', options['date']['date_to']),
+                        ('date_from', '>=', options['date']['date_from']),
+                        ('type_id.report_id', '=', options['report_id']),
+                    ]),
                     _("Create Closing Entry"),
-                    {'options': options},
                 )
             if closing_move.state == 'draft':
                 raise RedirectWarning(
                     _("The closing entry for the selected period is still in draft. Please post it before sending your report."),
-                    self.env.ref('l10n_nl_reports.action_open_closing_entry').id,
+                    self.env['account.return'].action_open_tax_return_view(additional_return_domain=[
+                        ('date_to', '<=', options['date']['date_to']),
+                        ('date_from', '>=', options['date']['date_from']),
+                        ('type_id.report_id', '=', options['report_id']),
+                    ]),
                     _("Closing Entry"),
-                    {'options': options},
                 )
         options['codes_values'] = self._generate_general_codes_values(options)
         xbrl_data = self.env['l10n_nl_reports.ec.sales.report.handler'].export_icp_report_to_xbrl(options)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="it_withh_tax_return_type" model="account.return.type">
+            <field name="name">Witholding Tax Return (IT)</field>
+            <field name="report_id" ref="l10n_it_edi_withholding.withh_tax_report_it"/>
+        </record>
+    </data>
+</odoo>

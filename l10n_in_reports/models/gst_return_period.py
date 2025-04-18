@@ -32,12 +32,12 @@ class L10n_InGstReturnPeriod(models.Model):
     def _default_year(self):
         today_date = fields.Date.context_today(self)
         company = self.env.company
-        if company.account_tax_periodicity == 'trimester':
+        if company.account_return_periodicity == 'trimester':
             this_quarter = date_utils.get_quarter(today_date)
             if this_quarter and this_quarter[0].month == today_date.month and today_date.day <= 10:
                 return (fields.Date.context_today(self) - relativedelta.relativedelta(months=3)).strftime('%Y')
 
-        if today_date.day <= 10 and company.account_tax_periodicity == 'monthly':
+        if today_date.day <= 10 and company.account_return_periodicity == 'monthly':
             return (fields.Date.context_today(self) - relativedelta.relativedelta(months=1)).strftime('%Y')
         return today_date.strftime('%Y')
 
@@ -208,7 +208,7 @@ class L10n_InGstReturnPeriod(models.Model):
     @api.depends("company_id")
     def _compute_periodicity(self):
         for record in self:
-            periodicity = record.tax_unit_id.main_company_id.account_tax_periodicity or record.company_id.account_tax_periodicity
+            periodicity = record.tax_unit_id.main_company_id.account_return_periodicity or record.company_id.account_return_periodicity
             if periodicity not in ["monthly", "trimester"]:
                 raise UserError(_("To Create Return Period Periodicity should be Monthly or Quarterly"))
             record.periodicity = periodicity
@@ -240,7 +240,7 @@ class L10n_InGstReturnPeriod(models.Model):
             closing_journal_entry = self.env['account.move'].search([
                 ('move_type', '=', 'entry'),
                 ('company_id', '=', return_period.company_id.id),
-                ('tax_closing_report_id', '!=', False),
+                ('closing_return_id', '!=', False),
                 ('date', '=', return_period.end_date),
             ], limit=1)
             return_period.gstr3b_closing_entry = closing_journal_entry

@@ -315,7 +315,7 @@
         <menuitem
             id="menu_action_loans"
             sequence="62"
-            parent="account.menu_finance_entries"
+            parent="accountant.account_assets_liabilities_menu"
             action="action_view_account_loans"
             groups="account.group_account_readonly"
         />

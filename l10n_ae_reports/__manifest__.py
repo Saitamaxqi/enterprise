@@ -9,6 +9,9 @@
     """,
     'depends': ['l10n_ae', 'account_reports'],
     'installable': True,
+    'data': [
+        'data/account_return_data.xml',
+    ],
     'post_init_hook': '_l10n_ae_reports_post_init',
     'auto_install': ['l10n_ae', 'account_reports'],
     'website': 'https://www.odoo.com/app/accounting',

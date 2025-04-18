@@ -14,6 +14,7 @@ Accounting reports for the Philippines
         "account_reports",
     ],
     "data": [
+        "data/account_return_data.xml",
         "data/sawt_qap_report.xml",
         "data/slsp_report.xml",
     ],

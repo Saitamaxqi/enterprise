@@ -67,7 +67,11 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
 
     def _get_xml_declaration(self, report_xmlid, yearly=False):
         report = self.env.ref(report_xmlid)
-        options = report.get_options({})
+        options = report.get_options({
+            'date': {
+                'filter': 'previous_month',
+            }
+        })
 
         # Add the filename in the options, which is initially done by the get_report_filename() method
         now_datetime = datetime.now()

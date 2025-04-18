@@ -48,7 +48,7 @@ class L10n_DeTaxReportHandler(models.AbstractModel):
         options = report.get_options(options)
         date_to = datetime.strptime(options['date']['date_to'], '%Y-%m-%d')
         template_context['year'] = date_to.year
-        periodicity = options['tax_periodicity']['periodicity']
+        periodicity = options['return_periodicity']['periodicity']
         if periodicity == 'monthly':
             template_context['period'] = date_to.strftime("%m")
         elif periodicity == 'quarterly':

@@ -10,23 +10,6 @@ class L10n_FrReportHandler(models.AbstractModel):
     _inherit = ['account.tax.report.handler']
     _description = 'French Report Custom Handler'
 
-    def _postprocess_vat_closing_entry_results(self, company, options, results):
-        # OVERRIDE
-        """ Apply the rounding from the French tax report by adding a line to the end of the query results
-            representing the sum of the roundings on each line of the tax report.
-        """
-        rounding_accounts = {
-            'profit': company.l10n_fr_rounding_difference_profit_account_id,
-            'loss': company.l10n_fr_rounding_difference_loss_account_id,
-        }
-
-        vat_results_summary = [
-            ('due', self.env.ref('l10n_fr_account.tax_report_32').id, 'balance'),
-            ('due', self.env.ref('l10n_fr_account.tax_report_22').id, 'balance'),
-            ('deductible', self.env.ref('l10n_fr_account.tax_report_27').id, 'balance'),
-        ]
-        return self._vat_closing_entry_results_rounding(company, options, results, rounding_accounts, vat_results_summary)
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
@@ -39,9 +22,9 @@ class L10n_FrReportHandler(models.AbstractModel):
     def send_vat_report(self, options):
         report = self.env['account.report'].browse(options['report_id'])
         view_id = self.env.ref('l10n_fr_reports.view_l10n_fr_reports_report_form').id
-        date_from, date_to = self.env.company._get_tax_closing_period_boundaries(fields.Date.to_date(options['date']['date_from']), report)
-
-        closing_moves = self._get_tax_closing_entries_for_closed_period(report, options, self.env.company)
+        date_from, date_to = report.return_type_ids._get_period_boundaries(self.env.company, fields.Date.to_date(options['date']['date_from']))
+        account_return = self.env['account.return']._get_return_from_report_options(options)
+        closing_moves = account_return.closing_move_ids if account_return else None
         if not closing_moves:
             raise UserError(_("You need to complete the tax closing process for this period before submitting the report to the French administration."))
 

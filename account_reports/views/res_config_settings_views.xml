@@ -11,28 +11,25 @@
             </setting>
 
             <setting id="default_taxes" position="after">
-                <setting id="account_tax_periodicity" string="Tax Return Periodicity" company_dependent="1" groups="account.group_account_user" help="How often tax returns have to be made"
+                <setting id="account_return_periodicity" string="Tax Return Periodicity" company_dependent="1" groups="account.group_account_user" help="How often tax returns have to be made"
                     documentation="/applications/finance/accounting/reporting/declarations/tax_returns.html">
                     <div class="content-group">
                         <div class="row mt16">
-                            <label string="Periodicity" for="account_tax_periodicity" class="col-lg-3 o_light_label"/>
-                            <field name="account_tax_periodicity"/>
+                            <label string="Periodicity" for="account_return_periodicity" class="col-lg-3 o_light_label"/>
+                            <field name="account_return_periodicity"/>
                         </div>
                         <div class="row">
-                            <label string="Reminder" for="account_tax_periodicity_reminder_day" class="col-lg-3 o_light_label"/>
+                            <label string="Reminder" for="account_return_reminder_day" class="col-lg-3 o_light_label"/>
                             <div class="col-lg-auto content-group">
-                                <field name="account_tax_periodicity_reminder_day" class="text-center oe_inline" /> days after period
+                                <field name="account_return_reminder_day" class="text-center oe_inline" /> days after period
                             </div>
                         </div>
                         <div class="row">
-                            <label string="Journal" for="account_tax_periodicity_journal_id" class="col-lg-3 o_light_label"/>
-                            <field name="account_tax_periodicity_journal_id" required="has_chart_of_accounts"/>
+                            <label string="Journal" for="account_tax_return_journal_id" class="col-lg-3 o_light_label"/>
+                            <field name="account_tax_return_journal_id" required="has_chart_of_accounts"/>
                         </div>
                         <div class="mt8">
                             <button name="open_tax_group_list" icon="oi-arrow-right" type="object" string="Configure your tax accounts" class="btn-link"/>
-                        </div>
-                        <div class="mt8" invisible="not account_reports_show_per_company_setting">
-                            <button name="open_company_dependent_report_settings" icon="oi-arrow-right" type="object" string="Configure start dates" class="btn-link"/>
                         </div>
                     </div>
                 </setting>

@@ -17,6 +17,7 @@ Provides Reports for OSS with export files for available EU countries.
         'views/res_company_views.xml',
         'views/product_views.xml',
         'data/account_reports.xml',
+        'data/account_return_data.xml',
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

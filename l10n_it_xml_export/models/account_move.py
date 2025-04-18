@@ -11,7 +11,7 @@ class AccountMove(models.Model):
            Validating the wizard will resume the `action_post` and take these options in
            consideration when generating the XML report.
         """
-        closing_moves = self.filtered(lambda move: move.tax_closing_report_id)
+        closing_moves = self.filtered(lambda move: move.closing_return_id)
         if (
             closing_moves
             and "IT" in self.mapped('tax_country_code')

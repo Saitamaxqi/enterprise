@@ -13,8 +13,8 @@ Accounting Reports for Nigeria
         'account_reports',
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/tax_report.xml',
-        'data/withholding_report.xml',
     ],
     'installable': True,
     'auto_install': [

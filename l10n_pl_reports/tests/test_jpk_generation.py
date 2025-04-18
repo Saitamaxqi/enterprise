@@ -131,7 +131,7 @@ class TestJpkExport(TestAccountReportsCommon):
         wizard_action = self.env[report.custom_handler_model_name].print_tax_report_to_xml(options)
         wizard = self.env['l10n_pl_reports.periodic.vat.xml.export'].with_context(wizard_action.get('context')).browse(wizard_action.get('res_id'))
 
-        self.company_data['company'].account_tax_periodicity = 'trimester'
+        self.company_data['company'].account_return_periodicity = 'trimester'
         wizard.l10n_pl_paid_before_deadline = True  # To test the options passing to the export (in P_67 here)
 
         report_action = wizard.print_xml()
@@ -153,7 +153,7 @@ class TestJpkExport(TestAccountReportsCommon):
         wizard_action = self.env[report.custom_handler_model_name].print_tax_report_to_xml(options)
         wizard = self.env['l10n_pl_reports.periodic.vat.xml.export'].with_context(wizard_action.get('context')).browse(wizard_action.get('res_id'))
 
-        self.company_data['company'].account_tax_periodicity = 'trimester'
+        self.company_data['company'].account_return_periodicity = 'trimester'
         wizard.l10n_pl_paid_before_deadline = True  # To test the options passing to the export (in P_67 here)
 
         report_action = wizard.print_xml()

@@ -24,6 +24,7 @@ MTD-VAT API to HMRC.
         'security/ir.model.access.csv',
         'security/hmrc_security.xml',
         'wizard/hmrc_send_wizard.xml',
+        'data/account_return_data.xml',
         'data/tax_report.xml',
         'data/config_parameter.xml',
     ],

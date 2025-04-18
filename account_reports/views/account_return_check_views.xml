@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="account_return_check_kanban_view" model="ir.ui.view">
+            <field name="name">account.return.check.kanban</field>
+            <field name="model">account.return.check</field>
+            <field name="arch" type="xml">
+                <kanban js_class="account_return_check_kanban" create="0" edit="0">
+                    <field name="state"/>
+                    <field name="return_state"/>
+                    <field name="result"/>
+                    <field name="action"/>
+                    <field name="bypassed"/>
+                    <field name="return_id"/> <!-- mandatory -->
+
+                    <t t-name="card" class="o_return_check_kanban_card mt-2">
+                        <t t-set="result" t-value="record.result.raw_value"/>
+                        <t t-set="bypassed" t-value="record.bypassed.raw_value"/>
+                        <t t-set="message" t-value="record.message.raw_value"/>
+                        <t t-set="summary" t-value="record.summary.raw_value"/>
+
+                        <div class="w-100" t-att-style="result == 'success' or bypassed ? 'background-color: #eafaeb;' : ''">
+                            <div class="container w-100 h-100 p-2 border-1 align-items-center align-self-center">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-12 col-md-8">
+                                        <div>
+                                            <i invisible="result != 'success'" class="fa fa-check text-success align-self-center" title="success"/>
+                                            <i invisible="result == 'success'" class="fa fa-times text-danger align-self-center" title="failure"/>
+                                            <field class="oe_inline px-2" name="name" readonly="1" nolabel="1"/>
+                                            <field invisible="not summary or result != 'failure'" name="summary" class="text-muted small"/>
+                                        </div>
+                                        <div invisible="not message" class="row text-muted">
+                                            <field name="message" class="mt-2"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 h-full d-flex justify-content-end align-items-center my-auto">
+                                        <span invisible="(result != 'failure' and result != 'manual') or not bypassed or state == return_state" class="text-muted fw-bold">Ignored</span>
+                                        <button invisible="result != 'failure' or bypassed" type="object" class="btn btn-secondary" name="action_bypass_or_undo" string="Ignore"/>
+                                        <button invisible="(result != 'failure' and result != 'manual') or not bypassed or state != return_state" type="object" class="btn btn-secondary" name="action_bypass_or_undo" string="Restore"/>
+                                        <button invisible="result != 'manual' or bypassed" type="object" class="btn btn-primary" name="action_bypass_or_undo" string="Mark Done"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="account_return_check_search_view" model="ir.ui.view">
+            <field name="name">account.return.check.search</field>
+            <field name="model">account.return.check</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="result"/>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -27,7 +27,7 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
         ongoing_processes = self.search([('is_done', '=', False)])
         if not ongoing_processes:
             return
-        serv_root_cert = ongoing_processes[0].company_id._l10n_nl_reports_get_server_root_certificate_bytes()   # The root certificate is the same for all processes
+        serv_root_cert = ongoing_processes[0].company_id._l10n_nl_get_server_root_certificate_bytes()   # The root certificate is the same for all processes
         with NamedTemporaryFile() as f:
             f.write(serv_root_cert)
             f.flush()

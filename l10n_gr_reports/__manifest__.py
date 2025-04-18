@@ -15,6 +15,7 @@ Accounting reports for Greece
         'account_reports',
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/balance_sheet-gr.xml',
         'data/profit_and_loss-gr.xml',
         'data/ec_sales_list_report-gr.xml',

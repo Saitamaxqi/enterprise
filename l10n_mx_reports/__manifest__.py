@@ -22,6 +22,7 @@ DIOT Report
     ],
     "data": [
         "data/account_report_diot.xml",
+        "data/account_return_data.xml",
         "data/country_data.xml",
         "data/templates/cfdicoa.xml",
         "data/templates/cfdibalance.xml",

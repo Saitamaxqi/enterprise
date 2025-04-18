@@ -16,6 +16,7 @@ Accounting reports for Sweden
         'data/account_financial_html_report_K3_bs_data.xml',
         'data/account_financial_html_report_K3_pnl_data.xml',
         'data/account_report_ec_sales_list_report.xml',
+        'data/account_return_data.xml',
         'data/tax_report_data.xml',
         'views/report_export_template.xml',
     ],

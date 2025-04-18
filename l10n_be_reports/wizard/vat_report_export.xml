@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="vat_return_submission_wizard_form" model="ir.ui.view">
+            <field name="name">l10n_be_reports.vat.return.submission.wizard.form</field>
+            <field name="model">l10n_be_reports.vat.return.submission.wizard</field>
+            <field name="inherit_id" ref="account_reports.return_submission_wizard_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <field name="instructions" position="before">
+                    <field name="need_ec_sales_list" invisible="1"/>
+                    <div class="alert alert-info" role="alert" invisible="not need_ec_sales_list">
+                        The operations made in this period also require you to submit the EC Sales List report.
+                        A new return will be created for it upon validation.
+                    </div>
+                    <group>
+                        <group>
+                            <div>
+                                <span class="o_stat_text"><label for="ask_restitution"/></span>
+                                <span id="ask_restitution_field" class="o_stat_value ms-2 me-3"><field name="ask_restitution"/></span>
+                            </div>
+                        </group>
+                    </group>
+                </field>
+                <field name="instructions" position="replace">
+                    <group>
+                        <group id="instructions">
+                            <separator string="Instructions"/>
+                            <ol colspan="2">
+                                <li>
+                                    <div class="d-inline-block align-top">
+                                        <span>Download the VAT statement</span><br/>
+                                        <button string='Download XML' name="print_xml" type="object" class="btn-secondary"/>
+                                    </div>
+                                </li>
+                                <li>Login on Intervat using Itsme or your card reader</li>
+                                <li>Select Intervat &gt; Dashboard</li>
+                                <li>Upload the XML file on the right panel and click "Continue"</li>
+                                <li>Validate the VAT return</li>
+                            </ol>
+                        </group>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

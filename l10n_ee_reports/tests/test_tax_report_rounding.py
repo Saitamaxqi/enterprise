@@ -31,7 +31,6 @@ class TestEstonianFiscalRounding(TestAccountReportsCommon):
         cls.difference_profit_acc = cls.company_data['company'].l10n_ee_rounding_difference_profit_account_id
 
         cls.report = cls.env.ref('l10n_ee.tax_report').with_company(cls.company_data['company'])
-        cls.handler = cls.env['l10n_ee.tax.report.handler']
 
         cls._standard_line_dict = {
             'name': 'Line1',
@@ -71,8 +70,14 @@ class TestEstonianFiscalRounding(TestAccountReportsCommon):
             Command.create({'name': 'Difference from rounding taxes', 'debit': 0.01, 'credit': 0, 'account_id': self.difference_loss_acc.id}),
         ]
 
-        options = self._generate_options(self.report, '2024-05-01', '2024-05-31')
-        lines, _tax_subtotals = self.handler._compute_vat_closing_entry(self.company_data['company'], options)
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'type_id': self.report.return_type_ids.id,
+            'company_id': self.env.company.id,
+        })
+        lines, _tax_subtotals = tax_return._compute_tax_closing_entry(self.company_data['company'], tax_return._get_closing_report_options())
         self.assertEqual(lines, expected_closing_entry_lines)
 
     def test_l10n_ee_closing_entry_multiple_taxes_rounding(self):
@@ -100,6 +105,12 @@ class TestEstonianFiscalRounding(TestAccountReportsCommon):
             Command.create({'name': 'Difference from rounding taxes', 'debit': 0, 'credit': 0.03, 'account_id': self.difference_profit_acc.id}),
         ]
 
-        options = self._generate_options(self.report, '2024-05-01', '2024-05-31')
-        lines, _tax_subtotals = self.handler._compute_vat_closing_entry(self.company_data['company'], options)
+        tax_return = self.env['account.return'].create({
+            'name': "test return",
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'type_id': self.report.return_type_ids.id,
+            'company_id': self.env.company.id,
+        })
+        lines, _tax_subtotals = tax_return._compute_tax_closing_entry(self.company_data['company'], tax_return._get_closing_report_options())
         self.assertEqual(lines, expected_closing_entry_lines)

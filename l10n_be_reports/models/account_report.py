@@ -102,11 +102,13 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
-        options.setdefault('buttons', []).append({
-            'name': _('XML'),
-            'sequence': 30,
-            'action': 'print_tax_report_to_xml',
-            'file_export_type': _('XML'),
+        # Export options set by the return submission wizard ; we need them here so that they're not reset in
+        # the pdf generation, when calling _get_options()
+        options.update({
+            'l10n_be_closing_vat_return': previous_options.get('l10n_be_closing_vat_return'),
+            'closing_entry': previous_options.get('closing_entry'),
+            'ask_restitution': previous_options.get('ask_restitution'),
+            'client_nihil': previous_options.get('client_nihil'),
         })
 
     def open_account_report_sales(self, options):
@@ -117,21 +119,6 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
         }
 
         return action
-
-    def print_tax_report_to_xml(self, options):
-        # add options to context and return action to open transient model
-        new_wizard = self.env['l10n_be_reports.periodic.vat.xml.export'].create({})
-        view_id = self.env.ref('l10n_be_reports.view_account_financial_report_export').id
-        return {
-            'name': _('XML Export Options'),
-            'view_mode': 'form',
-            'views': [[view_id, 'form']],
-            'res_model': 'l10n_be_reports.periodic.vat.xml.export',
-            'type': 'ir.actions.act_window',
-            'res_id': new_wizard.id,
-            'target': 'new',
-            'context': dict(self._context, l10n_be_reports_generation_options=options),
-        }
 
     def export_tax_report_to_xml(self, options):
         report = self.env['account.report'].browse(options['report_id'])
@@ -294,24 +281,9 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
             for line in report.line_ids
             if line.code
         }
-        round_adm_tol = 62.00  # Rounding tolerance for belgian administration
-        checks = [
-            # code 13. Carried over grids can be ignored by these rules, they will be set to 0 if they are negative.
-            (_("Not allowed negative amounts"),
-                lambda expr_totals: all(expr_totals[expr]['value'] >= 0 for expr in expr_map.values())),
-        ]
-
-        failed_controls = [
-            check_name
-            for check_name, check_func in checks
-            if not _evaluate_check(check_func)
-        ]
 
         if _evaluate_check(lambda expr_totals: any(
             [expr_totals[expr_map[grid]]['value'] for grid in ('c44', 'c46L', 'c46T', 'c48s44', 'c48s46L', 'c48s46T')]
         )):
             # remind user to submit EC Sales Report if any ec sales related taxes
             warnings['l10n_be_reports.tax_report_warning_ec_sales_reminder'] = {}
-
-        if failed_controls:
-            warnings['l10n_be_reports.tax_report_warning_checks'] = {'failed_controls': failed_controls, 'alert_type': 'danger'}

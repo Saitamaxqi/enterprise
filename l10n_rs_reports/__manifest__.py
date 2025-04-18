@@ -16,6 +16,7 @@ Source: https://www.paragraf.rs/propisi/pravilnik-o-kontnom-okviru-sadrzini-racu
         'account_reports',
     ],
     'data': [
+        'data/account_return_data.xml',
         'data/profit_and_loss.xml',
         'data/balance_sheet.xml',
     ],

@@ -15,6 +15,7 @@ This module has been built with the help of Caudigef.
         'account_reports',
     ],
     'data': [
+        "data/account_return_data.xml",
         "data/profit_and_loss.xml",
         "data/balance_sheet.xml",
         "data/tax_report.xml",

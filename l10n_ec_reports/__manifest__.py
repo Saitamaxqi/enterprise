@@ -19,6 +19,7 @@ Accounting reports for Ecuador
         ],
     'data': [
         'data/account_financial_html_report_data.xml',
+        'data/account_return_data.xml',
     ],
     'auto_install': True,
     'installable': True,

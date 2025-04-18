@@ -76,7 +76,7 @@ class L10nThaiTaxReportTest(AccountSalesReportCommon):
         self.env.flush_all()
 
         report = self.env.ref('l10n_th.tax_report_pnd53')
-        options = report.get_options({})
+        options = self._generate_options(report, '2023-05-01', '2023-05-31')
 
         report_data = self.env['l10n_th.pnd53.report.handler'].l10n_th_print_pnd_tax_report_pnd53(options)['file_content']
         expected = ("No.,Tax ID,Title,Contact Name,Street,Street2,City,State,Zip,Branch Number,Invoice/Bill Date,Tax Rate,Total Amount,WHT Amount,WHT Condition,Tax Type\n"
@@ -118,7 +118,7 @@ class L10nThaiTaxReportTest(AccountSalesReportCommon):
         self.env.flush_all()
 
         report = self.env.ref('l10n_th.tax_report_pnd3')
-        options = report.get_options({})
+        options = self._generate_options(report, '2023-05-01', '2023-05-31')
 
         report_data = self.env['l10n_th.pnd3.report.handler'].l10n_th_print_pnd_tax_report_pnd3(options)['file_content']
         expected = ("No.,Tax ID,Title,Contact Name,Street,Street2,City,State,Zip,Branch Number,Invoice/Bill Date,Tax Rate,Total Amount,WHT Amount,WHT Condition,Tax Type\n"

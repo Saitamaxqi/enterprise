@@ -27,9 +27,6 @@ const getOptionMockResponse = {
     "sections": [],
     "has_inactive_sections": false,
     "report_id": 14,
-    "allow_domestic": false,
-    "fiscal_position": "all",
-    "available_vat_fiscal_positions": [],
     "date": {
         "string": "2025",
         "period_type": "fiscalyear",

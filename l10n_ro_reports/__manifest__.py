@@ -12,6 +12,7 @@ Accounting reports for Romania
         'l10n_ro', 'account_reports'
     ],
     'data': [
+        "data/account_return_data.xml",
         "data/balance_sheet_short.xml",
         "data/balance_sheet_internat.xml",
         "data/profit_loss_micro.xml",

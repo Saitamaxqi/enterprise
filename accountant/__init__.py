@@ -20,8 +20,8 @@ def _accounting_post_init(env):
             module_ids.sudo().button_install()
 
     for company in env['res.company'].search([]):
-        company.account_tax_periodicity_journal_id = company._get_default_misc_journal()
-        company.account_tax_periodicity_journal_id.show_on_dashboard = True
+        default_misc_journal = company._get_default_misc_journal()
+        default_misc_journal.show_on_dashboard = True
         company._initiate_account_onboardings()
 
 def uninstall_hook(env):

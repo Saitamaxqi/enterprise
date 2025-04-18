@@ -117,7 +117,7 @@ class L10n_MaTaxReportHandler(models.AbstractModel):
     def _l10n_ma_prepare_vat_report_values(self, options):
         date_from = fields.Date.from_string(options['date'].get('date_from'))
         date_to = fields.Date.from_string(options['date'].get('date_to'))
-        period_type = options['tax_periodicity']['periodicity']
+        period_type = options['return_periodicity']['periodicity']
         company = self.env.company
 
         prorata_expression = self.env.ref('l10n_ma.l10n_ma_vat_d_prorata_pro')

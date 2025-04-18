@@ -9,6 +9,7 @@
     'depends': ['l10n_br', 'account_reports'],
     'data': [
         'data/account_financial_html_report_data.xml',
+        'data/account_return_data.xml',
     ],
     'installable': True,
     'auto_install': ['l10n_br', 'account_reports'],
