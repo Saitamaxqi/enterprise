@@ -374,7 +374,7 @@
         <field name="arch" type="xml">
             <!-- date_start has a dummy value because the attribute is required
             but it will not be used: the itemCalendarController will overwrite
-            it in onWillStartModel using the property selected by the user -->
+            it in the setup (updateModel) using the property selected by the user -->
             <calendar js_class="knowledge_article_view_calendar_embedded" string="Items" date_start="article_properties">
                 <field name="user_can_write" invisible="1"/>
                 <field name="parent_id" invisible="1"/>

@@ -18,6 +18,16 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
         if (!("isEmbeddedReadonly" in this.env) || this.env.isEmbeddedReadonly) {
             this.model.meta.canCreate = false;
         }
+        // Set model meta variables to make the model work with the properties
+        if (this.props.itemCalendarProps) {
+            this.updateModel(this.props.itemCalendarProps);
+            this.state.isWeekendVisible =
+                this.props.itemCalendarProps.showWeekEnds ?? this.state.isWeekendVisible;
+        } else {
+            this.state.missingConfiguration = true;
+            this.model.meta.invalid = true;
+        }
+
         onMounted(async () => {
             // Show error message if the start date property is invalid (if it
             // has been deleted or its type changed)
@@ -105,20 +115,6 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
      */
     editRecord(record) {
         this.selectRecord(record.id);
-    }
-
-    /**
-     * Set model meta variables to make the model work with the properties
-     */
-    onWillStartModel() {
-        if (this.props.itemCalendarProps) {
-            this.updateModel(this.props.itemCalendarProps);
-            this.state.isWeekendVisible =
-                this.props.itemCalendarProps.showWeekEnds ?? this.state.isWeekendVisible;
-        } else {
-            this.state.missingConfiguration = true;
-            this.model.meta.invalid = true;
-        }
     }
 
     /**
