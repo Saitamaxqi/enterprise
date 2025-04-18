@@ -13,7 +13,7 @@ class HrEmployee(models.Model):
 
     niss = fields.Char(
         'NISS Number', compute="_compute_niss", store=True, readonly=False,
-        groups="hr.group_hr_user", tracking=True)
+        groups="hr.group_hr_user", tracking=True, index=True)
     spouse_fiscal_status = fields.Selection([
         ('high_income', 'With High Income'),
         ('low_income', 'With Low Income'),
