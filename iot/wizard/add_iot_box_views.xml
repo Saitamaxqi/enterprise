@@ -53,7 +53,7 @@
                 Which one do you want to connect?<br/><br/>
                 <group class="col-md-8">
                     <!-- required is forced here because the record is created without a value -->
-                    <field name="iot_box_to_connect" widget="radio" required="1"/>
+                    <field name="iot_box_to_connect" widget="radio" required="1" domain="[['id', 'in', discovered_box_ids]]"/>
                 </group>
                 <footer>
                     <div class="d-flex justify-content-between w-100">

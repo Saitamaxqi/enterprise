@@ -85,11 +85,20 @@ class IotBox(models.Model):
             'target': 'new',
         }
 
-    def connect_iot_box(self):
+    @api.model
+    def connect_iot_box(self, local_iot_boxes):
         """
         This method is called when pressing the "Connect" button in the IoT app.
         Used to connect a new IoT Box to a database.
         :return: action to open the wizard view depending on the result of the iot-proxy request sent by the wizard
         """
         wizard = self.env['add.iot.box'].create({})
+        self.env['iot.discovered.box'].create([
+            {
+                "pairing_code": box["pairing_code"],
+                "serial_number": box.get("serial_number"),
+                "add_iot_box_wizard_id": wizard.id,
+            }
+            for box in local_iot_boxes
+        ])
         return wizard.add_iot_box_wizard_action()

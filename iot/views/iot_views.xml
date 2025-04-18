@@ -9,6 +9,16 @@
         sequence="265"
     />
 
+    <!-- Client Actions -->
+    <record id="action_iot_delete_linked_devices_menu" model="ir.actions.client">
+        <field name="name">reset.linked.printers</field>
+        <field name="tag">iot_delete_linked_devices_action</field>
+    </record>
+    <record id="action_discover_iot_boxes" model="ir.actions.client">
+        <field name="name">Discover IoT boxes</field>
+        <field name="tag">discover_iot_boxes</field>
+    </record>
+
     <!-- IoT Boxes -->
     <record id="iot_box_view_form" model="ir.ui.view">
         <field name="name">iot.box.view.form</field>
@@ -64,7 +74,7 @@
         <field name="arch" type="xml">
             <kanban create="false">
                 <header>
-                    <button groups="iot.group_iot_admin" name="connect_iot_box" type="object" string="Connect" class="btn-primary o-kanban-button-new"  display="always"/>
+                    <button groups="iot.group_iot_admin" name="iot.action_discover_iot_boxes" type="action" string="Connect" class="btn-primary o-kanban-button-new"  display="always"/>
                 </header>
                 <templates>
                     <t t-name="card" class="p-0">
@@ -82,7 +92,7 @@
         <field name="arch" type="xml">
             <list create="false">
                 <header>
-                    <button groups="iot.group_iot_admin" name="connect_iot_box" type="object" string="Connect" class="btn-primary" display="always"/>
+                    <button groups="iot.group_iot_admin" name="iot.action_discover_iot_boxes" type="action" string="Connect" class="btn-primary" display="always"/>
                 </header>
                 <field name="name"/>
                 <field name="identifier"/>
@@ -214,11 +224,6 @@
                 There is no device connected to your IoT Boxes
             </p>
         </field>
-    </record>
-
-    <record id="action_iot_delete_linked_devices_menu" model="ir.actions.client">
-        <field name="name">reset.linked.printers</field>
-        <field name="tag">iot_delete_linked_devices_action</field>
     </record>
     
     <menuitem

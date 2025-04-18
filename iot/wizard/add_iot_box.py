@@ -20,55 +20,12 @@ class AddIotBox(models.TransientModel):
         ('manual', 'Manual'),
     ], string='Stage', default='start')
 
-    # IoT Box identifying fields and methods
-    def _get_box_name(self, iot_box):
-        serial = iot_box['serial_number'] or ""
-        return _("IoT Box %(serial_n)s %(pairing_code)s", serial_n=serial, pairing_code=iot_box['pairing_code'])
-
-    def _get_selection_value(self, iot_box):
-        return f"{iot_box['pairing_code']} {iot_box['pairing_uuid']} {iot_box['serial_number'] or ''}"
-
-    def _get_pairing_code_from_selection(self, selection):
-        return selection.split()[0]
-
-    def _get_serial_number_from_selection(self, selection):
-        s_split = selection.split()
-        return s_split[2] if len(s_split) == 3 else ""
-
-    def _get_iot_box_to_connect_selection(self):
-        discovered_iot_boxes = self._discover_boxes()
-        selection = [(self._get_selection_value(iot_box), self._get_box_name(iot_box)) for iot_box in discovered_iot_boxes] if discovered_iot_boxes else []
-        return selection
-
-    iot_box_to_connect = fields.Selection(selection=_get_iot_box_to_connect_selection)
+    discovered_box_ids = fields.One2many("iot.discovered.box", "add_iot_box_wizard_id")
+    iot_box_to_connect = fields.Many2one("iot.discovered.box")
     serial_number = fields.Char(string='Serial Number', help="Serial number of the IoT Box")
     pairing_code = fields.Char(string='Pairing Code', help="Pairing code of the IoT Box")
 
     # ------------------------- IOT-PROXY CALLING METHODS -------------------------
-    def _discover_boxes(self):
-        """
-        Calls the route /odoo-enterprise/iot/discover-boxes to get the IoT Boxes listed on the same network as the caller
-        Returns a list of dictionaries containing the pairing code and serial number of the IoT Boxes
-
-        :return: list with dictionaries each containing {'id': ..., 'serial_number': ..., 'pairing_code': ..., 'pairing_uuid': ...}
-        """
-        try:
-            response = requests.get(
-                'https://iot-proxy.odoo.com/odoo-enterprise/iot/discover-boxes',
-                json={},
-                timeout=5,
-            )
-            response.raise_for_status()
-
-            result = response.json().get('result')  # e.g [{'id': 1, 'serial_number': 'sn1', 'pairing_code': 'pc1', 'pairing_uuid': 'pu1'}]
-            if result:
-                return result
-            else:
-                _logger.info("No IoT Boxes found registered on the local network")
-        except (requests.exceptions.RequestException, ValueError):
-            _logger.exception("Failed to contact iot-proxy to discover local IoT Boxes")
-        return []
-
     def _connect_iot_box_with_pairing_code(self):
         """
         Calls the route /odoo-enterprise/iot/connect-db to connect the IoT Box with the provided pairing code
@@ -77,8 +34,8 @@ class AddIotBox(models.TransientModel):
         """
         # Pairing code can be entered manually or recovered from the selected IoT Box
         if self.iot_box_to_connect:
-            self.pairing_code = self._get_pairing_code_from_selection(self.iot_box_to_connect)
-            self.serial_number = self._get_serial_number_from_selection(self.iot_box_to_connect)
+            self.pairing_code = self.iot_box_to_connect.pairing_code
+            self.serial_number = self.iot_box_to_connect.serial_number
         try:
             icp_sudo = self.env['ir.config_parameter'].sudo()
             response = requests.post(
@@ -120,8 +77,7 @@ class AddIotBox(models.TransientModel):
             'res_model': 'add.iot.box',
             'res_id': self.id,
             'name': _("Several IoT's detected"),
-            'view_mode': 'form',
-            'view_id': self.env.ref('iot.view_select_box_to_connect').id,
+            'views': [[self.env.ref('iot.view_select_box_to_connect').id, 'form']],
             'target': 'new',
         }
 
@@ -132,8 +88,7 @@ class AddIotBox(models.TransientModel):
             'res_model': 'add.iot.box',
             'res_id': self.id,
             'name': _("We couldn't detect any IoT"),
-            'view_mode': 'form',
-            'view_id': self.env.ref('iot.view_enter_pairing_code').id,
+            'views': [[self.env.ref('iot.view_enter_pairing_code').id, 'form']],
             'target': 'new',
         }
 
@@ -144,8 +99,7 @@ class AddIotBox(models.TransientModel):
             'res_model': 'add.iot.box',
             'res_id': self.id,
             'name': _("We couldn't detect any IoT"),
-            'view_mode': 'form',
-            'view_id': self.env.ref('iot.view_no_iot_box_found').id,
+            'views': [[self.env.ref('iot.view_no_iot_box_found').id, 'form']],
             'target': 'new',
         }
 
@@ -156,8 +110,7 @@ class AddIotBox(models.TransientModel):
             'res_model': 'add.iot.box',
             'res_id': self.id,
             'name': name,
-            'view_mode': 'form',
-            'view_id': self.env.ref('iot.view_add_iot_box').id,
+            'views': [[self.env.ref('iot.view_add_iot_box').id, 'form']],
             'target': 'new',
         }
 
@@ -177,16 +130,15 @@ class AddIotBox(models.TransientModel):
         If only 1 is found, attempt to connect it directly
         If > 1 is found, open the select box wizard
         """
-        detected_iot_boxes = self._get_iot_box_to_connect_selection()
-        n_detected_iot_boxes = len(detected_iot_boxes) if detected_iot_boxes else 0
+        n_detected_iot_boxes = len(self.discovered_box_ids)
 
         # If multiple IoT Boxes are found, ask the user to select one
         if n_detected_iot_boxes > 1:
             return self._open_select_box_to_connect_action()
         # If only one IoT Box is found, connect it directly without showing the wizard to the user
         elif n_detected_iot_boxes == 1:
-            self.pairing_code = self._get_pairing_code_from_selection(detected_iot_boxes[0][0])
-            self.serial_number = self._get_serial_number_from_selection(detected_iot_boxes[0][0])
+            self.pairing_code = self.discovered_box_ids[0].pairing_code
+            self.serial_number = self.discovered_box_ids[0].serial_number
             return self._connect_iot_box_with_pairing_code()
         # If no IoT Boxes are found, ask the user to enter the pairing code manually
         else:
