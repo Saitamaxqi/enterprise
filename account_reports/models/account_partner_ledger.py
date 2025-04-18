@@ -265,7 +265,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             date_from = options['date']['date_from']
             queries.append(SQL(
                 """
-                WITH partner_sums AS (
+                (WITH partner_sums AS (
                     SELECT
                         account_move_line.partner_id            AS groupby,
                         %(column_group_key)s                    AS column_group_key,
@@ -285,7 +285,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 WHERE partner_sums.balance != 0
                 OR partner_sums.all_reconciled = FALSE
                 OR partner_sums.latest_date >= %(date_from)s
-                """,
+                )""",
                 column_group_key=column_group_key,
                 debit_select=report._currency_table_apply_rate(SQL("account_move_line.debit")),
                 credit_select=report._currency_table_apply_rate(SQL("account_move_line.credit")),
