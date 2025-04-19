@@ -2023,7 +2023,7 @@ class SaleOrder(models.Model):
             customer_ref = sub.partner_id._get_html_link()
             lines = sub._upsell_activity_line()
             sub.activity_schedule(
-                'sale.mail_act_sale_upsell',
+                'mail.mail_activity_data_todo',
                 user_id=sub.user_id.id or sub.partner_id.user_id.id,
                 note=_(
                     "Upsell %(order)s for customer %(customer)s for the period %(date_start)s to %(date_end)s %(nl)s%(lines)s",

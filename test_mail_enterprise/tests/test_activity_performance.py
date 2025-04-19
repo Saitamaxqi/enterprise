@@ -10,12 +10,12 @@ from odoo.tests import tagged
 from odoo.tools import mute_logger
 
 
-@tagged('mail_performance', 'post_install', '-at_install')
+@tagged('mail_performance', 'mail_activity', 'post_install', '-at_install')
 class TestActivityPerformance(BaseMailPerformance):
 
     @classmethod
     def setUpClass(cls):
-        super(TestActivityPerformance, cls).setUpClass()
+        super().setUpClass()
 
         cls.customer = cls.env['res.partner'].with_context(cls._test_context).create({
             'country_id': cls.env.ref('base.be').id,
@@ -190,7 +190,7 @@ class TestActivityPerformance(BaseMailPerformance):
         ])
         self.env.flush_all()
 
-        with self.assertQueryCount(employee=59):
+        with self.assertQueryCount(employee=64):
             activities.action_feedback(
                 feedback='Intense feedback',
                 attachment_ids=attachments.ids,
@@ -232,7 +232,7 @@ class TestActivityPerformance(BaseMailPerformance):
         ])
         self.env.flush_all()
 
-        with self.assertQueryCount(employee=59):
+        with self.assertQueryCount(employee=65):
             activities.action_feedback(
                 feedback='Intense feedback',
                 attachment_ids=attachments.ids,

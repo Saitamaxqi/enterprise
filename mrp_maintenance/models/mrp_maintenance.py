@@ -215,7 +215,8 @@ class MaintenanceRequest(models.Model):
                 text = _("The schedule has changed from %(desired_date)s to %(effective_date)s due to planned manufacturing orders.", desired_date=desired_date.astimezone(user_pytz), effective_date=effective_date.astimezone(user_pytz))
                 self.activity_schedule(
                     'mail.mail_activity_data_warning',
-                    note=text
+                    note=text,
+                    user_id=self.env.uid,
                 )
                 if raise_on_schedule_date_already_planned:
                     raise UserError(self.env._("Manufacturing Orders are already scheduled for this time slot."))

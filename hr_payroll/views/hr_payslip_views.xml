@@ -277,6 +277,8 @@
                 <field name="contract_id"/>
                 <field name="payslip_run_id"/>
                 <field name="struct_id"/>
+                <field name="activity_user_id" string="Activities of"/>
+                <field name="activity_type_id" string="Activity type"/>
                 <filter string="To Compute" name="draft" domain="[('state', '=', 'draft')]" help="Draft Slip"/>
                 <filter string="To Confirm" name="draft" domain="[('state', '=', 'verify')]" help="Slips to Confirm"/>
                 <filter string="Done" name="done" domain="[('state', '=', 'done')]" help="Done Slip"/>

@@ -16,7 +16,7 @@ class DocumentsRequest_Wizard(models.TransientModel):
 
     activity_type_id = fields.Many2one('mail.activity.type',
                                        string="Activity type",
-                                       default=lambda self: self.env.ref('documents.mail_documents_activity_data_md',
+                                       default=lambda self: self.env.ref('mail.mail_activity_data_upload_document',
                                                                          raise_if_not_found=False),
                                        required=True,
                                        domain="[('category', '=', 'upload_file')]")
