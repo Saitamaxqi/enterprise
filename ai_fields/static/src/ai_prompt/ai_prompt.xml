@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates xml:space="preserve">
+    <t t-name="ai_fields.AiPrompt">
+        <span t-if="props.readonly" class="o_readonly_ai_prompt" t-out="value"/>
+        <div t-else="" class="o_ai_prompt border-bottom" t-on-click="this.onClick">
+            <Wysiwyg
+                config="this.getConfig()"
+                onLoad.bind="onEditorLoad"
+                onBlur.bind="onBlur"
+                t-key="state.key"/>
+        </div>
+    </t>
+
+    <t t-name="ai_server_actions.AiPromptDialog">
+        <Dialog size="md" bodyClass="'o_ai_prompt_dialog'" title.translate="Edit Field Prompt">
+            <h5 class="mb-3">Prompt</h5>
+            <AiPrompt t-props="aiPromptProps"/>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="confirm">
+                    Save &amp; Generate
+                </button>
+                <button class="btn btn-secondary" t-on-click="props.close">
+                    Discard
+                </button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

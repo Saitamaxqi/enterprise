@@ -1,0 +1,9 @@
+.o_web_studio_new_fields {
+    .o_web_studio_icon_container.o_web_studio_field_ai {
+        &:after {
+            // todo: use icon from ai app
+            background-image: url('/ai_fields/static/src/ai_icon.png');
+        }
+        filter: grayscale(100%);
+    }
+}

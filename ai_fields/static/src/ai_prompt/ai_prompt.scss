@@ -1,0 +1,11 @@
+.o_ai_record:not(.o_ai_default_record) {
+    display: contents !important;
+    span {
+        margin-x: 5px !important;
+        background-color: rgba(36, 154, 255, 0.16) !important;
+    }
+}
+
+.o_ai_default_record {
+    display: none;
+}
