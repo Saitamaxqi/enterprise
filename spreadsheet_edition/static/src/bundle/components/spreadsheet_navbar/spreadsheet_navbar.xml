@@ -19,7 +19,7 @@
         </xpath>
 
         <xpath expr="//div[hasclass('o_navbar_breadcrumbs')]" position="replace">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-fill">
                 <div t-if="breadcrumbs.length > 1" class="btn btn-link o-sp-breadcrumb fw-normal" t-on-click="onBreadcrumbClicked" t-esc="breadcrumbTitle"/>
                 <SpreadsheetName name="props.spreadsheetName" isReadonly="props.isReadonly" onSpreadsheetNameChanged="props.onSpreadsheetNameChanged" />
                 <t t-slot="navbar-additional-actions"/>
