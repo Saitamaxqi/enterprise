@@ -1071,8 +1071,8 @@ class AccountMove(models.Model):
             cfdi_values["tipo_cambio"] = 1.0 / self.invoice_currency_rate
 
         # Additional Addendas and Complementos.
-        cfdi_values['addendas'] = self.l10n_mx_edi_addenda_ids
-        cfdi_values['move'] = self
+        cfdi_values['addendas'] = self.l10n_mx_edi_addenda_ids.sudo(flag=False)
+        cfdi_values['move'] = self.sudo(flag=False)
 
     def _l10n_mx_edi_get_invoice_cfdi_filename(self):
         """ Get the filename of the CFDI.
