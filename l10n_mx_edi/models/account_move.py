@@ -2602,7 +2602,7 @@ class AccountMove(models.Model):
             company=self.company_id,
         )
         # create a partner if it's not found
-        if not partner:
+        if not partner and name:
             is_foreign_partner = rfc == 'XEXX010101000'
             partner_vals = {
                 'name': name,
