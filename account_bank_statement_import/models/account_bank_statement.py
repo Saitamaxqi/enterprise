@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 from markupsafe import Markup
 
@@ -18,6 +18,13 @@ class AccountBankStatementLine(models.Model):
         'unique (unique_import_id)',
         "A bank account transactions can be imported only once!",
     )
+
+    @api.model
+    def get_import_templates(self):
+        return [{
+            'label': _('Import Template for Bank Statement Lines'),
+            'template': '/account_bank_statement_import/static/xls/bank_statement_line_import_template.xlsx'
+        }]
 
     def _action_open_bank_reconciliation_widget(self, extra_domain=None, default_context=None, name=None, kanban_first=True):
         res = super()._action_open_bank_reconciliation_widget(extra_domain, default_context, name, kanban_first)
