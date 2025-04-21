@@ -215,9 +215,9 @@ test("Can autofill positional row headers vertically", async () => {
                 </pivot>`,
         pivotType: "static",
     });
-    setCellContent(model, "A3", `=PIVOT.HEADER(1,"date:month",DATE(2016, 4, 1),"#product_id",1)`);
+    setCellContent(model, "A3", `=PIVOT.HEADER(1,"date:month",DATE(2016,4,1),"#product_id",1)`);
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        `=PIVOT.HEADER(1,"date:month",DATE(2016, 4, 1),"#product_id",2)`
+        `=PIVOT.HEADER(1,"date:month",DATE(2016,4,1),"#product_id",2)`
     );
     selectCell(model, "A3");
     model.dispatch("AUTOFILL_SELECT", { col: 1, row: 3 });
@@ -259,10 +259,10 @@ test("Can autofill positional row vertically", async () => {
     setCellContent(
         model,
         "A3",
-        `=PIVOT.VALUE(1,"probability","date:month",DATE(2016, 4, 1),"#product_id",1)`
+        `=PIVOT.VALUE(1,"probability","date:month",DATE(2016,4,1),"#product_id",1)`
     );
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        `=PIVOT.VALUE(1,"probability","date:month",DATE(2016, 4, 1),"#product_id",2)`
+        `=PIVOT.VALUE(1,"probability","date:month",DATE(2016,4,1),"#product_id",2)`
     );
     selectCell(model, "A3");
     model.dispatch("AUTOFILL_SELECT", { col: 1, row: 3 });
@@ -298,19 +298,19 @@ test("Autofill pivot values with date in rows", async function () {
         pivotType: "static",
     });
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        getCellFormula(model, "A4").replace("DATE(2016, 10, 1)", "DATE(2016, 5, 1)")
+        getCellFormula(model, "A4").replace("DATE(2016,10,1)", "DATE(2016,5,1)")
     );
     expect(getPivotAutofillValue(model, "A5", { direction: "bottom", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:month",DATE(2017, 1, 1))'
+        '=PIVOT.HEADER(1,"date:month",DATE(2017,1,1))'
     );
     expect(getPivotAutofillValue(model, "B3", { direction: "bottom", steps: 1 })).toBe(
-        getCellFormula(model, "B4").replace("DATE(2016, 10, 1)", "DATE(2016, 5, 1)")
+        getCellFormula(model, "B4").replace("DATE(2016,10,1)", "DATE(2016,5,1)")
     );
     expect(getPivotAutofillValue(model, "B5", { direction: "bottom", steps: 1 })).toBe(
-        getCellFormula(model, "B5").replace("DATE(2016, 12, 1)", "DATE(2017, 1, 1)")
+        getCellFormula(model, "B5").replace("DATE(2016,12,1)", "DATE(2017,1,1)")
     );
     expect(getPivotAutofillValue(model, "B5", { direction: "top", steps: 1 })).toBe(
-        getCellFormula(model, "B4").replace("DATE(2016, 10, 1)", "DATE(2016, 11, 1)")
+        getCellFormula(model, "B4").replace("DATE(2016,10,1)", "DATE(2016,11,1)")
     );
     expect(getPivotAutofillValue(model, "F6", { direction: "top", steps: 1 })).toBe("");
 });
@@ -325,21 +325,21 @@ test("Autofill pivot values with date in cols", async function () {
                 </pivot>`,
         pivotType: "static",
     });
-    expect(getCellFormula(model, "B1")).toBe('=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 14))');
+    expect(getCellFormula(model, "B1")).toBe('=PIVOT.HEADER(1,"date:day",DATE(2016,4,14))');
     expect(getPivotAutofillValue(model, "B1", { direction: "right", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 15))'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016,4,15))'
     );
     expect(getCellFormula(model, "B2")).toBe(
-        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 14),"measure","probability:avg")'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016,4,14),"measure","probability:avg")'
     );
     expect(getPivotAutofillValue(model, "B2", { direction: "right", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 15),"measure","probability:avg")'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016,4,15),"measure","probability:avg")'
     );
     expect(getCellFormula(model, "B3")).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016, 4, 14))'
+        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016,4,14))'
     );
     expect(getPivotAutofillValue(model, "B3", { direction: "right", steps: 1 })).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016, 4, 15))'
+        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016,4,15))'
     );
 });
 
@@ -353,12 +353,12 @@ test("Autofill pivot values with date (day)", async function () {
                 </pivot>`,
         pivotType: "static",
     });
-    expect(getCellFormula(model, "A3")).toBe('=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 14))');
+    expect(getCellFormula(model, "A3")).toBe('=PIVOT.HEADER(1,"date:day",DATE(2016,4,14))');
     expect(model.getters.getTooltipFormula(getCellFormula(model, "A3"))).toEqual([
         { value: "14 Apr 2016" },
     ]);
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 15))'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016,4,15))'
     );
 });
 
@@ -425,7 +425,7 @@ test("Autofill pivot values with date (month)", async function () {
         pivotType: "static",
     });
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        `=PIVOT.HEADER(1,"date:month",DATE(2016, 5, 1))`
+        `=PIVOT.HEADER(1,"date:month",DATE(2016,5,1))`
     );
     expect(model.getters.getTooltipFormula(getCellFormula(model, "A3"))).toEqual([
         { value: "April 2016" },
@@ -479,7 +479,7 @@ test("Autofill pivot values with date (no defined interval)", async function () 
         pivotType: "static",
     });
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        `=PIVOT.HEADER(1,"date:month",DATE(2016, 5, 1))`
+        `=PIVOT.HEADER(1,"date:month",DATE(2016,5,1))`
     );
 });
 
@@ -783,7 +783,7 @@ test("Can autofill with month string parent group header and value", async () =>
     tooltipContent = model.getters.getAutofillTooltip().props.content;
     expect(tooltipContent[tooltipContent.length - 1].value).toBe("October 2016");
     model.dispatch("AUTOFILL");
-    expect(getCell(model, "A2").content).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016, 10, 1))');
+    expect(getCell(model, "A2").content).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016,10,1))');
 
     setCellContent(
         model,
@@ -796,7 +796,7 @@ test("Can autofill with month string parent group header and value", async () =>
     expect(tooltipContent[tooltipContent.length - 1].value).toBe("October 2016");
     model.dispatch("AUTOFILL");
     expect(getCell(model, "A2").content).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016, 10, 1))'
+        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016,10,1))'
     );
 });
 
@@ -879,10 +879,10 @@ test("Can autofill pivot horizontally with column grouped by date", async () => 
     setCellContent(
         model,
         "B1",
-        `=PIVOT.HEADER(1,"date:month",DATE(2016, 4, 1),"measure","probability:avg")`
+        `=PIVOT.HEADER(1,"date:month",DATE(2016,4,1),"measure","probability:avg")`
     );
     expect(getPivotAutofillValue(model, "B1", { direction: "right", steps: 1 })).toBe(
-        `=PIVOT.HEADER(1,"date:month",DATE(2016, 5, 1),"measure","probability:avg")`
+        `=PIVOT.HEADER(1,"date:month",DATE(2016,5,1),"measure","probability:avg")`
     );
 
     setCellContent(model, "B1", `=PIVOT.HEADER(1,"measure","probability:avg")`);
@@ -892,10 +892,10 @@ test("Can autofill pivot horizontally with column grouped by date", async () => 
     setCellContent(
         model,
         "B1",
-        `=PIVOT.VALUE(1,"probability:avg","product_id",47,"date:month",DATE(2016, 4, 1))`
+        `=PIVOT.VALUE(1,"probability:avg","product_id",47,"date:month",DATE(2016,4,1))`
     );
     expect(getPivotAutofillValue(model, "B1", { direction: "right", steps: 1 })).toBe(
-        `=PIVOT.VALUE(1,"probability:avg","product_id",47,"date:month",DATE(2016, 5, 1))`
+        `=PIVOT.VALUE(1,"probability:avg","product_id",47,"date:month",DATE(2016,5,1))`
     );
 
     setCellContent(model, "B1", `=PIVOT.VALUE(1,"probability:avg","product_id",47)`);

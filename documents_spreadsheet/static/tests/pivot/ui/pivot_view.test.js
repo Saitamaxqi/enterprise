@@ -221,17 +221,17 @@ test("groupby date field without interval defaults to month", async () => {
         name: "Partners by Foo",
         type: "ODOO",
     });
-    expect(getCellContent(model, "A3")).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016, 4, 1))');
-    expect(getCellContent(model, "A4")).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016, 10, 1))');
-    expect(getCellContent(model, "A5")).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016, 12, 1))');
+    expect(getCellContent(model, "A3")).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016,4,1))');
+    expect(getCellContent(model, "A4")).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016,10,1))');
+    expect(getCellContent(model, "A5")).toBe('=PIVOT.HEADER(1,"date:month",DATE(2016,12,1))');
     expect(getCellContent(model, "B3")).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016, 4, 1),"foo",1)'
+        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016,4,1),"foo",1)'
     );
     expect(getCellContent(model, "B4")).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016, 10, 1),"foo",1)'
+        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016,10,1),"foo",1)'
     );
     expect(getCellContent(model, "B5")).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016, 12, 1),"foo",1)'
+        '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016,12,1),"foo",1)'
     );
     expect(getEvaluatedCell(model, "A3").formattedValue).toBe("April 2016");
     expect(getEvaluatedCell(model, "A4").formattedValue).toBe("October 2016");
@@ -240,7 +240,7 @@ test("groupby date field without interval defaults to month", async () => {
     expect(getEvaluatedCell(model, "B4").formattedValue).toBe("11.00");
     expect(getEvaluatedCell(model, "B5").formattedValue).toBe("");
 
-    setCellContent(model, "B4", '=PIVOT.VALUE(1,"probability:avg","date",DATE(2016, 10, 1),"foo",1)');
+    setCellContent(model, "B4", '=PIVOT.VALUE(1,"probability:avg","date",DATE(2016,10,1),"foo",1)');
     expect(getEvaluatedCell(model, "B4").formattedValue).toBe("11.00");
 });
 
