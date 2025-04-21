@@ -2332,11 +2332,15 @@ class DocumentsDocument(models.Model):
     @api.autovacuum
     def _gc_clear_bin(self):
         """Files are deleted automatically from the trash bin after the configured remaining days."""
+        self.search(self._get_gc_clear_bin_domain(), limit=1000).unlink()
+
+    @api.model
+    def _get_gc_clear_bin_domain(self):
         deletion_delay = self.get_deletion_delay()
-        self.search([
+        return [
             ('active', '=', False),
             ('write_date', '<=', fields.Datetime.now() - relativedelta(days=deletion_delay)),
-        ], limit=1000).unlink()
+        ]
 
     def _get_access_action(self, access_uid=None, force_website=False):
         self.ensure_one()
