@@ -900,3 +900,44 @@ class TestDatevCSV(AccountTestInvoicingCommon):
         data = [[x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
         self.assertIn(['50,00', 'H', 'XYZ', '2,0', '100,00', 'EUR', '34000000', '49800000',
                        '', '112', move.name, move.line_ids[1].name], data)
+
+    def test_datev_miscellaneous_with_updated_credit_and_debit_in_aml(self):
+        """
+            Test that the datev exported values are correct when we update the
+            credit and debit in aml of an miscellaneous move.
+        """
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = report.get_options({})
+        options['date'].update({
+            'date_from': '2020-01-01',
+            'date_to': '2020-12-31',
+        })
+        move = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2020-01-01',
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                Command.create({
+                    'debit': 1000,
+                    'credit': 0,
+                    'account_id': self.account_4980.id,
+                }),
+                Command.create({
+                    'debit': 0,
+                    'credit': 1000,
+                    'account_id': self.account_1500.id,
+                }),
+            ],
+        })
+        move.write({
+            'line_ids': [
+                Command.update(move.line_ids[0].id, {'debit': 3004}),
+                Command.update(move.line_ids[1].id, {'credit': 3004}),
+            ]
+        })
+        move.action_post()
+
+        f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, move))
+        reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)
+        data = [[x[0], x[13]] for x in reader][2:]
+        self.assertIn(['3004,00', move.name], data)

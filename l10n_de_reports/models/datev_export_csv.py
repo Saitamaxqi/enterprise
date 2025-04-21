@@ -335,7 +335,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 if aml.tax_line_id:
                     continue
 
-                if aml.price_total:
+                if aml.price_total and m.move_type != 'entry':
                     sign = -1 if aml.currency_id.compare_amounts(aml.balance, 0) < 0 else 1
                     line_amount_currency = abs(aml.price_total) * sign
 
