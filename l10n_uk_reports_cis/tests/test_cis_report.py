@@ -296,3 +296,27 @@ class TestCisReport(TestAccountReportsCommon):
         self.report._get_lines(report_options, None, warnings)
         self.assertFalse(move.l10n_uk_cis_inactive_partner)
         self.assertTrue('l10n_uk_reports_cis.warning_cis_unregistered_partner' not in warnings)
+
+    def test_cis_report_rounded_values(self):
+        partner = self.env['res.partner'].create({
+            'name': 'Factory and Warehouse Fabrication Services',
+            'is_company': True,
+            'l10n_uk_cis_enabled': True,
+            'l10n_uk_reports_cis_verification_number': 'V6499876214',
+            'l10n_uk_reports_cis_deduction_rate': 'net',
+            'l10n_uk_hmrc_company_registration_number': 'NI839475',
+            'l10n_uk_hmrc_unique_taxpayer_reference': '2983286482',
+        })
+        self.create_invoice_and_post(partner, '2009-04-18', [(1029.33, True), (5489.43, False)])
+        options = self._generate_options(self.report, '2009-04-06', '2009-05-05')
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            # Name                                                  Payment     Materials   Deduction
+            [0,                                                     1,          2,          3],
+            [
+                ('CIS Deduction Purchase',                          6519,       5489,       205.87),
+                ('Factory and Warehouse Fabrication Services',      6519,       5489,       205.87),
+            ],
+            options,
+        )

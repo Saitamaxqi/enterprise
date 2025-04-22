@@ -1,5 +1,5 @@
 from odoo import models, _
-from odoo.tools import SQL
+from odoo.tools import SQL, float_round
 
 
 class AccountTaxReportHandler(models.AbstractModel):
@@ -42,6 +42,16 @@ class BritishCISTaxReportCustomHandler(models.AbstractModel):
         domain = f"[('display_type', '=', 'product'), ('move_id.move_type', 'in', ('out_invoice', 'out_refund')), ('tax_tag_ids', 'not in', {sales_base_tags.ids})]"
         result = report._compute_formula_batch_with_engine_domain(options, 'strict_range', {domain: expressions}, current_groupby, next_groupby, offset, limit, warnings)
         return result[domain, expressions]
+
+    def _custom_line_postprocessor(self, report, options, lines):
+        for column_index, column in enumerate(options['columns']):
+            if column['expression_label'] in ('payment', 'materials'):
+                for line in lines:
+                    column_dict = line['columns'][column_index]
+                    value = float_round(column_dict['no_format'], precision_digits=0)
+                    line['columns'][column_index] = report._build_column_dict(value, column)
+
+        return lines
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         queries = []
