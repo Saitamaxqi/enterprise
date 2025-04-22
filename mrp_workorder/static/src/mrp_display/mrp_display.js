@@ -14,14 +14,7 @@ import { PinPopup } from "@mrp_workorder/components/pin_popup";
 import { useConnectedEmployee } from "@mrp_workorder/mrp_display/hooks/employee_hooks";
 import { MrpDisplaySearchBar } from "@mrp_workorder/mrp_display/search_bar";
 import { CheckboxItem } from "@web/core/dropdown/checkbox_item";
-import {
-    Component,
-    onWillDestroy,
-    onWillRender,
-    onWillStart,
-    useState,
-    useSubEnv,
-} from "@odoo/owl";
+import { Component, onWillRender, onWillStart, useState, useSubEnv } from "@odoo/owl";
 import { MrpEmployeeDialog } from "./dialog/mrp_employee_dialog";
 
 const defaultWorkcenterButtons = [
@@ -106,14 +99,10 @@ export class MrpDisplay extends Component {
                     await record.load();
                     await record.model.notify();
                 } else {
-                    clearInterval(this.refreshInterval);
                     await this.model.root.load({
                         offset: this.state.offset,
                         limit: this.state.limit,
                     });
-                    this.refreshInterval = setInterval(() => {
-                        this.env.reload();
-                    }, 600000);
                 }
                 await this.useEmployee.getConnectedEmployees();
             },
@@ -157,17 +146,10 @@ export class MrpDisplay extends Component {
             this.state.canLoadSamples = await this.orm.call("mrp.production", "can_load_samples", [
                 [],
             ]);
-            this.refreshInterval = setInterval(() => {
-                this.env.reload();
-            }, 600000);
         });
 
         onWillRender(() => {
             this.defineRelevantRecords();
-        });
-
-        onWillDestroy(async () => {
-            clearInterval(this.refreshInterval);
         });
     }
 
