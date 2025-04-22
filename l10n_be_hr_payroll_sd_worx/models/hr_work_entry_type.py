@@ -1,4 +1,3 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
@@ -12,5 +11,7 @@ class HrWorkEntryType(models.Model):
 
     @api.constrains('sdworx_code')
     def _check_sdworx_code(self):
-        if self.sdworx_code and len(self.sdworx_code) != 4:
-            raise ValidationError(_('The code should have 4 characters!'))
+        invalid_work_entry_types = self.filtered(lambda we: we.sdworx_code and len(we.sdworx_code) != 4)
+        if invalid_work_entry_types:
+            error = _("The following work entry types should have a 4 characters SDWorx code or should be left empty:\n")
+            raise ValidationError(error + "\n".join(invalid_work_entry_types.mapped('name')))
