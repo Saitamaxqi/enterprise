@@ -1,40 +1,9 @@
 <?xml version="1.0"?>
 <templates>
 <t t-name="voip.Dialer">
-    <div class="o-voip-Dialer d-flex flex-column align-items-center gap-3 w-100 p-3">
-        <div class="d-flex flex-column w-100">
-            <div class="position-relative px-5">
-                <img t-if="phoneNumberStartsWithCountryCode" class="o-voip-countryFlag position-absolute start-0 top-50 translate-middle-y ms-2" t-attf-src="/base/static/img/country_flags/{{ softphone.numpad.countryCode.iso }}.png" t-att-alt="flagAltLabel"/>
-                <div class="d-flex justify-content-center align-items-center w-100">
-                    <div class="d-flex align-items-center">
-                        <input class="form-control border-0 fs-1 fw-bold text-center" type="text" t-model="softphone.numpad.value" t-ref="input" t-on-input="onInputChangeDebounced" t-on-keydown="onKeydown"/>
-                    </div>
-                </div>
-                <t t-if="softphone.numpad.value">
-                    <button class="btn btn-light position-absolute end-0 top-50 translate-middle-y d-flex p-2" title="Backspace" t-on-click="onClickBackspace" t-on-touchend.prevent="(ev) => ev.target.click()">
-                        <i class="oi oi-backspace-o fa-2x" aria-hidden="true"/>
-                    </button>
-                </t>
-            </div>
-            <t t-set="suggestions" t-value="calleeSuggestions"/> <!-- avoid recomputing the whole thing -->
-            <div t-if="suggestions.length > 0" class="d-flex flex-column">
-                <button class="btn btn-light fw-normal text-truncate" t-out="firstSuggestion" t-on-click="() => this.onClickFirstResult(suggestions.firstResult.contact)"/>
-                <button t-if="suggestions.length > 1" class="btn btn-link fw-normal text-truncate">
-                    <i class="fa fa-users pe-1" aria-hidden="true"/>
-                    <t t-esc="showOthersButtonText"/>
-                </button>
-            </div>
-        </div>
-        <div class="o-voip-Numpad grid w-100 mt-auto px-2">
-            <t t-foreach="keys" t-as="key" t-key="key.key">
-                <button t-attf-class="btn btn-light d-flex flex-column align-items-stretch g-col-4 gap-1 p-1 {{ key.icon and 'justify-content-center' }}" t-on-click="() => this.onClickKey(key.key)" t-on-touchend.prevent="() => this.onClickKey(key.key)">
-                    <i t-if="key.icon" t-attf-class="fa {{ key.icon or '' }}"/>
-                    <span t-else="" class="o-voip-Numpad-number fw-bolder lh-1" t-esc="key.key"/>
-                    <span t-if="key.letters" class="smaller fw-bold opacity-50" t-esc="key.letters"/>
-                </button>
-            </t>
-        </div>
-        <ActionButton
+    <div class="o-voip-Dialer d-flex flex-column align-items-center gap-2 w-100">
+        <Keypad state="softphone.dialer"/>
+        <ActionButton t-if="!softphone.dialer.showMore"
             name.translate="Call"
             icon="'fa-phone fa-2x'"
             type="'success'"

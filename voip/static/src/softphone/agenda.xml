@@ -21,6 +21,7 @@
                 subtitleIcon="isFolded ? '' : 'fa fa-fw fa-building-o'"
                 phoneNumber="activity.partner ? activity.phone : ''"
                 record="activity"
+                section="slot.section"
             >
                 <t t-set-slot="side">
                     <ActionButton t-if="isFolded"

@@ -2,12 +2,14 @@
 <templates>
 <t t-name="voip.Tab">
     <div class="o-voip-Tab d-flex flex-column w-100" t-att-class="props.extraClass">
-        <div class="d-flex align-items-center py-2 border-bottom">
-            <input id="o-voip-Tab-searchInput" class="form-control flex-grow-1 border-0" placeholder="Search…" t-model="props.state.searchInputValue" t-on-input="props.onInputSearch" t-ref="searchInput"/>
-            <label class="px-3" for="o-voip-Tab-searchInput">
-                <i t-att-class="searchBarIcon" aria-hidden="true"/>
-            </label>
-        </div>
+        <t t-if="props.hasSearchBar">
+            <div class="d-flex align-items-center py-2 border-bottom">
+                <input id="o-voip-Tab-searchInput" class="form-control flex-grow-1 border-0" placeholder="Search…" t-model="props.state.searchInputValue" t-on-input="props.onInputSearch" t-ref="searchInput"/>
+                <label class="px-3" for="o-voip-Tab-searchInput">
+                    <i t-att-class="searchBarIcon" aria-hidden="true"/>
+                </label>
+            </div>
+        </t>
         <div t-if="props.itemsBySection.size > 0" class="overflow-auto">
             <t t-foreach="[...props.itemsBySection]" t-as="mapping" t-key="mapping[0]">
                 <t t-set="sectionName" t-value="mapping[0]"/>
@@ -19,7 +21,7 @@
                         <t t-esc="sectionName"/>
                     </h2>
                     <t t-foreach="items" t-as="item" t-key="item.id">
-                        <t t-slot="entry" item="item"/>
+                        <t t-slot="entry" item="item" section="sectionName"/>
                         <!-- dummy node, used to hold a t-ref to the end of tab -->
                         <span t-if="mapping_last and item_last" t-ref="end-of-tab"/>
                     </t>

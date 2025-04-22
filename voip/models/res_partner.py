@@ -48,7 +48,7 @@ T9_MAPPING = {
 
 def unaccent(text):
     return "".join(
-        c for c in unicodedata.normalize("NFD", text) if unicodedata.category(c) != "Mn"
+        c for c in unicodedata.normalize("NFKD", text) if unicodedata.category(c) != "Mn"
     )
 
 

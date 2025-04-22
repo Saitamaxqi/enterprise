@@ -12,6 +12,7 @@ export class Tab extends Component {
     static defaultProps = {
         extraClass: "",
         getSectionStyle: (item) => "",
+        hasSearchBar: true,
         noEntriesMessage: _t("Nothing to see here 😔"),
         onInputSearch: () => {},
         onTabEnd: () => {},
@@ -24,6 +25,7 @@ export class Tab extends Component {
          * section name. It takes the first item of the section as an argument.
          */
         getSectionStyle: { type: Function, optional: true },
+        hasSearchBar: { type: Boolean, optional: true },
         itemsBySection: Map,
         /**
          * Message displayed when there are no entries in the tab.
@@ -53,8 +55,10 @@ export class Tab extends Component {
         });
         useEffect(
             (shouldFocus) => {
-                if (shouldFocus && !this.voip.error) {
-                    this.searchInput.el.focus();
+                if (shouldFocus) {
+                    if (this.searchInput.el && !this.voip.error) {
+                        this.searchInput.el.focus();
+                    }
                     this.softphone.shouldFocus = false;
                 }
             },

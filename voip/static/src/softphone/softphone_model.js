@@ -1,3 +1,4 @@
+import { KeypadModel } from "@voip/softphone/keypad_model";
 import { isSubstring } from "@voip/utils/utils";
 
 /**
@@ -6,7 +7,9 @@ import { isSubstring } from "@voip/utils/utils";
  */
 export class Softphone {
     activeTab = "dialer";
+    activeTabSection = "";
     activeRecord = null;
+    dialer = new KeypadModel();
     isDisplayed = false;
     numpad = {
         isOpen: false,

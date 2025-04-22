@@ -21,6 +21,7 @@
                 subtitleIcon="'fa fa-fw fa-building-o'"
                 phoneNumber="contact.phone"
                 record="contact"
+                section="slot.section"
             >
                 <t t-set-slot="side">
                     <ActionButton t-if="isFolded"

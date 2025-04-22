@@ -17,6 +17,10 @@ export class TabEntry extends Component {
         subtitleIcon: { type: String, optional: true },
         phoneNumber: { type: String },
         record: Object,
+        /**
+         * The name of the section of the tab to which this entry belongs.
+         */
+        section: String,
         slots: Object,
     };
     static template = "voip.TabEntry";
@@ -54,11 +58,26 @@ export class TabEntry extends Component {
 
     /** @returns {boolean} */
     get isActiveRecord() {
-        return this.props.record.eq(this.softphone.activeRecord);
+        return (
+            this.softphone.activeTabSection === this.props.section &&
+            this.props.record.eq(this.softphone.activeRecord)
+        );
     }
 
-    /** @param {MouseEvent} ev */
+    /**
+     * Updates the active section and the active record. These two variables
+     * determine which record to unfold and which record to return to after the
+     * call summary is hidden.
+     *
+     * @param {MouseEvent} ev
+     */
     onClickSummary(ev) {
-        this.softphone.activeRecord = this.isActiveRecord ? null : this.props.record;
+        if (this.isActiveRecord) {
+            this.softphone.activeRecord = null;
+            this.softphone.activeTabSection = "";
+        } else {
+            this.softphone.activeTabSection = this.props.section;
+            this.softphone.activeRecord = this.props.record;
+        }
     }
 }

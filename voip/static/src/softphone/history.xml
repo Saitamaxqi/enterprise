@@ -23,6 +23,7 @@
                 subtitleIcon="getSubtitleIcon(call)"
                 phoneNumber="phoneNumber"
                 record="call"
+                section="slot.section"
             >
                 <t t-set-slot="side">
                     <small class="text-muted smaller text-nowrap" t-esc="call.callDate"/>
