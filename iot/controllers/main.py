@@ -86,33 +86,43 @@ class IoTController(http.Controller):
                 urls[device.identifier] = device.display_url
         return json.dumps(urls)
 
-    @http.route('/iot/printer/status', type='jsonrpc', auth='public')
-    def listen_iot_printer_status(self, print_id, device_identifier, iot_mac):
+    @http.route('/iot/box/send_websocket', type='jsonrpc', auth='public')
+    def iot_box_send_websocket(self, session_id, iot_box_identifier, device_identifier, status, **kwargs):
+        """Called by the IoT Box once an operation is over. We then forward
+        the acknowledgment to the user who made the request to inform him
+        of the success of the operation.
+
+        :param session_id: ID of the operation
+        :param iot_box_identifier: The IP of the IoT box (used to find the box)
+        :param device_identifier: The IoT device identifier
+        :param status: Status of the last action (success, error, ...)
+        :param kwargs:
         """
-        Called by the IoT once the printing operation is over. We then forward
-        the acknowledgment to the user who made the print request to inform him
-        of the sucess of the operation.
-        """
-        if isinstance(device_identifier, str) and isinstance(print_id, str):
-            box = self._search_box(iot_mac)
-            if not box:
-                _logger.warning("No IoT found with mac/identifier '%s'. Request ignored", iot_mac)
-                return
-            iot_device = request.env["iot.device"].sudo().search([
-                    ('identifier', '=', device_identifier),
-                    ('iot_id', '=', box.id)
-                ],
-                limit=1
+        box = self._search_box(iot_box_identifier)
+        if not box:
+            _logger.warning("No IoT Box found with MAC: '%s'. Request ignored", iot_box_identifier)
+            return
+        iot_device = request.env["iot.device"].sudo().search(
+            [('identifier', '=', device_identifier), ('iot_id', '=', box.id)], limit=1
+        )
+
+        if not iot_device:
+            _logger.warning(
+                "No IoT device found with identifier '%s' (MAC: %s). Request ignored",
+                device_identifier, iot_box_identifier
             )
+            return
 
-            if not iot_device:
-                _logger.warning("No IoT device found with identifier '%s' (iot_mac: %s). Request ignored", device_identifier, iot_mac)
-                return
-
-            request.env['iot.channel']._send_message({
-                'print_id': print_id,
-                'device_identifier': device_identifier
-            }, message_type='print_confirmation')
+        request.env['iot.channel']._send_message({
+            'session_id': session_id,
+            'iot_box_identifier': iot_box_identifier,
+            'device_identifier': device_identifier,
+            'message': {
+                'status': status,
+                'result': kwargs.get('result', {}),
+                'action_args': kwargs.get('action_args', {})
+            },
+        }, message_type='operation_confirmation')
 
     @http.route('/iot/setup', type='jsonrpc', auth='public')
     def update_box(self, iot_box, devices):

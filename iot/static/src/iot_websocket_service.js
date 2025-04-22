@@ -91,12 +91,10 @@ export const IotWebsocketService = {
         try {
             if (iotChannel) {
                 busService.addChannel(iotChannel);
-                busService.subscribe("print_confirmation", (payload) => {
-                    if (ws.jobs[payload["print_id"]]) {
-                        ws.onPrintConfirmation(
-                            payload["device_identifier"],
-                            payload["print_id"]
-                        );
+                busService.subscribe("operation_confirmation", (payload) => {
+                    const printId = payload["message"]?.["result"]?.["print_id"];
+                    if (ws.jobs[printId]) {
+                        ws.onPrintConfirmation(payload["device_identifier"], printId);
                     }
                 });
             }
