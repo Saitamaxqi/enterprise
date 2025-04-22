@@ -45,7 +45,7 @@
                 </Receptor>
                 <Totales>
                     <MntNeto>167449</MntNeto>
-                    <TasaIVA>19.00%</TasaIVA>
+                    <TasaIVA>19.00</TasaIVA>
             <IVA>31815</IVA>
                     <ImptoReten>
                         <TipoImp>25</TipoImp>
