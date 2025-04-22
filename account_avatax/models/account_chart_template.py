@@ -13,5 +13,6 @@ class AccountChartTemplate(models.AbstractModel):
                 'is_avatax': True,
                 'auto_apply': False,
                 'country_id': self.env.ref('base.us').id,
+                'sequence': 100,
             },
         }

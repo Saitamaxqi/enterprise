@@ -10,7 +10,6 @@
     'data': [
         'security/ir.model.access.csv',
         'data/product.avatax.category.csv',
-        'data/fiscal_position.xml',
         'views/account_fiscal_position_views.xml',
         'views/account_move_views.xml',
         'views/avatax_category_views.xml',
