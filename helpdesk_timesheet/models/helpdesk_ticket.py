@@ -129,6 +129,17 @@ class HelpdeskTicket(models.Model):
                 timers.unlink()
                 if timesheets_to_remove := timesheets.filtered(lambda t: t.unit_amount == 0):
                     timesheets_to_remove.unlink()
+            timesheet_read_group = self.env['account.analytic.line']._read_group(
+                [('project_id', '!=', False), ('helpdesk_ticket_id', 'in', self.ids)],
+                ['helpdesk_ticket_id'],
+                ['id:recordset'],
+            )
+            for ticket, timesheets in timesheet_read_group:
+                if ticket.use_helpdesk_timesheet and ticket.project_id:
+                    timesheets_to_update = timesheets.filtered(lambda t: t.project_id != ticket.project_id)
+                    timesheets_to_update.project_id = ticket.project_id
+                else:
+                    timesheets.helpdesk_ticket_id = False
         return res
 
     def action_timer_start(self):

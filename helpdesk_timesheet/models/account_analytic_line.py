@@ -30,7 +30,7 @@ class AccountAnalyticLine(models.Model):
         for line in self:
             line.display_task = line.task_id or not line.has_helpdesk_team
 
-    @api.depends('helpdesk_ticket_id.project_id')
+    @api.depends('helpdesk_ticket_id')
     def _compute_project_id(self):
         timesheets_with_ticket = self.filtered('helpdesk_ticket_id')
         for timesheet in timesheets_with_ticket:
@@ -56,16 +56,14 @@ class AccountAnalyticLine(models.Model):
         # Override to set task_id to false when a helpdesk_ticket_id has been assigned
         task_and_ticket_lines = self.filtered(lambda line: line.task_id and line.helpdesk_ticket_id)
         task_and_ticket_lines.task_id = False
+        self.env.remove_to_compute(self._fields['helpdesk_ticket_id'], task_and_ticket_lines)
         super(AccountAnalyticLine, self - task_and_ticket_lines)._compute_task_id()
 
-    @api.depends('task_id')
+    @api.depends('task_id', 'project_id')
     def _compute_helpdesk_ticket_id(self):
         # set helpdesk_ticket_id to false when a task_id has been assigned
-        timesheet_to_update = self.filtered(lambda line: line.task_id and line.helpdesk_ticket_id)
-        # no need to recompute the project_id if nothing changes.
-        # unless the record is not yet created
-        self.env.remove_to_compute(self._fields['project_id'],
-                                   (self - timesheet_to_update).filtered(lambda line: line._origin))
+        timesheet_to_update = self.filtered(lambda line: line.task_id and line.helpdesk_ticket_id or line.project_id != line.helpdesk_ticket_id.project_id)
+        self.env.remove_to_compute(self._fields['task_id'], timesheet_to_update)
         timesheet_to_update.helpdesk_ticket_id = False
 
     @api.constrains('task_id', 'helpdesk_ticket_id')
