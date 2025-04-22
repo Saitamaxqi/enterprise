@@ -512,7 +512,7 @@ export class MrpDisplay extends Component {
     }
 
     get displayBackButton() {
-        return this.env.config.breadcrumbs.length > 2;
+        return this.env.config.breadcrumbs.length > 1;
     }
 
     onClickBack() {
