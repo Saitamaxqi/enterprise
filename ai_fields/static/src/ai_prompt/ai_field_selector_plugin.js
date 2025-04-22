@@ -49,49 +49,78 @@ export class AIFieldSelectorPlugin extends Plugin {
         this.dependencies.selection.focusEditable();
     }
 
+    /**
+     * Insert the given fields as qweb expressions in the editor
+     *
+     * @param {Array} fieldsInfo: list of field to insert
+     * @param {boolean} noTrailingSpace: true if no space should be added at the end
+     */
     insert(fieldsInfo, noTrailingSpace) {
         if (!fieldsInfo) {
             return;
         }
 
-        const t = document.createElement("T");
-        t.classList.add("o_ai_field");
-        if (fieldsInfo.length === 1) {
-            t.innerText = fieldsInfo[0].map((f) => f.string).join(" > ");
-            t.setAttribute("data-ai-field", fieldsInfo[0].map((f) => f.name).join("."));
-        } else {
-            // Show one per line
-            for (const fieldChain of fieldsInfo) {
-                const el = document.createElement("span");
-                el.innerText = fieldChain.map((f) => f.string).join(" > ");
-                el.setAttribute("data-ai-field", fieldChain.map((f) => f.name).join("."));
-                t.appendChild(el);
-                t.appendChild(document.createElement("br"));
-            }
-            noTrailingSpace = true;
-        }
+        const chains = fieldsInfo.map((f) => f.map((field) => field.name).join("."));
+        const aiRead = `object._ai_read(${chains.map((c) => `'${c}'`).join(",")})`;
+        let elField;
 
         if (fieldsInfo.length === 1) {
             const fields = fieldsInfo[0];
             const chain = fields.map((f) => this._fieldToQweb(f)).join(".");
+            const fieldString = fieldsInfo[0].map((f) => f.string).join(" > ");
 
-            const forceAiRead = fields.some((f) => ["one2many", "many2many"].includes(f.type));
-
-            if (!fields) {
-                return;
-            }
-            if (fields.at(-1).type === "one2many" && fields.at(-1).relation === "mail.message") {
-                t.setAttribute("t-out", `object.${chain}._ai_format_mail_messages()`);
-            } else if (!forceAiRead) {
+            if (!fields.some((f) => ["one2many", "many2many"].includes(f.type))) {
                 // Try to not call `_ai_read` so demo user can use it
-                t.setAttribute("t-out", `{"${chain}": object.${chain}}`);
+                // keep only `object.field` in `t-out`, because of QWeb whitelist
+                elField = document.createElement("SPAN");
+                elField.setAttribute("data-oe-protected", "true");
+                elField.setAttribute("contenteditable", "false");
+
+                const elOpen = document.createElement("DIV");
+                elOpen.classList.add("d-none");
+                elOpen.innerText = `{"${chain}":`;
+                elField.appendChild(elOpen);
+
+                const elT = document.createElement("T");
+                elT.setAttribute("t-out", `object.${chain}`);
+                elT.innerText = fieldString;
+                elField.appendChild(elT);
+
+                const elClose = document.createElement("DIV");
+                elClose.classList.add("d-none");
+                elClose.innerText = `}`;
+                elField.appendChild(elClose);
+            } else {
+                elField = document.createElement("T");
+                elField.setAttribute("data-ai-field", fieldsInfo[0].map((f) => f.name).join("."));
+                elField.innerText = fieldString;
+
+                if (
+                    fields.at(-1).type === "one2many" &&
+                    fields.at(-1).relation === "mail.message"
+                ) {
+                    elField.setAttribute("t-out", `object.${chain}._ai_format_mail_messages()`);
+                } else {
+                    elField.setAttribute("t-out", aiRead);
+                }
             }
+        } else {
+            elField = document.createElement("T");
+            elField.setAttribute("t-out", aiRead);
+
+            for (const fieldChain of fieldsInfo) {
+                // Show one per line
+                const el = document.createElement("span");
+                el.innerText = fieldChain.map((f) => f.string).join(" > ");
+                el.setAttribute("data-ai-field", fieldChain.map((f) => f.name).join("."));
+                elField.appendChild(el);
+                elField.appendChild(document.createElement("br"));
+            }
+            noTrailingSpace = true;
         }
-        if (!t.hasAttribute("t-out")) {
-            const chains = fieldsInfo.map((f) => f.map((field) => field.name).join("."));
-            t.setAttribute("t-out", `object._ai_read(${chains.map((c) => `'${c}'`).join(",")})`);
-        }
-        this.dependencies.dom.insert(t);
+
+        elField.classList.add("o_ai_field");
+        this.dependencies.dom.insert(elField);
         if (!noTrailingSpace) {
             this.dependencies.dom.insert(" ");
         }

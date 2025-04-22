@@ -106,7 +106,7 @@ test("AI Prompt - Field selector without template editor group", async () => {
     expect("div.o_ai_prompt").toHaveText("Hello Display name");
     await click(document.body);
     expect.verifySteps([
-        'change <p>Hello <t class="o_ai_field" data-ai-field="display_name" t-out="{&quot;display_name&quot;: object.display_name}">Display name</t> </p>',
+        'change <p>Hello <span data-oe-protected="true" class="o_ai_field"><div class="d-none">{"display_name":</div><t t-out="object.display_name">Display name</t><div class="d-none">}</div></span> </p>',
     ]);
 });
 
@@ -138,7 +138,7 @@ test("AI Prompt - Field selector with template editor group", async () => {
     expect("div.o_ai_prompt").toHaveText("Hello Created on\nDisplay name");
     await click(document.body);
     expect.verifySteps([
-        `change <p>Hello <t class="o_ai_field" t-out="object._ai_read('create_date','display_name')"><span data-ai-field="create_date">Created on</span><br><span data-ai-field="display_name">Display name</span><br></t></p>`,
+        `change <p>Hello <t t-out="object._ai_read('create_date','display_name')" class="o_ai_field"><span data-ai-field="create_date">Created on</span><br><span data-ai-field="display_name">Display name</span><br></t></p>`
     ]);
 });
 
@@ -164,7 +164,7 @@ test("AI prompt - Insert messages", async () => {
     expect("div.o_ai_prompt").toHaveText("Messages Messages");
     await click(document.body);
     expect.verifySteps([
-        'change <p>Messages <t class="o_ai_field" data-ai-field="message_ids" t-out="object.message_ids._ai_format_mail_messages()">Messages</t> </p>',
+        'change <p>Messages <t data-ai-field="message_ids" t-out="object.message_ids._ai_format_mail_messages()" class="o_ai_field">Messages</t> </p>',
     ]);
 });
 
