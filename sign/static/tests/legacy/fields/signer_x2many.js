@@ -85,6 +85,7 @@ QUnit.module("Sign Fields", (hooks) => {
                     fields: {
                         display_name: { string: "partner", type: "char" },
                         email: { string: "email", type: "char" },
+                        leave_date_to: { string: "out of office", type: "date" },
                     },
                     records: [
                         {
