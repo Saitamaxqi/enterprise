@@ -51,7 +51,13 @@ class HrContract(models.Model):
             check_out_tz = attendance.check_out.astimezone(tz)
             if attendance.overtime_status == 'refused':
                 check_out_tz -= timedelta(hours=attendance.validated_overtime_hours)
-            attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)])
+            if attendance.employee_id.resource_calendar_id and not attendance.employee_id.resource_calendar_id.flexible_hours:
+                lunch_intervals = attendance.employee_id._employee_attendance_intervals(check_in_tz, check_out_tz, lunch=True)
+                leaves = emp_cal._leave_intervals_batch(check_in_tz, check_out_tz, None)[False] if emp_cal else WorkIntervals([])
+                real_lunch_intervals = lunch_intervals - leaves
+                attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)]) - real_lunch_intervals
+            else:
+                attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)])
             for interval in attendance_intervals:
                 intervals[attendance.employee_id.resource_id.id].append((
                     max(start_dt, interval[0]),

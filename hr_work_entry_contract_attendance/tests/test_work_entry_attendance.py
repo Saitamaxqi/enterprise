@@ -32,7 +32,7 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         self.assertTrue(all(hwe.attendance_id for hwe in work_entries))
 
     def test_lunch_time_case(self):
-        # never consider lunch time for attendance based contracts
+        # only consider lunch time for non-flexible attendance based contracts
         week_day = datetime(2022, 9, 19, 8, 0, 0)
         weekend = datetime(2022, 9, 18, 8, 0, 0)
         self.env['hr.attendance'].create([
@@ -49,10 +49,9 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
             }
             ]
         )
-
-        # We should have 2 work entries
-        # Sunday: 08:00 -> 20:00
-        # Monday: 08:00 -> 20:00
+        # We should have here 3 work entries in total
+        # Sunday -> 08:00 -> 20:00
+        # Monday -> 08:00 -> 12:00 and 13:00 -> 20:00
         self.contract.generate_work_entries(date(2022, 9, 18), date(2022, 9, 19))
         sunday = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id),
                                                    ('date_stop', '<', week_day)])
@@ -64,9 +63,32 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         self.assertEqual(sunday.date_start, datetime(2022, 9, 18, 8, 0, 0))
         self.assertEqual(sunday.date_stop, datetime(2022, 9, 18, 20, 0, 0))
 
-        self.assertEqual(len(monday), 1)
-        self.assertEqual(monday.date_start, datetime(2022, 9, 19, 8, 0, 0))
-        self.assertEqual(monday.date_stop, datetime(2022, 9, 19, 20, 0, 0))
+        self.assertEqual(len(monday), 2)
+        self.assertEqual(monday[0].date_start, datetime(2022, 9, 19, 8, 0, 0))
+        self.assertEqual(monday[0].date_stop, datetime(2022, 9, 19, 12, 0, 0))
+
+        self.assertEqual(monday[1].date_start, datetime(2022, 9, 19, 13, 0, 0))
+        self.assertEqual(monday[1].date_stop, datetime(2022, 9, 19, 20, 0, 0))
+
+        # set flexible hours on the employee contract
+        self.contract.resource_calendar_id.flexible_hours = True
+        flex_day = datetime(2022, 9, 20, 8, 0, 0)
+        self.env['hr.attendance'].create([
+            {
+                'employee_id': self.employee.id,
+                'check_in': flex_day,
+                'check_out': flex_day.replace(hour=20),
+            },
+            ]
+        )
+        # We should have here 1 work entry
+        # Tuesday -> 08:00 -> 20:00
+        self.contract.generate_work_entries(date(2022, 9, 20), date(2022, 9, 21))
+        tuesday = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id),
+                                                   ('date_start', '>=', flex_day)])
+        self.assertEqual(len(tuesday), 1)
+        self.assertEqual(tuesday.date_start, datetime(2022, 9, 20, 8, 0, 0))
+        self.assertEqual(tuesday.date_stop, datetime(2022, 9, 20, 20, 0, 0))
 
     def test_timezones(self):
         """ Basic check that timezones do not cause weird behaviors:
