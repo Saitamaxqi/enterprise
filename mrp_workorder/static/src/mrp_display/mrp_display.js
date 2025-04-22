@@ -395,10 +395,7 @@ export class MrpDisplay extends Component {
     }
 
     get adminWorkorderIds() {
-        // TODO remove lock,check if we can remove isPreviousAdmin
-        const adminId =
-            this.useEmployee.employees.admin.id ||
-            this.useEmployee.employees.connected.find((e) => e.isPreviousAdmin)?.id;
+        const adminId = this.useEmployee.employees.admin.id;
         return !adminId
             ? []
             : this.workorders.reduce(

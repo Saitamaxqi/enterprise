@@ -9,7 +9,8 @@
                     <h4 class="mb-0 text-wrap text-break font-monospace" t-out="props.record.resModel === 'mrp.workorder' ? record.production_id[1]: record.display_name"/>
                     <t t-if="!this.props.record.data.employee_ids.records.length">
                         <span t-if="props.record.resModel === 'mrp.workorder'"
-                              class="o_mrp_display_record_start_btn btn btn-outline-primary text-uppercase fw-bold lh-1">start</span>
+                              class="o_mrp_display_record_start_btn btn btn-outline-primary text-uppercase fw-bold lh-1"
+                              t-att-class="{'opacity-0': disabled}">start</span>
                         <span t-else="" class="badge rounded-pill p-2 lh-1 text-nowrap"
                             t-att-class="{
                                 'border border-info text-info': record.state === 'confirmed',

@@ -13,7 +13,6 @@
                     <div class="d-flex justify-content-between align-items-center gap-2">
                         <span class="fw-bold text-truncate"
                          t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}" t-esc="employee.name"/>
-                        <i class="fa fa-unlock-alt" t-if="employee.id === props.employees.admin.id" role="img"/>
                     </div>
                     <div t-foreach="employee.workcenters" t-as="wc" t-key="wc.id" class="d-flex justify-content-between">
                         <span t-attf-class="o_tag o_tag_color_{{wc.id % 11}} badge rounded" t-esc="wc.name"/>
