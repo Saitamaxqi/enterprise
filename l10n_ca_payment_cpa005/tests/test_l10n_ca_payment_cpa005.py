@@ -74,6 +74,7 @@ class TestCPA005(AccountTestInvoicingCommon):
             }
         )
 
+        cls.env.ref("base.CAD").active = True
         payments = (
             create_payment(cls.partner_a, 123.45, "partner_a_1", 0, "430")
             | create_payment(cls.partner_a, 543.21, "partner_a_2", 0, "430")
