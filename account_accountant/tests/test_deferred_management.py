@@ -644,3 +644,13 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
             {'date': fields.Date.to_date('2024-02-29'), 'amount_total': 4000},
             {'date': fields.Date.to_date('2024-03-31'), 'amount_total': 4000},
         ])
+
+    def test_deferral_moves_not_removed(self):
+        """
+        Test that when there are multiple amls with the same price on the original invoice the deferral_moves are not removed
+        """
+        move = self.create_invoice('in_invoice', [
+            (self.expense_accounts[0], 1000, '2025-05-10', '2025-05-25'),
+            (self.expense_accounts[0], 1000, '2025-05-10', '2025-05-25')
+        ], date='2025-04-11')
+        self.assertEqual(len(move.deferred_move_ids), 4)

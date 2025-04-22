@@ -339,7 +339,7 @@ class AccountMove(models.Model):
         for move_fully_deferred in moves_fully_deferred:
             # If, after calculation, we have 2 deferral entries in the same month, it means that
             # they simply cancel out each other, so there is no point in creating them.
-            deferred_move_ids = move_fully_deferred.deferred_original_move_ids.deferred_move_ids
+            deferred_move_ids = move_fully_deferred + deferral_moves
             cancelling_moves = deferred_move_ids.filtered(lambda move:
                 move_fully_deferred.date.replace(day=1) == move.date.replace(day=1)
                 and move.amount_total == move_fully_deferred.amount_total
