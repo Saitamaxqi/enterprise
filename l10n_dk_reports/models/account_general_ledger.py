@@ -92,6 +92,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             "income": 'Sale',
             "income_other": 'Sale',
             "expense": 'Expense',
+            "expense_other": 'Expense',
             "expense_depreciation": 'Expense',
             "expense_direct_cost": 'Expense',
             "off_balance": 'Other',

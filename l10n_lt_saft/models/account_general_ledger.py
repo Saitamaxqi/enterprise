@@ -150,6 +150,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             'income': 'P',
             'income_other': 'P',
             'expense': 'S',
+            'expense_other': 'S',
             'expense_depreciation': 'S',
             'expense_direct_cost': 'S',
             'off_balance': 'KT',
