@@ -42,11 +42,11 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
 
         expected_vals_list = [
             # number_draft, sum_draft, number_waiting, sum_waiting, number_late, sum_late, currency
-            [            1,       100,              1,         100,           1,      100, company_currency],
-            [            1,       200,              1,         200,           1,      200, foreign_currency],
-            [            1,       400,              1,         400,           1,      400, foreign_currency],
-            [            1,       200,              1,         200,           1,      200, company_currency],
-            [            1,       100,              1,         100,           1,      100, company_currency],
+            [            1,       100,              1,          55,           1,       55, company_currency],
+            [            1,       200,              1,         110,           1,      110, foreign_currency],
+            [            1,       400,              1,         220,           1,      220, foreign_currency],
+            [            1,       200,              1,         110,           1,      110, company_currency],
+            [            1,       100,              1,          55,           1,       55, company_currency],
         ]
 
         for (purchase_journal, bill_currency), expected_vals in zip(setup_values, expected_vals_list):
@@ -145,7 +145,7 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         self.assertIn('13.3', dashboard_data['sum_draft'])
 
         self.assertEqual(dashboard_data['number_waiting'], 1)
-        self.assertIn('81.72', dashboard_data['sum_waiting'])
+        self.assertIn('68.42', dashboard_data['sum_waiting'])
 
         # Check waiting payment
         refund.action_post()
@@ -155,7 +155,7 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         self.assertIn('0.00', dashboard_data['sum_draft'])
 
         self.assertEqual(dashboard_data['number_waiting'], 2)
-        self.assertIn('68.42', dashboard_data['sum_waiting'])
+        self.assertIn('55.12', dashboard_data['sum_waiting'])
 
         # Check partial on refund
         payment = self.env['account.payment'].create({
@@ -175,11 +175,11 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         self.assertIn('0.00', dashboard_data['sum_draft'])
 
         self.assertEqual(dashboard_data['number_waiting'], 2)
-        self.assertIn('68.42', dashboard_data['sum_waiting'])
+        self.assertIn('65.12', dashboard_data['sum_waiting'])
 
         dashboard_data = journal._get_journal_dashboard_data_batched()[journal.id]
         self.assertEqual(dashboard_data['number_late'], 2)
-        self.assertIn('68.42', dashboard_data['sum_late'])
+        self.assertIn('65.12', dashboard_data['sum_late'])
 
     def test_sale_purchase_journal_for_multi_currency_sale(self):
         currency = self.other_currency
@@ -213,8 +213,8 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
 
         default_journal_sale = self.company_data['default_journal_sale']
         dashboard_data = default_journal_sale._get_journal_dashboard_data_batched()[default_journal_sale.id]
-        self.assertEqual(format_amount(self.env, 100, company_currency), dashboard_data['sum_waiting'])
-        self.assertEqual(format_amount(self.env, 100, company_currency), dashboard_data['sum_late'])
+        self.assertEqual(format_amount(self.env, 55, company_currency), dashboard_data['sum_waiting'])
+        self.assertEqual(format_amount(self.env, 55, company_currency), dashboard_data['sum_late'])
 
     @freeze_time("2023-03-15")
     def test_purchase_journal_numbers_and_sums_to_validate(self):

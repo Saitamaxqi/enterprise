@@ -17,29 +17,9 @@ class AccountJournal(models.Model):
             action['search_view_id'] = account_purchase_filter and [account_purchase_filter.id, account_purchase_filter.name] or False
         return action
 
-    def _get_open_sale_purchase_query(self, journal_type):
+    def _get_to_pay_select(self):
         # OVERRIDE
-        assert journal_type in ('sale', 'purchase')
-        query = self.env['account.move']._where_calc([
-            *self.env['account.move']._check_company_domain(self.env.companies),
-            ('journal_id', 'in', self.ids),
-            ('payment_state', 'in', ('not_paid', 'partial')),
-            ('move_type', 'in', ('out_invoice', 'out_refund') if journal_type == 'sale' else ('in_invoice', 'in_refund')),
-            ('state', '=', 'posted'),
-        ])
-
-        selects = [
-            SQL("journal_id"),
-            SQL("company_id"),
-            SQL("currency_id AS currency"),
-            SQL("invoice_date_due < %s AS late", fields.Date.context_today(self)),
-            SQL("SUM(amount_total_signed) AS amount_total_company"),
-            SQL("SUM(amount_total_in_currency_signed) AS amount_total"),
-            SQL("COUNT(*)"),
-            SQL("release_to_pay IN ('yes', 'exception') AS to_pay")
-        ]
-
-        return query, selects
+        return SQL("release_to_pay IN ('yes', 'exception') AS to_pay")
 
     def _get_draft_sales_purchases_query(self):
         # OVERRIDE
