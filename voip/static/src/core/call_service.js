@@ -1,4 +1,3 @@
-import { browser } from "@web/core/browser/browser";
 import { registry } from "@web/core/registry";
 
 export class CallService {
@@ -73,7 +72,7 @@ export class CallService {
             call.timer.time = Math.floor((luxon.DateTime.now() - call.startDate) / 1000);
         };
         computeDuration();
-        call.timer.interval = browser.setInterval(computeDuration, 1000);
+        call.timer.interval = setInterval(computeDuration, 1000);
     }
 }
 

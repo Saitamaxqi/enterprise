@@ -1,6 +1,5 @@
 import { Component, onWillStart, useRef } from "@odoo/owl";
 
-import { browser } from "@web/core/browser/browser";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
@@ -30,7 +29,7 @@ export class DeviceSelectionDialog extends Component {
 
     /** @returns {Promise<{deviceId: *, label: string}[]>} */
     async getAudioInputDevices() {
-        const devices = await browser.navigator.mediaDevices.enumerateDevices();
+        const devices = await navigator.mediaDevices.enumerateDevices();
         return devices
             .filter(({ kind }) => kind === "audioinput")
             .map((device, i) => ({

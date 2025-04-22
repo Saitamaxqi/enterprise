@@ -6,7 +6,6 @@ import { Softphone } from "@voip/softphone/softphone_model";
 import { cleanPhoneNumber } from "@voip/utils/utils";
 import { VoipSystrayItem } from "@voip/web/voip_systray_item";
 
-import { browser } from "@web/core/browser/browser";
 import { isMobileOS } from "@web/core/browser/feature_detection";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
@@ -106,7 +105,7 @@ export class Voip {
     /** @returns {boolean} */
     get hasRtcSupport() {
         return Boolean(
-            window.RTCPeerConnection && window.MediaStream && browser.navigator.mediaDevices
+            window.RTCPeerConnection && window.MediaStream && navigator.mediaDevices
         );
     }
 

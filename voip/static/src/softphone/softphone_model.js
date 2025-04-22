@@ -1,7 +1,5 @@
 import { isSubstring } from "@voip/utils/utils";
 
-import { browser } from "@web/core/browser/browser";
-
 /**
  * Retains the state of the Softphone that needs to be persisted even if the
  * corresponding component is unmounted.
@@ -77,7 +75,7 @@ export class Softphone {
     }
 
     hideCallSummary() {
-        browser.clearTimeout(this.callSummary.hideAfterTimeout);
+        clearTimeout(this.callSummary.hideAfterTimeout);
         Object.assign(this.callSummary, {
             call: null,
             hideAfterTimeout: undefined,
@@ -91,10 +89,10 @@ export class Softphone {
     }
 
     showSummary(call) {
-        browser.clearTimeout(this.callSummary.hideAfterTimeout);
+        clearTimeout(this.callSummary.hideAfterTimeout);
         Object.assign(this.callSummary, {
             call,
-            hideAfterTimeout: browser.setTimeout(() => {
+            hideAfterTimeout: setTimeout(() => {
                 this.hideCallSummary();
                 this.callSummary.scrollToActiveRecord = true;
             }, 3000),

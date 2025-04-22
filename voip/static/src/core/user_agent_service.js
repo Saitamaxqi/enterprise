@@ -4,7 +4,6 @@ import { Registerer } from "@voip/core/registerer";
 import { cleanPhoneNumber } from "@voip/utils/utils";
 
 import { loadBundle } from "@web/core/assets";
-import { browser } from "@web/core/browser/browser";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { Reactive } from "@web/core/utils/reactive";
@@ -85,7 +84,7 @@ export class UserAgent extends Reactive {
      */
     get mediaStreamFactory() {
         return (constraints, sessionDescriptionHandler) => {
-            const mediaRequest = browser.navigator.mediaDevices.getUserMedia(constraints);
+            const mediaRequest = navigator.mediaDevices.getUserMedia(constraints);
             mediaRequest.then(
                 (stream) => this._onGetUserMediaSuccess(stream),
                 (error) => this._onGetUserMediaFailure(error)
@@ -176,7 +175,7 @@ export class UserAgent extends Reactive {
 
     async hangup({ activityDone = true } = {}) {
         this.ringtoneService.stopPlaying();
-        browser.clearTimeout(this.demoTimeout);
+        clearTimeout(this.demoTimeout);
         if (this.session.sipSession) {
             this._cleanUpRemoteAudio();
             switch (this.session.sipSession.state) {
@@ -319,7 +318,7 @@ export class UserAgent extends Reactive {
         if (this.voip.mode === "prod") {
             this.invite(call.phoneNumber);
         } else {
-            this.demoTimeout = browser.setTimeout(() => {
+            this.demoTimeout = setTimeout(() => {
                 this._onOutgoingInvitationAccepted();
             }, 3000);
         }
@@ -347,7 +346,7 @@ export class UserAgent extends Reactive {
             return;
         }
         this.preferredInputDevice = deviceId;
-        const stream = await browser.navigator.mediaDevices.getUserMedia(this.mediaConstraints);
+        const stream = await navigator.mediaDevices.getUserMedia(this.mediaConstraints);
         for (const sender of this.session.sipSession.sessionDescriptionHandler.peerConnection.getSenders()) {
             if (sender.track) {
                 await sender.replaceTrack(stream.getAudioTracks()[0]);
