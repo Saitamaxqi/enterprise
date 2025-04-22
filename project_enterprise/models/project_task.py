@@ -484,7 +484,7 @@ class ProjectTask(models.Model):
                 stop = stop.replace(tzinfo=utc)
 
             resource = compute_allocated_hours.sudo().user_ids._get_project_task_resource()
-            if len(resource) == 1:
+            if len(resource) == 1 and resource.calendar_id:
                 # First case : trying to plan tasks for a single user that has its own calendar => using user's calendar
                 calendar = resource.calendar_id
                 work_intervals = calendar._work_intervals_batch(start, stop, resources=resource)
