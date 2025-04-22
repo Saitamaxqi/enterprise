@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from unittest.mock import patch
-
 from freezegun import freeze_time
-
 from odoo import Command, fields
 from odoo.tests import tagged
 from odoo.addons.account_followup.tests.common import TestAccountFollowupCommon
+from odoo.addons.mail.tests.common import MailCommon
 from dateutil.relativedelta import relativedelta
 
 
 @tagged('post_install', '-at_install')
-class TestAccountFollowupReports(TestAccountFollowupCommon):
+class TestAccountFollowupReports(TestAccountFollowupCommon, MailCommon):
 
     @classmethod
     def setUpClass(cls):
@@ -467,3 +466,33 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
         overdue_invoices = self.env['account.move'].search(action['domain'])
         self.assertIn(invoice.id, overdue_invoices.ids)
         self.assertEqual(parent_contact.followup_status, 'with_overdue_invoices')
+
+    def test_followup_template_recipients_with_cron(self):
+        """
+        tests that when a mail_cc is defined on a template,
+        even if the action is ran from a cron (and de facto from `res.partner.send_followup_email`)
+        the email is correctly sent
+        Completes `test_manual_reminder_get_template_mail_addresses`
+        """
+        self.partner_a.email = "test@test.com"
+        mail_cc = self.env['res.partner'].create({
+            'name': 'John Carmac',
+            'email': 'john.carmac@example.me',
+        })
+        mail_template = self.env['mail.template'].create({
+            'name': 'reminder',
+            'model_id': self.env['ir.model']._get_id('res.partner'),
+            'email_cc': mail_cc.email,
+            'use_default_to': False,
+        })
+        followup_10 = self.create_followup(delay=10)
+        followup_10.mail_template_id = mail_template
+        self.create_invoice('2025-05-01')
+
+        with freeze_time('2025-05-12'), self.mock_mail_gateway(mail_unlink_sent=False):
+            options = {
+                'followup_line': followup_10,
+                'partner_id': self.partner_a.id,
+            }
+            self.partner_a.send_followup_email(options=options)
+        self.assertMailMail(mail_cc, 'sent', author=self.env.user.partner_id)

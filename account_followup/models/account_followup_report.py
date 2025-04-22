@@ -7,7 +7,7 @@ from odoo import models, fields, api
 from odoo.exceptions import UserError
 from odoo.tools.misc import formatLang, format_date, get_lang
 from odoo.tools.translate import _
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, html2plaintext, plaintext2html
+from odoo.tools import html2plaintext, plaintext2html
 
 
 class AccountFollowupReport(models.AbstractModel):
@@ -324,6 +324,25 @@ Best Regards,
 
         return self._get_rendered_body(partner.id, template_src, default_body, options={'post_process': True})
 
+    @api.model
+    def _get_email_recipients(self, options):
+        if options.get('email_recipient_ids'):
+            return options.get('email_recipient_ids')
+
+        partner = self.env['res.partner'].browse(options.get('partner_id'))
+        recipients = partner._get_all_followup_contacts() or partner
+        followup_line = options.get('followup_line', recipients.followup_line_id)
+        mail_template = options.get('mail_template', followup_line.mail_template_id)
+        if mail_template:
+            rendered_values = mail_template._generate_template_recipients(
+                res_ids=[partner.id],
+                render_fields={'partner_to', 'email_cc', 'email_to'},
+                allow_suggested=True,
+                find_or_create_partners=True
+            )[partner.id]
+            recipients |= partner.browse(rendered_values.get('partner_ids'))
+        return recipients
+
     ####################################################
     # REPORT DATA
     ####################################################
@@ -372,11 +391,9 @@ Best Regards,
         Send by email the followup to the customer's followup contacts
         """
         partner = self.env['res.partner'].browse(options.get('partner_id'))
-        followup_contacts = partner._get_all_followup_contacts() or partner
-        followup_recipients = options.get('email_recipient_ids', followup_contacts)
         followup_line = options.get('followup_line', partner.followup_line_id)
         sent_at_least_once = False
-        for to_send_partner in followup_recipients:
+        for to_send_partner in self._get_email_recipients(options):
             email = to_send_partner.email
             if email and email.strip():
                 self = self.with_context(lang=partner.lang or self.env.user.lang)
