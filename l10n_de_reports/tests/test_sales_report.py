@@ -19,6 +19,15 @@ class GermanySalesReportTest(AccountSalesReportCommon):
             'vat': 'DE123456788',
         })
 
+    def _get_report_from_csv(self, report, options):
+        csv_content = self.env['l10n_de.ec.sales.report.handler'].get_csvs(report, options)[0]
+        lines = csv_content.strip().split('\n')
+        headers = lines[0].split(',')
+        return [
+            {headers[i]: value.strip() for i, value in enumerate(line.split(','))}
+            for line in lines[1:]
+        ]
+
     @freeze_time('2019-12-31')
     def test_ec_sales_report(self):
         l_tax = self.env['account.tax'].with_context(active_test=False).search([
@@ -60,3 +69,21 @@ class GermanySalesReportTest(AccountSalesReportCommon):
             options,
         )
         self.assertTrue(self.env['account.general.ledger.report.handler'].l10n_de_datev_export_to_zip(options).get('file_content'), 'Error creating CSV')
+
+    @freeze_time('2019-12-31')
+    def test_ec_sales_report_csv(self):
+        """
+        Amount should be integer
+        "Feld "Summe": Volle Geldbetraege muessen als Ziffernfolge ohne Dezimaltrenner eingetragen werden. Negativen Geldbetraegen ist ein negatives Vorzeichen voran
+        https://www.elster.de/eportal/helpGlobal?themaGlobal=zmdo_import_eop
+        """
+        l_tax = self.env['account.tax'].search([
+            ('name', '=', '0% EU D'),
+            ('company_id', '=', self.company_data['company'].id)
+        ])[0]
+        self._create_invoices([
+            (self.partner_a, l_tax, 234.5),
+        ])
+        report = self.env.ref('l10n_de_reports.german_ec_sales_report')
+        options = report.get_options({'date': {'mode': 'range', 'filter': 'this_month'}})
+        self.assertEqual(self._get_report_from_csv(report, options)[0].get('Betrag (Euro)'), '235', 'Amount should be integer')

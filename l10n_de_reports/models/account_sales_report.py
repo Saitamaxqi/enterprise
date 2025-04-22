@@ -5,6 +5,7 @@ import tempfile
 import zipfile
 
 from odoo import _, api, models
+from odoo.tools.float_utils import float_round
 
 
 class L10n_DeEcSalesReportHandler(models.AbstractModel):
@@ -62,7 +63,7 @@ class L10n_DeEcSalesReportHandler(models.AbstractModel):
             content = 'Umsatzsteuer-Identifikationsnummer (USt-IdNr.),Betrag (Euro),Art der Leistung\n'
             for vat_country_code, vat_number, service_type, amount, *vals in chunk:
                 full_vat_number = f'{vat_country_code}{vat_number}' if vat_country_code and vat_number else ''
-                content += f'{full_vat_number},{amount},{service_type}\n'
+                content += f'{full_vat_number},{int(float_round(amount, 0))},{service_type}\n'
             line_chunks.append(content)
         return line_chunks
 
