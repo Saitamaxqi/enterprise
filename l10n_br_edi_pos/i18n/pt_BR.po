@@ -403,7 +403,7 @@ msgstr "IE:"
 #. odoo-javascript
 #: code:addons/l10n_br_edi_pos/static/src/overrides/components/receipt/receipt.xml:0
 msgid "ISSUED IN SANDBOX ENVIRONMENT - WITHOUT FISCAL VALUE"
-msgstr "EMETIDO EM AMBIENTE SANDBOX - SEM VALOR FISCAL"
+msgstr "EMITIDO EM AMBIENTE SANDBOX - SEM VALOR FISCAL"
 
 #. module: l10n_br_edi_pos
 #: model:ir.model,name:l10n_br_edi_pos.model_l10n_latam_identification_type
