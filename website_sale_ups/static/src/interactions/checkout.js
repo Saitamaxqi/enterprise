@@ -1,11 +1,16 @@
-import WebsiteSaleCheckout from '@website_sale/js/checkout'
+import { patch } from '@web/core/utils/patch';
+import { patchDynamicContent } from '@web/public/utils';
+import { Checkout } from '@website_sale/interactions/checkout';
 
-WebsiteSaleCheckout.include({
-    events: Object.assign({}, WebsiteSaleCheckout.prototype.events || {}, {
-        'click [name="ups_bill_my_account"]': '_onClickBillMyAccount',
-    }),
+patch(Checkout.prototype, {
+     setup() {
+        super.setup();
+        patchDynamicContent(this.dynamicContent, {
+            '[name="ups_bill_my_account"]': { 't-on-click': this.onClickBillMyAccount.bind(this) },
+        });
+    },
 
-    async _onClickBillMyAccount(ev) {
+    async onClickBillMyAccount(ev) {
         const radio = this._getDeliveryMethodContainer(ev.currentTarget).querySelector(
             'input[type="radio"]'
         );
@@ -17,18 +22,15 @@ WebsiteSaleCheckout.include({
     },
 
     /**
-     * @override
+     * @override method from `@website_sale/interactions/checkout`
      * @private
      */
      _toggleDeliveryMethodRadio(radio, disable){
-         this._super.apply(this, arguments);
+         super._toggleDeliveryMethodRadio(...arguments);
          if (radio.dataset.deliveryType !== 'ups') return;
          const carrierContainer = this._getDeliveryMethodContainer(radio);
          const billMyAccountHref = carrierContainer.querySelector('[name="ups_bill_my_account"] a');
          if (!billMyAccountHref) return;
-         // Disable bill my account href if radio button is disabled.
-         if (disable) {billMyAccountHref.classList.add('disabled');}
-         // Enable bill my account href if radio button is enabled.
-         else {billMyAccountHref.classList.remove('disabled');}
-     }
-})
+         billMyAccountHref.classList.toggle('disabled', disable);
+     },
+});
