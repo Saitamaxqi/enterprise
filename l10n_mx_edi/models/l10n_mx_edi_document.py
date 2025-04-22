@@ -2102,6 +2102,10 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             if ns != 'xsi' and not cfdi_infos['cfdi_node'].xpath(f'//{ns}:*', namespaces=cfdi_infos['cfdi_node'].nsmap):
                 schema_parts.pop(cfdi_infos['cfdi_node'].nsmap[ns])
         cfdi_infos['cfdi_node'].attrib[f'{{{xsi_ns}}}schemaLocation'] = ' '.join(f"{ns} {location}" for ns, location in schema_parts.items())
+
+        # Clean up unused namespaces
+        etree.cleanup_namespaces(cfdi_infos['cfdi_node'], keep_ns_prefixes=['xsi'])
+
         cfdi_str = self.env['l10n_mx_edi.document']._convert_xml_to_attachment_data(cfdi_infos['cfdi_node'])
 
         # == Check credentials ==
