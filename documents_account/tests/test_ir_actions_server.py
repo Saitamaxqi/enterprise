@@ -17,7 +17,7 @@ class TestIrActionsServer(DocumentsAccountTestCommon):
                 (False, True)):
             with (self.subTest(move_type=move_type, with_journal=with_journal),
                   RecordCapturer(self.env['account.move'], []) as capture):
-                journal_id = self.env['account.move'].new({'move_type': move_type}).journal_id
+                journal_id = self.env['account.move']._get_suitable_journal_ids(move_type)[:1]
                 document = self.document_pdf.copy()
                 action = self.env['ir.actions.server'].create({
                     'name': f'test {move_type}',

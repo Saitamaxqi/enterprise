@@ -95,8 +95,7 @@ class DocumentsDocument(models.Model):
             if move_type == 'statement':
                 journal_id = company_journals.filtered(lambda journal: journal.type == 'bank')[:1]
             else:
-                move = self.env['account.move'].new({'move_type': move_type})
-                journal_id = move.suitable_journal_ids[:1]._origin
+                journal_id = self.env['account.move']._get_suitable_journal_ids(move_type)[:1]
         elif isinstance(journal_id, int):
             journal_id = self.env['account.journal'].browse(journal_id)
 

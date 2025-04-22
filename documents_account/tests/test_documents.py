@@ -479,7 +479,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
             'documents_account_create_model': 'account.move.in_invoice',
         }
         journal_id_per_company = {
-            company: self.env['account.move'].with_company(company).new({'move_type': 'in_invoice'}).journal_id.id
+            company: self.env['account.move'].with_company(company)._get_suitable_journal_ids('in_invoice').ids[0]
             for company in companies
         }
         for company in companies:

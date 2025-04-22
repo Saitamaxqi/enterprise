@@ -74,8 +74,8 @@ class IrActionsServer(models.Model):
             if action.documents_account_move_type == 'statement':
                 action.documents_account_suitable_journal_ids = bank_journals
             elif action.documents_account_move_type:
-                move = self.env['account.move'].new({'move_type': action.documents_account_move_type})
-                action.documents_account_suitable_journal_ids = move.suitable_journal_ids._origin
+                action.documents_account_suitable_journal_ids = (
+                        self.env['account.move']._get_suitable_journal_ids(action.documents_account_move_type))
 
     @api.depends('documents_account_create_model')
     def _compute_documents_account_move_type(self):
