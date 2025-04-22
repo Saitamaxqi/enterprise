@@ -201,7 +201,6 @@ class Base(models.AbstractModel):
         self.check_access("read")
         self.check_access("write")
         record = self.new(changes, origin=self)
-        record.ensure_one()
         field = self._fields.get(fname)
         if not field:
             raise ValueError(f"The field {fname} is not defined on {self._name}")
@@ -231,7 +230,6 @@ class Base(models.AbstractModel):
         self.check_access("read")
         self.check_access("write")
         record = self.new(changes, origin=self)
-        record.ensure_one()
         property_definition = None
         fname, pname = full_name.split(".")
 
@@ -278,24 +276,18 @@ class Base(models.AbstractModel):
         if field_name and not self._fields[field_name].store:
             return []
 
-        order_by = ""
-        if 'id' in self._fields:
-            order_by = "id DESC"
-        if 'create_date' in self._fields:
-            order_by = f"create_date DESC, {order_by}"
-
         records_ids = []
         if not property_name and field_name:
             records_ids = [
                 record_id
-                for r in self.search([(field_name, 'any', domain)], limit=limit * 5, order=order_by)
+                for r in self.search([(field_name, 'any', domain)], limit=limit * 5, order="id DESC")
                 for record_id in r[field_name].ids
             ]
         elif property_name:
             # `any` operator not working on relational properties (because too costly to do)
             definition = self.get_property_definition(f"{field_name}.{property_name}")
             if definition:
-                values = self.search_read([(f"{field_name}.{property_name}", '!=', False)], [field_name], limit=limit * 5, order=order_by)
+                values = self.search_read([(f"{field_name}.{property_name}", '!=', False)], [field_name], limit=limit * 5, order="id DESC")
                 values = [next(p.get('value') for p in v[field_name] if p.get('name') == property_name) for v in values]
                 if definition.get('type') == 'many2one':
                     records_ids = [v[0] for v in values if v]
@@ -311,6 +303,7 @@ class Base(models.AbstractModel):
             records |= self.env[comodel].search(
                 Domain.AND([domain, [('id', 'not in', records.ids)]]),
                 limit=limit - len(records),
+                order="id DESC",
             )
 
         return [[r.id, r.display_name] for r in records]

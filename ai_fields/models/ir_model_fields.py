@@ -150,7 +150,7 @@ class IrModelFields(models.Model):
                     [[properties_orm_field.definition_record, "=", parent_id]],
                 ])
                 # Can not use the ORM because we need IS NULL (VS False, empty string, etc...)
-                query = model._search(ai_domain, order='id')
+                query = model._search(ai_domain, order='id DESC')
                 query.add_where(SQL(
                     "(%(field)s IS NULL OR %(field)s->%(property_name)s IS NULL)",
                     field=model._field_to_sql(model._table, properties_orm_field.name, query),
