@@ -70,7 +70,10 @@ export class MrpDisplayRecord extends Component {
         if (!this.props.production.data.qty_producing) {
             this.props.production.update({ qty_producing: this.props.production.data.product_qty });
         }
-        const title = _t("Register Production: %s", this.props.production.data.product_id.display_name);
+        const title = _t(
+            "Register Production: %s",
+            this.props.production.data.product_id.display_name
+        );
         const params = {
             record: this.props.production,
             reload: this.env.reload.bind(this),
@@ -197,6 +200,7 @@ export class MrpDisplayRecord extends Component {
         ) {
             props.check = subRecord;
             props.isCurrent =
+                this.active &&
                 subRecord.resId === this.props.record.data.current_quality_check_id.id;
             const moves =
                 subRecord.data.test_type === "register_consumed_materials"
@@ -212,6 +216,7 @@ export class MrpDisplayRecord extends Component {
 
         if (subRecord.resModel === "quality.check") {
             props.isCurrent =
+                this.active &&
                 subRecord.resId === this.props.record.data.current_quality_check_id.id;
             if (subRecord.data.test_type === "register_production") {
                 props.registerProduction = this.registerProduction.bind(this);
