@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
@@ -7,7 +6,7 @@ from lxml import html
 from werkzeug.urls import url_join
 
 from odoo import _, api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import is_html_empty
 
 
@@ -85,7 +84,7 @@ class KnowledgeArticle(models.Model):
         return values
 
     def _get_read_domain(self):
-        return expression.OR([
+        return Domain.OR([
             super()._get_read_domain(),
             [('website_published', '=', True)]
         ])
@@ -97,7 +96,7 @@ class KnowledgeArticle(models.Model):
     def _search_get_detail(self, website, order, options):
         domain = [('is_published', '=', True), ('is_template', '=', False)]
         if options.get('max_date'):
-            domain = expression.AND([[('create_date', '>=', options['max_date'])], domain])
+            domain = Domain.AND([[('create_date', '>=', options['max_date'])], domain])
         mapping = {
             'name': {'name': 'name', 'type': 'text', 'match': True},
             'website_url': {'name': 'website_url', 'type': 'text', 'truncate': False},

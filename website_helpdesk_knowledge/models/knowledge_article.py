@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models, _
-from odoo.osv import expression
 from odoo.exceptions import ValidationError
+from odoo.fields import Domain
 
 
 class KnowledgeArticle(models.Model):
@@ -20,7 +19,7 @@ class KnowledgeArticle(models.Model):
             return res
         team_article = team.sudo().website_article_id
         if team_article:
-            res['base_domain'] = [expression.AND([
+            res['base_domain'] = [Domain.AND([
                 ['|', ('id', '=', team_article.id), ('root_article_id', '=', team_article.id)],
                 res['base_domain'][0]
             ])]

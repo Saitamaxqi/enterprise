@@ -6,8 +6,8 @@ from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 
 from odoo import http, _
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv import expression
 
 from odoo.addons.website.controllers import form, main
 from odoo.addons.base.models.ir_qweb_fields import nl2br, nl2br_enclose
@@ -26,11 +26,11 @@ class WebsiteHelpdesk(http.Controller):
     def website_helpdesk_teams(self, team=None, **kwargs):
         search = kwargs.get('search')
 
-        teams_domain = [('use_website_helpdesk_form', '=', True)]
+        teams_domain = Domain('use_website_helpdesk_form', '=', True)
         if not request.env.user.has_group('helpdesk.group_helpdesk_manager'):
             if team and not team.is_published:
                 raise NotFound()
-            teams_domain = expression.AND([teams_domain, [('website_published', '=', True)]])
+            teams_domain &= Domain('website_published', '=', True)
 
         teams = request.env['helpdesk.team'].search(teams_domain, order="id asc")
         if not teams:

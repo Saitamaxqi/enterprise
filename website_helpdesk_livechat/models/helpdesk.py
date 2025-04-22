@@ -1,14 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import json
-import re
-from markupsafe import Markup
-
-from odoo import Command, fields, models, _
-from odoo.tools import html2plaintext, is_html_empty, plaintext2html
-from odoo.tools.mimetypes import get_extension
-from odoo.osv.expression import OR
+from odoo import fields, models
+from odoo.fields import Command
 
 
 class HelpdeskTeam(models.Model):

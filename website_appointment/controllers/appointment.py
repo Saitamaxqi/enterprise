@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, http
+from odoo import http
 from odoo.http import request
 
 from odoo.addons.base.models.ir_qweb import keep_query
 from odoo.addons.appointment.controllers.appointment import AppointmentController
-from odoo.exceptions import UserError
-from odoo.osv import expression
 
 
 class WebsiteAppointment(AppointmentController):
@@ -204,5 +201,5 @@ class WebsiteAppointment(AppointmentController):
     @classmethod
     def _appointments_base_domain(cls, filter_appointment_type_ids, search=False, invite_token=False, additional_domain=None, filter_countries=False):
         domain = super()._appointments_base_domain(filter_appointment_type_ids, search, invite_token, additional_domain, filter_countries)
-        domain = expression.AND([domain, ['|', ('website_id', '=', request.website.id), ('website_id', '=', False)]])
+        domain &= request.website.website_domain()
         return domain

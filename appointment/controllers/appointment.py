@@ -10,21 +10,19 @@ from werkzeug.exceptions import BadRequest
 from babel.dates import format_datetime, format_date, format_time
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
-from markupsafe import Markup
 from urllib.parse import quote, unquote_plus
 from werkzeug.exceptions import Forbidden, NotFound
 from werkzeug.urls import url_encode
 
-from odoo import Command, exceptions, http, fields, _
+from odoo import fields, http
+from odoo.fields import Command, Domain
 from odoo.http import request, route
-from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as dtf, email_normalize
 from odoo.tools.mail import is_html_empty
 from odoo.tools.misc import babel_locale_parse, get_lang
 from odoo.addons.base.models.ir_qweb import keep_query
 from odoo.addons.base.models.res_partner import _tz_get
 from odoo.addons.phone_validation.tools import phone_validation
-from odoo.exceptions import UserError
 
 
 def _formated_weekdays(locale):
@@ -141,25 +139,25 @@ class AppointmentController(http.Controller):
             list: A list of domain expressions suitable for use in Odoo record filtering.
         """
 
-        domain = list(additional_domain) if additional_domain else []
+        domain = Domain(additional_domain or Domain.TRUE)
         if filter_appointment_type_ids:
             filter_appointment_type_ids = unquote_plus(filter_appointment_type_ids)
-            domain = expression.AND([domain, [('id', 'in', json.loads(filter_appointment_type_ids))]])
+            domain &= Domain('id', 'in', json.loads(filter_appointment_type_ids))
 
         # Exclude country only if it's not an invite and it was specified
         if not invite_token and filter_countries:
             country = cls._get_customer_country()
             if country:
-                country_domain = ['|', ('country_ids', '=', False), ('country_ids', 'in', [country.id])]
-                domain = expression.AND([domain, country_domain])
+                country_domain = Domain('country_ids', 'in', [False, country.id])
+                domain &= country_domain
 
         # Add domain related to the search bar
         if search:
-            domain = expression.AND([domain, [('name', 'ilike', search)]])
+            domain &= Domain('name', 'ilike', search)
 
         # Because of sudo search, we need to search only published ones if there is no invite_token
         if request.env.user.share and not invite_token:
-            domain = expression.AND([domain, [('is_published', '=', True)]])
+            domain &= Domain('is_published', '=', True)
 
         return domain
 
@@ -894,16 +892,16 @@ class AppointmentController(http.Controller):
                 In case, the user is logged we return an empty list to not return private info.
         }
         """
-        common_domain = [
-          ('appointment_type_id', '!=', False),
-          ('start', '>', datetime.now()),
-        ]
+        common_domain = (
+          Domain('appointment_type_id', '!=', False)
+          & Domain('start', '>', datetime.now())
+        )
         if not request.env.user._is_public():
-            domain = [('appointment_booker_id', '=', request.env.user.partner_id.id)]
+            domain = Domain('appointment_booker_id', '=', request.env.user.partner_id.id)
         else:
-            domain = [('access_token', 'in', calendar_event_access_tokens)]
+            domain = Domain('access_token', 'in', calendar_event_access_tokens)
         upcoming_appointments = request.env['calendar.event'].sudo().search_read(
-            expression.AND([common_domain, domain]),
+            common_domain & domain,
             fields=['access_token', 'appointment_booker_id', 'appointment_type_id', 'start'],
             order="start",
             limit=20,

@@ -1,5 +1,5 @@
-from odoo import models, Command
-from odoo.osv import expression
+from odoo import models
+from odoo.fields import Command, Domain
 
 
 class SaleOrderLine(models.Model):
@@ -21,7 +21,7 @@ class SaleOrderLine(models.Model):
         # For resource based scheduling, we set the resource names as tags on the task
         else:
             resource_names = self.calendar_event_id.appointment_resource_ids.mapped('name')
-            domain = expression.OR([[('name', '=ilike', resource_name)] for resource_name in resource_names])
+            domain = Domain.OR(Domain('name', '=ilike', resource_name) for resource_name in resource_names)
             existing_tags = self.env['project.tags'].search(domain)
             existing_tags_names = {tag.name.lower() for tag in existing_tags}
             new_tags_names = {resource_name for resource_name in resource_names if resource_name.lower() not in existing_tags_names}

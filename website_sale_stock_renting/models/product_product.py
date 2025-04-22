@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
+from odoo.fields import Domain
 from odoo.http import request
-from odoo.osv import expression
 
 
 class ProductProduct(models.Model):
@@ -15,13 +15,13 @@ class ProductProduct(models.Model):
 
         :param datetime from_date: The first date where a rental sale order line is returned.
         :param datetime to_date: The last date where a rental sale order line reservation begins.
-        :param list(tuple) domain: An additional restrictive domain to search sale order line for.
+        :param domain: An additional restrictive domain to search sale order line for.
         """
         self.ensure_one()
 
         return self.env['sale.order.line'].search(
-            expression.AND([
-                domain or [],
+            Domain.AND([
+                domain or Domain.TRUE,
                 [
                     ('is_rental', '=', True),
                     ('product_id', '=', self.id),

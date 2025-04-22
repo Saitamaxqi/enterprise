@@ -3,8 +3,8 @@ import re
 from markupsafe import Markup
 
 from odoo import api, fields, models, _
+from odoo.fields import Domain
 from odoo.tools import is_html_empty, plaintext2html
-from odoo.osv.expression import OR
 from odoo.tools.mimetypes import get_extension
 
 
@@ -90,7 +90,7 @@ class DiscussChannel(models.Model):
     def fetch_ticket_by_keyword(self, list_keywords, load_counter=0):
         keywords = re.findall(r'\w+', ' '.join(list_keywords))
         helpdesk_tag_ids = self.env['helpdesk.tag'].search(
-            OR([[('name', 'ilike', keyword)] for keyword in keywords])
+            Domain.OR(Domain('name', 'ilike', keyword) for keyword in keywords)
         ).ids
         tickets = self.env['helpdesk.ticket'].search([('tag_ids', 'in', helpdesk_tag_ids)], offset=load_counter*5, limit=6, order='id desc')
         if not tickets:

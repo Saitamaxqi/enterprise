@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SlideChannel(models.Model):
@@ -32,7 +31,7 @@ class SlideChannel(models.Model):
             extra_domain = [('tag_ids.name', 'ilike', options['tag'])]
         website_slide_channel_ids = team.sudo().website_slide_channel_ids
         if website_slide_channel_ids:
-            extra_domain = expression.AND([[('id', 'in', website_slide_channel_ids.ids)], extra_domain])
+            extra_domain = Domain.AND([[('id', 'in', website_slide_channel_ids.ids)], extra_domain])
         res['base_domain'] = [res['base_domain'][0] + extra_domain]
 
         return res
