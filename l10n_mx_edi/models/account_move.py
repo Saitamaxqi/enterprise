@@ -479,6 +479,21 @@ class AccountMove(models.Model):
             return self.env['account.move'].search([('l10n_mx_edi_cfdi_uuid', 'in', list(origin_uuids))])
         return self.env['account.move']
 
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default)
+        for move, vals in zip(self, vals_list):
+            if (
+                move.move_type == 'out_invoice'
+                and vals['move_type'] == 'out_refund'
+                and move.country_code == 'MX'
+                and move.company_id.l10n_mx_income_return_discount_account_id
+            ):
+                for orm_command in vals['line_ids']:
+                    if orm_command[0] == Command.CREATE and orm_command[2]['display_type'] == 'product':
+                        orm_command[2]['account_id'] = move.company_id.l10n_mx_income_return_discount_account_id.id
+
+        return vals_list
+
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------

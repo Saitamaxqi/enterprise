@@ -697,3 +697,27 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
 
         payment = self.env['account.payment'].search([('pos_session_id', '=', session.id)])
         self.assertEqual(payment.l10n_mx_edi_payment_method_id, payment_method_electronico)
+
+    def test_pos_order_invoice_after_closing_session(self):
+        with self.mx_external_setup(self.frozen_today), self.with_pos_session():
+            order = self._create_order({
+                'pos_order_lines_ui_args': [
+                    (self.product, 1.0),
+                ],
+                'payments': [(self.bank_pm1, 1160)],
+                'customer': self.partner_mx,
+            })
+
+        invoice = self.env['account.move'].browse(order.action_pos_order_invoice()['res_id'])
+        reversal_move = self.env['account.move'].search([('reversed_pos_order_id', '=', order.id)])
+
+        self.assertRecordValues(invoice.line_ids, [
+            {'balance': -1000.0, 'account_id': self.env.company.l10n_mx_income_re_invoicing_account_id.id},
+            {'balance': -160.0, 'account_id': self.company_data['default_tax_sale'].cash_basis_transition_account_id.id},
+            {'balance': 1160.0, 'account_id': self.company_data['default_account_receivable'].id},
+        ])
+        self.assertRecordValues(reversal_move.line_ids, [
+            {'balance': 160.0, 'account_id': self.company_data['default_tax_sale'].cash_basis_transition_account_id.id},
+            {'balance': 1000.0, 'account_id': self.env.company.l10n_mx_income_re_invoicing_account_id.id},
+            {'balance': -1160.0, 'account_id': self.bank_pm1.receivable_account_id.id},
+        ])

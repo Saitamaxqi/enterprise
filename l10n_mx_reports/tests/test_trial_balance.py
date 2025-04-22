@@ -251,10 +251,12 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="305.01" NumCta="305.01" Desc="Profit for the year" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="401" NumCta="401" Desc="Income" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="401.01" NumCta="401.01" Desc="Sales and/or services taxed at the general rate" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="402" NumCta="402" Desc="Refunds, discounts or rebates on income" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="402.04" NumCta="402.04" Desc="Refunds, discounts or rebates of other income" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="402" NumCta="402" Desc="Refunds, discounts or rebates on income" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="402.01" NumCta="402.01" Desc="Refunds, discounts or rebates on sales and/or services at the general rate" Nivel="2" Natur="D"/>
-            <catalogocuentas:Ctas CodAgrup="403" NumCta="403" Desc="Other income" Nivel="1" Natur="D"/>
-            <catalogocuentas:Ctas CodAgrup="403.01" NumCta="403.01" Desc="Other Income" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="403" NumCta="403" Desc="Other income" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="403.01" NumCta="403.01" Desc="Other Income" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="501" NumCta="501" Desc="Cost of sale and/or service" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="501.01" NumCta="501.01" Desc="Cost of sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="503" NumCta="503" Desc="Returns, discounts or rebates on purchases" Nivel="1" Natur="A"/>
@@ -382,10 +384,12 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="305.01" NumCta="305.01" Desc="Profit for the year" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="401" NumCta="401" Desc="Income" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="401.01" NumCta="401.01" Desc="Sales and/or services taxed at the general rate" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="402" NumCta="402" Desc="Refunds, discounts or rebates on income" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="402.04" NumCta="402.04" Desc="Refunds, discounts or rebates of other income" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="402" NumCta="402" Desc="Refunds, discounts or rebates on income" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="402.01" NumCta="402.01" Desc="Refunds, discounts or rebates on sales and/or services at the general rate" Nivel="2" Natur="D"/>
-            <catalogocuentas:Ctas CodAgrup="403" NumCta="403" Desc="Other income" Nivel="1" Natur="D"/>
-            <catalogocuentas:Ctas CodAgrup="403.01" NumCta="403.01" Desc="Other Income" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="403" NumCta="403" Desc="Other income" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="403.01" NumCta="403.01" Desc="Other Income" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="501" NumCta="501" Desc="Cost of sale and/or service" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="501.01" NumCta="501.01" Desc="Cost of sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="503" NumCta="503" Desc="Returns, discounts or rebates on purchases" Nivel="1" Natur="A"/>

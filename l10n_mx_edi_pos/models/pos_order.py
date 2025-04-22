@@ -849,3 +849,11 @@ class PosOrder(models.Model):
             'target': 'new',
             'context': {'default_pos_order_ids': [Command.set(self.ids)]},
         }
+
+    @api.model
+    def _get_invoice_lines_values(self, line_values, pos_line, move_type):
+        # EXTENDS point_of_sale
+        invoice_lines_values = super()._get_invoice_lines_values(line_values, pos_line, move_type)
+        if pos_line.company_id.country_code == 'MX':
+            invoice_lines_values['account_id'] = line_values['account_id'].id
+        return invoice_lines_values

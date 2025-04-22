@@ -1,6 +1,6 @@
 # coding: utf-8
 from odoo import fields, Command
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.l10n_mx.tests.common import TestMxCommon
 from odoo.exceptions import ValidationError
 from odoo.tools import misc
 from odoo.tools.zeep.client import SERIALIZABLE_TYPES
@@ -34,10 +34,9 @@ RATE_WITH_USD = 17.1098
 TEST_RATE_WITH_USD = 16.9995
 
 
-class TestMxEdiCommon(AccountTestInvoicingCommon):
+class TestMxEdiCommon(TestMxCommon):
 
     @classmethod
-    @AccountTestInvoicingCommon.setup_country('mx')
     def setUpClass(cls):
         super().setUpClass()
 
@@ -64,19 +63,7 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
             'date_end': '2018-01-01',
         })
 
-        # do not use demo data and avoid having duplicated companies
-        cls.env['res.company'].search([('vat', '=', "EKU9003173C9")]).write({'vat': False})
-        cls.env['res.company'].search([('name', '=', "ESCUELA KEMPER URGATE")]).name = "ESCUELA KEMPER URGATE (2)"
-
         cls.company_data['company'].write({
-            'name': "ESCUELA KEMPER URGATE",
-            'vat': 'EKU9003173C9',
-            'street': 'Campobasso Norte 3206 - 9000',
-            'street2': 'Fraccionamiento Montecarlo',
-            'zip': '20914',
-            'city': 'Jesús María',
-            'country_id': cls.env.ref('base.mx').id,
-            'state_id': cls.env.ref('base.state_mx_ags').id,
             'l10n_mx_edi_pac': 'solfact',
             'l10n_mx_edi_pac_test_env': True,
             'l10n_mx_edi_fiscal_regime': '601',
@@ -151,17 +138,7 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
             })],
         })
 
-        cls.partner_mx = cls.env['res.partner'].create({
-            'name': "INMOBILIARIA CVA",
-            'property_account_receivable_id': cls.company_data['default_account_receivable'].id,
-            'property_account_payable_id': cls.company_data['default_account_payable'].id,
-            'street': "Campobasso Sur 3201 - 9001",
-            'city': "Hidalgo del Parral",
-            'state_id': cls.env.ref('base.state_mx_chih').id,
-            'zip': '33826',
-            'country_id': cls.env.ref('base.mx').id,
-            'vat': 'ICV060329BY0',
-            'bank_ids': [Command.create({'acc_number': "0123456789"})],
+        cls.partner_mx.write({
             'l10n_mx_edi_fiscal_regime': '601',
         })
         cls.partner_us = cls.env['res.partner'].create({
