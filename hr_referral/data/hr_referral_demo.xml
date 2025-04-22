@@ -40,9 +40,54 @@
             <field name="source_id" ref="utm.utm_source_facebook"/>
         </record>
 
+        <record id="hr_recruitment.hr_case_mkt1" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_facebook"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_yrsexperienceinphp0" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_facebook"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_financejob2" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_facebook"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_traineemca1" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_twitter"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_advertisement" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_glassdoor"/>
+        </record>
+
         <record id="hr_recruitment.hr_case_salesman0" model="hr.applicant">
             <field name="source_id" ref="utm.utm_source_linkedin"/>
         </record>
+
+        <record id="hr_recruitment.hr_case_cto1" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_linkedin"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_fresher0" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_linkedin"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_mkt2" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_linkedin"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_dev1" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_mailing"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_advertisement4" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_craigslist"/>
+        </record>
+
+        <record id="hr_recruitment.hr_case_advertisement5" model="hr.applicant">
+            <field name="source_id" ref="utm.utm_source_monster"/>
+        </record>
+
 
         <record id="hr_referral_point_1" model="hr.referral.points">
             <field name="applicant_id" ref="hr_recruitment.hr_case_marketingjob0"/>

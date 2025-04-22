@@ -24,20 +24,6 @@
         <field name="company_id" ref="base.main_company"/>
     </record>
 
-    <record id="us_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead US</field>
-        <field name="department_id" ref="l10n_us_hr_payroll.us_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.main_company"/>
-    </record>
-
-    <record id="us_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer US</field>
-        <field name="department_id" ref="l10n_us_hr_payroll.us_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.main_company"/>
-    </record>
-
     <record id="res_partner_troy" model="res.partner">
         <field name="name">Troy Cruz</field>
         <field name="street">5 King Street</field>
@@ -225,7 +211,7 @@
     <record id="hr_contract_troy" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_us_hr_payroll.hr_employee_troy')).name + ' - ' + obj(ref('l10n_us_hr_payroll.hr_employee_troy')).job_title"/>
         <field name="employee_id" ref="l10n_us_hr_payroll.hr_employee_troy"/>
-        <field name="job_id" ref="l10n_us_hr_payroll.us_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_cto"/>
         <field name="department_id" ref="l10n_us_hr_payroll.us_hr_department_rd"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="structure_type_id" ref="l10n_us_hr_payroll.structure_type_employee_us"/>
@@ -240,7 +226,7 @@
     <record id="hr_contract_maggie_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_us_hr_payroll.hr_employee_maggie')).name + ' - ' + obj(ref('l10n_us_hr_payroll.hr_employee_maggie')).job_title"/>
         <field name="employee_id" ref="l10n_us_hr_payroll.hr_employee_maggie"/>
-        <field name="job_id" ref="l10n_us_hr_payroll.us_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_us_hr_payroll.us_hr_department_rd"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="structure_type_id" ref="l10n_us_hr_payroll.structure_type_employee_us"/>
@@ -256,7 +242,7 @@
     <record id="hr_contract_maggie" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_us_hr_payroll.hr_employee_maggie')).name + ' - ' + obj(ref('l10n_us_hr_payroll.hr_employee_maggie')).job_title"/>
         <field name="employee_id" ref="l10n_us_hr_payroll.hr_employee_maggie"/>
-        <field name="job_id" ref="l10n_us_hr_payroll.us_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_us_hr_payroll.us_hr_department_rd"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="structure_type_id" ref="l10n_us_hr_payroll.structure_type_employee_us"/>
