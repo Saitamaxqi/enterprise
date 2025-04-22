@@ -38,7 +38,7 @@
                     <div>
                         <span class="text-nowrap fw-bolder"
                             t-att-class="{'text-danger': quantityProducing > quantityToProduce}">
-                            <t t-if="quantityProducing > quantityToProduce">
+                            <t t-if="quantityProducing &amp;&amp; quantityProducing !== quantityToProduce">
                                 <t t-esc="quantityProducing"/> /
                             </t>
                             <t t-esc="quantityToProduce"/>
