@@ -39,7 +39,7 @@ export class StockMove extends QualityCheck {
     }
 
     get isComplete() {
-        return Boolean(this.props.record.data.picked);
+        return this.check ? super.isComplete : Boolean(this.props.record.data.picked);
     }
 
     get toConsumeQuantity() {
@@ -89,14 +89,14 @@ export class StockMove extends QualityCheck {
     }
 
     async doActionAndNext(action, stateToSet = "pass", actionParams = {}) {
-        const { model, resModel, resId, data, _parentRecord } = this.props.check;
+        const { model, resModel, resId, _parentRecord } = this.props.check;
         const result = await model.orm.call(resModel, action, [resId]);
         if ("next_check_id" in result) {
-            data.quality_state = stateToSet;
+            this.check.quality_state = stateToSet;
             this.props.record.data.picked = true;
             _parentRecord.data.current_quality_check_id = [result.next_check_id];
-            _parentRecord.model.notify();
         }
+        return this.props.startWorking();
     }
 
     clicked() {
@@ -123,6 +123,7 @@ export class StockMove extends QualityCheck {
             onCreateEdit: () => this.createQuant(),
             record: this.props.record,
         });
+        return this.props.startWorking();
     }
 
     async selectQuant(quantIds) {

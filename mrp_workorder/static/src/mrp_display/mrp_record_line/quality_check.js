@@ -15,6 +15,7 @@ export class QualityCheck extends MrpWorkorder {
         registerProduction: { type: Function, optional: true },
         qtyProducing: { type: String, optional: true },
         isCurrent: Boolean,
+        startWorking: Function,
     };
 
     setup() {
@@ -93,7 +94,7 @@ export class QualityCheck extends MrpWorkorder {
         return false;
     }
 
-    clicked() {
+    async clicked() {
         switch (this.type) {
             case "instructions":
                 if (this.isComplete) {
@@ -131,7 +132,6 @@ export class QualityCheck extends MrpWorkorder {
         if ("next_check_id" in result) {
             data.quality_state = stateToSet;
             _parentRecord.data.current_quality_check_id = [result.next_check_id];
-            _parentRecord.model.notify();
         }
         if ("type" in result) {
             const params = {};
@@ -142,8 +142,9 @@ export class QualityCheck extends MrpWorkorder {
             if (result.type === "ir.actions.client") {
                 result.params = { ...result.params, ...actionParams };
             }
-            return this.action.doAction(result, params);
+            await this.action.doAction(result, params);
         }
+        return this.props.startWorking();
     }
 
     async showWorksheet() {

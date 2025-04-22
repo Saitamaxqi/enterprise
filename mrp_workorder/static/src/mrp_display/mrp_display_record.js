@@ -211,9 +211,11 @@ export class MrpDisplayRecord extends Component {
                     : this.props.production.data.move_byproduct_ids;
             subRecord = moves.records.find((m) => m.data.check_id.resIds.includes(subRecord.resId));
             props.displayUOM = this.displayUOM;
+            props.startWorking = this.startWorking.bind(this);
         } else if (subRecord.resModel === "stock.move") {
             props.displayUOM = this.displayUOM;
             props.isCurrent = false;
+            props.startWorking = this.startWorking.bind(this);
         }
         props.record = subRecord;
 
@@ -221,6 +223,7 @@ export class MrpDisplayRecord extends Component {
             props.isCurrent =
                 this.active &&
                 subRecord.resId === this.props.record.data.current_quality_check_id.id;
+            props.startWorking = this.startWorking.bind(this);
             if (subRecord.data.test_type === "register_production") {
                 props.registerProduction = this.registerProduction.bind(this);
                 props.qtyProducing = `${this.quantityProducing} / ${this.quantityToProduce} ${this.uom}`;
@@ -267,10 +270,8 @@ export class MrpDisplayRecord extends Component {
         return this.props.production.data.product_tracking;
     }
 
-    async onClickHeader() {
-        if (this.props.record.resModel === "mrp.workorder") {
-            this.startWorking(true);
-        }
+    onClickHeader() {
+        return this.startWorking(true);
     }
 
     onClickOpenMenu() {
@@ -421,7 +422,8 @@ export class MrpDisplayRecord extends Component {
             await this.env.reload(this.props.production);
         } else if (shouldStop) {
             await this.model.orm.call(resModel, "stop_employee", [resId, [admin_id]]);
+            await this.env.reload(this.props.production);
         }
-        await this.env.reload(this.props.production);
+        return this.props.updateEmployees();
     }
 }

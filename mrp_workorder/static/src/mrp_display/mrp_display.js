@@ -266,9 +266,8 @@ export class MrpDisplay extends Component {
         this.env.searchModel.addAutoCompletionValues(searchItem.id, autocompleteValue);
     }
 
-    async _onWorkorderBarcodeScanned(workorder) {
-        workorder.component.onClickHeader();
-        this.env.reload(workorder);
+    _onWorkorderBarcodeScanned(workorder) {
+        return workorder.component.onClickHeader();
     }
 
     get barcodeTargetRecord() {
