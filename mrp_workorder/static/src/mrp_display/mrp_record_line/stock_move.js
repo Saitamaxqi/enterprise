@@ -79,7 +79,30 @@ export class StockMove extends QualityCheck {
             : move_line_ids.records.filter((ml) => ml.data.picked);
     }
 
+    get displayCheck() {
+        const { picking_type_prefill_shop_floor_lots, has_tracking } = this.props.record.data;
+        return (
+            this.check &&
+            !this.isComplete &&
+            (!has_tracking || picking_type_prefill_shop_floor_lots)
+        );
+    }
+
+    async doActionAndNext(action, stateToSet = "pass", actionParams = {}) {
+        const { model, resModel, resId, data, _parentRecord } = this.props.check;
+        const result = await model.orm.call(resModel, action, [resId]);
+        if ("next_check_id" in result) {
+            data.quality_state = stateToSet;
+            this.props.record.data.picked = true;
+            _parentRecord.data.current_quality_check_id = [result.next_check_id];
+            _parentRecord.model.notify();
+        }
+    }
+
     clicked() {
+        if (this.displayCheck) {
+            return this.doActionAndNext("action_next");
+        }
         const tracked = this.props.record.data.has_tracking !== "none";
         const [productId, productName] = this.props.record.data.product_id;
         this.dialog.add(MrpSelectQuantDialog, {

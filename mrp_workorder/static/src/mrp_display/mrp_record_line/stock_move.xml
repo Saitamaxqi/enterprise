@@ -17,7 +17,7 @@
                         <i class="fa fa-info" role="img"/>
                 </button>
                 <button class="o_btn_icon btn" t-attf-class="{{props.isCurrent ? 'btn-primary' : 'btn-outline-secondary'}}">
-                    <i class="fa fa-plus" role="img"/>
+                    <i t-attf-class="fa fa-{{displayCheck ? 'check' : 'plus'}}" role="img"/>
                 </button>
             </div>
         </li>
