@@ -18,11 +18,13 @@ msgstr ""
 #. module: l10n_br_avatax_sale
 #: model:ir.model.fields,help:l10n_br_avatax_sale.field_sale_order_line__l10n_br_goods_operation_type_id
 msgid ""
-"Brazil: this is the operation type related to the goods transaction. This "
-"will define the CFOP used on the NF-e."
+"Brazil: If an Operation Type is selected, it will be applied to the product in the line, "
+"determining the CFOP for that line. If no selection is made, the operation type will be "
+"inherited from the header."
 msgstr ""
-"Brasil: Este é o tipo de operação relacionado a transações de produtos. Isso"
-" determinará o CFOP usado na NF-e."
+"Brasil: Se houver um tipo de operação selecionado, ele será aplicado ao produto na linha, "
+"determinando assim o CFOP daquela linha. Se não houver seleção, o tipo de operação "
+"será herdado do cabeçalho."
 
 #. module: l10n_br_avatax_sale
 #: model:ir.model.fields,field_description:l10n_br_avatax_sale.field_sale_order__display_name
@@ -32,8 +34,8 @@ msgstr "Nome exibido"
 
 #. module: l10n_br_avatax_sale
 #: model:ir.model.fields,field_description:l10n_br_avatax_sale.field_sale_order_line__l10n_br_goods_operation_type_id
-msgid "Goods Operation Type"
-msgstr "Tipo de operação das mercadorias"
+msgid "Override Operation Type"
+msgstr "Sobrescrever tipo de operação"
 
 #. module: l10n_br_avatax_sale
 #: model:ir.model.fields,field_description:l10n_br_avatax_sale.field_sale_order__id

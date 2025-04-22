@@ -352,8 +352,9 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
 msgid ""
-"Brazil: this is the operation type related to the goods transaction. This "
-"will define the CFOP used on the NF-e."
+"Brazil: If an Operation Type is selected, it will be applied to the product in the line, "
+"determining the CFOP for that line. If no selection is made, the operation type will be "
+"inherited from the header."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -597,7 +598,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_goods_operation_type_id
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_goods_operation_type_id
 msgid "Goods Operation Type"
 msgstr ""
@@ -839,6 +839,11 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__other_inputs
 msgid "Other inputs"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
+msgid "Override Operation Type"
 msgstr ""
 
 #. module: l10n_br_avatax

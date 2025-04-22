@@ -404,11 +404,13 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
 msgid ""
-"Brazil: this is the operation type related to the goods transaction. This "
-"will define the CFOP used on the NF-e."
+"Brazil: If an Operation Type is selected, it will be applied to the product in the line, "
+"determining the CFOP for that line. If no selection is made, the operation type will be "
+"inherited from the header."
 msgstr ""
-"Brasil: Este é o tipo de operação relacionado a transações de produtos. Isso"
-" determinará o CFOP usado na NF-e."
+"Brasil: Se houver um tipo de operação selecionado, ele será aplicado ao produto na linha, "
+"determinando assim o CFOP daquela linha. Se não houver seleção, o tipo de operação "
+"será herdado do cabeçalho."
 
 #. module: l10n_br_avatax
 #. odoo-python
@@ -667,7 +669,6 @@ msgstr "Acessar o painel de configuração"
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_goods_operation_type_id
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_goods_operation_type_id
 msgid "Goods Operation Type"
 msgstr "Tipo de operação das mercadorias"
@@ -919,6 +920,11 @@ msgstr "Outros custos"
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__other_inputs
 msgid "Other inputs"
 msgstr "Outras entradas"
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
+msgid "Override Operation Type"
+msgstr "Sobrescrever tipo de operação"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_partner__l10n_br_subject_pis
