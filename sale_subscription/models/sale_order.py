@@ -1239,6 +1239,17 @@ class SaleOrder(models.Model):
         else:
             return super(SaleOrder, self)._get_portal_return_action()
 
+    def _get_default_payment_link_values(self):
+        res = super()._get_default_payment_link_values()
+        if self.is_subscription and self.invoice_count and self.state == 'sale':
+            next_billing_details = self._next_billing_details()
+            amount_max = next_billing_details.get('next_invoice_amount') or 0.0
+            res.update({
+                'amount': amount_max,
+                'amount_max': amount_max,
+            })
+        return res
+
     ####################
     # Invoicing Methods #
     ####################

@@ -957,3 +957,46 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
         self.assertEqual(sub.state, "sale")
         self.assertEqual(len(sub.invoice_ids), 2)
         self.assertEqual(sub.invoice_ids[1].state, "posted")
+
+    def test_payment_link_wizard(self):
+        # test auto values for payment link
+        with freeze_time("2025-04-15"):
+            test_payment_token = self.env['payment.token'].create({
+                'payment_details': 'Test',
+                'partner_id': self.user_portal.partner_id.id,
+                'provider_id': self.dummy_provider.id,
+                'payment_method_id': self.payment_method_id,
+                'provider_ref': 'test'
+            })
+            self.subscription.write({
+                'start_date': False,
+                'next_invoice_date': False,
+                'prepayment_percent': 50,
+                'payment_token_id': test_payment_token.id,
+                'client_order_ref': 'Customer REF XXXXXXX'
+            })
+            self.subscription.action_confirm()
+            payment_vals = self.subscription._get_default_payment_link_values()
+            self.assertAlmostEqual(payment_vals['amount'], 23.1, msg="Non invoiced SO have same behavior as recular SO")
+            self.assertAlmostEqual(payment_vals['amount_max'], 23.1, msg="Non invoiced SO have same behavior as recular SO")
+        with freeze_time("2025-05-15"):
+            inv = self.subscription._create_recurring_invoice()
+            tx = self.env["payment.transaction"].create(
+                self._get_payment_values(self.subscription, inv.ids)
+            )
+            tx._set_done()
+            tx._post_process()
+            payment_vals = self.subscription._get_default_payment_link_values()
+            self.assertAlmostEqual(payment_vals['amount'], 23.1, msg="invoiced recurring SO have different behavior")
+            self.assertAlmostEqual(payment_vals['amount_max'], 23.1, msg="invoiced recurring SO have different behavior")
+
+        with freeze_time("2025-06-15"):
+            inv = self.subscription._create_recurring_invoice()
+            tx = self.env["payment.transaction"].create(
+                self._get_payment_values(self.subscription, inv.ids, reference="PAYMENT2")
+            )
+            tx._set_done()
+            tx._post_process()
+            payment_vals = self.subscription._get_default_payment_link_values()
+            self.assertAlmostEqual(payment_vals['amount'], 23.1, msg="invoiced recurring SO have different behavior")
+            self.assertAlmostEqual(payment_vals['amount_max'], 23.1, msg="invoiced recurring SO have different behavior")
