@@ -203,7 +203,6 @@ class TestBarcodeClientAction(HttpCase):
             'product_id': product.id,
         })
 
-
         # Searches while using the default barcode nomenclature.
         lot = self.env['stock.lot'].search([('name', '=', 'lot1')])
         self.assertEqual(len(lot), 1, "Lot should be found when searching by its barcode")
@@ -213,6 +212,7 @@ class TestBarcodeClientAction(HttpCase):
 
         # Searches while using the GS1 barcode nomenclature.
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
+        self.assertFalse(self.env['stock.lot'].search([('name', 'in', [False])]))
         for operator in ['=', 'ilike']:
             lot = self.env['stock.lot'].search([('name', operator, '10lot1')])
             self.assertEqual(len(lot), 1, "Lot should still be found when searching by its raw barcode even if GS1 nomenclature is active")
