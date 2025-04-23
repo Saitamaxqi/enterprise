@@ -3,6 +3,7 @@
 
     <record id="deferred_expense_report" model="account.report">
         <field name="name">Deferred Expense Report</field>
+        <field name="filter_show_draft" eval="False"/>
         <field name="filter_journals" eval="True"/>
         <field name="filter_analytic" eval="True"/>
         <field name="filter_period_comparison" eval="True"/>
@@ -23,6 +24,7 @@
 
     <record id="deferred_revenue_report" model="account.report">
         <field name="name">Deferred Revenue Report</field>
+        <field name="filter_show_draft" eval="False"/>
         <field name="filter_journals" eval="True"/>
         <field name="filter_analytic" eval="True"/>
         <field name="filter_period_comparison" eval="True"/>

@@ -467,24 +467,6 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             options,
         )
 
-        # All non-cancelled entries
-        options = self._generate_options(self.deferred_expense_report, fields.Date.from_string('2023-02-01'), fields.Date.from_string('2023-02-28'), {
-            'all_entries': True,
-        })
-        lines = self.get_lines(options)
-        self.assertLinesValues(
-            lines,
-            #    Name                Total          Not Started   Before    Current    Recognized          Later
-            [    0,                  1,             2,            3,        4,         5,                  6          ],
-            [
-                ('EXP0 Expense 0',   2000 + 2100,   0,            836.67,   1026.67,   836.67 + 1026.66,   2236.67    ),
-                ('EXP1 Expense 1',   2450,          0,            723.33,   653.33,    723.33 + 653.34,    1073.33    ),
-                ('EXP2 Expense 2',   3360 + 450,    450,          440,      1120,      440 + 1120,         1800 + 450 ),
-                ('Total',            10360,         450,          2000,     2800,      2000 + 2800,        5560       ),
-            ],
-            options,
-        )
-
     def test_deferred_expense_report_comparison(self):
         """
         Test the the comparison tool on the deferred expense report.
