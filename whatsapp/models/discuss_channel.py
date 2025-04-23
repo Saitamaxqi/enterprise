@@ -225,7 +225,7 @@ class DiscussChannel(models.Model):
                 'whatsapp_partner_id': recipient_partner.id,
                 'wa_account_id': wa_account_id.id,
             })
-            partners_to_notify += channel.whatsapp_partner_id
+            partners_to_notify |= channel.whatsapp_partner_id
             if related_message:
                 # Add message in channel about the related document
                 info = _("Related %(model_name)s: ", model_name=self.env['ir.model']._get(related_message.model).display_name)
@@ -255,7 +255,7 @@ class DiscussChannel(models.Model):
                         subtype_xmlid='mail.mt_note',
                     )
             if partners_to_notify == channel.whatsapp_partner_id and wa_account_id.notify_user_ids.partner_id:
-                partners_to_notify += wa_account_id.notify_user_ids.partner_id
+                partners_to_notify |= wa_account_id.notify_user_ids.partner_id
             channel.channel_member_ids = [Command.clear()] + [Command.create({'partner_id': partner.id}) for partner in partners_to_notify]
             channel._broadcast(partners_to_notify.ids)
         return channel
