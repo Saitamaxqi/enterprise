@@ -642,9 +642,12 @@ class AccountReturn(models.Model):
 
     def _add_attachment(self, file_data):
         self.ensure_one()
+        data = file_data['file_content']
+        if isinstance(data, str):
+            data = data.encode()
         self.attachment_ids = [Command.create({
             'name': file_data['file_name'],
-            'datas': base64.b64encode(file_data['file_content']),
+            'datas': base64.b64encode(data),
             'type': 'binary',
             'description': file_data['file_name'],
             'res_model': self._name,
@@ -719,6 +722,10 @@ class AccountReturn(models.Model):
         self.date_submission = False
         self.report_opened_once = False
         self.state = 'reviewed'
+
+    def reset_to_reviewed_from_completed(self):
+        self.action_reset_to_reviewed()
+        self.is_completed = False
 
     def action_reset_is_completed(self):
         self.ensure_one()

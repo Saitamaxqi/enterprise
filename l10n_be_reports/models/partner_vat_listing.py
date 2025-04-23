@@ -50,14 +50,6 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
 
         options['partner_vat_listing_taxes_tag_ids'] = tax_expressions._get_matching_tags().ids
 
-        options['buttons'] += [{
-            'name': _('XML'),
-            'sequence': 30,
-            'action': 'export_file',
-            'action_param': 'partner_vat_listing_export_to_xml',
-            'file_export_type': _('XML')
-        }]
-
         options['enable_export_buttons_for_common_vat_in_branches'] = True
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):

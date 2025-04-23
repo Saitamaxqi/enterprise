@@ -43,6 +43,8 @@ Accounting reports for Belgium
         'report/l10n_be_325_pdf_templates.xml',
         'wizard/isoc_prepayment_pay_wizard.xml',
         'wizard/annual_corporate_tax_submission_wizard.xml',
+        'wizard/vat_listing_submission_wizard.xml',
+        'wizard/ec_sales_list_submission_wizard.xml',
     ],
     'installable': True,
     'post_init_hook': '_l10n_be_reports_post_init',

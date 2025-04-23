@@ -62,15 +62,6 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
         }
         options.update({'sales_report_taxes': ec_operation_category})
 
-        # Buttons
-        options.setdefault('buttons', []).append({
-            'name': _('XML'),
-            'sequence': 30,
-            'action': 'export_file',
-            'action_param': 'export_to_xml_sales_report',
-            'file_export_type': _('XML'),
-        })
-
     def _get_tax_tags_for_belgian_sales_report(self):
         report_46L_expression = self.env.ref('l10n_be.tax_report_line_46L_tag')
         report_46T_expression = self.env.ref('l10n_be.tax_report_line_46T_tag')

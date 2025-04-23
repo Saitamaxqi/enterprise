@@ -8,3 +8,4 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
 
     def action_proceed_with_submission(self):
         self.return_id.is_completed = True
+        super().action_proceed_with_submission()

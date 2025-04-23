@@ -6,3 +6,5 @@ from . import isoc_prepayment_pay_wizard
 from . import vat_pay_wizard
 from . import vat_report_export
 from . import l10n_be_325_form_wizard
+from . import vat_listing_submission_wizard
+from . import ec_sales_list_submission_wizard

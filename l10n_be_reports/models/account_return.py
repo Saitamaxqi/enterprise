@@ -387,18 +387,19 @@ class AccountReturn(models.Model):
                 """)
             )
 
-        rslt = super().action_submit()
+        if self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
+            return self.env['l10n_be_reports.vat.listing.submission.wizard']._open_submission_wizard(self)
 
-        if self.type_external_id in ('l10n_be_reports.be_vat_listing_return_type', 'l10n_be_reports.be_ec_sales_list_return_type'):
-            self.is_completed = True
+        if self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
+            return self.env['l10n_be_reports.ec.sales.list.submission.wizard']._open_submission_wizard(self)
 
-        return rslt
-
-    def l10n_be_action_reset_vat_listing_submitted(self):
-        self.action_reset_to_reviewed()
-        self.is_completed = False
+        return super().action_submit()
 
     def _generate_submission_attachments(self, options):
         super()._generate_submission_attachments(options)
         if self.type_id == self.env.ref('l10n_be_reports.be_vat_return_type'):
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_tax_report_to_xml'))
+        if self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
+            self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'partner_vat_listing_export_to_xml'))
+        if self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
+            self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_to_xml_sales_report'))
