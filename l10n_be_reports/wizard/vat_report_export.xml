@@ -33,7 +33,7 @@
                                         <button string='Download XML' name="print_xml" type="object" class="btn-secondary"/>
                                     </div>
                                 </li>
-                                <li>Login on Intervat using Itsme or your card reader</li>
+                                <li>Log in to <a href="https://intervat.minfin.fgov.be/" target="_blank">Intervat</a> using Itsme or your card reader</li>
                                 <li>Select Intervat &gt; Dashboard</li>
                                 <li>Upload the XML file on the right panel and click "Continue"</li>
                                 <li>Validate the VAT return</li>
