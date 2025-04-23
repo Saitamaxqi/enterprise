@@ -482,7 +482,7 @@ class Sign(http.Controller):
         return result
 
     @http.route(['/sign/refuse/<int:sign_request_id>/<token>'], type='jsonrpc', auth='public')
-    def refuse(self, sign_request_id, token, refusal_reason=""):
+    def refuse(self, sign_request_id, token, refusal_reason="", refusal_name="", refusal_email=""):
         request_item = request.env["sign.request.item"].sudo().search(
             [
                 ("sign_request_id", "=", sign_request_id),
@@ -500,7 +500,26 @@ class Sign(http.Controller):
             request_item = request_item.with_user(refuse_user).sudo()
             refuse_log = _("The signature has been canceled by %(partner)s (%(role)s)", partner=refuse_user.name, role=request_item.role_id.name)
             request_item.sign_request_id.message_post(body=refuse_log)
-        request_item.with_context(default_sign_request_item_id=request_item.id)._refuse(refusal_reason)
+        else:
+            request_item = request_item.sudo()
+            refuse_log = _(
+                "The signature has been canceled by %(partner)s with email (%(email)s)",
+                partner=refusal_name,
+                email=refusal_email,
+            )
+            request_item.sign_request_id.message_post(body=refuse_log)
+
+        sign_request = request.env["sign.request"].sudo().search(
+            [("id", "=", sign_request_id)],
+            limit=1,
+        )
+        if sign_request.state in ['sent', 'shared']:
+            request_item.with_context(default_sign_request_item_id=request_item.id)._refuse(
+                sign_request.state,
+                refusal_reason,
+                refusal_name,
+                refusal_email,
+            )
         return True
 
     @http.route(['/sign/save_location/<int:request_id>/<token>'], type='jsonrpc', auth='public')

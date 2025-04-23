@@ -177,12 +177,12 @@ class TestSignRequest(SignRequestCommon, MockEmail):
 
         # refuse
         with self.assertRaises(UserError, msg='A signed sign.request.item cannot be refused'):
-            sign_request_item_customer._refuse("bad document")
+            sign_request_item_customer._refuse(request_state='sent', refusal_reason='bad document')
         sign_request_item_customer_token = sign_request_item_customer.access_token
         sign_request_item_employee_token = sign_request_item_employee.access_token
         sign_request_item_company_token = sign_request_item_company.access_token
         sign_request_3_roles_token = sign_request_3_roles.access_token
-        sign_request_item_employee._refuse('bad document')
+        sign_request_item_employee._refuse(request_state='sent', refusal_reason='bad document')
         self.assertEqual(sign_request_item_customer.state, 'completed', 'The sign.request.item should be completed')
         self.assertEqual(sign_request_item_employee.state, 'canceled', 'The sign.request.item should be completed')
         self.assertEqual(sign_request_item_company.state, 'canceled', 'The sign.request.item should be canceled')
@@ -212,6 +212,41 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertNotEqual(sign_request_3_roles.access_token, sign_request_3_roles_token, 'The access token should be changed')
         # now the cancel method is also called from refuse method so the log count is become 2
         self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(lambda log: log.action == 'cancel')), 2, 'A log with action="cancel" should be created')
+
+    def test_sign_request_refuse_shared(self):
+        """ Ensure that shared sign requests can be refused by public users. """
+        # Get the shared request from a template with one role.
+        shared_request_id = self.template_1_role.open_shared_sign_request()['res_id']
+        shared_request = self.env['sign.request'].browse(shared_request_id)
+        sign_request_item = shared_request.request_item_ids[0]
+
+        with self.assertRaises(UserError):
+            # Ensure an user error is raised by not specifying the refusal email.
+            sign_request_item.with_user(self.public_user).sudo()._refuse(
+                request_state="shared",
+                refusal_reason="Reason",
+                refusal_name="Marc"
+            )
+
+        sign_request_item.with_user(self.public_user).sudo()._refuse(
+            request_state="shared",
+            refusal_reason="Reason",
+            refusal_name="Marc",
+            refusal_email="demo@odoo.com"
+        )
+        self.assertEqual(shared_request.state, "shared", "Previous request must remain shared.")
+
+        refused_public_user = self.env['res.partner'].search([('email', '=', 'demo@odoo.com')])
+        self.assertTrue(refused_public_user, "Ensure that the partner from the public user was created.")
+
+        refused_request_item = self.env['sign.request.item'].search([('partner_id', '=', refused_public_user.id)])
+        self.assertEqual(len(refused_request_item), 1, "Ensure that the refused request item was created.")
+
+        refused_request = self.env['sign.request'].search([
+            ('state', '=', 'canceled'),
+            ('id', '>', shared_request.id)
+        ])
+        self.assertEqual(len(refused_request), 1, "Ensure that the refused request was created.")
 
     def test_sign_request_item_auto_resend(self):
         # create
@@ -300,7 +335,7 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 1, 'An activity for the new signer should be created')
 
         # refuse
-        sign_request_item_employee._refuse('bad request')
+        sign_request_item_employee._refuse(request_state='sent', refusal_reason='bad request')
 
         # reassign
         with self.assertRaises(UserError, msg='A refused sign request item cannot be reassigned'):

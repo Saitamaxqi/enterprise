@@ -82,6 +82,7 @@
                 <field name="activity_exception_decoration" widget="activity_exception" readonly="1"/>
                 <button name="send_signature_accesses" string="Resend" type="object" groups="sign.group_sign_user" invisible="state != 'sent' or create_uid != uid" icon="fa-refresh"/>
                 <button name="send_signature_accesses" string="Resend" type="object" groups="sign.group_sign_manager" invisible="state != 'sent' or create_uid == uid" icon="fa-refresh"/>
+                <button name="get_formview_action" string="Details" type="object" groups="sign.group_sign_user" invisible="state != 'canceled'" icon="fa-info"/>
                 <button name="get_completed_document" invisible="state != 'signed'" string="Download" type="object" icon="fa-download"/>
                 <button name="go_to_signable_document" string="Sign" type="object" invisible="not need_my_signature or state != 'sent'" icon="fa-pencil-square-o"/>
             </list>

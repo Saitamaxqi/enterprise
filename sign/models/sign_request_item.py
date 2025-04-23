@@ -91,7 +91,7 @@ class SignRequestItem(models.Model):
             raise UserError(_("You need to define a signatory"))
         request_items_reassigned = self.env['sign.request.item']
         if vals.get('partner_id'):
-            request_items_reassigned |= self.filtered(lambda sri: sri.partner_id.id != vals['partner_id'])
+            request_items_reassigned |= self.filtered(lambda sri: sri.partner_id and sri.partner_id.id != vals['partner_id'])
             if any(sri.state != 'sent'
                    or sri.sign_request_id.state != 'sent'
                    or (sri.partner_id and not sri.role_id.change_authorized)
@@ -143,23 +143,82 @@ class SignRequestItem(models.Model):
             })
             request_item.sudo().write({'access_token': self._default_access_token() if no_access else request_item.access_token})
 
-    def _refuse(self, refusal_reason):
+    def _refuse(self, request_state, refusal_reason, refusal_name="", refusal_email=""):
+        """ Refuse a sign request item with 'sent' or 'shared' states. """
         self.ensure_one()
         if not self.env.su:
             raise UserError(_("This function can only be called with sudo."))
-        if self.state != 'sent' or self.sign_request_id.state != 'sent':
+
+        # Get the post message according to the logged user.
+        refuse_user = self.partner_id.user_ids[:1]
+        # If refusing with a signed user, we use the user as the refuser.
+        if not refuse_user and self.env.user and not self.env.user.is_public:
+            refuse_user = self.env.user
+        message_post = ""
+        if refuse_user:
+            message_post = _(
+                "The signature has been refused by %(partner)s (%(role)s), refusal reason:",
+                partner=self.partner_id.name,
+                role=self.role_id.name
+            )
+        else:
+            message_post = _(
+                "The signature has been refused by %(name)s with email (%(email)s), refusal reason:",
+                name=refusal_name,
+                email=refusal_email,
+            )
+        refusal_reason = _("No specified reason") if not refusal_reason or refusal_reason.isspace() else refusal_reason
+        message_post = Markup('{}<p style="white-space: pre">{}</p>').format(message_post, refusal_reason)
+
+        if self.state == 'sent' and request_state == 'sent':
+            self._refuse_sent(refuse_user, message_post, refusal_reason)
+        elif self.state == 'sent' and request_state == 'shared':
+            self._refuse_shared(refuse_user, message_post, refusal_name, refusal_email)
+        else:
             raise UserError(_("This sign request item cannot be refused"))
+
+    def _refuse_sent(self, refuse_user, message_post, refusal_reason):
+        """ Refuse requests that were sent directly to the signers ('sent' state).
+        The cancelling flow happens directly in the refused sign request. """
         self.env['sign.log'].create({'sign_request_item_id': self.id, 'action': 'refuse'})
         self.write({'signing_date': fields.Date.context_today(self), 'state': 'canceled'})
-        refuse_user = self.partner_id.user_ids[:1]
-        # mark the activity as done for the refuser
+
+        # Mark the activity as done for the refuser.
         if refuse_user and refuse_user.has_group('sign.group_sign_user'):
             self.sign_request_id.activity_feedback(['mail.mail_activity_data_todo'], user_id=refuse_user.id)
-        refusal_reason = _("No specified reason") if not refusal_reason or refusal_reason.isspace() else refusal_reason
-        message_post = _("The signature has been refused by %(partner)s(%(role)s)", partner=self.partner_id.name, role=self.role_id.name)
-        message_post = Markup('{}<p style="white-space: pre">{}</p>').format(message_post, refusal_reason)
+
         self.sign_request_id.message_post(body=message_post)
         self.sign_request_id._refuse(self.partner_id, refusal_reason)
+
+    def _refuse_shared(self, refuse_user, message_post, refusal_name="", refusal_email=""):
+        """ Refuse requests that were shared by a shared link ('shared' state).
+        The request is duplicated and its copy is cancelled, allowing other users to also refuse it.
+        Public users can also refuse the request by disclosing their identity (name and email). """
+        user_identified = bool(refusal_name and refusal_email)
+        if not refuse_user and not user_identified:
+            raise UserError(_("The public user must identify itself for the refusal."))
+
+        # Duplicate the sign request, allowing other users to also refuse it.
+        request_copy_values = self.sign_request_id.copy_data()[0]
+        request_copy_values['state'] = 'shared'
+        new_request = self.env['sign.request'].create(request_copy_values)
+        new_sign_request_item = new_request.request_item_ids
+
+        # Do the refuse action in the request item and set the copied request as cancelled.
+        self.env['sign.log'].create({'sign_request_item_id': new_sign_request_item.id, 'action': 'refuse'})
+        new_sign_request_item.write({'signing_date': fields.Date.context_today(new_sign_request_item), 'state': 'canceled'})
+        new_request.state = "canceled"
+
+        # Mark the activity as done for the refuser.
+        if refuse_user and refuse_user.has_group('sign.group_sign_user'):
+            new_sign_request_item.sign_request_id.activity_feedback(['mail.mail_activity_data_todo'], user_id=refuse_user.id)
+        new_sign_request_item.sign_request_id.message_post(body=message_post)
+
+        # Link the refusal partner to the cancelled request, it is used for easying the identification.
+        refusal_partner = refuse_user.partner_id or self.env['res.partner'].search([('email', '=', refusal_email)], limit=1)
+        if not refusal_partner:
+            refusal_partner = self.env['res.partner'].create({'name': refusal_name, 'email': refusal_email})
+        new_sign_request_item.partner_id = refusal_partner
 
     def _get_url_parameters(self, signer, expiry_link_timestamp):
         return url_encode({

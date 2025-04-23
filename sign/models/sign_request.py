@@ -212,8 +212,6 @@ class SignRequest(models.Model):
     def _check_signers_partners_validity(self):
         for sign_request in self:
             sign_request_items = sign_request.request_item_ids
-            if sign_request.state == 'shared' and (len(sign_request_items) != 1 or sign_request_items.partner_id):
-                raise ValidationError(_("A shared sign request should only have one signer with an empty partner"))
             if sign_request.state != 'shared' and any(not sri.partner_id for sri in sign_request_items):
                 raise ValidationError(_("A non-shared sign request's should not have any signer with an empty partner"))
 
