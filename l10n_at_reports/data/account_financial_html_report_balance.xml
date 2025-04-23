@@ -471,6 +471,18 @@
                                                     </record>
                                                 </field>
                                             </record>
+                                            <record id="account_financial_report_l10n_at_paragraph_224_ugb_line_passiva_140" model="account.report.line">
+                                                <field name="name">Profit/Loss of the current year</field>
+                                                <field name="name@de">Gewinn/Verlust aus dem aktuellen Jahr</field>
+                                                <field name="code">PACY</field>
+                                                <field name="expression_ids">
+                                                    <record id="account_financial_report_l10n_at_paragraph_224_ugb_line_passiva_140_balance" model="account.report.expression">
+                                                        <field name="label">balance</field>
+                                                        <field name="engine">aggregation</field>
+                                                        <field name="formula">PAIV.balance - PAIV1.balance</field>
+                                                    </record>
+                                                </field>
+                                            </record>
                                         </field>
                                     </record>
                                 </field>
