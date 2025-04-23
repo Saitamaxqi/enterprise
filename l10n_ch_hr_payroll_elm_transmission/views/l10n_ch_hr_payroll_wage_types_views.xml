@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <list default_order="l10n_ch_code asc" create="0" edit="0" delete="0">
                 <field name="l10n_ch_code" string="CH Code"/>
+                <field name="code" string="Code" optional="hide"/>
                 <field name="name"/>
                 <field name="category_id"/>
                 <field name="l10n_ch_gross_included" string="Gross"/>

@@ -1157,6 +1157,11 @@ msgid "Agricultural Company"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5082
+msgid "Alimony Deduction"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.view_l10n_ch_hr_payslip_monthly_wizard_form
 msgid "All Contract Types"
 msgstr ""
@@ -2653,6 +2658,11 @@ msgid "Deduction Start"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5081
+msgid "Deduction for Prosecution Office"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_report_payslip
 msgid "Deductions"
 msgstr ""
@@ -2737,6 +2747,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_hr_payslip_montlhy_wizard__department_id
 msgid "Department"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
+msgid "Departure"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -5256,6 +5271,11 @@ msgid "Lines"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
+msgid "Location"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_salary_certificate_profile__l10n_ch_cs_employee_participation_taxable_income_locked
 msgid "Locked Options"
 msgstr ""
@@ -6323,6 +6343,16 @@ msgid "PP Benefits Purchase Employer Contributions Compensation"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5052
+msgid "PP Complementary Contributions"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_7052
+msgid "PP Complementary Employer Contributions"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5050
 msgid "PP Contributions"
 msgstr ""
@@ -7053,6 +7083,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll_elm_transmission.selection__l10n_ch_salary_certificate_profile__l10n_ch_cs_expense_policy_approved_canton__sh
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll_elm_transmission.selection__l10n_ch_source_tax_institution__canton__sh
 msgid "Schaffhouse"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
+msgid "Schedule"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -9094,6 +9129,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
 msgid "Work Canton"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
+msgid "Work Information"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission

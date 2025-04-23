@@ -5487,6 +5487,23 @@ result_name = inputs['LPP'].name
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
     </record>
 
+    <record id="l10n_ch_hr_elm_5052" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">PP Complementary Contributions</field>
+        <field name="code">LPP.COMPL</field>
+        <field name="l10n_ch_code">5052</field>
+        <field name="sequence">350</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = "LPP.COMPL" in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['LPP.COMPL'].amount
+result_name = inputs['LPP.COMPL'].name
+        </field>
+        <field name="l10n_ch_salary_certificate">10.1</field>
+        <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
+    </record>
+
     <record id="l10n_ch_hr_elm_5111" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">PP Employer Contributions Compensation</field>
@@ -5552,6 +5569,22 @@ result = inputs['LPP.COMP'].amount
 result_name = inputs['LPP.COMP'].name
         </field>
         <field name="appears_on_payslip" eval="False"/>
+        <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
+    </record>
+
+    <record id="l10n_ch_hr_elm_7052" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_company_contributions"/>
+        <field name="name">PP Complementary Employer Contributions</field>
+        <field name="code">LPP.COMP.COMPL</field>
+        <field name="l10n_ch_code">7052</field>
+        <field name="sequence">355</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = "LPP.COMP.COMPL" in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs['LPP.COMP.COMPL'].amount
+result_name = inputs['LPP.COMP.COMPL'].name
+        </field>
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
     </record>
 
@@ -6020,6 +6053,38 @@ result_rate = - payslip.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date
         <field name="amount_python_compute">
 result = -inputs['WT_5080'].amount
 result_name = inputs['WT_5080'].name
+        </field>
+        <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
+    </record>
+
+    <record id="l10n_ch_elm_rule_5081" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Deduction for Prosecution Office</field>
+        <field name="code">WT_5081</field>
+        <field name="l10n_ch_code">5081</field>
+        <field name="sequence">500</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'WT_5081' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['WT_5081'].amount
+result_name = inputs['WT_5081'].name
+        </field>
+        <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
+    </record>
+
+    <record id="l10n_ch_elm_rule_5082" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Alimony Deduction</field>
+        <field name="code">WT_5082</field>
+        <field name="l10n_ch_code">5082</field>
+        <field name="sequence">500</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'WT_5082' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['WT_5082'].amount
+result_name = inputs['WT_5082'].name
         </field>
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
     </record>

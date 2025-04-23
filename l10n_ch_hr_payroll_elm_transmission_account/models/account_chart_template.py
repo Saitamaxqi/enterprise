@@ -14,6 +14,7 @@ class AccountChartTemplate(models.AbstractModel):
             '1090',  # Salary Pass Through Account
             '1091',  # Transfer account: Salaries
             '2270',  # Health insurance AHV, IV, EO, ALV
+            '2210',  # Short Term liabilities
             '2271',  # LPP Provision
             '2272',  # Health insurance CAF
             '2273',  # Assurance Accident
@@ -379,7 +380,15 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[rule]['debit'] = '2271'
         rules_mapping[rule]['credit'] = '1090'
 
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5052')
+        rules_mapping[rule]['debit'] = '2271'
+        rules_mapping[rule]['credit'] = '1090'
+
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_7050')
+        rules_mapping[rule]['debit'] = '5720'
+        rules_mapping[rule]['credit'] = '2271'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_7052')
         rules_mapping[rule]['debit'] = '5720'
         rules_mapping[rule]['credit'] = '2271'
 
@@ -426,6 +435,14 @@ class AccountChartTemplate(models.AbstractModel):
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5080')
         rules_mapping[rule]['debit'] = '1090'
         rules_mapping[rule]['credit'] = '5891'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5081')
+        rules_mapping[rule]['debit'] = '1090'
+        rules_mapping[rule]['credit'] = '2210'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5082')
+        rules_mapping[rule]['debit'] = '1090'
+        rules_mapping[rule]['credit'] = '2210'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5100')
         rules_mapping[rule]['debit'] = '5800'

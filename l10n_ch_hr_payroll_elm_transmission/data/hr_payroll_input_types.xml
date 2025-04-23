@@ -1131,6 +1131,20 @@
         <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
     </record>
 
+    <record id="l10n_ch_elm_input_WT_5081" model="hr.payslip.input.type">
+        <field name="name">(5081) Deduction for Prosecution Office</field>
+        <field name="code">WT_5081</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_5082" model="hr.payslip.input.type">
+        <field name="name">(5082) Alimony Deduction</field>
+        <field name="code">WT_5082</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
     <record id="l10n_ch_elm_input_WT_5100" model="hr.payslip.input.type">
         <field name="name">(5100) Correction benefits in kind</field>
         <field name="code">WT_5100</field>
@@ -1179,7 +1193,21 @@
         <field name="code">LPP</field>
         <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
     </record>
-    
+
+    <record id="l10n_ch_hr_elm_input_WT_5052" model="hr.payslip.input.type">
+        <field name="country_id" ref="base.ch"/>
+        <field name="name">(5052) PP Complementary Contributions</field>
+        <field name="code">LPP.COMPL</field>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_hr_elm_input_WT_7052" model="hr.payslip.input.type">
+        <field name="country_id" ref="base.ch"/>
+        <field name="name">(7052) PP Complementary Employer Contributions</field>
+        <field name="code">LPP.COMP.COMPL</field>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
     <record id="l10n_ch_hr_elm_input_WT_7050" model="hr.payslip.input.type">
         <field name="country_id" ref="base.ch"/>
         <field name="name">(7050) PP Employer Contributions</field>
