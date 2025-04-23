@@ -32,7 +32,8 @@ test("use stored menus, and update on load_menus return", async () => {
     ]);
     // Initial Stored Values
     // There is no menu "CRM" in the initial values
-    browser.localStorage.webclient_menus_version = "1.0";
+    browser.localStorage.webclient_menus_version =
+        "05500d71e084497829aa807e3caa2e7e9782ff702c15b2f57f87f2d64d049bd0";
     browser.localStorage.webclient_menus = JSON.stringify({
         1: {
             id: 1,
