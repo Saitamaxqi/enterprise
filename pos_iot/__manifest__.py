@@ -32,6 +32,7 @@ Supported devices include payment terminals, receipt printers, scales and custom
         'point_of_sale._assets_pos': [
             'iot_base/static/src/network_utils/*',
             'iot_base/static/src/device_controller.js',
+            'iot/static/src/overrides/network_utils/longpolling.js',
             'iot/static/src/iot_report_action.js',
             'iot/static/src/iot_websocket_service.js',
             'iot/static/src/select_printer_wizard.js',
