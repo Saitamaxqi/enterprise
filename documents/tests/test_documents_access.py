@@ -10,7 +10,7 @@ from odoo.tests.common import RecordCapturer
 
 class TestDocumentsAccess(TransactionCaseDocuments):
 
-    @mute_logger('odoo.addons.base.models.ir_rule')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule')
     def test_access_type_internal(self):
         """Check that the 'internal' access_type_role works as expected."""
         self.assertEqual(self.folder_a.access_internal, 'view')
@@ -527,7 +527,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         with self.assertRaises(UserError):
             action.with_context(active_model='documents.document', active_id=document.id).run()
 
-    @mute_logger('odoo.addons.base.models.ir_rule')
+    @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule')
     def test_create_document_access(self):
         with self.assertRaises(AccessError):
             self.folder_a.with_user(self.internal_user).name = 'test'
@@ -1440,11 +1440,23 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         """Check that reading fields depending on restricted folder doesn't raise (access) error."""
         self.folder_b.access_internal = 'none'
         self.assertEqual(self.folder_b.with_user(self.internal_user).user_permission, 'none')
+        self.assertFalse(self.env['documents.document'].with_user(self.internal_user)._get_folder_embedded_actions(self.folder_b.id))
         self.document_gif.access_internal = 'view'
         self.assertEqual(self.document_gif.with_user(self.internal_user).user_permission, 'view')
 
         self.document_gif.invalidate_recordset()  # cache pollution
         self.assertFalse(self.document_gif.with_user(self.internal_user).available_embedded_actions_ids)
 
+        # Private method now returns actions because there are accessible child(ren)
+        self.env['documents.document'].with_user(self.internal_user)._get_folder_embedded_actions(self.folder_b.id)
         with self.assertRaises(UserError):
+            # Public method doesn't need to, actions are only embeddable by folder editors.
             self.env['documents.document'].with_user(self.internal_user).get_documents_actions(self.folder_b.id)
+
+        folder_b_embedded_server_action_ids = {
+            server_action['id']
+            for server_action in self.folder_b.action_folder_embed_action(self.folder_b.id, self.server_action.id)
+            if server_action['is_embedded']
+        }
+        embedded_action_folder_b = self.document_gif.with_user(self.internal_user).available_embedded_actions_ids
+        self.assertIn(embedded_action_folder_b.action_id.id, folder_b_embedded_server_action_ids)

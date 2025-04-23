@@ -52,4 +52,8 @@ div.o_documents_details_panel {
             display: inline-block;
         }
     }
+
+    .o_documents_details_panel_placeholder {
+        @include o-placeholder;
+    }
 }

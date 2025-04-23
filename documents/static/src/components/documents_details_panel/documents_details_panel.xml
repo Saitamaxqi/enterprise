@@ -28,8 +28,9 @@
             <div class="o_documents_details_panel_fields d-flex flex-row flex-wrap align-items-baseline">
                 <i class="fa fa-folder mx-1 my-2"/>
                 <div class="o_field_widget o_field_many2one">
-                    <Many2OneField
+                    <DocumentsDetailsMany2OneField
                         name="'folder_id'"
+                        readonly="userPermissionViewOnly"
                         record="record"
                         canOpen="false"
                         canCreate="false"
@@ -42,9 +43,10 @@
 
                 <i t-att-class="{invisible: !documentService.multiCompany}" class="fa fa-building mx-1 my-2"/>
                 <div class="o_field_widget o_field_many2one">
-                    <Many2OneField
+                    <DocumentsDetailsMany2OneField
                         t-if="documentService.multiCompany"
                         name="'company_id'"
+                        readonly="userPermissionViewOnly"
                         record="record"
                         canOpen="false"
                         canCreate="false"
@@ -57,7 +59,7 @@
 
                 <i class="fa fa-user-circle-o mx-1 my-2"/>
                 <div class="o_field_widget o_field_many2one">
-                    <Many2OneField
+                    <DocumentsDetailsMany2OneField
                         name="'owner_id'"
                         readonly="userPermissionViewOnly"
                         record="record"
@@ -71,7 +73,7 @@
 
                 <i class="fa fa-user fa-fw mx-1 my-2"/>
                 <div class="o_field_widget o_field_many2one">
-                    <Many2OneField
+                    <DocumentsDetailsMany2OneField
                         name="'partner_id'"
                         readonly="userPermissionViewOnly"
                         record="record"
@@ -93,6 +95,7 @@
                             canQuickCreate="true"
                             canCreateEdit="true"
                             placeholder.translate="Add tags..."
+                            readonlyPlaceholder.translate="No tags"
                             colorField="'color'"
                         />
                     </div>
@@ -102,6 +105,7 @@
                         <a href="#" t-on-click.stop="openLinkedRecord" t-out="record.data.res_name" class="text-truncate"/>
                         <button t-on-click="() => this.onRecordReset()" class="btn fa fa-close"/>
                     </div>
+                    <div t-elif="userPermissionViewOnly" class="o_documents_details_panel_placeholder">No linked record</div>
                     <div t-else="" class="o_field_widget o_field_many2one">
                         <div class="o_input_dropdown">
                             <ModelSelector
@@ -152,7 +156,7 @@
                 <div t-if="record.data.alias_name and record.data.alias_domain_id" class="d-flex flex-row flex-wrap w-100 my-2 justify-content-between">
                     <div class="o_field_widget o_field_many2one d-flex flex-row align-items-baseline my-1 w-50">
                         <span class="fw-bold mx-1">Activity type</span>
-                        <Many2OneField
+                        <DocumentsDetailsMany2OneField
                             name="'create_activity_type_id'"
                             readonly="userPermissionViewOnly"
                             record="record"
@@ -163,7 +167,7 @@
                             placeholder.translate="No activity"
                         />
                     </div>
-                    <div class="o_field_widget o_field_many2one d-flex flex-row align-items-baseline my-1 w-50">
+                    <div t-if="record.data.create_activity_type_id" class="o_field_widget o_field_many2one d-flex flex-row align-items-baseline my-1 w-50">
                         <span class="fw-bold mx-1">Responsible</span>
                         <Many2OneField
                             name="'create_activity_user_id'"
@@ -174,6 +178,7 @@
                             canQuickCreate="false"
                             canCreateEdit="false"
                             placeholder.translate="Activity assigned to"
+                            readonlyPlaceholder.translate="No activity assignee"
                         />
                     </div>
 
@@ -187,6 +192,7 @@
                             canQuickCreate="true"
                             canCreateEdit="true"
                             placeholder.translate="Add an alias tag..."
+                            readonlyPlaceholder.translate="No alias tags"
                             colorField="'color'"
                         />
                     </div>

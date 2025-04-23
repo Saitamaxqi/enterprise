@@ -9,7 +9,8 @@ import { Many2OneAvatarField } from "@web/views/fields/many2one_avatar/many2one_
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 
-import { DocumentsDetailsMany2ManyTagsField } from "@documents/views/fields/documents_details_many2many_tags";
+import { DocumentsDetailsMany2ManyTagsField } from "@documents/views/fields/documents_details_many2many_tags/documents_details_many2many_tags_field";
+import { DocumentsDetailsMany2OneField } from "@documents/views/fields/documents_details_many2one/documents_details_many2one_field";
 import { DocumentsTypeIcon } from "@documents/views/fields/documents_type_icon/documents_type_icon";
 
 import { Component, onWillRender, onWillUpdateProps, reactive, useState } from "@odoo/owl";
@@ -23,6 +24,7 @@ export class DocumentsDetailsPanel extends Component {
     static components = {
         CharField,
         DocumentsDetailsMany2ManyTagsField,
+        DocumentsDetailsMany2OneField,
         DocumentsTypeIcon,
         Many2OneAvatarField,
         Many2OneField,
