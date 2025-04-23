@@ -1554,3 +1554,15 @@ registry.category("web_tour.tours").add("test_select_mo_component_line_scan_pack
         ...stepUtils.validateBarcodeOperation(".o_notification_bar.bg-danger"),
     ],
 });
+
+registry.category("web_tour.tours").add("test_create_all_transfers_for_3_step_manufacturing", {steps: () => [
+    { trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')", run: "click" },
+    { trigger: ".o-kanban-button-new", run: "click" },
+    { trigger: "button.o_add_line", run: "click" },
+    { trigger: "input#product_id_0", run: "edit Final" },
+    { trigger: ".ui-autocomplete a:contains('Final Product')", run: "click" },
+    { trigger: "div[name=product_id] .o_external_button", run() {} },
+    { trigger: "button.o_save", run: "click" },
+    { trigger: "button.o_validate_page:enabled", run: "click" },
+    { trigger: ".o_notification_bar.bg-success", run() {} },
+]});

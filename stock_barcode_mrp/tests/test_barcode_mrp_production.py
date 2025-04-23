@@ -967,3 +967,42 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         url = '/web#action=%s&active_id=%s' % (action.id, manufacturing_order.id)
         self.start_tour(url, 'test_select_mo_component_line_scan_package_type', login='admin')
         self.assertEqual(manufacturing_order.state, 'done')
+
+    def test_create_all_transfers_for_3_step_manufacturing(self):
+        """
+        Checks if 'Pick Components' and 'Store Finished Product' transfers are
+        created when an MO is created via Barcode.
+        """
+        self.env.user._get_default_warehouse_id().manufacture_steps = 'pbm_sam'
+        # A BoM with a component is required, to generate 'Pick Components' transfer
+        self.env['mrp.bom'].create({
+            'product_tmpl_id': self.final_product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'bom_line_ids': [
+                Command.create({'product_id': self.component01.id, 'product_qty': 1.0}),
+            ],
+            'byproduct_ids': [
+                Command.create({'product_id': self.by_product.id, 'product_qty': 2.0})
+            ],
+        })
+
+        # Create a new MO via Barcode
+        action_id = self.env.ref('stock_barcode.stock_picking_type_action_kanban')
+        url = "/web#action=" + str(action_id.id)
+        self.start_tour(url, 'test_create_all_transfers_for_3_step_manufacturing', login='admin')
+
+        # 'Pick Components' and 'Store Finished Product' transfers should be created
+        mos = self.env['mrp.production'].search([('product_id', '=', self.final_product.id)])
+        self.assertEqual(len(mos), 1, 'There should be only 1 MO created via Barcode')
+        self.assertEqual(len(mos.picking_ids), 2, '2 transfers should be created for a 3-step manufacture process')
+
+        pick_component_transfer = mos.picking_ids.search([('picking_type_id.name', '=', 'Pick Components')])
+        store_final_transfer = mos.picking_ids.search([('picking_type_id.name', '=', 'Store Finished Product')])
+
+        self.assertEqual(pick_component_transfer.move_ids[0].product_id, self.component01)
+        self.assertEqual(pick_component_transfer.move_ids[0].product_qty, 1)
+        # Both final product and by-products are included in the SFP move
+        self.assertEqual(store_final_transfer.move_ids[0].product_id, self.final_product)
+        self.assertEqual(store_final_transfer.move_ids[0].product_qty, 1)
+        self.assertEqual(store_final_transfer.move_ids[1].product_id, self.by_product)
+        self.assertEqual(store_final_transfer.move_ids[1].product_qty, 2)
