@@ -145,7 +145,9 @@ class OSSTaxReportTest(TestAccountReportsCommon):
         })
         tax_return.action_review()
         with self.allow_pdf_render():
-            tax_return.action_submit()
+            wizard_action = tax_return.action_submit()
+            self.env[wizard_action['res_model']].browse(wizard_action['res_id']).action_proceed_with_submission()
+
         self.assertEqual(len(tax_return.closing_move_ids), 1)
 
         self._assert_closing_lines(

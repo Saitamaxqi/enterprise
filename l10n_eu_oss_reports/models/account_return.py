@@ -49,3 +49,11 @@ class AccountReturn(models.Model):
         domain = super()._get_vat_closing_entry_additional_domain()
         domain += [('tax_tag_ids', 'not in', self.env.ref('l10n_eu_oss.tag_oss').ids)]
         return domain
+
+    def action_submit(self):
+        oss_wizard_country_codes = ('BE', 'LU')
+        oss_return_types = ('l10n_eu_oss_reports.eu_oss_sales_tax_return_type', 'l10n_eu_oss_reports.eu_oss_imports_tax_return_type')
+        if self.company_id.account_fiscal_country_id.code in oss_wizard_country_codes and self.type_external_id in oss_return_types:
+            return self.env['l10n_eu_oss_reports.return.submission.wizard']._open_submission_wizard(self)
+
+        return super().action_submit()

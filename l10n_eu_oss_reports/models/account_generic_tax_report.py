@@ -105,17 +105,8 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
         return rslt
 
     def _custom_options_initializer(self, report, options, previous_options):
-        # Add OSS XML export if there is one available for the domestic country
         super()._custom_options_initializer(report, options, previous_options=previous_options)
-        if self._get_oss_xml_template(options):
-            options.setdefault('buttons', []).append({
-                'name': _('XML'),
-                'sequence': 3,
-                'action': 'export_file',
-                'action_param': 'export_to_xml',
-                'file_export_type': _('XML'),
-                'branch_allowed': True,
-            })
+
         options['forced_domain'] = [
             *options.get('forced_domain', []),
             *self._get_oss_custom_domain(),
@@ -261,6 +252,20 @@ class L10n_Eu_OssImportsTaxReportHandler(models.AbstractModel):
     _name = 'l10n_eu_oss.imports.tax.report.handler'
     _inherit = ['l10n_eu_oss.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler (Imports)'
+
+    def _custom_options_initializer(self, report, options, previous_options):
+        super()._custom_options_initializer(report, options, previous_options)
+
+        # Add OSS XML export if there is one available for the domestic country
+        if self._get_oss_xml_template(options):
+            options.setdefault('buttons', []).append({
+                'name': _('XML'),
+                'sequence': 3,
+                'action': 'export_file',
+                'action_param': 'export_to_xml',
+                'file_export_type': _('XML'),
+                'branch_allowed': True,
+            })
 
     @api.model
     def _get_oss_custom_domain(self):
