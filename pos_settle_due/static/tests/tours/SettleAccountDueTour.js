@@ -14,17 +14,8 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
             PartnerList.clickPartnerOptions("Partner Test 1"),
-            {
-                isActive: ["auto"],
-                trigger: "div.o_popover :contains('Settle invoices')",
-                content: "Check the popover opened",
-                run: "click",
-            },
-            {
-                trigger: "tr.o_data_row td[name='name']:contains('TSJ/2025/00001')",
-                content: "Check the settle due account line is present",
-                run: "click",
-            },
+            PartnerList.clickDropDownItemText("Settle invoices"),
+            PartnerList.clickSettleOrderName("TSJ/2025/00001"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),
             PaymentScreen.clickValidate(),
@@ -76,6 +67,89 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
             {
                 trigger: "tr:contains('A Partner') .partner-due:contains('19.80')",
             },
+            // Settle partially
+            PartnerList.clickPartnerOptions("A Partner"),
+            PartnerList.clickDropDownItemText("Settle orders"),
+            PartnerList.clickSettleOrderName("Shop/0001"),
+            ProductScreen.modeIsActive("Price"),
+            ProductScreen.clickNumpad("1", "0"),
+            ProductScreen.totalAmountIs("10.00"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickValidate(),
+            Dialog.confirm("Yes"),
+            ReceiptScreen.clickNextOrder(),
+            ProductScreen.clickPartnerButton(),
+            {
+                trigger: "tr:contains('A Partner') .partner-due:contains('9.80')",
+            },
+            // Settle the rest and invoice it
+            PartnerList.clickPartnerOptions("A Partner"),
+            PartnerList.clickDropDownItemText("Settle orders"),
+            PartnerList.clickSettleOrderName("Shop/0001"),
+            ProductScreen.totalAmountIs("9.80"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickInvoiceButton(),
+            PaymentScreen.clickValidate(),
+            Dialog.confirm("Yes"),
+            ReceiptScreen.clickNextOrder(),
+            ProductScreen.clickPartnerButton(),
+            PartnerList.clickPartnerOptions("A Partner"),
+            // Deposit money should be shown (since we have no more due to settle)
+            PartnerList.checkDropDownItemText("Deposit money"),
+            Chrome.endTour(),
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("test_settle_order_partially_backend_01", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            ProductScreen.clickPartnerButton(),
+            ProductScreen.clickCustomer("A Partner"),
+            ProductScreen.addOrderline("Desk Pad", "10"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Customer Account"),
+            PaymentScreen.clickInvoiceButton(),
+            PaymentScreen.clickValidate(),
+            ReceiptScreen.clickNextOrder(),
+            ProductScreen.clickPartnerButton(),
+            {
+                trigger: "tr:contains('A Partner') .partner-due:contains('19.80')",
+            },
+            PartnerList.clickPartnerOptions("A Partner"),
+            PartnerList.clickDropDownItemText("Settle invoices"),
+            PartnerList.clickSettleOrderName("TSJ/2025/00001"),
+            ProductScreen.modeIsActive("Price"),
+            ProductScreen.clickNumpad("1", "0"),
+            ProductScreen.totalAmountIs("10.00"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickValidate(),
+            Dialog.confirm("Yes"),
+            ReceiptScreen.clickNextOrder(),
+            Chrome.endTour(),
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("test_settle_order_partially_backend_02", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            ProductScreen.clickPartnerButton(),
+            PartnerList.clickPartnerOptions("A Partner"),
+            PartnerList.clickDropDownItemText("Settle invoices"),
+            PartnerList.clickSettleOrderName("TSJ/2025/00001"),
+            ProductScreen.totalAmountIs("4.80"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickValidate(),
+            Dialog.confirm("Yes"),
+            ReceiptScreen.clickNextOrder(),
+            Chrome.endTour(),
         ].flat(),
 });
 

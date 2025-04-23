@@ -17,9 +17,39 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
             'split_transactions': True,
         })
 
-        self.main_pos_config.write({'payment_method_ids': [(6, 0, self.customer_account_payment_method.ids)]})
+        self.main_pos_config.write({'payment_method_ids': [(4, self.customer_account_payment_method.id)]})
         self.main_pos_config.open_ui()
         self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'pos_settle_account_due_update_instantly', login="accountman")
+
+    def test_settle_order_partially_backend(self):
+        """
+        - Create an invoice when paying an order with customer account from POS, pay partially the invoice from PoS and go to backend to check that the amount residual is decreased.
+        - Then pay partially from the backend, and check that the amount due is updated in the POS.
+        """
+        self.partner_test_a = self.env["res.partner"].create({"name": "A Partner"})
+        self.customer_account_payment_method = self.env['pos.payment.method'].create({
+            'name': 'Customer Account',
+            'split_transactions': True,
+        })
+
+        self.main_pos_config.write({'payment_method_ids': [(4, self.customer_account_payment_method.id)]})
+        self.main_pos_config.open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_settle_order_partially_backend_01', login="accountman")
+        self.main_pos_config.current_session_id.close_session_from_ui()
+
+        pos_invoice = self.partner_test_a.invoice_ids[0]
+        self.assertEqual(pos_invoice.amount_residual, 9.8)
+        self.env['account.payment.register'].with_context(active_ids=pos_invoice.ids, active_model='account.move').create({
+            'payment_date': pos_invoice.date,
+            'amount': 5,
+        })._create_payments()
+        self.assertEqual(pos_invoice.amount_residual, 4.8)
+
+        self.main_pos_config.open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_settle_order_partially_backend_02', login="accountman")
+        self.main_pos_config.current_session_id.close_session_from_ui()
+        self.assertEqual(pos_invoice.amount_residual, 0)
+        self.assertEqual(self.partner_test_a.total_due, 0)
 
     def test_settle_due_account_button(self):
         """ Test that an invoice can be created after the session is closed """

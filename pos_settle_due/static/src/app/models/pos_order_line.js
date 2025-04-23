@@ -35,6 +35,6 @@ patch(PosOrderline.prototype, {
         return super.orderDisplayProductName;
     },
     get canBeRemoved() {
-        return super.canBeRemoved && !this.isSettleDueLine() && !this.isSettleInvoiceLine();
+        return super.canBeRemoved && !this.isAnySettleLine();
     },
 });
