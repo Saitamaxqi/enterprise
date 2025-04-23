@@ -1091,16 +1091,18 @@
                 <br/>
                 They can also be shared with customers, journalists and resellers.
             </p>
-            <div data-embedded="file" data-embedded-props='{
-                "fileData":{
-                    "extension": "png",
-                    "filename": "Odoo Logo",
-                    "mimetype": "image/png",
-                    "name": "Odoo Logo.png",
-                    "type": "url",
-                    "url": "https://odoocdn.com/openerp_website/static/src/img/assets/png/odoo_logo.png?download=true"
-                }
-            }'/>
+            <p>
+                <span data-embedded="file" data-embedded-props='{
+                    "fileData":{
+                        "extension": "png",
+                        "filename": "Odoo Logo",
+                        "mimetype": "image/png",
+                        "name": "Odoo Logo.png",
+                        "type": "url",
+                        "url": "https://odoocdn.com/openerp_website/static/src/img/assets/png/odoo_logo.png?download=true"
+                    }
+                }'/>
+            </p>
             <p><br/></p>
             <h4>Usage</h4>
             <ul>
@@ -1270,16 +1272,18 @@
             <h2>Car Policy</h2>
             <h3>How do I know which model I can order or not?</h3>
             <p>Our catalog can be found here and is updated every 2 years. If you do not manage to find the specific model you are looking for, <a href="mailto:fleet@company.com" target="_blank">contact our FleetOfficer</a></p>
-            <div data-embedded="file" data-embedded-props='{
-                "fileData":{
-                    "extension": "png",
-                    "filename": "Car_Catalog.png",
-                    "mimetype": "image/png",
-                    "name": "Car_Catalog.png",
-                    "type": "url",
-                    "url": "/knowledge/static/src/demo/fleet_icon.png?download=true"
-                }
-            }'/>
+            <p>
+                <span data-embedded="file" data-embedded-props='{
+                    "fileData":{
+                        "extension": "png",
+                        "filename": "Car_Catalog.png",
+                        "mimetype": "image/png",
+                        "name": "Car_Catalog.png",
+                        "type": "url",
+                        "url": "/knowledge/static/src/demo/fleet_icon.png?download=true"
+                    }
+                }'/>
+            </p>
             <p><br/></p>
             <h3>Who can drive my car?</h3>
             <p>

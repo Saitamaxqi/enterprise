@@ -146,16 +146,18 @@
         </ul>
     </li>
 </ul>
-<div data-embedded="file" data-embedded-props='{
-    "fileData":{
-        "extension": "pdf",
-        "filename": "Odoo Survival Guide",
-        "mimetype": "application/pdf",
-        "name": "Odoo Survival Guide.pdf",
-        "type": "url",
-        "url": "/knowledge/static/src/demo/Onboarding.pdf?download=true"
-    }
-}'/>
+<p>
+    <span data-embedded="file" data-embedded-props='{
+        "fileData":{
+            "extension": "pdf",
+            "filename": "Odoo Survival Guide",
+            "mimetype": "application/pdf",
+            "name": "Odoo Survival Guide.pdf",
+            "type": "url",
+            "url": "/knowledge/static/src/demo/Onboarding.pdf?download=true"
+        }
+    }'/>
+</p>
 <p><br /></p>
 <p>
     <span style="font-size: 14px;">
