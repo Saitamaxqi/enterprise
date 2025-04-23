@@ -220,23 +220,24 @@ class AccountMove(models.Model):
         else:
             return None
 
-        user_selected_box = self.env['iap.extracted.words'].search([
-            ('res_model', '=', self._name),
-            ('res_id', '=', self.id),
-            ('field', '=', field),
-            ('user_selected', '=', True),
-            ('ocr_selected', '=', False),
-        ])
-        if user_selected_box and user_selected_box.word_text == text_to_send['content']:
-            text_to_send['box'] = [
-                user_selected_box.word_text,
-                user_selected_box.word_page,
-                user_selected_box.word_box_midX,
-                user_selected_box.word_box_midY,
-                user_selected_box.word_box_width,
-                user_selected_box.word_box_height,
-                user_selected_box.word_box_angle,
-            ]
+        if 'content' in text_to_send:
+            if user_selected_box := self.env['iap.extracted.words'].search([
+                ('res_model', '=', self._name),
+                ('res_id', '=', self.id),
+                ('field', '=', field),
+                ('user_selected', '=', True),
+                ('ocr_selected', '=', False),
+                ('word_text', '=', text_to_send['content']),
+            ]):
+                text_to_send['box'] = [
+                    user_selected_box.word_text,
+                    user_selected_box.word_page,
+                    user_selected_box.word_box_midX,
+                    user_selected_box.word_box_midY,
+                    user_selected_box.word_box_width,
+                    user_selected_box.word_box_height,
+                    user_selected_box.word_box_angle,
+                ]
         return text_to_send
 
     @api.model
