@@ -545,8 +545,15 @@ class PlanningSlot(models.Model):
                 slot.write({'template_id': existing_templates.id})
 
     def _get_non_working_days_bounds(self, start_datetime, end_datetime, resource=False):
-        timezone = resource.tz if resource else self.env.user.tz
-        start_date_in_user_tz = start_datetime.astimezone(pytz.timezone(timezone))
+        resource = resource or self.env.user.employee_id.resource_id
+        user_tz = pytz.timezone(self.env.user.tz
+            or resource.employee_id and resource.employee_id.tz
+            or resource.tz
+            or self._context.get('tz')
+            or self.env.user.company_id.resource_calendar_id.tz
+            or 'UTC'
+        )
+        start_date_in_user_tz = start_datetime.astimezone(user_tz)
         offset = start_date_in_user_tz.utcoffset().total_seconds() / 3600
         return (
             (start_datetime.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None) + timedelta(hours=8 - offset)),
