@@ -50,7 +50,6 @@ export class UserAgent extends Reactive {
         this.env = env;
         this.callService = services["voip.call"];
         this.multiTabService = services.multi_tab;
-        this.notificationService = services.notification;
         this.ringtoneService = services["voip.ringtone"];
         this.voip = services.voip;
         this.softphone = this.voip.softphone;
@@ -305,9 +304,6 @@ export class UserAgent extends Reactive {
         }
         const call = await this.callService.create(data);
         this.softphone.show();
-        this.notificationService.add(
-            _t("Calling %(phone number)s", { "phone number": call.phoneNumber })
-        );
         this.session = {
             inviteState: "trying",
             isMute: false,
@@ -673,7 +669,7 @@ export class UserAgent extends Reactive {
 }
 
 export const userAgentService = {
-    dependencies: ["multi_tab", "notification", "voip", "voip.call", "voip.ringtone"],
+    dependencies: ["multi_tab", "voip", "voip.call", "voip.ringtone"],
     start(env, services) {
         return new UserAgent(env, services);
     },
