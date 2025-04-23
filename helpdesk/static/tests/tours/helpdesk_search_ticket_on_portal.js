@@ -28,5 +28,8 @@ registry.category("web_tour.tours").add("helpdesk_search_ticket_on_portal_tour",
             content: "click on ticket.",
             run: "click",
         },
+        {
+            trigger: "#chatterRoot:shadow div.o-mail-Thread-empty",
+        },
     ],
 });
