@@ -7,7 +7,7 @@
             <ActionButton
                 name.translate="Contact"
                 title.translate="View customer details"
-                icon="contact ? 'oi-user' : 'oi-user-plus'"
+                icon="props.call.partner ? 'oi-user' : 'oi-user-plus'"
                 onClick.bind="onClickContact"
             />
             <t class="o-voip-InCallView-xpathTarget"/>
