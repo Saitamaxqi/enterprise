@@ -15,7 +15,7 @@ patch(PivotSidePanelStore.prototype, {
         const sortedColumn = definition.sortedColumn;
         if (sortedColumn) {
             if (
-                !definition.measures.some((measure) => measure.name === sortedColumn.measure) ||
+                !definition.measures.some((measure) => measure.id === sortedColumn.measure) ||
                 !deepEquals(definition.columns, coreDefinition.columns)
             ) {
                 definition.sortedColumn = undefined;

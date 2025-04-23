@@ -280,6 +280,22 @@ test("non measure fields are filtered and sorted", async () => {
     expect(store.measureFields.map((m) => m.name)).toEqual(measures);
 });
 
+test("update preserves sorting", async function () {
+    const { model, pivotId } = await createSpreadsheetWithPivot();
+    const { store } = makeStoreWithModel(model, PivotSidePanelStore, pivotId);
+    const sortedColumn = {
+        domain: [],
+        measure: "probability:avg",
+        order: "asc",
+    };
+    store.update({ sortedColumn });
+    expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual(sortedColumn);
+    store.update({
+        domain: [["foo", "=", 1]],
+    });
+    expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual(sortedColumn);
+});
+
 test("Existing dimensions fields are filtered, but not measures", async () => {
     const partnerFields = {
         foo: fields.Integer({ string: "Foo", store: true }),
