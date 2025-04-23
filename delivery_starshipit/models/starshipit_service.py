@@ -17,6 +17,7 @@ class Starshipit:
         self.logger = logger
         self.session = requests.Session()
         self.session.headers = {
+            'Platform': 'Odoo',
             'Content-Type': 'application/json',
             'StarShipIT-Api-Key': api_key,
             'Ocp-Apim-Subscription-Key': subscription_key,

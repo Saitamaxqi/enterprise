@@ -1,8 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import time
-
-from odoo import fields, models, _
+from odoo import _, fields, models
 from odoo.exceptions import UserError, ValidationError
+
 from .starshipit_service import Starshipit
 
 CARRIER_SUPPORTING_RETURNS = [
@@ -112,35 +111,6 @@ class DeliveryCarrier(models.Model):
             order_id = order['order_id']
             picking.starshipit_parcel_reference = order_id
 
-            # The 'total_shipping_price' is required in order to get the exact_price.
-            # It seems that this is computed by starshipit asynchronously and that we could need to wait a bit to get it.
-            # We cannot delete the order once it has been labelled, so we need to ensure that this exists before moving forward.
-            # To that end, we will loop and try up to 3 times before labelling.
-            total_shipping_price = None
-            tries = 0
-
-            while not total_shipping_price and tries < 3:
-                tries += 1
-                order_data = starshipit._get_order_details(order_id)
-                total_shipping_price = order_data['order'].get('total_shipping_price', None)
-                if total_shipping_price:
-                    break
-                time.sleep(1)
-
-            # If we still couldn't get it after three tries (unlikely), we will ask the user to try again.
-            if not total_shipping_price:
-                error_messages = [_('There was an issue when creating the order, please try again')]
-                try:
-                    starshipit._delete_order(order_id)
-                except UserError:
-                    error_messages.append(_(' after deleting the order on Starshipit'))
-                finally:
-                    raise UserError(''.join(error_messages))
-
-            order_result = {
-                'exact_price': total_shipping_price,
-            }
-
             label_data = self._create_label_for_order(order_id)
 
             tracking_number = ', '.join(tracking_number for tracking_number in label_data['tracking_numbers'] if tracking_number is not None)
@@ -165,11 +135,18 @@ class DeliveryCarrier(models.Model):
                     'res_id': picking.id,
                 })
             attachment_ids = self.env['ir.attachment'].create(attachment_data)
-            # Before continuing, get the order info and check if it was automatically manifested.
+
             order_data = starshipit._get_order_details(order_id)
+            total_shipping_price = order_data['order'].get('total_shipping_price', 0.0)
+
+            if not total_shipping_price:
+                picking.message_post(body=_('The exact price could not be retrieved'))
+
+            order_result = {
+                'exact_price': total_shipping_price,
+                'tracking_number': tracking_number,
+            }
             manifested = order_data['order']['manifested']
-            # Get the final rate from the order information.
-            order_result['tracking_number'] = tracking_number
             res.append(order_result)
             if attachment_ids:
                 picking.message_post(body=_('Labels were generated for the order %s', picking.name), attachment_ids=attachment_ids.ids)
@@ -409,5 +386,5 @@ class DeliveryCarrier(models.Model):
         return Starshipit(
             self.starshipit_api_key,
             self.starshipit_subscription_key,
-            self.log_xml
+            self.log_xml,
         )
