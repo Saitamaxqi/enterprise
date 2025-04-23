@@ -39,7 +39,7 @@ export class ListEditorRenderer extends listView.Renderer {
         this.viewEditorModel = reactive(viewEditorModel, () => {
             // Little trick to update our columns when showInvisible changes on the viewEditorModel
             // getActiveColumns reads that value
-            this.columns = this.getActiveColumns(this.props.list);
+            this.columns = this.getActiveColumns();
             this.render();
         });
         super.setup();
