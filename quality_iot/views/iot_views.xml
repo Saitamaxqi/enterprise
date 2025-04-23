@@ -9,7 +9,7 @@
                 <field name="qcp_test_type" invisible="1"/>
             </xpath>
             <xpath expr="//page[@name='reports']" position="after">
-                <page string="Quality Control Points" name="quality_control_points">
+                <page string="Quality Control Points" name="quality_control_points" invisible="type == 'unsupported'">
                     <field name="quality_point_ids" widget="many2many" domain="[('test_type', '=', qcp_test_type)]">
                         <list>
                             <field name="name"/>

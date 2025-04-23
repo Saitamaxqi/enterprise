@@ -170,7 +170,7 @@
                 <templates>
                     <t t-name="card" class="row g-0 p-0">
                         <aside class="col-3 text-center align-self-center">
-                            <t t-set="types" t-value="{'camera': 'camera', 'printer': 'printer', 'device': 'rulers', 'payment': 'payment-terminal', 'scale': 'scales', 'keyboard': 'keyboard', 'scanner': 'barcode-scanner', 'display': 'desktop', 'fiscal_data_module': 'fdm'}"/>
+                            <t t-set="types" t-value="{'camera': 'camera', 'printer': 'printer', 'device': 'rulers', 'payment': 'payment-terminal', 'scale': 'scales', 'keyboard': 'keyboard', 'scanner': 'barcode-scanner', 'display': 'desktop', 'fiscal_data_module': 'fdm', 'unsupported': 'unsupported'}"/>
                             <img t-attf-src="/iot/static/src/img/#{types[record.type.raw_value]}.svg" t-attf-alt="Device type is #{record.type.raw_value}" class="w-50"/>
                         </aside>
                         <main class="col p-2 border-start">

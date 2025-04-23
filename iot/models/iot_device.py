@@ -18,6 +18,7 @@ class IotDevice(models.Model):
             ('scale', 'Scale'),
             ('display', 'Display'),
             ('fiscal_data_module', 'Fiscal Data Module'),
+            ('unsupported', 'Unsupported'),
         ],
         readonly=True,
         default='device',
