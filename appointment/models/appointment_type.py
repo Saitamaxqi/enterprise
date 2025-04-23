@@ -181,19 +181,30 @@ class AppointmentType(models.Model):
     @api.depends('meeting_ids')
     def _compute_appointment_counts(self):
         mapped_status_data = {}
+        allowed_events = {}
         status_data = self.env['calendar.event']._read_group(
             [('appointment_type_id', 'in', self.ids)],
-            ['appointment_type_id', 'appointment_status'], ['__count']
+            ['appointment_type_id', 'appointment_status'], ['__count', 'id:array_agg']
         )
-        for appointment_type, status, count in status_data:
+        for appointment_type, status, count, event_ids in status_data:
             if appointment_type.id not in mapped_status_data:
                 mapped_status_data[appointment_type.id] = {}
             mapped_status_data[appointment_type.id][status] = count
+            allowed_events[appointment_type.id] = set(event_ids)
 
         mapped_upcoming_data = {
-            appointment_type.id: count for appointment_type, count in self.env['calendar.event']._read_group(
-                [('appointment_type_id', 'in', self.ids), ('start', '>', datetime.now())],
-                ['appointment_type_id'], ['__count'])
+            # For performance reasons, we add sudo() to bypass record rules and private field domain
+            # since they were already validated in the previous _read_group.
+            # Security is ensured by taking intersection with previously validated events.
+            appointment_type.id: len(set(event_ids) & allowed_events[appointment_type.id])
+            for appointment_type, event_ids in self.env['calendar.event'].sudo()._read_group(
+                domain=[
+                    ('appointment_type_id', 'in', mapped_status_data.keys()),
+                    ('start', '>', datetime.now()),
+                ],
+                groupby=['appointment_type_id'],
+                aggregates=['id:array_agg'],
+            )
         }
         for appointment_type in self:
             appointment_status_data = mapped_status_data.get(appointment_type.id, {'booked': 0})
