@@ -385,6 +385,7 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
             'move_type': 'entry',
             'partner_id': self.partner_a.id,
             'invoice_date': '2019-01-10',
+            'date': '2019-01-10',
             'invoice_line_ids': [
                 Command.create({
                     'partner_id': self.partner_a.id,
