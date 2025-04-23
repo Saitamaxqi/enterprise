@@ -5,6 +5,7 @@ import * as PaymentScreen from "@point_of_sale/../tests/pos/tours/utils/payment_
 import * as ProductScreen from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 import * as ReceiptScreen from "@point_of_sale/../tests/pos/tours/utils/receipt_screen_util";
 import * as Utils from "@point_of_sale/../tests/pos/tours/utils/common";
+import { negateStep } from "@point_of_sale/../tests/generic_helpers/utils";
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("pos_settle_account_due", {
@@ -148,6 +149,17 @@ registry.category("web_tour.tours").add("test_settle_order_partially_backend_02"
             Dialog.confirm("Yes"),
             ReceiptScreen.clickNextOrder(),
             Chrome.endTour(),
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("test_settle_due_account_ui_coherency_2", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            ProductScreen.clickPartnerButton(),
+            PartnerList.clickPartnerOptions("B Partner"),
+            negateStep(PartnerList.checkDropDownItemText("Deposit money")),
         ].flat(),
 });
 

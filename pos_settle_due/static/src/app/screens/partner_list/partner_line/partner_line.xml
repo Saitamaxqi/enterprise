@@ -13,13 +13,13 @@
                 </DropdownItem>
             </t>
             <t t-if="partnerInfos.remainingDue gt 0">
-                <DropdownItem onSelected="() => this.depositMoney(partnerInfos.remainingDue)">
+                <DropdownItem t-if="this.payLaterPaymentExists()" onSelected="() => this.depositMoney(partnerInfos.remainingDue)">
                     Settle due amount
                 </DropdownItem>
             </t>
         </t>
         <t t-else="">
-            <DropdownItem onSelected="() => this.depositMoney()">
+            <DropdownItem t-if="this.payLaterPaymentExists()" onSelected="() => this.depositMoney()">
                 Deposit money
             </DropdownItem>
         </t>

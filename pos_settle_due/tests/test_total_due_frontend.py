@@ -60,7 +60,7 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
         self.partner_test_a = self.env["res.partner"].create({"name": "A Partner"})
         self.partner_test_b = self.env["res.partner"].create({"name": "B Partner"})
 
-        self.main_pos_config.write({'payment_method_ids': [(6, 0, self.customer_account_payment_method.ids)]})
+        self.main_pos_config.write({'payment_method_ids': [(4, self.customer_account_payment_method.id)]})
 
         self.main_pos_config.open_ui()
         current_session = self.main_pos_config.current_session_id
@@ -95,6 +95,11 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
         current_session.close_session_from_ui()
         self.main_pos_config.open_ui()
         self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'SettleDueButtonPresent', login="accountman")
+
+        self.main_pos_config.current_session_id.close_session_from_ui()
+        self.main_pos_config.write({'payment_method_ids': [(3, self.customer_account_payment_method.id)]})
+        self.main_pos_config.open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_settle_due_account_ui_coherency_2', login="accountman")
 
     def test_settle_due_search_more(self):
         self.customer_account_payment_method = self.env['pos.payment.method'].create({

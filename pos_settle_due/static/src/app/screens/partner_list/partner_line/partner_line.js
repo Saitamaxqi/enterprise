@@ -52,6 +52,13 @@ patch(PartnerLine.prototype, {
         this.props.close();
         this.pos.depositMoney(this.props.partner, amount);
     },
+    payLaterPaymentExists() {
+        return this.pos.models["pos.payment.method"].some(
+            (pm) =>
+                this.pos.config.payment_method_ids.some((m) => m.id === pm.id) &&
+                pm.type === "pay_later"
+        );
+    },
     async settleCustomerInvoices() {
         this.props.close();
         const partnerId = this.props.partner.id;
