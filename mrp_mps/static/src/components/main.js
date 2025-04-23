@@ -185,13 +185,13 @@ export class MainComponent extends Component {
         return this.model.selectedRecords.size > 0;
     }
 
-    async getExportedFields(model, import_compat, parentParams) {
+    async getExportedFields(import_compat, parentParams) {
         const resIds = Array.from(this.model.selectedRecords);
         const ids = resIds.length > 0 && resIds;
         const domain = [['id', 'in', ids]]
         return await rpc("/web/export/get_fields", {
             ...parentParams,
-            model,
+            model: "mrp.production.schedule",
             domain,
             import_compat,
         });
