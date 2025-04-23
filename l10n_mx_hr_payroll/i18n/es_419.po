@@ -41,8 +41,8 @@ msgstr "<span>días / año</span>"
 #: model_terms:hr.salary.rule,note:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional_employee
 msgid "Additional quota due to the difference of the SBC and three times UMA"
 msgstr ""
-"Cuota adicional por la diferencia del salario base de cotización (SBC) y "
-"tres veces la unidad de medida y actualización (UMA)"
+"Cuota adicional por la diferencia del Salario Base de Cotización (SBC) y "
+"tres veces la Unidad de Medida y Actualización (UMA)"
 
 #. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
@@ -64,7 +64,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__bi_weekly
 msgid "Bi-weekly"
-msgstr "Cada dos semanas"
+msgstr "Quincenal"
 
 #. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
@@ -96,6 +96,51 @@ msgid "Daily"
 msgstr "Diario"
 
 #. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life_employee
+msgid "Disability and Life IMSS (Employee)"
+msgstr "Invalidez y vida IMSS (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life
+msgid "Disability and Life IMSS (Employer)"
+msgstr "Invalidez y vida IMSS (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional_employee
+msgid "Disease and Maternity IMSS - Additional Quota (Employee)"
+msgstr "Enfermedades y maternidad IMSS - Cuota adicional (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional
+msgid "Disease and Maternity IMSS - Additional Quota (Employer)"
+msgstr "Enfermedades y maternidad IMSS - Cuota adicional (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_fixed
+msgid "Disease and Maternity IMSS - Fixed Quota (Employer)"
+msgstr "Enfermedades y maternidad IMSS - Cuota fija (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money_employee
+msgid "Disease and Maternity IMSS - In Money (Employee)"
+msgstr "Enfermedades y maternidad IMSS - En dinero (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money
+msgid "Disease and Maternity IMSS - In Money (Employer)"
+msgstr "Enfermedades y maternidad IMSS - En dinero (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical_employee
+msgid "Disease and Maternity IMSS - Medical Expenses (Employee)"
+msgstr "Enfermedades y maternidad IMSS - Gastos médicos (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical
+msgid "Disease and Maternity IMSS - Medical Expenses (Employer)"
+msgstr "Enfermedades y maternidad IMSS - Gastos médicos (patrón)"
+
+#. module: l10n_mx_hr_payroll
 #: model:ir.model,name:l10n_mx_hr_payroll.model_hr_contract
 msgid "Employee Contract"
 msgstr "Contrato del empleado"
@@ -109,8 +154,8 @@ msgstr "Desarrollador con experiencia MX"
 #: model_terms:hr.salary.rule,note:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_fixed
 msgid "Fixed quota for each collaborator for up to three UMA"
 msgstr ""
-"Cuota fija para cada colaborador hasta tres veces la unidad de medida y "
-"actualización (UMA)"
+"Cuota fija para cada colaborador hasta tres veces la Unidad de Medida y "
+"Actualización (UMA)"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll.field_hr_contract__l10n_mx_holiday_bonus_rate
@@ -121,6 +166,39 @@ msgstr "Prima vacacional"
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll.field_hr_contract__l10n_mx_holidays_count
 msgid "Holidays Count"
 msgstr "Número de días festivos"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employee
+msgid "IMSS (Employee)"
+msgstr "IMSS (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employer
+msgid "IMSS (Employer)"
+msgstr "IMSS (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_social_security_total_employee
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_social_security_total_employer
+#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employee_total
+msgid "IMSS Total (Employee)"
+msgstr "Total IMSS (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employer_total
+msgid "IMSS Total (Employer)"
+msgstr "Total IMSS (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_infonavit
+msgid "INFONAVIT IMSS (Employer)"
+msgstr "INFONAVIT IMSS (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_christmas_bonus_isr
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_isr
+msgid "ISR (Income Tax)"
+msgstr "ISR (impuesto sobre la renta)"
 
 #. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
@@ -144,9 +222,9 @@ msgid ""
 "services."
 msgstr ""
 "Para que sea admisible, se debe notificar a Mi Empresa Mexicana respecto a "
-"cualquier demanda mediante una carta enviada por entrega certificada a su "
-"domicilio dentro de los 8 días posteriores a la entrega de los bienes o la "
-"prestación de los servicios."
+"cualquier demanda mediante una notificación enviada por entrega certificada "
+"a su domicilio dentro de los 8 días posteriores a la entrega de los bienes o "
+"la prestación de los servicios."
 
 #. module: l10n_mx_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_mx_hr_payroll.l10n_mx_employees_salary_isr
@@ -199,12 +277,17 @@ msgid ""
 "against the client by an end consumer."
 msgstr ""
 "Mi Empresa Mexicana se compromete a hacer todo lo posible para suministrar "
-"servicios de alto rendimiento dentro de lo establecido de acuerdo con los "
+"servicios de alto rendimiento dentro de lo establecido y dentro de los "
 "plazos acordados. Sin embargo, ninguna de sus obligaciones puede "
 "considerarse como una obligación para lograr resultados. El cliente no "
 "puede, bajo ninguna circunstancia, hacer que Mi Empresa Mexicana comparezca "
 "como externo en el contexto de cualquier demanda por daños y perjuicios "
 "presentada contra el cliente por parte de un consumidor final."
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_nursery
+msgid "Nursery and Social Benefits IMSS (Employer)"
+msgstr "Guarderías y prestaciones sociales IMSS (patrón)"
 
 #. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
@@ -233,6 +316,21 @@ msgstr "Recibo de nómina"
 #: model:hr.department,name:l10n_mx_hr_payroll.hr_department_rdlt
 msgid "RD MX"
 msgstr "RD MX"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav_employee
+msgid "Retirement, assault in elderly and old age (CEAV) IMSS (Employee)"
+msgstr "Jubilación, cesantía en edad avanzada o vejez (CEAV) IMSS (empleado)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav
+msgid "Retirement, assault in elderly and old age (CEAV) IMSS (Employer)"
+msgstr "Jubilación, cesantía en edad avanzada o vejez (CEAV) IMSS (patrón)"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_retirement
+msgid "Retirement, assault in elderly and old age IMSS (Employer)"
+msgstr "Jubilación, cesantía en edad avanzada o vejez IMSS (patrón)"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll.field_hr_contract__l10n_mx_risk_bonus_rate
@@ -266,6 +364,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__weekly
 msgid "Weekly"
 msgstr "Semanal"
+
+#. module: l10n_mx_hr_payroll
+#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_work_risk
+msgid "Work Risks IMSS (Employer)"
+msgstr "Riesgos de trabajo IMSS (patrón)"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__yearly
