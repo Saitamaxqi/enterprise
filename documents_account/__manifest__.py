@@ -16,7 +16,6 @@ Documents app in the desired format(s).
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
-        'data/mail_activity_type_data.xml',
         'data/documents_account_tour.xml',
         'data/ir_actions_server_data.xml',
         'views/account_move_views.xml',
