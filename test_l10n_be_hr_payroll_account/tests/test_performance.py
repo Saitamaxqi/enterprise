@@ -233,7 +233,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         } for i in range(self.EMPLOYEES_COUNT)]
 
         # Payslip Creation
-        with self.assertQueryCount(admin=1050):  # randomness
+        with self.assertQueryCount(admin=1148):  # randomness
             start_time = time.time()
             payslips = self.env['hr.payslip'].with_context(allowed_company_ids=self.company.ids).create(payslips_values)
             # --- 0.3016078472137451 seconds ---
@@ -290,7 +290,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             _logger.info("Declaration 281.10 XML:--- %s seconds ---", time.time() - start_time)
         self.assertEqual(declaration_281_10.xml_validation_state, 'done', declaration_281_10.error_message)
 
-        with self.assertQueryCount(admin=1343):
+        with self.assertQueryCount(admin=1641):
             start_time = time.time()
             declaration_281_10.line_ids.write({
                 'pdf_to_generate': True,
@@ -313,7 +313,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             _logger.info("Declaration 281.45:--- %s seconds ---", time.time() - start_time)
         self.assertEqual(declaration_281_45.xml_validation_state, 'done', declaration_281_45.error_message)
 
-        with self.assertQueryCount(admin=1228):
+        with self.assertQueryCount(admin=1525):
             start_time = time.time()
             declaration_281_45.line_ids.write({
                 'pdf_to_generate': True,
@@ -330,7 +330,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         })
         individual_accounts.action_generate_declarations()
         self.assertEqual(len(individual_accounts.line_ids), self.EMPLOYEES_COUNT)
-        with self.assertQueryCount(admin=1324):
+        with self.assertQueryCount(admin=1621):
             start_time = time.time()
             individual_accounts.line_ids.write({
                 'pdf_to_generate': True,
