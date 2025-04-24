@@ -41,6 +41,7 @@
                             fieldMatchings="store.fieldsMatching"
                             selectField.bind="store.updateFieldMatching"
                             filterModelFieldSelectorField.bind="filterModelFieldSelectorField"
+                            sortModelFieldSelectorFields.bind="sortModelFieldSelectorFields"
                         />
                     </Section>
                 </t>

@@ -19,6 +19,7 @@ export class FilterEditorFieldMatching extends Component {
         fieldMatchings: Array,
         selectField: Function,
         filterModelFieldSelectorField: Function,
+        sortModelFieldSelectorFields: Function,
         onOffsetSelected: { type: Function, optional: true },
     };
 

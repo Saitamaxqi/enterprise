@@ -70,6 +70,7 @@
                             fieldMatchings="store.fieldsMatching"
                             selectField.bind="onSelectedField"
                             filterModelFieldSelectorField.bind="filterModelFieldSelectorField"
+                            sortModelFieldSelectorFields.bind="sortModelFieldSelectorFields"
                             onOffsetSelected.bind="onOffsetSelected"
                         />
                     </Section>

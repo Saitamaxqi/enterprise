@@ -502,6 +502,24 @@ test("Only related models can be selected", async function () {
     expect(model6).toHaveText("Vehicle");
 });
 
+test("Fields are ordered by global filter type then relation", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "date");
+    await contains(".o_model_field_selector_value").click();
+    const [model1, model2, model3, model4, model5, model6, model7] = target.querySelectorAll(
+        ".o_model_field_selector_popover_item_name"
+    );
+    // Date first
+    expect(model1).toHaveText("Creation Date");
+    expect(model2).toHaveText("Date");
+    expect(model3).toHaveText("Last Modified on");
+    // Then relation
+    expect(model4).toHaveText("Currency");
+    expect(model5).toHaveText("Product");
+    expect(model6).toHaveText("Tags");
+    expect(model7).toHaveText("Users");
+});
+
 test("Edit an existing global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
     const label = "This year";
