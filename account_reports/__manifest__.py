@@ -53,6 +53,7 @@ Accounting Reports
         'wizard/return_generic_payment_wizard.xml',
         'views/account_account_views.xml',
         'views/account_tax_views.xml',
+        'data/account_return_data.xml',
     ],
     'auto_install': True,
     'installable': True,

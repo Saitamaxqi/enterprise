@@ -51,11 +51,5 @@
             <field name="deadline_periodicity">trimester</field>
             <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
         </record>
-
-        <!-- Annual Corporate Tax-->
-        <record id="be_annual_corporate_tax_return_type" model="account.return.type">
-            <field name="name">Annual Closing: Corporate Tax (BE)</field>
-            <field name="deadline_periodicity">year</field>
-        </record>
     </data>
 </odoo>

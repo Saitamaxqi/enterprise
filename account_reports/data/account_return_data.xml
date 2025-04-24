@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Annual Corporate Tax-->
+        <record id="annual_corporate_tax_return_type" model="account.return.type">
+            <field name="name">Annual Closing: Corporate Tax</field>
+            <field name="deadline_periodicity">year</field>
+        </record>
+    </data>
+</odoo>

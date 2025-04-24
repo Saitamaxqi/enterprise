@@ -132,7 +132,7 @@ class AccountReturnType(models.Model):
         :param country_code: the country code for which we want to generate returns. It can be fpos country_code or main_company country_code
         :param main_company: the main company for which we generate returns
         """
-        pass
+        self.env.ref('account_reports.annual_corporate_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
     def _try_create_returns_for_fiscal_year(self, main_company, tax_unit):
         """
@@ -633,6 +633,9 @@ class AccountReturn(models.Model):
         return self._on_post_submission_event()
 
     def _on_post_submission_event(self):
+        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
+            self.is_completed = True
+
         if self.is_tax_return:
             return self.action_pay()
 

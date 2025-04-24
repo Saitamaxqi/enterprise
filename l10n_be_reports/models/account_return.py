@@ -7,7 +7,7 @@ class AccountReturnType(models.Model):
     _inherit = 'account.return.type'
 
     def _get_start_date_elements(self, main_company):
-        if self == self.env.ref('l10n_be_reports.be_annual_corporate_tax_return_type'):
+        if self == self.env.ref('account_reports.annual_corporate_tax_return_type') and main_company.account_fiscal_country_id.code == 'BE':
             fiscal_year_date = date(2025, int(main_company.fiscalyear_last_month), main_company.fiscalyear_last_day)
             start_date = fiscal_year_date + relativedelta(days=1)
             return start_date.day, start_date.month
@@ -22,7 +22,6 @@ class AccountReturnType(models.Model):
             self.env.ref('l10n_be_reports.be_vat_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
             self.env.ref('l10n_be_reports.be_vat_listing_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
             self.env.ref('l10n_be_reports.be_isoc_prepayment_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
-            self.env.ref('l10n_be_reports.be_annual_corporate_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
         return rslt
 
@@ -42,7 +41,7 @@ class AccountReturn(models.Model):
         elif self.type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
             return self.date_to + relativedelta(days=-9 if self.date_to.month == 12 else 10)
 
-        elif self.type_external_id == 'l10n_be_reports.be_annual_corporate_tax_return_type':
+        elif self.type_external_id == 'account_reports.annual_corporate_tax_return_type' and self.company_id.account_fiscal_country_id.code == 'BE':
             return self.date_to + relativedelta(months=7)
 
         else:
@@ -370,7 +369,7 @@ class AccountReturn(models.Model):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
             return self.env['l10n_be_reports.vat.return.submission.wizard']._open_submission_wizard(self)
 
-        if self.type_external_id == 'l10n_be_reports.be_annual_corporate_tax_return_type':
+        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type' and self.company_id.account_fiscal_country_id.code == 'BE':
             return self.env['l10n_be_reports.annual.corporate.tax.submission.wizard']._open_submission_wizard(
                 self,
                 instructions=_("""
