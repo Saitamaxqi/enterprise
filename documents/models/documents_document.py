@@ -19,6 +19,7 @@ from werkzeug.urls import url_encode
 import odoo
 from odoo import _, api, Command, fields, models, SUPERUSER_ID
 from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.fields import Domain
 from odoo.osv import expression
 from odoo.tools import groupby, image_process, SQL
 from odoo.tools.mimetypes import get_extension
@@ -582,11 +583,11 @@ class DocumentsDocument(models.Model):
         )
         # Filtering on action_id.groups_id above is not possible because the orm "considers" action_id
         # to be of the ir.actions.action model, that does not have a groups_id field.
-        accessible_server_actions_ids = self.env['ir.actions.server'].sudo().search([
-            ('id', 'in', all_embedded_actions_sudo.action_id.ids),
-            '|', ('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
-                 ('group_ids', '=', False),
-        ]).ids
+        accessible_server_actions_ids = self.env['ir.actions.server'].sudo().search(
+            Domain.AND([
+                [('id', 'in', all_embedded_actions_sudo.action_id.ids)],
+                self._get_embeddable_server_action_domain(),
+            ])).ids
         embedded_actions = all_embedded_actions_sudo.filtered(
             lambda e: e.action_id.id in accessible_server_actions_ids).sudo(False)
         # group after ordering by `ir.embedded.actions` sequence
@@ -1121,19 +1122,35 @@ class DocumentsDocument(models.Model):
         embedded_actions = self._get_folder_embedded_actions(folder.ids)
         embedded_actions = embedded_actions[folder.id].action_id.ids if embedded_actions else []
 
-        actions = self.env['ir.actions.server'].sudo().search([
-            ('model_id', '=', self.env['ir.model']._get_id('documents.document')),
-            ('usage', 'in', ('ir_actions_server', 'documents_embedded')),
-            '|', ('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
-                 ('group_ids', '=', False),
-        ])
-        # Do not show an action if it's a child of a different action
-        actions -= actions.child_ids
+        actions = self.env['ir.actions.server'].sudo().search(self._get_embeddable_server_action_domain())
         return [{
             "id": action.id,
             "name": action.display_name,
             "is_embedded": action.id in embedded_actions
         } for action in actions]
+
+    @api.model
+    def _get_embeddable_server_action_domain(self):
+        """Wrap `_get_base_server_actions_domain`'s domain to exclude children and actions with invalid children."""
+        candidate_actions_sudo = self.env["ir.actions.server"].sudo()._search(self._get_base_server_actions_domain())
+        return Domain.AND([
+            [('id', 'in', candidate_actions_sudo)],
+            [('parent_id', '=', False)],  # no child action
+            [('child_ids', 'not any', [('id', 'not in', candidate_actions_sudo)])],  # no invalid child
+        ])
+
+    @api.model
+    def _get_base_server_actions_domain(self):
+        """Return the base domain for actions applicable to documents in the current context.
+
+        !Meant to be wrapped by _get_embeddable_server_action_domain. Override to add validity conditions.
+        """
+        return Domain.AND([
+            [('model_id', '=', self.env['ir.model']._get_id('documents.document'))],
+            [('usage', 'in', ('ir_actions_server', 'documents_embedded'))],
+            Domain.OR([[('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)])],
+                       [('group_ids', '=', False)]]),
+        ])
 
     @api.model
     def action_folder_embed_action(self, folder_id, action_id):

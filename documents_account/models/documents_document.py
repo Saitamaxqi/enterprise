@@ -8,6 +8,7 @@ from xml.etree import ElementTree
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class DocumentsDocument(models.Model):
@@ -94,8 +95,7 @@ class DocumentsDocument(models.Model):
             if move_type == 'statement':
                 journal_id = company_journals.filtered(lambda journal: journal.type == 'bank')[:1]
             else:
-                move = self.env['account.move'].new({'move_type': move_type})
-                journal_id = move.suitable_journal_ids[:1]._origin
+                journal_id = self.env['account.move']._get_suitable_journal_ids(move_type)[:1]
         elif isinstance(journal_id, int):
             journal_id = self.env['account.journal'].browse(journal_id)
 
@@ -160,3 +160,14 @@ class DocumentsDocument(models.Model):
         # many times the same bank statement is later checked.
         default_journal = journal_id or self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
         return default_journal.create_document_from_attachment(attachment_ids=self.attachment_id.ids)
+
+    @api.model
+    def _get_base_server_actions_domain(self):
+        return Domain.AND([
+            super()._get_base_server_actions_domain(),
+            Domain.OR([
+                [('state', '!=', 'documents_account_record_create')],
+                [('documents_account_journal_id', '=', False)],
+                [('documents_account_journal_id.company_id', '=', self.env.company.id)],
+            ])
+        ])
