@@ -319,24 +319,25 @@ class SaleOrderLine(models.Model):
         on purpose because '_compute_price_unit' depends on 'parent_line_id' and it triggered side effects
         when we added these dependencies.
         """
-        parent_line_ids = self.order_id.subscription_id.order_line
-        for line in self:
-            if not line.order_id.subscription_id or not line.product_id.recurring_invoice:
-                continue
-            # We use a rounding to avoid -326.40000000000003 != -326.4 for new records.
-            matching_line_ids = parent_line_ids.filtered(
-                lambda l:
-                (l.order_id, l.product_id, l.product_uom_id, l.order_id.currency_id, l.order_id.plan_id,
-                 l.order_id.currency_id.round(l.price_unit) if l.order_id.currency_id else round(l.price_unit, 2)) ==
-                (line.order_id.subscription_id, line.product_id, line.product_uom_id, line.order_id.currency_id, line.order_id.plan_id,
-                 line.order_id.currency_id.round(line.price_unit) if line.order_id.currency_id else round(line.price_unit, 2)
-                ) and l.id in parent_line_ids.ids
-            )
-            if matching_line_ids:
-                line.parent_line_id = matching_line_ids._origin[-1]
-                parent_line_ids -= matching_line_ids._origin[-1]
-            else:
-                line.parent_line_id = False
+        for order, lines in self.grouped('order_id').items():
+            parent_line_ids = self.order_id.subscription_id.order_line
+            for line in lines:
+                if not line.order_id.subscription_id or not line.product_id.recurring_invoice:
+                    continue
+                # We use a rounding to avoid -326.40000000000003 != -326.4 for new records.
+                matching_line_ids = parent_line_ids.filtered(
+                    lambda l:
+                    (l.order_id, l.product_id, l.product_uom_id, l.order_id.currency_id, l.order_id.plan_id,
+                    l.order_id.currency_id.round(l.price_unit) if l.order_id.currency_id else round(l.price_unit, 2)) ==
+                    (line.order_id.subscription_id, line.product_id, line.product_uom_id, line.order_id.currency_id, line.order_id.plan_id,
+                    line.order_id.currency_id.round(line.price_unit) if line.order_id.currency_id else round(line.price_unit, 2)
+                    ) and l.id in parent_line_ids.ids
+                )
+                if matching_line_ids:
+                    line.parent_line_id = matching_line_ids._origin[-1]
+                    parent_line_ids -= matching_line_ids._origin[-1]
+                else:
+                    line.parent_line_id = False
 
     def _get_invoice_line_parameters(self):
         """ Util to compute the relevant next period to invoice for a line dependent on his pre-paid or post-paid status

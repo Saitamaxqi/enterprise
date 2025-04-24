@@ -2445,6 +2445,59 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.assertAlmostEqual(inv.amount_untaxed, 42, msg="We invoice recurring products")
             self.assertEqual(sub.next_invoice_date, datetime.date(2025, 4, 1))
 
+    def test_compute_unit_price_second_upsell(self):
+        # Make sure upselling twice the same order don't reset the parent_line_id
+        delivered_product_tmpl = self.env['product.template'].create({
+            'name': 'Delivery product',
+            'type': 'consu',
+            'recurring_invoice': True,
+            'uom_id': self.env.ref('uom.product_uom_unit').id,
+            'invoice_policy': 'order',
+            'list_price': 50.0,
+        })
+        product = delivered_product_tmpl.product_variant_id
+        # create a subscription with a custom price_unit
+        subscription = self.env['sale.order'].create({
+            'name': 'Original subscription',
+            'is_subscription': True,
+            'partner_id': self.partner.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [
+                Command.create({
+                    'name': product.name,
+                    'product_id': product.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'price_unit': 10,
+                }),
+            ]
+        })
+
+        subscription.action_confirm()
+        move = subscription._create_invoices()
+        move.action_post()
+        # Create two upsells and confirm them later.
+        action = subscription.prepare_upsell_order()
+        upsell = self.env['sale.order'].browse(action['res_id'])
+        upsell.name = "UPSELL 1"
+        action2 = subscription.prepare_upsell_order()
+        upsell2 = self.env['sale.order'].browse(action2['res_id'])
+        upsell2.name = "UPSELL 2"
+        self.assertEqual(upsell.order_line.parent_line_id, subscription.order_line, "The parent_line_id should be correctly set")
+        self.assertEqual(upsell2.order_line.parent_line_id, subscription.order_line, "The parent_line_id should be correctly set")
+        # upsell confirmation
+        upsell.action_confirm()
+        self.assertEqual(upsell.order_line.price_unit, 10, "The unit price should be the same as the original subscription")
+        self.assertEqual(upsell.order_line.parent_line_id, subscription.order_line, "The parent_line_id should be correctly set")
+        self.assertEqual(upsell2.order_line.price_unit, 10, "The unit price should be the same as the original subscription")
+        self.assertEqual(upsell2.order_line.parent_line_id, subscription.order_line, "The unit price should be the same as the original subscription")
+
+        upsell2.action_confirm()
+        self.assertEqual(upsell2.order_line.price_unit, 10, "The unit price should be the same as the original subscription")
+        self.assertEqual(upsell.order_line.parent_line_id, subscription.order_line, "The parent_line_id of first upsell should not be reset")
+        self.assertEqual(upsell.order_line.price_unit, 10, "The unit price shouldn't get updated")
+
+
     def test_churn_discount_removal(self):
         """ Test the following flow:
                 Sub with first year discount -> Renew -> Discount is removed on original sub -> Cancel the renewal -> Churn the original sub
