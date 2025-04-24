@@ -3,7 +3,7 @@
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.tests.common import test_xsd
 from odoo.tests import tagged
-from odoo import fields
+from odoo import Command, fields
 
 from freezegun import freeze_time
 
@@ -79,6 +79,18 @@ class TestNoSaftReportCommon(TestAccountReportsCommon):
                     'tax_ids': [(6, 0, cls.company_data['default_tax_purchase'].ids)],
                 })],
             },
+            {
+                # this entry is added to ensure that the XML will have CreditAmount tag
+                # CreditAmount (or DebitAmount) is necessary for the SAF-T XML validator (even if the entry is empty)
+                'move_type': 'entry',
+                'date': '2019-11-30',
+                'partner_id': cls.partner_a.id,
+                'line_ids': [Command.create({
+                    'debit': 0.0,
+                    'credit': 0.0,
+                    'account_id': cls.company_data['default_account_revenue'].id,
+                })],
+            },
         ])
         cls.invoices.action_post()
 
@@ -129,7 +141,6 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                             <Account>
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Accounts receivable</AccountDescription>
-                                <StandardAccountID>1500</StandardAccountID>
                                 <GroupingCategory>RF-1167</GroupingCategory>
                                 <GroupingCode>1500</GroupingCode>
                                 <AccountType>GL</AccountType>
@@ -139,7 +150,6 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                             <Account>
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Retained result</AccountDescription>
-                                <StandardAccountID>2099</StandardAccountID>
                                 <GroupingCategory>RF-1167</GroupingCategory>
                                 <GroupingCode>2099</GroupingCode>
                                 <AccountType>GL</AccountType>
@@ -149,7 +159,6 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                             <Account>
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Trade creditors (copy)</AccountDescription>
-                                <StandardAccountID>2401</StandardAccountID>
                                 <GroupingCategory>RF-1167</GroupingCategory>
                                 <GroupingCode>2401</GroupingCode>
                                 <AccountType>GL</AccountType>
@@ -159,7 +168,6 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                             <Account>
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Output VAT, high rate</AccountDescription>
-                                <StandardAccountID>2700</StandardAccountID>
                                 <GroupingCategory>RF-1167</GroupingCategory>
                                 <GroupingCode>2700</GroupingCode>
                                 <AccountType>GL</AccountType>
@@ -169,7 +177,6 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                             <Account>
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Input VAT, high rate</AccountDescription>
-                                <StandardAccountID>2710</StandardAccountID>
                                 <GroupingCategory>RF-1167</GroupingCategory>
                                 <GroupingCode>2710</GroupingCode>
                                 <AccountType>GL</AccountType>
@@ -179,7 +186,6 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                             <Account>
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Sales revenue, merchandise, subject to VAT, high rate</AccountDescription>
-                                <StandardAccountID>3000</StandardAccountID>
                                 <GroupingCategory>RF-1167</GroupingCategory>
                                 <GroupingCode>3000</GroupingCode>
                                 <AccountType>GL</AccountType>
@@ -245,7 +251,7 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                         </Owners>
                     </MasterFiles>
                     <GeneralLedgerEntries>
-                        <NumberOfEntries>2</NumberOfEntries>
+                        <NumberOfEntries>3</NumberOfEntries>
                         <TotalDebit>10000.00</TotalDebit>
                         <TotalCredit>10000.00</TotalCredit>
                         <Journal>
@@ -355,6 +361,33 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                     <Description>RINV/2019/00001</Description>
                                     <CreditAmount>
                                         <Amount>3750.00</Amount>
+                                    </CreditAmount>
+                                </Line>
+                            </Transaction>
+                        </Journal>
+                        <Journal>
+                            <JournalID>___ignore___</JournalID>
+                            <Description>Miscellaneous Operations</Description>
+                            <Type>general</Type>
+                            <Transaction>
+                                <TransactionID>___ignore___</TransactionID>
+                                <Period>11</Period>
+                                <PeriodYear>2019</PeriodYear>
+                                <TransactionDate>2019-11-30</TransactionDate>
+                                <TransactionType>entry</TransactionType>
+                                <Description>MISC/2019/11/0001</Description>
+                                <SystemEntryDate>___ignore___</SystemEntryDate>
+                                <GLPostingDate>2019-11-30</GLPostingDate>
+                                <CustomerID>___ignore___</CustomerID>
+                                <Line>
+                                    <RecordID>___ignore___</RecordID>
+                                    <AccountID>___ignore___</AccountID>
+                                    <ValueDate>2019-11-30</ValueDate>
+                                    <SourceDocumentID>___ignore___</SourceDocumentID>
+                                    <CustomerID>___ignore___</CustomerID>
+                                    <Description>MISC/2019/11/0001</Description>
+                                    <CreditAmount>
+                                        <Amount>0.00</Amount>
                                     </CreditAmount>
                                 </Line>
                             </Transaction>

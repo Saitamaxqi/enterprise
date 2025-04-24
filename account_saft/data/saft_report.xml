@@ -82,7 +82,7 @@
                 <ExchangeRate t-out="format_float(line_vals['rate'], digits=8)"/>
             </t>
         </DebitAmount>
-        <CreditAmount t-if="not line_vals.get('debit') and not line_vals.get('credit') and line_vals.get('move_type', '') in ('out_invoice', 'in_refund')">
+        <CreditAmount t-if="not line_vals.get('debit') and not line_vals.get('credit') and line_vals.get('move_type', '') in ('out_invoice', 'in_refund', 'entry')">
             <Amount t-out="format_float(line_vals['credit'])"/>
             <t t-if="line_vals['currency_id'] != company.currency_id.id">
                 <CurrencyCode t-out="line_vals['currency_code']"/>
