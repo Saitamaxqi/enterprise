@@ -50,7 +50,6 @@ class AccountReturn(models.Model):
     def _get_pay_wizard(self):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
             vat_pay_wizard = self.env['l10n_be_reports.vat.pay.wizard'].create([{
-
                 'company_id': self.company_id.id,
                 'partner_bank_id': self.type_id.payment_partner_bank_id.id,
                 'currency_id': self.amount_to_pay_currency_id.id,
@@ -132,9 +131,6 @@ class AccountReturn(models.Model):
         expressions_to_evaluate = self.env['account.report.expression']
         if 'tax_report_code_13' not in check_codes_to_ignore:
             expressions_to_evaluate |= report.line_ids.expression_ids
-        if 'check_tax_report_c72_lt_1000' not in check_codes_to_ignore:
-            c72_expr = self.env.ref('l10n_be.tax_report_line_72_formula')
-            expressions_to_evaluate |= c72_expr
 
         all_column_groups_expression_totals = report._compute_expression_totals_for_each_column_group(
             report.line_ids.expression_ids,
@@ -154,26 +150,9 @@ class AccountReturn(models.Model):
             )
             checks.append({
                 'code': 'tax_report_code_13',
-                'name': _("There is no negative amount in the VAT report"),
-                'message': _("""
-                    The Belgian VAT report should only include positive values for sales and purchases.<br/>
-                    <br/>
-                    Negative amounts (e.g., refunds, corrections) should be handled separately and not included in the VAT return unless explicitly allowed by Belgian tax law.
-                """),
+                'name': _("No negative amount in VAT report"),
+                'message': _("The Belgian VAT report should only include positive values. A negative amount probably means a misconfiguration."),
                 'result': 'success' if success else 'failure'
-            })
-
-        if 'check_tax_report_c72_lt_1000' not in check_codes_to_ignore:
-            success = _evaluate_report_check(
-                lambda expr_totals: expr_totals[c72_expr]['value'] < 1000,
-                all_column_groups_expression_totals
-            )
-            checks.append({
-                'code': 'check_tax_report_c72_lt_1000',
-                'name': _("There is no VAT refund over €1000"),
-                'message': _("The declaration does not request a VAT refund exceeding €1,000."),
-                'result': 'success' if success else 'failure',
-                'action': self.action_open_report(),
             })
 
         return checks
@@ -183,60 +162,11 @@ class AccountReturn(models.Model):
         if 'sales_threshold' not in check_codes_to_ignore:
             # The report always ensures that though SQL, so the test can never fail; we still add it to reassure the user
             checks.append({
-                'name': _("Only report customers with sales above 250€, or at least 1 credit note"),
-                'message': _("Only include customers with total annual taxable sales exceeding €250 (excluding VAT), or with at least one credit note.<br/>"
-                          "Action Point: Exclude any clients not respecting those criteria."),
+                'name': _("Sales above 250€"),
+                'message': _("Only include customers with total annual taxable sales exceeding 250€ (excluding VAT) or a credit note."),
                 'code': 'sales_threshold',
                 'result': 'success',
             })
-
-        report_options = None
-        if 'missing_customers' not in check_codes_to_ignore:
-            report_options = self._get_closing_report_options()
-
-            partner_ids = self.env[self.type_id.report_id._get_custom_handler_model()]._get_warning_partners(self.type_id.report_id, report_options)
-            check_vals = {
-                'name': _("No customer is missing in the report"),
-                'message': _("All customers needing to appear in the report have their country set to Belgium, and a Belgian VAT number."),
-                'code': 'missing_customers',
-                'result': 'failure' if partner_ids else 'success',
-            }
-
-            if partner_ids:
-                check_vals['action'] = {
-                    'type': 'ir.actions.act_window',
-                    'name': _("Possibly Missing Customers"),
-                    'res_model': 'res.partner',
-                    'domain': [('id', 'in', partner_ids)],
-                    'views': [(False, 'list'), (False, 'form')],
-                }
-
-            checks.append(check_vals)
-
-        if 'duplicate_vat' not in check_codes_to_ignore:
-            if not report_options:
-                report_options = self._get_closing_report_options()
-
-            partner_ids = self.env[self.type_id.report_id._get_custom_handler_model()]._get_duplicate_vat_partners_ids(self.type_id.report_id, report_options)
-
-            check_vals = {
-                'name': _("There is no duplicate entry"),
-                'message': _("Each VAT number should appear only once in the listing, with the total taxable amount for the year.<br/>"
-                             "Action Point: Identify and merge duplicate records by VAT number to ensure accurate reporting."),
-                'code': 'duplicate_vat',
-                'result': 'failure' if partner_ids else 'success',
-            }
-
-            if partner_ids:
-                check_vals['action'] = {
-                    'type': 'ir.actions.act_window',
-                    'name': _("Customers with Duplicate VAT"),
-                    'res_model': 'res.partner',
-                    'domain': [('id', 'in', list(partner_ids))],
-                    'views': [(False, 'list'), (False, 'form')],
-                }
-
-            checks.append(check_vals)
 
         return checks
 

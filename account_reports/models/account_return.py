@@ -1183,11 +1183,10 @@ class AccountReturn(models.Model):
             is_company_config_valid = company.vat and company.country_id and company.phone and company.email
 
             checks.append({
-                'name': _("Complete company data"),
+                'name': _("Company data"),
                 'message': _("""
-                    Incomplete company data (e.g., VAT number, country) can lead to applying the wrong VAT rate (e.g., domestic VAT vs. reverse charge) in your Belgian VAT report, incorrectly exempting transactions or failing to recover VAT when appropriate.<br/>
-                    <br/>
-                    Action Point: Complete your company data (VAT number, country, phone, email).
+                    Missing company details (like VAT number or country) can cause errors in your Belgian VAT report,
+                    such as using the wrong VAT rate, wrongly exempting transactions.
                 """),
                 'code': 'check_company_data',
                 'summary': self.company_id.name,
@@ -1208,6 +1207,7 @@ class AccountReturn(models.Model):
 
             review_action = {
                 'type': 'ir.actions.act_window',
+                'name': _("Bank Matching"),
                 'view_mode': 'list',
                 'res_model': 'account.bank.statement.line',
                 'domain': domain,
@@ -1215,13 +1215,8 @@ class AccountReturn(models.Model):
             }
 
             checks.append({
-                'name': _("All bank entries are reconciled"),
-                'message': _("""
-                    The VAT report is based on invoices, but ensuring that bank transactions align with these invoices helps verify the completeness and correctness of your VAT filings.<br/>
-                    Bank reconciliation helps avoid missing invoices, duplicate invoices, and ensures accurate VAT reporting.<br/>
-                    <br/>
-                    Action point: Reconcile bank entries with corresponding invoices.
-                """),
+                'name': _("Bank matching"),
+                'message': _("Bank matching isn’t required for VAT returns but helps spot missing bills."),
                 'code': 'check_match_all_bank_entries',
                 'summary': summary_string,
                 'action': review_action if unreconciled_bank_entries_count else None,
@@ -1241,6 +1236,7 @@ class AccountReturn(models.Model):
 
             review_action = {
                 'type': 'ir.actions.act_window',
+                'name': _("Draft Entries"),
                 'view_mode': 'list',
                 'res_model': 'account.move',
                 'domain': domain,
@@ -1248,13 +1244,9 @@ class AccountReturn(models.Model):
             }
 
             checks.append({
-                'name': _("All entries are posted."),
+                'name': _("Draft entries"),
                 'code': 'check_draft_entries',
-                'message': _("""
-                    There is no draft entry in this period.<br/>
-                    <br/>
-                    Action point: Review and post them to include them in the current declaration.
-                """),
+                'message': _("Review and post draft invoices and bills in the period, or change their accounting date."),
                 'summary': summary_string,
                 'action': review_action if draft_entries_count else None,
                 'result': 'failure' if draft_entries_count else 'success',
@@ -1267,12 +1259,14 @@ class AccountReturn(models.Model):
                 ('company_id', 'in', self.company_ids.ids),
                 ('date', '<=', fields.Date.to_string(self.date_to)),
                 ('date', '>=', fields.Date.to_string(self.date_from)),
+                ('state', '=', 'posted'),
             ]
             bills_without_attachments_count = self.env['account.move'].sudo().search_count(domain)
             summary_string = _("%(count)s Bills", count=bills_without_attachments_count) if bills_without_attachments_count > 1 else _("1 Bill")
 
             review_action = {
                 'type': 'ir.actions.act_window',
+                'name': _("Bill Attachments"),
                 'view_mode': 'list',
                 'res_model': 'account.move',
                 'domain': domain,
@@ -1280,49 +1274,12 @@ class AccountReturn(models.Model):
             }
 
             checks.append({
-                'name': _("All bills have related attachments"),
+                'name': _("Bill attachments"),
                 'code': 'check_bills_attachment',
-                'message': _("""
-                    Some of your recorded bills don't have matching documents or receipts.<br/>
-                    <br/>
-                    Action point: Please attach the relevant receipts or invoices.
-                """),
+                'message': _("Each bill should have its own document attached as a proof in case of audit."),
                 'summary': summary_string,
                 'action': review_action if bills_without_attachments_count else None,
                 'result': 'failure' if bills_without_attachments_count else 'success',
-            })
-
-        if 'check_invoices_sent' not in check_codes_to_ignore:
-            domain = [
-                ('is_move_sent', '=', False),
-                ('move_type', '=', 'out_invoice'),
-                ('company_id', 'in', self.company_ids.ids),
-                ('date', '<=', fields.Date.to_string(self.date_to)),
-                ('date', '>=', fields.Date.to_string(self.date_from)),
-            ]
-
-            unsent_invoices_count = self.env['account.move'].sudo().search_count(domain)
-            summary_string = _("%(count)s Invoices", count=unsent_invoices_count) if unsent_invoices_count > 1 else _("1 Invoice")
-
-            review_action = {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'list',
-                'res_model': 'account.move',
-                'domain': domain,
-                'views': [[False, 'list'], [False, 'form']],
-            }
-
-            checks.append({
-                'name': _("All customer invoices are marked as sent"),
-                'code': 'check_invoices_sent',
-                'message': _("""
-                    Some sales invoice in this declaration hasn't been marked as sent. Having unsent invoices could lead to payment default from your customers and treasorery issues on your end.<br/>
-                    <br/>
-                    Action Point: Please make sure that you sent all the reported invoices.
-                """),
-                'summary': summary_string,
-                'action': review_action if unsent_invoices_count else None,
-                'result': 'failure' if unsent_invoices_count else 'success',
             })
 
         return checks
@@ -1353,6 +1310,7 @@ class AccountReturn(models.Model):
 
             review_action = {
                 'type': 'ir.actions.act_window',
+                'name': _("Valid VAT Numbers"),
                 'view_mode': 'list',
                 'res_model': 'res.partner',
                 'domain': [('id', 'in', invalid_vies_partners.ids)],
