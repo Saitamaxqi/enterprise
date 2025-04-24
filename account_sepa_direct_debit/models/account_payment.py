@@ -53,11 +53,8 @@ class AccountPayment(models.Model):
         unpaid = self.filtered(lambda p: p.state == 'draft')
         res = super().write(vals)
         for pay in unpaid.filtered(lambda p: p.state == 'in_process'):
-            if pay.sdd_mandate_id:
-                matched_invoices = pay.move_id._get_reconciled_invoices() + pay.invoice_ids
-                matched_invoices.filtered(lambda m: m.sdd_mandate_id != pay.sdd_mandate_id).sdd_mandate_id = pay.sdd_mandate_id
-                if pay.sdd_mandate_id.one_off:
-                    pay.sdd_mandate_id.sudo().action_close_mandate()
+            if pay.sdd_mandate_id.one_off:
+                pay.sdd_mandate_id.sudo().action_close_mandate()
         return res
 
     @api.model

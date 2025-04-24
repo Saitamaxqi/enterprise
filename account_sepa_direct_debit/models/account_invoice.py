@@ -7,7 +7,6 @@ from odoo.tools import SQL
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    sdd_mandate_id = fields.Many2one(related='origin_payment_id.sdd_mandate_id')
     sdd_has_usable_mandate = fields.Boolean(compute='_compute_sdd_has_usable_mandate', search='_search_sdd_has_usable_mandate')
 
     @api.model
@@ -50,6 +49,9 @@ class AccountMove(models.Model):
     def _track_subtype(self, init_values):
         # OVERRIDE to log a different message when an invoice is paid using SDD.
         self.ensure_one()
-        if 'state' in init_values and self.state in ('in_payment', 'paid') and self.move_type == 'out_invoice' and self.sdd_mandate_id:
+        if ('state' in init_values
+            and self.state in ('in_payment', 'paid')
+            and self.move_type == 'out_invoice'
+            and any(p.sdd_mandate_id for p in self.matched_payment_ids)):
             return self.env.ref('account_sepa_direct_debit.sdd_mt_invoice_paid_with_mandate')
         return super(AccountMove, self)._track_subtype(init_values)

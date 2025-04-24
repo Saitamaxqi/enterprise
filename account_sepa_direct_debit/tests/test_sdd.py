@@ -39,7 +39,6 @@ class SDDTest(SDDTestCommon):
         payment_agrolait = self.invoice_agrolait._get_reconciled_payments()
         payment_agrolait.action_draft()
         self.assertEqual(self.invoice_agrolait.payment_state, 'not_paid')
-        self.assertFalse(self.invoice_agrolait.sdd_mandate_id)
 
     def test_xml_pain_008_001_08_generation(self):
         self.sdd_company_bank_journal.debit_sepa_pain_version = 'pain.008.001.08'
