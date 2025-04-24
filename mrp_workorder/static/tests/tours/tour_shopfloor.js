@@ -398,7 +398,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
         },
         // Exit the Shop Floor and open it from a WO form view.
         { trigger: ".o_home_menu", run: "click" },
-        { trigger: ".o_menuitem[href='/odoo/work-centers']", run: "click" },
+        { trigger: ".o_menuitem[href='/odoo/work-centers-overview']", run: "click" },
         { trigger: "button[data-menu-xmlid='mrp.menu_mrp_manufacturing']", run: "click" },
         { trigger: "a[data-menu-xmlid='mrp.menu_mrp_workorder_todo']", run: "click" },
         { trigger: "[name='workcenter_id'][data-tooltip='Furnace']", run: "click" },

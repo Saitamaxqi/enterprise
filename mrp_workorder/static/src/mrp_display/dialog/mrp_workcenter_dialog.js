@@ -1,5 +1,3 @@
-import { _t } from "@web/core/l10n/translation";
-import { isDisplayStandalone } from "@web/core/browser/feature_detection";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart, useState } from "@odoo/owl";
@@ -21,11 +19,12 @@ export class MrpWorkcenterDialog extends ConfirmationDialog {
         this.ormService = useService("orm");
         this.menu = useService("menu");
         this.notification = useService("notification");
+        this.action = useService("action");
         this.workcenters = this.props.workcenters || [];
         this.state = useState({
             activeWorkcenters: this.props.active ? [...this.props.active] : [],
+            noWorkcenters: false,
         });
-        this.isDisplayStandalone = isDisplayStandalone();
 
         onWillStart(async () => {
             if (!this.workcenters.length) {
@@ -74,14 +73,12 @@ export class MrpWorkcenterDialog extends ConfirmationDialog {
     async _loadWorkcenters() {
         this.workcenters = await this.ormService.searchRead("mrp.workcenter", [], ["display_name"]);
         if (!this.workcenters.length) {
-            if (this.props.showWarning) {
-                this.notification.add(
-                    _t(
-                        "No workcenters are available, please create one first to add it to the shop floor view"
-                    ),
-                    { type: "warning" }
-                );
-            }
+            this.state.noWorkcenters = true;
         }
+    }
+
+    async createWorkcenter() {
+        await this.ormService.call("mrp.workcenter", "action_enable_routings", [[]]);
+        location.assign("/odoo/workcenters");
     }
 }

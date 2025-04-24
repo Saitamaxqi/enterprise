@@ -220,6 +220,7 @@ class MrpProduction(models.Model):
                 (
                     'mrp_workorder.quality_point_register_serial_production',
                     'mrp_workorder.test_type_register_production',
+                    'Register the produced quantity.',
                     'Register production',
                     5,
                     None,

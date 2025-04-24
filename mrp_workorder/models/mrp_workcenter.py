@@ -48,6 +48,9 @@ class MrpWorkcenter(models.Model):
                 # the workcenter is blocked
                 time.workcenter_id.working_state = 'blocked'
 
+    def action_enable_routings(self):
+        self.env['res.config.settings'].create([{'group_mrp_routings': True}]).execute()
+
 
 class MrpWorkcenterProductivity(models.Model):
     _inherit = "mrp.workcenter.productivity"
