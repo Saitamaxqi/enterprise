@@ -4,12 +4,11 @@ from contextlib import contextmanager
 from unittest import mock
 from unittest.mock import patch
 
-from odoo import Command
+from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixin
 from odoo.addons.l10n_br_edi.tests.test_l10n_br_edi import TestL10nBREDICommon
+from odoo.addons.l10n_br_edi_pos.tests.common import CommonPosBrEdiTest
 from odoo.addons.l10n_br_edi_pos.models.pos_order import PosOrder
-from odoo.addons.point_of_sale.tests.common import TestPointOfSaleCommon
-from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo.tests import tagged, freeze_time
 from odoo.tools import file_open
 
@@ -20,10 +19,13 @@ TEST_DATETIME = "2025-02-05T22:55:17+00:00"
 
 class TestL10nBREDIPOSCommon(TestL10nBREDICommon):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(self):
         super().setUpClass()
-        cls.product_screens.available_in_pos = True
-        cls.company.write(
+        # Avoid taxes access error
+        self.product_screens.taxes_id = [(5, 0)]
+        self.product_cabinet.taxes_id = [(5, 0)]
+        self.product_screens.available_in_pos = True
+        self.company.write(
             {
                 "l10n_br_edi_csc_number": "00001",
                 "l10n_br_edi_csc_identifier": "000000000000000000000000000000000000",
@@ -93,42 +95,7 @@ class TestL10nBREDIPOSCommon(TestL10nBREDICommon):
 
 
 @tagged("post_install_l10n", "post_install", "-at_install")
-class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
-    def setUp(self):
-        super().setUp()
-        self.pos_config.write(
-            {
-                "l10n_br_is_nfce": True,
-                "l10n_br_invoice_serial": "1",
-            }
-        )
-
-        self.pos_config.open_ui()
-        self.session = self.pos_config.current_session_id
-
-    def _create_simple_order(self):
-        return self.PosOrder.create(
-            {
-                "name": "Order/0001",
-                "session_id": self.session.id,
-                "lines": [
-                    Command.create(
-                        {
-                            "product_id": self.product_screens.product_variant_id.id,
-                            "qty": 3,
-                            "price_unit": 1.0,
-                            "price_subtotal": 3.0,
-                            "price_subtotal_incl": 3.0,
-                        }
-                    )
-                ],
-                "amount_tax": 0.0,
-                "amount_total": 3.0,
-                "amount_paid": 0.0,
-                "amount_return": 0.0,
-            }
-        )
-
+class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
     def test_01_access_key_check_digit(self):
         self.assertEqual(
             self.env["pos.order"]._l10n_br_calculate_access_key_check_digit("4323070738511100010255503000765973124086659"),
@@ -137,23 +104,35 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
 
     @freeze_time(TEST_DATETIME)
     def test_02_session_closing(self):
-        order = self._create_simple_order()
-        with self._with_mocked_l10n_br_iap_request(
-            [
-                ("calculate_tax", "anonymous_tax_request", "anonymous_tax_response"),
-                ("submit_invoice_goods", "anonymous_edi_request", "anonymous_edi_response"),
-            ]
-        ):
-            self.env["pos.make.payment"].with_context(active_id=order.id).create({"amount": order.amount_total}).check()
+        order, _ = self.create_backend_pos_order({
+            'order_data': {
+                'name': 'Order/0001',
+            },
+            'line_data': [{
+                'qty': 3,
+                'price_unit': 1.0,
+                'product_id': self.product_screens.product_variant_id.id,
+            }],
+        })
 
-        self.session.action_pos_session_close()
-        self.assertEqual(self.session.state, "closed", "Session should be closed without differences.")
+        with self._with_mocked_l10n_br_iap_request([
+            ("calculate_tax", "anonymous_tax_request", "anonymous_tax_response"),
+            ("submit_invoice_goods", "anonymous_edi_request", "anonymous_edi_response"),
+        ]):
+            payment_context = {"active_ids": order.ids, "active_id": order.id}
+            order_payment = self.env['pos.make.payment'].with_context(**payment_context).create({})
+            order_payment.with_context(**payment_context).check()
+
+        current_session = self.pos_config_usd.current_session_id
+        current_session.action_pos_session_close()
+        self.assertEqual(current_session.state, "closed")
 
     def _test_adjustment_entry(self, order, expected_communications, expected_adjustment_line_vals):
         order.l10n_br_last_avatax_status = "error"
+        current_session = self.pos_config_usd.current_session_id
         self.env["pos.make.payment"].with_context(active_id=order.id).create({"amount": order.amount_total}).check()
-        self.session.action_pos_session_close()
-        self.assertEqual(self.session.state, "closed", "Session should be closed without differences.")
+        current_session.action_pos_session_close()
+        self.assertEqual(current_session.state, "closed", "Session should be closed without differences.")
 
         with self._with_mocked_l10n_br_iap_request(expected_communications):
             order.button_l10n_br_edi()
@@ -168,7 +147,13 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
     @freeze_time(TEST_DATETIME)
     def test_03_edi_after_session_closed_simple(self):
         """Verify that a correcting journal entry is created if EDI is successfully retried after the session is closed."""
-        order = self._create_simple_order()
+        order, _ = self.create_backend_pos_order({
+            'line_data': [{
+                'qty': 3,
+                'product_id': self.product_screens.product_variant_id.id,
+                "price_unit": 1.0,
+            }],
+        })
         expected_communications = [
             ("calculate_tax", "anonymous_tax_request", "anonymous_tax_response"),
             ("submit_invoice_goods", "anonymous_edi_request", "anonymous_edi_response"),
@@ -197,38 +182,6 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
             expected_adjustment_line_vals,
         )
 
-    def _create_order_with_two_lines(self):
-        return self.PosOrder.create(
-            {
-                "name": "Order/0002",
-                "session_id": self.session.id,
-                "lines": [
-                    Command.create(
-                        {
-                            "product_id": self.product_screens.product_variant_id.id,
-                            "qty": 3,
-                            "price_unit": 1.0,
-                            "price_subtotal": 3.0,
-                            "price_subtotal_incl": 3.0,
-                        }
-                    ),
-                    Command.create(
-                        {
-                            "product_id": self.product_cabinet.product_variant_id.id,
-                            "qty": 5,
-                            "price_unit": 3.0,
-                            "price_subtotal": 15.0,
-                            "price_subtotal_incl": 15.0,
-                        }
-                    ),
-                ],
-                "amount_tax": 0.0,
-                "amount_total": 18.0,
-                "amount_paid": 0.0,
-                "amount_return": 0.0,
-            }
-        )
-
     @freeze_time(TEST_DATETIME)
     def test_04_edi_after_session_closed_complex(self):
         """Verify the correcting journal entry posted after EDI is successfully retried in a closed session. Uses
@@ -242,7 +195,20 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
             limit=1,
         )
         self.product_cabinet.property_account_income_id = other_income_account
-        order = self._create_order_with_two_lines()
+        order, _ = self.create_backend_pos_order({
+            'order_data': {
+                "name": "Order/0002",
+            },
+            'line_data': [{
+                'qty': 3,
+                "price_unit": 1.0,
+                'product_id': self.product_screens.product_variant_id.id,
+            }, {
+                'qty': 5,
+                "price_unit": 3.0,
+                'product_id': self.product_cabinet.product_variant_id.id,
+            }],
+        })
         expected_communications = [
             ("calculate_tax", "anonymous_tax_request_multiple_lines", "anonymous_tax_response_multiple_lines"),
             ("submit_invoice_goods", "anonymous_edi_request_multiple_lines", "anonymous_edi_response_multiple_lines"),
@@ -280,7 +246,20 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
         """ Properly handle automatic adjustment entries that have multiple product lines with the same income account. """
         income_account = self.product_screens._get_product_accounts()["income"]
         self.assertEqual(income_account, self.product_cabinet._get_product_accounts()["income"])
-        order = self._create_order_with_two_lines()
+        order, _ = self.create_backend_pos_order({
+            'order_data': {
+                "name": "Order/0002",
+            },
+            'line_data': [{
+                'qty': 3,
+                "price_unit": 1.0,
+                'product_id': self.product_screens.product_variant_id.id,
+            }, {
+                'qty': 5,
+                "price_unit": 3.0,
+                'product_id': self.product_cabinet.product_variant_id.id,
+            }],
+        })
         expected_communications = [
             ("calculate_tax", "anonymous_tax_request_multiple_lines", "anonymous_tax_response_multiple_lines"),
             ("submit_invoice_goods", "anonymous_edi_request_multiple_lines", "anonymous_edi_response_multiple_lines"),
@@ -318,24 +297,24 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, TestPointOfSaleCommon):
 @tagged("post_install_l10n", "post_install", "-at_install")
 class TestUi(TestL10nBREDIPOSCommon, TestPointOfSaleHttpCommon):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(self):
         super().setUpClass()
-        cls.main_pos_config.write(
+        self.main_pos_config.write(
             {
                 "l10n_br_is_nfce": True,
                 "l10n_br_invoice_serial": "1",
             }
         )
-        cls.main_pos_config.payment_method_ids.write({"l10n_br_payment_method": "01"})
-        cls.product_screens.write(
+        self.main_pos_config.payment_method_ids.write({"l10n_br_payment_method": "01"})
+        self.product_screens.write(
             {
                 "list_price": 1.0,
                 "taxes_id": False,
             }
         )
-        cls.product_cabinet.write(
+        self.product_cabinet.write(
             {
-                "taxes_id": cls.env["account.tax"].create(
+                "taxes_id": self.env["account.tax"].create(
                     {"name": "Excluded Tax", "amount": 10.0, "price_include_override": "tax_excluded"}
                 ),
                 "available_in_pos": True,
