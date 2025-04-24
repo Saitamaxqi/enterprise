@@ -766,3 +766,88 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_trial_balance_analytic_groupby(self):
+        """
+        Test the analytic accounts groupby
+        """
+        self.env.user.group_ids += self.env.ref('analytic.group_analytic_accounting')
+        self.report.filter_analytic = True
+        self.report.filter_analytic_groupby = True
+
+        analytic_plan = self.env['account.analytic.plan'].create({
+            'name': 'Plan XYZ',
+        })
+        analytic_account = self.env['account.analytic.account'].create({
+            'name': 'Account XYZ',
+            'plan_id': analytic_plan.id
+        })
+        move_2019 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': fields.Date.from_string('2019-01-01'),
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                Command.create({
+                    'debit': 50.0,
+                    'credit': 0.0,
+                    'name': 'XYZ debit (2019)',
+                    'account_id': self.company_data['default_account_payable'].id,
+                    'analytic_distribution': {analytic_account.id: 100},
+                }),
+                Command.create({
+                    'debit': 0.0,
+                    'credit': 50.0,
+                    'name': 'XYZ credit (2019)',
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'analytic_distribution': {analytic_account.id: 100},
+                }),
+            ],
+        })
+        move_2019.action_post()
+        move_2020 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': fields.Date.from_string('2020-01-01'),
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                Command.create({
+                    'debit': 100.0,
+                    'credit': 0.0,
+                    'name': 'XYZ debit (2020)',
+                    'account_id': self.company_data['default_account_payable'].id,
+                    'analytic_distribution': {analytic_account.id: 100},
+                }),
+                Command.create({
+                    'debit': 0.0,
+                    'credit': 100.0,
+                    'name': 'XYZ credit (2020)',
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'analytic_distribution': {analytic_account.id: 100},
+                }),
+            ],
+        })
+        move_2020.action_post()
+
+        options = self._generate_options(
+            self.report,
+            '2020-01-01',
+            '2020-01-31',
+            default_options={
+                'analytic_accounts': [analytic_account.id],
+                'analytic_accounts_groupby': [analytic_account.id],
+            }
+        )
+        lines = self.report._get_lines(options)
+        self.assertLinesValues(
+            lines,
+            #                                          [         Initial Balance        ]    [            Jan 2020            ]    [           End Balance          ]
+            #                                          [ Account XYZ ]    [    Total    ]    [ Account XYZ ]    [    Total    ]    [ Account XYZ ]    [    Total    ]
+            #   Name                                   Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit
+            [0,                                            1,       2,        3,       4,        5,       6,        7,       8,        9,      10,       11,      12],
+            [
+                ('211000 Account Payable',              50.0,     0.0,     50.0,     0.0,    100.0,     0.0,    100.0,     0.0,    150.0,     0.0,    150.0,     0.0),
+                ('400000 Product Sales',                 0.0,     0.0,      0.0,     0.0,      0.0,   100.0,      0.0,   100.0,      0.0,   100.0,      0.0,   100.0),
+                ('999999 Undistributed Profits/Losses',  0.0,    50.0,      0.0,    50.0,      0.0,     0.0,      0.0,     0.0,      0.0,    50.0,      0.0,    50.0),
+                ('Total',                               50.0,    50.0,     50.0,    50.0,    100.0,   100.0,    100.0,   100.0,    150.0,   150.0,    150.0,   150.0),
+            ],
+            options,
+        )

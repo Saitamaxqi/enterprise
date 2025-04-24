@@ -387,7 +387,8 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             column_group = options['column_groups'][column['column_group_key']]
             block_id = column_group['forced_options'].get('trial_balance_column_block_id')
             horizontal_group = frozendict(column_group.get('horizontal_groupby_element', {}))
-            return block_id, horizontal_group
+            analytic_group = tuple(column_group['forced_options'].get('analytic_accounts_list', []))
+            return block_id, horizontal_group, analytic_group
 
         for line in lines:
 
