@@ -228,16 +228,13 @@ class SddMandate(models.Model):
         payments_collected_per_mandate = dict(self.env['account.payment']._read_group([
                 ('sdd_mandate_id', 'in', self.ids),
                 ('payment_method_code', 'in', self.env['account.payment.method']._get_sdd_payment_method_code()),
-                ('state', 'in', ('in_process', 'paid')),
-                ('move_id.state', '=', 'posted'),
+                ('state', '=', 'paid'),
             ],
             groupby=['sdd_mandate_id'],
             aggregates=['id:recordset'],
         ))
         for mandate in self:
-            payments_collected = payments_collected_per_mandate.get(mandate, self.env['account.payment']).filtered(
-                lambda payment: (payment.move_id.currency_id.is_zero(payment.move_id.amount_residual))
-            )
+            payments_collected = payments_collected_per_mandate.get(mandate, self.env['account.payment'])
 
             dates = [mandate.end_date] if mandate.end_date else []
             dates.append(max(payments_collected.mapped('date'), default=mandate.start_date) + delay_36_months)

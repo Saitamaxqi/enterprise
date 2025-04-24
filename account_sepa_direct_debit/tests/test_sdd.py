@@ -77,7 +77,8 @@ class SDDTest(SDDTestCommon):
             self.assertTrue(mandates_per_validity['expiring'], 'The mandate is expiring soon')
 
             new_invoice = self.create_invoice(self.partner_agrolait)
-            _payment = self.pay_with_mandate(new_invoice)  # Should reset the 36-month up to 2025-12-2
+            payment = self.pay_with_mandate(new_invoice)  # Should reset the 36-month up to 2025-12-2
+            payment.action_validate()
             mandates_per_validity = mandate._update_and_partition_state_by_validity()
             self.assertTrue(mandates_per_validity['valid'], 'The mandate should not be expiring soon anymore, as we have reset the period')
             new_expiry_date = next(iter(mandate._get_expiry_date_per_mandate().values())).isoformat()
