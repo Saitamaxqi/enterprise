@@ -81,6 +81,7 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
         self.main_pos_config.write({'payment_method_ids': [Command.set(payment_methods.ids)]})
 
         self.assertEqual(partner_test_b.total_due, 0)
+        self.assertEqual(partner_test_b.has_moves, False)
 
         self.main_pos_config.with_user(self.pos_admin).open_ui()
         current_session = self.main_pos_config.current_session_id
@@ -114,6 +115,7 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
 
         self.assertEqual(partner_test_b.total_due, 10)
         current_session.action_pos_session_closing_control()
+        self.assertEqual(partner_test_b.has_moves, True)
 
         self.main_pos_config.with_user(self.user).open_ui()
         with patch.object(PosConfig, 'get_limited_partners_loading', mocked_get_limited_partners_loading):

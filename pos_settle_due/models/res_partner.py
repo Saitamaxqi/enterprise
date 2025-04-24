@@ -84,3 +84,8 @@ class ResPartner(models.Model):
             for partner in data:
                 partner['total_due'] = self.env.company.currency_id._convert(partner['total_due'], config_id.currency_id, self.env.company, fields.Date.today())
         return super()._post_read_pos_data(data)
+
+    def _compute_has_moves(self):
+        super()._compute_has_moves()
+        for partner in self.filtered(lambda p: not p.has_moves):
+            partner.has_moves = partner.total_due != 0
