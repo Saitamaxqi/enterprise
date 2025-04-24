@@ -6,6 +6,10 @@ patch(PosScaleService.prototype, {
         return this.hardwareProxy.deviceControllers.scale;
     },
 
+    get isManualMeasurement() {
+        return this._scaleDevice?.manual_measurement;
+    },
+
     reset() {
         if (this.isMeasuring) {
             this._scaleDevice?.removeListener();

@@ -14,4 +14,4 @@ class IotDevice(models.Model):
 
     @api.model
     def _load_pos_data_fields(self, config_id):
-        return ['iot_ip', 'iot_id', 'identifier', 'type']
+        return ['iot_ip', 'iot_id', 'identifier', 'type', 'manual_measurement']
