@@ -50,6 +50,7 @@ export class BankRecButtonList extends Component {
             noCreate: false,
             multiSelect: false,
             resModel: "res.partner",
+            context: { default_name: this.statementLineData.partner_name },
             onSelected: async (partner) => {
                 await this.orm.call(
                     "account.bank.statement.line",
