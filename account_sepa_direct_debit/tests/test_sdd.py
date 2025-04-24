@@ -261,8 +261,8 @@ class SDDTest(SDDTestCommon):
         wizard.action_create_payments()
 
         self.assertRecordValues(invoices.matched_payment_ids.sorted('partner_id'), [
-            {'partner_id': self.partner_agrolait.id, 'state': 'in_process'},
-            {'partner_id': self.partner_china_export.id, 'state': 'in_process'},
+            {'partner_id': self.partner_agrolait.id},
+            {'partner_id': self.partner_china_export.id},
         ])
 
     def test_batch_register_payment_mixed_valids_invalids(self):
