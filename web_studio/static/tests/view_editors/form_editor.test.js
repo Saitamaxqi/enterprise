@@ -5,10 +5,11 @@ import {
     queryAllProperties,
     queryAllTexts,
     unload,
+    queryFirst,
     waitFor,
     waitForNone,
 } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 
 import { mailModels, STORE_FETCH_ROUTES } from "@mail/../tests/mail_test_helpers";
@@ -21,6 +22,7 @@ import {
     contains,
     defineActions,
     defineModels,
+    editSelectMenu,
     fields,
     getService,
     makeMockServer,
@@ -311,15 +313,14 @@ test("image field edition (change size)", async () => {
     expect.verifySteps(["image, width: undefined, height: 90, previewImage: coucou"]);
     await contains(".o_web_studio_form_view_editor .o_field_image").click();
     expect(".o_web_studio_property_size").toHaveCount(1);
-    expect(".o_web_studio_property_size .text-start").toHaveText("Small");
+    expect(".o_web_studio_property_size input").toHaveValue("Small");
     expect(".o_web_studio_form_view_editor .o_field_image").toHaveClass(
         "o-web-studio-editor--element-clicked"
     );
-    await contains(".o_web_studio_property_size button").click();
-    await contains(".o_select_menu_item_label:contains(Large)").click();
+    await editSelectMenu(".o_web_studio_property_size input", { value: "Large" });
     // the image should have been fetched again
     expect.verifySteps(["image, width: undefined, height: 270, previewImage: coucou"]);
-    expect(".o_web_studio_property_size .text-start").toHaveText("Large");
+    expect(".o_web_studio_property_size input").toHaveValue("Large");
 });
 
 test("image size can be unset from the selection", async () => {
@@ -355,9 +356,9 @@ test("image size can be unset from the selection", async () => {
     });
     expect('.o_field_widget.oe_avatar[name="image"]').toHaveCount(1);
     await contains(".o_field_widget[name='image']").click();
-    expect(".o_web_studio_property_size .text-start").toHaveText("Small");
-    await contains(".o_web_studio_property_size .o_select_menu_toggler_clear").click();
-    expect(".o_web_studio_property_size .o_select_menu").toHaveText("");
+    expect(".o_web_studio_property_size input").toHaveValue("Small");
+    await contains(".o_web_studio_property_size input").click();
+    await contains(".o_web_studio_property_size input").edit("");
 });
 
 test("signature field edition (change full_name)", async () => {
@@ -433,15 +434,13 @@ test("signature field edition (change full_name)", async () => {
     expect(".o_web_studio_form_view_editor .o_signature").toHaveCount(1);
     await contains(".o_web_studio_form_view_editor .o_signature").click();
     expect(".o_web_studio_property_full_name .o-dropdown").toHaveCount(1);
-    expect(".o_web_studio_property_full_name button").toHaveText("", {
+    expect(".o_web_studio_property_full_name input").toHaveValue("", {
         message: "the auto complete field should be empty by default",
     });
-    await contains(".o_web_studio_property_full_name button").click();
-    await contains(".o_select_menu_item_label:contains(Name)").click();
-    expect(".o_web_studio_property_full_name button").toHaveText("Display name");
-    await contains(".o_web_studio_property_full_name button").click();
-    await contains(".o_select_menu_item_label:contains(Product)").click();
-    expect(".o_web_studio_property_full_name button").toHaveText("Product");
+    await editSelectMenu(".o_web_studio_property_full_name input", { value: "Name" });
+    expect(".o_web_studio_property_full_name input").toHaveValue("Display name");
+    await editSelectMenu(".o_web_studio_property_full_name input", { value: "Product" });
+    expect(".o_web_studio_property_full_name input").toHaveValue("Product");
 });
 
 test("integer field should come with 0 as default value", async () => {
@@ -3028,15 +3027,18 @@ test("edit the rainbowman effect from the sidebar", async () => {
 
     await contains("button.oe_stat_button[data-studio-xpath]").click();
     expect(".o_web_studio_sidebar [name='effect']").toBeChecked();
-    expect(".o_web_studio_sidebar_select:eq(0) .o_select_menu .o_select_menu_toggler").toHaveText(
-        "MEDIUM"
+    expect(".o_web_studio_sidebar_select:eq(0) .o_select_menu .o_select_menu_toggler").toHaveValue(
+        "Medium"
     );
 
-    await contains(".o_web_studio_sidebar .o_select_menu button").click();
+    await contains(".o_web_studio_sidebar .o_select_menu input").click();
     await contains(".dropdown-item:contains('Fast')").click();
     expect.verifySteps(["edit_view"]);
 
-    await contains(".o_select_menu .o_select_menu_toggler_clear").click();
+    await contains(".o_web_studio_sidebar .o_select_menu input").click();
+    await contains(".o_web_studio_sidebar .o_select_menu input").clear({ confirm: false });
+    await runAllTimers();
+    await queryFirst(".o_web_studio_sidebar .o_select_menu input").blur();
     expect.verifySteps(["edit_view"]);
 });
 

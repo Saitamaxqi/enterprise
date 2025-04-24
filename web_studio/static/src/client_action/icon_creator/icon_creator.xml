@@ -20,9 +20,8 @@
                 <div class="o_web_studio_selectors float-end mt-2">
                     <SelectMenu
                         autoSort="false"
-                        class="'o_web_studio_selector o_web_studio_selector_background overflow-visible p-0 border-0 m-3'"
+                        class="'o_web_studio_selector o_web_studio_selector_background rounded-2 p-0 border-0 m-3'"
                         menuClass="'o_web_studio_selector_menu'"
-                        togglerClass="'p-0'"
                         value="props.backgroundColor"
                         choices="backgroundColorChoices"
                         onSelect="(value) => this.onPaletteItemClick('backgroundColor', value)"
@@ -39,9 +38,8 @@
                     </SelectMenu>
                     <SelectMenu
                         autoSort="false"
-                        class="'o_web_studio_selector o_web_studio_selector_color overflow-visible p-0 border-0 m-3'"
+                        class="'o_web_studio_selector o_web_studio_selector_color rounded-2 overflow-visible p-0 border-0 m-3'"
                         menuClass="'o_web_studio_selector_menu'"
-                        togglerClass="'p-0'"
                         value="props.color"
                         choices="colorChoices"
                         onSelect="(value) => this.onPaletteItemClick('color', value)"
@@ -57,7 +55,7 @@
                         </t>
                     </SelectMenu>
                     <FontAwesomeIconSelector
-                        className="'o_web_studio_selector o_web_studio_selector_icon m-3'"
+                        className="'o_web_studio_selector o_web_studio_selector_icon rounded-2 m-3'"
                         menuClassName="'o_web_studio_selector_menu o_web_studio_selector_icon_menu'"
                         value="props.iconClass"
                         onSelect="(value) => this.onPaletteItemClick('iconClass', value)"

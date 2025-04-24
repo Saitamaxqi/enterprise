@@ -3,6 +3,7 @@ import { knowledgeTopbar } from "@knowledge/components/topbar/topbar";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import {
     asyncStep,
+    contains,
     defineModels,
     fields,
     getKwArgs,
@@ -19,7 +20,7 @@ import { serializeDateTime } from "@web/core/l10n/dates";
 import { user } from "@web/core/user";
 
 import { expect, test } from "@odoo/hoot";
-import { click, edit, waitFor } from "@odoo/hoot-dom";
+import { click, runAllTimers, waitFor } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 class KnowledgeArticle extends models.ServerModel {
@@ -259,10 +260,10 @@ test("Move Article", async () => {
     expect(".dropdown-item:contains('a1')").toHaveCount(0);
     expect(".dropdown-item:contains('a2')").toHaveCount(1);
     expect(".dropdown-item:contains('a3')").toHaveCount(1);
-    await click("input.dropdown-item");
-    await edit("a2");
+    await contains("input.dropdown-item").click();
+    await contains("input.dropdown-item").edit("a2", { confirm: false });
+    await runAllTimers();
     await waitForSteps(["get valid parent"]);
-    await animationFrame();
     expect(".dropdown-item:contains('a1')").toHaveCount(0);
     expect(".dropdown-item:contains('a2')").toHaveCount(1);
     expect(".dropdown-item:contains('a3')").toHaveCount(0);

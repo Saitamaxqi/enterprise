@@ -147,18 +147,9 @@ $o-web-studio-sidebar-margin: $grid-gutter-width * 0.5;
                 }
             }
 
-            .o_select_menu {
-                input {
-                    background-color: $dropdown-bg;
-                    color: $o-web-studio-text-dark;
-                }
-
-                button {
-                    background-color: $o-web-studio-bg-dark !important;
-                    .text-muted {
-                        color: lighten($o-web-studio-text-dark, 50%) !important;
-                    }
-                }
+            .o_select_menu .o_select_menu_caret, .o_record_autocomplete_with_caret {
+                --o-caret-color: white;
+                padding-right: 4px;
             }
 
             .o_tag {

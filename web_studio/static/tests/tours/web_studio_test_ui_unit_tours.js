@@ -2,6 +2,7 @@ import { registry } from "@web/core/registry";
 import { stepNotInStudio, assertEqual } from "@web_studio/../tests/tours/tour_helpers";
 import { queryAll, queryFirst, queryOne, drag, waitFor } from "@odoo/hoot-dom";
 import { rpcBus } from "@web/core/network/rpc";
+import { DEBOUNCED_DELAY } from "@web/core/select_menu/select_menu";
 
 registry
     .category("web_tour.tours")
@@ -439,7 +440,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
             run: "click",
         },
         {
-            trigger: ".o_web_studio_property [name='default_group_by'] .o_select_menu_toggler",
+            trigger: ".o_web_studio_property input[name='default_group_by']",
             run: "click",
         },
         {
@@ -467,7 +468,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
             run: "click",
         },
         {
-            trigger: ".o_web_studio_property [name='default_group_by'] .o_select_menu_toggler",
+            trigger: ".o_web_studio_property input[name='default_group_by']",
             run: "click",
         },
         {
@@ -2132,11 +2133,20 @@ registry.category("web_tour.tours").add("web_studio_empty_default_group_by", {
             trigger: ".o_web_studio_kanban_view_editor",
         },
         {
-            trigger: 'div[name="default_group_by"] .o_select_menu_toggler_clear',
+            trigger: "input[name='default_group_by']",
             run: "click",
         },
         {
-            trigger: 'div[name="default_group_by"]:not(:has(.o_select_menu_toggler_clear))',
+            trigger: "input[name='default_group_by']",
+            run: async function () {
+                this.anchor.value = "";
+                this.anchor.dispatchEvent(new InputEvent("input"));
+                await animationFrame(DEBOUNCED_DELAY);
+                this.anchor.blur();
+            },
+        },
+        {
+            trigger: "input[name='default_group_by']:empty",
         },
     ],
 });

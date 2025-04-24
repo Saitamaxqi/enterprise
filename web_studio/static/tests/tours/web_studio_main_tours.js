@@ -356,11 +356,11 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // change the `widget` attribute
-            trigger: '.o_web_studio_sidebar [name="widget"] .o_select_menu_toggler_slot',
+            trigger: '.o_web_studio_sidebar input[name="widget"]',
             run: "click",
         },
         {
-            trigger: ".o-dropdown--menu .o_select_menu_item_label:contains('(many2many_tags)')",
+            trigger: ".o-dropdown--menu .o_select_menu_item:contains('(many2many_tags)')",
             run: "click",
         },
         {
@@ -383,8 +383,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // verify that a default value has been set for the statusbar
-            trigger:
-                '.o_web_studio_sidebar [name="default_value"] .o_select_menu_toggler_slot:contains(First Status)',
+            trigger: '.o_web_studio_sidebar input[name="default_value"]:value(First Status)',
         },
         {
             trigger: ".o_web_studio_views_icons a[aria-label=Form]",
@@ -485,8 +484,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             //select field you want to sort and based on that sorting will be applied on List view
-            trigger:
-                '.o_web_studio_sidebar .o_web_studio_sidebar_select[name="sort_by"] .o_select_menu_toggler',
+            trigger: '.o_web_studio_sidebar input[name="sort_by"]',
             run: "click",
         },
         {
@@ -495,8 +493,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             //change order of sorting, Select order and change it
-            trigger:
-                '.o_web_studio_sidebar .o_web_studio_sidebar_select[name="sort_order"] .o_select_menu_toggler',
+            trigger: '.o_web_studio_sidebar input[name="sort_order"]',
             run: "click",
         },
         {
@@ -571,7 +568,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             trigger:
-                ".o_web_studio_property_highlight_color .o_select_menu_toggler:contains(Card color)",
+                ".o_web_studio_property_highlight_color .o_select_menu_toggler:value(Card color)",
         },
         {
             // edit action
@@ -774,7 +771,7 @@ registry.category("web_tour.tours").add("web_studio_hide_fields_tour", {
         {
             trigger: `
         .o_web_studio_sidebar
-        [name="optional"] .o_select_menu_toggler`,
+        input[name="optional"]`,
             run: "click",
         },
         {
@@ -1698,7 +1695,7 @@ const addActionButtonSteps = (
         run: `edit ${ActionLabel}`,
     },
     {
-        trigger: ".o_web_studio_property [name='name'] button",
+        trigger: ".o_web_studio_property input[name='name']",
         run: "click",
     },
     {
@@ -1717,7 +1714,7 @@ const addMethodButtonSteps = () => [
         run: `edit test`,
     },
     {
-        trigger: ".o_web_studio_property [name='type'] button",
+        trigger: ".o_web_studio_property input[name='type']",
         run: "click",
     },
     {
@@ -1912,9 +1909,9 @@ registry.category("web_tour.tours").add("web_studio_monetary_create", {
         },
         {
             // verify that the currency is set
-            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field .text-start",
+            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field input",
             run() {
-                assertEqual(this.anchor.textContent, "Currency (x_studio_currency_id)");
+                assertEqual(this.anchor.value, "Currency (x_studio_currency_id)");
             },
         },
         {
@@ -1964,9 +1961,9 @@ registry.category("web_tour.tours").add("web_studio_monetary_change_currency_nam
         },
         {
             // verify that the currency name changed in the monetary field
-            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field .text-start",
+            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field input",
             run() {
-                assertEqual(this.anchor.textContent, "NewCurrency (x_studio_currency_test)");
+                assertEqual(this.anchor.value, "NewCurrency (x_studio_currency_test)");
             },
         },
     ],
@@ -2084,18 +2081,18 @@ registry.category("web_tour.tours").add("web_studio_monetary_change_currency_fie
         },
         {
             // change the currency_field in the monetary
-            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field button",
+            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field input",
             run: "click",
         },
         {
             // click on the second currency, which is "X Studio Currency Test2"
-            trigger: ".o-dropdown--menu .o_select_menu_item:nth-child(2)",
+            trigger: ".o-dropdown--menu .o_select_menu_item:nth-of-type(2)",
             run: "click",
         },
         {
             //wait until the currency has been set (also test the reactivity)
             trigger:
-                ".o_web_studio_sidebar .o_web_studio_property_currency_field span.text-start:contains('X Studio Currency Test2')",
+                ".o_web_studio_sidebar .o_web_studio_property_currency_field input:value('X Studio Currency Test2')",
         },
         {
             // by changing the currency, we should have a $ symbol in the renderer
@@ -2133,18 +2130,18 @@ registry.category("web_tour.tours").add("web_studio_monetary_change_currency_not
         },
         {
             // change the currency_field in the monetary
-            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field button",
+            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field input",
             run: "click",
         },
         {
             // click on the second currency, which is "X Studio Currency Test2"
-            trigger: ".o-dropdown--menu .o_select_menu_item:nth-child(2)",
+            trigger: ".o-dropdown--menu .o_select_menu_item:nth-of-type(2)",
             run: "click",
         },
         {
             // wait until the currency has been set
             trigger:
-                ".o_web_studio_sidebar .o_web_studio_property_currency_field span.text-start:contains('X Studio Currency Test2')",
+                ".o_web_studio_sidebar .o_web_studio_property_currency_field input:value('X Studio Currency Test2')",
         },
         {
             // go to view tab
@@ -2199,12 +2196,9 @@ registry.category("web_tour.tours").add("web_studio_monetary_add_existing_moneta
         },
         {
             // verify that the currency name changed in the monetary field
-            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field .text-start",
+            trigger: ".o_web_studio_sidebar .o_web_studio_property_currency_field input",
             run() {
-                assertEqual(
-                    this.anchor.textContent,
-                    "X Studio Currency Test (x_studio_currency_test)"
-                );
+                assertEqual(this.anchor.value, "X Studio Currency Test (x_studio_currency_test)");
             },
         },
         {

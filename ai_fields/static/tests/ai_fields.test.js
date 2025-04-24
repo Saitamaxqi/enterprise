@@ -292,16 +292,16 @@ test("AI Fields - Selection Field", async () => {
                 </form>`,
     });
     expect(".o_field_ai_selection").toHaveCount(1);
-    expect(".o_field_ai_selection select").toHaveValue("false");
+    expect(".o_field_ai_selection input").toHaveValue("");
     expect(".o_field_ai_selection .btn[title='Refresh value']").toHaveCount(1);
     await click(".o_field_ai_selection .btn[title='Refresh value']");
     await waitForSteps(["selection computed"]);
     await animationFrame();
-    expect(".o_field_ai_selection select").toHaveValue('"v2"');
+    expect(".o_field_ai_selection input").toHaveValue("Val 2");
     await click(".o_form_button_save");
     await waitForSteps(["save"]);
     await animationFrame();
-    expect(".o_field_ai_selection select").toHaveValue('"v2"');
+    expect(".o_field_ai_selection input").toHaveValue("Val 2");
 });
 
 test("AI Fields - Text Field", async () => {

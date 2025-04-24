@@ -294,7 +294,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_select_menu_menu .o_select_menu_item:contains("Date Property")',
     run: 'click',
 }, { // Check that stop date has been removed as the start type changed,
-    trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler_slot span.text-muted',
+    trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler:empty',
 }, { // Open the stop property dropdown
     trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler',
     run: 'click',
@@ -338,7 +338,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_select_menu_menu .o_select_menu_item:contains("Start Property")',
     run: 'click',
 }, { // Check that stop date has been removed as the start type changed,
-    trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler_slot span.text-muted',
+    trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler:empty',
 }, { // Open the stop property dropdown
     trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler',
     run: 'click',

@@ -505,10 +505,10 @@ test("buttons can be edited when being selected", async () => {
     expect("footer .o-web-studio-editor--element-clickable").toHaveCount(2);
     await contains("a.o-web-studio-editor--element-clickable").click();
     expect("input[id=class]").toHaveCount(1);
-    expect("[name=name] .o_select_menu_toggler").toHaveText("Action 1");
+    expect("[name=name].o_select_menu_toggler").toHaveValue("Action 1");
     await contains("button.o-web-studio-editor--element-clickable").click();
     expect("input[id=class]").toHaveCount(1);
-    expect("[name=name] .o_select_menu_toggler").toHaveText("Action 2");
+    expect("[name=name].o_select_menu_toggler").toHaveValue("Action 2");
 });
 
 test("grouped kanban editor", async () => {
@@ -662,7 +662,7 @@ test("kanban editor can group by only one field", async () => {
                 </templates>
             </kanban>`,
     });
-    expect(".o_web_studio_property_default_group_by .o_select_menu_toggler_slot").toHaveText("M2o");
+    expect(".o_web_studio_property_default_group_by .o_select_menu_toggler").toHaveValue("M2o");
 });
 
 test("grouped kanban fold_field can be change for custom model", async () => {
@@ -736,13 +736,13 @@ test("grouped kanban fold_field can be change for custom model", async () => {
     `,
     });
 
-    await contains(".o_web_studio_property_default_group_by button").click();
+    await contains(".o_web_studio_property_default_group_by input").click();
     await contains(".o-dropdown-item:contains('Stage')").click();
 
     expect("input[name='group_expand']").not.toHaveCount();
     expect(".o_web_studio_property_fold_name").not.toHaveCount();
 
-    await contains(".o_web_studio_property_default_group_by button").click();
+    await contains(".o_web_studio_property_default_group_by input").click();
     await contains(".o-dropdown-item:contains('Custom stage')").click();
 
     expect("input[name='group_expand']").toBeVisible();
@@ -767,7 +767,7 @@ test("grouped kanban fold_field can be change for custom model", async () => {
 
     expect(".o_web_studio_property_fold_name").toBeVisible();
 
-    await contains(".o_web_studio_property_fold_name button").click();
+    await contains(".o_web_studio_property_fold_name input").click();
     expect(queryAllTexts(".o-dropdown-item")).toEqual(["Folded1", "Folded2"]);
 });
 
@@ -805,13 +805,13 @@ test("sortby and orderby field in kanban sidebar", async () => {
     await contains(".o_web_studio_view").click();
     await contains(".o_web_studio_property_sort_by .o_select_menu .o_select_menu_toggler").click();
     await contains(".o-overlay-item:nth-child(1) .o-dropdown--menu .dropdown-item:eq(0)").click();
-    expect(".o_web_studio_property_sort_by .o_select_menu .text-start").toHaveText("Char field");
+    expect(".o_web_studio_property_sort_by .o_select_menu input").toHaveValue("Char field");
 
     await contains(
         ".o_web_studio_property_sort_order .o_select_menu .o_select_menu_toggler"
     ).click();
     await contains(".o-overlay-item:nth-child(1) .o-dropdown--menu .dropdown-item:eq(0)").click();
-    expect(".o_web_studio_property_sort_order .o_select_menu .text-start").toHaveText("Ascending");
+    expect(".o_web_studio_property_sort_order .o_select_menu input").toHaveValue("Ascending");
     expect.verifySteps(["edit_view"]);
 });
 
@@ -832,7 +832,7 @@ test("sortby numeric field in kanban sidebar", async () => {
         arch,
     });
 
-    await contains(".o_web_studio_property_sort_by button").click();
+    await contains(".o_web_studio_property_sort_by input").click();
     expect(queryAllTexts(".dropdown-item.o_select_menu_item")).toEqual([
         "Created on",
         "Float field",

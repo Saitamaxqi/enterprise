@@ -407,7 +407,7 @@ test("open a dialog to create/edit a task", async () => {
     expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00");
     expect(".o_field_widget[name=project_id] input").toHaveValue("Project 1");
     expect(".o_field_widget[name=user_id] input").toHaveValue("User 1");
-    expect(".o_field_widget[name=stage] select").toHaveValue('"in_progress"');
+    expect(".o_field_widget[name=stage] input").toHaveValue("In Progress");
 
     // create the task
     await contains(".o_form_button_save").click();
@@ -422,7 +422,7 @@ test("open a dialog to create/edit a task", async () => {
     expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00");
     expect(".o_field_widget[name=project_id] input").toHaveValue("Project 1");
     expect(".o_field_widget[name=user_id] input").toHaveValue("User 1");
-    expect(".o_field_widget[name=stage] select").toHaveValue('"in_progress"');
+    expect(".o_field_widget[name=stage] input").toHaveValue("In Progress");
 });
 
 test("open a dialog to create a task when grouped by many2many field", async () => {

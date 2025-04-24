@@ -7,6 +7,7 @@ import {
     contains,
     defineModels,
     editAce,
+    editSelectMenu,
     fields,
     mockService,
     models,
@@ -64,7 +65,7 @@ test("add a monetary field without currency in the model", async () => {
     expect.verifySteps(["edit_view"]);
 
     await contains("th[data-name='monetary_field']").click();
-    expect(".o_web_studio_property_currency_field .text-start").toHaveText("Currency");
+    expect(".o_web_studio_property_currency_field input").toHaveValue("Currency");
 });
 
 test("add a monetary field with currency in the model", async () => {
@@ -172,8 +173,9 @@ test("edit the currency of a monetary field", async () => {
     });
 
     await contains("th[data-name='monetary_field']").click();
-    await contains(".o_web_studio_sidebar .o_web_studio_property_currency_field button").click();
-    await contains(".o-dropdown-item:contains(Currency2)").click();
+    await editSelectMenu(".o_web_studio_sidebar .o_web_studio_property_currency_field input", {
+        value: "Currency2",
+    });
     expect.verifySteps(["set_currency", "edit_view"]);
 });
 
@@ -194,13 +196,8 @@ test("field monetary not manual (base field) currency_field is readonly", async 
     });
 
     await contains("th[data-name='monetary_field']").click();
-    await waitFor(".o_web_studio_sidebar div[name='currency_field']");
-    expect(
-        ".o_web_studio_sidebar div[name='currency_field'] .o_select_menu_toggler:disabled"
-    ).toHaveCount(1);
-    expect(
-        ".o_web_studio_sidebar div[name='currency_field'] .o_select_menu_toggler_clear"
-    ).toHaveCount(0);
+    await waitFor(".o_web_studio_sidebar input[name='currency_field']");
+    expect(".o_web_studio_sidebar input[name='currency_field']:disabled").toHaveCount(1);
 });
 
 test("add a related field", async () => {
@@ -681,10 +678,9 @@ test("XML editor: reset operations stack", async () => {
     await contains(".o_web_studio_sidebar .o_web_studio_open_xml_editor").click();
 
     await def;
-
-    await contains(".o_web_studio_xml_resource_select_menu .o_select_menu_toggler").click();
-    await contains(".o_select_menu_menu .o_select_menu_item:eq(1)").click();
-
+    await editSelectMenu(".o_web_studio_xml_resource_select_menu .o_select_menu_toggler", {
+        index: 1,
+    });
     await editAce("<data/>");
     await animationFrame();
 

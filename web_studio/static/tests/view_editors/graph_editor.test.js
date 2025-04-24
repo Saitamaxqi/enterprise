@@ -113,16 +113,16 @@ test("switching chart types in graph editor", async () => {
 
     await contains(".o_web_studio_navbar_item").click();
 
-    expect(".o_web_studio_sidebar .o_web_studio_property_type button").toHaveText("Bar");
+    expect(".o_web_studio_sidebar .o_web_studio_property_type input").toHaveValue("Bar");
     expect("#stacked").toHaveCount(1);
 
-    await contains(".o_web_studio_sidebar .o_web_studio_property_type button").click();
+    await contains(".o_web_studio_sidebar .o_web_studio_property_type input").click();
     await contains(".o-dropdown-item:contains(Line)").click();
 
     expect.verifySteps(["line"]);
     expect("#stacked").toHaveCount(0);
 
-    await contains(".o_web_studio_sidebar .o_web_studio_property_type button").click();
+    await contains(".o_web_studio_sidebar .o_web_studio_property_type input").click();
     await contains(".o-dropdown-item:contains(Pie)").click();
 
     expect.verifySteps(["pie"]);
@@ -185,13 +185,13 @@ test("open xml editor of graph component view and close it", async () => {
     await xmlEditorDef;
 
     expect(".o_web_studio_code_editor.ace_editor").toHaveCount(1);
-    expect(".o_web_studio_sidebar").toHaveCount(0);
+    expect(".o_web_studio_xml_editor").toHaveCount(1);
 
     await contains(
         ".o_web_studio_xml_resource_selector .btn-secondary:not(.dropdown-toggle)"
     ).click();
 
     expect(".o_ace_view_editor").toHaveCount(0);
-    expect(".o_web_studio_sidebar").toHaveCount(1);
+    expect(".o_web_studio_xml_editor").toHaveCount(0);
     expect(".o_graph_renderer").toHaveCount(1);
 });

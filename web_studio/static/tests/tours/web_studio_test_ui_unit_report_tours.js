@@ -184,10 +184,11 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
             run: "click",
         },
         {
-            trigger: ".o_web_studio_xml_resource_selector .o_web_studio_xml_resource_select_menu",
+            trigger:
+                ".o_web_studio_xml_resource_selector .o_web_studio_xml_resource_select_menu input",
             run() {
                 assertEqual(
-                    this.anchor.textContent,
+                    this.anchor.value,
                     "web_studio.test_report_document (web_studio.test_report_document)"
                 );
             },
@@ -770,12 +771,12 @@ registry.category("web_tour.tours").add("web_studio.test_edition_without_lang", 
             run: "click",
         },
         {
-            trigger: ".o_web_studio_xml_resource_select_menu button.o_select_menu_toggler",
+            trigger: ".o_web_studio_xml_resource_select_menu .o_select_menu_toggler",
             run: "click",
         },
         {
             trigger:
-                ".o-dropdown--menu .o_select_menu_item_label:contains(report_editor_customization_diff)",
+                ".o-dropdown--menu .o_select_menu_item:contains(report_editor_customization_diff)",
             run: "click",
         },
         {
@@ -1205,10 +1206,9 @@ registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
             run: "click",
         },
         {
-            trigger:
-                ".o_web_studio_xml_resource_select_menu button.o_select_menu_toggler .o_select_menu_toggler_slot",
+            trigger: ".o_web_studio_xml_resource_select_menu input.o_select_menu_toggler",
             run() {
-                const currentViewKey = this.anchor.textContent.split(" (")[0];
+                const currentViewKey = this.anchor.value.split(" (")[0];
                 assertEqual(
                     currentViewKey,
                     "web_studio.report_editor_customization_diff.view._web_studio.test_report_document"
@@ -1216,12 +1216,12 @@ registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
             },
         },
         {
-            trigger: ".o_web_studio_xml_resource_select_menu button.o_select_menu_toggler",
+            trigger: ".o_web_studio_xml_resource_select_menu .o_select_menu_toggler",
             run: "click",
         },
         {
             trigger:
-                ".o-dropdown--menu .o_select_menu_item_label:contains(web_studio.test_report_document)",
+                ".o-dropdown--menu .o_select_menu_item:contains(web_studio.test_report_document)",
             run: "click",
         },
         {

@@ -83,7 +83,6 @@
         value="state.currentVar"
         onSelect="(value) => state.currentVar = value"
         required="true"
-        searchable="false"
       />
     </div>
     <StudioDynamicPlaceholderPopover showOnlyX2ManyFields="props.showOnlyX2ManyFields" resModel="currentResModel" validate.bind="validate" close="props.close" t-key="currentResModel"/>

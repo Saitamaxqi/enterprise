@@ -143,23 +143,17 @@ test("switching column and row groupby fields in pivot editor", async () => {
 
     await contains(".o_web_studio_navbar_item").click();
 
-    expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("product_id");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
-        "partner_id"
-    );
+    expect(".o_web_studio_sidebar input[name='column_groupby']").toHaveValue("product_id");
+    expect(".o_web_studio_sidebar input[name='first_row_groupby']").toHaveValue("partner_id");
 
     // set the Row-Second level field value
-    await contains(".o_web_studio_sidebar [name='second_row_groupby'] button").click();
+    await contains(".o_web_studio_sidebar input[name='second_row_groupby']").click();
     await contains(".o-dropdown-item:contains(Toughness)").click();
 
     expect.verifySteps(["edit_view"]);
-    expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("product_id");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
-        "partner_id"
-    );
-    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText(
-        "Toughness"
-    );
+    expect(".o_web_studio_sidebar input[name='column_groupby']").toHaveValue("product_id");
+    expect(".o_web_studio_sidebar input[name='first_row_groupby']").toHaveValue("partner_id");
+    expect(".o_web_studio_sidebar input[name='second_row_groupby']").toHaveValue("Toughness");
     expect(queryAllTexts(".o_web_studio_view_renderer th")).toEqual([
         "",
         "Total",
@@ -177,17 +171,13 @@ test("switching column and row groupby fields in pivot editor", async () => {
     ]);
 
     // change the column field value to Name
-    await contains(".o_web_studio_sidebar [name='column_groupby'] button").click();
+    await contains(".o_web_studio_sidebar input[name='column_groupby']").click();
     await contains(".o-dropdown-item:contains(Name):not(:contains(Display))").click();
 
     expect.verifySteps(["edit_view"]);
-    expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("Name");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
-        "partner_id"
-    );
-    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText(
-        "Toughness"
-    );
+    expect(".o_web_studio_sidebar input[name='column_groupby']").toHaveValue("Name");
+    expect(".o_web_studio_sidebar input[name='first_row_groupby']").toHaveValue("partner_id");
+    expect(".o_web_studio_sidebar input[name='second_row_groupby']").toHaveValue("Toughness");
 
     expect(queryAllTexts(".o_web_studio_view_renderer th")).toEqual([
         "",
@@ -206,15 +196,13 @@ test("switching column and row groupby fields in pivot editor", async () => {
     ]);
 
     // change the Row-First level field value to product_id
-    await contains(".o_web_studio_sidebar [name='first_row_groupby'] button").click();
+    await contains(".o_web_studio_sidebar input[name='first_row_groupby']").click();
     await contains(".o-dropdown-item:contains(product_id)").click();
 
     expect.verifySteps(["edit_view"]);
-    expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("Name");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
-        "product_id"
-    );
-    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText("");
+    expect(".o_web_studio_sidebar input[name='column_groupby']").toHaveValue("Name");
+    expect(".o_web_studio_sidebar input[name='first_row_groupby']").toHaveValue("product_id");
+    expect(".o_web_studio_sidebar input[name='second_row_groupby']").toHaveValue("");
 
     expect(queryAllTexts(".o_web_studio_view_renderer th")).toEqual([
         "",

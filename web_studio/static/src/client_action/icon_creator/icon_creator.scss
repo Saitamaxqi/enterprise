@@ -67,7 +67,6 @@
   }
 
   .o_web_studio_selector {
-    position: relative;
     width: $tmp-selector-size !important;
     height: $tmp-selector-size;
     transition: all 0.3s ease 0s;
@@ -102,7 +101,7 @@
       text-align: center !important;
     }
 
-    .o_select_menu_toggler_caret {
+    .o_select_menu_caret {
       display: none;
     }
 

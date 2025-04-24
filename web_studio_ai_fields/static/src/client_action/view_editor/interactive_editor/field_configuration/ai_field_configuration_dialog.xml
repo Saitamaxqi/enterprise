@@ -4,7 +4,7 @@
 <t t-name="web_studio_ai_fields.AiFieldConfigurationDialog">
     <Dialog size="'md'" title.translate="Add an AI Field" contentClass="'o_web_studio_ai_field_configuration_dialog'">
         <h5>Field Type</h5>
-        <SelectMenu choices="choices" value="state.fieldType" onSelect="(val) => this.state.fieldType = val" searchable="false" required="true" autoSort="false">
+        <SelectMenu choices="choices" value="state.fieldType" onSelect="(val) => this.state.fieldType = val" required="true" autoSort="false">
             <div t-attf-class="position-relative o_web_studio_icon_container o_web_studio_ai_field_select_menu_toggler o_web_studio_field_#{selectedField.icon or selectedField.type}" t-out="selectedField.label"/>
             <t t-set-slot="choice" t-slot-scope="choice">
                 <div t-attf-class="position-relative o_web_studio_icon_container o_web_studio_ai_field_select_menu_item o_web_studio_field_#{choice.data.icon or choice.data.type}" t-out="choice.data.label"/>

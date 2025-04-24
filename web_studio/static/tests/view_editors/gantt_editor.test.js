@@ -5,6 +5,7 @@ import { animationFrame } from "@odoo/hoot-mock";
 import {
     contains,
     defineModels,
+    editSelectMenu,
     fields,
     getService,
     models,
@@ -71,9 +72,7 @@ test("empty gantt editor", async () => {
     expect(".o_web_studio_sidebar .o_web_studio_property_precision_day .o_select_menu").toHaveCount(
         1
     );
-
-    await contains(".o_web_studio_property_precision_day button").click();
-    await contains(".o_select_menu_item:contains('Quarter Hour')").click();
+    await editSelectMenu(".o_web_studio_property_precision_day input", { value: "Quarter Hour" });
 });
 
 test("only show allowed scales as default scale", async () => {

@@ -16,7 +16,7 @@
             </div>
             <div t-if="rainbowEffect.fadeout" class="o_web_studio_sidebar_select">
                 <label for="rainbow_fadeout">Fadeout Speed</label>
-                <SelectMenu class="'border-0'" value="rainbowEffect.fadeout" choices="choices" onSelect="(value) => this.onRainbowEffectChange('fadeout', value)" searchable="false"/>
+                <SelectMenu class="'border-0'" value="rainbowEffect.fadeout" choices="choices" onSelect="(value) => this.onRainbowEffectChange('fadeout', value)"/>
             </div>
             <div class="text-center">
                 <FileInput

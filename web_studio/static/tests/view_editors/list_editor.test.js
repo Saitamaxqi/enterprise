@@ -6,6 +6,7 @@ import { onWillRender } from "@odoo/owl";
 import {
     contains,
     defineModels,
+    editSelectMenu,
     fields,
     getService,
     MockServer,
@@ -399,7 +400,7 @@ test("field widgets correctly displayed and whitelisted in the sidebar (debug=fa
 
     await contains("thead th[data-studio-xpath]").click();
     await contains(".o_web_studio_property_widget .o_select_menu_toggler").click();
-    expect(queryAllTexts(".o_select_menu_menu .o_select_menu_item_label")).toEqual([
+    expect(queryAllTexts(".o_select_menu_menu .o_select_menu_item")).toEqual([
         "(safeWidgetNoDisplayName)",
         "Test Widget (safeWidget)",
     ]);
@@ -446,7 +447,7 @@ test("field widgets correctly displayed and whitelisted in the sidebar (debug=tr
 
     await contains("thead th[data-studio-xpath]").click();
     await contains(".o_web_studio_property_widget .o_select_menu_toggler").click();
-    expect(queryAllTexts(".o_select_menu_menu .o_select_menu_item_label")).toEqual([
+    expect(queryAllTexts(".o_select_menu_menu .o_select_menu_item")).toEqual([
         "(safeWidgetNoDisplayName)",
         "Test Widget (safeWidget)",
         "Text (unsafeWidget)",
@@ -471,8 +472,10 @@ test("visible studio hooks in listview", async () => {
     expect("th.o_web_studio_hook").toBeVisible();
 
     await contains(".o_web_studio_view").click();
-    await contains(".o_web_studio_sidebar .o_web_studio_property_editable button").click();
-    await contains(".o_select_menu_item:contains('Add record at the bottom')").click();
+    await animationFrame();
+    await editSelectMenu(".o_web_studio_sidebar .o_web_studio_property_editable input", {
+        value: "Add record at the bottom",
+    });
 
     expect("th.o_web_studio_hook").toBeVisible();
 });
@@ -521,20 +524,19 @@ test("sortby and orderby field in sidebar", async () => {
     });
 
     await contains(".o_web_studio_view").click();
+    await animationFrame();
     expect(".o_web_studio_property_sort_by .o_select_menu").toHaveCount(1);
-    expect(".o_web_studio_property_sort_by .o_select_menu .text-start").toHaveText("char_field");
+    expect(".o_web_studio_property_sort_by .o_select_menu input").toHaveValue("char_field");
 
-    expect(".o_web_studio_property_sort_order .o_select_menu .text-start").toHaveText("Descending");
-    await contains(".o_web_studio_property_sort_by button").click();
-    await contains(".o_select_menu_item:contains('Display name')").click();
+    expect(".o_web_studio_property_sort_order .o_select_menu input").toHaveValue("Descending");
+    await editSelectMenu(".o_web_studio_property_sort_by input", { value: "Display name" });
 
-    expect(".o_web_studio_property_sort_order .o_select_menu .text-start").toHaveText("Ascending");
+    expect(".o_web_studio_property_sort_order .o_select_menu input").toHaveValue("Ascending");
     expect(".o_web_studio_property_sort_order").toHaveCount(1);
-    await contains(".o_web_studio_property_sort_order button").click();
-    await contains(".o_select_menu_item:contains('Descending')").click();
+    await editSelectMenu(".o_web_studio_property_sort_order input", { value: "Descending" });
 
-    expect(".o_web_studio_property_sort_order .o_select_menu .text-start").toHaveText("Descending");
-    await contains(".o_web_studio_property_sort_by .o_select_menu_toggler_clear").click();
+    expect(".o_web_studio_property_sort_order .o_select_menu input").toHaveValue("Descending");
+    await editSelectMenu(".o_web_studio_property_sort_by input", { value: "" });
     expect(".o_web_studio_property_sort_order").toHaveCount(0);
 });
 
@@ -568,7 +570,7 @@ test("many2many, one2many, binary fields and non-stored fields cannot be selecte
     expect("th[data-name='m2m_field']").toHaveCount(1);
     expect("th[data-name='binary_field']").toHaveCount(1);
 
-    await contains(".o_web_studio_property_sort_by button").click();
+    await contains(".o_web_studio_property_sort_by input").click();
     expect(queryAllTexts(".dropdown-item.o_select_menu_item")).toEqual([
         "Char field",
         "Id",
@@ -594,9 +596,7 @@ test("already selected unsafe widget without description property should be show
     });
 
     await contains("thead th[data-studio-xpath]").click();
-    expect(".o_web_studio_property_widget .o_select_menu_toggler_slot").toHaveText(
-        "(widgetWithoutDescription)"
-    );
+    expect(".o_web_studio_property_widget input").toHaveValue("(widgetWithoutDescription)");
 });
 
 test("already selected widget wihtout supportingTypes should be shown in sidebar with its technical name", async () => {
@@ -618,9 +618,7 @@ test("already selected widget wihtout supportingTypes should be shown in sidebar
     });
 
     await contains("thead th[data-studio-xpath]").click();
-    expect(".o_web_studio_property_widget .o_select_menu_toggler_slot").toHaveText(
-        "(widgetWithoutTypes)"
-    );
+    expect(".o_web_studio_property_widget input").toHaveValue("(widgetWithoutTypes)");
 });
 
 test("editing selection field of list of form view", async () => {
@@ -1032,9 +1030,7 @@ test("list editor field", async () => {
     expect(".o_web_studio_properties").toHaveClass("active");
     expect(".o_web_studio_sidebar .o_web_studio_property_widget").toHaveCount(1);
     expect(".o_web_studio_sidebar input[name='string']").toHaveValue("Display name");
-    expect(".o_web_studio_sidebar .o_web_studio_property_widget .o_select_menu").toHaveText(
-        "Text (char)"
-    );
+    expect(".o_web_studio_sidebar .o_web_studio_property_widget input").toHaveValue("Text (char)");
 });
 
 test("add group to field", async () => {
@@ -1266,7 +1262,7 @@ test("list editor field with aggregate function", async () => {
     await contains("thead th[data-studio-xpath='/list[1]/field[4]']").click();
     expect(".o_web_studio_sidebar .o_web_studio_property_aggregate").toHaveCount(1);
 
-    await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate button").click();
+    await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate input").click();
     await contains(".o-dropdown-item:contains(Sum)").click();
     expect.verifySteps(["edit_view"]);
     expect("tfoot tr td.o_list_number:eq(0)").toHaveText("8");
@@ -1275,7 +1271,7 @@ test("list editor field with aggregate function", async () => {
         "Sum of Integer field"
     );
 
-    await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate button").click();
+    await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate input").click();
     await contains(".o-dropdown-item:contains(Average)").click();
     expect.verifySteps(["edit_view"]);
     expect("tfoot tr td.o_list_number:eq(0)").toHaveText("4");
@@ -1284,7 +1280,7 @@ test("list editor field with aggregate function", async () => {
         "Average of Integer field"
     );
 
-    await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate button").click();
+    await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate input").click();
     await contains(".o-dropdown-item:contains('No aggregation')").click();
     expect.verifySteps(["edit_view"]);
 });
@@ -1419,9 +1415,8 @@ test("Default group by field in sidebar", async () => {
 
     await contains(".nav-tabs > li:nth-child(2) a").click();
     expect(".o_web_studio_property_default_group_by .o_select_menu").toHaveCount(1);
-    expect(".o_web_studio_property_default_group_by .o_select_menu_toggler_clear").toHaveCount(0);
 
-    await contains(".o_web_studio_property_default_group_by .o_select_menu button").click();
+    await contains(".o_web_studio_property_default_group_by .o_select_menu input").click();
     expect(queryAllTexts(".o_select_menu_item")).toEqual([
         "Created on",
         "Display name",
@@ -1429,10 +1424,12 @@ test("Default group by field in sidebar", async () => {
         "Last Modified on",
     ]);
 
-    await contains(".o_select_menu_item:nth-child(2)").click();
-    expect(".o_web_studio_property_default_group_by .o_select_menu .text-start").toHaveText(
-        "Display name"
-    );
+    await editSelectMenu(".o_web_studio_property_default_group_by .o_select_menu input", {
+        index: 1,
+    });
+    expect(
+        ".o_web_studio_property_default_group_by .o_select_menu .o_tag:contains(Display Name)"
+    ).toHaveCount(1);
     expect(".o_web_studio_property_default_group_by + .alert").toHaveCount(1);
 
     await contains(".o_web_studio_property_default_group_by .o_tag .o_delete i").click();
@@ -1545,7 +1542,7 @@ test("change 'editable' and 'open_form_view' attribute", async () => {
     await contains(".o_web_studio_view").click();
     expect(".o_web_studio_sidebar_checkbox").toHaveCount(6);
 
-    await contains(".o_web_studio_sidebar .o_web_studio_property_editable button").click();
+    await contains(".o_web_studio_sidebar .o_web_studio_property_editable input").click();
     await contains(".o-dropdown-item:contains('Add record at the bottom')").click();
 
     expect(".o_web_studio_sidebar_checkbox").toHaveCount(7);

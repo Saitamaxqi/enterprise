@@ -9,7 +9,6 @@
                 Move the untitled article under:
             </t>
             <SelectMenu
-                togglerClass="'o_knowledge_select_menu'"
                 menuClass="'o_knowledge_select_menu_dropdown'"
                 class="'o_knowledge_select_menu'"
                 onInput.bind="fetchValues"

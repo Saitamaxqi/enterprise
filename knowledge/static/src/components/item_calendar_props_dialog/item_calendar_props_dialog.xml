@@ -93,7 +93,7 @@
                         Default Scale
                     </label>
                     <div class="col-sm-8 my-auto">
-                        <SelectMenu onSelect.bind="selectScale" choices="scalesChoices" value="state.scale" required="true" searchable="false"/>
+                        <SelectMenu onSelect.bind="selectScale" choices="scalesChoices" value="state.scale" required="true"/>
                     </div>
                 </div>
                 <div class="mb-3 row">

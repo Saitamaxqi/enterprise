@@ -46,7 +46,7 @@ registry.category("web_tour.tours").add("test_brazilian_address", {
         },
         {
             content: "Check that Abadia de Goiás is selected",
-            trigger: '.o_select_city:contains("Abadia de Goiás")',
+            trigger: '.o_select_city input:value("Abadia de Goiás")',
         },
         {
             content: "Check that Goiás state is automatically selected based on the city.",
@@ -60,7 +60,7 @@ registry.category("web_tour.tours").add("test_brazilian_address", {
         },
         {
             content: "Check that Jacareí is selected",
-            trigger: '.o_select_city:contains("Jacareí")',
+            trigger: '.o_select_city input:value("Jacareí")',
         },
         {
             content: "Check that São Paulo state is automatically selected based on the city.",

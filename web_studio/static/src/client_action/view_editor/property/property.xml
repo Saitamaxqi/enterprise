@@ -3,7 +3,7 @@
 
     <t t-name="web_studio.Property">
         <div t-ref="root" t-attf-class="o_web_studio_property {{this.className}}">
-            <div t-if="props.type === 'selection'" class="o_web_studio_sidebar_select mt-2 mb-2" t-att-name="props.name">
+            <div t-if="props.type === 'selection'" class="o_web_studio_sidebar_select mt-2 mb-2">
                 <label t-att-for="props.name">
                     <t t-slot="default" />
                     <sup t-if="props.tooltip" class="text-info p-1" t-att-data-tooltip="props.tooltip" t-esc="'?'"/>
@@ -11,12 +11,12 @@
                 <t t-set="choices" t-value="props.childProps.choices" />
                 <SelectMenu t-if="choices"
                     t-props="props.childProps"
+                    id="props.name"
+                    name="props.name"
                     value="props.value"
                     placeholder="props.inputAttributes?.placeholder"
                     onSelect="(value) => this.props.onChange(value, this.props.name)"
                     class="'border-0'"
-                    togglerClass="'p-2'"
-                    searchable="choices.length > 8"
                     required="props.childProps.required !== false"
                     disabled="props.isReadonly"
                 />

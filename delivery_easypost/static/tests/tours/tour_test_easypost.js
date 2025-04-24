@@ -7,34 +7,33 @@ registry.category("web_tour.tours").add('test_carrier_type_selection_field', { s
         run: 'click'
     },
     {
+        content: 'Open the selection',
+        trigger: 'input#carrier_type_0',
+        run: 'click'
+    },
+    {
         content: 'Check if the dropdown was populated',
-        trigger: '#carrier_type_0',
+        trigger: '.o_field_selection_menu',
         run: function () {
-            const carrierTypeSelect = document.querySelector('select#carrier_type_0');
+            const carrierTypeChoices = [...document.querySelectorAll(".o_field_selection_menu span")].map(e=>e.textContent);
             [
-                '"FedEx"',
-                '"DHL Global Mail"',
-                '"USPS"',
-                '"GSO"',
-                '"DHL Express"',
-                '"Canada Post"',
-                '"Canpar"',
-                '"DPD"',
-                '"LSO"',
-                '"UPSDAP"',
+                "FedEx",
+                "DHL Global Mail",
+                "USPS",
+                "GSO",
+                "DHL Express",
+                "Canada Post",
+                "Canpar",
+                "DPD",
+                "LSO",
+                "UPSDAP",
             ].forEach((carrierType) => {
                 console.info(`Checking carrier type ${carrierType} ...`);
-                carrierTypeSelect.value = carrierType;
-                if (carrierTypeSelect.value != carrierType) {
+                const index = carrierTypeChoices.indexOf(carrierType);
+                if (index === -1) {
                     console.error(`${carrierType} value not found in available carrier types.`);
                 }
             })
-            // Check an incorrect value and confirm that it was not selected
-            var carrierType = 'CompletelyFakeCarrierType';
-            carrierTypeSelect.value = carrierType;
-            if (carrierTypeSelect.value == carrierType) {
-                console.error(`${carrierType} value should not be allowed.`);
-            }
         }
     },
 ]});

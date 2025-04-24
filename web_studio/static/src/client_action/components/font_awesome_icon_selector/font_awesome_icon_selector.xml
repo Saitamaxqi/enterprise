@@ -6,7 +6,6 @@
         autoSort="false"
         class="'o_font_awesome_icon_selector overflow-visible p-0 border-0 ' + this.props.className"
         menuClass="'o_font_awesome_icon_selector_menu ' + props.menuClassName"
-        togglerClass="'p-0'"
         value="this.props.value"
         choices="iconChoices"
         onSelect="this.props.onSelect"

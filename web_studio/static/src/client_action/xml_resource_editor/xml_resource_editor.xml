@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
     <t t-name="web_studio.XmlResourceEditor">
-        <div class="o_web_studio_xml_editor h-100 d-flex flex-column">
+        <div class="o_web_studio_sidebar o_web_studio_xml_editor h-100 d-flex flex-column">
             <div class="o_web_studio_xml_resource_selector p-2">
                 <SelectMenu
                     class="'o_web_studio_xml_resource_select_menu text-light'"
                     value="this.state.currentResourceId"
                     choices="state.resourcesOptions"
                     onSelect.bind="onResourceChange"
-                    searchable="state.resourcesOptions.length > 5"
                     required="true"
                 />
                 <button t-if="props.canSave" t-on-click="onSaveClick" class="btn btn-primary">Save</button>

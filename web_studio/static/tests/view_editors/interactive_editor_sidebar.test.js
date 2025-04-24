@@ -43,9 +43,7 @@ test("show properties sidepanel on field selection", async () => {
     expect(
         ".o_web_studio_view_renderer .o-web-studio-editor--element-clickable:has(> .o_form_label:contains('Display name'))"
     ).toHaveClass(["o-web-studio-editor--element-clicked"]);
-    expect(".o_web_studio_sidebar .o_web_studio_property_widget .o_select_menu").toHaveText(
-        "Text (char)"
-    );
+    expect(".o_web_studio_sidebar .o_web_studio_property_widget input").toHaveValue("Text (char)");
     expect("#help").toHaveValue("Display name");
 });
 
@@ -162,7 +160,7 @@ test("change widget binary to image", async () => {
         "o-web-studio-editor--element-clicked",
     ]);
 
-    await contains(".o_web_studio_property_widget .o_select_menu button").click();
+    await contains(".o_web_studio_property_widget .o_select_menu input").click();
     await contains(".o-dropdown-item:contains('Image (image)')").click();
 
     expect.verifySteps(["edit_view RPC has been called"]);
@@ -235,8 +233,8 @@ test("default value in sidebar", async () => {
 
     expect(".o_field_widget[name='gender'] input[type='radio']").toHaveCount(2);
     await contains("[data-field-name='gender']").click();
-    await contains(".o_web_studio_property_default_value .o_select_menu_toggler_slot").click();
-    expect(".o_web_studio_property_default_value .o_select_menu_toggler_slot").toHaveText("Male");
+    await contains(".o_web_studio_property_default_value .o_select_menu_toggler").click();
+    expect(".o_web_studio_property_default_value .o_select_menu_toggler").toHaveValue("Male");
     expect(queryAllTexts(".o_select_menu_item")).toEqual(["Female", "Male"]);
 });
 
