@@ -2417,15 +2417,15 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
+                'pricelist_id': self.pricelist.id,
                 'order_line': [Command.create({
                     'product_id': sub_product_delivery.id,
                     'product_uom_qty': 1,
-                    'tax_id': [Command.clear()],
+                    'tax_ids': [Command.clear()],
                 }), Command.create({
                     'product_id': product_non_recurring.id,
                     'product_uom_qty': 1,
-                    'tax_id': [Command.clear()],
+                    'tax_ids': [Command.clear()],
                 })],
             })
             sub.action_confirm()
