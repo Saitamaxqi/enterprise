@@ -1228,6 +1228,7 @@ class AccountReturn(models.Model):
         if 'check_draft_entries' not in check_codes_to_ignore:
             domain = [
                 ('state', '=', 'draft'),
+                ('move_type', '!=', 'entry'),
                 ('company_id', 'in', self.company_ids.ids),
                 ('date', '<=', fields.Date.to_string(self.date_to)),
                 ('date', '>=', fields.Date.to_string(self.date_from)),
