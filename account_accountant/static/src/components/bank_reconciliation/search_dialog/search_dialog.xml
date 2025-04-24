@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="account_accountant.BankRecSelectCreateDialog" t-inherit="web.SelectCreateDialog" t-inherit-mode="primary">
+        <xpath expr="//Dialog" position="attributes">
+            <attribute name="size">props.size</attribute>
+        </xpath>
+
         <xpath expr="//button[hasclass('o_form_button_cancel')]" position="after">
             <div class="ms-4 flex-fill d-flex justify-content-between" name="bank_reconciliation_info">
                 <span t-esc="formattedStatementLineDate"/>

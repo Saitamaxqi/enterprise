@@ -13,6 +13,12 @@ export class BankRecSelectCreateDialog extends SelectCreateDialog {
         suspenseAccountLine: Object,
         reference: String,
         date: DateTime,
+        size: { type: String, optional: true },
+    };
+
+    static defaultProps = {
+        ...SelectCreateDialog.defaultProps,
+        size: "lg",
     };
 
     setup() {

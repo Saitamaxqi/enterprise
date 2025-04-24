@@ -156,6 +156,7 @@ export class BankRecButtonList extends Component {
             noCreate: true,
             domain: this.getReconcileButtonDomain(),
             resModel: "account.move.line",
+            size: "xl",
             context: context,
             onSelected: async (moveLines) => {
                 await this.orm.call("account.bank.statement.line", "set_line_bank_statement_line", [
