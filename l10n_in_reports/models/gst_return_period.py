@@ -1208,13 +1208,42 @@ class L10n_InGstReturnPeriod(models.Model):
         return return_json
 
     def button_send_gstr1(self):
+        cron = self.env.ref('l10n_in_reports.ir_cron_to_send_gstr1_data')
+        cron_sudo = cron.sudo()
+        if not cron_sudo.active:
+            if self.env.user.has_group('base.group_system'):
+                message = _("Can not send GSTR-1 data because the required scheduled action '%s' is not active.", cron_sudo.cron_name)
+                action = {
+                    'name': _("Scheduled Action"),
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'ir.cron',
+                    'res_id': cron.id,
+                    'views': [[False, 'form']],
+                }
+                raise RedirectWarning(message, action, _("Go to Scheduled Action"))
+            else:
+                raise ValidationError(_("Can not send GSTR-1 data because the required scheduled action '%s' is not active.\nPlease contact your system administrator.", cron_sudo.cron_name))
+
         self._check_config(next_gst_action='send_gstr1')
         self.sudo().write({
             "gstr1_error": False,
             "gstr1_blocking_level": False,
             "gstr1_status": "sending",
         })
-        self.env.ref("l10n_in_reports.ir_cron_to_send_gstr1_data")._trigger()
+        cron._trigger()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'info',
+                'message': _("Action triggered — now waiting in queue to prepare and send data."),
+                'sticky': True,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'soft_reload',
+                },
+            }
+        }
 
     def _cron_send_gstr1_data(self, job_count=None):
         gstr1_sending = self.search([
