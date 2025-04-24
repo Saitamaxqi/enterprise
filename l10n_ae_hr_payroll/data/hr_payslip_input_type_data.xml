@@ -85,10 +85,52 @@
         <field name="struct_ids" eval="[(4, ref('l10n_ae_hr_payroll.uae_employee_payroll_structure'))]"/>
     </record>
 
+    <record id="l10n_ae_input_advance_recovery" model="hr.payslip.input.type">
+        <field name="name">Advance Recovery</field>
+        <field name="code">ADVREC</field>
+        <field name="country_id" ref="base.ae"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.uae_employee_payroll_structure'))]"/>
+    </record>
+
     <record id="l10n_ae_input_leave_encashment" model="hr.payslip.input.type">
         <field name="name">Leave Encashment</field>
         <field name="code">LEAVEENCASH</field>
         <field name="country_id" ref="base.ae"/>
-        <field name="struct_ids" eval="[(4, ref('l10n_ae_hr_payroll.uae_employee_payroll_structure'))]"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.uae_employee_payroll_structure')), Command.link(ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay'))]"/>
+    </record>
+
+    <record id="l10n_ae_input_allowance" model="hr.payslip.input.type">
+        <field name="name">Allowance</field>
+        <field name="code">ALLOW</field>
+        <field name="country_id" ref="base.ae"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay'))]"/>
+    </record>
+
+    <record id="l10n_ae_input_commission" model="hr.payslip.input.type">
+        <field name="name">Commission</field>
+        <field name="code">COMM</field>
+        <field name="country_id" ref="base.ae"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay'))]"/>
+    </record>
+
+    <record id="l10n_ae_input_salary_advance" model="hr.payslip.input.type">
+        <field name="name">Salary Advance</field>
+        <field name="code">ADV</field>
+        <field name="country_id" ref="base.ae"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay'))]"/>
+    </record>
+
+    <record id="l10n_ae_input_loan_advance" model="hr.payslip.input.type">
+        <field name="name">Loan Advance</field>
+        <field name="code">LOAN</field>
+        <field name="country_id" ref="base.ae"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay'))]"/>
+    </record>
+
+    <record id="l10n_ae_input_deduction" model="hr.payslip.input.type">
+        <field name="name">Deduction</field>
+        <field name="code">DED</field>
+        <field name="country_id" ref="base.ae"/>
+        <field name="struct_ids" eval="[Command.link(ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay'))]"/>
     </record>
 </odoo>

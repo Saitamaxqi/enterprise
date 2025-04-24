@@ -1,6 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
+from collections import defaultdict
+from itertools import chain
+
+from odoo import api, models, Command
 
 
 class HrPayslip(models.Model):
@@ -54,6 +57,50 @@ class HrPayslip(models.Model):
                 ])
 
         return rows
+
+    @api.depends('employee_id', 'version_id', 'struct_id', 'date_from', 'date_to')
+    def _compute_input_line_ids(self):
+        super()._compute_input_line_ids()
+        balance_by_employee = self._get_salary_advance_balances_by_employee()
+        uae_employee_struct = self.env.ref('l10n_ae_hr_payroll.uae_employee_payroll_structure')
+
+        for slip in self:
+            if not slip.employee_id or slip.country_code != "AE":
+                continue
+            if slip.struct_id == uae_employee_struct:
+                balance = balance_by_employee[slip.employee_id]
+                if balance <= 0:
+                    continue
+                sal_adv_rec_type = self.env.ref('l10n_ae_hr_payroll.l10n_ae_input_advance_recovery')
+                new_input_lines = [
+                    Command.unlink(line.id)
+                    for line in slip.input_line_ids.filtered_domain([('input_type_id', '=', sal_adv_rec_type.id)])
+                ]
+                new_input_lines.append(Command.create({
+                    'name': self.env._('Salary Advance Recovery'),
+                    'amount': balance,
+                    'input_type_id': sal_adv_rec_type.id,
+                }))
+                slip.write({'input_line_ids': new_input_lines})
+
+    def _get_salary_advance_balances_by_employee(self):
+        payslips_by_employee = self._read_group(
+            domain=[
+                ('state', 'in', ('done', 'paid')),
+                ('employee_id', 'in', self.employee_id.ids),
+                ('input_line_ids.code', 'in', ('ADV', 'ADVREC')),
+            ],
+            groupby=['employee_id'],
+            aggregates=['id:recordset']
+        )
+        balance_by_employee = defaultdict(float)
+        for employee_id, payslips in payslips_by_employee:
+            for input_line in chain.from_iterable(payslip.input_line_ids for payslip in payslips):
+                if input_line.code == 'ADV':
+                    balance_by_employee[employee_id] += input_line.amount
+                elif input_line.code == 'ADVREC':
+                    balance_by_employee[employee_id] -= input_line.amount
+        return balance_by_employee
 
     def action_payslip_payment_report(self, export_format='l10n_ae_wps'):
         self.ensure_one()

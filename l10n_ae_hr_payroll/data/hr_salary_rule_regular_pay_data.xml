@@ -399,6 +399,20 @@ result = - worked_days['OUT'].number_of_days * (gross_salary / number_of_days_in
             <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         </record>
 
+        <record id="l10n_ae_uae_employee_payroll_structure_advance_recovery" model="hr.salary.rule">
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="name">Advance Recovery</field>
+            <field name="sequence">65</field>
+            <field name="code">ADVREC</field>
+            <field name="condition_select">input</field>
+            <field name="condition_other_input_id" ref="l10n_ae_input_advance_recovery"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = -inputs['ADVREC'].amount
+            </field>
+            <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
+        </record>
+
         <record id="uae_annual_leaves_eos_allowance_salary_rule" model="hr.salary.rule">
             <field name="name">Annual Leave Remaining Balance Allowance</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
