@@ -24,6 +24,7 @@ class HrESICReport(models.Model):
         current_year = datetime.now().year
         return [(str(i), i) for i in range(current_year, 1989, -1)]
 
+    company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     month = fields.Selection(MONTH_SELECTION, default=lambda self: str(datetime.today().month), required=True)
     year = fields.Selection(selection='_get_year_selection', required=True, default=lambda self: str(datetime.now().year))
     export_report_type = fields.Selection(
@@ -48,7 +49,10 @@ class HrESICReport(models.Model):
 
     def _get_period_payslips_with_employees(self):
         self.ensure_one()
-        indian_employees = self.env['hr.employee'].search([('contract_id.l10n_in_esic_amount', '>', 0)]).filtered(lambda e: e.company_country_code == 'IN')
+        indian_employees = self.env['hr.employee'].search([
+            ('contract_id.l10n_in_esic_amount', '>', 0),
+            ('company_id', '=', self.company_id.id)
+        ]).filtered(lambda e: e.company_country_code == 'IN')
         end_date = calendar.monthrange(int(self.year), int(self.month))[1]
 
         payslips = self.env['hr.payslip'].search([
@@ -65,8 +69,8 @@ class HrESICReport(models.Model):
             _, payslips = report._get_period_payslips_with_employees()
             report.period_has_payslips = bool(payslips)
 
-    @api.model
     def _get_employee_esic_data(self):
+        self.ensure_one()
         # Get the relevant records based on the year and month
         result = []
         indian_employees, payslips = self._get_period_payslips_with_employees()
@@ -93,8 +97,8 @@ class HrESICReport(models.Model):
             ))
         return result
 
-    @api.model
     def _get_employee_esi_data(self):
+        self.ensure_one()
         # Get the relevant records based on the year and month
         result = []
         indian_employees, payslips = self._get_period_payslips_with_employees()

@@ -32,6 +32,7 @@ class L10nInHrPayrollEpfReport(models.Model):
     _name = 'l10n.in.hr.payroll.epf.report'
     _description = 'Indian Payroll: Employee Provident Fund Report'
 
+    company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     month = fields.Selection(MONTH_SELECTION, default='1', required=True)
     year = fields.Integer(required=True, default=lambda self: fields.Date.context_today(self).year)
     xls_file = fields.Binary(string="XLS file")
@@ -49,18 +50,21 @@ class L10nInHrPayrollEpfReport(models.Model):
         for report in self:
             report.display_name = f"{month_description.get(report.month)}-{report.year}"
 
-    @api.model
-    def _get_employee_pf_data(self, year, month):
+    def _get_employee_pf_data(self):
+        self.ensure_one()
         # Get the relevant records based on the year and month
-        indian_employees = self.env['hr.employee'].search([('contract_id.l10n_in_provident_fund', '=', True)]).filtered(lambda e: e.company_country_code == 'IN')
+        indian_employees = self.env['hr.employee'].search([
+            ('contract_id.l10n_in_provident_fund', '=', True),
+            ('company_id', '=', self.company_id.id)
+        ]).filtered(lambda e: e.company_country_code == 'IN')
 
         result = []
-        end_date = calendar.monthrange(year, int(month))[1]
+        end_date = calendar.monthrange(self.year, int(self.month))[1]
 
         payslips = self.env['hr.payslip'].search([
             ('employee_id', 'in', indian_employees.ids),
-            ('date_from', '>=', f'{year}-{month}-1'),
-            ('date_to', '<=', f'{year}-{month}-{end_date}'),
+            ('date_from', '>=', f'{self.year}-{self.month}-1'),
+            ('date_to', '<=', f'{self.year}-{self.month}-{end_date}'),
             ('state', 'in', ('done', 'paid'))
         ])
 
@@ -139,7 +143,7 @@ class L10nInHrPayrollEpfReport(models.Model):
             "REFUNDED OF ADVANCES"
         ]
 
-        rows = self._get_employee_pf_data(self.year, self.month)
+        rows = self._get_employee_pf_data()
 
         for col, header in enumerate(headers):
             worksheet.write(row, col, header, style_highlight)
