@@ -48,7 +48,7 @@ class MailActivity(models.Model):
           * are assigned to the current user
           * are in the current company or free of document
 
-        The resulting list is intended for display in the “Next Activities” tab.
+        The resulting list is intended for display in the “Activities” tab.
         """
         overdue_call_activities_of_current_user = self.search(
             [
@@ -58,13 +58,14 @@ class MailActivity(models.Model):
                 ("phone", "!=", False),
             ]
         )
-        # ----- Tackling multi-company shenanigans 👺 -----
         record_ids_by_model_name = defaultdict(set)
         for activity in overdue_call_activities_of_current_user.filtered("res_model"):
             record_ids_by_model_name[activity.res_model].add(activity.res_id)
 
         allowed_record_ids_by_model_name = defaultdict(list)
         for model_name, record_ids in record_ids_by_model_name.items():
+            if not self.env[model_name].has_access("read"):
+                continue
             # calling search will filter out records that are irrelevant to the current company
             allowed_record_ids_by_model_name[model_name] = self.env[model_name].search([("id", "in", list(record_ids))]).ids
         store = Store()
