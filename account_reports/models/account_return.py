@@ -9,12 +9,12 @@ from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.tools import SQL
 from odoo.tools.misc import format_date
 PERIODS = [
-    ('year', 'annually'),
-    ('semester', 'semi-annually'),
-    ('4_months', 'every 4 months'),
-    ('trimester', 'quarterly'),
-    ('2_months', 'every 2 months'),
-    ('monthly', 'monthly'),
+    ('monthly', 'Monthly'),
+    ('2_months', 'Every 2 months'),
+    ('trimester', 'Quarterly'),
+    ('4_months', 'Every 4 months'),
+    ('semester', 'Semi-annually'),
+    ('year', 'Annually'),
 ]
 
 MONTHS_PER_PERIOD = {
@@ -251,7 +251,7 @@ class AccountReturnType(models.Model):
 
         return self.env['account.return'].sudo().create(create_vals_list)
 
-    def _get_return_name(self, main_company, period_from, period_to):
+    def _get_return_name(self, main_company, period_from, period_to, minimal=False):
         periodicity = self._get_periodicity(main_company)
         start_day, start_month = self._get_start_date_elements(main_company)
         if start_day != 1 or start_month != 1:
@@ -259,13 +259,27 @@ class AccountReturnType(models.Model):
         elif periodicity == 'year':
             period_suffix = f"{period_from.year}"
         elif periodicity == 'trimester':
-            period_suffix = f"{format_date(self.env, period_from, date_format='qqq yyyy')}"
+            date_format = 'qqq yyyy' if not minimal else 'qqq'
+            period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
         elif periodicity == 'monthly':
-            period_suffix = f"{format_date(self.env, period_from, date_format='LLLL yyyy')}"
+            date_format = 'LLLL yyyy' if not minimal else 'LLL'
+            period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
         else:
             period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
 
-        return _("%(return_type_name)s %(period_suffix)s", return_type_name=self.name, period_suffix=period_suffix)
+        country_code = ""
+        if not minimal or main_company.account_fiscal_country_id.code != self.report_id.country_id.code:
+            if self.report_id and self.report_id.country_id:
+                country_code = f"({self.report_id.country_id.code})"
+            else:
+                country_code = f"({main_company.account_fiscal_country_id.code})"
+
+        return _(
+            "%(return_type_name)s %(period_suffix)s %(country_code)s",
+            return_type_name=self.name,
+            country_code=country_code,
+            period_suffix=period_suffix
+        )
 
     def _get_periodicity(self, company):
         self.ensure_one()
@@ -461,7 +475,7 @@ class AccountReturn(models.Model):
         ], limit=1)
 
     @api.model
-    def get_next_returns(self, journal_id=False, additional_domain=None, allow_multiple_by_types=False):
+    def get_next_returns_ids(self, journal_id=False, additional_domain=None, allow_multiple_by_types=False):
         """
         Return all the return for the current company to post next
         """
@@ -480,23 +494,35 @@ class AccountReturn(models.Model):
             field_names=['name', 'date_deadline', 'type_id', 'id'],
         ).grouped('type_id')
 
-        next_returns = []
+        next_returns_ids = []
         for recordset in future_returns_by_type.values():
             if not allow_multiple_by_types:
-                next_returns.append({
-                    'id': recordset[0].id,
-                    'name': recordset[0].name,
-                    'date_deadline': recordset[0].date_deadline,
-                })
+                next_returns_ids.append(recordset[0].id)
             else:
                 for record in recordset:
-                    next_returns.append({
-                        'id': record.id,
-                        'name': record.name,
-                        'date_deadline': record.date_deadline,
-                    })
+                    next_returns_ids.append(record.id)
 
-        return next_returns
+        return next_returns_ids
+
+    @api.model
+    def get_next_return_for_dashboard(self, journal_id=False):
+        additional_domain = [
+            ('date_deadline', '<=', fields.Date.today() + relativedelta(months=1))
+        ]
+        return_ids = self.get_next_returns_ids(journal_id=journal_id, additional_domain=additional_domain, allow_multiple_by_types=True)
+
+        account_returns = self.browse(return_ids)
+        dashboard_return_dicts = []
+        for account_return in account_returns:
+            name = account_return.type_id._get_return_name(account_return.company_id, account_return.date_from, account_return.date_to, minimal=True)
+            dashboard_return_dicts.append({
+                'id': account_return.id,
+                'date_deadline': account_return.date_deadline,
+                'name': name,
+            })
+
+        dashboard_return_dicts.sort(key=lambda return_dict: return_dict['date_deadline'])
+        return dashboard_return_dicts
 
     @api.model
     def action_open_tax_return_view(self, additional_return_domain=None):

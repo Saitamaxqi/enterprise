@@ -27,13 +27,10 @@ export class AccountReturnDashboardList extends Component {
     }
 
     async fetchNextReturns() {
-        const additionalDomain = [ // The next two months current + next month
-            ['date_deadline', '<=', DateTime.now().plus({ months: 1 }).endOf("month").toISODate()]
-        ]
         const returns = await this.orm.call(
             'account.return',
-            'get_next_returns',
-            [this.props.record.resId, additionalDomain, true], //allow_multiple_by_types
+            'get_next_return_for_dashboard',
+            [this.props.record.resId], //allow_multiple_by_types
         );
 
         this.accountReturns = returns.map(this.formatReturn);

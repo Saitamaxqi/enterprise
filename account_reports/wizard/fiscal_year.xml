@@ -7,15 +7,8 @@
         <field name="inherit_id" ref="account.setup_financial_year_opening_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/group" position="inside">
-
                 <span class="o_form_label"><field name="vat_label" class="oe_inline"/> <label for="account_return_periodicity" string="Periodicity"/></span>
                 <field name="account_return_periodicity" string="Tax Periodicity" class="o_stat_value" nolabel="1"/>
-                
-                <label for="account_return_reminder_day"/>
-                <div class="o_field_widget">
-                    <field name="account_return_reminder_day" class="text-center" string="Reminder" no_label="1" style="width: 40px !important;"/> days after period
-                </div>
-                <field name="account_tax_return_journal_id" string="Journal"/>
             </xpath>
         </field>
     </record>

@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="jo_tax_return_type" model="account.return.type">
-            <field name="name">Tax Return (JO)</field>
+            <field name="name">Tax</field>
             <field name="report_id" ref="l10n_jo.tax_report_vat_return"/>
         </record>
     </data>

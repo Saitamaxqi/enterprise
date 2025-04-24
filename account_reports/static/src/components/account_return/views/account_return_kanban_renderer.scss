@@ -9,8 +9,6 @@
 
     .o_kanban_record {
         width: 80%;
-        background-color: white;
-        border: 1px solid #dfdfdf;
         padding: 5px;
         display: flex;
         flex-direction: row;
@@ -23,5 +21,9 @@
         font-weight: 700;
         font-size: 1rem;
         padding: 10px 10px;
+    }
+
+    .return-check-card-success {
+        background-color: var(--AccountReturnCheck-card-success-bg-color, #eafaeb);
     }
 }

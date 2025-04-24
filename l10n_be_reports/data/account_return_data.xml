@@ -15,21 +15,21 @@
         </data>
 
         <record id="be_vat_return_type" model="account.return.type">
-            <field name="name">VAT Return (BE)</field>
+            <field name="name">VAT</field>
             <field name="report_id" ref="l10n_be.tax_report_vat"/>
             <field name="payment_partner_bank_id" ref="l10n_be_reports.fps_vat_current_account"/>
         </record>
 
         <!-- VAT listing -->
         <record id="be_vat_listing_return_type" model="account.return.type">
-            <field name="name">VAT Listing (BE)</field>
+            <field name="name">VAT Listing</field>
             <field name="report_id" ref="l10n_be_reports.l10n_be_partner_vat_listing"/>
             <field name="deadline_periodicity">year</field>
         </record>
 
         <!-- EC sales list -->
         <record id="be_ec_sales_list_return_type" model="account.return.type">
-            <field name="name">EC Sales List (BE)</field>
+            <field name="name">EC Sales List</field>
             <field name="report_id" ref="l10n_be_reports.belgian_ec_sales_report"/>
         </record>
 
@@ -47,7 +47,7 @@
         </data>
 
         <record id="be_isoc_prepayment_return_type" model="account.return.type">
-            <field name="name">ISOC Prepayment (BE)</field>
+            <field name="name">Advance Tax Payment</field>
             <field name="deadline_periodicity">trimester</field>
             <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
         </record>

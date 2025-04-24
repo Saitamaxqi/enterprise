@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="uk_cis_tax_return_type" model="account.return.type">
-            <field name="name">CIS Tax Return (UK)</field>
+            <field name="name">CIS Tax</field>
             <field name="deadline_periodicity">monthly</field>
             <field name="deadline_start_date" eval="datetime(2025, 1, 6).date()"/>
             <field name="report_id" ref="l10n_uk_reports_cis.tax_report_cis"/>

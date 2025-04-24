@@ -19,7 +19,7 @@
                         <t t-set="message" t-value="record.message.raw_value"/>
                         <t t-set="summary" t-value="record.summary.raw_value"/>
 
-                        <div class="w-100" t-att-style="result == 'success' or bypassed ? 'background-color: #eafaeb;' : ''">
+                        <div class="w-100" t-att-class="result == 'success' or bypassed ? 'return-check-card-success' : ''">
                             <div class="container w-100 h-100 p-2 border-1 align-items-center align-self-center">
                                 <div class="row h-100 align-items-center">
                                     <div class="col-12 col-md-8">

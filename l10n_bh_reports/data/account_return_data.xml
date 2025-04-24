@@ -2,12 +2,12 @@
 <odoo>
     <data>
         <record id="bh_full_tax_return_type" model="account.return.type">
-            <field name="name">Full Tax Return (BH)</field>
+            <field name="name">Full Tax</field>
             <field name="report_id" ref="l10n_bh.l10n_bh_tax_report_full"/>
         </record>
 
         <record id="bh_simplified_tax_return_type" model="account.return.type">
-            <field name="name">Simplified Tax Return (BH)</field>
+            <field name="name">Simplified Tax</field>
             <field name="report_id" ref="l10n_bh.l10n_bh_tax_report_simplified"/>
         </record>
     </data>

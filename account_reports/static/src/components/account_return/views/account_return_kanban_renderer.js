@@ -40,17 +40,15 @@ export class AccountReturnKanbanRenderer extends Component {
             ['date_from', '<=', DateTime.now().endOf("month").toISODate()]
         ]
 
-        const returns = await this.orm.call(
+        const returnIds = await this.orm.call(
             'account.return',
-            'get_next_returns',
+            'get_next_returns_ids',
             [
                 null,
                 additionalDomain,
                 true, //allow_multiple_by_types
             ],
         );
-
-        const returnIds = returns.map((accountReturn) => accountReturn.id);
 
         await this.orm.call(
             'account.return',

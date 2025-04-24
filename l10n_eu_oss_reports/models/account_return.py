@@ -1,4 +1,4 @@
-from odoo import api, models
+from odoo import api, models, _
 
 
 class AccountReturnType(models.Model):
@@ -57,3 +57,74 @@ class AccountReturn(models.Model):
             return self.env['l10n_eu_oss_reports.return.submission.wizard']._open_submission_wizard(self)
 
         return super().action_submit()
+
+    def _run_checks(self, check_codes_to_ignore):
+        checks = super()._run_checks(check_codes_to_ignore)
+
+        if self.type_external_id == 'l10n_eu_oss_reports.eu_oss_sales_tax_return_type':
+            checks += self._check_suite_oss_sales(check_codes_to_ignore)
+
+        return checks
+
+    def _check_suite_oss_sales(self, check_codes_to_ignore):
+        checks = []
+
+        if 'check_oss_currency' not in check_codes_to_ignore:
+            checks.append({
+                'code': 'check_oss_currency',
+                'name': _("EUR Currency"),
+                'message': _("""
+                    OSS reports must be submitted in euros.
+                """),
+                'result': 'success' if self.company_id.currency_id.name == 'EUR' else 'failure',
+            })
+
+        if 'check_oss_only_intra_eu_transactions' not in check_codes_to_ignore:
+            checks.append({
+                'code': 'check_oss_only_intra_eu_transactions',
+                'name': _("Only intra-EU transactions"),
+                'message': _("""
+                    Exclude any domestic or extra-EU sales from the OSS report.
+                """),
+                'result': 'success',
+            })
+
+        if 'check_oss_only_b2c_customer' not in check_codes_to_ignore:
+            report_options = self._get_closing_report_options()
+            options_domain = self.type_id.report_id._get_options_domain(report_options, 'strict_range')
+
+            business_partner_ids = [
+                group_result[0].id
+                for group_result in self.env['account.move.line'].sudo()._read_group(
+                    domain=[
+                        *options_domain,
+                        *self._get_vat_closing_entry_additional_domain(),
+                        ('partner_id.is_company', '=', True),
+                    ],
+                    groupby=['partner_id'],
+                )
+            ]
+
+            business_partners_count = len(business_partner_ids)
+            review_action = {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'list',
+                'res_model': 'res.partner',
+                'domain': [('id', 'in', business_partner_ids)],
+                'views': [[False, 'list'], [False, 'form']],
+            }
+
+            summary_string = _("%(count)s Partners", count=business_partners_count) if business_partners_count > 1 else _("1 Partner")
+
+            checks.append({
+                'code': 'check_oss_only_b2c_customer',
+                'name': _("Only B2C transactions"),
+                'message': _("""
+                    Only B2C transactions should be included in the OSS report.
+                """),
+                'summary': summary_string,
+                'action': review_action if business_partner_ids else False,
+                'result': 'success' if not business_partner_ids else 'failure',
+            })
+
+        return checks

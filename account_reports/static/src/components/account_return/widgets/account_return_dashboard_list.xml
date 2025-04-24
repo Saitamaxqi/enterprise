@@ -3,9 +3,9 @@
     <t t-name="account_reports.account_return_dashboard_list">
         <table>
             <t t-foreach="accountReturns" t-as="accountReturn" t-key="accountReturn.id">
-                <tr t-att-class="{'text-danger': accountReturn.isOverdue}">
+                <tr>
                     <td class="px-1 text-start fw-bold"><t t-out="accountReturn.name"/></td>
-                    <td class="px-1 text-end"><t t-esc="accountReturn.deadline"/></td>
+                    <td class="px-1 text-end" t-att-class="{'text-danger': accountReturn.isOverdue}"><t t-esc="accountReturn.deadline"/></td>
                 </tr>
             </t>
         </table>
