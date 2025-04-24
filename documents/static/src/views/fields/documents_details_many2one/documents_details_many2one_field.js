@@ -16,6 +16,6 @@ export class DocumentsDetailsMany2OneField extends Component {
     }
 
     get fieldProps() {
-        return omit(this.props, ["readonlyPlaceholder"]);
+        return omit(this.props, "readonlyPlaceholder");
     }
 }

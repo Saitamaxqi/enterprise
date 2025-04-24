@@ -71,6 +71,7 @@ export class DocumentsDocument extends models.Model {
     alias_domain_id = fields.Many2one({ relation: "mail.alias.domain" });
     alias_name = fields.Char({ string: "Alias name" });
     alias_tag_ids = fields.Many2many({ relation: "documents.tag" });
+    mail_alias_domain_count = fields.Integer();
     create_activity_type_id = fields.Many2one({ relation: "mail.activity.type" });
     create_activity_user_id = fields.Many2one({ relation: "res.users" });
     description = fields.Char({ string: "Attachment description" });
@@ -176,8 +177,18 @@ export class DocumentsDocument extends models.Model {
                     if (!record.active) {
                         recordValues.folder_id = "TRASH";
                     }
+                    if (record.alias_tag_ids) {
+                        recordValues.alias_tag_ids = record.alias_tag_ids.map((id) => {
+                            const tag = this.env["documents.tag"].search_read([["id", "=", id]])[0];
+                            return { id, color: tag.color, display_name: tag.name };
+                        });
+                    }
                     [
+                        "alias_domain_id",
+                        "alias_name",
+                        "mail_alias_domain_count",
                         "company_id",
+                        "create_activity_type_id",
                         "owner_id",
                         "partner_id",
                         "description",
@@ -205,12 +216,6 @@ export class IrEmbeddedActions extends models.Model {
     _name = "ir.embedded.actions";
 
     name = fields.Char({ string: "Action Name" });
-}
-
-export class MailActivityType extends models.Model {
-    _name = "mail.activity.type";
-
-    name = fields.Char({ string: "Activity Type" });
 }
 
 export class MailAlias extends models.Model {
@@ -290,6 +295,15 @@ export function getDocumentsTestServerData(additionalRecords = []) {
                     },
                 ],
             },
+            "mail.alias": {
+                records: [{ id: 1, alias_name: "alias" }],
+            },
+            "mail.alias.domain": {
+                records: [
+                    { id: 1, name: "odoo.com" },
+                    { id: 2, name: "runbot.odoo.com" },
+                ],
+            },
         },
     };
 }
@@ -330,7 +344,6 @@ export function getBasicPermissionPanelData(recordExtra) {
 export const DocumentsModels = {
     ...mailModels,
     IrEmbeddedActions,
-    MailActivityType,
     MailAlias,
     MailAliasDomain,
     ResCompany: webModels.ResCompany,
