@@ -39,6 +39,7 @@ Switzerland Payroll Rules.
         'views/l10n_ch_location_unit_views.xml',
         'views/l10n_ch_hr_employee_children_views.xml',
         'views/hr_contract_views.xml',
+        'views/hr_contract_type_views.xml',
         'views/hr_salary_rule_views.xml',
         'views/l10n_ch_individual_account_views.xml',
         'views/l10n_ch_monthly_summary_views.xml',
