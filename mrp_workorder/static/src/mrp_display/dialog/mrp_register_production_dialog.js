@@ -11,6 +11,7 @@ export class MrpRegisterProductionDialog extends ConfirmationDialog {
         qtyToProduce: { optional: true, type: Number },
         record: Object,
         reload: Function,
+        workorderId: { optional: true, type: Number },
     };
     static components = {
         ...ConfirmationDialog.components,
@@ -34,7 +35,9 @@ export class MrpRegisterProductionDialog extends ConfirmationDialog {
         const record = this.props.record;
         this.state.disabled = true;
         await record.save();
-        await record.model.orm.call(record.resModel, "set_qty_producing", [record.resIds]);
+        const resModel = this.props.workorderId ? "mrp.workorder" : "mrp.production";
+        const resId = [this.props.workorderId || record.resId];
+        await record.model.orm.call(resModel, "set_qty_producing", [resId]);
         await this.props.reload(record);
         this.props.close();
     }

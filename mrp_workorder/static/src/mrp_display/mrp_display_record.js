@@ -80,6 +80,9 @@ export class MrpDisplayRecord extends Component {
             title,
             qtyToProduce: this.record.qty_remaining,
         };
+        if (this.props.record.resModel === "mrp.workorder") {
+            params.workorderId = this.props.record.resId;
+        }
         this.dialog.add(MrpRegisterProductionDialog, params);
     }
 

@@ -837,3 +837,36 @@ class MrpWorkorder(models.Model):
         if self.employee_assigned_ids:
             time_data['employee_id'] = self.employee_assigned_ids[0].id
         return time_data
+
+    def set_qty_producing(self):
+        self.ensure_one()
+        self.production_id.set_qty_producing()
+
+        # Find first uncompleted step of type register production (if it exists) in the chain
+        current_check = self.check_ids.filtered(lambda c: not c.previous_check_id)
+        while current_check and current_check.next_check_id and (current_check.test_type != 'register_production' or current_check.quality_state != 'none'):
+            current_check = current_check.next_check_id
+
+        if current_check and current_check.test_type == 'register_production' and current_check.quality_state == 'none':
+            # Check exists already, mark as done.
+            current_check.action_next()
+        elif not any(c.test_type == 'register_production' for c in self.check_ids):
+            # Add a register production step for this WO only (at the front of the list)
+            first_check = self.check_ids.filtered(lambda c: not c.previous_check_id)
+            new_check = self.env['quality.check'].create([{
+                'title': _('Register Production'),
+                'test_type_id': self.env.ref('mrp_workorder.test_type_register_production').id,
+                'workorder_id': self.id,
+                'quality_state': 'pass',
+                'production_id': self.production_id.id,
+                'product_id': self.product_id.id,
+                'lot_id': self.production_id.lot_producing_id.id,
+                'team_id': self.env['quality.alert.team']._get_quality_team(
+                    self.env['quality.alert.team']._check_company_domain(
+                        self.company_id.id or self.env.context.get('default_company_id', self.env.company.id)
+                    ))
+            }])
+            if first_check:
+                new_check._insert_in_chain('before', first_check)
+            else:
+                self.current_quality_check_id = new_check
