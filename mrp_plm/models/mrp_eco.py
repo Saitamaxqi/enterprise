@@ -678,8 +678,10 @@ class MrpEco(models.Model):
                         'approval_template_id': approval_template.id,
                     })
                     for user in approval_template.user_ids:
+                        # TDE TODO: link to eco approval record ?
                         activity_vals.append({
-                            'activity_type_id': self.env.ref('mrp_plm.mail_activity_eco_approval').id,
+                            'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+                            'summary': _('ECO Approval'),
                             'user_id': user.id,
                             'res_id': eco.id,
                             'res_model_id': self.env.ref('mrp_plm.model_mrp_eco').id,

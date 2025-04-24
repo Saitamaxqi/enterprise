@@ -16,7 +16,7 @@ a periodic and automatic synchronization of their bank statements.
     'data': [
         'data/config_parameter.xml',
         'data/ir_cron.xml',
-        'data/mail_activity_type_data.xml',
+        'data/mail_subtype_data.xml',
         'data/mail_template.xml',
 
         'security/ir.model.access.csv',
