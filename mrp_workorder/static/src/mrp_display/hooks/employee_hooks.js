@@ -80,14 +80,39 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         if (login) {
             employees.all = res.all;
         }
+        const oldEmployees = employees.connected;
         res.connected.sort(function (emp1, emp2) {
-            if (emp1.workcenters.length === 0) {
-                return 1;
+            /*
+            "MGMSort"
+            Show active employees at the top of the list, inactive at the bottom.
+            Never change the previous order of the employees, unless:
+            - they become active (start timer when inactive), then put them at the top;
+            - they become inactive (stop last running timer), then put them at the top of the inactive employees.
+             */
+            const oldEmp1 = oldEmployees.find((e) => e.id === emp1.id);
+            const oldEmp2 = oldEmployees.find((e) => e.id === emp2.id);
+            if (!oldEmp1 || !oldEmp2) {
+                // No previous sorting: sort active first, inactive last.
+                return emp1.workcenters.length >= emp2.workcenters.length ? -1 : 1;
             }
-            if (emp2.workcenters.length === 0) {
+            if (emp1.workcenters.length !== 0 && oldEmp1.workcenters.length === 0) {
+                // Emp1 became active, sort at top.
                 return -1;
             }
-            return 0;
+            if (emp2.workcenters.length !== 0 && oldEmp2.workcenters.length === 0) {
+                // Emp2 became active, sort at top.
+                return 1;
+            }
+            if (emp1.workcenters.length === 0 && oldEmp1.workcenters.length !== 0) {
+                // Emp1 became inactive, sort below active and above inactive.
+                return emp2.workcenters.length === 0 ? -1 : 1;
+            }
+            if (emp2.workcenters.length === 0 && oldEmp2.workcenters.length !== 0) {
+                // Emp2 became inactive, sort below active and above inactive.
+                return emp1.workcenters.length === 0 ? 1 : -1;
+            }
+            // Sort with previous order.
+            return oldEmployees.indexOf(oldEmp1) - oldEmployees.indexOf(oldEmp2);
         });
         employees.connected = res.connected.map((obj) => {
             const emp = employees.all.find((e) => e.id === obj.id);
