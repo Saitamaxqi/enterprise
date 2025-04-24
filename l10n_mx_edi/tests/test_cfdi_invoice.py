@@ -2294,3 +2294,55 @@ class TestCFDIInvoice(TestMxEdiCommon):
             # The down payment line should be dispatched to the 3 other lines, removing the 2
             # biggest ones and generating a discount of 450 on the lowest one
             self._assert_invoice_cfdi(invoice, 'test_invoice_negative_lines_cfdi_amounts')
+
+    def test_vendor_bill_payment_production_sign_flow_cancel_from_the_sat(self):
+        """ Test the case where the vendor bill is manually canceled from the SAT portal by the user (production environment). """
+        self.env.company.l10n_mx_edi_pac_test_env = False
+        self.env.company.l10n_mx_edi_pac_username = 'test'
+        self.env.company.l10n_mx_edi_pac_password = 'test'
+
+        file_name = "test_import_bill"
+        full_file_path = misc.file_path(f'{self.test_module}/tests/test_files/{file_name}.xml')
+        self.env.company.partner_id.company_id = self.env.company
+        with file_open(full_file_path, "rb") as file:
+            file_content = file.read()
+        new_bill = self._upload_document_on_journal(
+            journal=self.company_data['default_journal_purchase'],
+            content=file_content,
+            filename=file_name,
+        )
+
+        # Not checking bill values since they are already checked in a different test, only SAT
+        self.assertEqual(new_bill.l10n_mx_edi_invoice_document_ids.state, 'invoice_received')
+        new_bill.action_post()
+        self.assertTrue(new_bill.l10n_mx_edi_update_sat_needed)
+        with self.with_mocked_sat_call(lambda _x: 'valid'):
+            new_bill.l10n_mx_edi_cfdi_try_sat()
+        self.assertTrue(new_bill.l10n_mx_edi_update_sat_needed)
+
+        # Manual cancellation from the SAT portal
+        with self.with_mocked_sat_call(lambda _x: 'cancelled'):
+            new_bill.l10n_mx_edi_cfdi_try_sat()
+
+        inv_cancel_doc_values = {
+            'move_id': new_bill.id,
+            'state': 'invoice_cancel',
+            'sat_state': 'cancelled',
+        }
+        inv_sent_doc_values = {
+            'move_id': new_bill.id,
+            'state': 'invoice_received',
+            'sat_state': 'valid',
+        }
+        self.assertRecordValues(new_bill.l10n_mx_edi_invoice_document_ids.sorted(), [
+            inv_cancel_doc_values,
+            inv_sent_doc_values,
+        ])
+        self.assertRecordValues(new_bill, [{
+            'state': 'cancel',
+            'need_cancel_request': False,
+            'show_reset_to_draft_button': True,
+            'l10n_mx_edi_update_sat_needed': False,
+            'l10n_mx_edi_cfdi_sat_state': 'cancelled',
+            'l10n_mx_edi_cfdi_state': 'cancel',
+        }])

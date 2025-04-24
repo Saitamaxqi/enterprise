@@ -546,6 +546,7 @@ class AccountMove(models.Model):
                     'invoice_cancel',
                     'ginvoice_sent',
                     'ginvoice_cancel',
+                    'invoice_received',
                 }):
                     if doc.sat_state != 'skip':
                         move.l10n_mx_edi_cfdi_sat_state = doc.sat_state
@@ -1891,7 +1892,7 @@ class AccountMove(models.Model):
         self.ensure_one()
 
         # The user manually cancelled the document in the SAT portal.
-        if document.state == 'invoice_sent' and sat_state == 'cancelled':
+        if document.state in ('invoice_sent', 'invoice_received') and sat_state == 'cancelled':
             if document.sat_state not in ('valid', 'cancelled', 'skip'):
                 document.sat_state = 'skip'
 
