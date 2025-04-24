@@ -19,7 +19,12 @@
                         <span class="o_tabular_nums fw-bold text-action" t-esc="Math.round(wc.duration) + '\''"/>
                     </div>
                     <div t-if="!employee.workcenters.length" class="d-flex justify-content-between">
-                        <span class="text-muted">Inactive</span>
+                        <span class="text-muted">
+                            <t t-if="employee.last_active &amp;&amp; employee.id !== props.employees.admin.id">
+                                Last seen <RelativeTime datetime="makeDate(employee.last_active)"/>
+                            </t>
+                            <t t-else="">Inactive</t>
+                        </span>
                     </div>
                 </div>
             </li>

@@ -89,8 +89,8 @@ class HrEmployee(models.Model):
             for end_date, start_date in zip(end_dates, start_dates):
                 if not end_date:
                     duration += int((datetime.now() - start_date).total_seconds()) / 60
+            employee = next(emp for emp in employees if emp['id'] == employee.id)
             if any(not date for date in end_dates):
-                employee = [emp for emp in employees if emp['id'] == employee.id][0]
                 employee["workcenters"].append(
                     {
                         'id': workcenter.id,
@@ -98,6 +98,8 @@ class HrEmployee(models.Model):
                         'duration': duration,
                         'ongoing': True,
                     })
+            else:
+                employee["last_active"] = max(employee.get("last_active", datetime.min), *(d for d in end_dates if d))
         return employees
 
     def get_wo_time_by_employees_ids(self, wo_id):
