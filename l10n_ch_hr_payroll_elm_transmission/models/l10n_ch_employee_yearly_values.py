@@ -1275,7 +1275,7 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
         rules_grouped_by_certificate_section = swissdec_structure_rules.grouped('l10n_ch_salary_certificate')
         caf_codes = swissdec_structure_rules.filtered(lambda r: r.l10n_ch_caf_statement and r.l10n_ch_caf_statement != "0").mapped("code")
         avs_splits = dict(self.env['l10n.ch.avs.splits']._read_group(domain=[('state', '=', 'confirmed')], groupby=['employee_id'], aggregates=['id:recordset']))
-        mapped_qst_institutions = self.env["l10n.ch.source.tax.institution"].search([]).grouped("canton")
+        mapped_qst_institutions = self.env["l10n.ch.source.tax.institution"].search([('company_id', '=', company_id.id)]).grouped("canton")
 
         global_avs_institutions = self.env["l10n.ch.social.insurance"]
         global_caf_institutions = self.env["l10n.ch.compensation.fund"]

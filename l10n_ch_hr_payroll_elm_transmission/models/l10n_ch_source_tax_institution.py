@@ -20,11 +20,8 @@ Each entity or branch may have a separate DPI number or use a global DPI with se
 If a company manages separate payrolls (e.g., for branches or subsidiaries), the ACI may assign individual company numbers under a global DPI. 
 Use this field for any additional company number defined by the ACI.""")
 
-    _check_unique_canton = [
-        ('ch_qst_canton_unique', 'unique(canton)', 'Only one Source-Tax Institution per Canton is possible.')
-    ]
-    models.Constraint(
-        'unique(canton)',
+    _check_unique_canton = models.Constraint(
+        'unique(canton, company_id)',
         "Only one Source-Tax Institution per Canton is possible.",
     )
 
