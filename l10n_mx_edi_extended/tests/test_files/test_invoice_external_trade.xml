@@ -25,7 +25,7 @@
 				<cce20:Domicilio Calle="77 Santa Barbara Rd" Estado="CA" Pais="USA" CodigoPostal="94523"/>
 			</cce20:Receptor>
 			<cce20:Mercancias>
-				<cce20:Mercancia NoIdentificacion="product_mx" FraccionArancelaria="7212100399" CantidadAduana="5.000" UnidadAduana="01" ValorUnitarioAduana="58.825260" ValorDolares="294.1263">
+				<cce20:Mercancia NoIdentificacion="product_mx" FraccionArancelaria="7212100399" CantidadAduana="5.000" UnidadAduana="01" ValorUnitarioAduana="58.825260" ValorDolares="294.1300">
                                     </cce20:Mercancia>
 			</cce20:Mercancias>
 		</cce20:ComercioExterior>
