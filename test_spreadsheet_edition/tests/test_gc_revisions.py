@@ -112,3 +112,18 @@ class SpreadsheetRevisionTest(SpreadsheetTestCase):
                 2,
                 "the history should not be deleted",
             )
+
+    def test_do_not_delete_with_no_snapshot(self):
+        with freeze_time("2018-01-01"):
+            spreadsheet = self.env["spreadsheet.test"].create({})
+            spreadsheet.dispatch_spreadsheet_message(
+                self.new_revision_data(spreadsheet)
+            )
+            revisions = spreadsheet.spreadsheet_revision_ids
+            revisions.write_date = "2018-01-01"
+
+        with freeze_time("2020-01-01"):
+            self.env["spreadsheet.revision"]._gc_revisions()
+            revisions = spreadsheet.with_context(active_test=False).spreadsheet_revision_ids
+            self.assertEqual(len(revisions), 1, "the history should not be deleted")
+            self.assertTrue(spreadsheet.spreadsheet_data)

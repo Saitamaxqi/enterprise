@@ -60,7 +60,7 @@ class SpreadsheetRevision(models.Model):
             ids_by_model[res_model].append(res_id)
         for res_model, res_ids in ids_by_model.items():
             records = self.env[res_model].browse(res_ids).with_context(preserve_spreadsheet_revisions=True)
-            for record in records:
+            for record in records.filtered('spreadsheet_snapshot'):
                 # reset the initial data to the current snapshot
                 record.spreadsheet_binary_data = record.spreadsheet_snapshot
             self.search([
