@@ -684,12 +684,3 @@ class ProjectTask(models.Model):
         action = super()._server_action_project_task_fsm(xml_id_multiple_fsm_projects, xml_id_one_fsm_project, default_user_ids)
         action['context']['allow_billable'] = bool(self.env['project.project'].search_count([('is_fsm', '=', True), ('allow_billable', '=', True)], limit=1))
         return action
-
-
-class ProjectTaskRecurrence(models.Model):
-    _inherit = 'project.task.recurrence'
-
-    def _get_sale_line_id(self, task):
-        if not task.is_fsm:
-            return super()._get_sale_line_id(task)
-        return False
