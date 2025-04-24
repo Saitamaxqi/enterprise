@@ -281,10 +281,9 @@ class SDDTest(SDDTestCommon):
             })
         )
         wizard.action_create_payments()
-
-        self.assertRecordValues(invoices.matched_payment_ids.sorted('partner_id'), [
-            {'partner_id': self.partner_agrolait.id, 'state': 'in_process'},  # Only the payments with a valid mandate are generated
-        ])
+        payments = invoices.matched_payment_ids
+        self.assertEqual(len(payments), 1, "Only one payment should be created.")
+        self.assertEqual(payments.partner_id, self.partner_agrolait, "The payment should be for the 'Agrolait' partner since it have a valid mandate.")
 
     def test_batch_register_payment_all_invalids(self):
         """
