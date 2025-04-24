@@ -179,4 +179,17 @@ export class History extends Component {
             },
         });
     }
+
+    openPartnerList() {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Contacts",
+            res_model: "res.partner",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: this.ui.isSmall ? "new" : "current",
+        });
+    }
 }

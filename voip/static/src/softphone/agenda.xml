@@ -85,7 +85,7 @@
                 icon="'fa fa-clock-o'"
                 noResultsMessage.translate="No call activities found"
                 actionMessage.translate="See all other activities"
-                actionCallback="() => {}"
+                actionCallback="() => this.openMyActivities()"
             />
         </t>
     </Tab>

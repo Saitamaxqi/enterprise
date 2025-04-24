@@ -77,7 +77,7 @@
                 icon="'fa fa-address-book-o'"
                 noResultsMessage.translate="No contacts found"
                 actionMessage.translate="Create a new contact"
-                actionCallback="() => {}"
+                actionCallback="() => this.openPartnerForm()"
             />
         </t>
     </Tab>

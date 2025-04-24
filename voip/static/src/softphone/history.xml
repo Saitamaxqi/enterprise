@@ -81,7 +81,7 @@
                 icon="'fa fa-history'"
                 noResultsMessage.translate="No recent calls found"
                 actionMessage.translate="See your contact list"
-                actionCallback="() => {}"
+                actionCallback="() => this.openPartnerList()"
             />
         </t>
     </Tab>
