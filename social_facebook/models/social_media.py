@@ -38,11 +38,7 @@ class SocialMedia(models.Model):
 
     def _add_facebook_accounts_from_configuration(self, facebook_app_id):
         base_facebook_url = 'https://www.facebook.com/v17.0/dialog/oauth?%s'
-        params = {
-            'client_id': facebook_app_id,
-            'redirect_uri': url_join(self.get_base_url(), "social_facebook/callback"),
-            'response_type': 'token',
-            'scope': ','.join([
+        scopes = [
                 'pages_manage_ads',
                 'pages_manage_metadata',
                 'pages_read_engagement',
@@ -50,7 +46,14 @@ class SocialMedia(models.Model):
                 'pages_manage_engagement',
                 'pages_manage_posts',
                 'read_insights'
-            ])
+        ]
+        if not self.env['ir.config_parameter'].sudo().get_param('social.facebook_no_business_management'):
+            scopes.append("business_management")
+        params = {
+            'client_id': facebook_app_id,
+            'redirect_uri': url_join(self.get_base_url(), "social_facebook/callback"),
+            'response_type': 'token',
+            'scope': ','.join(scopes),
         }
 
         return {
