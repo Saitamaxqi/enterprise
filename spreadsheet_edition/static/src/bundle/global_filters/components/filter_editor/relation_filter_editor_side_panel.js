@@ -39,7 +39,6 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         });
 
         this.nameService = useService("name");
-        this.modelDisplayName = useService("modelDisplayName");
         this.orm = useService("orm");
         onWillStart(this.onWillStart);
     }
@@ -76,7 +75,10 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         if (!this.store.filter.modelName) {
             return;
         }
-        const label = await this.modelDisplayName.getModelDisplayName(this.store.filter.modelName);
+        const result = await this.orm.cached.call("ir.model", "display_name_for", [
+            [this.store.filter.modelName],
+        ]);
+        const label = result[0]?.display_name;
         this.store.updateRelationModelLabel(label);
         if (!this.store.filter.label) {
             this.store.update({ label });
