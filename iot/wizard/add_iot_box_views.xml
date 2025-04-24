@@ -71,8 +71,12 @@
         <field name="name">No IoT Box Found</field>
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
-            <form string="No IoT Box found">
-                    <p class="mb-3">It takes 1 minute for the IoT Box to boot, in the mean time check this:</p>
+            <form string="No IoT Box found" js_class="no_iot_box_found_wizard">
+                    <p class="mb-3">
+                        It takes 1 minute for the IoT Box to boot.
+                        <span id="discover_retry_countdown"></span>
+                    </p>
+                    <p> In the mean time check this:</p>
                     <div class="d-flex flex-column flex-md-row gap-4 gap-md-3 text-center">
                         <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
                             <img src="/iot/static/src/img/iot_power.svg" alt="Power is on" class="mb-3"/>

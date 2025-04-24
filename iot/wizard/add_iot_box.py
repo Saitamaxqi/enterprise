@@ -101,6 +101,7 @@ class AddIotBox(models.TransientModel):
             'name': _("We couldn't detect any IoT"),
             'views': [[self.env.ref('iot.view_no_iot_box_found').id, 'form']],
             'target': 'new',
+            'no_iot_found_found': True,
         }
 
     def _open_connecting_action(self):
