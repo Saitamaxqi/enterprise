@@ -272,8 +272,17 @@ class L10n_InGstReturnPeriod(models.Model):
         company = company or self.company_id
         action = False
         button_name = msg = ""
-        if not company.vat:
-            raise UserError(_("Please set company GSTIN"))
+        if not company.partner_id.check_vat_in(company.vat):
+            action = {
+                'view_mode': 'form',
+                'res_model': 'res.company',
+                'type': 'ir.actions.act_window',
+                'res_id': company.id,
+                'views': [[self.env.ref('base.view_company_form').id, 'form']],
+            }
+            msg = _("Please set a valid GST number on company.")
+            button_name = _('Go to Company')
+            raise RedirectWarning(msg, action, button_name)
         if not company.sudo().l10n_in_gstr_gst_username:
             msg = _("First setup GST user name and validate using OTP from configuration")
             button_name = _('Go to the configuration panel')
