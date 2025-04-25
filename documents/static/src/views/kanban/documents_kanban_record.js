@@ -54,6 +54,14 @@ export class DocumentsKanbanRecord extends KanbanRecord {
             },
             () => [this.props.record?.data.attachment_id?.id]
         );
+
+        // Activity updates from Chatter
+        this.documentService = useService("document.document");
+        useBus(this.documentService.bus, "DOCUMENT_CHATTER_ACTIVITY_CHANGED", ({ detail }) => {
+            if (this.props.record.data.id == detail.recordId) {
+                this.props.record.load();
+            }
+        });
     }
 
     /**

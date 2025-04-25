@@ -2,7 +2,7 @@ import { useCommand } from "@web/core/commands/command_hook";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressKanbanRecord } from "@web/core/file_upload/file_upload_progress_record";
 import { _t } from "@web/core/l10n/translation";
-import { useService } from "@web/core/utils/hooks";
+import { useBus, useService } from "@web/core/utils/hooks";
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 
 import { DocumentsRightPanel } from "@documents/components/documents_right_panel/documents_right_panel";
@@ -33,6 +33,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         this.root = useRef("root");
         const { uploads } = useService("file_upload");
         this.documentUploads = uploads;
+        this.documentService = useService("document.document");
 
         useCommand(
             _t("Select all"),
@@ -80,6 +81,15 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
 
         useExternalListener(window, "keydown", (ev) => this.onKeyDown(ev));
         useExternalListener(window, "keyup", (ev) => this.onKeyUp(ev));
+
+        useBus(this.documentService.bus, "DOCUMENT_ACTIVITY_CHANGED", ({ detail }) => {
+            if (
+                this.props.list.selection.length == 1 &&
+                this.props.list.selection[0].data.id == detail.recordId
+            ) {
+                this.render(true); // Re-render this Component and its children on activity add/edit/unlink
+            }
+        });
     }
 
     /**

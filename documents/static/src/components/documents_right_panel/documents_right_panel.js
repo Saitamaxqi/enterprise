@@ -1,4 +1,4 @@
-import { Chatter } from "@mail/chatter/web_portal/chatter";
+import { DocumentsChatter } from "@documents/views/chatter/documents_chatter";
 import { useService } from "@web/core/utils/hooks";
 
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
@@ -11,7 +11,7 @@ export class DocumentsRightPanel extends Component {
         nbViewItems: { type: Number },
     };
     static components = {
-        Chatter,
+        Chatter: DocumentsChatter,
         DocumentsDetailsPanel,
     };
 

@@ -154,7 +154,7 @@
                                         </div>
                                         <div class="d-flex d-flex-row align-items-center ms-2 gap-2">
                                             <i t-if="!discoverable" class="fa fa-eye-slash" title="Must have the link to access"/>
-                                            <field name="activity_ids" widget="kanban_activity"/>
+                                            <field name="activity_ids" widget="documents_kanban_activity"/>
                                             <field name="owner_id" widget="many2one_avatar_user"/>
                                         </div>
                                     </div>
