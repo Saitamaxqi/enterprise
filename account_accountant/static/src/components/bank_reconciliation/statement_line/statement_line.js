@@ -24,6 +24,9 @@ export class BankRecStatementLine extends KanbanRecord {
         this.state = useState({
             isUnfolded: false,
         });
+        if (this.env.model.config.context?.default_st_line_id) {
+            this.state.isUnfolded = true;
+        }
     }
 
     // -----------------------------------------------------------------------------
