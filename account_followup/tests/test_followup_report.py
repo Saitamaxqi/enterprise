@@ -556,6 +556,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             freeze_time('2022-01-10'),
             patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
             self.enter_registry_test_mode(),
+            patch.object(self.env.registry['ir.actions.report'], '_run_wkhtmltopdf', return_value=b"0"),
         ):
             cron.method_direct_trigger()
             # For the same reason we clear the cache in assertPartnerFollowup, to avoid this test change the state of the cache,
@@ -623,6 +624,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             freeze_time('2022-01-10'),
             patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
             self.enter_registry_test_mode(),
+            patch.object(self.env.registry['ir.actions.report'], '_run_wkhtmltopdf', return_value=b"0"),
         ):
             cron.method_direct_trigger()
             # For the same reason we clear the cache in assertPartnerFollowup, to avoid this test change the state of the cache,
@@ -725,6 +727,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             freeze_time('2022-01-10'),
             patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
             self.enter_registry_test_mode(),
+            patch.object(self.env.registry['ir.actions.report'], '_run_wkhtmltopdf', return_value=b"0"),
         ):
             cron.method_direct_trigger()
             # For the same reason we clear the cache in assertPartnerFollowup, to avoid this test change the state of the cache,

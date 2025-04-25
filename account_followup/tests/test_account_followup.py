@@ -17,6 +17,14 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
         super().setUpClass()
         cls.env['account_followup.followup.line'].search([]).unlink()
 
+        wkhtmltopdf_patcher = patch.object(
+            cls.env.registry['ir.actions.report'],
+            '_run_wkhtmltopdf',
+            lambda *args, **kwargs: b"0"
+        )
+        wkhtmltopdf_patcher.start()
+        cls.addClassCleanup(wkhtmltopdf_patcher.stop)
+
     def create_followup(self, delay):
         return self.env['account_followup.followup.line'].create({
             'name': f'followup {delay}',
