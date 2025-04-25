@@ -21,8 +21,10 @@ from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRES
 class CustomerPortal(payment_portal.PaymentPortal):
 
     def _get_subscription_domain(self, partner):
+        # Include all subscriptions linked to any contact (child) of the company (commercial partner).
+        # This ensures all users of a company can view and manage each other's subscriptions.
         return [
-            ('partner_id', 'in', [partner.id, partner.commercial_partner_id.id]),
+            ('partner_id', 'child_of', partner.commercial_partner_id.id),
             ('subscription_state', 'in', ['3_progress', '4_paused', '6_churn']),
             ('is_subscription', '=', True)
         ]

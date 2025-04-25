@@ -841,3 +841,39 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         self.subscription.invalidate_recordset(fnames=['partner_shipping_id', 'partner_invoice_id'])
         self.assertEqual(self.subscription.partner_shipping_id, original_shipping_partner, "shipping partner is not updated even when it is provided")
         self.assertEqual(self.subscription.partner_invoice_id, invoicing_partner, "the invoicing partner is updated")
+
+    def test_portal_user_sees_company_subscriptions(self):
+        """Test that a portal user sees all subscriptions of their company and not others."""
+        company = self.env['res.partner'].create({
+            'name': 'Test Company',
+            'is_company': True,
+        })
+        self.user.partner_id.parent_id = company.id
+        self.other_user.partner_id.parent_id = company.id
+
+        self.subscription._onchange_sale_order_template_id()
+        self.subscription.action_confirm()
+
+        # Create a subscription for an external unrelated partner
+        external_partner = self.env['res.partner'].create({'name': 'External Partner'})
+        external_subscription = self.subscription.copy({
+            'partner_id': external_partner.id,
+        })
+        external_subscription._onchange_sale_order_template_id()
+        external_subscription.action_confirm()
+
+        # First, remove all existing group memberships from self.user to avoid conflicts with exclusive groups
+        # Then, explicitly assign the Portal group to self.user to simulate portal-level access
+        portal_group = self.env.ref('base.group_portal')
+        self.user.write({
+            'group_ids': [Command.clear(), Command.link(portal_group.id)]
+        })
+
+        # Authenticate as self.user and access the subscriptions page
+        self.authenticate(self.user.login, self.user.password)
+        response = self.url_open('/my/subscriptions')
+        self.assertEqual(response.status_code, 200)
+
+        content = response.content.decode("utf-8")
+        self.assertIn(self.subscription.name, content, "Portal user should see subscriptions from their company")
+        self.assertNotIn(external_subscription.name, content, "Portal user should NOT see subscriptions from other companies")
