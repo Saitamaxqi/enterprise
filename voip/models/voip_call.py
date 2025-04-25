@@ -140,15 +140,6 @@ class VoipCall(models.Model):
         # and match what's supposed to be stored in the database.
         elif number.startswith("1"):
             domain = [("phone_mobile_search", "=", f"+{number}")]
-        # 0 is the national prefix recommended by the ITU-T. This means that a
-        # number starting with 0 will identify a national call in most
-        # countries. We don't know the country code, so we can't convert the
-        # number to the international format: Replace the prefix with a
-        # wildcard.
-        elif number.startswith("0"):
-            domain = [("phone_mobile_search", "=like", f"%{number[1:]}")]
-        # The phone number doesn't match any expected format. Could it be some
-        # kind of internal extension? Try looking for an exact match:
         else:
             domain = [("phone_mobile_search", "=", number)]
         partner = self.env["res.partner"].search(domain, limit=1)
