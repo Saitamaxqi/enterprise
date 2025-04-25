@@ -110,8 +110,6 @@ class AccountReturn(models.Model):
             checks += self._check_suite_be_vat_report(check_codes_to_ignore)
         elif self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
             checks += self._check_suite_be_partner_vat_listing(check_codes_to_ignore)
-        elif self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
-            checks += self._check_suite_ec_sales_list(check_codes_to_ignore)
 
         return checks
 
@@ -167,91 +165,6 @@ class AccountReturn(models.Model):
                 'code': 'sales_threshold',
                 'result': 'success',
             })
-
-        return checks
-
-    def _check_suite_ec_sales_list(self, check_codes_to_ignore):
-        checks = []
-        if 'goods_service_classification' not in check_codes_to_ignore:
-            checks.append({
-                'name': _("Goods and services are properly classified"),
-                'message': _("Goods and services must be reported separately in the correct section.<br/>"
-                             "Action Point: Classify each transaction accurately as a supply of goods or services."),
-                'code': 'goods_service_classification',
-                'result': 'manual',
-            })
-
-        if 'reverse_charge_mentioned' not in check_codes_to_ignore:
-            checks.append({
-                'name': _("Reverse charge is mentioned on invoices"),
-                'message': _("For services under the reverse charge, invoices must include the reverse charge statement.<br/>"
-                             "Action Point: Confirm this mention appears correctly on all relevant invoices."),
-                'code': 'reverse_charge_mentioned',
-                'result': 'manual',
-            })
-
-        if any(code not in check_codes_to_ignore for code in ('eu_cross_border', 'only_b2b', 'no_partners_without_vat')):
-            warnings = {}
-            custom_handler = self.env[self.type_id.report_id._get_custom_handler_model()]
-            options = self._get_closing_report_options()
-            partner_results = custom_handler._query_partners(self.type_id.report_id, options, warnings)
-
-            if 'eu_cross_border' not in check_codes_to_ignore:
-                cross_border_failure = 'sales_report_warning_non_ec_country' in warnings or 'sales_report_warning_same_country' in warnings
-
-                cross_border_action = False
-                if cross_border_failure:
-                    same_country_action = custom_handler.get_warning_act_window(options, {'type': 'same_country', 'model': 'partner'})
-                    non_ec_country_action = custom_handler.get_warning_act_window(options, {'type': 'non_ec_country', 'model': 'partner'})
-                    cross_border_action = {
-                        **same_country_action,
-                        'name': _("Partners in Wrong Country"),
-                        'domain': ['|', *same_country_action['domain'], *non_ec_country_action['domain']],
-                    }
-
-                checks.append({
-                    'name': _("Reported transactions are cross-border"),
-                    'message': _("The EC Sales List is only for intra-EU supplies.<br/>"
-                                 "Action Point: Exclude any domestic sales or exports outside the EU."),
-                    'code': 'eu_cross_border',
-                    'result': 'failure' if cross_border_failure else 'success',
-                    'action': cross_border_action,
-                })
-
-            if 'only_b2b' not in check_codes_to_ignore:
-                non_b2b_partners = [partner.id for partner, _partner_result in partner_results if not partner.is_company]
-                checks.append({
-                    'name': _("Only B2B EU customers are included"),
-                    'message': _("The report is limited to intra-EU sales to VAT-registered businesses (B2B).<br/>"
-                                 "Action Point: Exclude private individuals or clients from the listing."),
-                    'code': 'only_b2b',
-                    'result': 'failure' if non_b2b_partners else 'success',
-                    'action': {
-                        'type': 'ir.actions.act_window',
-                        'name': _("Private Customers"),
-                        'res_model': 'res.partner',
-                        'domain': [('id', 'in', non_b2b_partners)],
-                        'views': [(False, 'list'), (False, 'form')],
-                    },
-                })
-
-            if 'no_partners_without_vat' not in check_codes_to_ignore:
-                no_vat_partners = [partner.id for partner, _partner_result in partner_results if not partner.vat]
-                checks.append({
-                    'name': _("All reported customers have a VAT number"),
-                    'message': _("Action point: add the missing VAT numbers."),
-                    'code': 'no_partners_without_vat',
-                    'result': 'failure' if no_vat_partners else 'success',
-                    'action': {
-                        'type': 'ir.actions.act_window',
-                        'name': _("Partners without VAT"),
-                        'res_model': 'res.partner',
-                        'domain': [('id', 'in', no_vat_partners)],
-                        'views': [(False, 'list'), (False, 'form')],
-                    },
-                })
-
-        self._generic_vies_vat_check(check_codes_to_ignore, checks)
 
         return checks
 

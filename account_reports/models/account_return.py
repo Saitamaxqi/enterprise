@@ -1165,6 +1165,9 @@ class AccountReturn(models.Model):
 
         if self.is_tax_return:
             checks += self._check_suite_common_vat_report(check_codes_to_ignore)
+        elif (self.type_id.report_id.root_report_id or self.type_id.report_id) == self.env.ref('account_reports.generic_ec_sales_report'):
+            checks += self._check_suite_common_ec_sales_list(check_codes_to_ignore)
+
         return checks
 
     def _check_suite_common_vat_report(self, check_codes_to_ignore):
@@ -1318,19 +1321,95 @@ class AccountReturn(models.Model):
             }
 
             checks.append({
-                'name': _("Your customers have a valid VAT number under VIES"),
+                'name': _("Valid VAT Numbers"),
                 'code': 'check_partner_vies',
-                'message': _("""
-                    When using the reverse charge system for EU transactions, your customer should have a valid VAT number. If they aren’t VAT-registered, you must charge VAT instead.<br/>
-                    Once verified, it’s mandatory to mention the application of the reverse charge on your invoice. This enables your customer to declare and recover VAT in their country.<br/>
-                    <br/>
-                    Action point: Charge the VAT for customers without verified VAT number
-                """),
+                'message': _("""All customer VAT numbers are valid under <a href="https://ec.europa.eu/taxation_customs/vies" target="_blank">VIES</a>."""),
                 'state': 'new',
                 'summary': summary_string,
                 'action': review_action if invalid_vies_partners_count else None,
                 'result': 'failure' if invalid_vies_partners_count else 'success',
             })
+
+    def _check_suite_common_ec_sales_list(self, check_codes_to_ignore):
+        checks = []
+        if 'goods_service_classification' not in check_codes_to_ignore:
+            checks.append({
+                'name': _("Goods and services classification"),
+                'message': _("Review the tax code and ensure each transaction is correctly classified as a supply of goods or services."),
+                'code': 'goods_service_classification',
+                'result': 'manual',
+            })
+
+        if 'reverse_charge_mentioned' not in check_codes_to_ignore:
+            checks.append({
+                'name': _("Reverse charge mention"),
+                'message': _('Make sure the "Reverse Charge" mention appears on all invoices.'),
+                'code': 'reverse_charge_mentioned',
+                'result': 'manual',
+            })
+
+        if any(code not in check_codes_to_ignore for code in ('eu_cross_border', 'only_b2b', 'no_partners_without_vat')):
+            warnings = {}
+            custom_handler = self.env[self.type_id.report_id._get_custom_handler_model()]
+            options = self._get_closing_report_options()
+            partner_results = custom_handler._query_partners(self.type_id.report_id, options, warnings)
+
+            if 'eu_cross_border' not in check_codes_to_ignore:
+                cross_border_failure = 'sales_report_warning_non_ec_country' in warnings or 'sales_report_warning_same_country' in warnings
+
+                cross_border_action = False
+                if cross_border_failure:
+                    same_country_action = custom_handler.get_warning_act_window(options, {'type': 'same_country', 'model': 'partner'})
+                    non_ec_country_action = custom_handler.get_warning_act_window(options, {'type': 'non_ec_country', 'model': 'partner'})
+                    cross_border_action = {
+                        **same_country_action,
+                        'name': _("Partners in Wrong Country"),
+                        'domain': ['|', *same_country_action['domain'], *non_ec_country_action['domain']],
+                    }
+
+                checks.append({
+                    'name': _("Only intra-EU customers"),
+                    'message': _("Exclude any domestic or extra-EU sales from the EC Sales List."),
+                    'code': 'eu_cross_border',
+                    'result': 'failure' if cross_border_failure else 'success',
+                    'action': cross_border_action,
+                })
+
+            if 'only_b2b' not in check_codes_to_ignore:
+                non_b2b_partners = [partner.id for partner, _partner_result in partner_results if not partner.is_company]
+                checks.append({
+                    'name': _("Only business customers"),
+                    'message': _("Exclude any private customers."),
+                    'code': 'only_b2b',
+                    'result': 'failure' if non_b2b_partners else 'success',
+                    'action': {
+                        'type': 'ir.actions.act_window',
+                        'name': _("Private Customers"),
+                        'res_model': 'res.partner',
+                        'domain': [('id', 'in', non_b2b_partners)],
+                        'views': [(False, 'list'), (False, 'form')],
+                    },
+                })
+
+            if 'no_partners_without_vat' not in check_codes_to_ignore:
+                no_vat_partners = [partner.id for partner, _partner_result in partner_results if not partner.vat]
+                checks.append({
+                    'name': _("VAT Numbers"),
+                    'message': _("All customers have a VAT number."),
+                    'code': 'no_partners_without_vat',
+                    'result': 'failure' if no_vat_partners else 'success',
+                    'action': {
+                        'type': 'ir.actions.act_window',
+                        'name': _("Partners without VAT"),
+                        'res_model': 'res.partner',
+                        'domain': [('id', 'in', no_vat_partners)],
+                        'views': [(False, 'list'), (False, 'form')],
+                    },
+                })
+
+        self._generic_vies_vat_check(check_codes_to_ignore, checks)
+
+        return checks
 
 
 class AccountReturnCheck(models.Model):
