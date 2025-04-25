@@ -86,9 +86,14 @@ export class BankRecButtonList extends Component {
     setAccountOnReconcileLine() {
         const context = {
             list_view_ref: "account_accountant.view_account_list_bank_rec_widget",
+            search_view_ref: "account_accountant.view_account_search_bank_rec_widget",
             ...(this.statementLineData.amount > 0
-                ? { search_default_incomeacc: 1 }
-                : { search_default_expensesacc: 1, search_default_assetsacc: 1 }),
+                ? { search_default_bankrec_income: 1, preferred_internal_group: "income" }
+                : {
+                      search_default_bankrec_expense: 1,
+                      search_default_bankrec_currentasset: 1,
+                      preferred_internal_group: "expense",
+                  }),
         };
 
         this.addDialog(SelectCreateDialog, {

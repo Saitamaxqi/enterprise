@@ -402,6 +402,20 @@
             </field>
         </record>
 
+        <record id="view_account_search_bank_rec_widget" model="ir.ui.view">
+            <field name="name">account.account.search.bank.rec.widget</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_search"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <filter invisible="1" name="bankrec_income" string="Income" domain="[('account_type', '=', 'income')]"/>
+                    <filter invisible="1" name="bankrec_expense" string="Expenses" domain="[('account_type', '=', 'expense')]"/>
+                    <filter invisible="1" name="bankrec_currentasset" string="Fixed Assets" domain="[('account_type', '=', 'asset_current')]"/>
+                </field>
+            </field>
+        </record>
+
         <!-- Add bank recon widget to the statements list view -->
         <record id="view_bank_statement_tree" model="ir.ui.view">
             <field name="name">account.bank.statement.list</field>
