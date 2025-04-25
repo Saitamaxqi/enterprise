@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, Command
-from odoo.tools import _, get_timedelta
+from odoo.tools import _
+from odoo.tools.date_utils import get_timedelta
 
 
 class SaleSubscriptionPlan(models.Model):

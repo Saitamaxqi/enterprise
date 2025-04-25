@@ -2,7 +2,7 @@ import math
 from datetime import time
 from odoo import api, fields, models, _
 from odoo.tools import format_time
-from odoo.tools.date_intervals import float_to_time
+from odoo.tools.date_utils import float_to_time
 from odoo.exceptions import ValidationError
 
 
