@@ -1,67 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="sign.SignTemplateSidebar">
-        <div t-attf-class="o_sign_sidebar {{ isSidebarHidden ? 'd-none' : ''}} w-100 pt-3">
+        <div t-attf-class="o_sign_sidebar {{ isSidebarHidden ? 'd-none' : ''}} w-100">
             <div class="d-flex flex-column align-items-stretch">
-                <div class="d-flex flex-row align-items-center">
-                    <b class="px-3 mb-3">Documents</b>
-                </div>
-                <div class="px-3 mb-1 d-flex flex-column gap-1 flex-grow-1">
+                <div class="mb-1 d-flex flex-column">
                     <t t-foreach="this.props.documents.filter((doc) => !doc.deleted).sort((a,b) => a.sequence - b.sequence)" t-as="document" t-key="document.id">
-                        <div class="d-flex flex-row">
-                            <t t-if="this.props.selectedDocumentId === document.id">
-                                <div class="o_sign_template_header_document_name align-items-center d-flex w-100">
-                                    <input type="text" t-attf-class="o_sign_document_name_input o_input bg-transparent form-control rounded-0 w-full {{ this.props.documents.length > 1 ? ' text-success' : '' }}"
-                                        t-att-value="this.state.selectedDocumentName"
-                                        t-att-disabled="this.props.hasSignRequests"
-                                        t-on-change="ev => this.onDocumentNameChanged(ev)"
-                                        t-on-mouseleave="ev => this.updateShowEditNameIcon(ev, false)"/>
-                                    <i t-if="!props.hasSignRequests" class="fa fa-pencil"/>
-                                </div>
-                            </t>
-                            <t t-else="">
-                                <a class="d-flex align-items-center text-black w-100 o_sign_document_list_item" t-on-click="() => this.onUpdateSelectedDocument(document.id)">
-                                    <t t-out="document.display_name"/>
-                                </a>
-                            </t>
-                            <div t-if="this.props.documents.filter((doc) => !doc.deleted).length > 1">
-                                <Dropdown>
-                                    <button class="btn o_sign_sidebar_icon">
-                                        <i class="oi oi-ellipsis-v"/>
-                                    </button>
-                                    <t t-set-slot="content">
-                                        <DropdownItem onSelected="() => this.onMoveDocumentUp(document.id)">
-                                            <i class="fa fa-arrow-up fa-fw"/>
-                                            Move Up
-                                        </DropdownItem>
-                                        <DropdownItem onSelected="() => this.onMoveDocumentDown(document.id)">
-                                            <i class="fa fa-arrow-down fa-fw"/>
-                                            Move Down
-                                        </DropdownItem>
-                                        <DropdownItem onSelected="() => this.onRemoveDocument(document.id)">
-                                            <i class="fa fa-trash-o fa-fw text-danger"/>
-                                            Delete
-                                        </DropdownItem>
-                                    </t>
-                                </Dropdown>
+                        <div t-attf-class="o_sign_sidebar_document_name border-bottom {{ document.id === this.props.selectedDocumentId ? 'o_sign_sidebar_document_name_selected' : ''}} flex-grow-1"
+                            t-on-click="() => this.onUpdateSelectedDocument(document.id)"
+                        >
+                            <input type="text" t-attf-class="o_sign_document_name_input o_input bg-transparent form-control rounded-0 {{ document.id === this.state.editableDocumentId ? '' : 'd-none' }}"
+                                t-att-data-document-id="document.id"
+                                t-att-value="document.display_name"
+                                t-att-disabled="this.props.hasSignRequests"
+                                t-on-change="ev => this.onDocumentNameChanged(document.id, ev)"
+                                t-on-blur="onDocumentNameBlur"
+                            />
+                            <div t-attf-class="o_sign_sidebar_document_name_text {{ document.id === this.state.editableDocumentId ? 'd-none' : '' }}" t-att-title="document.display_name">
+                                <t t-esc="document.display_name"/>
                             </div>
+                            <Dropdown t-if="!this.props.hasSignRequests">
+                                <button t-attf-class="btn o_sign_sidebar_icon">
+                                    <i class="oi oi-ellipsis-v"/>
+                                </button>
+                                <t t-set-slot="content">
+                                    <DropdownItem onSelected="() => this.onRenameClick(document.id)">
+                                        <i class="fa fa-pencil"/>
+                                        Rename
+                                    </DropdownItem>
+                                    <DropdownItem t-if="this.props.documents.filter((doc) => !doc.deleted).length > 1 &amp; this.props.documents.filter((doc) => !doc.deleted).sort((a,b) => a.sequence - b.sequence)[0].id !== document.id" onSelected="() => this.onMoveDocumentUp(document.id)">
+                                        <i class="fa fa-arrow-up fa-fw"/>
+                                        Move Up
+                                    </DropdownItem>
+                                    <DropdownItem t-if="this.props.documents.filter((doc) => !doc.deleted).length > 1 &amp; this.props.documents.filter((doc) => !doc.deleted).sort((a,b) => a.sequence - b.sequence).at(-1).id !== document.id" onSelected="() => this.onMoveDocumentDown(document.id)">
+                                        <i class="fa fa-arrow-down fa-fw"/>
+                                        Move Down
+                                    </DropdownItem>
+                                    <DropdownItem t-if="this.props.documents.filter((doc) => !doc.deleted).length > 1" onSelected="() => this.onRemoveDocument(document.id)">
+                                        <i class="fa fa-trash-o fa-fw text-danger"/>
+                                        Delete
+                                    </DropdownItem>
+                                </t>
+                            </Dropdown>
                         </div>
                     </t>
                 </div>
-                <div class="d-flex px-2" t-if="!this.props.hasSignRequests">
+                <div class="d-flex" t-if="!this.props.hasSignRequests">
                     <t t-call="sign.SignViews.buttons"/>
                 </div>
             </div>
-            <div class="px-3">
+            <div>
                 <t t-foreach="props.signers" t-as="signer" t-key="signer.id">
                     <SignTemplateSidebarRoleItems t-props="getSidebarRoleItemsProps(signer.id)"/>
                 </t>
             </div>
-            <div t-if="!props.hasSignRequests" class="o_sign_sidebar_add_button_container position-sticky bottom-0 p-3">
-                <button class="o_sign_sidebar_add_button btn btn-secondary w-100" title="Create a new signer for signing the fields" t-on-click="onClickAddSigner">
-                    <i class="fa fa-plus mx-1"/>Add signer
-                </button>
-            </div>
+            <button t-if="!props.hasSignRequests" class="btn btn-link fs-5" title="Create a new signer for signing the fields" t-on-click="onClickAddSigner">
+                Add Signer
+            </button>
             <div t-if="props.hasSignRequests" class="text-center p-3">
                 <p class="text-info">Currently in <b>visualization</b> mode.</p>
                 <button class="btn btn-secondary w-60" t-on-click="this.props.onEditTemplate">

@@ -30,16 +30,40 @@
         }
     }
 
-    .o_sign_sidebar_role_input_container .fa-pencil,
-    .o_sign_template_header_document_name .fa-pencil {
+    .o_sign_sidebar_signer .fa-pencil {
         display: none;
     }
 
-    .o_sign_sidebar_role_input_container:hover .fa-pencil,
-    .o_sign_template_header_document_name:hover .fa-pencil {
+    .o_sign_sidebar_signer:hover .fa-pencil {
         display: inline-block;
     }
 
+    .o_sign_sidebar_document_name {
+        padding: 5px;
+        width: 100%;
+        height: 55px;
+        align-items: center;
+        display: flex;
+        &:hover {
+            cursor: pointer;
+            background-color: #e9ecef;
+        }
+    }
+
+    .o_sign_sidebar_document_name_text {
+        width: 100%;
+        padding-right: 10px;
+        cursor: pointer;
+    }
+
+    .o_sign_document_name_input {
+        width: 100%;
+        padding-right: 10px;
+    }
+
+    .o_sign_sidebar_document_name_selected {
+        background-color: #e9ecef;
+    }
     /* Module pages */
     .o_sign_template, .o_sign_document {
         display: flex;
@@ -62,19 +86,6 @@
         }
         :hover > .fa-pencil {
             opacity: 1.0; 
-        }
-
-        .o_sign_document_name_input {
-            width: auto;
-            display: inline-block;
-            border: 1px dashed white;
-            &:focus {
-                border: 1px solid silver;
-            }
-            &[disabled] {
-                background-color: transparent;
-                border: none;
-            }
         }
 
         .alert.o_sign_template_saved_info {
@@ -134,11 +145,13 @@
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
+        margin-top: 32px;
     }
 
     .o_sign_sidebar_icon {
-        min-width: 20px;
+        min-width: 10px;
         border: none;
+        padding: 0px !important;
     }
 
     .o_sign_document_list_item {
@@ -160,13 +173,31 @@
         margin-top: 10px;
     }
 
-    .o_sign_sidebar_signer {
-        position: relative;
-    }
-
-    .o_sign_sidebar_header {
+    .o_sign_sidebar_signer_header {
         display: flex;
         flex-direction: row;
+        align-items: center;
+    }
+
+    .o_sign_sidebar_signer {
+        position: relative;
+        padding-left: 5px;
+        padding-right: 5px;
+        &:hover {
+            cursor: pointer;
+            background-color: #e9ecef;
+        }
+    }
+
+    .o_sign_sidebar_signer_selected {
+        background-color: #e9ecef;
+    }
+
+    .o_sign_sidebar_signer_header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
     }
 
     .o_sign_item_count {
@@ -180,10 +211,17 @@
         padding: 4px;
     }
 
+    .o_sign_sidebar_signer_name {
+        width: 100%;
+    }
+
     .o_sign_sidebar_item_grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 4px; /* Small gap between buttons */
+        background-color: #FFFFFF;
+        padding: 4px;
+        border-radius: 5px;
     }
 
     .o_sign_field_type_button {
@@ -205,6 +243,9 @@
 
     .o_sign_sidebar_role_muted_input {
         border-color: transparent;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .o_sign_save_template_dialog_container {

@@ -1,4 +1,4 @@
-import { Component, useState, useEffect } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { SignTemplateSidebarRoleItems } from "./sign_template_sidebar_role_items";
 import { useService } from "@web/core/utils/hooks";
 import { useSignViewButtons } from "@sign/views/hooks";
@@ -19,13 +19,11 @@ export class SignTemplateSidebar extends Component {
         signTemplateId: { type: Number },
         updateRoleName: { type: Function },
         signers: { type: Array },
-        selectedDocumentName: { type: String },
         hasSignRequests: { type: Boolean },
-        updateSelectedDocumentName: { type: Function },
+        updateDocumentName: { type: Function },
         updateSigners: { type: Function },
         pushNewSigner: { type: Function },
         updateCollapse: { type: Function },
-        updateInputFocused: { type: Function },
         deleteRole: { type: Function },
         documents: { type: Array },
         selectedDocumentId: { type: Number },
@@ -40,34 +38,27 @@ export class SignTemplateSidebar extends Component {
     setup() {
         this.orm = useService("orm");
         this.state = useState({
-            showEditNameIcon: false,
-            selectedDocumentName: this.props.selectedDocumentName || "",
+            editableDocumentId: false,
         });
         const functions = useSignViewButtons(this.props.signTemplateId);
         Object.assign(this, functions);
-        useEffect(
-            () => {
-                this.state.selectedDocumentName = this.props.documents.find((doc) => doc.id === this.props.selectedDocumentId).display_name;
-            },
-            () => [this.props.selectedDocumentId]
-        );
-    }
-
-    updateShowEditNameIcon(ev, value) {
-        /* Save document name when unfocusing input for avoiding save conflicts.*/
-        const newDocumentName = ev.target.value;
-        if (newDocumentName && !value && newDocumentName !== this.state.selectedDocumentName)
-            this.onDocumentNameChanged(ev);
-        this.state.showEditNameIcon = value;
     }
 
     onClickAddSigner() {
         this.props.pushNewSigner();
-
-        /* Auto-focus last added signer. */
         if (this.props.signers?.length > 0) {
-            const lastSignerId = this.props.signers[this.props.signers.length-1].id;
-            this.props.updateCollapse(lastSignerId, false);
+            const lastSigner = this.props.signers.at(-1);
+            this.props.updateCollapse(lastSigner.id, false);
+            setTimeout(() => {
+                const roleId = this.props.signers.at(-1).roleId;
+                const span = document.querySelector(`span[data-role-id="${roleId}"]`);
+                span.click();
+                setTimeout(() => {
+                    const input = document.querySelector(`input[data-role-id="${roleId}"]`);
+                    input.focus();
+                    input.select();
+                }, 100);
+            }, 100);
         }
     }
 
@@ -95,7 +86,6 @@ export class SignTemplateSidebar extends Component {
             isCollapsed: signer.isCollapsed,
             isInputFocused: signer.isInputFocused,
             /* Update callbacks binding for parent props: */
-            updateInputFocused: (id, value) => this.props.updateInputFocused(id, value),
             updateCollapse: (id, value) => this.props.updateCollapse(id, value),
             onDelete: () => this.deleteSigner(id, signer.roleId),
             itemsCount: signer.itemsCount,
@@ -103,19 +93,32 @@ export class SignTemplateSidebar extends Component {
         };
     }
 
-    onUpdateSelectedDocument(documentId) {
-        this.props.updateSelectedDocument(documentId);
-        this.state.selectedDocumentName = this.props.documents.find((doc) => doc.id === documentId).display_name;
+    onDocumentNameBlur() {
+        this.state.editableDocumentId = false;
     }
 
-    onDocumentNameChanged(e) {
+    onUpdateSelectedDocument(documentId) {
+        this.props.updateSelectedDocument(documentId);
+    }
+
+    onDocumentNameChanged(documentId, e) {
         const documentName = e.target.value;
         if (documentName) {
-            this.props.updateSelectedDocumentName(documentName);
-            this.state.selectedDocumentName = documentName;
-        } else {
-            e.target.value = this.state.selectedDocumentName;
+            this.props.updateDocumentName(documentId, documentName);
         }
+    }
+
+    setEditableDocumentId (documentId) {
+        this.state.editableDocumentId = documentId;
+        this.props.updateSelectedDocument(documentId);
+    }
+
+    onRenameClick(documentId) {
+        this.state.editableDocumentId = documentId;
+        const input = document.querySelector(`[data-document-id="${documentId}"]`);
+        setTimeout(() => {
+            input.focus();
+        }, 100);
     }
 
     async onRemoveDocument(documentId) {
