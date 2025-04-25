@@ -233,11 +233,13 @@ class MrpWorkorder(models.Model):
 
         res = super().button_start(raise_on_invalid_state=raise_on_invalid_state)
 
-        for wo in self:
-            if main_employee:
-                if (len(wo.allowed_employees) == 0 or main_employee in [emp.id for emp in wo.allowed_employees]) and wo.state not in ('done', 'cancel'):
-                    wo.start_employee(self.env['hr.employee'].browse(main_employee).id)
-                    wo.employee_ids |= self.env['hr.employee'].browse(main_employee)
+        if main_employee:
+            main_employee = self.env['hr.employee'].browse(main_employee)
+            for wo in self:
+                if (len(wo.allowed_employees) == 0 or main_employee in wo.allowed_employees) and wo.state not in ('done', 'cancel'):
+                    wo.start_employee(main_employee.id)
+                    wo.employee_ids |= main_employee
+                    wo.employee_assigned_ids |= main_employee
 
         return res
 
