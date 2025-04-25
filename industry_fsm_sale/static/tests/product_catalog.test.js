@@ -45,6 +45,7 @@ describe.current.tags("desktop");
 defineModels([ProductProduct, SaleOrderLine]);
 defineProjectModels();
 
+onRpc("has_group", () => true);
 onRpc("/product/catalog/order_lines_info", () => deepCopy(saleOrderLineInfo));
 
 test("fsm_product_kanban widgets fetching data once", async () => {
@@ -346,4 +347,27 @@ test("Test button 'Back to task'", async () => {
     expect(".o_form_view").toBeDisplayed({
         message: "It should lead to the task form",
     });
+});
+
+test("Should display unit price with sales access", async () => {
+    await mountView({
+        resModel: "product.product",
+        type: "kanban",
+        context: {
+            fsm_task_id: 1,
+        },
+    });
+    expect(`.o_product_catalog_price`).toHaveCount(3, { message: "Unit price should be visible" });
+});
+
+test("Should not display unit price without any sales access", async () => {
+    onRpc("has_group", () => false);
+    await mountView({
+        resModel: "product.product",
+        type: "kanban",
+        context: {
+            fsm_task_id: 1,
+        },
+    });
+    expect(`.o_product_catalog_price`).toHaveCount(0, { message: "Unit price should not be visible" });
 });

@@ -16,6 +16,8 @@ class ProjectProject(models.Model):
          compute='_compute_allow_billable', store=True, readonly=False)
     sale_line_id = fields.Many2one(
         compute="_compute_sale_line_id", store=True, readonly=False)
+    hide_price = fields.Boolean("Hide price on customer report and portal",
+        compute="_compute_hide_price", store=True, readonly=False)
 
     _material_imply_billable = models.Constraint(
         "CHECK((allow_material = 't' AND allow_billable = 't') OR (allow_material = 'f'))",
@@ -48,6 +50,12 @@ class ProjectProject(models.Model):
         if 'allow_quotations' in fields_list and 'allow_quotations' not in defaults and defaults.get('is_fsm'):
             defaults['allow_quotations'] = self.env.user.has_group('industry_fsm.group_fsm_quotation_from_task')
         return defaults
+
+    @api.depends('is_fsm', 'allow_material')
+    def _compute_hide_price(self):
+        for project in self:
+            if not project.allow_material or not project.is_fsm:
+                project.hide_price = False
 
     @api.depends('is_fsm')
     def _compute_allow_quotations(self):

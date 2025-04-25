@@ -8,6 +8,7 @@
         <t t-set="final_total" t-value="0"/>
         <t t-set="amount_due" t-value="0"/>
         <t t-set="is_any_total_discount_line" t-value="False"/>
+        <t t-set="hide_price" t-value="doc.project_id.hide_price"/>
         <t t-foreach="order.order_line" t-as="line">
             <t t-set="is_task" t-value="line == doc.sale_line_id"/>
             <t t-set="use_qty_delivered" t-value="is_task and line.product_id.service_policy != 'ordered_prepaid'"/>
@@ -32,12 +33,12 @@
                         <tr>
                             <th class="text-start">Product</th>
                             <th class="text-end">Quantity</th>
-                            <th t-if="final_subtotal != 0 or is_any_total_discount_line" class="text-end">Unit Price</th>
-                            <th t-if="final_tax" class="text-end">Taxes</th>
-                            <th t-if="display_discount" class="text-end">
+                            <th t-if="not hide_price and final_subtotal != 0 or is_any_total_discount_line" class="text-end">Unit Price</th>
+                            <th t-if="not hide_price and final_tax" class="text-end">Taxes</th>
+                            <th t-if="not hide_price and display_discount" class="text-end">
                                 <span>Disc.%</span>
                             </th>
-                            <th class="text-end">
+                            <th class="text-end" t-if="not hide_price">
                                 <span t-if="final_subtotal != 0 or is_any_total_discount_line">Amount</span>
                             </th>
                         </tr>
@@ -71,16 +72,16 @@
                                             <span t-else="" t-field="line.product_uom_qty"/>
                                             <span t-field="line.product_uom_id" groups="uom.group_uom"/>
                                         </td>
-                                        <td class="text-end">
+                                        <td class="text-end" t-if="not hide_price">
                                             <span t-options='{"widget": "monetary"}' t-if="(is_task and line.delivered_price_total != 0) or (not use_qty_delivered and line.price_total != 0) or (not is_task and line.price_total != 0) or is_total_discount" t-field="line.price_unit"/>
                                         </td>
-                                        <td t-if="final_tax" class="text-end">
-                                            <span t-esc="', '.join(map(lambda x: x._get_description_plaintext() or x.name, line.tax_ids))"/>
+                                        <td t-if="not hide_price and final_tax" class="text-end">
+                                            <span t-out="', '.join(map(lambda x: x._get_description_plaintext() or x.name, line.tax_ids))"/>
                                         </td>
-                                        <td t-if="display_discount" class="text-end">
+                                        <td t-if="not hide_price and display_discount" class="text-end">
                                             <span t-field="line.discount"/>
                                         </td>
-                                        <td class="text-end o_price_total">
+                                        <td class="text-end o_price_total" t-if="not hide_price">
                                             <t t-if="use_qty_delivered">
                                                 <span t-if="line.delivered_price_subtotal != 0 or is_total_discount" t-field="line.delivered_price_subtotal"/>
                                             </t>
@@ -119,7 +120,7 @@
                 </table>
             </div>
 
-            <div class="container_subtotal" name="so_total_summary">
+            <div class="container_subtotal" name="so_total_summary" t-if="not hide_price">
                 <div id="total" class="row justify-content-end" name="total">
                     <div t-attf-class="#{'col-6' if report_type == 'pdf' else 'col-auto'}">
                         <table t-if="final_subtotal != 0 or is_any_total_discount_line" class="table table-sm">

@@ -291,14 +291,14 @@
                         data-hotkey="c"/>
             </xpath>
             <xpath expr="//span[@id='button_products']" position="replace">
-                <button class="oe_stat_button" name="action_fsm_view_material" groups="sales_team.group_sale_salesman,industry_fsm.group_fsm_quotation_from_task"
+                <button class="oe_stat_button" name="action_fsm_view_material"
                     type="object" icon="fa-cart-plus" invisible="not partner_id and not is_fsm or not allow_material or has_template_ancestor">
                     <div class="o_stat_info">
                         <span class="o_stat_text d-flex align-items-baseline gap-1">
                             <field name="material_line_product_count" widget="statinfo" string="Products" nolabel="1" class="oe_inline"/>
                             <span>Products</span>
                         </span>
-                        <span class="o_stat_value">
+                        <span class="o_stat_value" groups="sales_team.group_sale_salesman">
                             <field name="material_line_total_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             <field name="currency_id" invisible="True"/>
                         </span>
