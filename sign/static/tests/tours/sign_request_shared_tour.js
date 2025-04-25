@@ -43,10 +43,6 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
             run: "click",
         },
         {
-            content: "Check share toggle",
-            trigger: ".o_field_boolean_toggle .form-check-input",
-        },
-        {
             content: "Go on signing page",
             trigger: ".o_field_CopyClipboardChar",
             run: function () {

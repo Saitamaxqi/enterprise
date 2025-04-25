@@ -2,6 +2,7 @@
 
 import time
 import uuid
+
 from werkzeug.urls import url_join, url_quote
 from markupsafe import Markup
 
@@ -194,17 +195,6 @@ class SignRequest(models.Model):
     def action_archive(self):
         self.filtered(lambda sr: sr.active and sr.state == 'sent').cancel()
         return super().action_archive()
-
-    def action_share_request(self):
-        self.ensure_one()
-        self.is_shared = True
-        return {'type': 'ir.actions.act_window_close'}
-
-    def action_close_request(self):
-        self.ensure_one()
-        if not self.is_shared:
-            self.unlink()
-        return {'type': 'ir.actions.act_window_close'}
 
     def _check_senders_validity(self):
         invalid_senders = self.create_uid.filtered(lambda u: not u.email_formatted)
@@ -540,6 +530,14 @@ class SignRequest(models.Model):
             force_send=force_send,
             lang=partner_lang,
         )
+
+    @api.autovacuum
+    def _gc_expired_sr(self):
+        """
+        Deletes all the shared sign requests which have an expired validity date
+        """
+        sign_request = self.env["sign.request"].search([("state", "=", "shared"), ("validity", "<", fields.Date.today())])
+        sign_request.unlink()
 
     ##################
     # PDF Rendering  #

@@ -1,12 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import Command, fields
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form, users
 from odoo.tools import formataddr
 
 from odoo.addons.mail.tests.common import MockEmail
-from .sign_request_common import SignRequestCommon
+from .sign_request_common import SignRequestCommon, freeze_time
 
 from datetime import timedelta
 
@@ -216,8 +218,10 @@ class TestSignRequest(SignRequestCommon, MockEmail):
     def test_sign_request_refuse_shared(self):
         """ Ensure that shared sign requests can be refused by public users. """
         # Get the shared request from a template with one role.
-        shared_request_id = self.template_1_role.open_shared_sign_request()['res_id']
-        shared_request = self.env['sign.request'].browse(shared_request_id)
+        wizard_id = self.template_1_role.open_shared_sign_request()['res_id']
+        wizard = self.env['sign.request.share'].browse(wizard_id)
+        wizard.action_share_request()
+        shared_request = wizard.sign_request_id
         sign_request_item = shared_request.request_item_ids[0]
 
         with self.assertRaises(UserError):
@@ -569,3 +573,24 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         sign_request = self.create_sign_request_no_item(signer=self.partner_1, cc_partners=self.partner_4, validity=validity_date)
         sign_request.validity = False
         self.assertEqual(sign_request.state, 'sent')
+
+    def test_expired_shared_sign_requests_are_cleaned_up(self):
+        """ Tests that the expired sign requests are cleaned when the autovacuum job is called """
+
+        with freeze_time("2025-05-16"):
+            shared_request = self.env["sign.request"].create({
+                'template_id': self.template_1_role.id,
+                'reference': self.template_1_role.display_name,
+                'request_item_ids': [Command.create({
+                    'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                })],
+                'state': 'shared',
+                'validity': fields.Date.today() + relativedelta(days=3)
+            })
+
+        with freeze_time("2025-05-20"):
+            with self.enter_registry_test_mode():
+                autovacuum_job = self.env.ref('base.autovacuum_job')
+                if autovacuum_job:
+                    autovacuum_job.method_direct_trigger()
+                    self.assertFalse(shared_request.exists(), "The template is not shared anymore.")

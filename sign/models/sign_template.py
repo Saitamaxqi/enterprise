@@ -6,7 +6,7 @@ import re
 from reportlab.rl_config import TTFSearchPath
 
 from odoo import api, fields, models, Command, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import misc, pdf
 
@@ -283,22 +283,23 @@ class SignTemplate(models.Model):
     def open_shared_sign_request(self):
         self.ensure_one()
         shared_sign_request = self.sign_request_ids.filtered(lambda sr: sr.state == 'shared' and sr.create_uid == self.env.user)
-        if not shared_sign_request:
-            if len(self.sign_item_ids.mapped('responsible_id')) > 1:
-                raise ValidationError(_("You cannot share this document by link, because it has fields to be filled by different roles. Use Send button instead."))
-            shared_sign_request = self.env['sign.request'].with_context(no_sign_mail=True).create({
-                'template_id': self.id,
-                'request_item_ids': [Command.create({'role_id': self.sign_item_ids.responsible_id.id or self.env.ref('sign.sign_item_role_default').id})],
-                'reference': "%s-%s" % (self.name, _("Shared")),
-                'state': 'shared',
-            })
+
+        local_context = dict(self.env.context, default_sign_request_id=self.id)
+
+        wizard = self.env["sign.request.share"].with_context(local_context).create({
+            "template_id": self.id,
+            "sign_request_id": shared_sign_request.id if shared_sign_request else False,
+            "is_shared": bool(shared_sign_request)
+        })
+
         return {
-            "name": _("Share Document by Link"),
+            "name": _("Share Document"),
             'type': 'ir.actions.act_window',
-            "res_model": "sign.request",
-            "res_id": shared_sign_request.id,
+            "view_mode": "form",
             "target": "new",
-            'views': [[self.env.ref("sign.sign_request_share_view_form").id, 'form']],
+            "res_model": "sign.request.share",
+            "res_id": wizard.id,
+            "views": [[False, "form"]],
         }
 
     def get_action_in_progress_requests(self):

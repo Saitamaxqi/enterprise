@@ -263,27 +263,6 @@
         </field>
     </record>
 
-    <record id="sign_request_share_view_form" model="ir.ui.view">
-        <field name="name">sign.request.share.view.form</field>
-        <field name="model">sign.request</field>
-        <field name="arch" type="xml">
-            <form string="Multiple Signature Requests">
-                <group>
-                    <span class="text-muted">Enable link by sharing</span>
-                    <field name="is_shared" nolabel="1" widget="boolean_toggle"/>
-                </group>
-                <field name="share_link" invisible="1"/>
-                <group invisible="not share_link or not is_shared">
-                    <field name="share_link" widget="CopyClipboardChar" readonly="1" class="mb-3"/>
-                </group>
-                <footer>
-                    <button string="Share" class="btn-primary" name="action_share_request" type="object" data-hotkey="x"/>
-                    <button string="Close" name="action_close_request" type="object" data-hotkey="q"/>
-                </footer>
-            </form>
-        </field>
-    </record>
-
     <record id="sign_request_view_activity" model="ir.ui.view">
         <field name="name">sign.request.actvity</field>
         <field name="model">sign.request</field>

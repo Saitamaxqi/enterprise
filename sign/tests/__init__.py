@@ -10,3 +10,4 @@ from . import test_sign_multicompany
 from . import test_ui
 from . import test_sign_controllers
 from . import test_portal_sign_flow
+from . import test_sign_request_share
