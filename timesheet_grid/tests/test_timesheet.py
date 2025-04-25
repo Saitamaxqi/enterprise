@@ -715,3 +715,20 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         task_2.with_user(self.env.user).write({'project_id': non_tracked_project.id})
         warning = task_2._onchange_project_id()
         self.assertFalse(warning, "No warning should be raised when the task's timesheets are validated.")
+
+    def test_return_value_action_timer_stop(self):
+
+        self.timesheet1.date = fields.Date.today()
+        timesheet = self.timesheet1.with_user(self.timesheet1.user_id)
+        timesheet.action_timer_start()
+        self.assertTrue(timesheet.is_timer_running)
+        amount = timesheet.action_timer_stop()
+        self.assertEqual(amount, 0.25, 2)
+        self.assertFalse(timesheet.is_timer_running)
+
+        timesheet.action_timer_start()
+        self.assertTrue(timesheet.is_timer_running)
+        amount = timesheet.action_timer_stop()
+        self.assertEqual(amount, 0.25, 2)
+        self.assertEqual(timesheet.unit_amount, 2.50, 2)
+        self.assertFalse(timesheet.is_timer_running)

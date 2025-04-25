@@ -491,7 +491,7 @@ class AccountAnalyticLine(models.Model):
         amount = self.unit_amount + minutes_spent
         if not try_to_match or self.name != '/':
             self.write({'unit_amount': amount})
-            return amount
+            return minutes_spent
 
         domain = self._get_last_timesheet_domain()
         last_timesheet_id = self.search(domain, limit=1)
@@ -502,7 +502,7 @@ class AccountAnalyticLine(models.Model):
             self.unlink()
         else:
             self.write({'unit_amount': amount})
-        return amount
+        return minutes_spent
 
     def action_timer_stop(self, try_to_match=False):
         """ Action stop the timer of the current timesheet
