@@ -13,7 +13,7 @@
                     <img class="img-fluid w-100" t-attf-src="data:image/*;base64,{{order.account_move?.l10n_cl_sii_barcode_image}}"/>
                     <span>Timbre Electrónico SII</span>
                     <span>Resolución Nº: <t t-out="order.company.l10n_cl_dte_resolution_number"/></span>
-                    <span>de Fecha: <t t-out="order.company.l10n_cl_dte_resolution_date"/></span>
+                    <span>de Fecha: <t t-out="order.company.formatDateOrTime('l10n_cl_dte_resolution_date', 'date')"/></span>
                     <span>Verifique documento en www.sii.cl</span>
                 </div>
             </div>
