@@ -94,25 +94,6 @@ export class MrpDisplayRecord extends Component {
         this.dialog.add(MrpLogNoteDialog, params);
     }
 
-    get productionComplete() {
-        const production =
-            this.props.record.resModel === "mrp.production"
-                ? this.record
-                : this.props.production.data;
-        if (production.product_tracking === "serial") {
-            return Boolean(
-                (production.qty_producing === 1 &&
-                    production.lot_producing_id &&
-                    production.state === "to_close") ||
-                    production.state === "progress"
-            );
-        }
-        return Boolean(
-            (production.qty_producing !== 0 && production.state === "to_close") ||
-                production.state === "progress"
-        );
-    }
-
     get quantityProducing() {
         return this.props.production.data.qty_producing;
     }
@@ -129,7 +110,9 @@ export class MrpDisplayRecord extends Component {
     }
 
     get displayDoneButton() {
-        return this.resModel === "mrp.production" || this._workorderDisplayDoneButton();
+        return this.resModel === "mrp.production"
+            ? this.props.record.data.picking_type_auto_close
+            : this._workorderDisplayDoneButton();
     }
 
     get byProducts() {
