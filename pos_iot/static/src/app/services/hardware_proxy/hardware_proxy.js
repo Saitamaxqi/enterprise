@@ -12,7 +12,6 @@ patch(hardwareProxyService, {
 patch(HardwareProxy.prototype, {
     setup({ orm }) {
         super.setup(...arguments);
-        this.deviceControllers = {};
         this.iotBoxes = [];
     },
     /**
