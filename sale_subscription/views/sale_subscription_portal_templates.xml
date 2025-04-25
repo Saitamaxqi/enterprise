@@ -336,7 +336,10 @@
                         <t t-if="missing_periods == 1">If you wish to reopen it, you can pay your invoice for the current invoicing period.</t>
                         <t t-if="missing_periods &gt; 1">If you wish to reopen it, the <t t-out ="missing_periods"/> missing payments (from <span t-field="sale_order.next_invoice_date"/> to this day) will be automatically processed.</t>
                     </p>
-                    <h3 t-else="" class="mb-1">Anticipate payment <span t-out="next_billing_details.get('next_invoice_amount')" t-options='{"widget": "monetary","display_currency": sale_order.currency_id}'/></h3>
+                    <h3 t-elif="sale_order.next_invoice_date&lt;=datetime.date.today() or not is_delivery_product" class="mb-1">
+                        Extend Until <span t-out="format_date(sale_order.get_future_next_invoice_date())"/> (<span t-out="next_billing_details.get('next_invoice_amount')" t-options='{"widget": "monetary","display_currency": sale_order.currency_id}'/>)
+                        <br/>
+                    </h3>
                     <div t-if="sale_order.get_portal_last_transaction().state == 'pending'">
                         <div class="alert alert-warning m-1 mt-3">
                             <span>
@@ -344,7 +347,7 @@
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div id="payNow" t-if="sale_order.next_invoice_date&lt;=datetime.date.today() or not is_delivery_product">
                         <hr class="mt-1 mb-2"/>
                         <t t-call="payment.form">
                             <t t-set="amount" t-value="next_billing_details.get('next_invoice_amount')"/>
@@ -374,8 +377,8 @@
                             </h6>
                         </div>
                         <t t-if="sale_order.subscription_state in ['3_progress', '4_paused']">
-                            <!-- User is logged in under the partner set on the subscription -->
-                            <t t-if="enable_token_management">
+                            <!-- User is logged in as the subscription partner or is a public user. -->
+                            <t t-if="enable_token_management or providers_sudo or tokens_sudo">
                                 <t t-if="sale_order.payment_token_id">
                                     <a t-att-href="token_management_url">
                                         <div class="card mb-2">
@@ -389,9 +392,7 @@
                                         </div>
                                     </a>
                                 </t>
-                                <t t-else="">
-                                    <a class="btn btn-primary d-block" t-att-href="token_management_url">Automate Payment</a>
-                                </t>
+                                <a t-if="next_billing_details.get('next_invoice_amount')>0 and (sale_order.next_invoice_date&lt;=datetime.date.today() or not is_delivery_product)" class="btn btn-primary d-block" href="#payment_message"> Pay Now</a>
                             </t>
                             <!-- User is logged in under a partner different than that set on the subscription -->
                             <button t-elif="not user._is_public()"
@@ -400,16 +401,8 @@
                                     disabled="true"
                                     role="button"
                                     class="btn btn-primary">
-                                Automate Payment
+                                Pay Now
                             </button>
-                            <!-- User is logged out -->
-                            <a t-else="providers_sudo or tokens_sudo"
-                               title="You must be logged in to manage your payment methods."
-                               t-attf-href="/web/login?redirect={{sale_order.get_portal_url()}}"
-                               role="button"
-                               class="btn btn-primary">
-                                Automate Payment
-                            </a>
                         </t>
                         <a role="button" t-attf-class="btn btn-light d-block {{ 'disabled' if sale_order.next_invoice_date &lt;= datetime.date.today() else '' }}"
                            data-bs-toggle="modal" data-bs-target="#wc-modal-pause" href="#"
@@ -477,6 +470,13 @@
                         <div class="d-flex flex-column gap-2">
                             <a t-attf-href="/my/subscriptions?order_id={{sale_order.id}}" title="Orders">Orders</a>
                         </div>
+                    </div>
+                    <!-- Reopen button if there is an option to reopen the closed subscription -->
+                    <div t-if="(providers_sudo or tokens_sudo) and next_billing_details.get('next_invoice_amount')> 0 and
+                        sale_order.subscription_state == '6_churn'" class="d-flex flex-wrap flex-column gap-4">
+                        <a class="btn btn-primary d-block" href="#payment_message" role="button">
+                                Reopen
+                        </a>
                     </div>
                 </div>
             </t>

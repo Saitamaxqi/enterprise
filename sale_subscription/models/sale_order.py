@@ -659,6 +659,10 @@ class SaleOrder(models.Model):
                 })
         return vals_list
 
+    def get_future_next_invoice_date(self):
+        self.ensure_one()
+        return self.next_invoice_date + self.plan_id.billing_period - relativedelta(days=1)
+
     ###########
     # Actions #
     ###########

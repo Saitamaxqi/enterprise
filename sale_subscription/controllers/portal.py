@@ -205,6 +205,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'format_date': lambda date: format_date(request.env, date),
             'next_invoice_date_at_resume': max(order_sudo.user_pause_start, fields.Date.today()) if order_sudo.user_pause_start else False,
             'is_subscription_postpaid': order_sudo._is_subscription_postpaid(),
+            'is_delivery_product': int(any(line.product_id.invoice_policy == 'delivery' for line in order_sudo.order_line)),
             **self._prepare_partner_addresses(order_sudo)
         }
 
