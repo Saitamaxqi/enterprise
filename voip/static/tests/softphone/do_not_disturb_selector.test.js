@@ -14,6 +14,8 @@ test("Do not disturb selector show all options", async () => {
     await startServer();
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
+    // don't click on the dropdown too early: handler may not be registered yet
+    await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
     await click("p", { text: "Do Not Disturb" });
     await contains("button", { text: "For 15 minutes" });
@@ -29,12 +31,16 @@ test("Do not disturb selector change state correctly with limited time", async (
     await startServer();
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
+    // don't click on the dropdown too early: handler may not be registered yet
+    await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
     await click("p", { text: "Do Not Disturb" });
     await click("button", { text: "For 15 minutes" });
     await waitNotifications(["res.users.settings"]);
+    // don't click on the dropdown too early: handler may not be registered yet
+    await contains(".o-voip-DndSelector-badge i.text-danger");
     await click(".o-voip-DndSelector-badge i.text-danger");
-    await contains("p", { text: "Until Jan 1, 2025, 1:15 AM" });
+    await contains("p", { text: "Until Jan 1, 2025, 1:15 AM" });
     await advanceTime(14 * 60 * 1000, { blockTimers: true });
     await contains(".o-voip-DndSelector-badge i.text-danger");
     await advanceTime(1 * 60 * 1000, { blockTimers: true });
@@ -45,13 +51,19 @@ test("Do not disturb selector change state correctly with infinite time", async 
     await startServer();
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
+    // don't click on the dropdown too early: handler may not be registered yet
+    await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
     await click("p", { text: "Do Not Disturb" });
     await click("button", { text: "Until I turn it back on" });
     await waitNotifications(["res.users.settings"]);
+    // don't click on the dropdown too early: handler may not be registered yet
+    await contains(".o-voip-DndSelector-badge i.text-danger");
     await click(".o-voip-DndSelector-badge i.text-danger");
     await contains("p", { text: "Until I turn it back on" });
     await advanceTime(24 * 60 * 60 * 1000, { blockTimers: true });
+    // don't click on the dropdown too early: handler may not be registered yet
+    await contains(".o-voip-DndSelector-badge i.text-danger");
     await click(".o-voip-DndSelector-badge i.text-danger");
     await click(".o-dropdown-item i.text-success");
     await waitNotifications(["res.users.settings"]);
