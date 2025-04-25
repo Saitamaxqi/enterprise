@@ -77,7 +77,7 @@ class ApprovalRequest(models.Model):
         for line in self.product_line_ids:
             seller = line.seller_id or line.product_id.with_company(line.company_id)._select_seller(
                 quantity=line.po_uom_qty,
-                uom_id=line.product_id.uom_po_id,
+                uom_id=line.product_id.uom_id,
             )
             vendor = seller.partner_id
             po_domain = line._get_purchase_orders_domain(vendor)
