@@ -86,6 +86,13 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
                 "|",
                 ["match_journal_ids", "=", false],
                 ["match_journal_ids", "=", this.globalState.journalId],
+                ["trigger", "=", "manual"],
+                ["line_ids.account_id", "!=", false],
+                [
+                    "company_id",
+                    "child_of",
+                    this.env.model.root.records.map((record) => record.data.company_id.id),
+                ],
             ],
             {
                 specification: {
