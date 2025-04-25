@@ -1174,3 +1174,58 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         ])
         self.assertEqual(inv1.amount_residual_currency, 0)
         self.assertEqual(inv1.move_id.payment_state, 'paid')
+
+    def test_partial_auto_tolerance(self):
+        inv1 = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            invoice_date='2020-01-01',
+            invoice_line_ids=[{'price_unit': 500.0}],
+        )
+        st_line = self._create_st_line(
+            450.0,
+            date='2020-01-05',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        st_line._try_auto_reconcile_statement_lines()
+        self.assertFalse(st_line.is_reconciled)
+        st_line = self._create_st_line(
+            490.0,
+            date='2020-01-05',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        st_line._try_auto_reconcile_statement_lines()
+
+        # The invoice is fully reconciled, with the surplus on the suspense account
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'balance': 490.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'balance': -500.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.suspense_account_id.id, 'balance': 10.0, 'reconciled': False},
+        ])
+
+    def test_partial_auto_tolerance_multicurrency(self):
+        other_currency = self.setup_other_currency('JPY', rates=[('2020-01-01', 10.0), ('2020-01-20', 9.9)])
+        inv1 = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            currency_id=other_currency.id,
+            invoice_date='2020-01-20',
+            invoice_line_ids=[{'price_unit': 4950.0}],
+        )
+        st_line = self._create_st_line(
+            485.0,
+            date='2020-01-01',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        st_line.set_line_bank_statement_line([inv1.id])
+
+        # with the exchange diff, it's not 500 but 495 that is reconciled. And so the invoice is fully paid
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 485.0, 'currency_id': self.company_data['currency'].id, 'balance': 485.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'amount_currency': -4950.0, 'currency_id': other_currency.id, 'balance': -495.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': 10.0, 'currency_id': self.company_data['currency'].id, 'balance': 10.0, 'reconciled': False},
+        ])
+        self.assertEqual(inv1.amount_residual, 0)

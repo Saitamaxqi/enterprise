@@ -112,7 +112,7 @@ class AccountReconcileModel(models.Model):
         if not self:
             return
         self.env['account.reconcile.model'].flush_model()
-        statement_lines.flush_recordset(['journal_id', 'amount', 'transaction_details', 'payment_ref', 'partner_id', 'company_id'])
+        statement_lines.flush_recordset(['journal_id', 'amount', 'amount_residual', 'transaction_details', 'payment_ref', 'partner_id', 'company_id'])
         self._cr.execute(SQL("""
             WITH matching_journal_ids AS (
                     SELECT account_reconcile_model_id,
@@ -125,11 +125,24 @@ class AccountReconcileModel(models.Model):
                            ARRAY_AGG(res_partner_id) AS ids
                       FROM account_reconcile_model_res_partner_rel
                   GROUP BY account_reconcile_model_id
+                 ),
+                 model_fees AS (
+                    SELECT model_fees.id,
+                           model_fees.trigger,
+                           matching_journal_ids.ids AS journal_ids
+                      FROM account_reconcile_model model_fees
+                      JOIN ir_model_data imd ON model_fees.id = imd.res_id
+                      JOIN account_reconcile_model_line model_lines ON model_lines.model_id = model_fees.id
+                 LEFT JOIN matching_journal_ids ON model_fees.id = matching_journal_ids.account_reconcile_model_id
+                     WHERE imd.module = 'account'
+                       AND imd.name LIKE 'account_reco_model_fee_%%'
+                       AND model_fees.active IS TRUE
+                       AND model_lines.account_id IS NOT NULL
                  )
 
           SELECT st_line.id AS st_line_id,
-                 reco_model.id AS reco_model_id,
-                 reco_model.trigger
+                 COALESCE(reco_model.id, model_fees.id) AS reco_model_id,
+                 COALESCE(reco_model.trigger, model_fees.trigger) AS trigger
             FROM account_bank_statement_line st_line
             JOIN account_move move ON st_line.move_id = move.id
        LEFT JOIN LATERAL (
@@ -173,6 +186,16 @@ class AccountReconcileModel(models.Model):
                  ORDER BY reco_model.sequence ASC, reco_model.id ASC
                     LIMIT 1
                  ) AS reco_model ON TRUE
+       LEFT JOIN LATERAL (
+                   SELECT model_fees.id,
+                          model_fees.trigger
+                     FROM model_fees
+                    WHERE st_line.journal_id = ANY(model_fees.journal_ids)
+                   -- Show model fees if matched amount was 3 %% higher than incoming statement line amount
+                      AND SIGN(st_line.amount) > 0
+                      AND SIGN(st_line.amount_residual) > 0
+                      AND ABS(st_line.amount_residual) < 0.03 * st_line.amount / 1.03
+                 ) AS model_fees ON TRUE
            WHERE st_line.id IN %s
         """, tuple(self.ids), tuple(statement_lines.ids)))
 

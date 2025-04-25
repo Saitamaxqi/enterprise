@@ -287,7 +287,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'date': '2020-01-01',
                 'payment_ref': 'yyyyy 12345.67 EUR fdfkmlk',
                 'partner_id': self.partner_2.id,
-                'amount': 12344.78,
+                'amount': 5000,
                 'sequence': 6,
             },
         ])
@@ -328,8 +328,8 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
         # invoice amount found in the payment ref and partner identified
         self._check_st_line_matching(bank_line_6, [
-            {'account_id': self.bank_journal.default_account_id.id, 'balance': 12344.78, 'partner_id': self.partner_2.id},
-            {'account_id': self.account_rec.id, 'balance': -12344.78, 'partner_id': self.partner_2.id},
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 5000, 'partner_id': self.partner_2.id},
+            {'account_id': self.account_rec.id, 'balance': -5000, 'partner_id': self.partner_2.id},
         ], reconciled_amls=[invoice_line_11])
 
     def test_auto_rule_creation_and_matching(self):

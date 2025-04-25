@@ -361,7 +361,7 @@ class AccountBankStatementLine(models.Model):
                 AND (st_line.payment_ref = aml.move_name OR st_line.payment_ref = aml.ref OR st_line.payment_ref = move.payment_reference)
                 -- we have only one invoice matching the reference and amount, or the amount found in the statement line label
                 AND (
-                     aml.amount_residual = st_line.amount
+                     (aml.amount_residual BETWEEN st_line.amount AND st_line.amount * 103/100)
                      OR (
                          REPLACE(st_line.payment_ref, ',', '.') ILIKE '%%' || TRIM(trailing '0' FROM move.amount_total::TEXT) || '%%'
                      )
@@ -769,24 +769,26 @@ class AccountBankStatementLine(models.Model):
         self._add_move_line_to_statement_line_move(new_lines)
 
     def _get_partial_amounts(self, current_balance, move_line, open_amount_currency, open_balance):
+        def has_enough(currency, open_amount, current_amount):
+            return (
+                currency.compare_amounts(open_amount, 0) > 0
+                and currency.compare_amounts(current_amount, 0) > 0
+                and currency.compare_amounts(current_amount, open_amount) > 0
+            )
         transaction_amount, transaction_currency, _journal_amount, _journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
-        has_enough_comp_debit = company_currency.compare_amounts(-open_balance, 0) < 0 \
-                                and company_currency.compare_amounts(current_balance, 0) > 0 \
-                                and company_currency.compare_amounts(current_balance, open_balance) > 0
-        has_enough_comp_credit = company_currency.compare_amounts(-open_balance, 0) > 0 \
-                                 and company_currency.compare_amounts(current_balance, 0) < 0 \
-                                 and company_currency.compare_amounts(-current_balance, -open_balance) > 0
-
+        has_enough_comp_debit = has_enough(company_currency, open_balance, current_balance)
+        has_enough_comp_credit = has_enough(company_currency, -open_balance, -current_balance)
         current_amount_currency = -move_line.amount_residual_currency
-        has_enough_curr_debit = move_line.currency_id.compare_amounts(-open_amount_currency, 0) < 0 \
-                                and move_line.currency_id.compare_amounts(current_amount_currency, 0) > 0 \
-                                and move_line.currency_id.compare_amounts(current_amount_currency, open_amount_currency) > 0
-        has_enough_curr_credit = move_line.currency_id.compare_amounts(-open_amount_currency, 0) > 0 \
-                                 and move_line.currency_id.compare_amounts(current_amount_currency, 0) < 0 \
-                                 and move_line.currency_id.compare_amounts(-current_amount_currency, -open_amount_currency) > 0
+        has_enough_curr_debit = has_enough(move_line.currency_id, open_amount_currency, current_amount_currency)
+        has_enough_curr_credit = has_enough(move_line.currency_id, -open_amount_currency, -current_amount_currency)
 
         if move_line.currency_id == transaction_currency and (has_enough_curr_debit or has_enough_curr_credit):
-            new_amount_currency = current_amount_currency - open_amount_currency
+            new_amount_currency = (
+                current_amount_currency
+                # If the open amount is small, fully reconcile the move_line and not the transaction
+                if move_line.currency_id.compare_amounts(abs(open_amount_currency), 0.03 * abs(current_amount_currency)) < 0
+                else current_amount_currency - open_amount_currency
+            )
             rate = abs(company_amount / transaction_amount) if transaction_amount else 0.0
 
             # Compute the amounts to make a partial.
@@ -797,7 +799,12 @@ class AccountBankStatementLine(models.Model):
             }
         elif has_enough_comp_debit or has_enough_comp_credit:
             # Compute the new value for balance.
-            balance_after_partial = current_balance - open_balance
+            balance_after_partial = (
+                current_balance
+                # If the open amount is small, fully reconcile the move_line and not the transaction
+                if move_line.currency_id.compare_amounts(abs(open_balance), 0.03 * abs(current_balance)) < 0
+                else current_balance - open_balance
+            )
             # Get the rate of the original journal item.
             rate = move_line.currency_rate
 
