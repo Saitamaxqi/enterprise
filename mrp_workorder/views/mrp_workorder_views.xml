@@ -60,9 +60,6 @@
             <xpath expr="//field[@name='state']" position="after">
                 <field name="production_state" column_invisible="True"/>
             </xpath>
-            <xpath expr="//button[@name='button_start']" position="before">
-                <field name="employee_ids" widget="many2many_avatar_employee" readonly="1" nolabel="1"/>
-            </xpath>
             <xpath expr="//field[@name='name']" position="after">
                     <field name="allowed_employees" column_invisible="True"/>
                     <field name="all_employees_allowed" column_invisible="True"/>
