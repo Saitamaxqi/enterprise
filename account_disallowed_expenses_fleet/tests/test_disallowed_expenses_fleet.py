@@ -14,6 +14,7 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref("fleet.fleet_group_manager")
         cls.dna_category = cls.env['account.disallowed.expenses.category'].create({
             'code': '2345',
             'name': 'DNA category',

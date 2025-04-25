@@ -11,6 +11,7 @@ class TestDeferredFleet(TestAccountReportsCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("fleet.fleet_group_manager")
         cls.expense_accounts = [cls.env['account.account'].create({
             'name': f'Expense {i}',
             'code': f'EXP{i}',

@@ -9,10 +9,11 @@ class TestAccountMoveFleet(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("fleet.fleet_group_manager")
         cls.batmobile = cls.env['fleet.vehicle'].create({
             'model_id': cls.env['fleet.vehicle.model'].create({
                 'name': 'Batmobile',
-                'brand_id': cls.env['fleet.vehicle.model.brand'].sudo().create({
+                'brand_id': cls.env['fleet.vehicle.model.brand'].create({
                     'name': 'Wayne Enterprises',
                 }).id,
                 'vehicle_type': 'car',
