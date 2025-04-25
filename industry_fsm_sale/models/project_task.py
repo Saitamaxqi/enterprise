@@ -103,8 +103,8 @@ class ProjectTask(models.Model):
         return super()._is_fsm_report_available() or self.material_line_product_count
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | {'allow_material',
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | {'allow_material',
                                               'allow_quotations',
                                               'portal_quotation_count',
                                               'material_line_product_count',

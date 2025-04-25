@@ -102,8 +102,8 @@ class ProjectTask(models.Model):
             task.planning_overlap = ' '.join(overlap_messages) or False
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | {'is_fsm',
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | {'is_fsm',
                                               'planned_date_begin',
                                               'fsm_done',
                                               'partner_phone',

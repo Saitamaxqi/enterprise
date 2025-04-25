@@ -24,8 +24,8 @@ class ProjectTask(models.Model):
     portal_progress = fields.Float(compute='_compute_project_sharing_timesheets', aggregator="avg", help="Display progress of current task.", export_string_translation=False)
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | set(PROJECT_TASK_READABLE_FIELDS_TO_MAP.values()) - set(PROJECT_TASK_READABLE_FIELDS_TO_MAP.keys())
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | set(PROJECT_TASK_READABLE_FIELDS_TO_MAP.values()) - set(PROJECT_TASK_READABLE_FIELDS_TO_MAP.keys())
 
     @api.depends('allocated_hours')
     def _compute_project_sharing_timesheets(self):

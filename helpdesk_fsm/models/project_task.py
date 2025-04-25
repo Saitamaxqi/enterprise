@@ -13,8 +13,8 @@ class ProjectTask(models.Model):
     display_helpdesk_ticket_button = fields.Boolean(compute='_compute_display_helpdesk_ticket_button', export_string_translation=False)
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | {'helpdesk_ticket_id', 'display_helpdesk_ticket_button'}
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | {'helpdesk_ticket_id', 'display_helpdesk_ticket_button'}
 
     @api.depends_context('uid')
     @api.depends('helpdesk_ticket_id')

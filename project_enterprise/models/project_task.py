@@ -49,8 +49,8 @@ class ProjectTask(models.Model):
     _WEB_GANTT_RESCHEDULE_RESOURCE_VALIDITY_CACHE_KEY = 'resource_validity'
 
     @property
-    def SELF_WRITABLE_FIELDS(self):
-        return super().SELF_WRITABLE_FIELDS | PROJECT_TASK_WRITABLE_FIELDS
+    def TASK_PORTAL_WRITABLE_FIELDS(self):
+        return super().TASK_PORTAL_WRITABLE_FIELDS | PROJECT_TASK_WRITABLE_FIELDS
 
     def default_get(self, fields_list):
         result = super().default_get(fields_list)

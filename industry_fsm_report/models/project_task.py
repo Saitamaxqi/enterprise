@@ -18,8 +18,8 @@ class ProjectTask(models.Model):
     worksheet_count = fields.Integer(compute='_compute_worksheet_count', compute_sudo=True, export_string_translation=False)
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | {
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | {
             'allow_worksheets',
             'worksheet_count',
             'worksheet_template_id',
