@@ -2,6 +2,7 @@ import logging
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -45,9 +46,7 @@ class VoipQueueMixin(models.AbstractModel):
                 self.env["mail.activity.type"]
                 .search(
                     [
-                        "|",
-                        ("res_model", "=", False),
-                        ("res_model", "=", self._name),
+                        Domain.OR([[("res_model", "=", False)], [("res_model", "=", self._name)]]),
                         ("category", "=", "phonecall"),
                     ],
                     limit=1,

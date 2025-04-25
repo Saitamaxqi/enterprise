@@ -1,7 +1,7 @@
 from typing import Optional
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 from odoo.addons.mail.tools.discuss import Store
 
@@ -83,11 +83,10 @@ class VoipCall(models.Model):
     def get_recent_phone_calls(
         self, search_terms: Optional[str] = None, offset: int = 0, limit: Optional[int] = None
     ):
-        domain = [("user_id", "=", self.env.uid)]
+        domain = Domain("user_id", "=", self.env.uid)
         if search_terms:
             search_fields = ["phone_number", "partner_id.name", "activity_name"]
-            search_domain = expression.OR([[(field, "ilike", search_terms)] for field in search_fields])
-            domain += search_domain
+            domain &= Domain.OR([Domain(field, "ilike", search_terms) for field in search_fields])
         calls = self.search(domain, offset=offset, limit=limit, order="create_date DESC")
         return Store(calls, calls._get_voip_store_fields()).get_result()
 

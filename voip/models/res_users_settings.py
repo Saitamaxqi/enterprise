@@ -5,9 +5,7 @@ class ResUsersSettings(models.Model):
     _inherit = "res.users.settings"
 
     def _get_default_voip_provider(self):
-        return self.env['voip.provider'].search([
-            ('company_id', 'in', [self.env.company.id, False])
-        ], limit=1)
+        return self.env["voip.provider"].search([("company_id", "in", [self.env.company.id, False])], limit=1)
 
     voip_provider_id = fields.Many2one(
         "voip.provider", string="VoIP Provider",

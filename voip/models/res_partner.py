@@ -1,7 +1,7 @@
 import unicodedata
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 from odoo.addons.mail.tools.discuss import Store
 
@@ -90,17 +90,15 @@ class ResPartner(models.Model):
 
     @api.model
     def get_contacts(self, offset, limit, search_terms, t9_search=False):
-        # Fast path, keep first. Filters out all partners without a phone number.
-        domain = [("phone", "!=", False)]
+        domain = Domain("phone", "!=", False)
         if t9_search:
-            domain = expression.AND([domain, [("t9_name", "ilike", f"% {search_terms}%")]])
+            domain &= Domain("t9_name", "ilike", f"% {search_terms}%")
         if search_terms:
-            subdomain = expression.OR([
+            domain &= Domain.OR([
                 [("phone", "like", search_terms)],
                 [("complete_name", "ilike", search_terms)],
                 [("email", "ilike", search_terms)],
             ])
-            domain = expression.AND([domain, subdomain])
         contacts = self.search(domain, offset=offset, limit=limit)
         return Store(contacts, self._voip_get_store_fields()).get_result()
 
