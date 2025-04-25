@@ -244,6 +244,7 @@ class HrPayslip(models.Model):
                     lambda a: a.state == 'open'
                         and a.date_start <= slip.date_to
                         and (not a.date_end or a.date_end >= slip.date_from)
+                        and (not a.other_input_type_id.struct_ids or slip.struct_id in a.other_input_type_id.struct_ids)
                 )
                 # Only take deduction types present in structure
                 for input_type_id, attachments in valid_attachments.grouped("other_input_type_id").items():
