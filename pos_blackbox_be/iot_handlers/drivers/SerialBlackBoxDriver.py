@@ -58,6 +58,7 @@ class BlackBoxDriver(SerialDriver):
     """Driver for the blackbox fiscal data module."""
 
     _protocol = BlackboxProtocol
+    priority = 1
 
     def __init__(self, identifier, device):
         super().__init__(identifier, device)
