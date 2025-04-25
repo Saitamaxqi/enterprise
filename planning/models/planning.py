@@ -838,8 +838,8 @@ class PlanningSlot(models.Model):
         for slot in self:
             if slot.request_to_switch and (
                 (new_resource and slot.resource_id != new_resource)
-                or ('start_datetime' in values and slot.start_datetime != datetime.strptime(values['start_datetime'], '%Y-%m-%d %H:%M:%S'))
-                or ('end_datetime' in values and slot.end_datetime != datetime.strptime(values['end_datetime'], '%Y-%m-%d %H:%M:%S'))
+                or ('start_datetime' in values and slot.start_datetime != values['start_datetime'])
+                or ('end_datetime' in values and slot.end_datetime != values['end_datetime'])
             ):
                 values['request_to_switch'] = False
 
