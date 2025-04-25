@@ -1355,7 +1355,7 @@ class AccountReturn(models.Model):
             partner_results = custom_handler._query_partners(self.type_id.report_id, options, warnings)
 
             if 'eu_cross_border' not in check_codes_to_ignore:
-                cross_border_failure = 'sales_report_warning_non_ec_country' in warnings or 'sales_report_warning_same_country' in warnings
+                cross_border_failure = 'account_reports.sales_report_warning_non_ec_country' in warnings or 'account_report.sales_report_warning_same_country' in warnings
 
                 cross_border_action = False
                 if cross_border_failure:
