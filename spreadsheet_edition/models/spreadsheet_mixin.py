@@ -11,7 +11,8 @@ from typing import Dict, Any, List, Optional
 
 from odoo import _, fields, models, api
 from odoo.exceptions import AccessError, UserError
-from odoo.tools import mute_logger, OrderedSet, image_process
+from odoo.tools import mute_logger, OrderedSet
+from odoo.tools.image import image_process
 
 from odoo.addons.spreadsheet.utils.json import extend_serialized_json
 

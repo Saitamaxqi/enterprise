@@ -11,7 +11,8 @@ from lxml import etree
 from odoo import _, Command, fields, models, api
 from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.osv import expression
-from odoo.tools import image_process, consteq
+from odoo.tools import consteq
+from odoo.tools.image import image_process
 from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 
 

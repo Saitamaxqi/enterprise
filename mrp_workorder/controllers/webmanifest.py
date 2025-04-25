@@ -2,7 +2,8 @@
 
 from odoo import http
 from odoo.http import request
-from odoo.tools import file_open, image_process
+from odoo.tools import file_open
+from odoo.tools.image import image_process
 from odoo.addons.web.controllers import webmanifest
 
 
