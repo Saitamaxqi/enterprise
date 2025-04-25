@@ -172,8 +172,8 @@ class ProjectProject(models.Model):
             [('order_id.is_subscription', '=', False)],
         ])
 
-    def _get_revenues_items_from_invoices_domain(self, domain=None):
+    def _get_items_from_invoices_domain(self, domain=None):
         return expression.AND([
-            super()._get_revenues_items_from_invoices_domain(domain),
+            super()._get_items_from_invoices_domain(domain),
             [('subscription_id', '=', False)],
         ])
