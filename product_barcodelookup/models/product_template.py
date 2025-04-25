@@ -5,7 +5,7 @@ from collections import OrderedDict
 from odoo import api, models, Command
 from markupsafe import Markup
 from odoo.addons.product_barcodelookup.tools import barcode_lookup_service
-from odoo.tools import check_barcode_encoding
+from odoo.tools.barcode import check_barcode_encoding
 
 BARCODE_UOM_REGEX = r'^((?P<uom_val>(\d*\.?\d+))([\s?]*)(?P<unit>(([a-zA-Z]*))))$'
 
