@@ -26,7 +26,7 @@
                         </div>
                         <field name="instructions" placeholder="Explain to the Agent what they need to do..."/>
                         <field name="description" placeholder="Summarize what this topic does"/>
-                        <field name="tool_ids" widget="many2many_tags" placeholder="Select the tools linked to this topic"/>
+                        <field name="tool_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}" placeholder="Select the tools linked to this topic"/>
                     </group>
                 </sheet>
             </form>
