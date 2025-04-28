@@ -16,7 +16,9 @@
                     <noPurchases t-else="" t-out="'true'"/>
                     <sumPerPartnerSales t-out="'false'"/>
                     <sumPerPartnerPurchases t-out="'false'"/>
+                    <transactions24 t-if="line_1_24" t-out="line_1_24"/>
                     <transactions22 t-if="line_1" t-out="line_1"/>
+                    <transactions22 t-if="line_1_2" t-out="line_1_2"/>
                     <transactions20 t-if="line_1_1" t-out="line_1_1"/>
                     <transactions9 t-if="line_2" t-out="line_2"/>
                     <transactions5 t-if="line_2_1" t-out="line_2_1"/>

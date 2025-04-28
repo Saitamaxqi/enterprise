@@ -48,8 +48,10 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
         """ Compute the version of the XML file to export.
         """
         date_to = fields.Date.from_string(options['date'].get('date_to'))
-        if date_to >= fields.Date.from_string("2025-01-01"):
+        if date_to >= fields.Date.from_string("2025-01-01") and date_to < fields.Date.from_string("2025-07-01"):
             return "KMD5"
+        elif date_to >= fields.Date.from_string("2025-07-01"):
+            return "KMD6"
         return "KMD4"
     
     def export_to_xml(self, options):
@@ -94,7 +96,7 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
         # Tax report (KMD report)
         kmd_lines = report._get_lines(options)
         tax_line_prefix = 'l10n_ee.tax_report_line_'
-        tax_line_numbers = ('1', '1_1', '2', '2_1', '2_2', '3', '3_1', '3_1_1', '3_2', '3_2_1',
+        tax_line_numbers = ('1', '1_24', '1_1', '1_2', '2', '2_1', '2_2', '3', '3_1', '3_1_1', '3_2', '3_2_1',
                             '5', '5_1', '5_2', '5_3', '5_3_cars', '5_4', '5_4_cars',
                             '6', '6_1', '7', '7_1', '8', '9', '10', '11')
         tax_line_mapping = {
@@ -184,7 +186,9 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
                         '20': 'VAT 20%',
                         '20erikord': 'VAT 20% special procedure §41/42',
                         '22': 'VAT 22%',
-                        '22erikord': 'VAT 22% special procedure §41/42'
+                        '22erikord': 'VAT 22% special procedure §41/42',
+                        '24': 'VAT 24%',
+                        '24erikord': 'VAT 24% special procedure §41/42'
                     }
                     line['name'] = row_names[line['columns'][5]['no_format']]  # column 'tax_rate'
                     comments = line['columns'][7]['no_format']  # column 'comments'
@@ -217,7 +221,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
     def _get_warning_partners(self, report, options):
         """
         Returns a list of partner IDs that should potentially have been included in the report. Those are partners
-        with a move with taxable supply at 22%, 20%, 9% or 5% in the selected period and no VAT, if:
+        with a move with taxable supply at 24%, 22%, 20%, 13%, 9% or 5% in the selected period and no VAT, if:
         - For part A, if there is no country_id or if country_id is EE
         - For part B, if there is no country_id
         """
@@ -230,7 +234,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
             move_type = "('in_invoice', 'in_refund')"
             add_where_clause = "AND res_partner.country_id IS NULL"
 
-        tax_group_xmlids = ['tax_group_vat_22', 'tax_group_vat_20', 'tax_group_vat_13', 'tax_group_vat_9', 'tax_group_vat_5']
+        tax_group_xmlids = ['tax_group_vat_24', 'tax_group_vat_22', 'tax_group_vat_20', 'tax_group_vat_13', 'tax_group_vat_9', 'tax_group_vat_5']
         tax_group_ids = [tax_group.id for xmlid in tax_group_xmlids
                          if (tax_group := self.env.ref(f"account.{self.env.company.id}_{xmlid}", raise_if_not_found=False))]
 
@@ -317,7 +321,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
     def _report_custom_engine_kmd_inf_a(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         """ Part A contains information about invoices issued.
 
-            Only invoices containing supply taxable at the rate of 22%, 20%, 13%, 9% or 5% are included. Different lines are
+            Only invoices containing supply taxable at the rate of 24%, 22%, 20%, 13%, 9% or 5% are included. Different lines are
             used for supply taxable under the general procedure, the special procedure provided for in § 41 and § 42 of
             the Value-Added Tax Act (special code 1) and the special procedure provided for in § 41^1 (special code 2).
             Furthermore, if the invoice contains the supply taxable at the rate of 0% or tax-exempt supply or if the
@@ -339,7 +343,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
         """ Builds the query and dictionary necessary to display the report lines for the KMD INF.
 
         The query for part A and part B are built separately, as they have different columns and group by.
-        In both cases, only invoices containing a 22%, 13%, 9% or 5% tax (and 20% until end of 2025) are displayed.
+        In both cases, only invoices containing a 24%, 22%, 13%, 9% or 5% tax (and 20% until end of 2025) are displayed.
         Invoices from/to foreign companies not having a register code in Estonia are excluded. Both parts also
         include a column displaying the company registry number of the partner as well as their name, number of
         invoice, date of invoice, and the special code providing comments in the form of one or more code.
@@ -368,7 +372,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
             # In part A, the invoice total without VAT and the taxable supply presented in the fields 1, 1^1,
             # 2 and 2^1 of Form KMD (VAT report) are displayed. We exclude partners whose Tax ID is / and exclude
             # foreigners who have a Tax ID not starting by EE.
-            xmlids = ['tax_report_line_1_tag', 'tax_report_line_1_1_tag', 'tax_report_line_2_tag', 'tax_report_line_2_1_tag', 'tax_report_line_2_2_tag']
+            xmlids = ['tax_report_line_1_tag', 'tax_report_line_1_24_tag', 'tax_report_line_1_1_tag', 'tax_report_line_1_2_tag', 'tax_report_line_2_tag', 'tax_report_line_2_1_tag', 'tax_report_line_2_2_tag']
 
             sql_query = SQL("""
                 WITH multiple_tax_moves AS (
