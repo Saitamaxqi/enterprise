@@ -31,7 +31,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='holiday_status_id']" position="after">
                 <field name="payslip_state" widget="state_selection"
-                    options="{'hide_label': False}" class="ms-auto mb-2" invisible="state == 'cancel'"/>
+                    options="{'hide_label': False}" class="ms-auto mb-2" invisible="state == 'cancel' or not id"/>
             </xpath>
             <button name="action_refuse" position="before">
                 <button
