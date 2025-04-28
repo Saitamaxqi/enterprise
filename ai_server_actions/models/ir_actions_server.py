@@ -22,15 +22,6 @@ class IrActionsServer(models.Model):
             if action.evaluation_type == 'ai_computed' and not action.update_field_id.store:
                 raise ValidationError(_("This field can not be computed with AI (not stored)."))
 
-    def _generate_action_name(self):
-        self.ensure_one()
-        if self.state == 'object_write' and self.evaluation_type == 'ai_computed':
-            _field_chain, field_chain_str = self._get_relation_chain("update_path")
-            if field_chain_str:
-                return _("Update %(field_chain_str)s with AI", field_chain_str=field_chain_str)
-            return _("Update with AI")
-        return super()._generate_action_name()
-
     def _run_action_object_write(self, eval_context=None):
         ai_actions = self.filtered(lambda a: a.evaluation_type == "ai_computed")
         if self - ai_actions:

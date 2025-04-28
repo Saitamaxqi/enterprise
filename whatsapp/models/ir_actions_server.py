@@ -20,18 +20,13 @@ class IrActionsServer(models.Model):
     )
 
     def _name_depends(self):
-        return super()._name_depends() + ["wa_template_id"]
+        return [*super()._name_depends(), "wa_template_id"]
 
     def _generate_action_name(self):
         self.ensure_one()
-        match self.state:
-            case 'whatsapp':
-                return _(
-                    'Send WhatsApp: %(template_name)s',
-                    template_name=self.wa_template_id.name
-                )
-            case _:
-                return super()._generate_action_name()
+        if self.state == 'whatsapp' and self.wa_template_id:
+            return _('Send %(template_name)s', template_name=self.wa_template_id.name)
+        return super()._generate_action_name()
 
     @api.depends('model_id', 'state')
     def _compute_wa_template_id(self):
