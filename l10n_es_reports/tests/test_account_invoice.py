@@ -29,7 +29,7 @@ class TestAccountInvoice(TestAccountReportsCommon):
         f = Form(self.env['account.move'].with_context(default_move_type="out_invoice"))
         f.partner_id = partner_id
         with f.invoice_line_ids.new() as line:
-            line.product_id = self.env.ref("product.product_product_4")
+            line.product_id = self.env['product.product'].create({"name": "thing"})
             line.quantity = 1
             line.price_unit = 100
             line.name = 'something'
