@@ -11,7 +11,10 @@ patch(PosStore.prototype, {
             const currentOrder = this.getOrder();
             const isRefund = currentOrder.lines.some((x) => x.refunded_orderline_id);
             if (
-                (isRefund && currentOrder.lines.some((x) => x.price_subtotal > 0.0)) ||
+                (isRefund &&
+                    currentOrder.lines.some(
+                        (x) => x.price_subtotal > 0.0 && !x[2].refunded_orderline_id
+                    )) ||
                 (!isRefund && currentOrder.amount_total < 0.0)
             ) {
                 this.dialog.add(AlertDialog, {

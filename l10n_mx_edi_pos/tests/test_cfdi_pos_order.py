@@ -3,7 +3,7 @@ from .common import TestMxEdiPosCommon
 from odoo import Command, http
 from odoo.addons.l10n_mx_edi.tests.common import EXTERNAL_MODE
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 
 
@@ -581,6 +581,70 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
             })
             refund = self.env['pos.order'].browse(order.refund()['res_id'])
             self.assertEqual(refund.refunded_order_id, order)
+
+    def test_refund_order_with_negative_line(self):
+        with self.mx_external_setup(self.frozen_today):
+            with self.with_pos_session():
+                order = self._create_order({
+                    'pos_order_lines_ui_args': [
+                        (self.product, 10.0),
+                        (self.product, -1.0),
+                    ],
+                    'payments': [(self.bank_pm1, 10440.0)],
+                })
+                order.partner_id = self.customer
+                with self.with_mocked_pac_sign_success():
+                    invoice = order._generate_pos_order_invoice()
+                    self.assertRecordValues(invoice, [{'l10n_mx_edi_cfdi_state': 'sent'}])
+
+                refund = self._create_order({
+                    'pos_order_lines_ui_args': [
+                        {
+                            'product': self.product,
+                            'quantity': -10.0,
+                            'refunded_orderline_id': order.lines[0].id,
+                        },
+                        {
+                            'product': self.product,
+                            'quantity': 1.0,
+                            'refunded_orderline_id': order.lines[1].id,
+                        },
+                    ],
+                    'payments': [(self.bank_pm1, -10440.0)],
+                })
+                refund.partner_id = self.customer
+                with self.with_mocked_pac_sign_success():
+                    invoice = refund[0]._generate_pos_order_invoice()
+                    self.assertRecordValues(invoice, [{'l10n_mx_edi_cfdi_state': 'sent'}])
+
+    def test_refund_order_with_manual_positive_line(self):
+        with self.mx_external_setup(self.frozen_today):
+            with self.with_pos_session():
+                order = self._create_order({
+                    'pos_order_lines_ui_args': [
+                        (self.product, 10.0),
+                    ],
+                    'payments': [(self.bank_pm1, 11600.0)],
+                })
+                order.partner_id = self.customer
+                with self.with_mocked_pac_sign_success():
+                    invoice = order._generate_pos_order_invoice()
+                    self.assertRecordValues(invoice, [{'l10n_mx_edi_cfdi_state': 'sent'}])
+
+                with self.assertLogs('odoo.addons.point_of_sale.models.pos_order'), self.assertRaises(ValidationError):
+                    self._create_order({
+                        'pos_order_lines_ui_args': [
+                            {
+                                'product': self.product,
+                                'quantity': -10.0,
+                                'refunded_orderline_id': order.lines[0].id,
+                            },
+                            {
+                                'product': self.product,
+                                'quantity': 1.0,
+                            },
+                        ],
+                    })
 
     def test_pos_order_then_invoice_request(self):
         """
