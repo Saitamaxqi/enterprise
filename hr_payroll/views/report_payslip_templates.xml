@@ -94,7 +94,7 @@
                     </tbody>
                 </table>
             </div>
-            <div id="worked_days_table">
+            <div id="worked_days_table" t-if="o.use_worked_day_lines">
                 <table class="table table-sm table-borderless">
                     <thead class="o_black_border">
                         <tr>
