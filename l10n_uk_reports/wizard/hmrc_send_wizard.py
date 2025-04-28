@@ -14,6 +14,8 @@ class L10n_UkHmrcSendWizard(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
+        if 'client_data' not in self.env.context:
+            return res
 
         # Check obligations: should be logged in by now
         self.env['l10n_uk.vat.obligation'].import_vat_obligations(self.env.context['client_data'])
