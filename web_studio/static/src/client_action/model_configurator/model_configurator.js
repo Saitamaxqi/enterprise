@@ -80,7 +80,7 @@ function getModelOptions(isMultiCompany) {
             value: true,
         },
     };
-    if (isMultiCompany) {
+    if (!isMultiCompany) {
         delete modelOptions.use_company;
     }
     return modelOptions;
