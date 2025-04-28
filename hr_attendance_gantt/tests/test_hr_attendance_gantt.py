@@ -136,7 +136,7 @@ class TestHrAttendanceGantt(TransactionCase):
             'employee_id',
             [emp1.id, emp2.id],
             datetime(2024, 1, 8),
-            datetime(2024, 1, 14),
+            datetime(2024, 1, 15),
         )
 
         self.assertEqual(interval[emp1.id]['max_value'], 8)

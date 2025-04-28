@@ -43,7 +43,7 @@ class HrAttendance(models.Model):
         3) if fixed working hours, we compute the work hours based on their expected attendances.
         """
         # number of days between the start and stop and take the stop into account.
-        num_days = (stop.date() - start.date()).days + 1
+        num_days = (stop.date() - start.date()).days
         if employee.is_fully_flexible:
             return num_days * 24
         if not employee.is_flexible:
