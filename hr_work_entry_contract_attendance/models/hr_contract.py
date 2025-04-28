@@ -1,14 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
-import pytz
 
 from pytz import timezone
 from datetime import timedelta
 
 from odoo import fields, models
-from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkIntervals
 from odoo.tools.date_intervals import Intervals
 
 
@@ -53,7 +50,7 @@ class HrContract(models.Model):
                 check_out_tz -= timedelta(hours=attendance.validated_overtime_hours)
             if attendance.employee_id.resource_calendar_id and not attendance.employee_id.resource_calendar_id.flexible_hours:
                 lunch_intervals = attendance.employee_id._employee_attendance_intervals(check_in_tz, check_out_tz, lunch=True)
-                leaves = emp_cal._leave_intervals_batch(check_in_tz, check_out_tz, None)[False] if emp_cal else WorkIntervals([])
+                leaves = emp_cal._leave_intervals_batch(check_in_tz, check_out_tz, None)[False] if emp_cal else Intervals([], keep_distinct=True)
                 real_lunch_intervals = lunch_intervals - leaves
                 attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)]) - real_lunch_intervals
             else:
@@ -63,7 +60,7 @@ class HrContract(models.Model):
                     max(start_dt, interval[0]),
                     min(end_dt, interval[1]),
                     attendance))
-        mapped_intervals = {r: WorkIntervals(intervals[r]) for r in resource_ids}
+        mapped_intervals = {r: Intervals(intervals[r], keep_distinct=True) for r in resource_ids}
         mapped_intervals.update(super()._get_attendance_intervals(
             start_dt, end_dt))
 
@@ -90,7 +87,7 @@ class HrContract(models.Model):
 
         resource_ids = attendances.employee_id.resource_id.ids
         work_intervals_by_resources = {
-            resource_id: WorkIntervals(list(intervals)) for resource_id, intervals in mapped_intervals.items()
+            resource_id: Intervals(list(intervals), keep_distinct=True) for resource_id, intervals in mapped_intervals.items()
         }
 
         lunch_intervals_by_resource = self._get_lunch_intervals(start_dt, end_dt)
@@ -101,7 +98,7 @@ class HrContract(models.Model):
             tz = timezone(resource.tz)
             check_in_tz = attendance.check_in.astimezone(tz)
             check_out_tz = attendance.check_out.astimezone(tz)
-            attendance_intervals = WorkIntervals([(check_in_tz, check_out_tz, attendance)])
+            attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)], keep_distinct=True)
 
             contract = attendance.employee_id._get_contracts(attendance.check_in, attendance.check_out, states=['open', 'close'])
             public_holiday = public_leaves.filtered(lambda pl:
@@ -125,14 +122,15 @@ class HrContract(models.Model):
                             new_work_intervals.append((start, check_in_tz, calendar_attendance))
                         if end > check_out_tz:
                             new_work_intervals.append((check_out_tz, end, calendar_attendance))
-                work_intervals = WorkIntervals(new_work_intervals)
-            lunch_intervals = lunch_intervals_by_resource.get(resource.id, WorkIntervals([]))
+                work_intervals = Intervals(new_work_intervals, keep_distinct=True)
+            lunch_intervals = lunch_intervals_by_resource.get(resource.id, Intervals([], keep_distinct=True))
             overtime_intervals = attendance_intervals - work_intervals - lunch_intervals  # [1]
             if self.company_id.overtime_company_threshold:
-                overtime_intervals = WorkIntervals([
-                    (start, end, calendar_attendance) \
-                    for (start, end, calendar_attendance) in overtime_intervals \
-                    if (end - start).seconds / 60 > self.company_id.overtime_company_threshold])
+                overtime_intervals = Intervals([
+                    (start, end, calendar_attendance)
+                    for (start, end, calendar_attendance) in overtime_intervals
+                    if (end - start).seconds / 60 > self.company_id.overtime_company_threshold
+                ], keep_distinct=True)
             work_intervals_by_resources[resource.id] = work_intervals | overtime_intervals
         return work_intervals_by_resources
 
@@ -148,10 +146,11 @@ class HrContract(models.Model):
 
     def _get_valid_leave_intervals(self, attendances, interval):
         self.ensure_one()
-        badge_attendances = WorkIntervals([
-            (start, end, record) for (start, end, record) in attendances \
-            if start <= interval[1] and end > interval[0] and isinstance(record, self.env['hr.attendance'].__class__)])
+        badge_attendances = Intervals([
+            (start, end, record) for (start, end, record) in attendances
+            if start <= interval[1] and end > interval[0] and isinstance(record, self.env['hr.attendance'].__class__)
+        ], keep_distinct=True)
         if badge_attendances:
-            leave_interval = WorkIntervals([interval])
+            leave_interval = Intervals([interval], keep_distinct=True)
             return list(leave_interval - badge_attendances)
         return super()._get_valid_leave_intervals(attendances, interval)

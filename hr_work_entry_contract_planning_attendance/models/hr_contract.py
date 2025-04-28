@@ -5,7 +5,7 @@ from collections import defaultdict
 from pytz import timezone
 
 from odoo import models
-from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkIntervals
+from odoo.tools.date_intervals import Intervals
 
 
 class HrContract(models.Model):
@@ -40,7 +40,7 @@ class HrContract(models.Model):
 
         resource_ids = attendances.employee_id.resource_id.ids
         work_intervals_by_resources = {
-            resource_id: WorkIntervals(list(intervals)) for resource_id, intervals in mapped_intervals.items()
+            resource_id: Intervals(list(intervals), keep_distinct=True) for resource_id, intervals in mapped_intervals.items()
         }
 
         work_intervals_by_resource_day = defaultdict(lambda: defaultdict(list))
@@ -58,7 +58,7 @@ class HrContract(models.Model):
             tz = timezone(resource.tz)
             check_in_tz = attendance.check_in.astimezone(tz)
             check_out_tz = attendance.check_out.astimezone(tz)
-            attendance_intervals = WorkIntervals([(check_in_tz, check_out_tz, attendance)])
+            attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)], keep_distinct=True)
 
             contract = attendance.employee_id._get_contracts(attendance.check_in, attendance.check_out, states=['open', 'close'])
             public_holiday = public_leaves.filtered(lambda pl:
@@ -79,12 +79,13 @@ class HrContract(models.Model):
                             new_work_intervals.append((start, check_in_tz, calendar_attendance))
                         if end > check_out_tz:
                             new_work_intervals.append((check_out_tz, end, calendar_attendance))
-                work_intervals = WorkIntervals(new_work_intervals)
+                work_intervals = Intervals(new_work_intervals, keep_distinct=True)
             overtime_intervals = attendance_intervals - work_intervals
             if self.company_id.overtime_company_threshold:
-                overtime_intervals = WorkIntervals([
-                    (start, end, calendar_attendance) \
-                    for (start, end, calendar_attendance) in overtime_intervals \
-                    if (end - start).seconds / 60 > self.company_id.overtime_company_threshold])
+                overtime_intervals = Intervals([
+                    (start, end, calendar_attendance)
+                    for (start, end, calendar_attendance) in overtime_intervals
+                    if (end - start).seconds / 60 > self.company_id.overtime_company_threshold
+                ], keep_distinct=True)
             work_intervals_by_resources[resource.id] = work_intervals | overtime_intervals
         return work_intervals_by_resources
