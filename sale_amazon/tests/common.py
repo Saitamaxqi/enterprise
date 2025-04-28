@@ -85,6 +85,8 @@ class TestAmazonCommon(TransactionCase):
 
     def setUp(self):
         super().setUp()
+
+        self.env.user.group_ids |= self.env.ref("sales_team.group_sale_manager")
         self.marketplace = self.env['amazon.marketplace'].search(
             [('api_ref', '=', ORDER_MOCK['MarketplaceId'])]
         )
