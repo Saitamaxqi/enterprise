@@ -1,6 +1,7 @@
-from odoo import models, Command, _
-from odoo.exceptions import UserError
+from odoo import Command, _, api, models
+from odoo.exceptions import RedirectWarning, UserError
 
+import json
 import re
 
 from math import copysign
@@ -80,10 +81,8 @@ class AccountReconcileModelLine(models.Model):
                 = st_line._get_accounting_amounts_and_currencies()
             aml_values['amount_currency'] = currency.round(-journal_amount * self.amount / 100.0)
             aml_values['currency_id'] = journal_currency.id
-        elif self.amount_type == 'regex':
-            aml_values['amount_currency'] = self._get_amount_currency_by_regex(residual_amount_currency, self.amount_string, st_line.payment_ref)
-        elif self.amount_type == 'from_transaction_details':
-            aml_values['amount_currency'] = self._get_amount_currency_by_regex(residual_amount_currency, self.amount_string, st_line.transaction_details)
+        elif self.amount_type in {'regex', 'from_transaction_details'}:
+            aml_values['amount_currency'] = self._get_amount_currency_by_regex(st_line, residual_amount_currency, self.amount_string)
 
         if 'amount_currency' not in aml_values:
             aml_values.update(self._apply_in_manual_widget(residual_amount_currency, partner, currency))
@@ -95,18 +94,30 @@ class AccountReconcileModelLine(models.Model):
 
         return aml_values
 
-    def _get_amount_currency_by_regex(self, residual_amount_currency, amount_string, target_field):
-        if not target_field:
-            return 0.0
-
-        match = re.search(amount_string, str(target_field))
-        if match:
-            sign = 1 if residual_amount_currency > 0.0 else -1
-            try:
-                extracted_match_group = re.sub(r'[^\d+[,\.]?\d*]', '', match.group(1))
-                extracted_balance = float(extracted_match_group.replace(',', '.'))
-                return copysign(extracted_balance * sign, residual_amount_currency)
-            except (ValueError, IndexError):
-                return 0.0
-        else:
-            return 0.0
+    @api.model
+    def _get_amount_currency_by_regex(self, st_line, residual_amount_currency, amount_string):
+        sign = 1 if residual_amount_currency > 0.0 else -1
+        transaction_details = json.dumps(st_line.transaction_details) if st_line.transaction_details else False
+        for target_field in (st_line.payment_ref, transaction_details, st_line.narration):
+            if not target_field:
+                continue
+            if match := re.search(amount_string, target_field):
+                if not match.groups():
+                    raise RedirectWarning(_("It seems that the regular expression for the counterpart amount is not in the correct format. "
+                        "Please make sure that the part of the regex capturing the amount is the first (or only) one in parentheses, for example: BRT: ([\\d,.]+)."),
+                        {
+                            'type': 'ir.actions.act_window',
+                            'view_mode': 'form',
+                            'res_model': 'account.reconcile.model',
+                            'res_id': self.model_id.id,
+                            'views': [[False, 'form']],
+                        },
+                        _("Open reconcile model")
+                    )
+                try:
+                    extracted_match_group = re.search(r'\d+[,.]?\d*', match.group(1))
+                    extracted_balance = float(extracted_match_group.group().replace(',', '.'))
+                    return copysign(extracted_balance * sign, residual_amount_currency)
+                except ValueError:
+                    continue
+        return 0.0

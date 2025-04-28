@@ -129,6 +129,7 @@ class AccountReconcileModel(models.Model):
                  reco_model.id AS reco_model_id,
                  reco_model.trigger
             FROM account_bank_statement_line st_line
+            JOIN account_move move ON st_line.move_id = move.id
        LEFT JOIN LATERAL (
                    SELECT reco_model.id,
                           reco_model.trigger
@@ -146,18 +147,21 @@ class AccountReconcileModel(models.Model):
                                    AND (
                                       st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
                                       OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR move.narration::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
                                    )
                               ) OR (
                                   reco_model.match_label = 'not_contains'
                                   AND NOT (
                                       st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
                                       OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR move.narration::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
                                   )
                               ) OR (
                                   reco_model.match_label = 'match_regex'
                                   AND (
                                       st_line.payment_ref ~ reco_model.match_label_param
                                       OR st_line.transaction_details::TEXT ~ reco_model.match_label_param
+                                      OR move.narration::TEXT ~ reco_model.match_label_param
                                   )
                               )
                           )
