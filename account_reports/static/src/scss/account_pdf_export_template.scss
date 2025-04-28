@@ -12,10 +12,7 @@
     *****************/
     header {
         padding: 10px;
-        background-color: #d8dce2;
         margin-bottom: 10px;
-
-        .o_header_font { font-size: 13px }
     }
     /*****************
         TABLE
@@ -30,7 +27,7 @@
         // Define direction attribute here so when rtlcss preprocessor run, it converts it to rtl
         direction: ltr;
 
-        > :not(caption) > * > * { padding: 0.25rem 0.75rem } //!\\ Override of bootstrap, keep selector
+        > :not(caption) > * > * { padding: 0.5rem 0.75rem } //!\\ Override of bootstrap, keep selector
 
         // Override bootstrap in the account reports
         thead, tbody, tfoot, tr, td, th { border-style: none }
@@ -49,7 +46,7 @@
             tr > th:first-child { width:100% }
 
             > tr:not(:last-child) th:not(:first-child) {
-                border: 1px solid $o-gray-300;
+                background-color: #e7e9ed;
                 text-align: center;
             }
         }
@@ -114,10 +111,14 @@
 .o_muted { color: $o-gray-300 }
 
 .o_title {
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.o_company_logo {
+    max-height: 4rem;
+    margin-bottom: 12px;
 }
 
 .o_overflow_value {

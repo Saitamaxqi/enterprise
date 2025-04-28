@@ -82,7 +82,7 @@
                             <div class="col-4 o_header_font">
                                  <t t-call="account_reports.company_information"/>
                             </div>
-                            <div class="col-4">
+                            <div class="col-8 text-end">
                                  <div class="o_title">
                                     <t t-if="report.filter_show_draft and options['all_entries']">[Draft]</t>
                                     <t t-out="report.name"/>

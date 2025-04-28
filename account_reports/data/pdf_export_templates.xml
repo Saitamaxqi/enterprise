@@ -10,19 +10,23 @@
              <body t-att-dir="env['res.lang']._get_data(code=lang or env.user.lang).direction or 'ltr'">
                  <div t-att-class="'o_content ' + options['css_custom_class']">
                      <header>
-                         <div class="o_title">
-                             <t t-if="report.filter_show_draft and options['all_entries']">[Draft]</t>
-                             <t t-out="report_title"/>
-                         </div>
-                         <div class="row o_header_font">
+                         <div class="row">
                              <div class="col-8">
                                  <!-- All company information (name, address, vat, ...) -->
                                  <t t-call="{{custom_templates.get('company_information', 'account_reports.company_information')}}"/>
                              </div>
                              <div class="col-4">
-                                 <!-- All filters and options -->
-                                 <t t-call="{{custom_templates.get('pdf_export_filters', 'account_reports.pdf_export_filters')}}"/>
-                             </div>
+                                <div class="d-flex justify-content-end">
+                                    <div>
+                                        <div class="o_title text-end">
+                                            <t t-if="report.filter_show_draft and options['all_entries']">[Draft]</t>
+                                            <t t-out="report_title"/>
+                                        </div>
+                                        <!-- All filters and options -->
+                                        <t t-call="{{custom_templates.get('pdf_export_filters', 'account_reports.pdf_export_filters')}}"/>
+                                    </div>
+                                </div>
+                            </div>
                          </div>
                      </header>
 
@@ -60,6 +64,7 @@
     </template>
 
     <template id="company_information">
+        <img t-if="env.company.logo" class="o_company_logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo"/>
         <t t-set="company_names" t-value="[company['name'] for company in options['companies']]"/>
         <div class="row">
             <div class="col-10" t-out="', '.join(company_names)"/>
@@ -80,20 +85,16 @@
     <template id="pdf_export_filters">
         <!-- Journals -->
         <t t-if="options.get('journals')">
-            <div class="row" name="filter_info_template_journals">
-                <t t-set="journal_group_selected" t-value="options.get('selected_journal_groups')"/>
-                <t t-if="journal_group_selected">
-                    <div class="col-3">Multi-Ledger: </div>
-                    <div class="col-9 o_text_muted" t-out="journal_group_selected['title']"/>
+            <t t-set="journal_group_selected" t-value="options.get('selected_journal_groups')"/>
+            <t t-if="journal_group_selected">
+                <div>Multi-Ledger: <span t-out="journal_group_selected['title']" class="o_text_muted"/></div>
+            </t>
+            <t t-else="">
+                <t t-set="journal_value" t-value="[journal.get('title') for journal in options['journals'] if journal.get('selected')]"/>
+                <t t-if="journal_value">
+                    <div>Journals: <span t-out="', '.join(journal_value)" class="o_text_muted"/></div>
                 </t>
-                <t t-else="">
-                    <t t-set="journal_value" t-value="[journal.get('title') for journal in options['journals'] if journal.get('selected')]"/>
-                    <t t-if="journal_value">
-                        <div class="col-3">Journals: </div>
-                        <div class="col-9 o_text_muted" t-out="', '.join(journal_value)"/>
-                    </t>
-                </t>
-            </div>
+            </t>
         </t>
 
         <!-- Partners -->
@@ -101,8 +102,7 @@
             <div class="row">
                 <t t-set="partner_value" t-value="[partner for partner in options['selected_partner_ids']]"/>
                 <t t-if="partner_value">
-                    <div class="col-3">Partners:</div>
-                    <div class="col-9 o_text_muted" t-out="', '.join(partner_value)"/>
+                    <div>Partners: <span t-out="', '.join(partner_value)" class="o_text_muted"/></div>
                 </t>
             </div>
         </t>
@@ -112,8 +112,7 @@
             <div class="row">
                 <t t-set="partner_category_value" t-value="[partner for partner in options['selected_partner_categories']]"/>
                 <t t-if="partner_category_value">
-                    <div class="col-3">Partners Categories:</div>
-                    <div class="col-9 o_text_muted" t-out="', '.join(partner_category_value)"/>
+                    <div>Partners Categories: <span t-out="', '.join(partner_category_value)" class="o_text_muted"/></div>
                 </t>
             </div>
         </t>
@@ -123,8 +122,7 @@
             <div class="row">
                 <t t-set="horizontal_group" t-value="[hg['name'] for hg in options['available_horizontal_groups'] if hg['id'] == options.get('selected_horizontal_group_id')]"/>
                 <t t-if="horizontal_group">
-                    <div class="col-3">Horizontal:</div>
-                    <div class="col-9 o_text_muted" t-out="horizontal_group[0]"/>
+                    <div>Horizontal: <span t-out="horizontal_group[0]" class="o_text_muted"/></div>
                 </t>
             </div>
         </t>
@@ -132,8 +130,7 @@
         <!-- Currency -->
         <t t-if="options.get('company_currency')">
             <div class="row">
-                <div class="col-3">Currency:</div>
-                <div class="col-9 o_text_muted" t-out="options['company_currency']['currency_name']"/>
+                <div>Currency: <span t-out="options['company_currency']['currency_name']" class="o_text_muted"/></div>
             </div>
         </t>
 
@@ -142,54 +139,51 @@
             <div class="row">
                 <t t-set="aml_ir_filters" t-value="opt['name'] for opt in options['aml_ir_filters'] if opt['selected']"/>
                 <t t-if="aml_ir_filters">
-                    <div class="col-3">Filters:</div>
-                    <div class="col-9 o_text_muted" t-out="', '.join(aml_ir_filters)"/>
+                    <div>Filters: <span t-out="', '.join(aml_ir_filters)" class="o_text_muted"/></div>
                 </t>
             </div>
         </t>
 
         <!-- Extra options -->
-        <div class="row" name="pdf_options_header">
-            <t t-call="{{custom_templates.get('pdf_export_filter_extra_options_template', 'account_reports.pdf_export_filter_extra_options_template')}}"/>
-        </div>
+        <t t-call="{{custom_templates.get('pdf_export_filter_extra_options_template', 'account_reports.pdf_export_filter_extra_options_template')}}"/>
     </template>
 
     <template id="pdf_export_filter_extra_options_template">
         <t t-set="rounding_unit_display_names" t-value="{k: v[1] for k, v in options['rounding_unit_names'].items() if v[1]}"/>
-        <div class="col-3" t-if="(report.filter_show_draft and options['all_entries']) or
+        <div name="extra_filters" t-if="(report.filter_show_draft and options['all_entries']) or
                                  (report.filter_unreconciled and options['unreconciled']) or
                                  options.get('include_analytic_without_aml') or
                                  options['rounding_unit'] in rounding_unit_display_names">
             Options:
-        </div>
-        <div class="col-9 o_text_muted">
-            <t t-set="extra_options" t-value="[]"/>
+            <span class="o_text_muted">
+                <t t-set="extra_options" t-value="[]"/>
 
-            <!-- All entries -->
-            <t t-if="report.filter_show_draft and options['all_entries']" groups="account.group_account_readonly">
-                <t t-set="label_draft_entries">With Draft Entries</t>
-                <t t-set="extra_options" t-value="extra_options + [label_draft_entries]"/>
-            </t>
+                <!-- All entries -->
+                <t t-if="report.filter_show_draft and options['all_entries']" groups="account.group_account_readonly">
+                    <t t-set="label_draft_entries">With Draft Entries</t>
+                    <t t-set="extra_options" t-value="extra_options + [label_draft_entries]"/>
+                </t>
 
-            <!-- Unreconciled -->
-            <t t-if="report.filter_unreconciled and options['unreconciled']">
-                <t t-set="label_unreconciled_entries">Unreconciled Entries</t>
-                <t t-set="extra_options" t-value="extra_options + [label_unreconciled_entries]"/>
-            </t>
+                <!-- Unreconciled -->
+                <t t-if="report.filter_unreconciled and options['unreconciled']">
+                    <t t-set="label_unreconciled_entries">Unreconciled Entries</t>
+                    <t t-set="extra_options" t-value="extra_options + [label_unreconciled_entries]"/>
+                </t>
 
-            <!-- Analytic -->
-            <t t-if="options.get('include_analytic_without_aml')" name="include_analytic">
-                <t t-set="label_analytic_simulations">Including Analytic Simulations</t>
-                <t t-set="extra_options" t-value="extra_options + [label_analytic_simulations]"/>
-            </t>
+                <!-- Analytic -->
+                <t t-if="options.get('include_analytic_without_aml')" name="include_analytic">
+                    <t t-set="label_analytic_simulations">Including Analytic Simulations</t>
+                    <t t-set="extra_options" t-value="extra_options + [label_analytic_simulations]"/>
+                </t>
 
-            <!-- Currency Unit Amount Text -->
-            <t t-if="options['rounding_unit'] in rounding_unit_display_names">
-                <t t-set="rounding_unit" t-value="options.get('rounding_unit')"/>
-                <t t-set="extra_options" t-value="extra_options + [rounding_unit_display_names[rounding_unit]]"/>
-            </t>
+                <!-- Currency Unit Amount Text -->
+                <t t-if="options['rounding_unit'] in rounding_unit_display_names">
+                    <t t-set="rounding_unit" t-value="options.get('rounding_unit')"/>
+                    <t t-set="extra_options" t-value="extra_options + [rounding_unit_display_names[rounding_unit]]"/>
+                </t>
 
-            <t t-out="', '.join(extra_options)"/>
+                <t name="options" t-out="', '.join(extra_options)"/>
+            </span>
         </div>
     </template>
 
