@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -6,7 +5,7 @@ from datetime import datetime, time, timedelta
 from pytz import timezone
 
 from odoo import api, fields, models
-from odoo.tools.date_intervals import timezone_datetime
+from odoo.tools.date_utils import localized
 
 
 class HrLeave(models.Model):
@@ -46,8 +45,8 @@ class HrLeave(models.Model):
                 stop,
                 datetime.combine(contract.date_end, time.max)) if contract.date_end else stop
             resources_unavailable_intervals = contract.resource_calendar_id._unavailable_intervals_batch(
-                timezone_datetime(tmp_date_from),
-                timezone_datetime(tmp_date_to),
+                localized(tmp_date_from),
+                localized(tmp_date_to),
                 contract.employee_id.resource_id,
                 tz=timezone(contract.resource_calendar_id.tz))
             for key, value in resources_unavailable_intervals.items():
