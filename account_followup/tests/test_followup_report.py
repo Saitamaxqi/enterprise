@@ -6,7 +6,7 @@ from unittest.mock import patch
 from odoo.tests import Form, tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.addons.account_followup.tests.common import TestAccountFollowupCommon
-from odoo import Command
+from odoo import Command, fields
 
 
 @tagged('post_install', '-at_install')
@@ -749,3 +749,55 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
         self.assertEqual(self.partner_a.with_company(branch_a).total_overdue, 400)
         # Expected : 800
         self.assertEqual(self.partner_a.with_company(branch_b).total_overdue, 800)
+
+    def test_partner_total_due_with_payable(self):
+        """
+        Test that the total due for a partner also reflects payable accounts and is coherent with the customer statement report.
+        """
+        # Init options.
+        report = self.env.ref('account_reports.customer_statement_report')
+        default_options = {
+            'partner_id': self.partner_a.id,
+            'multi_currency': True,
+            'unfold_all': True,
+        }
+        options = self._generate_options(report, fields.Date.from_string('2016-01-01'), fields.Date.from_string('2016-12-31'), default_options=default_options)
+
+        self.init_invoice('out_invoice', self.partner_a, '2016-01-01', True, amounts=[500])
+
+        self.assertEqual(self.partner_a.total_due, 500.0)
+
+        with freeze_time('2016-01-01'):
+            self.assertLinesValues(
+                # pylint: disable=C0326
+                report._get_lines(options),
+                #   Name                                        Date,        Due Date,  Amount,       Balance
+                [   0,                                      1,              2,       3,             5],
+                [
+                    ('partner_a',                                  '',             '',   500.0,         500.0),
+                    ('INV/2016/00001',                   '01/01/2016',   '01/01/2016',   500.0,         500.0),
+                    ('Total partner_a',                            '',             '',   500.0,         500.0),
+                    ('Total',                                      '',             '',   500.0,         500.0),
+                ],
+                options,
+            )
+
+        self.init_invoice('in_invoice', self.partner_a, '2016-01-01', True, amounts=[200])
+
+        self.assertEqual(self.partner_a.total_due, 300.0)
+
+        with freeze_time('2016-01-01'):
+            self.assertLinesValues(
+                # pylint: disable=C0326
+                report._get_lines(options),
+                #   Name                                        Date,        Due Date,  Amount,       Balance
+                [   0,                                      1,              2,       3,             5],
+                [
+                    ('partner_a',                                  '',             '',   300.0,          300.0),
+                    ('INV/2016/00001',                   '01/01/2016',   '01/01/2016',   500.0,          500.0),
+                    ('BILL/2016/01/0001',                '01/01/2016',   '01/01/2016',  -200.0,          300.0),
+                    ('Total partner_a',                            '',             '',   300.0,          300.0),
+                    ('Total',                                      '',             '',   300.0,          300.0),
+                ],
+                options,
+            )

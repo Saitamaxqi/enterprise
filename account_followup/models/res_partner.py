@@ -187,7 +187,7 @@ class ResPartner(models.Model):
     def _get_unreconciled_aml_domain(self):
         return [
             ('reconciled', '=', False),
-            ('account_id.account_type', '=', 'asset_receivable'),
+            ('account_id.account_type', 'in', ('asset_receivable', 'liability_payable')),
             ('parent_state', '=', 'posted'),
             ('partner_id', 'in', self.ids),
             ('company_id', 'child_of', self.env.company.id),
