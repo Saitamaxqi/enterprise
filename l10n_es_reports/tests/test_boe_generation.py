@@ -70,3 +70,30 @@ class TestBOEGeneration(TestEsAccountReportsCommon):
             'default_judicial_person_procuration_date': '2020-01-01',
             'default_judicial_person_notary': "Maître Gagnant",
         })
+
+    @freeze_time('2020-12-22')
+    def test_boe_mod_347_with_cash_payment(self):
+        cash_journal = self.env['account.journal'].create({
+            'name': 'Cash Journal Test',
+            'type': 'cash',
+            'company_id': self.company_data['company'].id,
+            'code': 'CASHBOE',
+        })
+        invoice = self.init_invoice('out_invoice', partner=self.spanish_partner, amounts=[1000], invoice_date=fields.Date.today())
+        invoice.l10n_es_reports_mod347_invoice_type = 'regular'
+        invoice._post()
+        self.env['account.payment.register'].with_context(active_ids=invoice.ids, active_model='account.move').create({
+            'amount': 1000,
+            'payment_date': invoice.date,
+            'journal_id': cash_journal.id,
+        })._create_payments()
+
+        report = self.env.ref('l10n_es_reports.mod_347')
+        options = self._generate_options(report, '2020-01-01', '2020-12-31')
+        wizard_model = self.env[report.custom_handler_model_name]
+        wizard_action = wizard_model.open_boe_wizard(options, 347)
+        wizard = self.env[wizard_action['res_model']].with_context(wizard_action['context']).create({})
+        options['l10n_es_reports_boe_wizard_id'] = wizard.id
+
+        boe_result = self.env[report.custom_handler_model_name].export_boe(options)
+        self.assertTrue(self.spanish_partner.name.upper() not in boe_result['file_content'].decode())

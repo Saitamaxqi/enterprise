@@ -1028,18 +1028,6 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
     def _get_required_partner_ids_for_boe(self, mod_invoice_type, date_from, date_to, boe_wizard, operation_key, operation_class):
         cash_basis_manual_data = boe_wizard.cash_basis_mod347_data.filtered(lambda x: x.operation_key == operation_key and x.operation_class == operation_class)
         all_partners = cash_basis_manual_data.mapped('partner_id')
-
-        if operation_key == 'B':  # Only for perceived amounts
-            # If invoice is not in the current period but cash payment is,
-            # we need to inject the partner into BOE so that this cash amount is reported
-            cash_payments_aml = self.env['account.partial.reconcile'].search([('credit_move_id.date', '<=', date_to),
-                                                                              ('credit_move_id.date', '>=', date_from),
-                                                                              ('credit_move_id.journal_id.type', '=', 'cash'),
-                                                                              ('debit_move_id.move_id.l10n_es_reports_mod347_invoice_type', '=', mod_invoice_type),
-                                                                              ('credit_move_id.account_id.account_type', '=', 'asset_receivable'),
-                                                                              ])
-            all_partners += cash_payments_aml.mapped('credit_move_id.partner_id')
-
         return set(all_partners.ids)
 
     def _write_type2_header_record(self, current_company, boe_wizard, boe_report_options, year=None):
