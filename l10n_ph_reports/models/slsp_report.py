@@ -11,6 +11,7 @@ except ImportError:
     xlsxwriter = None
 
 from odoo import api, models, _, fields
+from odoo.osv import expression
 from odoo.exceptions import UserError
 from odoo.tools import date_utils, float_repr, SQL, parse_version
 from odoo.tools.misc import format_date, file_path
@@ -294,6 +295,12 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
             'caret_options': 'account.move',
         }
 
+    def _get_grand_total_line_domain(self, options):
+        domain = super()._get_grand_total_line_domain(options)
+        if not options.get("include_no_tin"):
+            domain = expression.AND([domain, [("partner_id.vat", "!=", False)]])
+        return domain
+
     # xlsx export methods
     @api.model
     def export_slsp(self, options):
@@ -470,6 +477,8 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
 
         # Finally write the moves' data.
         line_vals = {}
+        amount_expression_labels = [amount_column[0] for amount_column in amount_columns]
+
         for line in report_lines:
             model = report._parse_line_id(line['id'])[-1][1]
             # Lines are ordered, so for month and partner lines we can gather the vals, and then write the lines when we are processing aml.
@@ -484,9 +493,9 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 continue
             # if we want to group by partner, we add a check here and not update the vals, and not continue above
             elif model == 'account.move':
-                # Make sure to only override the values for which we have a value.
+                # Make sure to only override the amount values (we want to keep the partner info)
                 line_vals.update({
-                    col['expression_label']: col['no_format'] for col in line['columns'] if col["no_format"]
+                    col['expression_label']: col['no_format'] for col in line['columns'] if col["expression_label"] in amount_expression_labels
                 })
             # Time to write our line.
             self._slsp_write_next_row(sheet, fonts, [

@@ -81,12 +81,15 @@ class L10n_PhGenericReportHandler(models.AbstractModel):
 
         return lines_with_values
 
+    def _get_grand_total_line_domain(self, options):
+        return [('move_id.move_type', '=', options['move_type'])]
+
     # Grand total
     def _build_grand_total_line(self, report, options):
         """ The grand total line is the sum of all values in the given reporting period. """
         queries = []
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
-            domain = [('move_id.move_type', '=', options['move_type'])]
+            domain = self._get_grand_total_line_domain(options)
             query = report._get_report_query(column_group_options, date_scope="strict_range", domain=domain)
             lang = self.env.user.lang or get_lang(self.env).code
             if self.pool['account.account.tag'].name.translate:
