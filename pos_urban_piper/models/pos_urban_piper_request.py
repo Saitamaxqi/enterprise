@@ -285,9 +285,10 @@ class UrbanPiperClient:
             for option_group in product.attribute_line_ids:
                 for option in option_group.value_ids:
                     product_option = self.config.env['product.template.attribute.value'].search([
+                        ('ptav_active', '=', True),
                         ('product_tmpl_id', '=', product.id),
                         ('product_attribute_value_id', '=', option.id)
-                    ])
+                    ], limit=1)
                     value_dict = {
                         'ref_id': f'{product.id}-{option.id}',
                         'title': option.with_context(lang="en_US").name,
