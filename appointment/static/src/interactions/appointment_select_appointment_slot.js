@@ -128,15 +128,9 @@ export class appointmentSlotSelect extends Interaction {
                 const hideSelectDropdown = !!this.el.querySelector(
                     "input[name='hide_select_dropdown']"
                 ).value;
-                const active = this.el.querySelector("input[name='active']").value;
-                this.renderAt("Appointment.appointment_info_no_slot", {
-                    active: active,
-                    appointmentsCount: parseInt(this.el.querySelector("#slotsList").dataset.appointmentsCount),
-                    staffUserName: hideSelectDropdown ? staffUserName : false,
-                });
                 this.el.querySelector(".o_appointment_no_slot_overall_helper").replaceChildren();
                 this.renderAt("Appointment.appointment_info_no_slot", {
-                    active: active,
+                    active: this.el.querySelector("input[name='active']").value,
                     appointmentsCount: parseInt(this.el.querySelector("#slotsList").dataset.appointmentsCount),
                     staffUserName: hideSelectDropdown ? staffUserName : false,
                 }, this.el.querySelector(".o_appointment_no_slot_overall_helper"));
