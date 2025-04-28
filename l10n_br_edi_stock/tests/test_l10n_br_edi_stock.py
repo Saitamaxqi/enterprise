@@ -17,7 +17,7 @@ class TestL10nBrEDIStock(TestL10nBREDICommon):
         cls.package_type = cls.env["stock.package.type"].create(
             {"name": "Box", "l10n_br_brand": "BR brand", "base_weight": 3}
         )
-        cls.sale_order = cls.env["sale.order"].create(
+        cls.sale_order = cls.env["sale.order"].sudo().create(
             {
                 "partner_id": cls.partner_customer.id,
                 "order_line": [
@@ -31,7 +31,7 @@ class TestL10nBrEDIStock(TestL10nBREDICommon):
                 ],
                 "l10n_br_edi_freight_model": "CIF",
             }
-        )
+        ).sudo(False)
 
     def test_01_nfe_with_transport_info(self):
         self.sale_order.action_confirm()
