@@ -20,7 +20,10 @@
             'pos_restaurant_preparation_display/static/src/override/**/*.js',
         ],
         'web.assets_tests': [
-            'pos_restaurant_preparation_display/static/tests/tours/**/*',
+            'pos_restaurant_preparation_display/static/tests/tours/point_of_sale/**/*',
+        ],
+        'pos_preparation_display.assets_tour_tests': [
+            'pos_restaurant_preparation_display/static/tests/tours/preparation_display/**/*',
         ],
     },
     'post_init_hook': '_pos_restaurant_preparation_display_post_init',

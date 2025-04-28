@@ -1,10 +1,31 @@
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
+from odoo.addons.point_of_sale.tests.common_setup_methods import setup_product_combo_items
 from odoo import Command
 import odoo.tests
 
 
+class TestPreparationDisplayHttpCommon(TestPointOfSaleHttpCommon):
+
+    def _get_pdis_url(self, pdis=None):
+        pdis = pdis or self.pdis
+        return f"/pos_preparation_display/web?display_id={pdis.id}"
+
+    def start_pdis_tour(self, tour_name, login="pos_user", **kwargs):
+        self.start_tour(self._get_pdis_url(pdis=kwargs.get('pdis')), tour_name, login=login, **kwargs)
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.env['pos.prep.display'].search([]).unlink()
+        cls.pdis = cls.env['pos.prep.display'].create({
+            'name': 'Preparation Display',
+            'pos_config_ids': [(4, cls.main_pos_config.id)],
+        })
+
+
 @odoo.tests.tagged('post_install', '-at_install')
-class TestUi(TestPointOfSaleHttpCommon):
+class TestUi(TestPreparationDisplayHttpCommon):
 
     def test_01_preparation_display(self):
 
@@ -13,9 +34,7 @@ class TestUi(TestPointOfSaleHttpCommon):
             'tip_product_id': self.tip.id,
         })
 
-        pdis = self.env['pos.prep.display'].create({
-            'name': 'Preparation Display',
-            'pos_config_ids': [(4, self.main_pos_config.id)],
+        self.pdis.write({
             'category_ids': [(4, self.letter_tray.pos_categ_ids[0].id)],
         })
 
@@ -23,7 +42,7 @@ class TestUi(TestPointOfSaleHttpCommon):
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.start_pos_tour('PreparationDisplayTour')
 
-        data = pdis.get_preparation_display_order(None)
+        data = self.pdis.get_preparation_display_order(None)
 
         pdis_line = data['pos.prep.line']
 
@@ -43,9 +62,7 @@ class TestUi(TestPointOfSaleHttpCommon):
             'printer_ids': [Command.set(self.env['pos.printer'].search([]).ids)],
         })
 
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display',
-            'pos_config_ids': [Command.link(self.main_pos_config.id)],
+        self.pdis.write({
             'category_ids': [Command.set(self.env['pos.category'].search([]).ids)],
         })
 
@@ -68,9 +85,7 @@ class TestUi(TestPointOfSaleHttpCommon):
             'pos_categ_ids': [(4, self.letter_tray.pos_categ_ids[0].id)],
         })
 
-        self.display = self.env['pos.prep.display'].create({
-            'name': 'Preparation Display',
-            'pos_config_ids': [(4, self.main_pos_config.id)],
+        self.pdis.write({
             'category_ids': [(4, self.configurable_chair.pos_categ_ids[0].id)],
         })
 
@@ -87,3 +102,11 @@ class TestUi(TestPointOfSaleHttpCommon):
         preparation_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)
         attribute_names = [attr.name for attr in preparation_order.prep_line_ids.attribute_value_ids]
         self.assertEqual(attribute_names, ['Red', 'Metal', 'Leather'])
+
+    def test_03_preparation_display_front_end(self):
+        setup_product_combo_items(self)
+
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_pos_tour('MakePosOrderWithCombo')
+
+        self.start_pdis_tour('PreparationDisplayFrontEndTour')

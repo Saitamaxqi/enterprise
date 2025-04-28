@@ -15,6 +15,7 @@
                     t-as="stage"
                     t-key="stage.id"
                     class="o_pdis_navbar_stage btn btn-lg d-flex align-items-center bg-opacity-50"
+                    t-att-class="{ 'selected': this.prepDisplay.selectedStageId === stage.id }"
                     t-on-click="() => this.prepDisplay.selectStage(stage.id)"
                     t-attf-style="{{ this.prepDisplay.selectedStageId === stage.id ? 'background-color:' + (stage.color ? (stage.color === '#ffffff' ? '#00000010' : stage.color + '50') : '#00000010') + ';' : '' }}"
                 >

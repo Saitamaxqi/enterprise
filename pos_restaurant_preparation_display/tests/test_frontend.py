@@ -2,24 +2,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.pos_restaurant.tests import test_frontend
+from odoo.addons.pos_enterprise.tests.test_frontend import TestPreparationDisplayHttpCommon
 from unittest.mock import patch
 import odoo.tests
 import json
 
 
 @odoo.tests.tagged('post_install', '-at_install')
-class TestUi(test_frontend.TestFrontendCommon):
+class TestUi(test_frontend.TestFrontendCommon, TestPreparationDisplayHttpCommon):
     def test_01_preparation_display_resto(self):
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display (Food only)',
-            'pos_config_ids': [(4, self.pos_config.id)],
-            'category_ids': [(0, 0, {
-                'name': 'Food',
-            })],
-        })
-
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display',
+        self.pdis.write({
             'pos_config_ids': [(4, self.pos_config.id)],
         })
 
@@ -27,6 +19,8 @@ class TestUi(test_frontend.TestFrontendCommon):
         self.pos_config.printer_ids.unlink()
         self.pos_config.with_user(self.pos_user).open_ui()
         self.start_pos_tour('PreparationDisplayTourResto')
+
+        self.start_pdis_tour('PreparationDisplayFrontEndCancelTour')
 
         # Order 1 should have 2 preparation orderlines (Coca-Cola and Water)
         order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
@@ -48,16 +42,7 @@ class TestUi(test_frontend.TestFrontendCommon):
         self.assertEqual(cancelled_orderline.product_id.name, 'Minute Maid', "Cancelled orderline should be Minute Maid")
 
     def test_02_preparation_display_resto(self):
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display (Food only)',
-            'pos_config_ids': [(4, self.pos_config.id)],
-            'category_ids': [(0, 0, {
-                'name': 'Food',
-            })],
-        })
-
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display',
+        self.pdis.write({
             'pos_config_ids': [(4, self.pos_config.id)],
         })
 
@@ -75,13 +60,15 @@ class TestUi(test_frontend.TestFrontendCommon):
         self.assertEqual(sum(prep_line.mapped('quantity')), 2)
 
     def test_preparation_display_with_internal_note(self):
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display',
+        self.pdis.write({
             'pos_config_ids': [(4, self.pos_config.id)],
         })
         self.pos_config.printer_ids.unlink()
         self.pos_config.with_user(self.pos_user).open_ui()
         self.start_pos_tour('PreparationDisplayTourInternalNotes')
+
+        self.start_pdis_tour('PreparationDisplayFrontEndNoteTour')
+
         # Order 1 should have 2 preparation orderlines (Coca-Cola and Water)
         order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
         pdis_order1 = self.env['pos.prep.order'].search([('pos_order_id', '=', order1.id)])
@@ -100,9 +87,7 @@ class TestUi(test_frontend.TestFrontendCommon):
             'available_in_pos': True,
             'pos_categ_ids': category,
         })
-
-        pdis = self.env['pos.prep.display'].create({
-            'name': 'Preparation Display (Food only)',
+        self.pdis.write({
             'pos_config_ids': [(4, self.pos_config.id)],
             'category_ids': category,
         })
@@ -119,11 +104,10 @@ class TestUi(test_frontend.TestFrontendCommon):
             self.start_pos_tour('PreparationDisplayCancelOrderTour')
 
         # Should receive 2 notifications, 1 placing the order, 1 cancelling it
-        self.assertEqual(notifications.count(pdis.id), 2)
+        self.assertEqual(notifications.count(self.pdis.id), 2)
 
     def test_payment_does_not_cancel_display_orders(self):
-        self.env['pos.prep.display'].create({
-            'name': 'Preparation Display (Food only)',
+        self.pdis.write({
             'pos_config_ids': [(4, self.pos_config.id)],
         })
         self.pos_config.printer_ids.unlink()

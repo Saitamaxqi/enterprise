@@ -6,8 +6,8 @@ import * as FloorScreen from "@pos_restaurant/../tests/tours/utils/floor_screen_
 import * as ProductScreenPos from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
 import * as ProductScreenResto from "@pos_restaurant/../tests/tours/utils/product_screen_util";
-import * as PrepDisplay from "@pos_restaurant_preparation_display/../tests/tours/utils/preparation_display_util";
-const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto, ...PrepDisplay };
+import * as PosPrepDisplay from "@pos_restaurant_preparation_display/../tests/tours/point_of_sale/utils/point_of_sale_util";
+const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto, ...PosPrepDisplay };
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("PreparationDisplayTourResto", {

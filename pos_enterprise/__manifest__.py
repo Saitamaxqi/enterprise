@@ -62,6 +62,7 @@ for IoT Box config.
         ],
         'pos_preparation_display.assets_tour_tests': [
             ("include", "point_of_sale.base_tests"),
+            "pos_enterprise/static/tests/tours/preparation_display/**/*"
         ],
         'web.assets_tests': [
             'pos_enterprise/static/tests/tours/point_of_sale/**/*',
