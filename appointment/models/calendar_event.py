@@ -154,12 +154,16 @@ class CalendarEvent(models.Model):
                 if not resource.shareable or not (sum(bookings.mapped('capacity_reserved')) <= resource.capacity)])
             for event in events:
                 event_resources = event.resource_ids
+                event_interval = (localized(event.start), localized(event.stop))
                 event.unavailable_resource_ids = event_resources.filtered(lambda resource: any(
-                    intervals_overlap(interval, (event.start, event.stop)) for interval
-                    in resource_unavailabilities.get(resource, [])
+                    intervals_overlap(tuple(map(localized, interval)), event_interval)
+                    for interval in resource_unavailabilities.get(resource, [])
                 ))
                 for conflicting_event in events_to_check - event._origin:
-                    if (resources := event_resources._origin & conflicting_event.resource_ids) and intervals_overlap((event.start, event.stop), (conflicting_event.start, conflicting_event.stop)):
+                    if (
+                        (resources := event_resources._origin & conflicting_event.resource_ids)
+                        and intervals_overlap(event_interval, (localized(conflicting_event.start), localized(conflicting_event.stop)))
+                    ):
                         event.unavailable_resource_ids += resources
 
     @api.depends('booking_line_ids')
