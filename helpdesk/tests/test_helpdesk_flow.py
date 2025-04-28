@@ -821,3 +821,45 @@ Content-Transfer-Encoding: quoted-printable
         ticket2_a, ticket2_b = tickets.copy({'user_id': self.helpdesk_user.id})
         self.assertEqual(ticket2_a.user_id, self.helpdesk_user)
         self.assertEqual(ticket2_b.user_id, self.helpdesk_user)
+
+    def test_assigned_customer_multicompany(self):
+        """
+        Test in multicompany that the assigned customer is in the same company as the ticket
+
+        Test Case:
+        ==========
+        1. Create 2 companies
+        2. Create `res.partner` `test_partner` in company1
+        3. Create ticket for helpdesk_team2 from company2
+           with email of `test_partner`
+        4. Check that the partner on the ticket is a newly
+           created partner in company2 and different from `test_partner`
+        """
+
+        company1 = self.main_company_id
+        company2 = self.env['res.company'].create({'name': 'company2'})
+
+        # Create a partner in company1
+        test_partner = self.env['res.partner'].create({
+            'name': 'test partner',
+            'email': 'testmail@test.com',
+            'company_id': company1,
+        })
+
+        # Create a helpdesk team in company2
+        helpdesk_team = self.env['helpdesk.team'].create({
+            'name': 'test team',
+            'company_id': company2.id,
+        })
+
+        # Create a ticket in company2 with email of test_partner
+        ticket = self.env['helpdesk.ticket'].create({
+            'partner_name': 'Test Name',
+            'partner_email': 'testmail@test.com',
+            'name': 'Ticket Name',
+            'team_id': helpdesk_team.id,
+        })
+
+        # Check that the partner on the ticket is a newly created partner in company2
+        self.assertEqual(ticket.partner_id.company_id, company2)
+        self.assertNotEqual(ticket.partner_id, test_partner)
