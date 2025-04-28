@@ -85,7 +85,7 @@ class IotBox(models.Model):
     @api.ondelete(at_uninstall=True)
     def _unlink_iot_box(self):
         self.env['iot.channel']._send_message({
-            "iotIdentifiers": self.mapped('identifier')
+            "iot_identifiers": self.mapped('identifier')
         }, 'server_clear')
 
     def open_homepage(self):

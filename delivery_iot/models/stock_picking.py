@@ -38,13 +38,8 @@ class StockPicking(models.Model):
                 report = self.env['ir.actions.report']._get_report_from_name('delivery_iot.report_shipping_docs')
             if report.device_ids:
                 self.env['iot.channel']._send_message({
-                    'iotDevice': {
-                        'iotIdentifiers': [report.device_ids[0].iot_id.identifier],
-                        'identifiers': [{
-                            'identifier': report.device_ids[0].identifier,
-                            'id': report.device_ids[0].id
-                        }],
-                    },
+                    'iot_identifiers': [report.device_ids[0].iot_id.identifier],
+                    'device_identifiers': [report.device_ids[0].identifier],
                     'print_id': 0,
                     'documents': message.attachment_ids.mapped('datas'),
                 })

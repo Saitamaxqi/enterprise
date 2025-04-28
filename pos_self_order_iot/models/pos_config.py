@@ -47,10 +47,8 @@ class PosConfig(models.Model):
         ]
 
         self.env['iot.channel']._send_message({
-            "iotDevice": {
-                "iotIdentifiers": [iot_box.identifier for iot_box in self.self_ordering_iot_available_iot_box_ids],
-                "identifiers": [{"identifier": display_identifier} for display_identifier in display_identifiers],
-            },
+            "iot_identifiers": [iot_box.identifier for iot_box in self.self_ordering_iot_available_iot_box_ids],
+            "device_identifiers": display_identifiers,
             'action': 'open_kiosk',
             'pos_id': self.id,
             'access_token': self.access_token,

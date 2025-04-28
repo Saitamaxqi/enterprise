@@ -22,24 +22,17 @@ class IrActionsReport(models.Model):
         data_base64 = base64.b64encode(data_bytes)
         iot_identifiers = {device["iotIdentifier"] for device in devices}
         if not websocket:
-            return [
-                [
-                    self.env["iot.box"].search([("identifier", "=", device["iotIdentifier"])]).ip,
-                    device["identifier"],
-                    device['name'],
-                    data_base64,
-                ]
-                for device in devices
-            ]
+            return [[
+                self.env["iot.box"].search([("identifier", "=", device["iotIdentifier"])]).ip,
+                device["identifier"],
+                device['name'],
+                data_base64,
+            ] for device in devices]
 
         self.env['iot.channel']._send_message({
-            "iotDevice": {
-                "iotIdentifiers": list(iot_identifiers),
-                "identifiers": [{
-                    "identifier": device["identifier"],
-                    "id": device["id"]
-                } for device in devices],
-            },
+            "iot_identifiers": list(iot_identifiers),
+            "device_identifiers": [device["identifier"] for device in devices],
+            "action": "",
             "print_id": print_id,
             "document": data_base64
         })
