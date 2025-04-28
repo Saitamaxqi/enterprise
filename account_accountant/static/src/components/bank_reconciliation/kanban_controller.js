@@ -1,30 +1,23 @@
-import { EventBus, useSubEnv } from "@odoo/owl";
+import { useSubEnv } from "@odoo/owl";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 import { makeActiveField } from "@web/model/relational_model/utils";
 import { useService } from "@web/core/utils/hooks";
+import { useBankReconciliation } from "./bank_reconciliation_service";
 
 export class BankRecKanbanController extends KanbanController {
     static template = "account_accountant.BankRecoKanbanController";
 
     async setup() {
         super.setup();
-        this.bus = new EventBus();
         this.orm = useService("orm");
+        this.bankReconciliation = useBankReconciliation();
         useSubEnv({
-            bus: this.bus,
-            updateChatter: this.updateChatter.bind(this),
-        });
-    }
-
-    updateChatter(moveId) {
-        this.env.bus.trigger("MAIL:RELOAD-THREAD", {
-            model: "account.move",
-            id: moveId,
+            bus: this.bankReconciliation.bus,
         });
     }
 
     async createRecord() {
-        this.bus.trigger("createRecordQuickCreate");
+        this.env.bus.trigger("createRecordQuickCreate");
     }
 
     get modelParams() {

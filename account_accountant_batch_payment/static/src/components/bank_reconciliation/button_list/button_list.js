@@ -40,7 +40,7 @@ patch(BankRecButtonList.prototype, {
             [this.statementLineData.id, batchPaymentId]
         );
         this.props.statementLine.load();
-        this.env.updateChatter(this.statementLineData.move_id.id);
+        this.bankReconciliation.reloadChatter();
     },
 
     get buttons() {

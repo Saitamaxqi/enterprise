@@ -11,7 +11,7 @@ export class BankRecChatter extends Chatter {
      */
     load(thread, requestList) {
         super.load(thread, requestList);
-        this.props.statementLine.load();
+        this.props.statementLine?.load();
     }
 
     /**
@@ -22,6 +22,6 @@ export class BankRecChatter extends Chatter {
      */
     async onUploaded(data) {
         await super.onUploaded(data);
-        this.props.statementLine.load();
+        this.props.statementLine?.load();
     }
 }

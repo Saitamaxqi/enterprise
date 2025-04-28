@@ -22,7 +22,7 @@
                         <div class="o_row">
                             <div class="d-flex gap-3">
                                 <t t-esc="formattedDate"/>
-                                <div t-on-click.stop="toggleChatter">
+                                <div t-on-click.stop="openChatter" t-if="!ui.isSmall">
                                     <div t-if="activityNumber" class="activity-container">
                                         <i class="fa fa-lg fa-clock-o" role="img" aria-label="Activities" t-att-class="{'text-info': isChatterOpen}"/>
                                         <span class="activity-badge badge rounded-pill" t-esc="activityNumber"/>

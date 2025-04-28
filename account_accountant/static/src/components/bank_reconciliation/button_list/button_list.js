@@ -10,6 +10,7 @@ import { _t } from "@web/core/l10n/translation";
 import { getCurrency } from "@web/core/currency";
 import { roundDecimals } from "@web/core/utils/numbers";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
+import { useBankReconciliation } from "../bank_reconciliation_service";
 
 export class BankRecButtonList extends Component {
     static template = "account_accountant.BankRecButtonList";
@@ -39,6 +40,7 @@ export class BankRecButtonList extends Component {
 
         this.addDialog = useOwnedDialogs();
         this.currencyDigits = getCurrency(this.statementLineData.currency_id[0])?.digits || 2;
+        this.bankReconciliation = useBankReconciliation();
     }
 
     /**
@@ -67,7 +69,7 @@ export class BankRecButtonList extends Component {
                 } else {
                     this.props.statementLine.load();
                 }
-                this.env.updateChatter(this.statementLineData.move_id.id);
+                this.bankReconciliation.reloadChatter();
             },
         });
     }
@@ -108,7 +110,7 @@ export class BankRecButtonList extends Component {
             accountId,
         ]);
         this.props.statementLine.load();
-        this.env.updateChatter(this.statementLineData.move_id.id);
+        this.bankReconciliation.reloadChatter();
     }
 
     /**
@@ -166,7 +168,7 @@ export class BankRecButtonList extends Component {
                 ]);
                 this.env.bus.trigger("RECOMPUTE_AVAILABLE_RECONCILE_LINES");
                 this.props.statementLine.load();
-                this.env.updateChatter(this.statementLineData.move_id.id);
+                this.bankReconciliation.reloadChatter();
             },
             suspenseAccountLine: this.props.suspenseAccountLine,
             reference: this.statementLineData.payment_ref,
@@ -220,7 +222,7 @@ export class BankRecButtonList extends Component {
             this.statementLineData.id,
         ]);
         this.props.statementLine.load();
-        this.env.updateChatter(this.statementLineData.move_id.id);
+        this.bankReconciliation.reloadChatter();
     }
 
     // -----------------------------------------------------------------------------

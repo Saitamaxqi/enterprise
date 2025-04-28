@@ -5,6 +5,7 @@ import { formatMonetary } from "@web/views/fields/formatters";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { useService } from "@web/core/utils/hooks";
 import { useState } from "@odoo/owl";
+import { useBankReconciliation } from "../bank_reconciliation_service";
 
 export class BankRecStatementLine extends KanbanRecord {
     static template = "account_accountant.BankRecStatementLine";
@@ -13,27 +14,15 @@ export class BankRecStatementLine extends KanbanRecord {
         BankRecButtonList,
         DropdownItem,
     };
-    static props = [
-        ...KanbanRecord.props,
-        "reconcileCountPerPartnerId",
-        "reconcileModels",
-        "chatterMoveId",
-    ];
+    static props = [...KanbanRecord.props, "reconcileCountPerPartnerId", "reconcileModels"];
 
     setup() {
         super.setup();
         this.orm = useService("orm");
         this.ui = useService("ui");
+        this.bankReconciliation = useBankReconciliation();
         this.state = useState({
             isUnfolded: false,
-        });
-        this.currentMoveChatter = this.props.chatterMoveId;
-        this.env.bus.addEventListener("openChatter", (event) => {
-            if (this.currentMoveChatter !== event.detail.moveId) {
-                this.currentMoveChatter = event.detail.moveId;
-            } else {
-                this.currentMoveChatter = false;
-            }
         });
     }
 
@@ -77,13 +66,13 @@ export class BankRecStatementLine extends KanbanRecord {
 
     toggleUnfold() {
         this.state.isUnfolded = !this.isUnfolded;
+        // Update the chatter with the last selected element
+        this.bankReconciliation.selectStatementLine(this.record);
     }
 
-    toggleChatter() {
-        this.env.bus.trigger("openChatter", {
-            moveId: this.recordData.move_id.id,
-            statementLine: this.record,
-        });
+    openChatter() {
+        this.bankReconciliation.selectStatementLine(this.record);
+        this.bankReconciliation.openChatter();
     }
 
     get isUnfolded() {
@@ -184,6 +173,9 @@ export class BankRecStatementLine extends KanbanRecord {
     }
 
     get isChatterOpen() {
-        return this.recordData.move_id.id === this.currentMoveChatter;
+        return (
+            this.bankReconciliation.chatterState.visible &&
+            this.recordData.move_id.id === this.bankReconciliation.statementLineMoveId
+        );
     }
 }

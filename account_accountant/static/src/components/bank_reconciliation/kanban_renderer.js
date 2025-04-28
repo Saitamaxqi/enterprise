@@ -10,6 +10,7 @@ import { formatMonetary } from "@web/views/fields/formatters";
 import { onWillStart, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
+import { useBankReconciliation } from "./bank_reconciliation_service";
 
 export class BankRecKanbanRenderer extends KanbanRenderer {
     static template = "account_accountant.BankRecKanbanRenderer";
@@ -26,6 +27,7 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         this.action = useService("action");
         this.orm = useService("orm");
         this.ui = useService("ui");
+        this.bankReconciliation = useBankReconciliation();
         this.globalState = useState({
             resModel: this.env.model.config.resModel,
             context: this.env.model.config.context,
@@ -35,27 +37,11 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             },
             journalId: this.env.model.config.context.active_id,
             totalJournalAmount: "",
-            chatterState: {
-                visible: false,
-                moveId: false,
-                statementLine: false,
-            },
             reconcileCountPerPartnerId: {},
             reconcileModels: [],
         });
         this.env.bus.addEventListener("createRecordQuickCreate", () => {
             this.globalState.quickCreate.isVisible = true;
-        });
-        this.env.bus.addEventListener("openChatter", (event) => {
-            const moveId = event.detail.moveId;
-            if (this.globalState.chatterState.moveId !== moveId) {
-                this.globalState.chatterState.visible = true;
-                this.globalState.chatterState.moveId = moveId;
-                this.globalState.chatterState.statementLine = event.detail.statementLine;
-            } else {
-                this.globalState.chatterState.visible = false;
-                this.globalState.chatterState.moveId = false;
-            }
         });
 
         this.env.bus.addEventListener("RECOMPUTE_AVAILABLE_RECONCILE_LINES", (ev) => {

@@ -3,6 +3,7 @@ import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
 import { useService } from "@web/core/utils/hooks";
+import { useBankReconciliation } from "../bank_reconciliation_service";
 
 export class BankRecLineToReconcile extends Component {
     static template = "account_accountant.BankRecLineToReconcile";
@@ -16,6 +17,7 @@ export class BankRecLineToReconcile extends Component {
         this.action = useService("action");
         this.orm = useService("orm");
         this.dialogService = useService("dialog");
+        this.bankReconciliation = useBankReconciliation();
     }
 
     /**
@@ -43,7 +45,7 @@ export class BankRecLineToReconcile extends Component {
                     await record.getChanges(),
                 ]);
                 this.props.statementLine.load();
-                this.env.updateChatter(this.statementLineData.move_id.id);
+                this.bankReconciliation.reloadChatter();
                 return true;
             },
         });
@@ -63,7 +65,7 @@ export class BankRecLineToReconcile extends Component {
             this.lineData.id,
         ]);
         this.props.statementLine.load();
-        this.env.updateChatter(this.statementLineData.move_id.id);
+        this.bankReconciliation.reloadChatter();
     }
 
     // -----------------------------------------------------------------------------
