@@ -703,7 +703,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # Janvier 2020: Salary + Commissions (5 legal days)
         # Février 2020: Salary
         # Mars 2020: Salary
-        # Avril: Fired without notice period on the 15th of April (4 payslips):
+        # Avril: Fired Without notice period on the 15th of April (4 payslips):
         # - Termination Fees
         # - April Payslip
         # - Holiday Pay N
@@ -776,6 +776,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'company_id': cls.env.company.id,
             'journal_id': cls.journal.id,
             'payslip_run_id': cls.batch.id,
+            'input_line_ids': [(0, 0, {
+                'input_type_id': cls.env.ref('l10n_be_hr_payroll.cp200_other_input_warrant').id,
+                'amount': 1500,
+            })]
         })
 
         # Mai 2019: Salary (20 legal days)
@@ -957,7 +961,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'payslip_run_id': cls.batch.id,
         })
 
-        # Avril: Fired without notice period on the 15th of April (4 payslips):
+        # Avril: Fired Without notice period on the 15th of April (4 payslips):
         # - Termination Fees
         cls.departure_notice = cls.env['hr.payslip.employee.depature.notice'].create({
             'employee_id': cls.employee.id,

@@ -36,23 +36,8 @@ class HrPayslip(models.Model):
         for slip in self:
             if not slip.employee_id or not slip.date_from or not slip.date_to:
                 continue
-            if slip.struct_id.code == 'CP200WARRANT':
-                months = relativedelta(date_utils.add(slip.date_to, days=1), slip.date_from).months
-                if slip.employee_id.id in self.env.context.get('commission_real_values', {}):
-                    warrant_value = self.env.context['commission_real_values'][slip.employee_id.id]
-                else:
-                    warrant_value = slip.contract_id.commission_on_target * months
-                warrant_type = self.env.ref('l10n_be_hr_payroll.cp200_other_input_warrant')
-                lines_to_remove = slip.input_line_ids.filtered(lambda x: x.input_type_id == warrant_type)
-                to_remove_vals = [(3, line.id, False) for line in lines_to_remove]
-                to_add_vals = [(0, 0, {
-                    'amount': warrant_value,
-                    'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_warrant').id
-                })]
-                input_line_vals = to_remove_vals + to_add_vals
-                slip.update({'input_line_ids': input_line_vals})
             # If a double holiday pay should be recovered
-            elif slip.struct_id.code == 'CP200DOUBLE':
+            if slip.struct_id.code == 'CP200DOUBLE':
                 to_recover = slip._get_sum_european_time_off_days()
                 if to_recover:
                     european_type = self.env.ref('l10n_be_hr_payroll.input_double_holiday_european_leave_deduction')
