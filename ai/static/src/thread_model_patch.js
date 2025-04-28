@@ -13,7 +13,9 @@ patch(Thread.prototype, {
                 [["partner_id", "=", correspondentPersona.id]],
                 ["id"]
             );
-            agents.forEach(({ id }) => orm.call("ai.agent", "generate_response", [id, message.body]));
+            orm.call("ai.agent", "generate_response", [agents.map(({ id }) => id)], {
+                prompt: message.body,
+            });
         }
     },
 });

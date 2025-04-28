@@ -77,11 +77,19 @@
                         type="object"
                         string="Test">
                     </button>
-                    <field name="write_date"
-                           readonly="1"
-                           widget="ai_doc_processing_status"
-                           class="w-100"
-                           invisible="(not attachment_ids and not url_attachment_ids) or not write_date"/>
+                    <div invisible="attachment_processing_percentage == 100" role="status" class="alert alert-warning mb-0 py-2 px-3 w-100 d-flex justify-content-center align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-clock-o me-2" />
+                            <span>Processing your sources, it might take a few minutes...</span>
+                        </div>
+                        <button 
+                            name="action_refresh"
+                            class="btn btn-sm btn-link"
+                            type="object">
+                            <span class="me-1">Refresh</span>
+                            <i class="fa fa-refresh me-1"/>
+                        </button>
+                    </div>
                 </header>
                 <sheet>
                     <div class="oe_title mb-4 d-flex align-items-center">

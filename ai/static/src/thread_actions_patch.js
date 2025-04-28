@@ -1,8 +1,5 @@
 import { patch } from "@web/core/utils/patch";
-import {
-    threadActionsInternal,
-    threadActionsRegistry,
-} from "@mail/core/common/thread_actions";
+import { threadActionsInternal, threadActionsRegistry } from "@mail/core/common/thread_actions";
 
 patch(threadActionsInternal, {
     condition(component, id, action) {
@@ -19,12 +16,20 @@ patch(threadActionsInternal, {
 });
 
 patch(threadActionsRegistry.get("close"), {
-    open(component) {
+    async open(component) {
         super.open(component);
-        if (component.thread?.correspondent?.persona.im_status === "agent") {
-            component.store.env.services.orm.unlink("discuss.channel", [
-                component.thread.id,
-            ]);
+
+        const correspondentPersona = component.thread?.correspondent?.persona;
+        if (correspondentPersona?.im_status === "agent") {
+            const orm = component.store.env.services.orm;
+            const agents = await orm.searchRead(
+                "ai.agent",
+                [["partner_id", "=", correspondentPersona.id]],
+                ["id"]
+            );
+            orm.call("ai.agent", "close_chat", [agents.map(({ id }) => id)], {
+                channel_id: component.thread?.id,
+            });
         }
     },
 });

@@ -146,10 +146,11 @@ class LLMApiService:
         }
 
     def _get_api_token(self):
-        if self.provider == 'openai' and self.env['ir.config_parameter'].get_param('ai.openai_key'):
-            return self.env['ir.config_parameter'].get_param('ai.openai_key')
-        elif self.provider == 'google' and self.env['ir.config_parameter'].get_param('ai.google_key'):
-            return self.env['ir.config_parameter'].get_param('ai.google_key')
+        config_param_sudo = self.env['ir.config_parameter'].sudo()
+        if self.provider == 'openai' and config_param_sudo.get_param('ai.openai_key'):
+            return config_param_sudo.get_param('ai.openai_key')
+        elif self.provider == 'google' and config_param_sudo.get_param('ai.google_key'):
+            return config_param_sudo.get_param('ai.google_key')
         elif api_key := os.getenv('ODOO_AI_CHATGPT_TOKEN'):
             return api_key
         raise UserError(_("No API key set for provider '%s'", self.provider))

@@ -129,6 +129,8 @@ class AIAgent(models.Model):
         domain=[('url', '!=', False)],
     )
 
+    attachment_processing_percentage = fields.Integer(compute="_compute_attachment_processing_percentage", default=100)
+
     topic_ids = fields.Many2many(
         'ai.topic',
         string="Topics",
@@ -305,33 +307,16 @@ class AIAgent(models.Model):
             failed_urls_str = ", ".join(failed_urls)
             raise UserError(_("The following URLs cannot not be accessed or used for the agent: %s", failed_urls_str))
 
-    def get_document_stats(self):
+    def action_refresh(self):
         self.ensure_one()
-        all_attachments = self.attachment_ids + self.url_attachment_ids
-        n_docs = len(all_attachments)
-        if not n_docs:
-            return {
-                'show_alert': False
-            }
-        self.env.cr.execute(SQL(
-            '''
-                SELECT COUNT(DISTINCT attachment_id)
-                FROM ai_embedding
-                WHERE attachment_id = ANY(%s) AND embedding_vector IS NOT NULL
-            ''', all_attachments.ids)
-        )
-        processed_count = self.env.cr.fetchall()[0][0]
-        percentage = int(processed_count / n_docs * 100) if n_docs else 0
+        if not self.env.user.has_group('base.group_system'):
+            return
 
         cron = self.env.ref('ai.ir_cron_generate_embedding')
         last_cron_time = cron.lastcall
 
         if not last_cron_time or last_cron_time < fields.Datetime.now() - timedelta(minutes=3):
             self.env.ref('ai.ir_cron_generate_embedding')._trigger()
-
-        return {
-            'percentage': percentage,
-        }
 
     def generate_response(self, prompt: str):
         for agent in self:
@@ -373,6 +358,17 @@ class AIAgent(models.Model):
                 'channelId': channel.id,
             },
         }
+
+    def close_chat(self, channel_id: int):
+        for record in self:
+            channel = self.env['discuss.channel'].search([
+                ('id', '=', channel_id),
+                ('channel_member_ids', 'any', [
+                    ('partner_id', '=', self.partner_id.id)
+                ])
+            ])
+            if channel and channel.is_member:
+                channel.sudo().unlink()
 
     def _generate_response(self, prompt, ai_agent, discuss_channel_id):
         response_temperature = TEMPERATURE_MAP[ai_agent.response_style]
@@ -523,3 +519,23 @@ class AIAgent(models.Model):
                 'content': ai_tool._use_tool(tool_arguments)
             })
         return tools_usage_results
+
+    @api.depends("attachment_ids", "url_attachment_ids")
+    def _compute_attachment_processing_percentage(self):
+        for record in self:
+            all_attachments = self.attachment_ids + self.url_attachment_ids
+            n_docs = len(all_attachments)
+            if not n_docs:
+                record.attachment_processing_percentage = 100
+
+            self.env.cr.execute(SQL(
+                '''
+                    SELECT COUNT(DISTINCT attachment_id)
+                    FROM ai_embedding
+                    WHERE attachment_id = ANY(%s) AND embedding_vector IS NOT NULL
+                ''', all_attachments.ids)
+            )
+            processed_count = self.env.cr.fetchall()[0][0]
+            percentage = int(processed_count / n_docs * 100) if n_docs else 0
+
+            record.attachment_processing_percentage = percentage
