@@ -1,15 +1,12 @@
 import { _t } from "@web/core/l10n/translation";
 
 import { AccountReport } from "@account_reports/components/account_report/account_report";
-import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
+import {L10nPHReportFilters} from "@l10n_ph_reports/components/ph_reports/filters";
 
-export class L10nPHSlspReportFilters extends AccountReportFilters {
+export class L10nPHSlspReportFilters extends L10nPHReportFilters {
     get filterExtraOptionsData() {
         return {
             ...super.filterExtraOptionsData,
-            'include_no_tin': {
-                'name': _t("Including Partners Without TIN"),
-            },
             'include_imports': {
                 'name': _t("Including Importations"),
             },
@@ -18,14 +15,6 @@ export class L10nPHSlspReportFilters extends AccountReportFilters {
 
     get selectedExtraOptions() {
         let selectedExtraOptionsName = super.selectedExtraOptions;
-
-        if (this.controller.cachedFilterOptions.include_no_tin) {
-            const includeNoTINName = _t("With Partners without TIN");
-
-            selectedExtraOptionsName = selectedExtraOptionsName
-                ? `${selectedExtraOptionsName}, ${includeNoTINName}`
-                : includeNoTINName;
-        }
 
         if (this.controller.cachedFilterOptions.include_imports) {
             const includeImportsName = _t("With Importations");
@@ -36,6 +25,6 @@ export class L10nPHSlspReportFilters extends AccountReportFilters {
 
         return selectedExtraOptionsName;
     }
-};
+}
 
 AccountReport.registerCustomComponent(L10nPHSlspReportFilters);

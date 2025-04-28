@@ -1,16 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import contextlib
-import io
-import re
-from importlib import metadata
-
-from PIL import ImageFont
-
-from odoo import api, models, _, fields
-from odoo.exceptions import UserError
-from odoo.fields import Domain
-from odoo.tools import date_utils, float_repr, SQL, parse_version
-from odoo.tools.misc import format_date, file_path
+from odoo import _, fields, models
+from odoo.tools import SQL, date_utils
+from odoo.tools.misc import format_date
 
 
 class L10n_PhSlspReportHandler(models.AbstractModel):
@@ -23,14 +14,11 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
         options.setdefault('buttons', []).append(
             {
                 'name': _('Export SLSP'),
-                'sequence': 5,  # As the export is a particular format from the BIR, we assume it will be the primary format used when exporting.
-                'action': 'export_file',
-                'action_param': 'export_slsp',
-                'file_export_type': _('XLSX'),
+                'sequence': 5,
+                'action': 'print_report_to_dat',
+                'file_export_type': _('DAT'),
             }
         )
-        # Initialise the custom options for this report.
-        options['include_no_tin'] = previous_options.get('include_no_tin', False)
         # Initialise the custom options for this report.
         options['include_imports'] = previous_options.get('include_imports', False)
 
@@ -44,18 +32,13 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
 
         # 1) Build the queries to get the months
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
-            domain = [('move_id.move_type', '=', options['move_type'])]
-            if not column_group_options.get('include_no_tin'):
-                domain.append(('partner_id.vat', '!=', False))
-            query = report._get_report_query(column_group_options, "strict_range", domain)
+            query = self._get_report_query(report, column_group_options)
             # The joins are there to filter out months for which we would not have any lines in the report.
             queries.append(SQL(
                 """
-                  SELECT (date_trunc('month', account_move_line.date::date) + interval '1 month' - interval '1 day')::date AS taxable_month,
+                  SELECT (date_trunc('month', account_move_line.date::DATE) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS taxable_month,
                          %(column_group_key)s                                                                              AS column_group_key
                     FROM %(table_references)s
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                    WHERE %(search_condition)s
                 GROUP BY taxable_month
                 ORDER BY taxable_month DESC
@@ -65,11 +48,9 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 search_condition=query.where_clause,
             ))
 
-        self.env.cr.execute(SQL(" UNION ALL ").join(queries))
-
         # 2) Make the lines
         unfold_all = options['export_mode'] == 'print' or options.get('unfold_all')
-        for res in self.env.cr.dictfetchall():
+        for res in self.env.execute_query_dict(SQL(" UNION ALL ").join(queries)):
             line_id = report._get_generic_line_id('', '', markup=str(res['taxable_month']))
             month_lines.append({
                 'id': line_id,
@@ -99,50 +80,46 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
         end_date = fields.Date.from_string(month)  # Month is already set to the last day of the month.
         start_date = date_utils.start_of(end_date, 'month')
         queries = []
+        extra_domain = [
+            # Make sure to only fetch records that are in the parent's row month
+            ('date', '>=', start_date),
+            ('date', '<=', end_date),
+        ]
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
-            domain = [
-                ('move_id.move_type', '=', options['move_type']),
-                # Make sure to only fetch records that are in the parent's row month
-                ('date', '>=', start_date),
-                ('date', '<=', end_date),
-            ]
-            if not column_group_options.get('include_no_tin'):
-                domain.append(('partner_id.vat', '!=', False))
-            query = report._get_report_query(column_group_options, "strict_range", domain=domain)
-            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
-            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
+            query = self._get_report_query(report, column_group_options, extra_domain=extra_domain)
             tail_query = report._get_engine_query_tail(offset, limit)
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                   AS column_group_key,
-                         cp.vat                                                                                 AS partner_vat,
-                         case when (cp.id = p.id and cp.is_company) or cp.id != p.id then cp.name else '' end   AS register_name,
+                         p.vat                                                                                  AS partner_vat,
+                         CASE WHEN p.last_name IS NOT NULL THEN p.name ELSE '' END                              AS register_name,
                          p.id                                                                                   AS partner_id,
-                         case when p.is_company = false then p.name else '' end                                 AS partner_name,
+                         CASE WHEN p.last_name IS NULL THEN p.name ELSE '' END                                  AS partner_name,
                          p.last_name || ' ' || p.first_name || ' ' || p.middle_name                             AS formatted_partner_name,
-                         p.is_company                                                                           AS is_company,
+                         p.last_name                                                                            AS last_name,
                          %(account_tag_name)s                                                                   AS tag_name,
-                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)              AS balance
+                         SUM(%(balance_select)s
+                             * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
+                         )                                                                                      AS balance
                     FROM %(table_references)s
-                    JOIN res_partner p ON p.id = account_move_line__move_id.partner_id
-                    JOIN res_partner cp ON cp.id = p.commercial_partner_id
+                    JOIN res_partner p ON p.id = account_move_line__move_id.commercial_partner_id
                     %(currency_table_join)s
                    WHERE %(search_condition)s
-                GROUP BY p.id, cp.id, %(account_tag_name)s
+                GROUP BY p.id, %(account_tag_name)s
                 %(tail_query)s
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
-                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
-                table_references=query.from_clause,
+                account_tag_name=self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql('account_tag', 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql('account_tag', 'balance_negate', query),
                 currency_table_join=report._currency_table_aml_join(column_group_options),
+                table_references=query.from_clause,
                 search_condition=query.where_clause,
                 tail_query=tail_query,
             ))
 
-        self.env.cr.execute(SQL(" UNION ALL ").join(queries))
-        return self._process_partner_lines(self.env.cr.dictfetchall(), options)
+        results = self.env.execute_query_dict(SQL(" UNION ALL ").join(queries))
+        return self._process_partner_lines(results, options)
 
     def _process_partner_lines(self, data_dict, options):
         """ Taking in the values from the database, this will construct the column values by using the tax grid mapping
@@ -161,7 +138,7 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 lines_values[values['partner_id']] = {
                     'name': values['formatted_partner_name'] or values['partner_name'],
                     'register_name': values['register_name'],
-                    'is_company': values['is_company'],
+                    'is_company': values['last_name'],
                     values['column_group_key']: {
                         'column_group_key': values['column_group_key'],
                         'partner_vat': values['partner_vat'],
@@ -208,16 +185,14 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
         end_date = fields.Date.from_string(month)
         start_date = date_utils.start_of(end_date, 'month')
         queries = []
+
+        extra_domain = [
+            ('date', '>=', start_date),
+            ('date', '<=', end_date),
+            ('move_id.commercial_partner_id', '=', partner_id),
+        ]
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
-            query = report._get_report_query(column_group_options, "strict_range", domain=[
-                ('move_id.move_type', '=', options['move_type']),
-                # Make sure to only fetch records that are in the parent's row month
-                ('date', '>=', start_date),
-                ('date', '<=', end_date),
-                ('move_id.partner_id', '=', partner_id),
-            ])
-            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
-            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
+            query = self._get_report_query(report, column_group_options, extra_domain=extra_domain)
             tail_query = report._get_engine_query_tail(offset, limit)
             queries.append(SQL(
                 """
@@ -225,7 +200,9 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                          account_move_line__move_id.id                                                          AS move_id,
                          account_move_line__move_id.name                                                        AS move_name,
                          %(account_tag_name)s                                                                   AS tag_name,
-                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)              AS balance
+                         SUM(%(balance_select)s
+                             * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
+                         )                                                                                      AS balance
                     FROM %(table_references)s
                     %(currency_table_join)s
                    WHERE %(search_condition)s
@@ -234,16 +211,16 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
-                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
-                table_references=query.from_clause,
+                account_tag_name=self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql('account_tag', 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql('account_tag', 'balance_negate', query),
                 currency_table_join=report._currency_table_aml_join(column_group_options),
+                table_references=query.from_clause,
                 search_condition=query.where_clause,
                 tail_query=tail_query,
             ))
 
-        self.env.cr.execute(SQL(" UNION ALL ").join(queries))
-        return self._process_move_lines(self.env.cr.dictfetchall(), options)
+        results = self.env.execute_query_dict(SQL(" UNION ALL ").join(queries))
+        return self._process_move_lines(results, options)
 
     def _process_move_lines(self, data_dict, options):
         """ Taking in the values from the database, this will construct the column values by using the tax grid mapping
@@ -279,291 +256,39 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
             'caret_options': 'account.move',
         }
 
-    def _get_grand_total_line_domain(self, options):
-        domain = super()._get_grand_total_line_domain(options)
-        if not options.get("include_no_tin"):
-            domain = Domain.AND([domain, [("partner_id.vat", "!=", False)]])
-        return domain
+    # ================
+    # .DAT file export
+    # ================
 
-    # xlsx export methods
-    @api.model
-    def export_slsp(self, options):
-        """ Export the report to a XLSX file formatted base on the BIR standards """
-        # We start by gathering the bold, italic and regular fonts to use later.
-        fonts = {}
-        for font_type in ('Reg', 'Bol', 'RegIta', 'BolIta'):
-            try:
-                lato_path = f'web/static/fonts/lato/Lato-{font_type}-webfont.ttf'
-                fonts[font_type] = ImageFont.truetype(file_path(lato_path), 12)
-            except (OSError, FileNotFoundError):
-                # This won't give great result, but it will work.
-                fonts[font_type] = ImageFont.load_default()
+    def _get_dat_line_grouping_keys(self):
+        return ['payee_id']
 
-        report = self.env['account.report'].browse(options['report_id'])
+    def _slsp_get_header_values(self, categories_summed_amount, options):
+        """ Each child reports have different fields they want in the header, so we will let them handle it. """
+        return []
 
-        # If we are exporting from the composite report, we get the important options from the selected section.
-        # Otherwise, we assume we are on a "custom" report that's only SLS or SLSP
-        # (for example during tests, or if the user want to split the reports in two separate views)
-        if report.section_report_ids:
-            section = report.section_report_ids.filtered(lambda section: section.id == options['selected_section_id'])[:1]
-            if not section:
-                # Technically, this should never happen, but better be safe and return an error.
-                raise UserError(_('The export can only be executed if a report section has been selected'))
-            # We only need to get the move type, grid map and the column from the section. The rest is standard.
-            section_options = section.get_options(options)
-            options.update({
-                'move_type': section_options['move_type'],
-                'report_grids_map': section_options['report_grids_map'],
-                'columns': section_options['columns'],
-            })
+    def _slsp_get_line_values(self, line, options):
+        """ Each child reports have different fields they want in the lines, so we will let them handle it. """
+        return []
 
-        # in any case, we want the export mode and unfold_all set
-        options.update({
-            'unfold_all': True,
-            'export_mode': 'print',
-            'ignore_totals_below_sections': True,
-        })
+    def _add_header_line(self, file_rows, categories_summed_amount, options):
+        header_row = self._slsp_get_header_values(categories_summed_amount, options)
+        file_rows.append(','.join(header_row))
 
-        # Get the lines, according to the options.
-        lines = report._get_lines(options)
+    def _add_details(self, file_rows, line_details, options):
+        for line in line_details.values():
+            line_values = self._slsp_get_line_values(line, options)
+            file_rows.append(','.join(line_values))
 
-        # Prepare the workbook.
-        output = io.BytesIO()
-        import xlsxwriter  # noqa: PLC0415
-        workbook = xlsxwriter.Workbook(output, {
-            'in_memory': True,
-            'strings_to_formulas': False,  # As we need to give a default value when using formulas, we need to handle them manually so this is not needed.
-        })
-
-        # Write the data.
-        sheet = workbook.add_worksheet(_('sls') if options['move_type'] == 'out_invoice' else _('slp'))
-        # Add the styles to the sheet to make it easier to get them later.
-        sheet.styles = {
-            'text': workbook.add_format({'font_name': 'Arial', 'border': 1, 'align': 'left'}),
-            'title': workbook.add_format({'font_name': 'Arial', 'bold': True, 'border': 1, 'align': 'left'}),
-            'monetary': workbook.add_format({'font_name': 'Arial', 'border': 1, 'align': 'right', 'num_format': '#,##0.00'}),
-            'total': workbook.add_format({'font_name': 'Arial', 'bold': True, 'border': 1, 'align': 'right', 'num_format': '#,##0.00'}),
-            'date': workbook.add_format({'font_name': 'Arial', 'border': 1, 'align': 'left', "num_format": "yyyy-mm-dd"}),
-        }
-        # Write the header part.
-        self._slsp_write_header_data(sheet, fonts, options['move_type'])
-        # Write the data part.
-        self._slsp_write_invoice_data(sheet, fonts, lines, options['move_type'], report)
-        # End of report.
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-        self._slsp_write_next_row(sheet, fonts, [(_('END OF REPORT'), 1, sheet.styles['text'])])
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-
-        # Finish the process and get the file.
-        workbook.close()
-        output.seek(0)
-        generated_file = output.read()
-        output.close()
-        return {
-            'file_name': _('sl_sales') if options['move_type'] == 'out_invoice' else _('sl_purchases'),
-            'file_content': generated_file,
-            'file_type': 'xlsx',
-        }
-
-    @api.model
-    def _slsp_write_header_data(self, sheet, fonts, move_type):
-        """ Write the header data into the sheet """
-        company = self.env.company
-        text_style = sheet.styles['text']
-        title_style = sheet.styles['title']
-        self._slsp_write_next_row(
-            sheet, fonts,
-            [(_('PURCHASE TRANSACTION') if move_type == 'in_invoice' else _('SALES TRANSACTION'), 3, title_style)]
-            + [('', 1, text_style)] * (8 if move_type == 'out_invoice' else 11)  # We need to add empty cells to align everything. Done only the first time, for the others we'll get the amount of col from the sheet.
-        )
-        self._slsp_write_next_row(sheet, fonts, [(_('RECONCILIATION OF LISTING FOR ENFORCEMENT'), 3, title_style)])
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-        self._slsp_write_next_row(sheet, fonts, [
-            (_('TIN:'), 1, title_style),
-            (company.vat, 2, text_style),
-        ])
-        self._slsp_write_next_row(sheet, fonts, [
-            (_('OWNER\'S NAME:'), 1, title_style),
-            (company.display_name, 2, text_style),
-        ])
-        self._slsp_write_next_row(sheet, fonts, [
-            (_('OWNER\'S TRADE NAME:'), 1, title_style),
-            (company.display_name, 2, text_style),
-        ])
-        self._slsp_write_next_row(sheet, fonts, [
-            (_('OWNER\'S ADDRESS:'), 1, title_style),
-            (re.sub(r'\n+', '\n', company.partner_id._display_address(without_company=True)), 2, text_style),
-        ])
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-
-    @api.model
-    def _slsp_write_invoice_data(self, sheet, fonts, lines, move_type, report):
-        """ Write the invoice data in the sheet. """
-        if move_type == 'out_invoice':
-            amount_columns = [
-                ('gross_amount', _('GROSS SALES')),
-                ('exempt_amount', _('EXEMPT SALES')),
-                ('zero_rated_amount', _('ZERO-RATED SALES')),
-                ('taxable_amount', _('TAXABLE SALES')),
-                ('tax_amount', _('OUTPUT TAX')),
-                ('gross_taxable_amount', _('GROSS TAXABLE SALES')),
-            ]
-        else:
-            amount_columns = [
-                ('gross_amount', _('GROSS PURCHASE')),
-                ('exempt_amount', _('EXEMPT PURCHASE')),
-                ('zero_rated_amount', _('ZERO-RATED PURCHASE')),
-                ('taxable_amount', _('TAXABLE PURCHASE')),
-                ('services_amount', _('PURCHASE OF SERVICES')),
-                ('capital_goods_amount', _('PURCHASE OF CAPITAL GOODS')),
-                ('non_capital_goods_amount', _('PURCHASE OF OTHER THAN CAPITAL GOODS')),
-                ('tax_amount', _('INPUT TAX')),
-                ('gross_taxable_amount', _('GROSS TAXABLE PURCHASE')),
-            ]
-
-        title_style = sheet.styles['title']
-        text_style = sheet.styles['text']
-        monetary_style = sheet.styles['monetary']
-        total_style = sheet.styles['total']
-        date_style = sheet.styles['date']
-        # Write the titles.
-        self._slsp_write_next_row(sheet, fonts, [
-            (_('TAXABLE'), 1, title_style),
-            (_('TAXPAYER'), 1, title_style),
-            (_('REGISTER NAME'), 1, title_style),
-            (_('NAME OF CUSTOMER') if move_type == 'out_invoice' else _('NAME OF SUPPLIER'), 1, title_style),
-            (_('CUSTOMER\'S ADDRESS') if move_type == 'out_invoice' else _('SUPPLIER\'S ADDRESS'), 1, title_style),
-        ] + [(_('AMOUNT OF'), 1, title_style)] * len(amount_columns))
-        self._slsp_write_next_row(sheet, fonts, [
-            (_('MONTH'), 1, title_style),
-            (_('IDENTIFICATION'), 1, title_style),
-            ('', 1, title_style),
-            (_('(Last Name, First Name, Middle Name)'), 1, title_style),
-            ('', 1, title_style),
-        ] + [(column[1], 1, title_style) for column in amount_columns])
-        self._slsp_write_next_row(sheet, fonts, [
-            ('', 1, title_style),
-            (_('NUMBER'), 1, title_style),
-        ])
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-        amounts_start = len(sheet.table) + 1  # store the y position of the start of the data to be able to use formulas later.
-
-        # Filter the lines to separate report lines, and the frand total.
-        report_lines = []
-        grand_total_line = None
-        for line in lines:
-            markup = report._parse_line_id(line['id'])[-1][0]
-            if markup == 'grand_total':
-                grand_total_line = line
-            else:
-                report_lines.append(line)
-
-        # Finally write the moves' data.
-        line_vals = {}
-        amount_expression_labels = [amount_column[0] for amount_column in amount_columns]
-
-        for line in report_lines:
-            model = report._parse_line_id(line['id'])[-1][1]
-            # Lines are ordered, so for month and partner lines we can gather the vals, and then write the lines when we are processing aml.
-            if model is None:  # month line
-                line_vals['month'] = self.env['account.report']._parse_line_id(line['id'])[-1][0]
-                continue
-            elif model == 'res.partner':
-                line_vals['partner_name'] = line['name'] if not line['is_company'] else ''
-                line_vals.update({
-                    col['expression_label']: col['no_format'] for col in line['columns']
-                })
-                continue
-            # if we want to group by partner, we add a check here and not update the vals, and not continue above
-            elif model == 'account.move':
-                # Make sure to only override the amount values (we want to keep the partner info)
-                line_vals.update({
-                    col['expression_label']: col['no_format'] for col in line['columns'] if col["expression_label"] in amount_expression_labels
-                })
-            # Time to write our line.
-            self._slsp_write_next_row(sheet, fonts, [
-                (line_vals['month'], 1, date_style),
-                (line_vals['partner_vat'], 1, text_style),
-                (line_vals['register_name'], 1, text_style),
-                (line_vals['partner_name'], 1, text_style),
-                (re.sub(r', ', '\n', line_vals['partner_address']), 1, text_style),
-            ] + [(line_vals[column[0]], 1, monetary_style) for column in amount_columns])
-        amounts_end = len(sheet.table)
-        self._slsp_write_next_row(sheet, fonts, [])  # Empty row.
-        # Write the totals. We use formulas to compute them so that the sheet can be edited more easily.
-        if grand_total_line:
-            total_vals = {col['expression_label']: col['no_format'] for col in grand_total_line['columns']}
-            total_cols = [(_('Grand total:'), 1, text_style)] + [('', 1, text_style)] * 4
-            for i, column in enumerate(amount_columns):
-                col = chr(70 + i)  # 70 is the ascii code for 'F'. It matches the first amount column.
-                value = total_vals[column[0]]
-                total_cols.append((f'=sum({col}{amounts_start}:{col}{amounts_end})', 1, total_style, value))
-            self._slsp_write_next_row(sheet, fonts, total_cols)
-
-    @api.model
-    def _set_xlsx_cell_sizes(self, sheet, fonts, col, row, value, style, has_colspan):
-        """ This small helper will resize the cells if needed, to allow to get a better output.
-        Backport of the same method in account_report in 17.1. as it is needed for this report.
+    def _get_partner_address_lines(self, partner):
         """
-
-        def get_string_width(font, string):
-            return font.getlength(string) / 5
-
-        # Get the correct font for the row style
-        font_type = ('Bol' if style.bold else 'Reg') + ('Ita' if style.italic else '')
-        report_font = fonts[font_type]
-
-        # 8.43 is the default width of a column in Excel.
-        if parse_version(metadata.version('xlsxwriter')) >= parse_version('3.0.6'):
-            # cols_sizes was removed in 3.0.6 and colinfo was replaced by col_info
-            # see https://github.com/jmcnamara/XlsxWriter/commit/860f4a2404549aca1eccf9bf8361df95dc574f44
-            try:
-                col_width = sheet.col_info[col][0]
-            except KeyError:
-                col_width = 8.43
+        Prepare two strings representing the partner's address formated as required in the DAT file.
+        :param partner: The partner for which we want to get the address lines.
+        :return: The two strings representing the partner's address lines.
+        """
+        if partner.street2:
+            address_1 = f'{partner.street2} {partner.street}'
         else:
-            col_width = sheet.col_sizes.get(col, [8.43])[0]
-
-        with contextlib.suppress(ValueError):
-            # This is needed, otherwise we could compute width on very long number such as 12.0999999998
-            # which wouldn't show well in the end result as the numbers are rounded.
-            value = float_repr(float(value), self.env.company.currency_id.decimal_places)
-
-        # Start by computing the width of the cell if we are not using colspans.
-        if not has_colspan:
-            # Ensure to take indents into account when computing the width.
-            formatted_value = f"{'  ' * style.indent}{value}"
-            width = get_string_width(
-                report_font,
-                max(formatted_value.split('\n'), key=lambda line: get_string_width(report_font, line))
-            )
-            # We set the width if it is bigger than the current one, with a limit at 75 (max to avoid taking excessive space).
-            if width > col_width:
-                sheet.set_column(col, col, min(width, 75))
-
-    @api.model
-    def _slsp_write_next_row(self, sheet, fonts, values):
-        """ Take a list of tuples (value, colspan, style) and write them on the next row. """
-        # We need to be able to write on y in order to increase the offset.
-        y = len(sheet.table)
-        x = 0
-        col_amount = len(sheet.table[0])
-        for value, colspan, style, *formula_result in values:
-            # Handles resizing the column if needed.
-            self._set_xlsx_cell_sizes(sheet, fonts, x, y, value, style, colspan > 1)
-            if colspan == 1:
-                # For simplicity, it doesn't support merging formula cells.
-                if isinstance(value, str) and value.startswith('='):
-                    # Some software won't automatically calculate the value upon opening which is an issue.
-                    # So we force the calculation of the formula too to ensure a same behaviour everytime.
-                    sheet.write_formula(y, x, value, style, formula_result and formula_result[0])
-                else:
-                    sheet.write(y, x, value, style)
-            else:
-                sheet.merge_range(y, x, y, x + colspan - 1, value, style)
-            x += colspan
-        # Fill the remaining cells with empty values so that the style is applied.
-        for xx in range(x, col_amount):
-            sheet.write(y, xx, '', sheet.styles['text'])
+            address_1 = partner.street or ''
+        address_2 = f'{partner.city} {partner.state_id.name}'
+        return address_1, address_2

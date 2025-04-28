@@ -10,44 +10,50 @@ from odoo.tests import tagged
 class TestSLSPGeneration(TestAccountReportsCommon, TestPhCommon):
 
     @classmethod
+    @TestAccountReportsCommon.setup_country('ph')
     def setUpClass(cls):
         super().setUpClass()
 
-        # Gather taxes that we will use to build our moves. We need a variety of them as we want to test the different cases.
-        vat_exempt_sale = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_sale_vat_exempt')
-        vat_zr_sale = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_sale_vat_zero_rated')
-        vat_sale_12 = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_sale_vat_12')
+        ChartTemplate = cls.env["account.chart.template"].with_company(cls.company_data["company"])
+        # SLS
+        tax_sale_exempt = ChartTemplate.ref('l10n_ph_tax_sale_0_exempt')
+        tax_sale_zero_rated = ChartTemplate.ref('l10n_ph_tax_sale_0_zr')
+        tax_sale_goods = ChartTemplate.ref('l10n_ph_tax_sale_12')
 
-        vat_exempt_purchase = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_vat_exempt')
-        vat_zr_purchase = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_vat_zero_rated')
-        vat_purchase_12 = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_vat_12')
-        vat_purchase_service_12 = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_vat_12_service')
-        vat_purchase_capital_12 = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_vat_12_capital')
+        # SLP
+        tax_purchase_exempt = ChartTemplate.ref('l10n_ph_tax_purchase_0_exempt')
+        tax_purchase_zero_rated = ChartTemplate.ref('l10n_ph_tax_purchase_0_zr')
+        tax_purchase_service = ChartTemplate.ref('l10n_ph_tax_purchase_12_s')
+        tax_purchase_capital_goods = ChartTemplate.ref('l10n_ph_tax_purchase_12_c')
+        tax_purchase_pit = ChartTemplate.ref('l10n_ph_tax_purchase_4_pit')
+        tax_purchase_goods = ChartTemplate.ref('l10n_ph_tax_purchase_12')
+        tax_purchase_nr_service = ChartTemplate.ref('l10n_ph_tax_purchase_12_s_nr')
+        tax_purchase_ncr = ChartTemplate.ref('l10n_ph_tax_purchase_12_ncr')
 
         invoice_data = [
             # Sales
-            ('out_invoice', cls.partner_c, '2020-02-16', [(300, vat_sale_12)]),
-            ('out_invoice', cls.partner_c, '2020-02-15', [(300, False)]),  # No tax grids so ignored in the report
-            ('out_invoice', cls.partner_a, '2020-01-15', [
-                (250, vat_sale_12),
-                (200, vat_exempt_sale),
-            ]),
-            ('out_invoice', cls.partner_b, '2020-01-15', [
-                (500, vat_sale_12),
-                (100, vat_zr_sale),
-            ]),
+            ('out_invoice', cls.partner_c, '2024-02-16', [(300, tax_sale_goods)]),
+            ('out_invoice', cls.partner_c, '2024-02-15', [(300, False)]),  # No tax grids so ignored in the report
+            ('out_invoice', cls.partner_a, '2024-01-15', [(250, tax_sale_goods), (200, tax_sale_exempt)]),
+            ('out_invoice', cls.partner_b, '2024-01-15', [(500, tax_sale_goods), (100, tax_sale_zero_rated)]),
             # Purchases
-            ('in_invoice', cls.partner_c, '2020-02-16', [(300, vat_purchase_12)]),
-            ('in_invoice', cls.partner_a, '2020-02-15', [(300, False)]),  # No tax grids so ignored in the report
-            ('in_invoice', cls.partner_a, '2020-01-15', [
-                (250, vat_purchase_12),
-                (200, vat_exempt_purchase),
-                (50, vat_purchase_service_12),
+            ('in_invoice', cls.partner_c, '2024-02-16', [(300, tax_purchase_goods)]),
+            ('in_invoice', cls.partner_a, '2024-02-15', [(300, False)]),  # No tax grids so ignored in the report
+            ('in_invoice', cls.partner_a, '2024-01-15', [
+                (250, tax_purchase_goods),
+                (200, tax_purchase_exempt),
+                (50, tax_purchase_service),
             ]),
-            ('in_invoice', cls.partner_b, '2020-01-15', [
-                (500, vat_purchase_12),
-                (100, vat_zr_purchase),
-                (250, vat_purchase_capital_12),
+            ('in_invoice', cls.partner_b, '2024-01-15', [
+                (500, tax_purchase_goods),
+                (100, tax_purchase_zero_rated),
+                (250, tax_purchase_capital_goods),
+            ]),
+            ('in_invoice', cls.partner_c, '2024-01-15', [
+                (250, tax_purchase_goods),
+                (500, tax_purchase_pit),
+                (400, tax_purchase_nr_service),
+                (300, tax_purchase_ncr),
             ]),
         ]
         invoice_vals = []
@@ -68,77 +74,64 @@ class TestSLSPGeneration(TestAccountReportsCommon, TestPhCommon):
         invoices = cls.env['account.move'].create(invoice_vals)
         invoices.action_post()
 
-    def test_sl_sales(self):
-        """ Test the report """
-        # 1: Get the file data
-        report = self.env.ref('l10n_ph_reports.sls_report')
-        options = self._generate_options(report, fields.Date.from_string('2020-01-01'), fields.Date.from_string('2020-02-29'))
-        report_handler = self.env['l10n_ph.slsp.report.handler']
-
-        sls = report_handler.export_slsp(options)['file_content']
-        # 2: Build the expected values
-        expected_row_values = {
-            # Header
-            0: ['SALES TRANSACTION'],
-            1: ['RECONCILIATION OF LISTING FOR ENFORCEMENT'],
-            5: ['TIN:', '123-456-789-123'],
-            6: ['OWNER\'S NAME:', 'Test Company'],
-            7: ['OWNER\'S TRADE NAME:', 'Test Company'],
-            8: ['OWNER\'S ADDRESS:', '8 Super Street\nSuper City  8888\nPhilippines'],
-
-            # Data headers
-            10: ['TAXABLE', 'TAXPAYER', 'REGISTER NAME', 'NAME OF CUSTOMER', 'CUSTOMER\'S ADDRESS', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF'],
-            11: ['MONTH', 'IDENTIFICATION', '', '(Last Name, First Name, Middle Name)', '', 'GROSS SALES', 'EXEMPT SALES', 'ZERO-RATED SALES', 'TAXABLE SALES', 'OUTPUT TAX', 'GROSS TAXABLE SALES'],
-            12: ['', 'NUMBER'],
-
-            # Moves data
-            14: ['2020-02-29', '789-456-123-456', 'Test Partner Company', 'Smith John Doe', '10 Super Street\nSuper City  8888\nPhilippines', 300.0, '',    '',    300.0, 36.0, 336.0],  # noqa: E241
-            15: ['2020-01-31', '789-456-123-789', '',                     'Test Partner',   '9 Super Street\nSuper City  8888\nPhilippines',  450.0, 200.0, '',    250.0, 30.0, 280.0],  # noqa: E241
-            16: ['2020-01-31', '789-456-123-456', 'Test Partner Company', '',               '10 Super Street\nSuper City  8888\nPhilippines', 600.0, '',    100.0, 500.0, 60.0, 560.0],  # noqa: E241
-
-            # Totals
-            18: ['Grand total:', '', '', '', '', 1350.0, 200.0, 100.0, 1050.0, 126.0, 1176.0],
-
-            # End
-            20: ['END OF REPORT'],
-        }
-        # 3. Test the file
-        self._test_xlsx_file(sls, expected_row_values)
-
-    def test_sl_purchase(self):
-        """ Test the report """
-        # 1: Open the wizard
-        # 1: Get the file data
+    def test_export_slp(self):
         report = self.env.ref('l10n_ph_reports.slp_report')
-        options = self._generate_options(report, fields.Date.from_string('2020-01-01'), fields.Date.from_string('2020-02-29'))
-        report_handler = self.env['l10n_ph.slsp.report.handler']
+        options = self._generate_options(report, fields.Date.from_string('2024-01-01'), fields.Date.from_string('2024-03-31'))
+        report_handler = self.env['l10n_ph.slp.report.handler']
 
-        slp = report_handler.export_slsp(options)['file_content']
-        # 3: Build the expected values
-        expected_row_values = {
-            # Header
-            0: ['PURCHASE TRANSACTION'],
-            1: ['RECONCILIATION OF LISTING FOR ENFORCEMENT'],
-            5: ['TIN:', '123-456-789-123'],
-            6: ['OWNER\'S NAME:', 'Test Company'],
-            7: ['OWNER\'S TRADE NAME:', 'Test Company'],
-            8: ['OWNER\'S ADDRESS:', '8 Super Street\nSuper City  8888\nPhilippines'],
+        # Adds in the data that the wizard would add
+        options.update({
+           'alpha_type': 'SLSP',
+           'form_type_code': 'P',
+           'periodicity': 'quarterly',
+           'filename_date_format': '%m%Y',
+        })
 
-            # Data headers
-            10: ['TAXABLE', 'TAXPAYER', 'REGISTER NAME', 'NAME OF SUPPLIER', 'SUPPLIER\'S ADDRESS', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF', 'AMOUNT OF'],
-            11: ['MONTH', 'IDENTIFICATION', '', '(Last Name, First Name, Middle Name)', '', 'GROSS PURCHASE', 'EXEMPT PURCHASE', 'ZERO-RATED PURCHASE', 'TAXABLE PURCHASE', 'PURCHASE OF SERVICES', 'PURCHASE OF CAPITAL GOODS', 'PURCHASE OF OTHER THAN CAPITAL GOODS', 'INPUT TAX', 'GROSS TAXABLE PURCHASE'],
-            12: ['', 'NUMBER'],
+        file_data = report_handler.export_report_to_dat(options)
+        self.assertEqual(file_data['file_name'], "123456789P032024.dat")
+        self.assertEqual(file_data['file_type'], "dat")
 
-            # Partners data
-            14: ['2020-02-29', '789-456-123-456', 'Test Partner Company', 'Smith John Doe', '10 Super Street\nSuper City  8888\nPhilippines', 300.0, '',    '',    300.0, '',   '',    300.0, 36.0, 336.0],  # noqa: E241
-            15: ['2020-01-31', '789-456-123-789', '',                     'Test Partner',   '9 Super Street\nSuper City  8888\nPhilippines',  500.0, 200.0, '',    300.0, 50.0, '',    250.0, 36.0, 336.0],  # noqa: E241
-            16: ['2020-01-31', '789-456-123-456', 'Test Partner Company', '',               '10 Super Street\nSuper City  8888\nPhilippines', 850.0, '',    100.0, 750.0, '',   250.0, 500.0, 90.0, 840.0],  # noqa: E241
+        file_content = file_data['file_content']
+        file_data = [row.split(',') for row in file_content.split('\n')]
 
-            # Totals
-            18: ['Grand total:', '', '', '', '', 1650.0, 200.0, 100.0, 1350.0, 50.0, 250.0, 1050.0, 162.0, 1512.0],
+        self.assertListEqual(
+            file_data,
+            [
+                # Header
+                ['H', 'P', '123456789', '"Test Company"', '""', '""', '""', '"Test Company"', '"8 Super Street"', '"Super City False"', '200.00', '100.00', '450.00', '250.00', '2100.00', '296.00', '240.00', '56.00', '', '03/31/2024'],
+                # Details
+                ['D', 'P', '789456123', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '"9 Super Street"', '"Super City False"', '200.00', '0.00', '50.00', '0.00', '250.00', '36.00', '123456789', '03/31/2024'],
+                ['D', 'P', '789456123', '"Test Partner Company"', '""', '""', '""', '"10 Super Street"', '"Super City False"', '0.00', '100.00', '400.00', '250.00', '1850.00', '260.00', '123456789', '03/31/2024']
+            ],
+        )
 
-            # End
-            20: ['END OF REPORT'],
-        }
-        # 4. Test the file
-        self._test_xlsx_file(slp, expected_row_values)
+    def test_export_sls(self):
+        report = self.env.ref('l10n_ph_reports.sls_report')
+        options = self._generate_options(report, fields.Date.from_string('2024-01-01'), fields.Date.from_string('2024-03-31'))
+        report_handler = self.env['l10n_ph.sls.report.handler']
+
+        # Adds in the data that the wizard would add
+        options.update({
+           'alpha_type': 'SLSP',
+           'form_type_code': 'S',
+           'periodicity': 'quarterly',
+           'filename_date_format': '%m%Y',
+        })
+
+        file_data = report_handler.export_report_to_dat(options)
+        self.assertEqual(file_data['file_name'], "123456789S032024.dat")
+        self.assertEqual(file_data['file_type'], "dat")
+
+        file_content = file_data['file_content']
+        file_data = [row.split(',') for row in file_content.split('\n')]
+
+        self.assertListEqual(
+            file_data,
+            [
+                # Header
+                ['H', 'S', '123456789', '"Test Company"', '""', '""', '""', '"Test Company"', '"8 Super Street"', '"Super City False"', '200.00', '100.00', '1050.00', '126.00', '', '03/31/2024'],
+                # Details
+                ['D', 'S', '789456123', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '"9 Super Street"', '"Super City False"', '200.00', '0.00', '250.00', '30.00', '123456789', '03/31/2024'],
+                ['D', 'S', '789456123', '"Test Partner Company"', '""', '""', '""', '"10 Super Street"', '"Super City False"', '0.00', '100.00', '800.00', '96.00', '123456789', '03/31/2024'],
+            ]
+        )

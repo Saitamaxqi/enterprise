@@ -17,6 +17,10 @@ Accounting reports for the Philippines
         "data/account_return_data.xml",
         "data/sawt_qap_report.xml",
         "data/slsp_report.xml",
+
+        "security/ir.model.access.csv",
+
+        "wizard/vat_report_export.xml",
     ],
     'assets': {
         'web.assets_backend': [

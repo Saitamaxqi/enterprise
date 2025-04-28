@@ -8,7 +8,7 @@
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_unreconciled" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
-        <field name="filter_multi_company">selector</field>
+        <field name="filter_multi_company">tax_units</field>
         <field name="default_opening_date_filter">this_quarter</field>
         <field name="search_bar" eval="False"/>
         <field name="load_more_limit" eval="80"/>
@@ -20,19 +20,14 @@
                 <field name="figure_type">string</field>
             </record>
             <record id="sls_report_register_name" model="account.report.column">
-                <field name="name">Register Name</field>
+                <field name="name">Registered Name</field>
                 <field name="expression_label">register_name</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="sls_report_customer_address" model="account.report.column">
-                <field name="name">Customer's Address</field>
+                <field name="name">Registered Address</field>
                 <field name="expression_label">partner_address</field>
                 <field name="figure_type">string</field>
-            </record>
-            <record id="sls_report_gross_sales" model="account.report.column">
-                <field name="name">Gross Sales</field>
-                <field name="expression_label">gross_amount</field>
-                <field name="figure_type">monetary</field>
             </record>
             <record id="sls_report_exempt_sales" model="account.report.column">
                 <field name="name">Exempt Sales</field>
@@ -40,23 +35,18 @@
                 <field name="figure_type">monetary</field>
             </record>
             <record id="sls_report_zero_rated_sales" model="account.report.column">
-                <field name="name">Zero Rated Sales</field>
+                <field name="name">Zero-Rated Sales</field>
                 <field name="expression_label">zero_rated_amount</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="sls_report_taxable_sales" model="account.report.column">
-                <field name="name">Taxable Sales</field>
+                <field name="name">VAT Sales</field>
                 <field name="expression_label">taxable_amount</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="sls_report_output_tax" model="account.report.column">
                 <field name="name">Output Tax</field>
                 <field name="expression_label">tax_amount</field>
-                <field name="figure_type">monetary</field>
-            </record>
-            <record id="sls_report_gross_taxable_sales" model="account.report.column">
-                <field name="name">Gross Taxable Sales</field>
-                <field name="expression_label">gross_taxable_amount</field>
                 <field name="figure_type">monetary</field>
             </record>
         </field>
@@ -70,7 +60,7 @@
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_unreconciled" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
-        <field name="filter_multi_company">selector</field>
+        <field name="filter_multi_company">tax_units</field>
         <field name="default_opening_date_filter">this_quarter</field>
         <field name="search_bar" eval="False"/>
         <field name="load_more_limit" eval="80"/>
@@ -82,19 +72,14 @@
                 <field name="figure_type">string</field>
             </record>
             <record id="slp_report_register_name" model="account.report.column">
-                <field name="name">Register Name</field>
+                <field name="name">Registered Name</field>
                 <field name="expression_label">register_name</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="slp_report_supplier_address" model="account.report.column">
-                <field name="name">Supplier's Address</field>
+                <field name="name">Registered Address</field>
                 <field name="expression_label">partner_address</field>
                 <field name="figure_type">string</field>
-            </record>
-            <record id="slp_report_gross_purchases" model="account.report.column">
-                <field name="name">Gross Purchase</field>
-                <field name="expression_label">gross_amount</field>
-                <field name="figure_type">monetary</field>
             </record>
             <record id="slp_report_exempt_purchases" model="account.report.column">
                 <field name="name">Exempt Purchase</field>
@@ -102,13 +87,8 @@
                 <field name="figure_type">monetary</field>
             </record>
             <record id="slp_report_zero_rated_purchases" model="account.report.column">
-                <field name="name">Zero Rated Purchase</field>
+                <field name="name">Zero-Rated Purchase</field>
                 <field name="expression_label">zero_rated_amount</field>
-                <field name="figure_type">monetary</field>
-            </record>
-            <record id="slp_report_taxable_purchases" model="account.report.column">
-                <field name="name">Taxable Purchase</field>
-                <field name="expression_label">taxable_amount</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="slp_report_services" model="account.report.column">
@@ -122,18 +102,13 @@
                 <field name="figure_type">monetary</field>
             </record>
             <record id="slp_report_other_than_cg" model="account.report.column">
-                <field name="name">Purchase of Other Than Capital Goods</field>
+                <field name="name">Purchase Other Than Capital Goods</field>
                 <field name="expression_label">non_capital_goods_amount</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="slp_report_input_tax" model="account.report.column">
                 <field name="name">Input Tax</field>
                 <field name="expression_label">tax_amount</field>
-                <field name="figure_type">monetary</field>
-            </record>
-            <record id="slp_report_gross_taxable_purchases" model="account.report.column">
-                <field name="name">Gross Taxable Purchase</field>
-                <field name="expression_label">gross_taxable_amount</field>
                 <field name="figure_type">monetary</field>
             </record>
         </field>
@@ -147,7 +122,7 @@
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_unreconciled" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
-        <field name="filter_multi_company">selector</field>
+        <field name="filter_multi_company">tax_units</field>
         <field name="default_opening_date_filter">this_quarter</field>
         <field name="search_bar" eval="True"/>
         <field name="load_more_limit" eval="80"/>

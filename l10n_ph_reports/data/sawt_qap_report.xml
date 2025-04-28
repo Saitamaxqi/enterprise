@@ -9,7 +9,7 @@
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_unreconciled" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
-        <field name="filter_multi_company">selector</field>
+        <field name="filter_multi_company">tax_units</field>
         <field name="default_opening_date_filter">this_quarter</field>
         <field name="search_bar" eval="False"/>
         <field name="load_more_limit" eval="80"/>
@@ -56,7 +56,7 @@
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_unreconciled" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
-        <field name="filter_multi_company">selector</field>
+        <field name="filter_multi_company">tax_units</field>
         <field name="default_opening_date_filter">this_quarter</field>
         <field name="search_bar" eval="False"/>
         <field name="load_more_limit" eval="80"/>
@@ -104,7 +104,7 @@
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_unreconciled" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
-        <field name="filter_multi_company">selector</field>
+        <field name="filter_multi_company">tax_units</field>
         <field name="default_opening_date_filter">this_quarter</field>
         <field name="search_bar" eval="True"/>
         <field name="load_more_limit" eval="80"/>
