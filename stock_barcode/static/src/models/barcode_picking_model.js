@@ -553,7 +553,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     get displaySignatureButton() {
         return (
-            this.record.picking_type_code === "outgoing" && this.groups.group_stock_sign_delivery
+            this.record.picking_type_code === "outgoing" && !this.record.signature && this.groups.group_stock_sign_delivery
         );
     }
 
