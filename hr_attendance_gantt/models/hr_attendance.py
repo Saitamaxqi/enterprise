@@ -7,7 +7,7 @@ from pytz import timezone, UTC, utc
 from odoo import api, fields, models
 from odoo.osv import expression
 from odoo.tools import float_is_zero
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 from odoo.tools.date_utils import localized
 
 

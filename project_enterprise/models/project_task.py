@@ -12,7 +12,8 @@ from odoo.fields import Domain
 from odoo.osv import expression
 from odoo.exceptions import UserError
 from odoo.tools import _, format_list, topological_sort, Query
-from odoo.tools.date_intervals import Intervals, sum_intervals
+from odoo.tools.intervals import Intervals
+from odoo.tools.date_utils import sum_intervals
 from odoo.tools.sql import SQL
 from odoo.addons.resource.models.utils import filter_domain_leaf
 

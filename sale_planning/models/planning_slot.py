@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -8,7 +7,7 @@ import pytz
 from odoo import _, api, fields, models
 from odoo.osv import expression
 from odoo.tools import float_utils, DEFAULT_SERVER_DATETIME_FORMAT
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 
 
 class PlanningSlot(models.Model):

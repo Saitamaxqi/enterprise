@@ -6,7 +6,8 @@ from collections import defaultdict
 
 from odoo import _, models
 
-from odoo.tools.date_intervals import Intervals, sum_intervals
+from odoo.tools.intervals import Intervals
+from odoo.tools.date_utils import sum_intervals
 
 
 class ProjectProject(models.Model):

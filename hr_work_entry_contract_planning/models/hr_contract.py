@@ -4,7 +4,7 @@ from collections import defaultdict
 import pytz
 
 from odoo import fields, models
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 
 
 class HrContract(models.Model):

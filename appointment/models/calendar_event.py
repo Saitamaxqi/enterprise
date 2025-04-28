@@ -9,7 +9,7 @@ from markupsafe import Markup
 from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
 from odoo.addons.calendar.models.utils import interval_from_events
 from odoo.exceptions import ValidationError
-from odoo.tools.date_intervals import Intervals, intervals_overlap, invert_intervals
+from odoo.tools.intervals import Intervals, intervals_overlap, invert_intervals
 from odoo.tools.date_utils import localized
 from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
 from odoo.osv import expression

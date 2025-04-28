@@ -5,7 +5,7 @@ import pytz
 
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import users
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 from .common import AppointmentCommon
 
 

@@ -6,7 +6,7 @@ import pytz
 
 from odoo.tests import users
 from odoo.addons.appointment.tests.test_appointment_gantt import AppointmentGanttTestCommon
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 
 
 class AppointmentHRGanttTest(AppointmentGanttTestCommon):

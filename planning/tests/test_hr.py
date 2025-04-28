@@ -5,7 +5,7 @@ from freezegun import freeze_time
 import pytz
 
 from odoo import fields
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 
 from .common import TestCommonPlanning
 

@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, models
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 from odoo.tools.date_utils import localized
 
 

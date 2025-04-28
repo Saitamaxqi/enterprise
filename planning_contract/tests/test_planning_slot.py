@@ -5,7 +5,7 @@ from pytz import UTC, timezone
 
 from .common import TestPlanningContractCommon
 from odoo.tests import new_test_user
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 
 class TestPlanningContract(TestPlanningContractCommon):
     @classmethod

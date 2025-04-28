@@ -5,7 +5,7 @@ from collections import defaultdict
 from pytz import timezone
 
 from odoo import models
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 
 
 class HrContract(models.Model):
