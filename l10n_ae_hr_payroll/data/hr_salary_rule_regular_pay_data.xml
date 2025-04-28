@@ -402,7 +402,10 @@ gross_salary = version.wage + version.l10n_ae_housing_allowance + version.l10n_a
 start_date = payslip.date_from
 end_date = payslip.date_to
 number_of_days_in_month = (end_date - start_date).days + 1
-result = - worked_days['OUT'].number_of_days * (gross_salary / number_of_days_in_month)
+
+out_of_contract_days =  max(0, (version.date_start - start_date).days) + max(0, (end_date - (version.date_end or end_date)).days)
+
+result = - out_of_contract_days * (gross_salary / number_of_days_in_month)
             </field>
             <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         </record>
