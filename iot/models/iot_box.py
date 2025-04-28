@@ -13,7 +13,7 @@ class IotBox(models.Model):
     _description = 'IoT Box'
 
     name = fields.Char('Name', readonly=True)
-    identifier = fields.Char(string='Identifier (Mac Address)', readonly=True)
+    identifier = fields.Char(string='Identifier', readonly=True)
     device_ids = fields.One2many('iot.device', 'iot_id', string="Devices")
     device_count = fields.Integer(compute='_compute_device_count')
     ip = fields.Char('Domain Address', readonly=True)

@@ -149,7 +149,7 @@ class BlackBoxDriver(SerialDriver):
         return ack == ACK
 
     def _box_id(self):
-        return 'BODO001' + helpers.get_mac_address().upper().replace(':', '')[-7:]
+        return 'BODO001' + helpers.get_identifier().upper()[-7:]
 
     def _certified_ref(self):
         self.data['value'] = self._box_id()
@@ -193,7 +193,7 @@ class BlackBoxDriver(SerialDriver):
             'order_id': data['id'],
             'device_identifier': self.device_identifier,
             'blackbox_response': self.data['value'],
-            'iot_mac': helpers.get_mac_address()
+            'iot_mac': helpers.get_identifier()
         })
 
     def _request_registerReceipt(self, data):

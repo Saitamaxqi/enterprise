@@ -26,19 +26,19 @@ _logger = logging.getLogger(__name__)
 
 
 class IoTController(http.Controller):
-    def _search_box(self, mac_address):
-        return request.env['iot.box'].sudo().search([('identifier', '=', mac_address)], limit=1)
+    def _search_box(self, identifier):
+        return request.env['iot.box'].sudo().search([('identifier', '=', identifier)], limit=1)
 
     @http.route('/iot/get_handlers', type='http', auth='public', csrf=False)
-    def get_handlers(self, mac, auto):
+    def get_handlers(self, identifier, auto):
         """Return a zip file containing all the IoT handlers for the given IoT Box.
 
-        :param mac: The mac address of the IoT Box.
+        :param identifier: The identifier of the IoT Box.
         :param auto: If True, the IoT Box will automatically update its handlers.
         :return: A zip file containing all the IoT handlers.
         """
-        # Check mac is of one of the IoT Boxes
-        box = self._search_box(mac)
+        # Check if identifier is of one of the IoT Boxes
+        box = self._search_box(identifier)
         if not box or (auto == 'True' and not box.drivers_auto_update):
             return ''
 
@@ -100,7 +100,7 @@ class IoTController(http.Controller):
         """
         box = self._search_box(iot_box_identifier)
         if not box:
-            _logger.warning("No IoT Box found with MAC: '%s'. Request ignored", iot_box_identifier)
+            _logger.warning("No IoT Box found with identifier: '%s'. Request ignored", iot_box_identifier)
             return
         iot_device = request.env["iot.device"].sudo().search(
             [('identifier', '=', device_identifier), ('iot_id', '=', box.id)], limit=1
@@ -108,7 +108,7 @@ class IoTController(http.Controller):
 
         if not iot_device:
             _logger.warning(
-                "No IoT device found with identifier '%s' (MAC: %s). Request ignored",
+                "No IoT device found with identifier '%s' (iot_box_identifier: %s). Request ignored",
                 device_identifier, iot_box_identifier
             )
             return
@@ -213,7 +213,7 @@ class IoTController(http.Controller):
     def receive_iot_log(self):
         IOT_ELEMENT_SEPARATOR = b'<log/>\n'
         IOT_LOG_LINE_SEPARATOR = b','
-        IOT_MAC_PREFIX = b'mac '
+        IOT_IDENTIFIER_PREFIX = b'identifier '
 
         def log_line_transformation(log_line):
             split = log_line.split(IOT_LOG_LINE_SEPARATOR, 1)
@@ -241,12 +241,12 @@ class IoTController(http.Controller):
         if len(request_data_split) < 2:
             return finish_request()
 
-        mac_details = request_data_split.pop(0)
-        if not mac_details.startswith(IOT_MAC_PREFIX):
+        identifier_details = request_data_split.pop(0)
+        if not identifier_details.startswith(IOT_IDENTIFIER_PREFIX):
             return finish_request()
 
-        mac_address = mac_details[len(IOT_MAC_PREFIX):]
-        iot_box = self._search_box(mac_address)
+        identifier = identifier_details[len(IOT_IDENTIFIER_PREFIX):]
+        iot_box = self._search_box(identifier)
         if not iot_box:
             return finish_request()
 
@@ -260,15 +260,15 @@ class IoTController(http.Controller):
         return finish_request()
 
     @http.route('/iot/box/update_certificate_status', type='jsonrpc', auth='public')
-    def update_certificate_status(self, iot_mac, ssl_certificate_end_date):
+    def update_certificate_status(self, identifier, ssl_certificate_end_date):
         """Update the SSL certificate end date for the IoT Box.
 
-        :param str iot_mac: IoT Box mac address
+        :param str identifier: IoT Box identifier
         :param str ssl_certificate_end_date: SSL certificate end date
         """
-        box = self._search_box(iot_mac)
+        box = self._search_box(identifier)
         if not box:
-            _logger.warning("No IoT Box found with mac '%s'. Request ignored", iot_mac)
+            _logger.warning("No IoT Box found with identifier '%s'. Request ignored", identifier)
             return
 
         box.write({'ssl_certificate_end_date': ssl_certificate_end_date})
