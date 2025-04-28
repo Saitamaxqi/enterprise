@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -49,8 +49,6 @@
       "figures": [
         {
           "id": "c5965b6e-d729-44cc-8e3a-0b605c325d3d",
-          "x": 0,
-          "y": 40,
           "width": 207,
           "height": 107,
           "tag": "chart",
@@ -65,12 +63,13 @@
             "baselineDescr": "Churns",
             "keyValue": "Data!C2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 40 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "aa964ffe-ad26-4124-8c0c-6044f124fced",
-          "x": 219,
-          "y": 40,
           "width": 207,
           "height": 107,
           "tag": "chart",
@@ -85,12 +84,13 @@
             "baselineDescr": "MRR",
             "keyValue": "Data!C4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 219, "y": 40 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "5034de4a-9be0-410d-97eb-0a7092f48969",
-          "x": 437,
-          "y": 40,
           "width": 207,
           "height": 107,
           "tag": "chart",
@@ -104,12 +104,13 @@
             "baselineDescr": "",
             "keyValue": "Data!C6",
             "humanize": false
-          }
+          },
+          "offset": { "x": 437, "y": 40 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "d8fb1b9b-bd79-41f8-a0df-982395c26b96",
-          "x": 656,
-          "y": 40,
           "width": 207,
           "height": 107,
           "tag": "chart",
@@ -123,12 +124,13 @@
             "baselineDescr": "",
             "keyValue": "Data!C7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 656, "y": 40 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "012ac9c1-bfd5-4177-96ca-85c5e82b1953",
-          "x": 0,
-          "y": 216.140625,
           "width": 863,
           "height": 370,
           "tag": "chart",
@@ -144,12 +146,13 @@
             "stacked": false,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 0, "y": 216.140625 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "182477d2-ed24-4178-a477-e12395ecd80b",
-          "x": 0,
-          "y": 628.69140625,
           "width": 863,
           "height": 370,
           "tag": "chart",
@@ -169,12 +172,13 @@
             "stacked": false,
             "aggregated": false,
             "showValues": false
-          }
+          },
+          "offset": { "x": 0, "y": 628.69140625 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b0886ae7-2614-43d3-b99a-2331c85f45c8",
-          "x": 0,
-          "y": 1035.48828125,
           "width": 863,
           "height": 371,
           "tag": "chart",
@@ -194,12 +198,13 @@
             "stacked": false,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 0, "y": 1035.48828125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "15c5e96f-70da-47f6-bf78-7d847751fc18",
-          "x": 0,
-          "y": 1444,
           "width": 864,
           "height": 369,
           "tag": "chart",
@@ -218,12 +223,13 @@
             "title": {},
             "stacked": false,
             "aggregated": false
-          }
+          },
+          "offset": { "x": 0, "y": 1444 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "4a78439b-21d0-4366-8fda-ebbd501d912e",
-          "x": 1,
-          "y": 1890.7578125,
           "width": 863,
           "height": 335,
           "tag": "chart",
@@ -238,12 +244,13 @@
             "title": {},
             "stacked": false,
             "aggregated": false
-          }
+          },
+          "offset": { "x": 1, "y": 1890.7578125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "a3937968-c171-4c24-9c30-b7ce80eee860",
-          "x": 0,
-          "y": 2267,
           "width": 865,
           "height": 370,
           "tag": "chart",
@@ -258,7 +265,10 @@
             "title": {},
             "stacked": false,
             "aggregated": false
-          }
+          },
+          "offset": { "x": 0, "y": 2267 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -601,7 +611,6 @@
   "pivots": {},
   "pivotNextId": 4,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [],
   "lists": {},
   "listNextId": 1,

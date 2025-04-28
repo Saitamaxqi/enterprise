@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "Sheet1",
@@ -270,8 +270,6 @@
       "figures": [
         {
           "id": "151b0f60-aa89-457e-9456-9807ab779be6",
-          "x": 0,
-          "y": 177,
           "width": 1000,
           "height": 361,
           "tag": "chart",
@@ -313,12 +311,13 @@
             "fieldMatching": {
               "7785b753-917c-4640-a937-4b6226222ca8": { "chain": "invoice_date", "type": "date", "offset": 0 }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 177 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "86aac7b2-f3a5-46e1-a097-916aa4b8f8d0",
-          "x": 0,
-          "y": 10,
           "width": 200,
           "height": 106,
           "tag": "chart",
@@ -333,12 +332,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!C2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "3586cbc4-6ca3-46af-951f-94d4773f94dc",
-          "x": 212,
-          "y": 10,
           "width": 200,
           "height": 106,
           "tag": "chart",
@@ -352,12 +352,13 @@
             "baselineDescr": "to receive",
             "keyValue": "Data!C4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 212, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "57f18f9a-55b7-4b84-b927-480c4c56c026",
-          "x": 423,
-          "y": 10,
           "width": 200,
           "height": 106,
           "tag": "chart",
@@ -372,12 +373,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!C5",
             "humanize": false
-          }
+          },
+          "offset": { "x": 423, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "8f1fb053-5700-4bb3-b93d-55ceb2083d31",
-          "x": 635,
-          "y": 10,
           "width": 200,
           "height": 106,
           "tag": "chart",
@@ -391,7 +393,10 @@
             "baselineDescr": "to pay",
             "keyValue": "Data!C7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 635, "y": 10 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -968,7 +973,6 @@
   "pivots": {},
   "pivotNextId": 1,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "7785b753-917c-4640-a937-4b6226222ca8",

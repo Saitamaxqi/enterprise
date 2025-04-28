@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "df33ef16-d138-4c86-a257-a2d529a1cdfa",
@@ -66,8 +66,6 @@
       "figures": [
         {
           "id": "00d06fd4-5cb9-443d-80b1-e8b6bf6c05a1",
-          "x": 227,
-          "y": 10,
           "width": 218,
           "height": 106,
           "tag": "chart",
@@ -87,12 +85,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!B2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 227, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "bc286f72-8794-4655-b78e-b3811c2a15c5",
-          "x": 0,
-          "y": 10,
           "width": 218,
           "height": 106,
           "tag": "chart",
@@ -112,12 +111,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!B3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "d993b670-2faa-49b2-ba06-5dc136d05e88",
-          "x": 455,
-          "y": 10,
           "width": 218,
           "height": 106,
           "tag": "chart",
@@ -132,12 +132,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!B6",
             "humanize": false
-          }
+          },
+          "offset": { "x": 455, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b6792369-556a-4568-aac3-89524cde3ed0",
-          "x": 681,
-          "y": 10,
           "width": 218,
           "height": 106,
           "tag": "chart",
@@ -157,12 +158,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!B9",
             "humanize": false
-          }
+          },
+          "offset": { "x": 681, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b537b287-018f-4e0c-904a-05ac413bd774",
-          "x": 0,
-          "y": 1741,
           "width": 1076,
           "height": 369,
           "tag": "chart",
@@ -203,12 +205,13 @@
               "ad701208-d8cf-431f-97eb-dc72a229a727": {},
               "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 1741 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "f75d27b8-401c-4b23-be72-1e8c5f48c997",
-          "x": 0,
-          "y": 1359,
           "width": 1072,
           "height": 344,
           "tag": "chart",
@@ -249,12 +252,13 @@
               "472f70c0-7336-48e5-a84c-9d03754250b7": {},
               "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 1359 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "92ad86c5-b988-44b1-b5b3-17b6580743a6",
-          "x": 549,
-          "y": 177,
           "width": 525,
           "height": 364,
           "tag": "chart",
@@ -286,12 +290,13 @@
               }
             },
             "showValues": false
-          }
+          },
+          "offset": { "x": 549, "y": 177 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "3832422c-37b7-4b17-92bc-e69219ebb918",
-          "x": 0,
-          "y": 580,
           "width": 1074,
           "height": 356,
           "tag": "chart",
@@ -315,12 +320,13 @@
             "title": { "text": "" },
             "aggregated": false,
             "showValues": false
-          }
+          },
+          "offset": { "x": 0, "y": 580 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "757ff23d-2733-4dd7-98c2-3df3dc5ff6ea",
-          "x": 0,
-          "y": 975,
           "width": 1074,
           "height": 344,
           "tag": "chart",
@@ -343,12 +349,13 @@
             "labelRange": "'Cycle time'!N:N",
             "title": { "text": "" },
             "aggregated": false
-          }
+          },
+          "offset": { "x": 0, "y": 975 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "87ab87e6-2bdd-4e75-a59f-a0c34f6742fb",
-          "x": 0,
-          "y": 2149,
           "width": 529,
           "height": 346,
           "tag": "chart",
@@ -371,12 +378,13 @@
             "labelRange": "'Inventory adjustments by category'!H:H",
             "title": { "text": "" },
             "aggregated": false
-          }
+          },
+          "offset": { "x": 0, "y": 2149 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "f854691a-ed0a-4908-bd7b-3215c44f670a",
-          "x": 549,
-          "y": 2149,
           "width": 527,
           "height": 347,
           "tag": "chart",
@@ -391,12 +399,13 @@
             "labelRange": "Scrap!G:G",
             "title": { "text": "" },
             "aggregated": false
-          }
+          },
+          "offset": { "x": 549, "y": 2149 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "106df83f-9731-4842-87d9-a8c7b848399e",
-          "x": 0,
-          "y": 177,
           "width": 527,
           "height": 364,
           "tag": "chart",
@@ -428,7 +437,10 @@
               }
             },
             "showValues": false
-          }
+          },
+          "offset": { "x": 0, "y": 177 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -3003,11 +3015,6 @@
         ["location_dest_usage", "=", "customer"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "product_uom_qty",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
         {
@@ -3082,11 +3089,6 @@
         ["location_dest_usage", "=", "customer"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "product_uom_qty",
-        "order": "asc",
-        "domain": []
-      },
       "measures": [
         { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
         {
@@ -3163,11 +3165,6 @@
         ["picking_type_code", "=", "outgoing"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "product_qty",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -3206,11 +3203,6 @@
         ["picking_type_code", "=", "outgoing"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "product_qty",
-        "order": "asc",
-        "domain": []
-      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -3343,11 +3335,6 @@
         ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
-      "sortedColumn": {
-        "measure": "quantity_product_uom",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3391,11 +3378,6 @@
         ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
-      "sortedColumn": {
-        "measure": "quantity_product_uom",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3431,11 +3413,6 @@
         ["location_dest_id.scrap_location", "=", true]
       ],
       "context": { "create": 0 },
-      "sortedColumn": {
-        "measure": "quantity_product_uom",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3471,11 +3448,6 @@
         ["location_dest_id.scrap_location", "=", true]
       ],
       "context": { "create": 0 },
-      "sortedColumn": {
-        "measure": "quantity_product_uom",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3576,7 +3548,6 @@
   },
   "pivotNextId": 41,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "472f70c0-7336-48e5-a84c-9d03754250b7",

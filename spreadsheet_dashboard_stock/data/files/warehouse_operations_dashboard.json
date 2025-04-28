@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -252,8 +252,6 @@
       "figures": [
         {
           "id": "829a167d-18e9-4898-a974-080119c3218c",
-          "x": 0,
-          "y": 9,
           "width": 219,
           "height": 107,
           "tag": "chart",
@@ -286,12 +284,13 @@
             "background": "#EFF6FF",
             "keyValue": "Data!B2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "bcc37636-96f7-4911-a330-86b4195c4a95",
-          "x": 228,
-          "y": 9,
           "width": 219,
           "height": 107,
           "tag": "chart",
@@ -324,12 +323,13 @@
             "background": "#EFF6FF",
             "keyValue": "Data!B3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 228, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "c90eee49-4216-443b-807b-18929ea44af7",
-          "x": 457,
-          "y": 9,
           "width": 219,
           "height": 107,
           "tag": "chart",
@@ -370,12 +370,13 @@
             "background": "#EFF6FF",
             "keyValue": "Data!B4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 457, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "d38e4873-0fc1-4733-bf96-700877a9a756",
-          "x": 0,
-          "y": 1681,
           "width": 542,
           "height": 343,
           "tag": "chart",
@@ -426,12 +427,13 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 1681 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "82d8a8ed-d30e-4a64-8dde-af18e4e7ff8f",
-          "x": 579,
-          "y": 1681,
           "width": 548,
           "height": 346,
           "tag": "chart",
@@ -482,12 +484,13 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 579, "y": 1681 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "73fc118c-802b-4332-90a0-076112accdcc",
-          "x": 577,
-          "y": 175,
           "width": 547,
           "height": 322,
           "tag": "chart",
@@ -525,12 +528,13 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 577, "y": 175 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "75a32b49-2814-499d-b9ce-c5b0c3813bdc",
-          "x": 0,
-          "y": 175,
           "width": 546,
           "height": 322,
           "tag": "chart",
@@ -576,12 +580,13 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 175 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "9e0b69fd-33ad-4e27-bada-e64f5a3189d3",
-          "x": 0,
-          "y": 541,
           "width": 547,
           "height": 321,
           "tag": "chart",
@@ -628,12 +633,13 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 541 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "3270f063-a3ec-4756-bf7b-e78fc61bb78e",
-          "x": 0,
-          "y": 1290,
           "width": 543,
           "height": 344,
           "tag": "chart",
@@ -680,12 +686,13 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 1290 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "1acf6787-306a-44ef-8edf-6ee731fab35d",
-          "x": 0,
-          "y": 915,
           "width": 545,
           "height": 333,
           "tag": "chart",
@@ -732,7 +739,10 @@
               "152684de-d10f-48a8-95f8-50b2b2e778bb": { "chain": "user_id", "type": "many2one" },
               "a77447da-4a1c-4bc2-b38f-0f0678f1933b": { "chain": "picking_type_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 915 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -948,7 +958,6 @@
   },
   "pivotNextId": 8,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "6a738f48-e4d7-4b69-9f69-889b703ccff7",
@@ -1019,7 +1028,8 @@
         { "name": "scheduled_date", "asc": true }
       ],
       "id": "2",
-      "name": "Late Deliveries"
+      "name": "Late Deliveries",
+      "fieldMatching": {}
     },
     "3": {
       "columns": ["name", "user_id", "scheduled_date"],
@@ -1038,7 +1048,8 @@
         { "name": "scheduled_date", "asc": true }
       ],
       "id": "3",
-      "name": "Late internal transfers"
+      "name": "Late internal transfers",
+      "fieldMatching": {}
     },
     "6": {
       "columns": ["name", "partner_id", "user_id", "scheduled_date"],
@@ -1057,7 +1068,8 @@
         { "name": "scheduled_date", "asc": true }
       ],
       "id": "6",
-      "name": "Late receipts"
+      "name": "Late receipts",
+      "fieldMatching": {}
     }
   },
   "listNextId": 7,

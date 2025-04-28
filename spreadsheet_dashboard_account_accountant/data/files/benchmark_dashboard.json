@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "Sheet1",
@@ -79,8 +79,6 @@
       "figures": [
         {
           "id": "3d4e431e-fdfb-4aba-baba-14a9990b0a22",
-          "x": 0,
-          "y": 0,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -99,12 +97,13 @@
             "title": { "text": "Gross profit margin", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B2"
-          }
+          },
+          "offset": { "x": 0, "y": 0 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "777d58a8-e76e-4ef6-a16a-8ded6a18a524",
-          "x": 670,
-          "y": 0,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -123,12 +122,13 @@
             "title": { "text": "Net profit margin", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B3"
-          }
+          },
+          "offset": { "x": 670, "y": 0 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "7c87cbda-1869-4ada-a479-f83447de6c35",
-          "x": 0,
-          "y": 184,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -147,12 +147,13 @@
             "title": { "text": "Operating margin", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B4"
-          }
+          },
+          "offset": { "x": 0, "y": 184 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "da7d6686-f16e-4ecc-9e4f-6e855e2472b1",
-          "x": 0,
-          "y": 368,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -171,12 +172,13 @@
             "title": { "text": "Current ratio", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B6"
-          }
+          },
+          "offset": { "x": 0, "y": 368 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "dd3e9285-4be0-4511-b6e9-c1d6b27aa6fa",
-          "x": 670,
-          "y": 368,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -195,12 +197,13 @@
             "title": { "text": "Cash flow ratio", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B7"
-          }
+          },
+          "offset": { "x": 670, "y": 368 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "ce3a4fe4-5bd7-4571-942e-913061864e42",
-          "x": 0,
-          "y": 552,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -219,12 +222,13 @@
             "title": { "text": "Working capital", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B8"
-          }
+          },
+          "offset": { "x": 0, "y": 552 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "262de936-0aa6-42f5-9c2a-94ca9f3fd6f9",
-          "x": 670,
-          "y": 552,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -243,12 +247,13 @@
             "title": { "text": "Quick ratio", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B9"
-          }
+          },
+          "offset": { "x": 670, "y": 552 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "244bf3e6-9fb6-4979-b01c-303b7737bd7f",
-          "x": 0,
-          "y": 736,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -267,12 +272,13 @@
             "title": { "text": "Average debtor days", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B10"
-          }
+          },
+          "offset": { "x": 0, "y": 736 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "19747691-3f23-4572-bda0-4090744d9d13",
-          "x": 670,
-          "y": 736,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -291,12 +297,13 @@
             "title": { "text": "Average payable days", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B11"
-          }
+          },
+          "offset": { "x": 670, "y": 736 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "c73f1479-08b5-4598-86b3-90ae40a81528",
-          "x": 670,
-          "y": 184,
           "width": 225,
           "height": 184,
           "tag": "chart",
@@ -315,7 +322,10 @@
             "title": { "text": "Debt-to-equity", "bold": true, "color": "#434343" },
             "type": "gauge",
             "dataRange": "Data!B5"
-          }
+          },
+          "offset": { "x": 670, "y": 184 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -585,7 +595,6 @@
   "pivots": {},
   "pivotNextId": 1,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "069d7cf1-9623-4d6e-8226-ad7c60112662",

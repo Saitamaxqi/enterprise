@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "Sheet1",
@@ -468,8 +468,6 @@
       "figures": [
         {
           "id": "b9b862dd-1d57-47d9-b46c-ffcf4f8be638",
-          "x": 0,
-          "y": 178,
           "width": 1000,
           "height": 343,
           "tag": "chart",
@@ -521,12 +519,13 @@
               "e06a6095-d07b-4b2f-b737-a2f5b3b4ab7c": { "chain": "team_id", "type": "many2one" },
               "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 178 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "26d0db83-eced-423a-83ba-143e890a458b",
-          "x": 0,
-          "y": 12,
           "width": 192,
           "height": 103,
           "tag": "chart",
@@ -541,12 +540,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!D4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "1a364b24-21a0-41fe-8bd3-061efa4f1b1f",
-          "x": 202,
-          "y": 12,
           "width": 192,
           "height": 103,
           "tag": "chart",
@@ -561,12 +561,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D5",
             "humanize": false
-          }
+          },
+          "offset": { "x": 202, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "070e9913-f280-47fd-99c5-d0675a9e2cc2",
-          "x": 404,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -581,12 +582,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D6",
             "humanize": false
-          }
+          },
+          "offset": { "x": 404, "y": 13 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "9cd65dd7-0333-4fa3-bc21-fa53de78dfbf",
-          "x": 605,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -601,12 +603,13 @@
             "baselineDescr": "last period",
             "keyValue": "Data!D9",
             "humanize": false
-          }
+          },
+          "offset": { "x": 605, "y": 13 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "8c6ddf6e-2c14-4e32-9499-1b3608f05d1b",
-          "x": 808,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -621,7 +624,10 @@
             "baselineDescr": "last period",
             "keyValue": "Data!D10",
             "humanize": false
-          }
+          },
+          "offset": { "x": 808, "y": 13 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -1454,7 +1460,6 @@
   },
   "pivotNextId": 15,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "77bc36ef-1319-4784-891f-950545059abc",

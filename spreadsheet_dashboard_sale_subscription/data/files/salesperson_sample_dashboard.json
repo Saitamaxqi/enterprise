@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -129,8 +129,6 @@
       "figures": [
         {
           "id": "a5dcffea-a653-44c3-9563-773e5979da47",
-          "x": 0,
-          "y": 9,
           "width": 209,
           "height": 107,
           "tag": "chart",
@@ -145,12 +143,13 @@
             "baselineDescr": "MRR",
             "keyValue": "Data!D2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "259c7a2c-c4ae-4471-8b64-1292ef24ce47",
-          "x": 220,
-          "y": 9,
           "width": 210,
           "height": 107,
           "tag": "chart",
@@ -165,12 +164,13 @@
             "baselineDescr": "MRR",
             "keyValue": "Data!B8",
             "humanize": false
-          }
+          },
+          "offset": { "x": 220, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "d6573225-1b5e-4a1d-930b-19071b5023c4",
-          "x": 442,
-          "y": 9,
           "width": 215,
           "height": 107,
           "tag": "chart",
@@ -185,12 +185,13 @@
             "baselineDescr": "",
             "keyValue": "Data!D10",
             "humanize": false
-          }
+          },
+          "offset": { "x": 442, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "f1b6db9c-ddb7-495f-916c-4f918492ffc4",
-          "x": 670,
-          "y": 9,
           "width": 212,
           "height": 107,
           "tag": "chart",
@@ -205,12 +206,13 @@
             "baselineDescr": "over the period",
             "keyValue": "Data!D12",
             "humanize": false
-          }
+          },
+          "offset": { "x": 670, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "098fb605-7a63-4b72-8970-c88ad549b095",
-          "x": 0,
-          "y": 174,
           "width": 882,
           "height": 346,
           "tag": "chart",
@@ -225,7 +227,10 @@
             "title": {},
             "stacked": false,
             "aggregated": false
-          }
+          },
+          "offset": { "x": 0, "y": 174 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -361,7 +366,6 @@
   "pivots": {},
   "pivotNextId": 14,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [],
   "lists": {},
   "listNextId": 5,

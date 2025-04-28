@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -197,8 +197,6 @@
       "figures": [
         {
           "id": "15bc3d3b-444b-4332-9253-c70d05c13922",
-          "x": 0,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -213,12 +211,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B10",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b15c80fb-33e5-4c7c-9637-3120004b1479",
-          "x": 628,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -233,12 +232,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B11",
             "humanize": false
-          }
+          },
+          "offset": { "x": 628, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "788392ce-cc56-40fd-8b1e-0dde698dde42",
-          "x": 628,
-          "y": 121,
           "width": 202,
           "height": 108,
           "tag": "chart",
@@ -253,12 +253,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B17",
             "humanize": false
-          }
+          },
+          "offset": { "x": 628, "y": 121 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "821a7c97-27ae-4186-b164-750c7b383677",
-          "x": 209,
-          "y": 122,
           "width": 202,
           "height": 107,
           "tag": "chart",
@@ -273,12 +274,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B14",
             "humanize": false
-          }
+          },
+          "offset": { "x": 209, "y": 122 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "79341445-3077-45f4-b2cd-8f5bd8c914f0",
-          "x": 0,
-          "y": 121,
           "width": 202,
           "height": 108,
           "tag": "chart",
@@ -293,12 +295,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B13",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 121 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "bab9bd74-affe-46a7-bb69-d1d222a8642b",
-          "x": 838,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -313,12 +316,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B12",
             "humanize": false
-          }
+          },
+          "offset": { "x": 838, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "33928488-81ad-4159-a6eb-4bc756eeb172",
-          "x": 418,
-          "y": 122,
           "width": 202,
           "height": 107,
           "tag": "chart",
@@ -333,12 +337,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B16",
             "humanize": false
-          }
+          },
+          "offset": { "x": 418, "y": 122 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "ff80c592-1b87-4703-9715-3f408953e11e",
-          "x": 418,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -353,12 +358,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B21",
             "humanize": false
-          }
+          },
+          "offset": { "x": 418, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "93997682-c4c5-4605-8847-5d18d1791a95",
-          "x": 209,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -373,12 +379,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 209, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "9d398c66-2b4b-4a30-a4f9-c2e3d4c54028",
-          "x": 0,
-          "y": 280,
           "width": 1040,
           "height": 394,
           "tag": "chart",
@@ -400,12 +407,13 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 0, "y": 280 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "228d3fc2-6fee-4ec2-8696-fb60604a56d4",
-          "x": 0,
-          "y": 709,
           "width": 1040,
           "height": 390,
           "tag": "chart",
@@ -427,7 +435,10 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 0, "y": 709 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -595,8 +606,6 @@
       "figures": [
         {
           "id": "9864d81e-7cf4-42fc-bcbd-2cf782c568d6",
-          "x": 660,
-          "y": 222.5,
           "width": 536,
           "height": 335,
           "tag": "chart",
@@ -618,12 +627,13 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 660, "y": 222.5 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "e31fb587-852c-4efa-8432-5f082719b2c7",
-          "x": 485,
-          "y": 383.5,
           "width": 536,
           "height": 335,
           "tag": "chart",
@@ -645,7 +655,10 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 485, "y": 383.5 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -732,7 +745,6 @@
       "primaryColor": "#C9DAF8"
     }
   },
-  "odooVersion": 13,
   "globalFilters": [],
   "lists": {},
   "listNextId": 5,

@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -376,8 +376,6 @@
       "figures": [
         {
           "id": "fd511e83-ffe4-4c18-bd7f-eaf895b7b2ea",
-          "x": 814,
-          "y": 11,
           "width": 196,
           "height": 104,
           "tag": "chart",
@@ -392,12 +390,13 @@
             "baselineDescr": "ARR",
             "keyValue": "Data!C10",
             "humanize": false
-          }
+          },
+          "offset": { "x": 814, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "0be7a14a-ae5b-4aa5-8603-f225fd3a8ab1",
-          "x": 0,
-          "y": 11,
           "width": 196,
           "height": 104,
           "tag": "chart",
@@ -412,12 +411,13 @@
             "baselineDescr": "ARR",
             "keyValue": "Data!C2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b64cc563-a655-48a8-ab6e-192040fcdbef",
-          "x": 203,
-          "y": 11,
           "width": 196,
           "height": 104,
           "tag": "chart",
@@ -432,12 +432,13 @@
             "baselineDescr": "ARR",
             "keyValue": "Data!C6",
             "humanize": false
-          }
+          },
+          "offset": { "x": 203, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "e16dfa8a-35ab-4a26-8fd1-dde560ee90b1",
-          "x": 406,
-          "y": 11,
           "width": 196,
           "height": 104,
           "tag": "chart",
@@ -452,12 +453,13 @@
             "baselineDescr": "ARR",
             "keyValue": "Data!C8",
             "humanize": false
-          }
+          },
+          "offset": { "x": 406, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "257ebd49-e289-48fb-a9cd-3720a9bdd2fb",
-          "x": 611,
-          "y": 11,
           "width": 196,
           "height": 104,
           "tag": "chart",
@@ -472,12 +474,13 @@
             "baselineDescr": "of total invoiced",
             "keyValue": "Data!C13",
             "humanize": false
-          }
+          },
+          "offset": { "x": 611, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "eed907ce-ec89-4d39-a1ea-85b96845ecaa",
-          "x": 0,
-          "y": 175,
           "width": 1010,
           "height": 368,
           "tag": "chart",
@@ -515,12 +518,13 @@
               "866b40f9-0436-4e8b-8ec1-69c18381c876": { "chain": "user_id", "type": "many2one" },
               "bb803250-fe24-48ab-ab18-54ec5ab5806f": { "chain": "plan_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 175 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "76549119-0bbd-45b1-b0cb-b4a5a599a59d",
-          "x": 0,
-          "y": 582,
           "width": 1010,
           "height": 377,
           "tag": "chart",
@@ -554,7 +558,10 @@
               "866b40f9-0436-4e8b-8ec1-69c18381c876": { "chain": "user_id", "type": "many2one" },
               "bb803250-fe24-48ab-ab18-54ec5ab5806f": { "chain": "plan_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 582 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -1045,7 +1052,6 @@
   },
   "pivotNextId": 9,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "954bb57d-1c53-4918-a516-c179fc19579b",
@@ -1122,7 +1128,8 @@
         { "name": "id", "asc": false }
       ],
       "id": "1",
-      "name": "MRR Analysis by Monthly Recurring Revenue"
+      "name": "MRR Analysis by Monthly Recurring Revenue",
+      "fieldMatching": {}
     },
     "2": {
       "columns": [
@@ -1150,7 +1157,8 @@
         { "name": "id", "asc": false }
       ],
       "id": "2",
-      "name": "MRR Analysis by Monthly Recurring Revenue"
+      "name": "MRR Analysis by Monthly Recurring Revenue",
+      "fieldMatching": {}
     }
   },
   "listNextId": 4,

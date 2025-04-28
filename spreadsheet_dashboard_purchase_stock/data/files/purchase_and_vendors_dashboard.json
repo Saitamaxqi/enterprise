@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "c1dd5136-2d63-4eb2-8a48-42eae5ba2086",
@@ -275,8 +275,6 @@
       "figures": [
         {
           "id": "c79871cd-6483-4d0f-9493-cca9725c3dd7",
-          "x": 0,
-          "y": 11,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -296,12 +294,13 @@
             "baselineDescr": "since last period",
             "keyValue": "KPIs!D4",
             "humanize": true
-          }
+          },
+          "offset": { "x": 0, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "939104fa-dea7-4c61-9991-0654ab1dbf8d",
-          "x": 499,
-          "y": 11,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -321,12 +320,13 @@
             "baselineDescr": "since last period",
             "keyValue": "KPIs!C4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 499, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "3607d85d-8efd-4432-b4fd-8157b834e4c4",
-          "x": 250,
-          "y": 11,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -346,12 +346,13 @@
             "baselineDescr": "since last period",
             "keyValue": "KPIs!I4",
             "humanize": true
-          }
+          },
+          "offset": { "x": 250, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "45e7f600-9d45-49d4-865a-5f0ad24104f9",
-          "x": 0,
-          "y": 125,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -371,12 +372,13 @@
             "baselineDescr": "last period",
             "keyValue": "KPIs!H4",
             "humanize": true
-          }
+          },
+          "offset": { "x": 0, "y": 125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "e0ddc454-8376-4e21-b7fe-262d4a1c057e",
-          "x": 748,
-          "y": 11,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -396,12 +398,13 @@
             "baselineDescr": "since last period",
             "keyValue": "KPIs!E4",
             "humanize": true
-          }
+          },
+          "offset": { "x": 748, "y": 11 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "de913d05-7245-41a9-9939-0e1808def088",
-          "x": 250,
-          "y": 125,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -421,12 +424,13 @@
             "baselineDescr": "last period",
             "keyValue": "KPIs!G4",
             "humanize": true
-          }
+          },
+          "offset": { "x": 250, "y": 125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "7d77e1dc-020d-4c44-b379-9a59b7c4d46d",
-          "x": 499,
-          "y": 125,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -446,12 +450,13 @@
             "baselineDescr": "since last period",
             "keyValue": "KPIs!D11",
             "humanize": false
-          }
+          },
+          "offset": { "x": 499, "y": 125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b90dc169-577a-467b-b8b5-d5ad079efcc5",
-          "x": 748,
-          "y": 125,
           "width": 242,
           "height": 107,
           "tag": "chart",
@@ -471,12 +476,13 @@
             "baselineDescr": "since last period",
             "keyValue": "KPIs!B17",
             "humanize": false
-          }
+          },
+          "offset": { "x": 748, "y": 125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "72b620ea-22fe-4fe6-aceb-02898ae59a8a",
-          "x": 0,
-          "y": 298,
           "width": 1263,
           "height": 383,
           "tag": "chart",
@@ -519,12 +525,13 @@
               "41a58f16-d8c0-4ede-a391-ef2fcaaa0e32": { "chain": "product_id", "type": "many2one" },
               "698db1cf-95a4-4fa6-8364-56ff2d5b0adf": { "chain": "category_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 298 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "a876a7f1-80d3-4bce-a533-12ed1fa0def1",
-          "x": 0,
-          "y": 729,
           "width": 1264,
           "height": 413,
           "tag": "chart",
@@ -564,12 +571,13 @@
               "41a58f16-d8c0-4ede-a391-ef2fcaaa0e32": { "chain": "product_id", "type": "many2one" },
               "698db1cf-95a4-4fa6-8364-56ff2d5b0adf": { "chain": "category_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 729 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "460a1cef-70a5-4190-b681-6483e826bd09",
-          "x": 0,
-          "y": 1185,
           "width": 1263,
           "height": 415,
           "tag": "chart",
@@ -592,12 +600,13 @@
                 "title": { "text": "Count" }
               }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 1185 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "310ab7a9-fcb7-4db3-8369-fcfddec9f178",
-          "x": 0,
-          "y": 1640,
           "width": 1264,
           "height": 414,
           "tag": "chart",
@@ -613,12 +622,13 @@
             "title": { "text": "", "align": "center", "bold": true },
             "aggregated": false,
             "showValues": false
-          }
+          },
+          "offset": { "x": 0, "y": 1640 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "4d31c500-1186-498b-b589-d7b4ce1ccc4b",
-          "x": 800,
-          "y": 2905,
           "width": 462,
           "height": 311,
           "tag": "chart",
@@ -651,12 +661,13 @@
               "41a58f16-d8c0-4ede-a391-ef2fcaaa0e32": { "chain": "product_id", "type": "many2one" },
               "698db1cf-95a4-4fa6-8364-56ff2d5b0adf": { "chain": "product_id.categ_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 800, "y": 2905 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "98f4f82c-16ed-4d9f-9bef-6965a0c35513",
-          "x": 0,
-          "y": 2092,
           "width": 1262,
           "height": 390,
           "tag": "chart",
@@ -699,7 +710,10 @@
               "41a58f16-d8c0-4ede-a391-ef2fcaaa0e32": { "chain": "product_id", "type": "many2one" },
               "698db1cf-95a4-4fa6-8364-56ff2d5b0adf": { "chain": "category_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 2092 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -1379,11 +1393,6 @@
         "active_id": 27,
         "active_ids": [27]
       },
-      "sortedColumn": {
-        "measure": "on_time_rate",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "on_time_rate:sum",
@@ -1497,11 +1506,6 @@
         "active_id": 27,
         "active_ids": [27]
       },
-      "sortedColumn": {
-        "measure": "on_time_rate",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "on_time_rate:sum",
@@ -1536,11 +1540,6 @@
         ["state", "!=", "cancel"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "price_total",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -1604,11 +1603,6 @@
         ["picking_type_code", "=", "incoming"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "delay",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "delay:avg", "fieldName": "delay", "aggregator": "avg" },
         { "id": "__count", "fieldName": "__count" }
@@ -1639,11 +1633,6 @@
         ["state", "!=", "cancel"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "price_total",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -1691,11 +1680,6 @@
         ["picking_type_code", "=", "incoming"]
       ],
       "context": {},
-      "sortedColumn": {
-        "measure": "delay",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         {
           "id": "delay:avg",
@@ -1723,7 +1707,6 @@
   },
   "pivotNextId": 14,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "3e8575de-1649-4bcb-9e8c-367655452c70",
@@ -1791,7 +1774,8 @@
         { "name": "amount_total", "asc": false }
       ],
       "id": "1",
-      "name": "Purchase orders by Total"
+      "name": "Purchase orders by Total",
+      "fieldMatching": {}
     },
     "5": {
       "columns": [
@@ -1821,7 +1805,8 @@
       },
       "orderBy": [],
       "id": "5",
-      "name": "Receipts"
+      "name": "Receipts",
+      "fieldMatching": {}
     }
   },
   "listNextId": 6,

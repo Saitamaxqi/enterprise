@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "Sheet1",
@@ -165,8 +165,6 @@
       "figures": [
         {
           "id": "09ab3fe3-04d6-4c9f-97ff-bb37fee0e692",
-          "x": 0,
-          "y": 9,
           "width": 200,
           "height": 109,
           "tag": "chart",
@@ -181,12 +179,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "5dc98740-8fc9-432d-b386-59e6e5c8b7e8",
-          "x": 208,
-          "y": 9,
           "width": 200,
           "height": 109,
           "tag": "chart",
@@ -201,12 +200,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D5",
             "humanize": false
-          }
+          },
+          "offset": { "x": 208, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "735dabd8-96dc-44a1-9871-f35a94c347f5",
-          "x": 416,
-          "y": 9,
           "width": 200,
           "height": 109,
           "tag": "chart",
@@ -220,12 +220,13 @@
             "baselineDescr": "to close",
             "keyValue": "Data!D7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 416, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "2217934b-9700-499c-987e-8f3d7246a889",
-          "x": 525,
-          "y": 178,
           "width": 475,
           "height": 367,
           "tag": "chart",
@@ -242,12 +243,13 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 525, "y": 178 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "51b55454-1e58-4e5b-a487-f8d48bec364d",
-          "x": 0,
-          "y": 178,
           "width": 475,
           "height": 367,
           "tag": "chart",
@@ -264,7 +266,10 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 0, "y": 178 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -407,7 +412,6 @@
   "pivots": {},
   "pivotNextId": 9,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [],
   "lists": {},
   "listNextId": 2,

@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -107,8 +107,6 @@
       "figures": [
         {
           "id": "01657be1-2ed9-48bd-aab5-158f7d15e752",
-          "x": 220,
-          "y": 12,
           "width": 211,
           "height": 102,
           "tag": "chart",
@@ -123,12 +121,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 220, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "097038ff-456e-48b7-9908-2a07d5ff3440",
-          "x": 440,
-          "y": 12,
           "width": 200,
           "height": 102,
           "tag": "chart",
@@ -143,12 +142,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 440, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "81f8cba7-aabc-4e13-a454-4660645be79f",
-          "x": 0,
-          "y": 12,
           "width": 211,
           "height": 102,
           "tag": "chart",
@@ -163,12 +163,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "680d6c54-0871-4d0a-830f-53ed8f90bb55",
-          "x": 0,
-          "y": 178.109375,
           "width": 1001,
           "height": 347,
           "tag": "chart",
@@ -186,7 +187,10 @@
             "aggregated": false,
             "cumulative": true,
             "fillArea": true
-          }
+          },
+          "offset": { "x": 0, "y": 178.109375 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -328,7 +332,6 @@
   "pivots": {},
   "pivotNextId": 9,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [],
   "lists": {},
   "listNextId": 1,

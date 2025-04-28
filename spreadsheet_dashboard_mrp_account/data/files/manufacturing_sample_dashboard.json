@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -100,8 +100,6 @@
       "figures": [
         {
           "id": "992b1b7d-78e0-4b41-b144-3995c16b73be",
-          "x": 210,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -116,12 +114,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 210, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "379d22d2-4cbf-48fb-8fad-e44b9ce00dea",
-          "x": 0,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -136,12 +135,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "683afc26-bbb2-4647-8e80-e3699839ffd5",
-          "x": 420,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -156,12 +156,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 420, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "9f95d0f4-ad80-45de-970a-9897eab4d56f",
-          "x": 630,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -176,12 +177,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D8",
             "humanize": false
-          }
+          },
+          "offset": { "x": 630, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "3855fb60-c212-4299-8bf6-37b190758517",
-          "x": 0,
-          "y": 563,
           "width": 1000,
           "height": 346,
           "tag": "chart",
@@ -199,12 +201,13 @@
             "stacked": true,
             "aggregated": false,
             "horizontal": false
-          }
+          },
+          "offset": { "x": 0, "y": 563 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "f9cf8b74-91d5-412d-9074-e911a9381556",
-          "x": 0,
-          "y": 178,
           "width": 1000,
           "height": 345,
           "tag": "chart",
@@ -222,7 +225,10 @@
             "aggregated": false,
             "cumulative": true,
             "fillArea": true
-          }
+          },
+          "offset": { "x": 0, "y": 178 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [],
@@ -439,7 +445,6 @@
   "pivots": {},
   "pivotNextId": 11,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [],
   "lists": {},
   "listNextId": 1,

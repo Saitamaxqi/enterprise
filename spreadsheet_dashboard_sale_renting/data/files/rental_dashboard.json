@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -252,8 +252,6 @@
       "figures": [
         {
           "id": "4ce3be5b-1e3d-4174-a375-c9841f11475d",
-          "x": 0,
-          "y": 178,
           "width": 1000,
           "height": 344,
           "tag": "chart",
@@ -295,12 +293,13 @@
               "b810ed25-c56a-4a70-ab8c-f12f54c0d8f4": { "chain": "user_id", "type": "many2one" },
               "64e3bd4b-8b6d-4776-b802-d678cf8c4f56": { "chain": "partner_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 178 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "01657be1-2ed9-48bd-aab5-158f7d15e752",
-          "x": 220,
-          "y": 12,
           "width": 211,
           "height": 102,
           "tag": "chart",
@@ -315,12 +314,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 220, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "097038ff-456e-48b7-9908-2a07d5ff3440",
-          "x": 440,
-          "y": 12,
           "width": 200,
           "height": 102,
           "tag": "chart",
@@ -335,12 +335,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 440, "y": 12 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "81f8cba7-aabc-4e13-a454-4660645be79f",
-          "x": 0,
-          "y": 12,
           "width": 211,
           "height": 102,
           "tag": "chart",
@@ -355,7 +356,10 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 12 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -761,7 +765,6 @@
   },
   "pivotNextId": 9,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "a58dc8ef-f393-4607-bdcd-acb43a20585d",

@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -214,8 +214,6 @@
       "figures": [
         {
           "id": "2828f15d-9fe0-43c8-8ad7-a2b7fe7ff3c5",
-          "x": 0,
-          "y": 178,
           "width": 1000,
           "height": 343,
           "tag": "chart",
@@ -250,12 +248,13 @@
               "dfe37941-d119-494e-af10-62c1ed04c413": { "chain": "picking_type_id", "type": "many2one" },
               "be98718e-525b-4252-92c5-1c95bd470fc9": { "chain": "user_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 178 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "6591ce4b-64ce-4630-943d-18570a18a4f2",
-          "x": 0,
-          "y": 563,
           "width": 1000,
           "height": 343,
           "tag": "chart",
@@ -301,12 +300,13 @@
               "dfe37941-d119-494e-af10-62c1ed04c413": { "chain": "picking_type_id", "type": "many2one" },
               "be98718e-525b-4252-92c5-1c95bd470fc9": { "chain": "user_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 563 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "992b1b7d-78e0-4b41-b144-3995c16b73be",
-          "x": 210,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -321,12 +321,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 210, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "379d22d2-4cbf-48fb-8fad-e44b9ce00dea",
-          "x": 0,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -341,12 +342,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D2",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "683afc26-bbb2-4647-8e80-e3699839ffd5",
-          "x": 420,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -361,12 +363,13 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 420, "y": 9 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "9f95d0f4-ad80-45de-970a-9897eab4d56f",
-          "x": 630,
-          "y": 9,
           "width": 200,
           "height": 105,
           "tag": "chart",
@@ -381,7 +384,10 @@
             "baselineDescr": "since last period",
             "keyValue": "Data!D8",
             "humanize": false
-          }
+          },
+          "offset": { "x": 630, "y": 9 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -873,7 +879,6 @@
   },
   "pivotNextId": 11,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "a5d0b2fb-b866-4fa0-8d25-bcf1c41cf592",

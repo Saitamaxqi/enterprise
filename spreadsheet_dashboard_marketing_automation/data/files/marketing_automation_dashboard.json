@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -537,8 +537,6 @@
       "figures": [
         {
           "id": "15bc3d3b-444b-4332-9253-c70d05c13922",
-          "x": 0,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -553,12 +551,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B10",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "b15c80fb-33e5-4c7c-9637-3120004b1479",
-          "x": 628,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -573,12 +572,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B11",
             "humanize": false
-          }
+          },
+          "offset": { "x": 628, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "788392ce-cc56-40fd-8b1e-0dde698dde42",
-          "x": 628,
-          "y": 121,
           "width": 202,
           "height": 108,
           "tag": "chart",
@@ -593,12 +593,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B17",
             "humanize": false
-          }
+          },
+          "offset": { "x": 628, "y": 121 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "821a7c97-27ae-4186-b164-750c7b383677",
-          "x": 209,
-          "y": 122,
           "width": 202,
           "height": 107,
           "tag": "chart",
@@ -613,12 +614,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B14",
             "humanize": false
-          }
+          },
+          "offset": { "x": 209, "y": 122 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "79341445-3077-45f4-b2cd-8f5bd8c914f0",
-          "x": 0,
-          "y": 121,
           "width": 202,
           "height": 108,
           "tag": "chart",
@@ -633,12 +635,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B13",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 121 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "bab9bd74-affe-46a7-bb69-d1d222a8642b",
-          "x": 838,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -653,12 +656,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B12",
             "humanize": false
-          }
+          },
+          "offset": { "x": 838, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "33928488-81ad-4159-a6eb-4bc756eeb172",
-          "x": 418,
-          "y": 122,
           "width": 202,
           "height": 107,
           "tag": "chart",
@@ -673,12 +677,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B16",
             "humanize": false
-          }
+          },
+          "offset": { "x": 418, "y": 122 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "ff80c592-1b87-4703-9715-3f408953e11e",
-          "x": 418,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -693,12 +698,13 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B21",
             "humanize": false
-          }
+          },
+          "offset": { "x": 418, "y": 10 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "3a24c73f-11f9-4477-8bd4-f1bc47a3a252",
-          "x": 0,
-          "y": 709,
           "width": 1043,
           "height": 390,
           "tag": "chart",
@@ -741,12 +747,13 @@
             "title": { "text": "" },
             "stacked": true,
             "aggregated": false
-          }
+          },
+          "offset": { "x": 0, "y": 709 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "24a85627-ba30-45a6-8370-635a37722349",
-          "x": 0,
-          "y": 280,
           "width": 1042,
           "height": 388,
           "tag": "chart",
@@ -790,12 +797,13 @@
             "stacked": true,
             "aggregated": false,
             "showValues": false
-          }
+          },
+          "offset": { "x": 0, "y": 280 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "93997682-c4c5-4605-8847-5d18d1791a95",
-          "x": 209,
-          "y": 10,
           "width": 202,
           "height": 104,
           "tag": "chart",
@@ -810,7 +818,10 @@
             "baselineDescr": "vs last period",
             "keyValue": "'Mailing Statistics'!B7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 209, "y": 10 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -1167,11 +1178,6 @@
         "active_ids": [1],
         "default_mass_mailing_id": 1
       },
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
       ],
@@ -1200,11 +1206,6 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
-      },
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
@@ -1236,11 +1237,6 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
-      },
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
@@ -1276,11 +1272,6 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
-      },
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
@@ -1431,11 +1422,6 @@
         "active_ids": [1],
         "default_mass_mailing_id": 1
       },
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
-      },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
       ],
@@ -1466,7 +1452,6 @@
       "primaryColor": "#C9DAF8"
     }
   },
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "eb89bf39-7f4d-41c7-939a-d85c0841c9c2",
@@ -1538,7 +1523,8 @@
         { "name": "calendar_date", "asc": false }
       ],
       "id": "2",
-      "name": "Mass mailing list per launch date (active)"
+      "name": "Mass mailing list per launch date (active)",
+      "fieldMatching": {}
     },
     "3": {
       "columns": [
@@ -1565,7 +1551,8 @@
         { "name": "calendar_date", "asc": false }
       ],
       "id": "3",
-      "name": "Mass mailing list (draft)"
+      "name": "Mass mailing list (draft)",
+      "fieldMatching": {}
     },
     "4": {
       "columns": ["create_date", "title", "label", "url", "count"],
@@ -1584,7 +1571,8 @@
         { "name": "count", "asc": false }
       ],
       "id": "4",
-      "name": "Link Tracker by Number of Clicks"
+      "name": "Link Tracker by Number of Clicks",
+      "fieldMatching": {}
     }
   },
   "listNextId": 5,

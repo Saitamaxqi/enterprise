@@ -1,5 +1,5 @@
 {
-  "version": 25,
+  "version": "18.3.1",
   "sheets": [
     {
       "id": "sheet1",
@@ -75,8 +75,6 @@
       "figures": [
         {
           "id": "2e014bc2-e684-4373-adf6-6407a99af32c",
-          "x": 0,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -90,12 +88,13 @@
             "baseline": "Data!E3",
             "keyValue": "Data!D3",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 13 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "6432db5b-d0ee-446c-8fdc-571a58e107da",
-          "x": 200,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -109,12 +108,13 @@
             "baseline": "Data!E4",
             "keyValue": "Data!D4",
             "humanize": false
-          }
+          },
+          "offset": { "x": 200, "y": 13 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "d6526401-f138-4435-9147-df08e80b3303",
-          "x": 0,
-          "y": 125,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -128,12 +128,13 @@
             "baseline": "Data!E15",
             "keyValue": "Data!D15",
             "humanize": false
-          }
+          },
+          "offset": { "x": 0, "y": 125 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "ad4f9864-da2a-46c3-9738-7b5120eb3712",
-          "x": 400,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -147,12 +148,13 @@
             "baseline": "Data!E6",
             "keyValue": "Data!D6",
             "humanize": false
-          }
+          },
+          "offset": { "x": 400, "y": 13 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "784c171b-55e1-47f9-88c5-80ff33c0d58a",
-          "x": 601,
-          "y": 13,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -166,12 +168,13 @@
             "baseline": "Data!E7",
             "keyValue": "Data!D7",
             "humanize": false
-          }
+          },
+          "offset": { "x": 601, "y": 13 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "cdb5d177-1c7b-4e89-9fb2-6f12ba98807c",
-          "x": 0,
-          "y": 292,
           "width": 983,
           "height": 343,
           "tag": "chart",
@@ -203,12 +206,13 @@
               "74f6a928-ecb5-4350-9a5e-39a6edc250d4": { "chain": "job_id", "type": "many2one" },
               "cc3ddb0d-417c-441f-95bb-dc16ab4f11fe": { "chain": "company_id", "type": "many2one" }
             }
-          }
+          },
+          "offset": { "x": 0, "y": 292 },
+          "col": 0,
+          "row": 0
         },
         {
           "id": "1020f2c2-4cb2-4713-8a4d-2d22a3e30008",
-          "x": 200,
-          "y": 125,
           "width": 192,
           "height": 102,
           "tag": "chart",
@@ -223,7 +227,10 @@
             "baselineDescr": "Employees",
             "keyValue": "Data!B17",
             "humanize": false
-          }
+          },
+          "offset": { "x": 200, "y": 125 },
+          "col": 0,
+          "row": 0
         }
       ],
       "tables": [
@@ -529,7 +536,6 @@
   },
   "pivotNextId": 8,
   "customTableStyles": {},
-  "odooVersion": 13,
   "globalFilters": [
     {
       "id": "856ca699-dd18-47ea-a8c7-bb48a37e0f9f",
