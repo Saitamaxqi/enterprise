@@ -50,13 +50,13 @@ class TestDimona(TransactionCase):
             'declaration_type': 'in',
         })
 
-        def _patched_post(*args, **kwargs):
+        def _patched_request(*args, **kwargs):
             response = requests.Response()
             response.headers = {'Location': 'foo/bar/blork/2029409422'}
             response.status_code = 201
             return response
 
-        with patch.object(requests, 'post', _patched_post):
+        with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
         self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
@@ -79,13 +79,13 @@ class TestDimona(TransactionCase):
             'without_niss': True,
         })
 
-        def _patched_post(*args, **kwargs):
+        def _patched_request(*args, **kwargs):
             response = requests.Response()
             response.headers = {'Location': 'foo/bar/blork/2029409422'}
             response.status_code = 201
             return response
 
-        with patch.object(requests, 'post', _patched_post):
+        with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
         self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
@@ -103,13 +103,14 @@ class TestDimona(TransactionCase):
             'contract_id': self.contract.id,
             'declaration_type': 'in',
         })
-        def _patched_post(*args, **kwargs):
+
+        def _patched_request(*args, **kwargs):
             response = requests.Response()
             response.headers = {'Location': 'foo/bar/blork/2029409422'}
             response.status_code = 201
             return response
 
-        with patch.object(requests, 'post', _patched_post):
+        with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
         self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
@@ -127,13 +128,14 @@ class TestDimona(TransactionCase):
             'contract_id': self.contract.id,
             'declaration_type': 'out',
         })
-        def _patched_post(*args, **kwargs):
+
+        def _patched_request(*args, **kwargs):
             response = requests.Response()
             response.headers = {'Location': 'foo/bar/blork/309320239'}
             response.status_code = 201
             return response
 
-        with patch.object(requests, 'post', _patched_post):
+        with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
         self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
@@ -152,13 +154,13 @@ class TestDimona(TransactionCase):
             'declaration_type': 'update',
         })
 
-        def _patched_post(*args, **kwargs):
+        def _patched_request(*args, **kwargs):
             response = requests.Response()
             response.headers = {'Location': 'foo/bar/blork/309320239'}
             response.status_code = 201
             return response
 
-        with patch.object(requests, 'post', _patched_post):
+        with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
         self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
@@ -174,13 +176,13 @@ class TestDimona(TransactionCase):
             'declaration_type': 'cancel',
         })
 
-        def _patched_post(*args, **kwargs):
+        def _patched_request(*args, **kwargs):
             response = requests.Response()
             response.headers = {'Location': 'foo/bar/blork/309320239'}
             response.status_code = 201
             return response
 
-        with patch.object(requests, 'post', _patched_post):
+        with patch('requests.sessions.Session.request', side_effect=_patched_request):
             wizard.submit_declaration()
 
         self.assertEqual(self.contract.l10n_be_dimona_in_declaration_number, '2029409422')
