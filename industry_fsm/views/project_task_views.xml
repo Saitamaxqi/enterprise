@@ -45,13 +45,7 @@
                 <attribute name="invisible">is_fsm or planned_date_begin</attribute>
             </xpath>
             <xpath expr="//label[@for='date_deadline'][2]" position="attributes">
-                <attribute name="invisible">not is_fsm and not planned_date_begin</attribute>
-            </xpath>
-            <xpath expr="//field[@name='date_deadline']" position="attributes">
-                <attribute name="invisible">is_fsm</attribute>
-            </xpath>
-            <xpath expr="//field[@name='date_deadline']" position="after">
-                <field name="date_deadline" widget="daterange" options="{'start_date_field': 'planned_date_begin', 'always_range': '1'}" nolabel="1" invisible="not is_fsm" required="is_fsm and (date_deadline or planned_date_begin)"/>
+                <attribute name="invisible">is_fsm or not planned_date_begin</attribute>
             </xpath>
             <xpath expr="//field[@name='planned_date_begin']" position="attributes">
                 <attribute name="required">is_fsm and date_deadline</attribute>
@@ -135,6 +129,50 @@
                     ('is_internal_project', '=', False),
                     ('is_template', 'in', [is_template, False]),
                 ]</attribute>
+            </xpath>
+            <xpath expr="//div[@id='date_deadline_and_recurring_task']" position="attributes">
+                <attribute name="invisible">is_fsm</attribute>
+            </xpath>
+            <xpath expr="//group/label[@for='allocated_hours']" position="attributes">
+                <attribute name="invisible">not allow_timesheets or is_fsm</attribute>
+            </xpath>
+            <xpath expr="//div[@id='allocated_hours_container']" position="attributes">
+                <attribute name="invisible">not allow_timesheets or is_fsm</attribute>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="invisible">is_fsm</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <label for="date_deadline" string="Planned Date" invisible="not is_fsm"/>
+                <div id="date_deadline_and_recurring_task" class="d-inline-flex w-100" invisible="not is_fsm">
+                    <field
+                        name="date_deadline"
+                        widget="daterange"
+                        options="{'start_date_field': 'planned_date_begin', 'always_range': '1'}"
+                        nolabel="1"
+                        required="is_fsm and (date_deadline or planned_date_begin)"/>
+                    <field
+                        name="recurring_task"
+                        nolabel="1"
+                        class="ms-0"
+                        style="width: fit-content;"
+                        widget="boolean_icon"
+                        options="{'icon': 'fa-repeat'}"
+                        invisible="not active or parent_id"
+                        groups="project.group_project_recurring_tasks"
+                    />
+                </div>
+
+                <label for="allocated_hours" invisible="not (allow_timesheets and is_fsm)" groups="hr_timesheet.group_hr_timesheet_user"/>
+                <div id="allocated_hours_container" class="text-nowrap" invisible="not (allow_timesheets and is_fsm)" groups="hr_timesheet.group_hr_timesheet_user">
+                    <field name="allocated_hours" class="oe_inline o_field_float_time o_task_planned_hours" widget="timesheet_uom_no_toggle"/>
+                    <span invisible="subtask_count == 0">
+                        (incl. <field name="subtask_allocated_hours" nolabel="1" widget="timesheet_uom_no_toggle" class="oe_inline"/> on
+                        <span class="fw-bold text-dark"> Sub-tasks</span>)
+                    </span>
+                    (<field name="progress" invisible="not project_id" class="oe_inline" nolabel="1" decoration-danger="progress > 1.005" digits="[1, 0]" widget="percentage"/>)
+                </div>
+                <field name="priority" widget="priority_switch" invisible="not is_fsm"/>
             </xpath>
         </field>
     </record>
