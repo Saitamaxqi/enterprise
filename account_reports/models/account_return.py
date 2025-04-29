@@ -1311,6 +1311,64 @@ class AccountReturn(models.Model):
                 'result': 'failure' if bills_without_attachments_count else 'success',
             })
 
+        if 'check_tax_countries' not in check_codes_to_ignore:
+            self.env['account.move'].flush_model()
+            self.env['account.fiscal.position'].flush_model()
+            self.env['res.partner'].flush_model()
+            self.env['res.country.group'].flush_model()
+
+            self._cr.execute(SQL(
+                """
+                SELECT ARRAY_AGG(move.id)
+                FROM account_move move
+                JOIN account_fiscal_position fpos
+                    ON fpos.id = move.fiscal_position_id
+                JOIN res_partner partner
+                    ON partner.id = move.commercial_partner_id
+                WHERE
+                    state = 'posted'
+                    AND move.company_id IN %(company_ids)s
+                    AND move.move_type IN %(invoice_types)s
+                    AND move.date >= %(date_from)s
+                    AND move.date <= %(date_to)s
+                    AND (fpos.country_id IS NOT NULL OR fpos.country_group_id IS NOT NULL)
+                    AND (fpos.country_id IS NULL OR partner.country_id IS NULL OR fpos.country_id != partner.country_id)
+                    AND (
+                        fpos.country_group_id IS NULL
+                        OR partner.country_id IS NULL
+                        OR NOT EXISTS (
+                            SELECT 1
+                            FROM res_country_res_country_group_rel group_rel
+                            WHERE group_rel.res_country_id = partner.country_id
+                            AND group_rel.res_country_group_id = fpos.country_group_id
+                        )
+                    )
+                """,
+                company_ids=tuple(self.company_ids.ids),
+                invoice_types=tuple(self.env['account.move'].get_invoice_types()),
+                date_from=fields.Date.to_string(self.date_from),
+                date_to=fields.Date.to_string(self.date_to),
+            ))
+
+            country_error_move_ids = self._cr.fetchone()[0]
+
+            review_action = {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'list',
+                'res_model': 'account.move',
+                'domain': [('id', 'in', country_error_move_ids)],
+                'views': [[False, 'list'], [False, 'form']],
+            }
+
+            checks.append({
+                'name': _("Taxes and countries matching"),
+                'code': 'check_tax_countries',
+                'message': _("Ensure the taxes on invoices and bills match the customer’s country."),
+                'summary': _("%(count)s Invoices", count=len(country_error_move_ids)) if len(country_error_move_ids or []) > 1 else _("1 Invoice"),
+                'action': review_action if country_error_move_ids else None,
+                'result': 'failure' if country_error_move_ids else 'success',
+            })
+
         return checks
 
     def _check_suite_eu_vat_report(self, check_codes_to_ignore):
