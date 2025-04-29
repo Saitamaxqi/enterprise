@@ -166,10 +166,10 @@ export class BankRecStatementLine extends KanbanRecord {
         const reconciledLineName = [];
         for (const line of this.linesToReconcile) {
             if (
-                line.reconciled_lines_ids.records.length === 1 &&
-                line.reconciled_lines_ids.records[0].data.move_name
+                line.reconciled_lines_excluding_exchange_diff_ids.records.length === 1 &&
+                line.reconciled_lines_excluding_exchange_diff_ids.records[0].data.move_name
             ) {
-                reconciledLineName.push(line.reconciled_lines_ids.records[0].data.move_name);
+                reconciledLineName.push(line.reconciled_lines_excluding_exchange_diff_ids.records[0].data.move_name);
             } else {
                 reconciledLineName.push(line.account_id.display_name);
             }

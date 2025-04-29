@@ -116,8 +116,14 @@ export class BankRecLineToReconcile extends Component {
             : null;
     }
 
+    get reconciledLineExcludingExchangeDiffId() {
+        return this.lineData.reconciled_lines_excluding_exchange_diff_ids.records.length === 1
+            ? this.lineData.reconciled_lines_excluding_exchange_diff_ids.records[0].data
+            : null;
+    }
+
     get moveData() {
-        return this.reconciledLineId?.move_id || this.lineData.move_id;
+        return this.reconciledLineId?.move_id || this.reconciledLineExcludingExchangeDiffId?.move_id || this.lineData.move_id;
     }
 
     get sourceBalanceBiggerThanLineBalance() {

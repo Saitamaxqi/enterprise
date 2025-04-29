@@ -73,6 +73,7 @@ export class BankRecKanbanController extends KanbanController {
                 move_id: { name: "move_id", type: "many2one" },
                 move_attachment_ids: { name: "move_attachment_ids", type: "move_attachment_ids" },
                 reconciled_lines_ids: { name: "reconciled_lines_ids", type: "many2many" },
+                reconciled_lines_excluding_exchange_diff_ids: { name: "reconciled_lines_excluding_exchange_diff_ids", type: "many2many" },
                 reconcile_model_id: { name: "reconcile_model_id", type: "many2one" },
             },
             activeFields: {
@@ -90,6 +91,7 @@ export class BankRecKanbanController extends KanbanController {
                 move_id: makeActiveField(),
                 move_attachment_ids: makeActiveField(),
                 reconciled_lines_ids: makeActiveField(),
+                reconciled_lines_excluding_exchange_diff_ids: makeActiveField(),
                 reconcile_model_id: makeActiveField(),
             },
         };
@@ -111,6 +113,18 @@ export class BankRecKanbanController extends KanbanController {
                 balance: makeActiveField(),
                 amount_currency: makeActiveField(),
                 currency_id: makeActiveField(),
+            },
+        };
+        params.config.activeFields.line_ids.related.activeFields.reconciled_lines_excluding_exchange_diff_ids.related = {
+            fields: {
+                id: { name: "id", type: "int" },
+                move_name: { name: "move_name", type: "char" },
+                move_id: { name: "move_id", type: "many2one" },
+            },
+            activeFields: {
+                id: makeActiveField(),
+                move_name: makeActiveField(),
+                move_id: makeActiveField(),
             },
         };
         params.config.activeFields.line_ids.related.activeFields.partner_id.related = {
