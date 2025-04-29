@@ -197,7 +197,8 @@ class AccountReport(models.Model):
                     **send_and_print_vals['report_options'],
                     'partner_ids': [_id],
                 }
-                self.env['account.report.send']._process_send_and_print(report=report, options=options)
+                company = self.env['res.company'].browse(options['companies'][0]['id'])
+                self.env['account.report.send']._process_send_and_print(report=report.with_company(company), options=options)
                 processed_count += 1
                 report_partner_ids.remove(_id)
             if report_partner_ids:
