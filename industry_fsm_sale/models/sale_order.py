@@ -51,6 +51,11 @@ class SaleOrder(models.Model):
             return grouped_lines
         return super()._get_product_catalog_record_lines(product_ids, **kwarg)
 
+    def action_add_from_catalog(self):
+        if len(self.tasks_ids) == 1 and self.tasks_ids.allow_material:
+            return self.tasks_ids.action_fsm_view_material()
+        return super().action_add_from_catalog()
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -103,8 +108,3 @@ class SaleOrderLine(models.Model):
         )
         sol_from_task_without_amount.qty_to_invoice = 0.0
         super(SaleOrderLine, self - sol_from_task_without_amount)._compute_qty_to_invoice()
-
-    def action_add_from_catalog(self):
-        if len(self.task_id) == 1 and self.task_id.allow_material:
-            return self.task_id.action_fsm_view_material()
-        return super().action_add_from_catalog()
