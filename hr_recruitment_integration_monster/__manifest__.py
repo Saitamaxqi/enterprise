@@ -13,6 +13,7 @@ api from Monster.
 """,
     'depends': [
         'hr_recruitment_integration_base',
+        'hr_recruitment_extract',
     ],
     'data': [
         'data/hr_recruitment_platform_data.xml',
