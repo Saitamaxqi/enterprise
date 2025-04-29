@@ -1416,7 +1416,7 @@ registry.category("web_tour.tours").add("test_add_product_with_different_uom", {
             run: "edit product1",
         },
         {
-            trigger: ".dropdown-item:contains([TEST] product1)",
+            trigger: ".dropdown-item:contains(product1)",
             run: "click",
         },
         {
