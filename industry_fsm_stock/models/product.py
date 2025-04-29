@@ -110,8 +110,12 @@ class ProductProduct(models.Model):
         task_id = self.env.context.get('fsm_task_id')
         task = self.env['project.task'].browse(task_id)
         # project user with no sale rights should be able to change material quantities
-        sale_lines = self.env['sale.order.line'].sudo().search([
-            ('order_id', '=', task.sale_order_id.id), ('task_id', '=', task.id), ('product_id', '=', self.id), ('product_uom_qty', '>', 0)])
+        sale_lines = task.sale_order_id.order_line.sudo().filtered_domain([
+            ('task_id', '=', task.id),
+            ('product_id', '=', self.id),
+            ('product_uom_qty', '>', 0),
+            ('section_line_id', '=', self.env.context.get('selected_section_id', False)),
+        ])
         tracking_line_ids = [(0, 0, {
             'lot_id': line.fsm_lot_id.id,
             'quantity': line.product_uom_qty - line.qty_delivered,
@@ -145,7 +149,8 @@ class ProductProduct(models.Model):
             'target': 'new',
             'res_model': 'fsm.stock.tracking',
             'res_id': validation.id,
-            'views': [(False, 'form')]
+            'views': [(False, 'form')],
+            'context': self.env.context,
         }
 
     def action_product_forecast_report(self):

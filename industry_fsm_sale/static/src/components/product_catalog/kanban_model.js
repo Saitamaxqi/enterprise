@@ -16,7 +16,21 @@ export class FSMProductCatalogKanbanModel extends RelationalModel {
     static withCache = false;
 
     async _loadData(params) {
-        const result = await super._loadData(...arguments);
+        const selectedSection = this.env.searchModel.selectedSection;
+        if (selectedSection.filtered) {
+            params = {
+                ...params,
+                domain: [
+                    ...(params.domain || []),
+                    ['is_in_selected_section_of_order', '=', true],
+                ],
+                context: {
+                    ...params.context,
+                    selected_section_id: selectedSection.sectionId,
+                },
+            };
+        }
+        const result = await super._loadData(params);
         if (!params.isMonoRecord) {
             let records;
             if (params.groupBy?.length) {
@@ -41,6 +55,8 @@ export class FSMProductCatalogKanbanModel extends RelationalModel {
                 product_ids: records.map((rec) => rec.id),
                 task_id: params.context.fsm_task_id,
                 res_model: params.context.product_catalog_order_model,
+                child_field: params.context.child_field,
+                selected_section_id: this.env.searchModel.selectedSection.sectionId,
             });
             for (const record of records) {
                 record.productCatalogData = saleOrderLinesInfo[record.id];

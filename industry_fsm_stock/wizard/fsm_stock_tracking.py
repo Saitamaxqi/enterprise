@@ -109,30 +109,37 @@ class FsmStockTracking(models.TransientModel):
         if self.tracking_line_ids.filtered(lambda l: not l.lot_id):
             raise UserError(_('Each line needs a Lot/Serial Number'))
 
-        SaleOrderLine = self.env['sale.order.line'].sudo()
-
-        sale_lines_remove = SaleOrderLine.search([
-            ('order_id', '=', self.task_id.sale_order_id.id),
+        selected_section_id = self.env.context.get('selected_section_id', False)
+        sale_lines_remove = self.task_id.sale_order_id.order_line.sudo().filtered_domain([
             ('product_id', '=', self.product_id.id),
             ('id', 'not in', self.tracking_line_ids.sale_order_line_id.ids),
-            ('task_id', '=', self.task_id.id)
+            ('task_id', '=', self.task_id.id),
+            ('section_line_id', '=', selected_section_id),
         ])
         # create the new sale_lines from the wizard
         move_line_qty_per_lot_id = defaultdict(int)
         new_lines = self.tracking_line_ids.filtered(lambda line: not line.sale_order_line_id)
         for line in new_lines:
             qty = line.quantity if self.tracking == 'lot' else 1
+            child_field = self.env.context.get('child_field', 'order_line')
+            sequence = self.task_id.sale_order_id._get_new_line_sequence(
+                child_field,
+                selected_section_id,
+            )
             vals = {
                 'order_id': self.task_id.sale_order_id.id,
                 'product_id': self.product_id.id,
                 'product_uom_qty': qty,
                 'task_id': self.task_id.id,
                 'fsm_lot_id': line.lot_id.id,
+                'sequence': sequence,
             }
             if self.task_id.under_warranty:
                 vals['price_unit'] = 0
             move_line_qty_per_lot_id[line.lot_id] += qty
-            SaleOrderLine.with_context(industry_fsm_stock_tracking=True).create(vals)
+            self.env['sale.order.line'].sudo().with_context(
+                industry_fsm_stock_tracking=True
+            ).create(vals)
 
         dict_moves_per_picking = self._get_moves_dict(self.task_id.sale_order_id)
         self.env['stock.move'].check_access('write')

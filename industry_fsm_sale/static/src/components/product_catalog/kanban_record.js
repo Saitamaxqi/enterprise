@@ -21,6 +21,8 @@ export class FSMProductCatalogKanbanRecord extends ProductCatalogKanbanRecord {
             quantity: this.productCatalogData.quantity,
             res_model: this.env.orderResModel,
             task_id: this.env.fsm_task_id,
+            child_field: this.env.childField,
+            selected_section_id: this.env.searchModel.selectedSection.sectionId,
         });
         if (price) {
             this.productCatalogData.price = parseFloat(price);
@@ -35,17 +37,28 @@ export class FSMProductCatalogKanbanRecord extends ProductCatalogKanbanRecord {
             const options = {
                 additionalContext: actionContext,
                 onClose: async (closeInfo) => {
+                    const domain = [
+                        ['task_id', '=', this.env.fsm_task_id],
+                        ['product_id', '=', this.env.productId],
+                        ['product_uom_qty', '>', 0],
+                    ];
+                    if (this.env.orderId) {
+                      domain.push([
+                        'section_line_id',
+                        '=',
+                        this.env.searchModel.selectedSection.sectionId,
+                      ]);
+                    }
                     const lines = await this.orm.searchRead(
                         'sale.order.line',
-                        [
-                            //["order_id", "=", this.env.orderId], need to remove in case there is no order_id yet
-                            ["task_id", "=", this.env.fsm_task_id],
-                            ["product_id", "=", this.env.productId],
-                            ["product_uom_qty", ">", 0],
-                        ],
-                        ['product_uom_qty']
+                        domain,
+                        ['product_uom_qty'],
                     );
-                    this.productCatalogData.quantity = lines.reduce((total, line) => total + line.product_uom_qty, 0);
+                    const quantity = lines.reduce(
+                        (total, line) => total + line.product_uom_qty, 0
+                    );
+                    this.notifyLineCountChange(quantity - this.productCatalogData.quantity);
+                    this.productCatalogData.quantity = quantity;
                     this.productCatalogData.tracking = true;
                 },
             };

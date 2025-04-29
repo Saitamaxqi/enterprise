@@ -424,6 +424,7 @@ class ProjectTask(models.Model):
                 'hide_qty_buttons': self.sale_order_id.sudo().locked,
                 'default_invoice_policy': 'delivery',
                 'search_default_fsm_quantity': self.state == '1_done',
+                'child_field': 'order_line',
             }
         if not context['product_catalog_currency_id']:
             # fallback currency in case no SO yet

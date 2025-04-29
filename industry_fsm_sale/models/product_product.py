@@ -33,17 +33,16 @@ class ProductProduct(models.Model):
 
     def _inverse_fsm_quantity(self):
         task = self._get_contextual_fsm_task()
+        selected_section_id = self.env.context.get('selected_section_id', False)
         if task:
-            SaleOrderLine_sudo = self.env['sale.order.line'].sudo()
-            sale_lines_read_group = SaleOrderLine_sudo._read_group([
-                ('order_id', '=', task.sale_order_id.id),
+            sale_order_lines = task.sale_order_id.order_line.filtered_domain([
                 ('product_id', 'in', self.ids),
-                ('task_id', '=', task.id)],
-                ['product_id', 'sequence'],
-                ['id:array_agg'])
+                ('task_id', '=', task.id),
+                ('section_line_id', '=', selected_section_id),
+            ])
             sale_lines_per_product = defaultdict(lambda: self.env['sale.order.line'])
-            for product, __, ids in sale_lines_read_group:
-                sale_lines_per_product[product.id] |= SaleOrderLine_sudo.browse(ids)
+            for line in sale_order_lines:
+                sale_lines_per_product[line.product_id.id] |= line
             for product in self:
                 sale_lines = sale_lines_per_product.get(product.id, self.env['sale.order.line'])
                 all_editable_lines = sale_lines.filtered(lambda l: l.qty_delivered == 0 or l.qty_delivered_method == 'manual' or not l.order_id.locked)
@@ -71,20 +70,25 @@ class ProductProduct(models.Model):
                         if diff_qty == 0:
                             break
                 elif diff_qty > 0:  # create new SOL
+                    child_field = self.env.context.get('child_field', 'order_line')
+                    sequence = task.sale_order_id._get_new_line_sequence(
+                        child_field,
+                        selected_section_id,
+                    )
+
                     vals = {
                         'order_id': task.sale_order_id.id,
                         'product_id': product.id,
                         'product_uom_qty': diff_qty,
-                        'task_id': task.id
+                        'task_id': task.id,
+                        'sequence': sequence,
                     }
                     if task.under_warranty:
                         vals['price_unit'] = 0
                     if product.service_type == 'manual':
                         vals['qty_delivered'] = diff_qty
-                    if task.sale_order_id.order_line:
-                        vals['sequence'] = max(task.sale_order_id.order_line.mapped('sequence')) + 1
 
-                    sol_sudo = SaleOrderLine_sudo.create(vals)
+                    self.env['sale.order.line'].sudo().create(vals)
 
     @api.model
     def _search_fsm_quantity(self, operator, value):

@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
                 )
         return res
 
-    def _get_product_catalog_record_lines(self, product_ids, **kwarg):
+    def _get_product_catalog_record_lines(self, product_ids, *, selected_section_id=False, **kwarg):
         """
             Accessing the catalog from the smart button of a "field service" should compute
             the content of the catalog related to that field service rather than the content
@@ -45,11 +45,16 @@ class SaleOrder(models.Model):
         task_id = self.env.context.get('fsm_task_id')
         if task_id:
             grouped_lines = defaultdict(lambda: self.env['sale.order.line'])
-            for line in self.order_line:
+            order_lines = self.order_line.filtered_domain([
+                ('section_line_id', '=', selected_section_id),
+            ])
+            for line in order_lines:
                 if line.task_id.id == task_id and line.product_id.id in product_ids:
                     grouped_lines[line.product_id] |= line
             return grouped_lines
-        return super()._get_product_catalog_record_lines(product_ids, **kwarg)
+        return super()._get_product_catalog_record_lines(
+            product_ids, selected_section_id=selected_section_id, **kwarg
+        )
 
     def action_add_from_catalog(self):
         if len(self.tasks_ids) == 1 and self.tasks_ids.allow_material:

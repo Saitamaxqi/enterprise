@@ -32,7 +32,11 @@ class CatalogControllerFSM(ProductCatalogController):
         task_id = kwargs.get('task_id')
         if not task_id:
             return super().product_catalog_update_order_line_info(res_model, order_id, product_id, quantity, **kwargs)
-        request.update_context(fsm_task_id=task_id)
+        request.update_context(
+            child_field=kwargs.get('child_field'),
+            fsm_task_id=task_id,
+            selected_section_id=kwargs.get('selected_section_id'),
+        )
         task = request.env['project.task'].browse(task_id)
         product = request.env['product.product'].browse(product_id)
         SN_wizard = product.set_fsm_quantity(quantity)
