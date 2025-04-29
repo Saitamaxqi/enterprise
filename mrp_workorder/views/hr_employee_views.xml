@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='identification_group']" position='attributes'>
-                    <attribute name="string" add="Manufacturing" separator="/"/>
+                    <attribute name="string">Attendance/Point of Sale/Manufacturing</attribute>
                 </xpath>
             </field>
         </record>
