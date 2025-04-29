@@ -98,12 +98,16 @@ class BudgetAnalytic(models.Model):
         return revised._get_records_action()
 
     def action_open_budget_lines(self):
+        context = dict(self.env.context)
+        if len(self) == 1:
+            context['default_budget_analytic_id'] = self.id
         return {
             'type': 'ir.actions.act_window',
             'name': _('Budget Lines'),
             'res_model': 'budget.line',
             'view_mode': 'list,pivot,graph',
             'domain': [('budget_analytic_id', 'in', self.ids)],
+            'context': context,
         }
 
     def action_open_budget_report(self):

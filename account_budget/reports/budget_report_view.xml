@@ -6,7 +6,7 @@
             <field name="name">budget.report.view.list</field>
             <field name="model">budget.report</field>
             <field name="arch" type="xml">
-                <list string="Budget Report" create="0" action="action_open_reference" type="object">
+                <list string="Budget Report" create="0" action="action_open_reference" type="object" js_class="analytic_list">
                     <field name="date"/>
                     <field name="description"/>
                     <field name="account_id"/>
@@ -55,7 +55,7 @@
             <field name="name">budget.report.view.graph</field>
             <field name="model">budget.report</field>
             <field name="arch" type="xml">
-                <graph string="Budget Report" type="line">
+                <graph string="Budget Report" type="line" js_class="analytic_graph">
                     <field name="date" type="row"/>
                     <field name="account_id" type="col"/>
                     <field name="committed" type="measure"/>
@@ -67,7 +67,7 @@
             <field name="name">budget.report.view.pivot</field>
             <field name="model">budget.report</field>
             <field name="arch" type="xml">
-                <pivot string="Budget Report">
+                <pivot string="Budget Report" js_class="analytic_pivot">
                     <field name="budget_analytic_id" type="col"/>
                     <field name="account_id"/>  <!-- do not copy the `type` with _patch_view -->
                     <field name="account_id" type="row"/>
