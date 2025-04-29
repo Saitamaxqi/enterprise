@@ -34,12 +34,12 @@ $o-main-link-color: $o-enterprise-action-color !default;
 $o-main-color-muted: rgba($o-main-text-color, $o-opacity-muted) !default;
 
 // Components
-$o-component-active-color:  $o-gray-900 !default;
+$o-component-active-color:  $o-black !default;
 $o-component-active-bg: mix($o-action, $o-white, 10%) !default;
 $o-component-active-border: $o-action !default;
 
-$o-list-group-header-color: $o-gray-900 !default;
-$o-list-footer-color: $o-gray-900 !default;
+$o-list-group-header-color: $o-black !default;
+$o-list-footer-color: $o-black !default;
 $o-list-footer-bg-color: transparent !default;
 $o-list-footer-font-weight: 500 !default;
 
@@ -49,7 +49,7 @@ $o-form-lightsecondary: $o-gray-200 !default;
 $o-input-padding-y: 1px !default;
 $o-input-padding-x: 0 !default;
 
-$o-input-border-required: $o-gray-900 !default;
+$o-input-border-required: $o-black !default;
 
 // Badges
 $o-badge-min-width: 2.7ch !default !default;
@@ -77,11 +77,11 @@ $o-btns-bs-override: map-merge((
     "secondary": (
         background: $o-gray-200,
         border: $o-gray-200,
-        color: $o-gray-700,
+        color: $o-gray-900,
 
         hover-background: $o-gray-300,
         hover-border: $o-gray-300,
-        hover-color: $o-gray-800,
+        hover-color: $o-black,
 
         active-background: $o-component-active-bg,
         active-border:  $o-component-active-border,
@@ -94,14 +94,14 @@ $o-btns-bs-outline-override: map-merge((
     "secondary": (
         background: transparent,
         border: $o-gray-300,
-        color: $o-gray-700,
+        color: $o-gray-900,
 
         hover-background: $o-gray-200,
         hover-border: $o-gray-300,
-        hover-color: $o-gray-800,
+        hover-color: $o-black,
 
         active-background: mix($o-enterprise-action-color, $o-white, 10%),
         active-border:  $o-enterprise-action-color,
-        active-color: $o-gray-900,
+        active-color: $o-component-active-color,
     ),
 ), $o-btns-bs-outline-override);

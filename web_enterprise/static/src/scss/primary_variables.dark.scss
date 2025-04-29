@@ -106,11 +106,11 @@ $o-btns-bs-override: map-merge((
     "light": (
         background: $o-gray-200,
         border: $o-gray-200,
-        color: $o-gray-800,
+        color: $o-gray-900,
 
         hover-background: $o-gray-300,
         hover-border: $o-gray-300,
-        hover-color: $o-gray-900,
+        hover-color: $o-black,
 
         active-background: mix($o-action, $o-gray-100, 15%),
         active-border:  darken($o-action, 10%),
@@ -152,7 +152,7 @@ $o-btns-bs-outline-override: map-merge((
     "secondary": (
         background: transparent,
         border: $o-gray-300,
-        color: $o-gray-700,
+        color: $o-gray-900,
 
         hover-background: $o-gray-300,
         hover-border: $o-gray-300,
@@ -170,7 +170,7 @@ $o-btns-bs-outline-override: map-merge((
 
         hover-background: $o-gray-300,
         hover-border: $o-gray-300,
-        hover-color: $o-gray-900,
+        hover-color: $o-black,
 
         active-background: mix($o-action, $o-gray-100, 15%),
         active-border: lighten($o-action, 10%),
