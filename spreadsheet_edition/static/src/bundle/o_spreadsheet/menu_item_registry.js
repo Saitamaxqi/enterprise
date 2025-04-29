@@ -185,11 +185,6 @@ const insertPivotMenu = {
 
 topbarMenuRegistry.addChild("print", ["file"], printMenu);
 topbarMenuRegistry.addChild("reinsert_list", ["data"], reInsertListMenu);
-topbarMenuRegistry.addChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicPivotMenu, {
-    force: true,
-});
-topbarMenuRegistry.addChild("reinsert_static_pivot", ["data"], reinsertStaticPivotMenu, {
-    force: true,
-});
-
-topbarMenuRegistry.addChild("insert_pivot", ["insert"], insertPivotMenu, { force: true });
+topbarMenuRegistry.replaceChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicPivotMenu);
+topbarMenuRegistry.replaceChild("reinsert_static_pivot", ["data"], reinsertStaticPivotMenu);
+topbarMenuRegistry.replaceChild("insert_pivot", ["insert"], insertPivotMenu, { force: true });
