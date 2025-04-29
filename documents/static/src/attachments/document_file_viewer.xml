@@ -2,7 +2,7 @@
 <templates>
     <t t-name="documents.FileViewer" t-inherit="web.FileViewer" t-inherit-mode="primary">
         <xpath expr="//div[hasclass('o-FileViewer-download')]" position="before">
-            <div t-attf-class="d-flex align-items-center {{env.isSmall ? 'pe-2' : 'pe-4'}}">
+            <div t-attf-class="d-flex align-items-center flex-shrink-0 {{env.isSmall ? 'pe-2' : 'pe-4'}}">
                 <DocumentsAction folderId="folderId" targetRecords="[previewed.document?.record]" isPreview="true"/>
             </div>
         </xpath>
