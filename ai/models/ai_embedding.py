@@ -21,7 +21,6 @@ class AIEmbedding(models.Model):
         required=True,
         ondelete='cascade'
     )
-    checksum = fields.Char(string="Checksum", related='attachment_id.checksum')
     sequence = fields.Integer(string="Sequence", default=10)
     content = fields.Text(string="Chunk Content", required=True)
 

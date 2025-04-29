@@ -114,23 +114,19 @@ class AIAgent(models.Model):
         string="Restrict to Sources",
         help="If checked, the agent will only respond based on the provided sources.")
     image_128 = fields.Image("Image", related="partner_id.image_1920", max_width=128, max_height=128, readonly=False)
-    attachment_ids = fields.Many2many(
-        'ir.attachment',
-        'ai_agent_attachment_rel',
-        'agent_id',
-        'attachment_id',
+    attachment_ids = fields.One2many(
+        comodel_name='ir.attachment',
+        inverse_name='res_id',
         string="Attachment Sources",
-        index=True,
+        domain=[('url', '=', False)],
     )
 
     urls = fields.Text(string="URLs")
-    url_attachment_ids = fields.Many2many(
-        'ir.attachment',
-        'ai_agent_url_attachment_rel',
-        'agent_id',
-        'attachment_id',
+    url_attachment_ids = fields.One2many(
+        comodel_name='ir.attachment',
+        inverse_name='res_id',
         string="URL Sources",
-        index=True,
+        domain=[('url', '!=', False)],
     )
 
     topic_ids = fields.Many2many(
@@ -198,17 +194,7 @@ class AIAgent(models.Model):
         valid_attachments = unique_attachments.filtered(lambda att: att.index_content and len(att.index_content.split()) > 1)
         invalid_attachments = unique_attachments - valid_attachments
 
-        # Get existing embeddings for valid attachments
-        checksums = valid_attachments.mapped('checksum')
-        existing_embeddings = self.env['ai.embedding'].search([('checksum', 'in', checksums)])
-        existing_embeddings_map = {emb.checksum: emb.attachment_id for emb in existing_embeddings}
-
-        # Build final attachment list by using existing attachments with embeddings when possible
-        final_attachment_ids = self.env['ir.attachment']
-        for attachment in valid_attachments:
-            final_attachment_ids |= existing_embeddings_map.get(attachment.checksum, attachment)
-
-        self.attachment_ids = final_attachment_ids
+        self.attachment_ids = valid_attachments
 
         # Check for invalid attachments
         if invalid_attachments:
@@ -235,7 +221,7 @@ class AIAgent(models.Model):
         for attachment in self.attachment_ids:
             if attachment.index_content and len(attachment.index_content.split()) > 1:
                 # Check if this attachment already has embeddings
-                existing = self.env['ai.embedding'].search([('checksum', '=', attachment.checksum)], limit=1)
+                existing = self.env['ai.embedding'].search([('attachment_id', '=', attachment.id)], limit=1)
                 if not existing:
                     attachment._generate_embedding()
                     trigger_embeddings_cron = True

@@ -4,6 +4,7 @@
         <field name="name">Odoo Enterprise Agreement.pdf</field>
         <field name="datas" type="base64" file="ai/static/demo/odoo_enterprise_agreement.pdf"/>
         <field name="mimetype">application/pdf;base64</field>
+        <field name="res_model">ai.agent</field>
     </record>
 
     <record id="ai_agent_1" model="ai.agent">
