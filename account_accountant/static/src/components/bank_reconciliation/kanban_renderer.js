@@ -37,28 +37,17 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             },
             journalId: this.env.model.config.context.active_id,
             totalJournalAmount: "",
-            reconcileCountPerPartnerId: {},
             reconcileModels: [],
         });
         this.env.bus.addEventListener("createRecordQuickCreate", () => {
             this.globalState.quickCreate.isVisible = true;
         });
 
-        this.env.bus.addEventListener("RECOMPUTE_AVAILABLE_RECONCILE_LINES", (ev) => {
-            this.computeReconcileLineCountPerPartnerId();
-        });
-        this.env.bus.addEventListener("RELOAD_STATEMENT_LINES_FOR_PARTNER_NAME", (ev) => {
-            const recordsToLoad = this.env.model.root.records.filter(
-                (record) => record.data.partner_name === ev.detail
-            );
-            for (const record of recordsToLoad) {
-                record.load();
-            }
-        });
-
         onWillStart(async () => {
             this.getJournalTotalAmount();
-            await this.computeReconcileLineCountPerPartnerId();
+            await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+                this.env.model.root.records
+            );
             await this.getReconcileModels();
         });
     }
@@ -81,43 +70,6 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         if (mode === "add_close") {
             this.globalState.quickCreate.isVisible = false;
         }
-    }
-
-    async computeReconcileLineCountPerPartnerId(recordIds = null) {
-        if (!recordIds) {
-            recordIds = this.env.model.root.records.map((record) => record.data.id);
-        }
-        const result = await this.orm.webReadGroup(
-            "account.move.line",
-            [
-                ["parent_state", "in", ["draft", "posted"]],
-                [
-                    "partner_id",
-                    "in",
-                    this.env.model.root.records
-                        .filter((record) => !!record.data.partner_id.id)
-                        .map((record) => record.data.partner_id.id),
-                ],
-                [
-                    "company_id",
-                    "child_of",
-                    this.env.model.root.records.map((record) => record.data.company_id.id),
-                ],
-                ["account_id.reconcile", "=", true],
-                ["display_type", "not in", ["line_section", "line_note"]],
-                ["reconciled", "=", false],
-                "|",
-                ["account_id.account_type", "not in", ["asset_receivable", "liability_payable"]],
-                ["payment_id", "=", false],
-                ["statement_line_id", "not in", recordIds],
-            ],
-            ["partner_id"],
-            ["id:count"]
-        );
-
-        result.groups.forEach((group) => {
-            this.globalState.reconcileCountPerPartnerId[group.partner_id[0]] = group["id:count"];
-        });
     }
 
     async getJournalTotalAmount() {

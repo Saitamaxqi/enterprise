@@ -37,7 +37,6 @@
                 readonly="props.readonly"
                 record="groupOrRecord.record"
                 selectionAvailable="state.selectionAvailable"
-                reconcileCountPerPartnerId="globalState.reconcileCountPerPartnerId"
                 reconcileModels="globalState.reconcileModels"
             />
         </xpath>

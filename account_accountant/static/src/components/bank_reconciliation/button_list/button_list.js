@@ -59,16 +59,22 @@ export class BankRecButtonList extends Component {
                     "set_partner_bank_statement_line",
                     [this.statementLineData.id, partner[0]]
                 );
-                this.env.bus.trigger("RECOMPUTE_AVAILABLE_RECONCILE_LINES");
+                const recordsToLoad = [];
                 if (this.statementLineData.partner_name) {
                     // Reload all impacted statement lines if we have a partner_name
-                    this.env.bus.trigger(
-                        "RELOAD_STATEMENT_LINES_FOR_PARTNER_NAME",
-                        this.statementLineData.partner_name
+                    recordsToLoad.push(
+                        ...this.env.model.root.records.filter(
+                            (record) =>
+                                record.data.partner_name === this.statementLineData.partner_name
+                        )
                     );
                 } else {
-                    this.props.statementLine.load();
+                    recordsToLoad.push(this.props.statementLine);
                 }
+                await this.bankReconciliation.reloadRecords(recordsToLoad);
+                await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+                    this.env.model.root.records
+                );
                 this.bankReconciliation.reloadChatter();
             },
         });
@@ -166,7 +172,9 @@ export class BankRecButtonList extends Component {
                     this.statementLineData.id,
                     moveLines,
                 ]);
-                this.env.bus.trigger("RECOMPUTE_AVAILABLE_RECONCILE_LINES");
+                await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+                    this.env.model.root.records
+                );
                 this.props.statementLine.load();
                 this.bankReconciliation.reloadChatter();
             },
