@@ -22,6 +22,11 @@
         'web_studio',
         'whatsapp',
     ],
+    'assets': {
+        'web.assets_unit_tests': [
+            'test_discuss_full_enterprise/static/tests/**/*',
+        ],
+    },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }
