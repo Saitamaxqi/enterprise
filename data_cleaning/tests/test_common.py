@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import unittest
 
 from odoo.tests.common import TransactionCase
+from odoo.tools.func import reset_cached_properties
 from odoo.tools.sql import convert_column
-from odoo.tools import lazy_property
 
 
 class TestCommon(TransactionCase):
@@ -72,7 +71,7 @@ class TestCommon(TransactionCase):
         field = self.registry['x_dm_test_model_cd']._fields['x_cd']
         field.company_dependent = True
         self.registry.field_depends_context[field] = ('company',)
-        lazy_property.reset_all(field)
+        reset_cached_properties(field)
         convert_column(self.env.cr, 'x_dm_test_model_cd', 'x_cd', 'jsonb')
 
     def _create_record(self, model, **kwargs):
