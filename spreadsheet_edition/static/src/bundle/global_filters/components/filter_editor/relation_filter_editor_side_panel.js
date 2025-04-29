@@ -80,9 +80,9 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         if (!this.store.filter.modelName) {
             return;
         }
-        const result = await this.orm.cached.call("ir.model", "display_name_for", [
-            [this.store.filter.modelName],
-        ]);
+        const result = await this.orm
+            .cached()
+            .call("ir.model", "display_name_for", [[this.store.filter.modelName]]);
         const label = result[0]?.display_name;
         this.store.updateRelationModelLabel(label);
         if (!this.store.filter.label) {

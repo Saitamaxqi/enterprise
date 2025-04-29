@@ -13,6 +13,7 @@ class ProductCatalogRecord extends Record {
 
 export class FSMProductCatalogKanbanModel extends RelationalModel {
     static Record = ProductCatalogRecord;
+    static withCache = false;
 
     async _loadData(params) {
         const result = await super._loadData(...arguments);

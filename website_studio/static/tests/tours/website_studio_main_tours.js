@@ -1,5 +1,4 @@
 import { registry } from "@web/core/registry";
-import { assertEqual } from "@web_studio/../tests/tours/tour_helpers";
 
 registry.category("web_tour.tours").add("website_studio_listing_and_page", {
     url: "/odoo/action-studio?debug=1&mode=home_menu",
@@ -43,12 +42,7 @@ registry.category("web_tour.tours").add("website_studio_listing_and_page", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_view .o_kanban_renderer",
-            run() {
-                const pages = this.anchor.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)");
-                assertEqual(pages.length, 1);
-                assertEqual(pages[0].querySelector("[data-section='title']").textContent, "MyCustom Name");
-            },
+            trigger: ".o_kanban_view .o_kanban_renderer .o_kanban_record div[data-section='title']:contains('MyCustom Name')",
         },
     ],
 });
@@ -100,12 +94,7 @@ registry.category("web_tour.tours").add("website_studio_listing_without_page", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_view .o_kanban_renderer",
-            run() {
-                const pages = this.anchor.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)");
-                assertEqual(pages.length, 1);
-                assertEqual(pages[0].querySelector("[data-section='title']").textContent, "MyCustom Name");
-            },
+            trigger: ".o_kanban_view .o_kanban_renderer .o_kanban_record div[data-section='title']:contains('MyCustom Name')",
         },
     ],
 });

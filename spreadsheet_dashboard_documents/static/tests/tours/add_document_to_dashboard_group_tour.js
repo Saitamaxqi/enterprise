@@ -1,14 +1,5 @@
 import { registry } from "@web/core/registry";
 
-let startingNumberOfSheetsInGroup = 0;
-
-function assertNSheetsInGroup(number) {
-    const actualNumber = document.querySelectorAll(".o_list_table tr.o_data_row").length;
-    if (actualNumber !== number) {
-        console.error(`Expected ${number} sheets in the dashbord group, got ${actualNumber}`);
-    }
-}
-
 function focusFirstSheetInModal() {
     const sheetImg = document.querySelector(".o-spreadsheet-grid-image");
     sheetImg.dispatchEvent(new MouseEvent("focus"));
@@ -44,14 +35,6 @@ registry
             },
             {
                 trigger: 'button[name="action_add_document_spreadsheet_to_dashboard"]',
-                run: () => {
-                    startingNumberOfSheetsInGroup = document.querySelectorAll(
-                        ".o_list_table tr.o_data_row"
-                    ).length;
-                },
-            },
-            {
-                trigger: 'button[name="action_add_document_spreadsheet_to_dashboard"]',
                 content: "Open add document to dashboard modal",
                 run: "click",
             },
@@ -66,14 +49,17 @@ registry
                 run: "click",
             },
             {
-                trigger: '.o-sp-breadcrumb',
-                content: 'Go back to the dashboard group config',
+                trigger: ".o_sp_name input",
+                run: "edit Dashboard1",
+            },
+            {
+                trigger: ".o-sp-breadcrumb",
+                content: "Go back to the dashboard group config",
                 run: "click",
             },
             {
-                trigger: `.o_data_row`,
+                trigger: "tr.o_data_row td[name='name']:contains('Dashboard1')",
                 content: "A spreadsheet was added as dashboard",
-                run: () => assertNSheetsInGroup(startingNumberOfSheetsInGroup + 1),
             },
             {
                 trigger: 'button[name="action_add_document_spreadsheet_to_dashboard"]',
@@ -91,14 +77,17 @@ registry
                 run: "dblclick",
             },
             {
-                trigger: '.o-sp-breadcrumb',
-                content: 'Go back to the dashboard group config',
+                trigger: ".o_sp_name input",
+                run: "edit Dashboard2",
+            },
+            {
+                trigger: ".o-sp-breadcrumb",
+                content: "Go back to the dashboard group config",
                 run: "click",
             },
             {
-                trigger: `.o_data_row`,
+                trigger: "tr.o_data_row td[name='name']:contains('Dashboard2')",
                 content: "A spreadsheet was added as dashboard",
-                run: () => assertNSheetsInGroup(startingNumberOfSheetsInGroup + 2),
             },
         ],
     });
