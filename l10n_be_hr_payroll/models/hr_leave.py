@@ -104,13 +104,15 @@ class HrLeave(models.Model):
         dt_to = date_to.replace(tzinfo=timezone.utc)
         attendance_intervals = calendar._attendance_intervals_batch(dt_from, dt_to, employee.resource_id)
         leave_intervals = calendar._leave_intervals_batch(dt_from, dt_to, employee.resource_id)
-        if leave_intervals[employee.resource_id.id].items():
-            for start, end, leave in leave_intervals[employee.resource_id.id].items():
-                if leave.holiday_id:
-                    # remove holidays taken by the user from leave_intervals
-                    leave_intervals[employee.resource_id.id].remove((start, end, leave))
-        attendance_intervals = attendance_intervals[employee.resource_id.id] - leave_intervals[employee.resource_id.id]
-        return bool(attendance_intervals.items())
+        employee_leave_intervals = leave_intervals[employee.resource_id.id]
+        # remove holidays taken by the user from employee_leave_intervals
+        employee_leave_intervals -= [
+            (start, end, leave)
+            for start, end, leave in employee_leave_intervals
+            if leave.holiday_id
+        ]
+        attendance_intervals = attendance_intervals[employee.resource_id.id] - employee_leave_intervals
+        return bool(attendance_intervals)
 
     def _check_consecutive_leaves(self):
         self.ensure_one()
