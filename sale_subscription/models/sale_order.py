@@ -1064,7 +1064,10 @@ class SaleOrder(models.Model):
         """
         self.ensure_one()
         end_date = fields.Date.context_today(self)
-        if self.plan_id.user_closable and self.plan_id.user_closable_options == 'end_of_period' and self.env.context.get("allow_future_end_date"):
+        if self.end_date and self.end_date <= end_date:
+            # prevent overriding end date if end_date already set and it is less than today.
+            end_date = self.end_date
+        elif self.plan_id.user_closable and self.plan_id.user_closable_options == 'end_of_period' and self.env.context.get("allow_future_end_date"):
             end_date = self.next_invoice_date - relativedelta(days=1)
         elif renew:
             end_date = self.next_invoice_date

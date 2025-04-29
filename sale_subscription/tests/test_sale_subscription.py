@@ -2497,6 +2497,21 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(upsell.order_line.parent_line_id, subscription.order_line, "The parent_line_id of first upsell should not be reset")
         self.assertEqual(upsell.order_line.price_unit, 10, "The unit price shouldn't get updated")
 
+    def test_not_override_end_date_in_expiration_cron(self):
+        """Ensure the expiration cron does not override an existing past end_date."""
+        with freeze_time("2025-05-05"):
+            self.subscription.write({'end_date': datetime.date(2025, 6, 4)})
+            self.subscription.action_confirm()
+            self.subscription._create_recurring_invoice()
+            today = fields.Date.today()
+            self.assertEqual(self.subscription.start_date, today, "start date set to today")
+            self.assertEqual(self.subscription.next_invoice_date, datetime.date(2025, 6, 5))
+            self.assertEqual(self.subscription.end_date, datetime.date(2025, 6, 4))
+
+        with freeze_time("2025-06-10"):
+            self.env["sale.order"].sudo()._cron_subscription_expiration()
+            self.assertEqual(self.subscription.end_date, datetime.date(2025, 6, 4), "after expiration cron run, end_date should remain unchanged if already set and in the past")
+
 
     def test_churn_discount_removal(self):
         """ Test the following flow:
