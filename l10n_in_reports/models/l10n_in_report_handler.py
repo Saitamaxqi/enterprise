@@ -182,16 +182,21 @@ class L10n_InReportHandler(models.AbstractModel):
                 hsn_base_line_expression_domain,
             ])
 
-            all_checks = [
-                self._get_invalid_intra_state_tax_on_lines(aml_domain),
-                self._get_invalid_inter_state_tax_on_lines(aml_domain),
-                self._get_invalid_no_hsn_products(aml_domain),
-                self._get_invalid_service_hsn_products(aml_domain),
-                self._get_invalid_goods_hsn_products(aml_domain),
-                self._get_invalid_uqc_codes(aml_domain),
-                self._get_out_of_fiscal_year_reversed_moves(options),
-                self._get_invalid_tds_tcs_moves(options, report),
-            ]
+            all_checks = []
+            if report.id == self.env.ref("l10n_in_reports.account_report_gstr1").id:
+                all_checks = [
+                    self._get_invalid_intra_state_tax_on_lines(aml_domain),
+                    self._get_invalid_inter_state_tax_on_lines(aml_domain),
+                    self._get_invalid_no_hsn_products(aml_domain),
+                    self._get_invalid_service_hsn_products(aml_domain),
+                    self._get_invalid_goods_hsn_products(aml_domain),
+                    self._get_invalid_uqc_codes(aml_domain),
+                    self._get_out_of_fiscal_year_reversed_moves(options),
+                ]
+            elif report.id in (self.env.ref("l10n_in.tds_report").id, self.env.ref("l10n_in.tcs_report").id):
+                all_checks = [
+                    self._get_invalid_tds_tcs_moves(options, report),
+                ]
 
             for warning_template_ref, wrong_data in all_checks:
                 if wrong_data:
