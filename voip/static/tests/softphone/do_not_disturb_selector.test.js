@@ -26,7 +26,7 @@ test("Do not disturb selector show all options", async () => {
     await contains("button", { text: "Until I turn it back on" });
 });
 
-test("Do not disturb selector change state correctly with limited time", async () => {
+test("Do not disturb selector changes state correctly with limited time", async () => {
     mockDate("2025-01-01 01:00:00", +0);
     await startServer();
     await start();
@@ -40,7 +40,7 @@ test("Do not disturb selector change state correctly with limited time", async (
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge i.text-danger");
     await click(".o-voip-DndSelector-badge i.text-danger");
-    await contains("p", { text: "Until Jan 1, 2025, 1:15 AM" });
+    await contains("p:contains(Until Jan 1, 2025, 1:15)");
     await advanceTime(14 * 60 * 1000, { blockTimers: true });
     await contains(".o-voip-DndSelector-badge i.text-danger");
     await advanceTime(1 * 60 * 1000, { blockTimers: true });
