@@ -1555,21 +1555,50 @@ class AccountReturn(models.Model):
 
     def _check_suite_common_ec_sales_list(self, check_codes_to_ignore):
         checks = []
-        if 'goods_service_classification' not in check_codes_to_ignore:
-            checks.append({
-                'name': _("Goods and services classification"),
-                'message': _("Review the tax code and ensure each transaction is correctly classified as a supply of goods or services."),
-                'code': 'goods_service_classification',
-                'result': 'manual',
-            })
 
-        if 'reverse_charge_mentioned' not in check_codes_to_ignore:
-            checks.append({
-                'name': _("Reverse charge mention"),
-                'message': _('Make sure the "Reverse Charge" mention appears on all invoices.'),
-                'code': 'reverse_charge_mentioned',
-                'result': 'manual',
-            })
+        if 'goods_service_classification' not in check_codes_to_ignore or 'reverse_charge_mentioned' not in check_codes_to_ignore:
+            options = self._get_closing_report_options()
+
+            tax_criterium_ids = options['sales_report_taxes']['goods'] + options['sales_report_taxes']['triangular'] + options['sales_report_taxes']['services']
+            if options['sales_report_taxes'].get('use_taxes_instead_of_tags'):
+                tax_criterium = ('tax_ids', 'in', tax_criterium_ids)
+            else:
+                tax_criterium = ('tax_tag_ids', 'in', tax_criterium_ids)
+
+            ec_sales_aml_domain = [
+                *self.type_id.report_id._get_options_domain(options, 'strict_range'),
+                tax_criterium,
+            ]
+
+            if 'goods_service_classification' not in check_codes_to_ignore:
+                checks.append({
+                    'name': _("Goods and services classification"),
+                    'message': _("Review the tax code and ensure each transaction is correctly classified as a supply of goods or services."),
+                    'code': 'goods_service_classification',
+                    'result': 'manual',
+                    'action': {
+                        'type': 'ir.actions.act_window',
+                        'name': _("Journal Items"),
+                        'res_model': 'account.move.line',
+                        'domain': ec_sales_aml_domain,
+                        'views': [(False, 'list')],
+                    },
+                })
+
+            if 'reverse_charge_mentioned' not in check_codes_to_ignore:
+                checks.append({
+                    'name': _("Reverse charge mention"),
+                    'message': _('Make sure the "Reverse Charge" mention appears on all invoices.'),
+                    'code': 'reverse_charge_mentioned',
+                    'result': 'manual',
+                    'action': {
+                        'type': 'ir.actions.act_window',
+                        'name': _("Invoices"),
+                        'res_model': 'account.move',
+                        'domain': [('line_ids', 'any', ec_sales_aml_domain)],
+                        'views': [(False, 'list'), (False, 'form')],
+                    },
+                })
 
         if any(code not in check_codes_to_ignore for code in ('eu_cross_border', 'only_b2b', 'no_partners_without_vat')):
             warnings = {}
