@@ -118,13 +118,14 @@ class TestReconciliationReport(TestAccountReportsCommon):
         options = self._generate_options(report, '2016-01-02', '2016-01-02')
         options['unfold_all'] = True
         lines = report._get_lines(options)
+        account = bank_journal.default_account_id.display_name
 
         self.assertLinesValues(
             lines,
             #   Name                                            Date            Amount
             [0,                                                   1,                3],
             [
-                ('Balance of \'101403 Bank\'',                   '',           -200.0),
+                (f'Balance of \'{account}\'',                    '',           -200.0),
                 ('Last statement balance',                       '',           -200.0),
                 ('Including Unreconciled Receipts',              '',            200.0),
                 ('BNKKK/2015/00002',                   '01/02/2015',            200.0),
@@ -277,13 +278,14 @@ class TestReconciliationReport(TestAccountReportsCommon):
             options = self._generate_options(report, '2016-01-02', '2016-01-02')
             options['unfold_all'] = True
             lines = report._get_lines(options)
+            account = bank_journal.default_account_id.display_name
 
             self.assertLinesValues(
                 lines,
                 #   Name                                                Date   Am. Cur.                  Cur.       Amount
                 [0,                                                       1,       3,                      4,           5],
                 [
-                    ('Balance of \'101403 Bank\'',                       '',      '',                     '',       200.0),
+                    (f'Balance of \'{account}\'',                        '',      '',                     '',       200.0),
                     ('Last statement balance',                           '',      '',                     '',       200.0),
                     ('Including Unreconciled Receipts',                  '',      '',                     '',       170.005),
                     ('BNKKK/2016/00002',                       '01/01/2016',  900.00,    choco_currency.name,        90.001),
@@ -470,13 +472,14 @@ class TestReconciliationReport(TestAccountReportsCommon):
         options = self._generate_options(report, '2016-01-02', '2016-01-02')
         options['unfold_all'] = True
         lines = report._get_lines(options)
+        account = bank_journal.default_account_id.display_name
 
         self.assertLinesValues(
             lines,
             #   Name                                                  Date         Amount
             [0,                                                         1,             3],
             [
-                ('Balance of \'101403 Bank\'',                         '',           0.0),
+                (f'Balance of \'{account}\'',                          '',           0.0),
                 ('Last statement balance',                             '',           0.0),
                 ('Including Unreconciled Receipts',                    '',           0.0),
                 ('Including Unreconciled Payments',                    '',           0.0),
@@ -532,13 +535,14 @@ class TestReconciliationReport(TestAccountReportsCommon):
         options = self._generate_options(report, '2016-01-02', '2016-01-02')
         options['unfold_all'] = True
         lines = report._get_lines(options)
+        account = bank_journal.default_account_id.display_name
 
         self.assertLinesValues(
             lines,
             #   Name                                                  Date         Amount
             [0,                                                         1,             3],
             [
-                ('Balance of \'101403 Bank\'',                         '',         800.0),
+                (f'Balance of \'{account}\'',                          '',         800.0),
                 ('Last statement balance',                             '',           0.0),
                 ('Including Unreconciled Receipts',                    '',           0.0),
                 ('Including Unreconciled Payments',                    '',           0.0),
@@ -565,7 +569,7 @@ class TestReconciliationReport(TestAccountReportsCommon):
             #   Name                                                  Date         Amount
             [0,                                                         1,             3],
             [
-                ('Balance of \'101403 Bank\'',                         '',           0.0),
+                (f'Balance of \'{account}\'',                          '',           0.0),
                 ('Last statement balance',                             '',           0.0),
                 ('Including Unreconciled Receipts',                    '',           0.0),
                 ('Including Unreconciled Payments',                    '',           0.0),

@@ -533,7 +533,7 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
         })._create_payments()
 
         self.assertEqual(move_1.payment_state, 'partial')
-        self.assertEqual(move_2.payment_state, 'in_payment')
+        self.assertEqual(move_2.payment_state, move_2._get_invoice_in_payment_state())
 
         options = self._generate_options(self.report, '2019-01-01', '2019-12-31', default_options={'partner_ids': new_partner.ids})
         self.assertLinesValues(
