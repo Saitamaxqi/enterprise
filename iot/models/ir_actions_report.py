@@ -13,30 +13,31 @@ class IrActionsReport(models.Model):
     device_ids = fields.Many2many('iot.device', string='IoT Devices', domain="[('type', '=', 'printer')]",
                                 help='When setting a device here, the report will be printed through this device on the IoT Box')
 
-    def render_and_send(self, devices, res_ids, data=None, print_id=0, websocket=True):
+    def render_document(self, device_id_list, res_ids, data=None):
+        """Render a document to be printed by the IoT Box through client
+
+        :param device_id_list: The list of device ids to print the document
+        :param res_ids: The list of record ids to print
+        :param data: The data to pass to the report
+        :return: The list of documents to print with information about the device
         """
-            Send the dictionary in message to the iot_box via websocket, or return the data to be sent by longpolling.
-        """
+        device_ids = self.env['iot.device'].browse(device_id_list)
+        if len(device_id_list) != len(device_ids.exists()):
+            raise UserError(_(
+                "One of the printer used to print the document has been removed.\n"
+                "To reset printers, go to the IoT App, Configuration tab, \"Reset Linked Printers\" and retry the operation."
+            ))
+
         datas = self._render(self.report_name, res_ids, data=data)
         data_bytes = datas[0]
         data_base64 = base64.b64encode(data_bytes)
-        iot_identifiers = {device["iotIdentifier"] for device in devices}
-        if not websocket:
-            return [[
-                self.env["iot.box"].search([("identifier", "=", device["iotIdentifier"])]).ip,
-                device["identifier"],
-                device['name'],
-                data_base64,
-            ] for device in devices]
-
-        self.env['iot.channel']._send_message({
-            "iot_identifiers": list(iot_identifiers),
-            "device_identifiers": [device["identifier"] for device in devices],
-            "action": "",
-            "print_id": print_id,
-            "document": data_base64
-        })
-        return print_id
+        return [{
+            "iotBoxId": device.iot_id.id,
+            "deviceId": device.id,
+            "deviceIdentifier": device.identifier,
+            "deviceName": device.display_name,
+            "document": data_base64,
+        } for device in device_ids]  # As it is called via JS, we format keys to camelCase
 
     def report_action(self, docids, data=None, config=True):
         result = super().report_action(docids, data, config)
@@ -75,18 +76,3 @@ class IrActionsReport(models.Model):
                     'default_report_id': self._ids[0]
                 },
         }
-
-    def get_devices_from_ids(self, id_list):
-        device_ids = self.env['iot.device'].browse(id_list)
-        if len(id_list) != len(device_ids.exists()):
-            raise UserError(_("One of the printer used to print document have been removed. Please retry the operation to choose new printers to print."))
-        device_list = []
-        for device_id in device_ids:
-            device_list.append({
-                "id": device_id.id,
-                "identifier": device_id.identifier,
-                "name": device_id.name,
-                "iotIdentifier": device_id.iot_id.identifier,
-                "display_name": device_id.display_name
-            })
-        return device_list

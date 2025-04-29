@@ -124,7 +124,7 @@ class IoTController(http.Controller):
             )
             return
 
-        request.env['iot.channel']._send_message({
+        request.env['iot.channel'].send_message({
             'session_id': session_id,
             'iot_box_identifier': iot_box_identifier,
             'device_identifier': device_identifier,

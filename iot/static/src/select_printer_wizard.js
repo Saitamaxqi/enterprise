@@ -5,7 +5,7 @@ import { FormController } from "@web/views/form/form_controller";
 import { useSubEnv } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { setReportIdInBrowserLocalStorage } from "./client_action/delete_local_storage";
-import { handleIoTConnectionFallbacks } from "./iot_report_action";
+import { printReport } from "@iot/iot_report_action";
 
 export class SelectPrinterFormController extends FormController {
     setup () {
@@ -30,7 +30,7 @@ export class SelectPrinterFormController extends FormController {
                 this.props.context.print_id
             ];
             setReportIdInBrowserLocalStorage(args[0], deviceOptions);
-            await handleIoTConnectionFallbacks(this.env, this.orm, args, deviceOptions.selectedDevices);
+            await printReport(this.env, args, deviceOptions.selectedDevices);
 
             this.onClickViewButton(params);
         } else {

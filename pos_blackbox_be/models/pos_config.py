@@ -239,7 +239,7 @@ class PosConfig(models.Model):
             "high_level_message": blackbox_data,
             "id": order.id,
         }
-        self.env['iot.channel']._send_message(message)
+        self.env['iot.channel'].send_message(message)
         return True
 
     def _clock_kiosk_user(self, clock_in):

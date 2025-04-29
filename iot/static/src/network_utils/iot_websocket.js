@@ -1,0 +1,126 @@
+import { uuid } from "@iot_base/network_utils/http";
+
+/**
+ * Class to handle Websocket connections
+ */
+export class IotWebsocket {
+    listeners = {};
+
+    constructor() {
+        this.setup(...arguments);
+    }
+
+    async setup({ bus_service, orm }) {
+        this.busService = bus_service;
+        this.orm = orm;
+        this.iotChannel = await this.orm.call("iot.channel", "get_iot_channel", [0]);
+    }
+
+    /**
+     * Send a message to the IoT Box
+     * @param iotBoxIdentifier Identifier of the IoT Box
+     * @param message Data to send to the device
+     * @param messageId Unique identifier for the message (optional)
+     * @param messageType Type of message to send (optional)
+     * @returns {Promise<*>} The message ID
+     */
+    async sendMessage(iotBoxIdentifier, message, messageId = null, messageType = 'iot_action') {
+        messageId ??= uuid();
+
+        await this.orm.call("iot.channel", "send_message", [
+            0, { iot_identifiers: [iotBoxIdentifier], session_id: messageId, ...message }, messageType
+        ]);
+
+        return messageId;
+    }
+
+    /**
+     * Add a listener for events/messages coming from the IoT Box.
+     * This method allows defining callbacks for success and failure cases.
+     * @param iotBoxIdentifier Identifier of the IoT Box
+     * @param deviceIdentifier Identifier of the device connected to the IoT Box
+     * @param onSuccess Callback to run when a message is received (can return ``message``, ``deviceIdentifier``, and ``messageId``)
+     * @param onFailure Callback to run when the request fails (can return ``deviceIdentifier`` and ``messageId``)
+     * @param messageType The type of message to listen for (optional)
+     */
+    onMessage(
+        iotBoxIdentifier,
+        deviceIdentifier,
+        onSuccess = (_message, _deviceIdentifier, _messageId) => {},
+        onFailure = (_messageId, _deviceIdentifier) => {},
+        messageType = 'operation_confirmation',
+    ) {
+        if (!this.iotChannel) {
+            console.error("No IoT Channel found");
+            return;
+        }
+
+        // add the listener to the list of listeners
+        this.pushListener(iotBoxIdentifier, deviceIdentifier, messageType, onSuccess, onFailure);
+
+        this.busService.addChannel(this.iotChannel);
+        this.busService.subscribe(messageType, (payload) => {
+            const { message_id, iot_box_identifier, device_identifier, message } = payload;
+            if (iot_box_identifier !== iotBoxIdentifier || device_identifier !== deviceIdentifier) {
+                return;
+            }
+
+            this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, message_id, message);
+        });
+    }
+
+    /**
+     * Register a callback to be called when the device sends a success or failure message/event
+     * Both pop and push listener methods are used to handle callbacks to multiple listeners for the same message
+     * @param iotBoxIdentifier Identifier of the IoT Box
+     * @param deviceIdentifier Identifier of the device connected to the IoT Box
+     * @param messageType The type of message to listen for
+     * @param onSuccess The callback to run when a message is received
+     * @param onFailure The callback to run when the request fails
+     */
+    pushListener(iotBoxIdentifier, deviceIdentifier, messageType, onSuccess, onFailure) {
+        const currentIotBox = this.listeners[iotBoxIdentifier] ??= {};
+        const currentDeviceIdentifier = currentIotBox[deviceIdentifier] ??= {};
+        const callbacks = currentDeviceIdentifier[messageType] ??= { onSuccess: [], onFailure: [] };
+
+        callbacks.onSuccess.push(onSuccess);
+        callbacks.onFailure.push(onFailure);
+    }
+
+    /**
+     * Execute all callbacks for a specific device and unregister them.
+     * Both pop and push listener methods are used to handle callbacks to multiple listeners for the same message
+     * @param iotBoxIdentifier Identifier of the IoT Box
+     * @param deviceIdentifier Identifier of the device connected to the IoT Box
+     * @param messageType The type of message to listen for
+     * @param messageId The message ID
+     * @param message The message received
+     */
+    callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, messageId, message) {
+        const listenedIotBox = this.listeners[iotBoxIdentifier];
+        const listeners = listenedIotBox?.[deviceIdentifier]?.[messageType];
+        if (!listeners) {
+            return;
+        }
+
+        // Run the callbacks
+        const success = message.status === "success";
+        const callbacks = success ? listeners.onSuccess : listeners.onFailure;
+        for (const callback of callbacks) {
+            callback(message, deviceIdentifier, messageId);
+        }
+
+        // Remove the listeners (cleanup)
+        delete listenedIotBox[deviceIdentifier][messageType];
+
+        // If there are no more listeners for the device, remove the device
+        if (Object.keys(listenedIotBox[deviceIdentifier]).length === 0) {
+            delete listenedIotBox[deviceIdentifier];
+        }
+
+        // If there are no more listeners for the IoT Box, remove the IoT Box
+        if (Object.keys(listenedIotBox).length === 0) {
+            delete this.listeners[iotBoxIdentifier];
+        }
+    }
+}

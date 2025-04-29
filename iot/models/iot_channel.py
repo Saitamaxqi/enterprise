@@ -19,8 +19,7 @@ class IotChannel(models.AbstractModel):
 
         return ws_channel
 
-
-    def _send_message(self, message, message_type='iot_action'):
+    def send_message(self, message, message_type='iot_action'):
         """Send a message to a device via websocket.
 
         :param dict message: The message to send to the IoT Box

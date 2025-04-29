@@ -1,9 +1,47 @@
 import { patch } from "@web/core/utils/patch";
 import { IoTLongpolling } from "@iot_base/network_utils/longpolling";
-import { formatEndpoint } from "@iot_base/network_utils/http";
+import { formatEndpoint, uuid } from "@iot_base/network_utils/http";
+import { uniqueId } from "@web/core/utils/functions";
 import { _t } from "@web/core/l10n/translation";
 
 patch(IoTLongpolling.prototype, {
+    /**
+     * Send a message to the IoT Box (action route)
+     * @param iotBoxIp IP Address of the IoT Box
+     * @param message Data to send to the device
+     * @param messageId Unique identifier for the message
+     * @returns {Promise<*>} messageId if the request didn't throw an error
+     */
+    async sendMessage(iotBoxIp, message, messageId = null) {
+        messageId ??= uuid();
+        await this._rpcIoT(iotBoxIp, '/hw_drivers/action', { session_id: messageId, ...message });
+
+        return messageId;
+    },
+    /**
+     * Listen for messages from the IoT Box (polling the IoT Box)
+     * @param iotBoxIp IP Address of the IoT Box
+     * @param iotDeviceIdentifier Identifier of the device connected to the IoT Box
+     * @param onSuccess Callback to run when a successful response is received (can return ``message``, ``deviceIdentifier``, and ``messageId``)
+     * @param onFailure Callback to run when the request fails (can return ``deviceIdentifier`` and ``messageId``)
+     */
+    onMessage(
+        iotBoxIp,
+        iotDeviceIdentifier,
+        onSuccess = (_message, _deviceIdentifier, _messageId) => {},
+        onFailure = (_deviceIdentifier, _messageId) => {},
+    ) {
+        const listenerId = uniqueId('listener-');
+        const listenerCallback = (message) => {
+            this.removeListener(iotBoxIp, iotDeviceIdentifier, listenerId);
+            if (message.status !== 'success') {
+                onFailure(iotDeviceIdentifier, listenerId);
+            } else {
+                onSuccess(message, iotDeviceIdentifier, listenerId);
+            }
+        }
+        return this.addListener(iotBoxIp, [ iotDeviceIdentifier ], listenerId, listenerCallback, true);
+    },
     async _rpcIoT(iot_ip, route, params, timeout = undefined, fallback = false, headers = undefined) {
         // Sign the request
         const requestUrl = formatEndpoint(iot_ip, route);
