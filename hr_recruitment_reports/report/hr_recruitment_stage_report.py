@@ -13,7 +13,7 @@ class HrRecruitmentStageReport(models.Model):
     name = fields.Char('Applicant Name', readonly=True)
     stage_id = fields.Many2one('hr.recruitment.stage', readonly=True)
     job_id = fields.Many2one('hr.job', readonly=True)
-    days_in_stage = fields.Float(readonly=True, aggregator='avg')
+    days_in_stage = fields.Float(readonly=True, aggregator='avg', string="Average Days in Stage")
 
     state = fields.Selection([
         ('is_hired', 'Hired'),
