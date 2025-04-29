@@ -6,3 +6,7 @@ from . import ai_tool
 from . import ir_attachment
 from . import res_config_settings
 from . import res_partner
+from . import ai_composer
+from . import discuss_channel
+from . import mail_thread
+from . import models
