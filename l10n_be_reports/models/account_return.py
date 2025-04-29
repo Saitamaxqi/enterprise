@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 from datetime import date
-from odoo import api, models, _
+from odoo import api, fields, models, _
 
 
 class AccountReturnType(models.Model):
@@ -165,6 +165,36 @@ class AccountReturn(models.Model):
                 'code': 'sales_threshold',
                 'result': 'success',
             })
+
+        if 'customer_without_country' not in check_codes_to_ignore:
+            domain = [
+                ('company_id', 'in', self.company_ids.ids),
+                ('date', '<=', fields.Date.to_string(self.date_to)),
+                ('date', '>=', fields.Date.to_string(self.date_from)),
+                ('state', '=', 'posted'),
+                ('partner_id.country_id', '=', False),
+                ('move_type', 'in', self.env['account.move'].get_sale_types()),
+            ]
+            no_country_moves_count = self.env['account.move'].search_count(domain)
+            summary_string = _("%(count)s Invoices", count=no_country_moves_count) if no_country_moves_count > 1 else _("1 Invoice")
+            action = {
+                'type': 'ir.actions.act_window',
+                'name': _("Invoices Without Country"),
+                'view_mode': 'list',
+                'res_model': 'account.move',
+                'domain': domain,
+                'views': [[False, 'list'], [False, 'form']],
+            }
+            check_vals = {
+                'name': _("No customer without country"),
+                'message': _("Review invoices having a customer with no country specified."),
+                'code': 'customer_without_country',
+                'summary': summary_string,
+                'result': 'failure' if no_country_moves_count else 'success',
+                'action': action if no_country_moves_count else False,
+            }
+
+            checks.append(check_vals)
 
         return checks
 
