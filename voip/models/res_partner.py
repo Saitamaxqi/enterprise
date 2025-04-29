@@ -73,8 +73,8 @@ class ResPartner(models.Model):
         def encode(letter):
             if letter in T9_MAPPING:
                 return T9_MAPPING[letter]
-            if letter == " ":
-                return " "
+            if letter in "0123456789 ":
+                return letter
             return "x"
 
         for partner in self:
