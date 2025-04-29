@@ -781,6 +781,9 @@ class AccountJournal(models.Model):
                     if line['communication_struct']:
                         structured_com, extend_notes = self._parse_structured_communication(line['communication_type'], line['communication'])
                         transaction_details['communication_struct'] = extend_notes
+                        # If we have no partner name but that we have an ATM/POS debit, use partner (name + city) from structured communication
+                        if not line.get('counterpartyName') and line['communication_type'] == '113':
+                            line['counterpartyName'] = f"{rmspaces(line['communication'][40:56])} ({rmspaces(line['communication'][56:66])})"
                     elif line.get('communication'):
                         transaction_details['communication'] = rmspaces(line['communication'])
                     if not self.coda_split_transactions and statement_line and line['ref_move'] == statement_line[-1]['ref'][:4]:

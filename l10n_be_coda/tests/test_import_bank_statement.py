@@ -107,3 +107,15 @@ class TestCodaFile(AccountTestInvoicingCommon):
             self.env['account.bank.statement.line'].search(action['domain'])['journal_id'],
             journal_1 + journal_2,
         )
+
+    def test_coda_import_atm_pos_transaction_import_partner_from_struct_com(self):
+        coda = """0000001122472505        0123456789JOHN DOE                  KREDBEBB   00477472701 00000                                       2                              2
+12001BE68539007547034                  EUR0000000000100000310123DEMO COMPANY              KBC Business Account               027
+2100020001DALZ15199 BKTBPFBECPG1000000000380500250325804021000                                                     25032506110 0
+2100030000OL98R57W3GBKTOTBBEPOS10000000000062002503250040200011135127880000006588101902254978525032512037TOYOTA EVE25032506101 0
+2200030000RE    EVERE     000000000000000000000000000   0000000                                                              1 0
+2300030000                                                                        00000                                      0 0
+8027BE68539007547034                  EUR0000000000125500000000                                                                0
+9               000005000000000000000000000000025500                                                                           2"""
+        statements = self.company_data['default_journal_bank']._parse_bank_statement_file(coda.encode('utf-8'))[0][2]
+        self.assertEqual(statements[0]['transactions'][0]['partner_name'], "TOYOTA EVERE (EVERE)")
