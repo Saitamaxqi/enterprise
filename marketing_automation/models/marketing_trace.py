@@ -64,13 +64,15 @@ class MarketingTrace(models.Model):
 
     # DANE: try to make this function to work on batches later
     def process_event(self, action):
-        """Process event coming from customers currently centered on email actions.
-        It updates child traces :
+        """ Process event coming from customers. It updates child traces :
 
-         * opposite actions are canceled, for example mail_not_open when mail_open is triggered;
-         * bounced mail cancel all child actions not being mail_bounced;
+         * child trace matching action is scheduled or executed depending on
+           time interval configuration;
+         * opposite actions are canceled
+           e.g. mail_not_open is canceled if mail_open is triggered
+           e.g. mail_bounce cancels all child actions not being mail_bounced;
 
-        :param string action: see trigger_type field of activity
+        :param string action: one of ``trigger_type`` of marketing activity
         """
         self.ensure_one()
         if self.participant_id.campaign_id.state not in ['draft', 'running']:

@@ -504,8 +504,14 @@ class MarketingActivity(models.Model):
         return True
 
     def _generate_children_traces(self, traces):
-        """Generate child traces for child activities and compute their schedule date except for mail_open,
-        mail_click, mail_reply, mail_bounce which are computed when processing the mail event """
+        """Generate child traces for child activities that are directly time
+        dependant e.g. after an activity, after not opened email, ...
+        Action-based traces (mail open, ...) have no specific scheduled date
+        as they depend on external actions.
+
+        :param traces: marketing.trace records which have been processed and
+          validated and for which we want to generate children traces
+        """
         child_traces = self.env['marketing.trace']
         cron_trigger_dates = set()
         for activity in self.child_ids:
@@ -533,9 +539,10 @@ class MarketingActivity(models.Model):
         return child_traces
 
     def _get_reschedule_trigger_types(self):
-        """ Retrieve a set of trigger types used for rescheduling actions.
-        The marketing activity will be rescheduled after these triggers are activated.
-        :returns set[str]: set of elements, each containing trigger_type
+        """ Retrieve a set of trigger types that have a schedule_date that depends
+        on parent or activity / campaign, not on external user actions.
+
+        :returns set[str]: set of ``trigger_type`` elements
         """
         return {'activity', 'begin', 'mail_not_open', 'mail_not_click', 'mail_not_reply'}
 
