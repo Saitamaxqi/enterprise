@@ -12,6 +12,7 @@ Accounting reports for US
     ],
     'data': [
         'data/check_register.xml',
+        'data/account_return_data.xml',
     ],
     'installable': True,
     'post_init_hook': '_l10n_us_reports_post_init',

@@ -1569,7 +1569,10 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
     def test_returns_period_filter(self):
         generic_tax_report = self.env.ref('account.generic_tax_report')
 
-        # By default, the generic tax report isn't linked to a return type (only localized tax reports are) ; it should fallback on 'this_month'
+        # l10n_us_reports adds a return type for this report; we make sure that none is set at this point, for testing purposes
+        generic_tax_report.return_type_ids.unlink()
+
+        # When the tax report isn't linked to a return type, it should fallback on 'this_month'
         self._assert_filter_date(
             generic_tax_report,
             {},
