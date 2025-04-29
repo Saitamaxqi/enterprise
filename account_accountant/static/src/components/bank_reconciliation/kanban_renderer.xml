@@ -49,6 +49,7 @@
                     label="recordData.name"
                     amount="recordData.balance"
                     action="() => this.actionOpenStatement(recordData.statementId)"
+                    isValid="recordData.isValid"
                 />
             </t>
         </xpath>

@@ -29,3 +29,26 @@ test("can display a BankRecStatementSummary", async () => {
     expect(elements[0]).toHaveText("A label");
     expect(elements[1]).toHaveText("$1,000.00");
 });
+
+test("no amount displayed if no amount in props", async () => {
+    await mountWithCleanup(BankRecStatementSummary, {
+        props: {
+            label: "A label",
+            action: () => {},
+        },
+    });
+    const elements = queryOne("div.o_statement_summary").children;
+    expect(elements).toHaveCount(1);
+});
+
+test("label in text danger when isValid set to False", async () => {
+    await mountWithCleanup(BankRecStatementSummary, {
+        props: {
+            label: "A label",
+            isValid: false,
+            action: () => {},
+            amount: "$1,000.00",
+        },
+    });
+    expect("div.o_statement_summary > div > span").toHaveClass("text-danger");
+});

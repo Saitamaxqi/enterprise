@@ -226,6 +226,7 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
                     balance: formatMonetary(record.data.statement_balance_end_real, {
                         currencyId: record.data.currency_id[0],
                     }),
+                    isValid: record.data.statement_complete && record.data.statement_valid,
                 };
                 lastStatementId = statementId;
             } else {
@@ -236,6 +237,7 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
                 ) {
                     statementGroups[record.data.id] = {
                         name: _t("No Bank Statement"),
+                        isValid: true,
                     };
                     lastStatementId = "no_bank_statement";
                 }

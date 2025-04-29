@@ -5,8 +5,12 @@ export class BankRecStatementSummary extends Component {
 
     static props = {
         label: { type: String },
-        amount: { type: String },
+        amount: { type: String, optional: true },
         action: { type: Function },
         journalId: { type: Number, optional: true },
+        isValid: { type: Boolean, optional: true },
+    };
+    static defaultProps = {
+        isValid: true,
     };
 }

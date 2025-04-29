@@ -2,16 +2,15 @@
 <templates>
     <t t-name="account_accountant.BankRecStatementSummary">
         <div class="o_statement_summary">
-            <div
-                name="label_statement_summary"
-                class="fw-bold fs-4 text-start"
-                t-esc="props.label"
-            />
-            <div
-                class="btn btn-link p-0 fw-bold fs-4"
-                t-on-click="props.action"
-                t-esc="props.amount"
-            />
+            <div name="label_statement_summary" class="d-flex gap-2 align-items-center">
+                <span t-esc="props.label"
+                      class="fw-bold fs-4 text-start"
+                      t-att-class="{'text-danger': !props.isValid}"/>
+            </div>
+            <div t-if="props.amount"
+                 class="btn btn-link p-0 fw-bold fs-4"
+                 t-on-click="props.action"
+                 t-esc="props.amount"/>
         </div>
     </t>
 </templates>
