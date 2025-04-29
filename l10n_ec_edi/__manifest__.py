@@ -43,6 +43,7 @@ Includes automations to easily predict the withholding tax to be applied to each
         "views/res_config_settings_views.xml",
         "views/res_partner_view.xml",
         "views/res_country_view.xml",
+        'views/withhold_portal_templates.xml',
 
         'wizard/l10n_ec_wizard_account_withhold_view.xml',
 

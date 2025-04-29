@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from . import models, wizard
+from . import controllers, models, wizard
 
 
 def _post_install_hook_configure_ecuadorian_data(env):

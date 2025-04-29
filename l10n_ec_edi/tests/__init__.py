@@ -3,4 +3,5 @@
 
 from . import test_edi_flows
 from . import test_edi_xml
+from . import test_withhold_portal
 from . import test_withhold_wizard

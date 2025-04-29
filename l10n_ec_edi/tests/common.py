@@ -159,14 +159,15 @@ class TestEcEdiCommon(AccountEdiTestCommon):
                 'tax_ids': [Command.set(self._get_tax_by_xml_id(second_tax_xml_id).ids)],
             })]
 
-    def get_wizard_and_purchase_invoice(self):
+    def get_wizard_and_purchase_invoice(self, partner_id=None):
         purchase_journal = self.env['account.journal'].search([
             ('company_id', '=', self.company_data['company'].id),
             ('code', '=', 'BILL')])
         with freeze_time(self.frozen_today):
+            partner_id = partner_id or self.partner_a.id
             purchase_invoice = self.get_invoice({
                 'move_type': 'in_invoice',
-                'partner_id': self.partner_a.id,
+                'partner_id': partner_id,
                 'journal_id': purchase_journal.id,
                 'l10n_ec_sri_payment_id': self.env.ref('l10n_ec.P1').id,
                 'invoice_line_ids': self.get_custom_purchase_invoice_line_vals(),

@@ -166,6 +166,7 @@
             <field name="attachment_use">True</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
             <field name="binding_type">report</field>
+            <field name="domain" eval="[('l10n_ec_withhold_type', '!=', False)]"/>
         </record>
     </data>
 </odoo>

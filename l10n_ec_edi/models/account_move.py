@@ -295,6 +295,13 @@ class AccountMove(models.Model):
             invoice.l10n_ec_withhold_ids = withhold_ids
             invoice.l10n_ec_withhold_count = withhold_count
 
+    # EXTENDS portal portal.mixin
+    def _compute_access_url(self):
+        super()._compute_access_url()
+        for move in self:
+            if move._l10n_ec_is_withholding():
+                move.access_url = '/my/invoices/%s' % move.id
+
     @api.onchange('l10n_latam_document_type_id', 'l10n_latam_document_number', 'partner_id')
     def _inverse_l10n_latam_document_number(self):
         super()._inverse_l10n_latam_document_number()
@@ -339,6 +346,13 @@ class AccountMove(models.Model):
                 'l10n_ec_code_taxsupport')
 
     # ===== BUTTONS =====
+
+    def action_print_pdf(self):
+        # Override to print the withhold PDF when we have a withholding rather than outright blocking the button
+        self.ensure_one()
+        if not self._l10n_ec_is_withholding():
+            return super().action_print_pdf()
+        return self.env.ref('l10n_ec_edi.l10n_ec_edi_withhold').report_action(self.id)
 
     def l10n_ec_add_withhold(self):
         # Launches the withholds wizard linked to selected invoices
@@ -395,26 +409,23 @@ class AccountMove(models.Model):
             return action
 
     def l10n_ec_action_send_withhold(self):
+        # Pass custom report and template to account.move.send to take advantage of the
+        # additional data it populates.
         self.ensure_one()
         template = self.env.ref('l10n_ec_edi.email_template_edi_withhold')
-        compose_form = self.env.ref('mail.email_compose_message_wizard_form')
-        ctx = {
-            **self.env.context,
-            'default_model': 'account.move',
-            'default_res_ids': self.ids,
-            'default_template_id': template.id,
-            'default_composition_mode': 'comment',
-            'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
-            'force_email': True,
-        }
-
+        report = self.env.ref('l10n_ec_edi.l10n_ec_edi_withhold')
         return {
-            'name': _('Compose Email'),
+            'name': _("Compose Email"),
             'type': 'ir.actions.act_window',
-            'res_model': 'mail.compose.message',
-            'views': [(compose_form.id, 'form')],
+            'res_model': 'account.move.send.wizard',
+            'view_mode': 'form',
             'target': 'new',
-            'context': ctx,
+            'context': {
+                'active_model': 'account.move',
+                'active_ids': self.ids,
+                'default_template_id': template.id,
+                'default_pdf_report_id': report.id,
+            },
         }
 
     def l10n_ec_action_compute_lines_from_reimbursements(self):
@@ -487,6 +498,23 @@ class AccountMove(models.Model):
                 or (self.move_type in ('in_invoice') and doc_type_code in ['03', '41']):
                 return 'l10n_ec_edi.report_invoice_document'
         return super(AccountMove, self)._get_name_invoice_report()
+
+    def _get_invoice_pdf_proforma(self):
+        """ Extends account_move to allow us to download a proforma version of the withhold PDF since
+           by default it will only use account.account_invoice report which does not work with entry
+           move types. """
+        self.ensure_one()
+        if not self._l10n_ec_is_withholding():
+            return super()._get_invoice_pdf_proforma()
+
+        filename = self._get_invoice_proforma_pdf_report_filename()
+        content, report_type = self.env['ir.actions.report']._pre_render_qweb_pdf('l10n_ec_edi.l10n_ec_edi_withhold', self.ids, data={'proforma': True})
+        content_by_id = self.env['ir.actions.report']._get_splitted_report('l10n_ec_edi.l10n_ec_edi_withhold', content, report_type)
+        return {
+            'filename': filename,
+            'filetype': 'pdf',
+            'content': content_by_id[self.id],
+        }
 
     def _is_manual_document_number(self):
         # EXTEND l10n_latam_invoice_document to exclude purchase liquidations and include sales withhold
