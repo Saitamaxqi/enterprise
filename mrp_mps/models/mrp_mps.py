@@ -39,8 +39,6 @@ class MrpProductionSchedule(models.Model):
         required=True, default=lambda self: self._default_warehouse_id())
     route_id = fields.Many2one(compute='_compute_route_and_supplier', store=True, readonly=False, help="Route to replenish your product.")
     is_manufacture_route = fields.Boolean(compute='_compute_is_manufacture_route')
-    batch_size = fields.Float('Batch Size', help="If set, the generated manufacturing orders will be split in quantities of this value at maximum.")
-    enable_batch_size = fields.Boolean(default=False)
     supplier_id = fields.Many2one(compute='_compute_route_and_supplier', store=True, readonly=False)
     bom_id = fields.Many2one(
         'mrp.bom', "Bill of Materials",
@@ -915,8 +913,6 @@ class MrpProductionSchedule(models.Model):
             values['route_ids'] = self.route_id
         if self.supplier_id and self.show_vendor:
             values['supplierinfo_id'] = self.supplier_id
-        if self.enable_batch_size and self.batch_size > 0:
-            values['batch_size'] = self.batch_size
         if self.bom_id and self.is_manufacture_route:
             values['bom_id'] = self.bom_id
         return values
@@ -1000,6 +996,9 @@ class MrpProductionSchedule(models.Model):
         rtype: float
         """
         optimal_qty = self.forecast_target_qty - after_forecast_qty
+        if self.bom_id.enable_batch_size:
+            batch_size = self.bom_id.product_uom_id._compute_quantity(self.bom_id.batch_size, self.product_uom_id)
+            optimal_qty = float_round(optimal_qty / batch_size, precision_digits=0, rounding_method='UP') * batch_size
 
         if optimal_qty <= 0:
             replenish_qty = 0
