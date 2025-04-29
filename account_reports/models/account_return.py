@@ -1214,7 +1214,7 @@ class AccountReturn(models.Model):
             checks.append({
                 'name': _("Company data"),
                 'message': _("""
-                    Missing company details (like VAT number or country) can cause errors in your Belgian VAT report,
+                    Missing company details (like VAT number or country) can cause errors in your report,
                     such as using the wrong VAT rate, wrongly exempting transactions.
                 """),
                 'code': 'check_company_data',
