@@ -39,7 +39,7 @@ class LoadMenusTests(HttpCase):
         self.menu.web_icon = False
         self.menu.web_icon_data = b"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+BCQAHBQICJmhD1AAAAABJRU5ErkJggg=="
 
-        menu_loaded = self.url_open("/web/webclient/load_menus?unique=1234")
+        menu_loaded = self.url_open("/web/webclient/load_menus")
 
         expected = {
             str(self.menu.id): {
