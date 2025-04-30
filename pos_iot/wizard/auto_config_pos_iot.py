@@ -7,9 +7,16 @@ class AutoConfigPoSIoT(models.TransientModel):
     _name = 'auto.config.pos.iot'
     _description = 'Configure Automatically IoT Box In PoS'
 
-    pos_config_ids = fields.Many2many('pos.config', string="Associated PoS", required=True)
+    pos_config_ids = fields.Many2many(
+        'pos.config', string="Associated PoS", required=True, default=lambda self: self._get_default_pos()
+    )
     iot_box_identifier = fields.Char(required=True)
     iot_box_id = fields.Many2one('iot.box', compute='_compute_iot_box_id')
+
+    def _get_default_pos(self):
+        """Get the first PoS config where no IoT Box is set."""
+        pos_config = self.env['pos.config'].search([('is_posbox', '=', False)], limit=1)
+        return [(6, 0, [pos_config.id])] if pos_config else []
 
     @api.depends('iot_box_identifier')
     def _compute_iot_box_id(self):

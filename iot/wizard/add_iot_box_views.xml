@@ -5,7 +5,7 @@
         <field name="name">Add IoT box</field>
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
-            <form string="IoT Box found" js_class="add_iot_box_wizard">
+            <form string="IoT Box found. Connecting..." js_class="add_iot_box_wizard">
                 Your IoT is connecting to your database. This shouldn't take long <span class="spinner-border spinner-border-sm"/>
                 <footer>
                     <div class="d-flex justify-content-between w-100">
@@ -72,35 +72,35 @@
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
             <form string="No IoT Box found" js_class="no_iot_box_found_wizard">
-                    <p class="mb-3">
-                        It takes 1 minute for the IoT Box to boot.
-                        <span id="discover_retry_countdown"></span>
-                    </p>
-                    <p> In the mean time check this:</p>
-                    <div class="d-flex flex-column flex-md-row gap-4 gap-md-3 text-center">
-                        <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
-                            <img src="/iot/static/src/img/iot_power.svg" alt="Power is on" class="mb-3"/>
-                            <h5 class="h2">Power the box</h5>
-                            <p class="mb-0">Make sure the IoT Box is powered on.</p>
-                        </div>
-                        <i class="oi oi-arrow-right align-self-center d-none d-md-block fs-2 text-muted"/>
-                        <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
-                            <img src="/iot/static/src/img/network_light.svg" alt="Internet is connected" class="mb-3"/>
-                            <h5 class="h2">Check the lights</h5>
-                            <p class="mb-0">Make sure the Network lights are on.</p>
-                        </div>
-                        <i class="oi oi-arrow-right align-self-center d-none d-md-block fs-2 text-muted"/>
-                        <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
-                            <img src="/iot/static/src/img/pairing_code.svg" alt="Pairing code received from a printer or screen" class="mb-3"/>
-                            <h5 class="h2">Plug a screen</h5>
-                            <p class="mb-0">Plug a screen or a printer to get a status (optional).</p>
-                        </div>
+                <div class="d-flex flex-column flex-md-row gap-4 gap-md-3 text-center">
+                    <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
+                        <img src="/iot/static/src/img/iot_power.svg" alt="Power is on" class="mb-3"/>
+                        <h5 class="h2">Power the box</h5>
+                        <p class="mb-0">Make sure the IoT Box is powered on.</p>
                     </div>
+                    <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
+                        <img src="/iot/static/src/img/network_light.svg" alt="Internet is connected" class="mb-3"/>
+                        <h5 class="h2">Check the lights</h5>
+                        <p class="mb-0">Make sure the Network lights are on.</p>
+                    </div>
+                    <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
+                        <img src="/iot/static/src/img/pairing_code.svg" alt="Pairing code received from a printer or screen" class="mb-3"/>
+                        <h5 class="h2">Optional: Plug a screen</h5>
+                        <p class="mb-0">Plug a screen or a printer to get a status.</p>
+                    </div>
+                </div>
+                <div id="discover_retry_spinner" class="d-flex gap-1 align-items-center mt-4">
+                    <span class="spinner-border spinner-border-sm"/>
+                    Searching for an IoT Box.
+                    <span id="discover_retry_countdown" class="fw-bold"/>
+                </div>
+                <p class="mb-0">Note: It takes ~1 minute. After that, try to pair manually.</p>
                 <footer>
                     <div class="d-flex justify-content-between w-100">
                         <div class="d-flex gap-1">
-                            <button class="btn btn-primary" name="open_documentation_url" type="object" string="Documentation"/>
-                            <button id="pair_code_button" class="btn btn-secondary" type="object" name="add_iot_box_wizard_action" string="Use Pairing Code"/>                            <button class="btn btn-secondary" string="Discard" data-hotkey="x" name="cancel" special="cancel"/>
+                            <button id="pair_code_button" class="btn btn-primary" type="object" name="add_iot_box_wizard_action" string="Use Pairing Code"/>
+                            <button class="btn btn-secondary" name="open_documentation_url" type="object" string="Documentation"/>
+                            <button class="btn btn-secondary" string="Discard" data-hotkey="x" name="cancel" special="cancel"/>
                         </div>
                     </div>
                 </footer>

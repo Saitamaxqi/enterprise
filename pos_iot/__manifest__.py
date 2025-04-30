@@ -22,6 +22,7 @@ Supported devices include payment terminals, receipt printers, scales and custom
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
+        'views/iot_views.xml',
         'views/pos_config_views.xml',
         'views/pos_printer_views.xml',
         'views/res_config_setting_views.xml',

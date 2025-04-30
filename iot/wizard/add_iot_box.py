@@ -87,7 +87,7 @@ class AddIotBox(models.TransientModel):
             'type': 'ir.actions.act_window',
             'res_model': 'add.iot.box',
             'res_id': self.id,
-            'name': _("We couldn't detect any IoT"),
+            'name': _("Searching for an IoT Box..."),
             'views': [[self.env.ref('iot.view_enter_pairing_code').id, 'form']],
             'target': 'new',
         }
@@ -98,14 +98,18 @@ class AddIotBox(models.TransientModel):
             'type': 'ir.actions.act_window',
             'res_model': 'add.iot.box',
             'res_id': self.id,
-            'name': _("We couldn't detect any IoT"),
+            'name': _("Searching for an IoT Box..."),
             'views': [[self.env.ref('iot.view_no_iot_box_found').id, 'form']],
             'target': 'new',
             'no_iot_found_found': True,
         }
 
     def _open_connecting_action(self):
-        name = _('Connecting to IoT Box %s', self.serial_number) if self.serial_number else _('Connecting to IoT Box')
+        if self.serial_number:
+            name = _('IoT Box %s found. Connecting...', self.serial_number)
+        else:
+            name = _('IoT Box found. Connecting...')
+
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'add.iot.box',

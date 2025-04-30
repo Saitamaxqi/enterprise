@@ -25,6 +25,17 @@ _iot_logger.setLevel(logging.DEBUG)
 _logger = logging.getLogger(__name__)
 
 
+def ensure_unique_name(name):
+    existing_names = request.env['iot.box'].sudo().search([('name', 'ilike', name + '%')]).mapped('name')
+    base_name = name
+    suffix = 1
+    while name in existing_names:
+        name = f"{base_name} ({suffix})"
+        suffix += 1
+
+    return name
+
+
 class IoTController(http.Controller):
     def _search_box(self, identifier):
         return request.env['iot.box'].sudo().search([('identifier', '=', identifier)], limit=1)
@@ -139,7 +150,7 @@ class IoTController(http.Controller):
         iot_identifier = iot_box['identifier']  # IoT Mac Address
         box = self._search_box(iot_identifier)
         create_update_value = {
-            'name': iot_box['name'],
+            'name': ensure_unique_name(iot_box['name']),
             'ip': iot_box['ip'],
             'version': iot_box['version'],
         }

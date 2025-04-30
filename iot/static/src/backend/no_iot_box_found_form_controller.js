@@ -28,6 +28,7 @@ export class NoIoTBoxFoundFormController extends FormController {
      * Create and show a countdown. When it reaches 0 we look for new IoT Boxes again
      */
     startCountdown(seconds) {
+        const countdownSpinner = document.getElementById("discover_retry_spinner");
         const countdownEl = document.getElementById("discover_retry_countdown");
         const textToDisplay = _t("Retrying in ")
         let timeLeft = seconds;
@@ -50,6 +51,7 @@ export class NoIoTBoxFoundFormController extends FormController {
         // Clear the countdown and interval
         setTimeout(() => {
             if (countdownEl) {
+                countdownSpinner.classList.add("o_hidden");
                 countdownEl.textContent = null;
                 clearInterval(this.retryDiscoverInterval);
             }
