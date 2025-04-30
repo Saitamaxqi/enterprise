@@ -517,7 +517,7 @@ export const DocumentsRecordMixin = (component) => class extends component {
     async onClickPreview(ev) {
         if (this.isRequest()) {
             ev.stopPropagation();
-            // Only supported in the kanban view
+            // kanban view support
             ev.target.querySelector(".o_kanban_replace_document")?.click();
         } else if (this.isViewable()) {
             ev.stopPropagation();
