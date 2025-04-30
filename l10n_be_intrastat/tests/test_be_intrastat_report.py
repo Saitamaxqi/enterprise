@@ -59,13 +59,21 @@ class TestBEIntrastatReport(TestAccountReportsCommon):
             'date': '2022-05-15',
             'intrastat_country_id': italy.id,
             'company_id': cls.company_data['company'].id,
-            'invoice_line_ids': [Command.create({
-                'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
-                'product_id': cls.product_aeroplane.id,
-                'intrastat_transaction_id': cls.env.ref('account_intrastat.account_intrastat_transaction_11').id,
-                'quantity': 4,
-                'price_unit': 234000,
-            })]
+            'invoice_line_ids': [
+                Command.create({
+                    'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
+                    'product_id': cls.product_aeroplane.id,
+                    'intrastat_transaction_id': cls.env.ref('account_intrastat.account_intrastat_transaction_11').id,
+                    'quantity': 4,
+                    'price_unit': 234000,
+                }),
+                # line wo product should be excluded
+                Command.create({
+                    'intrastat_transaction_id': cls.env.ref('account_intrastat.account_intrastat_transaction_11').id,
+                    'quantity': 4,
+                    'price_unit': 1234,
+                }),
+            ]
         })
         cls.product_service_a = cls.env['product.product'].create({
             'name': 'Service A',

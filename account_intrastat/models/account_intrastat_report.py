@@ -656,7 +656,11 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
     def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, offset=None, limit=None, warnings=None, order_by=True):
         query_params = {
             **(query_params or {}),
-            'product_type_condition': SQL("AND (account_move_line.product_id IS NULL OR prodt.type != 'service')"),
+            'product_type_condition': (
+                SQL("AND prodt.type != 'service'")
+                if options.get('export_mode') == 'file'
+                else SQL("AND (account_move_line.product_id IS NULL OR prodt.type != 'service')")
+            ),
             'commodity_warning_suffix': SQL('goods'),
         }
         return super()._get_intrastat_report_query(report, options, current_groupby, query_params, offset, limit, warnings, order_by)
