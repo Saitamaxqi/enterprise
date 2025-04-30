@@ -150,7 +150,6 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         self.assertEqual(legit_user_subscription.payment_token_id, legit_payment_method, "The token should not be updated")
 
     def test_automatic_invoice_token(self):
-
         self.original_prepare_invoice = self.subscription._prepare_invoice
         with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
             self.env['ir.config_parameter'].sudo().set_param('sale.automatic_invoice', 'False')
@@ -218,27 +217,44 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         self.assertEqual(len(subscription.transaction_ids), 1, "Only one transaction should be created")
         first_transaction_id = subscription.transaction_ids
         url = self._build_url("/my/subscriptions/%s/transaction" % subscription.id)
+        amount_to_invoice = subscription.amount_to_invoice  # force a non null amount 2.3
         data = {'access_token': subscription.access_token,
                 'landing_route': subscription.get_portal_url(),
                 'provider_id': self.dummy_provider.id,
                 'payment_method_id': self.payment_method_id,
                 'token_id': False,
                 'flow': 'direct',
+                'amount': amount_to_invoice,
                 }
         self.make_jsonrpc_request(url, data)
-        # the transaction is associated to the invoice in tx._post_process()
         last_transaction_id = subscription.transaction_ids - first_transaction_id
+        # the transaction is associated to the invoice in tx._post_process()
         last_transaction_id._set_done()
         last_transaction_id._post_process()
         self.assertEqual(len(subscription.transaction_ids), 2)
         self.assertEqual(last_transaction_id.sale_order_ids, subscription)
-        self.assertEqual(subscription.invoice_ids.sorted('id').mapped('state'), ['posted'])
-        subscription.transaction_ids._post_process()  # Create the payment
+        subscription.invoice_ids.filtered(lambda am: am.state == 'draft')._post()
         # subscription has a payment_token_id, the invoice is created by the flow.
         subscription.invoice_ids.invoice_line_ids.account_id.account_type = 'asset_cash'
         subscription.invoice_ids.auto_post = 'at_date'
-        subscription.invoice_ids.filtered(lambda am: am.state == 'draft')._post()
-        self.assertFalse(set(subscription.invoice_ids.mapped('payment_state')) & {'not_paid', 'partial'},
+        subscription.transaction_ids._set_done()
+        last_invoice_date = subscription.next_invoice_date - subscription.plan_id.billing_period
+        if last_invoice_date != datetime.date.today():
+            # sometimes, the computed last_invoice_date is different than the start_date at this step.
+            # it happens for example on the 31th of march:
+            # next_invoice_date = 30th of April - billing period = 30th of March
+            # but 31th of March + billing period = 30th of April too.
+            # As this test is only making sure that the invoice is paid, we make sure to register the payment when necessary
+            # registering the payment every time could trigger
+            # UserError: You can't register a payment because there is nothing left to pay on the selected journal items.
+            self.env['account.payment.register'] \
+                .with_context(active_model='account.move', active_ids=subscription.invoice_ids.ids) \
+                .create({
+                'currency_id': subscription.currency_id.id,
+                'amount': subscription.amount_total,
+            })._create_payments()
+        res = set(subscription.invoice_ids.mapped('payment_state')) & {'not_paid', 'partial'}
+        self.assertFalse(res,
                          "All invoices should be in paid or in_payment status")
         return subscription
 
