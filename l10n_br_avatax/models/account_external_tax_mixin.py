@@ -130,8 +130,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
     def _l10n_br_avatax_check_lines(self, lines):
         errors = {}
-        max_length_description = 7_000 if self.l10n_br_is_service_transaction else 120
-        doc_type = self.env.ref("l10n_br.dt_SE" if self.l10n_br_is_service_transaction else "l10n_br.dt_55").doc_code_prefix
 
         for line in lines:
             product = line['tempProduct']
@@ -150,16 +148,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
             if line['lineAmount'] < 0:
                 errors["negative_line"] = {
                     "message": _("Avatax Brazil doesn't support negative lines."),
-                    "level": "danger",
-                }
-
-            description = line['itemDescriptor']['description']
-            if description and len(description) > max_length_description:
-                errors["description_too_long"] = {
-                    "message": _(
-                        "- The following label exceeds the %(max_characters)s character limit for %(doc_type)s: %(line)s",
-                        max_characters=max_length_description, doc_type=doc_type, line=description
-                    ),
                     "level": "danger",
                 }
 
@@ -327,6 +315,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
         :param l10n_br.operation.type operation_type: the operation type of the line
         :return dict: the basis for the 'lines' value in the /calculations API call
         """
+        # Transform the descriptions of the lines to something Avatax will trim correctly.
+        description = description and description.replace("\n", " | ")
         line = {
             'lineCode': line_id,
             'useType': self.l10n_br_use_type or product.l10n_br_use_type,
