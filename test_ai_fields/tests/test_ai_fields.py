@@ -267,3 +267,17 @@ class TestAiFields(TransactionCase):
         with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), self.enter_registry_test_mode():
             value = record.get_ai_field_value("x_ai_html", None)
             self.assertEqual(value, '<img src="x">')
+
+        record.write({
+            "properties": [{
+                "type": "html",
+                "name": "test_html",
+                "ai": True,
+                "system_prompt": "system_prompt",
+                "definition_changed": True,
+            }],
+        })
+        record.flush_recordset()
+        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), self.enter_registry_test_mode():
+            value = record.get_ai_property_value("properties.test_html", None)
+        self.assertEqual(value, '<img src="x">')

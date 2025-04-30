@@ -43,7 +43,7 @@ def generate_ai_response(env, system_prompt, user_prompt):
             'content': system_prompt,
         }],
         'database_id': database_id,
-    }, timeout=10)
+    }, timeout=20)
     return (response and response.get('content')) or ''
 
 
