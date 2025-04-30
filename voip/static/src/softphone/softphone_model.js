@@ -42,6 +42,12 @@ export class Softphone {
     history = {
         searchInputValue: "",
     };
+    inCallView = {
+        keypad: {
+            isOpen: false,
+            state: new KeypadModel(),
+        },
+    };
     shouldFocus = false;
 
     constructor(store, voip) {

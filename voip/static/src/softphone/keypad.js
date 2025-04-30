@@ -30,7 +30,8 @@ const T9_MAPPING = Object.freeze({
  */
 export class Keypad extends Component {
     static components = { ...tabComponents };
-    static props = { state: KeypadModel };
+    static defaultProps = { dtmf: false };
+    static props = { dtmf: { type: Boolean, optional: true }, state: KeypadModel };
     static template = "voip.Keypad";
 
     setup() {
@@ -281,7 +282,9 @@ export class Keypad extends Component {
 
     /** @param {string} key */
     onClickKey(key) {
-        // TODO: put back DTMF
+        if (this.props.dtmf) {
+            this.userAgent.session?.sipSession?.sessionDescriptionHandler.sendDtmf(key);
+        }
         const { selectionStart, selectionEnd, value } = this.inputRef.el;
         this.props.state.input.value =
             value.slice(0, selectionStart) + key + value.slice(selectionEnd);

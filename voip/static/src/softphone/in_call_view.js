@@ -3,16 +3,18 @@ import { Component, useEffect } from "@odoo/owl";
 import { Call } from "@voip/core/call_model";
 import { ActionButton } from "@voip/softphone/action_button";
 import { ContactInfo } from "@voip/softphone/contact_info";
+import { Keypad } from "@voip/softphone/keypad";
 
 import { useService } from "@web/core/utils/hooks";
 
 export class InCallView extends Component {
-    static components = { ActionButton, ContactInfo };
+    static components = { ActionButton, ContactInfo, Keypad };
     static props = { call: Call };
     static template = "voip.InCallView";
 
     setup() {
         this.action = useService("action");
+        this.softphone = useService("voip").softphone;
         this.userAgent = useService("voip.user_agent");
         this.ui = useService("ui");
         useEffect(
@@ -21,6 +23,11 @@ export class InCallView extends Component {
             () => this.userAgent.updateTracks(),
             () => [this.isMuted, this.isOnHold]
         );
+    }
+
+    /** @returns {boolean} */
+    get isKeypadOpen() {
+        return this.softphone.inCallView.keypad.isOpen;
     }
 
     /** @returns {boolean} */
@@ -55,6 +62,10 @@ export class InCallView extends Component {
 
     onClickHold() {
         this.userAgent.setHold(!this.isOnHold);
+    }
+
+    onClickKeypad() {
+        this.softphone.inCallView.keypad.isOpen = !this.isKeypadOpen;
     }
 
     onClickMute() {
