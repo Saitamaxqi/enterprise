@@ -1,7 +1,9 @@
-from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
+from freezegun import freeze_time
+
+from odoo import Command
 from odoo.tests import tagged, Form
 
-from freezegun import freeze_time
+from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -232,3 +234,45 @@ class TestAccountInvoice(TestAccountReportsCommon):
         )
 
         self.assertEqual(invoice_eu.l10n_es_reports_mod349_invoice_type, 'E')
+
+    def test_exclude_347_from_internal_employee_expense_vendor_bill(self):
+        """
+        Test that "internal transfer receipts" recorded as vendor bills (like in the cases of hr_expense)
+        should not be considered as real vendor bills in the case of the mod347.
+        The test is in this module because there are no bridge between l10n_es_reports and expense.
+        """
+        internal_partner = self.env['res.partner'].create({
+            'name': 'internal partner',
+            'country_id': self.env.ref('base.es').id,
+            'company_id': self.company.id,
+            'parent_id': self.company.partner_id.id,
+        })
+        external_partner = self.env['res.partner'].create({
+            'name': 'external partner',
+            'country_id': self.env.ref('base.es').id,
+        })
+        expense_bill = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': internal_partner.id,
+            'invoice_line_ids': [Command.create({
+                'product_id': self.product.id,
+                'price_unit': 200.0,
+            })],
+        })
+        # This prevents the bill to use the company data, preventing it to "bill itself". As it is done in hr_expense.
+        expense_bill.write({
+            'commercial_partner_id': internal_partner.id,
+        })
+        normal_bill = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': external_partner.id,
+            'invoice_line_ids': [Command.create({
+                'product_id': self.product.id,
+                'price_unit': 200.0,
+            })],
+        })
+        expense_bill.action_post()
+        normal_bill.action_post()
+
+        self.assertFalse(expense_bill.l10n_es_reports_mod347_invoice_type)
+        self.assertEqual(normal_bill.l10n_es_reports_mod347_invoice_type, 'regular')
