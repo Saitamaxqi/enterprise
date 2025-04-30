@@ -1,12 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from .common import TestAccountBudgetCommon
+from .common import TestAccountBudgetPurchaseCommon
 from odoo import Command
 from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install')
-class TestPurchaseOrder(TestAccountBudgetCommon):
+class TestPurchaseOrder(TestAccountBudgetPurchaseCommon):
 
     def test_access_purchase_order(self):
         """ Make sure a purchase manager can access a purchase order linked to a budget. """

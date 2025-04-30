@@ -14,7 +14,6 @@
                     <field name="user_id" optional="hide"/>
                     <field name="line_type" optional="hide"/>
                     <field name="budget" sum="Total Budget"/>
-                    <field name="committed" sum="Total Committed"/>
                     <field name="achieved" sum="Total Achieved"/>
                 </list>
             </field>
@@ -32,7 +31,6 @@
                     <field name="company_id"/>
                     <field name="date"/>
                     <filter string="Budgeted" name="budget" domain="[('line_type','=','budget')]"/>
-                    <filter string="Committed" name="committed" domain="[('line_type','=','committed')]"/>
                     <filter string="Achieved" name="achieved" domain="[('line_type','=','achieved')]"/>
                     <separator/>
                     <filter string="In a Budget" name="in_a_budget" domain="[('budget_analytic_id', '!=', False)]"/>
@@ -58,7 +56,6 @@
                 <graph string="Budget Report" type="line" js_class="analytic_graph">
                     <field name="date" type="row"/>
                     <field name="account_id" type="col"/>
-                    <field name="committed" type="measure"/>
                 </graph>
             </field>
         </record>
@@ -72,7 +69,6 @@
                     <field name="account_id"/>  <!-- do not copy the `type` with _patch_view -->
                     <field name="account_id" type="row"/>
                     <field name="budget" type="measure"/>
-                    <field name="committed" type="measure"/>
                     <field name="achieved" type="measure"/>
                 </pivot>
             </field>

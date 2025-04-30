@@ -32,7 +32,6 @@
                 <field name="date_from" readonly="1"/>
                 <field name="date_to" readonly="1"/>
                 <field name="budget_amount" readonly="budget_analytic_state != 'draft'"/>
-                <field name="committed_amount" readonly="1"/>
                 <field name="achieved_amount" readonly="1"/>
             </list>
         </field>

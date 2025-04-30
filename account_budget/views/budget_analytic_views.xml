@@ -60,10 +60,8 @@
                                     <field name="account_id" optional="show"/>
                                     <field name="currency_id" column_invisible="True"/>
                                     <field name="budget_amount" sum="Budget"/>
-                                    <field name="committed_amount" decoration-danger="(committed_amount > budget_amount) and parent.budget_type in ('expense', 'both')" sum="Committed" optional="show" column_invisible="parent.budget_type == 'revenue' or parent.state in ('draft','canceled')"/>
                                     <field name="achieved_amount" decoration-danger="(achieved_amount > budget_amount) and parent.budget_type in ('expense', 'both')" sum="Achieved" column_invisible="parent.state in ('draft','canceled')"/>
                                     <field name="theoritical_amount" sum="Theoretical" optional="hide" column_invisible="parent.state in ('draft','canceled')"/>
-                                    <field name="committed_percentage" widget="percentage" optional="hide" column_invisible="parent.budget_type == 'revenue' or parent.state in ('draft','canceled')"/>
                                     <field name="achieved_percentage" widget="percentage" optional="hide" column_invisible="parent.state in ('draft','canceled')"/>
                                     <field name="theoritical_percentage" widget="percentage" optional="hide" column_invisible="parent.state in ('draft','canceled')"/>
                                     <button type="object" name="action_open_budget_entries" string="Audit" width="60px" column_invisible="parent.state in ('draft','canceled')"/>

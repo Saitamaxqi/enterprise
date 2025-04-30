@@ -1,11 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import Command
-from .common import TestAccountBudgetCommon
+from .common import TestAccountBudgetPurchaseCommon
 from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install')
-class TestCommittedAchievedAmount(TestAccountBudgetCommon):
+class TestCommittedAchievedAmount(TestAccountBudgetPurchaseCommon):
 
     def create_other_category_aal(self):
         self.env['account.analytic.line'].create({
@@ -442,7 +442,7 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         """
         Test that the committed amount is well computed when a PO is created on the last day of the budget range.
         """
-        plan_a_line, plan_b_line, plan_b_admin_line = self.budget_analytic_expense.budget_line_ids
+        plan_a_line, _plan_b_line, _plan_b_admin_line = self.budget_analytic_expense.budget_line_ids
         self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)
 
         # Create a PO on the last day of the budget range
