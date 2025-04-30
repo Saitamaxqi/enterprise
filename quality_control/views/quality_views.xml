@@ -371,6 +371,12 @@
                     <filter string="Control Point" name="groupby_point_id" context="{'group_by': 'point_id'}"/>
                     <filter string="Team" name="groupby_team_id" context="{'group_by': 'team_id'}"/>
                 </group>
+                <filter invisible="1" string="Late Activities" name="activities_overdue"
+                    domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter invisible="1" string="Today Activities" name="activities_today"
+                    domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter invisible="1" string="Future Activities" name="activities_upcoming"
+                    domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
             </search>
         </field>
     </record>
