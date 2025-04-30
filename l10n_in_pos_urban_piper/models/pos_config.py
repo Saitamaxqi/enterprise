@@ -25,7 +25,7 @@ class PosConfig(models.Model):
                         if tax.tax_group_id in [sgst_group, cgst_group]:
                             tax_lst.append(
                                 {
-                                    'code': f'{tax.tax_group_id.with_context(lang="en_US").name}_P',
+                                    'code': ('CGST' if tax.tax_group_id == cgst_group else 'SGST') + '_P',
                                     'title': 'CGST' if tax.tax_group_id == cgst_group else 'SGST',
                                     'description': f'{tax.amount}% {tax.tax_group_id.with_context(lang="en_US").name} on product price.',
                                     'active': True,

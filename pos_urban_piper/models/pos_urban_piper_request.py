@@ -427,29 +427,45 @@ class UrbanPiperClient:
             }
             self._make_api_request('hub/api/v1/location/', data=payload)
 
+    def _get_jpeg_datas(self, datas):
+        """
+        Get the image data in jpeg format.
+        """
+        try:
+            data_uri = self.config.env['ir.qweb'].with_context(webp_as_jpg=True)._get_converted_image_data_uri(datas)
+            _header, base64_data = data_uri.split('base64,', 1)
+            return base64_data
+        except TypeError:
+            return datas
+
     def _get_public_image_url(self, record):
         """
-        Get public image url for the product and categories.
+        Get public image URL for the given record (product or category).
+        Converts webp to jpeg if necessary.
         """
         base_url = self.config.urbanpiper_webhook_url
+        image_data = record.image_1920 if record._name == 'product.template' else record.image_128
         attachment = record.env['ir.attachment'].search([
             ('res_model', '=', record._name),
             ('res_id', '=', record.id),
             ('type', '=', 'binary'),
             ('public', '=', True),
+            ('mimetype', '=', 'image/jpg'),
         ], limit=1)
+        datas = self._get_jpeg_datas(image_data)
         if attachment:
-            attachment.datas = record.image_1920 if record._name == 'product.template' else record.image_128
+            attachment.datas = datas
         else:
             attachment = record.env['ir.attachment'].create({
-                'name': f'{record.name}.png',
+                'name': record.name,
                 'type': 'binary',
-                'datas': record.image_1920 if record._name == 'product.template' else record.image_128,
+                'datas': datas,
                 'res_model': record._name,
                 'res_id': record.id,
                 'public': True,
+                'mimetype': 'image/jpg',
             })
-        local_url = attachment.local_url + '.png'
+        local_url = attachment.local_url
         return url_join(base_url, local_url)
 
     def request_refresh_webhooks(self):

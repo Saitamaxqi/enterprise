@@ -16,9 +16,6 @@
                     <field name="urbanpiper_pos_platform_ids" groups="point_of_sale.group_pos_user" widget="many2many_tags" placeholder="Not available on any platforms."/>
                 </group>
             </xpath>
-            <xpath expr="//field[@name='image_1920']" position="attributes">
-                 <attribute name="options">{'convert_to_webp': False, 'preview_image': 'image_128'}</attribute>
-             </xpath>
         </field>
     </record>
 
