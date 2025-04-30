@@ -150,7 +150,6 @@ class IoTController(http.Controller):
         iot_identifier = iot_box['identifier']  # IoT Mac Address
         box = self._search_box(iot_identifier)
         create_update_value = {
-            'name': ensure_unique_name(iot_box['name']),
             'ip': iot_box['ip'],
             'version': iot_box['version'],
         }
@@ -158,6 +157,7 @@ class IoTController(http.Controller):
             _logger.info('Updating IoT %s with data: %s', box, create_update_value)
             box.write(create_update_value)
         else:
+            create_update_value['name'] = ensure_unique_name(iot_box['name'])
             icp_sudo = request.env['ir.config_parameter'].sudo()
             iot_token = icp_sudo.get_param('iot.iot_token')
             if iot_token == iot_box['token']:
