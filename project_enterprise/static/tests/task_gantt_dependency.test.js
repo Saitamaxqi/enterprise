@@ -8,6 +8,7 @@ import {
     getConnector,
     getConnectorMap,
     clickConnectorButton,
+    getConnectorStroke,
 } from "@web_gantt/../tests/gantt_dependency_helpers";
 import { SELECTORS, mountGanttView } from "@web_gantt/../tests/web_gantt_test_helpers";
 import { COLORS } from "@web_gantt/gantt_connector";
@@ -156,9 +157,7 @@ test("Connectors are correctly computed and rendered.", async () => {
             });
         }
 
-        const connectorStroke = getConnector(connector.id).querySelector(SELECTORS.connectorStroke);
-
-        expect(connectorStroke).toHaveAttribute("stroke", color);
+        expect(getConnectorStroke(connector.id)).toHaveAttribute("stroke", color);
     }
 
     expect(testMap.size).toBe(connectorMap.size);

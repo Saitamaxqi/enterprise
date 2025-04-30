@@ -4,11 +4,19 @@ import { contains } from "@web/../tests/web_test_helpers";
 import { SELECTORS } from "./web_gantt_test_helpers";
 
 /**
- * @param {import("@odoo/hoot-dom").Target} target
+ * @typedef {import("@odoo/hoot-dom").Target} Target
+ *
+ * @typedef {import("@web_gantt/gantt_renderer").ConnectorId} ConnectorId
+ * @typedef {import("@web_gantt/gantt_renderer").GanttRenderer} GanttRenderer
+ * @typedef {import("@web_gantt/gantt_renderer").PillId} PillId
+ */
+
+/**
+ * @param {Target} target
  * @param {"remove" | "reschedule-forward" | "reschedule-backward"} button
  */
 export async function clickConnectorButton(target, button) {
-    await hover(target);
+    await hover(SELECTORS.connectorStroke, { root: target });
     await runAllTimers();
     let element = null;
     switch (button) {
@@ -33,17 +41,18 @@ export async function clickConnectorButton(target, button) {
 }
 
 /**
- * @param {number | "new"} id
+ * @param {ConnectorId | number | "new"} id
  */
 export function getConnector(id) {
-    if (!/^__connector__/.test(id)) {
+    if (typeof id !== "string" || !id.startsWith("__connector__")) {
         id = `__connector__${id}`;
     }
-    return queryFirst(
-        `${SELECTORS.cellContainer} ${SELECTORS.connector}[data-connector-id='${id}']`
-    );
+    return `${SELECTORS.cellContainer} ${SELECTORS.connector}[data-connector-id='${id}']`;
 }
 
+/**
+ * @param {GanttRenderer} renderer
+ */
 export function getConnectorMap(renderer) {
     /**
      * @param {PillId} pillId
@@ -80,4 +89,11 @@ export function getConnectorMap(renderer) {
         connectorMap.set(key, connector);
     }
     return connectorMap;
+}
+
+/**
+ * @param {ConnectorId | number | "new"} id
+ */
+export function getConnectorStroke(id) {
+    return `${getConnector(id)} ${SELECTORS.connectorStroke}`;
 }

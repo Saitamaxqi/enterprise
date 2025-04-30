@@ -260,7 +260,7 @@ test("Move Article", async () => {
     expect(".dropdown-item:contains('a2')").toHaveCount(1);
     expect(".dropdown-item:contains('a3')").toHaveCount(0);
     await click(".dropdown-item:contains('a2')");
-    await click(".modal-footer .btn-primary");
+    await click(waitFor(".modal-footer .btn-primary:interactive"));
     await waitForSteps(["move"]);
 });
 

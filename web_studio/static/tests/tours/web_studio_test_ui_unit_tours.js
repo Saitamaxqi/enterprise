@@ -1797,14 +1797,14 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
             async run() {
                 await animationFrame();
                 const { drop, moveTo } = await drag(this.anchor);
-                await moveTo(".o_kanban_record:first()");
+                await moveTo(".o_kanban_record:first");
                 await animationFrame(500); // wait for animations to finish in under 500ms
                 const target = await waitFor(".o_web_studio_hook_visible", {
                     visible: true,
                     timeout: 5000,
                 });
-                await moveTo(target);
-                await drop(target);
+                await moveTo(target, { interactive: false });
+                await drop();
             },
         },
         {

@@ -1,4 +1,4 @@
-import { beforeEach, expect, test } from "@odoo/hoot";
+import { beforeEach, expect, test, describe } from "@odoo/hoot";
 import { queryFirst } from "@odoo/hoot-dom";
 import { mockDate } from "@odoo/hoot-mock";
 import { mountGanttView } from "./web_gantt_test_helpers";
@@ -17,7 +17,9 @@ function randomName(length) {
 defineGanttModels();
 beforeEach(() => mockDate("2018-12-20T08:00:00", +1));
 
-test.tags("manual testing").skip("large amount of records (ungrouped)", async () => {
+describe.current.tags("manual testing");
+
+test.skip("large amount of records (ungrouped)", async () => {
     const NB_TASKS = 10000;
 
     Tasks._records = [...Array(NB_TASKS)].map((_, i) => ({
@@ -36,7 +38,7 @@ test.tags("manual testing").skip("large amount of records (ungrouped)", async ()
     expect(1).toBe(1);
 });
 
-test.tags("manual testing").skip("large amount of records (one level grouped)", async () => {
+test.skip("large amount of records (one level grouped)", async () => {
     const NB_USERS = 10000;
     const NB_TASKS = 10000;
 
@@ -74,7 +76,7 @@ test.tags("manual testing").skip("large amount of records (one level grouped)", 
     expect(1).toBe(1);
 });
 
-test.tags("manual testing").skip("large amount of records (two level grouped)", async () => {
+test.skip("large amount of records (two level grouped)", async () => {
     const NB_USERS = 100;
     const NB_TASKS = 10000;
 
