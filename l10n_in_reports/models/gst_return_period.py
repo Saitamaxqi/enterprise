@@ -1931,7 +1931,8 @@ class L10n_InGstReturnPeriod(models.Model):
                     ("move_type", "in", AccountMove.get_purchase_types()),
                     ('ref', '=', late_bill.get('bill_number')),
                     ("state", "=", "posted"),
-                    ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer'))
+                    ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer')),
+                    ("l10n_in_gstr2b_reconciliation_status", "not in", ('matched', 'partially_matched', 'manually_matched'))
                 ])
             for bill in to_match_bills:
                 bill_type = 'bill'
