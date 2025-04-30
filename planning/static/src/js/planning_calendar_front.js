@@ -104,17 +104,24 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
         await loadBundle("web.fullcalendar_lib");
     },
     onEventDidMount: function (calRender) {
-        const eventContent = calRender.el.querySelectorAll('.fc-event-time, .fc-event-title');
+        const calendarElement = calRender.el;
+        const timeEvent = calendarElement.querySelector('.fc-event-time')
         if (calRender.view.type !== 'listMonth') {
-            calRender.el.classList.add('px-2', 'py-1');
+            calendarElement.classList.add('px-2', 'py-1');
         }
         if (calRender.view.type === 'dayGridMonth') {
-            for (let i = 0; i < eventContent.length; i++) {
-                eventContent[i].classList.add('d-block', 'text-truncate');
-            }
+            const timeRow = document.createElement('div');
+            timeRow.classList.add('d-flex', 'align-items-center', 'w-100', 'overflow-hidden');
+            const titleEvent = calendarElement.querySelector('.fc-event-title');
+            const colorElement = calendarElement.querySelector('.fc-daygrid-event-dot');
+            timeEvent.classList.add('w-100', 'text-truncate');
+            timeRow.append(colorElement, timeEvent);
+            titleEvent.classList.add('w-100', 'text-truncate', 'ms-4');
+            calendarElement.classList.add('flex-column');
+            calendarElement.append(timeRow, titleEvent);
         }
-        calRender.el.classList.add('cursor-pointer');
-        calRender.el.childNodes[0].classList.add('fw-bold');
+        calendarElement.classList.add('cursor-pointer');
+        calendarElement.childNodes[0].classList.add('fw-bold');
         const timeElement = document.createElement('span');
         timeElement.classList.add('ps-1');
         const allocatedHours = calRender.event.extendedProps.alloc_hours;
@@ -128,14 +135,14 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             percentSpan.textContent = `(${allocatedPercent}%)`;
             timeElement.appendChild(percentSpan);
         }
-        calRender.el.querySelector('.fc-event-time')?.appendChild(timeElement);
+        timeEvent?.appendChild(timeElement);
 
         if (calRender.event.extendedProps.request_to_switch && !calRender.event.extendedProps.allow_self_unassign) {
-            calRender.el.style.opacity = '0.5';
-            const backgroundColor = calRender.el.style.backgroundColor;
-            calRender.el.style.borderColor = backgroundColor;
-            calRender.el.style.borderWidth = '5px';
-            calRender.el.style.background = 'repeating-linear-gradient(40deg, #A0A0A0, #A0A0A0 5px, '+backgroundColor+' 5px, '+backgroundColor + ' 10px)';
+            calendarElement.style.opacity = '0.5';
+            const backgroundColor = calendarElement.style.backgroundColor;
+            calendarElement.style.borderColor = backgroundColor;
+            calendarElement.style.borderWidth = '5px';
+            calendarElement.style.background = 'repeating-linear-gradient(40deg, #A0A0A0, #A0A0A0 5px, '+backgroundColor+' 5px, '+backgroundColor + ' 10px)';
         }
     },
     formatDateAsBackend: function (date) {
