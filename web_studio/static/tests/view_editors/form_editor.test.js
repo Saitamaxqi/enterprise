@@ -32,6 +32,7 @@ import { ImageField } from "@web/views/fields/image/image_field";
 import { WebClient } from "@web/webclient/webclient";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { COMPUTED_DISPLAY_OPTIONS } from "@web_studio/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties";
+import { followRelation } from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 
 import {
     createMockViewResult,
@@ -3025,7 +3026,9 @@ test("edit the rainbowman effect from the sidebar", async () => {
 
     await contains("button.oe_stat_button[data-studio-xpath]").click();
     expect(".o_web_studio_sidebar [name='effect']").toBeChecked();
-    expect(".o_web_studio_sidebar_select:eq(0) .o_select_menu .o_select_menu_toggler").toHaveText("MEDIUM");
+    expect(".o_web_studio_sidebar_select:eq(0) .o_select_menu .o_select_menu_toggler").toHaveText(
+        "MEDIUM"
+    );
 
     await contains(".o_web_studio_sidebar .o_select_menu button").click();
     await contains(".dropdown-item:contains('Fast')").click();
@@ -3300,7 +3303,7 @@ test("cannot add a related properties field", async () => {
     expect(".modal .o_model_field_selector").toHaveCount(1);
 
     await contains(".modal .o_model_field_selector").click();
-    await contains(".o_popover .o_model_field_selector_popover_item_relation").click();
+    await followRelation(2); // Product
 
     expect(
         queryAllTexts(
