@@ -33,10 +33,10 @@ class ShiftController(http.Controller):
     def _get_slot_title(self, slot):
         return '%s%s' % (slot.role_id.name or _('Shift'), ' \U0001F4AC' if slot.name else '')
 
-    def _get_slot_vals(self, slot):
+    def _get_slot_vals(self, slot, is_open_shift):
         return {
             'title': self._get_slot_title(slot),
-            'color': self._format_planning_shifts(slot.role_id.color),
+            'color': self._format_planning_shifts(slot.role_id.color, is_open_shift),
             'alloc_hours': format_duration(slot.allocated_hours),
             'alloc_perc': f'{slot.allocated_percentage:.2f}',
             'slot_id': slot.id,
@@ -46,9 +46,10 @@ class ShiftController(http.Controller):
             'role': slot.role_id.name,
             'request_to_switch': slot.request_to_switch,
             'is_past': slot.is_past,
+            'is_open_shift': is_open_shift,
         }
 
-    def _get_slots_vals(self, slot, employee_token, attendance_intervals):
+    def _get_slots_vals(self, slot, employee_token, attendance_intervals, is_open_shift):
         # This method provides a hook for customization by allowing the overriding for specific values
         employee_sudo = request.env['hr.employee'].sudo().search([('employee_token', '=', employee_token)], limit=1)
         if not employee_sudo:
@@ -59,7 +60,7 @@ class ShiftController(http.Controller):
         datetime_end = pytz.utc.localize(slot.end_datetime)
 
         if employee_sudo.is_flexible:
-            vals = self._get_slot_vals(slot)
+            vals = self._get_slot_vals(slot, is_open_shift)
             vals['start'] = str(datetime_start.astimezone(employee_tz).replace(tzinfo=None))
             vals['end'] = str(datetime_end.astimezone(employee_tz).replace(tzinfo=None))
             return [vals]
@@ -67,7 +68,7 @@ class ShiftController(http.Controller):
         res = []
         for start, stop, _dummy in attendance_intervals:
             if datetime_start < stop and datetime_end > start:
-                vals = self._get_slot_vals(slot)
+                vals = self._get_slot_vals(slot, is_open_shift)
                 vals['start'] = str(max(datetime_start, start).astimezone(employee_tz).replace(tzinfo=None))
                 vals['end'] = str(min(datetime_end, stop).astimezone(employee_tz).replace(tzinfo=None))
                 res.append(vals)
@@ -87,6 +88,8 @@ class ShiftController(http.Controller):
         employee_fullcalendar_data = []
         open_slots = []
         unwanted_slots = []
+        # storage list
+        employee_slots = []
 
         domain = Domain([
             ('start_datetime', '>=', planning_sudo.start_datetime),
@@ -147,7 +150,8 @@ class ShiftController(http.Controller):
                 ):
                     unwanted_slots.append(slot)
                 if slot.employee_id == employee_sudo:
-                    vals = self._get_slots_vals(slot, employee_token, attendance_intervals)
+                    employee_slots.append(slot)
+                    vals = self._get_slots_vals(slot, employee_token, attendance_intervals, False)
                     employee_fullcalendar_data.extend(vals)
                 # We add the slot start and stop into the list after converting it to the timezone of the employee
                 slots_start_datetime.append(slot_start_datetime)
@@ -160,7 +164,30 @@ class ShiftController(http.Controller):
                 employee_sudo.is_flexible or
                 any(pytz.utc.localize(slot.start_datetime) < end and pytz.utc.localize(slot.end_datetime) > start for start, end, dummy in attendance_intervals._items)
             ):
-                open_slots.append(slot)
+                concurrent_slot = False
+                for open_slot in open_slots:
+                    if slot.start_datetime == open_slot.start_datetime and slot.end_datetime == open_slot.end_datetime:
+                        concurrent_slot = open_slot
+                        break
+                if (not concurrent_slot or slot.role_id == employee_sudo.default_planning_role_id
+                        or (slot.role_id.sequence < concurrent_slot.role_id.sequence and concurrent_slot.role_id != employee_sudo.default_planning_role_id)):
+                    open_slots.append(slot)
+                    if concurrent_slot:
+                        open_slots.remove(concurrent_slot)
+
+        slots_to_remove = []
+        for slot in open_slots:
+            if any(slot.start_datetime == employee_slot.start_datetime
+                    and slot.end_datetime == employee_slot.end_datetime
+                    for employee_slot in employee_slots):
+                slots_to_remove.append(slot)
+            else:
+                vals = self._get_slots_vals(slot, employee_token, attendance_intervals, True)
+                employee_fullcalendar_data.extend(vals)
+
+        for slot in slots_to_remove:
+            open_slots.remove(slot)
+
         # Calculation of the events to define the default calendar view:
         # If the planning_sudo only spans a week, default view is week, else it is month.
         min_start_datetime = slots_start_datetime and min(slots_start_datetime) \
@@ -204,8 +231,8 @@ class ShiftController(http.Controller):
                 'open_slot_has_note': any(s.name for s in open_slots),
                 'unwanted_slot_has_role': any(s.role_id.id for s in unwanted_slots),
                 'unwanted_slot_has_note': any(s.name for s in unwanted_slots),
-                # start_datetime and end_datetime are used in the banner. This ensure that these values are
-                # coherent with the sended mail.
+                # start_datetime and end_datetime are used in the banner. This ensures that these values are
+                # coherent with the mail sent.
                 'start_datetime': planning_sudo.start_datetime,
                 'end_datetime': planning_sudo.end_datetime,
                 'mintime': '%02d:00:00' % mintime_weekview,
@@ -298,6 +325,26 @@ class ShiftController(http.Controller):
         slot_sudo.write({'request_to_switch': False})
         return request.redirect(f'/planning/{token_planning}/{token_employee}?message=cancel_switch')
 
+    @http.route('/planning/<string:token_planning>/<string:token_employee>/take_open_shift/<int:shift_id>', type="http", auth="public", website=True)
+    def planning_self_assign_with_user_from_calendar(self, token_planning, token_employee, shift_id, **kwargs):
+        slot_sudo = request.env['planning.slot'].sudo().browse(shift_id)
+        if not slot_sudo.exists():
+            return request.not_found()
+
+        employee_sudo = request.env['hr.employee'].sudo().search([('employee_token', '=', token_employee)], limit=1)
+        if not employee_sudo:
+            return request.not_found()
+
+        planning_sudo = request.env['planning.planning'].sudo().search([('access_token', '=', token_planning)], limit=1)
+        if not planning_sudo._is_slot_in_planning(slot_sudo):
+            return request.not_found()
+
+        if not slot_sudo.employee_id:
+            slot_sudo.write({'resource_id': employee_sudo.resource_id.id})
+            slot_sudo.slot_properties  # necessary addition to stop the re-computation of the slot_properties field during the redirect (leads to access rights error)
+
+        return request.redirect(f'/planning/{token_planning}/{token_employee}?message=assign')
+
     @http.route('/planning/assign/<string:token_employee>/<int:shift_id>', type="http", auth="user", website=True)
     def planning_self_assign_with_user(self, token_employee, shift_id, **kwargs):
         slot_sudo = request.env['planning.slot'].sudo().search([('id', '=', shift_id)], limit=1)
@@ -383,24 +430,39 @@ class ShiftController(http.Controller):
         return response
 
     @staticmethod
-    def _format_planning_shifts(color_code):
+    def _format_planning_shifts(color_code, is_open_shift):
         """Take a color code from Odoo's Kanban view and returns an hex code compatible with the fullcalendar library"""
-
-        switch_color = {
-            0: '#008784',   # No color (doesn't work actually...)
-            1: '#EE4B39',   # Red
-            2: '#F29648',   # Orange
-            3: '#F4C609',   # Yellow
-            4: '#55B7EA',   # Light blue
-            5: '#71405B',   # Dark purple
-            6: '#E86869',   # Salmon pink
-            7: '#008784',   # Medium blue
-            8: '#267283',   # Dark blue
-            9: '#BF1255',   # Fushia
-            10: '#2BAF73',  # Green
-            11: '#8754B0'   # Purple
-        }
-
+        # if the shift is an open shift, we use the '80' affix at the end of the hex code to modify the transparency
+        if is_open_shift:
+            switch_color = {
+                0: '#00878480',   # No color (doesn't work actually...)
+                1: '#EE4B3980',   # Red
+                2: '#F2964880',   # Orange
+                3: '#F4C60980',   # Yellow
+                4: '#55B7EA80',   # Light blue
+                5: '#71405B80',   # Dark purple
+                6: '#E8686980',   # Salmon pink
+                7: '#00878480',   # Medium blue
+                8: '#26728380',   # Dark blue
+                9: '#BF125580',   # Fushia
+                10: '#2BAF7380',  # Green
+                11: '#8754B080'   # Purple
+            }
+        else:
+            switch_color = {
+                0: '#008784',   # No color (doesn't work actually...)
+                1: '#EE4B39',   # Red
+                2: '#F29648',   # Orange
+                3: '#F4C609',   # Yellow
+                4: '#55B7EA',   # Light blue
+                5: '#71405B',   # Dark purple
+                6: '#E86869',   # Salmon pink
+                7: '#008784',   # Medium blue
+                8: '#267283',   # Dark blue
+                9: '#BF1255',   # Fushia
+                10: '#2BAF73',  # Green
+                11: '#8754B0'   # Purple
+            }
         return switch_color[color_code]
 
     @staticmethod

@@ -131,9 +131,11 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
         calRender.el.querySelector('.fc-event-time')?.appendChild(timeElement);
 
         if (calRender.event.extendedProps.request_to_switch && !calRender.event.extendedProps.allow_self_unassign) {
-            calRender.el.style.borderColor = 'rgb(255, 172, 0)';
+            calRender.el.style.opacity = '0.5';
+            const backgroundColor = calRender.el.style.backgroundColor;
+            calRender.el.style.borderColor = backgroundColor;
             calRender.el.style.borderWidth = '5px';
-            calRender.el.style.opacity = '0.7';
+            calRender.el.style.background = 'repeating-linear-gradient(40deg, #A0A0A0, #A0A0A0 5px, '+backgroundColor+' 5px, '+backgroundColor + ' 10px)';
         }
     },
     formatDateAsBackend: function (date) {
@@ -184,6 +186,7 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
         if (
             calEvent.event.extendedProps.allow_self_unassign
             && !calEvent.event.extendedProps.is_unassign_deadline_passed
+            && !calEvent.event.extendedProps.is_open_shift
             ) {
             document.getElementById("dismiss_shift").style.display = "block";
             displayFooter = true;
@@ -194,6 +197,7 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             !calEvent.event.extendedProps.request_to_switch
             && !calEvent.event.extendedProps.is_past
             && !calEvent.event.extendedProps.allow_self_unassign
+            && !calEvent.event.extendedProps.is_open_shift
             ) {
             document.getElementById("switch_shift").style.display = "block";
             displayFooter = true;
@@ -203,15 +207,23 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
         if (
             calEvent.event.extendedProps.request_to_switch
             && !calEvent.event.extendedProps.allow_self_unassign
+            && !calEvent.event.extendedProps.is_open_shift
             ) {
             document.getElementById("cancel_switch").style.display = "block";
             displayFooter = true;
         } else {
             document.getElementById("cancel_switch").style.display = "none";
         }
+        if (calEvent.event.extendedProps.is_open_shift) {
+            document.getElementById("take_open_switch").style.display = "block";
+            displayFooter = true;
+        } else {
+            document.getElementById("take_open_switch").style.display = "none";
+        }
         $("#modal_action_dismiss_shift").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/unassign/" + calEvent.event.extendedProps.slot_id);
         $("#modal_action_switch_shift").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/switch/" + calEvent.event.extendedProps.slot_id);
         $("#modal_action_cancel_switch").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/cancel_switch/" + calEvent.event.extendedProps.slot_id);
+        $("#modal_action_take_open_switch").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/take_open_shift/" + calEvent.event.extendedProps.slot_id);
         $("#fc-slot-onclick-modal").modal("show");
         document.getElementsByClassName("modal-footer")[0].style.display = displayFooter ? "block" : "none" ;
     },

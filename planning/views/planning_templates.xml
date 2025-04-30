@@ -49,6 +49,16 @@
                     </div>
                 </div>
             </div>
+            <!-- legend for the shifts that are displayed inside the calendar container -->
+            <div class="container d-flex flex-row-reverse mt-2">
+                <table style="border-spacing: 5px; border-collapse: separate;">
+                    <tr>
+                        <td>Open Shifts</td><td class="o_base_shift_legend o_open_shifts_legend"></td>
+                        <td>Request to Switch</td><td class="o_base_shift_legend o_unwanted_shifts_legend"></td>
+                        <td>My Shifts</td><td class="o_base_shift_legend"></td>
+                    </tr>
+                </table>
+            </div>
             <!-- open shift's container -->
             <t t-call="planning.open_slots_list_template"/>
             <!-- unwanted shift's container-->
@@ -100,6 +110,13 @@
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="message" value="cancel_switch"/>
                                     <button type="submit" class="btn btn-outline-danger">Cancel Switch</button>
+                                </form>
+                            </div>
+                            <div id="take_open_switch" style="float:left">
+                                <form id="modal_action_take_open_switch" t-attf-action="/planning"  method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="message" value="take_open_shift"/>
+                                    <button type="submit" class="btn btn-outline-danger">I Take it</button>
                                 </form>
                             </div>
                         </div>
@@ -195,7 +212,7 @@
         <xpath expr="//td[@name='note_id']" position="attributes">
             <attribute name="t-if">unwanted_slot_has_note</attribute>
         </xpath>
-        <!-- change conditional to show self-assginment button in unwanted shifts -->
+        <!-- change conditional to show self-assignment button in unwanted shifts -->
         <xpath expr="//td[@name='buttons']/div" position="attributes">
             <attribute name="t-if">shift.resource_id and shift.request_to_switch and shift.employee_id != employee</attribute>
         </xpath>

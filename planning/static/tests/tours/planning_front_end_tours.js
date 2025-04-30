@@ -29,7 +29,7 @@ registry.category("web_tour.tours").add('planning_front_end_tour', {
         trigger: "div.o_planning_toast.bg-success",
         content: "A success planning toast notification should appear",
     }, {
-        trigger: "td.fc-timegrid-col a[style='border-color: rgb(255, 172, 0); background-color: rgb(238, 75, 57); border-width: 5px; opacity: 0.7;']",
+        trigger: "td.fc-timegrid-col a[style='border-color: rgb(238, 75, 57); background: repeating-linear-gradient(40deg, rgb(160, 160, 160), rgb(160, 160, 160) 5px, rgb(238, 75, 57) 5px, rgb(238, 75, 57) 10px); opacity: 0.5; border-width: 5px;']",
         content: "The shift's calendar entry should have changed in style to indicate that a request to switch has been filed",
     }, {
         trigger: "div.o_planning_calendar_unwanted_shifts",

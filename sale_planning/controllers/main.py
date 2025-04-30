@@ -33,7 +33,7 @@ class ShiftControllerProject(ShiftController):
     def _get_slot_title(self, slot):
         return " - ".join(x for x in (super()._get_slot_title(slot), self._get_slot_sale_line(slot)) if x)
 
-    def _get_slot_vals(self, slot):
-        vals = super()._get_slot_vals(slot)
+    def _get_slot_vals(self, slot, is_open_shift):
+        vals = super()._get_slot_vals(slot, is_open_shift)
         vals['sale_line'] = self._get_slot_sale_line(slot)
         return vals

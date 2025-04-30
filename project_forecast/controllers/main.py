@@ -16,7 +16,7 @@ class ShiftControllerProject(ShiftController):
     def _get_slot_title(self, slot):
         return " - ".join(x for x in (super()._get_slot_title(slot), slot.project_id.name) if x)
 
-    def _get_slot_vals(self, slot):
-        vals = super()._get_slot_vals(slot)
+    def _get_slot_vals(self, slot, is_open_shift):
+        vals = super()._get_slot_vals(slot, is_open_shift)
         vals['project'] = slot.project_id.name
         return vals

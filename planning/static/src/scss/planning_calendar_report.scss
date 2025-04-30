@@ -49,3 +49,20 @@
         padding: 0.5rem 1rem;
     }
 }
+
+$odoo-color: #714b67;
+.o_base_shift_legend {
+    min-width: 35px;
+    background-color: $o-enterprise-color;
+    border-radius: 4px;
+}
+
+.o_open_shifts_legend {
+    opacity: 50%;
+}
+
+.o_unwanted_shifts_legend {
+    opacity: 50%;
+    background :repeating-linear-gradient(40deg, #A0A0A0, #A0A0A0 2px, $o-enterprise-color 2px, $o-enterprise-color 4px);
+    border: 2px solid $o-enterprise-color;
+}
