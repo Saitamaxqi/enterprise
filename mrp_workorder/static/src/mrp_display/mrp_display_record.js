@@ -157,7 +157,8 @@ export class MrpDisplayRecord extends Component {
         return this.resModel === "mrp.production"
             ? []
             : this.props.record.data.move_raw_ids.records.filter(
-                  (move) => !move.data.scrapped && !move.data.check_id.count
+                  (move) =>
+                      !move.data.scrapped && !move.data.check_id.count && move.data.operation_id
               );
     }
 
