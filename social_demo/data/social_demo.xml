@@ -3,7 +3,7 @@
 <data noupdate="1">
     <record id="product_product_4d" model="product.product">
         <field name="name">Desk Variant D</field>
-        <field name="image_1920" type="base64" file="product/static/img/table01.jpg"/>
+        <field name="image_1920" type="base64" file="social_demo/static/img/table01.jpg"/>
     </record>
 
     <record id="social_utm_campaign" model="utm.campaign">
@@ -89,13 +89,13 @@
 
     <record id="social_post_global_2_image_2" model="ir.attachment">
         <field name="name">Table Model 2</field>
-        <field name="datas" type="base64" file="product/static/img/table02.jpg"/>
+        <field name="datas" type="base64" file="social_demo/static/img/table02.jpg"/>
         <field name="mimetype">image/png</field>
     </record>
 
     <record id="social_post_global_2_image_3" model="ir.attachment">
         <field name="name">Table Model 3</field>
-        <field name="datas" type="base64" file="product/static/img/table03.jpg"/>
+        <field name="datas" type="base64" file="social_demo/static/img/table03.jpg"/>
         <field name="mimetype">image/png</field>
     </record>
 
