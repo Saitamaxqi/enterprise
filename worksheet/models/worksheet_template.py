@@ -161,6 +161,15 @@ class WorksheetTemplate(models.Model):
                 }),
             ]
         }))
+        if self.env.context.get('install_module'):
+            x_name_field = model.field_id.filtered(lambda f: f.name == 'x_name')
+            self.env['ir.model.data'].sudo().create({
+                'name': f'{model.model}_field_x_name',
+                'model': 'ir.model.fields',
+                'module': self.env.context.get('install_module'),
+                'res_id': x_name_field.id,
+                'noupdate': True,
+            })
 
         register_xids(sorted(model.field_id, key=lambda field: field.name))
 

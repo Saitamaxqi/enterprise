@@ -62,30 +62,35 @@ class WorksheetTemplate(models.Model):
     def _create_demo_data_quality(self):
         # create demo data in batch for performance reasons (avoid multiple calls to _setup_models__)
         model_id = self.env.ref('quality_control_worksheet.quality_control_worksheet_template1').model_id.id
-        self.env['ir.model.fields'].create([{
+        self.env['ir.model.fields'].with_context(_import_current_module='quality_control_worksheet').create([{
+            'id': 'quality_control_worksheet_template_field1',
             'name': 'x_date',
             'ttype': 'date',
             'field_description': 'Date',
             'model_id': model_id,
         }, {
+            'id': 'quality_control_worksheet_template_field2',
             'name': 'x_product',
             'ttype': 'many2one',
             'relation': 'product.product',
             'field_description': 'Product',
             'model_id': model_id,
         }, {
+            'id': 'quality_control_worksheet_template_field3',
             'name': 'x_responsible',
             'ttype': 'many2one',
             'relation': 'res.users',
             'field_description': 'Responsible',
             'model_id': model_id,
         }, {
+            'id': 'quality_control_worksheet_template_field4',
             'name': 'x_texture',
             'ttype': 'selection',
             'field_description': 'Wood Texture',
             'selection': "[('rough','Rough'),('smooth','Smooth')]",
             'model_id': model_id,
         }, {
+            'id': 'quality_control_worksheet_template_field5',
             'name': 'x_length',
             'ttype': 'selection',
             'field_description': 'Length',
