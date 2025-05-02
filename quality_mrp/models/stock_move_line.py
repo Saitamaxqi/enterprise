@@ -38,4 +38,4 @@ class StockMoveLine(models.Model):
         fail_sort = self.check_state == 'fail'
         # `check_ids` are sorted by their existence and then by their ID
         check_ids_sort = self.check_ids and self.check_ids.id or 0
-        return (not fail_sort, check_ids_sort, self.id)
+        return (not fail_sort, not bool(check_ids_sort), check_ids_sort, self.id)

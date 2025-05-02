@@ -104,6 +104,69 @@ class TestQualityCheckWorkorder(TestMrpCommon):
             {'quantity': 1, 'lot_id': finished_sn.id},
         ])
 
+    def test_register_consumed_materials_split_production(self):
+        """
+        Process an MO based on a BoM with one operation. That operation has one
+        step: register the used component. The component is tracked. Split the
+        production MO -> MO-001 + MO-002, the component registrations should
+        update the appropriate backorder.
+        """
+        warehouse = self.env['stock.warehouse'].search([('company_id', '=', self.env.company.id)], limit=1)
+        finished = self.bom_4.product_id
+        component = self.bom_4.bom_line_ids.product_id
+        component.write({
+            'is_storable': True,
+            'tracking': 'serial',
+        })
+
+        lots = self.env['stock.lot'].create([{
+            'name': f"SN00{i + 1}",
+            'product_id': component.id,
+            'company_id': self.env.company.id,
+        } for i in range(4)])
+        for lot in lots:
+            self.env['stock.quant']._update_available_quantity(component, warehouse.lot_stock_id, 1, lot_id=lot)
+
+        type_register_materials = self.env.ref('mrp_workorder.test_type_register_consumed_materials')
+        operation = self.env['mrp.routing.workcenter'].create({
+            'name': 'Super Operation',
+            'bom_id': self.bom_4.id,
+            'workcenter_id': self.workcenter_2.id,
+            'quality_point_ids': [Command.create({
+                'product_ids': [Command.link(finished.id)],
+                'picking_type_ids': [Command.link(warehouse.manu_type_id.id)],
+                'test_type_id': type_register_materials.id,
+                'component_id': component.id,
+                'bom_id': self.bom_4.id,
+                'measure_on': 'product',
+            })]
+        })
+        self.bom_4.operation_ids = [Command.set(operation.ids)]
+
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.bom_id = self.bom_4
+        mo_form.product_qty = 2
+        mo = mo_form.save()
+        mo.action_confirm()
+
+        self.assertEqual(mo.move_raw_ids.lot_ids, lots[:2])
+        # Split the MO in 2
+        action = mo.action_split()
+        wizard = Form.from_action(self.env, action)
+        wizard.max_batch_size = 1
+        action = wizard.save().action_split()
+        # Should have 2 mos /w 1 sn each
+        self.assertEqual(len(mo.procurement_group_id.mrp_production_ids), 2)
+        # Check that the assigned lots didn't change
+        self.assertEqual(mo.procurement_group_id.mrp_production_ids[0].workorder_ids.lot_id, lots[0])
+        self.assertEqual(mo.procurement_group_id.mrp_production_ids[1].workorder_ids.lot_id, lots[1])
+        # Register sn3 on mo 1 and check that it is reflected on the associated move line
+        component_move = mo.workorder_ids.current_quality_check_id.move_id
+        component_move.action_add_from_quant(self.env['stock.quant'].search([('lot_id', '=', lots[2].id), ('location_id', '=', warehouse.lot_stock_id.id)], limit=1).id)
+        self.assertRecordValues(mo.move_raw_ids, [
+            {'quantity': 1.0, 'lot_ids': lots[2].ids},
+        ])
+
     def test_backorder_cancelled_workorder_quality_check(self):
         """ Create an MO based on a bom with 2 operations, when processing workorders,
             process one workorder fully and the other partially, then confirm and create backorder
