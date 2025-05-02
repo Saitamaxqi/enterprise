@@ -97,3 +97,66 @@ class TestPeEdiPoS(TestPeEdiCommon, TestPointOfSaleHttpCommon):
             order = self.env["pos.order"].sync_from_ui([order_data])["pos.order"][0]
             invoice_str = str(self.env["pos.order"].browse(order["id"]).account_move._get_invoice_legal_documents('pdf', allow_fallback=True).get('content'))
             self.assertTrue("barcode_type=QR" in invoice_str)
+
+    def test_refund_reason_not_set(self):
+        """
+        Test that a refund in Peruvian PoS does not crash and sets the refund reason.
+        """
+        self.main_pos_config.open_ui()
+        session = self.main_pos_config.current_session_id
+        order_result = self.env["pos.order"].sync_from_ui([{
+            "amount_paid": 1180,
+            "amount_tax": 180,
+            "amount_return": 0,
+            "amount_total": 1180,
+            "lines": [
+                Command.create({
+                    "price_unit": 1000.0,
+                    "product_id": self.product_a.id,
+                    "price_subtotal": 1000.0,
+                    "price_subtotal_incl": 1180.0,
+                    "tax_ids": [Command.set([self.product_a.taxes_id[0].id])],
+                    "qty": 1,
+                }),
+            ],
+            "name": "Order 12345-123-1234",
+            "partner_id": self.partner_a.id,
+            "session_id": session.id,
+            "payment_ids": [
+                Command.create({
+                    "amount": 1180,
+                    "name": fields.Datetime.now(),
+                    "payment_method_id": self.bank_payment_method.id,
+                }),
+            ],
+            "uuid": "12345-123-1234",
+            "to_invoice": True,
+        }])
+        original_order = self.env["pos.order"].browse(order_result["pos.order"][0]["id"])
+        refund_order = self.env["pos.order"].create({
+            "session_id": session.id,
+            "partner_id": original_order.partner_id.id,
+            "lines": [Command.create({
+                "product_id": self.product_a.id,
+                "qty": -1.0,
+                "price_unit": 1000.0,
+                "tax_ids": [Command.set([self.product_a.taxes_id[0].id])],
+                "price_subtotal": -1000.0,
+                "price_subtotal_incl": -1180.0,
+            })],
+            "refunded_order_id": original_order.id,
+            "to_invoice": True,
+            "amount_total": -1180.0,
+            "amount_tax": -180.0,
+            "amount_paid": -1180.0,
+            "amount_return": 0.0,
+        })
+        refund_order.refunded_order_id = original_order
+        try:
+            refund_invoice = refund_order._generate_pos_order_invoice()
+        except TypeError as e:
+            self.fail(f'l10n_pe_edi_refund_reason should be able to not be set: {e}')
+        # To make sure the l10n_pe_edi_refund_reason is still set as it should
+        refund_order.write({"l10n_pe_edi_refund_reason": "01"})
+        refund_invoice = refund_order._generate_pos_order_invoice()
+        self.assertEqual(refund_invoice.l10n_pe_edi_refund_reason, "01")

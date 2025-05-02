@@ -30,7 +30,7 @@ class PosOrder(models.Model):
             if len(refunded_move) > 1:
                 raise UserError(_("You cannot refund several invoices at once."))
             if refunded_move:
-                vals['l10n_pe_edi_refund_reason'] = ", ".join(self.mapped('l10n_pe_edi_refund_reason'))
+                vals['l10n_pe_edi_refund_reason'] = ", ".join(reason for reason in self.mapped('l10n_pe_edi_refund_reason') if reason)
                 refunded_invoice_code = refunded_move.l10n_latam_document_type_id.code
                 if refunded_invoice_code == '01':
                     # refunding a "Factura electrónica" is done through a "Nota de Crédito electrónica"
