@@ -193,7 +193,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
     };
 
     const setConnectedEmployees = async (ids) => {
-        if (employees.admin) {
+        if (!ids.includes(employees.admin.id)) {
             await stopAllWorkorderFromEmployee(employees.admin.id);
             await orm.call("hr.employee", "logout", [employees.admin.id, false, true]);
         }
