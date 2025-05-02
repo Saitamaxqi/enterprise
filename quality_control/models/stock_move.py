@@ -9,8 +9,8 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _action_confirm(self, merge=True, merge_into=False):
-        moves = super(StockMove, self)._action_confirm(merge=merge, merge_into=merge_into)
+    def _action_confirm(self, merge=True, merge_into=False, create_proc=True):
+        moves = super()._action_confirm(merge=merge, merge_into=merge_into, create_proc=create_proc)
         moves._create_quality_checks()
         return moves
 
