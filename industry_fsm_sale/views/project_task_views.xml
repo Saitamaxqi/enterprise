@@ -310,12 +310,12 @@
                 <attribute name="required">is_fsm</attribute>
             </field>
             <xpath expr="//field[@name='child_ids']/list/field[@name='partner_id']" position="attributes">
-                <attribute name="column_invisible">parent.is_fsm and not parent.partner_id or not parent.allow_billable and not parent.is_fsm or has_template_ancestor</attribute>
+                <attribute name="column_invisible">parent.is_fsm and not parent.partner_id or not parent.allow_billable and not parent.is_fsm or parent.has_template_ancestor</attribute>
                 <attribute name="invisible">not allow_billable and not is_fsm</attribute>
                 <attribute name="required">is_fsm and parent.partner_id</attribute>
             </xpath>
             <xpath expr="//field[@name='depend_on_ids']/list/field[@name='partner_id']" position="attributes">
-                <attribute name="column_invisible">not parent.allow_billable and not parent.is_fsm or has_template_ancestor</attribute>
+                <attribute name="column_invisible">not parent.allow_billable and not parent.is_fsm or parent.has_template_ancestor</attribute>
                 <attribute name="invisible">not allow_billable and not is_fsm</attribute>
                 <attribute name="required">is_fsm</attribute>
             </xpath>
