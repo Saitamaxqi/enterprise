@@ -74,7 +74,7 @@ describe("field sync plugins", () => {
             indexInList: 0,
             fieldName: "product_uom_qty",
         });
-        const newModel = new Model(data);
+        const newModel = new Model(data, { custom: model.config.custom });
         expect(getFieldSync(newModel, "A1")).toEqual(getFieldSync(model, "A1"));
     });
 
