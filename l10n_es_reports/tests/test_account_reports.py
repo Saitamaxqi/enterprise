@@ -66,8 +66,9 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
         invoice.action_post()
 
         # 2) The move is not reversed yet, so it should appear in the "Invoices" section on the April 2019 report
+        report_lines = self.report._get_lines(options)
         self.assertLinesValues(
-            self.report._get_lines(options),
+            report_lines,
             [0,                                                                                                                                         1],
             [
                 ('Summary',                                                                                                                            ''),
@@ -101,6 +102,25 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
             options
         )
 
+        expected_lines = invoice.line_ids.filtered_domain([
+            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('tax_line_id', '=', False),
+        ])
+
+        # In Mod349 the auditable lines corresponds to the amount of intra-community operations and refunds
+        line_dict = dict(zip(self.report.line_ids, report_lines))
+        for report_line_code, expected_lines in [
+            ('aeat_mod_349_statistics_invoices_total_amount', expected_lines),
+            ('aeat_mod_349_statistics_refunds_total_amount', False),
+        ]:
+            report_line = self.env['account.report.line'].search([('code', '=', report_line_code)])
+            action_dict = self.report.action_audit_cell(options, self._get_audit_params_from_report_line(options, report_line, line_dict[report_line]))
+            result_lines = self.env['account.move.line'].search(action_dict['domain'])
+            if expected_lines:
+                self.assertEqual(result_lines, expected_lines)
+            else:
+                self.assertFalse(result_lines)
+
         # 3) We reverse the move in May 2019
         move_reversal = self.env['account.move.reversal'].with_context(active_model="account.move", active_ids=invoice.ids).create({
             'date': fields.Date.from_string('2019-05-05'),
@@ -118,8 +138,9 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
 
         # 5) Now, in the report of May 2019, the new balance of the move created in April 2019 is reported in the 'Refunds' section
         # The new balance is computed like this : invoice.residual_amount - reversed_move.amount_total
+        report_lines = self.report._get_lines(options)
         self.assertLinesValues(
-            self.report._get_lines(options),
+            report_lines,
             [0,                                                                                                                                         1],
             [
                 ('Summary',                                                                                                                            ''),
@@ -152,6 +173,24 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
             ],
             options
         )
+        expected_lines = reversed_move.line_ids.filtered_domain([
+            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('tax_line_id', '=', False),
+        ])
+
+        # In Mod349 the auditable lines corresponds to the amount of intra-community operations and refunds
+        line_dict = dict(zip(self.report.line_ids, report_lines))
+        for report_line_code, expected_lines in [
+            ('aeat_mod_349_statistics_invoices_total_amount', False),
+            ('aeat_mod_349_statistics_refunds_total_amount', expected_lines),
+        ]:
+            report_line = self.env['account.report.line'].search([('code', '=', report_line_code)])
+            action_dict = self.report.action_audit_cell(options, self._get_audit_params_from_report_line(options, report_line, line_dict[report_line]))
+            result_lines = self.env['account.move.line'].search(action_dict['domain'])
+            if expected_lines:
+                self.assertEqual(result_lines, expected_lines)
+            else:
+                self.assertFalse(result_lines)
 
     def test_mod349_report_change_key_on_existing_move(self):
         """ This test makes sure the report display the lines depending on the key set on the move, even if we change
@@ -721,8 +760,9 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
 
         # In the report of Jan 2020, the new balance of the move created in 2019 should be nulled by the credit note because
         # its accounting date is 2020
+        report_lines = self.report._get_lines(options)
         self.assertLinesValues(
-            self.report._get_lines(options),
+            report_lines,
             [0,                                                                                                                                                     1],
             [
                 ('Summary',                                                                                                                      ''),
@@ -755,3 +795,113 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
             ],
             options
         )
+
+        expected_lines = (invoice | reversed_move).line_ids.filtered_domain([
+            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('tax_line_id', '=', False),
+        ])
+
+        # In Mod349 the auditable lines corresponds to the amount of intra-community operations and refunds
+        line_dict = dict(zip(self.report.line_ids, report_lines))
+        for report_line_code, expected_lines in [
+            ('aeat_mod_349_statistics_invoices_total_amount', expected_lines),
+            ('aeat_mod_349_statistics_refunds_total_amount', False),
+        ]:
+            report_line = self.env['account.report.line'].search([('code', '=', report_line_code)])
+            action_dict = self.report.action_audit_cell(options, self._get_audit_params_from_report_line(options, report_line, line_dict[report_line]))
+            result_lines = self.env['account.move.line'].search(action_dict['domain'])
+            if expected_lines:
+                self.assertEqual(result_lines, expected_lines)
+            else:
+                self.assertFalse(result_lines)
+
+    def test_mod349_report_line_audit(self):
+        """ This test makes sure the report shows the correct results for the auditable lines
+        """
+        options = self._generate_options(self.report, '2019-04-01', '2019-04-30')
+        invoices = self.env['account.move']
+        for key in ('E', 'R', 'E'):
+            invoice = self.env['account.move'].create({
+                'move_type': 'out_invoice',
+                'date': '2019-04-05',
+                'invoice_date': '2019-04-05',
+                'partner_id': self.partner_a.id,
+                'line_ids': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'quantity': 1,
+                        'price_unit': self.product.lst_price,
+                        'tax_ids': [],
+                    }),
+                ]
+            })
+            invoice.update({
+                'l10n_es_reports_mod349_invoice_type': key,
+            })
+            invoice.action_post()
+            invoices |= invoice
+
+        # We reverse the last move
+        move_reversal = self.env['account.move.reversal'].with_context(active_model="account.move", active_ids=invoice.ids).create({
+            'date': '2019-04-06',
+            'journal_id': self.company_data['default_journal_sale'].id,
+        })
+        reversal = move_reversal.reverse_moves()
+        reversed_move = self.env['account.move'].browse(reversal['res_id'])
+        reversed_move.action_post()
+
+        # The report show values in 'E' and 'R' lines
+        report_lines = self.report._get_lines(options)
+        self.assertLinesValues(
+            report_lines,
+            [0,                                                                                                                                                     1],
+            [
+                ('Summary',                                                                                                                      ''),
+                ('Total number of intra-community operations',                                                                                    1),
+                ('Total amount of intra-community operations',                                                                               200.00),
+                ('Total number of intra-community refund operations',                                                                             0),
+                ('Amount of intra-community refund operations',                                                                                   0),
+                ('Invoices',                                                                                                                     ''),
+                ('E. Intra-community sales',                                                                                                 100.00),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Transfers of goods made under consignment sales contracts.',                                                            100.00),
+                ('D. Returns of goods previously sent from the TAI',                                                                              0),
+                ('C. Replacements of goods',                                                                                                      0),
+                ('Refunds',                                                                                                                      ''),
+                ('E. Intra-community sales refunds',                                                                                              0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Rectifications of transfers of goods made under consignment sale contracts.',                                                0),
+                ('D. Rectifications of returned goods previously sent from the TAI',                                                              0),
+                ('C. Rectifications for replacement of goods',                                                                                    0),
+            ],
+            options
+        )
+
+        expected_lines = (invoices | reversed_move).line_ids.filtered_domain([
+            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('tax_line_id', '=', False),
+        ])
+
+        # In Mod349 the auditable lines corresponds to the amount of intra-community operations and refunds
+        line_dict = dict(zip(self.report.line_ids, report_lines))
+        for report_line_code, expected_lines in [
+            ('aeat_mod_349_statistics_invoices_total_amount', expected_lines),
+            ('aeat_mod_349_statistics_refunds_total_amount', False),
+        ]:
+            report_line = self.env['account.report.line'].search([('code', '=', report_line_code)])
+            action_dict = self.report.action_audit_cell(options, self._get_audit_params_from_report_line(options, report_line, line_dict[report_line]))
+            result_lines = self.env['account.move.line'].search(action_dict['domain'])
+            if expected_lines:
+                self.assertEqual(result_lines, expected_lines)
+            else:
+                self.assertFalse(result_lines)

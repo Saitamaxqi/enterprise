@@ -103,16 +103,24 @@ MOD_347_CUSTOM_ENGINES_DOMAINS = {
 
 MOD_349_KEYS = ('A', 'E', 'T', 'S', 'I', 'M', 'H', 'R', 'D', 'C')
 
+MOD_349_CUSTOM_ENGINES_SPLIT_REGEX = re.compile(r'_report_custom_engine_modelo349_(invoice|refund)_([eatsimhrdc])')
+
 
 class AccountReport(models.Model):
     _inherit = 'account.report'
 
     def _get_expression_audit_aml_domain(self, expression, options):
-        # Overridden to allow auditing mod347's threshold lines (for consistency: this way all the lines of the report are audited in the same way)
-        if expression.engine == 'custom' and expression.formula in MOD_347_CUSTOM_ENGINES_DOMAINS:
-            return MOD_347_CUSTOM_ENGINES_DOMAINS[expression.formula]
-        else:
-            return super()._get_expression_audit_aml_domain(expression, options)
+        if expression.engine == 'custom':
+            # Allow auditing mod347's threshold lines (for consistency: this way all the lines of the report are audited in the same way)
+            if expression.formula in MOD_347_CUSTOM_ENGINES_DOMAINS:
+                return MOD_347_CUSTOM_ENGINES_DOMAINS[expression.formula]
+            # Allow auditing mod349 summary lines
+            matching = MOD_349_CUSTOM_ENGINES_SPLIT_REGEX.fullmatch(expression.formula)
+            if matching:
+                move_type = matching.group(1)
+                key = matching.group(2).capitalize()
+                return self.env[self.custom_handler_model_name]._get_modelo349_audit_aml_domain(options, key, move_type)
+        return super()._get_expression_audit_aml_domain(expression, options)
 
 
 class L10n_EsTaxReportHandler(models.AbstractModel):
@@ -1329,6 +1337,31 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
     def _report_custom_engine_modelo349_refund_totals(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         return self._custom_modelo349_common(options, current_groupby, move_type='refund')
 
+    def _get_modelo349_domain(self, key=False):
+        domain = [
+            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('move_id.move_type', 'in', ('in_invoice', 'out_invoice', 'in_refund', 'out_refund')),
+            ('move_id.l10n_es_reports_mod349_available', '=', True),
+            ('tax_line_id', '=', False),
+        ]
+
+        if key:
+            domain += [('move_id.l10n_es_reports_mod349_invoice_type', '=', key)]
+        else:
+            domain += [
+                ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False),
+                '|', ('move_id.reversed_entry_id', '=', False),
+                '|', ('move_id.reversed_entry_id.amount_residual', '>', 0), ('move_id.amount_residual', '>', 0)
+            ]
+        return domain
+
+    def _get_modelo349_audit_aml_domain(self, options, key, move_type):
+        res = self._custom_modelo349_common(options, 'move_id', key=key, move_type=move_type)
+        return [
+            *self._get_modelo349_domain(key),
+            ('move_id', 'in', tuple(move_id for move_id, _vals in res)),
+        ]
+
     def _custom_modelo349_common(self, options, current_groupby, key=None, move_type=None):
         def build_result_dict(query_res_lines, reversed_moves_dict):
             result_dict = {'value': 0}
@@ -1396,21 +1429,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         report._check_groupby_fields([current_groupby] if current_groupby else [])
 
-        domain = [
-            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
-            ('move_id.l10n_es_reports_mod349_available', '=', True),
-            ('move_id.move_type', 'in', ('in_invoice', 'out_invoice', 'in_refund', 'out_refund')),
-            ('tax_line_id', '=', False),
-        ]
-
-        if key:
-            domain.append(('move_id.l10n_es_reports_mod349_invoice_type', '=', key))
-        else:
-            domain.extend([
-                ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False),
-                '|', ('move_id.reversed_entry_id', '=', False),
-                '|', ('move_id.reversed_entry_id.amount_residual', '>', 0), ('move_id.amount_residual', '>', 0)
-            ])
+        domain = self._get_modelo349_domain(key)
 
         # Build query
         query = report._get_report_query(options, 'strict_range', domain=domain)
