@@ -1193,6 +1193,8 @@ class AccountReturn(models.Model):
             checks += self._check_suite_common_vat_report(check_codes_to_ignore)
         elif (self.type_id.report_id.root_report_id or self.type_id.report_id) == self.env.ref('account_reports.generic_ec_sales_report'):
             checks += self._check_suite_common_ec_sales_list(check_codes_to_ignore)
+        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
+            checks += self._check_suite_annual_closing(check_codes_to_ignore)
 
         return checks
 
@@ -1224,62 +1226,21 @@ class AccountReturn(models.Model):
             })
 
         if 'check_match_all_bank_entries' not in check_codes_to_ignore:
-            domain = [
-                ('is_reconciled', '=', False),
-                ('company_id', 'in', self.company_ids.ids),
-                ('date', '<=', fields.Date.to_string(self.date_to)),
-                ('date', '>=', fields.Date.to_string(self.date_from)),
-            ]
-
-            unreconciled_bank_entries_count = self.env['account.bank.statement.line'].sudo().search_count(domain)
-            summary_string = _("%(count)s Entries", count=unreconciled_bank_entries_count) if unreconciled_bank_entries_count > 1 else _("1 Entry")
-
-            review_action = {
-                'type': 'ir.actions.act_window',
-                'name': _("Bank Matching"),
-                'view_mode': 'list',
-                'res_model': 'account.bank.statement.line',
-                'domain': domain,
-                'views': [[False, 'list'], [False, 'kanban']],
-            }
-
-            checks.append({
-                'name': _("Bank matching"),
-                'message': _("Bank matching isn’t required for VAT returns but helps spot missing bills."),
-                'code': 'check_match_all_bank_entries',
-                'summary': summary_string,
-                'action': review_action if unreconciled_bank_entries_count else None,
-                'result': 'failure' if unreconciled_bank_entries_count else 'success',
-            })
+            checks.append(self._check_match_all_bank_entries(
+                    code='check_match_all_bank_entries',
+                    name=_("Bank Matching"),
+                    message=_("Bank matching isn’t required for VAT returns but helps spot missing bills."),
+                )
+            )
 
         if 'check_draft_entries' not in check_codes_to_ignore:
-            domain = [
-                ('state', '=', 'draft'),
-                ('move_type', '!=', 'entry'),
-                ('company_id', 'in', self.company_ids.ids),
-                ('date', '<=', fields.Date.to_string(self.date_to)),
-                ('date', '>=', fields.Date.to_string(self.date_from)),
-            ]
-            draft_entries_count = self.env['account.move'].sudo().search_count(domain)
-            summary_string = _("%(count)s Entries", count=draft_entries_count) if draft_entries_count > 1 else _("1 Entry")
-
-            review_action = {
-                'type': 'ir.actions.act_window',
-                'name': _("Draft Entries"),
-                'view_mode': 'list',
-                'res_model': 'account.move',
-                'domain': domain,
-                'views': [[False, 'list'], [False, 'form']],
-            }
-
-            checks.append({
-                'name': _("Draft entries"),
-                'code': 'check_draft_entries',
-                'message': _("Review and post draft invoices and bills in the period, or change their accounting date."),
-                'summary': summary_string,
-                'action': review_action if draft_entries_count else None,
-                'result': 'failure' if draft_entries_count else 'success',
-            })
+            checks.append(self._check_draft_entries(
+                    code='check_draft_entries',
+                    name=_("Draft entries"),
+                    message=_("Review and post draft invoices and bills in the period, or change their accounting date."),
+                    exclude_entries=True,
+                )
+            )
 
         if 'check_bills_attachment' not in check_codes_to_ignore:
             domain = [
@@ -1367,6 +1328,169 @@ class AccountReturn(models.Model):
                 'summary': _("%(count)s Invoices", count=len(country_error_move_ids)) if len(country_error_move_ids or []) > 1 else _("1 Invoice"),
                 'action': review_action if country_error_move_ids else None,
                 'result': 'failure' if country_error_move_ids else 'success',
+            })
+
+        return checks
+
+    def _check_suite_annual_closing(self, check_codes_to_ignore):
+        def get_unknown_partner_aml_ids(report):
+            options = report.get_options({})
+            unknown_partner_line = next(
+                (line for line in report._get_lines(options) if report._get_model_info_from_id(line['id']) == ('res.partner', None)),
+                None,
+            )
+            aml_ids = []
+            if unknown_partner_line:
+                options['unfolded_lines'] = [unknown_partner_line['id']]
+                aml_ids = [
+                    report._get_res_id_from_line_id(line['id'], 'account.move.line')
+                    for line in report._get_lines(options)
+                    if line.get('parent_id') == unknown_partner_line['id']
+                ]
+            return aml_ids
+
+        def has_overdue_aged_balance(report, older_expr):
+            options = report.get_options({'aging_interval': 15})  # 15-day intervals so amounts aged over 60 fall under 'Older' column
+            expression_totals = report._compute_expression_totals_for_each_column_group(older_expr, options)
+            expr_value = next(iter(expression_totals.values()), {}).get(older_expr, {})
+            return expr_value.get('value')
+
+        checks = []
+        if 'check_bank_reconcile' not in check_codes_to_ignore:
+            checks.append(self._check_match_all_bank_entries(
+                    code='check_bank_reconcile',
+                    name=_("Bank Reconciliation"),
+                    message=_("Reconcile all bank account transactions up to year-end."),
+                )
+            )
+
+        if 'check_draft_entries' not in check_codes_to_ignore:
+            checks.append(self._check_draft_entries(
+                    code='check_draft_entries',
+                    name=_("No draft entries"),
+                    message=_("Review and post draft invoices, bills and entries in the period, or change their accounting date."),
+                )
+            )
+
+        if 'check_unkown_partner_receivables' not in check_codes_to_ignore:
+            receivable_report = self.env.ref('account_reports.aged_receivable_report')
+            aml_ids = get_unknown_partner_aml_ids(receivable_report)
+            action = {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'list',
+                'res_model': 'account.move.line',
+                'domain': [('id', 'in', aml_ids)],
+                'views': [[False, 'list'], [False, 'form']],
+            }
+            checks.append({
+                'name': _("Aged receivables per partner"),
+                'message': _("Review receivables without a partner."),
+                'code': 'check_unkown_partner_receivables',
+                'action': action if aml_ids else None,
+                'result': 'failure' if aml_ids else 'success',
+            })
+
+        if 'check_overdue_receivables' not in check_codes_to_ignore:
+            receivable_report = self.env.ref('account_reports.aged_receivable_report')
+            older_expr = self.env.ref("account_reports.aged_receivable_line_period5")
+            has_overdue_receivables = has_overdue_aged_balance(receivable_report, older_expr)
+            action = None
+            if has_overdue_receivables:
+                action = self.env['ir.actions.actions']._for_xml_id("account_reports.action_account_report_ar")
+                action['params'] = {'ignore_session': True}
+            checks.append({
+                'name': _("Overdue receivables"),
+                'message': _("Review overdue receivables aged over 60 days and assess the need for an allowance for doubtful accounts or expected credit loss provision, as per IFRS 9 guidelines."),
+                'code': 'check_overdue_receivables',
+                'action': action,
+                'result': 'failure' if has_overdue_receivables else 'success',
+            })
+
+        if 'check_total_receivables' not in check_codes_to_ignore:
+            checks.append({
+                'name': _("Total Receivables"),
+                'message': _("Verify that the total aged receivables equals the customer account balance."),
+                'code': 'check_total_receivables',
+                'result': 'success',
+            })
+
+        if 'check_unkown_partner_payables' not in check_codes_to_ignore:
+            payable_report = self.env.ref('account_reports.aged_payable_report')
+            aml_ids = get_unknown_partner_aml_ids(payable_report)
+            action = {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'list',
+                'res_model': 'account.move.line',
+                'domain': [('id', 'in', aml_ids)],
+                'views': [[False, 'list'], [False, 'form']],
+            }
+            checks.append({
+                'name': _("Aged payables per partner"),
+                'message': _("Review payables without a partner."),
+                'code': 'check_unkown_partner_payables',
+                'action': action if aml_ids else None,
+                'result': 'failure' if aml_ids else 'success',
+            })
+
+        if 'check_overdue_payables' not in check_codes_to_ignore:
+            payable_report = self.env.ref('account_reports.aged_payable_report')
+            older_expr = self.env.ref("account_reports.aged_payable_line_period5")
+            has_overdue_payables = has_overdue_aged_balance(payable_report, older_expr)
+            action = None
+            if has_overdue_payables:
+                action = self.env['ir.actions.actions']._for_xml_id("account_reports.action_account_report_ap")
+                action['params'] = {'ignore_session': True}
+            checks.append({
+                'name': _("Overdue payables"),
+                'message': _("Review overdue payables aged over 60 days and assess the need for an allowance for uncertain liabilities."),
+                'code': 'check_overdue_payables',
+                'action': action,
+                'result': 'failure' if has_overdue_payables else 'success',
+            })
+
+        if 'check_total_payables' not in check_codes_to_ignore:
+            checks.append({
+                'name': _("Total payables"),
+                'message': _("Verify that the total aged payables equals the vendor account balance."),
+                'code': 'check_total_payables',
+                'result': 'success',
+            })
+
+        if 'check_deferred_entries' not in check_codes_to_ignore:
+            domain = [
+                ('company_id', 'in', self.company_ids.ids),
+                ('date', '<=', fields.Date.to_string(self.date_to)),
+                ('date', '>=', fields.Date.to_string(self.date_from)),
+                ('deferred_original_move_ids', '!=', False),
+            ]
+            deferred_entries_exist = self.env['account.move'].sudo().search_count(domain, limit=1)
+            if not deferred_entries_exist:
+                checks.append({
+                    'name': _("Deferred Entries"),
+                    'message': _("Odoo manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
+                    'code': 'check_deferred_entries',
+                    'result': 'manual',
+                })
+
+        if 'manual_adjustments' not in check_codes_to_ignore:
+            checks.append({
+                'name': _("Manual Adjustments"),
+                'message': _("Complete any necessary manual adjustments and internal checks."),
+                'code': 'manual_adjustments',
+                'result': 'manual',
+            })
+
+        if 'earnings_allocation' not in check_codes_to_ignore:
+            action = self.env['ir.actions.actions']._for_xml_id("account_reports.action_account_report_bs")
+            action['params'] = {
+                'ignore_session': True,
+            }
+            checks.append({
+                'name': _("Earnings Allocation"),
+                'message': _("After adjustements, transfer the undistributed Profits/Losses to an equity account."),
+                'code': 'earnings_allocation',
+                'action': action,
+                'result': 'manual',
             })
 
         return checks
@@ -1494,6 +1618,65 @@ class AccountReturn(models.Model):
         self._generic_vies_vat_check(check_codes_to_ignore, checks)
 
         return checks
+
+    def _check_match_all_bank_entries(self, code, name, message):
+        domain = [
+            ('is_reconciled', '=', False),
+            ('company_id', 'in', self.company_ids.ids),
+            ('date', '<=', fields.Date.to_string(self.date_to)),
+            ('date', '>=', fields.Date.to_string(self.date_from)),
+        ]
+
+        unreconciled_bank_entries_count = self.env['account.bank.statement.line'].sudo().search_count(domain)
+        summary_string = _("%(count)s Transactions", count=unreconciled_bank_entries_count) if unreconciled_bank_entries_count > 1 else _("1 Transaction")
+
+        review_action = {
+            'type': 'ir.actions.act_window',
+            'name': name,
+            'view_mode': 'list',
+            'res_model': 'account.bank.statement.line',
+            'domain': domain,
+            'views': [[False, 'list'], [False, 'kanban']],
+        }
+
+        return {
+            'name': name,
+            'message': message,
+            'code': code,
+            'summary': summary_string,
+            'action': review_action if unreconciled_bank_entries_count else None,
+            'result': 'failure' if unreconciled_bank_entries_count else 'success',
+        }
+
+    def _check_draft_entries(self, code, name, message, exclude_entries=False):
+        domain = [
+            ('state', '=', 'draft'),
+            ('company_id', 'in', self.company_ids.ids),
+            ('date', '<=', fields.Date.to_string(self.date_to)),
+            ('date', '>=', fields.Date.to_string(self.date_from)),
+        ]
+        if exclude_entries:
+            domain += [('move_type', '!=', 'entry')]
+        draft_entries_count = self.env['account.move'].sudo().search_count(domain)
+        summary_string = _("%(count)s Entries", count=draft_entries_count) if draft_entries_count > 1 else _("1 Entry")
+
+        review_action = {
+            'type': 'ir.actions.act_window',
+            'name': name,
+            'view_mode': 'list',
+            'res_model': 'account.move',
+            'domain': domain,
+            'views': [[False, 'list'], [False, 'form']],
+        }
+
+        return {
+            'name': name,
+            'code': code,
+            'message': message,
+            'summary': summary_string,
+            'action': review_action if draft_entries_count else None,
+            'result': 'failure' if draft_entries_count else 'success',
+        }
 
 
 class AccountReturnCheck(models.Model):
