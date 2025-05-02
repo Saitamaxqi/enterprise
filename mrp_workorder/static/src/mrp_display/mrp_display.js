@@ -477,10 +477,6 @@ export class MrpDisplay extends Component {
     async loadSamples() {
         this.state.canLoadSamples = "disabled";
         await this.orm.call("mrp.production", "action_load_samples", [[]]);
-        if (this.groups.workorders) {
-            await this.toggleWorkcenter([]);
-            this.toggleWorkcenterDialog();
-        }
         this.env.reload();
         this.state.canLoadSamples = false;
     }
