@@ -168,9 +168,19 @@ export class SignNameAndSignatureDialog extends Component {
     }
 
     onSignatureChange(signMode) {
-        const signature = this.props.signature;
-        const isNotValidSignature = !signature.name || (signature.isSignatureEmpty && (!signMode || signMode !== "auto"));
-        this.footerState.signAllButtonsDisabled = isNotValidSignature;
-        this.footerState.signButtonDisabled = isNotValidSignature || !signature.signatureChanged;
+        const { name, isSignatureEmpty, signatureChanged } = this.props.signature;
+        const isAutoMode = signMode === "auto"
+        // Disable Sign all button if:
+        // - Name is missing or empty
+        //   - In "auto" mode, the name is only whitespace
+        //   - In any other mode, the signature is empty
+        const buttonsDisabled = !name || isAutoMode ? !name.trim() : isSignatureEmpty
+        if (this.footerState.signAllButtonsDisabled !== buttonsDisabled){
+            this.footerState.signAllButtonsDisabled = buttonsDisabled;
+        }
+        // Disable Sign button if:
+        // - signature is not changed
+        // - name is missing
+        this.footerState.signButtonDisabled = buttonsDisabled || !signatureChanged;
     }
 }

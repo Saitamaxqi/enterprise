@@ -1,4 +1,4 @@
-import { click, getFixture, nextTick } from "@web/../tests/helpers/utils";
+import { click, getFixture, nextTick, editInput } from "@web/../tests/helpers/utils";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 import {
     makeFakeDialogService,
@@ -191,6 +191,28 @@ QUnit.module("Sign Name and Signature Dialog", function (hooks) {
                 "disabled",
                 "Buttons should be disabled on draw if no signature is drawn"
             );
+        }
+    );
+
+    QUnit.test(
+        "sign name and signature dialog - auto mode disables button on whitespace-only name",
+        async function (assert) {
+            const hasGroup = async () => true;
+            patchUserWithCleanup({ hasGroup });
+
+            await mountSignNameAndSignatureDialog();
+            const buttons = target.querySelectorAll(
+                "footer.modal-footer > button.btn-primary, footer.modal-footer > button.btn-secondary"
+            );
+
+            const signAllButton = buttons[0]; // "Sign all"
+            const signButton = buttons[1]; // "Sign"
+            assert.notOk(signAllButton.disabled, "Sign all starts enabled");
+
+            await editInput(target, 'input[name="signer"]', " ");
+
+            assert.ok(signAllButton.disabled, "Sign all disabled on whitespace name");
+            assert.ok(signButton.disabled, "Sign disabled on whitespace name");
         }
     );
 });
