@@ -771,7 +771,7 @@ class AccountReturn(models.Model):
             'name': self.name,
             'type': 'ir.actions.act_window',
             'res_model': 'ir.attachment',
-            'views': [(False, 'kanban')],
+            'views': [(self.env.ref('account_reports.view_attachment_kanban_inherit_return').id, 'kanban')],
             'domain': [('id', 'in', self.attachment_ids.ids)],
         }
 

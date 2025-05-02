@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_attachment_kanban_inherit_return" model="ir.ui.view">
+        <field name="name">ir.attachment.kanban.inherit.return</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="mail.view_document_file_kanban"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                 <attribute name="type">object</attribute>
+                 <attribute name="action">action_preview_return_attachment</attribute>
+             </xpath>
+        </field>
+    </record>
+</odoo>

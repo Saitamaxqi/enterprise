@@ -32,3 +32,4 @@ from . import account_fiscal_position
 from . import account_customer_statement
 from . import account_followup_report
 from . import account_return
+from . import ir_attachment

@@ -44,6 +44,7 @@ Accounting Reports
         'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',
         'views/report_template.xml',
+        'views/ir_attachment_views.xml',
         'wizard/account_report_send.xml',
         'wizard/multicurrency_revaluation.xml',
         'wizard/report_export_wizard.xml',
