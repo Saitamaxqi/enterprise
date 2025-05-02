@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import dbus
 from gatt import Device
 import logging
 
@@ -15,7 +15,7 @@ class SylvacBtDriver(Driver):
     connection_type = 'bluetooth'
 
     def __init__(self, identifier, device):
-        super(SylvacBtDriver, self).__init__(identifier, device)
+        super().__init__(identifier, device)
         self.gatt_device = GattSylvacBtDriver(mac_address=device.mac_address, manager=device.manager)
         self.gatt_device.btdriver = self
         self.gatt_device.connect()
@@ -25,7 +25,7 @@ class SylvacBtDriver(Driver):
         self._actions['read_once'] = self._action_read_once
 
     def _action_read_once(self, _data):
-        """Make value available to the longpolling event route"""""
+        """Make value available to the longpolling event route"""
         event_manager.device_changed(self)
 
     @classmethod
@@ -39,7 +39,7 @@ class SylvacBtDriver(Driver):
         return False
 
     def disconnect(self):
-        super(SylvacBtDriver, self).disconnect()
+        super().disconnect()
         del bt_devices[self.device_identifier]
 
 
@@ -65,10 +65,10 @@ class GattSylvacBtDriver(Device):
         event_manager.device_changed(self.btdriver)
 
     def characteristic_enable_notification_succeeded(self):
-        print("Success pied à coulisse Bluetooth!")
+        _logger.info("Successfully connected to %s", self.device_name)
 
     def characteristic_enable_notification_failed(self):
-        print("Problem connecting")
+        _logger.info("Problem connecting to %s", self.device_name)
 
     def disconnect_succeeded(self):
         super().disconnect_succeeded()

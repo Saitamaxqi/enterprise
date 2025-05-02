@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -15,7 +14,7 @@ class CameraDriver(Driver):
     connection_type = 'video'
 
     def __init__(self, identifier, device):
-        super(CameraDriver, self).__init__(identifier, device)
+        super().__init__(identifier, device)
         self.device_type = 'camera'
         self.device_connection = 'direct'
         self.device_name = device['name']

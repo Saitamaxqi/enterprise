@@ -5,7 +5,7 @@ import serial
 import requests
 
 from odoo.addons.hw_drivers.tools import helpers
-from odoo.addons.hw_drivers.iot_handlers.drivers.SerialBaseDriver import SerialDriver, SerialProtocol, serial_connection
+from odoo.addons.hw_drivers.iot_handlers.drivers.serial_base_driver import SerialDriver, SerialProtocol, serial_connection
 
 _logger = logging.getLogger(__name__)
 
@@ -268,6 +268,6 @@ class BlackBoxDriver(SerialDriver):
 
         try:
             name = '%s serial %s - %s' % (self._protocol.name, self.device_type, self._box_id())
-        except Exception:
+        except Exception:  # noqa: BLE001
             name = 'Unknown Serial Device'
         self.device_name = name

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
@@ -6,7 +5,7 @@ import serial
 import time
 
 from odoo.addons.hw_drivers.event_manager import event_manager
-from odoo.addons.hw_drivers.iot_handlers.drivers.SerialBaseDriver import SerialDriver, SerialProtocol, serial_connection
+from odoo.addons.hw_drivers.iot_handlers.drivers.serial_base_driver import SerialDriver, SerialProtocol, serial_connection
 
 _logger = logging.getLogger(__name__)
 
@@ -36,12 +35,12 @@ class SylvacSCalProDriver(SerialDriver):
     _protocol = SylvacSCalProProtocol
 
     def __init__(self, identifier, device):
-        super(SylvacSCalProDriver, self).__init__(identifier, device)
+        super().__init__(identifier, device)
         self.device_type = 'device'
         self._actions['read_once'] = self._action_read_once
 
     def _action_read_once(self, _data):
-        """Make value available to the longpolling event route"""""
+        """Make value available to the longpolling event route"""
         event_manager.device_changed(self)
 
     def _take_measure(self):
@@ -98,5 +97,5 @@ class SylvacSCalProDriver(SerialDriver):
         except (ValueError, TypeError, serial.serialutil.SerialTimeoutException):
             pass
         except Exception:
-            _logger.exception('Error while probing %s with protocol %s' % (device, protocol.name))
+            _logger.exception('Error while probing %s with protocol %s', device, protocol.name)
         return False

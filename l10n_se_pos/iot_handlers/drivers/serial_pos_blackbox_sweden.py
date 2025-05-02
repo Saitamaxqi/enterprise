@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
 import serial
 
 from odoo.addons.hw_drivers.event_manager import event_manager
-from odoo.addons.hw_drivers.iot_handlers.drivers.SerialBaseDriver import SerialDriver, SerialProtocol, serial_connection
+from odoo.addons.hw_drivers.iot_handlers.drivers.serial_base_driver import SerialDriver, SerialProtocol, serial_connection
 
 _logger = logging.getLogger(__name__)
 
@@ -126,7 +125,7 @@ class SwedishBlackBoxDriver(SerialDriver):
             else:
                 _logger.error("Sent IQ request error")
                 return False
-        except Exception:
+        except Exception:  # noqa: BLE001
             _logger.error("Did not receive a response")
 
     @staticmethod
@@ -143,7 +142,7 @@ class SwedishBlackBoxDriver(SerialDriver):
         for i in range(1, len(msg)):
             lrc ^= ord(msg[i])
 
-        return "{:02x}".format(int(lrc)).upper()
+        return f"{int(lrc):02X}"
 
     def _register_receipt(self, data):
         """The register receipt message registers a receipt. CleanCash® responds with Register
@@ -203,7 +202,7 @@ class SwedishBlackBoxDriver(SerialDriver):
                 else:
                     _logger.error("Received error: %s", ErrorCode.get(response[4]))
                     _logger.error("Sent request: %s received NACK.", packet)
-            except Exception:
+            except Exception:  # noqa: BLE001
                 _logger.error("sent request: %s without receiving response.", packet)
 
             retries += 1
@@ -229,7 +228,7 @@ class SwedishBlackBoxDriver(SerialDriver):
         """
 
         length = 11 + len(high_level_message)
-        length = "{:03x}".format(int(length)).upper()
+        length = f"{int(length):03X}"
         message = "#!#" + length + "#" + high_level_message + "#"
         lrc = cls._lrc(message)
         message += lrc + "\r"

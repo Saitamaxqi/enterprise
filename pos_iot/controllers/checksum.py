@@ -8,7 +8,7 @@ SCALE_FILES = [
     'point_of_sale/static/src/app/screens/scale_screen/scale_service.js',
     'point_of_sale/static/src/app/screens/scale_screen/scale_screen.js',
     'point_of_sale/static/src/app/screens/scale_screen/scale_screen.xml',
-    'hw_drivers/iot_handlers/drivers/SerialScaleDriver.py',
+    'hw_drivers/iot_handlers/drivers/serial_scale_driver.py',
     'pos_iot/static/src/app/screens/scale_screen/scale_service.js',
 ]
 
