@@ -4,7 +4,7 @@ from collections import OrderedDict, defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import topological_sort
+from odoo.tools import groupby, topological_sort
 from odoo.tools.misc import OrderedSet
 
 
@@ -421,8 +421,19 @@ class StudioExportWizard(models.TransientModel):
             ("studio", "=", True),
             ("model", "in", DEFAULT_MODELS_TO_EXPORT),
         ])
+
+        # filter active data
+        active_ids = {}
+        for model_name, model_data_list in groupby(data, lambda d: d.model):
+            records = self.env[model_name].browse(d.res_id for d in model_data_list)
+            if records._active_name:
+                records = records.filtered(records._active_name)
+            active_ids[model_name] = set(records.ids)
+
+        active_data = [d for d in data if d.res_id in active_ids[d.model]]
+
         return self.env["studio.export.wizard.data"].create(
-            [{"model": d.model, "res_id": d.res_id, "studio": d.studio} for d in data]
+            [{"model": d.model, "res_id": d.res_id, "studio": d.studio} for d in active_data]
         )
 
     default_export_data = fields.Many2many(

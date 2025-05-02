@@ -124,6 +124,49 @@ class TestExport(HttpCase):
             "trigger"
         })
 
+    def test_export_unarchived_records(self):
+        IrFilter = self.env['ir.filters'].with_context(studio=True)
+        filter_1 = IrFilter.create({
+            'name': 'Filter 1',
+            'model_id': self.env['ir.model']._get('res.partner').id,
+            'domain': '[]',
+        })
+
+        filter_2 = IrFilter.create({
+            'name': 'Filter 2',
+            'model_id': self.env['ir.model']._get('res.partner').id,
+            'domain': '[]',
+        })
+
+        self.assertTrue(filter_1.active, "Filter 1 should be active initially")
+        self.assertTrue(filter_2.active, "Filter 2 should be active initially")
+
+        filter_1.active = False
+        self.assertFalse(filter_1.active, "Filter should be archived")
+
+        filter_data = self.env['ir.model.data'].search([
+            ('studio', '=', True),
+            ('model', '=', 'ir.filters'),
+        ])
+        self.assertEqual(len(filter_data), 2, "Should have two ir.model.data records: one archived and one active filter")
+
+        wizard = self.env['studio.export.wizard'].create({})
+        default_data = wizard._default_studio_export_data()
+        wizard.default_export_data = [Command.set(default_data.ids)]
+        export_info = wizard.get_export_info()
+
+        studio_module = self.env['ir.module.module'].get_studio_module()
+        content_iter = iter(self.exporter.generate_module_files(studio_module, export_info))
+
+        file_name = content = None
+        with MockRequest(self.env):
+            while file_name != "data/ir_filters.xml":
+                file_name, content = next(content_iter)
+
+            arch_filters = etree.fromstring(content)
+            records = arch_filters.findall('record')
+            self.assertEqual(len(records), 1, "Only the active filter should be exported.")
+
 
 @tagged("post_install", "-at_install")
 class TestExportTours(HttpCase):
