@@ -1876,7 +1876,6 @@
             name="Customer Ratings"
             action="rating_rating_action_fsm"
             parent="industry_fsm.fsm_menu_reporting"
-            groups="project.group_project_rating"
             sequence="20"/>
 
     <menuitem id="fsm_menu_settings"

@@ -347,7 +347,7 @@ class ProjectTask(models.Model):
 
     @api.depends('planned_date_begin', 'depend_on_ids.date_deadline')
     def _compute_dependency_warning(self):
-        if not self._origin:
+        if not self._origin or not self.allow_task_dependencies:
             self.dependency_warning = False
             return
 
@@ -1725,6 +1725,7 @@ class ProjectTask(models.Model):
             'milestone': [
                 ('deadline', '>=', date_start),
                 ('deadline', '<=', date_end),
+                ('project_allow_milestones', '=', True),
             ],
         }
 

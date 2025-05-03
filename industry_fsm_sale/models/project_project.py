@@ -10,7 +10,7 @@ class ProjectProject(models.Model):
 
     allow_material = fields.Boolean("Products on Tasks", compute="_compute_allow_material", store=True, readonly=False)
     allow_quotations = fields.Boolean(
-        "Extra Quotations", compute="_compute_allow_quotations", store=True, readonly=False)
+        "Extra Quotations", compute="_compute_allow_quotations", inverse="_inverse_allow_quotations", store=True, readonly=False)
     allow_billable = fields.Boolean(
          compute='_compute_allow_billable', store=True, readonly=False)
     sale_line_id = fields.Many2one(
@@ -73,6 +73,19 @@ class ProjectProject(models.Model):
     def _compute_allow_material(self):
         for project in self:
             project.allow_material = project.allow_billable and project.is_fsm
+
+    def _inverse_allow_quotations(self):
+        self._check_project_group_with_field('allow_quotations', 'industry_fsm.group_fsm_quotation_from_task')
+
+    @api.ondelete(at_uninstall=False)
+    def _check_project_fsm_group_at_removal(self):
+        self._check_project_group_with_field('allow_quotations', 'industry_fsm.group_fsm_quotation_from_task')
+
+    def _get_project_features_mapping(self):
+        return {
+            **super()._get_project_features_mapping(),
+            'allow_quotations': 'industry_fsm.group_fsm_quotation_from_task',
+        }
 
     def flush_model(self, fnames=None):
         if fnames is not None:

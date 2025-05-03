@@ -27,8 +27,7 @@ class SaleOrderLine(models.Model):
         task = super()._timesheet_create_task(project)
         order = self.order_id
         # if the product is not recurrent or the project doesn't allow recurring tasks, we don't bother
-        recurring_tasks_setting = self.env['res.config.settings'].default_get(['group_project_recurring_tasks']).get('group_project_recurring_tasks')
-        if not self.product_id.recurring_invoice or not recurring_tasks_setting:
+        if not self.product_id.recurring_invoice or not project.allow_recurring_tasks:
             return task
 
         task_template_id = self.product_id.task_template_id

@@ -8,8 +8,6 @@ class ProjectProject(models.Model):
     _inherit = "project.project"
 
     is_fsm = fields.Boolean("Field Service", default=False, help="Display tasks in the Field Service module and allow planning with start/end dates.")
-    allow_task_dependencies = fields.Boolean(compute='_compute_allow_task_dependencies', store=True, readonly=False)
-    allow_milestones = fields.Boolean(compute='_compute_allow_milestones', store=True, readonly=False)
     allow_geolocation = fields.Boolean(
         "Geolocation",
         compute='_compute_allow_geolocation', store=True, readonly=False,
@@ -33,23 +31,11 @@ class ProjectProject(models.Model):
     )
 
     @api.depends('is_fsm')
-    def _compute_allow_task_dependencies(self):
-        has_group = self.env.user.has_group('project.group_project_task_dependencies')
-        for project in self:
-            project.allow_task_dependencies = has_group and not project.is_fsm
-
-    @api.depends('is_fsm')
     def _compute_company_id(self):
         #The super() call is done first in order to set the company of the fsm projects to the company of its account if a company is set on it.
         super()._compute_company_id()
         fsm_projects = self.filtered(lambda project: project.is_fsm and not project.company_id)
         fsm_projects.company_id = self.env.company
-
-    @api.depends('is_fsm')
-    def _compute_allow_milestones(self):
-        has_group = self.env.user.has_group('project.group_project_milestone')
-        for project in self:
-            project.allow_milestones = has_group and not project.is_fsm
 
     @api.depends('is_fsm', 'allow_timesheets')
     def _compute_allow_geolocation(self):
@@ -62,10 +48,6 @@ class ProjectProject(models.Model):
         defaults = super().default_get(fields)
         if defaults.get('is_fsm', False) and not defaults.get('company_id', False):
             defaults['company_id'] = self.env.company.id
-        if 'allow_task_dependencies' in fields:
-            defaults['allow_task_dependencies'] = defaults.get('allow_task_dependencies', False) and not defaults.get('is_fsm')
-        if 'allow_milestones' in fields:
-            defaults['allow_milestones'] = defaults.get('allow_milestones', False) and not defaults.get('is_fsm')
         return defaults
 
     def _get_projects_to_make_billable_domain(self):

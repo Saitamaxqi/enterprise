@@ -235,6 +235,16 @@
         </field>
     </record>
 
+    <record id="project_task_map_view_no_title_no_milestone" model="ir.ui.view">
+        <field name="name">project.task.view.map.no.milestone</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_task_map_view_no_title"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <field name="milestone_id" position="replace"/>
+        </field>
+    </record>
+
     <record id="view_task_calendar_inherited" model="ir.ui.view">
         <field name="name">project.task.all.calendar</field>
         <field name="model">project.task</field>

@@ -24,6 +24,11 @@ class ProjectProject(models.Model):
 
     def action_view_tasks(self):
         action = super().action_view_tasks()
+        if not self.allow_milestones:
+            action['views'] = [
+                (view_id if view_type != 'map' else self.env.ref('project_enterprise.project_task_map_view_no_title_no_milestone').id, view_type)
+                for view_id, view_type in action['views']
+            ]
         if self._get_hide_partner() or self.is_template:
             action['views'] = [(view_id, view_type) for view_id, view_type in action['views'] if view_type != 'map']
         return action

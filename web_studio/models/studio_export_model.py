@@ -147,7 +147,7 @@ DEFAULT_FIELDS_TO_EXCLUDE = {
         "warehouse_id",
         "location_id",
     },
-    "project.project": {"sale_line_id", "rating_request_deadline"},
+    "project.project": {"sale_line_id"},
     "project.task": {"personal_stage_type_ids", "date_last_stage_update"},
     "project.task.type": {"project_ids"},
     "product.attribute.value": {"pav_attribute_line_ids"},

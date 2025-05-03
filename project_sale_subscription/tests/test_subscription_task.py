@@ -14,11 +14,6 @@ class TestSubscriptionTask(TestSubscriptionCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.env.user.group_ids += cls.quick_ref('project.group_project_manager')
-
-        cls.env['res.config.settings'].create({
-            'group_project_recurring_tasks': True,
-        }).execute()
-
         cls.env.user.group_ids += cls.env.ref('project.group_project_recurring_tasks')
         cls.project = cls.env['project.project'].with_context({'mail_create_nolog': True}).create({
             'name': 'Project',
@@ -45,6 +40,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
     def test_task_recurrence(self):
         Order = self.env['sale.order']
         OrderLine = self.env['sale.order.line']
+        self.product_recurrence.project_id.allow_recurring_tasks = True
         for product in [
             self.product_no_recurrence,
             self.product_recurrence,
@@ -90,6 +86,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'order_id': order.id,
             'product_id': self.product_recurrence.product_variant_id.id,
         })
+        self.product_recurrence.project_id.allow_recurring_tasks = True
 
         order.action_confirm()
         task = order_line.task_id
@@ -111,6 +108,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'order_id': order.id,
             'product_id': self.product_recurrence.product_variant_id.id,
         })
+        self.product_recurrence.project_id.allow_recurring_tasks = True
 
         order.action_confirm()
         task = order_line.task_id
@@ -133,6 +131,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'order_id': order.id,
             'product_id': self.product_recurrence.product_variant_id.id,
         })
+        self.product_recurrence.project_id.allow_recurring_tasks = True
 
         order.action_confirm()
         task_recurrence = order_line.task_id.recurrence_id
@@ -149,6 +148,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'project_id': self.project.id,
             'service_tracking': 'task_global_project',
         })
+        self.project.allow_recurring_tasks = True
         order = self.env['sale.order'].create({
             'is_subscription': True,
             'plan_id': self.plan_month.id,
@@ -160,6 +160,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'order_id': order.id,
             'product_id': self.product_recurrence.product_variant_id.id,
         })
+        self.product_recurrence.project_id.allow_recurring_tasks = True
 
         order.action_confirm()
         order._create_recurring_invoice()
@@ -223,13 +224,12 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'order_id': order.id,
             'product_id': self.product_recurrence.product_variant_id.id,
         })
+        self.product_recurrence.project_id.allow_recurring_tasks = True
 
         order.with_user(self.user_portal).sudo().action_confirm()
         self.assertEqual(len(order_line.task_id.recurrence_id), 1)
 
-        self.env['res.config.settings'].create({
-            'group_project_recurring_tasks': False,
-        }).execute()
+        order_line.task_id.project_id.allow_recurring_tasks = False
 
         order = order.copy()
         order.with_user(self.user_portal).sudo().action_confirm()
@@ -289,6 +289,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'order_id': sale_order.id,
             'product_id': self.product_recurrence.product_variant_id.id,
         })
+        self.product_recurrence.project_id.allow_recurring_tasks = True
 
         sale_order.with_user(user_salemanager).action_confirm()
         self.assertEqual(len(order_line.task_id.recurrence_id), 1)
@@ -305,6 +306,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             4. Confirm the sale order.
             5. Assert the task is created with correct recurrence.
         """
+        self.project.allow_recurring_tasks = True
         task_template = self.env['project.task'].create({
             'is_template': True,
             'name': 'Recurring Template',

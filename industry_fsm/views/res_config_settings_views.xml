@@ -12,9 +12,6 @@
                         <setting help="Keep track of the products used for your tasks, and invoice your time and material to your customers" documentation="/applications/services/fsm/sales/onsite_tasks_from_sales_orders.html">
                             <field name="module_industry_fsm_sale"/>
                         </setting>
-                        <setting help="Create new quotations directly from your tasks">
-                            <field name="group_industry_fsm_quotations"/>
-                        </setting>
                         <setting name="module_industry_fsm_report" help="Design tailored worksheet templates for various interventions, and analyze collected intervention data.">
                             <field name="module_industry_fsm_report"/>
                         </setting>

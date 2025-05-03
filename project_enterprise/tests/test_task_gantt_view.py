@@ -169,6 +169,7 @@ class TestTaskGanttView(TestProjectCommon):
 
     @freeze_time('2020-01-12')
     def test_get_all_deadlines(self):
+        (self.project_pigs + self.project_goats).allow_milestones = True
         self.project_pigs.write({'date_start': '2020-01-05', 'date': '2020-02-10'})
         self.project_goats.write({'date_start': '2019-01-01', 'date': '2020-01-15'})
         project_pigs_milestone_1, project_pigs_milestone_2, dummy, project_goats_milestone_1, dummy = self.env['project.milestone'].create([

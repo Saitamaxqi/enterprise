@@ -156,7 +156,7 @@
                         style="width: fit-content;"
                         widget="boolean_icon"
                         options="{'icon': 'fa-repeat'}"
-                        invisible="not active or parent_id"
+                        invisible="not active or parent_id or not allow_recurring_tasks"
                         groups="project.group_project_recurring_tasks"
                     />
                 </div>
@@ -256,7 +256,7 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="hr_timesheet.project_invoice_form"/>
         <field name="arch" type="xml">
-            <xpath  expr="//group[@name='group_documents_analytics']" position="after">
+            <xpath expr="//group[@name='group_time_managment']" position="after">
                 <group name="group_field_service" string="Field Service" col="1" class="row mt16 o_settings_container col-lg-6">
                     <div>
                         <setting class="col-lg-12" help="Manage tasks in the Field Service module" groups="base.group_no_one">

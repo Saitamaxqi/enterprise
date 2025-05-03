@@ -3,7 +3,6 @@
 
     <data noupdate="1">
         <record id="fsm_project" model="project.project">
-            <field name="allow_milestones">False</field>
             <field name="type_ids" eval="[Command.link(ref('project.project_stage_0')), Command.link(ref('planning_project_stage_1')), Command.link(ref('planning_project_stage_2')), Command.link(ref('project.project_stage_2')), Command.link(ref('project.project_stage_3'))]"/>
         </record>
 

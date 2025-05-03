@@ -128,10 +128,10 @@ class TestProjectTemplates(TransactionCase):
         If the template has no dates, the planned tasks should get planned from the start date of the new project
         (by default, today)
         """
-        self.env["res.config.settings"].create({"group_project_task_dependencies": True}).execute()
         self.template_project.write({
             "date_start": False,
             "date": False,
+            'allow_task_dependencies': True,
         })
 
         task_1, task_2 = self.env["project.task"].create([{

@@ -44,11 +44,9 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
     def test_sub_timesheet_create_recurring_tasks(self):
         # Similar test with recurring tasks: new tasks are created automatically
         # Note: when the setting is deactivated it works similarly. All timesheets must be created into a single task.
-        self.env['res.config.settings'].create({
-            'group_project_recurring_tasks': True,
-        }).execute()
 
         self.env.user.group_ids += self.env.ref('project.group_project_recurring_tasks')
+        self.project_global.allow_recurring_tasks = True
         with freeze_time("2024-10-01"):
             self.subscription_timesheet.action_confirm()
             task = self.subscription_timesheet.tasks_ids
