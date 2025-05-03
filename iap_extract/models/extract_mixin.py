@@ -26,6 +26,7 @@ ERROR_MESSAGES = {
     'error_unsupported_size': _lt("The document has been rejected because it is too small"),
     'error_no_page_count': _lt("Invalid PDF (Unable to get page count)"),
     'error_pdf_conversion_to_images': _lt("Invalid PDF (Conversion error)"),
+    'error_unsupported_version': _lt("Version is unsupported"),
 }
 
 
