@@ -13,7 +13,7 @@
     position: relative;
     font-size: 10pt;
     width: 8in!important;
-    zoom: 1.25;
+    zoom: 1.3;
     margin-left: -15px;
     margin-right: -15px;
 
@@ -43,13 +43,21 @@
         width: 8in;
     }
 
+    .ckus_stub .date {
+        position: absolute;
+        left: 2.6in;
+        height: 0.3in;
+    }
+
     .ckus_stub .sequence_number {
+        position: absolute;
+        left: 5.45in;
         height: 0.3in;
     }
 
     .ckus_stub .summary_line {
         width: 100%;
-        margin-bottom: 0.1in;
+        margin-bottom: 0.2in;
     }
 
     .ckus_stub .summary_line span {

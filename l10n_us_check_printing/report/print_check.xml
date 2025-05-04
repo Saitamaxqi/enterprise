@@ -23,13 +23,13 @@
     <div t-attf-class="ckus_stub ckus_stub_{{ stub_num }}">
         <div class="row summary_line">
             <div class="col-4 text-start">
-                <span t-out="page['partner_name']"/>
+                <span t-if="page['manual_sequencing']" t-out="page['company']"/>
             </div>
-            <div class="col-4 text-center">
+            <div class="col-4 text-center date">
                 <span t-out="page['date']"/>
             </div>
             <div class="col-4 text-end sequence_number">
-                <span t-if="page['sequence_number']" t-out="page['sequence_number']"/>
+                <span t-if="page['manual_sequencing'] and page['sequence_number']" t-out="page['sequence_number']"/>
             </div>
         </div>
 
