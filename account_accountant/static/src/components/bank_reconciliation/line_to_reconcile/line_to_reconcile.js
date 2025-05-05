@@ -19,6 +19,7 @@ export class BankRecLineToReconcile extends Component {
         this.action = useService("action");
         this.orm = useService("orm");
         this.dialogService = useService("dialog");
+        this.ui = useService("ui");
         this.bankReconciliation = useBankReconciliation();
 
         this.lineInfoRef = useRef("line-info-ref");
@@ -26,6 +27,12 @@ export class BankRecLineToReconcile extends Component {
             position: "left",
             closeOnClickAway: true,
         });
+    }
+
+    onClickLine() {
+        if (this.ui.isSmall) {
+            this.toggleEditLine();
+        }
     }
 
     /**
