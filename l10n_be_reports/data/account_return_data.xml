@@ -35,7 +35,7 @@
 
         <!-- ISOC Prepayment-->
         <record id="partner_centre_de_perception_belgium" model="res.partner">
-            <field name="name">Centre de Perception - Service des versements anticipés</field>
+            <field name="name">Collection Center - Advance Payment Service</field>
         </record>
 
         <data noupdate="1">
