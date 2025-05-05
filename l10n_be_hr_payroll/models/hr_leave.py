@@ -78,6 +78,7 @@ class HrLeave(models.Model):
                         'res_id': leave.id,
                         'res_model_id': res_model_id,
                     })
+                # TDE TODO: batch schedule with record-based note
                 self.env['mail.activity'].create(activity_vals)
         return res
 

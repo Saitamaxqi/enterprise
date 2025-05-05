@@ -26,13 +26,14 @@ class CalendarEvent(models.Model):
         ).sudo()._create_lead_from_appointment()
         opportunity_field = self.env['ir.model.fields']._get("calendar.event", "opportunity_id")
         for meeting in events.filtered('opportunity_id'):
-            meeting.opportunity_id.sudo().activity_schedule(
-                act_type_xmlid='mail.mail_activity_data_meeting',
-                date_deadline=meeting.start_date,
-                summary=meeting.name,
-                user_id=meeting.user_id.id,
-                calendar_event_id=meeting.id
-            )
+            if not meeting.activity_ids:
+                meeting.opportunity_id.sudo().activity_schedule(
+                    act_type_xmlid='mail.mail_activity_data_meeting',
+                    date_deadline=meeting.start_date,
+                    summary=meeting.name,
+                    user_id=meeting.user_id.id,
+                    calendar_event_id=meeting.id,
+                )
             meeting._message_log(
                 body=Markup("<p>%s</p>") % _(
                     "Meeting linked to Lead/Opportunity %s",

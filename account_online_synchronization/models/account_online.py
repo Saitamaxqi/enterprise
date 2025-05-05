@@ -926,6 +926,7 @@ class AccountOnlineLink(models.Model):
                         'note': data.get('activity_message') or '',
                         'activity_type_id': bank_sync_activity_type_id.id,
                     })
+                # TDE TODO: batch schedule with record-based note
                 self.env['mail.activity'].create(new_activity_vals)
         elif self.expiring_synchronization_date and self.expiring_synchronization_date < fields.Date.context_today(self):
             # Avoid an infinite "expired synchro" if the provider

@@ -469,10 +469,10 @@ class ResPartner(models.Model):
                 # log a next activity for today
                 for user in self._get_followup_responsible(multiple_responsible=True):
                     self.activity_schedule(
-                        activity_type_id=followup_line.activity_type_id and followup_line.activity_type_id.id or self._default_activity_type().id,
+                        activity_type_id=followup_line.activity_type_id.id or self._default_activity_type().id,
                         note=followup_line.activity_note,
                         summary=followup_line.activity_summary,
-                        user_id=user.id
+                        user_id=user.id,
                     )
 
             options['followup_line'] = followup_line

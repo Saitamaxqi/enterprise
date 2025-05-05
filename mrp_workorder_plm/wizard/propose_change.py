@@ -57,6 +57,7 @@ class ProposeChange(models.TransientModel):
             # Write reason in chatter for record keeping in case of multiple suggestions before approval
             new_step.message_post(body=body)
         else:
+            # TDE TODO: use mixin, as mrp.eco inherits from it (check all other eco cases)
             self.env['mail.activity'].sudo().create({
                 'res_model_id': self.env.ref('mrp_plm.model_mrp_eco').id,
                 'res_id': eco.id,
