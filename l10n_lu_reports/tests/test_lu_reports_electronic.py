@@ -551,6 +551,13 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
     def test_generate_bs_pnl_xml(self):
         report = self.env.ref('l10n_lu_reports.account_financial_report_l10n_lu_bs')
         options = report.get_options({})
+        # Add custom range date to test that it is correctly reported in the XML
+        options['date'].update({
+            'date_from': '2019-01-01',
+            'date_to': '2019-12-31',
+            'mode': 'range',
+            'filter': 'custom',
+        })
         # Add the filename in the options, which is initially done by the get_report_filename() method
         now_datetime = datetime.now()
         file_ref_data = {

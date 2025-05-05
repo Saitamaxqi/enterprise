@@ -89,16 +89,17 @@ class L10n_LuReportHandler(models.AbstractModel):
         lu_template_values = self.get_electronic_report_values(options)
 
         # Add comparison filter to get data from last year
-        options = report.get_options({**options, 'comparison': {
+        report_options = report.get_options({**options, 'comparison': {
             'filter': 'same_last_year',
             'number_period': 1,
         }})
-
-        lines = report._get_lines(options)
+        if options['date'].get('filter') == 'custom' and options['date'].get('mode') == 'range':
+            report_options['date']['date_from'] = options['date'].get('date_from')
+        lines = report._get_lines(report_options)
 
         report_line = self.env['account.report.line']
-        date_from = fields.Date.from_string(options['date'].get('date_from'))
-        date_to = fields.Date.from_string(options['date'].get('date_to'))
+        date_from = fields.Date.from_string(report_options['date'].get('date_from'))
+        date_to = fields.Date.from_string(report_options['date'].get('date_to'))
         values.update({
             '01': {'value': date_from.strftime("%d/%m/%Y"), 'field_type': 'char'},
             '02': {'value': date_to.strftime("%d/%m/%Y"), 'field_type': 'char'},
