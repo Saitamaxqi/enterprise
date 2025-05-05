@@ -45,10 +45,10 @@
                         <History t-elif="activeTab === 'recent'" extraClass="'flex-grow-1'"/>
                     </div>
                 </t>
-                <nav class="btn-group p-3">
-                    <button t-foreach="tabs" t-as="tab" t-key="tab.id" class="btn btn-secondary w-100 d-flex flex-column align-items-stretch p-2" t-att-class="{ 'active': activeTab === tab.id and !softphone.callSummary.isShown }" t-on-click="() => this.onClickTab(tab.id)">
-                        <i t-attf-class="{{ tab.id === 'dialer' ? 'oi' : 'fa' }} {{ tab.icon or '' }} p-1" aria-hidden="true"/>
-                        <span t-esc="tab.name" class="smaller"/>
+                <nav class="o-voip-Softphone-nav d-flex gap-2 p-2 z-1">
+                    <button t-foreach="tabs" t-as="tab" t-key="tab.id" class="o-voip-Softphone-navItem btn btn-link w-100 d-flex flex-column align-items-stretch rounded border-0 p-2" t-attf-class="{{  activeTab === tab.id and !softphone.callSummary.isShown ? 'active' : 'text-reset' }}" t-on-click="() => this.onClickTab(tab.id)">
+                        <i t-attf-class="{{ tab.id === 'dialer' ? 'oi' : 'fa' }} {{ tab.icon or '' }} rounded-pill p-2" aria-hidden="true"/>
+                        <span t-esc="tab.name" class="mt-auto text-break smaller"/>
                     </button>
                 </nav>
             </t>
