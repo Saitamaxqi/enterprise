@@ -7,6 +7,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, _, api, fields, models
 from odoo.tools import float_is_zero, format_date
 
+from .sale_order import SUBSCRIPTION_CLOSED_STATE
+
 INTERVAL_FACTOR = {
     'day': 30.437,  # average number of days per month over the year,
     'week': 30.437 / 7.0,
@@ -95,7 +97,9 @@ class SaleOrderLine(models.Model):
         line_per_so = defaultdict(lambda: self.env['sale.order.line'])
         for line in self:
             if not line.recurring_invoice:
-                other_lines += line  # normal sale line are handled by super
+                # normal sale line are handled by super if they are not belonging to closed subscription
+                if not line.order_id.subscription_state in SUBSCRIPTION_CLOSED_STATE:
+                    other_lines += line
             else:
                 line_per_so[line.order_id._origin.id] += line
 

@@ -2407,6 +2407,43 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.flush_tracking()
         self.assertEqual(sum(sub.order_log_ids.mapped('amount_signed')), 0)
 
+    def test_subscription_discount_on_non_sub_lines(self):
+        """
+        Check that discounts manually set on non-subscription order lines are preserved after creating
+        the subscription and when closing it.
+        """
+        DISCOUNT_10 = 10
+        self.product2.recurring_invoice = False
+
+        subscription = self.env['sale.order'].create({
+            'name': 'Test subscription',
+            'is_subscription': True,
+            'partner_id': self.partner.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [
+                Command.create({
+                    'name': 'Subscription product',
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                    'discount': DISCOUNT_10,
+                }),
+                Command.create({
+                    'name': 'Non-subscription product',
+                    'product_id': self.product2.id,
+                    'product_uom_qty': 1,
+                    'discount': DISCOUNT_10,
+                })
+            ]
+        })
+
+        self.assertEqual(subscription.order_line.mapped("discount"), [DISCOUNT_10, DISCOUNT_10])
+
+        subscription.action_confirm()
+        subscription._cron_recurring_create_invoice()
+        subscription.set_close()
+
+        self.assertEqual(subscription.order_line.mapped("discount"), [DISCOUNT_10, DISCOUNT_10])
+
     def test_proper_effective_date(self):
         """ Make sure that the effective date is correct when the order is confirmed
         and the first account.move are performed in the same transaction

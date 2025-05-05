@@ -603,7 +603,7 @@ class SaleOrder(models.Model):
     def create(self, vals_list):
         orders = super().create(vals_list)
         for order, vals in zip(orders, vals_list):
-            if order.is_subscription:
+            if order.is_subscription and not order.subscription_state:
                 order.subscription_state = vals.get('subscription_state', '1_draft')
         return orders
 
