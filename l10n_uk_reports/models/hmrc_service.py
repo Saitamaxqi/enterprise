@@ -135,7 +135,9 @@ class HmrcService(models.AbstractModel):
                                           sha256).hexdigest()
             else:
                 hashed_license = ''
-            gov_vendor_version = self.sudo().env.ref('base.module_base').latest_version
+
+            # installed_version corresponds to the version in the manifest
+            module_version = self.sudo().env.ref('base.module_l10n_uk_reports').installed_version
 
             gov_dict['Gov-Client-Connection-Method'] = 'WEB_APP_VIA_SERVER'
             
@@ -152,7 +154,7 @@ class HmrcService(models.AbstractModel):
                     unique=urls.url_quote(self.env.user._l10n_uk_hmrc_unique_reference()))
             gov_dict['Gov-Client-Timezone'] = utc_offset
             gov_dict['Gov-Client-Browser-JS-User-Agent'] = (environ.get('HTTP_USER_AGENT'))
-            gov_dict['Gov-Vendor-Version'] = '&'.join([urls.url_quote("Odoo") + "=" + urls.url_quote(gov_vendor_version)]*2) # We can not percent encode the separator and we need to do it for the key and the value. Client and Server sides are the same
+            gov_dict['Gov-Vendor-Version'] = f'{urls.url_quote("Odoo-hmrc")}={urls.url_quote(module_version)}'
             gov_dict['Gov-Client-User-IDs'] = urls.url_quote("Odoo") + "=" + urls.url_quote(self.env.user.name)  # We can not percent encode the separator, same as Gov-Vendor-Version
             gov_dict['Gov-Client-Browser-Do-Not-Track'] = 'true' if headers.get('DNT') == '1' else 'false'
             gov_dict['Gov-Client-Screens'] = f"width={client_data['screen_width']}&height={client_data['screen_height']}&scaling-factor={client_data['screen_scaling_factor']}&colour-depth={client_data['screen_color_depth']}" if client_data else ''
