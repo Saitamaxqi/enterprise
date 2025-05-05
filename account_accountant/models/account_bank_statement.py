@@ -725,11 +725,6 @@ class AccountBankStatementLine(models.Model):
         if edited_move_reconciled_line_ids:
             move_line_to_edit_vals['reconciled_lines_ids'] = [Command.set(edited_move_reconciled_line_ids)]
 
-        # Means that we are in a single currency environment, without this the move were not balanced
-        if record_data.get('balance') and not record_data.get('amount_currency'):
-            move_line_to_edit_vals['amount_currency'] = move_line_to_edit.currency_id.round(record_data['balance'] * move_line_to_edit.currency_rate)
-            move_line_to_edit_vals['balance'] = record_data['balance']
-
         self._set_move_line_to_statement_line_move(
             (liquidity_lines + other_lines) - move_line_to_edit,
             [move_line_to_edit_vals],

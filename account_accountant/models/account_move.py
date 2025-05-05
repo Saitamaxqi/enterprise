@@ -3,12 +3,14 @@ from contextlib import contextmanager
 from itertools import chain
 from dateutil.relativedelta import relativedelta
 import logging
+import markupsafe
 import re
 
 from odoo import fields, models, api, _, Command
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import SQL, float_compare
+from odoo.tools.misc import formatLang
 
 
 _logger = logging.getLogger(__name__)
@@ -452,6 +454,8 @@ class AccountMoveLine(models.Model):
     has_deferred_moves = fields.Boolean(compute='_compute_has_deferred_moves')
     has_abnormal_deferred_dates = fields.Boolean(compute='_compute_has_abnormal_deferred_dates')
 
+    full_amount_switch_html = fields.Html(compute='_compute_full_amount_switch_html')
+
     def _order_to_sql(self, order, query, alias=None, reverse=False):
         sql_order = super()._order_to_sql(order, query, alias, reverse)
         preferred_aml_residual_value = self._context.get('preferred_aml_value')
@@ -498,6 +502,58 @@ class AccountMoveLine(models.Model):
                         move_name=line.move_id.display_name
                     ))
         return super().write(vals)
+
+    @api.depends('balance')
+    def _compute_full_amount_switch_html(self):
+        for line in self:
+            if not (reconciled_lines := line.reconciled_lines_ids):
+                line.full_amount_switch_html = False
+                continue
+
+            is_invoice = reconciled_lines.move_id.is_invoice(include_receipts=True)
+            btn_start = markupsafe.Markup("<a name='apply_full_amount' type='object' class='btn btn-link p-0 align-baseline'>")
+
+            if reconciled_lines.currency_id.is_zero(reconciled_lines.amount_currency + line.amount_currency):
+                lines = [
+                    _("%(display_name_html)s will be entirely paid by the transaction.")
+                    if is_invoice else
+                    _("%(display_name_html)s will be fully reconciled by the transaction.")
+                ]
+                liquidity_line_amount_currency = line.move_id.line_ids.filtered(lambda line: line.account_id == line.move_id.journal_id.default_account_id).amount_currency
+                # Means that we possibly want to come back to partial
+                if float_compare(liquidity_line_amount_currency, reconciled_lines.amount_currency, 2) < 0:
+                    btn_start = markupsafe.Markup("<a name='apply_partial_amount' type='object' class='btn btn-link p-0 align-baseline'>")
+                    lines.append(
+                        _("You might want to record a %(btn_start)spartial payment%(btn_end)s.")
+                        if is_invoice else
+                        _("You might want to make a %(btn_start)spartial reconciliation%(btn_end)s instead.")
+                    )
+            else:
+                if is_invoice:
+                    lines = [
+                        _("%(display_name_html)s will be reduced by %(amount)s."),
+                        _("You might want to set the invoice as %(btn_start)sfully paid%(btn_end)s."),
+                    ]
+                else:
+                    lines = [
+                        _("%(display_name_html)s will be reduced by %(amount)s."),
+                        _("You might want to %(btn_start)sfully reconcile%(btn_end)s the document."),
+                    ]
+
+            # We need to use span instead of button here because button is not displayed otherwise
+            display_name_html = markupsafe.Markup("""
+                    <a name='action_redirect_to_move' type='object' class="btn btn-link p-0 align-baseline fst-italic">%(display_name)s</a>
+                """) % {
+                'display_name': reconciled_lines.move_id.display_name,
+            }
+
+            extra_text = markupsafe.Markup("<br/>").join(lines) % {
+                'amount': formatLang(self.env, line.amount_currency, currency_obj=line.currency_id),
+                'display_name_html': display_name_html,
+                'btn_start': btn_start,
+                'btn_end': markupsafe.Markup("</a>"),
+            }
+            line.full_amount_switch_html = markupsafe.Markup("<div class='text-muted'>%s</div>") % extra_text
 
     # ============================= START - Deferred management ====================================
     def _compute_has_deferred_moves(self):
