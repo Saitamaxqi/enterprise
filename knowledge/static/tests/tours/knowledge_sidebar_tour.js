@@ -1,6 +1,7 @@
 import {
     changeInternalPermission,
     dragAndDropArticle,
+    openPermissionPanel,
 } from "@knowledge/../tests/tours/knowledge_tour_utils";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
@@ -108,9 +109,8 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             run: "click",
         },
         {
-            // Close permission panel after that the wizard closed
+            content: "Close permission panel after that the wizard closed",
             trigger: "body:not(:has(.modal:contains(invite))",
-            run: "click",
         },
         {
             content: `Check that the article has been added to a new "Shared" section`,
@@ -385,7 +385,11 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     // Click on the "add Icon" button
     trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Add Icon")',
     run: "click",
-}, {
+},
+{
+    trigger: ".o_article_active .o_article_emoji:not(:contains(📄))",
+},
+{
     // Check that the icon has been updated in the sidenar
     trigger: '.o_knowledge_body div[name="icon"]',
     run: () => {
@@ -574,7 +578,6 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         },
         {
             trigger: "body:not(:has(.modal))",
-            run: "click",
         },
         {
     // Check that the article did not move
@@ -607,25 +610,19 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     trigger: 'section[data-section="shared"] .o_article:contains("Shared Article")',
 },
 // Remove member of shared article
+        ...openPermissionPanel,
 {
-    trigger: '.o_knowledge_header button:contains("Share")',
-    run: 'click',
-}, {
     trigger: '.o_knowledge_permission_panel_members > div:contains("Guest") .dropdown-toggle',
     run: 'click',
 }, {
     trigger: '.o_knowledge_permission_panel_remove_member',
     run: 'click',
 }, {
-    trigger: 'body',
-    run: 'click',
-}, {
     // Check that article moved to private
     trigger: 'section[data-section="private"] .o_article:contains("Shared Article")',
-},{
-    trigger: '.o_knowledge_header button:contains("Share")',
-    run: 'click',
-}, {
+},
+        ...openPermissionPanel,
+, {
     // Re-add the member to replace the article in the shared section
     trigger: '.o_knowledge_permission_panel .btn:contains("Invite")',
     run: "click",
@@ -737,11 +734,11 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             '.o_section[data-section="private"] .o_article_name:contains("Private Article")',
         );
     },
-        },
-        {
-            trigger: '.o_section[data-section="private"] ul li:first:contains("Private Child 2")',
-        },
-        {
+},
+{
+    trigger: '.o_section[data-section="private"] ul li:first:contains("Private Child 2") .o_article_active',
+},
+{
     // Check that child became the first private root article
     trigger: '.o_section[data-section="private"] .o_article:not(:has(.o_article:contains("Private Child 2")))',
 }, {
@@ -750,7 +747,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 }, {
     // Check that the "Add Properties" button is disabled
     trigger: '.o_knowledge_header .dropdown-toggle',
-    run: 'click',
+    async run(helpers) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await helpers.click();
+    }
 }, {
     trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Add Properties").o_disabled_option',
 },
@@ -927,10 +927,6 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         },
         {
             trigger: ".modal button:contains(Invite)",
-            run: "click",
-        },
-        {
-            trigger: "body",
             run: "click",
         },
         {

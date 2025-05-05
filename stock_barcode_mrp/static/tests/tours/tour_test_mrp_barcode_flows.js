@@ -264,6 +264,9 @@ registry.category("web_tour.tours").add("test_barcode_production_create_bom", {
             run: "click",
         },
         {
+            trigger: ".o_kanban_view",
+        },
+        {
             trigger: ".o-kanban-button-new",
             run: "click",
         },
@@ -903,6 +906,9 @@ registry.category("web_tour.tours").add("test_barcode_production_add_byproduct",
             run: "click",
         },
         {
+            trigger: ".o_kanban_renderer",
+        },
+        {
             trigger: ".o-kanban-button-new",
             run: "click",
         },
@@ -1247,6 +1253,7 @@ registry.category("web_tour.tours").add("test_barcode_mo_creation_in_mo2", {
     steps: () => [
         { trigger: "button.o_button_operations", run: "click" },
         { trigger: "div[name='o_kanban_record_title']:contains('MO2')", run: "click" },
+        { trigger: ".o_kanban_renderer" },
         { trigger: ".o-kanban-button-new", run: "click" },
         {
             content: "Click on the button to add a product",
@@ -1310,15 +1317,17 @@ registry.category("web_tour.tours").add("test_no_split_uncompleted_done_move", {
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan TBPCSNS mo" },
         {
-            trigger: '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Final Product")) .o_edit',
-            run: 'click'
+            trigger:
+                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Final Product")) .o_edit',
+            run: "click",
         },
         { trigger: "input", run: "clear" },
         { trigger: "input", run: "edit 1" },
         { trigger: ".o_save", run: "click" },
         {
-            trigger: '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit',
-            run: 'click'
+            trigger:
+                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit',
+            run: "click",
         },
         { trigger: "input", run: "clear" },
         { trigger: "input", run: "edit 1" },
@@ -1412,7 +1421,7 @@ registry.category("web_tour.tours").add("test_mrp_uncompleted_move_split_on_barc
             },
         },
         { trigger: ".o_exit", run: "click" },
-        { trigger: ".o_stock_barcode_main_menu", run() {} },
+        { trigger: ".o_stock_barcode_main_menu" },
     ],
 });
 
@@ -1436,7 +1445,6 @@ registry.category("web_tour.tours").add("test_add_product_with_different_uom", {
         },
         {
             trigger: "input[id=qty_done_0]:value(1)",
-            run() {},
         },
         {
             trigger: "button.o_save",
@@ -1475,7 +1483,6 @@ registry.category("web_tour.tours").add("test_not_allowing_component_lot_creatio
         },
         {
             trigger: ".o_barcode_line .qty-done:contains(1)",
-            run() {},
         },
         {
             trigger: "button.o_by_products",
@@ -1495,7 +1502,6 @@ registry.category("web_tour.tours").add("test_not_allowing_component_lot_creatio
         },
         {
             trigger: ".o_barcode_line .qty-done:contains(1)",
-            run() {},
         },
         // exit the barcode app to save the barcode data's
         {
@@ -1508,7 +1514,6 @@ registry.category("web_tour.tours").add("test_not_allowing_component_lot_creatio
         },
         {
             trigger: ".o_stock_barcode_main_menu",
-            run() {},
         },
     ],
 });

@@ -36,7 +36,10 @@ registry.category("web_tour.tours").add("test_brazilian_address", {
         {
             content: "Select Abadia de Goiás",
             trigger: ".o_select_menu_menu > span:first",
-            run: "click",
+            async run(helpers) {
+                await new Promise((r) => setTimeout(r, 1000));
+                await helpers.click();
+            },
         },
         {
             content: "Check that Abadia de Goiás is selected",

@@ -122,7 +122,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             })
 
         url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
-        self.start_tour(url, 'test_barcode_production_create_bom', login='admin', timeout=180)
+        self.start_tour(url, 'test_barcode_production_create_bom', login='admin')
         mo = self.env['mrp.production'].search([], order='id desc', limit=1)
         self.assertEqual(mo.state, 'done')
         self.assertEqual(mo.qty_produced, 3)

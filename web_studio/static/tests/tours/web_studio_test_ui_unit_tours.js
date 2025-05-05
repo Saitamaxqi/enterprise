@@ -451,7 +451,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
             run: "click",
         },
         {
-            trigger: ".o_searchview_facet",
+            trigger: "body:not(.o_in_studio):has(.o_searchview_facet):has(.o_list_table)",
             run() {
                 assertEqual(queryAll(".o_group_name").length, 1);
                 assertEqual(queryAll(".o_searchview_facet").length, 1);
@@ -479,7 +479,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
             run: "click",
         },
         {
-            trigger: ".o_searchview_facet",
+            trigger: "body:not(.o_in_studio):has(.o_searchview_facet):has(.o_list_table)",
             run() {
                 assertEqual(queryAll(".o_searchview_facet").length, 1);
                 assertEqual(queryOne(".o_searchview_facet").textContent, "Active>City");

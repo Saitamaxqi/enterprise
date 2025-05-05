@@ -33,9 +33,12 @@ registry
                 run: 'click',
             },
             {
+                trigger: "#product_detail_main #product_details:contains(computer)",
+            },
+            {
                 content: 'Pick an invalid start date',
                 trigger: 'input[name=renting_start_date]',
-                run: 'edit 01/01/2000 00:00:00 && press Tab',
+                run: 'edit 01/01/2000 && press Tab',
             },
             {
                 content: 'Check that css_not_available has been added to the product form',

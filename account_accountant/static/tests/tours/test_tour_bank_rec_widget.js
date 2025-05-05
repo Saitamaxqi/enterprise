@@ -103,13 +103,13 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget", {
             run: "click",
         },
         {
-            content: "Statement is created",
-            trigger: "div[name='bank_statement_line']",
-        },
-        {
             content: "Unfold statement line",
-            trigger: "div[name='bank_statement_line']",
-            run: "click",
+            trigger:
+                "div[name=bank_statement_line]:contains(set partner):has(.fa-chevron-down):contains(150)",
+            async run(helpers) {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                await helpers.click();
+            },
         },
         {
             content: "line is unfolded",

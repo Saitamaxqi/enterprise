@@ -28,11 +28,12 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),
             PaymentScreen.clickValidate(),
-            Utils.selectButton("Yes"),
+            Chrome.confirmPopup(),
             {
                 content: "Receipt doesn't include Empty State",
                 trigger: ".pos-receipt:not(:has(i.fa-shopping-cart))",
             },
+            ReceiptScreen.isShown(),
             ReceiptScreen.receiptIsThere(),
             ReceiptScreen.containsOrderLine("TSJ/2025/00001", 0, "10.00", "0.00"),
             ReceiptScreen.receiptAmountTotalIs("0.00"),

@@ -143,6 +143,10 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             run: "click",
         },
         {
+            trigger:
+                ".o_mrp_display_record:contains(giraffe - ):contains(2 / 2):contains(instructions):contains(5/5):contains(00:1)",
+        },
+        {
             content: "Close first operation",
             trigger: '.card-footer button[barcode_trigger="CLWO"]:contains(Mark as Done)',
             run: "click",
@@ -547,6 +551,10 @@ registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
             content: "Save and close the wizard",
             trigger: '.o_form_button_save:contains("Save")',
             run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:first .o_mrp_record_line.text-muted:contains(Register byprod)",
         },
         {
             content: "Set production as done",

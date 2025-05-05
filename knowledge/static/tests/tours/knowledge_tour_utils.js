@@ -8,22 +8,37 @@ import { ReadonlyEmbeddedViewComponent } from "@knowledge/editor/embedded_compon
 
 const permissions = { none: "No Access", read: "Can Read", write: "Can Edit" };
 
+export const openPermissionPanel = [
+    {
+        isActive: ["body:has(.o_knowledge_permission_panel)"],
+        content: "close o_knowledge_permission_panel if it already opened",
+        trigger: ".o_knowledge_header button:contains('Share')",
+        run: "click",
+    },
+    {
+        trigger: "body:not(:has(.o_knowledge_permission_panel))",
+    },
+    {
+        trigger: ".o_knowledge_header button:contains('Share')",
+        async run(helpers) {
+                await new Promise((r) => setTimeout(r, 1000));
+                await helpers.click();
+            },
+    },
+    {
+        trigger: "body:has(.o_knowledge_permission_panel)",
+    },
+];
+
 export const changeInternalPermission = (permission) => {
     return [
-        {
-            trigger: ".o_knowledge_header button:contains('Share')",
-            run: "click",
-        },
+        ...openPermissionPanel,
         {
             trigger: ".o_knowledge_permission_panel .o_internal_permission .dropdown-toggle",
             run: "click",
         },
         {
             trigger: `.o-dropdown-item:contains('${permissions[permission]}')`,
-            run: "click",
-        },
-        {
-            trigger: "body",
             run: "click",
         },
     ];
