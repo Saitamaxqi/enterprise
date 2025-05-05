@@ -45,7 +45,7 @@
 </t>
 
 <t t-name="o-voip-Keypad-numpad">
-    <div class="o-voip-Keypad-numpad grid px-3">
+    <div class="o-voip-Keypad-numpad grid" t-att-class="{ 'px-3': !props.dtmf }">
         <t t-foreach="keys" t-as="key" t-key="key.key">
             <!-- ⚠ align-items-stretch necessary for proper alignment on Safari -->
             <button class="btn btn-light d-flex flex-column align-items-stretch g-col-4 gap-1 p-1" t-att-class="{ 'justify-content-center': key.icon }" t-on-click="() => this.onClickKey(key.key)" t-on-touchend.prevent="() => this.props.onClickKey(key.key)">

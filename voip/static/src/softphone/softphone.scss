@@ -14,28 +14,47 @@
     }
 
     &.o-calling {
-        --#{$prefix}border-color: #{$o-voipCalling-button-bg-color};
+        --#{$prefix}border-color: #{$o-voipCalling-btn-secondary-bg-color};
+        --#{$prefix}body-color: #{color-contrast($o-voipCalling-bg-color)};
 
         background-color: $o-voipCalling-bg-color;
         color: color-contrast($o-voipCalling-bg-color);
 
         .btn-secondary {
-            --#{$prefix}btn-color: #{$o-voipCalling-button-color};
-            --#{$prefix}btn-bg: #{$o-voipCalling-button-bg-color};
-            --#{$prefix}btn-border-color: #{$o-voipCalling-button-border-color};
-            --#{$prefix}btn-hover-color: #{$o-voipCalling-button-color};
-            --#{$prefix}btn-hover-bg: #{$o-voipCalling-button-bg-color-hover};
-            --#{$prefix}btn-hover-border-color: #{$o-voipCalling-button-border-color};
-            --#{$prefix}btn-active-color: #{$o-voipCalling-button-color-active};
-            --#{$prefix}btn-active-bg: #{$o-voipCalling-button-bg-color-active};
-            --#{$prefix}btn-active-border-color: #{$o-voipCalling-button-border-color};
-            --#{$prefix}btn-disabled-color: #{$o-voipCalling-button-color};
-            --#{$prefix}btn-disabled-bg: #{$o-voipCalling-button-bg-color};
-            --#{$prefix}btn-disabled-border-color: #{$o-voipCalling-button-border-color};
+            --#{$prefix}btn-color: #{$o-voipCalling-btn-secondary-color};
+            --#{$prefix}btn-bg: #{$o-voipCalling-btn-secondary-bg-color};
+            --#{$prefix}btn-border-color: #{$o-voipCalling-btn-secondary-border-color};
+            --#{$prefix}btn-hover-color: #{$o-voipCalling-btn-secondary-color};
+            --#{$prefix}btn-hover-bg: #{$o-voipCalling-btn-secondary-bg-color-hover};
+            --#{$prefix}btn-hover-border-color: #{$o-voipCalling-btn-secondary-border-color};
+            --#{$prefix}btn-active-color: #{$o-voipCalling-btn-secondary-color-active};
+            --#{$prefix}btn-active-bg: #{$o-voipCalling-btn-secondary-bg-color-active};
+            --#{$prefix}btn-active-border-color: #{$o-voipCalling-btn-secondary-border-color};
+            --#{$prefix}btn-disabled-color: #{$o-voipCalling-btn-secondary-color};
+            --#{$prefix}btn-disabled-bg: #{$o-voipCalling-btn-secondary-bg-color};
+            --#{$prefix}btn-disabled-border-color: #{$o-voipCalling-btn-secondary-border-color};
+        }
+
+        .btn-light {
+            --#{$prefix}btn-color: #{$o-voipCalling-btn-light-color};
+            --#{$prefix}btn-bg: #{$o-voipCalling-btn-light-bg-color};
+            --#{$prefix}btn-border-color: #{$o-voipCalling-btn-light-border-color};
+            --#{$prefix}btn-hover-color: #{$o-voipCalling-btn-light-color};
+            --#{$prefix}btn-hover-bg: #{$o-voipCalling-btn-light-bg-color-hover};
+            --#{$prefix}btn-hover-border-color: #{$o-voipCalling-btn-light-border-color};
+            --#{$prefix}btn-active-color: #{$o-voipCalling-btn-light-color-active};
+            --#{$prefix}btn-active-bg: #{$o-voipCalling-btn-light-bg-color-active};
+            --#{$prefix}btn-disabled-color: #{$o-voipCalling-btn-light-color};
+            --#{$prefix}btn-disabled-bg: #{$o-voipCalling-btn-light-bg-color};
+            --#{$prefix}btn-disabled-border-color: #{$o-voipCalling-btn-light-border-color};
         }
 
         .btn-close {
             filter: var(--voipCalling__closeButton-filter, #{$btn-close-white-filter});
+        }
+
+        .form-control:focus {
+            background: inherit;
         }
     }
 
