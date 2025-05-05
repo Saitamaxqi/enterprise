@@ -4,6 +4,7 @@ import { REINSERT_LIST_CHILDREN } from "../list/list_actions";
 import {
     REINSERT_DYNAMIC_PIVOT_CHILDREN,
     REINSERT_STATIC_PIVOT_CHILDREN,
+    REINSERT_PIVOT_CELL_CHILDREN,
 } from "../pivot/pivot_actions";
 import { getListHighlights } from "../list/list_highlight_helpers";
 const { topbarMenuRegistry } = registries;
@@ -134,6 +135,16 @@ const reinsertStaticPivotMenu = {
     icon: "o-spreadsheet-Icon.INSERT_PIVOT",
 };
 
+const reinsertPivotCell = {
+    id: "reinsert_pivot_cell",
+    name: _t("Re-insert pivot cell"),
+    sequence: 1022,
+    children: [REINSERT_PIVOT_CELL_CHILDREN],
+    isVisible: (env) =>
+        env.model.getters.getPivotIds().some((id) => env.model.getters.getPivot(id).isValid()),
+    icon: "o-spreadsheet-Icon.INSERT_PIVOT",
+};
+
 const reInsertListMenu = {
     id: "reinsert_list",
     name: _t("Re-insert list"),
@@ -187,4 +198,5 @@ topbarMenuRegistry.addChild("print", ["file"], printMenu);
 topbarMenuRegistry.addChild("reinsert_list", ["data"], reInsertListMenu);
 topbarMenuRegistry.replaceChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicPivotMenu);
 topbarMenuRegistry.replaceChild("reinsert_static_pivot", ["data"], reinsertStaticPivotMenu);
-topbarMenuRegistry.replaceChild("insert_pivot", ["insert"], insertPivotMenu, { force: true });
+topbarMenuRegistry.replaceChild("insert_pivot", ["insert"], insertPivotMenu);
+topbarMenuRegistry.addChild("reinsert_pivot_cell", ["data"], reinsertPivotCell);
