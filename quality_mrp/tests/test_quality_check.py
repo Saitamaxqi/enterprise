@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.tests import Form
+from odoo import Command
 
 from .test_common import TestQualityMrpCommon
 
@@ -242,3 +243,32 @@ class TestQualityCheck(TestQualityMrpCommon):
 
         # Now check that no new quality check are created.
         self.assertEqual(len(self.mrp_production_qc_test1.check_ids), 1)
+
+    def test_manufacture_picking_type_with_product_categ_in_qp(self):
+        """Create a quality point of type measure on'operation' with the manufacturing
+        picking type and product category set, and verify that the quality check
+        is correctly created.
+        """
+        self.bom.product_tmpl_id.categ_id = self.product_category_base
+        qp = self.env['quality.point'].create({
+            'product_category_ids': [Command.link(self.product_category_base.id)],
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'measure_on': 'operation',
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+        })
+        production = self.env['mrp.production'].create({
+            'product_id': self.product.id,
+            'product_qty': 20,
+            'move_raw_ids': [
+                Command.create({
+                    'product_id': self.product_3.id,
+                    'product_uom_qty': 10,
+                })
+            ],
+        })
+        production.action_confirm()
+        self.assertEqual(production.state, 'confirmed')
+        self.assertEqual(len(production.check_ids), 1)
+        self.assertEqual(production.check_ids.point_id, qp)
+        production.check_ids.do_pass()
+        self.assertEqual(production.check_ids.quality_state, 'pass')
