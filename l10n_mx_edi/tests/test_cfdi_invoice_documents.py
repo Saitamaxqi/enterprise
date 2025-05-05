@@ -2050,3 +2050,32 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
             filename=file_name,
         )
         self.assertEqual(new_bill.l10n_mx_edi_cfdi_sat_state, 'not_defined')
+
+    def test_note_and_section_copied_new_invoice(self):
+        """ Test that notes and sections are carry over when the new invoice is created after a cfdi cancel"""
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(invoice_line_ids=[
+                Command.create({
+                    'display_type': 'line_section',
+                    'name': 'section',
+                }),
+                Command.create({
+                    'display_type': 'line_note',
+                    'name': 'note',
+                }),
+                Command.create({
+                    'product_id': self.product.id,
+                }),
+            ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+        with self.with_mocked_pac_cancel_success():
+            action_results = self.env['l10n_mx_edi.invoice.cancel'] \
+                .with_context(invoice.button_request_cancel()['context']) \
+                .create({'cancellation_reason': '01'}) \
+                .action_create_replacement_invoice()
+
+        new_invoice = self.env['account.move'].browse(action_results['res_id'])
+        self.assertEqual(new_invoice.line_ids[0].name, 'section')
+        self.assertEqual(new_invoice.line_ids[1].name, 'note')
