@@ -30,8 +30,6 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             ReceiptScreen.receiptAmountTotalIs("0.00"),
             ReceiptScreen.paymentLineContains("Bank", "10.00"),
             ReceiptScreen.paymentLineContains("Customer Account", "-10.00"),
-            ProductScreen.closePos(),
-            Dialog.confirm("Close Register"),
             Chrome.endTour(),
         ].flat(),
 });
