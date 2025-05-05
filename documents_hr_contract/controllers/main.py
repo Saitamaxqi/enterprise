@@ -25,9 +25,12 @@ class SignContract(Sign):
             sign_request_sudo._generate_completed_documents()
 
             employee_partner = employee.work_contact_id or employee.user_id.partner_id
-            owner = (employee.user_id
-                     or employee.search([('work_contact_id', '=', employee_partner.id)]).user_id
-                     or employee.contract_id.hr_responsible_id)
+            owner = (
+                employee.user_id or
+                employee.search([('work_contact_id', '=', employee_partner.id)]).user_id or
+                employee.contract_id.hr_responsible_id or
+                request_item.create_uid
+            )
 
             request.env['documents.document'].sudo().create([{
                 'partner_id': employee_partner.id,
