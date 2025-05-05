@@ -74,7 +74,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
-                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -105,7 +104,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
-                ("2024-11-01", "2024-12-31"),
             ]
         )
 
@@ -126,7 +124,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
-                ("2024-11-01", "2024-12-31"),
             ]
         )
 
@@ -156,7 +153,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
-                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -176,7 +172,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2023-12-01", "2024-03-31"),   # out of fy start
                 ("2024-04-01", "2024-07-31"),
                 ("2024-08-01", "2024-11-30"),
-                ("2024-12-01", "2025-03-31"),   # out of fy end
             ]
         )
 
@@ -204,7 +199,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-01-01", "2024-01-31"),   # first already posted so we won't create another one before it
                 ("2024-04-01", "2024-07-31"),
                 ("2024-08-01", "2024-11-30"),
-                ("2024-12-01", "2025-03-31"),   # out of fy end
             ]
         )
 
@@ -228,7 +222,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
-                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -238,7 +231,6 @@ class TestAccountReturn(TestAccountReportsCommon):
         self.assertRecordValues(
             existing_returns,
             [
-                {'is_completed': True},
                 {'is_completed': True},
                 {'is_completed': True},
                 {'is_completed': True},
@@ -274,7 +266,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
-                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -375,7 +366,7 @@ class TestAccountReturn(TestAccountReportsCommon):
     def test_multicompany_generation_branches(self):
         with self._patch_returns_generation():
             branch_1_data = self.setup_other_company(name='Branch 1', parent_id=self.company_data['company'].id)
-            branch_2_data = self.setup_other_company(name='Branch 2', vat='23434344', parent_id=self.company_data['company'].id, account_return_periodicity='semester')
+            branch_2_data = self.setup_other_company(name='Branch 2', vat='23434344', parent_id=self.company_data['company'].id, account_return_periodicity='semester', account_opening_date="2014-01-01")
             branch_1_1_data = self.setup_other_company(name='Branch 1-1', parent_id=branch_1_data['company'].id)
             branch_2_1_data = self.setup_other_company(name='Branch 2-1', parent_id=branch_2_data['company'].id)
 
@@ -397,7 +388,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                     ("2024-09-01", "2024-09-30"),
                     ("2024-10-01", "2024-10-31"),
                     ("2024-11-01", "2024-11-30"),
-                    ("2024-12-01", "2024-12-31"),
                 ],
             )
             self.assertTrue(all(tax_return.company_ids == vat_tree_1 for tax_return in tree_1_returns))
@@ -407,7 +397,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 tree_2_returns,
                 [
                     ("2024-01-01", "2024-06-30"),
-                    ("2024-07-01", "2024-12-31"),
                 ],
             )
             self.assertTrue(all(tax_return.company_ids == vat_tree_2 for tax_return in tree_2_returns))
@@ -430,7 +419,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
-                ("2024-11-01", "2024-12-31"),
             ],
         )
 
@@ -448,7 +436,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
-                ("2024-12-01", "2024-12-31"),
             ],
         )
 
@@ -471,7 +458,6 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
-                ("2024-11-01", "2024-12-31"),
             ],
         )
 

@@ -180,14 +180,19 @@ class AccountReturnType(models.Model):
                     to_treat.append((child_company.vat, child_company))
 
             for other_main_company in other_main_companies:
-                self._try_create_returns_for_fiscal_year(other_main_company, tax_unit)
+                if other_main_company.account_opening_date:
+                    self._try_create_returns_for_fiscal_year(other_main_company, tax_unit)
 
         expected_companies = self.env['account.return'].sudo()._get_company_ids(main_company, tax_unit, self.report_id)
         date_pointer = date_from
         periods = []
-        while date_pointer < date_to:
+        deadline_date = date_pointer
+        type_xml_id = self.get_external_id()[self.id]
+        while date_pointer < date_to and deadline_date <= next_year:
             period_date_from, period_date_to = self._get_period_boundaries(main_company, date_pointer)
-            periods.append((period_date_from, period_date_to))
+            deadline_date = self.env['account.return']._evaluate_deadline(main_company, self, type_xml_id, period_date_from, period_date_to)
+            if main_company.account_opening_date <= deadline_date <= next_year:
+                periods.append((period_date_from, period_date_to))
             date_pointer = period_date_to + relativedelta(days=1)
 
         existing_returns = self.env['account.return'].sudo().search([
@@ -375,13 +380,20 @@ class AccountReturn(models.Model):
                 self.refresh_checks(force_bypassed=True)
         return result
 
-    def _evaluate_deadline(self):
-        return self.date_to + relativedelta(days=self.company_id.account_return_reminder_day)
+    @api.model
+    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
+        return date_to + relativedelta(days=company.account_return_reminder_day)
 
     @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_external_id')
     def _compute_deadline(self):
         for account_return in self:
-            account_return.date_deadline = account_return._evaluate_deadline()
+            account_return.date_deadline = account_return._evaluate_deadline(
+                account_return.company_id,
+                account_return.type_id,
+                account_return.type_external_id,
+                account_return.date_from,
+                account_return.date_to
+            )
 
     @api.model
     def _get_company_ids(self, main_company, tax_unit, report):

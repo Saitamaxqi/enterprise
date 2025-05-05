@@ -29,23 +29,24 @@ class AccountReturnType(models.Model):
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
-    def _evaluate_deadline(self):
-        months_per_period = self.type_id._get_periodicity_months_delay(self.company_id)
-        if self.type_external_id in ('l10n_be_reports.be_vat_return_type', 'l10n_be_reports.be_ec_sales_list_return_type') and months_per_period in (1, 3):
+    @api.model
+    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
+        months_per_period = return_type._get_periodicity_months_delay(company)
+        if return_type_external_id in ('l10n_be_reports.be_vat_return_type', 'l10n_be_reports.be_ec_sales_list_return_type') and months_per_period in (1, 3):
             # https://finances.belgium.be/fr/entreprises/tva/calendrier-tva#q1
-            return self.date_to + relativedelta(days=20 if months_per_period == 1 else 25)
+            return date_to + relativedelta(days=20 if months_per_period == 1 else 25)
 
-        elif self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
-            return self.date_to + relativedelta(months=3)
+        elif return_type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
+            return date_to + relativedelta(months=3)
 
-        elif self.type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
-            return self.date_to + relativedelta(days=-9 if self.date_to.month == 12 else 10)
+        elif return_type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
+            return date_to + relativedelta(days=-9 if date_to.month == 12 else 10)
 
-        elif self.type_external_id == 'account_reports.annual_corporate_tax_return_type' and self.company_id.account_fiscal_country_id.code == 'BE':
-            return self.date_to + relativedelta(months=7)
+        elif return_type_external_id == 'account_reports.annual_corporate_tax_return_type' and company.account_fiscal_country_id.code == 'BE':
+            return date_to + relativedelta(months=7)
 
         else:
-            return super()._evaluate_deadline()
+            return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
 
     def _get_pay_wizard(self):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
