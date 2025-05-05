@@ -10,12 +10,12 @@ export class DocumentFavoriteField extends BooleanFavoriteField {
     if (this.props.readonly) {
       return;
     }
-    const result = await this.props.record.model.orm.call(
-        "documents.document",
-        "toggle_favorited",
-        [this.props.record.resId]
+    await this.props.record.model.orm.call(
+      "documents.document",
+      "toggle_favorited",
+      [this.props.record.resId]
     );
-    this.props.record.data[this.props.name] = result;
+    await this.props.record.load();
   }
 }
 
