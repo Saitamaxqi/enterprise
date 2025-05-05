@@ -44,6 +44,7 @@
                         </bdi>
                     </del>
                 </h5>
+                <t t-if="is_view_active('website_sale.tax_indication')" t-call="website_sale.tax_indication"/>
             </t>
         </div>
     </template>
