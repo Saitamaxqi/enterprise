@@ -92,7 +92,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
         })
-        april_return.action_review()
+        april_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
             april_return.action_submit()
 
@@ -132,7 +132,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
         })
-        may_return.action_review()
+        may_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
             may_return.action_submit()
 
@@ -244,7 +244,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
         })
-        may_return.action_review()
+        may_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
             may_return.action_submit()
 

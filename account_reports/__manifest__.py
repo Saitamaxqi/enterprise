@@ -36,6 +36,7 @@ Accounting Reports
         'data/menuitems.xml',
         'data/mail_templates.xml',
         'data/ir_cron.xml',
+        'wizard/return_creation_wizard.xml',
         'views/account_move_views.xml',
         'views/res_company_views.xml',
         'views/account_return_views.xml',

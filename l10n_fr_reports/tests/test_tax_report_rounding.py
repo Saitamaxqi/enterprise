@@ -139,7 +139,7 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
         self.assertEqual(25.00, carryover_line['columns'][0]['no_format'])
 
         # Suppress the pdf output
-        tax_return.action_review()
+        tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
             tax_return.action_submit()
 

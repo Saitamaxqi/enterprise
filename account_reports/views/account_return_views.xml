@@ -5,7 +5,7 @@
             <field name="name">account.return.kanban</field>
             <field name="model">account.return</field>
             <field name="arch" type="xml">
-                <kanban js_class="account_return_kanban" can_open="true" create="0" edit="0">
+                <kanban js_class="account_return_kanban" can_open="true" edit="0" on_create="account_reports.action_create_account_return">
                     <field name="state"/>
                     <field name="is_tax_return"/>
                     <field name="check_ids"/>
@@ -94,8 +94,10 @@
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" role="menu">
                                             <a invisible="state != 'new' or is_completed or (type_external_id == 'account_reports.annual_corporate_tax_return_type')" class="dropdown-item" type="object" name="action_mark_completed" string="Mark as Completed"/>
-                                            <a invisible="not check_ids" class="dropdown-item" type="object" name="action_review_all_checks" string="Review Checks"/>
+                                            <a invisible="not check_ids" class="dropdown-item" type="object" name="action_review_all_checks" string="View Checks"/>
                                             <a invisible="not has_move_entries or state not in ('submitted', 'paid')" class="dropdown-item" type="object" name="action_view_entry" string="View Entry"/>
+
+                                            <a invisible="not (manually_created and state == 'new')" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
 
                                             <!-- Reset should be last-->
                                             <a invisible="state != 'reviewed' or is_completed" class="dropdown-item" type="object" name="action_reset_to_new" string="Reset"/>
@@ -151,6 +153,16 @@
             </field>
         </record>
 
+        <record id="account_return_type_list_view" model="ir.ui.view">
+            <field name="name">account.return.type.list.view</field>
+            <field name="model">account.return.type</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="display_name"/>
+                </list>
+            </field>
+        </record>
+
         <!-- Will open a wizard if tax return config is not setup otherwise it will return action_view_account_return-->
         <!-- TODO lost: to remove in master -->
         <record id="action_open_view_account_return" model="ir.actions.client">
@@ -171,6 +183,14 @@
             <field name="view_mode">kanban,calendar,search</field>
             <field name="path">tax-return</field>
             <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1, 'max_number_opened_groups': 100000}</field>
+        </record>
+
+        <record id="action_create_account_return" model="ir.actions.act_window">
+            <field name="name">Generate Return</field>
+            <field name="res_model">account.return.creation.wizard</field>
+            <field name="view_id" ref="account_reports.return_creation_wizard_form"/>
+            <field name="target">new</field>
+            <field name="context">{'open_account_return_on_save': True}</field>
         </record>
 
         <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_server_open_view_account_return" name="Tax Returns" sequence="100"/>

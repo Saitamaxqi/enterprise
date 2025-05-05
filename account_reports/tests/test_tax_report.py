@@ -28,6 +28,9 @@ class TestTaxReport(TestAccountReportsCommon):
         # Setup fiscal data
         cls.company_data['company'].write({
             'account_return_periodicity': 'trimester',
+            'vat': 'US12345671',
+            'phone': '123456789',
+            'email': 'test@gmail.com',
         })
         cls.change_company_country(cls.company_data['company'], cls.fiscal_country)
 
@@ -341,7 +344,7 @@ class TestTaxReport(TestAccountReportsCommon):
             'company_id': company.id,
             'tax_unit_id': tax_unit.id if tax_unit else False,
         })
-        tax_return.action_review()
+        tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
             tax_return.action_submit()
 

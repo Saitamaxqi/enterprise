@@ -13,6 +13,13 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        # necessary to ensure successful return checks
+        cls.company_data['company'].write({
+            'vat': 'US12345671',
+            'phone': '123456789',
+            'email': 'test@gmail.com',
+        })
+
         cls.company_1 = cls.company_data['company']
         cls.company_2 = cls.company_data_2['company']
 

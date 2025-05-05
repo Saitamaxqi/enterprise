@@ -41,6 +41,7 @@ class AccountReturnType(models.Model):
 
     name = fields.Char(string="Name", required=True, translate=True)
     report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree')
+    report_country_id = fields.Many2one(related='report_id.country_id')
     payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank")
     payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id')
 
@@ -134,13 +135,16 @@ class AccountReturnType(models.Model):
         """
         self.env.ref('account_reports.annual_corporate_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
-    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit):
+    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, forced_date_from=None, forced_date_to=None):
         """
         Creates or updates the tax returns (possibly deleting the 'new' ones, if needed) for the provided main_company and tax_unit, so that all the
         returns are created from the start of the current fiscal year, up to one year after the current date.
 
         This functions runs multiple operations in sudo(), and updates all the companies of the database. It is important in order to handle more
         complex configuration changes, where branches or tax units structure would have been modified.
+
+        forced_date_from and forced_date_to can be specified to generate returns only in a specific time interval.
+        Either both must be specified or none.
         """
         self.ensure_one()
         if self.report_id.filter_multi_company != 'tax_units':
@@ -148,11 +152,17 @@ class AccountReturnType(models.Model):
 
         today = datetime.date.today()
         next_year = today + relativedelta(years=1)
-        fy_dates_dict = main_company.compute_fiscalyear_dates(today)
-        date_from = fy_dates_dict['date_from']
-        date_to = fy_dates_dict['date_to']
-        if date_to < next_year:
-            date_to = next_year
+
+        has_forced_dates = forced_date_from and forced_date_to
+        if has_forced_dates:
+            date_from = forced_date_from
+            date_to = forced_date_to
+        else:
+            fy_dates_dict = main_company.compute_fiscalyear_dates(today)
+            date_from = fy_dates_dict['date_from']
+            date_to = fy_dates_dict['date_to']
+            if date_to < next_year:
+                date_to = next_year
 
         if not self._can_return_exist(main_company, tax_unit):
             returns_to_unlink = self.env['account.return'].sudo().search([
@@ -188,10 +198,10 @@ class AccountReturnType(models.Model):
         periods = []
         deadline_date = date_pointer
         type_xml_id = self.get_external_id()[self.id]
-        while date_pointer < date_to and deadline_date <= next_year:
+        while date_pointer < date_to and (deadline_date <= next_year or has_forced_dates):
             period_date_from, period_date_to = self._get_period_boundaries(main_company, date_pointer)
             deadline_date = self.env['account.return']._evaluate_deadline(main_company, self, type_xml_id, period_date_from, period_date_to)
-            if main_company.account_opening_date <= deadline_date <= next_year:
+            if main_company.account_opening_date <= deadline_date <= next_year or has_forced_dates:
                 periods.append((period_date_from, period_date_to))
             date_pointer = period_date_to + relativedelta(days=1)
 
@@ -252,6 +262,7 @@ class AccountReturnType(models.Model):
                 'date_from': period_from,
                 'date_to': period_to,
                 'tax_unit_id': tax_unit.id if tax_unit else False,
+                'manually_created': bool(forced_date_from),
             })
 
         return self.env['account.return'].sudo().create(create_vals_list)
@@ -360,6 +371,22 @@ class AccountReturnType(models.Model):
 
         return start_date, end_date
 
+    @api.depends_context('company')
+    @api.depends('name', 'report_id')
+    def _compute_display_name(self):
+        has_foreign_fiscal_pos = bool(self.env['account.fiscal.position'].search_count([
+            *self.env['account.fiscal.position']._check_company_domain(self.env.company.id),
+            ('foreign_vat', '!=', False),
+        ], limit=1))
+        if not has_foreign_fiscal_pos:
+            return super()._compute_display_name()
+
+        for return_type in self:
+            if has_foreign_fiscal_pos and return_type.report_country_id:
+                return_type.display_name = f'{return_type.name} ({return_type.report_country_id.code})'
+            else:
+                return_type.display_name = return_type.name
+
 
 class AccountReturn(models.Model):
     _name = "account.return"
@@ -385,6 +412,7 @@ class AccountReturn(models.Model):
     check_ids = fields.One2many(comodel_name='account.return.check', inverse_name='return_id', string="Checks")
     unresolved_check_count = fields.Integer(string="Issues", compute="_compute_unresolved_check_count")
     resolved_check_count = fields.Integer(string="Passed", compute="_compute_resolved_check_count")
+    manually_created = fields.Boolean(string="Manually Created")
 
     # Tax return fields
     is_tax_return = fields.Boolean(string="Is Tax Return", compute="_compute_is_tax_return")
@@ -617,8 +645,13 @@ class AccountReturn(models.Model):
             if account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
                 account_return.action_review()
 
-    def action_review(self):
+    def action_review(self, bypass_failing_tests=False):
         self.ensure_one()
+        self.refresh_checks()
+
+        if bypass_failing_tests:
+            self.check_ids.filtered(lambda check: check.result == 'failure').bypassed = True
+
         if action := self._check_for_checks_wizard('action_review'):
             return action
 
@@ -758,6 +791,11 @@ class AccountReturn(models.Model):
     ####################################################################################################
     ####  Revert Actions
     ####################################################################################################
+
+    def action_delete(self):
+        valid_moves = self.filtered(lambda account_return: account_return.manually_created and account_return.state == 'new')
+        valid_moves.unlink()
+
     def _reset_checks_for_states(self, states):
         checks_to_reset = self.check_ids.filtered(lambda check: check.state in states)
         checks_to_reset.write({

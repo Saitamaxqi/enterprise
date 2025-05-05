@@ -7,5 +7,6 @@ from . import fiscal_year
 from . import multicurrency_revaluation
 from . import report_export_wizard
 from . import return_generic_payment_wizard
+from . import return_creation_wizard
 from . import return_submission_wizard
 from . import qr_code_payment_wizard

@@ -15,6 +15,13 @@ class TestReportEngines(TestAccountReportsCommon):
         super().setUpClass()
         cls.company_data['company'].totals_below_sections = False
 
+        # necessary to ensure successful return checks
+        cls.company_data['company'].write({
+            'vat': 'US12345671',
+            'phone': '123456789',
+            'email': 'test@gmail.com',
+        })
+
         cls.garbage_account = cls.env['account.account'].create({
             'code': "turlututu",
             'name': "turlututu",

@@ -18,6 +18,13 @@ class TestAccountReturn(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        # necessary to ensure successful return checks
+        cls.company_data['company'].write({
+            'vat': 'US12345671',
+            'phone': '123456789',
+            'email': 'test@gmail.com',
+        })
+
         cls.basic_return_type = cls.env['account.return.type'].create({
             'name': 'VAT Return (Generic)',
             'report_id': cls.env.ref('account.generic_tax_report').id,
@@ -497,3 +504,81 @@ class TestAccountReturn(TestAccountReportsCommon):
         with self.allow_pdf_render():
             first_return.action_submit()
             second_return.action_submit()
+
+    def test_return_manual_creation_wizard_single_return(self):
+        original_number_of_returns = self.env['account.return'].search_count([])
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'date_from': '2023-12-01',
+            'date_to': '2023-12-31',
+            'return_type_id': self.basic_return_type.id,
+        }])
+        wizard.action_create_manual_account_returns()
+        new_number_of_returns = self.env['account.return'].search_count([])
+
+        self.assertEqual(new_number_of_returns, original_number_of_returns + 1)
+
+        new_return = self.env['account.return'].search([], order='date_from')[0]
+        self.assertRecordValues(
+            new_return,
+            [{
+                'company_id': self.env.company.id,
+                'type_id': self.basic_return_type.id,
+            }]
+        )
+        self.assert_return_dates_equal(
+            new_return,
+            [("2023-12-01", "2023-12-31")]
+        )
+
+    def test_return_manual_creation_wizard_multiple_returns(self):
+        original_number_of_returns = self.env['account.return'].search_count([])
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'date_from': '2023-10-01',
+            'date_to': '2023-12-31',
+            'return_type_id': self.basic_return_type.id,
+        }])
+        wizard.action_create_manual_account_returns()
+
+        new_number_of_returns = self.env['account.return'].search_count([])
+        self.assertEqual(new_number_of_returns, original_number_of_returns + 3)
+
+        new_returns = self.env['account.return'].search([], order='date_from')[:3]
+        self.assertEqual(new_returns.company_id.id, self.env.company.id)
+        self.assertEqual(new_returns.type_id.id, self.basic_return_type.id)
+        self.assert_return_dates_equal(
+            new_returns,
+            [
+                ("2023-10-01", "2023-10-31"),
+                ("2023-11-01", "2023-11-30"),
+                ("2023-12-01", "2023-12-31"),
+            ]
+        )
+
+    def test_return_manual_creation_wizard_wrong_dates(self):
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'date_from': '2023-10-15',
+            'date_to': '2023-12-31',
+            'return_type_id': self.basic_return_type.id,
+        }])
+        self.assertEqual(wizard.show_warning_wrong_dates, True)
+        wizard.write({
+            'date_from': '2023-12-01',
+        })
+        self.assertEqual(wizard.show_warning_wrong_dates, False)
+
+    def test_return_manual_creation_wizard_warning_existing_return(self):
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'date_from': '2023-12-01',
+            'date_to': '2023-12-31',
+            'return_type_id': self.basic_return_type.id,
+        }])
+
+        self.assertEqual(wizard.show_warning_existing_return, False)
+        wizard.action_create_manual_account_returns()
+
+        new_wizard = self.env['account.return.creation.wizard'].create([{
+            'date_from': '2023-12-01',
+            'date_to': '2023-12-31',
+            'return_type_id': self.basic_return_type.id,
+        }])
+        self.assertEqual(new_wizard.show_warning_existing_return, True)

@@ -147,7 +147,7 @@ class OSSTaxReportTest(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_eu_oss_reports.eu_oss_sales_tax_return_type').id,
             'company_id': self.env.company.id,
         })
-        tax_return.action_review()
+        tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
             wizard_action = tax_return.action_submit()
             self.env[wizard_action['res_model']].browse(wizard_action['res_id']).action_proceed_with_submission()
