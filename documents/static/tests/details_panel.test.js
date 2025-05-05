@@ -212,3 +212,22 @@ test("Details panel root folder placeholders", async () => {
         { message: "Document should have correct root folder placeholder (viewers)." }
     );
 });
+
+test("Details panel should be updated when clearing a selection", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        makeDocumentRecordData(2, "Test file", { folder_id: 1 }),
+    ]);
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView({ arch: archWithTags });
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    for (const documentName of ["Folder 1", "Test file"]) {
+        await contains(`.o_kanban_record:contains('${documentName}')`).click();
+        await animationFrame();
+        expect(dp(".o_documents_details_panel_name input")).toHaveCount(1);
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue(documentName);
+    }
+    // Clearing a selection.
+    await contains(".o_unselect_all").click();
+    expect(dp(".o_documents_details_panel_name input")).toHaveCount(1);
+    expect(dp(".o_documents_details_panel_name input")).toHaveValue("Folder 1");
+});

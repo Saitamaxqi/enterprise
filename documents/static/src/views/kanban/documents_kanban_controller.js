@@ -1,5 +1,6 @@
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
 import { DocumentsControllerMixin } from "@documents/views/documents_controller_mixin";
+import { DocumentsSelectionBox } from "@documents/views/selection_box/documents_selection_box";
 import { onWillRender, useEffect, useRef, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
@@ -10,6 +11,7 @@ export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanCo
     static components = {
         ...KanbanController.components,
         Dropdown,
+        SelectionBox: DocumentsSelectionBox,
     };
     setup() {
         preSuperSetup();

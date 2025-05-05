@@ -3,6 +3,7 @@ import { useService } from "@web/core/utils/hooks";
 import { ListController } from "@web/views/list/list_controller";
 import { DocumentsControllerMixin } from "@documents/views/documents_controller_mixin";
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
+import { DocumentsSelectionBox } from "@documents/views/selection_box/documents_selection_box";
 import { useEffect, useRef, useState } from "@odoo/owl";
 
 export class DocumentsListController extends DocumentsControllerMixin(ListController) {
@@ -10,6 +11,7 @@ export class DocumentsListController extends DocumentsControllerMixin(ListContro
     static components = {
         ...ListController.components,
         Dropdown,
+        SelectionBox: DocumentsSelectionBox,
     };
     setup() {
         preSuperSetup();

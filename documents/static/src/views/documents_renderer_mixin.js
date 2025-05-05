@@ -1,6 +1,6 @@
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
-import { useService } from "@web/core/utils/hooks";
+import { useService, useBus } from "@web/core/utils/hooks";
 import { onWillRender, onWillUpdateProps, useComponent, useEffect, useState } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
@@ -57,6 +57,9 @@ export const DocumentsRendererMixin = (component) =>
                     this.refreshFocus = false;
                     this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord());
                 }
+            });
+            useBus(this.documentService.bus, "UPDATE-DOCUMENT-FOLDER", (ev) => {
+                this.documentService.focusRecord(this.getContainerRecord());
             });
         }
         /**
