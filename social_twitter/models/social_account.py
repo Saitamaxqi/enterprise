@@ -205,21 +205,13 @@ class SocialAccount(models.Model):
 
     def _init_twitter_upload(self, image):
         data = {
-            'command': 'INIT',
             'total_bytes': image['file_size'],
             'media_category': 'tweet_gif' if image['mimetype'] == 'image/gif' else 'tweet_image',
             'media_type': image['mimetype'],
         }
-        headers = self._get_twitter_oauth_header(
-            TWITTER_IMAGES_UPLOAD_ENDPOINT,
-            params=data
-        )
-        result = requests.post(
-            TWITTER_IMAGES_UPLOAD_ENDPOINT,
-            data=data,
-            headers=headers,
-            timeout=5
-        )
+        url_endpoint = f"{TWITTER_IMAGES_UPLOAD_ENDPOINT}/initialize"
+        headers = self._get_twitter_oauth_header(url_endpoint)
+        result = requests.post(url_endpoint, json=data, headers=headers, timeout=5)
         if not result.ok:
             # unfortunately Twitter does not return a proper error code so we have to rely on the error message
             # last known max file size for the API is 20MB
@@ -229,38 +221,13 @@ class SocialAccount(models.Model):
         return result.json().get('data').get('id')
 
     def _process_twitter_upload(self, image, media_id):
-        params = {
-            'command': 'APPEND',
-            'media_id': media_id,
-            'segment_index': 0,
-        }
-        files = {
-            'media': image['bytes']
-        }
-        headers = self._get_twitter_oauth_header(
-            TWITTER_IMAGES_UPLOAD_ENDPOINT,
-            params=params
-        )
-        requests.post(
-            TWITTER_IMAGES_UPLOAD_ENDPOINT,
-            params=params,
-            files=files,
-            headers=headers,
-            timeout=15
-        )
+        files = {'media': image['bytes']}
+        data = {"segment_index": 0}
+        url_endpoint = f"{TWITTER_IMAGES_UPLOAD_ENDPOINT}/{media_id}/append"
+        headers = self._get_twitter_oauth_header(url_endpoint)
+        requests.post(url_endpoint, files=files, data=data, headers=headers, timeout=15)
 
     def _finish_twitter_upload(self, media_id):
-        data = {
-            'command': 'FINALIZE',
-            'media_id': media_id,
-        }
-        headers = self._get_twitter_oauth_header(
-            TWITTER_IMAGES_UPLOAD_ENDPOINT,
-            params=data
-        )
-        requests.post(
-            TWITTER_IMAGES_UPLOAD_ENDPOINT,
-            data=data,
-            headers=headers,
-            timeout=5
-        )
+        url_endpoint = f"{TWITTER_IMAGES_UPLOAD_ENDPOINT}/{media_id}/finalize"
+        headers = self._get_twitter_oauth_header(url_endpoint)
+        requests.post(url_endpoint, headers=headers, timeout=5)
