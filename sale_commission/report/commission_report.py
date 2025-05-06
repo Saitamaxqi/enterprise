@@ -109,7 +109,11 @@ class SaleCommissionReport(models.Model):
 WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
 achievement AS (
     SELECT
-        (era.plan_id * 10^13 + u.user_id + 10^5 * to_char(era.date_from, 'YYMMDD')::integer)::bigint AS id,
+        (
+            COALESCE(era.plan_id, 0) * 10^13 +
+            COALESCE(u.user_id, 0) +
+            10^5 * COALESCE(to_char(era.date_from, 'YYMMDD')::integer, 0)
+        )::bigint AS id,
         era.id AS target_id,
         era.plan_id AS plan_id,
         u.user_id AS user_id,
