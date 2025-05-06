@@ -18,7 +18,7 @@ class HelpdeskTicketConvertWizard(models.TransientModel):
         # This method is meant to be overridden.
         return False
 
-    project_id = fields.Many2one('project.project', string='Project')
+    project_id = fields.Many2one('project.project', string='Project', domain=[('is_template', '=', False)])
     stage_id = fields.Many2one('project.task.type', string='Stage', domain="[('project_ids', 'in', project_id)]",
         compute='_compute_default_stage', readonly=False, store=True, required=True)
 

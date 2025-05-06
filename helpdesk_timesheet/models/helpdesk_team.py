@@ -8,7 +8,7 @@ from odoo import api, Command, fields, models, _
 class HelpdeskTeam(models.Model):
     _inherit = 'helpdesk.team'
 
-    project_id = fields.Many2one("project.project", string="Project", ondelete="restrict", domain="[('allow_timesheets', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+    project_id = fields.Many2one("project.project", string="Project", ondelete="restrict", domain="[('allow_timesheets', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id), ('is_template', '=', False)]",
         index='btree_not_null',
         help="Project to which the timesheets of this helpdesk team's tickets will be linked.")
     timesheet_encode_uom_id = fields.Many2one('uom.uom', related='company_id.timesheet_encode_uom_id', export_string_translation=False)

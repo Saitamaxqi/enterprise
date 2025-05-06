@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, _
+from odoo import models
 
 
 class ProjectTask(models.Model):
@@ -13,11 +13,20 @@ class ProjectTask(models.Model):
                 'tag': 'display_notification',
                 'params': {
                     'type': 'warning',
-                    'message': _('Recurring tasks cannot be converted into tickets.'),
+                    'message': self.env._('Recurring tasks cannot be converted into tickets.'),
+                }
+            }
+        if any(task.is_template for task in self):
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'warning',
+                    'message': self.env._('Tasks templates cannot be converted into tickets.'),
                 }
             }
         return {
-            'name': _('Convert to Ticket'),
+            'name': self.env._('Convert to Ticket'),
             'view_mode': 'form',
             'res_model': 'project.task.convert.wizard',
             'views': [(False, 'form')],

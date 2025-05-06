@@ -10,7 +10,7 @@ class PlanningSlot(models.Model):
     _inherit = 'planning.slot'
 
     project_id = fields.Many2one(
-        'project.project', string="Project", compute='_compute_project_id', store=True,
+        'project.project', string="Project", compute='_compute_project_id', domain=[('is_template', '=', False)], store=True,
         readonly=False, copy=True, check_company=True, group_expand='_read_group_project_id',
     )
 

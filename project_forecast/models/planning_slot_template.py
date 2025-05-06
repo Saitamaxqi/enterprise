@@ -6,7 +6,7 @@ from odoo import api, fields, models
 class PlanningSlotTemplate(models.Model):
     _inherit = 'planning.slot.template'
 
-    project_id = fields.Many2one('project.project', string="Project", copy=True)
+    project_id = fields.Many2one('project.project', string="Project", copy=True, domain=[('is_template', '=', False)])
     company_id = fields.Many2one('res.company', related='project_id.company_id')
 
     @api.depends('project_id')

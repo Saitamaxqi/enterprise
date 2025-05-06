@@ -48,10 +48,10 @@
                 </setting>
             </xpath>
             <xpath expr="//page[@name='billing_employee_rate']" position="attributes">
-                <attribute name="invisible">not allow_timesheets and is_fsm or not allow_billable or not partner_id and not is_fsm</attribute>
+                <attribute name="invisible">not allow_timesheets and is_fsm or not allow_billable or not partner_id and not is_fsm or is_template and not is_fsm</attribute>
             </xpath>
              <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="invisible">not allow_billable and not is_fsm</attribute>
+                <attribute name="invisible">(not allow_billable and not is_fsm) or is_template</attribute>
             </xpath>
             <xpath expr="//page[@name='billing_employee_rate']/p/span" position="attributes">
                 <attribute name="invisible">is_fsm</attribute>
@@ -85,7 +85,7 @@
         <field name="inherit_id" ref="sale_project.project_project_view_inherit_project_filter"/>
         <field name="arch" type="xml">
             <field name="sale_order_id" position="attributes">
-                <attribute name="invisible">context.get('fsm_mode')</attribute>
+                <attribute name="invisible">context.get('fsm_mode') or context.get('default_is_template')</attribute>
             </field>
         </field>
     </record>
@@ -102,7 +102,7 @@
                 <field name="is_fsm" column_invisible="True"/>
             </field>
             <field name="partner_id" position="attributes">
-                <attribute name="invisible">not allow_billable and not is_fsm</attribute>
+                <attribute name="invisible">(not allow_billable and not is_fsm) or is_template</attribute>
             </field>
         </field>
     </record>

@@ -15,7 +15,7 @@ class Hr_TimesheetMergeWizard(models.TransientModel):
     unit_amount = fields.Float('Quantity', compute='_compute_unit_amount', readonly=False, store=True)
     encoding_uom_id = fields.Many2one('uom.uom', readonly=True, export_string_translation=False)
 
-    project_id = fields.Many2one('project.project', string='Project')
+    project_id = fields.Many2one('project.project', string='Project', domain=[('is_template', '=', False)])
     task_id = fields.Many2one('project.task', string='Task', domain="[('project_id.allow_timesheets', '=', True), ('project_id', '=?', project_id)]", compute='_compute_task_id', readonly=False, store=True)
     employee_id = fields.Many2one('hr.employee', string='Employee')
 

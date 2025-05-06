@@ -7,7 +7,8 @@ from odoo import models, api, fields
 class HelpdeskTeam(models.Model):
     _inherit = 'helpdesk.team'
 
-    fsm_project_id = fields.Many2one('project.project', string='FSM Project', domain=[('is_fsm', '=', True)],
+    fsm_project_id = fields.Many2one('project.project', string='FSM Project',
+        domain=[('is_fsm', '=', True), ('is_template', '=', False)],
         readonly=False, store=True, compute='_compute_fsm_project_id')
 
     @api.depends('use_fsm', 'company_id')

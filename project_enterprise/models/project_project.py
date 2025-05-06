@@ -24,6 +24,6 @@ class ProjectProject(models.Model):
 
     def action_view_tasks(self):
         action = super().action_view_tasks()
-        if self._get_hide_partner():
+        if self._get_hide_partner() or self.is_template:
             action['views'] = [(view_id, view_type) for view_id, view_type in action['views'] if view_type != 'map']
         return action

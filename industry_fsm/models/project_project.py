@@ -101,6 +101,14 @@ class ProjectProject(models.Model):
             ]
         ]
 
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        for project, vals in zip(self, vals_list):
+            if self.env.context.get('copy_from_template') and self.env.context.get('default_is_fsm'):
+                # For a FSM project to be created from template company_id is required constraint
+                vals['company_id'] = self._context.get('default_company_id') or project.company_id.id or self.env.company.id
+        return vals_list
+
     @api.model_create_multi
     def create(self, vals_list):
         fsm_vals_list = [vals for vals in vals_list if vals.get('is_fsm')]
@@ -117,3 +125,16 @@ class ProjectProject(models.Model):
             for vals in fsm_vals_list:
                 vals.setdefault('type_ids', [(Command.set(task_type_ids))])
         return super().create(vals_list)
+
+    def _get_template_default_context_whitelist(self):
+        return [
+            *super()._get_template_default_context_whitelist(),
+            "is_fsm",
+            "allow_material",
+        ]
+
+    def _get_template_field_blacklist(self):
+        res = super()._get_template_field_blacklist()
+        if self._context.get("default_is_fsm"):
+            res.remove("partner_id")
+        return res

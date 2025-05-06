@@ -118,6 +118,7 @@
                     ('company_id', '=?', company_id),
                     ('is_fsm', '=?', context.get('fsm_mode')),
                     ('is_internal_project', '=', False),
+                    ('is_template', 'in', [is_template, False]),
                 ]</attribute>
             </field>
             <xpath expr="//group//field[@name='project_id']" position="attributes">
@@ -132,6 +133,7 @@
                     ('company_id', '=?', company_id),
                     ('is_fsm', '=?', context.get('fsm_mode')),
                     ('is_internal_project', '=', False),
+                    ('is_template', 'in', [is_template, False]),
                 ]</attribute>
             </xpath>
         </field>
@@ -184,7 +186,7 @@
             </field>
             <field name="user_ids" position="before">
                 <field name="is_fsm" invisible="1"/>
-                <field name="partner_id" invisible="not is_fsm" required="is_fsm" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
+                <field name="partner_id" invisible="not is_fsm or is_template" required="is_fsm" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
             </field>
         </field>
     </record>

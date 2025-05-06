@@ -10,7 +10,7 @@ class HelpdeskCreateFsmTask(models.TransientModel):
     helpdesk_ticket_id = fields.Many2one('helpdesk.ticket', string='Related ticket', required=True)
     company_id = fields.Many2one(related='helpdesk_ticket_id.company_id', export_string_translation=False)
     name = fields.Char('Title', required=True)
-    project_id = fields.Many2one('project.project', string='Project', help='Project in which to create the task', required=True, domain="[('company_id', '=', company_id), ('is_fsm', '=', True)]")
+    project_id = fields.Many2one('project.project', string='Project', help='Project in which to create the task', required=True, domain="[('company_id', '=', company_id), ('is_fsm', '=', True), ('is_template', '=', False)]")
     partner_id = fields.Many2one('res.partner', string='Customer', help="Ticket's customer, will be linked to the task", required=True, domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
 
     @api.model

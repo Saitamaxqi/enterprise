@@ -58,4 +58,17 @@
             </field>
         </field>
     </record>
+
+    <record id="project_templates_view_gantt" model="ir.ui.view">
+        <field name="name">project.project.template.gantt</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_enterprise.project_project_view_gantt"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <gantt position="attributes">
+                <attribute name="js_class"></attribute>
+            </gantt>
+        </field>
+    </record>
+
 </odoo>
