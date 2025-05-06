@@ -177,12 +177,15 @@ class PlanningSlot(models.Model):
             slots_written += self.create(sale_order_slots_to_plan)
 
         slots_to_unlink = PlanningShift
+        slots_to_post_process = self
         for slot in self:
-            if not slot.exists() or slot.sale_line_id and not slot.start_datetime \
+            if not slot.exists():
+                slots_to_post_process -= slot
+            elif slot.sale_line_id and not slot.start_datetime \
                 and float_utils.float_compare(slot.allocated_hours, 0.0, precision_digits=2) < 1:
-                slots_to_unlink |= slot
-        if (self - slots_to_unlink).sale_line_id:
-            (self - slots_to_unlink).sale_line_id.sudo()._post_process_planning_sale_line(ids_to_exclude=self.ids)
+                slots_to_unlink += slot
+        if (slots_to_post_process - slots_to_unlink).sale_line_id:
+            (slots_to_post_process - slots_to_unlink).sale_line_id.sudo()._post_process_planning_sale_line(ids_to_exclude=self.ids)
         slots_to_unlink.unlink()
         return slots_written - slots_to_unlink
 
