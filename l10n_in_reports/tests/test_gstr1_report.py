@@ -9,7 +9,7 @@ from odoo.addons.l10n_in_reports.tests.common import L10nInTestAccountReportsCom
 
 _logger = logging.getLogger(__name__)
 TEST_DATE = date(2023, 5, 20)
-HSN_CHANGE_TEST_DATE = date(2025, 4, 11)
+HSN_CHANGE_TEST_DATE = date(2025, 5, 11)
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')

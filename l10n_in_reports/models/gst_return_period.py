@@ -13,7 +13,8 @@ from markupsafe import Markup
 from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
 
 from odoo.exceptions import UserError, AccessError, ValidationError, RedirectWarning
-from odoo.tools import date_utils, get_lang, html_escape, SQL
+from odoo.tools import date_utils, get_lang, html_escape
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.tools.misc import format_date
 from odoo.addons.l10n_in_reports.tools.gstr1_spreadsheet_generator import GSTR1SpreadsheetGenerator
 from .irn_exception import IrnException
@@ -533,6 +534,14 @@ class L10n_InGstReturnPeriod(models.Model):
             })
         return tax_vals_map
 
+    def _get_hsn_new_schema_apply_date(self):
+        # TODO: Remove this fallback once the government finalizes the official HSN schema date.
+        fallback_value = date(2025, 5, 1)
+        try:
+            param_value = self.env['ir.config_parameter'].sudo().get_param('l10n_in_reports.hsn_new_schema_apply_date')
+            return datetime.strptime(param_value, DF).date() if param_value else fallback_value
+        except (ValueError, TypeError):
+            return fallback_value
 
     def _get_gstr1_hsn_json(self, journal_items, tax_details_by_move):
         # TO OVERRIDE on Point of sale for get details by product
@@ -556,7 +565,8 @@ class L10n_InGstReturnPeriod(models.Model):
         uoms = self.env['uom.uom'].browse(journal_items.product_uom_id.ids)
         uoms.fetch(['l10n_in_code'])
         hsn_json = {}
-        if self.start_date < date(2025, 4, 1):
+        hsn_new_schema_apply_date = self._get_hsn_new_schema_apply_date()
+        if self.start_date < hsn_new_schema_apply_date:
             hsn_json = {'data': {}}
         else:
             hsn_json = {'hsn_b2b': {}, 'hsn_b2c': {}}
