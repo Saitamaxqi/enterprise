@@ -1424,6 +1424,9 @@ class DocumentsDocument(models.Model):
         folder = self.env['documents.document'].browse(custom_values.get('folder_id'))
 
         custom_values['name'] = _('Mail: %s', msg_dict.get('subject'))
+        if 'company_id' not in custom_values:
+            custom_values['company_id'] = folder.company_id.id
+
         if 'tag_ids' not in custom_values:
             custom_values['tag_ids'] = folder.alias_tag_ids.ids
 
@@ -1479,6 +1482,7 @@ class DocumentsDocument(models.Model):
                 'name': attachment.name,
                 'attachment_id': attachment.id,
                 'folder_id': self.folder_id.id,
+                'company_id': self.folder_id.company_id.id,
                 'owner_id': self.folder_id.owner_id.id,
                 'partner_id': self.partner_id.id,
                 'tag_ids': self.tag_ids.ids,

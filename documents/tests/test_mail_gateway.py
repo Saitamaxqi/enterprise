@@ -30,6 +30,14 @@ class TestMailGateway(MailCommon):
             'alias_name': 'inbox-test',
         })
 
+        cls.folder_2 = cls.env['documents.document'].create({
+            'name': 'folder',
+            'type': 'folder',
+            'alias_tag_ids': False,
+            'alias_name': 'inbox-test-2',
+            'company_id': cls.company_2.id
+        })
+
         # edit the alias tags after the alias has been created
         cls.folder.alias_tag_ids = cls.tag.ids
 
@@ -56,6 +64,21 @@ class TestMailGateway(MailCommon):
                 MAIL_EML_ATTACHMENT,
                 email_from,
                 f'inbox-test@{self.alias_domain}',
+                subject='Test document creation on incoming mail',
+                target_model='documents.document',
+                references=references or '<f3b9f8f8-28fa-2543-cab2-7aa68f679ebb@odoo.com>',
+                msg_id=msg_id or '<cb7eaf62-58dc-2017-148c-305d0c78892f@odoo.com>',
+            )
+        documents = self.env['documents.document'].search([('name', 'in', self.email_filenames)])
+        self.assertEqual(len(documents), len(self.email_filenames))
+        return documents
+
+    def send_test_mail_with_attachment_on_different_company(self, email_from, msg_id=None, references=None):
+        with self.mock_mail_gateway():
+            self.format_and_process(
+                MAIL_EML_ATTACHMENT,
+                email_from,
+                f'inbox-test-2@{self.alias_domain_c2_name}',
                 subject='Test document creation on incoming mail',
                 target_model='documents.document',
                 references=references or '<f3b9f8f8-28fa-2543-cab2-7aa68f679ebb@odoo.com>',
@@ -334,3 +357,7 @@ class TestMailGateway(MailCommon):
         self.assertTrue(document.attachment_id)
         self.assertEqual(document.mimetype, 'application/documents-email')
         self.assertNotIn('<script>alert("XSS!")</script>', document.raw.decode())
+
+    def test_send_attachment_email_multi_company(self):
+        for document in self.send_test_mail_with_attachment_on_different_company(self.pre_existing_partner.email):
+            self.assertIsNotNone(document)
