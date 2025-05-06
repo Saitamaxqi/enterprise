@@ -8,7 +8,7 @@ import requests
 import string
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, time
 from json.decoder import JSONDecodeError
 from lxml import etree
 from odoo.tools.zeep import Client, Transport
@@ -660,14 +660,22 @@ class L10n_Mx_EdiDocument(models.Model):
         return datetime.now(tz)
 
     @api.model
-    def _add_date_cfdi_values(self, cfdi_values, document_date, journal=None):
+    def _add_date_cfdi_values(self, cfdi_values, document_date, journal=None, document_post_time=None):
         """ Add the values about the date of the document to 'cfdi_values'.
 
-        :param cfdi_values:     The current CFDI values.
-        :param document_date:   The date of the document.
-        :param journal:         (deprecated) An optional accounting journal to retrieve the custom timezone from it.
+        :param cfdi_values:        The current CFDI values.
+        :param document_date:      The date of the document.
+        :param journal:            An optional accounting journal to retrieve the custom timezone from it.
+        :param document_post_time: An optional exact time of sending the document if available.
         """
-        cfdi_values['fecha'] = document_date.strftime(CFDI_DATE_FORMAT)
+        if not document_post_time:
+            document_post_time = self._get_datetime_now_with_mx_timezone(cfdi_values, journal).replace(tzinfo=None)
+
+        document_date = datetime.combine(document_date, time(hour=23, minute=59, second=00))
+        cfdi_date = min(document_date, document_post_time)
+
+        cfdi_values['fecha'] = cfdi_date.strftime(CFDI_DATE_FORMAT)
+        cfdi_values['fecha_datetime'] = cfdi_date
 
     @api.model
     def _add_payment_policy_cfdi_values(self, cfdi_values, payment_policy=None, payment_method=None):

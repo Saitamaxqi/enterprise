@@ -2227,7 +2227,18 @@ class TestCFDIInvoice(TestMxEdiCommon):
                     with self.with_mocked_pac_sign_success():
                         invoice._l10n_mx_edi_cfdi_invoice_try_send()
                     document = invoice.l10n_mx_edi_invoice_document_ids.filtered(lambda x: x.state == 'invoice_sent')[:1]
-                    assert_cfdi_date(document, tz, expected_datetime=invoice.l10n_mx_edi_post_time)
+                    assert_cfdi_date(document, tz, expected_datetime=date_in_the_past.replace(hour=23, minute=59, second=0))
+
+                # Invoice created in the past with a date which was then in the future,
+                # which was already attempted to be sent in the past and which we try to resend today
+                with self.mx_external_setup(self.frozen_today):
+                    invoice = self._create_invoice(invoice_date=date_in_the_past)
+                    previous_send_time = (self.frozen_today - relativedelta(days=2)).replace(tzinfo=None)
+                    invoice.l10n_mx_edi_post_time = previous_send_time
+                    with self.with_mocked_pac_sign_success():
+                        invoice._l10n_mx_edi_cfdi_invoice_try_send()
+                    document = invoice.l10n_mx_edi_invoice_document_ids.filtered(lambda x: x.state == 'invoice_sent')[:1]
+                    assert_cfdi_date(document, tz, expected_datetime=previous_send_time)
 
                 with self.mx_external_setup(self.frozen_today):
                     invoice = self._create_invoice(invoice_line_ids=[Command.create({'product_id': self.product.id})])
