@@ -565,3 +565,43 @@ class TestShopFloor(HttpCase):
             if move.product_id.id == comp2.id:
                 self.assertEqual(move.quantity, 10)
                 self.assertTrue(move.picked)
+
+    def test_operator_assigned_to_all_work_orders(self):
+        """
+        Check that, if a custom operator is selected in the side panel, all work orders
+        completed via Shop Floor are assigned to that operator.
+        """
+        employee = self.env['hr.employee'].create([{'name': 'Anita Olivier'}])
+        product = self.env['product.product'].create({'name': 'P', 'is_storable': True})
+        workcenter = self.env['mrp.workcenter'].create({'name': 'Workcenter1'})
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                Command.create({'name': 'OP1', 'workcenter_id': workcenter.id}),
+                Command.create({'name': 'OP2', 'workcenter_id': workcenter.id}),
+            ],
+        })
+        mo = self.env['mrp.production'].create({
+            'product_id': product.id,
+            'product_qty': 1,
+            'bom_id': bom.id,
+        })
+        mo.action_confirm()
+        mo.action_assign()
+        mo.button_plan()
+
+        self.start_tour('/odoo/shop-floor', 'test_operator_assigned_to_all_work_orders', login='admin')
+
+        logs = mo.workorder_ids.time_ids
+        self.assertEqual(len(logs), 2, 'Both operations should be logged.')
+        self.assertEqual(logs[0].employee_id, employee, 'OP1 should be assigned to "Anita Olivier"')
+        self.assertEqual(
+            logs[0].description, 'Time Tracking: Anita Olivier',
+            'The description of OP1 should mention "Anita Olivier"'
+        )
+        self.assertEqual(logs[1].employee_id, employee, 'OP2 should be assigned to "Anita Olivier"')
+        self.assertEqual(
+            logs[1].description, 'Time Tracking: Anita Olivier',
+            'The description of OP2 should mention "Anita Olivier"'
+        )

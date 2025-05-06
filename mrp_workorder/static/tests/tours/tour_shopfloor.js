@@ -827,3 +827,33 @@ registry.category("web_tour.tours").add("test_component_registration_on_split_pr
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_operator_assigned_to_all_work_orders", {
+    steps: () => [
+        // Select workcenter for the station
+        ...stepUtils.openWorkcentersSelector(),
+        ...stepUtils.addWorkcenterToDisplay("Workcenter1"),
+        ...stepUtils.confirmWorkcentersSelection(),
+        //Open the employee panel, select Anita Olivier, close the selector
+        ...stepUtils.openEmployeesList(),
+        ...stepUtils.addEmployee("Anita Olivier"),
+        { trigger: ".modal-footer button.btn-primary", run: "click" },
+        // Select Anita Olivier in the side panel
+        { trigger: ".o_mrp_employees_panel li:contains(Anita Olivier)", run: "click" },
+        { trigger: ".o_mrp_employees_panel li:contains(Anita Olivier).o_admin_user", run() {} },
+        // Switch to Workcenter1
+        ...stepUtils.clickOnWorkcenterButton("Workcenter1"),
+        // Complete both operations
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-header:contains(OP1)) button:contains(Mark as Done)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-header:contains(OP2)) button:contains(Close Production)",
+            run: "click",
+        },
+        { trigger: ".o_nocontent_help", run() {} },
+    ],
+});

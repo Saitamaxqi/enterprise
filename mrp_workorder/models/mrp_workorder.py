@@ -781,13 +781,6 @@ class MrpWorkorder(models.Model):
         self._set_default_time_log(loss_id)
 
     def _set_default_time_log(self, loss_id):
-        if self.env.context.get('mrp_display'):
-            if (self.env.context.get('employee_id')):
-                main_employee_connected = self.env.context.get('employee_id')
-            else:
-                main_employee_connected = self.env['hr.employee'].get_session_owner()
-        else:
-            main_employee_connected = self.env.user.employee_id.id
         productivity = []
         for wo in self:
             if not wo.time_ids:
@@ -796,16 +789,17 @@ class MrpWorkorder(models.Model):
                 date_end = now
                 if not self.env.context.get('mrp_display') and wo.employee_assigned_ids:
                     main_employee_connected = wo.employee_assigned_ids[0].id
+                connected_employee = self._get_connected_employee()
                 productivity.append({
                     'workorder_id': wo.id,
                     'workcenter_id': wo.workcenter_id.id,
-                    'description': _('Time Tracking: %(user)s', user=self.env.user.name),
+                    'description': _('Time Tracking: %(user)s', user=connected_employee.name),
                     'date_start': date_start,
                     'date_end': date_end,
                     'loss_id': loss_id[0].id,
                     'user_id': self.env.user.id,
                     'company_id': wo.company_id.id,
-                    'employee_id': main_employee_connected
+                    'employee_id': connected_employee.id,
                 })
         self.env['mrp.workcenter.productivity'].create(productivity)
 
@@ -845,7 +839,12 @@ class MrpWorkorder(models.Model):
     def _prepare_timeline_vals(self, duration, date_start, date_end=False):
         time_data = super()._prepare_timeline_vals(duration=duration, date_start=date_start, date_end=date_end)
         if self.employee_assigned_ids:
-            time_data['employee_id'] = self.employee_assigned_ids[0].id
+            employee = self.employee_assigned_ids[0]
+        else:
+            employee = self._get_connected_employee()
+
+        time_data['employee_id'] = employee.id
+        time_data['description'] = _('Time Tracking: %(user)s', user=employee.name)
         return time_data
 
     def set_qty_producing(self):
@@ -880,3 +879,15 @@ class MrpWorkorder(models.Model):
                 new_check._insert_in_chain('before', first_check)
             else:
                 self.current_quality_check_id = new_check
+
+    def _get_connected_employee(self):
+        if self.env.context.get('mrp_display'):
+            if (self.env.context.get('employee_id')):
+                connected_employee_id = self.env.context.get('employee_id')
+            else:
+                connected_employee_id = self.env['hr.employee'].get_session_owner()
+            connected_employee = self.env['hr.employee'].browse(connected_employee_id)
+        else:
+            connected_employee = self.env.user.employee_id
+
+        return connected_employee
