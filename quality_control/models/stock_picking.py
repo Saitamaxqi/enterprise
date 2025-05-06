@@ -49,7 +49,7 @@ class StockPicking(models.Model):
         else:
             checkable_lines = self.move_line_ids.filtered(
             lambda ml: (
-                ml.move_id.picked and
+                (not self.env.context.get('picking_validation') or ml.move_id.picked) and
                 not float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)
             ))
         checkable_products = checkable_lines.product_id
@@ -79,7 +79,7 @@ class StockPicking(models.Model):
         if res is True:
             pickings_to_check_quality = self._check_for_quality_checks()
             if pickings_to_check_quality:
-                return pickings_to_check_quality.with_context(pickings_to_check_quality=pickings_to_check_quality.ids).check_quality()
+                return pickings_to_check_quality.with_context(picking_validation=True, pickings_to_check_quality=pickings_to_check_quality.ids).check_quality()
         return res
 
     def _check_for_quality_checks(self):

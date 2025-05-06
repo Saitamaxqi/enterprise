@@ -951,8 +951,8 @@ class TestQualityCheck(TestQualityCommon):
             'test_type_id': self.env.ref('quality_control.test_type_measure').id,
             'measure_on': 'move_line',
         })
-        (self.product_2 | self.product_3).is_storable = True
-        self.product_2.tracking = 'serial'
+        (self.product_2 | self.product_3 | self.product_4).is_storable = True
+        (self.product_2 | self.product_4).tracking = 'serial'
         # Create incoming shipment.
         picking_in = self.env['stock.picking'].create({
             'picking_type_id': self.picking_type_id,
@@ -960,7 +960,7 @@ class TestQualityCheck(TestQualityCommon):
             'location_id': self.location_id,
             'location_dest_id': self.location_dest_id,
         })
-        move_tracked_product = self.env['stock.move'].create({
+        move_tracked_product_a = self.env['stock.move'].create({
             'product_id': self.product_2.id,
             'product_uom_qty': 1,
             'product_uom': self.product_2.uom_id.id,
@@ -974,10 +974,18 @@ class TestQualityCheck(TestQualityCommon):
             'picking_id': picking_in.id,
             'location_id': self.location_id,
             'location_dest_id': self.location_dest_id})
+        move_tracked_product_b = self.env['stock.move'].create({
+            'product_id': self.product_4.id,
+            'product_uom_qty': 2,
+            'product_uom': self.product_4.uom_id.id,
+            'picking_id': picking_in.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
         # Confirm incoming shipment.
         picking_in.action_confirm()
         # Check Quality Check for incoming shipment is created
-        self.assertEqual(len(picking_in.check_ids), 2)
+        self.assertEqual(len(picking_in.check_ids), 4)
         self.assertTrue(picking_in.quality_check_todo)
         # Set the quantity for the untracked product and complete its quality check.
         move_untracked.quantity = 1
@@ -985,14 +993,36 @@ class TestQualityCheck(TestQualityCommon):
         untracked_check_ids = picking_in.check_ids.filtered(lambda qc: qc.product_id == self.product_3)
         untracked_check_ids.do_pass()
         self.assertEqual(untracked_check_ids.quality_state, 'pass')
+        # Register a quantity of 2 units for your product_b and none for product_a
+        move_tracked_product_a.quantity = 0
+        move_tracked_product_b.quantity = 2
+        tracked_check_ids_to_do = picking_in.check_ids.filtered(lambda qc: qc.product_id == self.product_4)
         self.env.invalidate_all()
-        self.assertFalse(picking_in.check_quality())
-        self.assertEqual(move_tracked_product.quantity, 1)
-        self.assertFalse(move_tracked_product.picked)
+        # Check that clicking on the Quality Check button shows you the QC's related to product_b
+        qc_wizard = Form.from_action(self.env, picking_in.check_quality()).save()
+        self.assertEqual(qc_wizard.check_ids, tracked_check_ids_to_do)
+        # process one of the 2 QC's and keep the second one for validation
+        tracked_check_ids_to_do[0].do_pass()
+        self.assertEqual(tracked_check_ids_to_do[0].quality_state, 'pass')
+        tracked_check_ids_to_do = tracked_check_ids_to_do.filtered(lambda qc: qc.quality_state == 'none')
+        qc_wizard = Form.from_action(self.env, picking_in.check_quality()).save()
+        self.assertEqual(qc_wizard.check_ids, tracked_check_ids_to_do)
+
+        # Set a quantity on the product_a but check only product_b
+        # Clicking on the Quality check button one should see both QC's
+        # -> At validation only the QC's for picked move should be seen
+        move_tracked_product_b.picked = True
+        move_tracked_product_b._generate_serial_numbers("1", next_serial_count=2)
+        move_tracked_product_a.quantity = 1
+        self.assertFalse(move_tracked_product_a.picked)
+        qc_wizard = Form.from_action(self.env, picking_in.check_quality()).save()
+        self.assertEqual(qc_wizard.check_ids, picking_in.check_ids.filtered(lambda qc: qc.quality_state == 'none'))
+
         # Validate incoming shipment.
-        res_dict = picking_in.button_validate()
-        wizard = Form(self.env[res_dict['res_model']].with_context(res_dict['context'])).save()
-        wizard.process()
+        wizard = Form.from_action(self.env, picking_in.button_validate()).save()
+        qc_wizard = Form.from_action(self.env, wizard.process()).save()
+        self.assertEqual(qc_wizard.check_ids, tracked_check_ids_to_do)
+        qc_wizard.do_pass()
         backorder = picking_in.backorder_ids
         self.assertEqual(picking_in.state, 'done')
         self.assertEqual(len(backorder.check_ids), 1)
