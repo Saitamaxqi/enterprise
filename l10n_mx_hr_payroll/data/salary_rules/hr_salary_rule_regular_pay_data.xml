@@ -678,7 +678,7 @@ result = - result_rules['SAVINGS_FUND_EMPLOYER_ALW']['total']
         <field name="condition_select">python</field>
         <field name="condition_python">
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-result = 0 &lt; version.wage &lt;= limit_salary_subsidy
+result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -710,7 +710,7 @@ else:
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
 last_day_of_month = payslip.date_from + relativedelta(day=31)
 split_two_months = payslip.date_from &lt;= last_day_of_month &lt; payslip.date_to
-result = 0 &lt; version.wage &lt;= limit_salary_subsidy and split_two_months
+result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy and split_two_months
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -739,7 +739,7 @@ else:
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
 last_day_of_month = payslip.date_from + relativedelta(day=31)
 end_of_month = payslip.date_from &lt;= last_day_of_month &lt;= payslip.date_to
-result = 0 &lt; version.wage &lt;= limit_salary_subsidy and end_of_month
+result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy and end_of_month
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -781,7 +781,7 @@ else:
         <field name="condition_select">python</field>
         <field name="condition_python">
 limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-result = 0 &lt; version.wage &lt;= limit_salary_subsidy
+result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
