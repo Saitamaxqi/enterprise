@@ -394,26 +394,6 @@ class TestRecurrencySlotGeneration(TestCommonPlanning):
             self.env['planning.recurrency']._cron_schedule_next()
             self.assertEqual(len(self.get_by_employee(self.employee_joseph)), 6, 'second run should not generate any slots')
 
-    @unittest.skip
-    @freeze_time('2019-06-01 08:00:00')
-    def kkktest_slot_remove_all(self):
-        self.configure_recurrency_span(6)
-        initial_start_dt = datetime(2019, 6, 1, 8, 0, 0)
-        initial_end_dt = datetime(2019, 6, 1, 17, 0, 0)
-        slot_values = {
-            'resource_id': self.resource_joseph.id,
-        }
-
-        recurrency = self.env['planning.recurrency'].create({
-            'repeat_interval': 1,
-        })
-        self.assertFalse(self.get_by_employee(self.employee_joseph))
-        recurrency.create_slot(initial_start_dt, initial_end_dt, slot_values)
-
-        self.assertEqual(len(self.get_by_employee(self.employee_joseph)), 27, 'first run has generated 27 slots')
-        recurrency.action_remove_all()
-        self.assertEqual(len(self.get_by_employee(self.employee_joseph)), 0, 'calling remove after on any slot from the recurrency remove all slots linked to the recurrency')
-
     @freeze_time('2020-04-20 08:00:00')
     def test_recurrency_interval_type(self):
         """ Since the recurrency cron is meant to run every week, make sure generation works accordingly when
