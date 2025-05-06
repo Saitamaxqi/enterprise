@@ -73,7 +73,7 @@ class BankReconciliationService {
     }
 
     get statementLineMoveId() {
-        return this.statementLineMove?.[0];
+        return this.statementLineMove?.id;
     }
 }
 

@@ -62,6 +62,8 @@
                     threadModel="'account.move'"
                     compactHeight="true"
                     isChatterAside="!ui.isSmall"
+                    hasParentReloadOnActivityChanged="true"
+                    hasParentReloadOnAttachmentsChanged="true"
                 />
             </div>
         </xpath>
