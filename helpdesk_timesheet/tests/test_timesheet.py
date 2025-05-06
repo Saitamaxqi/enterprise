@@ -1,7 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import logging
+
 from datetime import date, timedelta
 from freezegun import freeze_time
+from unittest.mock import patch
 
 from odoo.tests import tagged, Form
 from odoo.exceptions import ValidationError
@@ -261,10 +264,18 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
             'use_helpdesk_timesheet': False,
         })
 
-        # change the helpdesk_team of the ticket containing non-validated timesheet, to the helpdesk_team without timesheet feature
-        helpdesk_ticket_non_valid.write({'team_id': no_timesheet_helpdesk_team.id})
-        warning = helpdesk_ticket_non_valid._onchange_team_id()
-        self.assertTrue(warning, "A warning should be raised when the ticket's timesheets are not all validated and the newly assigned helpdesk_team has no timesheet feature.")
+        expected_warning = {
+            'title': "Warning",
+            'message': "Moving this task to a helpdesk team without timesheet support will retain timesheet drafts in the original helpdesk team. "
+                            "Although they won't be visible here, you can still edit them using the Timesheets app.",
+            'type': "notification",
+        }
+        with patch.object(logging.getLogger('odoo.tests.form').getChild('onchange'), 'warning') as mock_warning:
+            # change the helpdesk_team of the ticket containing non-validated timesheet, to the helpdesk_team without timesheet feature
+            helpdesk_ticket_form = Form(helpdesk_ticket_non_valid, view="helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet")
+            helpdesk_ticket_form.team_id = no_timesheet_helpdesk_team
+            mock_warning.assert_called_once_with("%(title)s %(message)s", expected_warning)
+            helpdesk_ticket_form.save()
 
         # (2) verify that after the warning, the helpdesk_team is changed
         self.assertEqual(helpdesk_ticket_non_valid.team_id, no_timesheet_helpdesk_team,
