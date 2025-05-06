@@ -139,3 +139,26 @@ class TestFsmFlow(TestIndustryFsmCommon):
         self.assertEqual(self.task.planned_date_begin, datetime(2023, 2, 1, 8, 0, 0))
         self.assertEqual(self.task.date_deadline, datetime(2023, 2, 1, 17, 0, 0))
         self.assertEqual(self.task.allocated_hours, 8)
+
+    def test_start_timer_on_private_project(self):
+        task = self.env['project.task'].create({
+            'name': 'Task A',
+            'project_id': self.project.id,
+            'user_ids': self.project_user.ids,
+        })
+        self.employee_user.user_id = self.project_user
+        self.project_user.group_ids += self.env.ref("hr_timesheet.group_hr_timesheet_user")
+        task_with_employee_user = task.with_user(self.project_user)
+        with self.assertRaises(AccessError):
+            self.project.with_user(self.project_user).read(['name'])
+        task_with_employee_user.action_timer_start()
+        self.assertTrue(task_with_employee_user.user_timer_id)
+        result = task_with_employee_user.action_timer_stop()
+        wizard = self.env[result['res_model']] \
+                     .with_context(result['context']) \
+                     .with_user(self.project_user) \
+                     .new()
+        self.env['project.project'].invalidate_model()
+        wizard.action_save_timesheet()
+        self.assertEqual(wizard.timesheet_id.task_id, task)
+        self.assertEqual(wizard.timesheet_id.project_id, self.project)

@@ -44,7 +44,7 @@ class HrTimesheetStopTimerConfirmationWizard(models.Model):
             )
             if geolocation_message:
                 body += Markup("<br/>") + geolocation_message
-                if latitude and latitude:
+                if latitude and longitude:
                     body += Markup(" <a href='https://maps.google.com?q={latitude},{longitude}' target='_blank'>{label}</a>").format(
                         latitude=latitude,
                         longitude=longitude,
