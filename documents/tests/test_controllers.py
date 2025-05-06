@@ -522,7 +522,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         # Request
         res = self.url_open(self.public_request.access_url)
         res.raise_for_status()
-        self.assertIn("This document has been requested.", res.text)
+        self.assertIn(f'<span>{self.public_request.owner_id.name}</span> is requesting', res.text)
 
     def test_doc_ctrl_thumbnail(self):
         placeholder = self.env['ir.binary']._placeholder(
@@ -638,7 +638,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             "<p>Document created</p>",
         ])
         self.assertEqual(res.status_code, HTTPStatus.SEE_OTHER)  # 303
-        self._assertPathEqual(res.headers.get('Location'), document.access_url)
+        self._assertPathEqual(res.headers.get('Location'), self.public_folder.access_url)
         self.url_open(res.headers['Location']).raise_for_status()
 
         # Upload an image but forge the filename/mimetype to pretend it is text
@@ -681,7 +681,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             "<p>Document created</p>",
         ])
         self.assertEqual(res.status_code, HTTPStatus.SEE_OTHER)  # 303
-        self._assertPathEqual(res.headers.get('Location'), self.public_request.access_url)
+        self._assertPathEqual(res.headers.get('Location'), "/documents/upload/success")
         self.url_open(res.headers['Location']).raise_for_status()
 
         # Reset the request

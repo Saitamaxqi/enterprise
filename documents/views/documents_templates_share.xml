@@ -350,36 +350,40 @@
     <template id="documents.document_request_page" name="Requested Documents Share">
         <t t-call="documents.public_page_layout">
             <t t-set="shareType" t-value="'o_share_files'"/>
-            <h3 class="text-center mb16">
-                This document has been requested.
-                <b onclick="document.querySelector('.o_request_upload').click()" style="cursor:pointer;">Upload it</b>.
-            </h3>
-            <div class="o_docs_single_container">
-                <article class="o_card d-flex mb4 o_request_card " title="">
-                    <figure class="o_card_left d-flex position-relative flex-column flex-nowrap justify-content-between m-0">
-                        <form class="o_hidden" enctype="multipart/form-data" t-attf-action="/documents/upload/#{quote(document.access_token)}" method="POST">
-                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input name="ufile" class="o_request_upload" type="file" onchange="form.submit()"/>
-                        </form>
-                        <div onclick="document.querySelector('.o_request_upload').click()"
-                            class="d-flex align-items-center justify-content-center o_request_icon o_request_allowed">
-                            <i class="fa fa-upload fa-2x"/>
-                        </div>
-                    </figure>
-                    <div class="o_card_content flex-column flex-nowrap d-flex">
-                        <header>
-                            <h3 class="mt4 mb8">
-                                <span t-esc="document.name"/>
-                            </h3>
-                        </header>
-                        <div class="o_card_footer">
-                            <b>
-                                Requested
-                                ∙ <time t-field="document.write_date" t-options="{'format':'MMM d, yyyy'}"/>
-                            </b>
-                        </div>
-                    </div>
-                </article>
+            <form class="o_hidden" enctype="multipart/form-data" t-attf-action="/documents/upload/#{quote(document.access_token)}" method="POST">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input name="ufile" class="o_request_upload" type="file" onchange="form.submit()"/>
+            </form>
+            <div class="shadow-lg text-center bg-white p-3 rounded-3">
+                <span class="fa-stack text-black-25 fa-3x">
+                    <i class="fa fa-circle-thin fa-stack-2x"/>
+                    <i class="fa fa-arrow-up fa-stack-1x"/>
+                </span>
+                <div class="fs-4 text-truncate">
+                    <span t-out="document.owner_id.name"/> is requesting
+                </div>
+                <div class="fs-4 text-truncate">
+                    <b t-esc="document.name"/>
+                </div>
+                <div onclick="document.querySelector('.o_request_upload').click()" title="Add file" class="btn btn-primary rounded-pill">
+                    <i class="fa fa-upload fa-fw"/> Add file
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="documents.document_request_done_page" name="Requested Documents Done">
+        <t t-call="documents.public_page_layout">
+            <t t-set="shareType" t-value="'o_share_files'"/>
+
+            <div class="shadow-lg text-center bg-white p-3 rounded-3">
+                <i class="fa fa-check-circle fa-5x text-success"/>
+                <div class="fs-4">
+                    <b>You're done!</b>
+                </div>
+                <div>
+                    Your upload is successful
+                </div>
             </div>
         </t>
     </template>

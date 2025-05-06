@@ -617,13 +617,16 @@ class ShareRoute(http.Controller):
             res_model = False
             res_id = False
 
+        previous_attachment_id = document_sudo.attachment_id
         document_ids = self._documents_upload(
             document_sudo, files, owner_id, partner_id, res_id, res_model)
-        if len(document_ids) == 1:
+        if document_sudo.type != 'folder' and len(document_ids) == 1:
             document_sudo = document_sudo.browse(document_ids)
 
         if request.env.user._is_public():
-            return request.redirect(document_sudo.access_url)
+            if document_sudo.type == 'folder' or previous_attachment_id:
+                return request.redirect(document_sudo.access_url)
+            return request.redirect('/documents/upload/success')
         else:
             return request.make_json_response(document_ids)
 
@@ -692,6 +695,10 @@ class ShareRoute(http.Controller):
             ))
 
         return document_sudo
+
+    @http.route('/documents/upload/success', type='http', auth='public')
+    def documents_upload_success(self):
+        return request.render('documents.document_request_done_page')
 
     @http.route('/documents/upload_traceback', type='http', methods=['POST'], auth='user')
     def documents_upload_traceback(self, ufile, max_content_length=1 << 20):  # 1MiB
