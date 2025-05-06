@@ -31,11 +31,13 @@ class AccountBankStatementLine(models.Model):
         """
         # EXTEND account
         bank_statement_lines = super().create(vals_list)
+        moves_to_cancel = self.env['account.move']
         for bank_statement_line in bank_statement_lines:
             transaction_details = bank_statement_line.transaction_details or {}
             if not transaction_details.get('is_zero_balancing'):
                 continue
-            bank_statement_line.move_id.button_cancel()
+            moves_to_cancel |= bank_statement_line.move_id
+        moves_to_cancel.button_cancel()
 
         return bank_statement_lines
 
