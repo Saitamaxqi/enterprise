@@ -396,7 +396,7 @@ class TestSignRequest(SignRequestCommon, MockEmail):
     def test_send_request_with_default_sign_template(self):
         sign_request_record = self.create_sign_request_no_item(signer=self.partner_1, cc_partners=self.partner_4)
         activity_type = self.env['mail.activity.type'].create({
-            'name': 'Request Signature',
+            'name': 'Signature',
             'category': 'sign_request',
         })
         activity = self.env['mail.activity'].create({

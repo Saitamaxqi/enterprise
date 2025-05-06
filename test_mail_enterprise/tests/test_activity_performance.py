@@ -232,7 +232,6 @@ class TestActivityPerformance(BaseMailPerformance):
         ])
         self.env.flush_all()
 
-        # todo guce postfreeze: count should be 59
         with self.assertQueryCount(employee=65):
             activities.action_feedback(
                 feedback='Intense feedback',
