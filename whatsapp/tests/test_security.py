@@ -182,7 +182,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "id": self.user_admin.partner_id.id,
                                         "type": "partner",
                                     },
-                                    "thread": {
+                                    "channel_id": {
                                         "id": employee_channel.id,
                                         "model": "discuss.channel",
                                     },
@@ -283,7 +283,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "type": "partner",
                                     },
                                     "seen_message_id": message.id,
-                                    "thread": {
+                                    "channel_id": {
                                         "id": employee_channel.id,
                                         "model": "discuss.channel",
                                     },

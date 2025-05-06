@@ -5,7 +5,8 @@ import { patch } from "@web/core/utils/patch";
 const channelMemberListPatch = {
     canOpenChatWith(member) {
         return (
-            super.canOpenChatWith(member) && member.persona.notEq(member.thread.whatsapp_partner_id)
+            super.canOpenChatWith(member) &&
+            member.persona.notEq(member.channel_id.whatsapp_partner_id)
         );
     },
 };
