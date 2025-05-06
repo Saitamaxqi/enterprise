@@ -71,6 +71,16 @@ FEDEX_MX_STATE_MATCH = {
     'ZAC': 'ZA'
 }
 
+FEDEX_STOCK_TYPE_MATCH = {
+    'PAPER_4X6.75': 'PAPER_4X675',
+    'PAPER_7X4.75': 'PAPER_7X475',
+    'PAPER_8.5X11_BOTTOM_HALF_LABEL': 'PAPER_85X11_BOTTOM_HALF_LABEL',
+    'PAPER_8.5X11_TOP_HALF_LABEL': 'PAPER_85X11_TOP_HALF_LABEL',
+    'STOCK_4X6.75': 'STOCK_4X675',
+    'STOCK_4X6.75_LEADING_DOC_TAB': 'STOCK_4X675_LEADING_DOC_TAB',
+    'STOCK_4X6.75_TRAILING_DOC_TAB': 'STOCK_4X675_TRAILING_DOC_TAB',
+}
+
 class FedexRequest:
     def __init__(self, carrier):
         super_carrier = carrier.sudo()
@@ -87,7 +97,7 @@ class FedexRequest:
         self.check_residential = super_carrier.fedex_rest_residential_address
         self.dropoff_type = super_carrier.fedex_rest_droppoff_type
         self.service_type = super_carrier.fedex_rest_service_type
-        self.label_stock = super_carrier.fedex_rest_label_stock_type
+        self.label_stock = _convert_stock_type(super_carrier.fedex_rest_label_stock_type)
         self.label_file = super_carrier.fedex_rest_label_file_type
         self.duty_payment = super_carrier.fedex_rest_duty_payment
         self.make_return = super_carrier.return_label_on_delivery
@@ -625,3 +635,7 @@ def _convert_curr_fdx_iso(code):
 
 def _convert_curr_iso_fdx(code):
     return FEDEX_CURR_MATCH.get(code, code)
+
+
+def _convert_stock_type(stock_type):
+    return FEDEX_STOCK_TYPE_MATCH.get(stock_type, stock_type)
