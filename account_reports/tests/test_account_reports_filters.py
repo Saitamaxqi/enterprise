@@ -1657,3 +1657,157 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
                 'currency_table_period_key': '2024-01-01_2024-06-30',
             },
         )
+
+        # Check filter fallback
+        return_type.deadline_periodicity = 'monthly'
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2024-08-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Aug 2024',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'previous_month',
+                'period': -1,
+                'date_from': '2024-08-01',
+                'date_to': '2024-08-31',
+                'currency_table_period_key': '2024-08-01_2024-08-31',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2023-08-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Aug 2023',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'previous_month',
+                'period': -13,
+                'date_from': '2023-08-01',
+                'date_to': '2023-08-31',
+                'currency_table_period_key': '2023-08-01_2023-08-31',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2021-08-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Aug 2021',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'previous_month',
+                'period': -37,
+                'date_from': '2021-08-01',
+                'date_to': '2021-08-31',
+                'currency_table_period_key': '2021-08-01_2021-08-31',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2025-08-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Aug 2025',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'next_month',
+                'period': 11,
+                'date_from': '2025-08-01',
+                'date_to': '2025-08-31',
+                'currency_table_period_key': '2025-08-01_2025-08-31',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2025-02-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Feb 2025',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'next_month',
+                'period': 5,
+                'date_from': '2025-02-01',
+                'date_to': '2025-02-28',
+                'currency_table_period_key': '2025-02-01_2025-02-28',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2024-12-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Dec 2024',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'next_month',
+                'period': 3,
+                'date_from': '2024-12-01',
+                'date_to': '2024-12-31',
+                'currency_table_period_key': '2024-12-01_2024-12-31',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2023-11-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Nov 2023',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'previous_month',
+                'period': -10,
+                'date_from': '2023-11-01',
+                'date_to': '2023-11-30',
+                'currency_table_period_key': '2023-11-01_2023-11-30',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2023-03-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Mar 2023',
+                'period_type': 'month',
+                'mode': 'range',
+                'filter': 'previous_month',
+                'period': -18,
+                'date_from': '2023-03-01',
+                'date_to': '2023-03-31',
+                'currency_table_period_key': '2023-03-01_2023-03-31',
+            },
+        )
+
+        return_type.deadline_periodicity = 'trimester'
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2023-03-01', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Jan - Mar 2023',
+                'period_type': 'quarter',
+                'mode': 'range',
+                'filter': 'previous_quarter',
+                'period': -6,
+                'date_from': '2023-01-01',
+                'date_to': '2023-03-31',
+                'currency_table_period_key': '2023-01-01_2023-03-31',
+            },
+        )
+
+        self._assert_filter_date(
+            generic_tax_report,
+            {'date': {'date_to': '2022-12-31', 'filter': 'custom_return_period'}},
+            {
+                'string': 'Oct - Dec 2022',
+                'period_type': 'quarter',
+                'mode': 'range',
+                'filter': 'previous_quarter',
+                'period': -7,
+                'date_from': '2022-10-01',
+                'date_to': '2022-12-31',
+                'currency_table_period_key': '2022-10-01_2022-12-31',
+            },
+        )
