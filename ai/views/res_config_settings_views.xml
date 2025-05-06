@@ -6,18 +6,22 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <app data-string="AI" string="AI" name="ai"> 
+                <app data-string="AI" string="AI" name="ai">
                     <block title="Providers" name="ai_providers">
-                        <setting id="openai_provider" string="OpenAI" help="Provide your OpenAI API key" groups="base.group_system">
+                        <setting id="openai_provider" string="Use your own ChatGPT account" help="Provide your API key to connect with your account" groups="base.group_system">
                             <field name="openai_key_enabled" />
                             <group invisible="not openai_key_enabled">
-                                <field name="openai_key" password="True" />
+                                <div class="flex-grow-1">
+                                    <field name="openai_key" placeholder="Key" password="True" nolabel="1" class="w-100"/>
+                                </div>
                             </group>
                         </setting>
-                        <setting id="google_provider" string="Google" help="Provide your Google API keys" groups="base.group_system">
+                        <setting id="google_provider" string="Use your own Google Gemini account" help="Provide your API key to connect with your account" groups="base.group_system">
                             <field name="google_key_enabled" />
                             <group invisible="not google_key_enabled">
-                                <field name="google_key" password="True" />
+                                <div class="flex-grow-1">
+                                    <field name="google_key" placeholder="Key" password="True" nolabel="1" class="w-100"/>
+                                </div>
                             </group>
                         </setting>
                     </block>

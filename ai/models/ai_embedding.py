@@ -4,8 +4,9 @@ import logging
 from odoo import api, fields, models
 from odoo.tools import SQL
 
-from ..orm.field_vector import Vector
-from ..utils.llm_api_service import LLMApiService
+from odoo.addons.ai.orm.field_vector import Vector
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.addons.ai.utils.llm_providers import EMBEDDING_MODELS_SELECTION, get_provider_for_embedding_model
 
 _logger = logging.getLogger(__name__)
 
@@ -23,11 +24,16 @@ class AIEmbedding(models.Model):
     )
     sequence = fields.Integer(string="Sequence", default=10)
     content = fields.Text(string="Chunk Content", required=True)
+    embedding_model = fields.Selection(selection=EMBEDDING_MODELS_SELECTION, string="Embedding Model", required=True)
     embedding_vector = Vector(size=1536)
     _embedding_vector_idx = models.Index("USING ivfflat (embedding_vector vector_cosine_ops)")
 
     @api.model
-    def _get_similar_chunks(self, query_embedding, attachment_ids, top_n=5):
+    def _get_dimensions(self):
+        return self._fields['embedding_vector'].size
+
+    @api.model
+    def _get_similar_chunks(self, query_embedding, attachment_ids, embedding_model, top_n=5):
         if not attachment_ids:
             return self
         # Execute the SQL query to find similar embeddings within the specified attachments
@@ -37,11 +43,11 @@ class AIEmbedding(models.Model):
                         id,
                         1 - (embedding_vector <=> %s::vector) AS similarity
                     FROM ai_embedding
-                    WHERE attachment_id = ANY(%s)
+                    WHERE attachment_id = ANY(%s) AND embedding_model = %s
                     ORDER BY similarity DESC
                     LIMIT %s;
                 ''',
-                query_embedding, attachment_ids, top_n)
+                query_embedding, attachment_ids, embedding_model, top_n)
             )
         )
 
@@ -54,7 +60,12 @@ class AIEmbedding(models.Model):
         self.env['ir.cron']._commit_progress(remaining=len(missing_embeddings))
         for embedding in missing_embeddings:
             _logger.info("Computing embedding for record %s, content length: %s", embedding.id, len(embedding.content or ""))
-            response = LLMApiService(env=self.env, provider='openai').get_embedding(input=embedding.content)
+            provider = get_provider_for_embedding_model(self.env, embedding.embedding_model)
+            response = LLMApiService(env=self.env, provider=provider).get_embedding(
+                input=embedding.content,
+                dimensions=self._get_dimensions(),
+                model=embedding.embedding_model,
+            )
             embedding.embedding_vector = response['data'][0]['embedding']
             if not self.env['ir.cron']._commit_progress(1):
                 break

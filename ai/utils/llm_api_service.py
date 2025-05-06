@@ -36,9 +36,9 @@ class LLMApiService:
         self.provider = provider
         base_url = None
         if self.provider == 'openai':
-            base_url = "https://api.openai.com"
+            base_url = "https://api.openai.com/v1"
         elif self.provider == 'google':
-            base_url = "https://generativelanguage.googleapis.com"
+            base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
 
         self.base_url = base_url
         self.env = env
@@ -109,7 +109,7 @@ class LLMApiService:
 
         return self._request(
             'post',
-            '/v1/chat/completions',
+            '/chat/completions',
             self._get_base_headers(),
             body,
         )
@@ -117,9 +117,9 @@ class LLMApiService:
     def get_embedding(
         self,
         input: str | list[str] | list[int] | list[list[int]],
+        dimensions: int,
         model: str = 'text-embedding-3-small',
         encoding_format: str | None = None,
-        dimensions: int | None = None,
         user: str | None = None,
     ) -> EmbeddingResponse:
         body = {
@@ -132,7 +132,7 @@ class LLMApiService:
 
         return self._request(
             'post',
-            '/v1/embeddings',
+            '/embeddings',
             self._get_base_headers(),
             body,
         )

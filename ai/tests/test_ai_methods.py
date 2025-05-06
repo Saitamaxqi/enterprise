@@ -2,9 +2,10 @@
 
 from unittest.mock import patch
 
-from odoo.tests import TransactionCase
+from odoo.tests import TransactionCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestAIMethods(TransactionCase):
     @patch("odoo.addons.ai.models.ai_agent.AIAgent._generate_response")
     def test_ai_methods_call_without_error(self, mock_generate_response):
@@ -36,3 +37,8 @@ class TestAIMethods(TransactionCase):
         result = agent.get_direct_response("Direct prompt")
         self.assertTrue(mock_generate_response.called)
         self.assertEqual(result, ["Mocked response"])
+
+    def test_ai_agent_allow_duplicate(self):
+        agent = self.env["ai.agent"].create({"name": "Test Agent"})
+        agent_copy = agent.copy()
+        self.assertEqual(agent_copy.name, "Test Agent (copy)")

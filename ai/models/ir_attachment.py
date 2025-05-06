@@ -57,7 +57,7 @@ class IrAttachment(models.Model):
         paragraphs = [re.sub(r'[ \t]+', ' ', p.strip()) for p in paragraphs]
         return '\n'.join(paragraphs)
 
-    def _generate_embedding(self):
+    def _generate_embedding(self, embedding_model):
         self.ensure_one()
         content = self._compute_pdf_content()
         chunks = self._chunk_text(content if content else self.index_content)
@@ -68,6 +68,7 @@ class IrAttachment(models.Model):
             vals_list.append({
                 'attachment_id': self.id,
                 'content': chunk,
+                'embedding_model': embedding_model,
             })
 
         self.env['ai.embedding'].create(vals_list)

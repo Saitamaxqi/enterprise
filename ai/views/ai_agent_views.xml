@@ -107,7 +107,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="llm_model" widget="radio" options="{'horizontal': true}"/>
+                            <field name="llm_model" widget="selection"/>
                             <field name="response_style" widget="radio" options="{'horizontal': true}"/>
                             <field name="system_prompt" placeholder="e.g. You are a support operator, you can answer questions related to ..."/>
                             <field name="restrict_to_sources"/>

@@ -19,19 +19,10 @@ from odoo.tools.mail import html_to_inner_content
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai.utils.url_scraping import URLScraper
 from odoo.addons.ai.utils.tools_schema.tools import call_ai_tool
+from odoo.addons.ai.utils.llm_providers import PROVIDERS
 
 _logger = logging.getLogger(__name__)
 
-# Pre-prompts and constants
-SELECTION_MODELS = {
-    'openai': [('gpt-3.5-turbo', "GPT-3.5 Turbo"), ('gpt-4', "GPT-4"), ('gpt-4o', "GPT-4o"), ('gpt-4.1', "GPT-4.1"), ('gpt-4.1-mini', "GPT-4.1 Mini")],
-    'google': [('gemini', "Gemini")],
-}
-
-PROVIDERS_MODELS = {
-    provider: {model[0] for model in SELECTION_MODELS[provider]}
-    for provider in SELECTION_MODELS
-}
 
 TEMPERATURE_MAP = {
     'analytical': 0.2,
@@ -70,6 +61,8 @@ PREPROMPTS = {
         5. If a user asks a follow-up question like 'what is this?' or 'tell me more', refer to the conversation history to understand the context and answer accordingly.
 
         6. If no context is provided at all, respond with: 'No source information has been provided for me to reference.'
+
+        7. Avoid using HTML elements in your response.
     """).strip(),
     'context': dedent("""
         - Use the context to answer the question.
@@ -87,8 +80,8 @@ class AIAgent(models.Model):
     @api.model
     def _get_llm_model_selection(self):
         selection = []
-        for available_models in SELECTION_MODELS.values():
-            selection.extend(available_models)
+        for provider in PROVIDERS:
+            selection.extend(provider.llms)
         return selection
 
     name = fields.Char(string="Agent Name", related='partner_id.name', required=True, readonly=False)
@@ -168,9 +161,11 @@ class AIAgent(models.Model):
         if 'partner_id' in vals:
             raise ValidationError(_("The partner linked to an AI agent can't be changed"))
 
+        old_providers = {agent.id: agent._get_provider() for agent in self}
         result = super().write(vals)
         for agent in self:
-            if 'attachment_ids' in vals:
+            new_provider = agent._get_provider()
+            if 'attachment_ids' in vals or new_provider != old_providers.get(agent.id):
                 agent._setup_attachment_embeddings()
 
             if 'urls' in vals:
@@ -184,6 +179,29 @@ class AIAgent(models.Model):
         system_agents = self.filtered('is_system_agent')
         if system_agents:
             raise UserError(_("System agents cannot be deleted."))
+
+    def copy_data(self, default=None):
+        default = dict(default or {})
+        vals_list = super().copy_data(default=default)
+        if 'name' not in default:
+            for agent, vals in zip(self, vals_list):
+                vals['name'] = _("%s (copy)", agent.name)
+        return vals_list
+
+    def _get_provider(self):
+        self.ensure_one()
+        for p in PROVIDERS:
+            if self.llm_model in [m[0] for m in p.llms]:
+                return p.name
+        raise UserError(_("No provider found for the selected model"))
+
+    def _get_embedding_model(self):
+        self.ensure_one()
+        provider = self._get_provider()
+        for p in PROVIDERS:
+            if p.name == provider:
+                return p.embedding_model
+        raise UserError(_("No embedding model found for the selected provider"))
 
     @api.constrains('urls')
     def _check_url(self):
@@ -233,9 +251,9 @@ class AIAgent(models.Model):
         for attachment in self.attachment_ids:
             if attachment.index_content and len(attachment.index_content.split()) > 1:
                 # Check if this attachment already has embeddings
-                existing = self.env['ai.embedding'].search([('attachment_id', '=', attachment.id)], limit=1)
+                existing = self.env['ai.embedding'].search([('attachment_id', '=', attachment.id), ('embedding_model', '=', self._get_embedding_model())], limit=1)
                 if not existing:
-                    attachment._generate_embedding()
+                    attachment._generate_embedding(self._get_embedding_model())
                     trigger_embeddings_cron = True
         if trigger_embeddings_cron:
             self.env.ref('ai.ir_cron_generate_embedding')._trigger()
@@ -283,6 +301,12 @@ class AIAgent(models.Model):
                     self.write({
                         'url_attachment_ids': [Command.link(existing_attachment.id)]
                     })
+                    # When a new url attachment is linked, we need to generate the embedding
+                    # if it doesn't exist yet
+                    existing = self.env['ai.embedding'].search([('attachment_id', '=', existing_attachment.id), ('embedding_model', '=', self._get_embedding_model())], limit=1)
+                    if not existing:
+                        existing_attachment._generate_embedding(self._get_embedding_model())
+                        trigger_embeddings_cron = True
                 continue
 
             # If URL doesn't have an attachment, scrape and create new one
@@ -304,7 +328,7 @@ class AIAgent(models.Model):
             }
 
             new_attachment = self.env['ir.attachment'].create(attachment_values)
-            new_attachment._generate_embedding()
+            new_attachment._generate_embedding(self._get_embedding_model())
             self.write({
                 'url_attachment_ids': [Command.link(new_attachment.id)]
             })
@@ -478,9 +502,7 @@ class AIAgent(models.Model):
         if rag_context := self._build_rag_context(prompt):
             system_messages.extend(rag_context)
         full_conversation = system_messages + (chat_history or []) + [{'role': 'user', 'content': prompt}]
-        provider = next((provider for provider, models in PROVIDERS_MODELS.items() if self.llm_model in models), None)
-        if not provider:
-            raise UserError(_("No provider found for the selected model"))
+        provider = self._get_provider()
         available_tools = self._get_available_ai_tools(provider)
         api_service = LLMApiService(env=self.env, provider=provider)
         response_temperature = TEMPERATURE_MAP[self.response_style]
@@ -569,11 +591,21 @@ class AIAgent(models.Model):
         context = ""
         all_attachments = self.attachment_ids + self.url_attachment_ids
         if all_attachments:
-            response = LLMApiService(env=self.env, provider='openai').get_embedding(input=prompt)
+            provider = self._get_provider()
+            embedding_model = self._get_embedding_model()
+            response = LLMApiService(env=self.env, provider=provider).get_embedding(
+                input=prompt,
+                dimensions=self.env['ai.embedding']._get_dimensions(),
+                model=embedding_model
+            )
+            if not response or "data" not in response:
+                raise UserError(_("Failed to get embeddings for the prompt."))
+
             prompt_embedding = response['data'][0]['embedding']
             similar_embeddings = self.env['ai.embedding']._get_similar_chunks(
                 query_embedding=prompt_embedding,
                 attachment_ids=all_attachments.ids,
+                embedding_model=self._get_embedding_model(),
                 top_n=5
             )
             if similar_embeddings:
@@ -595,16 +627,18 @@ class AIAgent(models.Model):
             n_docs = len(all_attachments)
             if not n_docs:
                 record.attachment_processing_percentage = 100
+                continue
 
+            embedding_model = record._get_embedding_model()
             self.env.cr.execute(SQL(
                 '''
                     SELECT COUNT(DISTINCT attachment_id)
                     FROM ai_embedding
-                    WHERE attachment_id = ANY(%s) AND embedding_vector IS NOT NULL
-                ''', all_attachments.ids)
+                    WHERE attachment_id = ANY(%s) AND embedding_model = %s AND embedding_vector IS NULL
+                ''', all_attachments.ids, embedding_model)
             )
-            processed_count = self.env.cr.fetchall()[0][0]
-            percentage = int(processed_count / n_docs * 100) if n_docs else 0
+            not_fully_processed_count = self.env.cr.fetchall()[0][0]
+            percentage = int((n_docs - not_fully_processed_count) / n_docs * 100) if n_docs else 0
 
             record.attachment_processing_percentage = percentage
 
