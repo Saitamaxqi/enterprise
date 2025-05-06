@@ -71,6 +71,16 @@
         <field name="connected_status">disconnected</field>
     </record>
 
+    <record id="iot_fdm" model="iot.device">
+        <field name="name">Fiscal Data Module</field>
+        <field name="iot_id" ref="iot_box_shop"/>
+        <field name="identifier">fdm_identifier</field>
+        <field name="type">fiscal_data_module</field>
+        <field name="manufacturer"></field>
+        <field name="connection">serial</field>
+        <field name="connected_status">disconnected</field>
+    </record>
+
     <record id="iot_keyboard" model="iot.device">
         <field name="name">USB Keyboard</field>
         <field name="iot_id" ref="iot_box_workshop"/>
@@ -98,6 +108,16 @@
         <field name="type">device</field>
         <field name="manufacturer"></field>
         <field name="connection">bluetooth</field>
+        <field name="connected_status">disconnected</field>
+    </record>
+
+    <record id="iot_unsupported_device" model="iot.device">
+        <field name="name">Unsupported Device</field>
+        <field name="iot_id" ref="iot_box_workshop"/>
+        <field name="identifier">unsupported_identifier</field>
+        <field name="type">unsupported</field>
+        <field name="manufacturer"></field>
+        <field name="connection">serial</field>
         <field name="connected_status">disconnected</field>
     </record>
 
