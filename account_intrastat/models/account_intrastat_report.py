@@ -478,9 +478,13 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             domain_dict['transport_code'] = [('move_id.intrastat_transport_mode_id', '=', False)]
 
         if grouping_key_dict['incoterm_code']:
-            domain_dict['incoterm_code'] = [(
-                'move_id.invoice_incoterm_id.code', '=', grouping_key_dict['incoterm_code']
-            )]
+            domain_dict['incoterm_code'] = expression.OR([
+                [('move_id.invoice_incoterm_id.code', '=', grouping_key_dict['incoterm_code'])],
+                [
+                    ('move_id.invoice_incoterm_id', '=', False),
+                    ('move_id.company_id.incoterm_id.code', '=', grouping_key_dict['incoterm_code']),
+                ],
+            ])
         else:
             domain_dict['incoterm_code'] = [('move_id.invoice_incoterm_id', '=', False)]
 
