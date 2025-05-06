@@ -106,14 +106,14 @@ class AccountReconcileModelLine(models.Model):
         if not target_field:
             return 0.0
 
-        match = re.search(amount_string, target_field)
+        match = re.search(amount_string, str(target_field))
         if match:
             sign = 1 if residual_amount_currency > 0.0 else -1
             try:
                 extracted_match_group = re.sub(r'[^\d+[,\.]?\d*]', '', match.group(1))
                 extracted_balance = float(extracted_match_group.replace(',', '.'))
                 return copysign(extracted_balance * sign, residual_amount_currency)
-            except ValueError:
+            except (ValueError, IndexError):
                 return 0.0
         else:
             return 0.0
