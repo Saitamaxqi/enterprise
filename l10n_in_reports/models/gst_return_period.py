@@ -389,6 +389,20 @@ class L10n_InGstReturnPeriod(models.Model):
     def _get_gstr_document_folder(self):
         xml_id = 'l10n_in_reports_gstr_spreadsheet.%s_gstr_folder' % self.company_id.id
         gstr_folder = self.env.ref(xml_id, raise_if_not_found=False)
+
+        def _get_account_manager_access_ids():
+            return [
+                Command.create({'partner_id': partner.id, 'role': 'edit'})
+                for partner in self.env.ref('account.group_account_manager').all_user_ids.partner_id
+            ]
+
+        user = self.env.user
+        if (
+            gstr_folder
+            and user.has_group('account.group_account_manager')
+            and user.partner_id not in gstr_folder.sudo().access_ids.partner_id
+        ):
+            gstr_folder.sudo().access_ids = [Command.clear()] + _get_account_manager_access_ids()
         if not gstr_folder:
             gstr_folder = self.env['documents.document'].create({
                 'type': 'folder',
@@ -396,8 +410,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 'company_id': self.company_id.id,
                 'access_internal': 'none',
                 'access_via_link': 'none',
-                'access_ids': [Command.create({'partner_id': partner.id, 'role': 'edit'})
-                               for partner in self.env.ref('account.group_account_manager').all_user_ids.partner_id]
+                'access_ids': _get_account_manager_access_ids()
             })
             self.env['ir.model.data']._update_xmlids([{
                 'xml_id': xml_id,
