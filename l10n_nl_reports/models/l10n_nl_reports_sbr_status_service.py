@@ -82,7 +82,7 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                             "Try submitting your report again.",
                             report_name=process.report_name,
                             id=process.kenmerk,
-                            error=error_description,
+                            error=status.statusomschrijving,
                             detailed_error=status.statusFoutcode.foutbeschrijving,
                             newline=Markup("<br>"),
                             italic_start=Markup("<i>"),
