@@ -845,6 +845,9 @@ class AccountReturn(models.Model):
 
         action = self.action_review_checks()
         action['domain'] = [('return_id', '=', self.id)]
+        action['context'] = action.get('context', {}) | {
+            'disable_return_checks_redirection': True,
+        }
 
         return action
 
@@ -1733,14 +1736,15 @@ class AccountReturnCheck(models.Model):
         return self.try_forward_state() or {'type': 'ir.actions.client', 'tag': 'soft_reload'}
 
     def try_forward_state(self):
-        current_state_checks = self.return_id.check_ids.filtered(lambda check: check.state == self.return_id.state)
+        if not self.env.context.get('disable_return_checks_redirection'):
+            current_state_checks = self.return_id.check_ids.filtered(lambda check: check.state == self.return_id.state)
 
-        if not self.return_id.is_completed and current_state_checks and all(check.bypassed or check.result == 'success' for check in current_state_checks):
-            current_state = self.return_id.state
-            state_action_mapping = self._get_next_state_action_func_for_current_state()
-            if action_func := state_action_mapping.get(current_state, False):
-                action_func()
-            return self.return_id.action_open_tax_return_view()
+            if not self.return_id.is_completed and current_state_checks and all(check.bypassed or check.result == 'success' for check in current_state_checks):
+                current_state = self.return_id.state
+                state_action_mapping = self._get_next_state_action_func_for_current_state()
+                if action_func := state_action_mapping.get(current_state, False):
+                    action_func()
+                return self.return_id.action_open_tax_return_view()
 
     def _get_next_state_action_func_for_current_state(self):
         """
