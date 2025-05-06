@@ -90,3 +90,13 @@ test("re-insert PIVOT day_of_week with order from the server", async function ()
     expect(getCell(model, "A8").content).toBe('=PIVOT.HEADER(1,"date:day_of_week",5)');
     expect(getCell(model, "A9").content).toBe('=PIVOT.HEADER(1,"date:day_of_week",6)');
 });
+
+test("Insert pivot from odoo model", async () => {
+    const { env } = await createSpreadsheetWithPivot();
+    env.openSidePanel = (panel) => {
+        expect.step(panel);
+    };
+    const insertPivotOdooModel = ["insert", "insert_pivot", "insert_pivot_from_odoo_model"];
+    await doMenuAction(topbarMenuRegistry, insertPivotOdooModel, env);
+    expect.verifySteps(["NewOdooPivotSidePanel"]);
+});

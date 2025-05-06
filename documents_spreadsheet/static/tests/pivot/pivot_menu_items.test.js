@@ -102,7 +102,9 @@ test("Reinsert pivot menu item should be hidden if the pivot is invalid", async 
         .getMenuItems()
         .find((item) => item.id === "insert")
         .children(env)
-        .find((item) => item.id === "insert_pivot");
+        .find((item) => item.id === "insert_pivot")
+        .children(env)
+        .find((item) => item.id === "insert_pivot_from_range");
     await pivot.execute(env);
 
     const reinsertDynamicPivot = topbarMenuRegistry

@@ -154,6 +154,35 @@ const printMenu = {
     icon: "o-spreadsheet-Icon.PRINT",
 };
 
+const insertPivotMenu = {
+    name: _t("Pivot table"),
+    sequence: 52,
+    children: [
+        {
+            id: "insert_pivot_from_range",
+            name: _t("From range"),
+            sequence: 1,
+            execute: (env) => {
+                const pivotId = env.model.uuidGenerator.smallUuid();
+                const newSheetId = env.model.uuidGenerator.smallUuid();
+                const result = env.model.dispatch("INSERT_NEW_PIVOT", { pivotId, newSheetId });
+                if (result.isSuccessful) {
+                    env.openSidePanel("PivotSidePanel", { pivotId });
+                }
+            },
+        },
+        {
+            id: "insert_pivot_from_odoo_model",
+            name: _t("From Odoo data"),
+            sequence: 2,
+            execute: (env) => {
+                env.openSidePanel("NewOdooPivotSidePanel");
+            },
+        },
+    ],
+    icon: "o-spreadsheet-Icon.PIVOT",
+};
+
 topbarMenuRegistry.addChild("print", ["file"], printMenu);
 topbarMenuRegistry.addChild("reinsert_list", ["data"], reInsertListMenu);
 topbarMenuRegistry.addChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicPivotMenu, {
@@ -162,3 +191,5 @@ topbarMenuRegistry.addChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicP
 topbarMenuRegistry.addChild("reinsert_static_pivot", ["data"], reinsertStaticPivotMenu, {
     force: true,
 });
+
+topbarMenuRegistry.addChild("insert_pivot", ["insert"], insertPivotMenu, { force: true });
