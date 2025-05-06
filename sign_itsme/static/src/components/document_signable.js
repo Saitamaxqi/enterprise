@@ -6,11 +6,14 @@ import { Document } from "@sign/components/sign_request/document_signable";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ItsmeDialog } from "@sign_itsme/dialogs/itsme_dialog";
 
+
 patch(SignablePDFIframe.prototype, {
     postRender() {
         const res = super.postRender();
-        if (this.props.errorMessage) {
-            const [errorMessage, title] = processErrorMessage.call(this, this.props.errorMessage);
+        const errorCode = this.props.errorCode;
+        const showThankYouDialog = this.props.showThankYouDialog;
+        if (errorCode) {
+            const [errorMessage, title] = processErrorMessage.call(this, errorCode);
             this.dialog.add(
                 AlertDialog,
                 {
@@ -24,14 +27,16 @@ patch(SignablePDFIframe.prototype, {
                 }
             );
         }
-        if (this.props.showThankYouDialog) {
-            this.openThankYouDialog();
+        if (showThankYouDialog) {
+            this.props.openThankYouDialog();
         }
         return res;
     },
+});
 
+patch(Document.prototype, {
     async getAuthDialog() {
-        if (this.props.authMethod === "itsme") {
+        if (this.authMethod === "itsme") {
             const credits = await rpc("/itsme/has_itsme_credits");
             if (credits) {
                 const [route, params] = await this._getRouteAndParams();
@@ -49,24 +54,22 @@ patch(SignablePDFIframe.prototype, {
         }
         return super.getAuthDialog();
     },
-});
 
-patch(Document.prototype, {
     getDataFromHTML() {
         super.getDataFromHTML();
-        const { el: parentEl } = this.props.parent;
         this.showThankYouDialog = Boolean(
-            parentEl.querySelector("#o_sign_show_thank_you_dialog")
+            document.querySelector("#o_sign_show_thank_you_dialog")
         );
-        this.errorMessage = parentEl.querySelector("#o_sign_show_error_message")?.value;
+        this.errorCode = document.querySelector("#o_sign_show_error_message")?.value;
     },
 
-    get iframeProps() {
-        const props = super.iframeProps;
+    getIframeProps(sign_document_id) {
+        const props = super.getIframeProps(sign_document_id);
         return {
             ...props,
             showThankYouDialog: this.showThankYouDialog,
-            errorMessage: this.errorMessage,
+            errorCode: this.errorCode,
+            openThankYouDialog: () => this.openThankYouDialog(),
         };
     },
 });
