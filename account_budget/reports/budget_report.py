@@ -139,7 +139,7 @@ class BudgetReport(models.Model):
                    'committed' AS line_type,
                    0 AS budget,
                    COALESCE(pol.price_subtotal::FLOAT, pol.price_unit::FLOAT * pol.product_qty)
-                        / pol.product_qty
+                        / COALESCE(NULLIF(pol.product_qty, 0), 1)
                         * (pol.product_qty - COALESCE(qty_invoiced_table.qty_invoiced, 0))
                         / po.currency_rate
                         * (a.rate)
