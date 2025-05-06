@@ -612,7 +612,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
                     work_data['half', work_entry.work_entry_type_id.id][1] += work_entry.duration
             else:
                 dt = date_stop - date_start
-                work_data['half', work_entry.work_entry_type_id.id] += dt.days * 24 + dt.seconds / 3600  # Number of hours
+                work_data['half', work_entry.work_entry_type_id.id][1] += dt.days * 24 + dt.seconds / 3600  # Number of hours
         return work_data
 
     # override to add work_entry_type from leave
