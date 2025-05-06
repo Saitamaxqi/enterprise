@@ -260,12 +260,10 @@ registry.category("web_tour.tours").add("test_barcode_production_create_bom", {
     steps: () => [
         // Creates a new production from the Barcode App.
         {
-            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
+            trigger: "article.o_barcode_picking_type:contains('Manufacturing')",
             run: "click",
         },
-        {
-            trigger: ".o_kanban_view",
-        },
+        { trigger: ".o_kanban_tip_filter" },
         {
             trigger: ".o-kanban-button-new",
             run: "click",
