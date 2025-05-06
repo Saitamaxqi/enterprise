@@ -1,12 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from lxml import etree
+from unittest import mock
+
 from odoo.exceptions import UserError
 from odoo.addons.l10n_ar.tests.common import TestAr
-from odoo.tools.misc import file_open
 from odoo.tests import tagged
+from odoo.tools.misc import file_open
+from odoo.tools.zeep import Transport
 from contextlib import contextmanager
 import base64
 import logging
 import re
+from requests import Response
 
 _logger = logging.getLogger(__name__)
 
@@ -62,7 +67,6 @@ class TestEdi(TestAr):
         cls._create_afip_connections(cls, cls.company_ri, cls.afip_ws)
 
     # Initialition
-
     def _create_afip_connections(self, company, afip_ws):
         """ Method used to create afip connections and commit then to re use this connections in all the test.
         If a connection can not be set because another instance is already using the certificate then we assign a
@@ -288,3 +292,75 @@ class TestFexCommon(TestEdi):
         data = data or {}
         data.update({'incoterm': self.incoterm})
         return super()._create_invoice_product_service(data=data)
+
+
+class TestArEdiMockedCommon(TestEdi):
+    @contextmanager
+    def patch_client(self, responses):
+        """ Patch zeep.Transport in l10n_ar_edi/models/l10n_ar_afipws_connection.py"""
+
+        self.maxDiff = None
+        # This method can be called from within a @classmethod, instantiate a TestCase when that happens, so we can use test_case.assert*
+        test_case = self if hasattr(self.assertEqual, '__self__') else self()
+
+        responses = iter(responses)
+
+        class MockedTransport(Transport):
+            def _load_remote_data(self, url):
+                """ Before we make any interactions with the server, we first need to get the
+                schema of datatypes so we know what services are available. There are only two
+                URLS for Argentina (LoginCms, and services.asmx?WSDL) we are testing so we can go
+                view these files directly.
+                """
+                service = url.rpartition("/")[2].partition("?")[0]
+                module = 'l10n_ar_edi'
+                with file_open(f'{module}/tests/expected_requests/{service}-schema.xml', 'rb') as fd:
+                    expected_tree = fd.read()
+                return expected_tree
+
+            def post(self, address, message, headers):
+                expected_service, expected_request_filename, response_filename = next(responses)
+                if 'service.asmx' in address:
+                    _, _, service = headers.get('SOAPAction').rpartition("/")
+                    service = service[:-1]
+                else:
+                    _, _, service = address.rpartition("/")
+
+                test_case.assertEqual(service, expected_service)
+
+                module = 'l10n_ar_edi'
+                with file_open(f'{module}/tests/expected_requests/{expected_request_filename}.xml', 'rb') as fd:
+                    expected_tree = etree.fromstring(fd.read())
+
+                request_tree = etree.fromstring(message)
+                try:
+                    test_case.assertXmlTreeEqual(request_tree, expected_tree)
+                except AssertionError:
+                    _logger.error('Unexpected request XML for service %s', service)
+                    raise
+
+                with file_open(f'{module}/tests/mocked_responses/{response_filename}.xml', 'rb') as fd:
+                    response_content = fd.read()
+
+                response = mock.Mock(spec=Response)
+                response.status_code = 200
+                response.content = response_content
+                response.headers = {'Content-Type': 'text/xml;charset=utf-8'}
+                self.xml_request = etree.tostring(
+                    request_tree, pretty_print=True).decode('utf-8')
+                self.xml_response = etree.tostring(
+                    etree.fromstring(response_content), pretty_print=True).decode('utf-8')
+                return response
+
+        with mock.patch('odoo.addons.l10n_ar_edi.models.l10n_ar_afipws_connection.ARTransport', new=MockedTransport):
+            yield
+
+        if next(responses, None):
+            test_case.fail('Not all expected calls were made!')
+
+    def _create_afip_connections(self, company, afip_ws):
+        # Override to mock the connection instead of actually making the network requests.
+        # No need to call super as it is mainly just running the same code in a loop.
+        company = company.with_context(l10n_ar_invoice_skip_commit=True)
+        with self.patch_client(self, [('LoginCms', 'LoginCms-final', 'LoginCms-final')]):
+            company._l10n_ar_get_connection(afip_ws)
