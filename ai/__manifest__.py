@@ -37,6 +37,7 @@
             'ai/static/tests/**/*',
         ],
     },
+    'pre_init_hook': "_pre_init_ai",
     'application': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
