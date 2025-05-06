@@ -63,6 +63,7 @@ class WhatsappMessage(models.Model):
         ('account', 'Account Error'),
         ('blacklisted', 'Blacklisted Phone Number'),
         ('network', 'Network Error'),
+        ('outdated_channel', 'The channel is no longer active'),
         ('phone_invalid', 'Wrong Number Format'),
         ('template', 'Template Quality Rating Too Low'),
         ('unknown', 'Unknown Error'),
@@ -198,16 +199,31 @@ class WhatsappMessage(models.Model):
     # ------------------------------------------------------------
 
     def _resend_failed(self):
-        """ Resend failed messages. """
+        """Resend failed template messages and messages in active discuss channels."""
         retryable_messages = self.filtered(lambda msg: msg.state == 'error' and msg.failure_type != 'whatsapp_unrecoverable')
+
+        # filter out outdated channel messages to avoid spamming whatsapp
+        discuss_messages = retryable_messages.filtered(lambda msg: msg.mail_message_id.model == 'discuss.channel')
+        discuss_channel_ids = discuss_messages.mail_message_id.mapped('res_id')
+        valid_discuss_channels = self.env['discuss.channel'].browse(discuss_channel_ids).exists().filtered(
+            lambda channel: channel.whatsapp_channel_valid_until
+            and channel.whatsapp_channel_valid_until >= fields.Datetime.now()  # worst case, they will fail
+        )
+        cancelled_discuss_messages = discuss_messages.filtered(
+            lambda msg: msg.mail_message_id.res_id not in valid_discuss_channels.ids
+        )
+        retryable_messages = retryable_messages - cancelled_discuss_messages
+
+        cancelled_discuss_messages.write({'state': 'cancel', 'failure_type': 'outdated_channel'})
         retryable_messages.write({'state': 'outgoing', 'failure_type': False, 'failure_reason': False})
         self.env.ref('whatsapp.ir_cron_send_whatsapp_queue')._trigger()
 
     def _send_cron(self):
         """ Send all outgoing messages. """
         # order by template to have more relevant duplicate detection
+        # order descending so non-template messages are processed first, as they have a time limit
         records = self.search([
-            ('state', '=', 'outgoing'), ('wa_template_id', '!=', False)
+            ('state', '=', 'outgoing'),
         ], order='wa_template_id', limit=500)
         # should not commit during tests
         records._send_message(with_commit=not modules.module.current_test)

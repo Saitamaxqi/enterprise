@@ -833,6 +833,19 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
                 'token': 'token_2',
             }
         ])
+        cls.simple_whatsapp_template = cls.env['whatsapp.template'].sudo().create({
+            'body': 'Howdy Partner',
+            'model_id': cls.env['ir.model']._get_id('res.partner'),
+            'name': '{{1}}',
+            'quality': 'green',
+            'status': 'approved',
+            'template_name': 'simple_whatsapp_template',
+            'variable_ids': [
+                (0, 0, {'name': '{{1}}', 'line_type': 'body', 'field_type': 'free_text', 'demo_value': 'Simple Whatsapp Template'}),
+            ],
+            'wa_account_id': cls.whatsapp_account.id,
+            'wa_template_uid': 'simple_whatsapp_template',
+        }).sudo(False)
         # Test customer (In)
         cls.whatsapp_customer = cls.env['res.partner'].create({
             'country_id': cls.env.ref('base.in').id,
