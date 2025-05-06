@@ -1,3 +1,5 @@
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, models, _
 
 
@@ -16,6 +18,13 @@ class AccountReturnType(models.Model):
 
 class AccountReturn(models.Model):
     _inherit = 'account.return'
+
+    @api.model
+    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
+        if return_type_external_id == 'l10n_nl_reports.nl_tax_return_type':
+            return date_to + relativedelta(months=1)
+
+        return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
 
     def _get_pay_wizard(self):
         if self.type_id == self.env.ref('l10n_nl_reports.nl_tax_return_type'):

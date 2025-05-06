@@ -1,3 +1,5 @@
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, models
 
 
@@ -17,6 +19,13 @@ class AccountReturnType(models.Model):
 
 class AccountReturn(models.Model):
     _inherit = 'account.return'
+
+    @api.model
+    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
+        if return_type_external_id == 'l10n_ee_reports.ee_tax_return_type':
+            return date_to + relativedelta(days=20)
+
+        return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
 
     def _postprocess_vat_closing_entry_results(self, company, options, results):
         # OVERRIDE 'account_reports'
