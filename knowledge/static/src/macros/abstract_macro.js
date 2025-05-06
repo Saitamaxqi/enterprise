@@ -21,7 +21,6 @@ export class AbstractMacro extends Macro {
         super({
             name: "restore_recort",
             steps: [],
-            checkDelay: 16,
         });
         this.targetXmlDoc = targetXmlDoc;
         this.targetBreadcrumbs = breadcrumbs;

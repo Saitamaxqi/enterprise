@@ -74,7 +74,6 @@ registry.category("web_tour.tours").add("test_fiskaly_tss_payload", {
 });
 
 registry.category("web_tour.tours").add("test_fiskaly_receipt_printer", {
-    checkDelay: 50,
     steps: () =>
         [
             Chrome.startPoS(),

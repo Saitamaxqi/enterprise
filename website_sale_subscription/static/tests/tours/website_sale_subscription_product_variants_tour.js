@@ -22,7 +22,6 @@ registry.category("web_tour.tours").add("sale_subscription_product_variants", {
 });
 
 registry.category("web_tour.tours").add("sale_subscription_add_to_cart", {
-    checkDelay: 1000,
     steps: () => [
         {
             trigger: "body h1:contains(TestProduct2)",

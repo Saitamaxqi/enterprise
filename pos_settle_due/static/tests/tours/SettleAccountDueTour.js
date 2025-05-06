@@ -80,7 +80,6 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
 });
 
 registry.category("web_tour.tours").add("SettleDueAmountMoreCustomers", {
-    checkDelay: 50,
     steps: () =>
         [
             Chrome.startPoS(),
