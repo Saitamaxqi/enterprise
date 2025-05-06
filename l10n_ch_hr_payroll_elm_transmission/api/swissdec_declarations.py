@@ -842,7 +842,7 @@ class SwissdecDeclaration:
             workplace_description["workplaceID"] = workplace_id_ref
             if workplace.bur_ree_number:
                 workplace_description["BUR-REE-Number"] = workplace.bur_ree_number
-            if workplace.in_house_id:
+            if workplace.in_house_id and not workplace.bur_ree_number:
                 workplace_description["InHouseID"] = workplace.in_house_id
             address_extended = {
                 "ComplementaryLine": workplace.partner_id.name,
