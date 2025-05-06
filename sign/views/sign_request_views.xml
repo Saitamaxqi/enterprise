@@ -67,10 +67,11 @@
                     <button type="action" name="%(action_view_sign_requests)d" class="btn btn-secondary" string="Download"/>
                 </header>
                 <field name="create_date" string="Creation Date" readonly="1"/>
-                <field name="reference" readonly="1"/>
-                <field name="request_item_ids" string="Signees" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}"/>
+                <field name="reference" readonly="1" string="Template"/>
+                <field name="template_document_ids" widget="many2many_tags" readonly="1"/>
+                <field name="request_item_ids" string="Signers" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}"/>
                 <field name="template_tags" string="Tags" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
-                <field name="state" widget="badge" readonly="1"
+                <field name="state" string="Status" widget="badge" readonly="1"
                         decoration-danger="state in ['canceled']"
                         decoration-warning="state in ['expired']"
                         decoration-success="state in ['signed']"

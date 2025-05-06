@@ -45,6 +45,7 @@ class SignRequest(models.Model):
         ("expired", "Expired"),
     ], default='sent', tracking=True, group_expand=True, copy=False, index=True)
 
+    template_document_ids = fields.Many2many('sign.document', string="Documents", compute='_compute_template_document_ids', store=False)
     completed_document_ids = fields.One2many('sign.completed.document', 'sign_request_id', string="Completed Documents Binaries", copy=False)
     nb_wait = fields.Integer(string="Sent Requests", compute="_compute_stats", store=True)
     nb_closed = fields.Integer(string="Completed Signatures", compute="_compute_stats", store=True)
@@ -77,6 +78,11 @@ class SignRequest(models.Model):
     reminder = fields.Integer(string='Reminder', default=7)
     last_reminder = fields.Date(string='Last reminder', default=lambda self: fields.Date.today())
     certificate_reference = fields.Boolean(string="Certificate Reference", default=False)
+
+    @api.depends('template_id')
+    def _compute_template_document_ids(self):
+        for sign_request in self:
+            sign_request.template_document_ids = sign_request.template_id.document_ids
 
     @api.constrains('reminder_enabled', 'reminder')
     def _check_reminder(self):

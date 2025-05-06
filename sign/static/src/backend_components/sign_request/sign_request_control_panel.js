@@ -1,4 +1,5 @@
 import { user } from "@web/core/user";
+import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 import { Component, useEffect, useComponent, markup } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
@@ -65,6 +66,7 @@ export class SignRequestControlPanel extends Component {
         this.signInfo = useService("signInfo");
         this.nextTemplate = multiFileUpload.getNext();
         useResendButtons();
+        this.fetchCompletedDocuments();
     }
 
     get markupSignerStatus() {
@@ -119,5 +121,16 @@ export class SignRequestControlPanel extends Component {
             },
             { clear_breadcrumbs: true }
         );
+    }
+
+    async fetchCompletedDocuments() {
+        if (this.signInfo.get('signRequestState') === 'signed') {
+            const {completed_documents} = await rpc(
+                `/sign/get_completed_documents/${this.signInfo.get('documentId')}/${this.signInfo.get('signRequestToken')}`
+            );
+            this.signInfo.set({ completed_documents });
+            console.log(this.signInfo.get('completed_documents'));
+            this.render();
+        }
     }
 }

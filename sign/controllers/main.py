@@ -190,7 +190,7 @@ class Sign(http.Controller):
         elif download_type == "origin":
             return self._handle_origin_download(sign_request, sign_document_id)
         elif download_type == "completed":
-            return self._handle_completed_download(sign_request)
+            return self._handle_completed_download(sign_request, sign_document_id)
 
         return self._redirect_to_sign_document(sign_request)
 
@@ -245,9 +245,9 @@ class Sign(http.Controller):
         if not attachment_data:
             return request.not_found()
 
-        return self._create_document_response(sign_request, attachment_data)
+        return self._create_document_response(sign_request, attachment_data, document_name=document_name)
 
-    def _handle_completed_download(self, sign_request):
+    def _handle_completed_download(self, sign_request, sign_document_id=None):
         """Handles the download of completed (signed) documents for a sign request.
 
         Generates completed documents if they don't exist, then returns either a single
@@ -255,14 +255,21 @@ class Sign(http.Controller):
         of completed documents.
         Args:
             sign_request (odoo.models.Model): The sign request record.
+            sign_document_id (int, optional): The ID of the specific completed document to download.
         Returns:
             http.Response: Response containing either a single document or a ZIP file.
         """
-        if not sign_request.completed_document_ids:
+        if not sign_request.completed_document_ids and sign_request.state == 'signed':
             sign_request.sudo()._generate_completed_documents()
 
+        if sign_document_id:
+            completed_document = sign_request.completed_document_ids.filtered(lambda d: d.id == sign_document_id)
+            if completed_document:
+                return self._create_document_response(sign_request, completed_document.file, document_name=completed_document.document_id.name)
+            return request.not_found()
+
         if len(sign_request.completed_document_ids) == 1:
-            return self._create_document_response(sign_request, sign_request.completed_document_ids[0].file)
+            return self._create_document_response(sign_request, sign_request.completed_document_ids[0].file, document_name=sign_request.completed_document_ids[0].document_id.name)
 
         return self._create_zip_response(sign_request)
 
@@ -295,18 +302,28 @@ class Sign(http.Controller):
             ('Content-Length', len(content))
         ])
 
-    def _create_document_response(self, sign_request, attachment_data):
+    def _create_document_response(self, sign_request, attachment_data, document_name=None):
         """Creates an HTTP response for a single document download.
         Determines the file extension and MIME type based on the sign request's template and returns a response with
         the decoded document data and appropriate headers.
         Args:
             sign_request (odoo.models.Model): The sign request object.
             attachment_data (str): Base64-encoded document data.
+            document_name (str, optional): Specific name for the document, if provided.
         Returns:
             http.Response: Response containing the decoded document with appropriate headers.
         """
         extension = '.' + sign_request.template_id.document_ids[0].attachment_id.mimetype.replace('application/', '').replace(';base64', '')
-        filename = sign_request.reference.replace(extension, '') + extension
+
+        if document_name:
+            # Use the provided document name if available
+            if document_name.endswith(extension):
+                filename = document_name
+            else:
+                filename = document_name + extension
+        else:
+            # Fall back to the reference name
+            filename = sign_request.reference.replace(extension, '') + extension
 
         return request.make_response(
             base64.b64decode(attachment_data),
@@ -368,6 +385,24 @@ class Sign(http.Controller):
                 'sign_request_token': render_ctx['sign_request'].access_token,
             }
         }
+
+    @http.route(["/sign/get_completed_documents/<int:request_id>/<token>"], type="jsonrpc", auth="user")
+    def get_completed_documents(self, request_id, token):
+        sign_request = self._get_sign_request(request_id, token)
+        if not sign_request:
+            return request.not_found()
+
+        if not sign_request.completed_document_ids and sign_request.state == 'signed':
+            sign_request.sudo()._generate_completed_documents()
+
+        completed_documents = [
+            {
+                'id': doc.id,
+                'name': doc.document_id.name
+            }
+            for doc in sign_request.completed_document_ids
+        ]
+        return {'completed_documents': completed_documents}
 
     def _check_refusal_conditions(self, context):
         """
