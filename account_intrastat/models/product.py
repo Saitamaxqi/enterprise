@@ -43,13 +43,19 @@ class ProductTemplate(models.Model):
     def _compute_intrastat_code_domain(self):
         """Dynamically compute the domain for intrastat_code_id."""
         country_id = self.env.company.account_fiscal_country_id.id
+        service_codes_available = self.env["account.intrastat.code"].search_count(
+            [
+                ("country_id", "in", (country_id, False)),
+                ("type", "=", "service"),
+            ],
+            limit=1,
+        )
         for product in self:
-            domain = [('country_id', 'in', (country_id, False))]
-            if product.type == 'service' and self.env["account.intrastat.code"].search_count([("country_id", "in", (country_id, False)), ("type", "=", "service")], limit=1):
-                domain.append(('type', '=', 'service'))
-            else:
-                domain.append(('type', '=', 'commodity'))
-            product.intrastat_code_domain = str(domain)
+            code_type = 'service' if service_codes_available and product.type == 'service' else 'commodity'
+            product.intrastat_code_domain = str([
+                ("country_id", "in", (country_id, False)),
+                ("type", "=", code_type),
+            ])
 
     @api.depends('product_variant_ids')
     def _compute_intrastat_values(self):
