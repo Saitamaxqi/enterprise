@@ -65,9 +65,7 @@ class BankReconciliationService {
     }
 
     async reloadRecords(records) {
-        for (const record of records) {
-            record.load();
-        }
+        await Promise.all([...records.map((record) => record.load())]);
     }
 
     get statementLineMove() {
