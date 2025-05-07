@@ -3,19 +3,11 @@ import { CharField, charField } from "@web/views/fields/char/char_field";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 
-class TwitterUsersAutocomplete extends AutoComplete {
-    static timeout = 500;
-
-    get autoCompleteRootClass() {
-        return `${super.autoCompleteRootClass} o_social_twitter_users_autocomplete`;
-    }
-}
-
 export class TwitterUsersAutocompleteField extends CharField {
     static template = "social_twitter.TwitterUsersAutocompleteField";
     static components = {
-        ...CharField.components,
-        AutoComplete: TwitterUsersAutocomplete
+        ...super.components,
+        AutoComplete,
     }
 
     setup() {
