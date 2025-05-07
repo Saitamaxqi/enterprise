@@ -30,7 +30,7 @@ class PosPrepDisplay(models.Model):
                 raise ValidationError(_("The interval auto clear time must be positive."))
 
     def _load_preparation_data_models(self):
-        return ['pos.category', 'pos.prep.order', 'pos.order', 'pos.prep.state', 'pos.prep.line', 'pos.prep.stage', 'product.product', 'pos.preset', 'product.attribute', 'product.template.attribute.value']
+        return ['pos.category', 'pos.prep.order', 'pos.order', 'pos.prep.state', 'pos.prep.line', 'pos.prep.stage', 'product.product', 'pos.preset', 'product.attribute', 'product.template.attribute.value', 'resource.calendar.attendance']
 
     def load_preparation_data(self):
         # Init our first record, in case of self_order is pos_config
@@ -160,7 +160,6 @@ class PosPrepDisplay(models.Model):
             'pos.prep.order': prep_orders.read(prep_orders._load_pos_preparation_data_fields(), load=False),
             'pos.prep.line': prep_lines.read(prep_lines._load_pos_preparation_data_fields(), load=False),
             'pos.order': prep_orders.pos_order_id.read(prep_orders.pos_order_id._load_pos_preparation_data_fields(), load=False),
-            'pos.preset': prep_orders.pos_order_id.preset_id.read(prep_orders.pos_order_id.preset_id._load_pos_preparation_data_fields(), load=False),
             'product.product': prep_lines.product_id.read(prep_lines.product_id._load_pos_preparation_data_fields(), load=False),
             'product.template.attribute.value': prep_lines.attribute_value_ids.read(prep_lines.attribute_value_ids._load_pos_preparation_data_fields(), load=False),
             'product.attribute': prep_lines.attribute_value_ids.attribute_id.read(prep_lines.attribute_value_ids.attribute_id._load_pos_preparation_data_fields(), load=False),

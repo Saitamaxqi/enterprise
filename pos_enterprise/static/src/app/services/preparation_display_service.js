@@ -6,10 +6,10 @@ import { session } from "@web/session";
 import { user } from "@web/core/user";
 import { WithLazyGetterTrap } from "@point_of_sale/lazy_getter";
 import { useState } from "@odoo/owl";
+import { debounce } from "@web/core/utils/timing";
 
 const { DateTime } = luxon;
 
-// in the furur, maybe just set "filterOrders" as a getter and directly call the function.
 export class PrepDisplay extends WithLazyGetterTrap {
     static DEPENDENCIES = ["orm", "bus_service", "notification", "pos_data"];
 
@@ -33,16 +33,31 @@ export class PrepDisplay extends WithLazyGetterTrap {
         this.selectedTime = "all";
         this.posHasProducts = await this.loadPosHasProducts();
         this.loadingProducts = false;
+        this.ringTheBell = debounce(() => {
+            this.sound.play("notification");
+        }, 1000);
 
         this.restoreFilterFromLocalStorage();
         this.getPreparationDisplayOrder(null);
 
         this.onNotified = getOnNotified(this.bus, odoo.preparation_display.access_token);
         this.onNotified("LOAD_ORDERS", async (data) => {
+            await this.getPreparationDisplayOrder(data.orderId);
+
+            const orderToDisplay = this.data.models["pos.prep.state"].filter(
+                (state) => state.prep_line_id.prep_order_id.pos_order_id.id === data.orderId
+            );
+            const minDuration = Math.min(...orderToDisplay.map((state) => state.timeToShow));
+
             if (data.sound) {
-                this.sound.play("notification");
+                if (minDuration) {
+                    setTimeout(() => {
+                        this.ringTheBell();
+                    }, minDuration);
+                } else {
+                    this.ringTheBell();
+                }
             }
-            this.getPreparationDisplayOrder(data.orderId);
             if (data.notification) {
                 this.notification.add(data.notification);
             }
@@ -82,14 +97,14 @@ export class PrepDisplay extends WithLazyGetterTrap {
         });
         this.onNotified("NOTIFICATION", async (data) => {
             if (data.sound) {
-                this.sound.play("notification");
+                this.ringTheBell();
             }
             if (data.notification) {
                 this.notification.add(data.notification);
             }
         });
         this.bus.addEventListener("reconnect", () => {
-            this.sound.play("notification");
+            this.ringTheBell();
             this.getPreparationDisplayOrder(null);
         });
     }
@@ -198,7 +213,12 @@ export class PrepDisplay extends WithLazyGetterTrap {
         const noFilter = selectedCategoryIds.size === 0 && selectedProductIds.size === 0;
         const notDoneOrLastStage = state.todo || state.stage_id.id !== this.lastStage.id;
 
-        return notDoneOrLastStage && (categoryMatch || productMatch || noFilter) && timeCheck;
+        return (
+            notDoneOrLastStage &&
+            (categoryMatch || productMatch || noFilter) &&
+            timeCheck &&
+            state.timeToShow === 0
+        );
     }
     orderNextStage(stageId, direction = 1) {
         if (stageId === this.lastStage.id && direction === 1) {
@@ -272,7 +292,9 @@ export class PrepDisplay extends WithLazyGetterTrap {
             if (stageA.id === this.lastStage.id) {
                 difference = bWriteDate - aWriteDate;
             } else {
-                difference = aWriteDate - bWriteDate;
+                difference =
+                    (a.prepOrder.pos_order_id.preset_time || aWriteDate) -
+                    (b.prepOrder.pos_order_id.preset_time || bWriteDate);
             }
 
             return difference;

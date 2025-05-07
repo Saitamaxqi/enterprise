@@ -15,3 +15,4 @@ from . import pos_preset
 from . import product_attribute_attribute_value
 from . import product_attribute
 from . import pos_prep_state
+from . import resource_calendar_attendance
