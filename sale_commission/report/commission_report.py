@@ -49,10 +49,14 @@ class SaleCommissionReport(models.Model):
                   ('date', '>=', self.target_id.date_from),
                   ('date', '<=', self.target_id.date_to),
                 ]
-        context = {'commission_user_ids': self.user_id.ids,
-                   'active_plan_ids': self.plan_id.ids,
+        context = {'active_plan_ids': self.plan_id.ids,
                    'active_target_ids': self.target_id.ids,
         }
+        if self.plan_id.user_type == 'team':
+            team_ids = self.env['crm.team'].search([('user_id', '=', self.user_id.id)])
+            context.update({'commission_team_ids': self.user_id.sale_team_id.ids + team_ids.ids})
+        else:
+            context.update({'commission_user_ids': self.user_id.ids})
         return {
             "type": "ir.actions.act_window",
             "res_model": "sale.commission.achievement.report",
