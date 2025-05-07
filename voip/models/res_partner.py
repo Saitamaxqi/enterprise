@@ -65,7 +65,6 @@ class ResPartner(models.Model):
             "Spaces are preserved, characters that can't be encoded are replaced with an 'x'.\n"
             "T9 stands for Text on 9 keys, it comes from the name of the original technology on old cell phones."
         ),
-        index="trigram",
         store=True,
     )
 
