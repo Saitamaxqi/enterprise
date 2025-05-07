@@ -2,7 +2,7 @@
 <odoo>
 
     <record model="res.groups.privilege" id="res_groups_privilege_recruitment">
-        <field name="name">Recruitment</field>
+        <field name="name">Referrals</field>
         <field name="category_id" ref="base.module_category_human_resources"/>
     </record>
 
