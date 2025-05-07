@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="mail.AttachmentList" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o-mail-Attachment-unlink')]" position="after">
+            <button t-if="canAddToMyDrive(attachment)"
+                class="btn bg-500 w-100 h-100 square-btn d-flex ms-2 justify-content-center align-items-center"
+                title="Add to My Drive" t-on-click.stop="() => this.onClickAddToDrive(attachment)">
+                <i class="fa fa-hdd-o text-white fw-bolder" role="img" aria-label="Add to My Drive"/>
+            </button>
+        </xpath>
+    </t>
+</templates>

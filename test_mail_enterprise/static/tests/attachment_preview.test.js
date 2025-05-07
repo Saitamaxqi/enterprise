@@ -47,7 +47,7 @@ test("Should not have attachment preview for still uploading attachment", async 
     await dragenterFiles(".o-mail-Chatter", files);
     await dropFiles(".o-Dropzone", files);
     await contains("iframe[data-src*='/web/static/lib/pdfjs/web/viewer.html']");
-    await click(".o-mail-AttachmentCard-unlink");
+    await click(".o-mail-Attachment-unlink");
     await click(".modal button", { text: "Ok" });
     await contains("iframe[data-src*='/web/static/lib/pdfjs/web/viewer.html']", { count: 0 });
     shouldBlockAttachmentUpload = true;
