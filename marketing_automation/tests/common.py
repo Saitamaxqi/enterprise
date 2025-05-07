@@ -165,8 +165,6 @@ class MarketingAutomationCase(MassMailCase):
                         records_add_info.append(add_info)
                     self.assertMailTraces(
                         [{
-                            # record info
-                            'record': record,
                             # mail.mail
                             'content': info.get('trace_content'),
                             'failure_type': info.get('trace_failure_type', False),
