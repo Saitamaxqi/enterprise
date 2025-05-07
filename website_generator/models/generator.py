@@ -54,7 +54,7 @@ class Website_GeneratorRequest(models.Model):
     uuid = fields.Char(string="Output UUID generated from Website Scraper Server")
     status = fields.Char(string="Status", default='waiting')
     status_message = fields.Char(string="Status Message", compute='_compute_status_message')
-    version = fields.Char(string="Version", default='2.0.0')
+    version = fields.Char(string="Version", default='2.1.0')
     website_id = fields.Many2one('website', string="Website", ondelete='cascade')
     notified = fields.Boolean(string="Notified", default=False)
 
@@ -196,7 +196,6 @@ class Website_GeneratorRequest(models.Model):
     def _generate_site(self, tar):
         odoo_blocks = self._load_input(tar)
         odoo_blocks['direct_html_replacements_mapping'] = {}
-        odoo_blocks['regex_html_replacements_mapping'] = {}
         website = self._get_website(odoo_blocks, tar)
         # Generate the images attachments (Modifies odoo_blocks in place)
         self._save_images_as_attachments(odoo_blocks, tar)
@@ -207,11 +206,11 @@ class Website_GeneratorRequest(models.Model):
         return website, odoo_blocks
 
     def _apply_all_html_replacements(self, odoo_blocks):
-        direct_html_replacements_mapping = odoo_blocks.get('direct_html_replacements_mapping', {})
-        regex_html_replacements_mapping = odoo_blocks.get('regex_html_replacements_mapping', {})
+        direct_html_replacements_mapping = odoo_blocks['direct_html_replacements_mapping']
         sorted_original_html = sorted(direct_html_replacements_mapping.keys(), key=len, reverse=True)
 
         homepage = odoo_blocks['homepage']
+        regex_html_replacements_mapping = homepage['regex_html_replacements_mapping']
         homepage['body_html'] = self._apply_html_replacements(homepage.get('body_html', []), sorted_original_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
 
         footer = homepage.get('footer', [])
@@ -225,6 +224,7 @@ class Website_GeneratorRequest(models.Model):
 
         # Update the html urls for all pages
         for page_name, page_dict in odoo_blocks.get('pages', {}).items():
+            regex_html_replacements_mapping = page_dict['regex_html_replacements_mapping']
             odoo_blocks['pages'][page_name]['body_html'] = self._apply_html_replacements(page_dict.get('body_html', []), sorted_original_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
 
     def _create_model_records(self, tar, odoo_blocks):
@@ -284,78 +284,84 @@ class Website_GeneratorRequest(models.Model):
         return website
 
     def _save_images_as_attachments(self, odoo_blocks, tar):
-        def populate_image_customization_mapping(customized_image_mappings, ws_id, customization):
-            # Replace the image with the cropped one
-            url = customization.get('url')
-            data_mimetype = customization['data_mimetype']
-
-            # Check that an attachment was created.
-            if not customized_attachments_url_src.get(ws_id) or not attachments_url_src.get(url):
-                return customized_image_mappings
-
-            attributes = {
-                'src': customized_attachments_url_src[ws_id].image_src,
-                'data-original-id': attachments_url_src[url].id,
-                'data-original-src': attachments_url_src[url].image_src,
-                'data-mimetype': data_mimetype,
-                'data-mimetype-before-conversion': data_mimetype,
-            }
-
-            # Apply the cropping attributes
-            cropping_dimensions = customization.get('cropping_coords', {})
-            if cropping_dimensions:
-                attributes.update({
-                    'data-x': cropping_dimensions['x'],
-                    'data-y': cropping_dimensions['y'],
-                    'data-width': cropping_dimensions['width'],
-                    'data-height': cropping_dimensions['height'],
-                    'data-scale-x': 1,
-                    'data-scale-y': 1,
-                    'data-aspect-ratio': '0/0',
-                })
-
-            color_filter = customization.get('filter', {})
-            if color_filter:
-                rgba = f'rgba({int(color_filter["coords"][0] * 255)}, {int(color_filter["coords"][1] * 255)}, {int(color_filter["coords"][2] * 255)}, {color_filter["alpha"]})'
-                attributes.update({
-                    'data-gl-filter': 'custom',
-                    'data-filter-options': f'{{&quot;filterColor&quot;:&quot;{rgba}&quot;}}'
-                })
-
-            if url and (cropping_dimensions or color_filter) and ws_id:
-                pattern = rf'<img[^>]*data-ws_id\s*=\s*["\']?{ws_id}["\']?[^>]*>'
-                # The 'style="" class=""' is needed and will be replaced by the class and style attributes of the original image.
-                customized_img_string = f'<img style="" class="" {" ".join([f"{k}={v!r}" for k, v in attributes.items()])}>'
-                customized_image_mappings[pattern] = customized_img_string
-            return customized_image_mappings
-
         all_images = odoo_blocks['website'].get('all_images', {})
         # Create attachments for all images (uncropped)
         attachments_url_src = {}
         for img_url, img_name in all_images.items():
-            attachments_url_src = self.try_create_image_attachment(img_name, img_url, attachments_url_src, tar)
+            attachment = self.try_create_image_attachment(img_name, img_url, tar)
+            if attachment:
+                attachments_url_src[img_url] = attachment
         odoo_blocks['direct_html_replacements_mapping'].update({html.escape(k): v.image_src for k, v in attachments_url_src.items()})
 
         # Create attachments for all images (cropped)
-        customized_attachments_url_src = {}
         customized_image_mappings = {}
         for page_dict in [odoo_blocks['homepage']] + list(odoo_blocks.get('pages', {}).values()):
             customized_images = page_dict.get('images_to_customize', [])
+            page_dict['regex_html_replacements_mapping'] = {}
             for ws_id, image_customizations in customized_images.items():
-                img_name = self._get_custom_image_name(all_images, ws_id, image_customizations)
                 # Note, we give the 'ws_id' as the image_url because we may have multiple images
                 # with the same url but cropped differently (where the image_url is the
                 # downloaded image url from the original website).
-                customized_attachments_url_src = self.try_create_image_attachment(img_name, ws_id, customized_attachments_url_src, tar)
-                customized_image_mappings = populate_image_customization_mapping(customized_image_mappings, ws_id, image_customizations)
-        odoo_blocks['regex_html_replacements_mapping'].update(customized_image_mappings)
+                img_name = image_customizations.get('filename')
+                mimetype = image_customizations.get('mimetype')
+                url = image_customizations.get('url')
+                if not img_name or not mimetype or not url or not ws_id:
+                    continue
 
-    def try_create_image_attachment(self, img_name, img_url, attachments_url_src, tar):
+                # Link to attachment
+                attachment = attachments_url_src.get(url)
+                if not attachment:
+                    continue
+
+                # Create a new attachment if needed
+                src = attachment.image_src
+                if image_customizations.get('create_new_attachment', False):
+                    new_attachment = self.try_create_image_attachment(img_name, ws_id, tar)
+                    if new_attachment:
+                        src = new_attachment.image_src
+
+                attributes = {
+                    'src': src,
+                    'data-original-id': attachment.id,
+                    'data-original-src': attachment.image_src,
+                    'data-mimetype': mimetype,
+                    'data-mimetype-before-conversion': mimetype,
+                }
+
+                # Apply the cropping attributes
+                cropping_dimensions = image_customizations.get('cropping_coords', {})
+                if cropping_dimensions:
+                    attributes.update({
+                        'data-x': cropping_dimensions['x'],
+                        'data-y': cropping_dimensions['y'],
+                        'data-width': cropping_dimensions['width'],
+                        'data-height': cropping_dimensions['height'],
+                        'data-scale-x': 1,
+                        'data-scale-y': 1,
+                        'data-aspect-ratio': '0/0',
+                    })
+
+                color_filter = image_customizations.get('filter', {})
+                if color_filter:
+                    rgba = f'rgba({int(color_filter["coords"][0] * 255)}, {int(color_filter["coords"][1] * 255)}, {int(color_filter["coords"][2] * 255)}, {color_filter["alpha"]})'
+                    attributes.update({
+                        'data-gl-filter': 'custom',
+                        'data-filter-options': f'{{&quot;filterColor&quot;:&quot;{rgba}&quot;}}'
+                    })
+
+                pattern = rf'<img[^>]*data-ws_id\s*=\s*["\']?{ws_id}["\']?[^>]*>'
+                # The 'style="" class=""' is needed and will be replaced by the class and style attributes of the original image.
+                customized_img_string = f'<img style="" class="" {" ".join([f"{k}={v!r}" for k, v in attributes.items()])}>'
+                customized_image_mappings[pattern] = customized_img_string
+
+            page_dict['regex_html_replacements_mapping'].update(customized_image_mappings)
+
+    def try_create_image_attachment(self, img_name, img_url, tar):
         try:
             # Read from tar
             image_data = self._get_image_data(tar, img_name)
             if not image_data:
-                return attachments_url_src
+                return None
             # Create a new attachment
             att = self.env['ir.attachment'].create({
                 'name': img_name,
@@ -365,36 +371,12 @@ class Website_GeneratorRequest(models.Model):
                 'res_id': 0,  # shared between website's pages
             })
             if att and att.image_src:
-                attachments_url_src[img_url] = att
+                return att
         except (AttributeError, TypeError, ValueError) as e:
             # Defensive programming: skip the image if it's invalid
             # (image extension not supported, corrupted metadata, etc.)
             logger.warning("Error attaching image %r : %s", img_url, e)
-
-        return attachments_url_src
-
-    def _get_custom_image_name(self, all_images, ws_id, image_customizations):
-        original_img_url = image_customizations.get('url')
-        original_img_name = all_images.get(original_img_url, '')
-        # We keep the same mimetype as the original image
-        supported_mimetypes = {
-            'png': 'image/png',
-            'jpg': 'image/jpeg',
-            'webp': 'image/webp',
-            'svg': 'image/svg+xml',
-            'gif': 'image/gif',
-        }
-        # Split the image name and the image extension based on the last dot
-        original_img_name_base, separator, original_img_name_extension = original_img_name.rpartition('.')
-        image_extension = original_img_name_extension.lower() if separator else ''
-        if not image_extension or image_extension not in supported_mimetypes:
-            image_extension = 'png'
-        image_customizations['data_mimetype'] = supported_mimetypes[image_extension]
-        if original_img_name:
-            img_name = f'customized_{original_img_name_base}_{ws_id}.{image_extension}'
-            image_customizations['filename'] = img_name
-            return img_name
-        return ''
+        return None
 
     def _apply_html_replacements(self, body_html, sorted_list_replacement_mapping, direct_replacement_mapping, regex_replacement_mapping):
         new_block_list = []
