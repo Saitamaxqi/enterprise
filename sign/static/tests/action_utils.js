@@ -2,7 +2,7 @@ import {
     onRpc,
     patchWithCleanup,
     defineActions,
-    mountWebClient
+    mountWebClient,
 } from "@web/../tests/web_test_helpers";
 import { Document } from "@sign/components/sign_request/document_signable";
 
