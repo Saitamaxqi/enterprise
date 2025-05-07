@@ -618,6 +618,14 @@ export class UserAgent extends Reactive {
         await this.callService.end(this.session.call);
     }
 
+    async _onSessionEstablished(session) {
+        // Empty method to be overridden by external modules.
+    }
+
+    async _onSessionTerminated(session) {
+        // Empty method to be overridden by external modules.
+    }
+
     /** @param {SIP.SessionState} newState */
     _onSessionStateChange(newState) {
         switch (newState) {
@@ -625,16 +633,28 @@ export class UserAgent extends Reactive {
                 break;
             case SIP.SessionState.Establishing:
                 break;
-            case SIP.SessionState.Established:
+            case SIP.SessionState.Established: {
                 this._setUpRemoteAudio();
                 this.session.sipSession.sessionDescriptionHandler.remoteMediaStream.onaddtrack = (
                     mediaStreamTrackEvent
                 ) => this._setUpRemoteAudio();
+
+                // Record call
+                (async () => {
+                    try {
+                        await this._onSessionEstablished(this.session);
+                    } catch (error) {
+                        console.error("Error starting recording:", error);
+                    }
+                })();
                 break;
+            }
             case SIP.SessionState.Terminating:
                 break;
-            case SIP.SessionState.Terminated:
+            case SIP.SessionState.Terminated: {
+                this._onSessionTerminated(this.session);
                 break;
+            }
             default:
                 throw new Error(`Unknown session state: "${newState}".`);
         }

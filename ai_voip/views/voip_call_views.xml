@@ -1,0 +1,27 @@
+<odoo>
+    <record id="voip_call_view_form_transcription_status" model="ir.ui.view">
+        <field name="name">voip.call.form.transcription_status</field>
+        <field name="model">voip.call</field>
+        <field name="inherit_id" ref="voip.voip_call_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='duration']" position="after">
+                <field name="transcription_status" widget="selection_badge" string="Transcription" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="voip_call_view_form_transcript" model="ir.ui.view">
+        <field name="name">voip.call.form.transcript</field>
+        <field name="model">voip.call</field>
+        <field name="inherit_id" ref="voip.voip_call_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet[last()]" position="inside">
+                <notebook>
+                    <page string="Transcript" name="transcript">
+                        <field name="transcript" placeholder="Call transcript..." />
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

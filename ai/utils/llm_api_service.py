@@ -107,11 +107,12 @@ class LLMApiService:
         start = time.time()
         response = self._request(
             method="post",
-            endpoint="/v1/audio/transcriptions",
+            endpoint="/audio/transcriptions",
             headers=headers,
             body={},
             data=body,
             files={"file": ("audio", data, mimetype)},
+            timeout=550
         )
         elapsed = time.time() - start
 
@@ -151,7 +152,7 @@ class LLMApiService:
     def _request(
         self, method: str, endpoint: str, headers: dict[str, str], body: dict,
         data: dict | None = None, files: dict | None = None, params: dict | None = None,
-        base_url: str | None = None,
+        base_url: str | None = None, timeout: int = 30
     ) -> dict:
         route = f"{base_url or self.base_url}/{endpoint.strip('/')}"
         try:
@@ -162,7 +163,7 @@ class LLMApiService:
                 headers=headers,
                 json=body,
                 data=data,
-                timeout=30,
+                timeout=timeout,
                 files=files
             )
             response.raise_for_status()

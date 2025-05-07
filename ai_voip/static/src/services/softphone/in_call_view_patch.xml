@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-inherit="voip.InCallView-default" t-inherit-mode="extension">
+    <xpath expr="//span[@t-esc='props.call.timerText']" position="after">
+      <t t-if="mode === 'prod'">
+        <span class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-2" title="This call will be transcribed when it's done">
+          <p class="mb-0 fw-bold">Transcription ON</p>
+        </span>
+      </t>
+    </xpath>
+  </t>
+</templates>
