@@ -12,6 +12,9 @@
         'pos_preparation_display.assets': [
             'pos_self_order_preparation_display/static/src/override/pos_preparation_display/**/*',
         ],
+        'pos_self_order.assets_tests': [
+            'pos_self_order_preparation_display/static/tests/**/*',
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
