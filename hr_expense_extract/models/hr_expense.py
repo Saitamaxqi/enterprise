@@ -78,22 +78,21 @@ class HrExpense(models.Model):
         return res
 
     def _fill_document_with_results(self, ocr_results):
-        if ocr_results is not None:
-            vals = {'state': 'draft'}
+        if ocr_results is not None and self.state == "draft":
+            vals = {}
 
             description_ocr = self._get_ocr_selected_value(ocr_results, 'description', "")
             total_ocr = self._get_ocr_selected_value(ocr_results, 'total', 0.0)
             date_ocr = self._get_ocr_selected_value(ocr_results, 'date', fields.Date.context_today(self).strftime(DEFAULT_SERVER_DATE_FORMAT))
             currency_ocr = self._get_ocr_selected_value(ocr_results, 'currency', self.env.company.currency_id.name)
 
-            receipt_name = (self.message_main_attachment_id.name or '').split('.')[0]
-            if (description_ocr and not self.name) or (receipt_name and self.name == receipt_name):
+            receipt_name = '.'.join(self.message_main_attachment_id.name.split('.')[:-1])
+            if (receipt_name and self.name == receipt_name):
                 predicted_product_id = self._predict_product(description_ocr, category=True)
                 if predicted_product_id:
-                    vals['product_id'] = predicted_product_id or self.product_id
-
-            vals['name'] = description_ocr
-            # We need to set the name after the product change as changing the product may change the name
+                    vals['product_id'] = predicted_product_id
+                vals['name'] = description_ocr
+                # We need to set the name after the product change as changing the product may change the name
             vals['predicted_category'] = description_ocr
 
             context_create_date = fields.Date.context_today(self, self.create_date)

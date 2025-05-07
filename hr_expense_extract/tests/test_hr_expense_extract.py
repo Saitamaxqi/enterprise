@@ -65,6 +65,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         eur_currency.rate_ids.unlink()
         eur_currency.active = True
 
+        self.expense.name = '.'.join(self.attachment.name.split('.')[:-1])
         with self._mock_iap_extract(
             extract_response=self.parse_success_response(),
             assert_params=expected_parse_params,
@@ -121,6 +122,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         # upon success, no button shall be provided
         self.assertFalse(self.expense.extract_can_show_send_button)
 
+        self.expense.name = '.'.join(self.attachment.name.split('.')[:-1])
         with self._mock_iap_extract(extract_response=extract_response):
             self.expense.check_all_status()
 
@@ -243,7 +245,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
                 'company_id': self.env.company.id,
             })
         ocr_results = self.get_result_success_response()['results'][0]
-        self.expense.name = ""
+        self.expense.message_post(attachment_ids=[self.attachment.id])
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertEqual(self.expense.total_amount, 33.33)
@@ -256,7 +258,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
                 'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
                 'currency': {'selected_value': {'content': '$', 'candidates': []}},
             }
-        self.expense.name = ""
+        self.expense.message_post(attachment_ids=[self.attachment.id])
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertTrue(self.expense.currency_id)
@@ -269,7 +271,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
                 'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
                 'currency': {'selected_value': {'content': 'undefined', 'candidates': []}},
             }
-        self.expense.name = ""
+        self.expense.message_post(attachment_ids=[self.attachment.id])
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertTrue(self.expense.currency_id)
@@ -277,7 +279,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
     def test_extract_no_total(self):
         ocr_results = self.get_result_success_response()['results'][0]
         del ocr_results['total']
-        self.expense.name = ""
+        self.expense.message_post(attachment_ids=[self.attachment.id])
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertAlmostEqual(self.expense.total_amount_currency, 0, 2)
@@ -295,7 +297,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
         ocr_results = self.get_result_success_response()['results'][0]
         del ocr_results['currency']
-        self.expense.name = ""
+        self.expense.message_post(attachment_ids=[self.attachment.id])
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertAlmostEqual(self.expense.total_amount_currency, 99.99, 2)
@@ -314,7 +316,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
         ocr_results = self.get_result_success_response()['results'][0]
         del ocr_results['date']
-        self.expense.name = ""
+        self.expense.message_post(attachment_ids=[self.attachment.id])
         self.expense.date = None
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
