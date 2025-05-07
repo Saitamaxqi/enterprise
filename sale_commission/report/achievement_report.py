@@ -80,7 +80,7 @@ class SaleCommissionAchievementReport(models.Model):
         return f"""
 WITH {self._commission_lines_query(users=users, teams=teams)}
 SELECT
-    (cl.plan_id *10^13 + cl.related_res_id * 10^5 +  cl.user_id + to_char(era.date_from, 'YYMMDD')::integer)::bigint  AS id,
+    (cl.plan_id *10^13 + cl.related_res_id * 10^5 + 10^3 * LENGTH(cl.related_res_model) + cl.user_id + to_char(era.date_from, 'YYMMDD')::integer)::bigint  AS id,
     era.id AS target_id,
     cl.user_id AS user_id,
     cl.team_id AS team_id,
