@@ -42,6 +42,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
                 this.props.list.records.forEach((record) => {
                     record.toggleSelection(!allSelected);
                 });
+                this.setDefaultFocus();
             },
             {
                 category: "smart_action",
@@ -201,6 +202,13 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         super.toggleRecordSelection(record);
         if (isSelection) {
             this.documentService.focusRecord(record, true);
+        }
+    }
+
+    toggleSelection() {
+        super.toggleSelection();
+        if (this.canSelectRecord) {
+            this.setDefaultFocus();
         }
     }
 }

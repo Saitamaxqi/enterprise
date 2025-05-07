@@ -518,13 +518,9 @@ function useDocumentsViewFileUpload() {
             return;
         }
         component.model.root.selection.forEach((el) => el.toggleSelection(false));
-        const records = env.model.root.records;
-        for (const record of records) {
-            if (!newDocumentIds.includes(record.resId)) {
-                continue;
-            }
-            record.toggleSelection(true);
-        }
+        const newRecords = env.model.root.records.filter((r) => newDocumentIds.includes(r.resId));
+        newRecords.map((record) => record.toggleSelection(true));
+        documentService.focusRecord(newRecords[0]);
     });
 
     /**

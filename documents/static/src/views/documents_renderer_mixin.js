@@ -60,6 +60,17 @@ export const DocumentsRendererMixin = (component) =>
             });
         }
         /**
+         * Default focus on first record (fallback on container record)
+         * if there is no focused record or current focused record is out of the record list.
+         */
+        setDefaultFocus() {
+            const focusedRecord = this.documentService.focusedRecord;
+            const records = this.props.list ? this.props.list.records : this.props.records;
+            if (!focusedRecord || !records.find((r) => r.id === focusedRecord.id)) {
+                this.documentService.focusRecord(records[0] || this.getContainerRecord());
+            }
+        }
+        /**
          * Record for showing/modifying details of containing folder
          */
         getContainerRecord() {
