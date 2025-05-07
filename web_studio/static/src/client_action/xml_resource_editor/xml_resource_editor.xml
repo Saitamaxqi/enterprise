@@ -28,7 +28,7 @@
                         </div>
                     </t>
                 </div>
-                <CodeEditor mode="'qweb'" sessionId="state.currentResourceId" value="arch" onChange.bind="onCodeChange" theme="'monokai'" class="'o_web_studio_code_editor'" t-key="codeEditorKey"/>
+                <CodeEditor mode="'qweb'" sessionId="state.currentResourceId" value="arch" onChange.bind="onCodeChange" initialCursorPosition="cursorPosition" theme="'monokai'" class="'o_web_studio_code_editor'" t-key="codeEditorKey"/>
             </ResizablePanel>
         </div>
     </t>

@@ -108,13 +108,16 @@ export class XmlResourceEditor extends Component {
         onWillStart(() => this.loadResources(this.props.mainResourceId));
 
         onWillUpdateProps(async (nextProps) => {
-            const shouldReload =
-                nextProps.mainResourceId !== this.props.mainResourceId ||
-                this.codeEditorKey !== nextProps.reloadSources;
+            const resourceChanged = nextProps.mainResourceId !== this.props.mainResourceId;
+            const shouldReload = resourceChanged || this.codeEditorKey !== nextProps.reloadSources;
             const nextResourceId =
                 nextProps.mainResourceId !== this.props.mainResourceId
                     ? nextProps.mainResourceId
                     : this.state.currentResourceId;
+
+            if (resourceChanged) {
+                this.cursorPosition = undefined;
+            }
 
             if (shouldReload) {
                 this.state._codeChanges = null;
@@ -178,7 +181,8 @@ export class XmlResourceEditor extends Component {
         this.props.onClose();
     }
 
-    onCodeChange(code) {
+    onCodeChange(code, cursorPosition) {
+        this.cursorPosition = cursorPosition;
         this.tempCode = code;
         if ("onCodeChange" in this.props) {
             this.props.onCodeChange({ ...toRaw(this.state._codeChanges) });
@@ -199,6 +203,7 @@ export class XmlResourceEditor extends Component {
 
     onResourceChange(resourceId) {
         this.state.currentResourceId = resourceId;
+        this.cursorPosition = undefined;
         this.props.onResourceChange(this.getResourceFromId(this.state.currentResourceId));
     }
 
