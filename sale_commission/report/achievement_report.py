@@ -320,29 +320,19 @@ JOIN sale_commission_plan_target era
         today = fields.Date.today().strftime('%Y-%m-%d')
         date_from_str = date_from and datetime.strftime(date_from, "%Y-%m-%d")
         date_from_condition = f"""AND date >= '{date_from_str}'""" if date_from_str else ""
-        if users:
-            res_user_ids = ','.join(str(i) for i in users.ids)
-            user_condition = f'AND (scpu_add.user_id IN ({res_user_ids}) OR scpu_rem.user_id IN ({res_user_ids}))'
-        else:
-            user_condition = ""
         query = f"""
         filtered_adjustments AS (
             SELECT
                     a.id,
                     add_user_id,
                     reduce_user_id,
-                    scpu_add.user_id as add_res_user_id,
-                    scpu_rem.user_id as rem_res_user_id,
                     company_id,
                     currency_id,
                     currency_rate,
                     achieved,
                     date
               FROM sale_commission_achievement a
-              JOIN sale_commission_plan_user scpu_add ON scpu_add.id = a.add_user_id
-              JOIN sale_commission_plan_user scpu_rem ON scpu_rem.id = a.reduce_user_id
              {company_condition}
-             {user_condition}
              {'AND team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
              {date_from_condition}
                AND date <= '{datetime.strftime(date_to, "%Y-%m-%d") if date_to else today}'
