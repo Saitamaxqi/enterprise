@@ -13,6 +13,7 @@ Provides electronic invoicing for Brazil through Avatax in the POS.
     "depends": ["l10n_br_edi", "point_of_sale"],
     "demo": ["data/product_product_demo.xml"],
     "data": [
+        "data/ir_cron.xml",
         "views/pos_order_views.xml",
         "views/pos_payment_method_views.xml",
         "views/product_template_views.xml",

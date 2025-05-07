@@ -10,6 +10,7 @@ from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import Account
 from odoo.addons.l10n_br_edi.tests.test_l10n_br_edi import TestL10nBREDICommon
 from odoo.addons.l10n_br_edi_pos.tests.common import CommonPosBrEdiTest
 from odoo.addons.l10n_br_edi_pos.models.pos_order import PosOrder
+from odoo.exceptions import UserError
 from odoo.tests import tagged, freeze_time
 from odoo.tools import file_open
 
@@ -318,6 +319,77 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
             order.message_ids[-1].body,
             f".*{re.escape('<b>aa Regular Consumable Product</b><br>COFINS Incl. - R$&nbsp;0.00<br>ICMS Incl. - R$&nbsp;0.58<br>PIS Incl. - R$&nbsp;0.00')}.*"
         )
+
+    @freeze_time(TEST_DATETIME)
+    def test_07_failed_edi_ran_as_cron(self):
+        """ Properly handle multiple orders being sent to the EDI in the background. This checks
+        that only errored records can be sent to the EDI as well as mocking all network calls. """
+        order_a, _ = self.create_backend_pos_order({
+            'order_data': {
+                'name': 'Order/0001',
+            },
+            'line_data': [{
+                'qty': 3,
+                'price_unit': 1.0,
+                'product_id': self.product_screens.product_variant_id.id,
+            }],
+        })
+        order_b, _ = self.create_backend_pos_order({
+            'order_data': {
+                "name": "Order/0002",
+            },
+            'line_data': [{
+                'qty': 3,
+                "price_unit": 1.0,
+                'product_id': self.product_screens.product_variant_id.id,
+            }, {
+                'qty': 5,
+                "price_unit": 3.0,
+                'product_id': self.product_cabinet.product_variant_id.id,
+            }],
+        })
+
+        orders = order_a + order_b
+        for order in orders:
+            order.l10n_br_last_avatax_status = "error"
+            payment_context = {"active_ids": order.ids, "active_id": order.id}
+            order_payment = self.env['pos.make.payment'].with_context(**payment_context).create({})
+            order_payment.with_context(**payment_context).check()
+
+        current_session = self.pos_config_usd.current_session_id
+        current_session.action_pos_session_close()
+        self.assertEqual(current_session.state, "closed", "Session should be closed without differences.")
+
+        # Order B is accepted so it can't be sent.
+        order_b.l10n_br_last_avatax_status = "accepted"
+        with self.assertRaisesRegex(UserError, r".+Order/0002.+", msg="Action should have blocked the cron when a non-errored Order is selected"):
+            orders.action_send_nfce_batch()
+
+        order_b.l10n_br_last_avatax_status = "error"
+        # Process
+        results = orders.action_send_nfce_batch()
+        self.assertEqual(results['type'], 'ir.actions.client')
+        self.assertEqual(results['params']['next']['type'], 'ir.actions.act_window_close')
+
+        # Await the CRON.
+        self.assertEqual(order_a.l10n_br_edi_triggered_user_id, self.env.user, "Triggered User was not set to the right user")
+        self.assertEqual(order_b.l10n_br_edi_triggered_user_id, self.env.user, "Triggered User was not set to the right user")
+
+        expected_communications = [
+            ("calculate_tax", "anonymous_tax_request", "anonymous_tax_response"),
+            ("submit_invoice_goods", "anonymous_edi_request", "anonymous_edi_response"),
+            ("calculate_tax", "anonymous_tax_request_multiple_lines", "anonymous_tax_response_multiple_lines"),
+            ("submit_invoice_goods", "anonymous_edi_request_multiple_lines", "anonymous_edi_response_multiple_lines"),
+        ]
+
+        with self._with_mocked_l10n_br_iap_request(expected_communications), self.enter_registry_test_mode():
+            self.env.ref('l10n_br_edi_pos.ir_cron_l10n_br_edi_pos_check_status').method_direct_trigger()
+
+        self.assertEqual(order_a.l10n_br_edi_triggered_user_id.id, False, "Triggered User was not cleared")
+        self.assertEqual(order_b.l10n_br_edi_triggered_user_id.id, False, "Triggered User was not cleared")
+
+        self.assertEqual(order_a.l10n_br_last_avatax_status, "accepted", "Order was not properly processed")
+        self.assertEqual(order_b.l10n_br_last_avatax_status, "accepted", "Order was not properly processed")
 
 
 @freeze_time(TEST_DATETIME)

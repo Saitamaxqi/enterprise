@@ -96,6 +96,20 @@ class PosOrder(models.Model):
         attachment=True,
     )
 
+    # Technical field used to mark the pos order for resending to the edi via cron.
+    l10n_br_edi_triggered_user_id = fields.Many2one(
+        string="User that triggered EDI Cron",
+        comodel_name="res.users",
+        readonly=True,
+        copy=False
+    )
+
+    l10n_br_edi_processed_by_cron = fields.Boolean(
+        string="Processed By EDI Cron",
+        readonly=True,
+        copy=False,
+    )
+
     @api.depends("name")
     def _compute_l10n_br_edi_number(self):
         """Use the longest, rightmost contiguous string of digits as the invoice number. E.g., for Shop 01/1234 the number
@@ -204,6 +218,56 @@ class PosOrder(models.Model):
                     line.tax_ids = False
                     line.write(original_line_amounts[line.id])
 
+    def _cron_l10n_br_send_nfce(self, batch_size=1):
+        def get_order_notification(orders, is_success: bool):
+            return [
+                'account_notification',
+                {
+                    'type': 'success' if is_success else 'warning',
+                    'title': self.env._('NFC-e sent') if is_success else self.env._('NFC-e declined'),
+                    'sticky': not is_success,
+                    'message': self.env._('POS Orders sent successfully.') if is_success else self.env._(
+                        "One or more POS orders couldn't be processed."),
+                    'action_button': {
+                        'name': self.env._('Open'),
+                        'action_name': self.env._('Sent orders') if is_success else self.env._('Orders in error'),
+                        'model': 'pos.order',
+                        'res_ids': orders.ids,
+                    },
+                },
+            ]
+
+        domain = [('l10n_br_edi_triggered_user_id', '!=', False), ('l10n_br_edi_processed_by_cron', '=', False)]
+        record = self.search(domain, order='id asc', limit=batch_size).try_lock_for_update()
+        if not record:
+            return
+
+        record.with_user(record.l10n_br_edi_triggered_user_id)._l10n_br_do_edi(save_avalara_pdf=True)
+        record.l10n_br_edi_processed_by_cron = True
+        remaining = self.search_count(domain)
+
+        if not remaining:
+            processed_records = self.search(
+                [('l10n_br_edi_triggered_user_id', '!=', False), ('l10n_br_edi_processed_by_cron', '=', True)]
+            ).try_lock_for_update()
+
+            orders_by_user = processed_records.grouped('l10n_br_edi_triggered_user_id')
+            # Notify those that triggered the cron
+            for user, user_orders in orders_by_user.items():
+
+                user_orders_error = user_orders.filtered('l10n_br_avatax_error')
+                if user_orders_error:
+                    user._bus_send(*get_order_notification(user_orders_error, False))
+                user_orders_success = user_orders - user_orders_error
+                if user_orders_success:
+                    user._bus_send(*get_order_notification(user_orders_success, True))
+                user_orders.write({
+                    'l10n_br_edi_triggered_user_id': False,
+                    'l10n_br_edi_processed_by_cron': False,
+                })
+
+        self.env['ir.cron']._commit_progress(1, remaining=remaining)
+
     def _prepare_invoice_vals(self):
         """Override. Refunds will be electronically invoiced through a normal account.move because it's not possible to
         do a salesReturn for NFC-e."""
@@ -244,6 +308,41 @@ class PosOrder(models.Model):
     def button_l10n_br_edi(self):
         """We save the Avalara receipt PDF in cases where a customer invoices manually from the backend."""
         self._l10n_br_do_edi(save_avalara_pdf=True)
+
+    def action_send_nfce_batch(self):
+        errored_orders = self.filtered(lambda order: order.l10n_br_last_avatax_status == 'error' and order.config_id.l10n_br_is_nfce)
+        others = self - errored_orders
+        if others:
+            raise UserError(_("Some orders are unable to be sent to Avalara for EDI. This could be due to them already being accepted or are not eligible to be sent.\n"
+                "Please unselect: %(other_orders)s and try again.", other_orders=others.mapped('name'))
+            )
+
+        already_triggered_orders = errored_orders.filtered('l10n_br_edi_triggered_user_id')
+        if already_triggered_orders:
+            raise UserError(_("Some orders are already queued to be sent to Avalara for EDI.\n"
+                "Please unselect: %(queued_orders)s and try again.", queued_orders=already_triggered_orders.mapped('name'))
+            )
+
+        new_errors = errored_orders - already_triggered_orders
+        new_errors.l10n_br_edi_triggered_user_id = self.env.user
+        if new_errors:
+            self.env.ref('l10n_br_edi_pos.ir_cron_l10n_br_edi_pos_check_status')._trigger()
+            title = _('Processing NFC-e')
+            message = _('Orders are being sent in the background.')
+        else:
+            title = _('No Orders to Process')
+            message = _('All orders already processed.')
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'info',
+                'title': title,
+                'message': message,
+                'next': {'type': 'ir.actions.act_window_close'},
+            },
+        }
 
     @api.model
     def sync_from_ui(self, orders):
