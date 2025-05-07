@@ -251,7 +251,6 @@ class TestBEIntrastatReport(TestAccountReportsCommon):
             B2101;IT;EUR;500;0
             ''')
         self.assertEqual(csv, expected)
-        self.assertEqual(csv, expected)
 
     def test_csv_service_non_intra_country_f02cms_export(self):
         self.partner_a.country_id = self.env.ref('base.us').id
