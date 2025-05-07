@@ -156,12 +156,12 @@
                                     <div class="o_address_format">
                                         <field name="private_street" placeholder="Street..." class="o_address_street"/>
                                         <field name="private_street2" placeholder="Street 2..." class="o_address_street"/>
-                                        <field name="private_city" placeholder="City" class="o_address_city"/>
+                                        <field name="private_zip" placeholder="ZIP" class="o_address_zip"/>
                                         <field name="private_state_id" class="o_address_state"
                                                placeholder="State"
                                                options="{'no_open': True, 'no_quick_create': True}"
                                                context="{'default_country_id': private_country_id}"/>
-                                        <field name="private_zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <field name="private_city" placeholder="City" class="o_address_city"/>
                                         <field name="private_country_id" placeholder="Country"
                                                class="o_address_country"
                                                options='{"no_open": True, "no_create": True}'/>
@@ -177,15 +177,15 @@
                                            invisible="l10n_ch_residence_type != 'Weekly' or l10n_ch_canton != 'EX'"/>
                                     <div class="o_address_format"
                                          invisible="l10n_ch_residence_type != 'Weekly' or l10n_ch_canton != 'EX'">
+                                        <field name="l10n_ch_weekly_residence_address_zip"
+                                               placeholder="ZIP"
+                                               class="o_address_zip"/>
                                         <field name="l10n_ch_weekly_residence_address_street"
                                                placeholder="Street..."
                                                class="o_address_street"/>
                                         <field name="l10n_ch_weekly_residence_address_city"
                                                placeholder="City"
                                                class="o_address_city"/>
-                                        <field name="l10n_ch_weekly_residence_address_zip"
-                                               placeholder="ZIP"
-                                               class="o_address_zip"/>
                                         <span class="o_address_country">Switzerland</span>
                                     </div>
                                     <field name="l10n_ch_weekly_residence_canton"

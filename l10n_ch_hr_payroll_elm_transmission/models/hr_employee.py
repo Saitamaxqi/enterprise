@@ -144,12 +144,11 @@ Weekly:
 For PIS who do not have a residence but have a weekly place of stay in Switzerland, 
 the canton and municipality of the weekly stay (based on the address of the weekly stay) are decisive.
 """, tracking=True)
-    l10n_ch_weekly_residence_canton = fields.Selection(string="Weekly Residence Canton", selection=CANTONS, tracking=True, groups = "hr.group_hr_user"
-    )
-    l10n_ch_weekly_residence_municipality = fields.Char(string="Weekly Residence Municipality", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_weekly_residence_canton = fields.Selection(string="Weekly Residence Canton", selection=CANTONS, compute="_compute_weekly_residence_autocomplete", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
+    l10n_ch_weekly_residence_municipality = fields.Char(string="Weekly Residence Municipality", compute="_compute_weekly_residence_autocomplete", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
 
     l10n_ch_weekly_residence_address_street = fields.Char(string="Weekly Residence Street", tracking=True, groups="hr.group_hr_user")
-    l10n_ch_weekly_residence_address_city = fields.Char(string="Weekly Residence City", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_weekly_residence_address_city = fields.Char(string="Weekly Residence City", compute="_compute_weekly_residence_autocomplete", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
     l10n_ch_weekly_residence_address_zip = fields.Char(string="Weekly Residence ZIP-Code", tracking=True, groups="hr.group_hr_user")
 
     l10n_ch_flex_profiling = fields.Char("Flex Profiling", help="""
@@ -159,6 +158,10 @@ It involves additional information required to account for the specific characte
 
     l10n_ch_is_mutations = fields.One2many('l10n.ch.is.mutation', 'employee_id', groups="hr.group_hr_user")
     l10n_ch_salary_certificate_profiles = fields.One2many("l10n.ch.salary.certificate.profile", "employee_id", groups="hr.group_hr_user")
+
+    l10n_ch_canton = fields.Selection(compute="_compute_autocomplete_private_address", store=True, readonly=False)
+    l10n_ch_municipality = fields.Char(compute="_compute_autocomplete_private_address", store=True, readonly=False)
+    private_city = fields.Char(compute="_compute_autocomplete_private_address", store=True, readonly=False)
 
     @api.constrains("l10n_ch_foreign_tax_id")
     def _check_l10n_ch_foreign_tax_id(self):
@@ -340,3 +343,27 @@ It involves additional information required to account for the specific characte
         action = super().action_open_contract()
         action['target'] = 'current'
         return action
+
+    @api.depends('private_zip')
+    def _compute_autocomplete_private_address(self):
+        ZIP_DATA = self.env['hr.rule.parameter']._get_parameter_from_code("l10n_ch_bfs_municipalities", fields.Date.today(), raise_if_not_found=False)
+        if ZIP_DATA:
+            for record in self:
+                if record.private_zip:
+                    data = ZIP_DATA.get(record.private_zip)
+                    if data:
+                        record.private_city = data[0]
+                        record.l10n_ch_municipality = data[1]
+                        record.l10n_ch_canton = data[2]
+
+    @api.depends('l10n_ch_weekly_residence_address_zip')
+    def _compute_weekly_residence_autocomplete(self):
+        ZIP_DATA = self.env['hr.rule.parameter']._get_parameter_from_code("l10n_ch_bfs_municipalities", fields.Date.today(), raise_if_not_found=False)
+        if ZIP_DATA:
+            for record in self:
+                if record.l10n_ch_weekly_residence_address_zip:
+                    data = ZIP_DATA.get(record.l10n_ch_weekly_residence_address_zip)
+                    if data:
+                        record.l10n_ch_weekly_residence_address_city = data[0]
+                        record.l10n_ch_weekly_residence_municipality = data[1]
+                        record.l10n_ch_weekly_residence_canton = data[2]

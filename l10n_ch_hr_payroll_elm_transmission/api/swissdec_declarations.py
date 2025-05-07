@@ -702,7 +702,7 @@ class SwissdecDeclaration:
         return description
 
     def get_workplace_id_ref(self, workplace):
-        workplace_id_ref = f"{workplace.bur_ree_number or workplace.in_house_id}"
+        workplace_id_ref = f"{workplace.bur_ree_number or workplace.in_house_id or workplace.id}"
         return f"#W_{workplace_id_ref}"
 
     def get_workplace_working_hours(self, workplace):

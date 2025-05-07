@@ -20,6 +20,7 @@ The Module is not retro-compatible with Previous Swiss Payroll versions, install
         'data/hr_swiss_leave_types.xml',
         'data/hr_payroll_input_types.xml',
         'data/reports_paper_format.xml',
+        'data/hr_payroll_rule_parameters.xml',
         'report/l10n_ch_master_data_report.xml',
         'report/l10n_ch_wage_type_report.xml',
         'views/hr_payslip_views.xml',

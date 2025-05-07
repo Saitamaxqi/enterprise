@@ -816,6 +816,7 @@ class HrPayslip(models.Model):
         # Note: file order should be maintained
         return super()._get_data_files_to_update() + [(
             'l10n_ch_hr_payroll_elm_transmission', [
+                'data/hr_payroll_rule_parameters.xml',
                 'data/hr_payroll_input_types.xml',
                 'data/hr_salary_rule_category_data.xml',
                 'data/hr_salary_rule_data.xml',
