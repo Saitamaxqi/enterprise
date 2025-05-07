@@ -364,7 +364,7 @@ class AIAgent(models.Model):
             channel = self.env['discuss.channel'].search([
                 ('id', '=', channel_id),
                 ('channel_member_ids', 'any', [
-                    ('partner_id', '=', self.partner_id.id)
+                    ('partner_id', '=', record.partner_id.id)
                 ])
             ])
             if channel and channel.is_member:
