@@ -53,7 +53,7 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
             'NO': {'vat': 'NO123456785', 'l10n_no_bronnoysund_number': '987654325'},
             'PL': {'l10n_pl_reports_tax_office_id': l10n_pl_reports_tax_office and l10n_pl_reports_tax_office.id},
             'BD': {'l10n_bd_corporate_tax_liability': l10n_bd_corporate_tax_liability, 'l10n_bd_corporate_tax_expense': l10n_bd_corporate_tax_liability},
-            'AE': {'l10n_ae_tax_report_liabilities_account': l10n_ae_liability_account, 'l10n_ae_tax_report_counterpart_account': l10n_ae_liability_account},
+            'AE': {'l10n_ae_tax_report_liabilities_account': l10n_ae_liability_account, 'l10n_ae_tax_report_expenses_account': l10n_ae_liability_account, 'l10n_ae_tax_report_asset_account': l10n_ae_liability_account},
             'CZ': {'l10n_cz_tax_office_id': l10n_cz_reports_tax_office and l10n_cz_reports_tax_office.id}
         }
 

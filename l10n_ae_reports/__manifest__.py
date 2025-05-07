@@ -5,15 +5,26 @@
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': """
-        Accounting reports for the United Arab Emirates
+        Accounting reports:
+        - Corporate Tax Report
     """,
-    'depends': ['l10n_ae', 'account_reports'],
+    'depends': ['l10n_ae', 'account_reports', 'account_disallowed_expenses'],
     'installable': True,
     'data': [
+        'data/corporate_tax_report.xml',
         'data/account_return_data.xml',
+        'data/actions.xml',
+        'data/menuitems.xml',
+        'data/account.account.tag.csv',
+        'views/res_config_settings_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'l10n_ae_reports/static/src/*',
+        ],
+    },
     'post_init_hook': '_l10n_ae_reports_post_init',
-    'auto_install': ['l10n_ae', 'account_reports'],
+    'auto_install': ['l10n_ae', 'account_reports', 'account_disallowed_expenses'],
     'website': 'https://www.odoo.com/app/accounting',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

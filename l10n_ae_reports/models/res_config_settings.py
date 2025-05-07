@@ -7,12 +7,17 @@ class ResConfigSettings(models.TransientModel):
     l10n_ae_tax_report_liabilities_account = fields.Many2one(
         comodel_name='account.account',
         related='company_id.l10n_ae_tax_report_liabilities_account',
-        string="Liabilities Account for Tax Report",
+        string="Liability Account",
         readonly=False,
     )
-    l10n_ae_tax_report_counterpart_account = fields.Many2one(
+    l10n_ae_tax_report_expenses_account = fields.Many2one(
         comodel_name='account.account',
-        related='company_id.l10n_ae_tax_report_counterpart_account',
-        string="Tax Report Counter Part Account",
+        related='company_id.l10n_ae_tax_report_expenses_account',
+        readonly=False,
+    )
+    l10n_ae_tax_report_asset_account = fields.Many2one(
+        comodel_name='account.account',
+        related='company_id.l10n_ae_tax_report_asset_account',
+        string="Asset Account",
         readonly=False,
     )
