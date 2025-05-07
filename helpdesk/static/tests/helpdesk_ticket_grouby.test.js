@@ -105,7 +105,7 @@ test("Access for helpdesk manager to reordering ticket stages", async () => {
     expect(".o_group_draggable").toHaveCount(2);
 });
 
-test("Verify ghost column is visible when all task stages are deleted in Task Kanban view", async () => {
+test("Verify stages nocontent helper is visible when all task stages are deleted in Task Kanban view", async () => {
     const teamId = HelpdeskTeam._records.push({ name: "Team 3", stage_ids: undefined });
 
     await mountView({
@@ -124,7 +124,5 @@ test("Verify ghost column is visible when all task stages are deleted in Task Ka
         message: "should have 1 column",
     });
     expect(".o_column_quick_create").toHaveCount(1);
-    expect(".o_kanban_example_background_container").toHaveCount(1, {
-        message: "Ghost column is visible",
-    });
+    expect(".o_kanban_stages_nocontent").toHaveCount(1);
 });
