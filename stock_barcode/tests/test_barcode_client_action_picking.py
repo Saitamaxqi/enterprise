@@ -105,7 +105,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
             'move_ids': [(0, 0, {
-                'name': 'scan_package_confirmation',
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.product1.id,
@@ -175,7 +174,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf3, 1)
         move1 = self.env['stock.move'].create({
-            'name': 'test_internal_picking_reserved_1_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product1.id,
@@ -184,7 +182,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': internal_picking.id,
         })
         move2 = self.env['stock.move'].create({
-            'name': 'test_internal_picking_reserved_1_2',
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product2.id,
@@ -307,7 +304,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         self.env['stock.move'].create({
-            'name': 'test_receipt_1',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.productserial1.id,
@@ -346,7 +342,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         move1 = self.env['stock.move'].create({
-            'name': 'test_receipt_reserved_1_1',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product1.id,
@@ -355,7 +350,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': receipt_picking.id,
         })
         move2 = self.env['stock.move'].create({
-            'name': 'test_receipt_reserved_1_2',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product2.id,
@@ -464,7 +458,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': 'product1 x4 (WH/Stock)',
             'location_id': delivery_from_stock.location_id.id,
             'location_dest_id': delivery_from_stock.location_dest_id.id,
             'product_id': self.product1.id,
@@ -483,7 +476,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': 'product1 x4 (WH/Second Stock)',
             'location_id': delivery_from_stock_2.location_id.id,
             'location_dest_id': delivery_from_stock_2.location_dest_id.id,
             'product_id': self.product1.id,
@@ -583,7 +575,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': self.productserial1.name,
             'product_id': self.productserial1.id,
             'product_uom_qty': 2,
             'product_uom': self.productserial1.uom_id.id,
@@ -672,7 +663,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         move = self.env['stock.move'].create({
-            'name': self.productlot1.name,
             'product_id': self.productlot1.id,
             'product_uom_qty': 1,
             'product_uom': self.productlot1.uom_id.id,
@@ -703,7 +693,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(delivery_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_1_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.product1.id,
@@ -712,7 +701,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': delivery_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_1_2',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.product2.id,
@@ -750,7 +738,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         partner_1 = self.env['res.partner'].create({'name': 'Parter1'})
         partner_2 = self.env['res.partner'].create({'name': 'Partner2'})
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_2_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.product1.id,
@@ -760,7 +747,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'restrict_partner_id': partner_1.id
         })
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_2_2',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.product1.id,
@@ -797,7 +783,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(delivery_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_2_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.product1.id,
@@ -837,7 +822,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         common_vals = {
             'location_dest_id': self.stock_location.id,
             'location_id': self.stock_location.id,
-            'name': 'test_delivery_reserved_4_backorder',
             'picking_id': delivery.id,
             'product_uom_qty': 4,
         }
@@ -886,7 +870,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': 'move_test_delivery_reserved_5',
             'location_id': delivery_picking.location_id.id,
             'location_dest_id': delivery_picking.location_dest_id.id,
             'picking_id': delivery_picking.id,
@@ -928,7 +911,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': 'move_test_delivery_reserved_6',
             'location_id': delivery_picking.location_id.id,
             'location_dest_id': delivery_picking.location_dest_id.id,
             'picking_id': delivery_picking.id,
@@ -1055,7 +1037,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(delivery_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_lots_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productlot1.id,
@@ -1102,7 +1083,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(delivery_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_different_products_with_same_lot_name_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productlot1.id,
@@ -1111,7 +1091,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': delivery_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_delivery_different_products_with_same_lot_name_2',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productlot2.id,
@@ -1195,7 +1174,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_lots_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productserial1.id,
@@ -1308,7 +1286,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(receipts_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_lots_1',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.productlot1.id,
@@ -1469,7 +1446,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(internal_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_delivery_reserved_2_1',
             'location_id': self.shelf1.id,
             'location_dest_id': self.shelf2.id,
             'product_id': self.product1.id,
@@ -1577,7 +1553,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_internal.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_put_in_pack_from_multiple_pages',
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product1.id,
@@ -1586,7 +1561,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': internal_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_put_in_pack_from_multiple_pages',
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product2.id,
@@ -1699,7 +1673,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(delivery_picking.id)
 
         self.env['stock.move'].create({
-            'name': 'test_bypass_source_scan_1_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productserial1.id,
@@ -1708,7 +1681,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': delivery_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_bypass_source_scan_1_2',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productlot1.id,
@@ -1717,7 +1689,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': delivery_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_bypass_source_scan_1_3',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.product1.id,
@@ -1752,7 +1723,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_internal.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_put_in_pack_from_different_location',
             'location_id': self.shelf1.id,
             'location_dest_id': self.shelf2.id,
             'product_id': self.product1.id,
@@ -1761,7 +1731,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': internal_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_put_in_pack_from_different_location2',
             'location_id': self.shelf3.id,
             'location_dest_id': self.shelf2.id,
             'product_id': self.product2.id,
@@ -1802,7 +1771,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_internal.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_put_in_pack_before_dest',
             'location_id': self.shelf1.id,
             'location_dest_id': self.shelf2.id,
             'product_id': self.product1.id,
@@ -1811,7 +1779,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': internal_picking.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_put_in_pack_before_dest',
             'location_id': self.shelf3.id,
             'location_dest_id': self.shelf4.id,
             'product_id': self.product2.id,
@@ -2278,7 +2245,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_in.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_receipt_1',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product1.id,
@@ -2377,7 +2343,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_internal.id,
         })
         self.env['stock.move'].create({
-            'name': self.product1.name,
             'product_id': self.product1.id,
             'lot_ids': lot1.id,
             'product_uom_qty': 10.00,
@@ -2441,7 +2406,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'state': 'draft',
         })
         self.env['stock.move'].create({
-            'name': 'test_show_entire_package',
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.product1.id,
@@ -2529,7 +2493,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': 'delivery_test move',
             'location_id': self.stock_location.id,
             'location_dest_id': self.supplier_location.id,
             'product_id': self.product1.id,
@@ -2637,7 +2600,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.move'].create({
             'location_dest_id': receipt.location_dest_id.id,
             'location_id': receipt.location_id.id,
-            'name': "product1 x4",
             'picking_id': receipt.id,
             'product_id': self.product1.id,
             'product_uom_qty': 4,
@@ -2655,7 +2617,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.move'].create({
             'location_dest_id': internal.location_dest_id.id,
             'location_id': internal.location_id.id,
-            'name': "product2 x7",
             'picking_id': internal.id,
             'product_id': self.product2.id,
             'product_uom_qty': 7,
@@ -2701,7 +2662,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.move'].create([{
             'location_dest_id': delivery.location_dest_id.id,
             'location_id': delivery.location_id.id,
-            'name': f"{product.name} x4",
             'picking_id': delivery.id,
             'product_id': product.id,
             'product_uom_qty': 4,
@@ -2741,7 +2701,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'move_ids': [Command.create({
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
-                'name': "productlot1 x3",
                 'product_id': self.productlot1.id,
                 'product_uom_qty': 3,
             })]
@@ -2782,7 +2741,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.move'].create({
             'location_dest_id': receipt.location_dest_id.id,
             'location_id': receipt.location_id.id,
-            'name': "product1 x4",
             'picking_id': receipt.id,
             'product_id': self.product1.id,
             'product_uom_qty': 4,
@@ -2790,7 +2748,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.move'].create({
             'location_dest_id': receipt.location_dest_id.id,
             'location_id': receipt.location_id.id,
-            'name': "product2 x4",
             'picking_id': receipt.id,
             'product_id': self.product2.id,
             'product_uom_qty': 4,
@@ -2890,7 +2847,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_in.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_create_backorder_after_qty_modified move',
             'picking_id': receipt.id,
             'product_id': self.product1.id,
             'product_uom_qty': 2.0,
@@ -2925,7 +2881,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_in.id,
             'user_id': bob.id,
             'move_ids': [(0, 0, {
-                'name': 'some product',
                 'location_id': self.supplier_location.id,
                 'location_dest_id': self.stock_location.id,
                 'product_id': self.product1.id,
@@ -2981,7 +2936,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'move_ids': [Command.create({
-                'name': 'TNZDNLFS move',
                 'product_id': self.product1.id,
                 'product_uom_qty': 1,
                 'location_id': self.stock_location.id,
@@ -3041,7 +2995,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
             'move_ids': [Command.create({
-                'name': 'Lovely move',
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': product.id,
@@ -3140,7 +3093,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         mts_product = self.product2
         self.env['stock.quant']._update_available_quantity(mts_product, ship.location_id, 5)
         self.env['stock.move'].create({
-            'name': mts_product.name,
             'product_id': mts_product.id,
             'product_uom_qty': 5,
             'product_uom': mts_product.uom_id.id,
@@ -3184,7 +3136,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
             'move_ids': [Command.create({
-                'name': 'Lovely move',
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.product1.id,
@@ -3226,7 +3177,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'move_ids': [Command.create({
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
-                'name': "productlot1 x2",
                 'product_id': self.productlot1.id,
                 'product_uom_qty': 4,
             })]
@@ -3289,7 +3239,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
             'move_ids': [Command.create({
-                'name': 'Lovely move',
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.productlot1.id,
@@ -3330,7 +3279,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
             'move_ids': [Command.create({
-                'name': 'test_quant_selection',
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.product1.id,
@@ -3375,7 +3323,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.picking_type_out.id,
             'move_ids': [Command.create({
-                'name': 'test_location_confirmation',
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.product1.id,
@@ -3415,7 +3362,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.shelf2.id,
             'picking_type_id': warehouse.int_type_id.id,
             'move_ids': [Command.create({
-                'name': 'Lovely move',
                 'location_id': self.shelf1.id,
                 'location_dest_id': floor_location.id,
                 'product_id': self.product1.id,
@@ -3438,7 +3384,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_dest_id': self.stock_location.id,
             'picking_type_id': self.picking_type_in.id,
             'move_ids': [Command.create({
-                'name': 'test_receipt_1',
                 'location_id': self.supplier_location.id,
                 'location_dest_id': self.stock_location.id,
                 'product_id': self.product1.id,
@@ -3474,7 +3419,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'move_ids': [Command.create({
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
-                'name': "Lovely move",
                 'product_id': lovely_product.id,
                 'product_uom_qty': 12,
             })]
@@ -3561,7 +3505,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
         })
         self.env['stock.move'].create({
-            'name': product_a.name,
             'product_id': product_a.id,
             'product_uom_qty': 1,
             'product_uom': product_a.uom_id.id,
@@ -4040,7 +3983,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
                 'partner_id': partner.id,
                 'user_id': False,
                 'move_ids': [(0, 0, {
-                    'name': '/',
                     'product_id': self.product1.id,
                     'product_uom': self.product1.uom_id.id,
                     'product_uom_qty': 1,
@@ -4078,7 +4020,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'group_id': pg.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_delivery_lot_xyz_1',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productlot1.id,
@@ -4089,7 +4030,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
         delivery_picking.action_confirm()
         second_move = self.env['stock.move'].create({
-            'name': 'test_delivery_lot_xyz_2',
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
             'product_id': self.productlot1.id,

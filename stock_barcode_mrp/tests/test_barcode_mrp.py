@@ -105,7 +105,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
             'move_ids': [Command.create({
-                'name': 'test_picking_product_with_packaging stock move',
                 'product_id': self.simple_kit.id,
                 'product_uom_qty': 1.0,
                 'product_uom': self.simple_kit.uom_id.id,

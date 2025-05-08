@@ -19,7 +19,6 @@ class TestReportsMrpAccountSubcontracting(TestMrpSubcontractingCommon):
             'picking_type_id': in_picking_type.id,
             'partner_id': cls.subcontractor_partner1.id,
             'move_ids_without_package': [Command.create({
-                'name': 'test_mrp_cost_structure_subcontracting',
                 'product_id': cls.finished.id,
                 'product_uom_qty': 2,
                 'location_id': supplier_location.id,

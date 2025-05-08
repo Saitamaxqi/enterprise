@@ -40,7 +40,6 @@ class TestECDeliveryGuideCommon(TestEcEdiXmls):
         '''
         return [Command.create({
             'product_id': self.product_pc.id,
-            'name': '[A12345] Computadora',
             'product_uom_qty': 1.0,
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id

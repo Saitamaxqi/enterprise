@@ -79,7 +79,6 @@ class TestMXEdiStockCommon(TestMxExtendedEdiCommon):
 
         move_vals = move_vals or {}
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 10,
             'product_uom': self.product.uom_id.id,

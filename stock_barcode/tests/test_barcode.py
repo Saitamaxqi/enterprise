@@ -263,7 +263,6 @@ class TestBarcodeClientAction(HttpCase):
                 'picking_type_id': warehouse.out_type_id.id,
                 'location_id': warehouse.lot_stock_id.id,
                 'location_dest_id': customer_loc.id,
-                'name': 'Test lot filter',
                 'product_id': product.id,
                 'product_uom_qty': 1,
                 'product_uom': product.uom_id.id,

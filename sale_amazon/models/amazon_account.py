@@ -1179,7 +1179,6 @@ class AmazonAccount(models.Model):
             lambda l: l.product_id.type != 'service' and not l.display_type
         ):
             stock_move = self.env['stock.move'].create({
-                'name': _('Amazon move: %s', order.name),
                 'company_id': self.company_id.id,
                 'product_id': order_line.product_id.id,
                 'product_uom_qty': order_line.product_uom_qty,

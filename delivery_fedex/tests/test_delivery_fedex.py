@@ -233,7 +233,6 @@ class TestDeliveryFedex(TransactionCase):
 
         order1_vals = {
                     'product_id': self.iPadMini.id,
-                    'name': "[A1232] iPad Mini",
                     'product_uom': self.uom_unit.id,
                     'product_uom_qty': 1.0,
                     'location_id': self.stock_location.id,

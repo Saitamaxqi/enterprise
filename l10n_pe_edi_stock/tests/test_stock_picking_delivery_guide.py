@@ -88,7 +88,6 @@ class TestPEDeliveryGuideCommon(TestPeEdiCommon):
         })
 
         cls.env['stock.move'].create({
-            'name': cls.productA.name,
             'product_id': cls.productA.id,
             'product_uom_qty': 10,
             'product_uom': cls.productA.uom_id.id,

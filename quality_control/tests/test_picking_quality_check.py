@@ -19,7 +19,6 @@ class TestQualityCheck(TestQualityCommon):
 
         cls.product_move, cls.product2_move = cls.env['stock.move'].create([
             {
-                'name': cls.product.name,
                 'product_id': cls.product.id,
                 'product_uom_qty': 2,
                 'picking_id': cls.receipt.id,
@@ -27,7 +26,6 @@ class TestQualityCheck(TestQualityCommon):
                 'location_dest_id': cls.receipt.location_dest_id.id,
             },
             {
-                'name': cls.product_2.name,
                 'product_id': cls.product_2.id,
                 'product_uom_qty': 2,
                 'picking_id': cls.receipt.id,
@@ -57,7 +55,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -107,7 +104,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -149,7 +145,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -221,7 +216,6 @@ class TestQualityCheck(TestQualityCommon):
         })
 
         move = self.env['stock.move'].create({
-            'name': product_tracked_by_lot.name,
             'product_id': product_tracked_by_lot.id,
             'product_uom_qty': 11,
             'product_uom': product_tracked_by_lot.uom_id.id,
@@ -264,7 +258,6 @@ class TestQualityCheck(TestQualityCommon):
 
         # Create move with a product without tracking with done quantity
         move_without_tracking1 = self.env['stock.move'].create({
-            'name': product.name,
             'product_id': product.id,
             'product_uom_qty': 1,
             'quantity': 1,
@@ -277,7 +270,6 @@ class TestQualityCheck(TestQualityCommon):
 
         # Create move with a product without tracking without done quantity and changing done quantity after
         move_without_tracking2 = self.env['stock.move'].create({
-            'name': product.name,
             'product_id': product.id,
             'product_uom_qty': 1,
             'quantity': 0,
@@ -309,7 +301,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -346,7 +337,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with right product.
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -356,7 +346,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with wrong product.
         self.env['stock.move'].create({
-            'name': self.product_2.name,
             'product_id': self.product_2.id,
             'product_uom_qty': 2,
             'product_uom': self.product_2.uom_id.id,
@@ -395,7 +384,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with product having right category (child of Quality Point set category).
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -405,7 +393,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with product having wrong category (parent of Quality Point set category).
         self.env['stock.move'].create({
-            'name': self.product_2.name,
             'product_id': self.product_2.id,
             'product_uom_qty': 2,
             'product_uom': self.product_2.uom_id.id,
@@ -445,7 +432,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with wrong product but having right category (child of Quality Point set category.
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -455,7 +441,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with right product but having wrong category (parent of Quality Point set category).
         self.env['stock.move'].create({
-            'name': self.product_2.name,
             'product_id': self.product_2.id,
             'product_uom_qty': 2,
             'product_uom': self.product_2.uom_id.id,
@@ -465,7 +450,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with wrong product and having wrong category (parent of Quality Point set category).
         self.env['stock.move'].create({
-            'name': self.product_3.name,
             'product_id': self.product_3.id,
             'product_uom_qty': 2,
             'product_uom': self.product_3.uom_id.id,
@@ -475,7 +459,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with right product having right category
         self.env['stock.move'].create({
-            'name': self.product_4.name,
             'product_id': self.product_4.id,
             'product_uom_qty': 2,
             'product_uom': self.product_4.uom_id.id,
@@ -516,7 +499,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with wrong product but having right category (child of Quality Point set category.
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -526,7 +508,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with right product but having wrong category (parent of Quality Point set category).
         self.env['stock.move'].create({
-            'name': self.product_2.name,
             'product_id': self.product_2.id,
             'product_uom_qty': 2,
             'product_uom': self.product_2.uom_id.id,
@@ -536,7 +517,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with wrong product and having wrong category (parent of Quality Point set category).
         self.env['stock.move'].create({
-            'name': self.product_3.name,
             'product_id': self.product_3.id,
             'product_uom_qty': 2,
             'product_uom': self.product_3.uom_id.id,
@@ -546,7 +526,6 @@ class TestQualityCheck(TestQualityCommon):
         })
         # Create move with right product having right category
         self.env['stock.move'].create({
-            'name': self.product_4.name,
             'product_id': self.product_4.id,
             'product_uom_qty': 2,
             'product_uom': self.product_4.uom_id.id,
@@ -582,7 +561,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create([{
-            'name': product.name,
             'product_id': product.id,
             'product_uom_qty': 1,
             'product_uom': product.uom_id.id,
@@ -633,7 +611,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': warehouse.wh_input_stock_loc_id.id,
         })
         self.env['stock.move'].create([{
-            'name': product.name,
             'product_id': product.id,
             'product_uom_qty': 1,
             'product_uom': product.uom_id.id,
@@ -657,7 +634,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': warehouse.wh_input_stock_loc_id.id,
         })
         self.env['stock.move'].create({
-            'name': p01.name,
             'product_id': p01.id,
             'product_uom_qty': 1,
             'product_uom': p01.uom_id.id,
@@ -692,7 +668,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         move = self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 1,
             'product_uom': self.product.uom_id.id,
@@ -740,7 +715,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         move = self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -784,7 +758,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         move = self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 2,
             'product_uom': self.product.uom_id.id,
@@ -953,7 +926,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': product_a.id,
             'product_uom_qty': 1,
             'picking_id': picking.id,
@@ -961,7 +933,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': product_b.id,
             'product_uom_qty': 1,
             'picking_id': picking.id,
@@ -990,7 +961,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         move_tracked_product = self.env['stock.move'].create({
-            'name': self.product_2.name,
             'product_id': self.product_2.id,
             'product_uom_qty': 1,
             'product_uom': self.product_2.uom_id.id,
@@ -998,7 +968,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_id': self.location_id,
             'location_dest_id': self.location_dest_id})
         move_untracked = self.env['stock.move'].create({
-            'name': self.product_3.name,
             'product_id': self.product_3.id,
             'product_uom_qty': 1,
             'product_uom': self.product_3.uom_id.id,
@@ -1048,7 +1017,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product_3.name,
             'product_id': self.product_3.id,
             'product_uom_qty': 2,
             'product_uom': self.product_3.uom_id.id,
@@ -1093,7 +1061,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         })
         move = self.env['stock.move'].create({
-            'name': self.product_2.name,
             'product_id': self.product_2.id,
             'product_uom_qty': 10,
             'product_uom': self.product_2.uom_id.id,
@@ -1139,7 +1106,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_id': self.location_id,
             'location_dest_id': self.location_dest_id,
             'move_ids': [Command.create({
-                'name': self.product.name,
                 'product_id': self.product.id,
                 'product_uom_qty': 2,
                 'product_uom': self.product.uom_id.id,
@@ -1192,7 +1158,6 @@ class TestQualityCheck(TestQualityCommon):
             'location_id': self.location_dest_id,
             'location_dest_id': self.ref('stock.stock_location_customers'),
             'move_ids': [Command.create({
-                'name': self.product.name,
                 'product_id': self.product.id,
                 'product_uom_qty': 2,
                 'product_uom': self.product.uom_id.id,

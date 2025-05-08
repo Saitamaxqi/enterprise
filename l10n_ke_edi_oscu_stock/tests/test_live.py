@@ -376,7 +376,6 @@ class TestKeEdiStock(TestKeEdiCommon):
             'picking_type_id': parent_delivery_type.id,
             'move_ids': [
                 Command.create({
-                    'name': self.product_a.name,
                     'location_id': self.stock_location.id,
                     'location_dest_id': self.customer_location.id,
                     'product_id': self.product_a.id,
@@ -402,7 +401,6 @@ class TestKeEdiStock(TestKeEdiCommon):
             'picking_type_id': branch_receipt_type.id,
             'move_ids': [
                 Command.create({
-                    'name': self.product_a.name,
                     'location_id': self.supplier_location.id,
                     'location_dest_id': branch_stock_location.id,
                     'product_id': self.product_a.id,

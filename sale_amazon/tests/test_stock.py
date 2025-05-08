@@ -45,7 +45,6 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
             'location_dest_id': self.customer_location.id,
         })
         move_vals = {
-            'name': self.productA.name,
             'product_id': self.productA.id,
             'product_uom_qty': 1,
             'product_uom': self.productA.uom_id.id,
@@ -325,7 +324,6 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
                 'location_dest_id': self.customer_location.id,
             })
             move_vals = {
-                'name': self.productA.name,
                 'product_id': self.productA.id,
                 'product_uom_qty': 1,
                 'product_uom': self.productA.uom_id.id,

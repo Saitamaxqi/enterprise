@@ -41,7 +41,6 @@ class TestReportsCommon(TestMrpAccount):
         })
 
         self.env['stock.move'].create({
-            'name': "Byproduct",
             'product_id': byproduct.id,
             'product_uom': byproduct.uom_id.id,
             'product_uom_qty': 1,

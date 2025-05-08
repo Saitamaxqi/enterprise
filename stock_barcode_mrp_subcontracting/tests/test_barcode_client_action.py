@@ -45,7 +45,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_in.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_receipt_classic_subcontracted_product',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.subcontracted_product.id,
@@ -82,7 +81,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_in.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_receipt_classic_subcontracted_product',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.subcontracted_product.id,
@@ -106,7 +104,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_in.id,
         })
         self.env['stock.move'].create({
-            'name': 'test_receipt_classic_subcontracted_product',
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
             'product_id': self.subcontracted_product.id,
@@ -138,7 +135,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.env.ref('stock.picking_type_in').id,
             'partner_id': self.subcontractor_partner.id,
             'move_ids_without_package': [Command.create({
-                'name': 'TRSBPMASL move',
                 'location_id': self.supplier_location.id,
                 'location_dest_id': self.stock_location.id,
                 'product_id': self.subcontracted_product.id,

@@ -959,7 +959,6 @@ class TestMpsMps(common.TransactionCase):
             'warehouse_id': self.warehouse.id,
         })
         outgoing_move = self.env['stock.move'].create({
-            'name': product_a.name,
             'product_id': product_a.id,
             'product_uom_qty': 1,
             'product_uom': self.env.ref('uom.product_uom_dozen').id,
@@ -967,7 +966,6 @@ class TestMpsMps(common.TransactionCase):
             'location_dest_id': self.env.ref('stock.stock_location_customers').id,
         })
         incoming_move = self.env['stock.move'].create({
-            'name': product_a.name,
             'product_id': product_a.id,
             'product_uom_qty': 1,
             'product_uom': self.env.ref('uom.product_uom_dozen').id,

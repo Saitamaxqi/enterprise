@@ -409,7 +409,6 @@ class TestRentalWizard(TestRentalCommon):
             'move_ids': [Command.create({
                 'location_id': self.warehouse_id.lot_stock_id.id,
                 'location_dest_id':  self.ref('stock.stock_location_customers'),
-                'name': 'Lovely product move',
                 'product_id': product.id,
                 'product_uom_qty': 20,
             })]
@@ -556,7 +555,6 @@ class TestRentalWizard(TestRentalCommon):
             'move_ids': [Command.create({
                 'location_id': self.warehouse_id.lot_stock_id.id,
                 'location_dest_id':  self.ref('stock.stock_location_customers'),
-                'name': 'Lovely product move',
                 'product_id': product.id,
                 'product_uom_qty': 20,
             })]
@@ -701,7 +699,6 @@ class TestRentalWizard(TestRentalCommon):
             'move_ids': [Command.create({
                 'location_id': self.warehouse_id.lot_stock_id.id,
                 'location_dest_id':  self.ref('stock.stock_location_customers'),
-                'name': 'Lovely product move',
                 'product_id': product.id,
                 'product_uom_qty': 20,
             })]

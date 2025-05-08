@@ -2344,7 +2344,6 @@ class TestRoutingAndKits(TransactionCase):
 
         mo_form = Form(mo)
         with mo_form.move_raw_ids.new() as move:
-            move.name = mo.name
             move.product_id = add_product
             move.product_uom = add_product.uom_id
             move.location_dest_id = mo.production_location_id
@@ -2380,7 +2379,6 @@ class TestRoutingAndKits(TransactionCase):
         mo.is_locked = False
         mo_form = Form(mo)
         with mo_form.move_raw_ids.new() as move:
-            move.name = mo.name
             move.product_id = add_product
             move.product_uom = add_product.uom_id
             move.location_dest_id = mo.production_location_id

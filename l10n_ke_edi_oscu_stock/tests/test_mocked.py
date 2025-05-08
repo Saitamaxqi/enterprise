@@ -119,7 +119,6 @@ class TestKeEdiStockMocked(TestKeEdiStock):
             'partner_id': self.partner_a.id,
             'state': 'draft',
             'move_ids': [Command.create({
-                'name': self.product_a.name,
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.product_a.id,

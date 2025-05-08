@@ -38,7 +38,6 @@ class TestQualitySpreadsheet(TestQualityCommon, SpreadsheetTestCase, HttpCase):
             'location_dest_id': self.location_dest_id,
         })
         self.env['stock.move'].create({
-            'name': self.product.name,
             'product_id': self.product.id,
             'product_uom_qty': 1,
             'product_uom': self.product.uom_id.id,

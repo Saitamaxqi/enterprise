@@ -64,7 +64,6 @@
         <field name="origin" model="stock.picking" eval="'Return of %s' % obj().env.ref('helpdesk_sale.sale_order_helpdesk_2').picking_ids.mapped('name')[:1]"/>
     </record>
     <record id="helpdesk_stock_return_order_line_1" model="stock.move">
-        <field name="name">A first stock move</field>
         <field name="picking_id" ref="helpdesk_stock_return_order_1"/>
         <field name="picking_type_id" ref="stock.picking_type_in"/>
         <field name="location_id" ref="stock.stock_location_stock"/>
@@ -91,7 +90,6 @@
         <field name="origin" model="stock.picking" eval="'Return of %s' % obj().env.ref('helpdesk_sale.sale_order_helpdesk_3').picking_ids.mapped('name')[:1]"/>
     </record>
     <record id="helpdesk_stock_return_order_line_2" model="stock.move">
-        <field name="name">A second stock move</field>
         <field name="picking_id" ref="helpdesk_stock_return_order_2"/>
         <field name="picking_type_id" ref="stock.picking_type_in"/>
         <field name="location_id" ref="stock.stock_location_stock"/>

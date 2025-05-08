@@ -40,7 +40,6 @@ class TestQualityWorksheet(HttpCase, TestQualityCommon):
 
         self.env['stock.move'].create([
             {
-                'name': self.product.name,
                 'product_id': self.product.id,
                 'product_uom_qty': 2,
                 'picking_id': receipt.id,
@@ -48,7 +47,6 @@ class TestQualityWorksheet(HttpCase, TestQualityCommon):
                 'location_dest_id': receipt.location_dest_id.id,
             },
             {
-                'name': self.product_2.name,
                 'product_id': self.product_2.id,
                 'product_uom_qty': 2,
                 'picking_id': receipt.id,

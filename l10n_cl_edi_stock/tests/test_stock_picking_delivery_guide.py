@@ -29,7 +29,6 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
             'picking_type_id': self.warehouse.out_type_id.id,
         })
         self.env['stock.move'].create({
-            'name': self.product_with_taxes_a.name,
             'product_id': self.product_with_taxes_a.id,
             'product_uom': self.product_with_taxes_a.uom_id.id,
             'product_uom_qty': 10.00,
@@ -41,7 +40,6 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
             'company_id': self.env.company.id
         })
         self.env['stock.move'].create({
-            'name': self.product_with_taxes_b.name,
             'product_id': self.product_with_taxes_b.id,
             'product_uom': self.product_with_taxes_b.uom_id.id,
             'product_uom_qty': 1,
@@ -304,7 +302,6 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
             'picking_type_id': self.warehouse.out_type_id.id,
         })
         self.env['stock.move'].create({
-            'name': product_a.name,
             'product_id': product_a.id,
             'product_uom_qty': 10.00,
             'quantity': 10.00,

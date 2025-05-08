@@ -69,7 +69,6 @@ class TestEpcIntegration(TransactionCase):
             'state': 'draft',
         })
         move = self.env['stock.move'].create({
-            'name': 'In move',
             'product_id': product_serial.id,
             'product_uom_qty': 30.0,
             'product_uom': product_serial.uom_id.id,
