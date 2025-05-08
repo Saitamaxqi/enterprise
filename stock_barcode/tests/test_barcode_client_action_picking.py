@@ -4148,3 +4148,29 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = "/web#action=" + str(action_id.id)
         self.start_tour(url, 'test_no_validate_no_dest_package', login='admin')
+
+    def test_qty_after_uom_update_picking_tour(self):
+        """ Test that when creating a receipt and updating the uom using the barcode app, the
+        quantity demand of the move line is correctly updated according to the uom.
+        """
+        self.env.user.group_ids += self.env.ref('uom.group_uom')
+        product = self.env['product.product'].create({
+            'name': 'test_product_uom_update',
+            'barcode': 'test_product_uom_update',
+            'uom_ids': [Command.link(self.env.ref('uom.product_uom_dozen').id)],
+        })
+        receipt = self.env['stock.picking'].create({
+            'name': 'receipt_test',
+            'location_id': self.customer_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_in.id,
+            'move_ids': [Command.create({
+                'product_id': product.id,
+                'product_uom_qty': 10,
+                'product_uom': self.env.ref('uom.product_uom_dozen').id,
+                'location_id': self.customer_location.id,
+                'location_dest_id': self.stock_location.id,
+            })],
+        })
+        receipt.action_confirm()
+        self.start_tour('/odoo/barcode', 'test_qty_after_uom_update_picking_tour', login='admin')

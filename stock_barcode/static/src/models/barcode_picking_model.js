@@ -7,6 +7,7 @@ import { user } from "@web/core/user";
 import { markup } from "@odoo/owl";
 import { SignatureDialog } from "@web/core/signature/signature_dialog";
 import { useService } from "@web/core/utils/hooks";
+import { formatFloat } from "@web/core/utils/numbers";
 
 export default class BarcodePickingModel extends BarcodeModel {
     constructor(resModel, resId, services) {
@@ -1302,8 +1303,15 @@ export default class BarcodePickingModel extends BarcodeModel {
                     // The reservation likely changed.
                     smlData.reserved_uom_qty = smlData.quantity;
                 } else {
-                    // The reservation of this line is already known.
-                    smlData.reserved_uom_qty = prevLine.reserved_uom_qty;
+                    if (smlData.product_uom_id.id !== prevLine.product_uom_id.id) {
+                        // Compatible but not the same UoM => Need a conversion.
+                        const params = { digits: [false, this.precision] };
+                        const baseQty = (prevLine.reserved_uom_qty * prevLine.product_uom_id.factor) / smlData.product_uom_id.factor;
+                        smlData.reserved_uom_qty  = parseFloat(formatFloat(baseQty, params));
+                    } else {
+                        // The reservation of this line is already known.
+                        smlData.reserved_uom_qty = prevLine.reserved_uom_qty;
+                    }
                 }
             } else {
                 // This line was created in the Barcode App, so it has no reservation.

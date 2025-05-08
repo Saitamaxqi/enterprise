@@ -6746,3 +6746,40 @@ registry.category("web_tour.tours").add("test_no_validate_no_dest_package", {
         },
     },
 ]});
+
+registry.category("web_tour.tours").add("test_qty_after_uom_update_picking_tour", { steps: () => [
+    {
+        trigger: ".o_stock_barcode_main_menu",
+        run: "scan receipt_test",
+    },
+    // Click the pencil to edit the line
+    {
+        trigger: ".o_barcode_line .o_edit",
+        run: "click",
+    },
+    // Open the UoM dropdown
+    {
+        trigger: ".o_field_widget[name='product_uom_id'] input",
+        run: "click",
+    },
+    // Select the 'Units' UoM
+    {
+        trigger: ".ui-menu-item > a:contains('Units')",
+        run: "click",
+    },
+    {
+        trigger: ".o_digipad_increment",
+        run: "click",
+    },
+    // Save the changes
+    {
+        trigger: ".o_barcode_control .o_save",
+        run: "click",
+    },
+    {
+        trigger: ".o_barcode_line",
+        run: () => {
+            helper.assertLineQty(0, "1/120 Units");
+        },
+    },
+]});
