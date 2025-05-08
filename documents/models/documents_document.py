@@ -2011,7 +2011,7 @@ class DocumentsDocument(models.Model):
         attachments_was_present = []
         for record in self:
             attachments_was_present.append(bool(record.attachment_id))
-            if record.type == 'binary' and not record.datas and ('datas' in vals or 'url' in vals):
+            if record.type == 'binary' and ('datas' in vals or 'url' in vals) and not record.datas:
                 body = _("Document Request: %(name)s Uploaded by: %(user)s", name=record.name, user=self.env.user.name)
                 record.with_context(no_document=True).message_post(body=body)
 
