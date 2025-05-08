@@ -1053,8 +1053,8 @@ class ResCompany(models.Model):
             error_message = response.respuestastatus.mensaje
             raise UserError(_('Error updating the currency rates from the BCU: %s.', error_message))
 
-        res = {'UYU': (1.0, last_closing_date)}
         rate_date = last_closing_date + relativedelta(days=1)
+        res = {'UYU': (1.0, rate_date)}
         for rate_values in response.datoscotizaciones['datoscotizaciones.dato']:
             iso_code = moneda_to_iso_map[rate_values.Moneda]
             rate = 1.0 / serialize_object(rate_values.TCV)
