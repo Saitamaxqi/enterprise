@@ -1706,6 +1706,12 @@ msgstr ""
 "Por favor seleccione su proveedor de servicio de DTE para su compañía."
 
 #. module: l10n_cl_edi
+#. odoo-python
+#: code:addons/l10n_cl_edi/models/account_move.py:0
+msgid "Please set the subject serial number in the certificate: %s"
+msgstr "Por favor, establezca el número de serie del sujeto en el certificado: %s"
+
+#. module: l10n_cl_edi
 #: model:ir.model.fields,field_description:l10n_cl_edi.field_account_journal__l10n_cl_point_of_sale_name
 msgid "Point Of Sale Name"
 msgstr "Nombre de punto de venta"

@@ -276,6 +276,8 @@ services reception has been received as well.
             return None
         _logger.info('Sending DTE for invoice with ID %s (name: %s)', self.id, self.name)
         digital_signature_sudo = self.company_id.sudo()._get_digital_signature(user_id=self.env.user.id)
+        if not digital_signature_sudo.subject_serial_number:
+            raise UserError(_("Please set the subject serial number in the certificate: %s", digital_signature_sudo.name))
         if self.company_id.l10n_cl_dte_service_provider == 'SIIDEMO':
             self.message_post(body=_('This DTE has been generated in DEMO Mode. It is considered as accepted and '
                                      'it won\'t be sent to SII.'))
