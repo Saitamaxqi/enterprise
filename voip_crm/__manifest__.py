@@ -6,7 +6,10 @@
     "version": "1.0",
     "depends": ["base", "crm", "voip"],
     "auto_install": True,
-    "data": ["views/crm_lead_views.xml"],
+    "data": [
+        "views/crm_lead_views.xml",
+        "security/voip_crm_security.xml",
+    ],
     "author": "Odoo S.A.",
     "license": "OEEL-1",
     "assets": {

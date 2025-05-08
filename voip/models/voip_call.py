@@ -65,18 +65,40 @@ class VoipCall(models.Model):
             call.display_name = get_name(call)
 
     @api.model
-    def create_and_format(self, res_id: Optional[int] = None, res_model: Optional[str] = None, **kwargs) -> list:
+    def create_and_format(
+        self,
+        phone_number: Optional[str] = None,
+        partner_id: Optional[int] = None,
+        direction: str = "outgoing",
+        res_id: Optional[int] = None,
+        res_model: Optional[str] = None,
+    ) -> dict:
         """Creates a call from the provided values and returns it formatted for
         use in JavaScript. If a record is provided via its id and model,
         introspects it for a recipient.
+
+        :param phone_number: The phone number to call
+        :param partner_id: ID of the partner related to this call
+        :param direction: Direction of the call ('incoming' or 'outgoing')
+        :param res_id: Optional record ID to extract partner from
+        :param res_model: Optional model name to extract partner from
+        :return: Dictionary with created call IDs and formatted data
         """
+        self.check_access("read")
+        values = {
+            "phone_number": phone_number,
+            "partner_id": partner_id,
+            "direction": direction,
+            "user_id": self.env.uid,
+        }
         if res_id and res_model:
             related_record = self.env[res_model].browse(res_id)
-            kwargs["partner_id"] = next(
+            related_record.check_access("read")
+            values["partner_id"] = next(
                 iter(related_record._mail_get_partners(introspect_fields=True)[related_record.id]),
                 self.env["res.partner"],
             ).id
-        calls = self.create(kwargs)
+        calls = self.sudo().create(values).sudo(False)
         return {"ids": [call.id for call in calls], "store_data": Store(calls, calls._get_voip_store_fields()).get_result()}
 
     @api.model
@@ -99,27 +121,34 @@ class VoipCall(models.Model):
         return self.search_count(domain)
 
     def abort_call(self):
-        self.state = "aborted"
+        self.check_access("read")
+        self.sudo().state = "aborted"
         return Store(self, self._get_voip_store_fields()).get_result()
 
     def start_call(self):
-        self.start_date = fields.Datetime.now()
-        self.state = "ongoing"
+        self.check_access("read")
+        calls_sudo = self.sudo()
+        calls_sudo.start_date = fields.Datetime.now()
+        calls_sudo.state = "ongoing"
         return Store(self, self._get_voip_store_fields()).get_result()
 
     def end_call(self, activity_name: Optional[str] = None):
-        self.end_date = fields.Datetime.now()
-        self.state = "terminated"
+        self.check_access("read")
+        calls_sudo = self.sudo()
+        calls_sudo.end_date = fields.Datetime.now()
+        calls_sudo.state = "terminated"
         if activity_name:
-            self.activity_name = activity_name
+            calls_sudo.activity_name = activity_name
         return Store(self, self._get_voip_store_fields()).get_result()
 
     def reject_call(self):
-        self.state = "rejected"
+        self.check_access("read")
+        self.sudo().state = "rejected"
         return Store(self, self._get_voip_store_fields()).get_result()
 
     def miss_call(self):
-        self.state = "missed"
+        self.check_access("read")
+        self.sudo().state = "missed"
         return Store(self, self._get_voip_store_fields()).get_result()
 
     def get_contact_info(self):

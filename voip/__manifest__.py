@@ -7,14 +7,17 @@
     "version": "2.0",
     "depends": ["base", "mail", "phone_validation", "web", "web_mobile"],
     "data": [
+        "security/voip_security.xml",
         "data/voip_data.xml",
         "security/ir.model.access.csv",
-        "security/voip_security.xml",
         "views/voip_provider_views.xml",   # load before res_config_settings_views.xml
         "views/res_users_views.xml",
         "views/res_users_settings_views.xml",
         "views/voip_call_views.xml",
         "views/res_config_settings_views.xml",
+    ],
+    "demo": [
+        "demo/demo_data.xml",
     ],
     "application": True,
     "author": "Odoo S.A.",
