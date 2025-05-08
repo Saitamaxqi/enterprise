@@ -31,14 +31,21 @@ class VoipCall(models.Model):
         ],
         default="calling",
         index=True,
+        readonly=True,
     )
-    end_date = fields.Datetime()
-    start_date = fields.Datetime()
+    end_date = fields.Datetime(readonly=True)
+    start_date = fields.Datetime(readonly=True)
+    duration = fields.Float(compute="_compute_duration", readonly=True)
+    is_within_same_company = fields.Boolean(compute="_compute_is_within_same_company", store=True)
     # Since activities are deleted from the database once marked as done, the
     # activity name is saved here in order to be preserved.
     activity_name = fields.Char(help="The name of the activity related to this phone call, if any.")
     partner_id = fields.Many2one("res.partner", "Contact", index=True)
     user_id = fields.Many2one("res.users", "Responsible", default=lambda self: self.env.uid, index=True)
+    country_id = fields.Many2one("res.country", compute="_compute_country_id", store=True)
+    country_flag_url = fields.Char(related="country_id.image_url", string="Country Flag")
+    provider_id = fields.Many2one(related="user_id.voip_provider_id", string="Provider", readonly=True)
+    company_id = fields.Many2one(related="user_id.company_id", readonly=True)
 
     @api.depends("state", "partner_id.name")
     def _compute_display_name(self):
@@ -63,6 +70,37 @@ class VoipCall(models.Model):
 
         for call in self:
             call.display_name = get_name(call)
+
+    @api.depends("start_date", "end_date")
+    def _compute_duration(self):
+        for call in self:
+            if call.start_date and call.end_date:
+                call.duration = (call.end_date - call.start_date).total_seconds() / 3600
+            else:
+                call.duration = 0
+
+    @api.depends("partner_id.commercial_partner_id", "user_id.partner_id.commercial_partner_id")
+    def _compute_is_within_same_company(self):
+        for call in self:
+            user_company = call.user_id.partner_id.commercial_partner_id
+            partner_company = call.partner_id.commercial_partner_id
+            call.is_within_same_company = user_company and user_company == partner_company
+
+    @api.depends("country_code_from_phone")
+    def _compute_country_id(self):
+        country_codes = set()
+        for call in self:
+            code = call.country_code_from_phone
+            if code:
+                country_codes.add(code.upper())
+        countries = self.env["res.country"].search_read(
+            [("code", "in", list(country_codes))],
+            fields=["id", "code"],
+        )
+        country_id_by_iso_code = {country["code"].lower(): country["id"] for country in countries}
+
+        for call in self:
+            call.country_id = country_id_by_iso_code.get(call.country_code_from_phone, False)
 
     @api.model
     def create_and_format(

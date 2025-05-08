@@ -15,6 +15,7 @@
                             <button colspan="2" name="%(voip.action_voip_provider_view)d" icon="oi-arrow-right" type="action" string="Manage Providers" class="btn-link"/>
                             <field name="voip_username" readonly="not voip_provider_id"/>
                             <field name="voip_secret" password="True" readonly="not voip_provider_id"/>
+                            <button name="%(voip_call_action_history)d" string="View call history" type="action" class="btn btn-secondary btn-sm" icon="fa-phone"/>
                         </group>
                         <group string="Preferences" name="voip_preferences">
                             <field name="should_call_from_another_device" readonly="not voip_provider_id"/>
@@ -41,6 +42,7 @@
                             <button colspan="2" name="%(voip.action_voip_provider_view)d" icon="oi-arrow-right" type="action" string="Manage Providers" class="btn-link"/>
                             <field name="voip_username" readonly="not voip_provider_id"/>
                             <field name="voip_secret" password="True" readonly="not voip_provider_id"/>
+                            <button name="%(voip_call_action_history)d" string="View call history" type="action" class="btn btn-secondary btn-sm" icon="fa-phone"/>
                         </group>
                         <group string="Preferences" name="voip_preferences">
                             <field name="should_call_from_another_device" readonly="not voip_provider_id"/>

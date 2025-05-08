@@ -5,28 +5,85 @@
         <field name="model">voip.call</field>
         <field name="arch" type="xml">
             <list string="Calls" editable="top">
-                <field name="display_name"/>
-                <field name="phone_number"/>
-                <field name="direction"/>
-                <field name="state"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="user_id"/>
-                <field name="partner_id"/>
+                <field name="create_date" string="Date" widget="voip_simple_datetime"/>
+                <field name="partner_id" string="Contact"/>
+                <field name="company_id" optional="hide"/>
+                <field name="phone_number" widget="voip_flag_phone"/>
+                <field name="country_flag_url" column_invisible="True"/> <!-- Needed for voip_flag_phone widget -->
+                <field name="duration" widget="float_time" options="{'displaySeconds': True}" invisible="not (start_date and end_date)"/>
+                <field name="user_id" string="User" widget="many2one_avatar_user"/>
+                <field name="state" string="Status"/>
+                <field name="country_id" optional="hide"/>
+                <field name="direction" optional="hide"/>
+                <field name="provider_id" optional="hide"/>
             </list>
+        </field>
+    </record>
+
+    <record id="voip_call_action_history" model="ir.actions.act_window">
+        <field name="name">History</field>
+        <field name="res_model">voip.call</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="context">{"search_default_my_calls": True}</field>
+    </record>
+
+    <record id="voip_call_view_pivot" model="ir.ui.view">
+        <field name="name">voip.call.view.pivot</field>
+        <field name="model">voip.call</field>
+        <field name="arch" type="xml">
+            <pivot string="Calls Analysis">
+                <field name="user_id" type="row"/>
+                <field name="create_date" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="voip_call_view_graph" model="ir.ui.view">
+        <field name="name">voip.call.view.graph</field>
+        <field name="model">voip.call</field>
+        <field name="arch" type="xml">
+            <graph string="Call Analysis">
+                <field name="user_id"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="voip_call_view_search" model="ir.ui.view">
+        <field name="name">voip.call.view.search</field>
+        <field name="model">voip.call</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="phone_number"/>
+                <field name="user_id"/>
+                <filter string="My Calls" name="my_calls" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Internal" name="internal" domain="[('is_within_same_company', '=', True)]"/>
+                <filter string="External" name="external" domain="[('is_within_same_company', '=', False)]"/>
+                <separator/>
+                <filter string="Incoming" name="incoming" domain="[('direction', '=', 'incoming')]"/>
+                <filter string="Outgoing" name="outgoing" domain="[('direction', '=', 'outgoing')]"/>
+                <filter string="Missed" name="missed" domain="[('state', '=', 'missed')]"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('create_date', '>=', context_today())]"/>
+                <filter string="Yesterday" name="yesterday" domain="[('create_date', '&lt;', context_today()), ('create_date', '>=', context_today() - relativedelta(days=1))]"/>
+                <filter string="Last 7 Days" name="last_7_days" domain="[('create_date','>=', context_today() - relativedelta(days=6))]"/>
+                <group name="group_by" string="Group By">
+                    <filter string="User" name="groupby_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Contact" name="groupby_contact" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="groupby_status" context="{'group_by': 'state'}"/>
+                    <separator/>
+                    <filter string="Date" name="groupby_date" context="{'group_by': 'create_date'}"/>
+                </group>
+            </search>
         </field>
     </record>
 
     <record id="voip_call_view" model="ir.actions.act_window">
         <field name="name">Calls</field>
         <field name="res_model">voip.call</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,graph,pivot</field>
         <field name="view_id" ref="voip_call_tree_view"/>
         <field name="domain">[]</field>
     </record>
-
-    <menuitem id="menu_voip_call_view"
-        name="Voip / Calls"
-        parent="base.menu_custom"
-        action="voip_call_view"/>
 </odoo>

@@ -11,13 +11,14 @@
         "data/voip_data.xml",
         "security/ir.model.access.csv",
         "views/voip_provider_views.xml",   # load before res_config_settings_views.xml
+        "views/voip_call_views.xml",
         "views/res_users_views.xml",
         "views/res_users_settings_views.xml",
-        "views/voip_call_views.xml",
         "views/res_config_settings_views.xml",
+        "views/voip_menu_views.xml",
     ],
     "demo": [
-        "demo/demo_data.xml",
+        "demo/res_groups.xml",
     ],
     "application": True,
     "author": "Odoo S.A.",
