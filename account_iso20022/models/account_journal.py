@@ -175,23 +175,9 @@ class AccountJournal(models.Model):
             PmtInf.append(ReqdExctnDt)
 
             PmtInf.append(self._get_Dbtr(group_payment_method_code))
-            PmtInf.append(self._get_DbtrAcct())
+            PmtInf.append(self._get_DbtrAcct(group_payment_method_code))
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
-            FinInstnId = etree.SubElement(DbtrAgt, "FinInstnId")
-            bank_account = self.bank_account_id
-            bic_code = self._get_cleaned_bic_code(bank_account, group_payment_method_code)
-            if bic_code:
-                BIC = etree.SubElement(FinInstnId, self._get_bic_tag(group_payment_method_code))
-                BIC.text = bic_code
-            else:
-                Othr = etree.SubElement(FinInstnId, "Othr")
-                Id = etree.SubElement(Othr, "Id")
-                Id.text = "NOTPROVIDED"
-
-            if bank_account.clearing_number:
-                ClrSysMmbId = etree.SubElement(FinInstnId, "ClrSysMmbId")
-                ClrSysMmbId.text = bank_account.clearing_number
-
+            DbtrAgt.append(self._get_FinInstnId(self.bank_account_id, group_payment_method_code))
             unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
             unique_chrgbr = unique_chrgbr_values.pop() if len(unique_chrgbr_values) == 1 else None
             if unique_chrgbr:
@@ -227,13 +213,19 @@ class AccountJournal(models.Model):
             Cd = etree.SubElement(SvcLvl, "Cd")
             Cd.text = SvcLvlTxt
 
+        CtgyPurp = self._get_CtgyPurp(payment_method_code)
+        if CtgyPurp is not None:  # avoid FutureWarning
+            PmtTpInf.append(CtgyPurp)
+        return PmtTpInf
+
+    def _get_CtgyPurp(self, payment_method_code):
         if self.env.context.get('sepa_payroll_sala'):
             # The SALA purpose code is standard for all SEPA, and guarantees a series
             # of things in instant payment: https://www.sepaforcorporates.com/sepa-payments/sala-sepa-salary-payments.
-            CtgyPurp = etree.SubElement(PmtTpInf, "CtgyPurp")
+            CtgyPurp = etree.Element("CtgyPurp")
             Cd = etree.SubElement(CtgyPurp, "Cd")
             Cd.text = 'SALA'
-        return PmtTpInf
+            return CtgyPurp
 
     def _get_ReqdExctnDt_content(self, payment_date, payment_method_code):
         ReqdExctnDt = etree.Element("ReqdExctnDt")
@@ -245,21 +237,25 @@ class AccountJournal(models.Model):
         Dbtr.extend(self._get_company_PartyIdentification32(postal_address=True, payment_method_code=payment_method_code))
         return Dbtr
 
-    def _get_DbtrAcct(self):
+    def _get_DbtrAcct(self, payment_method_code=None):
         if not self.bank_account_id.sanitized_acc_number:
             raise UserError(_("This journal does not have a bank account defined."))
         DbtrAcct = etree.Element("DbtrAcct")
         Id = etree.SubElement(DbtrAcct, "Id")
         if self.bank_account_id.acc_type != 'iban':
-            Othr = etree.SubElement(Id, "Othr")
-            OthrId = etree.SubElement(Othr, "Id")
-            OthrId.text = self.bank_account_id.sanitized_acc_number
+            Id.append(self._get_DbtrAcctOthr(payment_method_code))
         else:
             IBAN = etree.SubElement(Id, "IBAN")
             IBAN.text = self.bank_account_id.sanitized_acc_number
         Ccy = etree.SubElement(DbtrAcct, "Ccy")
         Ccy.text = self.currency_id and self.currency_id.name or self.company_id.currency_id.name
         return DbtrAcct
+
+    def _get_DbtrAcctOthr(self, payment_method_code=None):
+        Othr = etree.Element("Othr")
+        OthrId = etree.SubElement(Othr, "Id")
+        OthrId.text = self.bank_account_id.sanitized_acc_number
+        return Othr
 
     def _get_ChrgBr(self, payment_method_code, forced_value):
         ChrgBr = etree.Element("ChrgBr")
@@ -307,7 +303,7 @@ class AccountJournal(models.Model):
         if PstlAdr is not None:
             Cdtr.append(PstlAdr)
 
-        CdtTrfTxInf.append(self._get_CdtrAcct(partner_bank))
+        CdtTrfTxInf.append(self._get_CdtrAcct(partner_bank, payment_method_code))
 
         val_RmtInf = self._get_RmtInf(payment_method_code, payment)
         if val_RmtInf is not False:
@@ -316,7 +312,11 @@ class AccountJournal(models.Model):
 
     def _get_CdtrAgt(self, bank_account, payment_method_code):
         CdtrAgt = etree.Element("CdtrAgt")
-        FinInstnId = etree.SubElement(CdtrAgt, "FinInstnId")
+        CdtrAgt.append(self._get_FinInstnId(bank_account, payment_method_code))
+        return CdtrAgt
+
+    def _get_FinInstnId(self, bank_account, payment_method_code):
+        FinInstnId = etree.Element("FinInstnId")
         bic_code = self._get_cleaned_bic_code(bank_account, payment_method_code)
         if bic_code:
             BIC = etree.SubElement(FinInstnId, self._get_bic_tag(payment_method_code))
@@ -325,24 +325,31 @@ class AccountJournal(models.Model):
             Othr = etree.SubElement(FinInstnId, "Othr")
             Id = etree.SubElement(Othr, "Id")
             Id.text = "NOTPROVIDED"
-        return CdtrAgt
+        if bank_account.clearing_number:
+            ClrSysMmbId = etree.SubElement(FinInstnId, "ClrSysMmbId")
+            ClrSysMmbId.text = bank_account.clearing_number
+        return FinInstnId
 
-    def _get_CdtrAcct(self, bank_account):
+    def _get_CdtrAcct(self, bank_account, payment_method_code=None):
         CdtrAcct = etree.Element("CdtrAcct")
         Id = etree.SubElement(CdtrAcct, "Id")
-        if bank_account.acc_type != 'iban':
-            Othr = etree.SubElement(Id, "Othr")
-            _Id = etree.SubElement(Othr, "Id")
-            acc_number = bank_account.acc_number
-
-            # CH case when we have non-unique account numbers
-            if " " in bank_account.sanitized_acc_number and " " in bank_account.acc_number:
-                acc_number = bank_account.acc_number.split(" ")[0]
-            _Id.text = acc_number
-        else:
+        if bank_account.acc_type == 'iban':
             IBAN = etree.SubElement(Id, "IBAN")
             IBAN.text = bank_account.sanitized_acc_number
+        else:
+            Id.append(self._get_CdtrAcctIdOthr(bank_account, payment_method_code))
         return CdtrAcct
+
+    def _get_CdtrAcctIdOthr(self, bank_account, payment_method_code=None):
+        Othr = etree.Element("Othr")
+        Id = etree.SubElement(Othr, "Id")
+        acc_number = bank_account.acc_number
+
+        # CH case when we have non-unique account numbers
+        if " " in bank_account.sanitized_acc_number and " " in bank_account.acc_number:
+            acc_number = bank_account.acc_number.split(" ")[0]
+        Id.text = acc_number
+        return Othr
 
     def _get_RmtInf(self, payment_method_code, payment):
         def detect_reference_type(reference, partner_country_code):

@@ -98,6 +98,9 @@ class AccountBatchPayment(models.Model):
 
         return rslt
 
+    def _get_export_file_name_prefix(self):
+        return "SCT-" if self.payment_method_code == 'sepa_ct' else "PAIN-"
+
     def _generate_export_file(self):
         if self.payment_method_code in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']:
             payments = self.payment_ids.sorted(key=lambda r: r.id)
@@ -107,7 +110,7 @@ class AccountBatchPayment(models.Model):
                 self.payment_method_code,
                 batch_booking=self.iso20022_batch_booking,
             )
-            prefix = "SCT-" if self.payment_method_code == 'sepa_ct' else "PAIN-"
+            prefix = self._get_export_file_name_prefix()
             return {
                 'file': base64.encodebytes(xml_doc),
                 'filename': "%s%s-%s.xml" % (prefix, self.journal_id.code, datetime.now().strftime('%Y%m%d%H%M%S')),
