@@ -147,7 +147,7 @@ class TestAiFieldsAccess(TransactionCase):
 
         response = records[0].id
         with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
-            self.assertEqual(self.record.get_ai_property_value("properties.many2one", None), [records[0].id, records[0].display_name])
+            self.assertEqual(self.record.get_ai_property_value("properties.many2one", None), {'id': records[0].id, 'display_name': records[0].display_name})
 
         # The record doesn't exist but is in the prompt
         response = id_removed

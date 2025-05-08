@@ -258,7 +258,7 @@ class Base(models.AbstractModel):
             return False
         if property_type == 'many2one':
             record = self.env[property_definition['comodel']].browse(val)
-            return [(rec := record.read(['id', 'display_name'])[0])['id'], rec['display_name']] if record else False
+            return record.read(['id', 'display_name'])[0] if record else False
         if property_type == 'many2many':
             records = self.env[property_definition['comodel']].browse(val)
             return [[rec['id'], rec['display_name']] for rec in records.read(['id', 'display_name'])] if records else []
