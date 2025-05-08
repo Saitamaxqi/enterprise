@@ -466,12 +466,8 @@ msgid "<span>9001</span>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
-msgid "<span>CFH / Month</span>"
-msgstr ""
-
-#. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_contract_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
 msgid "<span>CHF / Month</span>"
 msgstr ""
 
@@ -1876,6 +1872,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.l10n_ch_wage_type_search_view
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.report_individual_account
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.report_wage_types_document
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.swissdec_wage_types_tree
 msgid "Code"
 msgstr ""
 
@@ -8340,7 +8337,6 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll_elm_transmission/models/res_company.py:0
-#, python-format
 msgid "This feature is only allowed in production environments."
 msgstr ""
 

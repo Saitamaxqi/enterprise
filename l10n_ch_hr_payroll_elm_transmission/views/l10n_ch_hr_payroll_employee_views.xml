@@ -226,7 +226,7 @@
                                     <div class="o_row mw-50" name="l10n_ch_other_activity_gross"
                                          invisible="l10n_ch_total_activity_type != 'gross' or not l10n_ch_other_employment">
                                         <field name="l10n_ch_other_activity_gross" nolabel="1"/>
-                                        <span>CFH / Month</span>
+                                        <span>CHF / Month</span>
                                     </div>
                                     <label for="l10n_ch_other_activity_percentage"
                                            invisible="l10n_ch_total_activity_type != 'percentage' or not l10n_ch_other_employment"/>

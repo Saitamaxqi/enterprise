@@ -13,6 +13,7 @@
                     </div>
                     <group>
                         <group string="Company Information">
+                            <field name="company_id" required="1" groups="base.group_multi_company"/>
                             <field name="insurance_code" string="Indemnity Fund Number" required="1"/>
                             <field name="member_number" required="1"/>
                             <field name="member_subnumber"/>

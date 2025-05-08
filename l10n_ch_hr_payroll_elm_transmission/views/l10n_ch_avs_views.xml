@@ -28,6 +28,7 @@
 
                 <group>
                     <group>
+                        <field name="company_id" required="1" groups="base.group_multi_company"/>
                         <field name="insurance_code"
                             placeholder="e.g. '003.000'"
                             required="1"

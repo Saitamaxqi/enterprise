@@ -24,7 +24,7 @@
                         <h1><field name="name" placeholder='e.g. "ACI Berne"'/></h1>
                     </div>
                     <group>
-                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="company_id" required="1" groups="base.group_multi_company"/>
                         <field name="canton"/>
                         <field name="dpi_number"/>
                         <field name="company_number"/>

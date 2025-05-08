@@ -13,6 +13,7 @@
                     </div>
                     <group>
                         <group>
+                            <field name="company_id" required="1" groups="base.group_multi_company"/>
                             <field name="insurance_code"/>
                             <field name="uid_bfs" placeholder="Unknown"/>
                             <field name="customer_number"/>
