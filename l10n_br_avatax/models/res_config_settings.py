@@ -130,10 +130,11 @@ class ResConfigSettings(models.TransientModel):
             raise AccessError(_('Only administrators can ping Avatax.'))
 
         query_result = self.env['account.external.tax.mixin']._l10n_br_iap_ping(self.company_id)
-        raise UserError(_(
-            "Server Response:\n%s",
-            pformat(query_result)
-        ))
+        raise RedirectWarning(
+            _("Server Response:\n%s", pformat(query_result)),
+            action=self.env.ref('account.action_account_config').id,
+            button_text=_("Continue Configurations")
+        )
 
     def button_l10n_br_avatax_log(self):
         return self.env['account.external.tax.mixin']._l10n_br_avatax_log()

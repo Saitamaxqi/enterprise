@@ -1036,6 +1036,12 @@ msgstr ""
 "%s"
 
 #. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
+msgid "Continue Configurations"
+msgstr "Continuar configurações"
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__service
 msgid "Service"
 msgstr "Serviço"
