@@ -4,7 +4,7 @@ from unittest.mock import patch, DEFAULT
 
 from freezegun import freeze_time
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.tests.common import tagged
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 
@@ -65,11 +65,13 @@ class TestSaleSubscriptionExternal(TestSubscriptionCommon, TestSaleSubscriptionE
     def test_03_subscription_fully_paid(self):
         sub = self.subscription
         self.assertGreater(sub.amount_tax, 0, 'Subscription should have taxes so this test can test what happens when Avatax overrides it.')
+        sub.action_confirm()
 
         def new_set_external_taxes(self, mapped_taxes):
             """Simulate what happens for an exempt sale order: amounts that don't match the set tax."""
-            sub.amount_total = 21.00
-            sub.amount_tax = 0.00
+            sub.order_line.write({
+                'tax_ids': [Command.clear()]
+            })
 
         # Calculate initial taxes
         with self.patch_set_external_taxes(new_set_external_taxes):
@@ -98,7 +100,7 @@ class TestSaleSubscriptionExternal(TestSubscriptionCommon, TestSaleSubscriptionE
         with self.patch_set_external_taxes(new_set_external_taxes):
             tx._post_process()
 
-        self.assertTrue(sub._is_paid(), 'Subscription should be fully paid')
+        self.assertEqual(sub.amount_total, sub.invoice_ids[0].amount_paid, 'Subscription should be fully paid')
 
     def test_04_subscription_date(self):
         self.subscription.date_order = '2024-01-01'

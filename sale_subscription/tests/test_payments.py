@@ -914,3 +914,46 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
             subscription.write({'transaction_ids': [Command.set(tx.ids)]})
             tx._set_done()
             tx.with_user(public_user).sudo()._post_process()
+
+    def test_subscription_invoice_after_second_period_payment(self):
+        """
+        Ensure the second invoice is generated correctly when a non-recurring product was included in the order lines.
+        When first time create invoice without payment then ensure that second time payment not considered down payment.
+        """
+        sub = self.subscription
+        self.product5.recurring_invoice = False
+        sub.order_line = [
+            Command.create(
+                {
+                    "name": "non recurring product",
+                    "product_id": self.product5.id,  # non recurring product
+                    "product_uom_qty": 1,
+                }
+            )
+        ]
+        sub.action_confirm()
+        # Create first period invoice for both recurring and non-recurring products
+        sub._create_recurring_invoice()
+        invoice_1 = sub.invoice_ids
+        # check subscription should be not be paid
+        self.assertNotEqual(sub.amount_total, invoice_1.amount_paid, 'Subscription should not be paid')
+
+        self.assertEqual(sub.state, "sale")
+        self.assertEqual(len(sub.invoice_ids), 1)
+        self.assertEqual(sub.invoice_ids.state, "posted")
+
+        # Now, pay for the second period with only the recurring product
+        self.reference = "SECOND PERIOD"
+        self.amount = sub._next_billing_details()["next_invoice_amount"]
+        tx = self._create_transaction(
+            flow="redirect", sale_order_ids=[sub.id], state="done"
+        )
+        with mute_logger("odoo.addons.sale.models.payment_transaction"):
+            tx._post_process()
+        invoice_2 = sub.invoice_ids - invoice_1
+        # check subscription should be fully paid
+        self.assertEqual(self.amount, invoice_2.amount_paid, 'Subscription should not be paid')
+
+        self.assertEqual(sub.state, "sale")
+        self.assertEqual(len(sub.invoice_ids), 2)
+        self.assertEqual(sub.invoice_ids[1].state, "posted")

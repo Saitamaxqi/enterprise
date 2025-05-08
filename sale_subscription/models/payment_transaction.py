@@ -109,9 +109,15 @@ class PaymentTransaction(models.Model):
             elif len(order) > 1:
                 # we don't support multiple order per tx. Accounting should invoice manually
                 tx_with_partial_payments |= tx
-            elif order.currency_id.compare_amounts(
+                continue
+            expected_amount = (
+                order._next_billing_details()['tax_totals']['total_amount_currency']
+                if len(order._get_invoiced_subscriptions()) == 0
+                else order._next_billing_details()['next_invoice_amount']
+            )
+            if order.currency_id.compare_amounts(
                     sum(order.transaction_ids.filtered(lambda tx: tx.renewal_state == 'authorized' and not tx.invoice_ids).mapped('amount')),
-                    order.amount_total
+                    expected_amount
                 ) != 0:
                 # The payment amount and other unused transactions will confirm and pay the invoice
                 tx_with_partial_payments |= tx

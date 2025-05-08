@@ -2248,3 +2248,22 @@ class SaleOrder(models.Model):
             kwargs['plan_id'] = self.plan_id.id
 
         return super()._update_order_line_info(product_id, quantity, **kwargs)
+
+    def _is_paid(self):
+        """
+        Override to determine whether a subscription-based sale order is considered paid.
+
+        - For regular sale orders (`is_subscription` is False), it call to the standard behavior.
+        - For subscription-based orders, we return True here because for subscription the actual payment validation
+        (including partial payments) is handled separately in  `_get_partial_payment_subscription_transaction`.
+
+        :return: Whether the sale order is paid or not
+        :rtype: bool
+        """
+        self.ensure_one()
+        if not self.is_subscription or self.state in ['draft', 'sent']:
+            return super()._is_paid()
+
+        # For confirmed subscription orders, return True unconditionally.
+        # Payment validation is done in _get_partial_payment_subscription_transaction based on transaction amounts.
+        return True
