@@ -18,7 +18,8 @@ class HmrcTransaction(models.Model):
             'cis_monthly_return': 'set default',
         },
     )
-    document_attachment_id = fields.Many2one(string="Document Attachment", comodel_name='ir.attachment')
+    document_file = fields.Binary(string="Document")
+    document_filename = fields.Char()
 
     def _generate_cis_mr_xml_data(self, credentials, document_data):
         self.ensure_one()
@@ -76,13 +77,8 @@ class HmrcTransaction(models.Model):
         # We render it twice. The second time without credentials to store it in an attachment
         xml_data['credentials'] = {}
         monthly_return_document_safe = self._generate_xml_document(xml_data)
-        document_string = etree.tostring(etree.fromstring(monthly_return_document_safe), pretty_print=True, xml_declaration=True, encoding='UTF-8').decode()
-        self.document_attachment_id = self.env['ir.attachment'].create({
-            'raw': document_string,
-            'name': f'hmrc_transaction_document_cis_{self.period_end}.xml',
-            'res_model': self._name,
-            'res_id': self.id,
-        })
+        self.document_filename = f'hmrc_transaction_document_cis_{self.period_end}.xml'
+        self.document_file = etree.tostring(etree.fromstring(monthly_return_document_safe), pretty_print=True, xml_declaration=True, encoding='UTF-8')
 
         response, header = _send_request(self, monthly_return_document)
 
@@ -105,7 +101,7 @@ class HmrcTransaction(models.Model):
             email_template.send_mail(
                 self.id,
                 force_send=True,
-                email_values={'attachment_ids': self.response_attachment_id.ids},
+                email_values={'attachments': [(self.response_filename, self.response_file)]},
             )
 
     def _handle_request_error(self, error_data, transaction_type):
@@ -115,7 +111,7 @@ class HmrcTransaction(models.Model):
             email_template.send_mail(
                 self.id,
                 force_send=True,
-                email_values={'attachment_ids': self.response_attachment_id.ids},
+                email_values={'attachments': [(self.response_filename, self.response_file)]},
             )
 
     @api.model

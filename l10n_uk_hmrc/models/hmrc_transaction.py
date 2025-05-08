@@ -73,7 +73,8 @@ class HMRCTransaction(models.Model):
     period_end = fields.Date(string="Document period end")
     company_id = fields.Many2one(comodel_name='res.company', string="Contractor")
 
-    response_attachment_id = fields.Many2one(string="Response Attachment", comodel_name='ir.attachment')
+    response_file = fields.Binary(string="Response Attachment")
+    response_filename = fields.Char()
 
     ##################################################################
     #                   To Override
@@ -132,12 +133,8 @@ class HMRCTransaction(models.Model):
 
         self.completed_datetime = fields.Datetime.now()
         tree = etree.fromstring(response.content)
-        self.response_attachment_id = self.env['ir.attachment'].create({
-            'raw': etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8').decode(),
-            'name': f'hmrc_transaction_response_{self.period_end}.xml',
-            'res_model': self._name,
-            'res_id': self.id,
-        })
+        self.response_file = etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+        self.response_filename = f'hmrc_transaction_response_{self.period_end}.xml'
         if header['qualifier'] == 'error':
             self.state = 'error'
             error_data = self._get_errors_from_response(response.content)
@@ -160,7 +157,7 @@ class HMRCTransaction(models.Model):
                 <h4>Fatal: %s</h4>
                 <p>%s:%s</p>
             """) % (error_data['code'], error_data['location'], error_data['message'])
-            self.company_id.message_post(body=html_body, attachment_ids=self.response_attachment_id.ids)
+            self.company_id.message_post(body=html_body, attachments=[(self.response_filename, self.response_file)])
             return
 
         errors = Markup().join(
@@ -177,7 +174,7 @@ class HMRCTransaction(models.Model):
             <p>%s:</p>
             <ul>%s</ul>
         """) % (error_message, errors)
-        self.company_id.message_post(body=html_body, attachment_ids=self.response_attachment_id.ids)
+        self.company_id.message_post(body=html_body, attachments=[(self.response_filename, self.response_file)])
 
     def _handle_submission_error(self, response, header):
         """
@@ -215,7 +212,7 @@ class HMRCTransaction(models.Model):
         Can be overidden.
         """
         html_body = Markup("%s") % _("HMRC Monthly return from %(period_start)s to %(period_end)s succeeded", period_start=self.period_start, period_end=self.period_end)
-        self.company_id.message_post(body=html_body, attachment_ids=self.response_attachment_id.ids)
+        self.company_id.message_post(body=html_body, attachments=[(self.response_filename, self.response_file)])
 
     ##################################################################
     #                   Transaction Crons
