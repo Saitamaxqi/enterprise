@@ -19,8 +19,8 @@
 
                 <table class="table table-sm table-striped" id="timesheet_table">
                     <t t-set="display_sol" t-value="False"/>
-                    <t t-foreach="timesheets" t-as="timesheet">
-                        <t t-if="timesheet.so_line != ticket.sale_line_id">
+                    <t t-foreach="timesheets" t-as="ts">
+                        <t t-if="ts.so_line != ticket.sale_line_id">
                             <t t-set="display_sol" t-value="True"/>
                         </t>
                     </t>
