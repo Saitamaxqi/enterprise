@@ -14,7 +14,7 @@ export class SettingDocumentPermissionWidget extends Component {
 
     async _openPermissionPanel (event) {
         this.dialogService.add(DocumentsPermissionPanel, {
-            document: {id: this.props.record.data.documents_employee_folder_id[0]},
+            document: {id: this.props.record.data.documents_employee_folder_id.id},
         });
     }
 }
