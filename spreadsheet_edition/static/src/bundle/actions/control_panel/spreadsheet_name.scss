@@ -13,7 +13,7 @@
         font-size: 16px;
 
         &:hover, &:focus {
-            color: $o-gray-900;
+            color: $black;
             --o-input-border-color: #{$o-action};
         }
         &.o-sp-untitled {

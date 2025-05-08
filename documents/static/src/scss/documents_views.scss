@@ -5,7 +5,7 @@
         &.o_search_panel_filter_value, > header {
             background-color: $component-active-bg;
             font-weight: $font-weight-bold;
-            color: $gray-900;
+            color: $black;
 
             .o_search_panel_label_title {
                 padding-left: map-get($spacers, 2);

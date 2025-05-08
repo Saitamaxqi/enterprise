@@ -48,7 +48,7 @@
                 <t t-else="">Untitled</t>
             </div>
             <div t-else="" class="o_hierarchy_article_name position-relative text-truncate" t-on-click="env.ensureArticleName">
-                <input class="o_input position-absolute top-50 start-50 translate-middle fw-bold text-truncate text-700 border-0"
+                <input class="o_input position-absolute top-50 start-50 translate-middle fw-bold text-truncate text-body border-0"
                     t-model="state.articleName"
                     t-on-change="ev => this.env.renameArticle(ev.target.value)"
                     type="text"
