@@ -542,7 +542,7 @@ class AccountJournal(models.Model):
                         error_code="R001",
                         version=statement["version"],
                     ))
-                statement['globalisation_stack'] = []
+                statement['globalisation_stack'] = {}
                 statement['lines'] = []
                 statement['date'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[5:11]), '%d%m%y'))
                 statement['separateApplication'] = rmspaces(line[83:88])
@@ -609,11 +609,12 @@ class AccountJournal(models.Model):
                     statementLine['type'] = 'normal'
                     statementLine['globalisation'] = int(line[124])
                     if statementLine['globalisation'] > 0:
-                        if statementLine['ref_move'] in statement['globalisation_stack']:
-                            statement['globalisation_stack'].remove(statementLine['ref_move'])
+                        globalisation_stack = statement['globalisation_stack'].setdefault(statementLine['ref_move'], [])
+                        if statementLine['globalisation'] in globalisation_stack:
+                            globalisation_stack.remove(statementLine['globalisation'])
                         else:
                             statementLine['type'] = 'globalisation'
-                            statement['globalisation_stack'].append(statementLine['ref_move'])
+                            globalisation_stack.append(statementLine['globalisation'])
                             globalisation_comm[statementLine['ref_move']] = statementLine['communication']
                     if not statementLine.get('communication'):
                         statementLine['communication'] = globalisation_comm.get(statementLine['ref_move'], '')
@@ -754,7 +755,7 @@ class AccountJournal(models.Model):
                     to_add.setdefault('transaction_details', {})
                     to_add['transaction_details']['communication'] = to_add['transaction_details'].get('communication', '') + communication
                 elif line['type'] == 'normal'\
-                        or (line['type'] == 'globalisation' and line['ref_move'] in statement['globalisation_stack'] and line['transaction_type'] in [1, 2]):
+                        or (line['type'] == 'globalisation' and line['globalisation'] in statement['globalisation_stack'][line['ref_move']] and line['transaction_type'] in [1, 2]):
                     if line.get('counterpartyName'):
                         transaction_details['counterpartyName'] = line['counterpartyName']
                     else:
