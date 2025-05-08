@@ -77,10 +77,10 @@ class TestSynchInBranches(AccountOnlineSynchronizationCommon):
             .with_context(allowed_company_ids=(self.mother_company)._ids)\
             .with_company(self.mother_company)\
             ._get_journal_dashboard_data_batched()
-        self.assertTrue(dashboard_data[self.mother_bank_journal.id].get('show_bank_connect'))
+        self.assertTrue(dashboard_data[self.mother_bank_journal.id].get('display_connect_bank_in_dashboard'))
 
         dashboard_data = self.mother_bank_journal\
             .with_context(allowed_company_ids=(self.branch_company + self.mother_company)._ids)\
             .with_company(self.branch_company)\
             ._get_journal_dashboard_data_batched()
-        self.assertFalse(dashboard_data[self.mother_bank_journal.id].get('show_bank_connect'))
+        self.assertFalse(dashboard_data[self.mother_bank_journal.id].get('display_connect_bank_in_dashboard'))

@@ -340,7 +340,7 @@ class AccountJournal(models.Model):
 
     def _get_journal_dashboard_data_batched(self):
         dashboard_data = super()._get_journal_dashboard_data_batched()
-        for journal in self.filtered(lambda j: j.type == 'bank'):
+        for journal in self.filtered(lambda j: j.type in ('bank', 'credit')):
             if journal.account_online_account_id:
                 if journal.company_id.id not in self.env.companies.ids:
                     continue
@@ -349,8 +349,6 @@ class AccountJournal(models.Model):
                     connection_state_details = {'status': 'fetching'}
                 dashboard_data[journal.id]['connection_state_details'] = connection_state_details
                 dashboard_data[journal.id]['show_sync_actions'] = journal.account_online_link_id.show_sync_actions
-            else:
-                dashboard_data[journal.id]['show_bank_connect'] = journal.company_id.id == self.env.company.id
         return dashboard_data
 
     def get_related_connection_state_details(self):
