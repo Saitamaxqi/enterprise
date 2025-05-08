@@ -43,7 +43,7 @@
     <menuitem
         id="menu_ai_composer"
         name="AI Composer Prompts"
-        action="open_view_ai_composer_kanban"
+        action="ai_composer_action"
         parent="ai.ai_config_menu"
         groups="base.group_system"
         sequence="20"/>

@@ -12,6 +12,7 @@ tests independently to functional aspects of other models. Moreover most of
 modules build on mail (sms, snailmail, mail_enterprise) are set as dependencies
 in order to test the whole mail codebase. """,
     'depends': [
+        'ai',
         'documents',
         'mail',
         'mail_bot',

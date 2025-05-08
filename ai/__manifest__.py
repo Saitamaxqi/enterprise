@@ -22,6 +22,7 @@
         'views/ai_composer_views.xml',
         'views/ai_menus.xml',
         'views/mail_scheduled_message_views.xml',
+        'views/mail_template_views.xml',
         'data/ir_cron.xml',
         'data/ai_composer_data.xml',
         'wizard/mail_compose_message_views.xml',

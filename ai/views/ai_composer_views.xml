@@ -49,10 +49,10 @@
         </field>
     </record>
 
-    <record id="open_view_ai_composer_kanban" model="ir.actions.act_window">
+    <record id="ai_composer_action" model="ir.actions.act_window">
         <field name="name">AI Composer Prompts</field>
         <field name="res_model">ai.composer</field>
-        <field name="view_id" ref="ai_composer_kanban"/>
+        <field name="view_id" ref="ai_composer_tree"/>
         <field name="view_mode">kanban,list,form</field>
     </record>
 
