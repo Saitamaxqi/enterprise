@@ -103,7 +103,10 @@ class AccountMove(models.Model):
                 else:
                     # backward compatibility with documents that may be not
                     # registered as attachments yet
-                    values.update({'attachment_id': attachment_id})
+                    values.update({
+                        "attachment_id": attachment_id,
+                        "company_id": self.company_id.id,
+                    })
                     doc_sudo.create(values)
 
     def _sync_partner_on_document(self):
