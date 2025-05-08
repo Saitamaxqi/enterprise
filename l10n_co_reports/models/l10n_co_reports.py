@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
@@ -44,7 +43,7 @@ class L10n_CoReportHandler(models.AbstractModel):
                         column_values.append(report._build_column_dict(None, None))
                         continue
                     else:
-                        if col_expr == 'bimestre':
+                        if col_expr == 'bimestre' and current_value.get('bimestre'):
                             col_val = self._get_bimonth_name(current_value['bimestre'])
 
                 column_values.append(report._build_column_dict(col_val, column, options=options))
@@ -71,14 +70,18 @@ class L10n_CoReportHandler(models.AbstractModel):
         return lines
 
     def _get_grouped_values(self, report, options, query_results, group_by=None):
+
         grouped_results = {}
         for results in query_results:
-            grouped_results.setdefault(results[group_by], {})[results['column_group_key']] = results
+            grouped_results.setdefault(tuple(results[item] for item in group_by), {})[results['column_group_key']] = results
 
         lines = []
         for group, group_values in grouped_results.items():
             parent_line_id = report._get_generic_line_id('res.partner', list(group_values.values())[0]['partner_id'])
-            markup = '%s_%s' % (group_by, group)
+            markup = ''
+            for key, value in zip(group_by, group):
+                markup += '%s_%s_' % (key, value)
+            markup = markup[:-1]
             lines.append({
                 'id': report._get_generic_line_id(None, None, markup=markup, parent_line_id=parent_line_id),
                 'name': '',

@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <table class="o_ignore_layout_styling table" t-if="report_name.endswith('fuente') or report_name.endswith('ica')">
+                                <table class="o_ignore_layout_styling table" t-if="report_name.endswith('fuente')">
                                     <colgroup>
                                         <col span="1" style="width: 70%;"/>
                                         <col span="1" style="width: 15%;"/>
@@ -57,29 +57,51 @@
                                     </colgroup>
                                     <thead>
                                         <tr>
-                                            <th t-if="report_name.endswith('fuente')"><strong>Concepto de retención</strong></th>
-                                            <th t-if="report_name.endswith('ica')"><strong>Bimestre</strong></th>
-                                            <th><strong>Monto del pago sujeto a retención</strong></th>
-                                            <th><strong>Retenido y consignado</strong></th>
+                                            <th class="fw-bold">Concepto de retención</th>
+                                            <th class="fw-bold">Monto del pago sujeto a retención</th>
+                                            <th class="fw-bold">Retenido y consignado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr t-foreach="partner['lines']" t-as="line">
-                                            <td t-if="report_name.endswith('fuente')"><t t-esc="line.get('account_name')"/></td>
-                                            <td t-if="report_name.endswith('ica')"><t t-esc="line.get('bimestre')"/></td>
-                                            <td><t t-esc="line.get('tax_base_amount')"/></td>
-                                            <td><t t-esc="line.get('balance')"/></td>
+                                            <td><t t-out="line.get('origin_tax_desc')"/></td>
+                                            <td><t t-out="line.get('tax_base_amount')"/></td>
+                                            <td><t t-out="line.get('balance')"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="o_ignore_layout_styling table" t-if="report_name.endswith('ica')">
+                                    <colgroup>
+                                        <col span="1" style="width: 25%;"/>
+                                        <col span="1" style="width: 25%;"/>
+                                        <col span="1" style="width: 25%;"/>
+                                        <col span="1" style="width: 25%;"/>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="fw-bold">Bimestre</th>
+                                            <th class="fw-bold">Monto del pago sujeto a retención</th>
+                                            <th class="fw-bold">Retenido y consignado</th>
+                                            <th class="fw-bold">Concepto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="partner['lines']" t-as="line">
+                                            <td><t t-out="line.get('bimestre')"/></td>
+                                            <td><t t-out="line.get('tax_base_amount')"/></td>
+                                            <td><t t-out="line.get('balance')"/></td>
+                                            <td><t t-out="line.get('ica_type')"/></td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <table class="o_ignore_layout_styling table" t-if="report_name.endswith('iva')">
                                     <thead>
                                         <tr>
-                                            <th><strong>Bimestre</strong></th>
-                                            <th><strong>Monto Total Operación</strong></th>
-                                            <th><strong>Monto del Pago Sujeto Retención</strong></th>
-                                            <th><strong>Retenido Consignado</strong></th>
-                                            <th><strong>%</strong></th>
+                                            <th class="fw-bold">Bimestre</th>
+                                            <th class="fw-bold">Monto Total Operación</th>
+                                            <th class="fw-bold">Monto del Pago Sujeto Retención</th>
+                                            <th class="fw-bold">Retenido Consignado</th>
+                                            <th class="fw-bold">%</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,11 +160,11 @@
                                 <div class="col-12">
                                     <t t-if="report_name.endswith('ica')">
                                         Dicha Retención fue consignada oportunamente a nombre de la Secretaría de Hacienda en la Ciudad de
-                                        <t t-esc="env.company.city"/>
+                                        <t t-out="env.company.city"/>
                                     </t>
                                     <t t-else="">
                                         Dicha Retención fue consignada oportunamente a nombre de la Dirección de Impuestos y Aduanas Nacionales en la Ciudad de
-                                        <t t-esc="env.company.city"/>
+                                        <t t-out="env.company.city"/>
                                     </t>
                                 </div>
                             </div>

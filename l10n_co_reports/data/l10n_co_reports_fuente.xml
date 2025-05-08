@@ -16,8 +16,7 @@
         <field name="column_ids">
             <record id="l10n_co_reports_fuente_communication" model="account.report.column">
                 <field name="name">Concepto de retención</field>
-                <field name="name@es_419">Concepto de retención</field>
-                <field name="expression_label">account_name</field>
+                <field name="expression_label">origin_tax_desc</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="l10n_co_reports_fuente_tax_base_amount" model="account.report.column">

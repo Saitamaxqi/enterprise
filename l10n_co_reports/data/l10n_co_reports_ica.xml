@@ -29,6 +29,11 @@
                 <field name="name@es_419">Retenido y consignado</field>
                 <field name="expression_label">balance</field>
             </record>
+            <record id="l10n_co_reports_ica_type" model="account.report.column">
+                <field name="name">Concepto</field>
+                <field name="expression_label">ica_type</field>
+                <field name="figure_type">string</field>
+            </record>
         </field>
     </record>
 

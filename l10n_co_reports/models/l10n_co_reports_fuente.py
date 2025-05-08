@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
-from odoo.tools import SQL
+from odoo.tools import SQL, get_lang
 
 
 class L10n_CoFuenteReportHandler(models.AbstractModel):
@@ -14,14 +14,15 @@ class L10n_CoFuenteReportHandler(models.AbstractModel):
         query_results = self._get_query_results(report, options, domain)
         return super()._get_partner_values(report, options, query_results, '_report_expand_unfoldable_line_fuente')
 
-    def _get_query_results(self, report, options, domain, account=False):
+    def _get_query_results(self, report, options, domain, expanded=False):
         queries = []
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
             query = report._get_report_query(column_group_options, 'strict_range', domain=domain)
-            account_alias = query.left_join(lhs_alias='account_move_line', lhs_column='account_id', rhs_table='account_account', rhs_column='id', link='account_id')
-            account_code = self.env['account.account']._field_to_sql(account_alias, 'code', query)
-            account_name = self.env['account.account']._field_to_sql(account_alias, 'name')
-            account_id = SQL.identifier(account_alias, 'id')
+            origin_tax_id_expression = SQL('tax.id')
+            lang = self.env.user.lang or get_lang(self.env).code
+            origin_tax_desc_expression = SQL("COALESCE(tax.description->>%s,tax.description->>'en_US')", lang)
+            origin_tax_desc_expression = SQL("REGEXP_REPLACE(%s, '(<([^>]+)>)', '', 'g')", origin_tax_desc_expression)
+            expanded_columns = SQL('%s AS origin_tax_id, %s AS origin_tax_desc,', origin_tax_id_expression if expanded else '', origin_tax_desc_expression if expanded else '')
             tax_base_amount_select = SQL("""
                 SUM(CASE
                     WHEN account_move_line.credit > 0
@@ -37,24 +38,23 @@ class L10n_CoFuenteReportHandler(models.AbstractModel):
                     %(column_group_key)s AS column_group_key,
                     SUM(account_move_line.credit - account_move_line.debit) AS balance,
                     %(tax_base_amount_select)s AS tax_base_amount,
-                    %(account_name)s
-                    %(account_id)s
+                    %(expanded_columns)s
                     rp.id AS partner_id,
                     rp.name AS partner_name
                 FROM %(table_references)s
                 JOIN res_partner rp ON account_move_line.partner_id = rp.id
+                JOIN account_tax tax ON account_move_line.tax_line_id = tax.id
                 WHERE %(search_condition)s
-                GROUP BY rp.id %(group_by_account_id)s
+                GROUP BY rp.id %(expanded_groupby)s
                 %(having_clause)s
                 """,
                 column_group_key=column_group_key,
                 tax_base_amount_select=tax_base_amount_select,
-                account_name=SQL("%s || ' ' || (%s) AS account_name,", account_code, account_name) if account else SQL(),
-                account_id=SQL("%s AS account_id,", account_id) if account else SQL(),
+                expanded_columns=expanded_columns,
                 table_references=query.from_clause,
                 search_condition=query.where_clause,
-                group_by_account_id=SQL(', %s', account_id) if account else SQL(),
-                having_clause=SQL("HAVING %s != 0", tax_base_amount_select) if account else SQL(),
+                expanded_groupby=SQL(', %s', origin_tax_id_expression) if expanded else SQL(),
+                having_clause=SQL("HAVING %s != 0", tax_base_amount_select) if expanded else SQL(),
             ))
 
         self._cr.execute(SQL(' UNION ALL ').join(queries))
@@ -62,11 +62,14 @@ class L10n_CoFuenteReportHandler(models.AbstractModel):
 
     def _get_domain(self, report, options, line_dict_id=None):
         domain = super()._get_domain(report, options, line_dict_id=line_dict_id)
-        domain += [('account_id.code', '=like', '2365%'), ('account_id.code', '!=', '236505')]
+        domain += [('tax_line_id.type_tax_use', '=', 'purchase')]
+        # Reports are categorized by the l10n_co_edi_type, which may not be present if l10n_co_edi is uninstalled
+        if 'l10n_co_edi_type' in self.env['account.tax']._fields:
+            domain += [('tax_line_id.l10n_co_edi_type.code', '=', '06')]
         return domain
 
     def _report_expand_unfoldable_line_fuente(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
         report = self.env['account.report'].browse(options['report_id'])
         domain = self._get_domain(report, options, line_dict_id=line_dict_id)
-        query_results = self._get_query_results(report, options, domain, account=True)
-        return super()._get_grouped_values(report, options, query_results, group_by='account_id')
+        query_results = self._get_query_results(report, options, domain, expanded=True)
+        return super()._get_grouped_values(report, options, query_results, group_by=['origin_tax_id'])
