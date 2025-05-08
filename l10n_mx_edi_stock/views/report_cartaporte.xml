@@ -138,7 +138,7 @@
                 </div>
             </div>
             <hr/>
-            <div class="row">
+            <div class="row avoid-page-break-inside">
                 <div class="barcode">
                     <img alt="Cartaporte Barcode" t-att-src="cartaporte_values['barcode_src']"/>
                 </div>
