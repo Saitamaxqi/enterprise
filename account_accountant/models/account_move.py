@@ -635,6 +635,10 @@ class AccountMoveLine(models.Model):
         - If the reconciliation can be done directly we do it silently
         - Else, if a write-off is required we open the wizard to let the client enter required information
         """
+        self = self.filtered(lambda x: x.balance or x.amount_currency)  # noqa: PLW0642
+        if not self:
+            return
+
         wizard = self.env['account.reconcile.wizard'].with_context(
             active_model='account.move.line',
             active_ids=self.ids,
