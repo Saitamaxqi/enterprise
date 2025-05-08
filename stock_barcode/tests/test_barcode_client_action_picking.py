@@ -2933,7 +2933,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         receipt_picking.action_confirm()
         action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = "/odoo/action-stock_barcode.stock_barcode_action_main_menu"
-        self.start_tour(url, 'test_open_picking_dont_override_assigned_user', login='admin', timeout=180)
+        self.start_tour(url, 'test_open_picking_dont_override_assigned_user', login='admin')
         self.assertEqual(receipt_picking.user_id.id, bob.id, "Picking responsible should be unchanged after click when previously set")
 
     def test_multi_company_record_access_in_barcode(self):

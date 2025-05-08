@@ -4536,7 +4536,7 @@ registry.category("web_tour.tours").add("test_scan_aggregate_barcode", {
 });
 
 registry.category("web_tour.tours").add("test_scrap_change_source_location", {
-     steps: () => [
+    steps: () => [
         { trigger: ".o_barcode_actions", run: "click" },
         { trigger: "input#manual_barcode", run: "edit LOC-01-01-00" },
         { trigger: "button:contains('Apply')", run: "click" },
@@ -4555,7 +4555,8 @@ registry.category("web_tour.tours").add("test_scrap_change_source_location", {
         { trigger: ".ui-menu-item > a:contains('lot1')", run: "click" },
         { trigger: "button.o_save", run: "click" },
         ...stepUtils.validateBarcodeOperation(),
-]});
+    ],
+});
 
 registry.category("web_tour.tours").add("test_scrap", {
     steps: () => [
@@ -5816,6 +5817,10 @@ registry.category("web_tour.tours").add("test_open_picking_dont_override_assigne
         },
         {
             trigger: ".o_breadcrumb > ol > li > a:contains(Operations)",
+        },
+        {
+            content: `Wait kanban is rendered before closing the tour or The following error occurred in onWillStart: "Component is destroyed" can occurs`,
+            trigger: ".o_kanban_renderer:has(.o_kanban_record:contains(test_responsible_receipt))",
         },
     ],
 });
