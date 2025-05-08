@@ -38,7 +38,9 @@
                             <field name="date_to" readonly="1"/>
                             <field name="recipient"/>
                             <field name="state" readonly="1"/>
-                            <field name="attachment_ids" widget="many2many_binary" readonly="1"/>
+                            <!-- Needed for the binary widget -->
+                            <field name="attachment_name" invisible="1"/>
+                            <field name="attachment" widget="binary" filename="attachment_name" readonly="1"/>
                             <field name="message" readonly="1"/>
                         </group>
                     </group>

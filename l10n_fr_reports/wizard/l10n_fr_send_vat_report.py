@@ -1,3 +1,5 @@
+import base64
+
 from odoo import api, Command, fields, models, _
 from odoo.tools import cleanup_xml_node, float_repr, float_compare, format_date
 from odoo.exceptions import ValidationError, UserError, RedirectWarning
@@ -617,20 +619,11 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         if not deposit_uid:
             raise ValidationError(_("Error occured while sending the report to the government : '%(response)s'", response=str(response)))
 
-
-        attachment = self.env['ir.attachment'].create({
-            'name': f'{export_name}.xml',
-            'res_model': 'l10n_fr_reports.report',
-            'type': 'binary',
-            # IAP might force the "Test" flag to 1 if the config parameter 'l10n_fr_aspone_proxy.test_env' is True
-            'raw': response['xml_content'].encode(),
-            'mimetype': 'application/xml',
-        })
-
         # Create the vat return
         self.env['account.report.async.export'].create({
             'name': export_name,
-            'attachment_ids': attachment.ids,
+            'attachment_name': f'{export_name}.xml',
+            'attachment': base64.b64encode(response['xml_content'].encode()),
             'deposit_uid': deposit_uid,
             'date_from': self.date_from,
             'date_to': self.date_to,

@@ -37,7 +37,8 @@ class AccountReportAsyncExport(models.Model):
     date_from = fields.Date()
     date_to = fields.Date()
     report_id = fields.Many2one('account.report')
-    attachment_ids = fields.Many2many('ir.attachment')
+    attachment = fields.Binary()
+    attachment_name = fields.Char()
     deposit_uid = fields.Char()  # ASPOne "Interchange" identifier
     declaration_uid = fields.Char()  # ASPOne identifier (an interchange might have several declarations)
     recipient = fields.Selection([
@@ -158,16 +159,6 @@ class AccountReportAsyncExport(models.Model):
     # ------------------------------------------------------------
     # Buttons
     # ------------------------------------------------------------
-
-    def button_fetch_attachments(self):
-        # DEPRECATED : This button will be removed in master
-        self.ensure_one()
-        attachments = self.attachment_ids.filtered(lambda a: a.name.endswith(".xml"))
-        if attachments:
-            return {
-                "type": "ir.actions.act_url",
-                "url": f"/web/content/{attachments.ids[0]}?download=true",
-            }
 
     def button_process_report(self):
         self.env.ref('l10n_fr_reports.ir_cron_l10n_fr_reports').method_direct_trigger()
