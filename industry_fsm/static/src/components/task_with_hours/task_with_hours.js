@@ -31,5 +31,5 @@ export class FsmTaskWithHours extends TaskWithHours {
 
 registry
     .category("fields")
-    .add("task_with_hours", { ...buildM2OFieldDescription(TaskWithHours) }, { force: true })
-    .add("list.task_with_hours", { ...buildM2OFieldDescription(FsmTaskWithHours) });
+    .add("task_with_hours", { ...buildM2OFieldDescription(FsmTaskWithHours) }, { force: true })
+    .add("list.task_with_hours", { ...buildM2OFieldDescription(TaskWithHours) });
