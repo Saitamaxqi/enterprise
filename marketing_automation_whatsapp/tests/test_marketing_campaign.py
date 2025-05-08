@@ -62,6 +62,7 @@ class TestMarketingAutomation(WaMaCase):
             )
         self.assertEqual(traces.whatsapp_message_id.state, 'replied')
 
+
 @tagged("link_tracker")
 class TestLinkTracker(WaMaCase):
 

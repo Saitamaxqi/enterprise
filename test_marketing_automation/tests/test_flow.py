@@ -365,7 +365,7 @@ for record in records:
             'Should have 1 day / 1 week triggers: two sub activities with should have triggers'
         )
 
-        # Processing does not change anything (not time yet) for unscheduled activities
+        # Processing does not change anything (not time yet)
         with self.mock_datetime_and_now(self.date_reference):
             campaign.execute_activities()
         for act in (act1_1 + act1_2 + act1_3):
