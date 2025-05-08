@@ -209,9 +209,9 @@ class Base(models.AbstractModel):
         system_prompt, allowed_values = get_field_system_prompt(self.env, field)
         user_prompt = render_prompt(record, field.ai) + (self._get_currency_prompt(field) if field.type == 'monetary' else '')
         val = get_ai_value(self.env, field.type, system_prompt, user_prompt, allowed_values)
+        if not val:
+            return False
         if field.type == 'many2one':
-            if not val:
-                return val
             return self.env[field.comodel_name].browse(val).read(['id', 'display_name'])[0]
         elif field.type == 'many2many':
             return [[Command.SET, 0, val or []]]
@@ -254,12 +254,12 @@ class Base(models.AbstractModel):
         system_prompt, allowed_values = get_property_system_prompt(self.env, property_definition)
         user_prompt = render_prompt(record, property_definition.get('system_prompt'))
         val = get_ai_value(self.env, property_type, system_prompt, user_prompt, allowed_values)
+        if not val:
+            return False
         if property_type == 'many2one':
-            if not val:
-                return val
             record = self.env[property_definition['comodel']].browse(val)
             return [(rec := record.read(['id', 'display_name'])[0])['id'], rec['display_name']] if record else False
-        elif property_type == 'many2many':
+        if property_type == 'many2many':
             records = self.env[property_definition['comodel']].browse(val)
             return [[rec['id'], rec['display_name']] for rec in records.read(['id', 'display_name'])] if records else []
         return val

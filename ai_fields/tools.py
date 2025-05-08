@@ -100,13 +100,16 @@ def get_property_system_prompt(env, property_definition):
     property_type = property_definition.get('type')
     prompt = GENERIC_PROMPT + FIELD_PROMPTS[property_type]
     if property_type == 'selection':
-        selection = dict(property_definition.get('selection'))
+        selection = dict(property_definition.get('selection') or {})
         return prompt + str(selection), set(selection.keys())
     elif property_type in ('many2one', 'many2many'):
         comodel = property_definition.get('comodel')
-        return prompt, parse_ai_prompt_records(env, property_definition.get('system_prompt'), comodel)
+        system_prompt = property_definition.get('system_prompt')
+        if not comodel or not system_prompt:
+            return prompt, set()
+        return prompt, parse_ai_prompt_records(env, system_prompt, comodel)
     elif property_type == 'tags':
-        tags = {name: label for name, label, color in property_definition.get('tags')}
+        tags = {name: label for name, label, color in (property_definition.get('tags') or [])}
         return prompt + str(tags), set(tags.keys())
     return prompt, False
 

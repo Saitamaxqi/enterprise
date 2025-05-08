@@ -159,6 +159,19 @@ class TestAiFieldsAccess(TransactionCase):
         with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
             self.assertFalse(self.record.get_ai_property_value("properties.many2one", None))
 
+        # Test missing model
+        self.record.write({"properties": [{
+            "type": "many2one",
+            "name": "many2one",
+            # comodel is missing
+            "definition_changed": True,
+            "ai": True,
+            "system_prompt": system_prompt,
+        }]})
+        self.env.flush_all()
+        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+            self.assertFalse(self.record.get_ai_property_value("properties.many2one", None))
+
     def test_ai_fields_validation_many2many(self):
         def _mocked_iap_jsonrpc(url, params, **kwargs):
             return {"content": response}
@@ -194,6 +207,19 @@ class TestAiFieldsAccess(TransactionCase):
                 [[records[0].id, records[0].display_name], [records[3].id, records[3].display_name]]
             )
 
+        # Test missing model
+        self.record.write({"properties": [{
+            "type": "many2many",
+            "name": "many2many",
+            # comodel is missing
+            "definition_changed": True,
+            "ai": True,
+            "system_prompt": system_prompt,
+        }]})
+        self.env.flush_all()
+        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+            self.assertFalse(self.record.get_ai_property_value("properties.many2many", None))
+
     def test_ai_fields_validation_tags(self):
         def _mocked_iap_jsonrpc(url, params, **kwargs):
             return {"content": str(response)}
@@ -213,6 +239,19 @@ class TestAiFieldsAccess(TransactionCase):
         response = "y,a,b,c,x"
         with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
             self.assertEqual(self.record.get_ai_property_value("properties.tags", None), ["a", "b", "c"])
+
+        # Test missing tags
+        self.record.write({"properties": [{
+            "type": "tags",
+            "name": "tags",
+            # tags is missing
+            "definition_changed": True,
+            "ai": True,
+            "system_prompt": "Good prompt",
+        }]})
+        self.env.flush_all()
+        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+            self.assertFalse(self.record.get_ai_property_value("properties.tags", None))
 
     def test_get_ai_property_value_new_record(self):
         """Test `get_ai_property_value` when the record does not exist."""
