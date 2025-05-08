@@ -91,6 +91,31 @@
     background: $red-100;
 }
 
+%o_documents_watermark {
+    transform: translate(-50%, -25%) rotate(-27deg);
+}
+
+.o_documents_watermark_file_viewer {
+    @extend %o_documents_watermark;
+    scale: 1.5;
+}
+.o_documents_watermark_thumbnail {
+    @extend %o_documents_watermark;
+    scale: 0.5;
+}
+
+.o_documents_thumbnail_iframe {
+    width: 600px;
+    height: 570px;
+    -ms-zoom: 0.34;
+    -moz-transform: scale(0.34);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.34);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.34);
+    -webkit-transform-origin: 0 0;
+}
+
 .o_record_temporary {
     position: absolute;
     overflow: hidden;

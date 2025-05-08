@@ -5,7 +5,8 @@ from odoo.exceptions import AccessError
 from odoo.tests.common import TransactionCase
 
 GIF = b"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
-TEXT = base64.b64encode(bytes("TEST", 'utf-8'))
+TEXT = base64.b64encode(b"TEST")
+WEBP = b"UklGRjoAAABXRUJQVlA4IC4AAAAwAQCdASoBAAEAAUAmJaAAA3AA/u/uY//8s//2W/7LeM///5Bj/dl/pJxGAAAA"
 
 
 class TransactionCaseDocuments(TransactionCase):

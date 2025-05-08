@@ -94,6 +94,7 @@
                                 <!-- should be made more generic if we support different websites for videos -->
                                 <t t-set="youtubeUrlMatch" t-value="record.url.raw_value ? record.url.raw_value.match('youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})') : false"/>
                                 <t t-set="youtubeVideoToken" t-value="youtubeUrlMatch ? youtubeUrlMatch.length > 1 ? youtubeUrlMatch[1] : false : false"/>
+                                <t t-set="isTextualDocument" t-value="(typeof mimetype === 'string' and mimetype.startsWith('text/') and mimetype !== 'text/csv') || ['application/json', 'application/xml', 'application/documents-email'].includes(mimetype)"/>
                                 <div name="document_preview" class="o_kanban_image_wrapper d-flex justify-content-center position-relative" t-att-title="fileRequest ? 'Upload file' : ''">
                                     <field name="is_favorited" nolabel="1" widget="document_favorite" class="position-absolute top-0 end-0 p-1 pt-2"/>
                                     <img t-if="youtubeVideoToken" alt="Document"
@@ -105,6 +106,16 @@
                                             <span class="fa fa-link fa-3x text-muted"/>
                                         </t>
                                     </a>
+                                    <div t-elif="isTextualDocument" class="overflow-hidden p-0 bg-white pe-none" style="width: 200px; height: 140px;">
+                                        <t t-if="mimetype === 'application/documents-email'">
+                                            <div class="position-absolute top-50 start-50 text-muted opacity-25 fs-1 o_documents_watermark_thumbnail">EMAIL</div>
+                                            <iframe scrolling="no" t-if="documentEmailContent" class="overflow-hidden o_documents_thumbnail_iframe"
+                                                t-att-srcdoc="documentEmailContent" sandbox=""
+                                            />
+                                        </t>
+                                        <iframe t-else="" scrolling="no" class="overflow-hidden o_documents_thumbnail_iframe"
+                                            t-attf-src="/documents/thumbnail_textual/#{encodeURIComponent(record.access_token.raw_value)}" sandbox=""/>
+                                    </div>
                                     <t t-elif="hasStoredThumbnail">
                                         <t t-set="unique" t-value="record.checksum.value ? record.checksum.value.slice(-8) : ''"/>
                                         <img t-attf-src="/documents/thumbnail/#{window.encodeURIComponent(record.access_token.raw_value)}?unique=#{unique}" alt="Document preview"/>

@@ -41,6 +41,7 @@ App to upload and manage your documents.
         'views/documents_menu_views.xml',
         'views/documents_templates_portal.xml',
         'views/documents_templates_share.xml',
+        'views/documents_templates_thumbnails.xml',
         'views/ir_actions_views.xml',
         'wizard/documents_access_invite_views.xml',
         'wizard/documents_link_to_record_wizard_views.xml',

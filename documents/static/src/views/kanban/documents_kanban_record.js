@@ -1,10 +1,11 @@
 import { _t } from "@web/core/l10n/translation";
+import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { browser } from "@web/core/browser/browser";
 import { FileUploadProgressBar } from "@web/core/file_upload/file_upload_progress_bar";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { xml } from "@odoo/owl";
+import { useEffect, useState, xml } from "@odoo/owl";
 
 const CANCEL_GLOBAL_CLICK = ["a", ".dropdown", ".oe_kanban_action"].join(",");
 
@@ -46,6 +47,13 @@ export class DocumentsKanbanRecord extends KanbanRecord {
 
         this.thumbnailService = useService("documents_client_thumbnail");
         this.thumbnailService.enqueueRecords([this.props.record]);
+        this.contentState = useState({ documentEmailContent: null });
+        useEffect(
+            () => {
+                this.fetchDocumentsEmailContent();
+            },
+            () => [this.props.record?.data.attachment_id?.id]
+        );
     }
 
     /**
@@ -70,16 +78,16 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         context.encodeURIComponent = encodeURIComponent;
 
         if ([false, "TRASH", "RECENT"].includes(this.env.searchModel.getSelectedFolderId())) {
-            context.inFolder = this.props.record.data.folder_id?.display_name ||
-                (
-                    this.props.record.data?.owner_id?.id === user.userId
+            context.inFolder =
+                this.props.record.data.folder_id?.display_name ||
+                (this.props.record.data?.owner_id?.id === user.userId
                     ? _t("My Drive")
                     : this.props.record.data?.owner_id
-                        ? _t("Shared with me")
-                        : _t("Company")
-                );
+                    ? _t("Shared with me")
+                    : _t("Company"));
         }
         context.mimetype = this.props.record.shortcutTarget.data.mimetype;
+        context.documentEmailContent = this.contentState.documentEmailContent;
         return context;
     }
     /**
@@ -103,12 +111,18 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         // or if we have more than one item selected
         const isSelectionModeActive = selectionLength === 1 ? ev.shiftKey : selectionLength > 1;
         const selectionKeyActive = ev.altKey || ev.ctrlKey;
-        if (ev.target.closest("div[name='document_preview']") && !(selectionKeyActive || ev.shiftKey)) {
+        if (
+            ev.target.closest("div[name='document_preview']") &&
+            !(selectionKeyActive || ev.shiftKey)
+        ) {
             this.props.record.onClickPreview(ev);
         } else if (selectionKeyActive || isSelectionModeActive) {
             this.rootRef.el.focus();
             this.props.toggleSelection(this.props.record, ev.shiftKey);
-        } else if (this.env.searchModel.getSelectedFolderId() === "TRASH" || this.props.record.data.type !== "folder") {
+        } else if (
+            this.env.searchModel.getSelectedFolderId() === "TRASH" ||
+            this.props.record.data.type !== "folder"
+        ) {
             // Select only one document record
             this.props.getSelection().forEach((r) => r.toggleSelection(false));
             this.rootRef.el.focus();
@@ -127,6 +141,23 @@ export class DocumentsKanbanRecord extends KanbanRecord {
                 this.props.record.toggleSelection(true);
                 this.resetLongTouchTimer();
             }, this.LONG_TOUCH_THRESHOLD);
+        }
+    }
+
+    async fetchDocumentsEmailContent() {
+        if (this.props.record.shortcutTarget.data.mimetype !== "application/documents-email") {
+            return;
+        }
+        try {
+            const result = await rpc("/web/dataset/call_kw/documents.document/read", {
+                model: "documents.document",
+                method: "read",
+                args: [this.props.record.resId, ["raw"]],
+                kwargs: { context: user.context },
+            });
+            this.contentState.documentEmailContent = result[0]["raw"];
+        } catch (error) {
+            console.error("Error fetching document:", error);
         }
     }
 }

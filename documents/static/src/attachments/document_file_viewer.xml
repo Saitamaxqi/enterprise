@@ -21,9 +21,13 @@
         </xpath>
         <xpath expr="//div[hasclass('o-FileViewer-main')]" position="inside">
             <t t-if="state.file.documentEmailContent">
-                <div class="position-absolute top-50 start-50 text-muted opacity-25 fs-1 o_documents_file_viewer_mail_watermark">EMAIL</div>
+                <div class="position-absolute top-50 start-50 text-muted opacity-25 fs-1 o_documents_watermark_file_viewer">EMAIL</div>
                 <iframe class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-srcdoc="state.file.documentEmailContent" sandbox=""/>
             </t>
+        </xpath>
+        <xpath expr="//iframe[@t-if='state.file.isText']" position="replace">
+            <iframe t-if="state.file.isJson || state.file.isHtml" class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-src="state.file.defaultSource" sandbox=""/>
+            <iframe t-elif="state.file.isMimetypeTextual" class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-srcdoc="state.file.documentTextContent" sandbox=""/>
         </xpath>
     </t>
 </templates>

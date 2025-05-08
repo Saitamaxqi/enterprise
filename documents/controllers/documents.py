@@ -20,12 +20,15 @@ from odoo.http import request, content_disposition
 from odoo.osv import expression
 from odoo.tools import replace_exceptions, str2bool, consteq
 
+from odoo.addons.documents.tools import attachment_read, is_mimetype_textual
 from odoo.addons.mail.controllers.attachment import AttachmentController
 
 logger = logging.getLogger(__name__)
 
 
 class ShareRoute(http.Controller):
+
+    TEXTUAL_THUMBNAIL_SIZE = 4096
 
     # util methods #################################################################################
     def _max_content_length(self):
@@ -477,6 +480,41 @@ class ShareRoute(http.Controller):
         return request.env['ir.binary']._get_image_stream_from(
             document_sudo, 'thumbnail', width=width, height=height
         ).get_response(as_attachment=False, **send_file_kwargs)
+
+    @http.route(['/documents/thumbnail_textual/<access_token>'],
+                type='http', auth='public', readonly=True)
+    def documents_thumbnail_textual(self, access_token):
+        """Show the thumbnail (first 4kiB) of text-like documents.
+
+        Textual documents are those whose mimetype starts with text/
+        or are a recognized application (json, xml, ...)
+        .html and external attachment url are served by Stream (same
+        as `/documents/content`).
+
+        :param access_token: the access token to the document record
+        """
+        document_sudo = self._from_access_token(access_token, skip_log=True)
+        if not document_sudo:
+            raise request.not_found()
+        if document_sudo.type != 'binary':
+            e = f"bad document type: expected a file (binary) document, found a {document_sudo.type} document"
+            raise BadRequest(e)
+        attachment_sudo = document_sudo.attachment_id.sudo()
+        if not attachment_sudo:
+            raise request.not_found()
+        if not is_mimetype_textual(document_sudo.mimetype):
+            e = f"bad document mimetype: expect text/* or a recognized application/, got {document_sudo.mimetype}"
+            raise BadRequest(e)
+        head = None
+        if document_sudo.mimetype not in ['text/html']:
+            head = attachment_read(attachment_sudo, size=self.TEXTUAL_THUMBNAIL_SIZE)
+        if not head:
+            with replace_exceptions(ValueError, MissingError, by=request.not_found()):
+                stream = self._documents_content_stream(document_sudo)
+            return stream.get_response(as_attachment=False)
+        return request.render("documents.thumbnails_textual", {
+            'content': head.decode('utf-8', errors='replace'),
+        })
 
     @http.route(['/documents/document/<int:document_id>/update_thumbnail'], type='jsonrpc', auth='user')
     def documents_update_thumbnail(self, document_id, thumbnail):

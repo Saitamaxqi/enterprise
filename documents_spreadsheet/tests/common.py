@@ -73,4 +73,5 @@ class SpreadsheetTestTourCommon(SpreadsheetTestCommon, HttpCase):
                 "raw": f.read(),
                 "name": "Res Partner Test Spreadsheet",
                 "access_internal": "edit",
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             })

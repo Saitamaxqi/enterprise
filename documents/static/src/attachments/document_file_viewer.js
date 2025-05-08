@@ -20,6 +20,8 @@ export class FileViewer extends WebFileViewer {
                 this.documentService.setPreviewedDocument(this.previewed.document);
                 if (this.state.file.isDocumentEmail) {
                     await this.state.file.loadDocumentEmailContent();
+                } else if (this.state.file.isMimetypeTextual) {
+                    await this.state.file.loadDocumentTextContent();
                 }
             }
         );
@@ -39,6 +41,8 @@ export class FileViewer extends WebFileViewer {
         onWillStart(async () => {
             if (this.state.file.isDocumentEmail) {
                 await this.state.file.loadDocumentEmailContent();
+            } else if (this.state.file.isMimetypeTextual) {
+                await this.state.file.loadDocumentTextContent();
             }
         });
     }
