@@ -181,18 +181,9 @@ registry.category("web_tour.tours").add("test_process_confirmed_mo", {
 
 registry.category("web_tour.tours").add("test_barcode_production_create", {
     steps: () => [
-        {
-            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
-            run: "click",
-        },
-        {
-            trigger: ".o-kanban-button-new",
-            run: "click",
-        },
+        { trigger: ".o_stock_barcode_main_menu", run: "scan WHMANUF" },
         // Scans final product, it should create the header line for this product.
-        {
-            trigger: ".o_scan_message.o_scan_product",
-        },
+        { trigger: ".o_scan_message.o_scan_product" },
         {
             trigger: '.o_title:contains("New")',
             run: "scan final",
@@ -329,17 +320,8 @@ registry.category("web_tour.tours").add("test_barcode_production_create_bom", {
 
 registry.category("web_tour.tours").add("test_barcode_production_create_tracked_bom", {
     steps: () => [
-        {
-            trigger: 'div[name="o_kanban_record_title"]:contains("Manufacturing")',
-            run: "click",
-        },
-        {
-            trigger: ".o-kanban-button-new",
-            run: "click",
-        },
-        {
-            trigger: ".o_scan_message.o_scan_product",
-        },
+        { trigger: ".o_stock_barcode_main_menu", run: "scan WHMANUF" },
+        { trigger: ".o_scan_message.o_scan_product" },
         {
             trigger: '.o_title:contains("New")',
             run: "scan final_lot",

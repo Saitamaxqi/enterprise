@@ -85,8 +85,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             'product_id': self.component01.id,
             'location_id': self.stock_location.id,
         })
-        url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
-        self.start_tour(url, 'test_barcode_production_create', login='admin', timeout=180)
+        self.start_tour('/odoo/barcode', 'test_barcode_production_create', login='admin')
         mo = self.env['mrp.production'].search([], order='id desc', limit=1)
         self.assertEqual(mo.state, 'done')
         self.assertEqual(mo.qty_produced, 2)
@@ -155,8 +154,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             'location_id': self.stock_location.id,
             'lot_id': lot_id.id
         })
-        url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
-        self.start_tour(url, 'test_barcode_production_create_tracked_bom', login='admin', timeout=180)
+        self.start_tour('/odoo/barcode', 'test_barcode_production_create_tracked_bom', login='admin')
         mo = self.env['mrp.production'].search([], order='id desc', limit=1)
         self.assertEqual(mo.state, 'done')
         self.assertEqual(mo.qty_produced, 3)
