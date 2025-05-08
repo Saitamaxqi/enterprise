@@ -155,6 +155,7 @@ export class BankRecButtonList extends Component {
     reconcileOnReconcileLine() {
         const context = {
             list_view_ref: "account_accountant.view_account_move_line_list_bank_rec_widget",
+            search_view_ref: "account_accountant.view_account_move_line_search_bank_rec_widget",
             ...(this.statementLineData.partner_id
                 ? { search_default_partner_id: this.statementLineData.partner_id[0] }
                 : {}),

@@ -45,6 +45,38 @@
             <field name="context">{'dialog_size': 'medium', 'show_running_balance_latest': True}</field>
         </record>
 
+        <!-- Search view of the reconcile button -->
+        <record id="view_account_move_line_search_bank_rec_widget" model="ir.ui.view">
+            <field name="name">account.move.line.search.bank_rec_widget</field>
+            <field name="model">account.move.line</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"
+                           string="Journal Item"
+                           filter_domain="['|', '|', '|', '|', '|', ('name', 'ilike', self), ('ref', 'ilike', self), ('partner_id', 'ilike', self), ('amount_residual', 'ilike', self), ('amount_residual_currency', 'ilike', self), ('discount_amount_currency', 'ilike', self)]"/>
+                    <field name="invoice_date"/>
+                    <field name="date"/>
+                    <field name="account_id"/>
+                    <field name="partner_id"/>
+                    <field name="journal_id"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="move_id"
+                           string="Journal Entry"
+                           filter_domain="['|', ('move_id.name', 'ilike', self), ('move_id.ref', 'ilike', self)]"/>
+                    <separator/>
+                    <filter name="amount_received" string="Incoming" domain="[('balance', '>', 0.0)]"/>
+                    <filter name="amount_paid" string="Outgoing" domain="[('balance', '&lt;', 0.0)]"/>
+                    <separator/>
+                    <filter name="posted" string="Posted" domain="[('parent_state', '=', 'posted')]"/>
+                    <filter name="draft" string="Draft" domain="[('parent_state', '=', 'draft')]"/>
+                    <separator name="inject_after"/>
+                    <filter name="date" string="Date" date="date"/>
+                    <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
+                </search>
+            </field>
+        </record>
+
         <!-- Search view on aml to be injected inside the form (view_bank_rec_widget_form) -->
         <record id="view_bank_statement_line_search_bank_rec_widget" model="ir.ui.view">
             <field name="name">account.bank.statement.line.search.bank_rec_widget</field>
