@@ -35,6 +35,10 @@ patch(TimesheetGridModel.prototype, {
             }
         }
 
+        if (!validRowFields.length) {
+            return additionalGroups;
+        }
+
         const domain = new Domain([
             ["employee_id", "!=", false],
             ["employee_id.user_id", "in", [false, searchParams.context.uid]],
