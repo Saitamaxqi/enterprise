@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, api, fields, _
+from odoo import Command, _, api, fields, models
 
 
 class AccountMove(models.Model):
@@ -48,6 +48,18 @@ class AccountMove(models.Model):
             move.l10n_br_is_service_transaction = (
                 move.l10n_br_is_avatax and move.l10n_latam_document_type_id == self.env.ref("l10n_br.dt_SE")
             )
+
+    def _get_external_taxes(self):
+        """ Override of account.external.tax.mixin. """
+        for invoice in self.filtered('l10n_br_is_avatax'):
+            # This type of transaction requires installments with a `grossValue` before subtracted taxes. Clear any
+            # already existing taxes to ensure that previous tax calculations haven't altered the down payment lines.
+            if invoice.l10n_br_is_service_transaction and invoice._get_l10n_br_avatax_service_params().get('installments'):
+                invoice.invoice_line_ids.filtered('tax_ids').write({
+                    'tax_ids': [Command.clear()]
+                })
+
+        return super()._get_external_taxes()
 
     def _l10n_br_avatax_check_missing_fields_product(self, lines):
         """account.external.tax.mixin override."""

@@ -563,6 +563,50 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             'amount_tax': 0.0,
         }])
 
+    def test_12_service_invoice_with_installments(self):
+        """Test that service invoices with installments clear tax_ids when using Avalara. It's necessary because Avalara
+        expects installments to be sent without taxes for service invoices."""
+        invoice, response = self._create_invoice_01_and_expected_response()
+        rio_city = self.env.ref("l10n_br.city_br_002")
+
+        invoice.invoice_payment_term_id = self.pay_terms_b.id
+        invoice.l10n_latam_document_type_id = self.env.ref("l10n_br.dt_SE").id
+        invoice.partner_id.city_id = rio_city
+
+        # Mark all products as services and assign service code
+        for line in invoice.invoice_line_ids:
+            line.tax_ids = self.tax_sale_a
+            line.product_id.write({
+                'type': 'service',
+                'l10n_br_property_service_code_origin_id': self.env['l10n_br.service.code'].create({
+                    'code': '12345',
+                    'city_id': rio_city.id,
+                }),
+            })
+
+        # Ensure there's a tax amount
+        self.assertGreater(invoice.amount_tax, 0, "There should be a tax amount on this invoice.")
+
+        with self._capture_request_br(return_value=response) as captured:
+            invoice._get_external_taxes()
+
+        expected_untaxed_terms = invoice.invoice_payment_term_id._compute_terms(
+            invoice.date,
+            invoice.currency_id,
+            invoice.company_id,
+            tax_amount=0,
+            tax_amount_currency=0,
+            sign=1,
+            untaxed_amount=invoice.amount_untaxed,
+            untaxed_amount_currency=invoice.amount_untaxed,
+        )
+
+        self.assertEqual(
+            [installment['grossValue'] for installment in captured.call_args[0][2]['header']['payment']['installment']],
+            [term['company_amount'] for term in expected_untaxed_terms['line_ids']],
+            "Installments should be sent without taxes."
+        )
+
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
 class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
