@@ -141,6 +141,13 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
                     res = query_res_lines[0]
 
                 vat_number, country_code = self._extract_vat_country_code(res.get('partner_vat'), res.get('country_code'), options)
+                purchase_types = self.env['account.move'].get_purchase_types(include_receipts=True)
+                # For vendor bills, we should use the original reference provided by the seller
+                reference = res.get('ref') if res.get('move_type') in purchase_types else res.get('move_name')
+                # For Code B2, "Tax document registration number" is mandatory.
+                # As "ref" can be empty, fall back on move name
+                if not reference and code == 'b2':
+                    reference = res.get('move_name')
 
                 return self._result_dict_control_statement(
                     # Code A1 and B1 are for reverse charges. A4 might include special regime transactions
@@ -148,7 +155,7 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
                     # A2 and A3 may require information on international partners, requiring the country code separately
                     country_code=country_code if code in {'a2', 'a3'} else None,
                     vat_number=vat_number,
-                    journal_entry=res['move_name'],
+                    journal_entry=reference,
                     taxable_supply_date=res['taxable_supply_date'].strftime("%d.%m.%Y"),
                     tax_base_1=res['tax_base_1'],
                     tax_1=res['tax_1'],
@@ -183,9 +190,11 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
                 partner.vat AS partner_vat,
                 country.code AS country_code,
                 account_move_line__move_id.taxable_supply_date AS taxable_supply_date,
-                account_move_line__move_id.name AS move_name
+                account_move_line__move_id.name AS move_name,
+                account_move_line__move_id.move_type AS move_type,
+                account_move_line__move_id.ref AS ref
             """))
-            groupby_clauses.append(SQL('partner.vat, account_move_line__move_id.name, account_move_line__move_id.taxable_supply_date, country.code'))
+            groupby_clauses.append(SQL('partner.vat, account_move_line__move_id.name, account_move_line__move_id.taxable_supply_date, country.code, account_move_line__move_id.move_type, account_move_line__move_id.ref'))
         else:
             search_condition_remaining += ' AND account_move_line__move_id.amount_total <= 10000'
 
