@@ -1008,11 +1008,7 @@
         "50cd1288-ab3f-4ac2-ad27-74a87954b81b": { "chain": "company_id", "type": "many2one" }
       },
       "context": { "chat_icon": true },
-      "domain": [
-        "&",
-        ["departure_reason_id", "!=", false],
-        ["active", "=", false]
-      ],
+      "domain": "[\"&\", \"&\", (\"company_id\", \"in\", allowed_company_ids), (\"departure_reason_id\", \"!=\", False), (\"active\", \"=\", False)]",
       "id": "10",
       "measures": [
         { "id": "__count", "fieldName": "__count" }
@@ -1060,13 +1056,7 @@
         "50cd1288-ab3f-4ac2-ad27-74a87954b81b": { "chain": "company_id", "type": "many2one" }
       },
       "context": { "chat_icon": true },
-      "domain": [
-        [
-          "active",
-          "in",
-          [true, false]
-        ]
-      ],
+      "domain": "[\"&\", \"&\", (\"company_id\", \"in\", allowed_company_ids), (\"active\", \"in\", [True, False])]",
       "id": "21",
       "measures": [
         { "id": "__count", "fieldName": "__count" }
@@ -1088,15 +1078,7 @@
         "50cd1288-ab3f-4ac2-ad27-74a87954b81b": { "chain": "company_id", "type": "many2one" }
       },
       "context": { "chat_icon": true },
-      "domain": [
-        "&",
-        ["departure_date", "!=", false],
-        [
-          "active",
-          "in",
-          [true, false]
-        ]
-      ],
+      "domain": "[\"&\", \"&\", (\"company_id\", \"in\", allowed_company_ids), (\"departure_date\", \"!=\", False), (\"active\", \"in\", [True, False])]",
       "id": "22",
       "measures": [
         { "id": "__count", "fieldName": "__count" }
