@@ -1,4 +1,5 @@
 import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { hover } from "@odoo/hoot-dom";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { mockDate } from "@odoo/hoot-mock";
 import { TaskGanttRenderer } from "@project_enterprise/views/task_gantt/task_gantt_renderer";
@@ -182,4 +183,14 @@ test("Connector dotted/dashed when depended task in closed state.", async () => 
         "10 5"
     );
     expect(".o_gantt_connector .o_connector_stroke").toHaveAttribute("stroke-dasharray", "10 5");
+});
+
+test("Hovering a connector should cause the connected pills to get highlighted in task gantt.", async () => {
+    mockDate("2021-10-10 7:00:00");
+    await mountGanttView(ganttViewParams);
+    expect(SELECTORS.highlightedPill).toHaveCount(0);
+
+    await hover(getConnectorStroke(1));
+
+    expect(SELECTORS.highlightedPill).toHaveCount(2);
 });

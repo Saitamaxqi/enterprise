@@ -73,6 +73,7 @@ export class GanttConnector extends Component {
             },
         },
         onRemoveButtonClick: { type: Function, optional: true },
+        onConnectorHover: { type: Function },
     };
     static defaultProps = {
         highlighted: false,
@@ -279,7 +280,11 @@ export class GanttConnector extends Component {
 
     onWillRender() {
         const key = this.highlighted ? "highlightedColor" : "color";
-        this.style.stroke.color = COLORS[this.alert || "default"][key];
         this.style.outlineStroke.color = COLORS.outline[key];
+        if (this.props.onConnectorHover() && this.highlighted) {
+            this.style.stroke.color = 'rgba(52, 152, 219,1)';
+        } else {
+            this.style.stroke.color = COLORS[this.alert || "default"][key];
+        }
     }
 }

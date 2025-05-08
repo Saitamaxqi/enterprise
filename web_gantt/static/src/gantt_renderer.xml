@@ -36,6 +36,7 @@
                         <GanttConnector
                             reactive="connector"
                             onRemoveButtonClick="() => this.onRemoveButtonClick(connector.id)"
+                            onConnectorHover="() => this.onConnectorHover()"
                         />
                     </t>
                 </t>

@@ -271,6 +271,25 @@ export class TaskGanttRenderer extends GanttRenderer {
         return false;
     }
 
+    highlightPill(pillId, highlighted) {
+        if (!this.connectorDragState.dragging) {
+            return super.highlightPill(pillId, highlighted);
+        }
+        const pill = this.pills[pillId];
+        if (!pill) {
+            return;
+        }
+        const { record } = pill;
+        if (!this.shouldRenderRecordConnectors(record)) {
+            return super.highlightPill(pillId, false);
+        }
+        return super.highlightPill(pillId, highlighted);
+    }
+
+    onConnectorHover() {
+        return !this.connectorDragState.dragging;
+    }
+
     onPlan(rowId, columnStart, columnStop) {
         let { start, stop } = this.getColumnStartStop(columnStart, columnStop);
         ({ start, stop } = this.normalizeTimeRange(start, stop));
@@ -309,6 +328,16 @@ export class TaskGanttRenderer extends GanttRenderer {
 
     onMilestoneMouseLeave() {
         this.milestonePopover.close();
+    }
+
+    /*
+     * @overwrite
+     */
+    onRemoveButtonClick(connectorId) {
+        const { sourcePillId, targetPillId } = this.mappingConnectorToPills[connectorId];
+        this.highlightPill(sourcePillId, false);
+        this.highlightPill(targetPillId, false);
+        super.onRemoveButtonClick(connectorId);
     }
 
     //--------------------------------------------------------------------------

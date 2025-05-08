@@ -58,6 +58,7 @@ function makeClassSelector(key) {
 export const CLASSES = {
     draggable: "o_draggable",
     group: "o_gantt_group",
+    highlightedPill: "highlight",
     resizable: "o_resizable",
 
     // Connectors
@@ -78,6 +79,7 @@ export const SELECTORS = {
     group: makeClassSelector(CLASSES.group),
     groupHeader: ".o_gantt_header_title",
     columnHeader: ".o_gantt_header_cell",
+    highlightedPill: makeClassSelector(CLASSES.highlightedPill),
     hoverable: ".o_gantt_hoverable",
     noContentHelper: ".o_view_nocontent",
     pill: ".o_gantt_pill",

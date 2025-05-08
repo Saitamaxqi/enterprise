@@ -484,6 +484,15 @@ test("Connectors are displayed behind pills, except on hover.", async () => {
     expect(getZIndex(getPillWrapper("Task 2"))).toBeLessThan(getZIndex(getConnector(1)));
 });
 
+test("Hovering a connector should not cause the connected pills to get highlighted.", async () => {
+    await mountGanttView(ganttViewParams);
+    expect(SELECTORS.highlightedPill).toHaveCount(0);
+
+    await hover(getConnectorStroke(1));
+
+    expect(SELECTORS.highlightedPill).toHaveCount(0);
+});
+
 test("Create a connector from the gantt view.", async () => {
     onRpc("write", ({ args, method }) => expect.step([method, args]));
     await mountGanttView(ganttViewParams);

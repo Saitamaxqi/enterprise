@@ -414,6 +414,10 @@
 			.o_gantt_pill.o_gantt_color_#{$index - 1} .o_gantt_progress {
 				background-color: darken($color, 30%);
 			}
+			&.highlight .o_gantt_pill {
+			    box-sizing: border-box;
+			    box-shadow: inset 0px 0px 0px 3px rgba(52, 152, 219,1);
+			}
 		}
 	}
 

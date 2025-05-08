@@ -2181,6 +2181,21 @@ export class GanttRenderer extends Component {
         return totalRow;
     }
 
+    highlightPill(pillId, highlighted) {
+        const pill = this.pills[pillId];
+        if (!pill) {
+            return;
+        }
+        const pillWrapper = this.getPillWrapperEl(pillId);
+        if (pillWrapper) {
+            pillWrapper.classList.toggle("highlight", highlighted);
+            pillWrapper.classList.toggle(
+                "o_connector_creator_highlight",
+                highlighted && this.connectorDragState.dragging
+            );
+        }
+    }
+
     initializeConnectors() {
         for (const connectorId in this.connectors) {
             this.deleteConnector(connectorId);
@@ -2623,6 +2638,13 @@ export class GanttRenderer extends Component {
         return this.shouldRenderConnectors();
     }
 
+    /*
+    * This function is made to be overwrite in other module to enable the highlight feature.
+    */
+    onConnectorHover() {
+        return false;
+    }
+
     /**
      * @param {ConnectorId | null} connectorId
      * @param {boolean} highlighted
@@ -2635,6 +2657,13 @@ export class GanttRenderer extends Component {
 
         connector.highlighted = highlighted;
         connector.displayButtons = highlighted;
+
+        if (this.onConnectorHover()) {
+            const { sourcePillId, targetPillId } = this.mappingConnectorToPills[connectorId];
+
+            this.highlightPill(sourcePillId, highlighted);
+            this.highlightPill(targetPillId, highlighted);
+        }
     }
 
     computeUnavailabilityPeriods() {
