@@ -390,6 +390,115 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'balance': -600.0},
         ], reconciled_amls=[])
 
+    def test_widget_available_for_line(self):
+        """
+            Tests what the reconcileModelPerStatementLineId (js side) will receive
+            A reco model is valid for a statement line if the value to filter is valid on the statement line or if
+            it is not specified on the model
+            Used to know which reconcile model to show in the list on the statement line
+        """
+        self.env['account.reconcile.model'].search([]).unlink()  # Don't want it to appear in suggestion
+        bank_line_1, bank_line_2, bank_line_3 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'Line 1',
+                'amount': -121,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'Line 2',
+                'partner_id': self.partner_1.id,
+                'amount': -121,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'xxxagrolaitxxfeesxxx',
+                'partner_id': self.partner_1.id,
+                'amount': 500,
+            },
+        ])
+
+        model_everywhere = self.env['account.reconcile.model'].create(
+            {
+                'name': "Shown everywhere",
+                'line_ids': [
+                    Command.create({'account_id': self.current_assets_account.id}),
+                    Command.create({'account_id': self.account_pay.id}),
+                ],
+            },
+        )
+        self.env['account.reconcile.model'].create(
+            {
+                'name': "Never shown because no Counterpart wit account",
+                'line_ids': [Command.create({'partner_id': self.partner_1.id})],
+            },
+        )
+        model_partner_a = self.env['account.reconcile.model'].create(
+            {
+                'name': "Needs partner 1",
+                'match_partner_ids': self.partner_1.ids,
+                'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+            },
+        )
+        model_amount = self.env['account.reconcile.model'].create(
+            {
+                'name': "Needs amount",
+                'match_amount': 'greater',
+                'match_amount_min': 200,
+                'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+            },
+        )
+        model_partner_a_amount = self.env['account.reconcile.model'].create(
+            {
+                'name': "Needs amount and partner 1",
+                'match_amount': 'greater',
+                'match_amount_min': 200,
+                'match_partner_ids': self.partner_1.ids,
+                'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+            },
+        )
+        model_label = self.env['account.reconcile.model'].create(
+            {
+                'name': "Needs label",
+                'match_label': 'contains',
+                'match_label_param': 'fees',
+                'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+            },
+        )
+
+        models_per_line = self.env['account.reconcile.model'].with_context(lang='en_US').get_available_reconcile_model_per_statement_line(
+            (bank_line_1 + bank_line_2 + bank_line_3).ids
+        )
+        self.assertEqual(
+            models_per_line[bank_line_1.id],
+            [
+                {'id': model_everywhere.id, 'display_name': "Shown everywhere"},
+            ],
+            "Does not match the amounts or partners"
+        )
+        self.assertEqual(
+            models_per_line[bank_line_2.id],
+            [
+                {'id': model_everywhere.id, 'display_name': "Shown everywhere"},
+                {'id': model_partner_a.id, 'display_name': "Needs partner 1"},
+            ],
+            "Only match the partner"
+        )
+        self.assertEqual(
+            models_per_line[bank_line_3.id],
+            [
+                {'id': model_everywhere.id, 'display_name': "Shown everywhere"},
+                {'id': model_partner_a.id, 'display_name': "Needs partner 1"},
+                {'id': model_amount.id, 'display_name': 'Needs amount'},
+                {'id': model_partner_a_amount.id, 'display_name': 'Needs amount and partner 1'},
+                {'id': model_label.id, 'display_name': 'Needs label'},
+            ],
+            "Match the partner, the amount and the label"
+        )
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

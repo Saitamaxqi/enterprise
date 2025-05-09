@@ -1,4 +1,4 @@
-from odoo import models, _
+from odoo import api, models, _
 from odoo.tools import SQL
 
 
@@ -28,6 +28,85 @@ class AccountReconcileModel(models.Model):
             residual_amount_currency -= amount_currency
 
         return vals_list
+
+    @api.model
+    def get_available_reconcile_model_per_statement_line(self, statement_line_ids):
+        self.check_access('read')
+        self.env['account.reconcile.model'].flush_model()
+        self.env['account.bank.statement.line'].flush_model()
+        self._cr.execute(SQL(
+            """
+            WITH matching_journal_ids AS (
+                    SELECT account_reconcile_model_id,
+                           ARRAY_AGG(account_journal_id) AS ids
+                      FROM account_journal_account_reconcile_model_rel
+                  GROUP BY account_reconcile_model_id
+                 ),
+                 matching_partner_ids AS (
+                    SELECT account_reconcile_model_id,
+                           ARRAY_AGG(res_partner_id) AS ids
+                      FROM account_reconcile_model_res_partner_rel
+                  GROUP BY account_reconcile_model_id
+                 )
+
+          SELECT st_line.id AS st_line_id,
+                 array_agg(reco_model.id ORDER BY reco_model.sequence ASC, reco_model.id ASC) AS reco_model_ids,
+                 array_agg(reco_model.name ORDER BY reco_model.sequence ASC, reco_model.id ASC) AS reco_model_names
+            FROM account_bank_statement_line st_line
+       LEFT JOIN LATERAL (
+                   SELECT DISTINCT reco_model.id,
+                          reco_model.sequence,
+                          reco_model.name -> %(lang)s as name
+                     FROM account_reconcile_model reco_model
+                LEFT JOIN matching_journal_ids ON reco_model.id = matching_journal_ids.account_reconcile_model_id
+                LEFT JOIN matching_partner_ids ON reco_model.id = matching_partner_ids.account_reconcile_model_id
+                LEFT JOIN account_reconcile_model_line reco_model_line ON reco_model_line.model_id = reco_model.id
+                    WHERE (matching_journal_ids.ids IS NULL OR st_line.journal_id = ANY(matching_journal_ids.ids))
+                      AND (matching_partner_ids.ids IS NULL OR st_line.partner_id = ANY(matching_partner_ids.ids))
+                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR ABS(st_line.amount) > reco_model.match_amount_min)
+                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR ABS(st_line.amount) < reco_model.match_amount_max)
+                      AND (
+                              reco_model.match_label IS NULL
+                              OR (
+                                  reco_model.match_label = 'contains'
+                                   AND (
+                                      st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                   )
+                              ) OR (
+                                  reco_model.match_label = 'not_contains'
+                                  AND NOT (
+                                      st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                  )
+                              ) OR (
+                                  reco_model.match_label = 'match_regex'
+                                  AND (
+                                      st_line.payment_ref ~ reco_model.match_label_param
+                                      OR st_line.transaction_details::TEXT ~ reco_model.match_label_param
+                                  )
+                              )
+                          )
+                      AND reco_model.company_id = st_line.company_id
+                      AND reco_model.trigger = 'manual'
+                      AND reco_model_line.account_id IS NOT NULL
+                 ) AS reco_model ON TRUE
+           WHERE st_line.id IN %(statement_lines)s
+           GROUP BY st_line.id
+            """,
+            lang=self.env.lang,
+            statement_lines=tuple(statement_line_ids),
+        ))
+        query_result = self._cr.fetchall()
+        return {
+            st_line_id: [
+                {'id': model_id, 'display_name': model_name}
+                for (model_id, model_name)
+                in zip(model_ids, model_names)
+            ]
+            for st_line_id, model_ids, model_names
+            in query_result
+        }
 
     def _apply_reconcile_models(self, statement_lines):
         self.env['account.reconcile.model'].flush_model()

@@ -37,7 +37,6 @@
                 readonly="props.readonly"
                 record="groupOrRecord.record"
                 selectionAvailable="state.selectionAvailable"
-                reconcileModels="globalState.reconcileModels"
             />
         </xpath>
         <xpath expr="//t[@t-else='']/BankRecStatementLine" position="before">

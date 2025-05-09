@@ -39,7 +39,6 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
                 this.env.model.config.context.default_journal_id ||
                 this.env.model.config.context.active_id,
             totalJournalAmount: "",
-            reconcileModels: [],
         });
         this.env.bus.addEventListener("createRecordQuickCreate", () => {
             this.globalState.quickCreate.isVisible = true;
@@ -50,7 +49,9 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
                 this.env.model.root.records
             );
-            await this.getReconcileModels();
+            await this.bankReconciliation.computeAvailableReconcileModels(
+                this.env.model.root.records
+            );
         });
     }
 
@@ -64,8 +65,9 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
     /**
         Override.
     **/
-    async validateQuickCreate(_recordId, mode) {
+    async validateQuickCreate(recordId, mode) {
         // When adding a record, some information needs to be recomputed
+        await this.bankReconciliation.updateAvailableReconcileModels(recordId);
         await this.env.model.load();
         await this.getJournalTotalAmount();
 
@@ -79,31 +81,6 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             this.globalState.journalId,
         ]);
         this.globalState.totalJournalAmount = value.balance_amount;
-    }
-
-    async getReconcileModels() {
-        const result = await this.orm.webSearchRead(
-            "account.reconcile.model",
-            [
-                "|",
-                ["match_journal_ids", "=", false],
-                ["match_journal_ids", "=", this.globalState.journalId],
-                ["trigger", "=", "manual"],
-                ["line_ids.account_id", "!=", false],
-                [
-                    "company_id",
-                    "child_of",
-                    this.env.model.root.records.map((record) => record.data.company_id.id),
-                ],
-            ],
-            {
-                specification: {
-                    id: {},
-                    display_name: {},
-                },
-            }
-        );
-        this.globalState.reconcileModels = result.records;
     }
 
     // -----------------------------------------------------------------------------

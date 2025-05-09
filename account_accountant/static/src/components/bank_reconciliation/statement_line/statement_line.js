@@ -14,7 +14,7 @@ export class BankRecStatementLine extends KanbanRecord {
         BankRecButtonList,
         DropdownItem,
     };
-    static props = [...KanbanRecord.props, "reconcileModels"];
+    static props = [...KanbanRecord.props];
 
     setup() {
         super.setup();
@@ -148,7 +148,8 @@ export class BankRecStatementLine extends KanbanRecord {
             reconcileLineCount:
                 this.bankReconciliation.reconcileCountPerPartnerId[this.recordData.partner_id.id] ??
                 null,
-            reconcileModels: this.props.reconcileModels,
+            reconcileModels:
+                this.bankReconciliation.reconcileModelPerStatementLineId[this.recordData.id] ?? [],
             preSelectedReconciliationModel: this.accountMoveLines
                 .filter((line) => line.reconcile_model_id.id)
                 .map((line) => line.reconcile_model_id)?.[0],

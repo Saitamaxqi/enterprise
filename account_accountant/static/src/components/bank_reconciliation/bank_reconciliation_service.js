@@ -13,6 +13,7 @@ class BankReconciliationService {
             statementLine: null,
         });
         this.reconcileCountPerPartnerId = reactive({});
+        this.reconcileModelPerStatementLineId = reactive({});
     }
 
     toggleChatter() {
@@ -62,6 +63,26 @@ class BankReconciliationService {
         result.groups.forEach((group) => {
             this.reconcileCountPerPartnerId[group.partner_id[0]] = group["id:count"];
         });
+    }
+
+    async computeAvailableReconcileModels(records) {
+        this.reconcileModelPerStatementLineId =
+            Object.keys(records).length === 0
+                ? {}
+                : await this.orm.call(
+                      "account.reconcile.model",
+                      "get_available_reconcile_model_per_statement_line",
+                      [records.map((record) => record.data.id)]
+                  );
+    }
+
+    async updateAvailableReconcileModels(recordId) {
+        const result = await this.orm.call(
+            "account.reconcile.model",
+            "get_available_reconcile_model_per_statement_line",
+            [[recordId]]
+        );
+        this.reconcileModelPerStatementLineId[recordId] = result[recordId];
     }
 
     async reloadRecords(records) {
