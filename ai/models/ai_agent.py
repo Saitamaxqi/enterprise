@@ -326,11 +326,7 @@ class AIAgent(models.Model):
                 agent.partner_id.id
             ])
 
-            response = self._generate_response(
-                prompt=prompt,
-                ai_agent=agent,
-                discuss_channel_id=channel,
-            )
+            response = agent._generate_response(prompt=prompt, discuss_channel_id=channel)
             for message in response or []:
                 formatted_message = message
                 if markdown:
@@ -370,13 +366,14 @@ class AIAgent(models.Model):
             if channel and channel.is_member:
                 channel.sudo().unlink()
 
-    def _generate_response(self, prompt, ai_agent, discuss_channel_id):
-        response_temperature = TEMPERATURE_MAP[ai_agent.response_style]
+    def _generate_response(self, prompt, discuss_channel_id):
+        self.ensure_one()
+        response_temperature = TEMPERATURE_MAP[self.response_style]
         chat_history = self._retrieve_chat_history(discuss_channel_id)
-        messages = self._prepare_chat_messages(prompt=prompt, ai_agent=ai_agent)
+        messages = self._prepare_chat_messages(prompt=prompt)
 
         full_conversation = chat_history + messages
-        functions_descriptions = self._generate_functions_descriptions(ai_agent.topic_ids)
+        functions_descriptions = self._generate_functions_descriptions()
         provider = next((provider for provider, models in PROVIDERS_MODELS.items() if self.llm_model in models), None)
         if not provider:
             raise UserError(_("No provider found for the selected model"))
@@ -402,7 +399,7 @@ class AIAgent(models.Model):
                     response_messages.append(api_response['content'])
                 # Check if the response contains a tool to call
                 if api_response.get('tool_calls'):
-                    messages = self._use_tools(tools_to_use=api_response['tool_calls'], topic_ids=ai_agent.topic_ids)
+                    messages = self._use_tools(tools_to_use=api_response['tool_calls'])
                     full_conversation.extend(messages)
                     api_response = api_service.get_completion(
                         model=self.llm_model,
@@ -423,29 +420,30 @@ class AIAgent(models.Model):
         chat_history.reverse()
         return chat_history
 
-    def _prepare_chat_messages(self, prompt, ai_agent):
+    def _prepare_chat_messages(self, prompt):
+        self.ensure_one()
         today_date = fields.Date.context_today(self)
-        system_content = ai_agent.system_prompt or "You are a RAG assistant."
+        system_content = self.system_prompt or "You are a RAG assistant."
         system_content += f"\n\nToday's date to be used: {today_date}"
 
-        if ai_agent.topic_ids:
+        if self.topic_ids:
             system_content += PREPROMPTS['tools']
 
         messages = [{'role': 'system', 'content': system_content}]
 
-        if ai_agent.topic_ids:
+        if self.topic_ids:
             topic_instructions = "\n\n".join(
-                [topic.instructions for topic in ai_agent.topic_ids if topic.instructions])
+                [topic.instructions for topic in self.topic_ids if topic.instructions])
             if topic_instructions:
                 messages.append(
                     {'role': 'system', 'content': f"Additional topic instructions:\n{topic_instructions}."})
 
         context = ""
-        all_attachments = ai_agent.attachment_ids + ai_agent.url_attachment_ids
+        all_attachments = self.attachment_ids + self.url_attachment_ids
         if all_attachments:
             response = LLMApiService(env=self.env, provider='openai').get_embedding(input=prompt)
             prompt_embedding = response['data'][0]['embedding']
-            similar_embeddings = ai_agent.env['ai.embedding']._get_similar_chunks(
+            similar_embeddings = self.env['ai.embedding']._get_similar_chunks(
                 query_embedding=prompt_embedding,
                 attachment_ids=all_attachments.ids,
                 top_n=5
@@ -458,7 +456,7 @@ class AIAgent(models.Model):
                         referenced_attachments.add(embedding.attachment_id.name)
                 context += f"##References:\n{', '.join(referenced_attachments)}"
 
-        if ai_agent.restrict_to_sources:
+        if self.restrict_to_sources:
             messages.append({
                 'role': 'system',
                 'content': PREPROMPTS['restrict_to_sources']
@@ -471,9 +469,9 @@ class AIAgent(models.Model):
         messages.append({'role': 'user', 'content': prompt})
         return messages
 
-    def _generate_functions_descriptions(self, topic_ids):
+    def _generate_functions_descriptions(self):
         functions_descriptions = []
-        for topic in topic_ids:
+        for topic in self.topic_ids:
             for ai_tool in topic.tool_ids:
                 ai_tool_input_schema = json.loads(ai_tool.input_schema)
                 functions_descriptions.append({
@@ -502,9 +500,10 @@ class AIAgent(models.Model):
                 properties[property_name][value] = ai_tool_properties[property_name][value]
         return properties
 
-    def _use_tools(self, tools_to_use, topic_ids):
+    def _use_tools(self, tools_to_use):
+        self.ensure_one()
         tool_map = {}
-        for ai_tool in topic_ids.tool_ids:
+        for ai_tool in self.topic_ids.tool_ids:
             tool_map[ai_tool.formatted_name] = ai_tool
 
         tools_usage_results = []
@@ -523,7 +522,7 @@ class AIAgent(models.Model):
     @api.depends("attachment_ids", "url_attachment_ids")
     def _compute_attachment_processing_percentage(self):
         for record in self:
-            all_attachments = self.attachment_ids + self.url_attachment_ids
+            all_attachments = record.attachment_ids + record.url_attachment_ids
             n_docs = len(all_attachments)
             if not n_docs:
                 record.attachment_processing_percentage = 100
