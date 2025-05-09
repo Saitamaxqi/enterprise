@@ -996,3 +996,15 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         xml_utils._reference_digests(extensions.find(".//ds:SignedInfo", {'ds': 'http://www.w3.org/2000/09/xmldsig#'}))
         xml_utils._fill_signature(extensions.find(".//ds:Signature", {'ds': 'http://www.w3.org/2000/09/xmldsig#'}), cert_sudo)
         return etree.tostring(root, encoding='UTF-8'), errors
+
+    # -------------------------------------------------------------------------
+    # IMPORT
+    # -------------------------------------------------------------------------
+
+    def _import_fill_invoice(self, invoice, tree, qty_factor):
+        # OVERRIDE account.edi.xml.ubl_20
+        logs = super()._import_fill_invoice(invoice, tree, qty_factor)
+        cufe = self._find_value("./cbc:UUID[@schemeName='CUFE-SHA384']", tree)
+        if cufe:
+            invoice.l10n_co_edi_cufe_cude_ref = cufe
+        return logs

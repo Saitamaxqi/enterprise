@@ -157,8 +157,8 @@ class AccountMove(models.Model):
     def _get_ubl_cii_builder_from_xml_tree(self, tree):
         # EXTENDS account_edi_ubl_cii
         ubl_profile = tree.findtext('{*}ProfileID')
-        if ubl_profile and ubl_profile.startswith('DIAN 2.1:'):
-            return self.env['account.edi.xml.ubl_21']
+        if ubl_profile and ubl_profile.startswith('DIAN 2.1'):
+            return self.env['account.edi.xml.ubl_dian']
         return super()._get_ubl_cii_builder_from_xml_tree(tree)
 
     @api.model

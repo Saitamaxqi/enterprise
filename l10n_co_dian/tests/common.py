@@ -5,6 +5,7 @@ import requests
 from base64 import b64encode
 from contextlib import contextmanager
 from datetime import datetime, date
+from os.path import join as opj
 from unittest.mock import Mock, patch
 import uuid
 
@@ -174,6 +175,35 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
         with file_open(path, *args) as f:
             content = f.read()
         return content
+
+    def _update_invoice_from_file(self, module_name, subfolder, filename, invoice):
+        """ Create an attachment from a file and post it on the invoice
+        """
+        file_path = opj(module_name, subfolder, filename)
+        file = self._read_file(file_path, 'rb')
+        attachment = self.env['ir.attachment'].create({
+            'name': filename,
+            'datas': b64encode(file),
+            'res_id': invoice.id,
+            'res_model': 'account.move',
+        })
+        invoice.message_post(attachment_ids=[attachment.id])
+
+    def _assert_imported_invoice_from_file(self, subfolder, filename, invoice_vals):
+        """ Create an empty account.move, update the xml file, and then check the invoice values. """
+        journal = self.company_data['default_journal_purchase']
+        invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'journal_id': journal.id})
+        self._update_invoice_from_file(
+            module_name='l10n_co_dian',
+            subfolder=subfolder,
+            filename=filename,
+            invoice=invoice,
+        )
+        invoice_vals = invoice_vals.copy()
+        invoice_lines = invoice_vals.pop('invoice_lines', False)
+        self.assertRecordValues(invoice, [invoice_vals])
+        if invoice_lines:
+            self.assertRecordValues(invoice.invoice_line_ids, invoice_lines)
 
     @contextmanager
     def _mock_uuid_generation(self):

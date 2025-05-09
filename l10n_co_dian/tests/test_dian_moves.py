@@ -359,6 +359,22 @@ class TestDianMoves(TestCoDianCommon):
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(credit_note)[0]
         self._assert_document_dian(xml, 'l10n_co_dian/tests/attachments/support_document_credit_note.xml')
 
+    def test_dian_import_vendor_xml(self):
+        kwargs = {
+            'subfolder': 'tests/attachments',
+            'invoice_vals': {
+                'currency_id': self.currency.id,
+                'amount_total': 224.00,
+                'amount_tax': 24.00,
+                'l10n_co_edi_cufe_cude_ref': '8007424c5ee187a2aa3bb99fdbfaee9354c0b2a355ce9654fcd97eae289ad827e19460b71e4390b3e9b1cc6c293fb247',
+                'invoice_lines': [
+                    {'price_subtotal': 100.00, 'price_unit': 100.00},
+                    {'price_subtotal': 100.00, 'price_unit': 100.00},
+                ],
+            },
+        }
+        self._assert_imported_invoice_from_file(filename='import_attached_document.xml', **kwargs)
+
     def test_dian_invoicing_access_rights(self):
         self.user.group_ids = [Command.unlink(self.env.ref('base.group_system').id)]
         invoice = self._create_move()
