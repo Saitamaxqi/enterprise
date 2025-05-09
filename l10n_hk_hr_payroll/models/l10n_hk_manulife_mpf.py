@@ -123,10 +123,10 @@ class L10n_HkManulifeMpf(models.Model):
                 for code in line_codes}
 
             employee_data = {
-                'member_acount': line.employee_id.l10n_hk_mpf_manulife_account or '',
-                'hkid': line.employee_id.identification_id or line.employee_id.passport_id or '',
-                'surname': line.employee_id.l10n_hk_surname or '',
-                'given_name': line.employee_id.l10n_hk_given_name or '',
+                'member_acount': employee.l10n_hk_mpf_manulife_account or '',
+                'hkid': employee.identification_id or employee.passport_id or '',
+                'surname': employee.l10n_hk_surname or '',
+                'given_name': employee.l10n_hk_given_name or '',
                 'period_start': self.period.strftime('%m/%d/%Y'),
                 'period_end': (self.period + relativedelta(months=1, days=-1)).strftime('%m/%d/%Y'),
                 'relevant_income': mapped_total['MPF_GROSS'],
@@ -141,7 +141,7 @@ class L10n_HkManulifeMpf(models.Model):
             }
             if not employee_data['member_acount'] and employee_data['hkid']:
                 employee_data['surname'] = ''
-                employee_data['given_name'] = ' '.join([line.employee_id.l10n_hk_surname, line.employee_id.l10n_hk_given_name])
+                employee_data['given_name'] = employee.legal_name
             employees_data.append(employee_data)
 
         total_data = {
