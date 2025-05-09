@@ -230,6 +230,9 @@ export class BankRecButtonList extends Component {
             reconciliationModelId,
             this.statementLineData.id,
         ]);
+        await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+            this.env.model.root.records
+        );
         this.props.statementLine.load();
         this.bankReconciliation.reloadChatter();
     }

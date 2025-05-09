@@ -45,13 +45,6 @@ class BankReconciliationService {
             "account.move.line",
             [
                 ["parent_state", "in", ["draft", "posted"]],
-                [
-                    "partner_id",
-                    "in",
-                    records
-                        .filter((record) => !!record.data.partner_id.id)
-                        .map((record) => record.data.partner_id.id),
-                ],
                 ["company_id", "child_of", records.map((record) => record.data.company_id.id)],
                 ["account_id.reconcile", "=", true],
                 ["display_type", "not in", ["line_section", "line_note"]],
@@ -65,6 +58,7 @@ class BankReconciliationService {
             ["id:count"]
         );
 
+        this.reconcileCountPerPartnerId = {};
         result.groups.forEach((group) => {
             this.reconcileCountPerPartnerId[group.partner_id[0]] = group["id:count"];
         });

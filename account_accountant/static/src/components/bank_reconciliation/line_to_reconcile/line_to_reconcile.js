@@ -64,6 +64,14 @@ export class BankRecLineToReconcile extends Component {
             this.statementLineData.id,
             this.lineData.id,
         ]);
+        if (this.lineData.reconciled_lines_ids.records.length) {
+            // Only update the line count per partner if we delete
+            // a line which is reconciled to another move line
+            // We don't use await here as it could be reloaded asynchronously.
+            this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+                this.env.model.root.records
+            );
+        }
         this.props.statementLine.load();
         this.bankReconciliation.reloadChatter();
     }
