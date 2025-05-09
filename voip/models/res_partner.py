@@ -33,17 +33,32 @@ from odoo.addons.mail.tools.discuss import Store
 T9_MAPPING = {
     letter: digit
     for letters, digit in [
-        ("ABC", "2"),
-        ("DEF", "3"),
-        ("GHI", "4"),
-        ("JKL", "5"),
-        ("MNO", "6"),
-        ("PQRS", "7"),
-        ("TUV", "8"),
-        ("WXYZ", "9"),
+        ("abc", "2"),
+        ("def", "3"),
+        ("ghi", "4"),
+        ("jkl", "5"),
+        ("mno", "6"),
+        ("pqrs", "7"),
+        ("tuv", "8"),
+        ("wxyz", "9"),
     ]
     for letter in letters
 }
+
+LIGATURES = {
+    "Æ": "Ae",
+    "æ": "ae",
+    "Œ": "Oe",
+    "œ": "oe",
+    "Ĳ": "IJ",
+    "ĳ": "ij",
+}
+
+
+def expand_ligatures(text):
+    for ligature, replacement in LIGATURES.items():
+        text = text.replace(ligature, replacement)
+    return text
 
 
 def unaccent(text):
@@ -81,7 +96,7 @@ class ResPartner(models.Model):
             if not partner.name:
                 partner.t9_name = False
                 continue
-            normalized_name = unaccent(partner.name).upper()
+            normalized_name = expand_ligatures(unaccent(partner.name)).casefold()
             partner.t9_name = "".join(encode(letter) for letter in normalized_name)
             # Add a space at the beginning so you can search for matches at the
             # beginning of each word using a pattern like '% 234%'.
