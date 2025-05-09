@@ -6567,6 +6567,14 @@ msgid "Please Provide the validity date of the last LPP Withdrawal"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_employee_yearly_values.py:0
+msgid ""
+"Please define a Source-Tax institution with a valid DPI Number for Canton "
+"%(canton)s"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.view_l10n_ch_swissdec_job_result_form
 msgid "Poll Result"
 msgstr ""

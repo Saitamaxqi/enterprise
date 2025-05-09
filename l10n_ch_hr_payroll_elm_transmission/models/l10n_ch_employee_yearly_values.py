@@ -5,6 +5,7 @@ from collections import defaultdict
 from odoo import _, api, fields, models, Command
 from odoo.tools.misc import format_date, file_path
 from ..api.swissdec_declarations import SwissdecDeclaration, SwissdecInstitution
+from odoo.exceptions import ValidationError
 
 from dateutil.relativedelta import relativedelta
 import uuid
@@ -272,6 +273,11 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
             if any(current_is_log_lines.mapped('source_tax_canton')):
                 all_cantons = current_is_log_lines.filtered(lambda l: l.source_tax_canton).mapped('source_tax_canton')
                 corrections_present = any(current_is_log_lines.mapped('is_correction'))
+
+                # Ensure all cantons have a corresponding QST institution
+                for canton in set(all_cantons):
+                    if canton and not mapped_qst_institutions.get(canton):
+                        raise ValidationError(_('Please define a Source-Tax institution with a valid DPI Number for Canton %(canton)s', canton=canton))
 
                 # 1) Normal Classic Case, no corrections, no canton change only one TaxAtSource Salary
                 if not corrections_present and len(set(all_cantons)) == 1:
