@@ -2,7 +2,8 @@
 
 from .sign_request_common import SignRequestCommon
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
+from odoo.tests.common import new_test_user
 
 
 class TestAccessRight(SignRequestCommon):
@@ -31,3 +32,33 @@ class TestAccessRight(SignRequestCommon):
             user_1_template.with_user(self.user_2).write({'name': 'My New Name!'})
         with self.assertRaises(AccessError):
             user_1_document.with_user(self.user_2).write({'name': 'My New Name!'})
+
+    def test_user_validation_sign_request(self):
+        """ Ensure that user cannot link a sign request item with an existing sign request. """
+        user_A = new_test_user(self.env, login="user_A", groups='sign.group_sign_user')
+        partner_A = user_A.partner_id
+        sign_request_A = self.create_sign_request_1_role(partner_A, partner_A)
+
+        user_B = new_test_user(self.env, login="user_B", groups='sign.group_sign_user')
+        partner_B = user_B.partner_id
+        sign_request_B = self.create_sign_request_1_role(partner_B, partner_B)
+
+        self.assertEqual(self.env['sign.request'].with_user(user_A).search([]), sign_request_A)
+        self.assertEqual(self.env['sign.request'].with_user(user_B).search([]), sign_request_B)
+
+        # If we "try to move" a ``sign.request.item`` on an existing ``sign.request`` a validation
+        # error must be triggered because we must have the same number of ``sign.request.item`` on the
+        # ``sign.request`` and on the ``sign.template`` linked to the ``sign.request``.
+        # Thanks to the constraint ``_check_signers_validity``.
+
+        # Test create validation
+        with self.assertRaises(ValidationError):
+            self.env['sign.request.item'].with_user(user_B).create({
+                    'partner_id': partner_B.id,
+                    'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                    'sign_request_id': sign_request_A.id
+            })
+
+        # Test write validation
+        with self.assertRaises(ValidationError):
+            sign_request_B.request_item_ids.with_user(user_B).sign_request_id = sign_request_A

@@ -66,7 +66,7 @@ class SignRequestItem(models.Model):
         if any(sri.partner_id and not sri.signer_email for sri in self):
             raise ValidationError(_("All signers must have valid email addresses"))
 
-    @api.constrains('partner_id', 'role_id')
+    @api.constrains('sign_request_id', 'partner_id', 'role_id')
     def _check_signers_validity(self):
         # this check allows one signer to be False, which is used to "share" a sign template
         self.sign_request_id._check_signers_roles_validity()
