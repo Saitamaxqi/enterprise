@@ -548,7 +548,7 @@ class HelpdeskTicket(models.Model):
                 suggested_name = tools.parse_contact_from_email(partner_name)[0] or tools.parse_contact_from_email(partner_email)[0]
                 vals['partner_id'] = self.env['mail.thread']._partner_find_from_emails_single(
                     [partner_email], additional_values={tools.mail.email_normalize(partner_email) or partner_email: {'name': suggested_name, 'company_id': company_id}},
-                    filter_found=lambda partner: partner.company_id.id == company_id,
+                    filter_found=lambda partner: not partner.company_id or partner.company_id.id == company_id,
                 ).id
 
         # determine partner email for ticket with partner but no email given
