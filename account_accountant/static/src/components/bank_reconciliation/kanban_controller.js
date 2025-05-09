@@ -107,6 +107,8 @@ export class BankRecKanbanController extends KanbanController {
                 move_id: { name: "move_id", type: "many2one" },
                 balance: { name: "balance", type: "monetary" },
                 amount_currency: { name: "amount_currency", type: "monetary" },
+                amount_residual: { name: "amount_residual", type: "monetary" },
+                amount_residual_currency: { name: "amount_residual_currency", type: "monetary" },
                 currency_id: { name: "currency_id", type: "many2one" },
             },
             activeFields: {
@@ -116,6 +118,8 @@ export class BankRecKanbanController extends KanbanController {
                 move_id: makeActiveField(),
                 balance: makeActiveField(),
                 amount_currency: makeActiveField(),
+                amount_residual: makeActiveField(),
+                amount_residual_currency: makeActiveField(),
                 currency_id: makeActiveField(),
             },
         };

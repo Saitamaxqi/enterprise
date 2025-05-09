@@ -1107,3 +1107,70 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         )
 
         st_line.set_line_bank_statement_line(aml.ids)
+
+    def test_residual_amount_same_currency(self):
+        st_line_1 = self._create_st_line(
+            20.0,
+            date='2017-01-01',
+            update_create_date=False,
+        )
+        st_line_2 = self._create_st_line(
+            100.0,
+            date='2017-01-01',
+            update_create_date=False,
+        )
+        inv1 = self._create_invoice_line(
+            'out_invoice',
+            invoice_date='2016-01-01',
+            invoice_line_ids=[{'price_unit': 100.0}],
+        )
+        st_line_1.set_line_bank_statement_line(inv1.id)
+        self.assertRecordValues(st_line_1.line_ids, [
+            {'account_id': st_line_1.journal_id.default_account_id.id, 'amount_currency': 20.0, 'currency_id': self.company_data['currency'].id, 'balance': 20.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'amount_currency': -20.0, 'currency_id': self.company_data['currency'].id, 'balance': -20.0, 'reconciled': True},
+        ])
+        self.assertEqual(inv1.amount_residual, 80)
+        self.assertEqual(inv1.move_id.payment_state, 'partial')
+
+        st_line_2.set_line_bank_statement_line(inv1.id)
+        self.assertRecordValues(st_line_2.line_ids, [
+            {'account_id': st_line_2.journal_id.default_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'amount_currency': -80.0, 'currency_id': self.company_data['currency'].id, 'balance': -80.0, 'reconciled': True},
+            {'account_id': st_line_2.journal_id.suspense_account_id.id, 'amount_currency': -20.0, 'currency_id': self.company_data['currency'].id, 'balance': -20.0, 'reconciled': False},
+        ])
+        self.assertEqual(inv1.amount_residual, 0)
+        self.assertEqual(inv1.move_id.payment_state, 'paid')
+
+    def test_residual_amount_other_currency(self):
+        st_line_1 = self._create_st_line(
+            20.0,
+            date='2017-01-01',
+            update_create_date=False,
+        )
+        st_line_2 = self._create_st_line(
+            100.0,
+            date='2017-01-01',
+            update_create_date=False,
+        )
+        inv1 = self._create_invoice_line(
+            'out_invoice',
+            currency_id=self.other_currency.id,
+            invoice_date='2017-01-01',
+            invoice_line_ids=[{'price_unit': 100.0}],
+        )
+        st_line_1.set_line_bank_statement_line(inv1.id)
+        self.assertRecordValues(st_line_1.line_ids, [
+            {'account_id': st_line_1.journal_id.default_account_id.id, 'amount_currency': 20.0, 'currency_id': self.company_data['currency'].id, 'balance': 20.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'amount_currency': -40.0, 'currency_id': self.other_currency.id, 'balance': -20.0, 'reconciled': True},
+        ])
+        self.assertEqual(inv1.amount_residual_currency, 60)
+        self.assertEqual(inv1.move_id.payment_state, 'partial')
+
+        st_line_2.set_line_bank_statement_line(inv1.id)
+        self.assertRecordValues(st_line_2.line_ids, [
+            {'account_id': st_line_2.journal_id.default_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'amount_currency': -60.0, 'currency_id':  self.other_currency.id, 'balance': -30.0, 'reconciled': True},
+            {'account_id': st_line_2.journal_id.suspense_account_id.id, 'amount_currency': -70.0, 'currency_id': self.company_data['currency'].id, 'balance': -70.0, 'reconciled': False},
+        ])
+        self.assertEqual(inv1.amount_residual_currency, 0)
+        self.assertEqual(inv1.move_id.payment_state, 'paid')

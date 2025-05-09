@@ -132,9 +132,9 @@ export class BankRecLineToReconcile extends Component {
         }
 
         if (this.statementLineData.amount > 0) {
-            return this.reconciledLineId?.balance * -1 < this.lineData.balance;
+            return this.reconciledLineId?.amount_residual * -1 < this.lineData.balance;
         }
-        return this.reconciledLineId?.balance * -1 > this.lineData.balance;
+        return this.reconciledLineId?.amount_residual * -1 > this.lineData.balance;
     }
 
     get hasDifferentCurrencies() {

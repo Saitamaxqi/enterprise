@@ -551,11 +551,11 @@ class AccountBankStatementLine(models.Model):
         for line in other_lines + move_lines:
             # Early payment Discount
             if line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date):
-                total_early_payment_discount += line.amount_currency - line.discount_amount_currency
+                total_early_payment_discount += line.amount_residual_currency - line.discount_amount_currency
                 early_pay_aml_values_list.append({
                     'aml': line,
-                    'amount_currency': -line.amount_currency,
-                    'balance': -line.balance,
+                    'amount_currency': -line.amount_residual_currency,
+                    'balance': -line.amount_residual,
                 })
 
             # move_lines are the lines coming from the reconcile button and other_lines are the lines from the bank
@@ -564,13 +564,13 @@ class AccountBankStatementLine(models.Model):
             sign = -1 if line in move_lines else 1
 
             exchange_diff_balance = self._lines_get_account_balance_exchange_diff(line)
-            line_balance = line.balance + exchange_diff_balance
+            line_balance = line.amount_residual + exchange_diff_balance
             open_balance += (line_balance * sign)
 
             if line.currency_id == transaction_currency:
-                open_amount_currency += line.amount_currency * sign
+                open_amount_currency += line.amount_residual_currency * sign
             elif line.currency_id == journal_currency:
-                open_amount_currency += transaction_currency.round(line.amount_currency * journal_transaction_rate) * sign
+                open_amount_currency += transaction_currency.round(line.amount_residual_currency * journal_transaction_rate) * sign
             else:
                 open_amount_currency += transaction_currency.round(line_balance * company_transaction_rate) * sign
 
@@ -578,18 +578,18 @@ class AccountBankStatementLine(models.Model):
         is_early_payment_discount = False
         for move_line in move_lines:
             exchange_diff_balance = self._lines_get_account_balance_exchange_diff(move_line)
-            current_balance = -(move_line.balance + exchange_diff_balance)
+            current_balance = -(move_line.amount_residual + exchange_diff_balance)
 
             new_line_balance = current_balance
-            new_amount_currency = -move_line.amount_currency
+            new_amount_currency = -move_line.amount_residual_currency
 
             if partial_amounts := self._get_partial_amounts(current_balance, move_line, open_amount_currency, open_balance):
                 new_line_balance = partial_amounts['partial_balance']
                 new_amount_currency = partial_amounts['partial_amount_currency']
 
             if is_early_payment_discount := move_line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date):
-                new_line_balance = -move_line.balance
-                new_amount_currency = -move_line.amount_currency
+                new_line_balance = -move_line.amount_residual
+                new_amount_currency = -move_line.amount_residual_currency
 
             new_lines.append(move_line._get_aml_values(
                 balance=new_line_balance,
@@ -612,7 +612,7 @@ class AccountBankStatementLine(models.Model):
                                  and company_currency.compare_amounts(current_balance, 0) < 0 \
                                  and company_currency.compare_amounts(-current_balance, -open_balance) > 0
 
-        current_amount_currency = -move_line.amount_currency
+        current_amount_currency = -move_line.amount_residual_currency
         has_enough_curr_debit = move_line.currency_id.compare_amounts(-open_amount_currency, 0) < 0 \
                                 and move_line.currency_id.compare_amounts(current_amount_currency, 0) > 0 \
                                 and move_line.currency_id.compare_amounts(current_amount_currency, open_amount_currency) > 0
@@ -637,7 +637,7 @@ class AccountBankStatementLine(models.Model):
             rate = move_line.currency_rate
 
             # Compute the amounts to make a partial.
-            new_line_balance = move_line.company_currency_id.round(balance_after_partial * abs(move_line.balance) / abs(current_balance))
+            new_line_balance = move_line.company_currency_id.round(balance_after_partial * abs(move_line.amount_residual) / abs(current_balance))
             new_amount_currency = move_line.currency_id.round(new_line_balance * rate)
             return {
                 'partial_balance': balance_after_partial,
@@ -649,20 +649,20 @@ class AccountBankStatementLine(models.Model):
         # Compute the balance of the line using the rate/currency coming from the bank transaction.
         amounts_in_st_curr = self._prepare_counterpart_amounts_using_st_line_rate(
             move_line.currency_id,
-            move_line.balance,
-            move_line.amount_currency,
+            move_line.amount_residual,
+            move_line.amount_residual_currency,
         )
         transaction_currency_id = self.foreign_currency_id or self.currency_id
         origin_balance = amounts_in_st_curr['balance']
         if move_line.currency_id == self.company_currency_id and transaction_currency_id != self.company_currency_id:
             # The reconciliation will be expressed using the rate of the statement line.
-            origin_balance = move_line.balance
+            origin_balance = move_line.amount_residual
         elif move_line.currency_id != self.company_currency_id and transaction_currency_id == self.company_currency_id:
             # The reconciliation will be expressed using the foreign currency of the aml to cover the Mexican case.
-            origin_balance = move_line.currency_id._convert(move_line.amount_currency, transaction_currency_id, self.company_id, self.date)
+            origin_balance = move_line.currency_id._convert(move_line.amount_residual_currency, transaction_currency_id, self.company_id, self.date)
 
         # Compute the exchange difference balance.
-        return self.company_currency_id.round(origin_balance - move_line.balance)
+        return self.company_currency_id.round(origin_balance - move_line.amount_residual)
 
     @api.model
     def _qualifies_for_early_payment(self, transaction_currency, open_amount_currency, total_early_payment_discount):
@@ -755,7 +755,7 @@ class AccountBankStatementLine(models.Model):
         for base_line, to_update in tax_results['base_lines_to_update']:
             line = base_line['record']
             amount_currency = to_update['amount_currency']
-            balance = self._prepare_counterpart_amounts_using_st_line_rate(line.currency_id, line.balance, amount_currency)['balance']
+            balance = self._prepare_counterpart_amounts_using_st_line_rate(line.currency_id, line.amount_residual, amount_currency)['balance']
             lines_to_delete += line
             lines_to_add_or_update.append(line._get_aml_values(balance=balance, amount_currency=amount_currency, tax_tag_ids=to_update['tax_tag_ids']))
 
