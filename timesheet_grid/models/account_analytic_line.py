@@ -42,7 +42,7 @@ class AccountAnalyticLine(models.Model):
             raise UserError(_("You can't encode numbers with more than six digits."))
 
     def _is_readonly(self):
-        return super()._is_readonly() or self.validated or self.timer_start
+        return super()._is_readonly() or self.validated
 
     def _should_not_display_timer(self):
         self.ensure_one()
