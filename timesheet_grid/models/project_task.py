@@ -7,8 +7,12 @@ class ProjectTask(models.Model):
     _name = 'project.task'
     _inherit = ["project.task", "timer.parent.mixin", "timesheet.grid.mixin"]
 
-    timesheet_unit_amount = fields.Float(compute='_compute_timesheet_unit_amount')
-    display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer', export_string_translation=False)
+    timer_start = fields.Datetime(groups='hr_timesheet.group_hr_timesheet_user')
+    timer_pause = fields.Datetime(groups='hr_timesheet.group_hr_timesheet_user')
+    is_timer_running = fields.Boolean(groups='hr_timesheet.group_hr_timesheet_user')
+    user_timer_id = fields.One2many(groups='hr_timesheet.group_hr_timesheet_user')
+    timesheet_unit_amount = fields.Float(compute='_compute_timesheet_unit_amount', groups='hr_timesheet.group_hr_timesheet_user')
+    display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer', export_string_translation=False, groups='hr_timesheet.group_hr_timesheet_user')
 
     @api.depends('user_timer_id')
     def _compute_timesheet_unit_amount(self):

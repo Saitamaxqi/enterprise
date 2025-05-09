@@ -59,7 +59,7 @@ class ProjectTask(models.Model):
             sign_p, sign_s = True, True
             if (
                 not task.allow_material
-                or task.timer_start
+                or task.sudo().timer_start
                 or task.worksheet_signature
                 or not task.display_satisfied_conditions_count
             ):
@@ -83,7 +83,7 @@ class ProjectTask(models.Model):
             send_p, send_s = True, True
             if (
                 not task.allow_material
-                or task.timer_start
+                or task.sudo().timer_start
                 or not task.display_satisfied_conditions_count
                 or task.fsm_is_sent
             ):
@@ -189,7 +189,7 @@ class ProjectTask(models.Model):
     def _compute_display_create_invoice_buttons(self):
         for task in self:
             primary, secondary = True, True
-            if not task.is_fsm or not task.fsm_done or not task.allow_billable or task.timer_start or \
+            if not task.is_fsm or not task.fsm_done or not task.allow_billable or task.sudo().timer_start or \
                     not task.sale_order_id or task.invoice_status == 'invoiced' or \
                     task.sale_order_id.state in ['cancel']:
                 primary, secondary = False, False

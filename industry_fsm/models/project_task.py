@@ -115,7 +115,7 @@ class ProjectTask(models.Model):
     def _compute_mark_as_done_buttons(self):
         for task in self:
             primary, secondary = True, True
-            if task.fsm_done or not task.is_fsm or task.timer_start:
+            if task.fsm_done or not task.is_fsm or task.sudo().timer_start:
                 primary, secondary = False, False
             else:
                 if task.display_enabled_conditions_count == task.display_satisfied_conditions_count:

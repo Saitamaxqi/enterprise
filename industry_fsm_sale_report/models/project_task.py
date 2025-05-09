@@ -15,7 +15,7 @@ class ProjectTask(models.Model):
             sign_p, sign_s = True, True
             if (
                 not (task.allow_worksheets or task.allow_material)
-                or task.timer_start
+                or task.sudo().timer_start
                 or task.worksheet_signature
                 or not task.display_satisfied_conditions_count
             ):
@@ -39,7 +39,7 @@ class ProjectTask(models.Model):
             send_p, send_s = True, True
             if (
                 not (task.allow_worksheets or task.allow_material)
-                or task.timer_start
+                or task.sudo().timer_start
                 or not task.display_satisfied_conditions_count
                 or task.fsm_is_sent
             ):
