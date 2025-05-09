@@ -801,3 +801,126 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
                 ],
                 options,
             )
+
+    def test_automatic_followup_report_attachments(self):
+        followup_line = self.env['account_followup.followup.line'].create({
+            'company_id': self.env.company.id,
+            'name': 'First Reminder',
+            'delay': 15,
+            'send_email': True,
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500,
+                'tax_ids': [],
+            })]
+        })
+        invoice.action_post()
+
+        self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_line)
+
+        invoice_attachment = self.env['ir.attachment'].create({
+            'name': 'some_attachment.pdf',
+            'res_id': invoice.id,
+            'res_model': 'account.move',
+            'datas': 'test',
+            'type': 'binary',
+        })
+        invoice._message_set_main_attachment_id(invoice_attachment)
+
+        self.partner_a._compute_unpaid_invoices()
+        with patch.object(self.env.registry['account.report'], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'fake_partner_ledger.pdf', 'file_content': b'', 'file_type': 'pdf'}):
+            self.partner_a.action_manually_process_automatic_followups()
+
+        sent_attachments = self.env['mail.message'].search([('partner_ids', '=', self.partner_a.id)]).attachment_ids
+        self.assertEqual(sent_attachments.mapped('name'), ['some_attachment.pdf', f'{self.partner_a.name} - fake_partner_ledger.pdf'])
+
+    def test_manual_followup_report_invoices_removed(self):
+        followup_line = self.env['account_followup.followup.line'].create({
+            'company_id': self.env.company.id,
+            'name': 'First Reminder',
+            'delay': 15,
+            'send_email': True,
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500,
+                'tax_ids': [],
+            })]
+        })
+        invoice.action_post()
+
+        self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_line)
+
+        invoice_attachment = self.env['ir.attachment'].create({
+            'name': 'some_attachment.pdf',
+            'res_id': invoice.id,
+            'res_model': 'account.move',
+            'datas': 'test',
+            'type': 'binary',
+        })
+        invoice._message_set_main_attachment_id(invoice_attachment)
+
+        self.partner_a._compute_unpaid_invoices()
+        with patch.object(self.env.registry['account.report'], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'fake_partner_ledger.pdf', 'file_content': b'', 'file_type': 'pdf'}):
+            self.partner_a._execute_followup_partner(options={
+                'partner_id': self.partner_a.id,
+                'manual_followup': True,
+                'snailmail': False,
+                'join_invoices': True,
+                'attachment_ids': [],
+            })
+
+        sent_attachments = self.env['mail.message'].search([('partner_ids', '=', self.partner_a.id)]).attachment_ids
+        self.assertEqual(sent_attachments.mapped('name'), [f'{self.partner_a.name} - fake_partner_ledger.pdf'])
+
+    def test_manual_followup_report_join_invoices(self):
+        followup_line = self.env['account_followup.followup.line'].create({
+            'company_id': self.env.company.id,
+            'name': 'First Reminder',
+            'delay': 15,
+            'send_email': True,
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500,
+                'tax_ids': [],
+            })]
+        })
+        invoice.action_post()
+
+        self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_line)
+
+        invoice_attachment = self.env['ir.attachment'].create({
+            'name': 'some_attachment.pdf',
+            'res_id': invoice.id,
+            'res_model': 'account.move',
+            'datas': 'test',
+            'type': 'binary',
+        })
+        invoice._message_set_main_attachment_id(invoice_attachment)
+
+        self.partner_a._compute_unpaid_invoices()
+        with patch.object(self.env.registry['account.report'], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'fake_partner_ledger.pdf', 'file_content': b'', 'file_type': 'pdf'}):
+            self.partner_a._execute_followup_partner(options={
+                'partner_id': self.partner_a.id,
+                'manual_followup': True,
+                'snailmail': False,
+                'join_invoices': False,
+                'attachment_ids': invoice_attachment.ids,
+            })
+
+        sent_attachments = self.env['mail.message'].search([('partner_ids', '=', self.partner_a.id)]).attachment_ids
+        self.assertEqual(sent_attachments.mapped('name'), [f'{self.partner_a.name} - fake_partner_ledger.pdf'])
