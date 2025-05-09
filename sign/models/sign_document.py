@@ -186,7 +186,7 @@ class SignDocument(models.Model):
             elif it.type_id.item_type == "textarea":
                 value = self.env._("""Odoo is a suite of open source business apps
 that cover all your company needs:
-CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
+CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
             """)
             elif it.type_id.item_type == "checkbox":
                 value = "on"

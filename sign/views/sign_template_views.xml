@@ -365,19 +365,6 @@
     </record>
 
     <!-- Signature Item Role Views -->
-    <record id="sign_item_role_view_tree" model="ir.ui.view">
-        <field name="name">sign.item.role.list</field>
-        <field name="model">sign.item.role</field>
-        <field name="arch" type="xml">
-            <list editable="bottom">
-                <field name="sequence" widget="handle"/>
-                <field name="name" string="Role Name"/>
-                <field name="auth_method"/>
-                <field name="change_authorized"/>
-            </list>
-        </field>
-    </record>
-
     <record id="sign_item_role_view_form" model="ir.ui.view">
         <field name="name">sign.item.role.form</field>
         <field name="model">sign.item.role</field>

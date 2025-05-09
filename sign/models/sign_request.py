@@ -271,16 +271,6 @@ class SignRequest(models.Model):
             },
         }
 
-    def open_template(self):
-        self.ensure_one()
-        return {
-            "type": "ir.actions.act_window",
-            "name": _("Templates"),
-            "res_model": "sign.template",
-            "domain": [["id", "=", self.template_id.id], ["active", "=", self.template_id.active]],
-            "views": [[False, 'kanban']]
-        }
-
     def get_completed_document(self):
         if not self:
             raise UserError(_('You should select at least one document to download.'))
@@ -297,16 +287,6 @@ class SignRequest(models.Model):
                 'type': 'ir.actions.act_url',
                 'url': f'/sign/download/zip/{",".join(map(str, self.ids))}',
             }
-
-    def open_logs(self):
-        self.ensure_one()
-        return {
-            "name": _("Activity Logs"),
-            "type": "ir.actions.act_window",
-            "res_model": "sign.log",
-            'view_mode': 'list,form',
-            'domain': [('sign_request_id', '=', self.id)],
-        }
 
     def _get_linked_record_action(self, default_action=None):
         """" Return the default action for any kind of record. This method can be override for specific kind or rec
