@@ -10,10 +10,17 @@ class Im_LivechatReportChannel(models.Model):
     tickets_created = fields.Integer("Tickets created", aggregator="sum", readonly=True)
 
     def _select(self) -> SQL:
-        return SQL("%s, count(distinct helpdesk_ticket.id) as tickets_created", super()._select())
+        return SQL("%s, helpdesk_ticket_data.tickets_created AS tickets_created", super()._select())
 
     def _from(self) -> SQL:
         return SQL(
-            "%s LEFT JOIN helpdesk_ticket ON (helpdesk_ticket.origin_channel_id = C.id)",
-            super()._from()
+            """%s
+            LEFT JOIN LATERAL
+                (
+                    SELECT count(*) AS tickets_created
+                      FROM helpdesk_ticket
+                     WHERE helpdesk_ticket.origin_channel_id = C.id
+                ) AS helpdesk_ticket_data ON TRUE
+            """,
+            super()._from(),
         )
