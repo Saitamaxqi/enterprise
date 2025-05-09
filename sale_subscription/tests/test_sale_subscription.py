@@ -2478,3 +2478,44 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.assertEqual(pricing_2.fixed_price, pricing_1.fixed_price)
             self.assertEqual(pricing_2.plan_id, pricing_1.plan_id)
             self.assertEqual(pricing_2.pricelist_id, pricing_1.pricelist_id)
+
+    def test_renew_subscription_keeps_non_empty_sections_and_notes(self):
+        self.subscription_tmpl.plan_id = self.plan_year.id
+        sub_1 = self.env['sale.order'].create({
+            'name': 'Parent Sub',
+            'is_subscription': True,
+            'note': "original subscription description",
+            'partner_id': self.user_portal.partner_id.id,
+            'sale_order_template_id': self.subscription_tmpl.id,
+            'start_date': '2025-01-01',
+            'order_line': [
+                (0, 0, {
+                    'name': 'Section 1',
+                    'display_type': 'line_section'
+                }),
+                (0, 0, {
+                    'name': 'TestRecurringLine',
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                }),
+                (0, 0, {
+                    'name': 'Some note',
+                    'display_type': 'line_note'
+                }),
+                (0, 0, {
+                    'name': 'Section 2',
+                    'display_type': 'line_section'
+                }),
+            ],
+        })
+
+        self.assertEqual(4, len(sub_1.order_line))
+        sub_1.action_confirm()
+        sub_1._create_recurring_invoice()
+        action = sub_1.prepare_renewal_order()
+        renewal_so = self.env['sale.order'].browse(action['res_id'])
+        self.assertEqual(3, len(renewal_so.order_line))
+        self.assertTrue(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'Section 1')]))
+        self.assertTrue(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'TestRecurringLine')]))
+        self.assertTrue(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'Some note')]))
+        self.assertFalse(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'Section 2')]))

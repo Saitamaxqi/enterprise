@@ -558,7 +558,8 @@ class SaleOrderLine(models.Model):
                 ratio = self.order_id._get_ratio_value(new_upsell=True)
             description_needed, description_name = self._get_renew_discount_info(upsell_ratio=ratio, start_date=fields.Date.context_today(self))
         for line in self:
-            if not line.recurring_invoice:
+            is_note_or_section = line.display_type in ['line_note', 'line_section']
+            if not line.recurring_invoice and not is_note_or_section:
                 continue
             if subscription_state == '7_upsell' and line._is_postpaid_line():
                 continue
@@ -572,7 +573,10 @@ class SaleOrderLine(models.Model):
                 'product_uom_id': line.product_uom_id.id,
                 'product_uom_qty': 0 if subscription_state == '7_upsell' else line.product_uom_qty,
                 'price_unit': line.price_unit,
+                'display_type': line.display_type
             }))
+
+        order_lines = self._filter_non_empty_sections(order_lines)
 
         if description_needed and description_name:
             order_lines.append((0, 0,
@@ -585,6 +589,28 @@ class SaleOrderLine(models.Model):
             ))
 
         return order_lines
+
+    def _filter_non_empty_sections(self, order_lines: list[tuple[int, int, dict]]) -> list[tuple[int, int, dict]]:
+        """
+        Filters sale order lines to only keep non-empty sections (sections that are followed by a subscription product)
+        :param list[tuple[int,int,dict]] order_lines: the list of order lines to filter
+        :return list[tuple[int,int,dict]]: the filtered list of order lines
+        """
+        filtered_order_lines = []
+        for index, line in enumerate(order_lines):
+            # Check if the current line is valid and is a section
+            is_section = line[2].get('display_type') == 'line_section' if len(line) == 3 else False
+            # If the current line is not a section, then it should be kept (either a product or a note)
+            # In which case we early return (continue), since the next line doesn't need to be checked
+            if not is_section:
+                filtered_order_lines.append(line)
+                continue
+            next_line = order_lines[index + 1] if index + 1 < len(order_lines) else None
+            # If the current line IS a section AND the next line is not a section or a note
+            should_keep = next_line is not None and len(next_line) == 3 and next_line[2].get('display_type') != 'line_section'
+            if should_keep:
+                filtered_order_lines.append(line)
+        return filtered_order_lines
 
     def _subscription_update_line_data(self, subscription):
         """
