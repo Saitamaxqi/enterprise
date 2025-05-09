@@ -732,3 +732,29 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         self.assertEqual(amount, 0.25, 2)
         self.assertEqual(timesheet.unit_amount, 2.50, 2)
         self.assertFalse(timesheet.is_timer_running)
+
+    @freeze_time('2025-06-03 00:00:00')
+    def test_timer_start_with_different_timezone(self):
+        """
+        Ensure action_timer_start avoids infinite recursion caused by timezone differences
+        between the user and timesheet date by using a context flag.
+        """
+        self.user_employee.tz = 'America/Adak'
+        AccountAnalyticLine = self.env['account.analytic.line']
+        timesheet = AccountAnalyticLine.with_user(self.user_employee).create({
+            'name': "My_timesheet",
+            'project_id': self.project_customer.id,
+            'task_id': self.task2.id,
+            'date': datetime.now() + timedelta(days=2),
+            'unit_amount': 10.0,
+        })
+        count = AccountAnalyticLine.search_count([('name', '=', 'My_timesheet')])
+        self.assertEqual(count, 1)
+        timesheet.with_user(self.user_employee).action_timer_start()
+        self.assertFalse(timesheet.with_user(self.user_employee).is_timer_running)
+        timer_timesheet = AccountAnalyticLine.with_user(self.user_employee).search([('is_timer_running', '=', True)])
+        self.assertNotEqual(timesheet, timer_timesheet)
+        self.assertEqual(timer_timesheet.date, datetime.today().date())
+        timer_timesheet.with_user(self.user_employee).action_timer_stop()
+        count = AccountAnalyticLine.with_user(self.user_employee).search_count([('task_id', '=', self.task2.id)])
+        self.assertEqual(count, 2, "There should be two entries for timesheet.")

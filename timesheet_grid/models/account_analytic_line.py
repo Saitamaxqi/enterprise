@@ -463,9 +463,9 @@ class AccountAnalyticLine(models.Model):
             timesheet = self.create(self._get_new_timesheet_timer_vals())
             timesheet.action_timer_start()
         elif not self.user_timer_id.timer_start and self.display_timer:
-            if self.date != fields.Date.context_today(self):
+            if self.date != fields.Date.context_today(self) and not self._context.get('_from_action_timer'):
                 timesheet = self.create(self._get_new_timesheet_timer_vals())
-                timesheet.action_timer_start()
+                timesheet.with_context(_from_action_timer=True).action_timer_start()
             else:
                 super().action_timer_start()
 
