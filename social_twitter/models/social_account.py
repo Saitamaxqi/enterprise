@@ -4,10 +4,10 @@
 import base64
 
 import requests
-from werkzeug.urls import url_join
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.tools.urls import urljoin as url_join
 
 TWITTER_IMAGES_UPLOAD_ENDPOINT = "https://api.x.com/2/media/upload"
 

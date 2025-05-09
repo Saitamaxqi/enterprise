@@ -5,9 +5,9 @@ import requests
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from werkzeug.urls import url_join
 
 from odoo import api, fields, models
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialAccount(models.Model):

@@ -2,10 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import requests
-from werkzeug.urls import url_encode, url_join
+from werkzeug.urls import url_encode
 
 from odoo import _, models, fields
 from odoo.exceptions import UserError
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialMedia(models.Model):

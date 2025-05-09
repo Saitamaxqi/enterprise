@@ -3,11 +3,11 @@
 import re
 
 from lxml import html
-from werkzeug.urls import url_join
 
 from odoo import _, api, fields, models
 from odoo.fields import Domain
 from odoo.tools import is_html_empty
+from odoo.tools.urls import urljoin as url_join
 
 
 class KnowledgeArticle(models.Model):

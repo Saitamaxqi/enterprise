@@ -7,12 +7,13 @@ import logging
 import re
 import requests
 import tarfile
+from urllib.parse import urlparse
 
 from odoo import api, fields, models
 from odoo.addons.iap.tools.iap_tools import iap_jsonrpc
 from odoo.exceptions import AccessError
 from odoo.tools import LazyTranslate
-from urllib.parse import urljoin, urlparse
+from odoo.tools.urls import urljoin as url_join
 
 _lt = LazyTranslate(__name__)
 
@@ -69,7 +70,7 @@ class Website_GeneratorRequest(models.Model):
             # created via the odoo.com start trial.
             if not req.uuid:
                 ws_endpoint = self.env['ir.config_parameter'].sudo().get_param('website_scraper_endpoint', DEFAULT_WSS_ENDPOINT)
-                url = urljoin(ws_endpoint, f'/website_scraper/{req.version}/scrape')
+                url = url_join(ws_endpoint, f'/website_scraper/{req.version}/scrape')
                 response = iap_jsonrpc(url, params=req._get_call_params())
                 if response.get('status') == 'accepted':
                     req.uuid = response['uuid']
@@ -127,7 +128,7 @@ class Website_GeneratorRequest(models.Model):
             'db_url': self.get_base_url(),
         }
         ws_endpoint = ICP.get_param('website_scraper_endpoint', DEFAULT_WSS_ENDPOINT)
-        url = urljoin(ws_endpoint, f'/website_scraper/{self.version}/get_result')
+        url = url_join(ws_endpoint, f'/website_scraper/{self.version}/get_result')
         response = requests.get(url, params=data, timeout=GET_RESULT_TIMEOUT_SECONDS)
 
         # /get_result is not protected by token
@@ -168,7 +169,7 @@ class Website_GeneratorRequest(models.Model):
 
             # Report OK to IAP (success)
             logger.info("Website Generator: Reporting OK for request uuid: %s", self.uuid)
-            url = urljoin(ws_endpoint, f'/website_scraper/{self.version}/report_ok')
+            url = url_join(ws_endpoint, f'/website_scraper/{self.version}/report_ok')
             self._report_to_iap(url, data)
 
         except Exception as e:
@@ -181,7 +182,7 @@ class Website_GeneratorRequest(models.Model):
 
             # Report KO to IAP (useful for spotting critical errors)
             logger.info("Website Generator: Reporting KO for request uuid: %s", self.uuid)
-            url = urljoin(ws_endpoint, f'/website_scraper/{self.version}/report_ko')
+            url = url_join(ws_endpoint, f'/website_scraper/{self.version}/report_ko')
             self._report_to_iap(url, data)
 
     def _report_to_iap(self, url, data):

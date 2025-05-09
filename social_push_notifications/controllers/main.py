@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import requests
-from werkzeug.urls import url_join
 
 from odoo import http, _, tools
 from odoo.http import request
@@ -50,7 +49,7 @@ class SocialPushNotificationsController(http.Controller):
             'social.social_iap_endpoint',
             request.env['social.media']._DEFAULT_SOCIAL_IAP_ENDPOINT
         )
-        result = requests.get(url_join(social_iap_endpoint, 'iap/social_push_notifications/get_firebase_info'),
+        result = requests.get(tools.urls.urljoin(social_iap_endpoint, 'iap/social_push_notifications/get_firebase_info'),
             params={
                 'db_uuid': request.env['ir.config_parameter'].sudo().get_param('database.uuid')
             },

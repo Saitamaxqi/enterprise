@@ -7,12 +7,13 @@ from dateutil.relativedelta import relativedelta
 from hashlib import sha256
 from markupsafe import Markup
 from random import randint
-from werkzeug.urls import url_join, url_quote, url_encode
+from werkzeug.urls import url_quote, url_encode
 
 from odoo import _, api, fields, models
-from odoo.tools import consteq, email_normalize, formataddr, groupby, get_lang, is_html_empty
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import consteq, email_normalize, formataddr, groupby, get_lang, is_html_empty
 from odoo.tools.misc import hmac
+from odoo.tools.urls import urljoin as url_join
 
 
 class SignRequestItem(models.Model):

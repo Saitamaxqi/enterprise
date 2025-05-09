@@ -8,13 +8,14 @@ from datetime import datetime, timedelta, time
 from dateutil import rrule
 from dateutil.relativedelta import relativedelta
 from babel.dates import format_datetime, format_time
-from werkzeug.urls import url_encode, url_join
+from werkzeug.urls import url_encode
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.fields import Command, Domain
 from odoo.tools import float_compare, frozendict
 from odoo.tools.misc import babel_locale_parse, get_lang
+from odoo.tools.urls import urljoin as url_join
 from odoo.addons.base.models.res_partner import _tz_get
 
 

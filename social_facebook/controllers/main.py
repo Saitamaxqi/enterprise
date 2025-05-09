@@ -8,11 +8,11 @@ import requests
 import urllib.parse
 
 from werkzeug.exceptions import Forbidden
-from werkzeug.urls import url_join
 
 from odoo import http, _
 from odoo.http import request
 from odoo.tools import consteq
+from odoo.tools.urls import urljoin as url_join
 from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 from odoo.addons.social.controllers.main import SocialController
 from odoo.addons.social.controllers.main import SocialValidationException

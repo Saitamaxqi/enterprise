@@ -4,7 +4,7 @@ import pytz
 
 from datetime import date, datetime, timedelta, timezone
 from freezegun import freeze_time
-from werkzeug.urls import url_encode, url_join
+from werkzeug.urls import url_encode
 
 import odoo
 from odoo.addons.appointment.tests.common import AppointmentCommon
@@ -13,6 +13,7 @@ from odoo.addons.base.tests.common import HttpCaseWithUserDemo
 from odoo.exceptions import ValidationError
 from odoo.tests import Form, tagged, users
 from odoo.tools import mute_logger
+from odoo.tools.urls import urljoin as url_join
 from odoo.fields import Command
 
 

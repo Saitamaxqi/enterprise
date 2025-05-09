@@ -2,11 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import timedelta
-from werkzeug.urls import url_join
 from markupsafe import Markup
 import pytz
 
 from odoo import models, fields, api, _, SUPERUSER_ID
+from odoo.tools.urls import urljoin as url_join
 
 
 class FrontdeskVisitor(models.Model):

@@ -10,7 +10,7 @@ from odoo import _, fields, http
 from odoo.addons.social.controllers.main import SocialController
 from odoo.addons.social.controllers.main import SocialValidationException
 from odoo.http import request
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialYoutubeController(SocialController):

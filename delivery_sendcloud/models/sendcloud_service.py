@@ -3,12 +3,11 @@
 import re
 import math
 import requests
-from werkzeug.urls import url_join
-
 
 from odoo import fields, _
 from odoo.exceptions import UserError
 from odoo.tools import float_repr, float_compare, format_list, float_is_zero
+from odoo.tools.urls import urljoin as url_join
 
 # More information at : https://api.sendcloud.dev/docs/sendcloud-public-api/integrations
 BASE_URL = "https://panel.sendcloud.sc/api/v2/"

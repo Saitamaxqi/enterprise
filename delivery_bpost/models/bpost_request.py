@@ -8,12 +8,12 @@ import re
 import requests
 from lxml import html
 from xml.etree import ElementTree as etree
-from werkzeug.urls import url_join
 
 from odoo import _
 from odoo.exceptions import UserError
 from odoo.tools import float_round
 from odoo.tools.pdf import PdfFileWriter, PdfFileReader
+from odoo.tools.urls import urljoin as url_join
 
 _logger = logging.getLogger(__name__)
 

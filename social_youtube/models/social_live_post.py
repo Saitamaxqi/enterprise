@@ -4,7 +4,7 @@
 import requests
 
 from odoo import _, fields, models, tools
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialLivePost(models.Model):

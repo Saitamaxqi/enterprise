@@ -7,11 +7,11 @@ import PIL.PdfImagePlugin  # pylint: disable=W0611
 from PIL import Image
 from json.decoder import JSONDecodeError
 from requests.exceptions import RequestException
-from werkzeug.urls import url_join
 
 from odoo import _
 from odoo.exceptions import ValidationError
 from odoo.tools import float_repr
+from odoo.tools.urls import urljoin as url_join
 
 TEST_BASE_URL = "https://wwwcie.ups.com"
 PROD_BASE_URL = "https://onlinetools.ups.com"

@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class EventTrack(models.Model):

@@ -7,10 +7,11 @@ import json
 import logging
 from pprint import pformat
 import requests
-from werkzeug.urls import url_join, url_parse
+from werkzeug.urls import url_parse
 from xml.etree import ElementTree
 
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.urls import urljoin as url_join
 
 from odoo.addons.sale_amazon import const
 

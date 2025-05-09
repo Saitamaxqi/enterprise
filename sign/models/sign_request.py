@@ -4,12 +4,13 @@ from collections import defaultdict
 import time
 import uuid
 
-from werkzeug.urls import url_join, url_quote
+from werkzeug.urls import url_quote
 from markupsafe import Markup
 
 from odoo import _, api, fields, models, Command
-from odoo.tools import get_lang, is_html_empty, format_date
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import get_lang, is_html_empty, format_date
+from odoo.tools.urls import urljoin as url_join
 
 
 class SignRequest(models.Model):

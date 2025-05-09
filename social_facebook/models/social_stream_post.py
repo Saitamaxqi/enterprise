@@ -9,8 +9,9 @@ import urllib.parse
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.urls import urljoin as url_join
+
 from odoo.addons.social_facebook.models.social_stream import SocialStream
-from werkzeug.urls import url_join
 
 _logger = logging.getLogger(__name__)
 

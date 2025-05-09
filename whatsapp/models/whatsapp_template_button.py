@@ -1,10 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urlparse
 
 from odoo import api, fields, models, _
 from odoo.addons.phone_validation.tools import phone_validation
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.urls import urljoin as url_join
 
 
 class WhatsappTemplateButton(models.Model):
@@ -106,6 +107,6 @@ class WhatsappTemplateButton(models.Model):
         if self.website_url:
             if self.website_url.startswith('/'):
                 if (base_url := self.get_base_url()) and 'localhost' not in base_url:
-                    self.website_url = urljoin(base_url, self.website_url)
+                    self.website_url = url_join(base_url, self.website_url)
             elif (parsed_url := urlparse(self.website_url)) and not parsed_url.scheme:
                 self.website_url = f"https://{self.website_url}"

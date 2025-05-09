@@ -3,10 +3,10 @@
 
 import uuid
 
-from werkzeug.urls import url_join
 from datetime import datetime, timedelta
 
 from odoo import models, fields, api, tools, _
+from odoo.tools.urls import urljoin as url_join
 
 ASK_FIELDS_SELECTION = [
     ("required", "Required"),

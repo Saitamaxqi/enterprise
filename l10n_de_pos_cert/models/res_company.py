@@ -3,9 +3,9 @@
 from odoo import models, fields, _, api
 from odoo.addons.iap import jsonrpc
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools.urls import urljoin as url_join
 import requests
 from requests.exceptions import ConnectTimeout
-from urllib.parse import urljoin
 
 DEFAULT_ENDPOINT = 'https://l10n-de-pos.api.odoo.com/api/l10n_de_pos'
 
@@ -51,7 +51,7 @@ class ResCompany(models.Model):
         """
         Return the url and headers containing the token to use the Kassensichv API.
         """
-        url = urljoin(self._l10n_de_fiskaly_kassensichv_url(), '/api/v%s' % version)
+        url = url_join(self._l10n_de_fiskaly_kassensichv_url(), '/api/v%s' % version)
         if not self.sudo().l10n_de_fiskaly_kassensichv_token:
             auth_response = requests.post(url + '/auth', json={
                 'api_secret': self.sudo().l10n_de_fiskaly_api_secret,
@@ -92,7 +92,7 @@ class ResCompany(models.Model):
         """
         Return the url and headers containing the token to use the DSFinV-K API.
         """
-        url = urljoin(self._l10n_de_fiskaly_dsfinvk_api_url(), '/api/v%s' % version)
+        url = url_join(self._l10n_de_fiskaly_dsfinvk_api_url(), '/api/v%s' % version)
         if not self.sudo().l10n_de_fiskaly_dsfinvk_token:
             auth_response = requests.post(url + '/auth', json={
                 'api_secret': self.sudo().l10n_de_fiskaly_api_secret,

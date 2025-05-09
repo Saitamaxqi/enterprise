@@ -8,15 +8,15 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from lxml import html
 from markupsafe import Markup
-from werkzeug.urls import url_join
 
 from odoo import api, Command, fields, models, _
 from odoo.addons.web_editor.tools import handle_history_divergence
 from odoo.exceptions import AccessError, ValidationError, UserError
 from odoo.fields import Domain
-from odoo.tools import get_lang, is_html_empty, OrderedSet
-from odoo.tools.translate import html_translate
+from odoo.tools import get_lang, OrderedSet
 from odoo.tools.sql import create_index, make_index_name, SQL
+from odoo.tools.translate import html_translate
+from odoo.tools.urls import urljoin as url_join
 
 ARTICLE_PERMISSION_LEVEL = {'none': 0, 'read': 1, 'write': 2}
 

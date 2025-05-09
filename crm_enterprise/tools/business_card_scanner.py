@@ -8,7 +8,7 @@ from odoo import _
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError
 from odoo.fields import Domain
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 _logger = logging.getLogger(__name__)
 

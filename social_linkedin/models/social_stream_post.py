@@ -5,7 +5,6 @@ import logging
 import requests
 from urllib.parse import quote, unquote
 from datetime import datetime
-from werkzeug.urls import url_join
 
 from odoo import _, models, fields
 

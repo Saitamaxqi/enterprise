@@ -7,11 +7,11 @@ from datetime import timedelta
 
 import dateutil.parser
 from markupsafe import Markup
-from werkzeug import urls
 
 from odoo import _, api, exceptions, fields, models, modules
 from odoo.exceptions import UserError, ValidationError
 from odoo.service.model import PG_CONCURRENCY_EXCEPTIONS_TO_RETRY as CONCURRENCY_ERRORS
+from odoo.tools import urls
 
 from odoo.addons.sale_amazon import const
 from odoo.addons.sale_amazon import utils as amazon_utils
@@ -297,11 +297,11 @@ class AmazonAccount(models.Model):
         self.ensure_one()
 
         base_seller_central_url = self.base_marketplace_id.seller_central_url
-        oauth_url = urls.url_join(base_seller_central_url, '/apps/authorize/consent')
+        oauth_url = urls.urljoin(base_seller_central_url, '/apps/authorize/consent')
         base_database_url = self.get_base_url()
         metadata = {
             'account_id': self.id,
-            'return_url': urls.url_join(base_database_url, 'amazon/return'),
+            'return_url': urls.urljoin(base_database_url, 'amazon/return'),
             'signature': compute_oauth_signature(self.id),
         }  # The metadata included in the redirect URL after authorizing the app on Amazon.
         oauth_url_params = {

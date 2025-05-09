@@ -4,11 +4,11 @@
 import datetime
 import requests
 import re
-from werkzeug.urls import url_join
 
 from odoo import _
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_round, float_is_zero, float_repr
+from odoo.tools.float_utils import float_is_zero
+from odoo.tools.urls import urljoin as url_join
 
 API_BASE_URL = 'https://api.easypost.com/v2/'
 NON_BLOCKING_MESSAGES = ['rate_message']

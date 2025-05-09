@@ -5,7 +5,6 @@ import re
 import mimetypes
 
 from markupsafe import Markup
-from urllib.parse import urljoin
 
 from odoo import api, models, fields, _, Command
 from odoo.addons.whatsapp.tools.lang_list import Languages
@@ -14,6 +13,7 @@ from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
 from odoo.exceptions import UserError, ValidationError, AccessError
 from odoo.tools import plaintext2html
 from odoo.tools.safe_eval import safe_eval
+from odoo.tools.urls import urljoin as url_join
 
 LATITUDE_LONGITUDE_REGEX = r'^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
 
@@ -497,7 +497,7 @@ class WhatsappTemplate(models.Model):
 
     def _get_url_button_data(self, button):
         if button.website_url.startswith('/'):
-            button.website_url = urljoin(button.get_base_url(), button.website_url)
+            button.website_url = url_join(button.get_base_url(), button.website_url)
         button_data = {'url': button.website_url}
         if button.url_type == 'dynamic':
             button_data['url'] += '{{1}}'

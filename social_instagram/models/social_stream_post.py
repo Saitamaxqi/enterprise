@@ -2,11 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import dateutil.parser
-import requests
 
-from werkzeug.urls import url_join, url_quote
+import requests
+from werkzeug.urls import url_quote
 
 from odoo import fields, models, _
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialStreamPost(models.Model):

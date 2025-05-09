@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields
 from odoo.addons.website_event.tests.common import TestEventOnlineCommon
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class TestTrackPush(TestEventOnlineCommon):

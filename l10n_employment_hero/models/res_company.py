@@ -4,12 +4,12 @@ from datetime import datetime, date
 from collections import defaultdict
 
 from requests import HTTPError
-from werkzeug.urls import url_join
 from urllib.parse import quote
 
 from odoo import _, api, fields, models, Command
 from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.tools.misc import format_date, format_datetime
+from odoo.tools.urls import urljoin as url_join
 
 
 class ResCompany(models.Model):

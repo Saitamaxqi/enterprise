@@ -3,7 +3,6 @@
 import json
 import requests
 from markupsafe import Markup
-from werkzeug.urls import url_join
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError

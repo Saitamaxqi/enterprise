@@ -7,10 +7,10 @@ import requests
 
 from collections import defaultdict
 from datetime import datetime, timedelta
-from werkzeug.urls import url_join
 
 from odoo import fields, _
 from odoo.exceptions import ValidationError, UserError, RedirectWarning
+from odoo.tools.urls import urljoin as url_join
 
 _logger = logging.getLogger(__name__)
 

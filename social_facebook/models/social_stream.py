@@ -6,7 +6,7 @@ import json
 import requests
 
 from odoo import models, api
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialStream(models.Model):

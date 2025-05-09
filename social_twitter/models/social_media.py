@@ -12,10 +12,12 @@ import time
 import xml.etree.ElementTree as XmlElementTree
 from html import unescape
 
+from werkzeug.urls import url_quote
+
 from odoo import models, fields, api, _
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError, AccessError
-from werkzeug.urls import url_join, url_quote
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialMedia(models.Model):

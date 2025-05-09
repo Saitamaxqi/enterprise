@@ -6,7 +6,7 @@ import requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialPost(models.Model):

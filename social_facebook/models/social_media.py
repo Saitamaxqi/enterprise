@@ -3,9 +3,11 @@
 
 import requests
 
+from werkzeug.urls import url_encode
+
 from odoo import _, models, fields, tools
 from odoo.exceptions import UserError
-from werkzeug.urls import url_encode, url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialMedia(models.Model):

@@ -2,11 +2,11 @@
 
 import requests
 from requests.exceptions import RequestException
-from werkzeug.urls import url_join
 
 from odoo import _
 from odoo.exceptions import UserError
 from odoo.tools import format_date
+from odoo.tools.urls import urljoin as url_join
 
 BASE_URL = 'https://api.starshipit.com/api/'
 

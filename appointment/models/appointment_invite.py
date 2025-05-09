@@ -4,11 +4,12 @@ import secrets
 import uuid
 
 from markupsafe import Markup
-from werkzeug.urls import url_encode, url_join
+from werkzeug.urls import url_encode
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
+from odoo.tools.urls import urljoin as url_join
 
 SHORT_CODE_PATTERN = re.compile(r"^[\w-]+$")
 

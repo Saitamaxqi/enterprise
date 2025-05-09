@@ -6,10 +6,11 @@ import logging
 import requests
 from datetime import datetime, timedelta
 from urllib.parse import quote
-from werkzeug.urls import url_join
 
 from odoo import _, models, fields, api
 from odoo.exceptions import UserError
+from odoo.tools.urls import urljoin as url_join
+
 from odoo.addons.social.controllers.main import SocialValidationException
 from odoo.addons.social_linkedin.utils import urn_to_id, id_to_urn
 

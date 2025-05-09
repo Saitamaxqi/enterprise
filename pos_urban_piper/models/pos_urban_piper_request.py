@@ -6,9 +6,9 @@ from datetime import datetime
 
 from odoo import Command
 from odoo.tools import html2plaintext, format_duration
+from odoo.tools.urls import urljoin as url_join
 
 from urllib.parse import quote
-from werkzeug.urls import url_join
 
 _logger = logging.getLogger(__name__)
 

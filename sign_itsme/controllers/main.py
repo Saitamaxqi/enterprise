@@ -3,12 +3,12 @@
 from hashlib import sha256
 from json import dumps
 from urllib.parse import urlsplit
-from werkzeug.urls import url_join
 
 from odoo import http, _
 from odoo.http import request
 from odoo.addons.iap import jsonrpc
 from odoo.tools import consteq
+from odoo.tools.urls import urljoin as url_join
 from odoo.addons.sign.controllers.main import Sign as SignController
 
 IAP_DEFAULT_DOMAIN = 'https://itsme.api.odoo.com'

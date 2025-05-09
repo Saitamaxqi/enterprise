@@ -9,7 +9,7 @@ import requests
 from odoo import _, api, models, fields
 from odoo.exceptions import UserError
 from odoo.http import request
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 _logger = logging.getLogger(__name__)
 

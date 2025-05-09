@@ -11,8 +11,8 @@ from odoo import http, _
 from odoo.addons.social.controllers.main import SocialController, SocialValidationException
 from odoo.exceptions import UserError
 from odoo.http import request
+from odoo.tools.urls import urljoin as url_join
 from werkzeug.exceptions import Forbidden, NotFound
-from werkzeug.urls import url_join
 
 _logger = logging.getLogger(__name__)
 

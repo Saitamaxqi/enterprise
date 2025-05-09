@@ -6,7 +6,6 @@ from requests.exceptions import RequestException, Timeout
 import json
 from json.decoder import JSONDecodeError
 from markupsafe import Markup
-from urllib.parse import urljoin
 import contextlib
 from datetime import datetime
 
@@ -14,6 +13,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError, RedirectWarning
 from odoo.http import request
 from odoo.tools import file_open
+from odoo.tools.urls import urljoin as url_join
 
 _logger = logging.getLogger(__name__)
 
@@ -217,7 +217,7 @@ class ResCompany(models.Model):
             'dvcSrlNo':  self.l10n_ke_oscu_serial_number,  # Device serial number
         }
         session = requests.Session()
-        url = urljoin(self._l10n_ke_oscu_get_base_url(), 'selectInitOsdcInfo')
+        url = url_join(self._l10n_ke_oscu_get_base_url(), 'selectInitOsdcInfo')
         _logger.debug("Calling OSCU initialization")
         try:
             response = session.post(url, json=content, timeout=30)
@@ -345,7 +345,7 @@ class ResCompany(models.Model):
             'bhfid': self.l10n_ke_branch_code,
             'cmcKey': self.sudo().l10n_ke_oscu_cmc_key,
         })
-        url = urljoin(self._l10n_ke_oscu_get_base_url(), urlext)
+        url = url_join(self._l10n_ke_oscu_get_base_url(), urlext)
 
         _logger.debug("Calling endpoint: %s", urlext)
         _logger.debug(content)

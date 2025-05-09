@@ -5,14 +5,14 @@ import base64
 import json
 import requests
 import werkzeug
+from werkzeug.exceptions import Forbidden
 
 from odoo import _, http
 from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 from odoo.addons.social.controllers.main import SocialController
 from odoo.addons.social.controllers.main import SocialValidationException
 from odoo.http import request
-from werkzeug.exceptions import Forbidden
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialInstagramController(SocialController):
@@ -180,5 +180,6 @@ class SocialInstagramController(SocialController):
     def _instagram_get_profile_image(self, account_id):
         profile_image_url = url_join(
             request.env['social.media']._INSTAGRAM_ENDPOINT,
-            '/v17.0/%s/picture?height=300' % account_id)
+            '/v17.0/%s/picture?height=300' % account_id,
+        )
         return base64.b64encode(requests.get(profile_image_url, timeout=10).content)

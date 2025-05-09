@@ -5,11 +5,11 @@ import base64
 import json
 import logging
 import requests
-from werkzeug.urls import url_join
 
 from odoo import _, api, fields, models, tools
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError
+from odoo.tools.urls import urljoin as url_join
 
 _logger = logging.getLogger(__name__)
 

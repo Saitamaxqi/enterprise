@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
 import requests
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from dateutil.relativedelta import relativedelta
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialStreamPost(models.Model):

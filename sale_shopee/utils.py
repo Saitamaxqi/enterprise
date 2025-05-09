@@ -8,8 +8,6 @@ import logging
 import requests
 import time
 
-from werkzeug.urls import url_join
-
 from odoo.exceptions import UserError, ValidationError
 from odoo.addons.sale_shopee import const
 

@@ -1,8 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from werkzeug.urls import url_join
-
 from odoo import api, fields, models, _
+from odoo.tools.urls import urljoin as url_join
 
 
 class HrReferralLinkToShare(models.TransientModel):

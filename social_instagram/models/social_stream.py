@@ -5,7 +5,7 @@ import dateutil.parser
 import requests
 
 from odoo import Command, models
-from werkzeug.urls import url_join
+from odoo.tools.urls import urljoin as url_join
 
 
 class SocialStream(models.Model):

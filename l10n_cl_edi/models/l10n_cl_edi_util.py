@@ -15,9 +15,9 @@ from lxml import etree
 from markupsafe import Markup
 from urllib3.exceptions import NewConnectionError
 from requests.exceptions import ConnectionError, HTTPError
-from werkzeug.urls import url_join
 
 from odoo.tools import zeep
+from odoo.tools.urls import urljoin as url_join
 from odoo.tools.zeep.exceptions import TransportError
 from odoo.tools.zeep import Client, Settings
 
