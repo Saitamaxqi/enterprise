@@ -79,12 +79,18 @@ class HrPayslip(models.Model):
         return (overlap_end - overlap_start).days + 1
 
     def _get_payroll_impacting_swissdec(self):
-        return self.env.ref('hr_holidays.l10n_ch_swissdec_unpaid_lt', raise_if_not_found=False) + \
-                                        self.env.ref('hr_holidays.l10n_ch_swissdec_illness_lt', raise_if_not_found=False) + \
-                                        self.env.ref('hr_holidays.l10n_ch_swissdec_accident_lt', raise_if_not_found=False) + \
-                                        self.env.ref('hr_holidays.l10n_ch_swissdec_maternity_lt', raise_if_not_found=False) + \
-                                        self.env.ref('hr_holidays.l10n_ch_swissdec_military_lt', raise_if_not_found=False) + \
-                                        self.env.ref('hr_holidays.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
+        leave_type_refs = [
+            'hr_holidays.l10n_ch_swissdec_unpaid_lt',
+            'hr_holidays.l10n_ch_swissdec_illness_lt',
+            'hr_holidays.l10n_ch_swissdec_accident_lt',
+            'hr_holidays.l10n_ch_swissdec_maternity_lt',
+            'hr_holidays.l10n_ch_swissdec_military_lt',
+            'hr_holidays.l10n_ch_swissdec_interruption_of_work_lt',
+        ]
+        valid_leave_types = [self.env.ref(ref, raise_if_not_found=False) for ref in leave_type_refs]
+        valid_leave_types_ids = [lt.id for lt in valid_leave_types if lt]
+
+        return self.env['hr.leave.type'].browse(valid_leave_types_ids)
 
     @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to')
     def _compute_l10n_ch_swiss_wage_ids(self):
