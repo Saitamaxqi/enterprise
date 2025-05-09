@@ -15,12 +15,12 @@
 
 <t t-name="o-voip-Keypad-searchBar">
     <div class="o-voip-Keypad-searchBar position-relative mx-3 mt-3" t-att-class="{ 'mb-3': props.state.showMore }">
-        <t t-if="props.state.showMore">
-            <button title="Back" class="btn btn-secondary position-absolute start-0 top-50 translate-middle-y d-flex p-2" t-on-click="onClickBack">
+        <div class="position-absolute start-0 top-50 translate-middle-y d-flex align-items-center">
+            <button t-if="props.state.showMore or props.onClickBack" title="Back" class="btn btn-secondary d-flex p-2" t-on-click="onClickBack">
                 <i class="oi oi-arrow-left" aria-hidden="true"/>
             </button>
-        </t>
-        <img t-if="phoneNumberStartsWithCountryCode and !props.state.showMore" class="o-voip-countryFlag position-absolute start-0 top-50 translate-middle-y ms-2" t-attf-src="/base/static/img/country_flags/{{ props.state.input.countryCode.iso }}.png" t-att-alt="flagAltLabel"/>
+            <img t-if="phoneNumberStartsWithCountryCode and !props.state.showMore" class="o-voip-countryFlag ms-2" t-attf-src="/base/static/img/country_flags/{{ props.state.input.countryCode.iso }}.png" t-att-alt="flagAltLabel"/>
+        </div>
         <div class="px-5">
             <!-- hack: "data-value" is used to reflect input changes in the DOM, so it immediately triggers the "contains" test helper's MutationObserver, speeding up tests -->
             <input type="text" class="o-voip-Keypad-input form-control border-0 fw-bold text-center" t-att-class="inputFontSizeClass" t-att-readonly="props.state.showMore" t-ref="input-ref" t-model="props.state.input.value" t-att-data-value="props.state.input.value" t-on-keydown="onKeydown" t-on-input="onInputDebounced"/>
@@ -74,17 +74,20 @@
                 section="slot.section"
             >
                 <t t-set-slot="side">
-                    <ActionButton t-if="isFolded"
-                        hideLabel="true"
-                        icon="'fa-phone'"
-                        type="'outline-success'"
-                        onClick="() => this.onClickCall(contact)"
-                        isSmall="true"
-                        name="'Call'"
-                    />
+                    <t t-if="isFolded">
+                        <t t-if="props.slots?.primaryAction" t-slot="primaryAction" contact="contact" isSmall="true"/>
+                        <ActionButton t-else=""
+                            hideLabel="true"
+                            icon="'fa-phone'"
+                            type="'outline-success'"
+                            onClick="() => this.onClickCall(contact)"
+                            isSmall="true"
+                            name.translate="Call"
+                        />
+                    </t>
                 </t>
                 <t t-set-slot="info">
-                    <p class="mb-0 text-muted text-truncate">
+                    <p class="mb-0 opacity-75 text-truncate">
                         <span t-if="countryCode" class="o-voip-countryFlag-wrapper d-inline-block me-1 align-middle">
                             <img class="o-voip-countryFlag mx-auto" t-attf-src="/base/static/img/country_flags/{{ countryCode }}.png" t-att-alt="flagAlt"/>
                         </span>
@@ -109,7 +112,8 @@
                 </t>
                 <t t-set-slot="call-to-action">
                     <t class="o-voip-AddressBook-sms-xpathTarget"/>
-                    <ActionButton
+                    <t t-if="props.slots?.primaryAction" t-slot="primaryAction" contact="contact" isSmall="false"/>
+                    <ActionButton t-else=""
                         name.translate="Call"
                         icon="'fa-phone'"
                         type="'success'"

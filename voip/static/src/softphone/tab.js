@@ -32,6 +32,7 @@ export class Tab extends Component {
          */
         noEntriesMessage: { type: String, optional: true },
         noSearchResultsMessage: { type: String, optional: true },
+        onClickBack: { type: Function, optional: true },
         onInputSearch: { type: Function, optional: true },
         /**
          * Function to be called each time the user scrolls to the end of the
@@ -76,6 +77,12 @@ export class Tab extends Component {
             return "fa fa-spin fa-circle-o-notch";
         }
         return "oi oi-search";
+    }
+
+    onClickBack() {
+        if (this.props.onClickBack) {
+            this.props.onClickBack();
+        }
     }
 }
 

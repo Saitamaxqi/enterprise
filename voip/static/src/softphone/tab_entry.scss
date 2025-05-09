@@ -2,7 +2,7 @@
     --voip__countryFlag-width: 1em;
 
     details[open], summary:hover {
-        background: $gray-100;
+        background: var(--voipCalling__tabEntry-background-color--hover, #{$gray-100});
     }
 
     summary:focus-visible {

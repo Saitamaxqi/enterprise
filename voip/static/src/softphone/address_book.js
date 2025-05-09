@@ -15,7 +15,11 @@ import { useDebounced } from "@web/core/utils/timing";
 export class AddressBook extends Component {
     static components = tabComponents;
     static defaultProps = { extraClass: "" };
-    static props = { extraClass: { type: String, optional: true } };
+    static props = {
+        extraClass: { type: String, optional: true },
+        onClickBack: { type: Function, optional: true },
+        slots: { type: Object, optional: true },
+    };
     static template = "voip.AddressBook";
 
     setup() {

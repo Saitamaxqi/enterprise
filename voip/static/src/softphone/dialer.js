@@ -24,4 +24,8 @@ export class Dialer extends Component {
         }
         this.userAgentService.makeCall({ phone_number: inputValue });
     }
+
+    onClickKeypadFirstResult(contact) {
+        this.userAgentService.makeCall({ partner: contact, phone_number: contact.phone });
+    }
 }

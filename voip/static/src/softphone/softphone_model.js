@@ -1,3 +1,4 @@
+import { InCallViewModel } from "@voip/softphone/in_call_view_model";
 import { KeypadModel } from "@voip/softphone/keypad_model";
 import { isSubstring } from "@voip/utils/utils";
 
@@ -42,12 +43,7 @@ export class Softphone {
     history = {
         searchInputValue: "",
     };
-    inCallView = {
-        keypad: {
-            isOpen: false,
-            state: new KeypadModel(),
-        },
-    };
+    inCallView = new InCallViewModel();
     shouldFocus = false;
 
     constructor(store, voip) {
@@ -90,11 +86,6 @@ export class Softphone {
             hideAfterTimeout: undefined,
             isShown: false,
         });
-    }
-
-    resetInCallViewKeypad() {
-        this.inCallView.keypad.isOpen = false;
-        this.inCallView.keypad.state.reset();
     }
 
     show() {

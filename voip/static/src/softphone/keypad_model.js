@@ -11,6 +11,10 @@ export class KeypadModel {
     };
     showMore = false;
 
+    constructor({ value = "" } = {}) {
+        this.value = value;
+    }
+
     reset() {
         Object.assign(this, new KeypadModel());
     }

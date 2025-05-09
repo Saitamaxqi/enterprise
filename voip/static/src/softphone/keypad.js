@@ -31,7 +31,13 @@ const T9_MAPPING = Object.freeze({
 export class Keypad extends Component {
     static components = { ...tabComponents };
     static defaultProps = { dtmf: false };
-    static props = { dtmf: { type: Boolean, optional: true }, state: KeypadModel };
+    static props = {
+        dtmf: { type: Boolean, optional: true },
+        onClickBack: { type: Function, optional: true },
+        onClickFirstResult: { type: Function, optional: true },
+        state: KeypadModel,
+        slots: { type: Object, optional: true },
+    };
     static template = "voip.Keypad";
 
     setup() {
@@ -141,7 +147,7 @@ export class Keypad extends Component {
             phoneNumberMatched.push({
                 contact,
                 id: contact.id + " (by phone)",
-                match: markup`${before}<span class="fw-bolder">${match}</span>${after}`,
+                match: markup`${before}<span class="o-voip-highlighted-letter fw-bolder">${match}</span>${after}`,
             });
         }
         const length = uniqueMatches.size;
@@ -253,7 +259,11 @@ export class Keypad extends Component {
     }
 
     onClickBack() {
-        this.props.state.showMore = false;
+        if (this.props.state.showMore) {
+            this.props.state.showMore = false;
+        } else if (this.props.onClickBack) {
+            this.props.onClickBack();
+        }
     }
 
     onClickBackspace() {
@@ -274,7 +284,6 @@ export class Keypad extends Component {
 
     onClickCall(contact) {
         this.userAgent.makeCall({ partner: contact, phone_number: contact.phone });
-        this.props.state.reset();
     }
 
     onClickContact(contact) {
@@ -288,8 +297,7 @@ export class Keypad extends Component {
     }
 
     onClickFirstResult(contact) {
-        this.userAgent.makeCall({ partner: contact, phone_number: contact.phone });
-        this.props.state.reset();
+        this.props.onClickFirstResult(contact);
     }
 
     /** @param {string} key */
@@ -335,12 +343,6 @@ export class Keypad extends Component {
         }
     }
 
-    resetSearch() {
-        this.props.state.input.value = "";
-        this.voip.softphone.activeRecord = null;
-        this.props.state.showMore = false;
-    }
-
     async updateCountryCode() {
         const phoneNumber = this.props.state.input.value.trim();
         // avoid making a request if the country code is already up to date
@@ -366,7 +368,7 @@ export function highlightMatch(str, substr) {
     if (!match) {
         return "";
     }
-    return markup`${str.slice(0, start)}<span class="fw-bolder">${match}</span>${str.slice(end)}`;
+    return markup`${str.slice(0, start)}<span class="o-voip-highlighted-letter fw-bolder">${match}</span>${str.slice(end)}`;
 }
 
 function highlightT9Match(name, t9) {
@@ -393,7 +395,7 @@ function highlightT9Match(name, t9) {
         return "";
     }
     return htmlJoin(
-        markup(`<span class="fw-bolder">`),
+        markup(`<span class="o-voip-highlighted-letter fw-bolder">`),
         ...nameAsArr.slice(0, matchEnd),
         markup("</span>"),
         ...nameAsArr.slice(matchEnd)

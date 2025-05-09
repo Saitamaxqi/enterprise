@@ -11,7 +11,7 @@
                             <img t-if="props.title === props.phoneNumber and props.countryCode" class="o-voip-countryFlag me-1 align-middle" t-attf-src="/base/static/img/country_flags/{{ props.countryCode }}.png" t-att-alt="flagAlt"/>
                             <span class="align-middle" t-out="props.title"/>
                         </p>
-                        <p t-if="props.subtitle" class="m-0 text-muted text-truncate" t-att-class="props.subtitleClass">
+                        <p t-if="props.subtitle" class="m-0 opacity-75 text-truncate" t-att-class="props.subtitleClass">
                             <i t-if="props.subtitleIcon" t-att-class="props.subtitleIcon" aria-hidden="true"/>
                             <t t-out="props.subtitle"/>
                         </p>

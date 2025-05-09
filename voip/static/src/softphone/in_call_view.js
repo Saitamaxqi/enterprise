@@ -4,11 +4,12 @@ import { Call } from "@voip/core/call_model";
 import { ActionButton } from "@voip/softphone/action_button";
 import { ContactInfo } from "@voip/softphone/contact_info";
 import { Keypad } from "@voip/softphone/keypad";
+import { TransferView } from "@voip/softphone/transfer_view";
 
 import { useService } from "@web/core/utils/hooks";
 
 export class InCallView extends Component {
-    static components = { ActionButton, ContactInfo, Keypad };
+    static components = { ActionButton, ContactInfo, Keypad, TransferView };
     static props = { call: Call };
     static template = "voip.InCallView";
 
@@ -23,6 +24,11 @@ export class InCallView extends Component {
             () => this.userAgent.updateTracks(),
             () => [this.isMuted, this.isOnHold]
         );
+    }
+
+    /** @returns {string} */
+    get activeView() {
+        return this.softphone.inCallView.activeView;
     }
 
     /** @returns {boolean} */
@@ -70,5 +76,25 @@ export class InCallView extends Component {
 
     onClickMute() {
         this.userAgent.session.isMute = !this.userAgent.session.isMute;
+    }
+
+    onClickTransfer() {
+        this.softphone.inCallView.activeView = "transfer";
+    }
+
+    onClickTransferContacts() {
+        this.softphone.inCallView.transferView.activeView = "contacts";
+    }
+
+    onClickTransferKeypad() {
+        this.softphone.inCallView.transferView.activeView = "keypad";
+    }
+
+    onClickTransferTransfer() {
+        const input = this.softphone.inCallView.transferView.keypad.input.value.trim();
+        if (!input) {
+            return;
+        }
+        this.userAgent.transfer(input);
     }
 }

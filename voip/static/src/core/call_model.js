@@ -61,9 +61,7 @@ export class Call extends Record {
                 case "missed":
                 case "rejected":
                 case "terminated": {
-                    const softphone = this.store.env.services.voip.softphone;
-                    softphone.showSummary(this);
-                    softphone.resetInCallViewKeypad();
+                    this.onCallEnd();
                     break;
                 }
                 default:
@@ -113,6 +111,13 @@ export class Call extends Record {
     /** @returns {string} */
     get timerText() {
         return this._formatTimerText(this.timer?.time);
+    }
+
+    onCallEnd() {
+        const softphone = this.store.env.services.voip.softphone;
+        softphone.showSummary(this);
+        softphone.dialer.reset();
+        softphone.inCallView.reset();
     }
 
     /**

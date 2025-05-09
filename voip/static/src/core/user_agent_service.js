@@ -618,10 +618,10 @@ export class UserAgent extends Reactive {
      * @param {SIP.IncomingResponse} response The server final response to the
      * REFER request.
      */
-    _onReferAccepted(response) {
+    async _onReferAccepted(response) {
         this.session.sipSession.bye();
         this._cleanUpRemoteAudio();
-        this.callService.end(this.session.call);
+        await this.callService.end(this.session.call);
         this.session = null;
     }
 

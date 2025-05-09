@@ -33,9 +33,24 @@
     &.o-calling {
         --#{$prefix}border-color: #{$o-voipCalling-btn-secondary-bg-color};
         --#{$prefix}body-color: #{color-contrast($o-voipCalling-bg-color)};
+        --#{$prefix}heading-color: #{color-contrast($o-voipCalling-bg-color)};
+        --voipCalling__tabEntry-background-color--hover: #{$o-voipCalling-tabEntry-bg-color-hover};
+        --voipCalling__highlightedLetter-color: #{$o-voipCalling-highlightedLetter-color};
 
         background-color: $o-voipCalling-bg-color;
         color: color-contrast($o-voipCalling-bg-color);
+        scrollbar-color: #fff #{$o-voipCalling-bg-color};
+
+        // Custom scrollbar for Safari
+        & *::-webkit-scrollbar {
+            width: map-get($spacers, 1);
+            background: $o-voipCalling-bg-color;
+        }
+
+        & *::-webkit-scrollbar-thumb {
+            border-radius: $border-radius-pill;
+            background: #fff;
+        }
 
         .btn-secondary {
             --#{$prefix}btn-color: #{$o-voipCalling-btn-secondary-color};
@@ -73,6 +88,10 @@
         .form-control:focus {
             background: inherit;
         }
+
+        .bg-view {
+            --#{$prefix}background-color: #{$o-voipCalling-bg-color};
+        }
     }
 
     .o-voip-CallIcon-end {
@@ -89,5 +108,9 @@
 
     .o-voip-countryFlag {
         width: var(--voip__countryFlag-width, #{$o-voip-countryFlag-width});
+    }
+
+    .o-voip-highlighted-letter {
+        color: var(--voipCalling__highlightedLetter-color, #{$primary});
     }
 }

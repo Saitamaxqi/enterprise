@@ -6,5 +6,5 @@ describe.current.tags("headless");
 
 test("highlightMatch", () => {
     const match = highlightMatch("Œdipe Roi", "oed");
-    expect(match.valueOf()).toBe(`<span class="fw-bolder">Œd</span>ipe Roi`);
+    expect(match.valueOf()).toBe(`<span class="o-voip-highlighted-letter fw-bolder">Œd</span>ipe Roi`);
 });

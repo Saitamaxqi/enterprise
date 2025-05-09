@@ -10,7 +10,8 @@ import { url } from "@web/core/utils/urls";
  * associated with the given call.
  */
 export class ContactInfo extends Component {
-    static props = { call: Call };
+    static defaultProps = { extraClass: "" };
+    static props = { call: Call, extraClass: { type: String, optional: true } };
     static template = "voip.ContactInfo";
 
     /** @returns {string} */

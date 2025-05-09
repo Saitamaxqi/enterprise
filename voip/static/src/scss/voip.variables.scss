@@ -12,6 +12,7 @@ $o-voipCalling-btn-light-color: color-contrast($o-voipCalling-btn-light-bg-color
 $o-voipCalling-btn-light-color-active: color-contrast($o-voipCalling-btn-light-bg-color-active);
 $o-voipCalling-btn-light-border-color: $o-voipCalling-btn-secondary-border-color;
 $o-voipCalling-tabEntry-bg-color-hover: #0E131C;
+$o-voipCalling-highlightedLetter-color: #b972a6;
 $o-voip-softphone-z-index: $zindex-modal - 2;
 $o-voip-countryFlag-width: 2em;
 $o-voip-progress-height: map-get($spacers, 1);

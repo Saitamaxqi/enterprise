@@ -1,47 +1,55 @@
 <?xml version="1.0"?>
 <templates>
 <t t-name="voip.InCallView">
-    <div class="o-voip-InCallView d-flex flex-column gap-3 flex-grow-1 p-3">
-        <t t-if="!isKeypadOpen">
-            <ContactInfo call="props.call"/>
-            <div class="d-flex justify-content-center gap-3">
-                <ActionButton
-                    name.translate="Contact"
-                    title.translate="View customer details"
-                    icon="props.call.partner_id ? 'oi-user' : 'oi-user-plus'"
-                    onClick.bind="onClickContact"
-                />
-                <t class="o-voip-InCallView-xpathTarget"/>
-            </div>
-
-            <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-2">
-                <!-- timer -->
-                <span class="fs-2 fw-bold" t-esc="props.call.timerText"/>
-                <!-- Status "On hold" and "Recording" -->
-                <div class="d-flex gap-2">
-                    <!-- <span class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-info">
-                        <i class="oi oi-voice-record"/>
-                        <p class="mb-0 fw-bold">Recording</p>
-                    </span> -->
-                    <span t-if="userAgent.session?.isOnHold" class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-warning">
-                        <i class="fa fa-pause"/>
-                        <p class="mb-0 fw-bold">On hold</p>
-                    </span>
-                </div>
-            </div>
+    <div class="o-voip-InCallView h-100 w-100 d-flex flex-column gap-3">
+        <t t-if="activeView === 'default'">
+            <t t-call="voip.InCallView-default"/>
         </t>
-        <Keypad t-else="" dtmf="true" state="softphone.inCallView.keypad.state"/>
-
-        <!-- buttons -->
-        <div class="o-voip-InCallView-pad grid">
-            <t t-if="!isKeypadOpen">
-                <!-- <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-6'" onClick="() => {}"/> -->
-                <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? 'g-col-12 active' : 'g-col-12'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>
+        <t t-elif="activeView === 'transfer'">
+            <TransferView state="softphone.inCallView.transferView"/>
+        </t>
+        <div class="o-voip-InCallView-pad grid m-3" t-att-class="{ 'mt-0': activeView === 'transfer' }">
+            <t t-if="activeView === 'default' and !isKeypadOpen">
+                <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-6'" onClick.bind="onClickTransfer" disabled="props.call.state !== 'ongoing'"/>
+                <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? 'g-col-6 active' : 'g-col-6'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>
             </t>
-            <ActionButton name.translate="Mute" icon="'fa-microphone-slash'" type="'secondary'" inCallPad="true" extraClass="isMuted ? 'g-col-4 active' : 'g-col-4'" onClick.bind="onClickMute"/>
-            <ActionButton name.translate="Hang up" icon="'o-voip-CallIcon-end fa-phone fa-2x'" type="'danger'" hideLabel="true" inCallPad="true" extraClass="'g-col-4'" onClick.bind="onClickHangUp"/>
-            <ActionButton name.translate="Keypad" icon="'oi-numpad'" inCallPad="true" extraClass="'g-col-4' + (isKeypadOpen ? ' active' : '')" onClick.bind="onClickKeypad"/>
+            <t t-if="activeView === 'default'">
+                <ActionButton name.translate="Mute" icon="'fa-microphone-slash'" type="'secondary'" inCallPad="true" extraClass="isMuted ? 'g-col-4 active' : 'g-col-4'" onClick.bind="onClickMute"/>
+                <ActionButton name.translate="Hang up" icon="'o-voip-CallIcon-end fa-phone fa-2x'" type="'danger'" hideLabel="true" inCallPad="true" extraClass="'g-col-4'" onClick.bind="onClickHangUp"/>
+                <ActionButton name.translate="Keypad" icon="'oi-numpad'" inCallPad="true" extraClass="'g-col-4' + (isKeypadOpen ? ' active' : '')" onClick.bind="onClickKeypad"/>
+            </t>
+            <t t-elif="activeView === 'transfer'">
+                <ActionButton name.translate="Contacts" icon="'oi-user'" type="'secondary'" inCallPad="true" extraClass="softphone.inCallView.transferView.activeView === 'contacts' ? ' active g-col-6' : 'g-col-4'" onClick.bind="onClickTransferContacts"/>
+                <ActionButton t-if="softphone.inCallView.transferView.activeView === 'keypad'" name.translate="Transfer" icon="'oi-transfer fa-2x'" type="'success'" hideLabel="true" inCallPad="true" extraClass="'g-col-4'" onClick.bind="onClickTransferTransfer" disabled="!softphone.inCallView.transferView.keypad.input.value.trim()"/>
+                <ActionButton name.translate="Keypad" icon="'oi-numpad'" inCallPad="true" extraClass="softphone.inCallView.transferView.activeView === 'keypad' ? 'active g-col-4' : 'g-col-6'" onClick.bind="onClickTransferKeypad"/>
+            </t>
         </div>
     </div>
+</t>
+
+<t t-name="voip.InCallView-default">
+    <t t-if="isKeypadOpen">
+        <Keypad dtmf="true" state="softphone.inCallView.keypad.state"/>
+    </t>
+    <t t-else="">
+        <ContactInfo call="props.call" extraClass="'mt-3'"/>
+        <div class="d-flex justify-content-center gap-3">
+            <ActionButton name.translate="Contact" title.translate="View customer details" icon="props.call.partner_id ? 'oi-user' : 'oi-user-plus'" onClick.bind="onClickContact"/>
+            <t class="o-voip-InCallView-xpathTarget"/>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-2">
+            <span class="fs-2 fw-bold" t-esc="props.call.timerText"/>
+            <div class="d-flex gap-2">
+                <!-- <span class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-info">
+                    <i class="oi oi-voice-record"/>
+                    <p class="mb-0 fw-bold">Recording</p>
+                </span> -->
+                <span t-if="userAgent.session?.isOnHold" class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-warning">
+                    <i class="fa fa-pause"/>
+                    <p class="mb-0 fw-bold">On hold</p>
+                </span>
+            </div>
+        </div>
+    </t>
 </t>
 </templates>
