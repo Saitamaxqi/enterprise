@@ -285,6 +285,13 @@ export class BankRecButtonList extends Component {
         return roundDecimals(this.statementLineData.amount, this.currencyDigits) >= 0;
     }
 
+    get isCustomerRankHigher() {
+        return (
+            this.statementLineData.partner_id.customer_rank >
+            this.statementLineData.partner_id.supplier_rank
+        );
+    }
+
     get isSetPartnerButtonShown() {
         return !this.statementLineData.partner_id;
     }
@@ -294,11 +301,11 @@ export class BankRecButtonList extends Component {
     }
 
     get isSetReceivableButtonShown() {
-        return this.isPositiveOr0 && !this.isSetPartnerButtonShown;
+        return !this.isSetPartnerButtonShown && this.isCustomerRankHigher;
     }
 
     get isSetPayableButtonShown() {
-        return !this.isPositiveOr0 && !this.isSetPartnerButtonShown;
+        return !this.isSetPartnerButtonShown && !this.isCustomerRankHigher;
     }
 
     get isReconcileButtonShown() {

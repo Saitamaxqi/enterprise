@@ -47,12 +47,16 @@ export class BankRecKanbanController extends KanbanController {
                     name: "property_account_payable_id",
                     type: "many2one",
                 },
+                customer_rank: { name: "customer_rank", type: "int"},
+                supplier_rank: { name: "supplier_rank", type: "int"},
             },
             activeFields: {
                 id: makeActiveField(),
                 display_name: makeActiveField(),
                 property_account_receivable_id: makeActiveField(),
                 property_account_payable_id: makeActiveField(),
+                customer_rank: makeActiveField(),
+                supplier_rank: makeActiveField(),
             },
         };
 
