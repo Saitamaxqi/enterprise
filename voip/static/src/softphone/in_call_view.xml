@@ -35,8 +35,8 @@
         <!-- buttons -->
         <div class="o-voip-InCallView-pad grid">
             <t t-if="!isKeypadOpen">
-                <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-6'" onClick="() => {}"/>
-                <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? 'g-col-6 active' : 'g-col-6'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>
+                <!-- <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-6'" onClick="() => {}"/> -->
+                <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? 'g-col-12 active' : 'g-col-12'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>
             </t>
             <ActionButton name.translate="Mute" icon="'fa-microphone-slash'" type="'secondary'" inCallPad="true" extraClass="isMuted ? 'g-col-4 active' : 'g-col-4'" onClick.bind="onClickMute"/>
             <ActionButton name.translate="Hang up" icon="'o-voip-CallIcon-end fa-phone fa-2x'" type="'danger'" hideLabel="true" inCallPad="true" extraClass="'g-col-4'" onClick.bind="onClickHangUp"/>
