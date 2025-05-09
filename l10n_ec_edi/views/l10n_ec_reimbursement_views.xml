@@ -33,7 +33,7 @@
                     <group string="Amounts">
                         <group>
                             <field name="tax_base"/>
-                            <field name="tax_id" widget="many2one_tax_tags" string="Tax"/>
+                            <field name="tax_id" string="Tax"/>
                             <field name="tax_amount"/>
                             <field name="total"/>
                         </group>

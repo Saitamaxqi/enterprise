@@ -46,8 +46,7 @@
                                required="not allow_partials or edit_mode"
                                invisible="not is_rec_pay_account or (allow_partials and not edit_mode)"/>
                         <field name="tax_id"
-                               widget="many2one_tax_tags"
-                               context="{'append_type_to_tax_name': True}"
+                               context="{'append_fields': ['type_tax_use']}"
                                invisible="allow_partials and not edit_mode"/>
                         <field name="journal_id"
                                required="not allow_partials or edit_mode"

@@ -51,15 +51,15 @@
                             <div class="content-group">
                                 <div class="row">
                                     <label for="l10n_ec_withhold_goods_tax_id" string="Consumables" class="col-lg-4 o_light_label"/>
-                                    <field name="l10n_ec_withhold_goods_tax_id" widget="many2one_tax_tags" domain="[('tax_group_id.l10n_ec_type', '=', 'withhold_income_purchase'), ('company_id', '=', company_id)]"/>
+                                    <field name="l10n_ec_withhold_goods_tax_id" domain="[('tax_group_id.l10n_ec_type', '=', 'withhold_income_purchase'), ('company_id', '=', company_id)]"/>
                                 </div>
                                 <div class="row">
                                     <label for="l10n_ec_withhold_services_tax_id" string="Services" class="col-lg-4 o_light_label"/>
-                                    <field name="l10n_ec_withhold_services_tax_id" widget="many2one_tax_tags" domain="[('tax_group_id.l10n_ec_type', '=', 'withhold_income_purchase'), ('company_id', '=', company_id)]"/>
+                                    <field name="l10n_ec_withhold_services_tax_id" domain="[('tax_group_id.l10n_ec_type', '=', 'withhold_income_purchase'), ('company_id', '=', company_id)]"/>
                                 </div>
                                 <div class="row">
                                     <label for="l10n_ec_withhold_credit_card_tax_id" string="Credit Card" class="col-lg-4 o_light_label"/>
-                                    <field name="l10n_ec_withhold_credit_card_tax_id" widget="many2one_tax_tags" domain="[('tax_group_id.l10n_ec_type', '=', 'withhold_income_purchase'), ('company_id', '=', company_id)]"/>
+                                    <field name="l10n_ec_withhold_credit_card_tax_id" domain="[('tax_group_id.l10n_ec_type', '=', 'withhold_income_purchase'), ('company_id', '=', company_id)]"/>
                                 </div>
                                 <div class="row">
                                     <span class="col-lg-4 o_light_label">
