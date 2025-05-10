@@ -171,7 +171,7 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
         sub.invoice_ids._post()
         invoice = sub.invoice_ids[-1]
         self.assertEqual(invoice.amount_untaxed, 148.0)
-        self.assertEqual(len(invoice.invoice_line_ids), 6)
+        self.assertEqual(len(invoice.invoice_line_ids), 4)
         self.assertRecordValues(invoice.invoice_line_ids, [
             {'display_type': 'line_section', 'name': 'Products', 'product_id': False},
             {
@@ -186,8 +186,6 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
                 'display_type': 'product', 'product_id': sub_product_onetime_discount.id,
                 'name': 'Initial discount New subscription discount (one-time)',
             },
-            {'display_type': 'line_section', 'name': 'Information', 'product_id': False},
-            {'display_type': 'line_note', 'name': '...', 'product_id': False},
         ])
 
         with freeze_time("2021-02-03"):
@@ -197,7 +195,7 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
         # second invoice, should NOT include one-time discount
         self.assertEqual(len(sub.invoice_ids), 2)
         self.assertEqual(invoice.amount_untaxed, 168.0)
-        self.assertEqual(len(invoice.invoice_line_ids), 5)
+        self.assertEqual(len(invoice.invoice_line_ids), 3)
         self.assertRecordValues(invoice.invoice_line_ids, [
             {'display_type': 'line_section', 'name': 'Products', 'product_id': False},
             {
@@ -208,8 +206,6 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
                 'display_type': 'product', 'product_id': sub_product2.id,
                 'name': 'Subscription #B\n1 Month 02/03/2021 to 03/02/2021',
             },
-            {'display_type': 'line_section', 'name': 'Information', 'product_id': False},
-            {'display_type': 'line_note', 'name': '...', 'product_id': False},
         ])
 
     def test_add_aml_to_invoice(self):
