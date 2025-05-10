@@ -71,7 +71,7 @@
                     </table>
                     <p t-if="spot.get('has_installments')">The withholding has to be paid in the first installment.</p>
                     <p>
-                        <img t-if="extra_edi_vals" class="border border-dark rounded" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', extra_edi_vals['qr_str'], 100, 100)"/>
+                        <img t-if="extra_edi_vals" class="border border-dark rounded" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('QR', extra_edi_vals['qr_str'], 100, 100, 0)"/>
                     </p>
                 </div>
             </xpath>

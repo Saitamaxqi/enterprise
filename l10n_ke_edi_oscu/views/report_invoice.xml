@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-auto col-1 mw-100 mb-2">
                         <p t-if="o.l10n_ke_oscu_signature" class="small mt-1 mb-1">
-                            <img style="display:block;"  t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', quote_plus(o._l10n_ke_oscu_get_receipt_url()), 130, 130)" alt="QR Code"/>
+                            <img style="display:block;"  t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('QR', quote_plus(o._l10n_ke_oscu_get_receipt_url()), 130, 130, 0)" alt="QR Code"/>
                         </p>
                     </div>
                 </div>

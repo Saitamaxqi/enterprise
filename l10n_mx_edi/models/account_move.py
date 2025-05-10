@@ -408,7 +408,7 @@ class AccountMove(models.Model):
         )
         barcode_sello = url_quote_plus(cfdi_infos['sello'][-8:], safe='=/').replace('%2B', '+')
         barcode_value = url_quote_plus(f'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?{barcode_value_params}&fe={barcode_sello}')
-        barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180'
+        barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180&quiet=0'
 
         return {
             **cfdi_infos,

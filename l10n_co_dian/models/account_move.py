@@ -235,7 +235,7 @@ class AccountMove(models.Model):
         self.ensure_one()
         document = self.l10n_co_dian_document_ids.sorted()[:1]
         return {
-            'barcode_src': f'/report/barcode/?barcode_type=QR&value="{self._l10n_co_dian_get_invoice_report_qr_code_value()}"&width=180&height=180',
+            'barcode_src': f'/report/barcode/?barcode_type=QR&value="{self._l10n_co_dian_get_invoice_report_qr_code_value()}"&width=180&height=180&quiet=0',
             'signing_datetime': document.datetime.replace(microsecond=0),
             'identifier': document.identifier,
         }
