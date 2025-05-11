@@ -1,15 +1,28 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import logging
+
 from contextlib import contextmanager
 from freezegun import freeze_time
 from unittest.mock import patch
 
+from odoo import fields
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.addons.mass_mailing.tests.common import MassMailCase, MassMailCommon
 
+_logger = logging.getLogger(__name__)
+
 
 class MarketingAutomationCase(MassMailCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        # store MA crons on cls, always handy to have them available without ref
+        cls.cron_ma_sync_participants = cls.env.ref('marketing_automation.ir_cron_campaign_sync_participants')
+        cls.cron_ma_execute_activities = cls.env.ref('marketing_automation.ir_cron_campaign_execute_activities')
 
     @contextmanager
     def mock_datetime_and_now(self, mock_dt):
@@ -24,7 +37,7 @@ class MarketingAutomationCase(MassMailCase):
     # TOOLS AND ASSERTS
     # ------------------------------------------------------------
 
-    def assertMarketAutoTraces(self, participants_info, activity, strict=True, **trace_values):
+    def assertMarketAutoTraces(self, participants_info, activity, strict=True, canceled_res_ids=None, **trace_values):
         """ Check content of traces.
 
         :param participants_info: [{
@@ -39,7 +52,7 @@ class MarketingAutomationCase(MassMailCase):
             'fields_values': dict                         # optional fields values to check on marketing.trace
             # mailing/sms trace
             'trace_author': author of mail/sms            # used notably to ease finding emails / sms
-            'trace_content': content of mail/sms          # content of sent mail / sms
+            'trace_content': content of mail/sms          # content of sent mail / sms / whatsapp
             'trace_email': email logged on trace          # may differ from 'email_normalized'
             'trace_email_to_mail': email logged on mail   # for assertMailMail
             'trace_email_to_recipients': email            # for assertSentEmail
@@ -47,6 +60,12 @@ class MarketingAutomationCase(MassMailCase):
             'trace_status': status of mailing trace,      # if not set: check there is no mailing trace
             'mail_values': mail.mail check                # for assertMailMail
         }, {}, ... ]
+        :param activity: a marketing.activity on which marketing traces are about
+            to be checked, as well as sub records like mailing.trace if requested
+            by status;
+        :param strict: whether activity traces must match given records IDs;
+        :param canceled_res_ids: quick check for canceled marketing traces not given
+            in participants_info (e.g. unlinked records, quick validation, ...);
         """
         all_records = self.env[activity.campaign_id.model_name]
         for info in participants_info:
@@ -61,26 +80,36 @@ class MarketingAutomationCase(MassMailCase):
             record = all_records.filtered(lambda r: r.id == trace.res_id)
             if record:
                 traces_info.append(
-                    f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} - status {trace.state} '
-                    f'(rec {record.id}, {record.name} - email_normalized {record.email_normalized})'
+                    f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} ({trace.activity_id.activity_type}) - status {trace.state} '
+                    f'(rec {record.id}, {record.display_name} - email_normalized {record.email_normalized})'
                 )
             else:
                 traces_info.append(
-                    f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} - status {trace.state} (no record info)'
+                    f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} ({trace.activity_id.activity_type}) - status {trace.state} (no record info)'
                 )
         debug_info = '\n'.join(traces_info)
 
         # check traces / records coherency through campaign
+        canceled_res_ids = canceled_res_ids or set()
+        all_record_ids = set(all_records.ids) | canceled_res_ids
         if strict:
             self.assertEqual(
-                set(traces.mapped('res_id')), set(all_records.ids),
+                set(traces.mapped('res_id')), all_record_ids,
                 f'Should find one trace / record. Found\n{debug_info}'
             )
             self.assertEqual(
-                len(traces), len(all_records),
+                len(traces), len(all_records) + len(canceled_res_ids),
                 f'Should find one trace / record. Found\n{debug_info}'
             )
+        else:
+            self.assertTrue(set(all_record_ids) < set(traces.mapped('res_id')))
+        for canceled_res_id in canceled_res_ids:
+            linked_trace = traces.filtered(lambda t: t.res_id == canceled_res_id)
+            self.assertTrue(linked_trace)
+            self.assertEqual(linked_trace.state, 'canceled')
 
+        if trace_values:
+            _logger.warning('Not supported anymore, please update tests')
         for key, value in (trace_values or {}).items():
             self.assertEqual(set(traces.mapped(key)), set([value]))
 
@@ -98,6 +127,8 @@ class MarketingAutomationCase(MassMailCase):
                 'trace_failure_reason', 'trace_failure_type',
                 'trace_status',  # mailing.trace status
                 'mail_values',
+                # whatsapp (see wa modules)
+                'wa_from_mock',
             }
             if invalid:
                 raise AssertionError(f"assertMarketAutoTraces: invalid input {invalid}")
@@ -135,55 +166,58 @@ class MarketingAutomationCase(MassMailCase):
                             )
 
             # check sub-records (mailing related notably)
-            if info.get('trace_status'):
-                if activity.mass_mailing_id.mailing_type == 'mail':
-                    # prepare optional record-specific values
-                    partners = info.get('records_to_partner', {})
-                    trace_emails = info.get('records_to_trace_email', {})
-                    mail_emails = info.get('records_to_email_to_mail', {})
-                    email_emails = info.get('records_to_email_to_recipients', {})
-                    statuses = info.get('records_to_trace_status', {})
-                    records_add_info = []
-                    for record in info['records']:
-                        add_info = {
-                            'email': trace_emails.get(record.id, info.get('trace_email', record.email_normalized)),
-                            'partner': partners.get(record.id) or self.env['res.partner'],
-                            'trace_status': statuses.get(record.id) or info['trace_status'],
-                        }
-
-                        if record.id in mail_emails:
-                            add_info['email_to_mail'] = mail_emails[record.id]
-                        elif 'trace_email_to_mail' in info:
-                            add_info['email_to_mail'] = info['trace_email_to_mail']
-                        elif not partners.get(record.id):
-                            add_info['email_to_mail'] = record[record._primary_email] or ''
-
-                        if record.id in email_emails:
-                            add_info['email_to_recipients'] = email_emails[record.id]
-                        elif 'trace_email_to_recipients' in info:
-                            add_info['email_to_recipients'] = info['trace_email_to_recipients']
-                        records_add_info.append(add_info)
-                    self.assertMailTraces(
-                        [{
-                            # record info
-                            'record': record,
-                            # mail.mail
-                            'content': info.get('trace_content'),
-                            'failure_type': info.get('trace_failure_type', False),
-                            'failure_reason': info.get('trace_failure_reason', False),
-                            'mail_values': info.get('mail_values'),
-                            # mailing.trace + mail info
-                            **add_info,
-                         } for record, add_info in zip(info['records'], records_add_info)
-                        ],
-                        activity.mass_mailing_id,
-                        info['records'],
-                    )
-            else:
+            if info.get('trace_status') and activity.activity_type == 'mail':
+                self.assertMarketAutoTracesMail(info, activity, traces)
+            elif not info.get('trace_status'):
                 self.assertEqual(linked_traces.mailing_trace_ids, self.env['mailing.trace'])
 
             if info.get('participants'):
                 self.assertEqual(traces.participant_id, info['participants'])
+        return traces
+
+    def assertMarketAutoTracesMail(self, participant_info, activity, traces):
+        # prepare optional record-specific values
+        partners = participant_info.get('records_to_partner', {})
+        trace_emails = participant_info.get('records_to_trace_email', {})
+        mail_emails = participant_info.get('records_to_email_to_mail', {})
+        email_emails = participant_info.get('records_to_email_to_recipients', {})
+        statuses = participant_info.get('records_to_trace_status', {})
+        records_add_info = []
+        for record in participant_info['records']:
+            add_info = {
+                'email': trace_emails.get(record.id, participant_info.get('trace_email', record.email_normalized)),
+                'partner': partners.get(record.id) or self.env['res.partner'],
+                'trace_status': statuses.get(record.id) or participant_info['trace_status'],
+            }
+
+            if record.id in mail_emails:
+                add_info['email_to_mail'] = mail_emails[record.id]
+            elif 'trace_email_to_mail' in participant_info:
+                add_info['email_to_mail'] = participant_info['trace_email_to_mail']
+            elif not partners.get(record.id):
+                add_info['email_to_mail'] = record[record._primary_email] or ''
+
+            if record.id in email_emails:
+                add_info['email_to_recipients'] = email_emails[record.id]
+            elif 'trace_email_to_recipients' in participant_info:
+                add_info['email_to_recipients'] = participant_info['trace_email_to_recipients']
+            records_add_info.append(add_info)
+        self.assertMailTraces(
+            [{
+                # record info
+                'record': record,
+                # mail.mail
+                'content': participant_info.get('trace_content'),
+                'failure_type': participant_info.get('trace_failure_type', False),
+                'failure_reason': participant_info.get('trace_failure_reason', False),
+                'mail_values': participant_info.get('mail_values'),
+                # mailing.trace + mail info
+                **add_info,
+                } for record, add_info in zip(participant_info['records'], records_add_info)
+            ],
+            activity.mass_mailing_id,
+            participant_info['records'],
+        )
 
     def assertActivityWoTrace(self, activities):
         """ Ensure activity has no traces linked to it """
@@ -235,7 +269,7 @@ class MarketingAutomationCase(MassMailCase):
         return cls.env['ir.actions.server'].create(vals)
 
     @classmethod
-    def _create_activity(cls, campaign, mailing=None, action=None, **act_values):
+    def _create_activity(cls, campaign, mailing=None, wa_template=None, action=None, **act_values):
         vals = {}
         if mailing:
             if mailing.mailing_type == 'mail':
@@ -248,6 +282,11 @@ class MarketingAutomationCase(MassMailCase):
                     'mass_mailing_id': mailing.id,
                     'activity_type': 'sms',
                 })
+        elif wa_template:
+            vals.update({
+                'activity_type': 'whatsapp',
+                'whatsapp_template_id': wa_template.id,
+            })
         elif action:
             vals.update({
                 'server_action_id': action.id,
@@ -275,6 +314,11 @@ class MarketingAutomationCase(MassMailCase):
         new_sa = cls._create_server_action(campaign.model_name, code, **(sa_values or {}))
         return cls._create_activity(campaign, action=new_sa, **(act_values or {}))
 
+    @classmethod
+    def _create_activity_wa(cls, campaign, user=None, template_values=None, act_values=None):
+        new_wa_template = cls._create_wa_template(campaign.model_name, user=user, **(template_values or {}))
+        return cls._create_activity(campaign, wa_template=new_wa_template, **(act_values or {}))
+
     def _force_activity_create_date(self, activities, create_date):
         """ As create_date is set through sql NOW it is not possible to mock
         it easily. """
@@ -282,6 +326,11 @@ class MarketingAutomationCase(MassMailCase):
             "UPDATE marketing_activity SET create_date=%s WHERE id IN %s",
             (create_date, tuple(activities.ids),)
         )
+
+    def _launch_campaign(self, campaign, date_reference=None):
+        with self.mock_datetime_and_now(date_reference or fields.Datetime.now()):
+            campaign.action_start_campaign()
+            campaign.sync_participants()
 
 
 class MarketingAutomationCommon(MarketingAutomationCase, MassMailCommon):

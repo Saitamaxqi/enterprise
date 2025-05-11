@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from freezegun import freeze_time
-
 from odoo.addons.base.tests.test_ir_cron import CronMixinCase
 from odoo.addons.test_marketing_automation.tests.common import TestMACommon
 from odoo.fields import Datetime
@@ -52,7 +50,7 @@ class TestMassMailing(CronMixinCase, TestMACommon):
 
         trace_test_1 = self.env['marketing.trace'].search([('participant_id', '=', new_participant_1.id)])
         trace_test_1.flush_recordset()
-        with freeze_time(self.date_reference), self.mock_mail_gateway(mail_unlink_sent=False):
+        with self.mock_datetime_and_now(self.date_reference), self.mock_mail_gateway(mail_unlink_sent=False):
             trace_test_1.action_execute()
         self.assertEqual(len(self._mails), 1)
 
@@ -66,20 +64,18 @@ class TestMassMailing(CronMixinCase, TestMACommon):
 
         trace_test_2 = self.env['marketing.trace'].search([('participant_id', '=', new_participant_2.id)])
         trace_test_2.flush_recordset()
-        with freeze_time(self.date_reference), self.mock_mail_gateway(mail_unlink_sent=False):
+        with self.mock_datetime_and_now(self.date_reference), self.mock_mail_gateway(mail_unlink_sent=False):
             trace_test_2.action_execute()
         self.assertEqual(len(self._mails), 1, 'test1 should have received an email')
 
         # normal campaign flow
-        with freeze_time(self.date_reference):
-            campaign.action_start_campaign()
-            campaign.sync_participants()
+        self._launch_campaign(campaign, date_reference=self.date_reference)
 
         self.assertEqual(len(activity.trace_ids), 4)
         self.assertEqual(
             activity.trace_ids.mapped('participant_id'),
             campaign.participant_ids,
         )
-        with freeze_time(self.date_reference), self.mock_mail_gateway(mail_unlink_sent=False):
+        with self.mock_datetime_and_now(self.date_reference), self.mock_mail_gateway(mail_unlink_sent=False):
             activity.execute_on_traces(activity.trace_ids)
         self.assertEqual(len(self._mails), 2, 'Should have sent 2 emails.')

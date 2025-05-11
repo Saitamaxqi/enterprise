@@ -8,6 +8,7 @@ from odoo.tests import tagged, users
 
 @tagged("marketing_automation", "utm")
 class TestMarketingCampaign(MarketingAutomationCommon):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

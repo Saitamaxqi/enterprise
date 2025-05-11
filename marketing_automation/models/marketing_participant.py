@@ -4,7 +4,6 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.fields import Datetime
 from odoo.osv.expression import NEGATIVE_TERM_OPERATORS
 
 
@@ -90,7 +89,7 @@ class MarketingParticipant(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         participants = super().create(vals_list)
-        now = Datetime.now()
+        now = self.env.cr.now()
         cron_trigger_dates = set()
         for res in participants:
             # prepare first traces related to begin activities
@@ -126,7 +125,7 @@ class MarketingParticipant(models.Model):
             ('state', '=', 'scheduled')
         ]).write({
             'state': 'canceled',
-            'schedule_date': Datetime.now(),
+            'schedule_date': self.env.cr.now(),
             'state_msg': _('Marked as completed')
         })
 

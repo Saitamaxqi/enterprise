@@ -122,7 +122,6 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
             stack.enter_context(self.mockSMSGateway())
             stack.enter_context(self.mock_mail_gateway())
             stack.enter_context(self.mockWhatsappGateway())
-            stack.enter_context(self.enter_registry_test_mode())
             capture = stack.enter_context(self.capture_triggers('event.event_mail_scheduler'))
             cron.method_direct_trigger()
             return capture

@@ -37,7 +37,7 @@ class SyncingCase(MarketingAutomationCommon):
         cls.env.flush_all()
 
 
-@tagged('marketing_automation')
+@tagged('marketing_automation', 'ma_sync')
 class TestDuplicate(SyncingCase):
     """ Test workflow when having duplicate participants or traces. This may
     happen in several occasions, and we should be defensive with duplicates. """
@@ -119,7 +119,7 @@ class TestDuplicate(SyncingCase):
         self.assertEqual(activity_1.total_sent, 4)
 
 
-@tagged('marketing_automation')
+@tagged('marketing_automation', 'ma_sync')
 class TestSyncing(SyncingCase):
     """ Test various cases of synchronization, notably to avoid creating
     duplicate traces. """
@@ -172,12 +172,11 @@ class TestSyncing(SyncingCase):
             marketing_campaign,
             act_values={
                 'parent_id': parent_activity.id,
-                'trigger_type': 'mail_open',
+                'trigger_type': 'mail_not_open',
             },
         )
 
-        marketing_campaign.action_start_campaign()
-        marketing_campaign.sync_participants()
+        self._launch_campaign(marketing_campaign)
         with self.mock_datetime_and_now(self.date_reference):
             [trace.action_execute() for trace in parent_activity.trace_ids]
         self.assertEqual(len(child_activity.trace_ids), len(self.test_contacts))
@@ -209,6 +208,8 @@ class TestSyncing(SyncingCase):
         self.assertEqual(campaign.completed_participant_count, 0)
         self.assertEqual(campaign.total_participant_count, 0)
         self.assertEqual(campaign.test_participant_count, 0)
+        # records
+        self.assertEqual(len(self.test_contacts), 10)
 
     @users('user_marketing_automation')
     def test_campaign_action_update_participants_no_last_sync_date(self):
@@ -286,6 +287,33 @@ class TestSyncing(SyncingCase):
                 'status': 'scheduled',
             }],
             self.activity_1,
+        )
+        # should not generate traces for other activities
+        self.assertActivityWoTrace(self.activity_2)
+
+        # create 5 records, remove 5 records, check trace status
+        new_contacts = self.env['mailing.contact'].create([
+            {
+                'country_id': self.env.ref('base.be').id,
+                'email': f'new.ma.test.contact.{idx}@example.com',
+                'name': f'MATest_{idx}_new',
+            }
+            for idx in range(5)
+        ])
+        self.test_contacts[:5].unlink()
+        with self.mock_datetime_and_now(self.date_reference + timedelta(hours=1)):
+            campaign.sync_participants()
+        # create / updated traces
+        self.assertMarketAutoTraces(
+            [{
+                'records': self.test_contacts[5:],
+                'status': 'scheduled',
+            }, {
+                'records': new_contacts,
+                'status': 'scheduled',
+            }],
+            self.activity_1,
+            canceled_res_ids=set(self.test_contacts[:5].ids),
         )
         # should not generate traces for other activities
         self.assertActivityWoTrace(self.activity_2)

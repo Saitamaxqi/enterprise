@@ -1,5 +1,4 @@
 from odoo import fields, models, _
-from odoo.fields import Datetime
 from odoo.osv import expression
 
 
@@ -46,7 +45,7 @@ class WhatsappMessage(models.Model):
         if trace:
             trace.write({
                     'state': 'canceled',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': self.env.cr.now(),
                     'state_msg': _('WhatsApp canceled')
             })
             if self.state == 'bounced':

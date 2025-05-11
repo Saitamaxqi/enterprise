@@ -182,42 +182,44 @@ class MarketingCampaign(models.Model):
         return super().write(vals)
 
     def action_set_synchronized(self):
+        """ Reset campaign and activities 'need synchronization' flags. """
         self.write({'last_sync_date': self.env.cr.now()})
         self.mapped('marketing_activity_ids').write({'require_sync': False})
 
     def action_update_participants(self):
-        """ Synchronizes all participants based campaign activities demanding synchronization
-        It is done in 2 part:
+        """ Synchronizes all participants traces based on activities requiring
+        synchronization aka it mainly creates and updates 'marketing.trace'
+        records. It is done in 2 steps:
 
-         * update traces related to updated activities. This means basically recomputing the
-           schedule date
-         * creating new traces for activities recently added in the workflow :
+         * update traces related to activities requiring sync, based on their
+           ``require_sync`` field. For those we update ``schedule date``.
+         * create traces for new activities added in the workflow, aka created
+           after campaign ``last_sync_date``:
+          * 'begin' activities: create traces for all running participants;
+          * other activities: create child for traces linked to the parent of
+            the newly created activity
+          * for 'not' triggers take into account brother traces that are already
+            processed e.g. do not schedule 'mail_not_open' if 'mail_open' is
+            already processed;
 
-          * 'begin' activities simple create new traces for all running participants;
-          * other activities: create child for traces linked to the parent of the newly created activity
-          * we consider scheduling to be done after parent processing, independently of other time considerations
-          * for 'not' triggers take into account brother traces that could be already processed
+        Note that scheduling is done right after parent processing independently
+        of other time considerations.
+
+        This sets both campaign and all activities to be synchronized. It is
+        used mainly on campaign form view, when activities have been modified
+        by marketing users.
         """
         now = self.env.cr.now()
+
         for campaign in self:
             # Action 1: On activity modification
-            modified_activities = campaign.marketing_activity_ids.filtered(lambda activity: activity.require_sync)
+            modified_activities = campaign.marketing_activity_ids.filtered(
+                lambda activity: activity.require_sync
+            )
             traces_to_reschedule = self.env['marketing.trace'].search([
                 ('state', '=', 'scheduled'),
                 ('activity_id', 'in', modified_activities.ids)])
-            for trace in traces_to_reschedule:
-                trace_offset = relativedelta(**{trace.activity_id.interval_type: trace.activity_id.interval_number})
-                trigger_type = trace.activity_id.trigger_type
-                if trigger_type == 'begin':
-                    trace.schedule_date = Datetime.from_string(trace.participant_id.create_date) + trace_offset
-                elif trigger_type in ['activity', 'mail_not_open', 'mail_not_click', 'mail_not_reply'] and trace.parent_id:
-                    trace.schedule_date = Datetime.from_string(trace.parent_id.schedule_date) + trace_offset
-                elif trace.parent_id:
-                    if trace.parent_id.mailing_trace_ids.mapped('write_date'):
-                        process_dt = Datetime.from_string(trace.parent_id.mailing_trace_ids.mapped('write_date')[0])
-                    else:
-                        process_dt = now
-                    trace.schedule_date = process_dt + trace_offset
+            traces_to_reschedule._update_schedule_date()
 
             # Action 2: On activity creation
             created_activities = campaign.marketing_activity_ids.filtered(
@@ -287,7 +289,7 @@ class MarketingCampaign(models.Model):
 
         # trigger CRON job ASAP so that participants are synced
         cron = self.env.ref('marketing_automation.ir_cron_campaign_sync_participants')
-        cron._trigger(at=Datetime.now())
+        cron._trigger(at=self.env.cr.now())
         self.write({'state': 'running'})
 
     def action_stop_campaign(self):
@@ -321,8 +323,23 @@ class MarketingCampaign(models.Model):
         return action
 
     def sync_participants(self):
-        """ Creates new participants, taking into account already-existing ones
-        as well as campaign filter and unique field. """
+        """ Synchronize campaign participants, based on records in DB. New
+        participants are created taking into account campaign filter and unique
+        field. Note that traces for 'begin' activities are created when
+        creating participants.
+
+        If records have been unlinked since last synchornization, matching
+        participants are set as removed.
+
+        It also updates ``last_sync_date`` that is used to know if a new
+        synchronization is necessary, based on activities 'require_sync'
+        flag.
+
+        This method is called by a cron mainly. It can be called manually on
+        campaign form view.
+
+        :return: new participants to the campaign
+        """
         def _uniquify_list(seq):
             seen = set()
             return [x for x in seq if x not in seen and not seen.add(x)]
@@ -390,6 +407,9 @@ class MarketingCampaign(models.Model):
         return participants
 
     def execute_activities(self):
+        """ Execute activities by fetching all scheduled traces and execute them
+        if their deadline is in the past. Called by cron or manually on campaign
+        form view. """
         for campaign in self:
             campaign.marketing_activity_ids.execute()
 

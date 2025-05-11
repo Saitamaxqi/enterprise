@@ -4,7 +4,6 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.fields import Datetime
 
 
 class MarketingTrace(models.Model):
@@ -54,7 +53,7 @@ class MarketingTrace(models.Model):
         self.action_cancel(message=_('Manually'))
 
     def action_cancel(self, message=None):
-        values = {'state': 'canceled', 'schedule_date': Datetime.now()}
+        values = {'state': 'canceled', 'schedule_date': self.env.cr.now()}
         if message:
             values['state_msg'] = message
         self.write(values)
@@ -65,19 +64,21 @@ class MarketingTrace(models.Model):
 
     # DANE: try to make this function to work on batches later
     def process_event(self, action):
-        """Process event coming from customers currently centered on email actions.
-        It updates child traces :
+        """ Process event coming from customers. It updates child traces :
 
-         * opposite actions are canceled, for example mail_not_open when mail_open is triggered;
-         * bounced mail cancel all child actions not being mail_bounced;
+         * child trace matching action is scheduled or executed depending on
+           time interval configuration;
+         * opposite actions are canceled
+           e.g. mail_not_open is canceled if mail_open is triggered
+           e.g. mail_bounce cancels all child actions not being mail_bounced;
 
-        :param string action: see trigger_type field of activity
+        :param string action: one of ``trigger_type`` of marketing activity
         """
         self.ensure_one()
         if self.participant_id.campaign_id.state not in ['draft', 'running']:
             return
 
-        now = Datetime.from_string(Datetime.now())
+        now = self.env.cr.now()
         msg = {
             'mail_not_reply': _('Parent activity mail replied'),
             'mail_not_click': _('Parent activity mail clicked'),
@@ -122,3 +123,33 @@ class MarketingTrace(models.Model):
             ).action_cancel(message=msg[action])
 
         return True
+
+    def _update_schedule_date(self):
+        """ Update scheduled date of traces, based on activity interval fields
+        update. Rationale
+
+          * begin activities: offset is based on participant creation e.g.
+            2 days after entering the campaign;
+          * reschedule triggers: based on parent trace scheduled date e.g.
+            mail_not_open triggered 2 days after sending the mailing aka the
+            parent activity;
+          * other triggers: reschedule only if already scheduled, based on a
+            master record e.g. 2 days after opening an email is based on the
+            mailing trace;
+        """
+        reschedule_types = self.env["marketing.activity"]._get_reschedule_trigger_types()
+        for trace in self:
+            base_dt_str = False
+            trace_offset = relativedelta(**{trace.activity_id.interval_type: trace.activity_id.interval_number})
+            # begin: based on participant creation as it is their first one
+            if trace.activity_id.trigger_type == 'begin':
+                base_dt_str = trace.participant_id.create_date
+            # reschedule (mail_not_open, ...) -> based on parent
+            elif trace.trigger_type in reschedule_types:
+                base_dt_str = trace.parent_id.schedule_date or trace.parent_id.mailing_trace_ids[0].write_date or trace.participant_id.create_date
+            # other (mail_open, ...): update only already scheduled traces, other unscheduled should stay as it
+            elif trace.schedule_date and trace.parent_id.mailing_trace_ids:
+                base_dt_str = trace.parent_id.mailing_trace_ids[0].write_date
+
+            if base_dt_str:
+                trace.schedule_date = fields.Datetime.from_string(base_dt_str) + trace_offset
