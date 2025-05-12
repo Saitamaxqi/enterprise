@@ -426,14 +426,32 @@ class AccountReconcileWizard(models.TransientModel):
                 )
             wizard.lock_date_violated_warning_message = lock_date_violated_warning_message
 
-    @api.depends('company_id')
+    @api.depends('company_id', 'move_line_ids.partner_id', 'amount')
     def _compute_reco_model_autocomplete_ids(self):
-        """ Computes available reconcile models, we only take models that are of type 'writeoff_button'
-        and that have one (and only one) line.
+        """ Computes available reconcile models, we only take models that
+        and that have one (and only one) line, that have partners or amount that match the ones of the entries.
         """
         for wizard in self:
             domain = [
-                ('company_id', '=', wizard.company_id.id)
+                ('company_id', '=', wizard.company_id.id),
+                '|',
+                ('match_partner_ids', '=', False),
+                ('match_partner_ids', 'any', [('id', 'in', wizard.move_line_ids.partner_id.ids)]),
+                '|',
+                ('match_amount', '=', False),
+                '|',
+                '&',
+                ('match_amount', '=', 'lower'),
+                ('match_amount_max', '>', wizard.amount),
+                '|',
+                '&',
+                ('match_amount', '=', 'greater'),
+                ('match_amount_min', '<', wizard.amount),
+                '&',
+                ('match_amount', '=', 'between'),
+                '&',
+                ('match_amount_min', '<', wizard.amount),
+                ('match_amount_max', '>', wizard.amount),
             ]
             query = self.env['account.reconcile.model']._where_calc(domain)
             reco_model_ids = [r[0] for r in self.env.execute_query(SQL("""
@@ -451,10 +469,8 @@ class AccountReconcileWizard(models.TransientModel):
     def _onchange_reco_model_id(self):
         """ We prefill the write-off data with the reconcile model selected. """
         if self.reco_model_id:
-            self.to_check = self.reco_model_id.to_check
             self.label = self.reco_model_id.line_ids.label
             self.tax_id = self.reco_model_id.line_ids.tax_ids[0] if self.reco_model_id.line_ids[0].tax_ids else None
-            self.journal_id = self.reco_model_id.line_ids.journal_id  # we limited models to those with one and only one line
             self.account_id = self.reco_model_id.line_ids.account_id
 
     # ==== Python constrains ====
