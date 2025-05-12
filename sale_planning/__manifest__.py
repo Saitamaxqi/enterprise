@@ -18,6 +18,7 @@ Plan shifts and keep an eye on the hours consumed on your plannable products.
     'data': [
         'security/ir.model.access.csv',
         'security/sale_planning_security.xml',
+        'data/planning_role_data.xml',
         'views/planning_role_views.xml',
         'views/planning_slot_views.xml',
         'views/planning_templates.xml',
