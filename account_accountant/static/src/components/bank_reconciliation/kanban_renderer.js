@@ -162,14 +162,14 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         const statementGroups = {};
         let lastStatementId = null;
         for (const record of this.env.model.root.records) {
-            const statementId = record.data.statement_id?.[0];
+            const statementId = record.data.statement_id?.id;
             if (statementId && statementId !== lastStatementId) {
                 // Add the statement group information to the statementGroups object
                 statementGroups[record.data.id] = {
                     statementId: statementId,
                     name: record.data.statement_name,
                     balance: formatMonetary(record.data.statement_balance_end_real, {
-                        currencyId: record.data.currency_id[0],
+                        currencyId: record.data.currency_id.id,
                     }),
                     isValid: record.data.statement_complete && record.data.statement_valid,
                 };

@@ -83,7 +83,7 @@ export class BankRecStatementLine extends KanbanRecord {
     }
 
     get formattedAmount() {
-        const currencyId = this.recordData.currency_id[0];
+        const currencyId = this.recordData.currency_id.id;
         return formatMonetary(this.recordData.amount, { currencyId });
     }
 

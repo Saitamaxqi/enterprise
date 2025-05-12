@@ -39,7 +39,7 @@ export class BankRecButtonList extends Component {
         this.orm = useService("orm");
 
         this.addDialog = useOwnedDialogs();
-        this.currencyDigits = getCurrency(this.statementLineData.currency_id[0])?.digits || 2;
+        this.currencyDigits = getCurrency(this.statementLineData.currency_id.id)?.digits || 2;
         this.bankReconciliation = useBankReconciliation();
     }
 
