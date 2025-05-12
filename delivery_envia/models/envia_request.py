@@ -53,7 +53,7 @@ class Envia:
         self.session = requests.Session()
         self.carrier = carrier
         self.debug_logger = debug_logger
-        self.token = carrier.envia_production_api_key if prod_environment else carrier.envia_sandbox_api_key
+        self.token = carrier.sudo().envia_production_api_key if prod_environment else carrier.sudo().envia_sandbox_api_key
 
     def _make_api_request(self, endpoint, is_query=False, geolocate=False, method='GET', data=None, params=None):
         """ Make an api call, return response for multiple api requests of Envia"""
