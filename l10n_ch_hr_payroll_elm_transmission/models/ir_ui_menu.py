@@ -15,6 +15,5 @@ class IrUiMenu(models.Model):
             res.append(self.env.ref('hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root').id)
             res.append(self.env.ref('hr_work_entry_contract_enterprise.menu_hr_work_entry_type_view').id)
             res.append(self.env.ref('hr_payroll.menu_hr_work_entry_report').id)
-            res.append(self.env.ref('hr_payroll.menu_hr_salary_configuration').id)
             res.append(self.env.ref('hr_payroll.menu_report_payroll').id)
         return res
