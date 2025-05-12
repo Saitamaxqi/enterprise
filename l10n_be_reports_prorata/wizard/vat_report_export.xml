@@ -6,6 +6,17 @@
             <field name="model">l10n_be_reports.vat.return.submission.wizard</field>
             <field name="inherit_id" ref="l10n_be_reports.vat_return_submission_wizard_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='need_ec_sales_list']" position="after">
+                    <div class="alert alert-warning oe_edit_only" role="alert"
+                        invisible="special_prorata_deduction == 0
+                                   or special_prorata_1 != 0
+                                   or special_prorata_2 != 0
+                                   or special_prorata_3 != 0
+                                   or special_prorata_4 != 0
+                                   or special_prorata_5 != 0">
+                        If the field '% Special pro rata deduction' is filled, one of the fields 'Special pro rata' must be filled
+                    </div>
+                </xpath>
                 <xpath expr="//span[@id='ask_restitution_field']" position="after">
                     <span class="o_stat_text" invisible="not show_prorata"><label for="is_prorata_necessary"/></span>
                     <span class="o_stat_value ms-2 me-3" invisible="not show_prorata"><field name="is_prorata_necessary"/></span>

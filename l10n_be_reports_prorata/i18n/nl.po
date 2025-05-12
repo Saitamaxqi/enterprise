@@ -59,8 +59,17 @@ msgstr "Definitieve pro rata moet een geheel getal zijn tussen 1 en 100"
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__submit_more
-msgid "I want to submit more than 5 specific pro rata"
-msgstr "Ik wil meer dan 5 specifieke pro rata indienen"
+msgid "I want to submit more than 5 specific prorata"
+msgstr "Ik wil meer dan 5 specifieke pro rata's indienen"
+
+#. module: l10n_be_reports_prorata
+#: model_terms:ir.ui.view,arch_db:l10n_be_reports_prorata.view_account_financial_report_export
+msgid ""
+"If the field '% Special pro rata deduction' is filled, one of the fields 'Special pro "
+"rata' must be filled"
+msgstr ""
+"Als het veld 'Pro rata gebruik met % variabel' is ingevuld, moet één van de velden 'Speciaal pro "
+"rata' worden ingevuld"
 
 #. module: l10n_be_reports_prorata
 #. odoo-python
@@ -110,6 +119,11 @@ msgid "Special Prorata 5"
 msgstr "Speciaal Prorata 5"
 
 #. module: l10n_be_reports_prorata
+#: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_deduction
+msgid "Special Prorata Deduction %"
+msgstr "Speciale pro rata aftrek %"
+
+#. module: l10n_be_reports_prorata
 #. odoo-python
 #: code:addons/l10n_be_reports_prorata/wizard/vat_report_export.py:0
 #, python-format
@@ -124,18 +138,3 @@ msgstr "Het gebruikspercentage en het speciale pro rata moeten waarden hebben tu
 #, python-format
 msgid "The sum of the prorata uses must be 100%"
 msgstr "De som van het pro rata gebruik moet 100% zijn"
-
-#. module: l10n_be_reports_prorata
-#: model_terms:ir.ui.view,arch_db:l10n_be_reports_prorata.vat_export_prorata
-msgid "true"
-msgstr "true"
-
-#. module: l10n_be_reports_prorata
-#: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_deduction
-msgid "Special Prorata Deduction %"
-msgstr "Speciale pro rata aftrek %"
-
-#. module: l10n_be_reports_prorata
-#: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__submit_more
-msgid "I want to submit more than 5 specific prorata"
-msgstr "Ik wil meer dan 5 specifieke pro rata's indienen"

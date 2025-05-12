@@ -5,7 +5,7 @@
             <AdjustedPeriod t-out="prorata_year"/>
             <AdjustedValue t-out="prorata"/>
             <SpecialAdjustedValue t-if="prorata_at_100 or prorata_at_0 or special_prorata_deduction">
-                <moreSpecialProrata t-if="submit_more">true</moreSpecialProrata>
+                <moreSpecialProrata t-out="str(submit_more).lower()"/>
                 <UseProRataPercentage t-att-GridNumber="1" t-out="prorata_at_100"/>
                 <UseProRataPercentage t-att-GridNumber="2" t-out="prorata_at_0"/>
                 <UseProRataPercentage t-att-GridNumber="3" t-out="special_prorata_deduction"/>

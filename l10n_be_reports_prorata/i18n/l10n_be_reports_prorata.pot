@@ -69,6 +69,13 @@ msgid "ID"
 msgstr ""
 
 #. module: l10n_be_reports_prorata
+#: model_terms:ir.ui.view,arch_db:l10n_be_reports_prorata.view_account_financial_report_export
+msgid ""
+"If the field '% Special pro rata deduction' is filled, one of the fields 'Special pro "
+"rata' must be filled"
+msgstr ""
+
+#. module: l10n_be_reports_prorata
 #. odoo-python
 #: code:addons/l10n_be_reports_prorata/wizard/vat_report_export.py:0
 msgid "Please enter a valid pro rata year (after 2000)"
@@ -131,9 +138,4 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_reports_prorata/wizard/vat_report_export.py:0
 msgid "The sum of the prorata uses must be 100%"
-msgstr ""
-
-#. module: l10n_be_reports_prorata
-#: model_terms:ir.ui.view,arch_db:l10n_be_reports_prorata.vat_export_prorata
-msgid "true"
 msgstr ""
