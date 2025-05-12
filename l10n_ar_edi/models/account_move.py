@@ -501,6 +501,8 @@ class AccountMove(models.Model):
             x.l10n_ar_afip_verification_result not in ['A', 'O'])
         try:
             verification_missing.l10n_ar_verify_on_afip()
+        except UserError as error:
+            _logger.warning(error)
         except Exception as error:
             _logger.error(repr(error))
 
