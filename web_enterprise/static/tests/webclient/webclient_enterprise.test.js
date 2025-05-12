@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryAll, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, mockMatchMedia } from "@odoo/hoot-mock";
+import { click, keyDown, queryAll, queryFirst } from "@odoo/hoot-dom";
+import { animationFrame, Deferred, mockMatchMedia } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 import {
     clearRegistry,
@@ -783,4 +783,21 @@ test("studio icon should not be visible for non-admin users", async () => {
     user.isSystem = false;
     await mountWebClient({ WebClient: WebClientEnterprise });
     expect(".o_menu_systray .o_nav_entry i").not.toBeVisible();
+});
+
+test.tags("desktop");
+test("Should not crash when opening an app via palette and immediately entering input in the palette search", async () => {
+    await mountWebClient({ WebClient: WebClientEnterprise });
+
+    const def = new Deferred();
+    onRpc("web_search_read", () => def);
+    await keyDown("a");
+    await animationFrame();
+    await keyDown("Enter");
+    await keyDown("a");
+    await animationFrame();
+    def.resolve();
+    await animationFrame();
+    expect(".test_client_action").toHaveCount(1);
+    expect(".test_client_action").toHaveText("ClientAction_Id 1");
 });

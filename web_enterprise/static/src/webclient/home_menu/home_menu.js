@@ -349,7 +349,9 @@ export class HomeMenu extends Component {
     _onInputSearch() {
         const onClose = () => {
             this._focusInput();
-            this.inputRef.el.value = "";
+            if (this.inputRef.el) {
+                this.inputRef.el.value = "";
+            }
         };
         const searchValue = this.compositionStart ? "/" : `/${this.inputRef.el.value.trim()}`;
         this.compositionStart = false;
