@@ -32,7 +32,7 @@ patch(AddIoTBoxFormController.prototype, {
                 clearInterval(this.interval);
                 this.env.services.action.doAction({
                     type: "ir.actions.act_window",
-                    name: _t("Automatically Configure IoT Box devices In PoS"),
+                    name: _t("Connect to a Point of Sale"),
                     res_model: "auto.config.pos.iot",
                     views: [[false, "form"]],
                     target: "new",
