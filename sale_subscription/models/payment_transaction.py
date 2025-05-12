@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 from odoo import api, fields, models
 
@@ -48,8 +48,13 @@ class PaymentTransaction(models.Model):
             return mandate_values
 
         # Convert start and end dates into datetime by setting the time to midnight.
-        start_datetime = self.sale_order_ids.start_date \
-            and datetime.combine(self.sale_order_ids.start_date, time())
+        # Payment providers require the start_datetime of the mandate to not be lesser than yesterday
+        # e.g., stripe: https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card-mandate_options-start_date
+        start_datetime = max(
+            self.sale_order_ids.start_date and datetime.combine(
+                self.sale_order_ids.start_date, time()
+            ), fields.Datetime.now() - timedelta(days=1)
+        )
         end_datetime = self.sale_order_ids.end_date \
             and datetime.combine(self.sale_order_ids.end_date, time())
         mandate_values.update({

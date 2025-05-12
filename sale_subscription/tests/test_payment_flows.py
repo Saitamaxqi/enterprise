@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import timedelta
 from unittest.mock import patch
 import datetime
 
@@ -8,6 +9,7 @@ from odoo.tests import tagged, JsonRpcException, freeze_time
 from odoo.tools import mute_logger
 
 from odoo.addons.mail.tests.common import MockEmail
+from odoo import fields
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 from odoo.addons.website.tools import MockRequest
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
@@ -241,6 +243,18 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
             'currency_id': self.env.company.currency_id.id,
             'partner_id': portal_partner.id,
         })
+
+    def test_check_mandate_start_date(self):
+        now = fields.Datetime.now()
+        self.subscription.write({'start_date': now - timedelta(days=10)})
+        tx = self._create_transaction(
+            'direct', tokenize=True, sale_order_ids=[self.subscription.id]
+        )
+        tx_mandate_values = tx._get_mandate_values()
+        self.assertGreaterEqual(
+            tx_mandate_values['start_datetime'].timestamp(), (now - timedelta(days=1)).timestamp(),
+            f"Subscription mandate should start at least {now}",
+        )
 
     def test_payment_link_renewed(self):
         self.subscription.write({
