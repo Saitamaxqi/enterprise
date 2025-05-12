@@ -225,6 +225,10 @@ class AccountBatchPayment(models.Model):
                 raise ValidationError(_("All payments in the batch must share the same payment method."))
             if all_payment_methods and record.payment_method_id not in all_payment_methods:
                 raise ValidationError(_("The batch must have the same payment method as the payments it contains."))
+            payment_with_entries = record.payment_ids.filtered(lambda payment: payment.move_id)
+            payment_without_entries = record.payment_ids - payment_with_entries
+            if payment_with_entries and payment_without_entries:
+                raise ValidationError(_("All payments must either have an entry or not at all."))
             payment_null = record.payment_ids.filtered(lambda p: p.amount == 0)
             if payment_null:
                 raise ValidationError(_('You cannot add payments with zero amount in a Batch Payment.'))
