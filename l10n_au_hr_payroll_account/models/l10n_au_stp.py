@@ -206,6 +206,7 @@ class L10n_AuStp(models.Model):
                 message += "\n  ・ ".join(["Missing required STP Responsible user information:"] + user_warnings)
             report.warning_message = message
 
+    @api.depends("previous_report_id")
     def _compute_file_replacement_message(self):
         for report in self:
             report.file_replacement_message = False
