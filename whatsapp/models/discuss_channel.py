@@ -301,7 +301,8 @@ class DiscussChannel(models.Model):
         return super()._to_store_defaults(for_current_user=for_current_user) + [
             "whatsapp_channel_valid_until",
             Store.One("whatsapp_partner_id", []),
-            Store.One("wa_account_id", ["name"]),
+            # sudo: discuss.channel - reading wa_account_id is allowed for multi-company users
+            Store.One("wa_account_id", ["name"], sudo=True),
         ]
 
     def _types_allowing_seen_infos(self):

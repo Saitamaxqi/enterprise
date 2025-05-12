@@ -6,4 +6,5 @@ from . import test_phone_format
 from . import test_security
 from . import test_whatsapp_composer
 from . import test_whatsapp_message
+from . import test_whatsapp_multicompany
 from . import test_whatsapp_template
