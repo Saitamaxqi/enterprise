@@ -257,7 +257,7 @@
             <codigo t-out="tax_data['code']"/>
             <codigoPorcentaje t-out="tax_data['code_percentage']"/>
             <tarifa t-if="tarifa_pre_base" t-out="format_num_6(abs(tax_data['rate']))"/>
-            <baseImponible t-out="format_num_6(currency_round(abs(tax_data['base_amount'])))"/>
+            <baseImponible t-out="format_num_6(currency_round(abs(tax_data['base_amount'] if tax_data['code_percentage'] != '3680' else (tax_data['tax_amount']/tax_data['rate']))))"/>
             <tarifa t-if="tarifa_post_base" t-out="format_num_6(abs(tax_data['rate']))"/>
             <valor t-out="format_num_2(abs(tax_data['tax_amount']))"/>
         </template>

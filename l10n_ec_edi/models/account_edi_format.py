@@ -124,10 +124,9 @@ class AccountEdiFormat(models.Model):
                         errors.append(_("Wrong tax (%(tax)s) for document %(document)s", tax=line.tax_ids[0].name, document=move.display_name))
             else:
                 unsupported_tax_types = set()
-                vat_subtaxes = (lambda l: L10N_EC_VAT_SUBTAXES[l.tax_group_id.l10n_ec_type])
                 tax_groups = self.env['account.move']._l10n_ec_map_tax_groups
                 for line in move.line_ids.filtered(lambda l: l.tax_group_id.l10n_ec_type):
-                    if not (vat_subtaxes(line) and tax_groups(line)):
+                    if not ((L10N_EC_VAT_SUBTAXES.get(line.tax_group_id.l10n_ec_type) or line.tax_group_id.l10n_ec_type == 'ice') and tax_groups(line)):
                         unsupported_tax_types.add(line.tax_group_id.l10n_ec_type)
                 for tax_type in unsupported_tax_types:
                     errors.append(_("Tax type not supported: %s", tax_type))

@@ -492,6 +492,10 @@ class AccountTaxReportHandler(models.AbstractModel):
             ('tax_group_id.l10n_ec_type', 'not in', (False, 'ice', 'irbpnr', 'other')),
             ('company_id', '=', self.env.company.id),
         ])
+        ec_ice_taxes = self.env['account.tax'].with_context(active_test=False).search([
+            ('tax_group_id.l10n_ec_type', '=', 'ice'),
+            ('company_id', '=', self.env.company.id),
+        ])
 
         errors = []
         invoices = self.env['account.move'].search(
@@ -507,10 +511,10 @@ class AccountTaxReportHandler(models.AbstractModel):
         )
 
         invoices_values = []
-        error_template = _("%s: Invoice lines should have exactly one VAT tax.")
+        error_template = _("%s: Each invoice line must include at least one IVA or ICE tax, and no more than one tax per VAT or ICE category.")
         for invoice in invoices:
             invoice_lines = invoice.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_note'))
-            if any(len(l.tax_ids & ec_vat_taxes) != 1 for l in invoice_lines):
+            if any((len(l.tax_ids & ec_vat_taxes) > 1 or len(l.tax_ids & ec_ice_taxes) > 1) or len(l.tax_ids) == 0 for l in invoice_lines):
                 errors.append(error_template % invoice.name)
 
             # This will create base_amounts and tax_amounts dicts with this structure:

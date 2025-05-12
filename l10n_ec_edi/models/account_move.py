@@ -597,11 +597,11 @@ class AccountMove(models.Model):
 
         def group_by(base_line, tax_data):
             tax = tax_data['tax']
-            code_percentage = L10N_EC_VAT_SUBTAXES[tax.tax_group_id.l10n_ec_type]
+            code_percentage = L10N_EC_VAT_SUBTAXES.get(tax.tax_group_id.l10n_ec_type, tax.l10n_ec_code_ats)
             values = {
                 'code': self._l10n_ec_map_tax_groups(tax),
                 'code_percentage': code_percentage,
-                'rate': L10N_EC_VAT_RATES[code_percentage],
+                'rate': L10N_EC_VAT_RATES.get(code_percentage, tax.amount),
             }
             if extra_group == 'tax_group':
                 values['tax_group_id'] = tax.tax_group_id.id
