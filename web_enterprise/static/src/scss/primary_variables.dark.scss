@@ -35,7 +35,6 @@ $dark: $o-gray-700 !default;
 // = Text
 // ============================================================================
 
-$o-main-text-color: $o-gray-800 !default;
 $o-main-link-color: $o-action !default;
 $o-enterprise-color: $o-brand-odoo !default;
 $o-main-favorite-color: #ffd532 !default;
@@ -66,7 +65,6 @@ $o-component-active-bg: mix($o-action, $o-gray-300, 10%) !default;
 $o-form-lightsecondary: $o-gray-300 !default;
 
 // = List-group
-$o-list-group-active-color: $o-gray-900 !default;
 $o-list-group-active-bg: rgba(saturate(adjust-hue($o-info, 15), 1.8), .5) !default;
 
 // = Modal
