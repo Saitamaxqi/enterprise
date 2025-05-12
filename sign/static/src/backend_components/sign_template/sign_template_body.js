@@ -200,8 +200,11 @@ export class SignTemplateBody extends Component {
         ]);
 
         if (!newId2ItemIdMap) {
-            if (updatedSignItems)
+            // updatedSignItems returns {} if there are no changes to be saved.
+            // In this case, we don't need to show the dialog.
+            if (updatedSignItems && Object.keys(updatedSignItems).length > 0) {
                 this.showBlockedTemplateDialog();
+            }
             return false;
         }
 
