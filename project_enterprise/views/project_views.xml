@@ -51,14 +51,7 @@
             <field name="date_deadline" position="after">
                 <t t-set="cls" t-value="(luxon.DateTime.fromISO(record.date_deadline.raw_value) &lt; luxon.DateTime.local() and !['1_done', '1_canceled'].includes(record.state.raw_value)) ? 'text-danger' : ''"/>
                 <div invisible="not planned_date_begin"  t-attf-class="d-flex align-items-center #{cls}">
-                    <t t-if="luxon.DateTime.fromISO(record.planned_date_begin.raw_value).hasSame(luxon.DateTime.fromISO(record.date_deadline.raw_value), 'days')">
-                        <field name="planned_date_begin" widget="datetime" options="{'show_seconds': False}"/>
-                        <i class="fa fa-long-arrow-right mx-2 oe_read_only" aria-label="Arrow icon" title="Arrow" invisible="not planned_date_begin"/>
-                        <t t-esc="luxon.DateTime.fromISO(record.date_deadline.raw_value).toFormat('HH:mm')" class="oe_date_deadline"/>
-                    </t>
-                    <t t-else="">
-                        <field name="planned_date_begin" widget="daterange" options="{'end_date_field': 'date_deadline', 'show_time': False, 'condensed': True}"/>
-                    </t>
+                    <field name="planned_date_begin" widget="daterange" options="{'end_date_field': 'date_deadline', 'condensed': True}"/>
                 </div>
                 <field name="planning_overlap" class="text-danger o_planning_overlap"
                     invisible="not context.get('is_form_gantt', False)"/>

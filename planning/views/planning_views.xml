@@ -199,20 +199,11 @@
                     <t t-name="AllocatedTimeSpan">
                     </t>
                     <t t-name="card">
-                        <div name="card_top" class="fw-bold">
-                            <i class="me-1 mt-1 fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
-                            <t t-if="luxon.DateTime.fromISO(record.start_datetime.raw_value).hasSame(luxon.DateTime.fromISO(record.end_datetime.raw_value), 'days')">
-                                <field name="start_datetime" options="{'show_seconds': False}" />
-                                <span class="fa fa-long-arrow-right mx-1 mt-1" aria-label="Arrow icon" title="Arrow"/>
-                                <t t-out="luxon.DateTime.fromISO(record.end_datetime.raw_value).toFormat('HH:mm')"/>
-                            </t>
-                            <t t-else="">
-                                <field name="start_datetime" options="{'show_seconds': False}"/>
-                                <span class="fa fa-long-arrow-right mx-2 mt-1" aria-label="Arrow icon" title="Arrow"/>
-                                <field name="end_datetime" options="{'show_seconds': False}"/>
-                            </t>
+                        <div name="card_top">
                             <span class="d-inline-flex fw-bold ps-1">
-                                <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">(<field name="allocated_hours" widget="float_time"/>)</t>
+                                <i class="me-1 mt-1 fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
+                                <field class="me-1" name="start_datetime" widget="daterange" options="{'end_date_field': 'end_datetime'}"/>
+                                <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value"> (<field name="allocated_hours" widget="float_time"/>)</t>
                                 <t t-else="">
                                     <field name="allocated_hours" widget="float_time"/>
                                 </t>
