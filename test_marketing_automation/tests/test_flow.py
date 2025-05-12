@@ -83,18 +83,11 @@ class TestMarketAutoFlow(TestMACommon, CronMixinCase):
             email_from=cls.user_marketing_automation.email_formatted,
             keep_archives=True,
         ).with_user(cls.user_marketing_automation)
-        # domain checking front-end dynamic domains can be evaluated
-        # domain is crafted such that it's effectively "True"
-        front_end_style_domain = (
-            '[("create_date", ">", datetime.datetime.combine(context_today() - relativedelta(years=100), datetime.time(0, 0, 0))'
-            '.to_utc().strftime("%Y-%m-%d %H:%M:%S"))]'
-        )
         cls.act1 = cls._create_activity(
             cls.campaign,
             mailing=cls.act1_mailing,
             trigger_type='begin',
             interval_number=0,
-            activity_domain=front_end_style_domain,
         ).with_user(cls.user_marketing_automation)
 
         # first sub-activity: send an SMS 1 hour after a reply
