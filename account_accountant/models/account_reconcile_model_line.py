@@ -78,15 +78,8 @@ class AccountReconcileModelLine(models.Model):
         if self.amount_type == 'percentage_st_line':
             transaction_amount, transaction_currency, journal_amount, journal_currency, _company_amount, _company_currency \
                 = st_line._get_accounting_amounts_and_currencies()
-            if self.model_id.counterpart_type in ('sale', 'purchase'):
-                # The invoice should be created using the transaction currency.
-                aml_values['amount_currency'] = currency.round(-transaction_amount * self.amount / 100.0)
-                aml_values['percentage_st_line'] = self.amount / 100.0
-                aml_values['currency_id'] = transaction_currency.id
-            else:
-                # The additional journal items follow the journal currency.
-                aml_values['amount_currency'] = currency.round(-journal_amount * self.amount / 100.0)
-                aml_values['currency_id'] = journal_currency.id
+            aml_values['amount_currency'] = currency.round(-journal_amount * self.amount / 100.0)
+            aml_values['currency_id'] = journal_currency.id
         elif self.amount_type == 'regex':
             aml_values['amount_currency'] = self._get_amount_currency_by_regex(residual_amount_currency, self.amount_string, st_line.payment_ref)
         elif self.amount_type == 'from_transaction_details':
