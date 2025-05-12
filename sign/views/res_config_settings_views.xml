@@ -50,7 +50,7 @@
                         </setting>
                         <setting id="company_sign_info" string="Cryptographic signature" help="Allow users to provide the files used in the cryptographic signature process." groups="base.group_system">
                             <group>
-                                <field name="signing_certificate_id" />
+                                <field name="signing_certificate_id" options="{'no_quick_create': True}"/>
                             </group>
                         </setting>
                     </block>
