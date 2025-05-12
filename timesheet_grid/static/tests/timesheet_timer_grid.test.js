@@ -1104,6 +1104,13 @@ test("hr.timesheet (grid)(timer): start button is always in focus", async () => 
     // Click on body which doesn't have any fields/actions must make Start button to come in focus
     await click(document.body);
     expect(".btn_start_timer").toBeFocused();
+
+    // Check click on select in search popover doesn't focus Start button to avoid unintended effects (e.g. closing an
+    // opened dropdown)
+    await click('button.o_searchview_dropdown_toggler');
+    await animationFrame();
+    await click('button.o_menu_item');
+    expect(".btn_start_timer").not.toBeFocused();
 });
 
 describe.current.tags("desktop");

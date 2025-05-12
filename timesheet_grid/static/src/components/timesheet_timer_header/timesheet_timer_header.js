@@ -37,7 +37,7 @@ export class TimesheetTimerHeader extends Component {
         useAutofocus({ refName: "stopButton" });
         useExternalListener(document.body, "click", (ev) => {
             if (
-                ev.target.closest(".modal") ||
+                ev.target.closest(".modal, .popover") ||
                 ["input", "textarea"].includes(ev.target.tagName.toLowerCase())
             ) {
                 return;
