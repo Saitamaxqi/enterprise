@@ -20,4 +20,3 @@ class ProjectProject(models.Model):
     def _prevent_esg_project_deletion(self):
         if self.env.ref('esg_project.esg_project_project_0') in self:
             raise ValidationError(self.env._('You cannot delete the ESG Project.'))
-        return super().unlink()
