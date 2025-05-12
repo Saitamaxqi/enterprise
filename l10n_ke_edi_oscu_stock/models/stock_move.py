@@ -39,12 +39,10 @@ class StockMove(models.Model):
         copy=False,
         help="Number used by the KRA to identify stock movements",
     )
-    l10n_ke_oscu_attachment_id = fields.Many2one(
-        comodel_name='ir.attachment',
-        string="eTIMS Stock IO content",
+    l10n_ke_oscu_attachment_file = fields.Binary(
+        string="eTIMS Stock IO content File",
         copy=False,
-        help="JSON file sent to eTIMS for Stock IO",
-        ondelete='set null',
+        attachment=True,
         groups='base.group_system',
     )
 
@@ -90,7 +88,7 @@ class StockMove(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _unlink_only_if_unsent(self):
-        if self.filtered(lambda m: m.sudo().l10n_ke_oscu_attachment_id):
+        if self.filtered(lambda m: m.sudo().l10n_ke_oscu_attachment_file):
             raise UserError(_('You cannot delete a stock move once it has been sent to eTIMS!'))
 
     # === Overrides === #
@@ -287,16 +285,13 @@ class StockMove(models.Model):
                 while self.env['ir.attachment'].search_count([('name', '=', filename)], limit=1):
                     filename = f'{filename_prefix}_{i}.json'
                     i += 1
-
                 attachment = self.env['ir.attachment'].create({
                     'name': filename,
                     'raw': json.dumps(contents, indent=4),
                     'res_model': picking.id and 'stock.picking',
                     'res_id': picking.id,
                 })
-                moves.sudo().write({
-                    'l10n_ke_oscu_attachment_id': attachment.id,
-                })
+                moves.sudo().l10n_ke_oscu_attachment_file = attachment.datas
 
         return is_error
 

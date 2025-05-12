@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import base64
 import contextlib
 import logging
 import json
@@ -55,12 +56,6 @@ class AccountMove(models.Model):
     l10n_ke_oscu_internal_data = fields.Char(string="Internal Data", copy=False)
     l10n_ke_control_unit = fields.Char(string="Control Unit ID")
     l10n_ke_oscu_attachment_file = fields.Binary(copy=False, attachment=True)
-    l10n_ke_oscu_attachment_id = fields.Many2one(
-        comodel_name='ir.attachment',
-        string="eTIMS Attachment",
-        compute=lambda self: self._compute_linked_attachment_id('l10n_ke_oscu_attachment_id', 'l10n_ke_oscu_attachment_file'),
-        depends=['l10n_ke_oscu_attachment_file'],
-    )
     l10n_ke_validation_message = fields.Json(compute='_compute_l10n_ke_validation_message', compute_sudo=True)
 
     # === Computes === #
@@ -75,7 +70,7 @@ class AccountMove(models.Model):
                 # since this info is already present in our custom tax totals grid.
                 move.tax_totals['display_in_company_currency'] = False
 
-    @api.depends('l10n_ke_oscu_attachment_id')
+    @api.depends('l10n_ke_oscu_invoice_number')
     def _compute_show_reset_to_draft_button(self):
         super()._compute_show_reset_to_draft_button()
         self.filtered(lambda m: m.l10n_ke_oscu_invoice_number).show_reset_to_draft_button = False
@@ -301,13 +296,14 @@ class AccountMove(models.Model):
         """Get the json content of the TrnsPurchaseSave request given an attachment on the move."""
 
         self.ensure_one()
-        if not self.l10n_ke_oscu_attachment_id:
+        if not self.l10n_ke_oscu_attachment_file:
+            return {}
+        json_file = base64.b64decode(self.l10n_ke_oscu_attachment_file)
+
+        if not self._l10n_ke_oscu_is_vendor_bill_json(json_file):
             return {}
 
-        if not self._l10n_ke_oscu_is_vendor_bill_json(self.l10n_ke_oscu_attachment_id.raw):
-            return {}
-
-        file_content = json.loads(self.l10n_ke_oscu_attachment_id.raw)
+        file_content = json.loads(json_file)
 
         # Firstly, those fields that map directly from the file to the purchase confirmation request
         content = {field: file_content[field] for field in (
@@ -526,7 +522,7 @@ class AccountMove(models.Model):
                                   '\n'.join([f"- {msg['message']}" for msg in blocking])))
             company = move.company_id
 
-            if move.l10n_ke_oscu_attachment_id:
+            if move.l10n_ke_oscu_attachment_file:
                 content = {
                     **move._l10n_ke_oscu_json_from_attachment(),
                     'rcptTyCd': {'in_invoice': 'P', 'in_refund': 'R'}.get(move.move_type),
@@ -581,6 +577,7 @@ class AccountMove(models.Model):
         :returns: recordset of the fetched invoices
         """
         moves = self
+        attachment_by_move_id = {}
         for company in companies:
             error, data, _date = company._l10n_ke_call_etims(
                 'selectTrnsPurchaseSalesList',
@@ -608,7 +605,7 @@ class AccountMove(models.Model):
                     'R': 'in_refund',
                 }.get(purchase['rcptTyCd'], 'in_invoice')
                 move = self.sudo().with_company(company).with_context(default_move_type=move_type).create({})
-                attachment = self.sudo().env['ir.attachment'].create({
+                attachment_by_move_id[move.id] = self.sudo().env['ir.attachment'].create({
                     'name': filename,
                     'raw': json.dumps(purchase, indent=4),
                     'type': 'binary',
@@ -616,14 +613,14 @@ class AccountMove(models.Model):
                     'res_id': move.id,
                     'res_field': 'l10n_ke_oscu_attachment_file',
                 })
-                move.invalidate_recordset(fnames=['l10n_ke_oscu_attachment_id', 'l10n_ke_oscu_attachment_file'])
-                move.message_post(attachment_ids=attachment.ids)
+                move.invalidate_recordset(fnames=['l10n_ke_oscu_attachment_file'])
+                move.message_post(attachments=[(filename, move.l10n_ke_oscu_attachment_file)])
                 moves |= move
 
             company.l10n_ke_oscu_last_fetch_purchase_date = fields.Datetime.now()
 
         for move in moves:
-            move._extend_with_attachments(move._to_files_data(move.l10n_ke_oscu_attachment_id), new=True)
+            move._extend_with_attachments(move._to_files_data(attachment_by_move_id[move.id]), new=True)
 
         return moves
 
