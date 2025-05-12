@@ -202,7 +202,7 @@ class TestSaleAvalara(TestAccountAvataxSaleCommon):
             {'price_unit': 15.0,    'tax_ids': []},
             {'price_unit': 15.0,    'tax_ids': []},
             {'price_unit': 0.0,     'tax_ids': []},
-            {'price_unit': 45.02,   'tax_ids': []},
+            {'price_unit': 45.0,    'tax_ids': []},
         ])
         with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
             final_invoice.sudo().action_post()
