@@ -34,48 +34,85 @@ class L10nChMonthlySummaryWizard(models.Model):
         self.ensure_one()
         payslips = self._get_valid_payslips()
 
-        lines = payslips.line_ids.filtered(lambda l: l.salary_rule_id.l10n_ch_code)
-        is_lines = payslips.l10n_ch_is_log_line_ids
-        rules_company = defaultdict(lambda: defaultdict(float))
-        for line in lines:
-            if line.salary_rule_id.l10n_ch_code == "9041":
-                rules_company["9041"][f'LAAC Salary - Code {line.slip_id.l10n_ch_additional_accident_insurance_line_ids[0].solution_code}'] += line.total
-            elif line.salary_rule_id.l10n_ch_code == "9043":
-                rules_company["9041"][f'LAAC Salary - Code {line.slip_id.l10n_ch_additional_accident_insurance_line_ids[1].solution_code}'] += line.total
-            elif line.salary_rule_id.l10n_ch_code == "5041":
-                rules_company["5041"][f'{line.name[:-2]} - Code {line.slip_id.l10n_ch_additional_accident_insurance_line_ids[0].solution_code}'] += line.total
-            elif line.salary_rule_id.l10n_ch_code == "5043":
-                rules_company["5041"][f'{line.name[:-2]} - Code {line.slip_id.l10n_ch_additional_accident_insurance_line_ids[1].solution_code}'] += line.total
-            elif line.salary_rule_id.l10n_ch_code == "5045":
-                rules_company["5045"][f'{line.name[:-2]} - Code {line.slip_id.l10n_ch_sickness_insurance_line_ids[0].solution_code}'] += line.total
-            elif line.salary_rule_id.l10n_ch_code == "5047":
-                rules_company["5045"][f'{line.name[:-2]} - Code {line.slip_id.l10n_ch_sickness_insurance_line_ids[1].solution_code}'] += line.total
+        # Initialize a nested defaultdict to accumulate totals per aggregate record and code, name pair
+        result = defaultdict(lambda: defaultdict(float))
 
-            elif line.salary_rule_id.l10n_ch_code == "9051":
-                rules_company["9051"][f'IJM Salary - Code {line.slip_id.l10n_ch_sickness_insurance_line_ids[0].solution_code}'] += line.total
-            elif line.salary_rule_id.l10n_ch_code == "9053":
-                rules_company["9051"][f'IJM Salary - Code {line.slip_id.l10n_ch_sickness_insurance_line_ids[1].solution_code}'] += line.total
+        for payslip in payslips:
+            # Determine the aggregation key based on aggregation_type
+            if self.aggregation_type == "company":
+                key = payslip.company_id
             else:
-                if line.salary_rule_id.l10n_ch_code not in ["9070", "9072", "9071", "9073", "9075", "5061", "5062", "5060"]:
-                    rules_company[line.salary_rule_id.l10n_ch_code][line.name] += line.total
+                key = payslip.employee_id
 
-        for line in is_lines:
-            if line.code == "ISSALARY":
-                rules_company["9070"][f'Source-Tax Salary - {line.source_tax_canton}-{line.is_code}'] += line.amount
-            if line.code == "ISDTSALARY":
-                rules_company["9073"][f'Source-Tax Rate Determinant Salary - {line.source_tax_canton}'] += line.amount
-            if line.code == "IS":
-                rules_company["5060"][f'Source-Tax Amount - {line.source_tax_canton}-{line.is_code}'] += -line.amount
+            # Process payslip lines with Swiss-specific rule codes
+            for line in payslip.line_ids.filtered(lambda l: l.salary_rule_id.l10n_ch_code):
+                rule = line.salary_rule_id
+                code = rule.l10n_ch_code
 
-        rules = sorted(
-            [
-                {"code": code, "name": name, "value": round(value, 2)}
-                for code, names in rules_company.items()
-                for name, value in names.items()
-            ], key=lambda rule: rule['code']
-        )
+                # Handle special rule codes with custom names
+                if code == "9041" and payslip.l10n_ch_additional_accident_insurance_line_ids:
+                    solution_code = payslip.l10n_ch_additional_accident_insurance_line_ids[0].solution_code
+                    name = f'LAAC Salary - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "9043" and len(payslip.l10n_ch_additional_accident_insurance_line_ids) > 1:
+                    solution_code = payslip.l10n_ch_additional_accident_insurance_line_ids[1].solution_code
+                    name = f'LAAC Salary - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "5041" and payslip.l10n_ch_additional_accident_insurance_line_ids:
+                    solution_code = payslip.l10n_ch_additional_accident_insurance_line_ids[0].solution_code
+                    name = f'{line.name[:-2]} - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "5043" and len(payslip.l10n_ch_additional_accident_insurance_line_ids) > 1:
+                    solution_code = payslip.l10n_ch_additional_accident_insurance_line_ids[1].solution_code
+                    name = f'{line.name[:-2]} - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "5045" and payslip.l10n_ch_sickness_insurance_line_ids:
+                    solution_code = payslip.l10n_ch_sickness_insurance_line_ids[0].solution_code
+                    name = f'{line.name[:-2]} - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "5047" and len(payslip.l10n_ch_sickness_insurance_line_ids) > 1:
+                    solution_code = payslip.l10n_ch_sickness_insurance_line_ids[1].solution_code
+                    name = f'{line.name[:-2]} - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "9051" and payslip.l10n_ch_sickness_insurance_line_ids:
+                    solution_code = payslip.l10n_ch_sickness_insurance_line_ids[0].solution_code
+                    name = f'IJM Salary - Code {solution_code}'
+                    result[key][code, name] += line.total
+                elif code == "9053" and len(payslip.l10n_ch_sickness_insurance_line_ids) > 1:
+                    solution_code = payslip.l10n_ch_sickness_insurance_line_ids[1].solution_code
+                    name = f'IJM Salary - Code {solution_code}'
+                    result[key][code, name] += line.total
+                else:
+                    # Handle regular rules, excluding specific codes
+                    if code not in ["9070", "9072", "9071", "9073", "9075", "5061", "5062", "5060"]:
+                        name = rule.name
+                        result[key][code, name] += line.total
 
-        return rules
+            # Process IS (source tax) lines
+            for is_line in payslip.l10n_ch_is_log_line_ids:
+                if is_line.code == "ISSALARY":
+                    code = "9070"
+                    name = f'Source-Tax Salary - {is_line.source_tax_canton}-{is_line.is_code}'
+                    result[key][code, name] += is_line.amount
+                elif is_line.code == "ISDTSALARY":
+                    code = "9073"
+                    name = f'Source-Tax Rate Determinant Salary - {is_line.source_tax_canton}'
+                    result[key][code, name] += is_line.amount
+                elif is_line.code == "IS":
+                    code = "5060"
+                    name = f'Source-Tax Amount - {is_line.source_tax_canton}-{is_line.is_code}'
+                    result[key][code, name] += -is_line.amount  # Negate as it's a deduction
+
+        # Convert accumulated data into the final format
+        final_result = {}
+        for agg_record, data in result.items():
+            lines = [
+                {"code": code, "name": name, "total": round(total, 2)}
+                for code, name, total in sorted(data.items(), key=lambda x: x[0][0])  # Sort by code
+            ]
+            final_result[agg_record] = lines
+
+        return final_result
 
     def action_generate_pdf(self):
         self.ensure_one()
@@ -83,7 +120,6 @@ class L10nChMonthlySummaryWizard(models.Model):
             'date_start': self.date_start.strftime("%d/%m/%Y"),
             'date_end': self.date_end.strftime("%d/%m/%Y"),
             'line_values': self._get_line_values(),
-            "company": self.env.company
         }
 
         filename = '%s-%s-monthly-summary.pdf' % (self.date_start.strftime("%d%B%Y"), self.date_end.strftime("%d%B%Y"))
@@ -108,7 +144,7 @@ class L10nChMonthlySummaryWizard(models.Model):
             col = 0
 
             headers = ["Code", "Name", "Amount"]
-            rows = [(rule.l10n_ch_code, rule.name, total) for rule, total in rules_data.items()]
+            rows = [(line['code'], line['name'], line['total']) for line in rules_data]
 
             for header in headers:
                 worksheet.write(row, col, header, style_highlight)
