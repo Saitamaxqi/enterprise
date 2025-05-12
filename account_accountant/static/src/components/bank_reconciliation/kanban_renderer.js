@@ -35,7 +35,9 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
                 isVisible: false,
                 quickCreateView: this.props.archInfo.quickCreateView,
             },
-            journalId: this.env.model.config.context.active_id,
+            journalId:
+                this.env.model.config.context.default_journal_id ||
+                this.env.model.config.context.active_id,
             totalJournalAmount: "",
             reconcileModels: [],
         });
