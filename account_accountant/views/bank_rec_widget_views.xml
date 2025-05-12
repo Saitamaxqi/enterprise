@@ -411,7 +411,7 @@
                 <field name="name" position="after">
                     <filter invisible="1" name="bankrec_income" string="Income" domain="[('account_type', '=', 'income')]"/>
                     <filter invisible="1" name="bankrec_expense" string="Expenses" domain="[('account_type', '=', 'expense')]"/>
-                    <filter invisible="1" name="bankrec_currentasset" string="Fixed Assets" domain="[('account_type', '=', 'asset_current')]"/>
+                    <filter invisible="1" name="bankrec_currentasset" string="Current Assets" domain="[('account_type', '=', 'asset_current')]"/>
                 </field>
             </field>
         </record>
