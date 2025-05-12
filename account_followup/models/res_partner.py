@@ -31,6 +31,15 @@ class ResPartner(models.Model):
 
     unpaid_invoice_ids = fields.One2many('account.move', compute='_compute_unpaid_invoices')
     unpaid_invoices_count = fields.Integer(compute='_compute_unpaid_invoices')
+    # These two fields are meant to receive the due and overdue amounts, including asset_receivable AND liability_payable accounts
+    # In opposition to the total_due and total_overdue fields which only take into account asset_receivable accounts
+    # To be renamed in master
+    total_all_due = fields.Monetary(
+        compute='_compute_total_due',
+        groups='account.group_account_readonly,account.group_account_invoice')
+    total_all_overdue = fields.Monetary(
+        compute='_compute_total_due',
+        groups='account.group_account_readonly,account.group_account_invoice')
     total_due = fields.Monetary(
         compute='_compute_total_due',
         groups='account.group_account_readonly,account.group_account_invoice')
@@ -160,20 +169,28 @@ class ResPartner(models.Model):
     def _compute_total_due(self):
         due_data = defaultdict(float)
         overdue_data = defaultdict(float)
+        receivable_due_data = defaultdict(float)
+        receivable_overdue_data = defaultdict(float)
         unreconciled_aml_ids = defaultdict(list)
-        for overdue, partner, amount_residual_sum, aml_ids in self.env['account.move.line']._read_group(
+        for account_type, overdue, partner, amount_residual_sum, aml_ids in self.env['account.move.line']._read_group(
             domain=self._get_unreconciled_aml_domain(),
-            groupby=['followup_overdue', 'partner_id'],
+            groupby=['account_type', 'followup_overdue', 'partner_id'],
             aggregates=['amount_residual:sum', 'id:array_agg'],
         ):
-            unreconciled_aml_ids[partner] += aml_ids
+            if account_type == 'asset_receivable':
+                unreconciled_aml_ids[partner] += aml_ids
+                receivable_due_data[partner] += amount_residual_sum
+                if overdue:
+                    receivable_overdue_data[partner] += amount_residual_sum
             due_data[partner] += amount_residual_sum
             if overdue:
                 overdue_data[partner] += amount_residual_sum
 
         for partner in self:
-            partner.total_due = due_data.get(partner, 0.0)
-            partner.total_overdue = overdue_data.get(partner, 0.0)
+            partner.total_all_due = due_data.get(partner, 0.0)
+            partner.total_all_overdue = overdue_data.get(partner, 0.0)
+            partner.total_due = receivable_due_data.get(partner, 0.0)
+            partner.total_overdue = receivable_overdue_data.get(partner, 0.0)
             partner.unreconciled_aml_ids = self.env['account.move.line'].browse(unreconciled_aml_ids.get(partner, []))
 
     def _set_followup_line_on_unreconciled_amls(self):

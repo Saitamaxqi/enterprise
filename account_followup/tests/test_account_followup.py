@@ -353,8 +353,23 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
         self.create_invoice('2016-01-01')
         self.create_invoice('2017-01-01')
         self.create_invoice(fields.Date.today() + relativedelta(months=1))
-        self.assertRecordValues(self.partner_a, [{'total_due': 1500.0}])
-        self.assertRecordValues(self.partner_a, [{'total_overdue': 1000.0}])
+        self.env['account.move'].create([{
+            'move_type': 'in_invoice',
+            'invoice_date': date,
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500,
+                'tax_ids': [],
+            })]
+        } for date in ('2016-01-01', '2017-01-01', fields.Date.today() + relativedelta(months=1))]).action_post()
+
+        self.assertRecordValues(self.partner_a, [{
+            'total_due': 1500.0,
+            'total_overdue': 1000.0,
+            'total_all_due': 0.0,
+            'total_all_overdue': 0.0,
+        }])
 
     def test_send_followup_no_due_date(self):
         """

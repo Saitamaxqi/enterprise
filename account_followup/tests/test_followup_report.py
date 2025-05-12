@@ -765,7 +765,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
 
         self.init_invoice('out_invoice', self.partner_a, '2016-01-01', True, amounts=[500])
 
-        self.assertEqual(self.partner_a.total_due, 500.0)
+        self.assertRecordValues(self.partner_a, [{'total_due': 500.0, 'total_all_due': 500.0}])
 
         with freeze_time('2016-01-01'):
             self.assertLinesValues(
@@ -784,7 +784,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
 
         self.init_invoice('in_invoice', self.partner_a, '2016-01-01', True, amounts=[200])
 
-        self.assertEqual(self.partner_a.total_due, 300.0)
+        self.assertRecordValues(self.partner_a, [{'total_due': 500.0, 'total_all_due': 300.0}])
 
         with freeze_time('2016-01-01'):
             self.assertLinesValues(
