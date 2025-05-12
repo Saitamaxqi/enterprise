@@ -40,7 +40,7 @@ class PosOrder(models.Model):
                 if not existing_order or existing_order.state == 'draft':
                     differences = self._line_differences(existing_order, ui_order)
                     if differences:
-                        order_differences[ui_order['name']] = differences
+                        order_differences[ui_order['pos_reference']] = differences
 
         for json_record in result['pos.order']:
             if json_record['pos_reference'] in order_differences:
