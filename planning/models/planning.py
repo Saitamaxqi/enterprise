@@ -292,11 +292,15 @@ class PlanningSlot(models.Model):
             resource_work_intervals, calendar_work_intervals = assigned_slots.resource_id._get_valid_work_intervals(
                 start_utc, end_utc, calendars=assigned_slots.company_id.resource_calendar_id
             )
+            slots_by_allocated_hours = defaultdict(lambda: self.env['planning.slot'])
             for slot in planned_assigned_slots:
-                slot.allocated_hours = slot._get_duration_over_period(
+                allocated_hour = slot._get_duration_over_period(
                     pytz.utc.localize(slot.start_datetime), pytz.utc.localize(slot.end_datetime),
                     resource_work_intervals, calendar_work_intervals, has_allocated_hours=False
                 )
+                slots_by_allocated_hours[allocated_hour] |= slot
+            for allocated_hours, slots in slots_by_allocated_hours.items():
+                slots.allocated_hours = allocated_hours
 
     @api.depends('start_datetime', 'end_datetime', 'resource_id')
     def _compute_overlap_slot_count(self):
