@@ -683,8 +683,17 @@ class AccountMoveLine(models.Model):
         return super()._get_computed_taxes()
 
     def _compute_attachment(self):
+        id_model2attachments = {
+            (res_model, res_id): attachments
+            for res_model, res_id, attachments in self.env['ir.attachment']._read_group(
+                domain=expression.OR(self._get_attachment_domains()),
+                groupby=['res_model', 'res_id'],
+                aggregates=['id:recordset'],
+            )
+        }
+
         for record in self:
-            record.move_attachment_ids = self.env['ir.attachment'].search(expression.OR(record._get_attachment_domains()))
+            record.move_attachment_ids = self._get_attachment_by_record(id_model2attachments, record)
 
     def action_reconcile(self):
         """ This function is called by the 'Reconcile' button of account.move.line's
