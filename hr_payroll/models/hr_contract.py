@@ -387,8 +387,10 @@ class HrContract(models.Model):
         work_entries = self.env['hr.work.entry'].search(self._get_work_hours_domain(date_from_tz, date_to_tz, domain=domain, inside=False))
 
         for work_entry in work_entries:
-            date_start = max(date_from, work_entry.date_start)
-            date_stop = min(date_to, work_entry.date_stop)
+            local_date_start = utc.localize(work_entry.date_start).astimezone(tz).replace(tzinfo=None)
+            local_date_stop = utc.localize(work_entry.date_stop).astimezone(tz).replace(tzinfo=None)
+            date_start = max(date_from, local_date_start)
+            date_stop = min(date_to, local_date_stop)
             if work_entry.work_entry_type_id.is_leave:
                 contract = work_entry.contract_id
                 calendar = contract.resource_calendar_id
