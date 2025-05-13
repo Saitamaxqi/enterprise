@@ -4,8 +4,12 @@
         <table>
             <t t-foreach="accountReturns" t-as="accountReturn" t-key="accountReturn.id">
                 <tr>
-                    <td class="px-1 text-start fw-bold"><t t-out="accountReturn.name"/></td>
-                    <td class="px-1 text-end" t-att-class="{'text-danger': accountReturn.isOverdue}"><t t-esc="accountReturn.deadline"/></td>
+                    <td class="px-1 text-start fw-bold">
+                        <t t-out="accountReturn.name"/>
+                    </td>
+                    <td class="px-1 text-end" t-att-class="accountReturn.deadlineClass">
+                        <t t-out="accountReturn.deadlineDisplay"/>
+                    </td>
                 </tr>
             </t>
         </table>
