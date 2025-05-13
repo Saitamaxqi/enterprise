@@ -360,33 +360,41 @@ export class BankRecButtonList extends Component {
      * @returns {Array<Object>} An array of button objects, each with label, action, and optionally `primary`.
      */
     get buttonsToDisplay() {
-        const buttons = this.buttons;
-        if (this.props.isTopLine) {
-            if (this.isPositiveOr0 && buttons?.partner) {
-                return [{ ...buttons.partner, primary: true }];
-            }
-            if (buttons?.partner && buttons?.account) {
-                return [
-                    { ...buttons.partner, primary: true },
-                    { ...buttons.account, primary: true },
-                ];
-            }
-            if (buttons?.reconcile && !!buttons.reconcile?.count) {
-                return [{ ...buttons.reconcile, primary: true }];
-            }
-            if (buttons?.receivable) {
-                return [{ ...buttons.receivable, primary: true }];
-            }
-            if (buttons?.payable) {
-                return [{ ...buttons.payable, primary: true }];
-            }
+        const buttons = this.buttons || {};
+
+        // This ensures that all buttons are visible in secondary when reco model is primary
+        if (this.props.preSelectedReconciliationModel && !this.props.isTopLine) {
+            return Object.values(buttons);
         }
-        const buttonsVals = Object.values(buttons);
+
+        let primaryButtonKeys = [];
+
+        if (this.isPositiveOr0 && buttons?.partner) {
+            primaryButtonKeys = ["partner"];
+        } else if (buttons?.partner && buttons?.account) {
+            primaryButtonKeys = ["partner", "account"];
+        } else if (buttons?.reconcile && !!buttons.reconcile?.count) {
+            primaryButtonKeys = ["reconcile"];
+        } else if (buttons?.receivable) {
+            primaryButtonKeys = ["receivable"];
+        } else if (buttons?.payable) {
+            primaryButtonKeys = ["payable"];
+        }
+
+        // Handle top line
+        if (this.props.isTopLine) {
+            return primaryButtonKeys.map((key) => ({ ...buttons[key], primary: true }));
+        }
+
+        // Get all other buttons excluding primary ones
+        const otherButtons = Object.keys(buttons)
+            .filter((key) => !primaryButtonKeys.includes(key))
+            .map((key) => buttons[key]);
 
         if (this.ui.isSmall) {
-            return [buttonsVals[0]];
+            return otherButtons.length ? [otherButtons[0]] : [];
         }
-        return buttonsVals;
+        return otherButtons;
     }
 
     get mobileButtonsToDisplay() {
