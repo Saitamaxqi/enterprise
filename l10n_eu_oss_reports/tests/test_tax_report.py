@@ -162,6 +162,28 @@ class OSSTaxReportTest(TestAccountReportsCommon):
             ]
         )
 
+    def test_oss_import_report(self):
+        self.product_1.account_tag_ids += self.env.ref('l10n_eu_oss.tag_eu_import')
+        self.init_invoice('out_invoice', partner=self.partner_fr, products=self.product_1, invoice_date='2021-04-01', post=True)
+
+        report = self.env.ref('l10n_eu_oss_reports.oss_imports_report')
+        options = self._generate_options(report, '2021-04-01', '2021-06-30')
+
+        self.assertLinesValues(
+            # pylint: disable=C0326
+            report._get_lines(options),
+            #   Name                        Net               Tax
+            [   0,                            1,                2],
+            [
+                ("Sales",                    '',              200),
+                ("France",                   '',              200),
+                ("20.0% FR VAT (20.0%)",   1000,              200),
+                ("Total France",             '',              200),
+                ("Total Sales",              '',              200),
+            ],
+            options,
+        )
+
     def test_generate_oss_xml_be(self):
         report = self.env.ref('l10n_eu_oss_reports.oss_sales_report')
         options = self._generate_options(report, fields.Date.from_string('2021-04-01'), fields.Date.from_string('2021-06-30'))
