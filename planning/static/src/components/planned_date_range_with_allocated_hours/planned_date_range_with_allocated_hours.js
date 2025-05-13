@@ -1,8 +1,11 @@
 import { registry } from "@web/core/registry";
-import { dateTimeField, DateTimeField } from "@web/views/fields/datetime/datetime_field";
+import {
+    listDateTimeField,
+    ListDateTimeField,
+} from "@web/views/fields/datetime/list_datetime_field";
 import { formatFloatTime } from "@web/views/fields/formatters";
 
-export class PlannedDateRangeWithAllocatedHours extends DateTimeField {
+export class PlannedDateRangeWithAllocatedHours extends ListDateTimeField {
     static template = "planning.PlannedDateRangeWithAllocatedHours";
 
     get allocatedHoursFormatted() {
@@ -11,7 +14,7 @@ export class PlannedDateRangeWithAllocatedHours extends DateTimeField {
 }
 
 export const plannedDateRangeWithAllocatedHours = {
-    ...dateTimeField,
+    ...listDateTimeField,
     component: PlannedDateRangeWithAllocatedHours,
     fieldDependencies: [{ name: "allocated_hours", type: "float" }],
 };
