@@ -269,6 +269,11 @@ class HelpdeskSLA(TransactionCase):
             tickets.write({'stage_id': self.stage_done.id})
             initial_values = {ticket.id: {'stage_id': self.stage_progress} for ticket in tickets}
             tickets._message_track(['stage_id'], initial_values)
+            tickets._compute_sla_success()
+            for ticket in tickets_reached:
+                self.assertTrue(ticket.sla_success, "Tickets Reached should have sla_success True")
+            for ticket in tickets_late:
+                self.assertFalse(ticket.sla_success, "Tickets (late) should have sla_success False")
             # Sentinel check for no ticket team.
             self.assertEqual(self.test_team_no_tickets.success_rate, -1.0, "Teams without tickets should have -1.0 sentinel success rate")
             # Success rate checks

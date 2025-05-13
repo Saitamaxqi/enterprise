@@ -249,18 +249,18 @@ class HelpdeskTicket(models.Model):
         datetime_now = fields.Datetime.now()
         return ['|', ('sla_reached_late', '=', True), ('sla_deadline', '<', datetime_now)]
 
-    @api.depends('sla_deadline')
+    @api.depends('sla_deadline', 'sla_reached', 'sla_reached_late')
     def _compute_sla_success(self):
         now = fields.Datetime.now()
         for ticket in self:
-            ticket.sla_success = (ticket.sla_deadline and ticket.sla_deadline > now)
+            ticket.sla_success = (ticket.sla_reached and not ticket.sla_reached_late and (not ticket.sla_deadline or ticket.sla_deadline > now))
 
     @api.model
     def _search_sla_success(self, operator, value):
         if operator != 'in':
             return NotImplemented
         datetime_now = fields.Datetime.now()
-        return [('sla_deadline', '>', datetime_now)]
+        return [('sla_reached', '=', True), ('sla_reached_late', '=', False), '|', ('sla_deadline', '=', False), ('sla_deadline', '>', datetime_now)]
 
     @api.depends('team_id')
     def _compute_user_and_stage_ids(self):
