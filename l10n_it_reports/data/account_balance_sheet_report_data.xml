@@ -311,7 +311,7 @@
                                         <field name="name@it">1. Partecipazioni in:</field>
                                         <field name="code">IT_ATT_B_III_1</field>
                                         <field name="hide_if_zero" eval="True"/>
-                                        <field name="aggregation_formula">IT_ATT_B_III_1_a.balance + IT_ATT_B_III_1_b.balance + IT_ATT_B_III_1_c.balance + IT_ATT_B_III_1_d.balance</field>
+                                        <field name="aggregation_formula">IT_ATT_B_III_1_a.balance + IT_ATT_B_III_1_b.balance + IT_ATT_B_III_1_c.balance + IT_ATT_B_III_1_d.balance + IT_ATT_B_III_1_d_bis.balance</field>
                                         <field name="children_ids">
                                             <record id="account_financial_report_line_it_sp_ATT_B_III_1_a" model="account.report.line">
                                                 <field name="name">a. Subsidiary enterprises</field>
