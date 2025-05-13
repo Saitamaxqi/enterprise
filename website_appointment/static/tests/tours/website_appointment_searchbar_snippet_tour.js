@@ -1,10 +1,11 @@
 import {
-    changeOption,
+    changeOptionInPopover,
     clickOnSnippet,
     clickOnSave,
     insertSnippet,
     registerWebsitePreviewTour,
 } from "@website/js/tours/tour_utils";
+import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
 registerWebsitePreviewTour("test_searchbar_within_appointments", {
     url: "/",
@@ -12,13 +13,13 @@ registerWebsitePreviewTour("test_searchbar_within_appointments", {
 }, () => [
     ...insertSnippet({ id: "s_searchbar_input", name: "Search" }),
     ...clickOnSnippet({ id: "s_searchbar_input", name: "Search" }),
-    changeOption("SearchBar", 'we-select[data-name="scope_opt"] we-toggler'),
-    changeOption("SearchBar", 'we-button[data-set-search-type="appointments"]'),
+    ...changeOptionInPopover("Search", "Search within", "Appointments"),
     {
         content: "Limit search to 'Appointments'",
         trigger: ':iframe .s_searchbar_input[action="/appointment"]',
     },
     ...clickOnSave(),
+    stepUtils.waitIframeIsReady(),
     {
         content: "Enter search term",
         trigger: ":iframe .o_searchbar_form input",
