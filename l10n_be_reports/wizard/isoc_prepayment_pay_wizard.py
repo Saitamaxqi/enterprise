@@ -12,15 +12,7 @@ class L10n_Be_ReportsISOCPrepaymentPayWizard(models.TransientModel):
         required=True,
         default=0,
     )
-    corporate_tax_rate = fields.Selection(
-        selection=[
-            ('25', "25 %"),
-            ('20', "20 %"),
-        ],
-        string="Corporate Tax Rate",
-        required=True,
-        default='25',
-    )
+    corporate_tax_rate = fields.Selection(related='company_id.l10n_be_isoc_corporate_tax_rate', required=True, readonly=False)
 
     @api.model_create_multi
     def create(self, vals_list):
