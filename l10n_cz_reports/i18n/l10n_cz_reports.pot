@@ -130,6 +130,16 @@ msgid "Account Chart Template"
 msgstr ""
 
 #. module: l10n_cz_reports
+#: model:ir.model,name:l10n_cz_reports.model_account_return
+msgid "Accounting Return"
+msgstr ""
+
+#. module: l10n_cz_reports
+#: model:ir.model,name:l10n_cz_reports.model_account_return_type
+msgid "Accounting Return Type"
+msgstr ""
+
+#. module: l10n_cz_reports
 #: model:account.report.line,name:l10n_cz_reports.control_statement_B
 msgid "B. Received taxable supplies with the place of supply in the country"
 msgstr ""
@@ -305,6 +315,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_cz_reports.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_cz_reports.field_account_return_type__display_name
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_tax__display_name
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_l10n_cz_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_l10n_cz_vat_control_report_handler__display_name
@@ -341,6 +353,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_cz_reports.field_account_return__id
+#: model:ir.model.fields,field_description:l10n_cz_reports.field_account_return_type__id
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_tax__id
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_l10n_cz_tax_report_handler__id
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_l10n_cz_vat_control_report_handler__id
@@ -444,6 +458,7 @@ msgid "Supply of electricity through systems or networks to a trader"
 msgstr ""
 
 #. module: l10n_cz_reports
+#: model:account.return.type,name:l10n_cz_reports.cz_tax_return_type
 #: model:ir.model,name:l10n_cz_reports.model_account_tax
 msgid "Tax"
 msgstr ""
