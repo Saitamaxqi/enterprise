@@ -42,7 +42,7 @@
             style="color: #000000; text-decoration:none; opacity:0.7;"> click here to cancel it.</a></small>
         </div>
     </td></tr>
-    <t t-set="company" t-value="record.create_uid.company_id"/>
+    <t t-set="company" t-value="record.sign_request_id.communication_company_id"/>
     <tr t-if="use_sign_terms">
         <t t-if="company.sign_terms_type == 'html'">
             <td style="margin:16px auto; text-align:center;">
