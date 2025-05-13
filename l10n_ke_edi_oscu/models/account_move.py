@@ -401,7 +401,10 @@ class AccountMove(models.Model):
                         "This credit note in conjunction with %(other_credit_notes)s has items of a quantity exceeding "
                         "that of the original customer invoice %(original_invoice)s. Please correct the quantity of "
                         "these lines before confirming:\n%(lines_to_correct)s",
-                        other_credit_notes=', '.join((reversals - move).mapped("name")),
+                        other_credit_notes=', '.join(
+                            rec.name or f"the credit note with ID {rec.id}"
+                            for rec in (reversals - move)
+                        ),
                         original_invoice=original_move.name,
                         lines_to_correct='\n'.join(exceeding_quantities),
                     ))
@@ -422,7 +425,10 @@ class AccountMove(models.Model):
                         "This credit note in conjunction with %(other_credit_notes)s exceeds the amount on the "
                         "original customer invoice %(original_invoice)s. "
                         "Please adjust this credit note to a total value equal to or less than %(total_value)d before confirming.",
-                        other_credit_notes=', '.join((reversals - move).mapped("name")),
+                        other_credit_notes=', '.join(
+                            rec.name or f"the credit note with ID {rec.id}"
+                            for rec in (reversals - move)
+                        ),
                         original_invoice=original_move.name,
                         total_value=abs(move.amount_total_in_currency_signed) - excess,
                     ))
