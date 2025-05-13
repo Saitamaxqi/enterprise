@@ -20,12 +20,15 @@ _logger = logging.getLogger()
 class Sign(http.Controller):
 
     def get_document_qweb_context(self, sign_request_id, token, **post):
+        result = {}
         sign_request = http.request.env['sign.request'].sudo().browse(sign_request_id).exists()
         if not sign_request:
-            return request.render('sign.deleted_sign_request')
+            result.update(error=True, template='sign.deleted_sign_request')
+            return result
         current_request_item = sign_request.request_item_ids.filtered(lambda r: consteq(r.access_token, token))
         if not current_request_item and sign_request.access_token != token:
-            return request.not_found()
+            result.update(error=True)
+            return result
         if current_request_item and current_request_item.partner_id.lang:
             http.request.update_context(lang=current_request_item.partner_id.lang)
 
@@ -89,7 +92,7 @@ class Sign(http.Controller):
         if lang:
             date_format = posix_to_ldml(lang.date_format, locale=locale)
 
-        return {
+        result['rendering_context'] = {
             'sign_request': sign_request,
             'current_request_item': current_request_item,
             'state_to_sign_request_items_map': dict(tools.groupby(sign_request.request_item_ids, lambda sri: sri.state)),
@@ -110,6 +113,7 @@ class Sign(http.Controller):
             'today_formatted_date': format_date(http.request.env, fields.Date.today(), lang_code=lang_code),
             'date_format': date_format.lower(),
         }
+        return result
 
     # -------------
     #  HTTP Routes
@@ -152,11 +156,11 @@ class Sign(http.Controller):
 
     @http.route(["/sign/document/<int:sign_request_id>/<token>"], type='http', auth='public', website=True)
     def sign_document_public(self, sign_request_id, token, **post):
-        document_context = self.get_document_qweb_context(sign_request_id, token, **post)
-        if not isinstance(document_context, dict):
-            return document_context
+        res = self.get_document_qweb_context(sign_request_id, token, **post)
+        if res.get('error'):
+            return request.render(res['template']) if res.get('template') else request.not_found()
 
-        return http.request.render('sign.doc_sign', document_context)
+        return http.request.render('sign.doc_sign', res.get('rendering_context'))
 
     @http.route([
         '/sign/download/<int:request_id>/<token>/<download_type>',
@@ -353,16 +357,15 @@ class Sign(http.Controller):
     # -------------
     @http.route(["/sign/get_document/<int:request_id>/<token>"], type='jsonrpc', auth='user')
     def get_document(self, request_id, token):
-        context = self.get_document_qweb_context(request_id, token)
-        if not isinstance(context, dict):
-            # context contains a rendered QWeb template (not found, deleted sign request, ...)
-            # TODO MASTER clean return type of get_document_qweb_context
-            return context
+        res = self.get_document_qweb_context(request_id, token)
+        if res.get('error'):
+            return request.render(res['template']) if res.get('template') else request.not_found()
+        render_ctx = res.get('rendering_context')
         return {
-            'html': request.env['ir.qweb']._render('sign._doc_sign', context),
+            'html': request.env['ir.qweb']._render('sign._doc_sign', render_ctx),
             'context': {
-                'refusal_allowed': self._check_refusal_conditions(context),
-                'sign_request_token': context['sign_request'].access_token,
+                'refusal_allowed': self._check_refusal_conditions(render_ctx),
+                'sign_request_token': render_ctx['sign_request'].access_token,
             }
         }
 

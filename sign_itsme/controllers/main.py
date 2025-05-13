@@ -16,10 +16,10 @@ IAP_SERVICE_NAME = 'itsme_proxy'
 class SignItsme(SignController):
     def get_document_qweb_context(self, sign_request_id, token, **post):
         res = super().get_document_qweb_context(sign_request_id, token, **post)
-        if isinstance(res, dict):
+        if res.get('rendering_context'):
             # show_thank_you_dialog and error_message come from IAP sign_itsme redirect
-            res['show_thank_you_dialog'] = post.get('show_thank_you_dialog')
-            res['error_message'] = post.get('error_message')
+            res['rendering_context']['show_thank_you_dialog'] = post.get('show_thank_you_dialog')
+            res['rendering_context']['error_message'] = post.get('error_message')
         return res
 
     def _validate_auth_method(self, request_item_sudo, **kwargs):
