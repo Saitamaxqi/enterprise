@@ -338,12 +338,19 @@ class StudioApprovalRule(models.Model):
                 })
 
         for server_action in self_sudo.env["ir.actions.server"].create(actions_server_data):
-            xml_ids_data.append({
-                "name": get_base_action_server_xml_id(server_action.model_id.model, module_prefix=""),
-                "model": "ir.actions.server",
-                "res_id": server_action.id,
-                "module": "web_studio",
-            })
+            model_data_name = get_base_action_server_xml_id(server_action.model_id.model, module_prefix="")
+            xml_ids_data.extend([{
+                    "name": model_data_name,
+                    "model": "ir.actions.server",
+                    "res_id": server_action.id,
+                    "module": "web_studio",
+                }, {
+                    "name": model_data_name,
+                    "model": "ir.actions.server",
+                    "res_id": server_action.id,
+                    "module": "__cloc_exclude__",
+                }
+            ])
 
         self_sudo.env["ir.model.data"].create(xml_ids_data)
 
