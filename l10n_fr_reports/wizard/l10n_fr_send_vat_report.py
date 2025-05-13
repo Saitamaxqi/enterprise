@@ -3,7 +3,7 @@ import base64
 from odoo import api, Command, fields, models, _
 from odoo.tools import cleanup_xml_node, float_repr, float_compare, format_date
 from odoo.exceptions import ValidationError, UserError, RedirectWarning
-from odoo.addons.l10n_fr_reports.models.account_report_async_export import ENDPOINT
+from odoo.addons.l10n_fr_reports.models.account_report_async_document import ENDPOINT
 
 from lxml import etree
 from stdnum.fr import siret
@@ -198,6 +198,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
     reimbursement_comment = fields.Text()
     show_express_mention = fields.Boolean()
     express_mention_reason = fields.Text()
+    report_async_document_ids = fields.Many2many(comodel_name='account.report.async.document', relation='report_document_fr_send_vat_report_rel')
 
     def _compute_vat_amount(self):
         vat_carried_forward_line = self.env.ref('l10n_fr_account.tax_report_27')
@@ -568,6 +569,15 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         vat_report_name = self._get_vat_report_name(self.date_from, self.date_to)
         self._send_xml_to_aspone(xml_content, vat_report_name)
 
+        self.env['account.report.async.export'].create({
+            'name': vat_report_name,
+            'document_ids': [Command.set(self.report_async_document_ids.ids)],
+            'date_from': self.date_from,
+            'date_to': self.date_to,
+            'report_id': self.env.ref('l10n_fr_account.tax_report').id,
+            'recipient': self.recipient,
+        })
+
     def _send_reimbursement_xml_to_aspone(self, options):
         """ Create declaration 3519 for each reimbursement asked for a bank account and send it to AspOne"""
         writer_vals, debtor_vals, edi_partner_vals, identif_vals = self._get_common_edi_vals(options)
@@ -655,7 +665,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
 
     def _send_xml_to_aspone(self, xml_content, export_name):
         db_uuid = self.env['ir.config_parameter'].sudo().get_param('database.uuid')
-        response = self.env['account.report.async.export']._get_fr_webservice_answer(
+        response = self.env['account.report.async.document']._get_fr_webservice_answer(
             url=f"{ENDPOINT}/api/l10n_fr_aspone/1/add_document",
             params={'db_uuid': db_uuid, 'xml_content': xml_content.decode('iso8859_15')},
         )
@@ -667,15 +677,12 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         if not deposit_uid:
             raise ValidationError(_("Error occured while sending the report to the government : '%(response)s'", response=str(response)))
 
-        # Create the vat return
-        self.env['account.report.async.export'].create({
+        document = self.env['account.report.async.document'].create({
             'name': export_name,
             'attachment_name': f'{export_name}.xml',
             'attachment': base64.b64encode(response['xml_content'].encode()),
             'deposit_uid': deposit_uid,
-            'date_from': self.date_from,
-            'date_to': self.date_to,
-            'report_id': self.env.ref('l10n_fr_account.tax_report').id,
-            'recipient': self.recipient,
             'state': 'sent',
         })
+
+        self.report_async_document_ids = [Command.link(document.id)]

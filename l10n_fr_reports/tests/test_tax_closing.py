@@ -471,3 +471,72 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             },
             edi_vals_6['declarations'][0]['form']['zones'],
         )
+
+    def test_fr_send_edi_vat_values_with_reimbursements(self):
+        """ The aim of this test is to verify edi VAT export is created
+            correctly when there are reimbursements not due.
+        """
+
+        self.env['account.move'].create([
+            self._get_move_create_data(
+                move_data={'move_type': 'in_invoice', 'invoice_date': '2024-05-09', 'journal_id': self.company_data['default_journal_purchase'].id},
+                line_data={'price_unit': 667.5, 'tax_ids': [Command.link(self.tax_20_g_purchase.id)]}
+            ),
+        ])._post()
+
+        send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'report_id': self.report.id,
+            'test_interchange': True,
+            'bank_account_line_ids': [
+                Command.create({
+                    'bank_partner_id': self.bank_partner.id,
+                    'vat_amount': 667,
+                }),
+            ],
+        })
+
+        # Create a VAT return for May in order to export EDI Report
+        may_return = self.env['account.return'].create({
+            'name': "May return",
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
+            'company_id': self.env.company.id,
+        })
+        with self.allow_pdf_render():
+            may_return.action_validate(bypass_failing_tests=True)
+
+        # Mock the response from the ASPOne web service
+        mock_aspone_response = {
+            'responseType': 'SUCCESS',
+            'response': {
+                'errorResponse': '',
+                'successfullResponse': {
+                    'depositId': 'CCA7A30B-A69B-4C9B-8BFB-30DF435DABE9',
+                },
+            },
+            'xml_content': '',
+        }
+
+        with patch.object(self.env.registry['account.report.async.document'], '_get_fr_webservice_answer', return_value=mock_aspone_response):
+            send_vat_wizard.send_vat_return()
+
+            self.assertEqual(len(send_vat_wizard.report_async_document_ids), 2)
+
+            export = self.env['account.report.async.export'].search([
+                ('date_from', '=', send_vat_wizard.date_from),
+                ('date_to', '=', send_vat_wizard.date_to),
+                ('report_id', '=', self.env.ref('l10n_fr_account.tax_report').id),
+            ])
+
+            export.ensure_one()
+
+            self.assertEqual(export.document_ids, send_vat_wizard.report_async_document_ids)
+            self.assertEqual(export.state, 'sent')
+
+            export.document_ids[0].state = 'accepted'
+            self.assertEqual(export.state, 'mixed')
+            export.document_ids[1].state = 'accepted'
+            self.assertEqual(export.state, 'accepted')

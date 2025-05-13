@@ -32,18 +32,25 @@
                 </div>
                 <sheet>
                     <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="date_from" readonly="1"/>
-                            <field name="date_to" readonly="1"/>
-                            <field name="recipient"/>
-                            <field name="state" readonly="1"/>
-                            <!-- Needed for the binary widget -->
-                            <field name="attachment_name" invisible="1"/>
-                            <field name="attachment" widget="binary" filename="attachment_name" readonly="1"/>
-                            <field name="message" readonly="1"/>
-                        </group>
+                        <field name="name"/>
+                        <field name="date_from" readonly="1"/>
+                        <field name="date_to" readonly="1"/>
+                        <field name="recipient"/>
+                        <field name="state" readonly="1"/>
                     </group>
+                    <field name="document_ids" readonly="1">
+                        <list readonly="1" editable="bottom">
+                            <!-- Needed for the binary widget -->
+                            <field name="attachment_name" column_invisible="1"/>
+                            <field name="attachment" widget="binary" filename="attachment_name" readonly="1"/>
+                            <field name="state"
+                                   widget="badge"
+                                   decoration-danger="state == 'rejected'"
+                                   decoration-success="state == 'accepted'"
+                                   decoration-info="state in ('to_send', 'sent')"/>
+                            <field name="message"/>
+                        </list>
+                    </field>
                 </sheet>
             </form>
         </field>
