@@ -12,10 +12,17 @@ class PurchaseOrder(models.Model):
         for order in self:
             order.is_analytic = any(order.order_line.mapped('analytic_distribution'))
 
-    @api.depends('order_line.is_above_budget')
+    @api.depends('order_line.budget_line_ids', 'order_line.price_unit', 'order_line.product_qty', 'order_line.qty_invoiced', 'state')
     def _compute_above_budget(self):
         for order in self:
-            order.is_above_budget = any(order.order_line.mapped('is_above_budget'))
+            uncommitted_amount = sum(
+                line.price_unit * (line.product_qty - line.qty_invoiced)
+                for line in order.order_line
+            ) if order.state not in ('purchase', 'done') else 0
+            order.is_above_budget = any(
+                budget.committed_amount + uncommitted_amount > budget.budget_amount
+                for budget in order.order_line.mapped('budget_line_ids')
+            )
 
     def action_budget(self):
         self.ensure_one()
