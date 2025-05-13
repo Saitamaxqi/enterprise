@@ -6,7 +6,7 @@ registry.category("web_tour.tours").add('sale_planning_test_tour', {
     url: '/odoo',
     steps: () => [
         ...planningTestTour.steps(), {
-            trigger: ".o_gantt_cell.o_gantt_hoverable",
+            trigger: ".o_gantt_cell.o_gantt_today.o_gantt_hoverable",
             content: "Click on magnify icon to see list of sale order",
             run: "click",
         }, {

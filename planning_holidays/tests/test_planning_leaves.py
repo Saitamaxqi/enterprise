@@ -220,6 +220,7 @@ class TestPlanningLeaves(TestCommon):
             'tz': 'UTC',
             'flexible_hours': True,
             'hours_per_day': 8,
+            'full_time_required_hours': 40,
             'attendance_ids': [],
         })
         employee = self.employee_bert
@@ -238,14 +239,14 @@ class TestPlanningLeaves(TestCommon):
         })
         leave_am.sudo().action_approve()
 
-        start_dt_am = datetime.datetime(2025, 3, 5, 0, 0, 0, tzinfo=utc)
+        start_dt_am = datetime.datetime(2025, 3, 5, 8, 0, 0, tzinfo=utc)
         end_dt_am = datetime.datetime(2025, 3, 5, 12, 0, 0, tzinfo=utc)
 
         intervals_am = flexible_calendar._leave_intervals_batch(start_dt_am, end_dt_am, [employee.resource_id])
         intervals_list_am = list(intervals_am[employee.resource_id.id])
         self.assertEqual(len(intervals_list_am), 1, "There should be one leave interval for AM half-day")
         interval_am = intervals_list_am[0]
-        self.assertEqual(interval_am[0], start_dt_am, "The start of the interval should be 00:00:00")
+        self.assertEqual(interval_am[0], start_dt_am, "The start of the interval should be 08:00:00")
         self.assertEqual(interval_am[1], end_dt_am, "The end of the interval should be 12:00:00")
 
         # Test PM half-day leave on next day
@@ -261,15 +262,15 @@ class TestPlanningLeaves(TestCommon):
         })
         leave_pm.sudo().action_approve()
 
-        start_dt_pm = datetime.datetime(2025, 3, 6, 0, 0, 0, tzinfo=utc)
-        end_dt_pm = datetime.datetime(2025, 3, 6, 23, 59, 59, 999999, tzinfo=utc)
+        start_dt_pm = datetime.datetime(2025, 3, 6, 12, 0, 0, tzinfo=utc)
+        end_dt_pm = datetime.datetime(2025, 3, 6, 16, 0, 0, 0, tzinfo=utc)
 
         intervals_pm = flexible_calendar._leave_intervals_batch(start_dt_pm, end_dt_pm, [employee.resource_id])
         intervals_list_pm = list(intervals_pm[employee.resource_id.id])
         self.assertEqual(len(intervals_list_pm), 1, "There should be one leave interval for PM half-day")
         interval_pm = intervals_list_pm[0]
         self.assertEqual(interval_pm[0], datetime.datetime(2025, 3, 6, 12, 0, 0, tzinfo=utc), "The start of the interval should be 12:00:00")
-        self.assertEqual(interval_pm[1], end_dt_pm, "The end of the interval should be 23:59:59.999999")
+        self.assertEqual(interval_pm[1], end_dt_pm, "The end of the interval should be 16:00:00")
 
     def test_multiple_leaves_with_one_refusal_and_approval(self):
         """
@@ -282,6 +283,7 @@ class TestPlanningLeaves(TestCommon):
             'tz': 'UTC',
             'flexible_hours': True,
             'hours_per_day': 8,
+            'full_time_required_hours': 40,
             'attendance_ids': [],
         })
         self.env['hr.leave'].sudo().create({
@@ -309,7 +311,7 @@ class TestPlanningLeaves(TestCommon):
     def test_two_half_day_off_leaves_on_same_day_of_flexible_resource(self):
         """
         Test half-day off leave for a flexible resource.
-        The leave intervals should be set to 00:00:00 - 23:59:59
+        The leave intervals should be set to 08:00:00 - 16:00:00
         if 2 half-day offs on the same day(am and pm).
         """
         flexible_calendar = self.env['resource.calendar'].create({
@@ -317,6 +319,7 @@ class TestPlanningLeaves(TestCommon):
             'tz': 'UTC',
             'flexible_hours': True,
             'hours_per_day': 8,
+            'full_time_required_hours': 40,
             'attendance_ids': [],
         })
         self.employee_bert.resource_calendar_id = flexible_calendar
@@ -347,5 +350,5 @@ class TestPlanningLeaves(TestCommon):
         end_dt = datetime.datetime(2025, 4, 30, 23, 59, 59, 999999, tzinfo=utc)
         intervals = flexible_calendar._leave_intervals_batch(start_dt, end_dt, [self.employee_bert.resource_id])
         interval = next(iter(intervals[self.employee_bert.resource_id.id]))
-        self.assertEqual(interval[0], datetime.datetime(2025, 4, 30, 0, 0, 0, tzinfo=utc), "The start of the interval should be 00:00:00")
-        self.assertEqual(interval[1], datetime.datetime(2025, 4, 30, 23, 59, 59, 999999, tzinfo=utc), "The end of the interval should be 23:59:59.999999")
+        self.assertEqual(interval[0], datetime.datetime(2025, 4, 30, 8, 0, 0, tzinfo=utc), "The start of the interval should be 08:00:00")
+        self.assertEqual(interval[1], datetime.datetime(2025, 4, 30, 16, 0, 0, tzinfo=utc), "The end of the interval should be 16:00:00")

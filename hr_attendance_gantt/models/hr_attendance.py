@@ -36,23 +36,8 @@ class HrAttendance(models.Model):
         """
         Compute the total work hours of the employee based on the intervals selected on the Gantt view.
         The calculation takes into account the working calendar (flexible or not).
-
-        1) if fully flexible (no limit per day), we return the difference in the time interval.
-        2) if flexible: `hours_per_day` or `full_time_required_hours` will be used.
-           To approximate the work hours in the interval, we multiply the `full_time_required_hours` by the number of weeks.
-           date() method is explicitely used to avoid having issue with daylight saving time (DST) when computing the number of days.
-        3) if fixed working hours, we compute the work hours based on their expected attendances.
         """
-        # number of days between the start and stop and take the stop into account.
-        num_days = (stop.date() - start.date()).days
-        if employee.sudo().is_fully_flexible:
-            return num_days * 24
-        if not employee.sudo().is_flexible:
-            return self.env['resource.calendar']._get_attendance_intervals_days_data(employee._get_expected_attendances(start, stop))['hours']
-        if num_days == 1:
-            return employee.resource_id.calendar_id.hours_per_day
-        # final result is rounded to the hour (e.g. 177.5 hours -> 178 hours)
-        return round(employee.resource_id.calendar_id.full_time_required_hours * (num_days / 7))
+        return self.env['resource.calendar']._get_attendance_intervals_days_data(employee._employee_attendance_intervals(start, stop))['hours']
 
     def _get_gantt_progress_bar_domain(self, res_ids, start, stop):
         return [
@@ -156,7 +141,7 @@ class HrAttendance(models.Model):
         unavailable_intervals_by_calendar = {}
         for calendar, employees in employees_by_calendar.items():
             # In case the calendar is not set (fully flexible calendar), we consider the employee as always available
-            if not calendar:
+            if not calendar or calendar.flexible_hours:
                 unavailable_intervals_by_calendar[calendar] = {
                     employee.id: Intervals([])
                     for employee in employees
