@@ -650,7 +650,7 @@ class AccountMove(models.Model):
         '''Fill the invoice fields from the cfdi values.
         '''
         for move in self:
-            cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(move.l10n_mx_edi_cfdi_attachment_id.raw)
+            cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(move.with_context(bin_size=False).l10n_mx_edi_cfdi_attachment_id.raw)
             move.l10n_mx_edi_cfdi_supplier_rfc = cfdi_infos.get('supplier_rfc')
             move.l10n_mx_edi_cfdi_customer_rfc = cfdi_infos.get('customer_rfc')
             move.l10n_mx_edi_cfdi_amount = cfdi_infos.get('amount_total')
