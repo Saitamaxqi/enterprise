@@ -179,5 +179,5 @@ class BlackboxPosController(PosController):
     def pos_web(self, config_id=False, from_backend=False, **k):
         config = request.env['pos.config'].sudo().browse(int(config_id))
         if config.current_session_id.state == "opened":
-            request.env['pos.blackbox.log.ip']._log_ip(config, request.geoip.ip)
+            request.env['pos.blackbox.log.ip']._log_ip(config, None)
         return super().pos_web(config_id=config_id, from_backend=from_backend, **k)

@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 from odoo.service.common import exp_version
-from odoo.http import request
 from uuid import uuid4
 
 
@@ -80,7 +79,7 @@ class PosConfig(models.Model):
     def _action_to_open_ui(self):
         res = super()._action_to_open_ui()
         if self.current_session_id.state == "opened":
-            self.env['pos.blackbox.log.ip']._log_ip(self, request.geoip.ip)
+            self.env['pos.blackbox.log.ip']._log_ip(self, None)
         return res
 
     def _check_before_creating_new_session(self):

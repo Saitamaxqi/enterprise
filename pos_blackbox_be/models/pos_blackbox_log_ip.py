@@ -2,6 +2,7 @@
 
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
+from odoo.http import request
 
 
 class PosBlackboxLogIp(models.Model):
@@ -19,6 +20,15 @@ class PosBlackboxLogIp(models.Model):
         return super().create(vals_list)
 
     def _log_ip(self, config_id, ip):
+        # due to an error in the test when pos_blackbox_be is installed,
+        # ip is now None and we check the ip in this method instead.
+        # in the test, the request is unbound, so the ip can not be retrieved
+        # from the request.
+
+        if not request:
+            return
+
+        ip = request.geoip.ip
         if bool(config_id.certified_blackbox_identifier):
             self.create({'ip': ip})
         elif self.search_count([('ip', '=', ip)]):

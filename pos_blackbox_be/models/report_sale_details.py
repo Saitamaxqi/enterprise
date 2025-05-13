@@ -91,13 +91,14 @@ class ReportPoint_Of_SaleReport_Saledetails(models.AbstractModel):
 
     def _get_total_and_qty_per_category(self, categories):
         res_cat, res_total = super()._get_total_and_qty_per_category(categories)
-        for cat in res_cat:
-            total_cat = 0
-            for product in cat['products']:
-                total_cat += product['total_paid']
-            cat['total'] = total_cat
-        unique_products = list({tuple(sorted(product.items())): product for category in categories for product in category['products']}.values())
-        res_total['total'] = sum(product['total_paid'] for product in unique_products)
+        if self.env.context.get('config_id') and self.env['pos.config'].browse(self.env.context.get('config_id')).certified_blackbox_identifier:
+            for cat in res_cat:
+                total_cat = 0
+                for product in cat['products']:
+                    total_cat += product['total_paid']
+                cat['total'] = total_cat
+            unique_products = list({tuple(sorted(product.items())): product for category in categories for product in category['products']}.values())
+            res_total['total'] = sum(product['total_paid'] for product in unique_products)
         return res_cat, res_total
 
     def _set_default_belgian_taxes_if_empty(self, data, taxes_name):

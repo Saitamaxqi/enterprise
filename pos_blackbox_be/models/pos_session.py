@@ -5,7 +5,6 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from itertools import groupby
 from collections import Counter
-from odoo.http import request
 from odoo.service.common import exp_version
 
 
@@ -74,7 +73,7 @@ class PosSession(models.Model):
             rec.amount_of_vat_tickets = len(rec.order_ids)
 
     def set_opening_control(self, cashbox_value: int, notes: str):
-        self.env['pos.blackbox.log.ip']._log_ip(self.config_id, request.geoip.ip)
+        self.env['pos.blackbox.log.ip']._log_ip(self.config_id, None)
         super().set_opening_control(cashbox_value, notes)
 
     def increase_cash_box_opening_counter(self):
