@@ -672,6 +672,16 @@ class TestRentalCommon(TransactionCase):
         self.assertEqual(dupe_order.order_line[0].is_rental, sol_rent.is_rental)
         self.assertEqual(dupe_order.order_line[1].is_rental, sol_buy.is_rental)
 
+    def test_product_display_price(self):
+        # There is a bug in the ORM when currency is given along display_price
+        # in the first onchange. task: https://www.odoo.com/odoo/1364/tasks/4264573
+        product = self.env["product.template"].with_context(default_rent_ok=True)
+        changes = product.onchange({}, [], {
+            "display_price": {},
+            "currency_id": {},
+        })
+        self.assertEqual(changes["value"]["display_price"], '$\xa01.00 (fixed)')
+
 
 @tagged('post_install', '-at_install')
 class TestUi(HttpCase):
