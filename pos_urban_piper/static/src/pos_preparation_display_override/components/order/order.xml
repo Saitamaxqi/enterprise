@@ -26,9 +26,9 @@
             t-att-class="{ 
                 'bg-white': this.state.duration >= 5,
                 'o_pdis_is_alert text-bg-danger': this.state.duration lt 5,
-                'o_pdis_archive-order cursor-pointer': this.preparationDisplay.lastStage.id === this.order.stageId
+                'o_pdis_archive-order cursor-pointer': this.prepDisplay.lastStage.id === this.order.stageId
             }">
-                <div t-if="this.preparationDisplay.lastStage.id !== this.order.stageId">
+                <div t-if="this.prepDisplay.lastStage.id !== this.order.stageId">
                     <i class="fa fa-clock-o pe-1" aria-hidden="true"/>
                     <span t-esc="this.state.duration" />'
                 </div>
