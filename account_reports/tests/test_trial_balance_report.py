@@ -827,6 +827,7 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
         })
         move_2020.action_post()
 
+        # add a group by analytic account
         options = self._generate_options(
             self.report,
             '2020-01-01',
@@ -841,6 +842,32 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
             lines,
             #                                          [         Initial Balance        ]    [            Jan 2020            ]    [           End Balance          ]
             #                                          [ Account XYZ ]    [    Total    ]    [ Account XYZ ]    [    Total    ]    [ Account XYZ ]    [    Total    ]
+            #   Name                                   Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit
+            [0,                                            1,       2,        3,       4,        5,       6,        7,       8,        9,      10,       11,      12],
+            [
+                ('211000 Account Payable',              50.0,     0.0,     50.0,     0.0,    100.0,     0.0,    100.0,     0.0,    150.0,     0.0,    150.0,     0.0),
+                ('400000 Product Sales',                 0.0,     0.0,      0.0,     0.0,      0.0,   100.0,      0.0,   100.0,      0.0,   100.0,      0.0,   100.0),
+                ('999999 Undistributed Profits/Losses',  0.0,    50.0,      0.0,    50.0,      0.0,     0.0,      0.0,     0.0,      0.0,    50.0,      0.0,    50.0),
+                ('Total',                               50.0,    50.0,     50.0,    50.0,    100.0,   100.0,    100.0,   100.0,    150.0,   150.0,    150.0,   150.0),
+            ],
+            options,
+        )
+
+        # add a group by analytic plan
+        options = self._generate_options(
+            self.report,
+            '2020-01-01',
+            '2020-01-31',
+            default_options={
+                'analytic_accounts': [analytic_account.id],
+                'analytic_plans_groupby': [analytic_plan.id],
+            }
+        )
+        lines = self.report._get_lines(options)
+        self.assertLinesValues(
+            lines,
+            #                                          [         Initial Balance        ]    [            Jan 2020            ]    [           End Balance          ]
+            #                                          [   Plan XYZ  ]    [    Total    ]    [   Plan XYZ  ]    [    Total    ]    [   Plan XYZ  ]    [    Total    ]
             #   Name                                   Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit    Debit    Credit
             [0,                                            1,       2,        3,       4,        5,       6,        7,       8,        9,      10,       11,      12],
             [
