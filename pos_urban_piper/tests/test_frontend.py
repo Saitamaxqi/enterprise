@@ -4,6 +4,7 @@ from odoo import Command
 from odoo.addons.website.tools import MockRequest
 from odoo.addons.point_of_sale.tests.common import archive_products
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
+from odoo.addons.pos_urban_piper.models.pos_urban_piper_request import UrbanPiperClient
 
 
 @odoo.tests.tagged('post_install', '-at_install')
@@ -43,6 +44,19 @@ class TestPosUrbanPiperCommon(TestPointOfSaleHttpCommon):
             'type': 'consu',
             'list_price': 200.0,
         })
+        cls.attr = cls.env['product.attribute'].create({'name': 'Size'})
+        cls.value_small = cls.env['product.attribute.value'].create({'name': 'Small', 'attribute_id': cls.attr.id})
+        cls.value_large = cls.env['product.attribute.value'].create({'name': 'Large', 'attribute_id': cls.attr.id})
+        cls.product = cls.env['product.template'].create({
+            'name': 'Pizza',
+            'attribute_line_ids': [(0, 0, {
+                'attribute_id': cls.attr.id,
+                'value_ids': [(6, 0, [cls.value_small.id, cls.value_large.id])]
+            })]
+        })
+        for ptav in cls.product.attribute_line_ids.product_template_value_ids:
+            if ptav.product_attribute_value_id == cls.value_large:
+                ptav.price_extra = 2.0
 
 
 class TestFrontend(TestPosUrbanPiperCommon):
@@ -118,3 +132,30 @@ class TestFrontend(TestPosUrbanPiperCommon):
         self.assertEqual(500.0, order_1.amount_paid)
         self.assertEqual(0.0, order_1.amount_tax)
         self.assertEqual(500.0, order_1.payment_ids[0].amount)
+
+    def test_prepare_option_data_returns_valid_options(self):
+        """Test that _prepare_option_data returns correctly formatted active options."""
+        self.env['res.lang']._activate_lang('fr_FR')
+        self.value_small.with_context(lang='fr_FR').name = "Petit"
+        self.value_large.with_context(lang='fr_FR').name = "Grand"
+        up = UrbanPiperClient(self.urban_piper_config)
+        result = up._prepare_option_data(self.product)
+        expected = [
+            {
+                'ref_id': f'{self.product.id}-{self.value_small.id}',
+                'title': 'Small',
+                'available': True,
+                'opt_grp_ref_ids': [f'{self.product.id}-{self.attr.id}'],
+                'price': 0.0,
+                'translations': [{'language': 'fr', 'title': 'Petit'}]
+            },
+            {
+                'ref_id': f'{self.product.id}-{self.value_large.id}',
+                'title': 'Large',
+                'available': True,
+                'opt_grp_ref_ids': [f'{self.product.id}-{self.attr.id}'],
+                'price': 2.0,
+                'translations': [{'language': 'fr', 'title': 'Grand'}]
+            },
+        ]
+        self.assertEqual(result, expected)

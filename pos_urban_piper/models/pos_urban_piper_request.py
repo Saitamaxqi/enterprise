@@ -281,24 +281,18 @@ class UrbanPiperClient:
         - Attribute values are options.
         """
         value_lst = []
-        for product in pos_products:
-            for option_group in product.attribute_line_ids:
-                for option in option_group.value_ids:
-                    product_option = self.config.env['product.template.attribute.value'].search([
-                        ('ptav_active', '=', True),
-                        ('product_tmpl_id', '=', product.id),
-                        ('product_attribute_value_id', '=', option.id)
-                    ], limit=1)
-                    value_dict = {
-                        'ref_id': f'{product.id}-{option.id}',
-                        'title': option.with_context(lang="en_US").name,
-                        'available': True,
-                        'opt_grp_ref_ids': [f'{product.id}-{i}' for i in option.attribute_id.ids],
-                        'price': product_option.price_extra or option.default_extra_price
-                    }
-                    name_translations = option.get_field_translations('name')
-                    value_dict['translations'] = self._get_translations(name_translations, 'title')
-                    value_lst.append(value_dict)
+        active_ptav = pos_products.attribute_line_ids.product_template_value_ids.filtered(lambda ptav: ptav.ptav_active)
+        for option in active_ptav:
+            value_dict = {
+                'ref_id': f'{option.product_tmpl_id.id}-{option.product_attribute_value_id.id}',
+                'title': option.product_attribute_value_id.with_context(lang="en_US").name,
+                'available': True,
+                'opt_grp_ref_ids': [f'{option.product_tmpl_id.id}-{i}' for i in option.attribute_id.ids],
+                'price': option.price_extra or option.product_attribute_value_id.default_extra_price
+            }
+            name_translations = option.product_attribute_value_id.get_field_translations('name')
+            value_dict['translations'] = self._get_translations(name_translations, 'title')
+            value_lst.append(value_dict)
         return value_lst
 
     def _prepare_charges_data(self):
