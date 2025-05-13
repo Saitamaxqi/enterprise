@@ -23,6 +23,7 @@ patch(BankRecStatementLine.prototype, {
                     currency_id: {},
                     amount: {},
                 },
+                limit: 5,
             }
         );
     },

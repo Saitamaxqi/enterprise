@@ -6,6 +6,11 @@
                 <t t-foreach="props.batchPayments" t-as="batchPayment" t-key="batchPayment.id">
                     <BatchPaymentPopoverLine batchPayment="batchPayment" onSelect.bind="() => this.onSelected(batchPayment.id)"/>
                 </t>
+                <tr t-on-click.stop="searchMore" class="cursor-pointer">
+                    <td colspan="4">
+                        <span class="btn btn-link p-0">Search More ...</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </t>

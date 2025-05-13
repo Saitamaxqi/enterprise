@@ -30,5 +30,6 @@ export class BankRecBatchPaymentButton extends Component {
 
     onSelected(batchPaymentId) {
         this.props.onSelected(batchPaymentId);
+        this.batchPaymentPopover.close();
     }
 }
