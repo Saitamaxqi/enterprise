@@ -86,8 +86,8 @@
                 </h3>
                 <p>
                     <em>
-                        Some achievements comforting you in their strengths to face job's
-                        issues.
+                        Mention any achievements that demonstrate their strengths in 
+                        handling work-related challenges.
                     </em>
                 </p>
                 <p>
@@ -110,7 +110,7 @@
                         <tr>
                             <td class="w-50">
                                 <p>
-                                    <em>Stress Resistance</em>
+                                    <em>Stress Management</em>
                                 </p>
                             </td>
                             <td class="w-25">
@@ -174,7 +174,7 @@
                         <tr>
                             <td class="w-50">
                                 <p>
-                                    <em>Pro-activity</em>
+                                    <em>Proactivity</em>
                                 </p>
                             </td>
                             <td class="w-25">
@@ -202,8 +202,7 @@
                 </h3>
                 <p>
                     <em>
-                        From a manager point of view, how could you help the employee to
-                        overcome their weaknesses?
+                        From a manager’s point of view, how could you help them overcome their weaknesses?
                     </em>
                 </p>
                 <p>
@@ -218,7 +217,7 @@
                 </h3>
                 <p>
                     <em>
-                        Do you need rapid answer to the current situation?
+                        Do you need a rapid response to address the current situation?
                     </em>
                 </p>
                 <p>
@@ -228,13 +227,13 @@
                     colleagues, ultimately improving team performance.
                 </p>
                 <h3>
-                    Long term (&gt; 6 months) career discussion, where does the employee
-                    wants to go, how to help them reach this path?
+                    Long term (&gt; 6 months) career discussion: Where does the employee
+                    want to go, and how can you help them reach that goal?
                 </h3>
                 <p>
                     <em>
-                        How do you see the employee in the future, do your vision follow the
-                        employee's desire?
+                        How do you see the employee in the future? Does your vision align with 
+                        the employee’s goals?
                     </em>
                 </p>
                 <p>
@@ -253,10 +252,10 @@
                         My work
                     </strong>
                 </h2>
-                <h3>What are my best achievement(s) since my last appraisal?</h3>
+                <h3>What are my most important achievements since my last appraisal?</h3>
                 <p>
                     <em>
-                        Describe something that made you proud, a piece of work positive for
+                        Describe something you are proud of—work that had a positive impact on
                         the company.
                     </em>
                 </p>
@@ -266,13 +265,12 @@
                     clear priorities, we managed to get back on track and deliver on time.
                 </p>
                 <h3>
-                    What has been the most challenging aspect of my work this past year and
-                    why?
+                  What has been the most challenging aspect of my work this past year,
+                  and why?
                 </h3>
                 <p>
                     <em>
-                        Did you face new difficulties? Did you confront yourself to new
-                        obstacles?
+                        Did you face any new difficulties or unexpected obstacles?
                     </em>
                 </p>
                 <p>
@@ -283,11 +281,11 @@
                     When team members clash, it can result in resentment and a lack of cohesion,
                     ultimately impacting the success of our projects.
                 </p>
-                <h3>What would I need to improve my work?</h3>
+                <h3>What do I need to improve my work?</h3>
                 <p>
                     <em>
-                        How can the company help you with your need and objectives in order
-                        for you to reach your goals and look for the best collaboration?
+                        How can the company support your needs and objectives to help you 
+                        reach your goals and foster better collaboration?
                     </em>
                 </p>
                 <p>
@@ -313,12 +311,12 @@
                     </strong>
                 </h2>
                 <h3>
-                    What are my short and long-term goals with the company, and for my
+                    What are my short- and long-term goals within the company and for my
                     career?
                 </h3>
                 <ul>
                     <li>
-                        <em>Give an example of short-term objective (&lt; 6 months)</em>
+                        <em>Provide a short-term objective (within the next 6 months).</em>
                     </li>
                 </ul>
                 <p>
@@ -326,17 +324,17 @@
                 </p>
                 <ul>
                     <li>
-                        <em>Give an example of long-term objective (&gt; 6 months)</em>
+                        <em>Provide a long-term objective (beyond 6 months).</em>
                     </li>
                 </ul>
                 <p>
                     Take the lead on another project, by myself
                 </p>
-                <h3>Which parts of my job do I most / least enjoy?</h3>
+                <h3>Which parts of my job do I enjoy the most? Which do I enjoy the least?</h3>
                 <p>
                     <em>
-                        Every job has strong points, what are, in your opinion, the tasks that
-                        you enjoy the most/the least?
+                        Every job has its strong points. In your opinion, which tasks do you 
+                        enjoy the most and which the least?
                     </em>
                 </p>
                 <p>
@@ -347,62 +345,76 @@
                         My feelings
                     </strong>
                 </h2>
-                <h3>How do I feel about the company...</h3>
-                <ul>
-                    <li>
-                        <em>Culture/Behavior:</em>
-                        <span class="o_stars o_five_stars" id="checkId-1">
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star-o" contenteditable="false"></i>
-                        </span>
-                    </li>
-                    <li>
-                        <em>Internal Communication:</em>
-                        <span class="o_stars o_five_stars" id="checkId-2">
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star-o" contenteditable="false"></i>
-                        </span>
-                    </li>
-                </ul>
-                <h3>How do I feel about my own...</h3>
-                <ul>
-                    <li>
-                        <em>Job's content:</em>
-                        <span class="o_stars o_five_stars" id="checkId-3">
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                        </span>
-                    </li>
-                    <li>
-                        <em>Work organization:</em>
-                        <span class="o_stars o_five_stars" id="checkId-4">
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star-o" contenteditable="false"></i>
-                            <i class="fa fa-star-o" contenteditable="false"></i>
-                        </span>
-                    </li>
-                    <li>
-                        <em>Remuneration:</em>
-                        <span class="o_stars o_five_stars" id="checkId-5">
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star" contenteditable="false"></i>
-                            <i class="fa fa-star-o" contenteditable="false"></i>
-                            <i class="fa fa-star-o" contenteditable="false"></i>
-                        </span>
-                    </li>
-                </ul>
+                <h3>How do I feel about the company?</h3>
+                <table class="table table-bordered o_table w-75">
+                    <tbody>
+                        <tr>
+                            <td class="w-50">
+                                <p>
+                                    <em>Company culture and values</em>
+                                </p>
+                            </td>
+                            <td class="w-25">
+                                <span class="o_stars o_five_stars" id="checkId-1">
+                                    <i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-50">
+                                <p>
+                                    <em>Internal Communication</em>
+                                </p>
+                            </td>
+                            <td class="w-25">
+                                <span class="o_stars o_five_stars" id="checkId-2">
+                                    <i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>How do I feel about my own role?</h3>
+                <table class="table table-bordered o_table w-75">
+                    <tbody>
+                        <tr>
+                            <td class="w-50">
+                                <p>
+                                    <em>Job content</em>
+                                </p>
+                            </td>
+                            <td class="w-25">
+                                <span class="o_stars o_five_stars" id="checkId-3">
+                                    <i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-50">
+                                <p>
+                                    <em>Work organization</em>
+                                </p>
+                            </td>
+                            <td class="w-25">
+                                <span class="o_stars o_five_stars" id="checkId-4">
+                                    <i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-50">
+                                <p>
+                                    <em>Compensation</em>
+                                </p>
+                            </td>
+                            <td class="w-25">
+                                <span class="o_stars o_five_stars" id="checkId-5">
+                                    <i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i><i class="fa fa-star-o" contenteditable="false"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </field>
         </record>
         <function model="hr.appraisal" name="action_confirm" eval="[ref('hr_appraisal.hr_appraisal_4bis')]"/>
