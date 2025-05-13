@@ -152,9 +152,11 @@ export class SignTemplate extends Component {
     waitForIframeToLoad() {
         //TODO: this save methods does n rpc requests, where n is the number of documents.
         //To bo optimized later.
-        this.signStatus.save = () => {
-            this.state.documents.filter((document) => !document.deleted).forEach(document => document.iframe.saveChangesOnBackend());
-        }
+        this.signStatus.save = async () => {
+            const saveDocuments = this.state.documents.filter(document => !document.deleted).map(document => document.iframe.saveChangesOnBackend());
+            // Wait for all save operations to complete
+            return Promise.all(saveDocuments);
+        };
         let iframesLoaded = false;
         if (this.state.documents) {
             iframesLoaded = true;
@@ -288,9 +290,11 @@ export class SignTemplate extends Component {
                 this.state.signers.forEach(signer => {
                     document.iframe.setRoleColor(signer.roleId, signer.colorId);
                 });
-                this.signStatus.save = () => {
-                    this.state.documents.filter((document) => !document.deleted).forEach(document => document.iframe.saveChangesOnBackend());
-                }
+                this.signStatus.save = async () => {
+                    const saveDocuments = this.state.documents.filter((document) => !document.deleted).map(document => document.iframe.saveChangesOnBackend());
+                    // Wait for all save operations to complete
+                    return Promise.all(saveDocuments);
+                };
             };
             this.state.documents.push(document);
         });
