@@ -4,7 +4,7 @@
     <template id="report_payslip_in">
         <t t-call="web.internal_layout">
             <div class="page" style="font-size: 11px; page-break-before: always;">
-                <table class="table table-sm table-bordered w-100 mb-0" style="border: 1px solid #c9c9c9;">
+                <table class="table table-sm table-bordered w-100 mb-0" style="border: 1px solid #808080;">
                     <tbody>
                         <tr>
                             <th colspan="6">
@@ -171,7 +171,7 @@
                         <t t-foreach="range(max_length)" t-as="i">
                             <tr>
                                 <!-- Earnings column -->
-                                <td>
+                                <td class="text-break">
                                     <span t-if="i &lt; len(earnings_lines)" t-field="earnings_lines[i].name"/>
                                     <span t-else=""></span>
                                 </td>
@@ -185,7 +185,7 @@
                                 </td>
 
                                 <!-- Deduction column -->
-                                <td>
+                                <td class="text-break">
                                     <span t-if="i &lt; len(deductions_lines)" t-field="deductions_lines[i].name"/>
                                     <span t-else=""></span>
                                 </td>
@@ -214,7 +214,7 @@
                         </tr>
                         <!-- Net Pay -->
                         <tr style="background-color: #efefef;">
-                            <td colspan="4"><strong>NET PAY</strong></td>
+                            <td colspan="4"></td>
                             <td colspan="2" class="text-end"><strong>AMOUNT</strong></td>
                         </tr>
                         <tr>
@@ -241,7 +241,7 @@
                         <tr>
                             <td colspan="6">
                                 <div t-if="o.net_wage &gt;= 0">
-                                    <h6 class="mb-0">Total net payable <strong t-field="o.net_wage"/></h6>
+                                    <h6 class="mb-0">Total Net Payable <strong t-field="o.net_wage"/></h6>
                                     <p>(<span t-out="o.currency_id.with_context(lang='en_US').amount_to_text(o.net_wage)"/> Only)</p>
                                 </div>
                             </td>

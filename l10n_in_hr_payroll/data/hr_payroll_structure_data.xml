@@ -6,7 +6,7 @@
         <field name="type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
         <field name="unpaid_work_entry_type_ids" eval="[(4, ref('hr_work_entry.work_entry_type_unpaid_leave'))]"/>
         <field name="country_id" ref="base.in"/>
-        <field name="report_id" ref="payslip_details_report"/>
+        <field name="report_id" ref="action_report_payslip_in"/>
         <field name="rule_ids" eval="[]"/>
     </record>
 
@@ -14,7 +14,7 @@
         <field name="name">Worker Pay</field>
         <field name="type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_worker"/>
         <field name="country_id" ref="base.in"/>
-        <field name="report_id" ref="payslip_details_report"/>
+        <field name="report_id" ref="action_report_payslip_in"/>
         <field name="rule_ids" eval="[]"/>
     </record>
 
@@ -22,7 +22,7 @@
         <field name="name">Stipend</field>
         <field name="type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_intern"/>
         <field name="country_id" ref="base.in"/>
-        <field name="report_id" ref="payslip_details_report"/>
+        <field name="report_id" ref="action_report_payslip_in"/>
         <field name="payslip_name">Stipend</field>
         <field name="rule_ids" eval="[]"/>
     </record>
@@ -31,7 +31,7 @@
         <field name="name">Non-Executive Employee</field>
         <field name="country_id" ref="base.in"/>
         <field name="type_id" ref="hr_payroll_salary_structure_type_ind_emp"/>
-        <field name="report_id" ref="payslip_details_report"/>
+        <field name="report_id" ref="action_report_payslip_in"/>
         <field name="rule_ids" eval="[]"/>
     </record>
 

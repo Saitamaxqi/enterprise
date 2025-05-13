@@ -357,7 +357,7 @@
         <!-- payslip  -->
         <record id="l10n_in_hr_payslip_in_vihaan_sep" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
-            <field name="name">Vihaan Payslip September</field>
+            <field name="name" eval="'Salary Slip - ' + (DateTime.today() - relativedelta(years=1, month=9)).strftime('%B %Y')"/>
             <field name="date_from" eval="DateTime.today() - relativedelta(years=1, month=9, day=1)"/>
             <field name="date_to" eval="DateTime.today() - relativedelta(years=1, month=9, day=30)"/>
             <field name="company_id" ref="base.demo_company_in"/>
@@ -365,7 +365,7 @@
         </record>
         <record id="l10n_in_hr_payslip_in_shaurya_sep" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_shaurya"/>
-            <field name="name">Shaurya Payslip September</field>
+            <field name="name" eval="'Salary Slip - ' + (DateTime.today() - relativedelta(years=1, month=9)).strftime('%B %Y')"/>
             <field name="date_from" eval="DateTime.today() - relativedelta(years=1, month=9, day=1)"/>
             <field name="date_to" eval="DateTime.today() - relativedelta(years=1, month=9, day=30)"/>
             <field name="company_id" ref="base.demo_company_in"/>
@@ -373,7 +373,7 @@
         </record>
         <record id="l10n_in_hr_payslip_in_vihaan_oct" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
-            <field name="name">Vihaan Payslip October</field>
+            <field name="name" eval="'Salary Slip - ' + (DateTime.today() - relativedelta(years=1, month=10)).strftime('%B %Y')"/>
             <field name="payslip_run_id" ref="l10n_in_hr_payslip_batch_year_1"/>
             <field name="date_from" eval="DateTime.today() - relativedelta(years=1, month=10, day=1)"/>
             <field name="date_to" eval="DateTime.today() - relativedelta(years=1, month=10, day=31)"/>
@@ -382,7 +382,7 @@
         </record>
         <record id="l10n_in_hr_payslip_in_alisha_sharma" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_alisha_sharma"/>
-            <field name="name">Alisha Sharma Payslip (3 months ago)</field>
+            <field name="name" eval="'Salary Slip - ' + (DateTime.today() - relativedelta(months=3, day=1)).strftime('%B %Y')"/>
             <field name="date_from" eval="DateTime.today() - relativedelta(months=3, day=1)"/>
             <field name="date_to" eval="DateTime.today() - relativedelta(months=3, day=31)"/>
             <field name="company_id" ref="base.demo_company_in"/>
@@ -390,7 +390,7 @@
         </record>
         <record id="l10n_in_hr_payslip_in_vihaan_current_month" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
-            <field name="name">Vihaan Payslip</field>
+            <field name="name" eval="'Salary Slip - ' + DateTime.today().replace(day=1).strftime('%B %Y')"/>
             <field name="date_from" eval="DateTime.today().replace(day=1)"/>
             <field name="date_to" eval="(DateTime.today().replace(day=1) + relativedelta(months=1)) - relativedelta(days=1)"/>
             <field name="company_id" ref="base.demo_company_in"/>
@@ -398,7 +398,7 @@
         </record>
         <record id="l10n_in_hr_payslip_in_alisha_sharma_current_month" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_alisha_sharma"/>
-            <field name="name">Alisha Sharma Payslip</field>
+            <field name="name" eval="'Salary Slip - ' + DateTime.today().replace(day=1).strftime('%B %Y')"/>
             <field name="date_from" eval="DateTime.today().replace(day=1)"/>
             <field name="date_to" eval="(DateTime.today().replace(day=1) + relativedelta(months=1)) - relativedelta(days=1)"/>
             <field name="company_id" ref="base.demo_company_in"/>

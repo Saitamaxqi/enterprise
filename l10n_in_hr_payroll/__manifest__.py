@@ -44,6 +44,7 @@ Indian Payroll Salary Rules.
         'views/hr_employee_views.xml',
         'views/res_config_settings_views.xml',
         'security/ir.model.access.csv',
+        'views/report_payslip_templates.xml',
         'views/report_payslip_details_template.xml',
         'wizard/hr_salary_register.xml',
         'views/report_hr_epf_views.xml',
