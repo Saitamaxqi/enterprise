@@ -24,5 +24,17 @@
             <field name="taxes_id" eval="[]"/>
             <field name="pos_categ_ids" eval="[(6, 0, [ref('pos_category_fdm')])]"/>
         </record>
+
+        <record id="action_load_driver" model="ir.actions.server">
+            <field name="name">Load Blackbox driver on IoT boxes</field>
+            <field name="model_id" ref="iot.model_iot_box"/>
+            <field name="state">code</field>
+            <field name="code">action = model._reload_iot_drivers("pos_blackbox_be")</field>
+        </record>
+
+        <record id="reload_iot_after_install" model="ir.actions.todo">
+            <field name="name">Load Blackbox driver on IoT boxes</field>
+            <field name="action_id" ref="action_load_driver"/>
+        </record>
     </data>
 </odoo>
