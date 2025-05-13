@@ -46,7 +46,7 @@ class PosConfig(models.Model):
             for d in box.device_ids if d.type == 'display'
         ]
 
-        self.env['iot.channel']._send_message({
+        self.env['iot.channel'].send_message({
             "iot_identifiers": [iot_box.identifier for iot_box in self.self_ordering_iot_available_iot_box_ids],
             "device_identifiers": display_identifiers,
             'action': 'open_kiosk',
