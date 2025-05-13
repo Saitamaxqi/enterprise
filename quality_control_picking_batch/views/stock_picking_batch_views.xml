@@ -28,10 +28,12 @@
         <field name="inherit_id" ref="stock_picking_batch.view_move_line_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='company_id']" position="after">
-                <field name="check_state" column_invisible="True"/>
-                <button type="object" class="btn-secondary text-muted" name="action_open_quality_check_wizard" icon="fa-check" invisible="check_state != 'in_progress'" title="Check Quality"/>
-                <button type="object" class="btn-secondary text-danger" name="action_open_quality_check_wizard" icon="fa-check" invisible="check_state != 'fail'" title="Check Quality"/>
-                <button type="object" class="btn-secondary text-success" name="action_open_quality_check_wizard" icon="fa-check" invisible="check_state != 'pass'" title="Check Quality"/>
+                <button type="object" class="btn-secondary text-muted" name="action_open_quality_check_wizard" icon="fa-check"
+                        column_invisible="parent.check_state != 'in_progress'" title="Check Quality"/>
+                <button type="object" class="btn-secondary text-danger" name="action_open_quality_check_wizard" icon="fa-check"
+                        column_invisible="parent.check_state != 'fail'" title="Check Quality"/>
+                <button type="object" class="btn-secondary text-success" name="action_open_quality_check_wizard" icon="fa-check"
+                        column_invisible="parent.check_state != 'pass'" title="Check Quality"/>
             </xpath>
         </field>
     </record>
