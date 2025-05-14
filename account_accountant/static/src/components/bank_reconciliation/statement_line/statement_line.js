@@ -55,6 +55,23 @@ export class BankRecStatementLine extends KanbanRecord {
         });
     }
 
+    openPartner() {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "res.partner",
+            res_id: this.partner.id,
+            views: [[false, "form"]],
+            target: "current",
+        });
+    }
+
+    async removePartner() {
+        await this.orm.write("account.bank.statement.line", [this.recordData.id],
+            { partner_id: false },
+        );
+        this.record.load();
+    }
+
     // -----------------------------------------------------------------------------
     // HELPER
     // -----------------------------------------------------------------------------
