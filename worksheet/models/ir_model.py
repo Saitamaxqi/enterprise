@@ -1,10 +1,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models
+from odoo import api, models
 
 
 class IrModel(models.Model):
     _inherit = 'ir.model'
 
-    def unlink(self):
-        self.env['worksheet.template'].search([('model_id', 'in', self.ids)]).unlink()
-        return super().unlink()
+    @api.ondelete(at_uninstall=False)
+    def _delete(self):
+        self.env['worksheet.template']\
+            .with_context(active_test=False)\
+            .search([('model_id', 'in', self.ids)])\
+            .unlink()
