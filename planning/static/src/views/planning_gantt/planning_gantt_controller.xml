@@ -28,6 +28,14 @@
             >
                 Auto Plan
             </button>
+            <button t-if="env.isSmall and ['week', 'month'].includes(model.metaData.rangeId)"
+                class="o_gantt_button_print btn btn-link dropdown-item"
+                title="Print resource calendar"
+                data-hotkey="p"
+                t-on-click="() => this.planningControllerActions.print(props.groupBy)"
+            >
+                Print
+            </button>
             <button t-if="env.isSmall"
                 class="o_gantt_button_preview btn btn-link dropdown-item"
                 title="Preview"
@@ -55,6 +63,13 @@
                         attrs="{ 'data-hotkey': 'k', 'title': 'Automatically plan open shifts and sales orders' }"
                     >
                         Auto Plan
+                    </DropdownItem>
+                    <DropdownItem t-if="['week', 'month'].includes(model.metaData.rangeId)"
+                        class="'o_gantt_button_print btn btn-link dropdown-item'"
+                        onSelected="() => this.planningControllerActions.print(props.groupBy)"
+                        attrs="{ 'data-hotkey': 'p', 'title': 'Print planning' }"
+                    >
+                        Print
                     </DropdownItem>
                     <DropdownItem
                         class="'o_gantt_button_preview btn btn-link dropdown-item'"

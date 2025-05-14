@@ -1052,3 +1052,25 @@ test("publish on gantt view: default end_datetime should cover full range", asyn
         await animationFrame();
     }
 });
+
+test("planning gantt view: print", async () => {
+    onRpc("action_print_plannings", () => {
+        expect.step("action_print_plannings()");
+        return {};
+    });
+
+    await mountGanttView({
+        resModel: "planning.slot",
+        arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_range="week"/>`,
+        domain: Domain.FALSE.toList(),
+        groupBy: ["resource_id"],
+    });
+
+    await click(
+        ".o_control_panel_main_buttons button > i.fa-caret-down"
+    );
+
+    await animationFrame();
+    await click(".o_gantt_button_print");
+    expect.verifySteps(["action_print_plannings()"]);
+});

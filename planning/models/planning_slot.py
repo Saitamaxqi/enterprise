@@ -14,7 +14,7 @@ from werkzeug.urls import url_encode
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
 from odoo.fields import Datetime, Domain
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, SQL, float_utils, format_datetime, get_lang, babel_locale_parse
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, SQL, float_utils, format_datetime, get_lang, babel_locale_parse, format_time, format_date
 from odoo.tools.date_utils import get_timedelta, sum_intervals, weeknumber, weekstart, weekend
 from odoo.tools.intervals import Intervals
 
@@ -737,13 +737,6 @@ class PlanningSlot(models.Model):
         for slot in slots_with_date:
             slot.is_unassign_deadline_passed = slot.unassign_deadline < fields.Datetime.now()
 
-    # Used in report
-    def _group_slots_by_resource(self):
-        grouped_slots = defaultdict(self.browse)
-        for slot in self.sorted(key=lambda s: s.resource_id.name or ''):
-            grouped_slots[slot.resource_id] |= slot
-        return grouped_slots
-
     # ----------------------------------------------------
     # ORM overrides
     # ----------------------------------------------------
@@ -1026,6 +1019,9 @@ class PlanningSlot(models.Model):
             :start_datetime: the start datetime of the second pill
             :end_datetime: the end datetime of the first pill
         """
+
+        # Important Note: When you change this method logic, change it also in _split_fake_pill
+        # in the same file, they should be identical
         result = self.copy({'start_datetime': values.get('start_datetime')})
         self.write({'end_datetime': values.get('end_datetime')})
         return result.id
@@ -1642,6 +1638,228 @@ class PlanningSlot(models.Model):
         return self._get_notification_action(notif_type, message)
 
     # ----------------------------------------------------
+    # Print planning
+    # ----------------------------------------------------
+    def _print_planning_get_fields_to_copy(self):
+        return ['employee_id', 'company_id', 'allocated_percentage', 'allocated_hours', 'resource_id', 'start_datetime', 'end_datetime', 'role_id']
+
+    def _print_planning_get_slot_title(self, slot_start, slot_end, tz_info, group_by):
+        def print_planning_format_time(date, tz_info):
+            return format_time(self.env, date.time(), tz_info, 'HH:mm')
+
+        allocated_hours_formatted = ""
+        if self.allocated_percentage != 100:
+            (unitary_part, decimal_part) = float_utils.float_split_str(
+                self.allocated_hours,
+                precision_digits=2,
+            )
+            allocated_hours_formatted = f" ({unitary_part}h{decimal_part if decimal_part != '00' else ''})"
+        name_get = ""
+        if group_by == "role_id":
+            if self.resource_id:
+                name_get = f" {self.resource_id.name}"
+        elif group_by == "resource_id":
+            if self.role_id:
+                name_get = f" {self.role_id.name}"
+        else:
+            name_get = f" {self.resource_id.name}" if self.resource_id else ""
+            if self.role_id:
+                if name_get:
+                    name_get += f" - {self.role_id.name}"
+                else:
+                    name_get = f" {self.role_id.name}"
+
+        return f"{print_planning_format_time(slot_start, tz_info)} – {print_planning_format_time(slot_end, tz_info)}{allocated_hours_formatted}{name_get}"
+
+    @api.model
+    def action_print_plannings(self, date_start, date_end, group_bys, domain):
+
+        def print_planning_split_fake_pill(shift, values):
+            shift.ensure_one()
+            assert 'start_datetime' in values and 'end_datetime' in values and not shift._origin
+            record = print_planning_create_fake_pill(shift, {'start_datetime': values.get('start_datetime').astimezone(pytz.utc).replace(tzinfo=None)})
+            shift.update({'end_datetime': values.get('end_datetime').astimezone(pytz.utc).replace(tzinfo=None)})
+            return record
+
+        def print_planning_create_fake_pill(shift, vals=None):
+            record = self.env['planning.slot'].new({
+                **shift._read_format(shift._print_planning_get_fields_to_copy())[0],
+                **(vals or {}),
+            })
+            # copy method called inside the original split_pill method recomputes the allocated_hours again after the split (dates changed)
+            record._compute_allocated_hours()
+            return record
+
+        def print_planning_get_fake_pill_datetime(datetime_per_resource_per_day, resource_id, day, tz_info, default):
+            if day in datetime_per_resource_per_day[resource_id]:
+                return datetime_per_resource_per_day[resource_id][day].astimezone(tz_info)
+
+            return tz_info.localize(datetime.combine(day, default))
+
+        def print_planning_get_fake_pill_start_datetime(start_datetime_per_resource_per_day, resource_id, day, tz_info):
+            return print_planning_get_fake_pill_datetime(start_datetime_per_resource_per_day, resource_id, day, tz_info, time.min)
+
+        def print_planning_get_fake_pill_end_datetime(end_datetime_per_resource_per_day, resource_id, day, tz_info):
+            return print_planning_get_fake_pill_datetime(end_datetime_per_resource_per_day, resource_id, day, tz_info, time.max)
+
+        def print_planning_add_slot(shift, tz_info, group_by_slots_per_day_per_week, group, weeks, group_by):
+            if float_utils.float_is_zero(shift.allocated_hours, precision_digits=2):
+                return
+
+            slot_start = shift.start_datetime.astimezone(tz_info)
+            slot_end = shift.end_datetime.astimezone(tz_info)
+            date = format_date(self.env, slot_start)
+            for index, week, _dummy in weeks:
+                if date in week:
+                    group_by_slots_per_day_per_week[index][group][date].append({
+                        "title": shift._print_planning_get_slot_title(slot_start, slot_end, tz_info, group_by),
+                        "style": f"background-color: {shift.role_id._get_light_color(0.5, not shift.resource_id)};"
+                    })
+                    return
+
+        def print_planning_update_datetime(_datetime, resource_id, datetime_per_resource_per_day, func):
+            day = _datetime.date()
+            if day in datetime_per_resource_per_day[resource_id]:
+                datetime_per_resource_per_day[resource_id][day] = func(datetime_per_resource_per_day[resource_id][day], _datetime)
+            else:
+                datetime_per_resource_per_day[resource_id][day] = _datetime
+
+        def print_planning_flexible_resources_work_intervals(start, end, resources):
+            assert all(resource._is_flexible() and not resource._is_fully_flexible() for resource in resources)
+            return {resource.id: Intervals([(start, end, self.env['resource.calendar.attendance'])]) for resource in resources}
+
+        group_bys = [g for g in (group_bys or []) if self.fields_get(g)[g.split(':')[0]]['type'] not in {"datetime", "date"}]
+        if not group_bys:
+            group_bys = ['resource_id']
+
+        group_by = group_bys[-1]
+        date_start = datetime.strptime(date_start, DEFAULT_SERVER_DATETIME_FORMAT)
+        date_end = datetime.strptime(date_end, DEFAULT_SERVER_DATETIME_FORMAT)
+
+        if date_end < date_start:
+            date_start, date_end = date_end, date_start
+
+        group_by_slots = self.env['planning.slot']._read_group(
+            domain,
+            [group_by],
+            ['id:recordset'],
+        )
+
+        if not group_by_slots:
+            return False
+
+        tz_info = pytz.timezone(self._get_tz())
+        day_start_in_user_tz = date_start.astimezone(tz_info).date()
+        day_end_in_user_tz = date_end.astimezone(tz_info).date()
+        days_count = (day_end_in_user_tz - day_start_in_user_tz).days + 1
+        days = [day_start_in_user_tz + timedelta(days=i) for i in range(days_count)]
+        group_by_slots_per_day_per_week = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+        unassigned = self.env._("Open Shifts") if group_by == 'resource_id' else self.env._("Undefined %(group)s", group=self.fields_get(group_by)[group_by]["string"])
+        group_by_name_by_id = {}
+        non_flexible_resources_ids = set()
+        flexible_resources_ids = set()
+
+        for g, slots in group_by_slots:
+            group_by_name_by_id[g.id if g else False] = g.display_name if g else unassigned
+            for slot in slots:
+                if slot.resource_id:
+                    (flexible_resources_ids if not slot.resource_id._is_fully_flexible() and slot.resource_id._is_flexible() else non_flexible_resources_ids).add(slot.resource_id.id)
+
+        non_flexible_resources = self.env['resource.resource'].browse(non_flexible_resources_ids)
+        flexible_resources = self.env['resource.resource'].browse(flexible_resources_ids)
+
+        start_utc, end_utc = pytz.utc.localize(date_start), pytz.utc.localize(date_end)
+        resources_work_intervals, _dummy = non_flexible_resources._get_valid_work_intervals(
+            start_utc, end_utc
+        )
+
+        resources_work_intervals.update(print_planning_flexible_resources_work_intervals(start_utc, end_utc, flexible_resources))
+
+        weeks = [
+            (
+                int(i / 7),
+                [format_date(self.env, day) for day in days[i:i + 7]],
+                self.env._(
+                    "Week from %(start_date)s to %(end_date)s",
+                    start_date=format_date(self.env, days[i:i + 7][0]),
+                    end_date=format_date(self.env, days[i:i + 7][-1])
+                ),
+            )
+            for i in range(0, len(days), 7)
+        ]
+
+        start_datetime_per_resource_per_day, end_datetime_per_resource_per_day = defaultdict(dict), defaultdict(dict)
+        for resource_id, intervals in resources_work_intervals.items():
+            for start_datetime, end_datetime, _dummy in intervals._items:
+                print_planning_update_datetime(start_datetime, resource_id, start_datetime_per_resource_per_day, min)
+                print_planning_update_datetime(end_datetime, resource_id, end_datetime_per_resource_per_day, max)
+
+        for group_id, slots in sorted(group_by_slots, key=lambda x: x[0].display_name if x[0] else ''):
+            group = group_id.id if group_id else False
+            for slot in slots:
+                resource_id = slot.resource_id
+                slot_start = slot.start_datetime.astimezone(tz_info)
+                slot_end = slot.end_datetime.astimezone(tz_info)
+
+                slot_start_day = slot_start.date()
+                slot_end_day = slot_end.date()
+
+                # one day slot
+                if slot_start_day == slot_end_day:
+                    print_planning_add_slot(slot, tz_info, group_by_slots_per_day_per_week, group, weeks, group_by)
+                else:
+                    # slot on more than one day, we do a fake copy using new without storing in db and
+                    # we use split_pill function to cut the slot in many days
+                    fake_slot = print_planning_create_fake_pill(slot)
+
+                    # remove the part of the pill happening in the previous weeks
+                    first_day = days[0]
+                    if slot_start_day < first_day:
+                        fake_slot = print_planning_split_fake_pill(fake_slot, {
+                            "start_datetime": print_planning_get_fake_pill_start_datetime(start_datetime_per_resource_per_day, resource_id.id, first_day, tz_info),
+                            "end_datetime": print_planning_get_fake_pill_end_datetime(end_datetime_per_resource_per_day, resource_id.id, first_day + timedelta(days=-1), tz_info)
+                        })
+
+                    # remove the part of the pill happening in the next weeks
+                    last_day = days[-1]
+                    if slot_end_day > last_day:
+                        print_planning_split_fake_pill(fake_slot, {
+                            "start_datetime": print_planning_get_fake_pill_start_datetime(start_datetime_per_resource_per_day, resource_id.id, last_day + timedelta(days=1), tz_info),
+                            "end_datetime": print_planning_get_fake_pill_end_datetime(end_datetime_per_resource_per_day, resource_id.id, last_day, tz_info),
+                        })
+
+                    # split the pill in different pills, pill per day
+                    current_day = fake_slot.start_datetime.date()
+                    last_day = fake_slot.end_datetime.date()
+                    while current_day < last_day:
+                        split_slot = print_planning_split_fake_pill(fake_slot, {
+                            "start_datetime": print_planning_get_fake_pill_start_datetime(start_datetime_per_resource_per_day, resource_id.id, current_day + timedelta(days=1), tz_info),
+                            "end_datetime": print_planning_get_fake_pill_end_datetime(end_datetime_per_resource_per_day, resource_id.id, current_day, tz_info),
+                        })
+
+                        print_planning_add_slot(fake_slot, tz_info, group_by_slots_per_day_per_week, group, weeks, group_by)
+                        fake_slot = split_slot
+                        current_day += timedelta(days=1)
+
+                    print_planning_add_slot(fake_slot, tz_info, group_by_slots_per_day_per_week, group, weeks, group_by)
+
+        # groups were inserted in the dict in a specific order (false, then sorted non DESC order)
+        # but in Qweb, the order was lost
+        # so we transformed it to a dict {week: (group, {day: slots})}
+        group_by_slots_per_day_per_week_formatted = {
+            week: [(group, val) for group, val in data.items()]
+            for week, data in group_by_slots_per_day_per_week.items()
+        }
+
+        return self.env.ref('planning.report_planning_slot').with_context(discard_logo_check=True).report_action(None,
+            data={
+                'group_by_slots_per_day_per_week': group_by_slots_per_day_per_week_formatted,
+                'weeks': weeks,
+                'group_by_name_by_id': group_by_name_by_id,
+            }
+        )
+
+    # ----------------------------------------------------
     # Business Methods
     # ----------------------------------------------------
 
@@ -1727,7 +1945,7 @@ class PlanningSlot(models.Model):
             :return a vals list of the slot to create
         """
         self.ensure_one()
-        splitted_slot_values = []
+        split_slot_values = []
         for start_inter, end_inter, _resource in intervals:
             new_slot_vals = {
                 **values,
@@ -1753,11 +1971,11 @@ class PlanningSlot(models.Model):
                 precision_digits=2
             )
             if not was_updated:
-                return splitted_slot_values
+                return split_slot_values
             if unassign:
                 new_slot_vals['resource_id'] = False
-            splitted_slot_values.append(new_slot_vals)
-        return splitted_slot_values
+            split_slot_values.append(new_slot_vals)
+        return split_slot_values
 
     def _copy_slots(self, start_dt, end_dt, delta):
         """

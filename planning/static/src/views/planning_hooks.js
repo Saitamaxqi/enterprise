@@ -173,6 +173,29 @@ export class PlanningControllerActions {
         });
     }
 
+    async print(groupBy = null) {
+        const resModel = this.getResModel();
+        const startDate = serializeDateTime(this.getStartDate());
+        const stopDate = serializeDateTime(this.getStopDate());
+        const domain = this.getDomain();
+        const result = await this.orm.call(resModel, "action_print_plannings", [
+            startDate,
+            stopDate,
+            groupBy,
+            domain,
+        ]);
+        if (result) {
+            this.actionService.doAction(result);
+        } else {
+            this.notifications.add(
+                _t(
+                    "No shifts to print"
+                ),
+                { type: "warning" }
+            );
+        }
+    }
+
     autoPlanDomain() {
         return this.getDomain();
     }

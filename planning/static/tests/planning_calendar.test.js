@@ -492,3 +492,21 @@ test("check creation of records while no filter is selected", async () => {
 
     expect.verifySteps(["empty record"]);
 });
+
+test("planning calendar view: print", async () => {
+    onRpc("get_calendar_filters", () => {
+        return [
+            {"id": 1, "resource_id": false, "checked": false, "resource_type": false},
+        ];
+    });
+    onRpc("action_print_plannings", () => {
+        expect.step("action_print_plannings()");
+        return {};
+    });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction(1);
+
+    await animationFrame();
+    await click(".o_button_print");
+    expect.verifySteps(["action_print_plannings()"]);
+});

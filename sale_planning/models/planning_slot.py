@@ -722,3 +722,14 @@ class PlanningSlot(models.Model):
             resource = resource_per_id[key]
             val['role_ids'] = resource.role_ids.ids
         return results
+
+    def _print_planning_get_fields_to_copy(self):
+        return super()._print_planning_get_fields_to_copy() + ['sale_line_id']
+
+    def _print_planning_get_slot_title(self, slot_start, slot_end, tz_info, group_by):
+        res = super()._print_planning_get_slot_title(slot_start, slot_end, tz_info, group_by)
+
+        if group_by != 'sale_line_id' and self.sale_line_id:
+            res += ' - ' + self.sale_line_id.display_name
+
+        return res

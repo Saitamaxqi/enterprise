@@ -36,7 +36,7 @@ class ShiftController(http.Controller):
     def _get_slot_vals(self, slot, is_open_shift):
         return {
             'title': self._get_slot_title(slot),
-            'color': self._format_planning_shifts(slot.role_id.color, is_open_shift),
+            'color': slot.role_id._get_color_from_code(is_open_shift),
             'alloc_hours': format_duration(slot.allocated_hours),
             'alloc_perc': f'{slot.allocated_percentage:.2f}',
             'slot_id': slot.id,
@@ -428,42 +428,6 @@ class ShiftController(http.Controller):
         response.headers.add('Content-Type', 'text/calendar')
         response.headers.add('Content-Disposition', 'attachment', filename=f'planning_{start_name}_to_{end_name}.ics')
         return response
-
-    @staticmethod
-    def _format_planning_shifts(color_code, is_open_shift):
-        """Take a color code from Odoo's Kanban view and returns an hex code compatible with the fullcalendar library"""
-        # if the shift is an open shift, we use the '80' affix at the end of the hex code to modify the transparency
-        if is_open_shift:
-            switch_color = {
-                0: '#00878480',   # No color (doesn't work actually...)
-                1: '#EE4B3980',   # Red
-                2: '#F2964880',   # Orange
-                3: '#F4C60980',   # Yellow
-                4: '#55B7EA80',   # Light blue
-                5: '#71405B80',   # Dark purple
-                6: '#E8686980',   # Salmon pink
-                7: '#00878480',   # Medium blue
-                8: '#26728380',   # Dark blue
-                9: '#BF125580',   # Fushia
-                10: '#2BAF7380',  # Green
-                11: '#8754B080'   # Purple
-            }
-        else:
-            switch_color = {
-                0: '#008784',   # No color (doesn't work actually...)
-                1: '#EE4B39',   # Red
-                2: '#F29648',   # Orange
-                3: '#F4C609',   # Yellow
-                4: '#55B7EA',   # Light blue
-                5: '#71405B',   # Dark purple
-                6: '#E86869',   # Salmon pink
-                7: '#008784',   # Medium blue
-                8: '#267283',   # Dark blue
-                9: '#BF1255',   # Fushia
-                10: '#2BAF73',  # Green
-                11: '#8754B0'   # Purple
-            }
-        return switch_color[color_code]
 
     @staticmethod
     def _get_hours_intervals(checkin_min, checkout_max, event_hour_min, event_hour_max):

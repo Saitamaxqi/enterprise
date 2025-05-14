@@ -20,7 +20,6 @@ Schedule your teams across projects and estimate deadlines more accurately.
         'views/planning_slot_views.xml',
         'views/project_project_views.xml',
         'views/planning_menus.xml',
-        'report/planning_analysis_report_templates.xml',
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

@@ -120,3 +120,14 @@ class PlanningSlot(models.Model):
     def _get_resources_dict_values(self, resource_dict):
         self.ensure_one()
         return resource_dict.get(self.project_id, super()._get_resources_dict_values(resource_dict))
+
+    def _print_planning_get_fields_to_copy(self):
+        return super()._print_planning_get_fields_to_copy() + ['project_id']
+
+    def _print_planning_get_slot_title(self, slot_start, slot_end, tz_info, group_by):
+        res = super()._print_planning_get_slot_title(slot_start, slot_end, tz_info, group_by)
+
+        if group_by != 'project_id' and self.project_id:
+            res += ' - ' + self.project_id.name
+
+        return res
