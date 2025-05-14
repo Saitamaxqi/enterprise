@@ -681,3 +681,77 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
             ],
             options
         )
+
+    def test_mod349_invoice_date(self):
+        """
+            Test the rectification part of modelo 349, if an in_refund/out_refund is found in the period defined by the move date
+        """
+        options = self._generate_options(self.report, '2020-01-01', '2020-01-30')
+
+        # We create an invoice with invoice date in 2019 and accounting date 2020
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2019-12-31',
+            'date': '2020-01-01',
+            'partner_id': self.partner_a.id,
+            'l10n_es_reports_mod349_invoice_type': 'E',
+            'line_ids': [
+                Command.create({
+                    'product_id': self.product.id,
+                    'account_id': self.account_income.id,
+                    'quantity': 4,
+                    'price_unit': self.product.lst_price,
+                }),
+            ]
+        })
+
+        invoice.action_post()
+
+        # We reverse the move in 2020
+        move_reversal = self.env['account.move.reversal'].with_context(
+            active_model="account.move",
+            active_ids=invoice.ids,
+        ).create({
+            'date': fields.Date.from_string('2020-01-02'),
+            'journal_id': self.company_data['default_journal_sale'].id,
+        })
+        reversal = move_reversal.reverse_moves()
+        reversed_move = self.env['account.move'].browse(reversal['res_id'])
+        reversed_move.action_post()
+
+        # In the report of Jan 2020, the new balance of the move created in 2019 should be nulled by the credit note because
+        # its accounting date is 2020
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            [0,                                                                                                                                                     1],
+            [
+                ('Summary',                                                                                                                      ''),
+                ('Total number of intra-community operations',                                                                                    1),
+                ('Total amount of intra-community operations',                                                                                    0),
+                ('Total number of intra-community refund operations',                                                                             0),
+                ('Amount of intra-community refund operations',                                                                                   0),
+                ('Invoices',                                                                                                                     ''),
+                ('E. Intra-community sales',                                                                                                      0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Transfers of goods made under consignment sales contracts.',                                                                 0),
+                ('D. Returns of goods previously sent from the TAI',                                                                              0),
+                ('C. Replacements of goods',                                                                                                      0),
+                ('Refunds',                                                                                                                      ''),
+                ('E. Intra-community sales refunds',                                                                                              0),
+                ('A. Intra-community purchases subject to taxes',                                                                                 0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                            0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                             0),
+                ('I. Intra-community purchases of services',                                                                                      0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                      0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                        0),
+                ('R. Rectifications of transfers of goods made under consignment sale contracts.',                                                0),
+                ('D. Rectifications of returned goods previously sent from the TAI',                                                              0),
+                ('C. Rectifications for replacement of goods',                                                                                    0),
+            ],
+            options
+        )

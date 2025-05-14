@@ -1331,11 +1331,11 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                         # If we find a refund, we need the move which is linked to the refund
                         matching_move = reversed_moves_dict[res_line['reversed_entry_id']]
 
-                        if move_type == 'invoice' and options['date']['date_from'] <= matching_move.invoice_date.strftime('%Y-%m-%d') <= options['date']['date_to']:
+                        if move_type == 'invoice' and options['date']['date_from'] <= matching_move.date.strftime('%Y-%m-%d') <= options['date']['date_to']:
                             # If the linked move invoice date is in the same period as the report, we just need to subtract the refund value
                             result_dict['value'] -= res_line['amount_untaxed']
 
-                        elif move_type == 'refund' and matching_move.invoice_date.strftime('%Y-%m-%d') < options['date']['date_from']:
+                        elif move_type == 'refund' and matching_move.date.strftime('%Y-%m-%d') < options['date']['date_from']:
                             # If the linked move is in a previous period, we need to add the amount_residual of the linked move to the result
                             # To be sure we don't add a move value twice (in case there is multiple refunds for a same move),
                             # we add it to a list
@@ -1354,15 +1354,23 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
             else:
                 # Manage the firsts lines (1 & 3) to display the total number of partners
                 partner_ids = set()
+                treated_moves = set()
                 for res_line in query_res_lines:
-                    if ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
+                    if res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'refund':
+                        matching_move = reversed_moves_dict.get(res_line['move_id'])
+
+                        if matching_move and options['date']['date_from'] <= matching_move.date.strftime('%Y-%m-%d') <= options['date']['date_to']:
+                            # If the linked move invoice date is in the same period as the report, we won't count it in refund operators
+                            treated_moves.add(res_line['move_id'])
+
+                    elif ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
                             (res_line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund')):
-                        if res_line['partner_id'] in partner_ids:
+                        if res_line['partner_id'] in partner_ids or res_line['reversed_entry_id'] in treated_moves:
                             continue
                         partner_ids.add(res_line['partner_id'])
                         if move_type == 'refund':
                             reversed_move = reversed_moves_dict.get(res_line['reversed_entry_id'])
-                            if reversed_move and reversed_move.invoice_date.strftime('%Y-%m-%d') <= options['date']['date_from']:
+                            if reversed_move and reversed_move.date.strftime('%Y-%m-%d') <= options['date']['date_from']:
                                 result_dict['value'] += 1
                         else:
                             result_dict['value'] += 1
