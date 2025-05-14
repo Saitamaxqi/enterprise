@@ -77,7 +77,7 @@ export class KnowledgeCoverSelector extends ImageSelector {
     onClickRecord(unsplashRecord) {
         this.unsplashService.uploadUnsplashRecords(
             [unsplashRecord],
-            {resModel: this.props.resModel, resId: this.props.articleCoverId},
+            { resModel: this.props.resModel },
             async (attachments) => this.onUploaded(attachments[0])
         );
     }
