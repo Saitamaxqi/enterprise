@@ -16,12 +16,12 @@ class SaleOrder(models.Model):
         self.ensure_one()
         super()._set_deferred_end_date_from_template()
         if self.end_date:
-            self.order_line.task_id.recurrence_id.write({
+            self.order_line.task_id.recurrence_id.sudo().write({
                 'repeat_type': 'until',
                 'repeat_until': self.end_date,
             })
         else:
-            self.order_line.task_id.recurrence_id.write({
+            self.order_line.task_id.recurrence_id.sudo().write({
                 'repeat_type': 'forever',
             })
 
