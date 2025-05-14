@@ -161,9 +161,11 @@ export class BankRecButtonList extends Component {
         const context = {
             list_view_ref: "account_accountant.view_account_move_line_list_bank_rec_widget",
             search_view_ref: "account_accountant.view_account_move_line_search_bank_rec_widget",
+            preferred_aml_value: -this.props.suspenseAccountLine.amount_currency,
+            preferred_aml_currency_id: this.props.suspenseAccountLine.currency_id.id,
             ...(this.statementLineData.partner_id
                 ? { search_default_partner_id: this.statementLineData.partner_id.id }
-                : {}),
+                : { search_default_posted: 1 }),
         };
 
         this.addDialog(BankRecSelectCreateDialog, {

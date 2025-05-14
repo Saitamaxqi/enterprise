@@ -6,10 +6,10 @@
         </xpath>
 
         <xpath expr="//button[hasclass('o_form_button_cancel')]" position="after">
-            <div class="ms-4 flex-fill d-flex justify-content-between" name="bank_reconciliation_info">
+            <div class="d-flex align-items-center flex-grow-1 flex-shrink-1 flex-basis-0 gap-2 min-w-0 justify-content-between" name="bank_reconciliation_info">
                 <span t-esc="formattedStatementLineDate"/>
-                <div class="text-truncate w-50" t-esc="props.reference"/>
-                <div class="text-end" name="remaining_amount">
+                <div class="text-truncate" t-esc="props.reference"/>
+                <div class="text-nowrap text-end" name="remaining_amount">
                     <span class="text-muted">Balance: </span>
                     <t t-esc="remainingAmountFormatted"/>
                 </div>
