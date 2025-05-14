@@ -332,6 +332,66 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.account_rec.id, 'balance': -12344.78, 'partner_id': self.partner_2.id},
         ], reconciled_amls=[invoice_line_11])
 
+    def test_auto_rule_creation_and_matching(self):
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        account_b = self.env['account.account'].create({
+            'name': "Custom Account B",
+            'code': "020202",
+            'account_type': "asset_current",
+        })
+        bank_stmt_line_1 = self._create_st_line(amount=1000, payment_ref='VISA PAYMENT RENT ON 2020-01-01 FOR JAN')
+        bank_stmt_line_2 = self._create_st_line(amount=1000, payment_ref='VISA PAYMENT RENT ON 2020-02-01 FOR FEB')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
+        # Assert that the reconciliation model has been created with the correct parameters.
+        reco_model = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', '=', 'VISA PAYMENT RENT ON \\d+-\\d+-\\d+ FOR'),
+            ('match_partner_ids', '=', self.partner_a.ids),
+            ('match_amount', '=', 'between'),
+            ('match_amount_min', '=', 1000 - 0.01),
+            ('match_amount_max', '=', 1000 + 0.01),
+            ('line_ids.account_id', '=', account_a.id),
+        ])
+        self.assertTrue(reco_model.exists())
+
+        bank_stmt_line_3 = self._create_st_line(amount=1000, payment_ref='VISA PAYMENT RENT ON 2020-03-01 FOR MAR')
+        bank_stmt_line_3._try_auto_reconcile_statement_lines()
+        # Assert that the created model will be used as a suggestion.
+        self.assertEqual(bank_stmt_line_3.line_ids[-1].reconcile_model_id.id, reco_model.id)
+
+        # Assert that the rule is deleted when another account is selected while having a suggestion.
+        bank_stmt_line_3.set_account_bank_statement_line(bank_stmt_line_3.line_ids[-1].id, account_b.id)
+        self.assertFalse(reco_model.exists())
+
+    def test_auto_rule_creation_and_matching_with_structured_reference(self):
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        bank_stmt_line_1 = self._create_st_line(amount=100, payment_ref='TAX +++123/12345/1234+++ 100 EUR')
+        bank_stmt_line_2 = self._create_st_line(amount=200, payment_ref='TAX +++123/12345/1234+++ 200 EUR')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
+        # Assert that the reconciliation model and that the structured reference has been perserved.
+        reco_model = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', '=', 'TAX \\+\\+\\+123/12345/1234\\+\\+\\+ \\d+ EUR'),
+        ])
+        self.assertTrue(reco_model.exists())
+
+        bank_stmt_line_3 = self._create_st_line(amount=300, payment_ref='TAX +++123/12345/1234+++ 300 EUR')
+        bank_stmt_line_3._try_auto_reconcile_statement_lines()
+        # Assert that the created model will be used as a suggestion.
+        self.assertEqual(bank_stmt_line_3.line_ids[-1].reconcile_model_id.id, reco_model.id)
+
     def test_discount_amount(self):
         _invoice_line_1 = self._create_invoice_line(100, self.partner_1, 'out_invoice')
         invoice_line_2 = self._create_invoice_line(100, self.partner_1, 'out_invoice')

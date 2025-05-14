@@ -1,10 +1,12 @@
 import logging
+import re
+import string
 
 from markupsafe import Markup
 from dateutil.relativedelta import relativedelta
 from itertools import product
 
-from odoo import Command, _, api, fields, models
+from odoo import Command, _, api, fields, models, SUPERUSER_ID
 from odoo.fields import Domain
 from odoo.tools import SQL
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -528,7 +530,164 @@ class AccountBankStatementLine(models.Model):
             :param aml_id: The ID of the account move line to update.
             :param account_id: The ID of the account to set on the specified account move line.
         """
-        self.line_ids.filtered(lambda line: line.id == aml_id).account_id = account_id
+        account_move_line = self.line_ids.filtered(lambda line: line.id == aml_id)
+        account_move_line.account_id = account_id
+
+        self._handle_reconciliation_rule(account_move_line, account_id)
+        self._check_and_create_reconciliation_rule(account_id, self.env.company.id)
+
+    def _handle_reconciliation_rule(self, aml, account_id):
+        # If a rule has been created by Odoo and is recommended to the user but another account is chosen, the rule
+        # should be deleted.
+        should_delete_rule = (
+            aml.reconcile_model_id
+            and aml.reconcile_model_id.create_uid.id == SUPERUSER_ID
+            and account_id not in aml.reconcile_model_id.line_ids.account_id.ids
+        )
+        if should_delete_rule:
+            aml.reconcile_model_id.sudo().unlink()
+
+    def _check_and_create_reconciliation_rule(self, account_id, company_id):
+        """Checks and creates reconciliation rules based on statement patterns."""
+        if self._reconciliation_rule_exists(account_id, company_id):
+            return
+
+        bank_stmt_line_domain = [
+            ('company_id', '=', company_id),
+            ('journal_id', '=', self.journal_id.id),
+            ('move_id.line_ids.account_id', '=', account_id),
+            ('move_id.line_ids.reconcile_model_id', '=', False)
+        ]
+        previous_statement_lines = self.env['account.bank.statement.line'].search(
+            bank_stmt_line_domain, limit=5, order='internal_index desc'
+        )
+        if len(previous_statement_lines) <= 1:
+            return
+
+        rule_data = self._prepare_reconciliation_rule_data(previous_statement_lines, account_id)
+        if rule_data.get('common_substring_length') > 10:
+            self._create_reconciliation_rule(rule_data)
+
+    def _reconciliation_rule_exists(self, account_id, company_id):
+        """Checks if a reconciliation rule already exists."""
+        model_domain = (
+                self.env['account.reconcile.model']._check_company_domain(company_id) +
+                [('line_ids.account_id', '=', account_id), ('match_journal_ids', '=', self.journal_id.ids)]
+        )
+        return bool(self.env['account.reconcile.model'].search(model_domain, limit=1))
+
+    def _prepare_reconciliation_rule_data(self, statement_lines, account_id):
+        """Prepares data for reconciliation rule creation."""
+        payment_refs = [line.payment_ref for line in statement_lines]
+        amounts = [line.amount for line in statement_lines]
+        common_substring = self._get_common_substring(payment_refs).strip()
+        account = self.env['account.account'].browse(account_id)
+
+        return {
+            'name': account.name,
+            'common_substring': common_substring,
+            'common_substring_length': len(common_substring),
+            'account': account,
+            'partner_ids': statement_lines.partner_id.ids if len(statement_lines.partner_id.ids) == 1 else [],
+            'amount': amounts[0] if len(set(amounts)) == 1 else None
+        }
+
+    def _create_reconciliation_rule(self, rule_data):
+        """Creates a new reconciliation rule based on prepared data."""
+        vals = {
+            'name': rule_data['name'],
+            'match_journal_ids': self.journal_id.ids,
+            'match_label': 'match_regex',
+            'match_label_param': rule_data['common_substring'],
+            'line_ids': [
+                Command.create({
+                    'account_id': rule_data['account'].id,
+                    'amount_type': 'percentage',
+                    'amount_string': '100',
+                    'label': rule_data['account'].name,
+                }),
+            ],
+        }
+
+        if rule_data['partner_ids']:
+            vals['match_partner_ids'] = rule_data['partner_ids']
+
+        if rule_data['amount'] is not None:
+            vals.update({
+                'match_amount': 'between',
+                # The +- 0.01 is a hacky way to have "equal to" behaviour. This is due to the query that matches the
+                # rules with the lines not having a separate condition for the "between", instead applying both
+                # "greater" and "lower" conditions.
+                'match_amount_min': rule_data['amount'] - 0.01,
+                'match_amount_max': rule_data['amount'] + 0.01,
+            })
+
+        self.with_user(SUPERUSER_ID).with_company(self.journal_id.company_id).env['account.reconcile.model'].create(vals)
+
+    def _get_common_substring(self, labels):
+        def normalise_label(label):
+            # Keep structured references.
+            structured_refs = re.findall(r'\+{3}\d+/\d+/\d+\+{3}', label)
+            placeholder_map = {}
+            for idx, ref in enumerate(structured_refs):
+                placeholder = f"__REF_{string.ascii_uppercase[idx]}__"
+                label = label.replace(ref, placeholder)
+                ref = ref.replace(r'+', r'\+')
+                placeholder_map[placeholder] = ref
+
+            label = re.sub(r'\d+', r'\\d+', label)
+
+            # Put the structured references back.
+            for placeholder, ref in placeholder_map.items():
+                label = label.replace(placeholder, ref)
+
+            return label
+
+        def get_longest_common_substring(s1, s2):
+            """
+            Finds the longest common substring (LCS) between two input strings using dynamic programming.
+            The function constructs a 2D table to keep track of suffix matches between the strings
+            and identifies the LCS based on the maximum match length stored in the table.
+
+            Parameters:
+                s1 (str): The first input string.
+                s2 (str): The second input string.
+
+            Returns:
+                str: The longest common substring found between `s1` and `s2`.
+            """
+
+            # Matrix to store lengths of common suffixes.
+            dp = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+
+            longest = 0  # Length of the longest match.
+            end_pos_s1 = 0  # End index in s1 where the longest match ends.
+
+            # Build the matrix.
+            for i in range(len(s1)):
+                for j in range(len(s2)):
+                    if s1[i] == s2[j]:
+                        dp[i + 1][j + 1] = dp[i][j] + 1
+                        if dp[i + 1][j + 1] > longest:
+                            longest = dp[i + 1][j + 1]
+                            end_pos_s1 = i + 1
+
+            return s1[end_pos_s1 - longest:end_pos_s1]
+
+        normalised = [normalise_label(label) for label in labels if label]
+        # Sorting by length, so we start with the shortest strings first. This will allow us to exit early
+        # if the size of the substring drops under 10.
+        normalised.sort(key=len)
+
+        # After normalising, we need to get the longest possible substring.
+        # To do this, we get the one from the first two, then the result with the next string and so on.
+        substring = get_longest_common_substring(normalised[0], normalised[1])
+        for i in range(2, len(normalised)):
+            if len(substring) < 10:
+                break
+            substring = get_longest_common_substring(substring, normalised[i])
+
+        return substring
 
     def set_line_bank_statement_line(self, move_lines_ids):
         """ Sets the specified move lines to the bank statement line and performs reconciliation.
