@@ -353,16 +353,19 @@ class L10n_BeForm325(models.Model):
                 'fees': fees_per_partner.get(partner_id.id, 0.0),
                 'atn': atn_per_partner.get(partner_id.id, 0.0),
                 'exposed_expenses': exposed_expenses_per_partner.get(partner_id.id, 0.0),
-                'paid_amount': paid_amount_per_partner.get(partner_id.id, 0.0),
+                # don't report negative numbers
+                'paid_amount': max(paid_amount_per_partner.get(partner_id.id, 0.0), 0.0),
             }
             for partner_id in partner_ids.sorted(lambda p: (p.zip, p.name))
-            if any((
-                paid_amount_per_partner.get(partner_id.id) is not None,
-                commissions_per_partner.get(partner_id.id) is not None,
-                fees_per_partner.get(partner_id.id) is not None,
-                atn_per_partner.get(partner_id.id) is not None,
-                exposed_expenses_per_partner.get(partner_id.id) is not None,
-            ))
+            if (
+                self.currency_id.compare_amounts(paid_amount_per_partner.get(partner_id.id, 0.0), 250.0) >= 0
+                or self.currency_id.compare_amounts(sum([
+                    commissions_per_partner.get(partner_id.id, 0.0),
+                    fees_per_partner.get(partner_id.id, 0.0),
+                    atn_per_partner.get(partner_id.id, 0.0),
+                    exposed_expenses_per_partner.get(partner_id.id, 0.0),
+                ]), 250.0) >= 0
+            )
         ]
 
         return amount_per_partner
@@ -395,6 +398,8 @@ class L10n_BeForm325(models.Model):
                AND line.company_id = %(company)s
                AND line.balance != 0
           GROUP BY COALESCE(move.commercial_partner_id, line.partner_id)
+            -- negative number can't be reported and will result in a crash when generating the BOW file
+            HAVING ROUND(SUM(line.balance), %(decimal_places)s) > 0
         """, {
             'partners': partners.ids,
             'accounts': accounts.ids,
