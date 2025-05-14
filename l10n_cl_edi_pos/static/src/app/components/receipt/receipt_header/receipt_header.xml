@@ -2,9 +2,9 @@
 <templates id="template" xml:space="preserve">
     <t t-name="l10n_cl_edi_pos.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('pos-receipt-contact')]" position="before">
-            <div t-if="order.company.cl_vat" class="pt-3">
+            <div t-if="isChileanCompany" class="pt-3">
                 <div class="chili-ticket-info fw-bolder border border-dark d-flex flex-column align-items-center ">
-                    <span>RUT: <t t-out="order.company.cl_vat"/></span>
+                    <span>RUT: <t t-out="order.company.vat"/></span>
                     <t t-out="order.account_move?.l10n_latam_document_type_id.name"/>
                     <span>Nº: <t t-out="order.account_move?.l10n_latam_document_number"/></span>
                 </div>
@@ -13,7 +13,7 @@
             </div>
         </xpath>
         <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
-            <div t-if="order.company.cl_vat and order.partner_id and order.isFactura()" class="pos-receipt-partner text-center" style="font-size: 75%;">
+            <div t-if="isChileanCompany and order.partner_id and order.isFactura()" class="pos-receipt-partner text-center" style="font-size: 75%;">
                 <!-- partner informations -->
                 <div>Cliente: <t t-esc="order.partner_id.name" /></div>
                 <div>RUT: <t t-esc="order.partner_id.vat" /></div>

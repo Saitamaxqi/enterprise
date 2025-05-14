@@ -7,4 +7,7 @@ patch(ReceiptHeader.prototype, {
             this.order.company_id.l10n_cl_sii_regional_office
         ];
     },
+    get isChileanCompany() {
+        return this.order.company_id.country_id?.code === "CL";
+    },
 });

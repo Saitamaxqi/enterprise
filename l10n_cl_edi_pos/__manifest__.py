@@ -24,6 +24,9 @@ Install this if you are using the Point of Sale app in Chile.
         'point_of_sale._assets_pos': [
             'l10n_cl_edi_pos/static/src/**/*'
         ],
+        'web.assets_tests': [
+            'l10n_cl_edi_pos/static/tests/**/*',
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
