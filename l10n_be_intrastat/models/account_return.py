@@ -1,8 +1,16 @@
-from odoo import models, _
+from dateutil.relativedelta import relativedelta
+from odoo import api, models, _
 
 
 class AccountReturn(models.Model):
     _inherit = 'account.return'
+
+    @api.model
+    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
+        if return_type_external_id == 'l10n_be_intrastat.be_intrastat_goods_return_type':
+            return date_to + relativedelta(days=20)
+
+        return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
 
     def action_submit(self):
         if self.type_external_id == 'l10n_be_intrastat.be_intrastat_goods_return_type':
