@@ -153,18 +153,18 @@ CURRENCY_PROVIDER_SELECTION = [
     (['EG'], 'cbegy', '[EG] Central Bank of Egypt'),
     (['GT'], 'banguat', '[GT] Bank of Guatemala'),
     (['HU'], 'mnb', '[HU] Magyar Nemzeti Bank'),
+    (['ID'], 'bi', '[ID] Bank Indonesia'),
     (['IT'], 'boi', '[IT] Bank of Italy'),
     (['MX'], 'banxico', '[MX] Bank of Mexico'),
+    (['MY'], 'bnm', '[MY] Bank Negara Malaysia'),
     (['PE'], 'bcrp', '[PE] SUNAT (replaces Bank of Peru)'),
     (['PL'], 'nbp', '[PL] National Bank of Poland'),
     (['RO'], 'bnr', '[RO] National Bank of Romania'),
     (['SE'], 'srb', '[SE] Sveriges Riksbank'),
+    (['TH'], 'bot', '[TH] Bank of Thailand'),
     (['TR'], 'tcmb', '[TR] Central Bank of the Republic of Türkiye'),
     (['UK'], 'hmrc', '[UK] HM Revenue & Customs'),
-    (['MY'], 'bnm', '[MY] Bank Negara Malaysia'),
-    (['ID'], 'bi', '[ID] Bank Indonesia'),
     (['UY'], 'bcu', '[UY] Uruguayan Central Bank'),
-    (['TH'], 'bot', '[TH] Bank of Thailand'),
 ]
 
 
