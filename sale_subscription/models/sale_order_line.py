@@ -211,25 +211,6 @@ class SaleOrderLine(models.Model):
                 lambda line: line.date and last_invoice_date and line.date > last_invoice_date)
             return invoice_line
 
-    def _get_subscription_qty_to_invoice(self, last_invoiced_date=False, next_invoice_date=False):
-        """
-        Compute the quantity to invoice for the current period or for a fixed period.
-        :param last_invoiced_date: date after which the contract is not already invoiced
-        :param next_invoice_date: next knowned invoice date
-        :return: qty to invoice per line
-        :rtype: dict
-        """
-        result = {}
-        qty_invoiced = self._get_subscription_qty_invoiced(last_invoiced_date, next_invoice_date)
-        for line in self:
-            if line.state != 'sale':
-                continue
-            if line.product_id.invoice_policy == 'order':
-                result[line.id] = line.product_uom_qty - qty_invoiced.get(line.id, 0.0)
-            else:
-                result[line.id] = line.qty_delivered - qty_invoiced.get(line.id, 0.0)
-        return result
-
     def _get_deferred_date(self, last_invoiced_date=None, next_invoice_date=None):
         """" Get deferred dates of a sale.order.line. This util method is useful when we need to know the current deferred dates of a line.
         If you want to compute future period date, check _get_invoice_line_parameters
