@@ -7,7 +7,7 @@ export function formatToLocaleString(ISOdatetime, code) {
 }
 
 export function addToRegistryWithCleanup(cleanUpHook, registry, name, item) {
-    registry.add(name, item);
+    registry.replace(name, item);
     cleanUpHook(() => {
         registry.remove(name);
     });

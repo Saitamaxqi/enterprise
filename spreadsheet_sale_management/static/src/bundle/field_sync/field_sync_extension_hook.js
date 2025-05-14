@@ -79,7 +79,7 @@ export function addSpreadsheetFieldSyncExtensionWithCleanUp(cleanUpHook = () => 
         sequence: 2000,
     };
     addToRegistryWithCleanup(cleanUpHook, cellMenuRegistry, "add_field_sync", addMenuAction);
-    topbarMenuRegistry.addChild("add_field_sync", ["insert"], addMenuAction, { force: true });
+    topbarMenuRegistry.replaceChild("add_field_sync", ["insert"], addMenuAction);
     cleanUpHook(() => {
         const menuIndex = topbarMenuRegistry.content.insert.children.findIndex(
             (menu) => menu.id === "add_field_sync"
@@ -115,15 +115,10 @@ export function addSpreadsheetFieldSyncExtensionWithCleanUp(cleanUpHook = () => 
         sequence: 2010,
     };
     addToRegistryWithCleanup(cleanUpHook, cellMenuRegistry, "delete_field_syncs", deleteMenuAction);
-    topbarMenuRegistry.addChild(
-        "delete_field_syncs",
-        ["edit", "delete"],
-        {
-            ...deleteMenuAction,
-            icon: undefined,
-        },
-        { force: true }
-    );
+    topbarMenuRegistry.replaceChild("delete_field_syncs", ["edit", "delete"], {
+        ...deleteMenuAction,
+        icon: undefined,
+    });
     cleanUpHook(() => {
         const editAction = topbarMenuRegistry.content.edit;
         const deleteIndex = editAction.children.findIndex((menu) => menu.id === "delete");
