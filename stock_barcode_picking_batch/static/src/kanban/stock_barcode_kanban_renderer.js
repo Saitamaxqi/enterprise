@@ -1,4 +1,4 @@
-import { markup } from "@odoo/owl";
+import { markup, onWillStart } from "@odoo/owl";
 import { StockBarcodeKanbanRenderer } from "@stock_barcode/kanban/stock_barcode_kanban_renderer";
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
@@ -11,6 +11,16 @@ patch(StockBarcodeKanbanRenderer.prototype, {
         this.activeId = this.props.list.evalContext.active_id;
         this.displayTransferProtip =
             this.displayTransferProtip || this.resModel === "stock.picking.batch";
+
+        onWillStart(async () => {
+            const modelToSearch =
+                this.resModel === "stock.picking" ? "stock.picking.batch" : "stock.picking";
+            this.otherRecordsCount = await this.orm.call(
+                "stock.picking.type",
+                "get_model_records_count",
+                [this.activeId, modelToSearch]
+            );
+        });
     },
 
     async displayPickings() {
@@ -43,16 +53,5 @@ patch(StockBarcodeKanbanRenderer.prototype, {
             stackPosition: "replaceCurrentAction",
             additionalContext: this.props.list.evalContext,
         });
-    },
-
-    async onWillStart() {
-        await super.onWillStart();
-        const modelToSearch =
-            this.resModel === "stock.picking" ? "stock.picking.batch" : "stock.picking";
-        this.otherRecordsCount = await this.orm.call(
-            "stock.picking.type",
-            "get_model_records_count",
-            [this.activeId, modelToSearch]
-        );
     },
 });

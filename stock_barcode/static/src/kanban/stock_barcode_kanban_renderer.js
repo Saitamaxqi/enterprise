@@ -27,8 +27,10 @@ export class StockBarcodeKanbanRenderer extends KanbanRenderer {
     }
 
     async onWillStart() {
-        this.packageEnabled = await user.hasGroup("stock.group_tracking_lot");
-        this.trackingEnabled = await user.hasGroup("stock.group_production_lot");
+        const groups = ["stock.group_tracking_lot", "stock.group_production_lot"];
+        const hasGroups = await Promise.all(groups.map((g) => user.hasGroup(g)));
+        this.packageEnabled = hasGroups[0];
+        this.trackingEnabled = hasGroups[1];
     }
 
     get transferTip() {
