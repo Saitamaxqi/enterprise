@@ -95,7 +95,7 @@
                     <div class="oe_title mb-4 d-flex align-items-center">
                         <field name="image_128" widget="image" class="oe_avatar me-3"
                             options="{'preview_image': 'image_128', 'size': [128, 128]}"/>
-                        <div>
+                        <div class="flex-grow-1">
                             <label for="name"/>
                             <h1>
                                 <field name="name" placeholder="e.g. SDR Advisor"/>
