@@ -10,6 +10,7 @@ const {
     ComboChartDesignPanel,
     PieChartDesignPanel,
     ChartWithAxisDesignPanel,
+    LineChartDesignPanel,
     RadarChartDesignPanel,
     WaterfallChartDesignPanel,
     GeoChartDesignPanel,
@@ -19,7 +20,7 @@ const {
 chartSidePanelComponentRegistry
     .add("odoo_line", {
         configuration: OdooLineChartConfigPanel,
-        design: ChartWithAxisDesignPanel,
+        design: LineChartDesignPanel,
     })
     .add("odoo_bar", {
         configuration: OdooBarChartConfigPanel,

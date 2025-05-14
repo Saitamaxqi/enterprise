@@ -46,7 +46,7 @@ test("The chart mode is the selected one", async () => {
     expect(model.getters.getChart(chartId).type).toBe("odoo_pie");
 });
 
-test("Line charts are inserted as stacked area charts", async (assert) => {
+test("Line charts are inserted as stacked area charts with data markers", async (assert) => {
     const { model } = await createSpreadsheetFromGraphView({
         actions: async (target) => {
             await contains(".fa-line-chart").click();
@@ -57,6 +57,7 @@ test("Line charts are inserted as stacked area charts", async (assert) => {
     const definition = model.getters.getChartDefinition(chartId);
     expect(definition.fillArea).toBe(true);
     expect(definition.stacked).toBe(true);
+    expect(definition.hideDataMarkers).toBe(undefined);
 });
 
 test("The chart order is the selected one when selecting desc", async () => {
@@ -209,7 +210,6 @@ test("graph with a contextual domain", async () => {
     expect.verifySteps(["formatted_read_group", "formatted_read_group"]);
 });
 
-
 test("'cumulated_start' is fetched from the graph view", async () => {
     const serverData = getBasicServerData();
     serverData.views["partner,false,graph"] = /* xml */ `
@@ -218,11 +218,11 @@ test("'cumulated_start' is fetched from the graph view", async () => {
         </graph>
     `;
     const { model } = await createSpreadsheetFromGraphView({
-        serverData
+        serverData,
     });
 
     const sheetId = model.getters.getActiveSheetId();
-    const chartIds = model.getters.getChartIds(sheetId)
+    const chartIds = model.getters.getChartIds(sheetId);
     expect(chartIds.length).toBe(1);
     expect(model.getters.getChart(chartIds[0]).metaData.cumulatedStart).toBe(true);
-})
+});

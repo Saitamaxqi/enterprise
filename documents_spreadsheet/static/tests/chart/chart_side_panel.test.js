@@ -125,6 +125,39 @@ test("Change odoo chart type", async () => {
     expect(model.getters.getChart(chartId).stacked).toBe(true);
 });
 
+test("data markers are displayed by default for line, combo and radar charts", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    expect(model.getters.getChart(chartId).type).toBe("odoo_bar");
+    await openChartSidePanel(model, env);
+
+    await changeChartType("odoo_line");
+    expect(model.getters.getChartDefinition(chartId).hideDataMarkers).toBe(undefined);
+
+    await changeChartType("odoo_combo");
+    expect(model.getters.getChartDefinition(chartId).hideDataMarkers).toBe(undefined);
+
+    await changeChartType("odoo_radar");
+    expect(model.getters.getChartDefinition(chartId).hideDataMarkers).toBe(undefined);
+});
+
+for (const type of ["odoo_line", "odoo_combo", "odoo_radar"]) {
+    test(`can toggle data markers for ${type}`, async () => {
+        const { model, env } = await createSpreadsheetFromGraphView();
+        const sheetId = model.getters.getActiveSheetId();
+        const chartId = model.getters.getChartIds(sheetId)[0];
+        await openChartSidePanel(model, env);
+        await changeChartType(type);
+        await contains(".o-panel-design").click();
+        expect(model.getters.getChartDefinition(chartId).hideDataMarkers).toBe(undefined);
+        await contains(".o-checkbox input[name='showDataMarkers']:checked").click();
+        expect(model.getters.getChartDefinition(chartId).hideDataMarkers).toBe(true);
+        await contains(".o-checkbox input[name='showDataMarkers']").click();
+        expect(model.getters.getChartDefinition(chartId).hideDataMarkers).toBe(false);
+    });
+}
+
 test("stacked line chart", async () => {
     const { model, env } = await createSpreadsheetFromGraphView();
     const sheetId = model.getters.getActiveSheetId();
