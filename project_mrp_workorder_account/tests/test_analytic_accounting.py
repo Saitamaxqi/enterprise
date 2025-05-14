@@ -202,6 +202,48 @@ class TestMrpAnalyticAccountHr(TestMrpAnalyticAccount):
         self.assertEqual(len(self.analytic_account.with_context(analytic_plan_id=self.analytic_account.plan_id.id).line_ids), 4, '2 lines for workcenters costs 2 for employee cost')
 
         # delete a time from a workorder
+        previous_balance = self.analytic_account.balance
         time.unlink()
-        self.assertEqual(self.analytic_account.balance, -32.5, '-40 + 7.5 (30 mins worker time)')
+        self.assertEqual(self.analytic_account.balance, previous_balance + 7.5, '-40 + 7.5 (30 mins worker time)')
         self.assertEqual(mo.workorder_ids[1].duration, 0, 'no time left on workorder')
+
+    def test_mrp_analytic_account_employee_from_widget(self):
+        """
+            Test adding a user time to a work order from the widget
+        """
+        user = self.env['res.users'].create({
+            'name': 'Marc Demo',
+            'email': 'mark.brown23@example.com',
+            'login': 'demo_1',
+            'password': 'demo_123'
+        })
+        self.employee1.write({
+            'user_id': user.id,
+            'hourly_cost': 100,
+        })
+        mo = self.env['mrp.production'].create({
+            'product_id': self.product.id,
+            'product_qty': 1,
+            'bom_id': self.bom.id,
+            'project_id': self.project.id
+        })
+        mo.action_confirm()
+        with Form(mo.workorder_ids) as form:
+            with form.time_ids.new() as line:
+                line.date_end = "2025-05-15 12:46:46"
+                line.date_start = "2025-05-15 12:16:46"
+                line.duration = 30
+                line.employee_id = self.employee1
+                line.loss_id = self.env.ref('mrp.block_reason7')
+                line.workcenter_id = self.workcenter
+
+        mo.button_mark_done()
+        # check that the aal is created with the right values
+        first_amount = self.env["account.analytic.line"].search([('employee_id', '=', self.employee1.id)]).amount
+        self.assertEqual(first_amount, -50, "the workcenter productivity has a duration of 30 min so the aal should be half of the employee's hourly cost")
+        # check that changing the date of a line without saving it does not create a new aal or modify the value of an existing one
+        with Form(mo.workorder_ids) as form:
+            with form.time_ids.edit(0) as line:
+                line.date_end = "2025-05-15 14:16:46"
+                self.assertEqual(self.env["account.analytic.line"].search([('employee_id', '=', self.employee1.id)]).amount, first_amount,
+                "changing the date_end and triggering the compute_duration method should not modify the aal amount")
