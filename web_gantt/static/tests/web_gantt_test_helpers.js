@@ -176,7 +176,7 @@ export async function selectCustomRange({ startDate, stopDate }) {
 export async function selectRange(label) {
     await click(SELECTORS.scaleSelectorToggler);
     await animationFrame();
-    await click(`${SELECTORS.scaleSelectorMenu} .dropdown-item:contains(/^${label}$/)`);
+    await click(`${SELECTORS.scaleSelectorMenu} .dropdown-item:contains(/^${label}$/i)`);
     await ganttControlsChanges();
 }
 
