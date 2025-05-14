@@ -5,9 +5,8 @@ from odoo.addons.pos_self_order.controllers.orders import PosSelfOrderController
 class PosSelfOrderControllerIot(PosSelfOrderController):
     @http.route("/pos-self-order/iot-payment-cancelled/", auth="public", type="jsonrpc", website=True)
     def iot_payment_cancelled(self, access_token, order_id):
-        pos_config, _ = self._verify_authorization(access_token, "", False)
+        pos_config = self._verify_pos_config(access_token)
         order = pos_config.env["pos.order"].search([("id", "=", order_id), ("config_id", "=", pos_config.id)])
-
         order.config_id._notify("PAYMENT_STATUS", {
             "payment_result": "fail",
             "data": {
@@ -18,8 +17,7 @@ class PosSelfOrderControllerIot(PosSelfOrderController):
 
     @http.route("/pos-self-order/iot-payment-success/", auth="public", type="jsonrpc", website=True)
     def iot_payment_success(self, access_token, order_id, payment_method_id, payment_info):
-        pos_config, _ = self._verify_authorization(access_token, "", False)
-
+        pos_config = self._verify_pos_config(access_token)
         payment_method = pos_config.payment_method_ids.filtered(lambda p: p.id == payment_method_id)
         order = pos_config.env["pos.order"].search([("id", "=", order_id), ("config_id", "=", pos_config.id)])
         order.add_payment({
