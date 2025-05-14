@@ -195,7 +195,7 @@ class L10n_BeForm28150(models.Model):
     @api.depends('partner_id')
     def _compute_partner_address(self):
         for form in self:
-            form.partner_address = form.partner_id._formated_address()
+            form.partner_address = form.partner_id._formated_address() if form.partner_id else ''
 
     @api.depends('partner_id')
     def _compute_partner_zip(self):
