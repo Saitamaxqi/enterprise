@@ -105,7 +105,8 @@ test("Unassigned tasks will show when search for assignee", async () => {
                 {
                     title: "Task 5",
                     level: 0,
-                    colSpan: "Wednesday 13 Week 11 of 2019 -> Wednesday 13 Week 11 of 2019",
+                    colSpan:
+                        "Wednesday 13 Week 11, Mar 10 - Mar 16 -> Wednesday 13 Week 11, Mar 10 - Mar 16",
                 },
             ],
         },
@@ -115,12 +116,14 @@ test("Unassigned tasks will show when search for assignee", async () => {
                 {
                     title: "Task 1",
                     level: 0,
-                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                    colSpan:
+                        "Tuesday 12 Week 11, Mar 10 - Mar 16 -> Tuesday 12 Week 11, Mar 10 - Mar 16",
                 },
                 {
                     title: "Task 2",
                     level: 1,
-                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                    colSpan:
+                        "Tuesday 12 Week 11, Mar 10 - Mar 16 -> Tuesday 12 Week 11, Mar 10 - Mar 16",
                 },
             ],
         },
@@ -130,12 +133,14 @@ test("Unassigned tasks will show when search for assignee", async () => {
                 {
                     title: "Task 3",
                     level: 0,
-                    colSpan: "Monday 11 Week 11 of 2019 -> Monday 11 Week 11 of 2019",
+                    colSpan:
+                        "Monday 11 Week 11, Mar 10 - Mar 16 -> Monday 11 Week 11, Mar 10 - Mar 16",
                 },
                 {
                     title: "Task 4",
                     level: 0,
-                    colSpan: "Thursday 14 Week 11 of 2019 -> Thursday 14 Week 11 of 2019",
+                    colSpan:
+                        "Thursday 14 Week 11, Mar 10 - Mar 16 -> Thursday 14 Week 11, Mar 10 - Mar 16",
                 },
             ],
         },
@@ -152,7 +157,8 @@ test("Unassigned tasks will show when search for assignee", async () => {
                 {
                     title: "Task 5",
                     level: 0,
-                    colSpan: "Wednesday 13 Week 11 of 2019 -> Wednesday 13 Week 11 of 2019",
+                    colSpan:
+                        "Wednesday 13 Week 11, Mar 10 - Mar 16 -> Wednesday 13 Week 11, Mar 10 - Mar 16",
                 },
             ],
         },
@@ -162,12 +168,14 @@ test("Unassigned tasks will show when search for assignee", async () => {
                 {
                     title: "Task 1",
                     level: 0,
-                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                    colSpan:
+                        "Tuesday 12 Week 11, Mar 10 - Mar 16 -> Tuesday 12 Week 11, Mar 10 - Mar 16",
                 },
                 {
                     title: "Task 2",
                     level: 1,
-                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                    colSpan:
+                        "Tuesday 12 Week 11, Mar 10 - Mar 16 -> Tuesday 12 Week 11, Mar 10 - Mar 16",
                 },
             ],
         },

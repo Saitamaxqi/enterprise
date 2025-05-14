@@ -330,9 +330,9 @@ test("Progress bar rpc is triggered when option set.", async () => {
         "50%",
         "12.5%",
     ]);
-    await hoverGridCell("Monday 17", "Week 51 of 2018");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22");
     expect(SELECTORS.progressBarForeground).toHaveText("50h / 100h");
-    await hoverGridCell("Monday 17", "Week 51 of 2018", "User 2");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22", "User 2");
     expect(SELECTORS.progressBarForeground).toHaveText("25h / 200h");
 });
 
@@ -359,10 +359,10 @@ test("Progress bar component will not render when hovering cells of the same row
             `,
     });
     expect.verifySteps(["rendering progress bar", "rendering progress bar"]);
-    await hoverGridCell("Wednesday 19", "Week 51 of 2018");
+    await hoverGridCell("Wednesday 19", "Week 51, Dec 16 - Dec 22");
     expect.verifySteps(["rendering progress bar", "rendering progress bar"]);
-    await hoverGridCell("Tuesday 18", "Week 51 of 2018");
-    await hoverGridCell("Tuesday 18", "Week 51 of 2018", "User 2");
+    await hoverGridCell("Tuesday 18", "Week 51, Dec 16 - Dec 22");
+    await hoverGridCell("Tuesday 18", "Week 51, Dec 16 - Dec 22", "User 2");
     expect.verifySteps(["rendering progress bar", "rendering progress bar"]);
 });
 
@@ -401,9 +401,9 @@ test("Progress bar when multilevel grouped.", async () => {
         "12.5%",
         "12.5%",
     ]);
-    await hoverGridCell("Monday 17", "Week 51 of 2018");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22");
     expect(SELECTORS.progressBarForeground).toHaveText("50h / 100h");
-    await hoverGridCell("Monday 17", "Week 51 of 2018", "User 2");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22", "User 2");
     expect(SELECTORS.progressBarForeground).toHaveText("25h / 200h");
 });
 
@@ -428,7 +428,7 @@ test("Progress bar warning when max_value is zero", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(SELECTORS.progressBarWarning).toHaveCount(0);
-    await hoverGridCell("Monday 17", "Week 51 of 2018");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22");
     expect(SELECTORS.progressBarWarning).toHaveCount(1);
     expect(queryFirst(SELECTORS.progressBarWarning).parentElement).toHaveText("50h");
     expect(queryFirst(SELECTORS.progressBarWarning).parentElement).toHaveProperty("title", "plop");
@@ -454,7 +454,7 @@ test("Progress bar when value less than hour", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(SELECTORS.progressBar).toHaveCount(1);
-    await hoverGridCell("Monday 17", "Week 51 of 2018");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22");
     expect(SELECTORS.progressBarForeground).toHaveText("0h30 / 100h");
 });
 
@@ -480,7 +480,7 @@ test("Progress bar danger when ratio > 100", async () => {
     expect(SELECTORS.progressBar).toHaveCount(1);
     expect(SELECTORS.progressBarBackground).toHaveStyle("width: 100%", { inline: true });
     expect(SELECTORS.progressBar).toHaveClass("o_gantt_group_danger");
-    await hoverGridCell("Monday 17", "Week 51 of 2018");
+    await hoverGridCell("Monday 17", "Week 51, Dec 16 - Dec 22");
     expect(queryFirst(SELECTORS.progressBarForeground).parentElement).toHaveClass("text-bg-danger");
     expect(SELECTORS.progressBarForeground).toHaveText("150h / 100h");
 });

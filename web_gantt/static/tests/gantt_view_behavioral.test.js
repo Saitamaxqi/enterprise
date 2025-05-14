@@ -1689,17 +1689,20 @@ test("close tooltip when drag pill", async () => {
                 },
                 {
                     title: "Task 2",
-                    colSpan: "Sunday 16 Week 51 of 2018 -> Saturday 22 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Sunday 16 Week 51, Dec 16 - Dec 22 -> Saturday 22 (1/2) Week 51, Dec 16 - Dec 22",
                     level: 1,
                 },
                 {
                     title: "Task 4",
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 (1/2) Week 51, Dec 16 - Dec 22",
                     level: 2,
                 },
                 {
                     title: "Task 7",
-                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 (1/2) Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                     level: 2,
                 },
             ],
@@ -1743,17 +1746,20 @@ test("drag&drop on other pill in grouped view", async () => {
                 {
                     title: "Task 1",
                     level: 0,
-                    colSpan: "Sunday 16 Week 51 of 2018 -> Sunday 16 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Sunday 16 Week 51, Dec 16 - Dec 22 -> Sunday 16 (1/2) Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 2",
                     level: 0,
-                    colSpan: "Monday 17 (1/2) Week 51 of 2018 -> Monday 17 Week 51 of 2018",
+                    colSpan:
+                        "Monday 17 (1/2) Week 51, Dec 16 - Dec 22 -> Monday 17 Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 4",
                     level: 0,
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 (1/2) Week 51, Dec 16 - Dec 22",
                 },
             ],
         },
@@ -1763,7 +1769,8 @@ test("drag&drop on other pill in grouped view", async () => {
                 {
                     title: "Task 7",
                     level: 0,
-                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 (1/2) Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                 },
             ],
         },
@@ -1788,17 +1795,20 @@ test("drag&drop on other pill in grouped view", async () => {
                 {
                     title: "Task 2",
                     level: 0,
-                    colSpan: "Sunday 16 Week 51 of 2018 -> Sunday 16 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Sunday 16 Week 51, Dec 16 - Dec 22 -> Sunday 16 (1/2) Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 1",
                     level: 1,
-                    colSpan: "Sunday 16 Week 51 of 2018 -> Sunday 16 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Sunday 16 Week 51, Dec 16 - Dec 22 -> Sunday 16 (1/2) Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 4",
                     level: 0,
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 (1/2) Week 51, Dec 16 - Dec 22",
                 },
             ],
         },
@@ -1808,7 +1818,8 @@ test("drag&drop on other pill in grouped view", async () => {
                 {
                     title: "Task 7",
                     level: 0,
-                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 (1/2) Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                 },
             ],
         },

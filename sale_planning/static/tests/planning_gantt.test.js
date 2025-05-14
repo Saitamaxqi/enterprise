@@ -48,6 +48,6 @@ test("Slot should be instantly created on click when grouped by sale_line_id.", 
                 />`,
         groupBy: ["sale_line_id"],
     });
-    await clickCell("Sunday 10", "Week 11 of 2019", "sale.order.line,1");
+    await clickCell("Sunday 10", "Week 11, Mar 10 - Mar 16", "sale.order.line,1");
     expect(queryFirst(".o_gantt_pill")).toHaveText("Slot 2");
 });

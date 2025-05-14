@@ -906,7 +906,7 @@ test("The date should take into the account when created through the button in G
         groupBy: ["resource_id"],
     });
 
-    await clickCell("Friday 9", "Week 49 of 2022", "Resource 1");
+    await clickCell("Friday 9", "Week 49, Dec 4 - Dec 10", "Resource 1");
     await contains(".modal .o_form_view .o_field_widget[name=name] input").edit("New Shift");
     await clickSave();
 
@@ -984,7 +984,7 @@ test("date_start and date_end in url (same week)", async function () {
     await animationFrame();
 
     let { groupHeaders, range } = getGridContent();
-    expect(groupHeaders.map((gh) => gh.title)).toEqual(["Week 50 of 2020"]);
+    expect(groupHeaders.map((gh) => gh.title)).toEqual(["Week 50, Dec 6 - Dec 12 2020"]);
     expect(range).toEqual("Week");
 });
 

@@ -208,7 +208,7 @@ test("check default planned dates on the plan dialog", async function () {
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>`,
     });
-    await clickCell("Monday 11", "Week 41 of 2021");
+    await clickCell("Monday 11", "Week 41, Oct 10 - Oct 16");
 });
 
 test("Show shift form dialog only when shifts to plan", async function () {
@@ -231,8 +231,8 @@ test("Show shift form dialog only when shifts to plan", async function () {
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>`,
     });
-    await hoverGridCell("Wednesday 13", "Week 41 of 2021");
-    await clickCell("Wednesday 13", "Week 41 of 2021");
+    await hoverGridCell("Wednesday 13", "Week 41, Oct 10 - Oct 16");
+    await clickCell("Wednesday 13", "Week 41, Oct 10 - Oct 16");
 
     expect(".o_dialog").toHaveCount(1);
     expect(".modal-title").toHaveText("Plan");
@@ -246,20 +246,22 @@ test("Show shift form dialog only when shifts to plan", async function () {
         {
             pills: [
                 {
-                    colSpan: "Tuesday 12 Week 41 of 2021 -> Tuesday 12 Week 41 of 2021",
+                    colSpan:
+                        "Tuesday 12 Week 41, Oct 10 - Oct 16 -> Tuesday 12 Week 41, Oct 10 - Oct 16",
                     level: 0,
                     title: "Shift 1",
                 },
                 {
-                    colSpan: "Wednesday 13 Week 41 of 2021 -> Wednesday 13 Week 41 of 2021",
+                    colSpan:
+                        "Wednesday 13 Week 41, Oct 10 - Oct 16 -> Wednesday 13 Week 41, Oct 10 - Oct 16",
                     level: 0,
                     title: "Shift 2",
                 },
             ],
         },
     ]);
-    await hoverGridCell("Wednesday 13", "Week 41 of 2021");
-    await clickCell("Wednesday 13", "Week 41 of 2021");
+    await hoverGridCell("Wednesday 13", "Week 41, Oct 10 - Oct 16");
+    await clickCell("Wednesday 13", "Week 41, Oct 10 - Oct 16");
     expect(".o_dialog").toHaveCount(1);
     expect(".modal-title").toHaveText("Add Shift");
 });
@@ -290,14 +292,14 @@ test("Open a dialog to schedule a plan using Open Shift", async function () {
         arch: '<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>',
         groupBy: ["resource_id"],
     });
-    await hoverGridCell("Wednesday 13", "Week 41 of 2021");
-    await clickCell("Wednesday 13", "Week 41 of 2021");
+    await hoverGridCell("Wednesday 13", "Week 41, Oct 10 - Oct 16");
+    await clickCell("Wednesday 13", "Week 41, Oct 10 - Oct 16");
     await click(".modal-footer .o_create_button");
 
     await selectFieldDropdownItem("resource_id", "Jarvo");
     await contains(`[name='name'] input`).edit("Shift-2");
-    await contains(`[name='start_datetime'] input`).edit('2021-10-12 09:00:00');
-    await contains(`[name='end_datetime'] input`).edit('2021-10-12 12:00:00');
+    await contains(`[name='start_datetime'] input`).edit("2021-10-12 09:00:00");
+    await contains(`[name='end_datetime'] input`).edit("2021-10-12 12:00:00");
 
     await click(".o_form_button_save");
     await animationFrame();

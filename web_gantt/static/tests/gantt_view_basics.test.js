@@ -626,12 +626,19 @@ test("full precision gantt rendering", async () => {
             title: "User 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (1)  -> Wednesday 19 Week 51 of 2018" },
+                {
+                    title: "1",
+                    colSpan: "Out of bounds (1)  -> Wednesday 19 Week 51, Dec 16 - Dec 22",
+                },
                 {
                     title: "2",
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                 },
-                { title: "1", colSpan: "Friday 21 Week 51 of 2018 -> Out of bounds (22) " },
+                {
+                    title: "1",
+                    colSpan: "Friday 21 Week 51, Dec 16 - Dec 22 -> Out of bounds (22) ",
+                },
             ],
         },
         {
@@ -640,7 +647,8 @@ test("full precision gantt rendering", async () => {
                 { level: 0, colSpan: "Out of bounds (1)  -> Out of bounds (22) ", title: "Task 1" },
                 {
                     level: 1,
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                     title: "Task 4",
                 },
             ],
@@ -651,13 +659,19 @@ test("full precision gantt rendering", async () => {
             pills: [
                 {
                     title: "1",
-                    colSpan: "Monday 17 Week 51 of 2018 -> Wednesday 19 Week 51 of 2018",
+                    colSpan:
+                        "Monday 17 Week 51, Dec 16 - Dec 22 -> Wednesday 19 Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "2",
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                 },
-                { title: "1", colSpan: "Friday 21 Week 51 of 2018 -> Saturday 22 Week 51 of 2018" },
+                {
+                    title: "1",
+                    colSpan:
+                        "Friday 21 Week 51, Dec 16 - Dec 22 -> Saturday 22 Week 51, Dec 16 - Dec 22",
+                },
             ],
         },
         {
@@ -665,7 +679,8 @@ test("full precision gantt rendering", async () => {
             pills: [
                 {
                     level: 0,
-                    colSpan: "Monday 17 Week 51 of 2018 -> Saturday 22 Week 51 of 2018",
+                    colSpan:
+                        "Monday 17 Week 51, Dec 16 - Dec 22 -> Saturday 22 Week 51, Dec 16 - Dec 22",
                     title: "Task 2",
                 },
             ],
@@ -675,7 +690,8 @@ test("full precision gantt rendering", async () => {
             pills: [
                 {
                     level: 0,
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                     title: "Task 7",
                 },
             ],
@@ -762,12 +778,14 @@ test("gantt rendering, pills must be chronologically ordered", async () => {
                 {
                     title: "Task 08:30:00",
                     level: 0,
-                    colSpan: "Monday 17 Week 51 of 2018 -> Monday 17 Week 51 of 2018",
+                    colSpan:
+                        "Monday 17 Week 51, Dec 16 - Dec 22 -> Monday 17 Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 14:30:00",
                     level: 1,
-                    colSpan: "Monday 17 (1/2) Week 51 of 2018 -> Monday 17 Week 51 of 2018",
+                    colSpan:
+                        "Monday 17 (1/2) Week 51, Dec 16 - Dec 22 -> Monday 17 Week 51, Dec 16 - Dec 22",
                 },
             ],
         },
@@ -860,20 +878,22 @@ test("range switching", async () => {
                 {
                     title: "Task 2",
                     level: 1,
-                    colSpan: "Out of bounds (18)  -> Saturday 22 (1/2) Week 51 of 2018",
+                    colSpan: "Out of bounds (18)  -> Saturday 22 (1/2) Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 4",
                     level: 2,
-                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 Week 51, Dec 16 - Dec 22 -> Thursday 20 (1/2) Week 51, Dec 16 - Dec 22",
                 },
                 {
                     title: "Task 7",
                     level: 2,
-                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    colSpan:
+                        "Thursday 20 (1/2) Week 51, Dec 16 - Dec 22 -> Thursday 20 Week 51, Dec 16 - Dec 22",
                 },
                 {
-                    colSpan: "Thursday 27 Week 52 of 2018 -> Out of bounds (43) ",
+                    colSpan: "Thursday 27 Week 52, Dec 23 - Dec 29 -> Out of bounds (43) ",
                     level: 1,
                     title: "Task 3",
                 },

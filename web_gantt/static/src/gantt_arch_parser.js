@@ -1,4 +1,4 @@
-import { getLocalYearAndWeek } from "@web/core/l10n/dates";
+import { getLocalYearAndWeek, today } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { evaluateExpr } from "@web/core/py_js/py";
 import { omit } from "@web/core/utils/objects";
@@ -81,14 +81,23 @@ const SCALES = {
 };
 
 /**
- * Formats a date to a `'W'W kkkk` datetime string, in the user's locale settings.
+ * Formats a date to a special datetime string, in the user's locale settings.
+ * It contains the week number, its period and the year if it is different from the current's
  *
  * @param {Date|luxon.DateTime} date
  * @returns {string}
  */
 function formatLocalWeekYear(date) {
-    const { year, week } = getLocalYearAndWeek(date);
-    return _t(`Week %(week)s of %(year)s`, { week, year });
+    const { year, week, startDate } = getLocalYearAndWeek(date);
+    let result = _t(`Week %(week)s, %(startDate)s - %(endDate)s`, {
+        week,
+        startDate: startDate.toLocaleString({ month: "short", day: "numeric" }),
+        endDate: startDate.plus({ days: 6 }).toLocaleString({ month: "short", day: "numeric" }),
+    });
+    if (today().year !== year) {
+        result += ` ${year}`;
+    }
+    return result;
 }
 
 function getPreferedScaleId(scaleId, scales) {

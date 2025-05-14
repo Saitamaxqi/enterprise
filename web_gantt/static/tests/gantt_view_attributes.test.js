@@ -599,19 +599,19 @@ test(`Today style with unavailabilities ("week": "day:half")`, async () => {
     });
 
     // Normal day / unavailability
-    expect(getCellColorProperties("Tuesday 18", "Week 51 of 2018")).toEqual([
+    expect(getCellColorProperties("Tuesday 18", "Week 51, Dec 16 - Dec 22")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
     ]);
 
     // Full unavailability
-    expect(getCellColorProperties("Wednesday 19", "Week 51 of 2018")).toEqual([
+    expect(getCellColorProperties("Wednesday 19", "Week 51, Dec 16 - Dec 22")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
 
     // Unavailability / today
-    expect(getCell("Thursday 20", "Week 51 of 2018")).toHaveClass("o_gantt_today");
-    expect(getCellColorProperties("Thursday 20", "Week 51 of 2018")).toEqual([
+    expect(getCell("Thursday 20", "Week 51, Dec 16 - Dec 22")).toHaveClass("o_gantt_today");
+    expect(getCellColorProperties("Thursday 20", "Week 51, Dec 16 - Dec 22")).toEqual([
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOffToday-background-color",
     ]);
@@ -641,7 +641,7 @@ test("Today style of group rows", async () => {
     await contains(".o_gantt_header_folded").click();
 
     // Normal group cell: open
-    let cell4 = getCell("Wednesday 19", "Week 51 of 2018");
+    let cell4 = getCell("Wednesday 19", "Week 51, Dec 16 - Dec 22");
     expect(cell4).not.toHaveClass("o_gantt_today");
     expect(cell4).toHaveClass("o_group_open");
     expect(cell4).toHaveStyle({
@@ -649,7 +649,7 @@ test("Today style of group rows", async () => {
     });
 
     // Today group cell: open
-    let cell5 = getCell("Thursday 20", "Week 51 of 2018");
+    let cell5 = getCell("Thursday 20", "Week 51, Dec 16 - Dec 22");
     expect(cell5).toHaveClass("o_gantt_today");
     expect(cell5).toHaveClass("o_group_open");
     expect(cell5).toHaveStyle({
@@ -658,7 +658,7 @@ test("Today style of group rows", async () => {
     await contains(SELECTORS.group).click(); // fold group
     await leave();
     // Normal group cell: closed
-    cell4 = getCell("Wednesday 19", "Week 51 of 2018");
+    cell4 = getCell("Wednesday 19", "Week 51, Dec 16 - Dec 22");
     expect(cell4).not.toHaveClass("o_gantt_today");
     expect(cell4).not.toHaveClass("o_group_open");
     expect(cell4).toHaveStyle({
@@ -666,7 +666,7 @@ test("Today style of group rows", async () => {
     });
 
     // Today group cell: closed
-    cell5 = getCell("Thursday 20", "Week 51 of 2018");
+    cell5 = getCell("Thursday 20", "Week 51, Dec 16 - Dec 22");
     expect(cell5).toHaveClass("o_gantt_today");
     expect(cell5).not.toHaveClass("o_group_open");
     expect(cell5).toHaveStyle({ backgroundImage: "none" });
@@ -925,18 +925,18 @@ test(`Fold unavailabilities ("week": "day:half")`, async () => {
     expect(groupHeaders).toEqual([
         {
             range: [1, 15],
-            title: "Week 50 of 2018",
-            titleAttr: "Week 50 of 2018",
+            title: "Week 50, Dec 9 - Dec 15",
+            titleAttr: "Week 50, Dec 9 - Dec 15",
         },
         {
             range: [15, 29],
-            title: "Week 51 of 2018",
-            titleAttr: "Week 51 of 2018",
+            title: "Week 51, Dec 16 - Dec 22",
+            titleAttr: "Week 51, Dec 16 - Dec 22",
         },
         {
             range: [29, 43],
-            title: "Week 52 of 2018",
-            titleAttr: "Week 52 of 2018",
+            title: "Week 52, Dec 23 - Dec 29",
+            titleAttr: "Week 52, Dec 23 - Dec 29",
         },
     ]);
     expect(columnHeaders).toEqual([
