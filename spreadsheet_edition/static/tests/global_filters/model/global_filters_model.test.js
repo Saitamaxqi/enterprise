@@ -73,7 +73,7 @@ test("Can set a value from a pivot header context menu", async function () {
     await animationFrame();
     // prettier-ignore
     expect(getEvaluatedGrid(model, "A1:B4")).toEqual([
-            ["(#1) Partner Pivot",  "Total"],
+            ["Partner Pivot",       "Total"],
             ["",                    "Probability"],
             ["xphone",              10],
             ["Total",               10],
@@ -82,7 +82,7 @@ test("Can set a value from a pivot header context menu", async function () {
     await animationFrame();
     // prettier-ignore
     expect(getEvaluatedGrid(model, "A1:B5")).toEqual([
-            ["(#1) Partner Pivot",  "Total"],
+            ["Partner Pivot",       "Total"],
             ["",                    "Probability"],
             ["xphone",              10],
             ["xpad",                121],

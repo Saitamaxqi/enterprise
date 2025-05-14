@@ -1286,7 +1286,7 @@ test("Can collapse pivot header group", async function () {
 
     // prettier-ignore
     expect(getEvaluatedGrid(model, "A20:C23")).toEqual([
-        ["(#1) Untitled by Date (Year)",    2016,           ""],
+        ["Untitled by Date (Year)",         2016,           ""],
         ["",                                "",             "Total"],
         ["",                                "Probability",  "Probability"],
         ["Total",                           131,            131],
