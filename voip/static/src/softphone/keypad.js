@@ -177,6 +177,18 @@ export class Keypad extends Component {
         return _t("%(country)s flag", { country });
     }
 
+    /** @returns {string} */
+    get inputFontSizeClass() {
+        const length = this.props.state.input.value.length;
+        if (length < 12) {
+            return "fs-1";
+        }
+        if (length < 18) {
+            return "fs-2";
+        }
+        return "fs-3";
+    }
+
     /**
      * Determines whether the cached country code (if any) still matches the
      * contents of the keypad input. Useful for hiding the flag and redoing the

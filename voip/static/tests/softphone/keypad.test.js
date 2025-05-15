@@ -155,3 +155,15 @@ test("pressing Enter in the input doesn't make a call if the trimmed input is em
     await triggerHotkey("Enter");
     expect(pyEnv["voip.call"].search_count([])).toBe(0);
 });
+
+test("input font size classes update dynamically when input changes", async () => {
+    await start();
+    await click(".o_menu_systray [title='Open Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    await insertText(".o-voip-Keypad-searchBar input", "12345");
+    await contains(".o-voip-Keypad-input.fs-1:not(.fs-2):not(.fs-3)");
+    await insertText(".o-voip-Keypad-searchBar input", "123456789012");
+    await contains(".o-voip-Keypad-input.fs-2:not(.fs-1):not(.fs-3)");
+    await insertText(".o-voip-Keypad-searchBar input", "123456789012345678");
+    await contains(".o-voip-Keypad-input.fs-3:not(.fs-1):not(.fs-2)");
+});
