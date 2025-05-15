@@ -20,9 +20,13 @@ class AccountChartTemplate(models.AbstractModel):
             '2273',  # Assurance Accident
             '2274',  # Daily Sickness Insurance
             '2279',  # Source Tax
+            '2350',  # 13th month provision
+            '2351',  # 14th month provision
             '5000',  # Wages
             '5001',  # Social insurance Payments
             '5002',  # Profit Sharing
+            '5005',  # 13th Month
+            '5011',  # 14th Month
             '5007',  # Bonus
             '5010',  # Commissions
             '5700',  # AHV
@@ -55,7 +59,7 @@ class AccountChartTemplate(models.AbstractModel):
             "1070", "1071", "1072", "1074", "1076", "1100", "1101", "1102", "1103", "1104", "1110", "1111",
             "1131", "1162", "1163", "1230", "1231", "1299", "1300", "1301", "1302", "1303", "1304", "1305",
             "1306", "1307", "1500", "1501", "1503", "1953", "1955", "1973", "2025", "2026", "2027", "2030",
-            "2031", "2032", "2035", "2040", "2070", "4900", "1200", "1205", "1207", "1208"
+            "2031", "2032", "2035", "2040", "2070", "4900", "1207", "1208"
         ]
 
         bonuses = [
@@ -183,6 +187,22 @@ class AccountChartTemplate(models.AbstractModel):
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_1980')
         rules_mapping[rule]['debit'] = '5810'
         rules_mapping[rule]['credit'] = '1090'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_1200')
+        rules_mapping[rule]['debit'] = '2350'
+        rules_mapping[rule]['credit'] = '1090'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_1205')
+        rules_mapping[rule]['debit'] = '2351'
+        rules_mapping[rule]['credit'] = '1090'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_13_prov')
+        rules_mapping[rule]['debit'] = '5005'
+        rules_mapping[rule]['credit'] = '2350'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_14_prov')
+        rules_mapping[rule]['debit'] = '5011'
+        rules_mapping[rule]['credit'] = '2351'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_2000')
         rules_mapping[rule]['debit'] = '5001'

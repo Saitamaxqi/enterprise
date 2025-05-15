@@ -4162,7 +4162,7 @@ result_name = inputs['WT_4900'].name
         <field name="category_id" ref="l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_technical_category"/>
         <field name="name">Thirteen Month Provision</field>
         <field name="code">13THMONTHPROVISION</field>
-        <field name="l10n_ch_code" eval="False"/>
+        <field name="l10n_ch_code">1995</field>
         <field name="sequence">30</field>
         <field name="condition_select">python</field>
         <field name="condition_python">result = contract.l10n_ch_thirteen_month</field>
@@ -4180,7 +4180,7 @@ result_rate = contract.l10n_ch_contractual_13th_month_rate
         <field name="category_id" ref="l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_technical_category"/>
         <field name="name">Fourteenth Month Provision</field>
         <field name="code">14THMONTHPROVISION</field>
-        <field name="l10n_ch_code" eval="False"/>
+        <field name="l10n_ch_code">1996</field>
         <field name="sequence">30</field>
         <field name="condition_select">python</field>
         <field name="condition_python">result = contract.l10n_ch_14th_month</field>
