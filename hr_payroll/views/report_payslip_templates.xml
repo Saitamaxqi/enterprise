@@ -164,7 +164,7 @@
                             <t t-set="line_class" t-value="line_styling['line_class']"/>
                             <t t-set="o_title" t-value="line_styling['o_title']"/>
                             <tr id="line_display">
-                                <td id="payslip_line_name" t-att-class="line_class" t-att-style="line_style" t-att-colspan="99 if line.salary_rule_id.title else 1">
+                                <td id="payslip_line_name" t-att-class="line_class" t-attf-style="#{line_style} #{'border-right: none;' if line.salary_rule_id.title else ''}" t-att-colspan="99 if line.salary_rule_id.title else 1">
                                     <span t-field="line.name" class="d-block"/>
                                     <span t-field="line.salary_rule_id.note" t-attf-class="#{line_class} d-inline-block text-truncate pb-0 mb-0 ps-1" style="max-width: 500px; font-size: 0.875em;"/>
                                 </td>
@@ -183,7 +183,7 @@
                                     <span t-out="line.total"
                                         t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                                 </td>
-                                <td id="payslip_line_ytd" t-if="o.ytd_computation" class="text-end">
+                                <td id="payslip_line_ytd" t-if="o.ytd_computation" t-attf-class="#{line_class} text-end #{o_title}" t-att-style="line_style">
                                     <span t-esc="line.ytd"
                                         t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                                 </td>
