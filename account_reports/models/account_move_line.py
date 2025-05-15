@@ -34,6 +34,19 @@ class AccountMoveLine(models.Model):
         (self - lines_to_compute).tax_ids = False
         super(AccountMoveLine, lines_to_compute)._compute_tax_ids()
 
+    def _get_attachment_domains(self):
+        attachment_domains = super()._get_attachment_domains()
+        if self.move_id.closing_return_id:
+            attachment_domains.append([('res_model', '=', 'account.return'), ('res_id', 'in', self.move_id.closing_return_id.ids)])
+        return attachment_domains
+
+    @api.model
+    def _get_attachment_by_record(self, id_model2attachments, move_line):
+        attachment_id = super()._get_attachment_by_record(id_model2attachments, move_line)
+        if not attachment_id and move_line.move_id.closing_return_id:
+            attachment_id = id_model2attachments.get(('account.return', move_line.move_id.closing_return_id.id))
+        return attachment_id
+
     @api.model
     def _prepare_aml_shadowing_for_report(self, change_equivalence_dict, prefix_fields=False, prefix_fields_to_insert=True):
         """ Prepares the fields lists for creating a temporary table shadowing the account_move_line one.

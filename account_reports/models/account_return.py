@@ -793,18 +793,22 @@ class AccountReturn(models.Model):
             if not self.env.user.has_group('account.group_account_manager'):
                 raise UserError(_("You first need to define an opening date for your accounting. Please contact your administrator."))
 
-            new_wizard = self.env['account.financial.year.op'].create([{'company_id': company.id}])
+            # We are not giving the res_id to the wizard as it would be considered as
+            # not a new record and the input field for the opening_date would be red.
             return {
                 'type': 'ir.actions.act_window',
                 'name': _('Accounting Periods'),
                 'view_mode': 'form',
                 'res_model': 'account.financial.year.op',
                 'target': 'new',
-                'res_id': new_wizard.id,
                 'views': [[self.env.ref('account.setup_financial_year_opening_form').id, 'form']],
                 'context': {
                     'dialog_size': 'medium',
                     'open_account_return_on_save': True,
+                    'default_company_id': company.id,
+                    'default_fiscalyear_last_month': company.fiscalyear_last_month,
+                    'default_fiscalyear_last_day': company.fiscalyear_last_day,
+                    'default_account_return_periodicity': company.account_return_periodicity,
                 },
             }
 
@@ -2200,7 +2204,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'view_mode': 'list',
             'res_model': 'account.move',
             'domain': domain,
-            'views': [[False, 'list'], [False, 'form']],
+            'views': [[self.env.ref('account_reports.view_draft_entries_tree').id, 'list'], [False, 'form']],
         }
 
         return {
