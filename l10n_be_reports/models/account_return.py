@@ -23,6 +23,24 @@ class AccountReturnType(models.Model):
             self.env.ref('l10n_be_reports.be_vat_listing_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
             self.env.ref('l10n_be_reports.be_isoc_prepayment_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
+            # BE Intracom return generation
+            ec_sales_return_type = self.env.ref('l10n_be_reports.be_ec_sales_list_return_type')
+            months_offset = ec_sales_return_type._get_periodicity_months_delay(main_company)
+            previous_period_start, previous_period_end = ec_sales_return_type._get_period_boundaries(main_company, fields.Date.context_today(self) - relativedelta(months=months_offset))
+            company_ids = self.env['account.return'].sudo()._get_company_ids(main_company, tax_unit, ec_sales_return_type.report_id)
+            ec_sales_list_tags_info = self.env['l10n_be.ec.sales.report.handler']._get_tax_tags_for_belgian_sales_report()
+            ec_sales_list_tag_ids = [*ec_sales_list_tags_info['goods'], *ec_sales_list_tags_info['triangular'], *ec_sales_list_tags_info['services']]
+
+            need_ec_sales_list = bool(self.env['account.move.line'].search_count([
+                ('tax_tag_ids', 'in', ec_sales_list_tag_ids),
+                ('company_id', 'in', company_ids.ids),
+                ('date', '>=', previous_period_start),
+                ('date', '<=', previous_period_end),
+            ], limit=1))
+
+            if need_ec_sales_list:
+                ec_sales_return_type._try_create_return_for_period(previous_period_start, main_company, tax_unit)
+
         return rslt
 
 
@@ -50,6 +68,10 @@ class AccountReturn(models.Model):
 
     def _get_pay_wizard(self):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
+            # If the amount is to be recovered, we don't want to open the wizard and just continue to the next state
+            if self.amount_to_pay_currency_id.compare_amounts(self.amount_to_pay, 0) == -1:
+                return
+
             vat_pay_wizard = self.env['l10n_be_reports.vat.pay.wizard'].create([{
                 'company_id': self.company_id.id,
                 'partner_bank_id': self.type_id.payment_partner_bank_id.id,
@@ -92,7 +114,7 @@ class AccountReturn(models.Model):
 
             return {
                 'type': 'ir.actions.act_window',
-                'name': _("ISOC Prepayment"),
+                'name': self.type_id.name,
                 'res_id': wizard.id,
                 'res_model': 'l10n_be_reports.isoc.prepayment.pay.wizard',
                 'views': [(False, 'form')],
@@ -176,8 +198,7 @@ class AccountReturn(models.Model):
                 ('partner_id.country_id', '=', False),
                 ('move_type', 'in', self.env['account.move'].get_sale_types()),
             ]
-            no_country_moves_count = self.env['account.move'].search_count(domain)
-            summary_string = _("%(count)s Invoices", count=no_country_moves_count) if no_country_moves_count > 1 else _("1 Invoice")
+            no_country_moves_count = self.env['account.move'].search_count(domain, limit=21)
             action = {
                 'type': 'ir.actions.act_window',
                 'name': _("Invoices Without Country"),
@@ -190,7 +211,7 @@ class AccountReturn(models.Model):
                 'name': _("No customer without country"),
                 'message': _("Review invoices having a customer with no country specified."),
                 'code': 'customer_without_country',
-                'summary': summary_string,
+                'summary': self._format_record_count(no_country_moves_count, _("Invoice"), _("Invoices")),
                 'result': 'failure' if no_country_moves_count else 'success',
                 'action': action if no_country_moves_count else False,
             }
@@ -198,46 +219,6 @@ class AccountReturn(models.Model):
             checks.append(check_vals)
 
         return checks
-
-    def _check_action_l10n_be_on_review_check_company_data(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Set your company data'),
-            'res_model': 'res.company',
-            'res_id': self.company_id.id,
-            'views': [(self.env.ref('account.res_company_form_view_onboarding').id, "form")],
-            'target': 'new',
-        }
-
-    def _check_action_l10n_be_on_review_check_match_all_bank_entries(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _("Check bank entries"),
-            'view_mode': 'list',
-            'res_model': 'account.bank.statement.line',
-            'domain': [('date', '<=', self.date_to), ('is_reconciled', '=', False)],
-            'views': [[False, 'list'], [False, 'kanban']],
-        }
-
-    def _check_action_l10n_be_on_review_check_draft_entries(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _("Check draft entries"),
-            'view_mode': 'list',
-            'res_model': 'account.move',
-            'domain': [('state', '=', 'draft'), ('date', '<=', self.date_to)],
-            'views': [[False, 'list'], [False, 'form']],
-        }
-
-    def _check_action_l10n_be_on_review_check_bills_attachment(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _("Check bills attachements"),
-            'view_mode': 'list',
-            'res_model': 'account.move',
-            'domain': [('attachment_ids', '=', False), ('move_type', '=', 'in_invoice')],
-            'views': [[False, 'list'], [False, 'form']],
-        }
 
     def action_submit(self):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
@@ -276,3 +257,8 @@ class AccountReturn(models.Model):
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'partner_vat_listing_export_to_xml'))
         if self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_to_xml_sales_report'))
+
+    def reset_to_new_from_paid(self):
+        self.ensure_one()
+        self.state = 'new'
+        self.is_completed = False

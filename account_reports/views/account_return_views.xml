@@ -18,6 +18,7 @@
                     <field name="show_companies"/>
                     <field name="show_amount_to_pay"/>
                     <field name="date_submission"/>
+                    <field name="days_to_deadline"/>
 
                     <t t-name="card" class="p-0 border-start-0">
                         <div class="border-start border-3" t-att-class="{'border-dark': !record.is_completed.raw_value, 'border-success': record.is_completed.raw_value}"/>
@@ -33,9 +34,9 @@
                                             <span invisible="unresolved_check_count != 0 or resolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-success">Passed</span>
                                         </div>
                                     </div>
-                                    <div class="row o_field_widget">
+                                    <div class="row o_field_widget" t-att-class="{'text-black': (record.days_to_deadline.raw_value &gt;= 0) or record.date_submission.raw_value or record.is_completed.raw_value, 'text-danger': (record.days_to_deadline.raw_value &lt; 0) and !record.date_submission.raw_value and !record.is_completed.raw_value}">
                                         <t t-if="!record.date_submission.raw_value">
-                                            <span class="oe_stat_text pe-1 text-black-50">Deadline: </span><field class="oe_stat_value ps-0 text-black-50" name="date_deadline"/>
+                                            <span class="oe_stat_text pe-1">Deadline: </span><field class="oe_stat_value ps-0" name="date_deadline"/>
                                         </t>
                                         <t t-else="">
                                             <span class="oe_stat_text pe-1 text-black-50">Submitted on: </span><field class="oe_stat_value ps-0 text-black-50" name="date_submission"/>
@@ -86,11 +87,8 @@
                                     
                                     <t t-if="0">
                                     </t>
-                                    <t t-elif="record.type_external_id.raw_value == 'account_reports.annual_corporate_tax_return_type'">
-                                        <button invisible="is_completed" class="btn btn-primary" type="object" name="action_submit">Submit</button>
-                                    </t>
                                     <t id="default_buttons" t-else="">
-                                        <button invisible="state != 'new' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_review">Review Issues</button>
+                                        <button invisible="state != 'new' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_review">Review</button>
                                         <button invisible="state != 'submitted' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_pay">Pay</button>
                                     </t>
 
@@ -107,6 +105,7 @@
                                             <!-- Reset should be last-->
                                             <a invisible="state != 'reviewed' or is_completed" class="dropdown-item" type="object" name="action_reset_to_new" string="Reset"/>
                                             <a invisible="state != 'submitted' or is_completed" class="dropdown-item" type="object" name="action_reset_to_reviewed" string="Reset"/>
+                                            <a invisible="state != 'paid' or not is_tax_return" class="dropdown-item" type="object" name="action_reset_to_submitted" string="Reset"/>
                                             <a invisible="state != 'new' or not is_completed" class="dropdown-item" type="object" name="action_reset_is_completed" string="Reset"/>
                                         </div>
                                     </div>
@@ -149,7 +148,7 @@
                     <field name="type_id"/>
                     <field name="state"/>
                     <field name="date_submission"/>
-                    <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False)]"/>
+                    <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False), ('date_to', '&lt;', context_today())]"/>
                     <filter name="done_returns" string="Done" domain="[('is_completed', '=', True)]"/>
                     <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
@@ -158,18 +157,27 @@
         </record>
 
         <!-- Will open a wizard if tax return config is not setup otherwise it will return action_view_account_return-->
+        <!-- TODO lost: to remove in master -->
         <record id="action_open_view_account_return" model="ir.actions.client">
             <field name="name">Open Tax Return</field>
             <field name="tag">action_open_view_account_return</field>
+        </record>
+
+        <record id="action_server_open_view_account_return" model="ir.actions.server">
+            <field name="name">Open Tax Return</field>
+            <field name="model_id" ref="model_account_return"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_tax_return_view()</field>
         </record>
 
         <record id="action_view_account_return" model="ir.actions.act_window">
             <field name="name">Tax Return</field>
             <field name="res_model">account.return</field>
             <field name="view_mode">kanban,calendar,search</field>
+            <field name="path">tax-return</field>
             <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1}</field>
         </record>
 
-        <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_open_view_account_return" name="Tax Returns" sequence="100"/>
+        <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_server_open_view_account_return" name="Tax Returns" sequence="100"/>
     </data>
 </odoo>

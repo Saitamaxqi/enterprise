@@ -14,15 +14,9 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
 
     @api.depends('return_id')
     def _compute_need_ec_sales_list(self):
-        ec_sales_list_tags_info = self.env['l10n_be.ec.sales.report.handler']._get_tax_tags_for_belgian_sales_report()
-        ec_sales_list_tag_ids = [*ec_sales_list_tags_info['goods'], *ec_sales_list_tags_info['triangular'], *ec_sales_list_tags_info['services']]
+        # TODO lost: remove in master
         for record in self:
-            record.need_ec_sales_list = bool(self.env['account.move.line'].search_count([
-                ('tax_tag_ids', 'in', ec_sales_list_tag_ids),
-                ('company_id', 'in', record.return_id.company_ids.ids),
-                ('date', '<=', record.return_id.date_to),
-                ('date', '>=', record.return_id.date_from),
-            ], limit=1))
+            record.need_ec_sales_list = False
 
     def _get_submission_options_to_inject(self):
         report = self.return_id.type_id.report_id
@@ -58,24 +52,3 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
                 'no_closing_after_download': True,
             }
         }
-
-    def action_proceed_with_submission(self):
-        if self.need_ec_sales_list:
-            ec_sales_return_type = self.env.ref('l10n_be_reports.be_ec_sales_list_return_type')
-            existing_return = self.env['account.return'].search([
-                ('date_from', '=', self.return_id.date_from),
-                ('date_to', '=', self.return_id.date_to),
-                ('type_id', '=', ec_sales_return_type.id),
-            ])
-
-            if not existing_return:
-                self.env['account.return'].create([{
-                    'name': ec_sales_return_type._get_return_name(self.return_id.company_id, self.return_id.date_from, self.return_id.date_to),
-                    'date_from': self.return_id.date_from,
-                    'date_to': self.return_id.date_to,
-                    'type_id': ec_sales_return_type.id,
-                    'company_id': self.return_id.company_id.id,
-                    'tax_unit_id': self.return_id.tax_unit_id.id,
-                }])
-
-        return super().action_proceed_with_submission()

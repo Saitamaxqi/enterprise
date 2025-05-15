@@ -1,4 +1,4 @@
-import { useService } from "@web/core/utils/hooks";
+import { useService, useBus } from "@web/core/utils/hooks";
 import { isNull } from "@web/views/utils";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 
@@ -33,6 +33,14 @@ export class AccountReturnKanbanRenderer extends Component {
         super.setup();
         this.orm = useService("orm");
         useEffect(() => {this.runAllReturnChecks()}, () => []);
+
+        useBus(this.env.bus, "return_reload_model", (ev) => {
+            const recordIds = ev.detail.resIds;
+            let recordToReload = this.records.filter((record) => recordIds.includes(record.resId));
+            for (let record of recordToReload) {
+                record.model.load();
+            }
+        });
     }
 
     async runAllReturnChecks() {
@@ -52,12 +60,28 @@ export class AccountReturnKanbanRenderer extends Component {
 
         await this.orm.call(
             'account.return',
+            'try_auto_review',
+            [returnIds],
+        );
+
+        await this.orm.call(
+            'account.return',
             'refresh_checks',
             [returnIds]
         );
 
         // reload records
         await this.props.list.model.load();
+    }
+
+    get records() {
+        const { list } = this.props;
+        if (list.isGrouped) {
+            return list.groups.flatMap((group) => group.list.records);
+        }
+        else {
+            return list.records;
+        }
     }
 
     get groups() {

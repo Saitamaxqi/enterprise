@@ -44,16 +44,6 @@ export class AccountReturnCheckKanbanRenderer extends Component {
                 [account_return.id]
             );
             await this.props.list.model.load();
-
-            const result = await this.orm.call(
-                'account.return.check',
-                'try_forward_state',
-                [records[0].resId],
-                { context: {...this.props.list.context}},
-            );
-            if (result) {
-                this.action.doAction(result);
-            }
         }
     }
 

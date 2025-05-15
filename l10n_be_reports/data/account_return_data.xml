@@ -47,7 +47,10 @@
         </data>
 
         <record id="be_isoc_prepayment_return_type" model="account.return.type">
-            <field name="name">Advance Tax Payment</field>
+            <field name="name">Advance Payment</field>
+            <field name="name@nl">Voorafbetaling</field>
+            <field name="name@fr">Versement anticipé</field>
+            <field name="name@de">Vorauszahlung</field>
             <field name="deadline_periodicity">trimester</field>
             <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
         </record>

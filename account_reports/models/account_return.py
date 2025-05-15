@@ -1,13 +1,13 @@
 import base64
 import datetime
-
-from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
-from odoo import api, fields, models, Command, _
-from odoo.exceptions import UserError, ValidationError, RedirectWarning
+from dateutil.relativedelta import relativedelta
+from odoo import Command, _, api, fields, models
+from odoo.exceptions import RedirectWarning, UserError, ValidationError
 from odoo.tools import SQL
 from odoo.tools.misc import format_date
+
 PERIODS = [
     ('monthly', 'Monthly'),
     ('2_months', 'Every 2 months'),
@@ -256,21 +256,48 @@ class AccountReturnType(models.Model):
 
         return self.env['account.return'].sudo().create(create_vals_list)
 
-    def _get_return_name(self, main_company, period_from, period_to, minimal=False):
+    def _try_create_return_for_period(self, date_in_period, main_company, tax_unit):
+        period_start, period_end = self._get_period_boundaries(main_company, date_in_period)
+        existing_return = self.env['account.return'].search([
+            *self.env['account.return']._check_company_domain(main_company),
+            ('tax_unit_id', '=', tax_unit.id if tax_unit else None),
+            ('date_from', '=', period_start),
+            ('date_to', '=', period_end),
+            ('type_id', '=', self.id),
+        ])
+
+        # We should update those companies if they are wrong
+        expected_companies = self.env['account.return'].sudo()._get_company_ids(main_company, tax_unit, self.report_id)
+        if existing_return.company_ids != expected_companies:
+            existing_return.company_ids = expected_companies
+
+        if not existing_return:
+            self.env['account.return'].create([{
+                'name': self._get_return_name(main_company, period_start, period_end),
+                'date_from': period_start,
+                'date_to': period_end,
+                'type_id': self.id,
+                'company_id': main_company.id,
+                'tax_unit_id': tax_unit.id if tax_unit else None,
+            }])
+
+    def _get_return_name(self, main_company, period_from=None, period_to=None, minimal=False):
         periodicity = self._get_periodicity(main_company)
         start_day, start_month = self._get_start_date_elements(main_company)
-        if start_day != 1 or start_month != 1:
-            period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
-        elif periodicity == 'year':
-            period_suffix = f"{period_from.year}"
-        elif periodicity == 'trimester':
-            date_format = 'qqq yyyy' if not minimal else 'qqq'
-            period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
-        elif periodicity == 'monthly':
-            date_format = 'LLLL yyyy' if not minimal else 'LLL'
-            period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
-        else:
-            period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
+        period_suffix = ""
+        if period_from and period_to:
+            if start_day != 1 or start_month != 1:
+                period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
+            elif periodicity == 'year':
+                period_suffix = f"{period_from.year}"
+            elif periodicity == 'trimester':
+                date_format = 'qqq yyyy' if not minimal else 'qqq'
+                period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
+            elif periodicity == 'monthly':
+                date_format = 'LLLL yyyy' if not minimal else 'LLL'
+                period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
+            else:
+                period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
 
         country_code = ""
         if not minimal or main_company.account_fiscal_country_id.code != self.report_id.country_id.code:
@@ -366,6 +393,7 @@ class AccountReturn(models.Model):
     show_amount_to_pay = fields.Boolean(compute='_compute_show_amount_to_pay')
 
     # view helper fields
+    days_to_deadline = fields.Integer(compute='_compute_days_to_deadline')
     is_report_set = fields.Boolean(compute='_compute_is_report_set')
     has_move_entries = fields.Boolean(compute='_compute_has_move_entries')
     report_opened_once = fields.Boolean(help="Has the report been opened once", default=False)
@@ -475,6 +503,12 @@ class AccountReturn(models.Model):
         for record in self:
             record.has_move_entries = record.closing_move_ids
 
+    @api.depends('date_deadline')
+    def _compute_days_to_deadline(self):
+        today = fields.Date.context_today(self)
+        for record in self:
+            record.days_to_deadline = (record.date_deadline - today).days
+
     @api.model
     def _get_return_from_report_options(self, options):
         report = self.env['account.report'].browse(options['report_id'])
@@ -583,12 +617,30 @@ class AccountReturn(models.Model):
     ####################################################################################################
     ####  State Actions
     ####################################################################################################
+    def try_auto_review(self):
+        for account_return in self:
+            if account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
+                account_return.action_review()
+
     def action_review(self):
         self.ensure_one()
         if action := self._check_for_checks_wizard('action_review'):
             return action
 
+        action = None
+
+        if self.unresolved_check_count == 0:
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'action_return_checks_completed_notification',
+                'params': {
+                    'message': _("%(count)s checks passed", count=self.resolved_check_count),
+                    'action': self.action_review_checks(),
+                },
+            }
+
         self.state = 'reviewed'
+        return action
 
     def action_submit(self):
         self.ensure_one()
@@ -699,7 +751,9 @@ class AccountReturn(models.Model):
         self.ensure_one()
         if action := self._check_for_checks_wizard('action_pay'):
             return action
-        return self._get_pay_wizard()
+        if not self.amount_to_pay_currency_id.is_zero(self.amount_to_pay) or self.state == 'new':
+            return (self._get_pay_wizard() or self._action_finalize_payment())
+        self._action_finalize_payment()
 
     def _action_finalize_payment(self):
         self.ensure_one()
@@ -727,6 +781,7 @@ class AccountReturn(models.Model):
             ('date_submission', '!=', False),
             ('date_deadline', '>', self.date_deadline),
         ]
+
         if self.env['account.return'].search_count(domain, limit=1):
             raise UserError(_("You cannot reset this return to reviewed, as another return has been posted at a later date."))
 
@@ -763,6 +818,12 @@ class AccountReturn(models.Model):
         self.date_submission = False
         self.report_opened_once = False
         self.state = 'reviewed'
+
+    def action_reset_to_submitted(self):
+        self.ensure_one()
+        self._delete_checks_for_states([self.state, 'submitted'])
+        self.is_completed = False
+        self.state = 'submitted'
 
     def reset_to_reviewed_from_completed(self):
         self.action_reset_to_reviewed()
@@ -811,7 +872,7 @@ class AccountReturn(models.Model):
             'params': {'options': options, 'ignore_session': True},
         }
 
-    def _get_closing_report_options(self):
+    def _get_closing_report_options(self, date_to=None, tax_unit=None, report=None):
         report = self.type_id.report_id
 
         options = {
@@ -830,9 +891,8 @@ class AccountReturn(models.Model):
 
     def action_review_checks(self):
         self.ensure_one()
-
         return {
-            'name': _("VAT Return Checks"),
+            'name': _("%(return_name)s Checks", return_name=self.type_id._get_return_name(self.company_id)),
             'type': 'ir.actions.act_window',
             'res_model': 'account.return.check',
             'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban'), (False, 'search')],
@@ -1193,6 +1253,14 @@ class AccountReturn(models.Model):
         self.ensure_one()
         return self.state == 'new'
 
+    def _format_record_count(self, count, record_singlular, record_plural):
+        if count > 20:
+            return _("20+ %(name)s", name=record_plural)
+        elif count > 1:
+            return _("%(count)s %(name)s", count=count, name=record_plural)
+        else:
+            return _("1 %(name)s", name=record_singlular)
+
     def _run_checks(self, check_codes_to_ignore):
         """
         To override in l10n for specific checks by type
@@ -1266,8 +1334,7 @@ class AccountReturn(models.Model):
                 ('date', '>=', fields.Date.to_string(self.date_from)),
                 ('state', '=', 'posted'),
             ]
-            bills_without_attachments_count = self.env['account.move'].sudo().search_count(domain)
-            summary_string = _("%(count)s Bills", count=bills_without_attachments_count) if bills_without_attachments_count > 1 else _("1 Bill")
+            bills_without_attachments_count = self.env['account.move'].sudo().search_count(domain, limit=21)
 
             review_action = {
                 'type': 'ir.actions.act_window',
@@ -1282,7 +1349,7 @@ class AccountReturn(models.Model):
                 'name': _("Bill attachments"),
                 'code': 'check_bills_attachment',
                 'message': _("Each bill should have its own document attached as a proof in case of audit."),
-                'summary': summary_string,
+                'summary': self._format_record_count(bills_without_attachments_count, _("Bill"), _("Bills")),
                 'action': review_action if bills_without_attachments_count else None,
                 'result': 'failure' if bills_without_attachments_count else 'success',
             })
@@ -1478,12 +1545,13 @@ class AccountReturn(models.Model):
                 ('date', '>=', fields.Date.to_string(self.date_from)),
                 ('deferred_original_move_ids', '!=', False),
             ]
-            deferred_entries_exist = self.env['account.move'].sudo().search_count(domain, limit=1)
-            if not deferred_entries_exist:
+            deferred_entries_count = self.env['account.move'].sudo().search_count(domain, limit=21)
+            if not deferred_entries_count:
                 checks.append({
                     'name': _("Deferred Entries"),
                     'message': _("Odoo manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
                     'code': 'check_deferred_entries',
+                    'summary': self._format_record_count(deferred_entries_count, _("Entry"), _("Entries")),
                     'result': 'manual',
                 })
 
@@ -1671,8 +1739,7 @@ class AccountReturn(models.Model):
             ('date', '>=', fields.Date.to_string(self.date_from)),
         ]
 
-        unreconciled_bank_entries_count = self.env['account.bank.statement.line'].sudo().search_count(domain)
-        summary_string = _("%(count)s Transactions", count=unreconciled_bank_entries_count) if unreconciled_bank_entries_count > 1 else _("1 Transaction")
+        unreconciled_bank_entries_count = self.env['account.bank.statement.line'].sudo().search_count(domain, limit=21)
 
         review_action = {
             'type': 'ir.actions.act_window',
@@ -1680,14 +1747,14 @@ class AccountReturn(models.Model):
             'view_mode': 'list',
             'res_model': 'account.bank.statement.line',
             'domain': domain,
-            'views': [[False, 'list'], [False, 'kanban']],
+            'views': [[False, 'kanban']],
         }
 
         return {
             'name': name,
             'message': message,
             'code': code,
-            'summary': summary_string,
+            'summary': self._format_record_count(unreconciled_bank_entries_count, _("Transaction"), _("Transactions")),
             'action': review_action if unreconciled_bank_entries_count else None,
             'result': 'failure' if unreconciled_bank_entries_count else 'success',
         }
@@ -1701,8 +1768,7 @@ class AccountReturn(models.Model):
         ]
         if exclude_entries:
             domain += [('move_type', '!=', 'entry')]
-        draft_entries_count = self.env['account.move'].sudo().search_count(domain)
-        summary_string = _("%(count)s Entries", count=draft_entries_count) if draft_entries_count > 1 else _("1 Entry")
+        draft_entries_count = self.env['account.move'].sudo().search_count(domain, limit=21)
 
         review_action = {
             'type': 'ir.actions.act_window',
@@ -1717,7 +1783,7 @@ class AccountReturn(models.Model):
             'name': name,
             'code': code,
             'message': message,
-            'summary': summary_string,
+            'summary': self._format_record_count(draft_entries_count, _("Entry"), _("Entries")),
             'action': review_action if draft_entries_count else None,
             'result': 'failure' if draft_entries_count else 'success',
         }
@@ -1756,24 +1822,11 @@ class AccountReturnCheck(models.Model):
     def action_review(self):
         self.ensure_one()
         if self.action:
-            return self. action
+            return self.action
 
     def action_bypass_or_undo(self):
         self.ensure_one()
         self.bypassed = not self.bypassed
-
-        return self.try_forward_state() or {'type': 'ir.actions.client', 'tag': 'soft_reload'}
-
-    def try_forward_state(self):
-        if not self.env.context.get('disable_return_checks_redirection'):
-            current_state_checks = self.return_id.check_ids.filtered(lambda check: check.state == self.return_id.state)
-
-            if not self.return_id.is_completed and current_state_checks and all(check.bypassed or check.result == 'success' for check in current_state_checks):
-                current_state = self.return_id.state
-                state_action_mapping = self._get_next_state_action_func_for_current_state()
-                if action_func := state_action_mapping.get(current_state, False):
-                    action_func()
-                return self.return_id.action_open_tax_return_view()
 
     def _get_next_state_action_func_for_current_state(self):
         """

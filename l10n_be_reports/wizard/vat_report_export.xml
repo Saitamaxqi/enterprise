@@ -8,12 +8,7 @@
             <field name="mode">primary</field>
             <field name="arch" type="xml">
                 <field name="instructions" position="before">
-                    <field name="need_ec_sales_list" invisible="1"/>
-                    <div class="alert alert-info" role="alert" invisible="not need_ec_sales_list">
-                        The operations made in this period also require you to submit the EC Sales List report.
-                        A new return will be created for it upon validation.
-                    </div>
-                    <group>
+                    <group id="export_options">
                         <group>
                             <div>
                                 <span class="o_stat_text"><label for="ask_restitution"/></span>

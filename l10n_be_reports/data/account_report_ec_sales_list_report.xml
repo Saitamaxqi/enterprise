@@ -10,8 +10,8 @@
     <!-- Add the report variant -->
     <record id="belgian_ec_sales_report" model="account.report">
         <field name="name">EC Sales List</field>
-        <field name="name@nl">Btw-opgave van de intracommunautaire handelingen</field>
-        <field name="name@fr">Relevé à la TVA des opérations intracommunautaires</field>
+        <field name="name@nl">Intracommunautaire listing</field>
+        <field name="name@fr">Relevé intracommunautaire</field>
         <field name="name@de">Innergemeinschaftliche Liste</field>
         <field name="country_id" ref="base.be"/>
         <field name="root_report_id" ref="account_reports.generic_ec_sales_report"/>

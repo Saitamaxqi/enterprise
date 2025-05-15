@@ -5,15 +5,8 @@
             <field name="name">l10n_be_reports.vat.return.submission.wizard.form.intrastat</field>
             <field name="model">l10n_be_reports.vat.return.submission.wizard</field>
             <field name="inherit_id" ref="l10n_be_reports.vat_return_submission_wizard_form"/>
-            <field name="arch" type="xml">
-                <div invisible="not need_ec_sales_list" position="before">
-                    <field name="need_intrastat_goods_report" invisible="1"/> <!-- Used to know if we should show the alert -->
-                    <div class="alert alert-info" role="alert" invisible="not need_intrastat_goods_report">
-                        The operations made in this period also require you to submit the Intrastat report.
-                        A new return will be created for it upon validation.
-                    </div>
-                </div>
-            </field>
+            <!-- TODO lost: remove in master -->
+            <field name="arch"/>
         </record>
     </data>
 </odoo>

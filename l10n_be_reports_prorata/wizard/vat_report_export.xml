@@ -6,7 +6,7 @@
             <field name="model">l10n_be_reports.vat.return.submission.wizard</field>
             <field name="inherit_id" ref="l10n_be_reports.vat_return_submission_wizard_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='need_ec_sales_list']" position="after">
+                <xpath expr="//group[@id='export_options']" position="after">
                     <div class="alert alert-warning oe_edit_only" role="alert"
                         invisible="special_prorata_deduction == 0
                                    or special_prorata_1 != 0
