@@ -74,15 +74,55 @@ class IoTDeviceController extends formView.Controller {
         return this.getIotDevice(data).action({ action: "update_url", url: display_url });
     }
 
+    onPrinterEvent(event, removeListener) {
+        if (!event.print_status || event.action_args) {
+            return;
+        }
+
+        const messages = {
+            ERROR_FAILED: _t("Failed to initiate print"),
+            ERROR_OFFLINE: _t("Printer is not ready"),
+            ERROR_TIMEOUT: _t("Printing timed out"),
+            ERROR_NO_PAPER: _t("Out of paper"),
+            ERROR_UNREACHABLE: _t("Printer is unreachable"),
+            ERROR_UNKNOWN: _t("Unknown printer error occurred"),
+            WARNING_LOW_PAPER: _t("Paper is low"),
+        };
+
+        const errorMessage = messages[event.message] ?? event.message;
+
+        if (event.print_status === "warning") {
+            this.notificationService.add(errorMessage, {
+                type: "warning",
+            });
+            return;
+        }
+
+        if (event.print_status === "error") {
+            this.notificationService.add(errorMessage, {
+                type: "danger",
+            });
+        } else {
+            this.notificationService.add(_t("Test page printed"), { type: "info" });
+        }
+
+        removeListener();
+    }
 
     async onClickButtonTest(params) {
         if (params.clickParams.name === "test_printer") {
             const device = this.getIotDevice(this.model.root.data);
-            device.addListener(() => {
-                this.notificationService.add(_t("Test page printed"), {type: "info"});
+            device.addListener((event) =>
+                this.onPrinterEvent(event, () => device.removeListener())
+            );
+
+            const actionResponse = await device.action({ action: "status" });
+            if (!actionResponse.result) {
+                this.notificationService.add(_t("Printer is disconnected"), {
+                    type: "danger",
+                });
                 device.removeListener();
-            });
-            device.action({ action: "status" });
+            }
         }
     }
 }
