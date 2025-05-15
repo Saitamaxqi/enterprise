@@ -6,6 +6,7 @@ import {
     contains,
     defineActions,
     getFacetTexts,
+    getService,
     mockService,
     mountWithCleanup,
     onRpc,
@@ -22,6 +23,7 @@ import {
     hoverGridCell,
     mountGanttView,
     resizePill,
+    selectRange,
 } from "@web_gantt/../tests/web_gantt_test_helpers";
 
 import { Domain } from "@web/core/domain";
@@ -1028,4 +1030,56 @@ test("date_start and date_end in url (not in same month)", async function () {
     let { groupHeaders, range } = getGridContent();
     expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020", "January 2021"]);
     expect(range).toEqual("From: 12/06/2020 to: 01/04/2021");
+});
+
+test("publish on gantt view: default end_datetime should cover full range", async function () {
+    expect.assertions(10);
+
+    mockTimeZone(0);
+    mockDate("2018-11-20 18:00:00");
+    // Expect env localization with {weekStart: 7}
+    const ranges = [
+        ["Day",     "2018-11-20 23:59:59"],
+        ["Week",    "2018-11-24 23:59:59"],
+        ["Month",   "2018-11-30 23:59:59"],
+        ["Quarter", "2018-12-31 23:59:59"],
+        ["Year",    "2018-12-31 23:59:59"],
+    ];
+    PlanningSlot._records.push({
+        name: "First Record",
+        start_datetime: "2018-11-20 07:00:00",
+        end_datetime: "2018-11-20 17:00:00",
+        resource_id: 1,
+    });
+    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
+
+    await mountGanttView({
+        resModel: "planning.slot",
+        arch: `
+            <gantt
+                js_class="planning_gantt"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+            />
+        `,
+    });
+
+    let currentExpectedDate = null;
+    patchWithCleanup(getService("action"), {
+        async doAction(action, options) {
+            expect(action).toBe("planning.planning_send_action", {
+                message: "should open 'Send Planning By Email' form view",
+            });
+            expect(options.additionalContext.default_end_datetime).toBe(currentExpectedDate);
+        },
+    });
+
+    for (const [label, date] of ranges) {
+        currentExpectedDate = date;
+
+        await selectRange(label);
+
+        click(".o_gantt_button_send_all.btn-primary");
+        await animationFrame();
+    }
 });

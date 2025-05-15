@@ -108,7 +108,7 @@ export class PlanningControllerActions {
         const additionalContext = this.getAdditionalContext();
         const adjustedEndDate = this.getStopDate();
         if (adjustedEndDate) {
-            additionalContext.default_end_datetime = serializeDateTime(adjustedEndDate.plus({ day: 1 }).minus({ minute: 1 }))
+            additionalContext.default_end_datetime = serializeDateTime(adjustedEndDate.endOf('day'));
         }
         return this.actionService.doAction("planning.planning_send_action", {
             additionalContext,
