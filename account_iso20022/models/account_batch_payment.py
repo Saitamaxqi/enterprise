@@ -102,12 +102,9 @@ class AccountBatchPayment(models.Model):
         if self.payment_method_code in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']:
             payments = self.payment_ids.sorted(key=lambda r: r.id)
             payment_dicts = self._generate_payment_template(payments)
-            payment_method_code = False
-            if self.payment_method_id.code in ['iso20022_se', 'iso20022_ch', 'sepa_ct']:
-                payment_method_code = self.payment_method_id.code
             xml_doc = self.journal_id.create_iso20022_credit_transfer(
                 payment_dicts,
-                payment_method_code,
+                self.payment_method_code,
                 batch_booking=self.iso20022_batch_booking,
             )
             prefix = "SCT-" if self.payment_method_code == 'sepa_ct' else "PAIN-"

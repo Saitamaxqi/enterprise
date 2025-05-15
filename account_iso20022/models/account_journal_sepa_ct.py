@@ -16,8 +16,13 @@ class AccountJournal(models.Model):
         return super().create_iso20022_credit_transfer(payments, payment_method_code, batch_booking=batch_booking)
 
     def _get_ReqdExctnDt_content(self, payment_date, payment_method_code):
+        force_iso_20022_pain_09 = bool(self.env['ir.config_parameter'].sudo().get_param('account_iso20022.force_iso_20022_pain_09'))
         ReqdExctnDt = etree.Element("ReqdExctnDt")
-        if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09":
+        use_pain_09 = (
+                (payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09") or
+                (payment_method_code == 'iso20022' and force_iso_20022_pain_09)
+        )
+        if use_pain_09:
             Dt = etree.SubElement(ReqdExctnDt, "Dt")
             Dt.text = fields.Date.to_string(payment_date)
             return ReqdExctnDt
@@ -30,7 +35,12 @@ class AccountJournal(models.Model):
 
     def _get_CdtrAgt(self, bank_account, payment_method_code):
         CdtrAgt = super()._get_CdtrAgt(bank_account, payment_method_code)
-        if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09":
+        force_iso_20022_pain_09 = bool(self.env['ir.config_parameter'].sudo().get_param('account_iso20022.force_iso_20022_pain_09'))
+        use_pain_09 = (
+                (payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09") or
+                (payment_method_code == 'iso20022' and force_iso_20022_pain_09)
+        )
+        if use_pain_09:
             FinInstnId = CdtrAgt.find(".//FinInstnId")
             partner_lei = bank_account.partner_id.iso20022_lei
             if partner_lei:
@@ -48,7 +58,12 @@ class AccountJournal(models.Model):
         return super()._get_ChrgBr(payment_method_code, forced_value)
 
     def _get_PstlAdr(self, partner_id, payment_method_code):
-        if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09":
+        force_iso_20022_pain_09 = bool(self.env['ir.config_parameter'].sudo().get_param('account_iso20022.force_iso_20022_pain_09'))
+        use_pain_09 = (
+                (payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09") or
+                (payment_method_code == 'iso20022' and force_iso_20022_pain_09)
+        )
+        if use_pain_09:
             postal_address = self.get_postal_address(partner_id, payment_method_code)
             if postal_address is not None:
                 PstlAdr = etree.Element("PstlAdr")
@@ -61,18 +76,23 @@ class AccountJournal(models.Model):
 
     def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code, include_charge_bearer=True):
         CdtTrfTxInf = super()._get_CdtTrfTxInf(PmtInfId, payment, payment_method_code, include_charge_bearer)
-        if payment_method_code == 'sepa_ct':
+        force_iso_20022_pain_09 = bool(self.env['ir.config_parameter'].sudo().get_param('account_iso20022.force_iso_20022_pain_09'))
+        use_pain_09 = (
+                (payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09") or
+                (payment_method_code == 'iso20022' and force_iso_20022_pain_09)
+        )
+        partner = self.env['res.partner'].sudo().browse(payment['partner_id'])
+        if use_pain_09 and payment.get("iso20022_uetr"):
             PmtId = CdtTrfTxInf.find(".//PmtId")
+            UETR = etree.SubElement(PmtId, "UETR")
+            UETR.text = payment["iso20022_uetr"]
+        if payment_method_code == 'sepa_ct' and partner.country_id.code and partner.city:
             Cdtr = CdtTrfTxInf.find("Cdtr")
             partner = self.env['res.partner'].sudo().browse(payment['partner_id'])
-            if self.sepa_pain_version == 'pain.001.001.09' and payment.get("iso20022_uetr"):
-                UETR = etree.SubElement(PmtId, "UETR")
-                UETR.text = payment["iso20022_uetr"]
-            if partner.country_id.code and partner.city:
-                PstlAdr = Cdtr.find(".//PstlAdr")
-                if PstlAdr is not None:
-                    Cdtr.remove(PstlAdr)
-                Cdtr.append(self._get_PstlAdr(partner, payment_method_code))
+            PstlAdr = Cdtr.find(".//PstlAdr")
+            if PstlAdr is not None:
+                Cdtr.remove(PstlAdr)
+            Cdtr.append(self._get_PstlAdr(partner, payment_method_code))
         return CdtTrfTxInf
 
     def _get_RmtInf_content(self, ref, reference_type=''):
@@ -115,12 +135,22 @@ class AccountJournal(models.Model):
         return super()._get_RmtInf(payment_method_code, payment)
 
     def _get_bic_tag(self, payment_method_code):
-        if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09":
+        force_iso_20022_pain_09 = bool(self.env['ir.config_parameter'].sudo().get_param('account_iso20022.force_iso_20022_pain_09'))
+        use_pain_09 = (
+                (payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09") or
+                (payment_method_code == 'iso20022' and force_iso_20022_pain_09)
+        )
+        if use_pain_09:
             return 'BICFI'
         return super()._get_bic_tag(payment_method_code)
 
     def _get_regex_for_bic_code(self, payment_method_code):
-        if payment_method_code == 'sepa_ct' and self.sepa_pain_version == 'pain.001.001.09':
+        force_iso_20022_pain_09 = bool(self.env['ir.config_parameter'].sudo().get_param('account_iso20022.force_iso_20022_pain_09'))
+        use_pain_09 = (
+                (payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09") or
+                (payment_method_code == 'iso20022' and force_iso_20022_pain_09)
+        )
+        if use_pain_09:
             return '[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}'
         return super()._get_regex_for_bic_code(payment_method_code)
 
