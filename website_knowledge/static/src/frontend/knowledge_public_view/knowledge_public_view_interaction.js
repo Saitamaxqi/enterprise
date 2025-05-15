@@ -66,7 +66,6 @@ export class KnowledgePublicViewInteraction extends Interaction {
                 } else {
                     handleButtonVisibility();
                 }
-                this.refreshListeners();
             },
             toggleSidebar: (showSidebar) => {
                 showSidebar ??= !this.state.showSidebar;

@@ -277,7 +277,6 @@ export class appointmentSlotSelect extends Interaction {
             },
         }, this.slotsListEl);
         this.resourceSelectionEl?.classList.add("d-none");
-        this.refreshListeners();
     }
 
     onClickHoursSlot(ev) {
@@ -461,7 +460,6 @@ export class appointmentSlotSelect extends Interaction {
                 selectedDayEl && this.onClickDaySlot({ currentTarget: selectedDayEl });
             }
         }
-        this.refreshListeners();
     }
 
     /**
