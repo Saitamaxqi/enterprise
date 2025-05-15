@@ -23,7 +23,7 @@ export class IoTBoxDownloadLogs extends Component {
     get name() {
         return this.props.record.data.name;
     }
-    async downloadLogs() {
+    async onClick() {
         try {
             const response = await this.http.get(this.ip_url + '/hw_proxy/hello', 'text');
             if (response == 'ping') {
