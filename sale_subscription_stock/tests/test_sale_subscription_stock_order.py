@@ -1019,3 +1019,54 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         # create the related invoice manually
         account_move = subscription._create_invoices()
         self.assertRecordValues(account_move, [{'invoice_origin': 'Delivery', 'amount_total': subscription.order_line.price_total, 'state': 'draft'}])
+
+    def test_post_invoice_hook_exception_handler(self):
+        """Check that the _handle_post_invoice_hook_exception correctly creates a warning activity
+        for the subscription with stock to deliver, and do nothing for the others.
+        """
+        self.storable_product = self.env['product.product'].create({
+            'name': 'Storable Product',
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'recurring_invoice': True,
+        })
+        self.service_product = self.env['product.product'].create({
+            'name': 'Service Product',
+            'type': 'service',
+            'recurring_invoice': True,
+        })
+
+        with freeze_time("2024-10-01"):
+            sub_stock_invoiced = self.env['sale.order'].create({
+                'name': "Order With Delivery",
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'plan_id': self.plan_month.id,
+                'start_date': "2024-10-01",
+                'next_invoice_date': False,
+                'order_line': [Command.create({'product_id': self.storable_product.id, 'product_uom_qty': 1})]
+            })
+            sub_service = self.env['sale.order'].create({
+                'name': "Order",
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'plan_id': self.plan_month.id,
+                'start_date': "2024-10-01",
+                'next_invoice_date': False,
+                'order_line': [Command.create({'product_id': self.service_product.id, 'product_uom_qty': 1})]
+            })
+
+            (sub_stock_invoiced | sub_service).action_confirm()
+            self.env["sale.order"]._create_recurring_invoice()
+            # Trigger the exception handler as no exception really happened
+            (sub_stock_invoiced | sub_service)._handle_post_invoice_hook_exception()
+
+        # Subscription was invoiced, and a delivery should be created,
+        # so a warning activity should have been created by the handler
+        self.assertEqual(len(sub_stock_invoiced.activity_ids), 1)
+        self.assertEqual(sub_stock_invoiced.activity_type_id.id, self.env.ref('mail.mail_activity_data_warning').id)
+
+        # The subscription only has service product, no delivery needed to be created anyway,
+        # no activity should have been created
+        self.assertEqual(len(sub_service.activity_ids), 0)

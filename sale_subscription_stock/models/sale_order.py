@@ -21,6 +21,8 @@ class SaleOrder(models.Model):
     def _handle_post_invoice_hook_exception(self):
         super()._handle_post_invoice_hook_exception()
         for order in self:
+            if not order.order_line._get_stock_subscription_lines()._get_lines_to_launch_stock_rule():
+                continue
             post_invoice_fail_summary = _("Delivery creation failed")
             post_invoice_fail_note = _(
                 "A system error prevented the automatic creation of delivery orders for this subscription."
