@@ -17,6 +17,8 @@ class AccountFollowupReport(models.AbstractModel):
         followup_contacts = partner._get_all_followup_contacts() or partner
         sent_at_least_once = False
         for to_send_partner in followup_contacts:
+            attachment = partner._get_followup_report_attachment(options)
+
             letter = self.env['snailmail.letter'].create({
                 'state': 'pending',
                 'partner_id': to_send_partner.id,
@@ -25,6 +27,7 @@ class AccountFollowupReport(models.AbstractModel):
                 'user_id': self.env.user.id,
                 'report_template': self.env.ref('account_followup.action_report_followup').id,
                 'company_id': to_send_partner.company_id.id or self.env.company.id,
+                'attachment_id': attachment.id,
             })
             if self.env['snailmail.letter']._is_valid_address(letter):
                 letter._snailmail_print()
