@@ -158,7 +158,7 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         }
         // that means that the date is not in the url and not in the hidden input
         // get the first available date based on this.rentingUnavailabilityDays
-        let date = DateTime.now().plus({days: 1});
+        const date = DateTime.now().plus({ days: 1, hours: 1 }).set({minutes: 0, seconds: 0 });
         return this._getFirstAvailableDate(date);
     },
 
