@@ -60,6 +60,14 @@ export class Softphone extends Component {
     }
 
     /** @returns {string} */
+    get topBarIcon() {
+        if (this.userAgent.session?.isOnHold) {
+            return "fa fa-pause text-warning";
+        }
+        return "oi oi-voip text-success";
+    }
+
+    /** @returns {string} */
     get topBarText() {
         if (!this.pendingCall) {
             return "";
@@ -74,7 +82,10 @@ export class Softphone extends Component {
             return _t("Calling…");
         }
         if (this.pendingCall.state === "ongoing") {
-            return _t("In call - %(timerText)s", { timerText: this.pendingCall.timerText });
+            return _t("%(status)s - %(timer)s", {
+                status: this.userAgent.inCallStatusText,
+                timer: this.pendingCall.timerText,
+            });
         }
         return _t("In call");
     }

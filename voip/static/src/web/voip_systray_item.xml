@@ -3,12 +3,10 @@
     <t t-name="voip.SystrayItem">
         <!-- This div is needed for the style of systray items to apply properly -->
         <div>
-            <button class="o_nav_entry" t-att-class="{ 'text-success': userAgent.hasCallInvitation, 'rounded-pill px-2 bg-success-subtle text-success-emphasis': shouldDisplayInCallIndicator }" t-att-title="titleText" t-on-click="onClick">
-                <i class="oi oi-voip " t-att-class="{ 'o-voip-RingingAnimation': userAgent.hasCallInvitation and !softphone.isDisplayed, 'oi-large': !shouldDisplayInCallIndicator }"/>
+            <button class="o_nav_entry" t-att-class="systrayButtonClasses" t-att-title="titleText" t-on-click="onClick">
+                <i t-attf-class="{{ iconClass }}" t-att-class="{ 'o-voip-RingingAnimation': userAgent.hasCallInvitation and !softphone.isDisplayed, 'oi-large': !shouldDisplayInCallIndicator }"/>
                 <span t-if="missedCallCount" class="badge rounded-pill" t-esc="missedCallCount"/>
-                <t t-if="shouldDisplayInCallIndicator"> <span class="ms-2">In call</span></t>
-                <!-- It would be nice to display the same call status as the topbar here. Something like this :  -->
-                <!-- <span t-out="userAgent.topBarText"/> -->
+                <span t-if="shouldDisplayInCallIndicator" class="ms-2" t-esc="userAgent.inCallStatusText"/>
             </button>
         </div>
     </t>

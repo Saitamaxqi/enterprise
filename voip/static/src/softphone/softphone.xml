@@ -4,11 +4,9 @@
     <article class="o-voip-Softphone position-absolute bottom-0 d-flex flex-column border d-print-none overflow-hidden shadow" t-att-class="{ 'o-mobile w-100 h-100': isOnSmallDevice, 'mb-2 ms-2 rounded': !isOnSmallDevice }" t-attf-class="{{ pendingCall ? 'o-calling' : 'bg-view' }}">
         <header t-attf-class="d-flex align-items-center justify-content-between gap-1 p-2 {{ pendingCall ? 'border-bottom' : 'shadow-sm' }} z-1">
             <div t-if="pendingCall" class="d-flex align-items-center">
-                <i class="oi oi-voip me-1 p-2 text-success" t-att-class="{ 'o-voip-RingingAnimation': userAgent.hasCallInvitation }" aria-hidden="true"/>
+                <i t-attf-class="me-1 p-2 {{ topBarIcon }}" t-att-class="{ 'o-voip-RingingAnimation': userAgent.hasCallInvitation }" aria-hidden="true"/>
                 <!-- If recording call -->
                 <!-- <i class="oi oi-voice-record me-1 p-2 text-info" aria-hidden="true"/> -->
-                <!-- If call is on hold -->
-                <!-- <i class="fa fa-pause me-1 p-2 text-warning" aria-hidden="true"/> -->
                 <p class="mb-0 fw-bolder" t-esc="topBarText"/>
             </div>
             <t t-else="">

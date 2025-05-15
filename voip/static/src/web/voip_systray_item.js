@@ -14,6 +14,14 @@ export class VoipSystrayItem extends Component {
         this.softphone = this.voip.softphone;
     }
 
+    /** @returns {string} */
+    get iconClass() {
+        if (this.userAgent.session?.isOnHold) {
+            return "fa fa-pause";
+        }
+        return "oi oi-voip";
+    }
+
     /**
      * Number of missed calls used to display in systray item icon.
      *
@@ -39,6 +47,20 @@ export class VoipSystrayItem extends Component {
      */
     get titleText() {
         return this.softphone.isDisplayed ? _t("Close Softphone") : _t("Open Softphone");
+    }
+
+    /** @returns {string} */
+    get systrayButtonClasses() {
+        if (this.userAgent.hasCallInvitation) {
+            return "text-success";
+        }
+        if (!this.shouldDisplayInCallIndicator) {
+            return "";
+        }
+        if (this.userAgent.session?.isOnHold) {
+            return "rounded-pill px-2 bg-warning-subtle text-warning-emphasis";
+        }
+        return "rounded-pill px-2 bg-success-subtle text-success-emphasis";
     }
 
     /** @param {MouseEvent} ev */

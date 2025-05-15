@@ -65,6 +65,16 @@ export class UserAgent extends Reactive {
         return call.state === "calling" && call.direction === "incoming";
     }
 
+    get inCallStatusText() {
+        if (this.session?.call.state !== "ongoing") {
+            return ""; // not in call
+        }
+        if (this.session.isOnHold) {
+            return _t("On hold");
+        }
+        return _t("In call");
+    }
+
     /** @returns {Object} */
     get mediaConstraints() {
         const constraints = { audio: true, video: false };
