@@ -79,9 +79,11 @@ class L10nKeHrPayrollShifReportWizard(models.TransientModel):
     @api.depends('reference_year', 'reference_month')
     def _compute_line_ids(self):
         for wizard in self:
+            start_date = date(int(wizard.reference_year), int(wizard.reference_month), 1)
+            end_date = start_date + relativedelta(months=1, days=-1)
             payslips = self.env['hr.payslip'].search([
-                ('date_to', '>', date(int(wizard.reference_year), int(wizard.reference_month), 9) - relativedelta(months=1, days=-1)),
-                ('date_to', '<=', date(int(wizard.reference_year), int(wizard.reference_month), 9)),
+                ('date_to', '>=', start_date),
+                ('date_to', '<=', end_date),
                 ('state', 'in', ['done', 'paid']),
                 ('company_id', '=', wizard.company_id.id),
             ])
