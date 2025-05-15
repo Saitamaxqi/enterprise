@@ -66,7 +66,7 @@ export function insertPivot(pivotData) {
      * @param {import("@spreadsheet").OdooSpreadsheetModel} model
      */
     return async (model, stores) => {
-        const pivotId = uuidGenerator.uuidv4();
+        const pivotId = uuidGenerator.smallUuid();
         ensureSuccess(
             model.dispatch("ADD_PIVOT", {
                 pivotId,
@@ -87,7 +87,7 @@ export function insertPivot(pivotData) {
         );
         // Add an empty sheet in the case of an existing spreadsheet.
         if (!this.isEmptySpreadsheet) {
-            const sheetId = uuidGenerator.uuidv4();
+            const sheetId = uuidGenerator.smallUuid();
             const sheetIdFrom = model.getters.getActiveSheetId();
             if (model.getters.getSheetIdByName(sheetName)) {
                 sheetName = undefined;
@@ -99,7 +99,7 @@ export function insertPivot(pivotData) {
             });
             model.dispatch("ACTIVATE_SHEET", { sheetIdFrom, sheetIdTo: sheetId });
         } else {
-            const sheetId = model.getters.getActiveSheetId()
+            const sheetId = model.getters.getActiveSheetId();
             model.dispatch("RENAME_SHEET", {
                 sheetId,
                 oldName: model.getters.getSheetName(sheetId),

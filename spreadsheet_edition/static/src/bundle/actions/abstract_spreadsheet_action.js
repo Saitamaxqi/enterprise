@@ -79,15 +79,13 @@ export class AbstractSpreadsheetAction extends Component {
         useSetupAction({
             beforeLeave: this._leaveSpreadsheet.bind(this),
             beforeUnload: this._leaveSpreadsheet.bind(this),
-            getLocalState: () => {
-                return {
-                    resId: this.resId,
-                    shareId: this.shareId,
-                    accessToken: this.accessToken,
-                    data: this.data,
-                    model: this.model,
-                };
-            },
+            getLocalState: () => ({
+                resId: this.resId,
+                shareId: this.shareId,
+                accessToken: this.accessToken,
+                data: this.data,
+                model: this.model,
+            }),
         });
 
         const print = useSpreadsheetPrint(() => this.model);
@@ -191,7 +189,7 @@ export class AbstractSpreadsheetAction extends Component {
             defaultCurrency: createDefaultCurrency(this.data.default_currency),
             transportService,
             client: {
-                id: uuidGenerator.uuidv4(),
+                id: uuidGenerator.smallUuid(),
                 name: user.name,
                 userId: user.userId,
             },

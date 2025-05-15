@@ -21,7 +21,7 @@ function createRevision(revisions, type, payload) {
         type === "REMOTE_REVISION"
             ? [
                   {
-                      sheetId: uuidGenerator.uuidv4(),
+                      sheetId: uuidGenerator.smallUuid(),
                       position: 0,
                       name: `sheet ${len + 2}`,
                       type: "CREATE_SHEET",
@@ -32,7 +32,7 @@ function createRevision(revisions, type, payload) {
         id: len + 1,
         name: `revision ${len + 1}`,
         serverRevisionId: revisions.at(-1)?.nextRevisionId || "START_REVISION",
-        nextRevisionId: uuidGenerator.uuidv4(),
+        nextRevisionId: uuidGenerator.smallUuid(),
         version: "1",
         timestamp: "2023-09-09 13:00:00",
         user: [2, "Superman"],

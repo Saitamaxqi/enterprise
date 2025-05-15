@@ -20,7 +20,7 @@ const { linkMenuRegistry } = spreadsheet.registries;
 function insertLink(actionToLink) {
     return (model) => {
         if (!this.isEmptySpreadsheet) {
-            const sheetId = model.uuidGenerator.uuidv4();
+            const sheetId = model.uuidGenerator.smallUuid();
             const sheetIdFrom = model.getters.getActiveSheetId();
             model.dispatch("CREATE_SHEET", {
                 sheetId,
@@ -43,8 +43,8 @@ initCallbackRegistry.add("insertLink", insertLink);
 linkMenuRegistry.add("odooMenu", {
     name: _t("Link an Odoo menu"),
     sequence: 20,
-    execute: async (env) => {
-        return new Promise((resolve) => {
+    execute: async (env) =>
+        new Promise((resolve) => {
             const closeDialog = env.services.dialog.add(IrMenuSelectorDialog, {
                 onMenuSelected: (menuId) => {
                     closeDialog();
@@ -55,6 +55,5 @@ linkMenuRegistry.add("odooMenu", {
                     resolve(markdownLink(label, url));
                 },
             });
-        });
-    },
+        }),
 });

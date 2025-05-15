@@ -47,7 +47,7 @@ export function insertList({ list, threshold, fields, name }) {
         );
         if (!this.isEmptySpreadsheet) {
             const sheetIdFrom = model.getters.getActiveSheetId();
-            const sheetId = uuidGenerator.uuidv4();
+            const sheetId = uuidGenerator.smallUuid();
             if (model.getters.getSheetIdByName(sheetName)) {
                 sheetName = undefined;
             }

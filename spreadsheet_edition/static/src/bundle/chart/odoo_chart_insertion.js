@@ -29,8 +29,8 @@ export function insertChart(chartData) {
         legendPosition: "top",
         verticalAxisPosition: "left",
         type: chartType,
-        dataSourceId: uuidGenerator.uuidv4(),
-        id: uuidGenerator.uuidv4(),
+        dataSourceId: uuidGenerator.smallUuid(),
+        id: uuidGenerator.smallUuid(),
         actionXmlId: chartData.actionXmlId,
     };
     return (model, stores) => {

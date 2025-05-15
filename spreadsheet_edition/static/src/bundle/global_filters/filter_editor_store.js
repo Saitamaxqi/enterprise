@@ -39,7 +39,7 @@ export class FilterEditorStore extends SpreadsheetStore {
     constructor(get, filterId, type, orm, fieldService) {
         super(get);
         this.isNew = !filterId;
-        this.filterId = filterId || new UuidGenerator().uuidv4();
+        this.filterId = filterId || new UuidGenerator().smallUuid();
         if (this.isNew) {
             this.draft = {
                 id: this.filterId,
