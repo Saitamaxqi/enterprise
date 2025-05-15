@@ -905,7 +905,11 @@ class L10n_Mx_EdiDocument(models.Model):
                 if grouping_key['tipo_factor'] == 'Tasa':
                     tax_values['tasa_o_cuota'] = abs(grouping_key['tax_amount_field'] / 100.0)
                 elif grouping_key['tipo_factor'] == 'Cuota':
-                    tax_values['tasa_o_cuota'] = tax_values['importe'] / tax_values['base']
+                    if tax_values['base']:
+                        tax_values['tasa_o_cuota'] = round(tax_values['raw_importe'] / tax_values['base'], 6)
+                        tax_values['raw_importe'] = round(tax_values['base'] * tax_values['tasa_o_cuota'], 6)
+                    else:
+                        tax_values['tasa_o_cuota'] = 0.0
                 else:
                     tax_values['tasa_o_cuota'] = None
 
@@ -970,7 +974,10 @@ class L10n_Mx_EdiDocument(models.Model):
             if grouping_key['tipo_factor'] == 'Tasa':
                 tasa_o_cuota = abs(grouping_key['tax_amount_field'] / 100.0)
             elif grouping_key['tipo_factor'] == 'Cuota':
-                tasa_o_cuota = values['tax_amount_currency'] / values['base_amount_currency']
+                if values['raw_base_amount_currency']:
+                    tasa_o_cuota = values['raw_tax_amount_currency'] / values['raw_base_amount_currency']
+                else:
+                    tasa_o_cuota = 0.0
             else:
                 tasa_o_cuota = None
 

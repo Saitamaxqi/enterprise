@@ -148,6 +148,41 @@ class TestCFDIInvoice(TestMxEdiCommon):
                         invoice._l10n_mx_edi_cfdi_invoice_try_send()
                     self._assert_invoice_cfdi(invoice, f'test_invoice_taxes_{index}_invoice_no_tax_breakdown')
 
+    def test_invoice_taxes_cuota(self):
+        self.env['decimal.precision'].search([('name', '=', 'Product Price')]).digits = 6
+        tax_cuota = self.env['account.tax'].create({
+            'name': "Cuota 14.0163",
+            'amount_type': 'fixed',
+            'amount': 14.0163,
+            'l10n_mx_factor_type': 'Cuota',
+            'l10n_mx_tax_type': 'ieps',
+        })
+
+        def create_invoice(l10n_mx_edi_cfdi_to_public=False):
+            return self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 523.448276,
+                        'tax_ids': [Command.set(tax_cuota.ids)],
+                    })
+                ],
+                l10n_mx_edi_cfdi_to_public=l10n_mx_edi_cfdi_to_public,
+            )
+
+        with self.mx_external_setup(self.frozen_today):
+            # Test the invoice CFDI.
+            invoice = create_invoice()
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_invoice_taxes_cuota_invoice')
+
+            # Test the payment CFDI.
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_cuota_payment')
+
     def test_invoice_addenda(self):
         # The test data for complementos in this test are not recognized by the SAT as valid.
         if EXTERNAL_MODE:
