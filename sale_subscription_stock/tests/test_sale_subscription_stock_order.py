@@ -482,7 +482,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
 
             self.assertEqual(sub.order_line.mapped('qty_delivered'), [0])
             self.assertEqual(sub.order_line.mapped('qty_to_deliver'), [1])
-            self.assertEqual(sub.next_invoice_date, datetime.date(2022, 3, 1))
+            self.assertEqual(sub.next_invoice_date, datetime.date(2022, 4, 1))
             rec_line = sub.order_line
             inv = sub._create_recurring_invoice()
             self.assertEqual(rec_line.invoice_status, 'no', 'Invoice status should be no')

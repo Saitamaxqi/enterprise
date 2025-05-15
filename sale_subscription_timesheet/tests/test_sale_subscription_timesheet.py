@@ -53,6 +53,9 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
             self.subscription_timesheet.action_confirm()
             task = self.subscription_timesheet.tasks_ids
             self.assertTrue(task, "A new task should be created")
+            # after confirming the subscription, next invoice date is set to the next period
+            self.assertEqual(self.subscription_timesheet.order_line.qty_delivered, 0, "No delivery before creating the first recurring invoice")
+            # after creating timesheet line quantity delivered set to 4
             self.env['account.analytic.line'].create({
                 'name': 'Test Line',
                 'project_id': task.project_id.id,
@@ -60,10 +63,7 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
                 'unit_amount': 4,
                 'employee_id': self.employee_user.id,
             })
-            self.assertEqual(self.subscription_timesheet.order_line.qty_delivered, 0, "No delivery before creating the first recurring invoice")
-            inv = self.subscription_timesheet._create_recurring_invoice()
             self.assertEqual(self.subscription_timesheet.order_line.qty_delivered, 4, "Product should be delivered after creating the recurring invoice")
-            self.assertFalse(inv, "No invoice should be created")
         with freeze_time("2024-10-01"):
             # record timesheet for that task
             self.env['account.analytic.line'].create({

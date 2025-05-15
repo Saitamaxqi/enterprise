@@ -548,7 +548,7 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
             self.assertEqual(invoice_start_periods, [datetime.date(2021, 6, 1), datetime.date(2021, 6, 1)], "monthly is updated when prior to today")
             self.assertEqual(invoice_end_periods, [datetime.date(2021, 6, 30), datetime.date(2021, 6, 30)], "monthly is updated when prior to today")
 
-    def test_invoice_status(self):
+    def test_invoice_status_postpaid(self):
         with freeze_time("2022-05-15"):
             self.product.invoice_policy = 'delivery'
             subscription_future = self.env['sale.order'].create({
@@ -591,6 +591,11 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
 
             subscriptions = subscription_future + subscription_now + subscription_past
             subscriptions.action_confirm()
+
+            self.assertEqual(subscription_now.next_invoice_date, datetime.date(2022, 6, 15), "Postpaid subscription first invoice should be end of period")
+            self.assertEqual(subscription_past.next_invoice_date, datetime.date(2022, 5, 15), "Postpaid subscription first invoice should be end of period")
+            self.assertEqual(subscription_future.next_invoice_date, datetime.date(2022, 7, 1), "Postpaid subscription first invoice should be end of period")
+
             # Nothing delivered, nothing invoiced
             self.assertEqual(subscription_future.order_line.invoice_status, 'no', "The line qty should be black.")
             self.assertEqual(subscription_now.order_line.invoice_status, 'no', "The line qty should be black.")
@@ -610,7 +615,13 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
             )
             subscriptions._create_recurring_invoice()
             self.assertEqual(subscription_past.order_line.invoice_status, 'invoiced', "The line qty should be invoiced.")
-            self.assertEqual(subscription_now.order_line.invoice_status, 'invoiced', "The line qty should be invoiced.")
+            self.assertEqual(subscription_now.order_line.invoice_status, 'to invoice', "The line qty should not be invoiced yet.")
+            self.assertEqual(subscription_future.order_line.invoice_status, 'no', "The line qty should be black.")
+
+        with freeze_time('2022-06-15'):
+            subscriptions._create_recurring_invoice()
+            self.assertEqual(subscription_past.order_line.invoice_status, 'invoiced', "The line qty should be invoiced.")
+            self.assertEqual(subscription_now.order_line.invoice_status, 'invoiced', "The line qty should not be invoiced yet.")
             self.assertEqual(subscription_future.order_line.invoice_status, 'no', "The line qty should be black.")
 
     def test_refund_qty_invoiced(self):

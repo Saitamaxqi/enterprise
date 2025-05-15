@@ -736,6 +736,7 @@ class SaleOrder(models.Model):
         recurring_order = self.env['sale.order']
         upsell = self.env['sale.order']
         renewal = self.env['sale.order']
+        post_paid = self.env['sale.order']
 
         # The sale_subscription override of `_compute_discount` added `order_id.start_date` and
         # `order_id.subscription_state` to `api.depends`; as this method modifies these fields,
@@ -753,6 +754,8 @@ class SaleOrder(models.Model):
                         order.subscription_state = '1_draft'
                 elif order.subscription_state != '7_upsell':
                     order.subscription_state = False
+                if all(sol._is_postpaid_line() for sol in order.order_line):
+                    post_paid |= order
 
             # _prepare_confirmation_values will update subscription_state for all confirmed subscription.
             res_sub = super(SaleOrder, recurring_order).action_confirm()
@@ -760,6 +763,10 @@ class SaleOrder(models.Model):
             recurring_order._confirm_subscription()
             renewal._confirm_renewal()
             upsell._confirm_upsell()
+            # Update the next_invoice_date if all the lines are postpaid
+            # _update_next_invoice_date method is called after the confirmation of the SO.
+            # so that we can get the order.next_invoice_date or order.start_date from the SO.
+            post_paid._update_next_invoice_date()
 
         return res_sub and res_other
 
