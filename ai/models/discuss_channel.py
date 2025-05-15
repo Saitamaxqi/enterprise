@@ -6,9 +6,11 @@ except ImportError:
 
 from odoo import fields, models, api, Command, _
 from odoo.exceptions import AccessError
+from odoo.tools import SQL
 
 from odoo.addons.iap.tools import iap_tools
 from odoo.tools.mail import html_sanitize
+from odoo.tools.misc import mute_logger
 from odoo.addons.mail.tools.discuss import Store
 
 
@@ -25,8 +27,8 @@ class DiscussChannel(models.Model):
     _inherit = ["discuss.channel"]
 
     channel_type = fields.Selection(
-        selection_add=[("ai_composer", "Draft with AI")],
-        ondelete={"ai_composer": "cascade"},
+        selection_add=[("ai_composer", "Draft with AI"), ("ai_chat", "AI chat")],
+        ondelete={"ai_composer": "cascade", "ai_chat": "cascade"},
     )
     ai_context = fields.Json("Context for AI agent")
     ai_composer = fields.Many2one("ai.composer")
@@ -79,9 +81,32 @@ class DiscussChannel(models.Model):
 
         return {"ai_channel_id": channel.id, "data": Store(channel).get_result()}
 
+    @api.model
+    def _get_or_create_ai_chat(self, partner):
+        channel = self.search([
+            ('is_member', '=', True),
+            ('channel_type', '=', 'ai_chat'),
+            ('channel_member_ids', 'any', [
+                ('partner_id', '=', partner.id)
+            ])
+        ])
+
+        if not channel:
+            with mute_logger("odoo.sql_db"):
+                self.env.cr.execute(SQL("SELECT pg_advisory_xact_lock(%s, %s) NOWAIT;", self.env.user.partner_id.id, partner.id))
+            channel = self.create({
+                "channel_member_ids": [
+                    Command.create({"partner_id": self.env.user.partner_id.id}),
+                    Command.create({"partner_id": partner.id}),
+                ],
+                "channel_type": "ai_chat",
+                "name": partner.name,
+            })
+        return channel
+
     def close_ai_chat(self):
         self.ensure_one()
-        if self.channel_type == "ai_composer" and self.is_member:
+        if self.is_member and self.channel_type in ["ai_composer", "ai_chat"]:
             self.sudo().unlink()
 
     def _ai_add_message_to_context(self, message, author):

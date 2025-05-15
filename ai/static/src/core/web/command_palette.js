@@ -39,6 +39,7 @@ export class AICommandPalette {
         this.options = options;
         this.orm = env.services.orm;
         this.ui = env.services.ui;
+        this.actions = env.services.action;
         this.commands = [];
         this.options = options;
         this.cleanedTerm = cleanTerm(this.options.searchValue);
@@ -67,8 +68,12 @@ export class AICommandPalette {
                 this.commands.push({
                     Component: AICommand,
                     action: async () => {
-                        const store = this.env.services["mail.store"];
-                        await store.joinChat(agent.partner_id, true);
+                        const result = await this.orm.call("ai.agent", "open_agent_chat", [
+                            agent.id,
+                        ]);
+                        if (result) {
+                            this.actions.doAction(result);
+                        }
                     },
                     name: agent.name,
                     props: {

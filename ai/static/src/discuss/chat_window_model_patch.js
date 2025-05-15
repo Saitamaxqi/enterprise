@@ -8,4 +8,12 @@ patch(ChatWindow.prototype, {
         }
         return super.computeCanShow();
     },
+    async close(options) {
+        const thread = this.thread;
+        const orm = this.store.env.services.orm;
+        if (["ai_composer", "ai_chat"].includes(thread?.channel_type)) {
+            await orm.call("discuss.channel", "close_ai_chat", [thread.id]);
+        }
+        await super.close(options);
+    },
 });

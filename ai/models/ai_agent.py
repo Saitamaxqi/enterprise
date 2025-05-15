@@ -318,10 +318,7 @@ class AIAgent(models.Model):
     def generate_response(self, prompt: str):
         for agent in self:
             prompt = html_to_inner_content(prompt)
-            channel = self.env['discuss.channel']._get_or_create_chat([
-                self.env.user.partner_id.id,
-                agent.partner_id.id
-            ])
+            channel = self.env['discuss.channel']._get_or_create_ai_chat(agent.partner_id)
 
             response = agent._generate_response(prompt=prompt, discuss_channel_id=channel)
             for message in response or []:
@@ -339,11 +336,7 @@ class AIAgent(models.Model):
 
     def open_agent_chat(self):
         self.ensure_one()
-        channel = self.env['discuss.channel']._get_or_create_chat([
-            self.env.user.partner_id.id,
-            self.partner_id.id,
-        ])
-
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
         return {
             'type': 'ir.actions.client',
             'tag': 'agent_chat_action',
@@ -353,15 +346,14 @@ class AIAgent(models.Model):
         }
 
     def close_chat(self, channel_id: int):
-        for record in self:
-            channel = self.env['discuss.channel'].search([
-                ('id', '=', channel_id),
-                ('channel_member_ids', 'any', [
-                    ('partner_id', '=', record.partner_id.id)
-                ])
-            ])
-            if channel and channel.is_member:
-                channel.sudo().unlink()
+        self.ensure_one()
+        channel = self.env['discuss.channel'].search([
+            ('id', '=', channel_id),
+            ('is_member', '=', True),
+            ('channel_type', '=', 'ai_chat')
+        ])
+        if channel:
+            channel.sudo().unlink()
 
     def _generate_response(self, prompt, discuss_channel_id):
         self.ensure_one()

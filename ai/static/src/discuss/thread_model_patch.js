@@ -26,6 +26,10 @@ patch(Thread.prototype, {
         if (this.channel_type === "ai_composer") {
             return url("/ai/static/description/icon.png");
         }
+        if (this.channel_type === "ai_chat" && this.correspondent) {
+            return this.correspondent.persona.avatarUrl;
+        }
+
         return super.avatarUrl;
     }
 });
