@@ -6,7 +6,7 @@
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
                         <t t-foreach="workcenters" t-as="workcenter" t-key="workcenter.id">
                             <div class="col">
-                                <div class="form-check btn btn-outline-secondary d-flex align-items-center py-3 w-100 h-100 text-start"
+                                <div class="o_workcenter_button form-check btn btn-outline-secondary d-flex align-items-center py-3 w-100 h-100 text-start"
                                      t-att-class="{'active' : active}"
                                      t-on-click.prevent="() => this.selectWorkcenter(workcenter)">
                                     <label class="form-check-label cursor-pointer"

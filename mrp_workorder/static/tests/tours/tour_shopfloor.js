@@ -567,12 +567,9 @@ registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
 registry.category("web_tour.tours").add("test_canceled_wo", {
     steps: () => [
         // Make sure workcenter is available.
+        ...stepUtils.openWorkcentersSelector(),
         ...stepUtils.addWorkcenterToDisplay("Assembly Line"),
-        {
-            content: "Confirm workcenter",
-            trigger: 'button:contains("Confirm")',
-            run: "click",
-        },
+        ...stepUtils.confirmWorkcentersSelection(),
         {
             content: "Check MO",
             trigger: 'button.btn-light:contains("Assembly Line")',
@@ -586,21 +583,20 @@ registry.category("web_tour.tours").add("test_canceled_wo", {
 
 registry.category("web_tour.tours").add("test_change_qty_produced", {
     steps: () => [
+        ...stepUtils.openWorkcentersSelector(),
         ...stepUtils.addWorkcenterToDisplay("WorkCenter"),
+        ...stepUtils.confirmWorkcentersSelection(),
+        ...stepUtils.clickOnWorkcenterButton("WorkCenter"),
         {
-            content: "Confirm workcenter",
-            trigger: 'button:contains("Confirm")',
+            content: "Register the production (automatically set it as 5/5 Units produced)",
+            trigger: ".o_mrp_record_line:contains('Register Production')",
             run: "click",
         },
         {
-            content: "Select workcenter",
-            trigger: 'button.btn-light:contains("WorkCenter")',
-            run: "click",
-        },
-        {
-            content: "Open the wizard",
+            content: "Open the wizard and decrease the produced quantity",
             trigger:
-                '.o_mrp_record_line .text-decoration-line-through:contains("Register Production")',
+                ".o_mrp_record_line .text-decoration-line-through:contains('Register Production')",
+
             run: "click",
         },
         {

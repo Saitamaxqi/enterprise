@@ -98,6 +98,12 @@ export class MrpDisplayRecord extends Component {
         return this.props.production.data.qty_producing;
     }
 
+    get quantityToDisplay() {
+        const fullQty = this.quantityProducing && this.quantityProducing !== this.quantityToProduce;
+        const qtyProducing = fullQty ? `${this.quantityProducing} / ` : "";
+        return `${qtyProducing}${this.quantityToProduce} ${this.uom}`;
+    }
+
     getByproductLabel(record) {
         return _t("Register %s", record.data.product_id.display_name);
     }

@@ -14,23 +14,24 @@ class TestShopFloor(HttpCase):
         self.uid = self.env.ref('base.user_admin').id
         # Enables Work Order setting, and disables other settings.
         group_workorder = self.env.ref('mrp.group_mrp_routings')
-        self.env.user.write({'group_ids': [(4, group_workorder.id, 0)]})
+        self.env.user.write({'group_ids': [Command.link(group_workorder.id)]})
 
         group_lot = self.env.ref('stock.group_production_lot')
         group_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         group_pack = self.env.ref('stock.group_tracking_lot')
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'group_ids': [(3, group_lot.id)]})
-        self.env.user.write({'group_ids': [(3, group_multi_loc.id)]})
-        self.env.user.write({'group_ids': [(3, group_pack.id)]})
+        self.env.user.write({'group_ids': [Command.unlink(group_lot.id)]})
+        self.env.user.write({'group_ids': [Command.unlink(group_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.unlink(group_pack.id)]})
         # Explicitly remove the UoM group.
         group_user = self.env.ref('base.group_user')
-        group_user.write({'implied_ids': [(3, group_uom.id)]})
-        self.env.user.write({'group_ids': [(3, group_uom.id)]})
+        group_user.write({'implied_ids': [Command.unlink(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.unlink(group_uom.id)]})
 
         # Add some properties for commonly used in tests records.
         self.warehouse = self.env['stock.warehouse'].search([], limit=1)
         self.stock_location = self.warehouse.lot_stock_id
+        self.test_type_register_production = self.env.ref('mrp_workorder.test_type_register_production')
         # Create new sequence specific for test to always have the same MO names
         # regardless the number of time tests are runned.
         mo_sequence = self.env['ir.sequence'].create({
@@ -237,7 +238,6 @@ class TestShopFloor(HttpCase):
         all_mo[1].workorder_ids[0].action_mark_as_done()
         self.start_tour("/odoo/shop-floor", "test_shop_floor_auto_select_workcenter", login='admin')
 
-    @unittest.skip  # TODO: tour needs to be updated.
     def test_shop_floor_catalog_add_component_in_two_steps(self):
         """ Ensures when a component is added through the Shop Floor catalog,
         the Pick Component operation is correctly created/updated."""
@@ -437,7 +437,6 @@ class TestShopFloor(HttpCase):
         self.start_tour(url, "test_generate_serials_in_shopfloor", login='admin')
         self.assertEqual(mo.move_byproduct_ids.lot_ids.name, "00001")
 
-    @unittest.skip  # TODO: tour needs to be updated.
     def test_canceled_wo(self):
         finished = self.env['product.product'].create({
             'name': 'finish',
@@ -492,7 +491,6 @@ class TestShopFloor(HttpCase):
 
         self.start_tour("odoo/shop-floor", "test_canceled_wo", login='admin')
 
-    @unittest.skip  # TODO: tour needs to be updated.
     def test_change_qty_produced(self):
         """
             Check that component quantity matches the quantity produced set in the shop
@@ -508,14 +506,10 @@ class TestShopFloor(HttpCase):
         demo = self.env['product.product'].create({
             'name': 'DEMO'
         })
-        comp1 = self.env['product.product'].create({
-            'name': 'COMP1',
+        comp1, comp2 = self.env['product.product'].create([{
+            'name': name,
             'is_storable': True
-        })
-        comp2 = self.env['product.product'].create({
-            'name': 'COMP2',
-            'is_storable': True
-        })
+        } for name in ['COMP1', 'COMP2']])
         work_center = self.env['mrp.workcenter'].create({"name": "WorkCenter", "time_start": 11})
         uom_unit = self.env.ref('uom.product_uom_unit')
         bom = self.env['mrp.bom'].create({
@@ -529,6 +523,14 @@ class TestShopFloor(HttpCase):
                 Command.create({'name': 'OP2', 'workcenter_id': work_center.id, 'time_cycle': 18, 'sequence': 2})
             ]
         })
+        # Create a step to register production.
+        self.env['quality.point'].create([{
+                'picking_type_ids': [Command.link(self.warehouse.manu_type_id.id)],
+                'product_ids': [Command.link(demo.id)],
+                'operation_id': bom.operation_ids[1].id,
+                'title': 'Register Production',
+                'test_type_id': self.test_type_register_production.id,
+        }])
         self.env['mrp.bom.line'].create([
             {
                 'product_id': comp.id,

@@ -8,10 +8,14 @@
                 <span class="o_line_value d-flex flex-column align-items-end me-1 fw-bold lh-sm" t-att-class="{
                     'text-danger': quantityDone > toConsumeQuantity
                 }">
-                    <t t-if="(quantityDone || isComplete) &amp;&amp; quantityDone !== toConsumeQuantity">
-                    <t t-out="quantityDone"/> / </t>
-                    <t t-esc="toConsumeQuantity"/>
-                    <span class="ms-1 small fw-normal" t-att-class="{'text-muted': !(quantityDone > toConsumeQuantity)}" t-esc="uom"/>
+                    <span class="o_mrp_record_line_qty">
+                        <t t-if="(quantityDone || isComplete) &amp;&amp; quantityDone !== toConsumeQuantity"
+                           t-out="quantityDone + ' / '"/>
+                        <t t-esc="toConsumeQuantity"/>
+                    </span>
+                    <span class="o_mrp_record_line_uom ms-1 small fw-normal"
+                          t-att-class="{'text-muted': !(quantityDone > toConsumeQuantity)}"
+                          t-esc="uom"/>
                 </span>
                 <button t-if="hasInstruction" t-on-click.stop="showWorksheet" class="o_btn_icon btn btn-outline-secondary">
                         <i class="fa fa-info" role="img"/>
@@ -30,8 +34,8 @@
             </span>
             <div class="d-flex align-items-center gap-1 mb-auto text-nowrap">
                 <span class="o_line_value d-flex flex-column align-items-end me-1 fw-bold lh-sm">
-                    <t t-out="line.data.quantity"/>
-                    <span class="small fw-normal text-muted" t-esc="uom"/>
+                    <span class="o_mrp_record_line_qty" t-out="line.data.quantity"/>
+                    <span class="o_mrp_record_line_uom small fw-normal text-muted" t-esc="uom"/>
                 </span>
                 <button class="o_btn_icon btn btn-outline-secondary">
                     <i class="fa fa-pencil" role="img"/>

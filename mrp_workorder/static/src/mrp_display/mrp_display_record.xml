@@ -36,18 +36,10 @@
                 <h5 t-if="record.name != record.display_name" class="mb-0 text-truncate fw-normal" t-out="record.name"/>
                 <div class="d-flex justify-content-between align-items-center gap-1">
                     <span class="o_finished_product text-truncate me-1" t-esc="record.product_id.display_name"/>
-                    <div>
+                    <div class="o_quantity">
                         <span class="text-nowrap fw-bolder"
                             t-att-class="{'text-danger': quantityProducing > quantityToProduce}">
-                            <t t-if="quantityProducing &amp;&amp; quantityProducing !== quantityToProduce">
-                                <t t-esc="quantityProducing"/> /
-                            </t>
-                            <t t-esc="quantityToProduce"/>
-                            <span class="ms-1">
-                                <t t-if="displayUOM" t-esc="uom"/>
-                                <t t-elif="quantityToProduce !== 1">Units</t>
-                                <t t-else="">Unit</t>
-                            </span>
+                            <t t-esc="quantityToDisplay"/>
                         </span>
                     </div>
                 </div>
