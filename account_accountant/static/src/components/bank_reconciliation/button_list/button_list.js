@@ -192,13 +192,9 @@ export class BankRecButtonList extends Component {
         });
     }
 
-    getReconcileButtonDomain(partnerId = null) {
-        const partnerDomain = partnerId
-            ? ["partner_id", "=", partnerId]
-            : ["partner_id", "!=", false];
+    getReconcileButtonDomain() {
         return [
             ["parent_state", "in", ["draft", "posted"]],
-            partnerDomain,
             ["company_id", "child_of", this.statementLineData.company_id.id],
             ["account_id.reconcile", "=", true],
             ["display_type", "not in", ["line_section", "line_note"]],
