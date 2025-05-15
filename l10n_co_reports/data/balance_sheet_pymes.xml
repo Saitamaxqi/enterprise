@@ -22,6 +22,7 @@
                 <field name="name">ASSETS</field>
                 <field name="name@es_419">ACTIVOS</field>
                 <field name="aggregation_formula">L10N_CO_BS_AC.balance + L10N_CO_BS_ANC.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <!-- Current Assets -->
@@ -130,6 +131,7 @@
                 <field name="name@es_419">PASIVO</field>
                 <field name="code">L10N_CO_BS_LIABILITIES</field>
                 <field name="aggregation_formula">L10N_CO_BS_LC.balance + L10N_CO_BS_LNC.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <!-- Current Liabilities -->
@@ -238,6 +240,7 @@
                 <field name="name">EQUITY</field>
                 <field name="name@es_419">PATRIMONIO</field>
                 <field name="aggregation_formula">L10N_CO_BS_CAPITAL.balance + L10N_CO_BS_SURPLUS.balance + L10N_CO_BS_RESERVES.balance + L10N_CO_BS_REVALUATION.balance + L10N_CO_BS_DIVIDENDS.balance + L10N_CO_BS_YEAR_RESULTS.balance + L10N_CO_BS_YEAR_EARNINGS.balance + L10N_CO_BS_PREV_RESULTS.balance + L10N_CO_BS_VAL_SURPLUS.balance + L10N_CO_BS_PREV_YEAR_EARNINGS.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_bs_report_social_capital" model="account.report.line">
@@ -353,6 +356,7 @@
                 <field name="name@es_419">PASIVO Y PATRIMONIO</field>
                 <field name="code">L10N_CO_BS_LIABILITIES_EQUITY</field>
                 <field name="aggregation_formula">L10N_CO_BS_LIABILITIES.balance + L10N_CO_BS_EQUITY.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
         </field>

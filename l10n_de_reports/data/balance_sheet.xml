@@ -21,6 +21,7 @@
                 <field name="name">Assets</field>
                 <field name="name@de">Aktivseite</field>
                 <field name="code">SKR_BS_ASSET_TOTAL</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="skr_asset_total_balance" model="account.report.expression">
@@ -568,6 +569,7 @@
                 <field name="name">Equity and liabilities</field>
                 <field name="name@de">Passivseite</field>
                 <field name="code">SKR_BS_LIABILITIES_TOTAL</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="skr_liabilities_total_balance" model="account.report.expression">
@@ -973,6 +975,7 @@
                 <field name="groupby">account_id</field>
                 <field name="hide_if_zero" eval="1"/>
                 <field name="foldable" eval="True"/>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_de_off_sheet_balance" model="account.report.expression">

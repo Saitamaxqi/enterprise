@@ -19,6 +19,7 @@
             <record id="l10n_mz_bs_line_1" model="account.report.line">
                 <field name="name">ASSETS</field>
                 <field name="code">l10n_mz_1</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">l10n_mz_11.balance + l10n_mz_12.balance</field>
                 <field name="hierarchy_level">0</field>
@@ -118,6 +119,7 @@
             </record>
             <record id="l10n_mz_bs_line_2" model="account.report.line">
                 <field name="name">EQUITY AND LIABILITIES</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="code">l10n_mz_2</field>
                 <field name="aggregation_formula">l10n_mz_21.balance + l10n_mz_22.balance + l10n_mz_23.balance</field>

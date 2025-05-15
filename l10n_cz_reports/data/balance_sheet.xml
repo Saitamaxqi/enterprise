@@ -33,6 +33,7 @@
                 <field name="name">TOTAL ASSETS</field>
                 <field name="name@cs">CELKOVÁ AKTIVA</field>
                 <field name="code">l10n_cz_reports_bs_aktiva</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="l10n_cz_reports_bs_aktiva_gross" model="account.report.expression">
@@ -1688,6 +1689,7 @@
                 <field name="name">TOTAL LIABILITIES</field>
                 <field name="name@cs">CELKOVÉ ZÁVAZKY</field>
                 <field name="code">l10n_cz_reports_bs_pasiva</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="l10n_cz_reports_bs_pasiva_gross" model="account.report.expression">

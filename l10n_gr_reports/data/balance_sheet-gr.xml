@@ -20,6 +20,7 @@
                 <field name="name">Assets</field>
                 <field name="name@el_GR">Περιουσιακά στοιχεία</field>
                 <field name="aggregation_formula">l10n_gr_non_current_assets.balance + l10n_gr_current_assets.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_gr_bs_non_current_assets" model="account.report.line">
@@ -349,6 +350,7 @@
                 <field name="name">Equity, provisions, and liabilities</field>
                 <field name="name@el_GR">Ίδια κεφάλαια, προβλέψεις και υποχρεώσεις</field>
                 <field name="aggregation_formula"> l10n_gr_equity.balance + l10n_gr_provisions.balance + l10n_gr_liabilities.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_gr_bs_equity" model="account.report.line">

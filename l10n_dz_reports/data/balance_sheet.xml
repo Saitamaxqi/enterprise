@@ -33,6 +33,7 @@
                 <field name="name@fr">Différence Actif - Passif</field>
                 <field name="code">l10n_dz_assets_liabilities_total</field>
                 <field name="hide_if_zero" eval="1"/>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="l10n_dz_bs_assets_liabilities_total_net" model="account.report.expression">
@@ -46,6 +47,7 @@
                 <field name="name">ASSETS</field>
                 <field name="name@fr">ACTIF</field>
                 <field name="code">l10n_dz_assets</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="report_dz_bs_assets_gross" model="account.report.expression">
@@ -646,6 +648,7 @@
                 <field name="name">LIABILITIES</field>
                 <field name="name@fr">PASSIF</field>
                 <field name="code">l10n_dz_liabilities</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="report_dz_bs_liabilities_net" model="account.report.expression">
@@ -923,6 +926,7 @@
                 <field name="hide_if_zero" eval="1"/>
                 <field name="foldable" eval="True"/>
                 <field name="domain_formula">-sum([('account_id.account_type', '=', 'off_balance')])</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
         </field>

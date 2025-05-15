@@ -28,6 +28,7 @@
                     <field name="name@de">AKTIVA</field>
                     <field name="code">NL_ASSETS</field>
                     <field name="aggregation_formula">NL_FIXED.balance + NL_CURRENT.balance</field>
+                    <field name="horizontal_split_side">left</field>
                     <field name="hierarchy_level">0</field>
                     <field name="children_ids">
                         <record id="account_financial_report_bs_fixed" model="account.report.line">
@@ -110,6 +111,7 @@
                     <field name="name@de">PASSIVA</field>
                     <field name="code">NL_LEQ</field>
                     <field name="aggregation_formula">NL_EQ.balance + NL_PROVISIONS.balance + NL_LONG_DEBT.balance + NL_SHORT_DEBT.balance</field>
+                    <field name="horizontal_split_side">right</field>
                     <field name="hierarchy_level">0</field>
                     <field name="children_ids">
                         <record id="account_financial_report_bs_eq" model="account.report.line">

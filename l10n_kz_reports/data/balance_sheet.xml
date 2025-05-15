@@ -22,6 +22,7 @@
                 <field name="name@ru">Активы</field>
                 <field name="code">L10N_KZ_BS_A</field>
                 <field name="aggregation_formula">L10N_KZ_BS_A_1.balance + L10N_KZ_BS_A_101.balance + L10N_KZ_BS_A_2.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_kz_bl_current_assets" model="account.report.line">
@@ -301,6 +302,7 @@
                 <field name="name@ru">Обязательство и капитал</field>
                 <field name="code">L10N_KZ_BS_B</field>
                 <field name="aggregation_formula">L10N_KZ_BS_B_1.balance + L10N_KZ_BS_B_2.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_kz_bl_liabilities" model="account.report.line">

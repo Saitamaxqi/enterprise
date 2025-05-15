@@ -24,6 +24,7 @@
                 <field name="code">SYSCEBNL_ASSOC_ACTIF_PASSIF_TOTAL</field>
                 <field name="hide_if_zero" eval="True"/>
                 <field name="hierarchy_level">0</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_bilan_assoc_actif_passif_total_balance" model="account.report.expression">
                         <field name="label">balance</field>
@@ -37,6 +38,7 @@
                 <field name="name@fr">ACTIF</field>
                 <field name="code">SYSCEBNL_ASSOC_ACTIF_TOT</field>
                 <field name="hierarchy_level">0</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_aa" model="account.report.line">
                         <field name="name">AA | Fixed assets held for sale arising from gifts and bequests not received and temporary usufruct</field>
@@ -451,6 +453,7 @@
                 <field name="name@fr">BZ | Total Général</field>
                 <field name="code">SYSCEBNL_ASSOC_BZ</field>
                 <field name="hierarchy_level">0</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_bz_balance" model="account.report.expression">
                         <field name="label">balance</field>
@@ -465,6 +468,7 @@
                 <field name="name@fr">PASSIF</field>
                 <field name="code">SYSCEBNL_ASSOC_PASSIVE_TOT</field>
                 <field name="hierarchy_level">0</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_de" model="account.report.line">
                         <field name="name">DE | Total stable resources</field>
@@ -886,6 +890,7 @@
                 <field name="name@fr">DZ | Total général</field>
                 <field name="code">SYSCEBNL_ASSOC_DZ</field>
                 <field name="hierarchy_level">0</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_dz_balance" model="account.report.expression">
                         <field name="label">balance</field>

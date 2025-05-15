@@ -21,6 +21,7 @@
                 <field name="name@da_DK">AKTIVER</field>
                 <field name="code">DK_active</field>
                 <field name="aggregation_formula">DK_fixed.balance + DK_current.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_balance_report_l10n_dk_active_1" model="account.report.line">
@@ -1831,6 +1832,7 @@
                 <field name="name@da_DK">PASSIVER</field>
                 <field name="code">DK_passive</field>
                 <field name="aggregation_formula">DK_equity_capital.balance + DK_provisions.balance + DK_long_term_debt.balance + DK_short_term_debt.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_balance_report_l10n_dk_passiv_1_1" model="account.report.line">
@@ -2753,6 +2755,7 @@
                 <field name="name@da_DK">AKTIVER</field>
                 <field name="code">DK_min_active</field>
                 <field name="aggregation_formula">DK_min_fixed.balance + DK_min_current.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_balance_report_minimal_l10n_dk_active_1" model="account.report.line">
@@ -3386,6 +3389,7 @@
                 <field name="name@da_DK">Passiver</field>
                 <field name="code">DK_min_passive</field>
                 <field name="aggregation_formula">DK_min_equity_capital.balance + DK_min_provisions.balance + DK_min_long_term_debt.balance + DK_min_short_term_debt.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_balance_report_minimal_l10n_dk_passive_1" model="account.report.line">

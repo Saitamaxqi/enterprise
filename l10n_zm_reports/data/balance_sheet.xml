@@ -24,6 +24,7 @@
         <field name="line_ids">
             <record id="balance_sheet_zm_assets" model="account.report.line">
                 <field name="name">ASSETS</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="code">ZM_ASSETS</field>
                 <field name="aggregation_formula">ZM_ASSETS_CURRENT_ASSETS.balance + ZM_ASSETS_FIXED_ASSETS.balance</field>
@@ -66,6 +67,7 @@
             </record>
             <record id="balance_sheet_zm_liabilities" model="account.report.line">
                 <field name="name">LIABILITIES</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="code">ZM_LIABILITIES</field>
                 <field name="aggregation_formula">ZM_LIABILITIES_NON_CURRENT.balance + ZM_LIABILITIES_CURRENT.balance</field>
@@ -96,6 +98,7 @@
             </record>
             <record id="balance_sheet_zm_equity" model="account.report.line">
                 <field name="name">EQUITY</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="code">ZM_EQUITY</field>
                 <field name="aggregation_formula">ZM_LIABILITIES_UNALLOCATED.balance + ZM_EQUITY_RETAINED_EARNINGS.balance</field>
@@ -177,6 +180,7 @@
             </record>
             <record id="balance_sheet_zm_liabilities_and_equities" model="account.report.line">
                 <field name="name">LIABILITIES + EQUITY</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="code">ZM_ASSETS_LIABILITIES_EQUITIES</field>
                 <field name="aggregation_formula">ZM_LIABILITIES.balance + ZM_EQUITY.balance</field>

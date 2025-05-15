@@ -24,6 +24,7 @@
                 <field name="name@es">TOTAL ACTIVO (A + B)</field>
                 <field name="code">l10n_es_assoc_line_10000</field>
                 <field name="aggregation_formula">l10n_es_assoc_line_11000.balance + l10n_es_assoc_line_12000.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="balance_assoc_line_11000" model="account.report.line">
@@ -203,6 +204,7 @@
                 <field name="name@es">TOTAL PATRIMONIO NETO Y PASIVO (A + B + C)</field>
                 <field name="code">l10n_es_assoc_line_30000</field>
                 <field name="aggregation_formula">l10n_es_assoc_line_20000.balance + l10n_es_assoc_line_31000.balance + l10n_es_assoc_line_32000.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="balance_assoc_line_20000" model="account.report.line">

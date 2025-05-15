@@ -24,6 +24,7 @@
                     <field name="code">ACTT</field>
                     <field name="groupby">account_id</field>
                     <field name="foldable" eval="True"/>
+                    <field name="horizontal_split_side">left</field>
                     <field name="hierarchy_level">0</field>
                     <field name="expression_ids">
                         <record id="l10n_ec_balance_sheet_assets_expresion" model="account.report.expression">
@@ -40,6 +41,7 @@
                     <field name="code">PAST</field>
                     <field name="groupby">account_id</field>
                     <field name="foldable" eval="True"/>
+                    <field name="horizontal_split_side">right</field>
                     <field name="hierarchy_level">0</field>
                     <field name="expression_ids">
                         <record id="l10n_ec_balance_sheet_liabilities_expresion" model="account.report.expression">
@@ -55,6 +57,7 @@
                     <field name="name@es_419">Total Capital</field>
                     <field name="code">CAPT</field>
                     <field name="aggregation_formula">UNAFFECTED_EARNINGS_EC.balance + RETAINED_EARNINGS_EC.balance</field>
+                    <field name="horizontal_split_side">right</field>
                     <field name="hierarchy_level">0</field>
                     <field name="children_ids">
                         <record id="l10n_ec_balance_sheet_equity_unaffected_earnings0" model="account.report.line">
@@ -141,6 +144,7 @@
                     <field name="name">Liabilities + Equity</field>
                     <field name="name@es_419">Pasivos + Capital</field>
                     <field name="code">PACA</field>
+                    <field name="horizontal_split_side">right</field>
                     <field name="hierarchy_level">0</field>
                     <field name="expression_ids">
                         <record id="l10n_ec_balance_sheet_liabilities_and_equity_expression" model="account.report.expression">

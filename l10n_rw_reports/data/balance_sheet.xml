@@ -17,6 +17,7 @@
             <record id="account_financial_report_rw_active" model="account.report.line">
                 <field name="name">Active</field>
                 <field name="code">rw_active</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="account_financial_report_rw_active_expr" model="account.report.expression">
@@ -252,6 +253,7 @@
             <record id="account_financial_report_rw_passive" model="account.report.line">
                 <field name="name">Passive</field>
                 <field name="code">rw_passive</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="account_financial_report_rw_passive_expr" model="account.report.expression">

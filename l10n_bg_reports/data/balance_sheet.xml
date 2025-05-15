@@ -20,6 +20,7 @@
                 <field name="name">Assets</field>
                 <field name="name@bg">Актив</field>
                 <field name="code">bg_assets</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="l10n_bg_bs_assets_balance" model="account.report.expression">
@@ -555,6 +556,7 @@
                 <field name="name">Liabilities</field>
                 <field name="name@bg">Пасив</field>
                 <field name="code">bg_liabilities</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="l10n_bg_bs_liabilities_balance" model="account.report.expression">

@@ -20,6 +20,7 @@
                 <field name="name@es_419">Activos</field>
                 <field name="code">l10n_do_bs_assets</field>
                 <field name="aggregation_formula">l10n_do_bs_assets_a.balance + l10n_do_bs_assets_b.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_do_bs_assets_a" model="account.report.line">
@@ -109,6 +110,7 @@
                 <field name="name@es_419">Pasivos</field>
                 <field name="code">l10n_do_bs_liabilities</field>
                 <field name="aggregation_formula">l10n_do_bs_liabilities_a.balance + l10n_do_bs_liabilities_b.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_do_bs_liabilities_a" model="account.report.line">
@@ -190,6 +192,7 @@
                 <field name="name@es_419">Patrimonio</field>
                 <field name="code">l10n_do_bs_equity</field>
                 <field name="aggregation_formula">l10n_do_bs_equity_1.balance + l10n_do_bs_equity_2.balance + l10n_do_bs_equity_3.balance + l10n_do_bs_equity_4.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_do_bs_equity_1" model="account.report.line">
@@ -265,6 +268,7 @@
                 <field name="name@es_419">Total Pasivos y Patrimonio</field>
                 <field name="code">l10n_do_bs_liabilities_plus_equity</field>
                 <field name="aggregation_formula">l10n_do_bs_liabilities.balance + l10n_do_bs_equity.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
         </field>

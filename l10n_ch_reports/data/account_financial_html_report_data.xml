@@ -326,6 +326,7 @@
                 <field name="name@de">AKTIVEN</field>
                 <field name="code">CH_1</field>
                 <field name="aggregation_formula">CH_10.balance + CH_14.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_ch_10" model="account.report.line">
@@ -477,6 +478,7 @@
                 <field name="name@de">PASSIVEN</field>
                 <field name="code">CH_2</field>
                 <field name="aggregation_formula">CH_20.balance + CH_24.balance + CH_28.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_ch_20" model="account.report.line">

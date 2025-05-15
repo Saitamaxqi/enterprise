@@ -23,6 +23,7 @@
                 <field name="name">Assets</field>
                 <field name="name@ko_KR">자본</field>
                 <field name="code">KR_TA</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">KR_CA.balance + KR_NCA.balance</field>
                 <field name="children_ids">
@@ -320,6 +321,7 @@
                 <field name="name">Liabilities</field>
                 <field name="name@ko_KR">부채</field>
                 <field name="code">KR_L</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">KR_CL.balance + KR_NCL.balance</field>
                 <field name="children_ids">
@@ -471,6 +473,7 @@
                 <field name="name">Equity</field>
                 <field name="name@ko_KR">자본</field>
                 <field name="code">KR_EQ</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">KR_SC.balance + KR_CAPS.balance + KR_CAPA.balance + KR_AOCI.balance + KR_RE.balance</field>
                 <field name="children_ids">
@@ -604,6 +607,7 @@
                 <field name="name">Liabilities + Equity</field>
                 <field name="name@ko_KR">부채 + 자본</field>
                 <field name="code">KR_LE</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">KR_L.balance + KR_EQ.balance</field>
             </record>

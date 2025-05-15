@@ -20,6 +20,7 @@
                 <field name="name">Active</field>
                 <field name="name@sw">Inayotumika</field>
                 <field name="code">tz_active</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="account_financial_report_tz_active_expr" model="account.report.expression">
@@ -275,6 +276,7 @@
                 <field name="name">Passive</field>
                 <field name="name@sw">Pasipo</field>
                 <field name="code">tz_passive</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="account_financial_report_tz_passive_expr" model="account.report.expression">

@@ -32,6 +32,7 @@
                 <field name="name">ACTIVE</field>
                 <field name="name@fr">ACTIF</field>
                 <field name="code">MA_BS_A</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_bs_a_i" model="account.report.line">
@@ -1252,6 +1253,7 @@
                 <field name="name">PASSIVE</field>
                 <field name="name@fr">PASSIF</field>
                 <field name="code">MA_BS_P</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_bs_p_i" model="account.report.line">

@@ -21,6 +21,7 @@
                 <field name="name">Assets</field>
                 <field name="name@es_419">Activos</field>
                 <field name="code">PE_BS_A_TOTAL</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_bs_A_TOTAL_balance" model="account.report.expression">
@@ -194,6 +195,7 @@
                 <field name="name">Liabilities</field>
                 <field name="name@es_419">Pasivo</field>
                 <field name="code">PE_BS_L</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_bs_L_balance" model="account.report.expression">
@@ -321,6 +323,7 @@
                 <field name="name">Equity</field>
                 <field name="name@es_419">Patrimonio neto</field>
                 <field name="code">PE_BS_E</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_bs_E_balance" model="account.report.expression">
@@ -530,6 +533,7 @@
                 <field name="name">Equity and Liabilities</field>
                 <field name="name@es_419">Patrimonio y Pasivos</field>
                 <field name="code">PE_BS_EL_TOTAL</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_bs_EL_balance" model="account.report.expression">

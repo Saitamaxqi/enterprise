@@ -19,6 +19,7 @@
             <record id="account_financial_report_lv_active_title" model="account.report.line">
                 <field name="name">ACTIVE</field>
                 <field name="name@lv">AKTĪVS</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_lv_active_balance" model="account.report.expression">
@@ -229,6 +230,7 @@
             <record id="account_financial_report_lv_passif_title" model="account.report.line">
                 <field name="name">PASSIF</field>
                 <field name="name@lv">PASĪVS</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_lv_passif_balance" model="account.report.expression">

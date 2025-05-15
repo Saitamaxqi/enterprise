@@ -23,6 +23,7 @@
                 <field name="name">1 ASSETS</field>
                 <field name="name@es_419">1 ACTIVO</field>
                 <field name="aggregation_formula">L10N_CO_LIB_ACT_11.balance + L10N_CO_LIB_ACT_12.balance + L10N_CO_LIB_ACT_13.balance + L10N_CO_LIB_ACT_14.balance + L10N_CO_LIB_ACT_15.balance + L10N_CO_LIB_ACT_16.balance + L10N_CO_LIB_ACT_17.balance + L10N_CO_LIB_ACT_18.balance + L10N_CO_LIB_ACT_19.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_activo_11" model="account.report.line">
@@ -104,6 +105,7 @@
                 <field name="name">2 LIABILITIES</field>
                 <field name="name@es_419">2 PASIVO</field>
                 <field name="aggregation_formula">L10N_CO_LIB_PSV_21.balance + L10N_CO_LIB_PSV_22.balance + L10N_CO_LIB_PSV_23.balance + L10N_CO_LIB_PSV_24.balance + L10N_CO_LIB_PSV_25.balance + L10N_CO_LIB_PSV_26.balance + L10N_CO_LIB_PSV_27.balance + L10N_CO_LIB_PSV_28.balance + L10N_CO_LIB_PSV_29.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_pasivo_21" model="account.report.line">
@@ -185,6 +187,7 @@
                 <field name="name">3 EQUITY</field>
                 <field name="name@es_419">3 PATRIMONIO</field>
                 <field name="aggregation_formula">L10N_CO_LIB_PTR_31.balance + L10N_CO_LIB_PTR_32.balance + L10N_CO_LIB_PTR_33.balance + L10N_CO_LIB_PTR_34.balance + L10N_CO_LIB_PTR_35.balance + L10N_CO_LIB_PTR_36.balance + L10N_CO_LIB_PTR_37.balance + L10N_CO_LIB_PTR_38.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_patrimonio_31" model="account.report.line">
@@ -257,6 +260,7 @@
                 <field name="name">4 INCOME</field>
                 <field name="name@es_419">4 INGRESOS</field>
                 <field name="aggregation_formula">L10N_CO_LIB_ING_41.balance + L10N_CO_LIB_ING_42.balance + L10N_CO_LIB_ING_47.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_ingresos_41" model="account.report.line">
@@ -290,6 +294,7 @@
                 <field name="name">5 EXPENSES</field>
                 <field name="name@es_419">5 GASTOS</field>
                 <field name="aggregation_formula">L10N_CO_LIB_GST_51.balance + L10N_CO_LIB_GST_52.balance + L10N_CO_LIB_GST_53.balance + L10N_CO_LIB_GST_54.balance + L10N_CO_LIB_GST_59.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_gastos_51" model="account.report.line">
@@ -339,6 +344,7 @@
                 <field name="name">6 COST OF SALES</field>
                 <field name="name@es_419">6 COSTOS DE VENTAS</field>
                 <field name="aggregation_formula">L10N_CO_LIB_CVT_61.balance + L10N_CO_LIB_CVT_62.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_c_ventas_61" model="account.report.line">
@@ -364,6 +370,7 @@
                 <field name="name">7 PRODUCTION OR OPERATION COSTS</field>
                 <field name="name@es_419">7 COSTOS DE PRODUCCION O DE OPERACION</field>
                 <field name="aggregation_formula">L10N_CO_LIB_CPO_71.balance + L10N_CO_LIB_CPO_72.balance + L10N_CO_LIB_CPO_73.balance + L10N_CO_LIB_CPO_74.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_c_prod_71" model="account.report.line">
@@ -405,6 +412,7 @@
                 <field name="name">8 MEMORANDUM ACCOUNTS – DEBIT BALANCES</field>
                 <field name="name@es_419">8 CUENTAS DE ORDEN DEUDORAS</field>
                 <field name="aggregation_formula">L10N_CO_LIB_CUD_81.balance + L10N_CO_LIB_CUD_82.balance + L10N_CO_LIB_CUD_83.balance + L10N_CO_LIB_CUD_84.balance + L10N_CO_LIB_CUD_85.balance + L10N_CO_LIB_CUD_86.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_cu_deud_81" model="account.report.line">
@@ -462,6 +470,7 @@
                 <field name="name">9 MEMORANDUM ACCOUNTS – CREDIT BALANCES</field>
                 <field name="name@es_419">9 CUENTAS DE ORDEN ACREEDORAS</field>
                 <field name="aggregation_formula">L10N_CO_LIB_CUA_91.balance + L10N_CO_LIB_CUA_92.balance + L10N_CO_LIB_CUA_93.balance + L10N_CO_LIB_CUA_94.balance + L10N_CO_LIB_CUA_95.balance + L10N_CO_LIB_CUA_96.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_reports_libro_inv_blc_cu_acre_91" model="account.report.line">
@@ -518,6 +527,7 @@
                 <field name="name">Assets + Expenses</field>
                 <field name="code">L10N_CO_ASSETS_EXPENSES</field>
                 <field name="aggregation_formula">L10N_CO_LIB_ACT.balance + L10N_CO_LIB_GST.balance + L10N_CO_LIB_CVT.balance + L10N_CO_LIB_CPO.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="l10n_co_inv_blc_equity_liability" model="account.report.line">
@@ -525,6 +535,7 @@
                 <field name="name@es_419">Patrimonio + Pasivo + Ingresos</field>
                 <field name="code">L10N_CO_EQUITY_LIABILITY</field>
                 <field name="aggregation_formula">L10N_CO_LIB_PTR.balance + L10N_CO_LIB_PSV.balance + L10N_CO_LIB_ING.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
         </field>

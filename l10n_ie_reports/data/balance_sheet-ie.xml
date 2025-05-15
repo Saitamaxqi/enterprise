@@ -18,6 +18,7 @@
                 <field name="code">l10n_ie_A</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_A_I.balance + l10n_ie_A_II.balance + l10n_ie_A_III.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_ie_bs_A_I" model="account.report.line">
@@ -158,6 +159,7 @@
                 <field name="code">l10n_ie_B</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_B_I.balance + l10n_ie_B_II.balance + l10n_ie_B_III.balance + l10n_ie_B_IV.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_ie_bs_B_I" model="account.report.line">
@@ -289,6 +291,7 @@
                 <field name="code">l10n_ie_C</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_C_1.balance + l10n_ie_C_2.balance + l10n_ie_C_3.balance + l10n_ie_C_4.balance + l10n_ie_C_5.balance + l10n_ie_C_6.balance + l10n_ie_C_7.balance + l10n_ie_C_8.balance + l10n_ie_C_9.balance + l10n_ie_C_10.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_ie_bs_C_1" model="account.report.line">
@@ -369,12 +372,14 @@
                 <field name="name">D. Net current assets (liabilities)</field>
                 <field name="code">l10n_ie_D</field>
                 <field name="aggregation_formula">l10n_ie_B.balance - l10n_ie_C.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="l10n_ie_bs_E" model="account.report.line">
                 <field name="name">E. Total assets less current liabilities</field>
                 <field name="code">l10n_ie_E</field>
                 <field name="aggregation_formula">l10n_ie_A.balance + l10n_ie_B.balance - l10n_ie_C.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="l10n_ie_bs_F" model="account.report.line">
@@ -382,6 +387,7 @@
                 <field name="code">l10n_ie_F</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_F_1.balance + l10n_ie_F_2.balance + l10n_ie_F_3.balance + l10n_ie_F_4.balance + l10n_ie_F_5.balance + l10n_ie_F_6.balance + l10n_ie_F_7.balance + l10n_ie_F_8.balance + l10n_ie_F_9.balance + l10n_ie_F_10.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_ie_bs_F_1" model="account.report.line">
@@ -461,6 +467,7 @@
                 <field name="code">l10n_ie_G</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_G_1.balance + l10n_ie_G_2.balance + l10n_ie_G_3.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_ie_bs_G_1" model="account.report.line">
@@ -491,6 +498,7 @@
                 <field name="code">l10n_ie_H</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_H_I.balance + l10n_ie_H_II.balance + l10n_ie_H_III.balance + l10n_ie_H_IV.balance + l10n_ie_H_V.balance + l10n_ie_H_VI.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_ie_bs_H_I" model="account.report.line">
@@ -595,6 +603,7 @@
                 <field name="code">l10n_ie_assets_total</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_A.balance + l10n_ie_B.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="l10n_ie_bs_liabilities_total" model="account.report.line">
@@ -602,6 +611,7 @@
                 <field name="code">l10n_ie_liabilities_total</field>
                 <field name="foldable" eval="True"/>
                 <field name="aggregation_formula">l10n_ie_C.balance + l10n_ie_F.balance + l10n_ie_G.balance + l10n_ie_H.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
         </field>

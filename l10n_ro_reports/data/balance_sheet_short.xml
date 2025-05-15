@@ -23,6 +23,7 @@
                 <field name="name">A. NON-CURRENT ASSETS</field>
                 <field name="name@ro">A. ACTIVE IMOBILIZATE</field>
                 <field name="code">RO_BS_smle_A_00_A</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="children_ids">
                     <record id="account_financial_report_ro_bs_smle_A_01" model="account.report.line">
@@ -64,6 +65,7 @@
                 <field name="name">B. CURRENT ASSETS</field>
                 <field name="name@ro">B. ACTIVE CIRCULANTE</field>
                 <field name="code">RO_BS_smle_B</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="children_ids">
                     <record id="account_financial_report_ro_bs_smle_B_05" model="account.report.line">
@@ -132,6 +134,7 @@
                 <field name="name">C. PREPAYMENTS | 12</field>
                 <field name="name@ro">C. CHELTUIELI ÎN AVANS | 12</field>
                 <field name="code">RO_BS_smle_C_12</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">RO_BS_smle_C_13.balance + RO_BS_smle_C_14.balance</field>
                 <field name="children_ids">
@@ -160,6 +163,7 @@
                 <field name="name@ro">DATORII: SUMELE CARE TREBUIE PLĂTITE ÎNTR-O PERIOADĂ DE PÂNĂ LA UN AN | 15</field>
                 <field name="code">RO_BS_smle_D_15</field>
                 <field name="groupby">account_id</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="foldable" eval="True"/>
                 <field name="account_codes_formula">-161\(16142,16152,16172,16182) - 162\(16212,16222,16232,16242,16252,16262,16272) - 166\(16612,16622,16632) - 167\(1672) - 168\(16812,16822,16852,16862,16872) - 169\(16912,16922) - 269\(26912,26922,26932,26952) - 401\(4012) - 403\(4032) - 404\(4042) - 405\(4052) -408\(4082) - 419\(4192) - 421\(4212) - 423\(4232) - 424\(4242) - 426\(4262) - 427\(4272) - 4281\(42812) - 4381\(43812) - 4423\(44232) - 4424 - 4427 - 4481\(44812) - 455\(45512,45582) - 457\(4572) - 4581\(45812) - 462\(4622) - 4661\(46612) - 48 - 509\(50912,50922) - 5186\(51862) - 519\(51912,51922,51932,51942,51952,51962,51972,51982,51992) - 431\(43112,43122,43132,43142,43152,43162,43182)C - 436\(4362)C - 437\(43712,43722)C - 441\(44112,44125,44152,44182)C - 44281\(442812)C - 444\(4442)C - 446\(4462)C - 447\(4472)C - 451\(45112,45182)C - 453\(45312,45382)C - 456\(4562)C - 473\(4732)C</field>
@@ -168,6 +172,7 @@
                 <field name="name">E. NET CURRENT ASSETS/LIABILITIES | 16</field>
                 <field name="name@ro">E. ACTIVE CIRCULANTE NETE/DATORII CURENTE NETE | 16</field>
                 <field name="code">RO_BS_smle_E_16</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">RO_BS_smle_B_11.balance + RO_BS_smle_C_13.balance - RO_BS_smle_D_15.balance - RO_BS_smle_I_22.balance - RO_BS_smle_I_25.balance - RO_BS_smle_I_28.balance</field>
             </record>
@@ -175,6 +180,7 @@
                 <field name="name">F. TOTAL ASSETS MINUS CURRENT LIABILITIES | 17</field>
                 <field name="name@ro">F. TOTAL ACTIVE MINUS DATORII CURENTE | 17</field>
                 <field name="code">RO_BS_smle_F_17</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">RO_BS_smle_A_04.balance + RO_BS_smle_C_14.balance + RO_BS_smle_E_16.balance</field>
             </record>
@@ -183,6 +189,7 @@
                 <field name="name@ro">G. DATORII: SUMELE CARE TREBUIE PLĂTITE ÎNTR-O PERIOADĂ MAI MARE DE UN AN | 18</field>
                 <field name="code">RO_BS_smle_G_18</field>
                 <field name="groupby">account_id</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="foldable" eval="True"/>
                 <field name="account_codes_formula">-16142 - 16152 - 16172 - 16182 - 16212 - 16222 - 16232 - 16242 - 16252 - 16262 - 16272 - 16612 - 16622 - 16632 - 1672 - 16812 - 16822 - 16852 - 16862 - 16872 - 16912 - 16922 - 26912 - 26922 - 26932 - 26952 - 4012 - 4032 - 4042 - 4052 - 4082 - 4192 - 4212 - 4232 - 4242 - 4262 - 4272 - 42812 - 43812 - 44232 - 44812 - 45512 - 4572 - 45582 - 45812 - 4622 - 46612 - 50912 - 50922 - 51862 - 51912 - 51922 - 51932 - 51942 - 51952 - 51962 - 51972 - 51982 - 51992 - 43112C - 43122C - 43132C - 43142C - 43152C - 43162C - 43182C - 4362C - 43712C - 43722C - 44112C - 44152C - 44182C - 442812C - 4442C - 4462C - 4472C - 45112C - 45182C - 45312C - 45382C - 4562C - 4732C</field>
@@ -192,6 +199,7 @@
                 <field name="name@ro">H. PROVIZIOANE | 19</field>
                 <field name="code">RO_BS_smle_H_19</field>
                 <field name="groupby">account_id</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="foldable" eval="True"/>
                 <field name="account_codes_formula">-151</field>
@@ -200,6 +208,7 @@
                 <field name="name">I. DEFERRED INCOME, of which: | 20</field>
                 <field name="name@ro">I. VENITURI ÎN AVANS, din care: | 20</field>
                 <field name="code">RO_BS_smle_I_20</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">RO_BS_smle_I_21.balance + RO_BS_smle_I_24.balance + RO_BS_smle_I_27.balance + RO_BS_smle_I_30.balance</field>
                 <field name="children_ids">
@@ -299,6 +308,7 @@
                 <field name="name">J. EQUITY AND RESERVES</field>
                 <field name="name@ro">J. CAPITAL ȘI REZERVE</field>
                 <field name="code">RO_BS_smle_J_00</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="children_ids">
                     <record id="account_financial_report_ro_bs_smle_J_31" model="account.report.line">
@@ -573,6 +583,7 @@
                 <field name="name">TOTAL ASSETS</field>
                 <field name="name@ro">TOTAL ACTIVE</field>
                 <field name="code">RO_BS_smle_total_assets</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">RO_BS_smle_A_04.balance + RO_BS_smle_B_11.balance + RO_BS_smle_C_12.balance</field>
             </record>
@@ -580,6 +591,7 @@
                 <field name="name">TOTAL LIABILITIES + EQUITY</field>
                 <field name="name@ro">TOTAL DABILITĂȚI + CAPITOLUL PROFESIONAL</field>
                 <field name="code">RO_BS_smle_total_liabilities</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">RO_BS_smle_D_15.balance + RO_BS_smle_G_18.balance + RO_BS_smle_H_19.balance + RO_BS_smle_I_20.balance + RO_BS_smle_J_51.balance</field>
             </record>

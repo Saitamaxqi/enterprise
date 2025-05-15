@@ -19,6 +19,7 @@
             <record id="account_financial_report_ke_bs_A" model="account.report.line">
                 <field name="name">Assets</field>
                 <field name="code">KE_BS_A</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_ke_bs_A_balance" model="account.report.expression">
@@ -109,6 +110,7 @@
             <record id="account_financial_report_ke_bs_B" model="account.report.line">
                 <field name="name">Equity and Liabilities</field>
                 <field name="code">KE_BS_B</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_ke_bs_B_balance" model="account.report.expression">

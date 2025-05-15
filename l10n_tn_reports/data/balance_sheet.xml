@@ -22,6 +22,7 @@
                 <field name="name@fr">Différence entre actifs et (capitaux propres et passifs)</field>
                 <field name="hide_if_zero" eval="1"/>
                 <field name="aggregation_formula">l10n_tn_asset.balance - l10n_tn_liabilities_equity.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="l10n_tn_bs_assets" model="account.report.line">
@@ -29,6 +30,7 @@
                 <field name="name@fr">ACTIFS</field>
                 <field name="code">l10n_tn_asset</field>
                 <field name="aggregation_formula">l10n_tn_non_current_assets.balance + l10n_tn_current_assets.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_tn_bs_non_current_assets" model="account.report.line">
@@ -230,6 +232,7 @@
                 <field name="name@fr">CAPITAUX PROPRES ET PASSIFS</field>
                 <field name="code">l10n_tn_liabilities_equity</field>
                 <field name="aggregation_formula">l10n_tn_equity.balance + l10n_tn_liabilities.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_tn_bs_equity" model="account.report.line">

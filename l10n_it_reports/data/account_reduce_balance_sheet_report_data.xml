@@ -20,6 +20,7 @@
             <record id="account_financial_report_line_it_sp_reduce_assets" model="account.report.line">
                 <field name="name">ACTIVE</field>
                 <field name="name@it">ATTIVO</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_it_sp_reduce_ATT_B" model="account.report.line">
@@ -101,11 +102,13 @@
                 <field name="name@it">TOTALE ATTIVO</field>
                 <field name="code">ITR_ASSETS_TOTAL</field>
                 <field name="aggregation_formula">ITR_ATT_B.balance + ITR_ATT_C.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_line_it_sp_reduce_passif" model="account.report.line">
                 <field name="name">PASSIVE</field>
                 <field name="name@it">PASSIVO</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_it_sp_reduce_PASS_A" model="account.report.line">
@@ -254,11 +257,13 @@
                 <field name="name@it">TOTALE PASSIVO</field>
                 <field name="code">ITR_PASSIF_TOTAL</field>
                 <field name="aggregation_formula">ITR_PASS_A.balance + ITR_PASS_B.balance + ITR_PASS_C.balance + ITR_PASS_D.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_line_it_sp_reduce_CONTI_ORDINE" model="account.report.line">
                 <field name="name">ORDINARY ACCOUNTS</field>
                 <field name="name@it">CONTABILITÀ ORDINARIA</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_it_sp_reduce_CONTI_ORDINE_RISCHI" model="account.report.line">

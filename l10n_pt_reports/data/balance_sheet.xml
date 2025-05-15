@@ -19,6 +19,7 @@
             <record id="account_financial_report_line_pt_balanco_ativo" model="account.report.line">
                 <field name="name">ATIVO</field>
                 <field name="code">ATIVO</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="sequence" eval="10"/>
                 <field name="children_ids">
@@ -209,10 +210,12 @@
                 <field name="code">TOTAL_DO_ATIVO</field>
                 <field name="sequence" eval="240"/>
                 <field name="aggregation_formula">ANC1.balance + ANC2.balance + ANC3.balance + ANC4.balance + ANC5.balance + ANC6.balance + ANC9.balance + ANC9a.balance + ANC10.balance + AC1.balance + AC2.balance + AC3.balance + AC5.balance + AC6.balance + AC7.balance + AC8.balance + AC9.balance + AC10.balance + AC10a.balance + AC11.balance</field>
+                <field name="horizontal_split_side">left</field>
             </record>
             <record id="account_financial_report_line_pt_balanco_capital_proprio_e_passivo" model="account.report.line">
                 <field name="name">CAPITAL PRÓPRIO E PASSIVO</field>
                 <field name="code">CAPITAL_PROPRIO_E_PASSIVO</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="sequence" eval="250"/>
                 <field name="children_ids">

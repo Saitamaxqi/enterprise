@@ -23,6 +23,7 @@
                 <field name="name@zh_TW">資產</field>
                 <field name="code">TW_TA</field>
                 <field name="aggregation_formula">TW_CA.balance + TW_FA.balance + TW_PNCA.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_current_assets_view0_l10n_tw" model="account.report.line">
@@ -88,6 +89,7 @@
                 <field name="name@zh_TW">負債及權益</field>
                 <field name="code">TW_LBEQ</field>
                 <field name="aggregation_formula">TW_LB.balance + TW_EQ.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_liabilities_view0_l10n_tw" model="account.report.line">

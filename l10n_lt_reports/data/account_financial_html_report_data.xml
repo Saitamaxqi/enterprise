@@ -239,6 +239,7 @@
             <record id="account_financial_html_report_line_bs_lt_debit" model="account.report.line">
                 <field name="name">TOTAL ASSETS</field>
                 <field name="code">BS_DEBIT</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="aggregation_formula">BS_A_.balance + BS_B_.balance + BS_C_.balance</field>
                 <field name="children_ids">
@@ -607,6 +608,7 @@
             <record id="account_financial_html_report_line_bs_lt_credit" model="account.report.line">
                 <field name="name">TOTAL EQUITY AND LIABILITIES</field>
                 <field name="code">BS_CREDIT</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="foldable" eval="False"/>
                 <field name="aggregation_formula">BS_D_.balance + BS_E_.balance + BS_F_.balance + BS_G_.balance + BS_H_.balance</field>

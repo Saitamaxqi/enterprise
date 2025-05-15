@@ -20,6 +20,7 @@
                 <field name="name">Assets</field>
                 <field name="code">PK_AST</field>
                 <field name="aggregation_formula">PK_NCA.balance + PK_CA.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="children_ids">
                     <record id="account_balance_report_pk_non_current_asset" model="account.report.line">
                         <field name="name">Non-Current Assets</field>
@@ -146,6 +147,7 @@
                 <field name="name">Liabilities</field>
                 <field name="code">PK_LIA</field>
                 <field name="aggregation_formula">PK_NCL.balance + PK_CL.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="children_ids">
                     <record id="account_balance_report_pk_non_current_liabilities" model="account.report.line">
                         <field name="name">Non-Current Liabilities</field>
@@ -223,6 +225,7 @@
                 <field name="name">Equity</field>
                 <field name="code">PK_EQUI</field>
                 <field name="aggregation_formula">PK_2111.balance + PK_Earnings.balance + PK_2112.balance + PK_2113.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pk_share_capital" model="account.report.line">
                         <field name="name">Share Capital</field>
@@ -263,6 +266,7 @@
                 <field name="name">Contingencies and Commitments</field>
                 <field name="code">PK_EQUI_LIA</field>
                 <field name="aggregation_formula">PK_EQUI.balance + PK_LIA.balance</field>
+                <field name="horizontal_split_side">right</field>
             </record>
         </field>
     </record>

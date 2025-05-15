@@ -21,6 +21,7 @@
             <record id="account_financial_report_NO_active_title" model="account.report.line">
                 <field name="name">ACTIVE</field>
                 <field name="name@nb_NO">AKTIV</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_NO_active" model="account.report.line">
@@ -295,6 +296,7 @@
             <record id="account_financial_report_NO_passive_title" model="account.report.line">
                 <field name="name">Passive</field>
                 <field name="name@nb_NO">Passiv</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_NO_passive" model="account.report.line">

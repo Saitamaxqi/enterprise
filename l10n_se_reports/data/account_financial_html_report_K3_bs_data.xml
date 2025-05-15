@@ -23,6 +23,7 @@
                     <field name="name@sv_SE">TILLGÅNGAR</field>
                     <field name="code">SE_BS_A_TOTAL</field>
                     <field name="aggregation_formula">SE_BS_A_10_TOTAL.balance + SE_BS_A_20_TOTAL.balance + SE_BS_A_30_TOTAL.balance</field>
+                    <field name="horizontal_split_side">left</field>
                     <field name="hierarchy_level" eval="0"/>
                     <field name="children_ids">
                         <record id="account_financial_report_bs_A_10_TOTAL" model="account.report.line">
@@ -418,6 +419,7 @@
                     <field name="name@sv_SE">EGET KAPITAL, AVSÄTTNINGAR OCH SKULDER</field>
                     <field name="code">SE_BS_EL_TOTAL</field>
                     <field name="aggregation_formula">SE_BS_EL_10_TOTAL.balance + SE_BS_EL_20_TOTAL.balance + SE_BS_EL_30_TOTAL.balance + SE_BS_EL_40_TOTAL.balance</field>
+                    <field name="horizontal_split_side">right</field>
                     <field name="hierarchy_level" eval="0"/>
                     <field name="children_ids">
                         <record id="account_financial_report_bs_EL_10_TOTAL" model="account.report.line">

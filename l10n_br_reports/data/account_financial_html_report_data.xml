@@ -23,6 +23,7 @@
                 <field name="name@pt">ATIVOS</field>
                 <field name="code">BR_TA</field>
                 <field name="aggregation_formula">BR_CA.balance + BR_PNCA.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_current_assets_view0" model="account.report.line">
@@ -136,6 +137,7 @@
                 <field name="name">LIABILITIES</field>
                 <field name="name@pt">PASSIVOS</field>
                 <field name="code">BR_L</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_liabilities_view0_balance" model="account.report.expression">
@@ -272,6 +274,7 @@
                 <field name="hide_if_zero" eval="1"/>
                 <field name="foldable" eval="True"/>
                 <field name="domain_formula">-sum([('account_id.account_type', '=', 'off_balance')])</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
         </field>

@@ -20,6 +20,7 @@
             <record id="account_financial_report_line_it_sp_assets" model="account.report.line">
                 <field name="name">ACTIVE</field>
                 <field name="name@it">ATTIVO</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_it_sp_ATT_A" model="account.report.line">
@@ -1008,11 +1009,13 @@
                 <field name="name@it">TOTALE ATTIVO</field>
                 <field name="code">IT_ASSETS_TOTAL</field>
                 <field name="aggregation_formula">IT_ATT_A.balance + IT_ATT_B.balance + IT_ATT_C.balance + IT_ATT_D.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_line_it_sp_passif" model="account.report.line">
                 <field name="name">PASSIVE</field>
                 <field name="name@it">PASSIVO</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_it_sp_PASS_A" model="account.report.line">
@@ -1591,11 +1594,13 @@
                 <field name="name@it">TOTALE PASSIVO</field>
                 <field name="code">IT_PASSIF_TOTAL</field>
                 <field name="aggregation_formula">IT_PASS_A.balance + IT_PASS_B.balance + IT_PASS_C.balance + IT_PASS_D.balance + IT_PASS_E.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_line_it_sp_CONTI_ORDINE" model="account.report.line">
                 <field name="name">ORDINARY ACCOUNTS</field>
                 <field name="name@it">CONTABILITÀ ORDINARIA</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_line_it_sp_CONTI_ORDINE_RISCHI" model="account.report.line">

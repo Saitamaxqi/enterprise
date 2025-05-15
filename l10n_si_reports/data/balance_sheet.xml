@@ -18,6 +18,7 @@
                 <field name="name">Resources</field>
                 <field name="code">si_resources</field>
                 <field name="aggregation_formula">si_resources_a.balance + si_resources_b.balance + si_resources_c.balance</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_si_balance_sheet_resources_a" model="account.report.line">
@@ -390,6 +391,7 @@
                 <field name="name">Liabilities</field>
                 <field name="code">si_liabilities</field>
                 <field name="aggregation_formula">si_liabilities_a.balance + si_liabilities_b.balance + si_liabilities_c.balance + si_liabilities_ch.balance + si_liabilities_d.balance</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_si_balance_sheet_liabilities_a" model="account.report.line">

@@ -18,6 +18,7 @@
                 <field name="name">ASSETS</field>
                 <field name="name@mn">ХӨРӨНГӨ</field>
                 <field name="code">MN_TA</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="aggregation_formula">MN_CA.balance + MN_PNCA.balance</field>
                 <field name="children_ids">
@@ -217,6 +218,7 @@
                 <field name="name">LIABILITIES AND EQUITIES</field>
                 <field name="name@mn">ӨР ТӨЛБӨР БА ЭЗДИЙН ӨМЧ</field>
                 <field name="code">MN_LE</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="aggregation_formula">MN_LIA.balance + MN_EQ.balance</field>
                 <field name="children_ids">
@@ -498,6 +500,7 @@
                 <field name="groupby">account_id</field>
                 <field name="hide_if_zero" eval="1"/>
                 <field name="foldable" eval="True"/>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="domain_formula">-sum([('account_id.account_type', '=', 'off_balance')])</field>
             </record>

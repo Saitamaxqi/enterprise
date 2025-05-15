@@ -21,6 +21,7 @@
                 <field name="name">Assets (A + B + C + D)</field>
                 <field name="name@sr@latin">Sredstva (A + B + C + D)</field>
                 <field name="code">RS_0071</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="account_financial_report_rs_BS_assets_balance" model="account.report.expression">
@@ -1057,6 +1058,7 @@
                 <field name="name">Equity and liabilities (A + B + C + D - E)</field>
                 <field name="name@sr@latin">Kapital i obaveze (A + B + C + D - E)</field>
                 <field name="code">RS_0464</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
                     <record id="account_financial_report_rs_BS_equity_liabilities_balance" model="account.report.expression">
@@ -1945,6 +1947,7 @@
             <record id="account_financial_report_rs_BS_off_balance" model="account.report.line">
                 <field name="name">Off-balance items</field>
                 <field name="name@sr@latin">Vanbilansne stavke</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="children_ids">
                     <record id="account_financial_report_rs_BS_off_balance_A" model="account.report.line">

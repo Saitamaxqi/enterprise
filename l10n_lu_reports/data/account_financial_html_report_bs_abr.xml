@@ -27,6 +27,7 @@
                 <field name="name@fr">ACTIFS</field>
                 <field name="name@de">ANLAGEVERMÖGEN</field>
                 <field name="name@lb">Verméigen</field>
+                <field name="horizontal_split_side">left</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_l10n_lu_bs_abr_line_1_1" model="account.report.line">
@@ -203,6 +204,7 @@
                 <field name="name@fr">CAPITAUX PROPRES ET PASSIF</field>
                 <field name="name@de">PASSIVA</field>
                 <field name="name@lb">Kapital, Reserven a Verbëndlechkeete</field>
+                <field name="horizontal_split_side">right</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_l10n_lu_bs_abr_line_2_1" model="account.report.line">
