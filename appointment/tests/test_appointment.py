@@ -232,6 +232,39 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
                 is_available
             )
 
+    @freeze_time('2025-05-19')
+    def test_appointment_not_blocked_by_nextday_allday_event(self):
+        """Ensure Monday 7-8:30 PM (local) is not blocked by a Tuesday all-day event,
+            even if both overlap on May 20 UTC due to time zone conversion.
+        """
+        self.staff_user_bxls.tz = 'America/Chicago'
+        local_tz = pytz.timezone(self.staff_user_bxls.tz)
+
+        # Monday 7:00 PM → 8:30 PM (local) converted to UTC - start time is Tuesday 0:0 UTC and end time is 1:30 UTC
+        slot_start_utc = local_tz.localize(datetime(2025, 5, 19, 19, 0)).astimezone(pytz.utc).replace(tzinfo=None)
+        slot_end_utc = local_tz.localize(datetime(2025, 5, 19, 20, 30)).astimezone(pytz.utc).replace(tzinfo=None)
+
+        busy_day = datetime(2025, 5, 20, 0, 0)  # 2025-5-20 is the following Tuesday
+        self.env['calendar.event'].create({
+            'name': "All-Day Tuesday",
+            'start': busy_day,
+            'stop': busy_day + timedelta(days=1),
+            'allday': True,
+            'show_as': 'busy',
+            'partner_ids': [self.staff_user_bxls.partner_id.id],
+            'user_id': self.staff_user_bxls.id,
+            'attendee_ids': [Command.create({
+                'state': 'accepted',
+                'availability': 'busy',
+                'partner_id': self.staff_user_bxls.partner_id.id,
+                }),
+            ],
+        })
+        self.assertTrue(
+            self.staff_user_bxls.partner_id.with_context(tz='America/Chicago').calendar_verify_availability(slot_start_utc, slot_end_utc),
+            "Time slots should not be blocked by next-day all-day events."
+        )
+
     @users('apt_manager')
     def test_appointment_type_create_anytime(self):
         # Any Time: only 1 / employee

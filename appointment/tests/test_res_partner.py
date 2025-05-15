@@ -18,8 +18,8 @@ class ResPartnerTest(AppointmentCommon):
               self.reference_monday + timedelta(days=1, hours=3),
               False
               ),
-             (self.reference_monday + timedelta(days=7),  # next Monday: one full day
-              self.reference_monday + timedelta(days=7, hours=1),
+             (self.reference_monday + timedelta(days=7, hours=8),  # next Monday: one full day
+              self.reference_monday + timedelta(days=7, hours=18),
               True,
               ),
              ]
@@ -30,8 +30,8 @@ class ResPartnerTest(AppointmentCommon):
         ))
 
         self.assertFalse(self.staff_user_bxls.partner_id.calendar_verify_availability(
-            self.reference_monday + timedelta(days=7, hours=2),  # Overlapping allday event
-            self.reference_monday + timedelta(days=7, hours=4)
+            self.reference_monday + timedelta(days=7, hours=4),  # Overlapping allday event
+            self.reference_monday + timedelta(days=7, hours=8)
         ))
         self.assertTrue(self.staff_user_bxls.partner_id.calendar_verify_availability(
             self.reference_monday + timedelta(days=8, hours=3),  # 1 hour next Tuesday (10 UTC)
