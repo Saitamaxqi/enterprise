@@ -2,6 +2,7 @@
 
 import ast
 import base64
+import re
 from datetime import datetime, timedelta
 
 from odoo import models, fields, api, _
@@ -283,12 +284,15 @@ class AccountBatchPayment(models.Model):
         sdd_codes = set(self.env['account.payment.method']._get_sdd_payment_method_code())
         for payment in self.payment_ids.filtered(lambda payment: payment.payment_method_code in sdd_codes and payment.sdd_mandate_id):
             mandate = payment.sdd_mandate_id
+            sanitized_acc_number = mandate.partner_bank_id.sanitized_acc_number
+            anonymized_bank_account_number = f"{re.sub(r'.', '*', sanitized_acc_number[:-4])}{sanitized_acc_number[-4:]}"
+
             ctx = {
-                'iban_last_4': mandate.partner_bank_id.sanitized_acc_number[-4:],
+                'iban_last_4': sanitized_acc_number[-4:],
                 'mandate_ref': mandate.name,
                 'collection_date': payment.batch_payment_id.sdd_required_collection_date,
                 'amount': payment.amount,
-                'creditor_iban': payment.journal_id.bank_acc_number,
+                'creditor_iban': anonymized_bank_account_number,
             }
             payment.with_context(ctx).message_post_with_source(source_ref=template, subtype_xmlid='mail.mt_note')
         return res
