@@ -106,7 +106,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div id="mx_edi_detail_identificacion_vehicular">
-                            <div class="cp-data">Peso Bruto Vehícular: <t t-out="cartaporte_values['peso_bruto_vehicular']"/> Kg</div>
+                            <div class="cp-data">Peso Bruto Vehícular: <t t-out="cartaporte_values['peso_bruto_vehicular']"/> t</div>
                             <div class="cp-data">Placa: <t t-out="cartaporte_values['placa_vm']"/></div>
                             <div class="cp-data">Año Modelo: <t t-out="cartaporte_values['anio_modelo_vm']"/></div>
                         </div>
