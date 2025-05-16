@@ -700,7 +700,7 @@ test("can edit ir.actions.act_window without id", async () => {
     await click(".o_menu_sections button:contains(Views)");
     await animationFrame();
     expect(
-        ".o_web_studio_thumbnail_item:not(.disabled.pe-none):has(img[data-alt='View Form'])"
+        ".o_web_studio_thumbnail_item:not(.disabled.pe-none):has(img[alt='View Form'])"
     ).toHaveCount(1);
     expect(".o_web_studio_thumbnail_item.pe-none").toHaveCount(10);
 
