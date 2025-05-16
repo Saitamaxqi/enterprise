@@ -330,7 +330,7 @@ test("Readonly user can update text filter values", async function () {
         id: "42",
         type: "text",
         label: "Text Filter",
-        defaultValue: "abc",
+        defaultValue: ["abc"],
     });
     model.updateMode("readonly");
     await openSidePanel(model, env);
@@ -342,11 +342,12 @@ test("Readonly user can update text filter values", async function () {
     expect(pivots[0].querySelector(".o_side_panel_filter_label")).toHaveText("Text Filter");
 
     const input = pivots[0].querySelector(".pivot_filter_input input");
-    expect(input).toHaveValue("abc");
+    expect(".pivot_filter_input .o_tag").toHaveText("abc");
 
     await contains(input).edit("something");
+    await contains(input).press("Enter");
 
-    expect(model.getters.getGlobalFilterValue("42")).toBe("something");
+    expect(model.getters.getGlobalFilterValue("42")).toEqual(["abc", "something"]);
 });
 
 test("Readonly user can update date filter values", async function () {
@@ -427,7 +428,7 @@ test("Can clear a text filter values", async function () {
             id: "42",
             type: "text",
             label: "Text Filter",
-            defaultValue: "",
+            defaultValue: [],
         },
         {
             pivot: { [pivotId]: { chain: "name", type: "char" } },
@@ -443,6 +444,7 @@ test("Can clear a text filter values", async function () {
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(0);
 
     await contains(input).edit("something");
+    await contains(input).press("Enter");
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(1);
     expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([["name", "ilike", "something"]]);
 

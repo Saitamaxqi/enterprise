@@ -151,7 +151,7 @@ async function editGlobalFilterLabel(label) {
 }
 
 async function editGlobalFilterDefaultValue(defaultValue) {
-    await contains(".o-global-filter-text-value").edit(defaultValue);
+    await contains(".o-global-filter-text-value input").edit(defaultValue);
 }
 
 beforeEach(() => {
@@ -213,7 +213,7 @@ test("Create a new text global filter", async function () {
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.defaultValue).toBe("Default Value");
+    expect(globalFilter.defaultValue).toEqual(["Default Value"]);
     expect(globalFilter.rangeOfAllowedValues).toBe(undefined);
 });
 
@@ -241,11 +241,13 @@ test("Create a new text global filter with a default value from a range", async 
     await animationFrame();
     await animationFrame(); // SelectionInput component needs an extra tick to update
     await contains(".o-selection-ok").click();
-    expect(queryAllTexts("select option")).toEqual(["Choose a value...", "hello"]);
-    await contains("select").select("hello");
+    await contains(".o-autocomplete input").click();
+    await animationFrame();
+    expect(queryAllTexts(".dropdown-item")).toEqual(["hello"]);
+    await contains(".dropdown-item:first").click();
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.defaultValue).toBe("hello");
+    expect(globalFilter.defaultValue).toEqual(["hello"]);
 });
 
 test("Create a new text global filter, set a default value ,then restrict values to range", async function () {
@@ -259,10 +261,12 @@ test("Create a new text global filter, set a default value ,then restrict values
     await animationFrame();
     await animationFrame(); // SelectionInput component needs an extra tick to update
     await contains(".o-selection-ok").click();
-    expect(queryAllTexts("select option")).toEqual(["Choose a value...", "hello", "hi"]);
+    await contains(".o-autocomplete input").click();
+    await animationFrame();
+    expect(queryAllTexts(".dropdown-item")).toEqual(["hello"]);
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.defaultValue).toBe("hi");
+    expect(globalFilter.defaultValue).toEqual(["hi"]);
 });
 
 test("edit a text global filter with a default value not from the range", async function () {
@@ -272,17 +276,19 @@ test("edit a text global filter with a default value not from the range", async 
         id: "42",
         type: "text",
         label: "a filter",
-        defaultValue: "Hi",
+        defaultValue: ["Hi"],
         rangeOfAllowedValues: toRangeData(sheetId, "B2"),
     });
     setCellContent(model, "B2", "hello"); // the range does not contain the default value
     await animationFrame();
     await openSidePanel(model, env, "42");
-    expect("select").toHaveValue("Hi");
-    expect(queryAllTexts("select option")).toEqual(["Choose a value...", "hello", "Hi"]);
+    expect(".o_tag").toHaveText("Hi");
+    await contains(".o-autocomplete input").click();
+    await animationFrame();
+    expect(queryAllTexts(".dropdown-item")).toEqual(["hello"]);
     await saveGlobalFilter(); // save without changing anything
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.defaultValue).toBe("Hi");
+    expect(globalFilter.defaultValue).toEqual(["Hi"]);
 });
 
 test("check range text filter but don't select any range", async function () {
@@ -523,11 +529,11 @@ test("Fields are ordered by global filter type then relation", async function ()
 test("Edit an existing global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
     const label = "This year";
-    const defaultValue = "value";
+    const defaultValue = ["value"];
     addGlobalFilterWithoutReload(model, { id: "42", type: "text", label, defaultValue });
     await openSidePanel(model, env, "42");
     expect(".o_global_filter_label").toHaveValue(label);
-    expect(".o-global-filter-text-value").toHaveValue(defaultValue);
+    expect(".o-global-filter-text-value .o_tag").toHaveText("value");
     await editGlobalFilterLabel("New Label");
     await selectFieldMatching("name");
     await saveGlobalFilter();
@@ -1180,7 +1186,7 @@ test("Empty field is marked as warning", async function () {
         id: "42",
         type: "text",
         label: "Text Filter",
-        defaultValue: "",
+        defaultValue: [],
     });
     await openSidePanel(model, env, "42");
     expect(target.querySelector(".o_spreadsheet_field_matching")).toHaveClass("o_missing_field");
@@ -1192,7 +1198,7 @@ test("Can save with an empty field", async function () {
         id: "42",
         type: "text",
         label: "Text Filter",
-        defaultValue: "",
+        defaultValue: [],
     });
     await openSidePanel(model, env, "42");
     await saveGlobalFilter();
@@ -1207,7 +1213,7 @@ test("Can clear a field matching an invalid field", async function () {
             id: "42",
             type: "text",
             label: "Text Filter",
-            defaultValue: "",
+            defaultValue: [],
             name: "test",
         },
         {

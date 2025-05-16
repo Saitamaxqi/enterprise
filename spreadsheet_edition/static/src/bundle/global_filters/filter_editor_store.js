@@ -91,7 +91,7 @@ export class FilterEditorStore extends SpreadsheetStore {
     }
 
     get evaluatedDefaultValue() {
-        const defaultValue = this.filter.defaultValue ?? (this.filter.type === "text" ? "" : []);
+        const defaultValue = this.filter.defaultValue ?? [];
         if (this.filter.type === "date" && typeof defaultValue === "object") {
             return "";
         }
@@ -190,9 +190,10 @@ export class FilterEditorStore extends SpreadsheetStore {
         if (!this.filter.rangeOfAllowedValues) {
             return [];
         }
-        return this.getters.getTextFilterOptionsFromRange(this.filter.rangeOfAllowedValues, [
-            this.filter.defaultValue,
-        ]);
+        return this.getters.getTextFilterOptionsFromRange(
+            this.filter.rangeOfAllowedValues,
+            this.filter.defaultValue
+        );
     }
 
     selectRelatedModel(technical, label) {
