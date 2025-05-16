@@ -23,6 +23,8 @@ class AppointmentControllerSecurity(AppointmentUICommon):
         appointment_url = (
             f"/appointment/{self.apt_type_bxls_2days.id}/submit?{url_encode(invite._get_redirect_url_parameters())}"
         )
+        phone_question = self.apt_type_bxls_2days._get_main_phone_question()
+        self.assertTrue(phone_question)
 
         base_appointment_data = {
             "csrf_token": False,
@@ -30,7 +32,7 @@ class AppointmentControllerSecurity(AppointmentUICommon):
             "datetime_str": "2022-07-04 12:30:00",
             "email": self.apt_manager.email,
             "name": "logged-out Apt Manager",
-            "phone": self.apt_manager.phone,
+            f"question_{phone_question.id}": self.apt_manager.phone,
             "staff_user_id": self.staff_user_bxls.id,
         }
         existing_partners = self.staff_user_bxls.partner_id + self.apt_manager.partner_id

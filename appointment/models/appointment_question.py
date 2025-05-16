@@ -14,14 +14,17 @@ class AppointmentQuestion(models.Model):
     sequence = fields.Integer('Sequence')
     appointment_type_ids = fields.Many2many('appointment.type', relation='appointment_type_appointment_question_rel', string='Appointment Types')
     appointment_count = fields.Integer('# Appointments', compute='_compute_appointment_count')
-    is_reusable = fields.Boolean('Is Reusable', default=True,
-        help="Will appear in the list of available questions when adding one in any appointment.")
+    is_default = fields.Boolean('Default question', help="Include by default in new appointment types.")
+    is_reusable = fields.Boolean('Is Reusable',
+        compute='_compute_is_reusable', default=True, store=True, readonly=False,
+        help="Will appear in the list of available questions when adding one in any appointment. Always true for default questions.")
     name = fields.Char('Question', translate=True, required=True)
     placeholder = fields.Char('Placeholder', translate=True)
     question_required = fields.Boolean('Mandatory Answer')
     question_type = fields.Selection([
         ('char', 'Single line text'),
         ('text', 'Multi-line text'),
+        ('phone', 'Phone Number'),
         ('select', 'Dropdown (one answer)'),
         ('radio', 'Radio (one answer)'),
         ('checkbox', 'Checkboxes (multiple answers)')], 'Answer Type', default='char', required=True)
@@ -29,6 +32,11 @@ class AppointmentQuestion(models.Model):
     answer_input_ids = fields.One2many('appointment.answer.input', 'question_id', string='Submitted Answers')
     extra_comment = fields.Html('Extra Comment', translate=True,
         help="This will appear below the question in the appointment form.")
+
+    _check_default_question_is_reusable = models.Constraint(
+        'CHECK(is_default IS DISTINCT FROM TRUE OR is_reusable IS TRUE)',
+        "A default question must be reusable."
+    )
 
     @api.constrains('question_type', 'answer_ids')
     def _check_question_type(self):
@@ -54,6 +62,12 @@ class AppointmentQuestion(models.Model):
             else:
                 question.appointment_count = mapped_data.get(question.id, 0)
 
+    @api.depends('is_default')
+    def _compute_is_reusable(self):
+        for question in self:
+            if question.is_default:
+                question.is_reusable = True
+
     def action_view_question_answer_inputs(self):
         """ Allow analyzing the answers to a question on an appointment in a convenient way:
         - A graph view showing counts of each suggested answers for multiple-choice questions:
@@ -63,7 +77,7 @@ class AppointmentQuestion(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("appointment.appointment_answer_input_action")
         if self.question_type in ['select', 'radio', 'checkbox']:
             action['views'] = [(False, 'pivot'), (False, 'graph'), (False, 'list'), (False, 'form')]
-        elif self.question_type in ['char', 'text']:
+        elif self.question_type in ['char', 'text', 'phone']:
             action['views'] = [(False, 'list'), (False, 'form')]
         action['context'] = {
             'create': False,

@@ -50,14 +50,6 @@
                                                         placeholder="e.g. john.smith@example.com"/>
                                                 </div>
                                             </div>
-                                            <div class="row mb-4">
-                                                <label class="col-sm-3 col-form-label fw-normal" for="phone">Phone number*</label>
-                                                <div class="col-sm-9">
-                                                    <input type="tel" class="form-control" name="phone" id="phone_field" required="1"
-                                                        t-att-value="'phone' in partner_data and partner_data['phone']"
-                                                        placeholder="e.g. +1(605)691-3277"/>
-                                                </div>
-                                            </div>
                                             <t t-if="appointment_type.allow_guests">
                                                 <div class="row mb-4 mt-1">
                                                     <label class="col-sm-3 col-form-label fw-normal">Guests</label>
@@ -76,6 +68,15 @@
                                                 <div class="row mb-4" t-if="question.question_type!='text'">
                                                     <label class="col-sm-3 col-form-label fw-normal" t-attf-for="question_#{question.id}" t-out="' '.join([question.name, '*' if question.question_required else ''])"/>
                                                     <div class="col-sm-9">
+                                                        <t t-if="question.question_type == 'phone'">
+                                                            <t t-set="isMainPhoneQuestion" t-value="question == main_phone_question"/>
+                                                            <input type="phone" class="form-control"
+                                                                t-attf-name="question_#{question.id}"
+                                                                t-att-value="partner_data['phone'] if isMainPhoneQuestion and 'phone' in partner_data else ''"
+                                                                t-att-required="question.question_required or None"
+                                                                t-att-placeholder="question.placeholder"
+                                                                t-att-data-is-main-phone-question="isMainPhoneQuestion"/>
+                                                        </t>
                                                         <t t-if="question.question_type == 'char'">
                                                             <input type="char" class="form-control"
                                                                 t-attf-name="question_#{question.id}"

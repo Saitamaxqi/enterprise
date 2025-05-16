@@ -34,7 +34,7 @@ registry.category("web_tour.tours").add("appointment_crm_forced_staff_user_tour"
     },
     {
         content: "Fill the phone number field in the appointment form.",
-        trigger: "input[name='phone']",
+        trigger: "input[type='phone']",
         run: function () {
             if (!this.anchor.value){
                 this.anchor.value = "+1 555-555-5555";

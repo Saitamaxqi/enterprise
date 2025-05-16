@@ -115,6 +115,8 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
         apt_type = self.apt_type_bxls_2days
         apt_type.appointment_manual_confirmation = True
         apt_type.schedule_based_on = 'users'
+        phone_question = apt_type._get_main_phone_question()
+        self.assertTrue(phone_question)
 
         self.authenticate(self.env.user.login, self.env.user.login)
         now_str = self.reference_now.strftime(DTF)
@@ -127,7 +129,7 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
                 "duration_str": "1.0",
                 "email": self.env.user.email,
                 "name": "Test Online Meeting",
-                "phone": "12345",
+                f"question_{phone_question.id}": "12345",
                 "staff_user_id": self.staff_user_bxls.id
             }
             response = self.url_open(f"/appointment/{apt_type.id}/submit", data=apt_data)

@@ -13,6 +13,7 @@
                 <filter name="filter_is_reusable" string="Reusable" domain="[('is_reusable', '=', True)]"/>
                 <filter name="filter_is_not_reusable" string="Not Reusable" domain="[('is_reusable', '=', False)]"/>
                 <separator/>
+                <filter name="filter_is_default" string="Default Questions" domain="[('is_default', '=', True)]"/>
                 <filter name="filter_archive" string="Archived" domain="[('active', '=', False)]"/>
                 <group>
                     <filter string="Appointment" name="group_by_appointment" context="{'group_by': 'appointment_type_ids'}"/>
@@ -41,6 +42,7 @@
                             'icon_mapping': {
                                 'char': 'fa-times',
                                 'text': 'fa-list-ol',
+                                'phone': 'fa-phone',
                                 'select': 'fa-caret-down',
                                 'radio': 'fa-circle-o',
                                 'checkbox': 'fa-check-square'
@@ -58,11 +60,12 @@
                             <field name="question_required"/>
                         </group>
                         <group>
-                            <field name="is_reusable"/>
+                            <field name="is_reusable" readonly="is_default"/>
+                            <field name="is_default"/>
                         </group>
                     </group>
                     <field name="extra_comment" class="oe-bordered-editor mb-4" placeholder="Extra comments..." nolabel="1"/>
-                    <notebook invisible="question_type in ('char', 'text')">
+                    <notebook invisible="question_type in ('char', 'text', 'phone')">
                         <page string="Answers" name="answers">
                             <field name="answer_ids">
                                 <list editable="bottom">
@@ -87,6 +90,7 @@
                 <field name="question_type"/>
                 <field name="answer_ids" widget="many2many_tags"/>
                 <field name="question_required"/>
+                <field name="is_default"/>
                 <field name="is_reusable" optional="hide"/>
                 <field name="placeholder" optional="hide"/>
                 <button name="action_view_question_answer_inputs" type="object" class="fa fa-bar-chart p-0" title="Answer Breakdown"/>

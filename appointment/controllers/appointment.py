@@ -568,6 +568,7 @@ class AppointmentController(http.Controller):
             'resources_possible': resources_possible,
             'available_resource_ids': available_resource_ids,
             'login_with_redirect_url': f'/web/login?redirect={quote(request.httprequest.full_path)}',
+            'main_phone_question': appointment_type._get_main_phone_question(),
         })
 
     def _check_appointment_is_valid_slot(self, appointment_type, staff_user_id, resource_selected_id, available_resource_ids, start_dt, duration, asked_capacity, **kwargs):
@@ -631,7 +632,7 @@ class AppointmentController(http.Controller):
 
     @http.route(['/appointment/<int:appointment_type_id>/submit'],
                 type='http', auth="public", website=True, methods=["POST"], csrf=False)
-    def appointment_form_submit(self, appointment_type_id, datetime_str, duration_str, name, phone, email, staff_user_id=None, available_resource_ids=None, asked_capacity=1,
+    def appointment_form_submit(self, appointment_type_id, datetime_str, duration_str, name, email, staff_user_id=None, available_resource_ids=None, asked_capacity=1,
                                 guest_emails_str=None, **kwargs):
         """
         Create the event for the appointment and redirect on the validation page with a summary of the appointment.
@@ -640,7 +641,6 @@ class AppointmentController(http.Controller):
         :param datetime_str: the string representing the datetime
         :param duration_str: the string representing the duration
         :param name: the name of the user sets in the form
-        :param phone: the phone of the user sets in the form
         :param email: the email of the user sets in the form
         :param staff_user_id: the user selected for the appointment
         :param available_resource_ids: the resources ids available for the appointment
@@ -711,61 +711,71 @@ class AppointmentController(http.Controller):
             if guest_emails_str:
                 guests = request.env['calendar.event'].sudo()._find_or_create_partners(guest_emails_str)
 
-        # avoid doing anything based on visitor if csrf isn't checked to avoid leaking last-login info
-        customer = self._get_customer_partner() if csrf_token else self.env['res.partner']
-
-        # email is mandatory
-        new_customer = not customer.email
-        if not new_customer and customer.email != email and customer.email_normalized != email_normalize(email):
-            new_customer = True
-        if not new_customer:
-            # phone is mandatory
-            if not customer.phone:
-                customer.phone = customer._phone_format(number=phone) or phone
-            else:
-                customer_phone_fmt = customer._phone_format(fname="phone")
-                input_country = self._get_customer_country()
-                input_phone_fmt = phone_validation.phone_format(phone, input_country.code, input_country.phone_code, force_format="E164", raise_exception=False)
-                new_customer = customer.phone != phone and customer_phone_fmt != input_phone_fmt
-
-        if new_customer:
-            customer = customer.sudo().create({
-                'name': name,
-                'phone': customer._phone_format(number=phone, country=self._get_customer_country()) or phone,
-                'email': email,
-                'lang': request.lang.code,
-            })
-
-        # partner_inputs dictionary structures all answer inputs received on the appointment submission per question_id:
-        # {'q_id': [a1_id, a2_id, ...] for multi choice, 'q_id': value (as text) for the rest, if set}
+        # partner_inputs dictionary structures all answer inputs received on the appointment submission: key is question id, value
+        # is answer id (as string) for choice questions, text input for text questions, array of ids for multiple choice questions.
         partner_inputs = {}
+        main_phone_question = appointment_type._get_main_phone_question()
+        phone = None
         for question in appointment_type.question_ids:
             if question.question_type == 'checkbox':
                 partner_inputs[question.id] = question.answer_ids.filtered(lambda answer: kwargs.get(f'question_{question.id}_answer_{answer.id}')).ids
             elif answer := kwargs.get(f'question_{question.id}'):
                 partner_inputs[question.id] = answer
+                if question == main_phone_question:
+                    phone = answer.strip()
 
         # The answer inputs will be created in _prepare_calendar_event_values from the values in answer_input_values
         answer_input_values = []
-        base_answer_input_vals = {
-            'appointment_type_id': appointment_type.id,
-            'partner_id': customer.id,
-        }
-
         for question in appointment_type.question_ids.filtered(lambda question: question.id in partner_inputs):
             if question.question_type == 'checkbox':
                 if answer_ids := partner_inputs[question.id]:
                     answer_input_values.extend(
-                        dict(base_answer_input_vals, question_id=question.id, value_answer_id=answer_id) for answer_id in answer_ids
+                        dict(question_id=question.id, value_answer_id=answer_id) for answer_id in answer_ids
                     )
             elif question.question_type in ['select', 'radio']:
                 answer_input_values.append(
-                    dict(base_answer_input_vals, question_id=question.id, value_answer_id=int(partner_inputs[question.id]))
+                    dict(question_id=question.id, value_answer_id=int(partner_inputs[question.id]))
                 )
-            elif question.question_type in ['char', 'text']:
+            elif question.question_type in ['char', 'text', 'phone']:
                 answer_input_values.append(
-                    dict(base_answer_input_vals, question_id=question.id, value_text_box=partner_inputs[question.id].strip())
+                    dict(question_id=question.id, value_text_box=partner_inputs[question.id].strip())
                 )
+
+        # avoid doing anything based on visitor if csrf isn't checked to avoid leaking last-login info
+        customer = self._get_customer_partner() if csrf_token else self.env['res.partner']
+
+        # email is mandatory. phone is updated only if current partner has none.
+        new_customer = not customer.email
+        if not new_customer and customer.email != email and customer.email_normalized != email_normalize(email):
+            new_customer = True
+        if not new_customer:
+            if not customer.phone:
+                if phone:
+                    customer.phone = customer._phone_format(number=phone) or phone
+            elif main_phone_question:
+                if phone:
+                    customer_phone_fmt = customer._phone_format(fname="phone")
+                    input_country = self._get_customer_country()
+                    input_phone_fmt = phone_validation.phone_format(phone, input_country.code, input_country.phone_code, force_format="E164", raise_exception=False)
+                    new_customer = customer.phone != phone and customer_phone_fmt != input_phone_fmt
+                else:
+                    new_customer = True
+
+        if new_customer:
+            customer = customer.sudo().create({
+                'name': name,
+                'phone': (
+                    customer._phone_format(number=phone, country=self._get_customer_country()) or phone
+                ) if phone else False,
+                'email': email,
+                'lang': request.lang.code,
+            })
+
+        for vals in answer_input_values:
+            vals |= {
+                'appointment_type_id': appointment_type.id,
+                'partner_id': customer.id,
+            }
 
         booking_line_values = []
         if appointment_type.schedule_based_on == 'resources':

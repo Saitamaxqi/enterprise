@@ -40,13 +40,15 @@ class AppointmentCrmUITest(AppointmentCommon, MailCommon, common.HttpCase):
         })
 
         self.authenticate(None, None)
+        phone_question = apt._get_main_phone_question()
+        self.assertTrue(phone_question)
         data = {
             "csrf_token": http.Request.csrf_token(self),
             "datetime_str": date_str,
             "duration_str": "1.0",
             "name": "12345",
             "email": partner.email,
-            "phone": "12345"
+            f"question_{phone_question.id}": "12345"
         }
         response = self.url_open(apt_submit_url, data=data)
         self.assertEqual(response.status_code, 200)

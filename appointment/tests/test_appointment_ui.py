@@ -236,13 +236,16 @@ class AppointmentUITest(AppointmentUICommon):
             'staff_user_ids': self.staff_user_bxls,
             'event_videocall_source': False,
         })
+        phone_question = appointment_with_discuss_videocall_source._get_main_phone_question()
+        self.assertTrue(phone_question)
+        self.assertEqual(phone_question, appointment_without_videocall_source._get_main_phone_question())
 
         online_meeting = {
             'duration_str': '1.0',
             'datetime_str': '2022-07-04 12:30:00',
             'staff_user_id': self.staff_user_bxls.id,
             'name': 'Online Meeting',
-            'phone': '2025550999',
+            f'question_{phone_question.id}': '2025550999',
             'email': 'test1@test.example.com',
             'csrf_token': http.Request.csrf_token(self)
         }
@@ -251,7 +254,7 @@ class AppointmentUITest(AppointmentUICommon):
             'datetime_str': '2022-07-05 10:30:00',
             'staff_user_id': self.staff_user_bxls.id,
             'name': 'Meeting with location',
-            'phone': '2025550888',
+            f'question_{phone_question.id}': '2025550888',
             'email': 'test2@test.example.com',
             'csrf_token': http.Request.csrf_token(self),
         }
@@ -299,6 +302,8 @@ class AppointmentUITest(AppointmentUICommon):
             "appointment_manual_confirmation": True,
             "manual_confirmation_percentage": 0.5,  # Set Manual Confirmation at 50%
         })
+        phone_question = self.apt_type_resource._get_main_phone_question()
+        self.assertTrue(phone_question)
         appointment_data = {
             "asked_capacity": 4,
             "available_resource_ids": [resource.id],
@@ -307,7 +312,7 @@ class AppointmentUITest(AppointmentUICommon):
             "duration_str": "1.0",
             "email": "test@test.example.com",
             "name": "Online Meeting",
-            "phone": "2025550999",
+            f"question_{phone_question.id}": "2025550999",
         }
 
         url = f"/appointment/{self.apt_type_resource.id}/submit"
@@ -327,13 +332,15 @@ class AppointmentUITest(AppointmentUICommon):
         """ Check that appointment and attendee status are correctly
         set based on the appointment_manual_confirmation field"""
         self.authenticate(self.env.user.login, self.env.user.login)
+        phone_question = self.apt_type_resource._get_main_phone_question()
+        self.assertTrue(phone_question)
         event_values = {
             'csrf_token': http.Request.csrf_token(self),
             'datetime_str': '2022-02-14 11:00:00',
             'duration_str': '1.0',
             'email': 'test1@test.example.com',
             'name': 'Meeting Test',
-            'phone': '2025550999',
+            f'question_{phone_question.id}': '2025550999',
             'staff_user_id': self.staff_user_bxls.id,
         }
         self.assertFalse(self.apt_type_bxls_2days.appointment_manual_confirmation)
