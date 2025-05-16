@@ -385,6 +385,11 @@ class AccountOnlineLink(models.Model):
                                                 readonly=True)
     journal_ids = fields.One2many('account.journal', compute='_compute_journal_ids')
     provider_type = fields.Char(help="Third Party Provider", readonly=True)
+    renewal_contact_email = fields.Char(
+        string='Connection Requests',
+        help='Comma separated list of email addresses to send consent renewal notifications 15, 3 and 1 days before expiry',
+        default=lambda self: self.env.user.email,
+    )
 
     ###################
     # Compute methods #

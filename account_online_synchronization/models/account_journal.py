@@ -27,11 +27,7 @@ class AccountJournal(models.Model):
     account_online_account_id = fields.Many2one('account.online.account', copy=False, ondelete='set null', index='btree_not_null')
     account_online_link_id = fields.Many2one('account.online.link', related='account_online_account_id.account_online_link_id', readonly=True, store=True)
     account_online_link_state = fields.Selection(related="account_online_link_id.state", readonly=True)
-    renewal_contact_email = fields.Char(
-        string='Connection Requests',
-        help='Comma separated list of email addresses to send consent renewal notifications 15, 3 and 1 days before expiry',
-        default=lambda self: self.env.user.email,
-    )
+    renewal_contact_email = fields.Char(related="account_online_link_id.renewal_contact_email", readonly=False)
     online_sync_fetching_status = fields.Selection(related="account_online_account_id.fetching_status", readonly=True)
 
     def write(self, vals):

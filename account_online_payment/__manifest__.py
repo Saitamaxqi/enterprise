@@ -5,7 +5,10 @@
     'depends': ['account_online_synchronization', 'account_batch_payment', 'account_iso20022'],
     'data': [
         'data/actions.xml',
+        'data/activation_mail_template.xml',
+        'data/success_mail_template.xml',
         'views/account_batch_payment_views.xml',
+        'views/account_online_link_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
