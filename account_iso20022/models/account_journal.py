@@ -31,7 +31,6 @@ class AccountJournal(models.Model):
         help="SEPA version to use to generate Credit Transfer XML files from this journal",
     )
     has_sepa_ct_payment_method = fields.Boolean(compute='_compute_has_sepa_ct_payment_method')
-    has_iso20022_payment_method = fields.Boolean(compute='_compute_has_iso20022_payment_method')
     iso20022_default_priority = fields.Selection(
         selection=ISO20022_PRIORITY_SELECTION,
         string='Default Priority',
