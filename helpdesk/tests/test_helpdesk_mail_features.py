@@ -3,6 +3,7 @@ from odoo.addons.mail.tests.common import MailCommon
 from odoo.addons.test_mail.data.test_mail_data import MAIL_TEMPLATE
 from odoo.tests import tagged, users
 from odoo.tools import formataddr
+from odoo.fields import Command
 
 
 @tagged('post_install', '-at_install', 'mail_flow', 'mail_tools')
@@ -459,3 +460,34 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
             ('res_id', '=', ticket.id),
         ], limit=1)
         self.assertTrue(follow)
+
+    def test_ticket_portal_share_adds_followers(self):
+        """ Test that sharing a ticket through the portal share wizard adds recipients as followers.
+
+            Test Cases:
+            ===========
+            1) Create a test ticket.
+            2) Verify that the portal user is not a follower of the ticket.
+            3) Create and execute a portal share wizard to share the ticket with the portal user.
+            4) Verify that the portal user has been added as a follower after sharing.
+        """
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': 'Ticket to Share',
+            'team_id': self.test_team.id,
+        })
+
+        self.assertNotIn(self.helpdesk_portal.partner_id, ticket.message_partner_ids,
+                        "Portal user's partner should not be a follower initially")
+
+        share_wizard = self.env['portal.share'].create({
+            'res_model': 'helpdesk.ticket',
+            'res_id': ticket.id,
+            'partner_ids': [Command.set(self.helpdesk_portal.partner_id.ids)]
+        })
+
+        with self.mock_mail_gateway():
+            share_wizard.action_send_mail()
+
+        self.assertIn(self.helpdesk_portal.partner_id, ticket.message_partner_ids,
+                    "Portal user's partner should be added as a follower after sharing")

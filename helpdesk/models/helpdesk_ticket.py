@@ -24,6 +24,7 @@ class HelpdeskTicket(models.Model):
     _description = 'Helpdesk Ticket'
     _order = 'priority desc, id desc'
     _mail_defaults_to_email = True
+    _mail_thread_customer = True
     _primary_email = 'partner_email'
     _inherit = [
         'portal.mixin',
