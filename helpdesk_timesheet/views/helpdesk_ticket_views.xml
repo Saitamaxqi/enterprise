@@ -93,6 +93,18 @@
         </field>
     </record>
 
+    <!-- To restrict the teams to the ones with the timesheet feature activated when creating tickets on the fly -->
+    <record id="helpdesk_ticket_view_form_inherit_helpdesk_timesheet_restrict_teams" model="ir.ui.view">
+        <field name='name'>helpdesk.ticket.form.inherit.timesheet.restrict.teams</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="domain">[('use_helpdesk_timesheet', '=', True)]</attribute>
+            </field>
+        </field>
+    </record>
+
     <record id="helpdesk_ticket_view_tree_inherit_helpdesk_timesheet" model="ir.ui.view">
         <field name='name'>helpdesk.ticket.list.inherit.timesheet</field>
         <field name="model">helpdesk.ticket</field>

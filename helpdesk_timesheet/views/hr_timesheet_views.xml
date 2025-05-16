@@ -184,6 +184,47 @@
         </field>
     </record>
 
+    <record id="view_calendar_account_analytic_line" model="ir.ui.view">
+        <field name="name">account.analytic.line.calendar</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.view_calendar_account_analytic_line"/>
+        <field name="arch" type="xml">
+            <field name="task_id" position="attributes">
+                <attribute name="invisible">not task_id or not display_task</attribute>
+            </field>
+            <field name="task_id" position="after">
+                <field name="helpdesk_ticket_id" string="Ticket" invisible="not helpdesk_ticket_id or display_task"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_calendar_account_analytic_line_multi_create" model="ir.ui.view">
+        <field name="name">account.analytic.line.calendar.multi_create</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.view_calendar_account_analytic_line_multi_create"/>
+        <field name="arch" type="xml">
+            <field name="task_id" position="attributes">
+                <attribute name="invisible">not display_task</attribute>
+            </field>
+            <field name="task_id" position="after">
+                <field
+                    name="helpdesk_ticket_id"
+                    string="Ticket"
+                    invisible="display_task"
+                    options="{'no_open': True}"
+                    context="{
+                        'search_default_my_ticket': True,
+                        'search_default_is_open': True,
+                        'search_view_ref': 'helpdesk.helpdesk_ticket_view_search_analysis',
+                        'form_view_ref': 'helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet',
+                        'restrict_team_timesheet': True,
+                    }"
+                    groups="helpdesk_timesheet.group_use_helpdesk_timesheet"
+                />
+            </field>
+        </field>
+    </record>
+
     <!-- Timesheets from helpdesk action -->
     <record id="act_hr_timesheet_line_helpdesk" model="ir.actions.act_window">
         <field name="name">Timesheets</field>

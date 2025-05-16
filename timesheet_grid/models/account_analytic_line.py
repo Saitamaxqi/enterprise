@@ -35,6 +35,7 @@ class AccountAnalyticLine(models.Model):
     display_timer = fields.Boolean(
         "Technical field used to display the timer if the encoding unit is 'Hours'.",
         compute='_compute_display_timer', export_string_translation=False)
+    is_hatched = fields.Boolean(compute='_compute_is_hatched', export_string_translation=False)
 
     @api.constrains('unit_amount')
     def _check_timesheet_unit_amount(self):
@@ -176,6 +177,11 @@ class AccountAnalyticLine(models.Model):
         EmployeeSudo.browse(employee_ids).last_validated_timesheet_date = False
         for employee, date_max in timesheet_read_group:
             employee.sudo().last_validated_timesheet_date = date_max
+
+    @api.depends('validated')
+    def _compute_is_hatched(self):
+        for line in self:
+            line.is_hatched = not line.validated
 
     def action_validate_timesheet(self):
         notification = {

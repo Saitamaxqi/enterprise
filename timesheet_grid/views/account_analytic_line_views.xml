@@ -385,6 +385,17 @@
             </field>
         </record>
 
+        <record id="view_calendar_account_analytic_line" model="ir.ui.view">
+            <field name="name">account.analytic.line.calendar</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.view_calendar_account_analytic_line"/>
+            <field name="arch" type="xml">
+                <calendar position="inside">
+                    <field name="is_hatched" invisible="1"/>
+                </calendar>
+            </field>
+        </record>
+
         <record id="timesheet_action_view_grid" model="ir.actions.act_window.view">
             <field name="sequence" eval="2"/>
             <field name="view_mode">grid</field>
@@ -479,6 +490,13 @@
             <field name="sequence">20</field>
         </record>
 
+        <record id="hr_timesheet_to_validate_action_calendar" model="ir.actions.act_window.view">
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_calendar_account_analytic_line"/>
+            <field name="act_window_id" ref="timesheet_grid_to_validate_action" />
+            <field name="sequence">25</field>
+        </record>
+
         <record id="hr_timesheet_to_validate_action_kanban" model="ir.actions.act_window.view">
             <field name="view_mode">kanban</field>
             <field name="view_id" ref="timesheet_grid.view_kanban_account_analytic_line_inherit_timesheet_grid_validation" />
@@ -536,6 +554,13 @@
             <field name="view_id" ref="timesheet_view_tree_user_inherited"/>
             <field name="act_window_id" ref="timesheet_grid_to_validate_all_timesheets_action" />
             <field name="sequence">20</field>
+        </record>
+
+        <record id="hr_timesheet_to_validate_all_timesheets_action_calendar" model="ir.actions.act_window.view">
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_calendar_account_analytic_line"/>
+            <field name="act_window_id" ref="timesheet_grid_to_validate_all_timesheets_action" />
+            <field name="sequence">25</field>
         </record>
 
         <record id="hr_timesheet_to_validate_all_timesheets_action_kanban" model="ir.actions.act_window.view">

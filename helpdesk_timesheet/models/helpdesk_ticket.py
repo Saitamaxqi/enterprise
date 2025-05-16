@@ -7,6 +7,16 @@ class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
     _inherit = ['helpdesk.ticket', 'timer.parent.mixin']
 
+    def _default_team_id(self):
+        if self.env.context.get('restrict_team_timesheet'):
+            team_id = self.env['helpdesk.team'].search([('member_ids', 'in', self.env.uid), ('use_helpdesk_timesheet', '=', True)], limit=1).id
+            if not team_id:
+                team_id = self.env['helpdesk.team'].search([('use_helpdesk_timesheet', '=', True)], limit=1).id
+            if team_id:
+                return team_id
+        return super()._default_team_id()
+
+    team_id = fields.Many2one(default=_default_team_id)
     project_id = fields.Many2one(
         "project.project", related="team_id.project_id", readonly=True, store=True, index='btree_not_null')
     timesheet_ids = fields.One2many('account.analytic.line', 'helpdesk_ticket_id', 'Timesheets',
