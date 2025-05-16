@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <templates>
 <t t-name="voip.Tab">
-    <div class="o-voip-Tab d-flex flex-column w-100" t-att-class="props.extraClass">
+    <div class="o-voip-Tab d-flex flex-column w-100 h-100" t-att-class="props.extraClass">
         <t t-if="props.hasSearchBar">
             <div class="d-flex align-items-center py-2 border-bottom">
                 <input id="o-voip-Tab-searchInput" class="form-control flex-grow-1 border-0" placeholder="Search…" t-model="props.state.searchInputValue" t-on-input="props.onInputSearch" t-ref="searchInput"/>
