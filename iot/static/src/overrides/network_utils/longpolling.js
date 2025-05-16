@@ -1,8 +1,9 @@
 import { patch } from "@web/core/utils/patch";
 import { debounce } from "@web/core/utils/timing";
 import { IoTLongpolling } from "@iot_base/network_utils/longpolling";
-import { formatEndpoint, uuid } from "@iot_base/network_utils/http";
+import { formatEndpoint } from "@iot_base/network_utils/http";
 import { uniqueId } from "@web/core/utils/functions";
+import { uuid } from "@web/core/utils/strings";
 import { _t } from "@web/core/l10n/translation";
 
 patch(IoTLongpolling.prototype, {

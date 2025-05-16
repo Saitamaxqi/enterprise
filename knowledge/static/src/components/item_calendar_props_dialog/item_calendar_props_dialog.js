@@ -4,7 +4,7 @@ import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { SCALE_LABELS } from "@web/views/calendar/calendar_controller";
 import { SelectMenu } from "@web/core/select_menu/select_menu";
 import { useAutofocus, useService } from "@web/core/utils/hooks";
-import { uuid } from "@web/views/utils";
+import { uuid } from "@web/core/utils/strings";
 
 import { Component, onWillStart, useExternalListener, useState } from "@odoo/owl";
 

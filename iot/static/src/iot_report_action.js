@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { browser } from "@web/core/browser/browser"
 import { IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY } from "@iot/client_action/delete_local_storage";
-import { uuid } from "@web/views/utils";
+import { uuid } from "@web/core/utils/strings";
 
 /**
  * Method to print the report with the selected devices

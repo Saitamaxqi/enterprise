@@ -3,7 +3,7 @@ import { batched, reactive } from "@odoo/owl";
 import { Deferred } from "@web/core/utils/concurrency";
 import { rpc } from "@web/core/network/rpc";
 import { browser } from "@web/core/browser/browser";
-import { uuid } from "@web/views/utils";
+import { uuid } from "@web/core/utils/strings";
 import { effect } from "@web/core/utils/reactive";
 
 const ARTICLE_THREAD_FIELDS = [

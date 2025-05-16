@@ -1,4 +1,4 @@
-import { uuid } from "@iot_base/network_utils/http";
+import { uuid } from "@web/core/utils/strings";
 
 /**
  * Class to handle Websocket connections

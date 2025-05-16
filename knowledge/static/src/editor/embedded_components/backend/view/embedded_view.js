@@ -11,7 +11,7 @@ import {
 import { ItemCalendarPropsDialog } from "@knowledge/components/item_calendar_props_dialog/item_calendar_props_dialog";
 import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { uuid } from "@web/views/utils";
+import { uuid } from "@web/core/utils/strings";
 import { useSubEnv } from "@odoo/owl";
 
 export class EmbeddedViewComponent extends ReadonlyEmbeddedViewComponent {
