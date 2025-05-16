@@ -41,7 +41,7 @@ class WhatsappMessage(models.Model):
 
     def _handle_error(self, failure_type=False, whatsapp_error_code=False, error_message=False):
         super()._handle_error(failure_type, whatsapp_error_code=whatsapp_error_code, error_message=error_message)
-        trace = self.marketing_trace_ids
+        trace = self.sudo().marketing_trace_ids
         if trace:
             trace.write({
                     'state': 'canceled',

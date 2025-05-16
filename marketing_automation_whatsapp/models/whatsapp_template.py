@@ -37,7 +37,7 @@ class WhatsappTemplate(models.Model):
         template_vals, attachment = super()._get_send_template_vals(
             record, whatsapp_message
         )
-        campaign_id = whatsapp_message.marketing_trace_ids.activity_id.campaign_id
+        campaign_id = whatsapp_message.sudo().marketing_trace_ids.activity_id.campaign_id
 
         mail_mixin = self.env['mail.render.mixin']
         if not template_vals.get('components') or not campaign_id:
