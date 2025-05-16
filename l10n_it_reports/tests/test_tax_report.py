@@ -19,7 +19,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
         cls.tax_4a = cls.env.ref(f'account.{cls.env.company.id}_4am')
         cls.tax_4a.active = True
         cls.tax_4v = cls.env.ref(f'account.{cls.env.company.id}_4v')
-        cls.tax_4v.tax_group_id.tax_payable_account_id = cls.company_data['default_account_payable']
+        cls.tax_4v.tax_group_id.tax_payable_account_id = cls.company_data['default_tax_account_payable']
         cls.tax_4v.active = True
 
         cls.l10n_it_tax_report_partner = cls.env['res.partner'].create({

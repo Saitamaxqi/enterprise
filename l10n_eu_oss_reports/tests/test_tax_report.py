@@ -21,12 +21,16 @@ class OSSTaxReportTest(TestAccountReportsCommon):
         account_payable = cls.env['account.account'].create({
             'name': "VAT Payable: VAT Current Account (C/A)",
             'code': "4512",
-            'account_type': 'liability_current',
+            'account_type': 'liability_payable',
+            'reconcile': True,
+            'non_trade': True,
         })
         account_receivable = cls.env['account.account'].create({
             'name': "VAT Recoverable: VAT Current Account (C/A)",
             'code': "4112",
-            'account_type': 'asset_current',
+            'account_type': 'asset_receivable',
+            'reconcile': True,
+            'non_trade': True,
         })
 
         tax_group = cls.env['account.tax.group'].create({
@@ -273,8 +277,8 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
         cls.env['account.tax.group'].create({
             'name': 'tax_group',
             'country_id': cls.company_data['company'].account_fiscal_country_id.id,
-            'tax_payable_account_id': cls.company_data['default_account_expense'].id,
-            'tax_receivable_account_id': cls.company_data['default_account_revenue'].id,
+            'tax_payable_account_id': cls.company_data['default_tax_account_payable'].id,
+            'tax_receivable_account_id': cls.company_data['default_tax_account_receivable'].id,
         })
         oss_tag = cls.env.ref('l10n_eu_oss.tag_oss')
         oss_fp = cls.env['account.fiscal.position'].create({

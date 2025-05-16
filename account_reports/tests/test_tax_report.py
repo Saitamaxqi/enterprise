@@ -262,8 +262,8 @@ class TestTaxReport(TestAccountReportsCommon):
         vals = {
             'name': 'Test tax group',
             'company_id': company.id,
-            'tax_receivable_account_id': cls.company_data['default_account_receivable'].sudo().copy({'company_ids': company.ids}).id,
-            'tax_payable_account_id': cls.company_data['default_account_payable'].sudo().copy({'company_ids': company.ids}).id,
+            'tax_receivable_account_id': cls.company_data['default_tax_account_receivable'].sudo().copy({'company_ids': company.ids}).id,
+            'tax_payable_account_id': cls.company_data['default_tax_account_payable'].sudo().copy({'company_ids': company.ids}).id,
         }
         if country:
             vals['country_id'] = country.id

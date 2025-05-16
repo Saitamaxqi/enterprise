@@ -543,8 +543,8 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         """ Update the taxes of confirmed lines when the subscription company is updated """
         tax_group_1 = self.env['account.tax.group'].create({
             'name': 'Test tax group',
-            'tax_receivable_account_id': self.company_data['default_account_receivable'].copy().id,
-            'tax_payable_account_id': self.company_data['default_account_payable'].copy().id,
+            'tax_receivable_account_id': self.company_data['default_tax_account_receivable'].copy().id,
+            'tax_payable_account_id': self.company_data['default_tax_account_payable'].copy().id,
         })
         sale_tax_percentage_incl_1 = self.env['account.tax'].create({
             'name': 'sale_tax_percentage_incl_1',
@@ -558,8 +558,8 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         tax_group_2 = self.env['account.tax.group'].create({
             'name': 'Test tax group',
             'company_id': other_company_data['company'].id,
-            'tax_receivable_account_id': other_company_data['default_account_receivable'].copy().id,
-            'tax_payable_account_id': other_company_data['default_account_payable'].copy().id,
+            'tax_receivable_account_id': other_company_data['default_tax_account_receivable'].copy().id,
+            'tax_payable_account_id': other_company_data['default_tax_account_payable'].copy().id,
         })
         sale_tax_percentage_incl_2 = self.env['account.tax'].create({
             'name': 'sale_tax_percentage_incl_2',
