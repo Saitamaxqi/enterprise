@@ -1,10 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
-from odoo.tests.common import TransactionCase, new_test_user
+from odoo.tests.common import new_test_user
+from odoo.addons.spreadsheet_edition.tests.spreadsheet_test_case import SpreadsheetTestCase
 
 
-class SaleOrderSpreadsheet(TransactionCase):
+class SaleOrderSpreadsheet(SpreadsheetTestCase):
 
     def test_sale_order_action_open(self):
         spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})
@@ -61,6 +62,34 @@ class SaleOrderSpreadsheet(TransactionCase):
         sale_order.unlink()
         self.assertFalse(so_spreadsheet.exists(), "spreadsheet should be deleted with the related order")
         self.assertTrue(spreadsheet.exists(), "Original spreadsheet should be unaltered")
+
+    def test_copy_so_copies_spreadsheet_revision(self):
+        spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})
+        quotation_template = self.env["sale.order.template"].create({
+            "name": "Test template",
+            "spreadsheet_template_id": spreadsheet.id
+        })
+        sale_order = self.env["sale.order"].create({
+            "partner_id": self.env.user.partner_id.id,
+            "sale_order_template_id": quotation_template.id
+        })
+        sale_order.action_open_sale_order_spreadsheet()
+
+        so_spreadsheet = sale_order.spreadsheet_ids
+
+        # dispatch a revision to the spreadsheet
+        revision = self.new_revision_data(spreadsheet)
+        spreadsheet.dispatch_spreadsheet_message(revision)
+
+        new_so = sale_order.copy()
+        new_so_spreadsheet = new_so.spreadsheet_ids
+
+        self.assertEqual(
+            so_spreadsheet.spreadsheet_revision_ids.commands,
+            new_so_spreadsheet.spreadsheet_revision_ids.commands,
+            "revision should be copied"
+        )
+        self.assertNotEqual(so_spreadsheet.id, new_so_spreadsheet.id, "spreadsheet id should be different")
 
     def test_access(self):
         salesman = new_test_user(self.env, login="Alice", groups="sales_team.group_sale_salesman")

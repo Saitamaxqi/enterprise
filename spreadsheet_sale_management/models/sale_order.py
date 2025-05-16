@@ -32,3 +32,12 @@ class SaleOrder(models.Model):
         if not self.spreadsheet_id:
             self.spreadsheet_template_id.copy({"order_id": self.id})
         return self.spreadsheet_id.action_open_spreadsheet()
+
+    def copy(self, default=None):
+        default = dict(default or {})
+        sale_orders = super().copy(default=default)
+        if 'spreadsheet_ids' not in default:
+            for order, new_order in zip(self, sale_orders):
+                # copy the spreadsheet, with all the revisions history
+                new_order.spreadsheet_ids = order.spreadsheet_ids.copy({"order_id": new_order.id})
+        return sale_orders
