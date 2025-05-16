@@ -220,8 +220,6 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "id": message.id,
                                         "incoming_email_cc": False,
                                         "incoming_email_to": False,
-                                        "is_discussion": True,
-                                        "is_note": False,
                                         "message_link_preview_ids": [],
                                         "message_type": "notification",
                                         "model": "discuss.channel",
@@ -235,7 +233,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "res_id": employee_channel.id,
                                         "scheduledDatetime": False,
                                         "subject": False,
-                                        "subtype_description": False,
+                                        "subtype_id": self.env.ref("mail.mt_comment").id,
                                         "thread": {
                                             "id": employee_channel.id,
                                             "model": "discuss.channel",
@@ -243,6 +241,9 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "write_date": fields.Datetime.to_string(message.write_date),
                                     },
                                 ),
+                                "mail.message.subtype": [
+                                    {"description": False, "id": self.env.ref("mail.mt_comment").id}
+                                ],
                                 "mail.thread": self._filter_threads_fields(
                                     {
                                         "display_name": "employee channel",
