@@ -58,6 +58,7 @@ class TestWhatsAppFollowup(WhatsAppCommon, TestAccountFollowupReports):
             active_ids=self.partner_a.ids,
         ).create({
             'print': False,
+            'wa_template_id': self.wa_template.id,
             'whatsapp': True,
         })
         with self.mockWhatsappGateway():

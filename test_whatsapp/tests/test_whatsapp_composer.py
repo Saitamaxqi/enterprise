@@ -279,11 +279,9 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
         )
 
         # retry the failed message
-        with self.capture_triggers('whatsapp.ir_cron_send_whatsapp_queue') as capt:
+        with self.mockWhatsappGateway(), self.patchWhatsappCronTrigger():
             message.button_resend()
-        self.assertEqual(len(capt.records), 1)
-        with self.mockWhatsappGateway():
-            message._send_message()
+        self.assertEqual(len(self._wa_msg_sent_vals), 1)
         self._assertWAMessage(
             message,
             attachment_values={
