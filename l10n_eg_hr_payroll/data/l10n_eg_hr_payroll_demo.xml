@@ -13,14 +13,18 @@
         <field name="zip">1000</field>
         <field name="city">Cairo</field>
         <field name="country_id" ref="base.eg"/>
+        <field name="resource_calendar_id" ref="l10n_eg_hr_payroll.resource_calendar_def_40h"/>
     </record>
 
     <record id="base.user_admin" model="res.users">
         <field name="company_ids" eval="[(4, ref('base.demo_company_eg'))]"/>
     </record>
-
     <record id="base.user_demo" model="res.users">
         <field name="company_ids" eval="[(4, ref('base.demo_company_eg'))]"/>
+    </record>
+
+    <record id="l10n_eg_hr_payroll.resource_calendar_def_40h" model="resource.calendar">
+        <field name="company_id" ref="base.demo_company_eg"/>
     </record>
 
     <record id="eg_hr_department_marketing" model="hr.department">
@@ -127,7 +131,7 @@
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="work_contact_id" ref="l10n_eg_hr_payroll.res_partner_abeer"/>
         <field name="company_id" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).company_id"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+        <field name="resource_calendar_id" ref="l10n_eg_hr_payroll.resource_calendar_def_40h"/>
         <field name="tz">Africa/Cairo</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).city"/>
@@ -169,7 +173,7 @@
         <field name="parent_id" ref="l10n_eg_hr_payroll.hr_employee_abeer"/>
         <field name="user_id" ref="l10n_eg_hr_payroll.user_hany"/>
         <field name="company_id" ref="base.demo_company_eg"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+        <field name="resource_calendar_id" ref="l10n_eg_hr_payroll.resource_calendar_def_40h"/>
         <field name="tz">Africa/Cairo</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).city"/>

@@ -17,6 +17,7 @@
         <field name="phone">+966 51 234 5678</field>
         <field name="email">info@company.saexample.com</field>
         <field name="website">www.saexample.com</field>
+        <field name="resource_calendar_id" ref="l10n_sa_hr_payroll.resource_calendar_def_40h"/>
     </record>
 
     <record id="base.user_admin" model="res.users">
@@ -25,6 +26,10 @@
 
     <record id="base.user_demo" model="res.users">
         <field name="company_ids" eval="[(4, ref('base.demo_company_sa'))]"/>
+    </record>
+
+    <record id="l10n_sa_hr_payroll.resource_calendar_def_40h" model="resource.calendar">
+        <field name="company_id" ref="base.demo_company_sa"/>
     </record>
 
     <record id="sa_hr_department_human_resources" model="hr.department">
@@ -133,7 +138,7 @@
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_nura')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="work_contact_id" ref="l10n_sa_hr_payroll.res_partner_nura"/>
         <field name="company_id" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_nura')).company_id"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+        <field name="resource_calendar_id" ref="l10n_sa_hr_payroll.resource_calendar_def_40h"/>
         <field name="tz">Asia/Riyadh</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_nura')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_nura')).city"/>
@@ -178,7 +183,7 @@
         <field name="parent_id" ref="l10n_sa_hr_payroll.hr_employee_nura"/>
         <field name="user_id" ref="l10n_sa_hr_payroll.user_salem"/>
         <field name="company_id" ref="base.demo_company_sa"/>
-        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+        <field name="resource_calendar_id" ref="l10n_sa_hr_payroll.resource_calendar_def_40h"/>
         <field name="tz">Asia/Riyadh</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_salem')).street"/>
         <field name="private_city" model="res.partner" eval="obj(ref('l10n_sa_hr_payroll.res_partner_salem')).city"/>
