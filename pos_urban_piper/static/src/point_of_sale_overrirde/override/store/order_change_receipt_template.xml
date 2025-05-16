@@ -7,7 +7,7 @@
                 Delivery/Online
             </div>
         </xpath>
-        <xpath expr="//div[hasclass('receipt-header')]//div[hasclass('pos-receipt-title')]" position="attributes">
+        <xpath expr="//div[hasclass('receipt-header')]//div[hasclass('preset-name')]" position="attributes">
             <attribute name="t-if">!data.delivery_provider_id</attribute>
         </xpath>
         <xpath expr="//div[hasclass('receipt-header')]//div[hasclass('o-employee-name')]" position="after">
