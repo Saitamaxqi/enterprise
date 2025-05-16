@@ -50,6 +50,21 @@ class Partner extends models.Model {
     ];
 }
 
+class Task extends models.Model {
+    _name = "task";
+    int_field = fields.Integer();
+    float_field = fields.Float();
+    monetary_field = fields.Monetary({ currency_field: "" });
+    _records = [
+        {
+            id: 1,
+            int_field: 5,
+            float_field: 19.99,
+            monetary_field: 1.23,
+        },
+    ];
+}
+
 class User extends models.Model {
     _name = "res.users";
     has_group() {
@@ -63,7 +78,7 @@ class Product extends models.Model {
     _records = [{ id: 1, display_name: "A very good product" }];
 }
 
-defineModels([Coucou, Product, Partner, User]);
+defineModels([Coucou, Product, Partner, Task, User]);
 
 test("empty kanban editor", async () => {
     await mountViewEditor({
@@ -796,4 +811,32 @@ test("sortby and orderby field in kanban sidebar", async () => {
     await contains(".o-overlay-item:nth-child(1) .o-dropdown--menu .dropdown-item:eq(0)").click();
     expect(".o_web_studio_property_sort_order .o_select_menu .text-start").toHaveText("Ascending");
     expect.verifySteps(["edit_view"]);
+});
+
+test("sortby numeric field in kanban sidebar", async () => {
+    const arch = `
+        <kanban>
+            <templates>
+                <t t-name='card'>
+                    <field name='int_field'/>
+                    <field name='float_field'/>
+                </t>
+            </templates>
+        </kanban>`;
+
+    await mountViewEditor({
+        type: "kanban",
+        resModel: "task",
+        arch,
+    });
+
+    await contains(".o_web_studio_property_sort_by button").click();
+    expect(queryAllTexts(".dropdown-item.o_select_menu_item")).toEqual([
+        "Created on",
+        "Float field",
+        "Id",
+        "Int field",
+        "Last Modified on",
+        "Monetary field",
+    ]);
 });

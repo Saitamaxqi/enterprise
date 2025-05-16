@@ -127,6 +127,7 @@ export class ViewEditorModel extends Reactive {
         this._editionFlow = editionFlow;
 
         this.GROUPABLE_TYPES = ["many2one", "char", "boolean", "selection", "date", "datetime"];
+        this.MEASURABLE_TYPES = ["integer", "float", "monetary"];
 
         this._activeNodeXpath = undefined;
         this.lastActiveNodeXpath = undefined;

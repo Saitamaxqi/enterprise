@@ -172,7 +172,7 @@ export class KanbanEditorSidebar extends Component {
     get sortChoices() {
         return fieldsToChoices(
             this.viewEditorModel.fields,
-            this.viewEditorModel.GROUPABLE_TYPES,
+            this.viewEditorModel.GROUPABLE_TYPES.concat(this.viewEditorModel.MEASURABLE_TYPES),
             (field) => field.store
         );
     }
