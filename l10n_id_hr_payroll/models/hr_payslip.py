@@ -84,4 +84,13 @@ class HrPayslip(models.Model):
     def _compute_l10n_id_include_pkp_ptkp(self):
         """ by default, if it's end of year/end of contract, set to True"""
         for slip in self:
-            slip.l10n_id_include_pkp_ptkp = slip.date_to.month == 12 or (slip.contract_id.date_end and slip.contract_id.date_end.month == slip.date_to.month and slip.contract_id.date_end.year == slip.date_to.year)
+            slip.l10n_id_include_pkp_ptkp = (
+                slip.date_to and (
+                    (slip.date_to.month == 12) or
+                    (
+                        slip.contract_id.date_end and
+                        slip.contract_id.date_end.month == slip.date_to.month and
+                        slip.contract_id.date_end.year == slip.date_to.year
+                    )
+                )
+            )
