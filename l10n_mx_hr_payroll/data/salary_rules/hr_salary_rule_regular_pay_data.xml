@@ -1137,6 +1137,7 @@ def find_index(x, rates):
     for ind, (low_num, low_measure, high_num, high_measure) in enumerate(rates):
         if low_num * measures[low_measure] &lt;= x &lt;= high_num * measures[high_measure]:
             return ind
+    return 0
 
 ceav_table = payslip._rule_parameter('l10n_mx_ceav_lower_upper')
 integrated_daily_wage = result_rules['INT_DAY_WAGE']['total']
