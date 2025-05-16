@@ -16,6 +16,14 @@ class TestShopFloor(HttpCase):
         group_workorder = self.env.ref('mrp.group_mrp_routings')
         self.env.user.write({'group_ids': [Command.link(group_workorder.id)]})
 
+        # Create a test dedicated company.
+        self.company = self.env['res.company'].create({'name': 'Test ShopFloor Company'})
+        self.env.user.company_ids |= self.company
+        self.env.user.company_id = self.company
+        self.env.company = self.company
+        # Create an employee for the user (it will be created for the test company.)
+        self.employee = self.env['hr.employee'].create({'user_id': self.env.user.id})
+
         group_lot = self.env.ref('stock.group_production_lot')
         group_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         group_pack = self.env.ref('stock.group_tracking_lot')
@@ -44,12 +52,10 @@ class TestShopFloor(HttpCase):
         stock_lot_seq = self.env['ir.sequence'].search([('code', '=', 'stock.lot.serial')])
         stock_lot_seq.number_next_actual = 1
 
-    @unittest.skip  # TODO: tour needs to be updated.
     def test_shop_floor(self):
         # Creates somme employees for test purpose.
         employees = self.env['hr.employee'].create([{
             'name': name,
-            'company_id': self.env.company.id,
         } for name in ['Abbie Seedy', 'Billy Demo', 'Cory Corrinson']])
         employees[0].barcode = "659898105101"
 
@@ -90,7 +96,6 @@ class TestShopFloor(HttpCase):
             'time_efficiency': 80,
         })
         jungle = self.env['mrp.workcenter'].create({'name': 'Jungle'})
-        picking_type = self.warehouse.manu_type_id
         bom = self.env['mrp.bom'].create({
             'product_id': giraffe.id,
             'product_tmpl_id': giraffe.product_tmpl_id.id,
@@ -98,28 +103,28 @@ class TestShopFloor(HttpCase):
             'product_qty': 1.0,
             'consumption': 'flexible',
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                 'name': 'Creation',
                 'workcenter_id': savannah.id,
-            }), (0, 0, {
+            }), Command.create({
                 'name': 'Release',
                 'workcenter_id': jungle.id,
             })],
             'bom_line_ids': [
-                (0, 0, {'product_id': leg.id, 'product_qty': 4}),
-                (0, 0, {'product_id': neck.id, 'product_qty': 1})
+                Command.create({'product_id': leg.id, 'product_qty': 4}),
+                Command.create({'product_id': neck.id, 'product_qty': 1})
             ]
         })
         steps_common_values = {
-            'picking_type_ids': [(4, picking_type.id)],
-            'product_ids': [(4, giraffe.id)],
+            'picking_type_ids': [Command.link(self.warehouse.manu_type_id.id)],
+            'product_ids': [Command.link(giraffe.id)],
             'operation_id': bom.operation_ids[0].id,
         }
         self.env['quality.point'].create([
             {
                 **steps_common_values,
                 'title': 'Register Production',
-                'test_type_id': self.env.ref('mrp_workorder.test_type_register_production').id,
+                'test_type_id': self.test_type_register_production.id,
                 'sequence': 0,
             },
             {
@@ -178,7 +183,6 @@ class TestShopFloor(HttpCase):
         self.assertEqual(mo.workorder_ids[0].check_ids[3].move_id.quantity, 2)
         self.assertRecordValues(mo.workorder_ids[0].check_ids[3].move_id.lot_ids, [{'id': neck_sn_1}, {'id': neck_sn_2}])
 
-    @unittest.skip  # TODO: tour needs to be updated.
     def test_shop_floor_auto_select_workcenter(self):
         """ This test ensures the right work center is selected when Shop Floor is opened."""
         # Create some products.
@@ -319,7 +323,6 @@ class TestShopFloor(HttpCase):
             {'product_id': product_comp2.id, 'product_uom_qty': 3, 'quantity': 3, 'picked': False},
         ])
 
-    @unittest.skip  # TODO: tour needs to be updated.
     def test_shop_floor_my_wo_filter_with_pin_user(self):
         """Checks the shown Work Orders (in "My WO" section) are correctly
         refreshed when selected user uses a PIN code."""
@@ -358,26 +361,19 @@ class TestShopFloor(HttpCase):
             'bom_line_ids': [
                 Command.create({'product_id': comp_1.id, 'product_qty': 3}),
                 Command.create({'product_id': comp_2.id, 'product_qty': 1}),
-            ]
+            ],
         })
+        # Mark the components as to consume in the operation so they appear in the Shop Floor.
+        bom.bom_line_ids.operation_id = bom.operation_ids.id
         # Create, confirm and plan two MO.
-        mo_1 = self.env['mrp.production'].create({
+        all_mo = self.env['mrp.production'].create([{
             'product_id': final_product.id,
-            'product_qty': 3,
+            'product_qty': qty,
             'bom_id': bom.id,
-        })
-        mo_2 = self.env['mrp.production'].create({
-            'product_id': final_product.id,
-            'product_qty': 5,
-            'bom_id': bom.id,
-        })
-        all_mo = mo_1 + mo_2
+        } for qty in [3, 5]])
         all_mo.action_confirm()
         all_mo.action_assign()
         all_mo.button_plan()
-        # Change MO name for easier tracking in the tour.
-        mo_1.name = 'TEST/00001'
-        mo_2.name = 'TEST/00002'
         self.start_tour('/odoo/shop-floor', 'test_shop_floor_my_wo_filter_with_pin_user', login='admin')
 
     @unittest.skip  # TODO: tour needs to be updated.

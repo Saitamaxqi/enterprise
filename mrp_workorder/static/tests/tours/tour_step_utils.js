@@ -12,7 +12,7 @@ export const stepUtils = {
         ];
     },
     addWorkcenterToDisplay(workcenterName) {
-        const target = `.o_mrp_workcenter_dialog div.o_workcenter_button:contains(${workcenterName}) input`;
+        const target = `.o_mrp_workcenter_dialog div.o_workcenter_button:contains("${workcenterName}") input`;
         return [
             { trigger: `${target}:not(:checked)`, run: "click" },
             { trigger: `${target}:checked` },
