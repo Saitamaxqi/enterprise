@@ -722,6 +722,12 @@ msgid "Self-retainers"
 msgstr ""
 
 #. module: l10n_co_edi
+#: model:ir.model.fields,field_description:l10n_co_edi.field_product_product__l10n_co_edi_ref_nominal_tax
+#: model:ir.model.fields,field_description:l10n_co_edi.field_product_template__l10n_co_edi_ref_nominal_tax
+msgid "Specific Component Nominal Taxes"
+msgstr ""
+
+#. module: l10n_co_edi
 #: model:ir.model.fields,field_description:l10n_co_edi.field_account_bank_statement_line__l10n_co_edi_is_support_document
 #: model:ir.model.fields,field_description:l10n_co_edi.field_account_journal__l10n_co_edi_is_support_document
 #: model:ir.model.fields,field_description:l10n_co_edi.field_account_move__l10n_co_edi_is_support_document

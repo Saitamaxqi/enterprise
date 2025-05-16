@@ -38,6 +38,30 @@ class TestDianMoves(TestCoDianCommon):
             default_code='P2222',
         )
 
+        # Alcohol Taxes
+        cls.alcohol_tax_1 = cls.env['account.tax'].create({
+            'name': "ICL >20%",
+            'amount_type': 'fixed',
+            'amount': 30,
+            'l10n_co_edi_type': cls.env.ref('l10n_co_edi.tax_type_18').id,  # ICL
+        })
+        cls.alcohol_tax_2 = cls.alcohol_tax_1.copy({
+            'name': "ICL <=20%",
+            'amount': 15,
+        })
+
+        # Alcohol Products
+        cls.product_alcohol_1 = cls._create_product(
+            name="Wine 50% ABV",
+            l10n_co_edi_ref_nominal_tax=50,
+            default_code='VINO1',
+        )
+        cls.product_alcohol_2 = cls._create_product(
+            name="Beer 3% ABV",
+            l10n_co_edi_ref_nominal_tax=3,
+            default_code='BEER1',
+        )
+
         # 1 USD ~= 3919 COP
         usd = cls.env.ref('base.USD')
         cls.env['res.currency.rate'].create({
@@ -77,6 +101,36 @@ class TestDianMoves(TestCoDianCommon):
         ])
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_sugar.xml")
+
+    def test_invoice_alcohol(self):
+        invoice = self._create_move(invoice_line_ids=[
+            Command.create({
+                'product_id': self.product_alcohol_1.id,
+                'quantity': 3,
+                'price_unit': 100,
+                'tax_ids': [Command.set([self.tax_iva_5.id, self.alcohol_tax_1.id])],
+            }),
+            Command.create({
+                'product_id': self.product_alcohol_2.id,
+                'quantity': 2,
+                'price_unit': 200,
+                'tax_ids': [Command.set([self.tax_iva_5.id, self.alcohol_tax_2.id])],
+            }),
+            Command.create({
+                'product_id': self.product_a.id,
+                'quantity': 10,
+                'price_unit': 100,
+                'tax_ids': [Command.set([self.tax_iva_5.id])],
+            }),
+            Command.create({
+                'product_id': self.product_a.id,
+                'quantity': 5,
+                'price_unit': 100,
+                'tax_ids': [Command.set([self.tax_iva_19.id])],
+            }),
+        ])
+        xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
+        self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_alcohol.xml")
 
     def test_multicurrency(self):
         """

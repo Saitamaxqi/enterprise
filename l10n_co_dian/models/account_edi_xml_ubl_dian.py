@@ -720,7 +720,14 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
                     constraints['dian_export_product_brand'] = _("Every exportation product must have a brand.")
             if "IBUA" in line.tax_ids.l10n_co_edi_type.mapped('name') and product.l10n_co_edi_ref_nominal_tax == 0:
                 constraints['dian_sugar'] = _(
-                    "'Volume in milliliters' should be set on product: %s when using IBUA taxes.", line.product_id.name)
+                    "Volume in milliliters should be set on the %(field_description)s field for product: %(product_name)s when using IBUA taxes.",
+                    field_description=product._fields['l10n_co_edi_ref_nominal_tax']._description_string(self.env),
+                    product_name=product.name)
+            if "ICL" in line.tax_ids.l10n_co_edi_type.mapped('name') and product.l10n_co_edi_ref_nominal_tax == 0:
+                constraints['dian_alcohol'] = _(
+                    "Alcohol percentage should be set on the %(field_description)s field for product: %(product_name)s when using ICL taxes.",
+                    field_description=product._fields['l10n_co_edi_ref_nominal_tax']._description_string(self.env),
+                    product_name=product.name)
             if not self._dian_uom_code(line):
                 constraints['dian_uom'] = _("There is no Colombian code on the unit of measure: %s", line.product_uom_id.name)
             if move.l10n_co_edi_is_support_document and move.currency_id.is_zero(line.price_unit):
@@ -826,6 +833,27 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
                     'tax_scheme_vals': vals['_tax_category_vals_']['tax_scheme_vals'],
                 },
             }
+            if tax_co_type == '32':
+                # ICL (tax on alcoholic beverages) is a tax based on the alcohol percentage in the bottle.
+                # It is always sent in LTRs according to the specifications listed in the DIAN documentation.
+                tax_subtotal.pop('taxable_amount')
+                tax_subtotal['base_unit_measure_attrs'] = {'unitCode': 'LTR'}
+                if 'percent' in tax_subtotal['tax_category_vals']:
+                    tax_subtotal['tax_category_vals'].pop('percent')
+                if 'tax_details_per_record' in taxes_vals:
+                    tax_subtotal['base_unit_measure'] = sum(
+                        base_line['product_id'].l10n_co_edi_ref_nominal_tax
+                        for base_line, _taxes_data in vals['base_line_x_taxes_data']
+                    )
+                else:
+                    base_line = taxes_vals['base_line']
+                    tax_subtotal['base_unit_measure'] = base_line['product_id'].l10n_co_edi_ref_nominal_tax
+                # Field validation happens after the exporting of values so we default to a sensible rate of 0 if no
+                # alcohol percent is set.
+                rate = 0
+                if tax_subtotal['base_unit_measure']:
+                    rate = vals['tax_amount'] / tax_subtotal['base_unit_measure']
+                tax_subtotal['per_unit_amount'] = self.format_float(rate, 2)
             if tax_co_type == '34':
                 # IBUA (tax on sugar beverages) is a tax based on the quantity of sugar per 100mL
                 # e.g. if the quantity of sugar per 100mL is > 10gr -> tax of 35$ per 100mL
@@ -845,7 +873,11 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
                     base_line = taxes_vals['base_line']
                     tax_subtotal['base_unit_measure'] = base_line['product_id'].l10n_co_edi_ref_nominal_tax * base_line['quantity']
                 # Infer the rate per 100mL
-                rate = vals['tax_amount'] * 100 / tax_subtotal['base_unit_measure']
+                # Field validation happens after the exporting of values so we default to a sensible rate of 0 if
+                # no sugar contents are set.
+                rate = 0
+                if tax_subtotal['base_unit_measure']:
+                    rate = vals['tax_amount'] * 100 / tax_subtotal['base_unit_measure']
                 tax_subtotal['per_unit_amount'] = self.format_float(rate, 2)
             tax_total_dict[tax_co_type]['tax_amount'] += tax_subtotal['tax_amount']  # abs for withholding taxes
             tax_total_dict[tax_co_type]['tax_subtotal_vals'].append(tax_subtotal)

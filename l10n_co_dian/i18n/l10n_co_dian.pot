@@ -16,13 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_co_dian
-#. odoo-python
-#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
-msgid ""
-"'Volume in milliliters' should be set on product: %s when using IBUA taxes."
-msgstr ""
-
-#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "1018418009"
 msgstr ""
@@ -217,6 +210,14 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
 msgid "Add your certificates to sign your documents."
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid ""
+"Alcohol percentage should be set on the %(field_description)s field"
+" for product: %(product_name)s when using ICL taxes."
 msgstr ""
 
 #. module: l10n_co_dian
@@ -1092,6 +1093,14 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
 msgid "Vendor Credit Note"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid ""
+"Volume in milliliters should be set on the %(field_description)s "
+"field for product: %(product_name)s when using IBUA taxes."
 msgstr ""
 
 #. module: l10n_co_dian

@@ -18,15 +18,6 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 #. module: l10n_co_dian
-#. odoo-python
-#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
-msgid ""
-"'Volume in milliliters' should be set on product: %s when using IBUA taxes."
-msgstr ""
-"Debe configurar “Volumen en mililitros” en el producto %s cuando usa el "
-"impuesto IBUA."
-
-#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "1018418009"
 msgstr "1018418009"
@@ -325,6 +316,15 @@ msgstr "ApplicationResponse"
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
 msgid "Are you sure you want to delete this record?"
 msgstr "¿Está seguro de que desea eliminar este registro?"
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid ""
+"Alcohol percentage should be set on the %(field_description)s field"
+" for product: %(product_name)s when using ICL taxes."
+msgstr "El porcentaje de alcohol debe establecerse en el campo del %(field_description)s"
+" para el producto: %(product_name)s al usar impuestos ICL."
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__attachment_id
@@ -1232,6 +1232,15 @@ msgstr "Documento Soporte"
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
 msgid "Vendor Credit Note"
 msgstr "Nota de Ajuste del Documento Soporte"
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid ""
+"Volume in milliliters should be set on the %(field_description)s "
+"field for product: %(product_name)s when using IBUA taxes."
+msgstr "El volumen en mililitros debe establecerse en el campo del %(field_description)s "
+"para el producto: %(product_name)s al usar impuestos IBUA."
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__zip_key
