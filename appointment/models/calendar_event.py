@@ -9,7 +9,8 @@ from markupsafe import Markup
 from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
 from odoo.addons.calendar.models.utils import interval_from_events
 from odoo.exceptions import ValidationError
-from odoo.tools.date_intervals import Intervals, intervals_overlap, invert_intervals, timezone_datetime
+from odoo.tools.intervals import Intervals, intervals_overlap, invert_intervals
+from odoo.tools.date_utils import localized
 from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
 from odoo.osv import expression
 
@@ -153,12 +154,16 @@ class CalendarEvent(models.Model):
                 if not resource.shareable or not (sum(bookings.mapped('capacity_reserved')) <= resource.capacity)])
             for event in events:
                 event_resources = event.resource_ids
+                event_interval = (localized(event.start), localized(event.stop))
                 event.unavailable_resource_ids = event_resources.filtered(lambda resource: any(
-                    intervals_overlap(interval, (event.start, event.stop)) for interval
-                    in resource_unavailabilities.get(resource, [])
+                    intervals_overlap(tuple(map(localized, interval)), event_interval)
+                    for interval in resource_unavailabilities.get(resource, [])
                 ))
                 for conflicting_event in events_to_check - event._origin:
-                    if (resources := event_resources._origin & conflicting_event.resource_ids) and intervals_overlap((event.start, event.stop), (conflicting_event.start, conflicting_event.stop)):
+                    if (
+                        (resources := event_resources._origin & conflicting_event.resource_ids)
+                        and intervals_overlap(event_interval, (localized(conflicting_event.start), localized(conflicting_event.stop)))
+                    ):
                         event.unavailable_resource_ids += resources
 
     @api.depends('booking_line_ids')
@@ -519,8 +524,8 @@ class CalendarEvent(models.Model):
             appointment_type = appointment_type.browse(appointment_type_id)
 
         if appointment_type:
-            start_utc = timezone_datetime(start)
-            stop_utc = timezone_datetime(stop)
+            start_utc = localized(start)
+            stop_utc = localized(stop)
             slot_available_intervals = [
                 (slot['utc'][0], slot['utc'][1])
                 for slot in appointment_type._slots_generate(start_utc, stop_utc, 'utc', reference_date=start)
@@ -560,7 +565,7 @@ class CalendarEvent(models.Model):
                 (start, stop, set())
                 for start, stop in resource_unavailabilities.get(appointment_resource_id, [])])
             if event_intervals := resource_unavailability_by_bookings.get(appointment_resource_id):
-                unavailabilities |= Intervals([(timezone_datetime(start), timezone_datetime(stop), set()) for start, stop, _ in event_intervals])
+                unavailabilities |= Intervals([(localized(start), localized(stop), set()) for start, stop, _ in event_intervals])
             result[appointment_resource_id.id] = [{'start': start, 'stop': stop} for start, stop, _ in unavailabilities]
         return result
 
@@ -571,7 +576,7 @@ class CalendarEvent(models.Model):
         """
         return {
             attendee.id: Intervals([
-                (timezone_datetime(event.start), timezone_datetime(event.stop), attendee)
+                (localized(event.start), localized(event.stop), attendee)
                 for event in partners._get_busy_calendar_events(start, stop).get(attendee.id, [])
             ]) for attendee in partners
         }

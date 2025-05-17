@@ -9,7 +9,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import RedirectWarning, UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import format_date
-from odoo.tools.date_intervals import make_aware
+from odoo.tools.date_utils import localized
 
 from odoo.addons.timer.utils.timer_utils import round_time_spent
 
@@ -61,8 +61,8 @@ class AccountAnalyticLine(models.Model):
         end_datetime = fields.Datetime.from_string(end_date) + relativedelta(hour=23, minute=59, second=59)
         unavailability_intervals_per_employee_id = {}
         # naive datetimes are made explicit in UTC
-        from_datetime, dummy = make_aware(start_datetime)
-        to_datetime, dummy = make_aware(end_datetime)
+        from_datetime = localized(start_datetime)
+        to_datetime = localized(end_datetime)
         # We need to display in grey the unavailable full days
         # We start by getting the availability intervals to avoid false positive with range outside the office hours
 

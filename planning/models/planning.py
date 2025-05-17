@@ -13,8 +13,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_utils, format_datetime, SQL
-from odoo.tools.date_intervals import Intervals, sum_intervals
-from odoo.tools.date_utils import get_timedelta
+from odoo.tools.intervals import Intervals
+from odoo.tools.date_utils import get_timedelta, sum_intervals
 
 _logger = logging.getLogger(__name__)
 

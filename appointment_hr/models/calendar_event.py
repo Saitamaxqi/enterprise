@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, models
-from odoo.tools.date_intervals import Intervals, timezone_datetime
+from odoo.tools.intervals import Intervals
+from odoo.tools.date_utils import localized
 
 
 class CalendarEvent(models.Model):
@@ -15,8 +15,8 @@ class CalendarEvent(models.Model):
         if field != 'partner_ids':
             return result
 
-        start = timezone_datetime(start)
-        stop = timezone_datetime(stop)
+        start = localized(start)
+        stop = localized(stop)
 
         partners = self.env['res.partner'].browse(res_ids)
         users = partners.user_ids

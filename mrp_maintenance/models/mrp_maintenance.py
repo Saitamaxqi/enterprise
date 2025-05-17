@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
@@ -7,7 +6,7 @@ from collections import defaultdict
 import pytz
 
 from odoo import api, fields, models, Command, _
-from odoo.tools.date_intervals import Intervals
+from odoo.tools.intervals import Intervals
 from odoo.exceptions import UserError
 
 

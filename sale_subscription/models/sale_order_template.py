@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.tools import get_timedelta
+from odoo.tools.date_utils import get_timedelta
 
 
 class SaleOrderTemplate(models.Model):

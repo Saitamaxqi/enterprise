@@ -6,8 +6,10 @@ from pytz import timezone, UTC
 
 from odoo import api, fields, models, _
 from odoo.tools import float_round
-from odoo.tools.date_intervals import sum_intervals, HOURS_PER_DAY
+from odoo.tools.date_utils import sum_intervals
 from odoo.exceptions import UserError
+
+from odoo.addons.resource.models.utils import HOURS_PER_DAY
 
 
 class HrEmployee(models.Model):

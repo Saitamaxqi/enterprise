@@ -7,7 +7,8 @@ from pytz import timezone, UTC, utc
 from odoo import api, fields, models
 from odoo.osv import expression
 from odoo.tools import float_is_zero
-from odoo.tools.date_intervals import Intervals, timezone_datetime
+from odoo.tools.intervals import Intervals
+from odoo.tools.date_utils import localized
 
 
 class HrAttendance(models.Model):
@@ -123,8 +124,8 @@ class HrAttendance(models.Model):
 
         # Retrieve for each employee, their period linked to their calendars
         calendar_periods_by_employee = employees._get_calendar_periods(
-            timezone_datetime(start),
-            timezone_datetime(stop),
+            localized(start),
+            localized(stop),
         )
 
         full_interval_UTC = Intervals([(
@@ -163,8 +164,8 @@ class HrAttendance(models.Model):
                 continue
 
             calendar_work_intervals = calendar._work_intervals_batch(
-                timezone_datetime(start),
-                timezone_datetime(stop),
+                localized(start),
+                localized(stop),
                 resources=employees.resource_id,
                 tz=timezone(calendar.tz)
             )

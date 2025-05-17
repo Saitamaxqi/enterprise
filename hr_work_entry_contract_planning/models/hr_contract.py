@@ -1,11 +1,10 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 import pytz
 
 from odoo import fields, models
-from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkIntervals
+from odoo.tools.intervals import Intervals
 
 
 class HrContract(models.Model):
@@ -19,7 +18,7 @@ class HrContract(models.Model):
     def _get_more_vals_attendance_interval(self, interval):
         result = super()._get_more_vals_attendance_interval(interval)
         if interval[2]._name == 'planning.slot':
-            # Due to how WorkIntervals work we might lose the right start and end time for our work entry
+            # Due to how Intervals work we might lose the right start and end time for our work entry
             # i.e. [(1, 5, slot_1), (3, 10, slot_2)] will result in (1, 10, {slot_1, slot_2})
             # `_get_contract_work_entries_values` already takes care of unsplitting our invervals into two for that case
             # But the date needs to be correct after the fact, which we do here.
@@ -51,6 +50,6 @@ class HrContract(models.Model):
                 max(start_dt, pytz.utc.localize(planning_slot.start_datetime)),
                 min(end_dt, pytz.utc.localize(planning_slot.end_datetime)),
                 planning_slot))
-        mapped_intervals = {r: WorkIntervals(intervals[r]) for r in resource_ids}
+        mapped_intervals = {r: Intervals(intervals[r], keep_distinct=True) for r in resource_ids}
         mapped_intervals.update(super()._get_attendance_intervals(start_dt, end_dt))
         return mapped_intervals

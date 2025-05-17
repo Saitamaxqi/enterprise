@@ -9,7 +9,8 @@ from odoo import Command, fields, models, api, _
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import get_lang
-from odoo.tools.date_intervals import Intervals, sum_intervals
+from odoo.tools.intervals import Intervals
+from odoo.tools.date_utils import sum_intervals
 from odoo.addons.timer.utils.timer_utils import round_time_spent
 
 

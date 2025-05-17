@@ -8,7 +8,8 @@ except ImportError:
 
 from odoo import models, _, api
 from odoo.exceptions import UserError
-from odoo.tools import get_quarter_number, format_date
+from odoo.tools import format_date
+from odoo.tools.date_utils import get_quarter_number
 
 INCOME_FIELDS = (
     'year', 'period', 'activity_code', 'activity_type', 'activity_group', 'invoice_type', 'income_concept',
