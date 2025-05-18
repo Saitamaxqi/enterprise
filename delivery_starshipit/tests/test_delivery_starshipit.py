@@ -10,11 +10,15 @@ from odoo.tests import TransactionCase, tagged
 
 
 @contextmanager
-def _mock_starshipit_call():
+def _mock_starshipit_call(simulate_async_price=False):
+    price_is_available = False
+
     def _mock_request(*args, **kwargs):
+        nonlocal price_is_available
         method = kwargs.get('method') or args[0]
         url = kwargs.get('url') or args[1]
         data = kwargs.get('json') or {}
+
         responses = {
             'GET': {
                 '/shipment/clone': {
@@ -53,6 +57,12 @@ def _mock_starshipit_call():
                 },
             }
         }
+
+        if simulate_async_price and method == 'GET' and 'orders' in url:
+            if not price_is_available:
+                # Simulate a Starshipit call that doesn't return the shipping price yet
+                responses['GET']['orders']['order'].pop('total_shipping_price')
+                price_is_available = True
 
         for endpoint, content in responses[method].items():
             if endpoint in url:
@@ -122,6 +132,7 @@ class TestDeliveryStarShipIt(TransactionCase):
             'name': 'StarShipIt',
             'starshipit_service_code': 'CP01IL',
             'starshipit_carrier_code': 'CourierPost',
+            'invoice_policy': 'real',
         })
 
         cls.starshipit_second = cls.env['delivery.carrier'].create({
@@ -230,3 +241,31 @@ class TestDeliveryStarShipIt(TransactionCase):
             self.assertIsNot(picking.starshipit_return_parcel_reference, False, "The StarShipIt Return Parcel Reference is not set")
             pdf = picking.message_ids.attachment_ids.filtered(lambda m: m.datas == b'WW91J3JlIGEgY3VyaW91cyBvbmUgYXJlbid0IHlvdQ==')
             self.assertEqual(len(pdf), 2, "There should be two label, one for the shipping and one for the return.")
+
+    def test_shipping_order_async_price(self):
+        """ Test the full flow with a delayed price from Starshipit. """
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.au_partner.id,
+            'order_line': [
+                Command.create({'product_id': self.product_to_ship1.id})
+            ]
+        })
+
+        with _mock_starshipit_call(simulate_async_price=True):
+            sale_order.set_delivery_line(self.starshipit, 0)
+            sale_order.action_confirm()
+            picking = sale_order.picking_ids[0]
+
+            picking.action_assign()
+            picking.move_ids.picked = True
+            picking._action_done()
+
+            self.assertEqual(picking.carrier_price, 0.0, "Initial carrier_price should be 0.0 as price was pending.")
+            initial_delivery_line = sale_order.order_line.filtered('is_delivery')
+            self.assertEqual(initial_delivery_line.price_unit, 0.0, "Initial SO delivery line cost should be 0.0.")
+
+            self.env['stock.picking']._cron_starshipit_fetch_and_update_prices(auto_commit=False)
+
+            self.assertEqual(picking.carrier_price, 4.20, "Final carrier_price on picking should be updated by the cron.")
+            final_delivery_line = sale_order.order_line.filtered('is_delivery')
+            self.assertEqual(final_delivery_line.price_unit, 4.20, "Final SO delivery line cost should be updated by the cron.")

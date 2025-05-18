@@ -15,9 +15,11 @@ reduce handling time and improve customer experience.
     'application': True,
     'depends': ['stock_delivery'],
     'data': [
+        'data/ir_cron_data.xml',
         'security/ir.model.access.csv',
         'views/delivery_carrier_views.xml',
         'views/res_config_settings_views.xml',
+        'views/stock_picking_views.xml',
         'wizard/starshipit_shipping_wizard.xml',
     ],
     'assets': {

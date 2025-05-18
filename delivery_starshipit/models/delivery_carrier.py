@@ -1,8 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from time import sleep
+import logging
+
 from odoo import _, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from .starshipit_service import Starshipit
+
+_logger = logging.getLogger(__name__)
 
 CARRIER_SUPPORTING_RETURNS = [
     'AusPost',
@@ -140,7 +146,7 @@ class DeliveryCarrier(models.Model):
             total_shipping_price = order_data['order'].get('total_shipping_price', 0.0)
 
             if not total_shipping_price:
-                picking.message_post(body=_('The exact price could not be retrieved'))
+                picking.message_post(body=_('The exact price could not be retrieved. It will be updated by a scheduled action.'))
 
             order_result = {
                 'exact_price': total_shipping_price,
@@ -185,6 +191,69 @@ class DeliveryCarrier(models.Model):
                 self.starshipit_cancel_shipment(picking)
                 picking.message_post(body=_('Order %s was archived.', picking.name))
         return res
+
+    def get_starshipit_price_update(self, pickings_to_update):
+        """
+        Called by the cron job to fetch prices for a batch of pickings.
+        This method updates the picking's carrier_price and triggers SO update.
+        """
+        self.ensure_one()
+        starshipit = self._get_starshipit()
+
+        for picking in pickings_to_update:
+            starshipit_order_id = picking.starshipit_parcel_reference
+            try:
+                order_data = starshipit._get_order_details(starshipit_order_id)
+                total_shipping_price = order_data.get('order', {}).get('total_shipping_price')
+
+                if total_shipping_price is not None:
+                    final_carrier_price = self.with_context(order=picking.sale_id)._apply_margins(total_shipping_price)
+
+                    picking.write({
+                        'carrier_price': final_carrier_price,
+                    })
+
+                    if self.invoice_policy == 'real' and picking.sale_id:
+                        if picking.sale_id.invoice_status == 'invoiced':
+                            picking.sale_id.message_post(body=_(
+                                "Starshipit: Exact shipping cost for delivery %(picking_name)s is now %(final_carrier_price)s. This sale order is already invoiced, please review if a manual adjustment to the invoice is needed.",
+                                picking_name=picking.name, final_carrier_price=final_carrier_price
+                            ))
+                        else:
+                            try:
+                                picking._add_delivery_cost_to_so()
+                                picking.sale_id.message_post(body=_(
+                                    "Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact price (%(final_carrier_price)s) from transfer %(picking_name)s.",
+                                    final_carrier_price=final_carrier_price,
+                                    picking_name=picking.name
+                                ))
+                                self.env['mail.activity'].create({
+                                    'res_model_id': self.env['ir.model']._get_id('sale.order'),
+                                    'res_id': picking.sale_id.id,
+                                    'user_id': picking.sale_id.user_id.id,
+                                    'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+                                    'note': _('Shipping Cost has been updated from Starshipit. The Sales Order can now be invoiced.'),
+                                    'summary': _('Starshipit: Shipping Cost updated'),
+                                    'automated': True,
+                                })
+                            except Exception as e_so:
+                                _logger.exception("Starshipit Price Update: Error updating SO %s for picking %s", picking.sale_id.name, picking.name)
+                                picking.message_post(body=_(
+                                    "Starshipit: Exact shipping cost for delivery %(picking_name)s is now %(final_carrier_price)s, but automatic sale order delivery cost re-evaluation failed: %(e_so)s",
+                                    picking_name=picking.name,
+                                    final_carrier_price=final_carrier_price,
+                                    e_so=e_so
+                                ))
+                else:
+                    _logger.info("Starshipit Price Update: Price still not available from Starshipit for Order ID %s (Picking %s). Will retry in next cron run.", starshipit_order_id, picking.name)
+
+                # Sleep for 1 second to avoid hitting the Starshipit API rate limit.
+                sleep(1)
+
+            except Exception as e:
+                picking.message_post(body=_("Starshipit Price Update Cron: System Error fetching price: %s", str(e)))
+                _logger.exception("Starshipit Price Update: System Error for Picking %s (Starshipit ID %s)", picking.name, starshipit_order_id)
+        return True
 
     def starshipit_get_tracking_link(self, picking):
         """ Get the tracking link for the given picking.
