@@ -49,7 +49,7 @@
             </div>
 
             <div class="o_pdis_orderline w-100 bg-white overflow-auto" t-ref="orderlines-container">
-                <t t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
+                <t t-foreach="orderlines" t-as="orderline" t-key="orderline_index">
                     <Orderline orderline="orderline" t-on-click="() => this.changeOrderlineStatus(orderline)"/>
                 </t>
                 <div class="product-down-bubble position-absolute bottom-0 start-50 translate-middle d-flex align-items-center justify-content-center badge rounded-pill py-2 px-3 text-bg-dark bg-opacity-75 small " t-if="this.state.productHighlighted.length">
