@@ -12,15 +12,17 @@ patch(StockBarcodeKanbanRenderer.prototype, {
         this.displayTransferProtip =
             this.displayTransferProtip || this.resModel === "stock.picking.batch";
 
-        onWillStart(async () => {
-            const modelToSearch =
-                this.resModel === "stock.picking" ? "stock.picking.batch" : "stock.picking";
-            this.otherRecordsCount = await this.orm.call(
-                "stock.picking.type",
-                "get_model_records_count",
-                [this.activeId, modelToSearch]
-            );
-        });
+        if (["stock.picking", "stock.picking.batch"].includes(this.resModel)) {
+            onWillStart(async () => {
+                const modelToSearch =
+                    this.resModel === "stock.picking" ? "stock.picking.batch" : "stock.picking";
+                this.otherRecordsCount = await this.orm.call(
+                    "stock.picking.type",
+                    "get_model_records_count",
+                    [this.activeId, modelToSearch]
+                );
+            });
+        }
     },
 
     async displayPickings() {
