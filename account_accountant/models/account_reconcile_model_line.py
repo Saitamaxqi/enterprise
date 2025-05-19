@@ -81,7 +81,7 @@ class AccountReconcileModelLine(models.Model):
                 = st_line._get_accounting_amounts_and_currencies()
             aml_values['amount_currency'] = currency.round(-journal_amount * self.amount / 100.0)
             aml_values['currency_id'] = journal_currency.id
-        elif self.amount_type in {'regex', 'from_transaction_details'}:
+        elif self.amount_type == 'regex':
             aml_values['amount_currency'] = self._get_amount_currency_by_regex(st_line, residual_amount_currency, self.amount_string)
 
         if 'amount_currency' not in aml_values:
