@@ -24,8 +24,8 @@ export class Call extends Record {
         if (data.startDate) {
             this.startDate = deserializeDateTime(data.startDate);
         }
-        if (data.endDate) {
-            this.endDate = deserializeDateTime(data.endDate);
+        if (data.end_date) {
+            this.end_date = deserializeDateTime(data.end_date);
         }
     }
 
@@ -39,7 +39,7 @@ export class Call extends Record {
     /** @type {string} */
     display_name;
     /** @type {luxon.DateTime} */
-    endDate;
+    end_date;
     /** @type {import("@mail/core/persona_model").Persona | undefined} */
     partner;
     /** @type {string} */
@@ -83,10 +83,10 @@ export class Call extends Record {
 
     /** @returns {number} */
     get duration() {
-        if (!this.startDate || !this.endDate) {
+        if (!this.startDate || !this.end_date) {
             return 0;
         }
-        return (this.endDate - this.startDate) / 1000;
+        return (this.end_date - this.startDate) / 1000;
     }
 
     /** @returns {string} */
