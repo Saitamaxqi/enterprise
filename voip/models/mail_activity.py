@@ -100,7 +100,7 @@ class MailActivity(models.Model):
                 activity_data = {
                     **activity.read(["id", "res_name", "phone", "res_id", "res_model", "state", "summary", "date_deadline", "mail_template_ids", "user_id"])[0],
                     "activity_category": activity.activity_type_id.category,
-                    "persona": Store.One("persona", value=lambda activity: activity.user_id.partner_id),
+                    "persona": Store.One(activity.user_id.partner_id, []),
                 }
                 activity_data["user_id"] = activity_data["user_id"][0]
                 partners = partners_by_records.get(activity.res_id)
