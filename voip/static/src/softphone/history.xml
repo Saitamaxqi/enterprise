@@ -13,7 +13,7 @@
             <t t-set="call" t-value="slot.item"/>
             <t t-set="title" t-value="call.partner_id?.voipName ?? call.phone_number"/>
             <t t-set="countryCode" t-value="call.country_code_from_phone"/>
-            <t t-set="phoneNumber" t-value="call.phoneNumber"/>
+            <t t-set="phoneNumber" t-value="call.phone_number"/>
             <TabEntry
                 avatarUrl="call.partner_id?.avatarUrl ?? '/base/static/img/avatar_grey.png'"
                 countryCode="countryCode"

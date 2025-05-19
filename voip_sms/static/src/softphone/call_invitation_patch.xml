@@ -4,7 +4,7 @@
         <xpath expr="//t[hasclass('o-voip-CallInvitation-xpathTarget')]" position="before">
             <t t-set="resModel" t-value="props.call.partner_id ? 'res.partner' : 'voip.call'"/>
             <t t-set="resId" t-value="props.call.partner_id ? props.call.partner_id.id : props.call.id"/>
-            <SmsButton phoneNumber="props.call.phoneNumber" resId="resId" resModel="resModel"/>
+            <SmsButton phoneNumber="props.call.phone_number" resId="resId" resModel="resModel"/>
         </xpath>
     </t>
 </templates>

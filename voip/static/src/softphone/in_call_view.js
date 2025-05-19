@@ -51,7 +51,7 @@ export class InCallView extends Component {
         if (this.props.call.partner_id) {
             action.res_id = this.props.call.partner_id.id;
         } else {
-            action.context.default_phone = this.props.call.phoneNumber;
+            action.context.default_phone = this.props.call.phone_number;
         }
         this.action.doAction(action);
     }

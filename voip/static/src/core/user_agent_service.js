@@ -313,7 +313,7 @@ export class UserAgent extends Reactive {
         };
         this.ringtoneService.ringback.play();
         if (this.voip.mode === "prod") {
-            this.invite(call.phoneNumber);
+            this.invite(call.phone_number);
         } else {
             this.demoTimeout = setTimeout(() => {
                 this._onOutgoingInvitationAccepted();

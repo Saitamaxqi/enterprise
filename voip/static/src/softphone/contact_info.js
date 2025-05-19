@@ -56,6 +56,6 @@ export class ContactInfo extends Component {
 
     /** @returns {string} */
     get contactName() {
-        return this.contact?.voipName || this.props.call.phoneNumber;
+        return this.contact?.voipName || this.props.call.phone_number;
     }
 }

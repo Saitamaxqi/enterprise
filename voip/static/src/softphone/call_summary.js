@@ -65,7 +65,7 @@ export class CallSummary extends Component {
     onClickCall(ev) {
         this.userAgent.makeCall({
             partner: this.call.partner_id,
-            phone_number: this.call.phoneNumber,
+            phone_number: this.call.phone_number,
         });
     }
 
@@ -80,7 +80,7 @@ export class CallSummary extends Component {
         if (this.call.partner_id) {
             action.res_id = this.call.partner_id.id;
         } else {
-            action.context = { default_phone: this.call.phoneNumber };
+            action.context = { default_phone: this.call.phone_number };
         }
         this.action.doAction(action);
     }

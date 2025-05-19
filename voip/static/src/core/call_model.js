@@ -43,7 +43,7 @@ export class Call extends Record {
     /** @type {import("@mail/core/persona_model").Persona | undefined} */
     partner_id;
     /** @type {string} */
-    phoneNumber;
+    phone_number;
     /** @type {luxon.DateTime} */
     startDate;
     /** @type {"aborted"|"calling"|"missed"|"ongoing"|"rejected"|"terminated"} */

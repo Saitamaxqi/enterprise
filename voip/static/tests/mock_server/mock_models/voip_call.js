@@ -89,7 +89,7 @@ export class VoipCall extends models.ServerModel {
                 create_date: call.create_date,
                 direction: call.direction,
                 end_date: call.end_date,
-                phoneNumber: call.phone_number,
+                phone_number: call.phone_number,
                 startDate: call.start_date,
                 state: call.state,
             };

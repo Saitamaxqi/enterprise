@@ -57,7 +57,7 @@ export class History extends Component {
             if (call.partner_id && isSubstring(call.partner_id.name, searchTerms)) {
                 return true;
             }
-            return isSubstring(call.phoneNumber, searchTerms);
+            return isSubstring(call.phone_number, searchTerms);
         });
     }
 
@@ -159,7 +159,7 @@ export class History extends Component {
         if (call.partner_id) {
             action.res_id = call.partner_id.id;
         } else {
-            action.context.default_phone = call.phoneNumber;
+            action.context.default_phone = call.phone_number;
         }
         this.action.doAction(action);
     }
