@@ -14,6 +14,7 @@ import {
     defineModels,
     fields,
     getService,
+    makeMockEnv,
     mockService,
     models,
     mountView,
@@ -21,6 +22,7 @@ import {
     onRpc,
     patchWithCleanup,
     selectFieldDropdownItem,
+    serverState,
     toggleMenuItem,
     toggleSearchBarMenu,
 } from "@web/../tests/web_test_helpers";
@@ -1161,6 +1163,84 @@ describe("grid_view_desktop", () => {
             "Unit Amount",
         ]);
     });
+
+    for (const [locale, expected] of Object.entries({
+        en_US: "Sun,\nJan 29",
+        fr_FR: "dim.\n29 janv.",
+        de_DE: "So.,\n29. Jan.",
+        ru_RU: "вс,\n29 янв.",
+        ar_SY: "الأحد،\n٢٩ كانون الثاني",
+        he_IL: "יום א׳,\n29 בינו׳",
+        fa_IR: "یکشنبه\n۱۰ بهمن",
+        th_TH: "อา.\n29 ม.ค.",
+        tr_TR: "29 Oca Paz",
+        pl_PL: "niedz.,\n29 sty",
+        // for CJK locales: keep everything on one line
+        ja_JP: "1月29日(日)",
+        zh_CN: "1月29日周日",
+        ko_KR: "1월 29일 (일)",
+    })) {
+        test(`header label should be adapted to the ${locale} locale (day step)`, async () => {
+            mockDate("2017-01-30 00:00:00");
+            const view = {
+                type: "grid",
+                resModel: "analytic.line",
+                arch: `<grid barchart_total="1" editable="1">
+                    <field name="project_id" type="row"/>
+                    <field name="task_id" type="row"/>
+                    <field name="date" type="col">
+                        <range name="week" string="Week" span="week" step="day"/>
+                    </field>
+                    <field name="unit_amount" type="measure" widget="float_time"/>
+                </grid>`,
+            };
+
+            serverState.lang = locale;
+            await makeMockEnv();
+            await mountView(view);
+            const text = queryAllTexts(".o_grid_column_title")[1];
+            expect(text).toEqual(expected);
+        });
+    }
+
+    for (const [locale, expected] of Object.entries({
+        en_US: "January\n2025",
+        fr_FR: "janvier\n2025",
+        de_DE: "Januar\n2025",
+        ru_RU: "январь\n2025 г.",
+        ar_SY: "كانون الثاني\n٢٠٢٥",
+        he_IL: "ינואר\n2025",
+        fa_IR: "۱۴۰۳ دی", // 10th month of year 1403, Solar Hijri calendar
+        th_TH: "มกราคม\n2568", // Buddhist calendar
+        tr_TR: "Ocak\n2025",
+        pl_PL: "styczeń\n2025",
+        // for CJK locales: keep everything on one line
+        ja_JP: "2025年1月",
+        zh_CN: "2025年1月",
+        ko_KR: "2025년 1월",
+    })) {
+        test(`header label should be adapted to the ${locale} locale (month step)`, async () => {
+            mockDate("2025-01-15 00:00:00");
+            const view = {
+                type: "grid",
+                resModel: "analytic.line",
+                arch: `<grid barchart_total="1" editable="1">
+                    <field name="project_id" type="row"/>
+                    <field name="task_id" type="row"/>
+                    <field name="date" type="col">
+                        <range name="quarter" string="Quarter" span="year" step="month"/>
+                    </field>
+                    <field name="unit_amount" type="measure" widget="float_time"/>
+                </grid>`,
+            };
+
+            serverState.lang = locale;
+            await makeMockEnv();
+            await mountView(view);
+            const text = queryAllTexts(".o_grid_column_title")[1];
+            expect(text).toEqual(expected);
+        });
+    }
 
     test("dialog should not close when clicking the link to many2one field", async () => {
         // create an action manager to test the interactions with the search view

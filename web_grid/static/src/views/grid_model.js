@@ -4,6 +4,7 @@ import { Domain } from "@web/core/domain";
 import { serializeDate } from "@web/core/l10n/dates";
 import { localization } from "@web/core/l10n/localization";
 import { _t } from "@web/core/l10n/translation";
+import { pyToJsLocale } from "@web/core/l10n/utils";
 import { Model } from "@web/model/model";
 import { browser } from "@web/core/browser/browser";
 
@@ -482,10 +483,6 @@ export class GridModel extends Model {
         return `scaleOf-viewId-${this.env.config.viewId}`;
     }
 
-    get dateFormat() {
-        return { day: "ccc,\nMMM\u00A0d", month: "MMMM\nyyyy" };
-    }
-
     get columnGroupByFieldName() {
         let columnGroupByFieldName = this.columnFieldName;
         if (this.columnFieldIsDate) {
@@ -513,10 +510,45 @@ export class GridModel extends Model {
     }
 
     _getDateColumnTitle(date) {
-        if (this.navigationInfo.range.step in this.dateFormat) {
-            return date.toFormat(this.dateFormat[this.navigationInfo.range.step]);
+        const granularity = this.navigationInfo.range.step;
+        if (!["day", "month"].includes(granularity)) {
+            return serializeDate(date);
         }
-        return serializeDate(date);
+        const locale = pyToJsLocale(this.navigationInfo.anchor.locale);
+
+        const options = {
+            day: { weekday: "short", month: "short", day: "numeric" },
+            month: { month: "long", year: "numeric" },
+        }[granularity];
+
+        const parts = new Intl.DateTimeFormat(locale, options).formatToParts(date);
+
+        const splitAfter = granularity === "day" ? "weekday" : "month";
+
+        let splitIndex = parts.findIndex((p) => p.type === splitAfter);
+        if (splitIndex === -1) {
+            return parts.map((p) => p.value).join("");
+        }
+
+        // split after the first literal
+        while (++splitIndex < parts.length) {
+            if (parts[splitIndex].type === "literal") {
+                break;
+            }
+        }
+
+        const firstLineParts = parts.slice(0, splitIndex + 1);
+        const secondLineParts = parts.slice(splitIndex + 1);
+
+        const firstLine = firstLineParts
+            .map((p) => p.value)
+            .join("")
+            .trim();
+        const secondLine = secondLineParts
+            .map((p) => p.value)
+            .join("")
+            .trim();
+        return `${firstLine}\n${secondLine}`;
     }
 
     /**
