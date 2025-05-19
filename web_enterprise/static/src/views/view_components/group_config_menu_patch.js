@@ -1,11 +1,16 @@
-import { registry } from "@web/core/registry";
-import { patch } from "@web/core/utils/patch";
-import { KanbanHeader } from "@web/views/kanban/kanban_header";
-import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
+import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
+import { useService } from "@web/core/utils/hooks";
+import { patch } from "@web/core/utils/patch";
+import { GroupConfigMenu } from "@web/views/view_components/group_config_menu";
+import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 
-patch(KanbanHeader.prototype, {
+patch(GroupConfigMenu.prototype, {
+    setup() {
+        super.setup();
+        this.orm = useService("orm");
+    },
     /**
      * @override
      */
@@ -30,7 +35,7 @@ patch(KanbanHeader.prototype, {
     },
 });
 
-registry.category("kanban_header_config_items").add(
+registry.category("group_config_items").add(
     "open_automations",
     {
         label: _t("Automations"),

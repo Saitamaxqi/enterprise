@@ -113,7 +113,7 @@ test("list editor", async () => {
     expect("tbody tr").toHaveCount(4);
     expect("tbody td.o_data_cell").toHaveCount(MockServer.env["partner"].length);
     expect("tbody tr:not(.o_data_row) td").toHaveAttribute("colspan", "3");
-    expect("tfoot td").toHaveCount(3);
+    expect("tfoot td").toHaveCount(1);
 });
 
 test("disable optional field dropdown icon", async () => {
