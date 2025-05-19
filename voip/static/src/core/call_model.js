@@ -37,7 +37,7 @@ export class Call extends Record {
     /** @type {"incoming"|"outgoing"} */
     direction;
     /** @type {string} */
-    displayName;
+    display_name;
     /** @type {luxon.DateTime} */
     endDate;
     /** @type {import("@mail/core/persona_model").Persona | undefined} */

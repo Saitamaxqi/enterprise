@@ -153,7 +153,7 @@ class VoipCall(models.Model):
             "country_code_from_phone",
             "create_date",
             "direction",
-            Store.Attr("display_name", rename="displayName"),
+            "display_name",
             Store.Attr("end_date", rename="endDate"),
             Store.One("partner_id", self.partner_id._voip_get_store_fields(), rename="partner"),
             Store.Attr("phone_number", rename="phoneNumber"),
