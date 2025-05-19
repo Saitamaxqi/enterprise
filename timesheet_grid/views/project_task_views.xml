@@ -64,7 +64,7 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_kanban"/>
             <field name="arch" type="xml">
-                <xpath expr="//footer/div" position="inside">
+                <xpath expr="//footer//field[@name='priority']" position="before">
                     <field name="display_timesheet_timer" invisible="1"/>
                     <field name="timer_start" invisible="1"/>
                     <t t-if="record.display_timesheet_timer.raw_value and !!record.timer_start.raw_value" groups="hr_timesheet.group_hr_timesheet_user">
