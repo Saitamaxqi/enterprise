@@ -21,8 +21,8 @@ export class Call extends Record {
         if (data.create_date) {
             this.create_date = deserializeDateTime(data.create_date);
         }
-        if (data.startDate) {
-            this.startDate = deserializeDateTime(data.startDate);
+        if (data.start_date) {
+            this.start_date = deserializeDateTime(data.start_date);
         }
         if (data.end_date) {
             this.end_date = deserializeDateTime(data.end_date);
@@ -45,7 +45,7 @@ export class Call extends Record {
     /** @type {string} */
     phone_number;
     /** @type {luxon.DateTime} */
-    startDate;
+    start_date;
     /** @type {"aborted"|"calling"|"missed"|"ongoing"|"rejected"|"terminated"} */
     state = fields.Attr("calling", {
         onUpdate() {
@@ -76,17 +76,17 @@ export class Call extends Record {
     /** @returns {string} */
     get callDate() {
         if (this.state === "terminated") {
-            return this.startDate.toLocaleString(luxon.DateTime.TIME_SIMPLE);
+            return this.start_date.toLocaleString(luxon.DateTime.TIME_SIMPLE);
         }
         return this.create_date.toLocaleString(luxon.DateTime.TIME_SIMPLE);
     }
 
     /** @returns {number} */
     get duration() {
-        if (!this.startDate || !this.end_date) {
+        if (!this.start_date || !this.end_date) {
             return 0;
         }
-        return (this.end_date - this.startDate) / 1000;
+        return (this.end_date - this.start_date) / 1000;
     }
 
     /** @returns {string} */

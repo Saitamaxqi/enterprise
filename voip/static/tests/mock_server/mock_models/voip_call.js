@@ -90,7 +90,7 @@ export class VoipCall extends models.ServerModel {
                 direction: call.direction,
                 end_date: call.end_date,
                 phone_number: call.phone_number,
-                startDate: call.start_date,
+                start_date: call.start_date,
                 state: call.state,
             };
             if (Number.isInteger(call.partner_id)) {

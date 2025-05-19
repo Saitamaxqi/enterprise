@@ -28,7 +28,7 @@ export class CallSummary extends Component {
 
     /** @returns {string} */
     get statusText() {
-        const date = this.call.startDate || this.call.create_date;
+        const date = this.call.start_date || this.call.create_date;
         const time = date.toLocaleString(TIME_SIMPLE);
         switch (this.call.state) {
             case "aborted":

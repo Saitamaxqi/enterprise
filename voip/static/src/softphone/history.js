@@ -29,11 +29,11 @@ export class History extends Component {
 
     get callsByDate() {
         const calls = [...this.filteredCalls];
-        calls.sort((a, b) => (b.startDate || b.create_date) - (a.startDate || a.create_date));
+        calls.sort((a, b) => (b.start_date || b.create_date) - (a.start_date || a.create_date));
         const today = luxon.DateTime.now();
         const yesterday = luxon.DateTime.now().minus({ days: 1 });
         return Map.groupBy(calls, (call) => {
-            const date = call.startDate || call.create_date;
+            const date = call.start_date || call.create_date;
             if (today.hasSame(date, "day")) {
                 return _t("Today");
             }
