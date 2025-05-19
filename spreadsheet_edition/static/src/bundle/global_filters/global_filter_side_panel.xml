@@ -19,7 +19,7 @@
                         <span class="o_side_panel_filter_label" t-esc="_t(filter.label)"/>
                     </div>
                     <div class="pivot_filter_input">
-                        <FilterValue filter="filter" model="env.model"/>
+                        <FilterValue filter="filter" model="env.model" showClear="true"/>
                         <i t-if="!isReadonly"
                             class="fa fa-cog btn btn-link text-muted o_side_panel_filter_icon"
                             title="Edit"
