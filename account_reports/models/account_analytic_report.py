@@ -146,25 +146,13 @@ class AccountReport(models.AbstractModel):
         stored_aml_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report(change_equivalence_dict)
 
         query = SQL("""
-            -- Create a temporary table, dropping not null constraints because we're not filling those columns
-            CREATE TEMPORARY TABLE IF NOT EXISTS analytic_temp_account_move_line () inherits (account_move_line) ON COMMIT DROP;
-            ALTER TABLE analytic_temp_account_move_line NO INHERIT account_move_line;
-            ALTER TABLE analytic_temp_account_move_line DROP CONSTRAINT IF EXISTS account_move_line_check_amount_currency_balance_sign;
-            ALTER TABLE analytic_temp_account_move_line ALTER COLUMN move_id DROP NOT NULL;
-            ALTER TABLE analytic_temp_account_move_line ALTER COLUMN currency_id DROP NOT NULL;
-
-            INSERT INTO analytic_temp_account_move_line (%(stored_aml_fields)s)
+            CREATE OR REPLACE TEMPORARY VIEW analytic_temp_account_move_line (%(stored_aml_fields)s) AS
             SELECT %(fields_to_insert)s
             FROM account_analytic_line
             LEFT JOIN account_move_line
                 ON account_analytic_line.move_line_id = account_move_line.id
             WHERE
                 account_analytic_line.general_account_id IS NOT NULL;
-
-            -- Create a supporting index to avoid seq.scans
-            CREATE INDEX IF NOT EXISTS analytic_temp_account_move_line__composite_idx ON analytic_temp_account_move_line (analytic_distribution, journal_id, date, company_id);
-            -- Update statistics for correct planning
-            ANALYZE analytic_temp_account_move_line
         """, stored_aml_fields=stored_aml_fields, fields_to_insert=fields_to_insert)
 
         self.env.cr.execute(query)
