@@ -30,11 +30,11 @@ registry.category("web_tour.tours").add(
             }, {
                 content: 'Add a customer to the parent task',
                 trigger: 'div[name="partner_id"] input.o_input',
-                run: "edit Azure Interior",
+                run: "edit Admin && click",
             }, {
                 id: "validate_customer",
                 content: 'Validate Customer',
-                trigger: '.ui-menu-item a:contains("Azure Interior")',
+                trigger: '.ui-menu-item a:contains("Admin")',
                 run: "click",
             }, {
                 content: 'Open Menu All Tasks',
