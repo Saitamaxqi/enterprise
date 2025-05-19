@@ -77,6 +77,7 @@ class HrPayslipRun(models.Model):
     payment_report_filename = fields.Char(readonly=True)
     payment_report_format = fields.Char(readonly=True)
     payment_report_date = fields.Date(readonly=True)
+    total_employer_cost = fields.Monetary(compute='_compute_total_employer_cost', string='Total Employer Cost')
     gross_sum = fields.Monetary(compute="_compute_gross_net_sum", store=True, readonly=True, copy=False)
     net_sum = fields.Monetary(compute="_compute_gross_net_sum", store=True, readonly=True, copy=False)
 
@@ -394,3 +395,8 @@ class HrPayslipRun(models.Model):
 
     def get_formview_action(self, access_uid=None):
         return self.action_open_payslips()
+
+    @api.depends('slip_ids.employer_cost')
+    def _compute_total_employer_cost(self):
+        for payslip_run in self:
+            payslip_run.total_employer_cost = sum(payslip_run.slip_ids.mapped('employer_cost'))

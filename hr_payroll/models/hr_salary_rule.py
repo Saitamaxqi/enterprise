@@ -29,8 +29,8 @@ class HrSalaryRule(models.Model):
         help="If the active field is set to false, it will allow you to hide the salary rule without removing it.")
     appears_on_payslip = fields.Boolean(string='Appears on Payslip', default=True,
         help="Used to display the salary rule on payslip.")
-    appears_on_employee_cost_dashboard = fields.Boolean(string='View on Employer Cost Dashboard', default=False,
-        help="Used to display the value in the employer cost dashboard.")
+    appears_on_employee_cost_dashboard = fields.Boolean(string='Contributes to Employer Cost', default=False,
+        help="Used to compute the employer cost of a payslip.")
     condition_select = fields.Selection([
         ('none', 'Always True'),
         ('range', 'Range'),

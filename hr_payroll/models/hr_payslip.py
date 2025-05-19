@@ -142,6 +142,7 @@ class HrPayslip(models.Model):
     payment_report_filename = fields.Char(readonly=True)
     payment_report_date = fields.Date(readonly=True)
     ytd_computation = fields.Boolean(related='struct_id.ytd_computation')
+    employer_cost = fields.Monetary(compute='_compute_basic_net', store=True, string='Employer Cost')
 
     def _get_salary_advance_balances(self):
         return defaultdict(float)
@@ -355,14 +356,27 @@ class HrPayslip(models.Model):
             'input_line_ids'
         ]
 
-    @api.depends('line_ids.total')
+    @api.depends('line_ids.total', 'struct_id.rule_ids.appears_on_employee_cost_dashboard')
     def _compute_basic_net(self):
         line_values = (self._origin)._get_line_values(['BASIC', 'GROSS', 'NET'])
+        employer_cost_codes = set(self.env['hr.salary.rule'].search([
+            ('appears_on_employee_cost_dashboard', '=', True)
+        ]).mapped('code'))
+        employer_cost_values = {}
+        if employer_cost_codes:
+            employer_cost_values = (self._origin)._get_line_values(employer_cost_codes)
         for payslip in self:
+            employer_cost_total = 0.0
+            payslip_employer_codes = payslip.struct_id.rule_ids.filtered(
+                'appears_on_employee_cost_dashboard'
+            ).mapped('code')
+            for code in payslip_employer_codes:
+                employer_cost_total += employer_cost_values[code][payslip._origin.id]['total']
             payslip.write({
                 'basic_wage': line_values['BASIC'][payslip._origin.id]['total'],
                 'gross_wage': line_values['GROSS'][payslip._origin.id]['total'],
                 'net_wage': line_values['NET'][payslip._origin.id]['total'],
+                'employer_cost': employer_cost_total,
             })
 
     @api.depends('worked_days_line_ids.number_of_hours', 'worked_days_line_ids.is_paid', 'worked_days_line_ids.is_credit_time')

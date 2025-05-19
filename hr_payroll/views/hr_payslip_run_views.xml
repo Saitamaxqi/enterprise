@@ -71,6 +71,14 @@
                         </div>
                         <div class="o_cell d-flex flex-column o_payrun_cost">
                             <div class="fs-2">
+                                <field name="total_employer_cost"/>
+                            </div>
+                            <div class="small fw-medium d-flex gap-2 align-items-center">
+                                <span>employer cost</span>
+                            </div>
+                        </div>
+                        <div class="o_cell d-flex flex-column o_payrun_cost">
+                            <div class="fs-2">
                                 <field name="gross_sum"/>
                             </div>
                             <div class="small fw-medium d-flex gap-2 align-items-center">

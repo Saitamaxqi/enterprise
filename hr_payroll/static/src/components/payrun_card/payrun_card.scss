@@ -1,8 +1,8 @@
 @media (max-width: 1200px) {
     .o_payrun_card {
-        grid-template-columns: repeat(4, 1fr) minmax(0, 1fr) !important;
+        grid-template-columns: repeat(5, 1fr) minmax(0, 1fr) !important;
 
-        .o_cell:nth-child(4) {
+        .o_cell:nth-child(5) {
             display: none !important;
         }
     }
@@ -10,7 +10,7 @@
 
 @media (max-width: 992px) {
     .o_payrun_card {
-        grid-template-columns: repeat(3, 1fr) minmax(0, 1fr) !important;
+        grid-template-columns: repeat(4, 1fr) minmax(0, 1fr) !important;
     }
 }
 
@@ -18,7 +18,7 @@
     .o_payrun_card {
         grid-template-columns: repeat(1, 1fr) minmax(0, 1fr) !important;
 
-        .o_cell:nth-child(3), .o_cell:nth-child(2) {
+        .o_cell:nth-child(4), .o_cell:nth-child(3), .o_cell:nth-child(2) {
             display: none !important;
         }
     }
@@ -32,7 +32,7 @@
 .o_payrun_card {
     display: grid !important;
     grid-auto-flow: column;
-    grid-template-columns: repeat(5, 1fr) minmax(0, 1.5fr);
+    grid-template-columns: repeat(6, 1fr) minmax(0, 1.5fr);
 
     .o_payrun_info {
         grid-column: span 2;

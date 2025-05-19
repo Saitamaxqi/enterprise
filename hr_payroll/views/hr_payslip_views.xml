@@ -21,6 +21,7 @@
                 <field name="payslip_run_id" widget="many2one" readonly="state not in ['draft', 'verify']" options="{'hide_in_payrun': 1, 'no_open': 0}" placeholder="Off-Cycle"/>
                 <field name="struct_id" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="hide"/>
+                <field name="employer_cost" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="basic_wage" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="gross_wage" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="net_wage" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="1" optional="show"/>
