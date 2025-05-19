@@ -1480,9 +1480,9 @@ class SaleOrder(models.Model):
 
         return all_subscriptions, need_cron_trigger
 
-    def _subscription_commit_cursor(self, auto_commit):
+    def _subscription_commit_cursor(self, auto_commit, progress=0):
         if auto_commit:
-            self.env.cr.commit()
+            self.env['ir.cron']._commit_progress(progress)
         else:
             self.env.flush_all()
             self.env.cr.flush()
@@ -1503,8 +1503,7 @@ class SaleOrder(models.Model):
 
     def _create_recurring_invoice(self, batch_size=30):
         today = fields.Date.today()
-        # TODO remove all config['test_enable'] when current_thread().testing will be removed
-        auto_commit = not (config['test_enable'] or modules.module.current_test)
+        auto_commit = not (modules.module.current_test or self.env.context.get('install_mode'))
         grouped_invoice = self.env['ir.config_parameter'].get_param('sale_subscription.invoice_consolidation', False)
         all_subscriptions, need_cron_trigger = self._recurring_invoice_get_subscriptions(grouped=grouped_invoice, batch_size=batch_size)
         if not all_subscriptions:
@@ -1533,10 +1532,13 @@ class SaleOrder(models.Model):
         # Set quantity to invoice before the invoice creation. If something goes wrong, the line will appear as "to invoice"
         # It prevents the use of _compute method and compare the today date and the next_invoice_date in the compute which would be bad for perfs
         all_invoiceable_lines._reset_subscription_qty_to_invoice()
+        if auto_commit:
+            self.env['ir.cron']._commit_progress(remaining=len(all_subscriptions))
         self._subscription_commit_cursor(auto_commit)
-        for number, subscription in enumerate(all_subscriptions, start=1):
-            if len(subscription) == 1:
-                subscription = subscription[0]  # Trick to not prefetch other subscriptions is all_subscription is recordset, as the cache is currently invalidated at each iteration
+        for subscription in all_subscriptions:
+            if auto_commit:
+                # prefetch only the current subscription because the cache is invalidated after commits
+                subscription = subscription.with_prefetch()
             subscription.is_invoice_cron = True
             # We check that the subscription should not be processed or that it has not already been set to "in exception" by previous cron failure
             # We only invoice contract in sale state. Locked contracts are invoiced in advance. They are frozen.
@@ -1613,8 +1615,7 @@ class SaleOrder(models.Model):
                     _logger.exception("Error during post invoice action")
                     subscription._handle_post_invoice_hook_exception()
                 subscription.is_invoice_cron = False
-                self.env['ir.cron']._notify_progress(done=number, remaining=len(all_subscriptions) - number)
-                self._subscription_commit_cursor(auto_commit)
+                self._subscription_commit_cursor(auto_commit, progress=1)
             except Exception:
                 name_list = [f"{sub.name} {sub.client_order_ref}" for sub in subscription]
                 _logger.exception("Error during renewal of contract %s", "; ".join(name_list))

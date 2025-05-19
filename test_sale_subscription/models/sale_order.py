@@ -32,26 +32,18 @@ class SaleOrder(models.Model):
         self.env["ir.model.data"]._update_xmlids(data)
 
     def _process_invoices_to_send(self, account_moves):
-        if self.env.context.get("mock_no_commit", False):
+        if self.env.context.get("install_mode"):
             # Mocking for '_process_invoices_to_send'
             # Otherwise the whole sending mail process will be triggered and we don't want it in the post_init hook
             account_moves.is_move_sent = True
             return
         return super()._process_invoices_to_send(account_moves)
 
-    def _subscription_commit_cursor(self, auto_commit):
-        if self.env.context.get("mock_no_commit", False):
-            return
-        return super()._subscription_commit_cursor(auto_commit)
-
-    def _subscription_rollback_cursor(self, auto_commit):
-        if self.env.context.get("mock_no_commit", False):
-            return
-        return super()._subscription_rollback_cursor(auto_commit)
-
     @api.model
     def _test_demo_generate_subscriptions(self):
-        self.with_context(mock_no_commit=True)._test_demo_generate_subscriptions_unpatched()
+        # make sure install_mode is set which is used for detection of
+        # auto_commit in _create_recurring_invoice
+        self.with_context(install_mode=True)._test_demo_generate_subscriptions_unpatched()
 
     def _test_demo_generate_subscriptions_unpatched(self):
         self._test_demo_flush_tracking()
