@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 10:34+0000\n"
-"PO-Revision-Date: 2025-05-21 10:34+0000\n"
+"POT-Creation-Date: 2025-05-21 10:36+0000\n"
+"PO-Revision-Date: 2025-05-21 10:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_reports_report_appendix_expenditures
 msgid "\"Operational Expenditures\" Appendix for LU"
-msgstr "Annexe \"Dépenses opérationnelles\" pour LU"
+msgstr "\"Operational Ausgaben\" Anhendix fir lu"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.LTCodeNode
@@ -29,22 +29,22 @@ msgstr ""
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_001
 msgid "001 - Supply of inhouse manufactured goods"
-msgstr "001 - Fourniture de produits fabriqués en interne"
+msgstr "001 - Versuergung vun den Amhove Listoréiert Wueren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_002
 msgid "002 - Supply of goods not manufactured inhouse"
-msgstr "002 - Fourniture de biens non fabriqués en interne"
+msgstr "002 - Versuergung vu Wueren net hiergestallt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_003
 msgid "003 - Net profit margin"
-msgstr "003 - Marge bénéficiaire nette"
+msgstr "003 - Net Gewënnmargin"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_004
 msgid "004 - Supply of services"
-msgstr "004 - Prestations de services"
+msgstr "004 - Versuergung vu Servicer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_005
@@ -52,19 +52,19 @@ msgid ""
 "005 - Disposal of tangible and intangible capital assets for ancillary "
 "transactions"
 msgstr ""
-"005 - Cession d'immobilisations corporelles et incorporelles pour des "
-"opérations accessoires"
+"005 - Entsuergung vun innbaren an immaterielle Kapitalverbrauch fir "
+"encillary Transaktiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_007
 msgid "007 - Custom (value)"
-msgstr "007 - Personnalisé (valeur)"
+msgstr "007 - Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_008
 msgid "008 - Application of goods for private use or for that of the staff"
 msgstr ""
-"008 - Utilisation de biens à des fins privées ou pour le compte du personnel"
+"008 - Uwendung vu Wueren fir privat Benotzung oder fir dat vum Personal"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_009
@@ -72,8 +72,8 @@ msgid ""
 "009 - Application for the purpose of business of goods produced in the "
 "course of the business"
 msgstr ""
-"009 - Demande à des fins professionnelles de biens produits dans le cadre de"
-" l'activité professionnelle"
+"009 - Applikatioun fir den Zweck vum Geschäft vu Wueren déi am Laf vum "
+"Geschäft produzéiert huet"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_010
@@ -81,8 +81,8 @@ msgid ""
 "010 - Use of goods considered business assets for purposes other than those "
 "of the business"
 msgstr ""
-"010 - Utilisation de biens considérés comme des actifs de l'entreprise à des"
-" fins autres que celles de l'entreprise"
+"010 - Benotzung vu Gidder, déi als Geschäftsverbrauche gemaach hunn, datt "
+"aner wéi déi vum Geschäft"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_011
@@ -90,13 +90,13 @@ msgid ""
 "011 - Supply of services carried out free of charge for purposes other than "
 "those of the business"
 msgstr ""
-"011 - Prestations de services effectuées à titre gratuit à des fins "
-"étrangères à l'entreprise"
+"011 - Versuergung vu Servicer hunn gratis fir net anescht wéi déi vun de "
+"Betrib"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover
 msgid "012 - Overall turnover"
-msgstr "012 - Chiffre d'affaires global"
+msgstr "012 - allgemeng Ëmsaz"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_013
@@ -104,23 +104,23 @@ msgid ""
 "013 - IC supply of goods to persons identified for VAT purposes in another "
 "Member State (MS)"
 msgstr ""
-"013 - Livraison IC de biens à des personnes identifiées à la TVA dans un "
-"autre État membre (EM)"
+"013 - IC Betrag vu Wueren fir Persounen déi fir vate Zwecker an engem anere "
+"Memberstaat identifizéiert ginn (MS)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_014
 msgid "014 - Exports"
-msgstr "014 - Exportations"
+msgstr "014 - Export"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_015
 msgid "015 - Other exemptions"
-msgstr "015 - Autres exemptions"
+msgstr "015 - aner Ernärung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_016
 msgid "016 - Other exemptions"
-msgstr "016 - Autres exemptions"
+msgstr "016 - aner Ernärung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_017
@@ -128,8 +128,8 @@ msgid ""
 "017 - Manufactured tobacco whose VAT was collected at the source or at the "
 "exit of the tax..."
 msgstr ""
-"017 - Tabacs manufacturés dont la TVA a été collectée à la source ou à la "
-"sortie de la taxe..."
+"017 - hiergestallt Tubak huet hir TVA gesammelt, gouf op der Quell gesammelt"
+" oder op der Ausgang vun der Steier ..."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_018
@@ -137,33 +137,33 @@ msgid ""
 "018 - Supply, subsequent to intra-Community acquisitions of goods, in the "
 "context of triangular transactions, when the customer identified,..."
 msgstr ""
-"018 - Fourniture, suite à des acquisitions intracommunautaires de biens, "
-"dans le cadre d'opérations triangulaires, lorsque le client identifié,..."
+"018 - Versuergung, duerno an Intra-Gemeinschaft Acquisitioune vu Wueren, an "
+"de Kontext Transaktiounen, wann de Client identifizéiert ass ..."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_019
 msgid ""
 "019 - Other supplies carried out (for which the place of supply is) abroad"
 msgstr ""
-"019 - Autres prestations effectuées (pour lesquelles le lieu de prestation "
-"est) à l'étranger"
+"019 - Aner Liwwerungen duerchgefouert (fir déi d'Plaz vun der Versuergung) "
+"am Ausland ass"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_amounts
 msgid "021 - Exemptions and deductible amounts"
-msgstr "021 - Exonérations et déductions"
+msgstr "021 - Ernärung an DEDIDEN ZËNNEREN"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_taxable_turnover
 msgid "022 - Taxable turnover"
-msgstr "022 - Chiffre d'affaires imposable"
+msgstr "022 - besteierbaren Ëmsaz"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_077
 msgid "077 - Invoiced by other taxable persons for goods or services supplied"
 msgstr ""
-"077 - Facturation par d'autres assujettis pour des livraisons de biens ou "
-"des prestations de services"
+"077 - rufft vun aneren besteierbaren Persounen fir Wueren oder Servicer "
+"geliwwert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_078
@@ -171,8 +171,8 @@ msgid ""
 "078 - Due in respect of IC acquisitions of goods other than manufactured "
 "tobacco"
 msgstr ""
-"078 - Montants dus au titre des acquisitions de biens autres que les tabacs "
-"manufacturés dans le cadre du CI"
+"078 - Duerch Respekt vun der IC ECPOPISSIOUNEN VUN GESCHAFT A ANER AUS "
+"HUSHED TOBACCO"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_079
@@ -180,21 +180,20 @@ msgid ""
 "079 - Due or paid in respect of importations of goods other than "
 "manufactured tobacco and goods for non-business purposes"
 msgstr ""
-"079 - Sommes dues ou payées au titre de l'importation de marchandises autres"
-" que les tabacs manufacturés et les marchandises destinées à des fins non "
-"commerciales"
+"079 - Wéinst oder bezuelte vun Importatiounen vun de Wueren anescht wéi "
+"hiergestallt Tubak a Wueren fir Net-Geschäftszwecker"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_080
 msgid "080 - Total of VAT on stock entries"
-msgstr "080 - Total de la TVA sur les entrées en stock"
+msgstr "080 - Total vun TVA op Aktie Entréen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_081
 msgid "081 - Invoiced by other taxable persons for goods or services supplied"
 msgstr ""
-"081 - Facturation par d'autres assujettis pour des livraisons de biens ou "
-"des prestations de services"
+"081 - rufft vun aneren besteierbaren Persounen fir Wueren oder Servicer "
+"geliwwert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_082
@@ -202,8 +201,8 @@ msgid ""
 "082 - Due in respect of IC acquisitions of goods other than manufactured "
 "tobacco"
 msgstr ""
-"082 - Montants dus au titre des acquisitions de biens autres que les tabacs "
-"manufacturés dans le cadre du CI"
+"082 - Duerch Respekt vun der IC ECPOPISSIOUNEN VUN GOEN AN DEM LOBACURED "
+"Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_083
@@ -211,21 +210,20 @@ msgid ""
 "083 - Due or paid in respect of importations of goods other than "
 "manufactured tobacco and goods for non-business purposes"
 msgstr ""
-"083 - Sommes dues ou payées au titre de l'importation de marchandises autres"
-" que les tabacs manufacturés et les marchandises destinées à des fins non "
-"commerciales"
+"083 - Wéinst oder bezuelte mat Importatiounen vun de Wueren anescht wéi "
+"hiergestallt Tubak a Wueren fir Net-Geschäftszwecker"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_084
 msgid "084 - Total of VAT on capital expenditures"
-msgstr "084 - Total de la TVA sur les dépenses en capital"
+msgstr "084 - Total vu TVA op Kapitalkäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_085
 msgid "085 - Invoiced by other taxable persons for goods or services supplied"
 msgstr ""
-"085 - Facturation par d'autres assujettis pour des livraisons de biens ou "
-"des prestations de services"
+"085 - rufft vun aneren besteierbaren Persounen fir Wueren oder Servicer "
+"geliwwert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_086
@@ -233,8 +231,8 @@ msgid ""
 "086 - Due in respect of IC acquisitions of goods other than manufactured "
 "tobacco"
 msgstr ""
-"086 - Montants dus au titre des acquisitions de biens autres que les tabacs "
-"manufacturés dans le cadre du CI"
+"086 - Duerch Respekt vun der IC Acquisitioune vu Wueren anescht wéi "
+"hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_087
@@ -242,39 +240,35 @@ msgid ""
 "087 - Due or paid in respect of importations of goods other than "
 "manufactured tobacco and goods for non-business purposes"
 msgstr ""
-"087 - Sommes dues ou payées au titre de l'importation de marchandises autres"
-" que les tabacs manufacturés et les marchandises destinées à des fins non "
-"commerciales"
+"087 - Wéinst oder bezuelte vun Importatiounen vun de Wueren vun de Wueren "
+"anescht wéi optéiert Tubak a Wueren fir Net-Geschäftszwecker"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_088
 msgid "088 - Total of VAT on operational expenditures"
-msgstr "088 - Total de la TVA sur les dépenses opérationnelles"
+msgstr "088 - Total vu TVA op operationell Ausgaben"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_090
 msgid "090 - Due in respect of the application of goods for business purposes"
-msgstr ""
-"090 - Sommes dues au titre de l'utilisation de biens à des fins "
-"professionnelles"
+msgstr "090 - Duerch Respekt vun der Uwendung vu Wueren fir Geschäftszwecker"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_092
 msgid "092 - Paid as joint and several guarantee"
-msgstr "092 - Payé en tant que garantie solidaire"
+msgstr "092 - Bezuelt als Gelenk an e puer Garantie"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_093
 msgid "093 - Total input tax"
-msgstr "093 - Total de la taxe en amont"
+msgstr "093 - Total Input Steier"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_094
 msgid ""
 "094 - Relating to transactions which are exempt pursuant to articles 44 and "
 "56quater"
-msgstr ""
-"094 - Relatif aux opérations exonérées en vertu des articles 44 et 56 quater"
+msgstr "09."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_095
@@ -282,8 +276,8 @@ msgid ""
 "095 - Where the deductible proportion determined in accordance to article 50"
 " is applied"
 msgstr ""
-"095 - En cas d'application du prorata de déduction déterminé conformément à "
-"l'article 50"
+"095 - wou den deductible Proportioun bestëmmt am Aklang deen 50 applizéiert "
+"gëtt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_096
@@ -291,18 +285,18 @@ msgid ""
 "096 - Non recoverable input tax in accordance with Art. 56ter-1(7) and "
 "56ter-2(7)"
 msgstr ""
-"096 - Taxe en amont non récupérable conformément à l'art. 56ter-1(7) et "
-"56ter-2(7)"
+"096 - Net erhuelbar Input Steier am Aklang mat Konscht.56ter-1 (7) an "
+"56ter-2 (7)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_097
 msgid "097 - Total input tax non-deductible"
-msgstr "097 - Total de la taxe en amont non déductible"
+msgstr "097 - Total Input Steier non-deduktibel"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_098
 msgid "098 - In accordance with provisions of Art. 53"
-msgstr "098 - Conformément aux dispositions de l'art. 53"
+msgstr "098 - am Aklang mat Bestëmmunge vu Konscht.58 Ëkf-53"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_099
@@ -310,84 +304,84 @@ msgid ""
 "099 - In accordance with provisions of the grand-ducal Regulation of 7 March"
 " 1980 - option to tax land"
 msgstr ""
-"099 - Conformément aux dispositions du règlement grand-ducal du 7 mars 1980 "
-"- option pour l'imposition des terrains"
+"099 - am Aklang mat Bestëmmunge vun der groussherzoglecher Reglement vu 7. "
+"Mäerz 1980 - Optioun fir d'Steieren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_accountant
 msgid "1. Accountant"
-msgstr "1. Comptable"
+msgstr "1. Comptabel"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1_1
 msgid "1. Costs of development"
-msgstr "1. Frais de développement"
+msgstr "1. Käschten vun der Entwécklung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1
 msgid "1. Debenture loans"
-msgstr "1. Emprunts obligataires"
+msgstr "1. Debenture Prêten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_239
 msgid "1. Gross salaries"
-msgstr "1. Salaires bruts"
+msgstr "1. Brutto Salairen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_2_1
 msgid "1. Land and buildings"
-msgstr "1. Terrains et constructions"
+msgstr "1. Land a Gebaier"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4_1
 msgid "1. Legal reserve"
-msgstr "1. Réserve légale"
+msgstr "1. Legal Reserve"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_motor
 msgid "1. Motor vehicles"
-msgstr "1. Véhicules à moteur"
+msgstr "1. Motor Gefierer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_1
 msgid "1. Net turnover"
-msgstr "1. Chiffre d'affaires net"
+msgstr "1. Net Ëmsaz"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_2_1
 msgid "1. Provisions for pensions and similar obligations"
-msgstr "1. Provisions pour pensions et obligations similaires"
+msgstr "1. Bestëmmunge fir Pensiounen an ähnlech Obligatiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_1_1
 msgid "1. Raw materials and consumables"
-msgstr "1. Matières  premières et consommables"
+msgstr "1. Matière première a Verbraucher"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_3_1
 msgid "1. Shares in affiliated undertakings"
-msgstr "1. Parts dans des entreprises liées"
+msgstr "1. Aktien op Affiliated Undererten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_total_stock
 msgid "1. Total stock and tobacco"
-msgstr "1. Total du stock et du tabac"
+msgstr "1. Total Stock an Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_2_1
 msgid "1. Trade debtors"
-msgstr "1. Créances résultant de ventes et prestations de services"
+msgstr "1. Handelsschouloren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_164
 msgid "1. stock for resale"
-msgstr "1. stock pour la revente"
+msgstr "1. Aktie fir d'Resale"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_1
 msgid "1. to 5. Gross profit or loss"
-msgstr "1. à 5. Résultat brut"
+msgstr "1. Op 5. Brutto Gewënn oder Verloscht"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_electronic_report_template_1_1
@@ -397,12 +391,12 @@ msgstr ""
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_273
 msgid "10. Custom (name)"
-msgstr "10. Personnalisé (nom)"
+msgstr "10. Benotzerdefinéiert (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_274
 msgid "10. Custom (value)"
-msgstr "10. Personnalisé (valeur)"
+msgstr "10. Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_10
@@ -410,106 +404,108 @@ msgstr "10. Personnalisé (valeur)"
 msgid ""
 "10. Income from other investments and loans forming part of the fixed assets"
 msgstr ""
-"10. Produits provenant d'autres valeurs mobilières, d'autres titres et de "
-"créances de l'actif immobilisé"
+"10. Akommes vun anere Investitiounen a Prêten déi en Deel vun de fixen "
+"Verméigen forméieren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_100
 msgid "100 - Other (value)"
-msgstr "100 - Autre (valeur)"
+msgstr "100 - Aner (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_101
 msgid "101 - Adjustment of deductions"
-msgstr "101 - Ajustement des déductions"
+msgstr "101 - Upassung vun den Deduktiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_102
 msgid "102 - Total input tax deductible"
-msgstr "102 - Total de la taxe en amont déductible"
+msgstr "102 - Total Input Steier ofgeleet"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_103
 msgid "103 - Total tax due"
-msgstr "103 - Total de la taxe due"
+msgstr "103 - total Steier wéinst"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_104
 msgid "104 - Total input tax deductible"
-msgstr "104 - Total de la taxe en amont déductible"
+msgstr "104 - Total Input Steier ofgedeckt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_105
 msgid "105 - Exceeding amount"
-msgstr "105 - Dépassement du montant"
+msgstr "105 - Iwwerschreiden Betrag"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_108
 msgid "108 - With salary or wage"
-msgstr "108 - Avec salaire ou traitement"
+msgstr "108 - mat Pai oder Loun"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_109
 msgid "109 - With no salary (family members)"
-msgstr "109 - Sans salaire (membres de la famille)"
+msgstr "109 - ouni Pai (Familljememberen)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_278
 msgid "11. Custom (name)"
-msgstr "11. Personnalisé (nom)"
+msgstr "11. Benotzerdefinéiert (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_279
 msgid "11. Custom (value)"
-msgstr "11. Personnalisé (valeur)"
+msgstr "11. Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_11
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_11
 msgid "11. Other interest receivable and similar income"
-msgstr "11. Autres intérêts et autres produits financiers"
+msgstr "11. Aner Zënssistent- an ähnlechen Akommes"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_110
 msgid "110 - Average number of employees for the fiscal year"
-msgstr "110 - Effectif moyen du personnel pour l'exercice"
+msgstr "110 - duerchschnëttlech Unzuel vun de Mataarbechter fir de Steierjoer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_283
 msgid "12. Employer's travel and representation expenses"
-msgstr "12. Frais de déplacement et de représentation de l'employeur"
+msgstr "12. D'Rees Rees a Representatiounskäschte"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_12
 msgid "12. Share of profit or loss of undertakings accounted "
-msgstr "12. Quote-part dans le résultat des entreprises mises en équivalence"
+msgstr "12. Deelen vum Gewënn oder Verloscht vun der Entféierung."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_12
 msgid ""
 "12. Share of profit or loss of undertakings accounted for under the equity "
 "method"
-msgstr "12. Quote-part dans le résultat des entreprises mises en équivalence"
+msgstr ""
+"12. Deelen vum Gewënn oder Verloscht vun der Entloossunge fir ënner der "
+"Equity Method virgesinn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_124
 msgid "124 - rate of 3%"
-msgstr "124 - taux de 3"
+msgstr "124 - Taux vun 3%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_128
 msgid "128 - Custom rate (value)"
-msgstr "128 - Taux personnalisé (valeur)"
+msgstr "128 - Benotzerdefinéiert Taux (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_129
 msgid "129 - Purchases other than manufactured tobacco"
-msgstr "129 - Achats autres que les tabacs manufacturés"
+msgstr "129 - Akeef aner wéi hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_285
 msgid "13. Electricity"
-msgstr "13. Électricité"
+msgstr "13. Elektrizitéit"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_13
@@ -518,79 +514,79 @@ msgid ""
 "13. Value adjustments in respect of financial assets and of investments held"
 " as current assets"
 msgstr ""
-"13. Corrections de valeur sur immobilisations financières et sur valeurs "
-"mobilières faisant partie de l'actif circulant"
+"13. Wäert Upassunge am Respekt vu finanziellen Verméigen an d'Investitiounen"
+" als aktuell Verméigen ofgehalen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_130
 msgid "130 - Manufactured tobacco"
-msgstr "130 - Tabac manufacturé"
+msgstr "130 - hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_131
 msgid "131 - Purchases within the country"
-msgstr "131 - Achats à l'intérieur du pays"
+msgstr "131 - Akeef am Land"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_134
 msgid "134 - rate of 3%"
-msgstr "134 - taux de 3"
+msgstr "134 - Taux vun 3%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_136
 msgid "136 - Custom rate (value)"
-msgstr "136 - Taux personnalisé (valeur)"
+msgstr "136 - Benotzerdefinéiert Taux (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_137
 msgid "137 - Acquisitions other than manufactured tobacco"
-msgstr "137 - Acquisitions autres que celles de tabacs manufacturés"
+msgstr "137 - Acquisitiounen anescht wéi hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_138
 msgid "138 - Manufactured tobacco"
-msgstr "138 - Tabac manufacturé"
+msgstr "138 - hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_139
 msgid "139 - Intra-Community acquisitions"
-msgstr "139 - Acquisitions intracommunautaires"
+msgstr "139 - Intra-Gemeinschaft Acquisitioune"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_289
 msgid "14. Gas"
-msgstr "14ème gaz"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_14
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_14
 msgid "14. Interest payable and similar expenses"
-msgstr "14. Intérêts et autres charges financières"
+msgstr "14. Zënssele bezuelt an ähnlech Ausgaben"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_142
 msgid "142 - rate of 3%"
-msgstr "142 - taux de 3"
+msgstr "142 - Taux vun 3%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_144
 msgid "144 - Custom rate (value)"
-msgstr "144 - Taux personnalisé (valeur)"
+msgstr "144 - Benotzerdefinéiert Taux (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_145
 msgid "145 - Imports other than manufactured tobacco"
-msgstr "145 - Importations autres que les tabacs manufacturés"
+msgstr "145 - Importéiert aner wéi hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_146
 msgid "146 - Manufactured tobacco"
-msgstr "146 - Tabac manufacturé"
+msgstr "146 - hiergestallt Tubak"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_147
 msgid "147 - Imports"
-msgstr "147 - Importations"
+msgstr "147 - Importer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_148
@@ -598,24 +594,24 @@ msgid ""
 "148 - Purchases of goods which give rise to a chargeable event for the "
 "supplier or for the taxable person acquiring the goods"
 msgstr ""
-"148 - Achats de biens qui donnent lieu à un fait générateur pour le "
-"fournisseur ou pour l'assujetti qui acquiert les biens"
+"148 - Akeef vu Wueren déi op e läschten Event fir de Liwwerant erakommen "
+"oder fir déi besteierbar Persoun d'Wuere kréien"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_149
 msgid "149 - Custom rate (%)"
-msgstr "149 - Taux de personnalisation (%)"
+msgstr "149 - Benotzerdefinéiert Taux (%)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_15
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_15
 msgid "15. Tax on profit or loss"
-msgstr "15. Impôts sur le résultat"
+msgstr "15. Steier op Gewënn oder Verloscht"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_293
 msgid "15. Water"
-msgstr "15. L'eau"
+msgstr "15. Waasser"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_150
@@ -623,129 +619,128 @@ msgid ""
 "150 - Purchases of goods which don't give rise to a chargeable event neither"
 " for the supplier nor for the taxable person acquiring the goods"
 msgstr ""
-"150 - Achats de biens ne donnant pas lieu à un fait générateur de taxe ni "
-"pour le fournisseur ni pour l'assujetti qui acquiert les biens"
+"150 - Akeef vu Wueren déi net zu engem chartable Event net fir de Liwwerant "
+"erakommen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_151
 msgid "151 - Purchases of goods abroad which are not brought to Luxembourg"
-msgstr ""
-"151 - Achats de biens à l'étranger qui ne sont pas introduits au Luxembourg"
+msgstr "151 - Eaafien vun der Ausübegkeet hunn net zu Lëtzebuerg bruecht"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_153
 msgid "153 - Custom rate (%)"
-msgstr "153 - Taux de personnalisation (%)"
+msgstr "153 - Benotzerdefinéiert Taux (%)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_total_stock_entry
 msgid "154 - Total entry of stock for business purposes"
-msgstr "154 - Entrée totale d'actions à des fins professionnelles"
+msgstr "154 - Total Entrée vun der Lager fir Geschäftszwecker"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_155
 msgid "155 - of which goods for resale"
-msgstr "155 - dont biens destinés à la revente"
+msgstr "155 - vu wéi eng Wueren fir d'Resale"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_158
 msgid "158 - rate of 3%"
-msgstr "158 - taux de 3"
+msgstr "158 - Taux vun 3%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_297
 msgid "16. Heating"
-msgstr "16. Chauffage"
+msgstr "16. Heizung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_16
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_16
 msgid "16. Profit or loss after taxation"
-msgstr "16. Résultat après impôts sur le résultat"
+msgstr "16. Gewënn oder Verloscht no der Steierung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_162
 msgid "162 - Custom rate (value)"
-msgstr "162 - Taux personnalisé (valeur)"
+msgstr "162 - Benotzerdefinéiert Taux (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_17
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_17
 msgid "17. Other taxes not shown under items 1 to 16"
-msgstr "17. Autres impôts ne figurant pas sous les postes 1. à 16."
+msgstr "17. Aner Steieren net ënner Artikelen 1 bis 16 gewisen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_301
 msgid "17. Telecommunications"
-msgstr "17. Les télécommunications"
+msgstr "17. Telekommunikatiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_179
 msgid "179 - Other"
-msgstr "179 - Autres"
+msgstr "179 - Aner"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_18
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_18
 msgid "18. Profit or loss for the financial year"
-msgstr "18. Résultat de l'exercice"
+msgstr "18. Gewënn oder Verloscht fir dat finanziell Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_305
 msgid "18a. Renting/leasing of immovable property with application of VAT"
-msgstr "18a. Location/leasing de biens immobiliers avec application de la TVA"
+msgstr "18a.Lount / Locatioun vun immovable Propriétéit mat Uwendung vun TVA"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_307
 msgid "18b. Renting/leasing of immovable property with no application of VAT"
-msgstr "18b. Location/leasing de biens immobiliers sans application de la TVA"
+msgstr "18b.Lount / Locatioun vun immovabele Besëtz ouni Uwendung vun TVA"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_310
 msgid "18c. Renting/leasing of permanently installed equipment and machinery"
 msgstr ""
-"18c. Location/leasing d'équipements et de machines installés de façon "
-"permanente"
+"18c.Lounen / Locatioun vun dauernd installéiert Ausrüstung a Maschinnen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_314
 msgid "19. Fire insurance"
-msgstr "19. Assurance incendie"
+msgstr "19. Feierversécherung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_197
 msgid "197 - Exempt"
-msgstr "197 - Exempté"
+msgstr "197 - befreit"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_198
 msgid "198 - Exempt"
-msgstr "198 - Exempté"
+msgstr "198 - EXEMPT"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_199
 msgid "199 - Exempt"
-msgstr "199 - Exempté"
+msgstr "199 - befreit"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_241
 msgid "1a. of which productive salaries"
-msgstr "1a. dont salaires productifs"
+msgstr "1a.vu wéi eng produktiv Salairen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_b1
 msgid "1b. Total of expenses during the financial year - Taxable amount"
-msgstr "1b. Total des dépenses de l'exercice - Montant imposable"
+msgstr ""
+"1b.TOTAL VUN Ausgaben wärend dem finanziellen Joer - besteierbare Betrag"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_2_2
 msgid "2. Amounts owed by affiliated undertakings"
-msgstr "2. Créances sur des entreprises liées"
+msgstr "2. Montanten verdanken duerch Affiliated Däfer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_2
 msgid "2. Amounts owed to credit institutions"
-msgstr "2. Dettes envers des établissements de crédit"
+msgstr "2. Mengen huele fir Kredittinstitutiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1_2
@@ -753,64 +748,64 @@ msgid ""
 "2. Concessions, patents, licences, trade marks and similar rights and "
 "assets, if they were"
 msgstr ""
-"2. Concessions, brevets, licences, marques, ainsi quedroits et valeurs "
-"similaires s’ils ont été"
+"2. Konzessioune, Patenter, Lizenzen, Handle Marken an ähnlech Rechter a "
+"Verméigen, wa se waren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_244
 msgid "2. Gross wages"
-msgstr "2. Salaires bruts"
+msgstr "2. Brutto Léin"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_lessor
 msgid "2. Lessor"
-msgstr ""
+msgstr "2. Canner brauch"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3_2
 msgid "2. Loans to affiliated undertaking"
-msgstr "2. Créances sur des entreprises liées"
+msgstr "2. Prêten un affiliéiert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_other
 msgid "2. Other assets"
-msgstr "2. Autres actifs"
+msgstr "2. Aner Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_3_2
 msgid "2. Own shares"
-msgstr "2. Actions propres ou parts propres"
+msgstr "2. Eege Aktien"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_2_2
 msgid "2. Plant and machinery"
-msgstr "2. Installations techniques et machines"
+msgstr "2. Planz a Maschinnen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_2_2
 msgid "2. Provisions for taxation"
-msgstr "2. Provisions pour impôts"
+msgstr "2. Bestëmmunge fir Steiererklärung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4_2
 msgid "2. Reserve for own shares"
-msgstr "2. Réserve pour actions propres ou parts propres"
+msgstr "2. Reserve fir eege Aktien"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_2
 msgid "2. Variation in stocks of finished goods and in work in progress"
-msgstr "2. Variation du stock de produits finis et en cours de fabrication"
+msgstr "2. Variant an Aktien vu fäerdege Wueren an an der Aarbecht amgaang"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_1_2
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_wip
 msgid "2. Work in progress"
-msgstr "2. Produits en cours de fabrication"
+msgstr "2. Schafft amgaang"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_165
 msgid "2. goods produced inhouse"
-msgstr "2. biens produits en interne"
+msgstr "2. Wueren produzéiert am Haus"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.EcSalesLuXMLReport
@@ -821,12 +816,12 @@ msgstr ""
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_316
 msgid "20. Property tax"
-msgstr "20. Impôt foncier"
+msgstr "20. Property Steier"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_200
 msgid "200 - Exempt"
-msgstr ""
+msgstr "200 - befreit"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_202
@@ -834,9 +829,8 @@ msgid ""
 "202 - IC supply of new means of transport to persons not identified for VAT "
 "purposes who are established or reside in another MS"
 msgstr ""
-"202 - Fourniture de moyens de transport neufs à des personnes non "
-"identifiées aux fins de la TVA qui sont établies ou résidentes dans un autre"
-" État membre"
+"202 - IC ONERVICE VUN NEW FATTER VUN DER TRANSE AN PERSOUNEN NET GEMAACHT "
+"FIR VAT GESCHAFFT WÉI INSCHREIWEN ODER AN EEN ANER MS"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_203
@@ -845,34 +839,34 @@ msgid ""
 "purposes and established in the MS where the dispatch ends, when these "
 "supplies are taxable in that MS"
 msgstr ""
-"203 - Livraisons de biens effectuées à des clients non identifiés aux fins "
-"de la TVA et établis dans l'État membre où l'expédition prend fin, lorsque "
-"ces livraisons sont imposables dans cet État membre."
+"203 - Versuergung vu Wueren déi op d'Clienten duerchgefouert ginn, net fir "
+"vat Zwecker an der MS etabléiert an etabléiert wou d'Versand op d'Versand "
+"ass, wann dës Versichtbar sinn an deem men"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_overall_turnover_206
 msgid "206 - Custom (name)"
-msgstr "206 - Personnalisé (nom)"
+msgstr "206 - Benotzerdefinéiert (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_318
 msgid "21. Custom (name)"
-msgstr "21. Personnalisé (nom)"
+msgstr "21. Benotzerdefinéiert (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_319
 msgid "21. Custom (value)"
-msgstr "21. Personnalisé (valeur)"
+msgstr "21. Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_321
 msgid "22. Custom (name)"
-msgstr "22. Personnalisé (nom)"
+msgstr "22. Benotzerdefinéiert (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_322
 msgid "22. Custom (value)"
-msgstr "22. Personnalisé (valeur)"
+msgstr "22. Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_226
@@ -880,68 +874,69 @@ msgid ""
 "226 - Supplies carried out within the scope of the special arrangement of "
 "art. 56sexies"
 msgstr ""
-"226 - Fournitures effectuées dans le cadre du régime spécial de l'art. "
-"56sexies"
+"226 - Ëmgeréits duerchgefouert am Kader vun de Spezial Arrangement vun der "
+"Konscht.56xsies"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_228
 msgid "228 - Adjusted tax - special arrangement for tax suspension"
-msgstr "228 - Impôt ajusté - régime spécial de suspension fiscale"
+msgstr "228 - ugepasst Steier - speziell Arrangement fir Steierrespensur"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_229
 msgid "229 - Other (name)"
-msgstr "229 - Autre (nom)"
+msgstr "229 - Aner (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_324
 msgid "23. Business tax"
-msgstr "23. Taxe professionnelle"
+msgstr "23. Business Steier"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_237
 msgid "237 - Phone number for contacting the declaring person"
-msgstr "237 - Numéro de téléphone pour contacter le déclarant"
+msgstr "237 - Telefonsnummer fir d'Deklaren ze kontaktéieren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_238
 msgid "238 - Books, records and documents"
-msgstr "238 - Livres, registres et documents"
+msgstr "238 - Bicher, records an Dokumenter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_325
 msgid "24. Licensing (cabaretage) tax and other taxes"
-msgstr "24. Taxe sur les licences (cabaretage) et autres taxes"
+msgstr "24. Lizenz (Cabarettage) Steier an aner Steieren"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_326
 msgid "25. Interest paid for long-term debts"
-msgstr "25. Intérêts payés pour les dettes à long terme"
+msgstr "25. Zënssaz bezuelt fir laangfristeg Scholden"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_327
 msgid "26. Interest paid for short-term debts"
-msgstr "26. Intérêts payés pour les dettes à court terme"
+msgstr "26. Zënssaz bezuelt fir kuerzfristeg Scholden"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_328
 msgid "27. Other financial costs"
-msgstr "27. Autres frais financiers"
+msgstr "27. Aner Finanzkäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_330
 msgid "28. Stock and business equipment insurance"
-msgstr "28. Assurance des stocks et du matériel d'entreprise"
+msgstr "28. Aktie a Geschäftsausrüstung Versécherung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_331
 msgid "29. Public and professional third party liability insurance"
-msgstr "29. Assurance responsabilité civile publique et professionnelle"
+msgstr ""
+"29. Ëffentlech a professionell Drëtt Partei Listabilitéit Versécherung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_b2
 msgid "2b. Total of expenses during the financial year - Tax"
-msgstr "2b. Total des dépenses de l'exercice - Impôts"
+msgstr "2b.Total vun Ausgaben während dem finanziellen Joer - Steier"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_2_3
@@ -949,45 +944,44 @@ msgid ""
 "3. Amounts owed by undertakings with which the undertaking is linked by "
 "virtue of participating interests"
 msgstr ""
-"3. Créances sur des entreprises avec lesquelles l'entreprise a un lien de "
-"participation"
+"3. Mengen duerch Ënnerdréckungen ze verdanken, mat deem d'Entreprise vun der"
+" Tugend vu Partizipatiounsinteresse verbonnen ass"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_1_3
 msgid "3. Finished goods and goods for resale"
-msgstr "3. Produits finis et marchandises"
+msgstr "3. Fäerdeg Wueren a Wueren fir d'Resale"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1_3
 msgid ""
 "3. Goodwill, to the extent that it was acquired for valuable consideration"
-msgstr ""
-"3. Fonds de commerce, dans la mesure où il a été acquis à titre onéreux"
+msgstr "3. Wallen, an de Mooss datt et fir wäertvoll Iwwerleeung kaaft gouf"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_247
 msgid "3. Occasional salaries"
-msgstr "3. Salaires occasionnels"
+msgstr "3. Gelegentlech Salairen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_2_3
 msgid "3. Other fixtures and fittings, tools and equipment"
-msgstr "3. Autres installations, outillage et mobilier"
+msgstr "3. Aner Armaturen a Fittingen, Tools an Ausrüstung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_3_3
 msgid "3. Other investments"
-msgstr "3. Autres valeurs mobilières"
+msgstr "3. Aner Investitiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_2_3
 msgid "3. Other provisions"
-msgstr "3. Autres provisions"
+msgstr "3. Aner Bestëmmunge"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3_3
 msgid "3. Participating interests"
-msgstr "3. Participations"
+msgstr "3. Participatioun matzemaachen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_3
@@ -995,35 +989,38 @@ msgid ""
 "3. Payments received on account of orders in so far as they are shown "
 "separately as deductions from stocks"
 msgstr ""
-"3. Acomptes reçus sur commandes pour autant qu’ilsne sont pas déduits des "
-"stocks de façon distincte"
+"3. Bezuelungen, déi op de Konto vun Uerderen an esou wäit sinn, wéi se "
+"separat uginn ginn wéi d'Deduktiounen aus Aktien"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_receivables
 msgid "3. Receivables from clients"
-msgstr "3. Créances sur les clients"
+msgstr "3. Empfeelunge vu Clienten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4_3
 msgid "3. Reserves provided for by the articles of association"
-msgstr "3. Réserves statutaires"
+msgstr ""
+"3. Reserven zur Verfügung gestallt fir vun den Artikelen vun der "
+"Associatioun"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_3
 msgid ""
 "3. Work performed by the undertaking for its own purposes and capitalised"
 msgstr ""
-"3. Travaux effectués par l'entreprise pour elle-même et portés à l'actif"
+"3. Aarbecht gemaach vun der Entreprise fir seng eege Zwecker a "
+"kapitaliséiert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_332
 msgid "30. Office expenses"
-msgstr "30. Frais de bureau"
+msgstr "30. Bürokäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_334
 msgid "31. Cleaning and maintenance of business premises"
-msgstr "31. Nettoyage et entretien des locaux professionnels"
+msgstr "31. Botzen an Ënnerhalt vu Geschäfter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_336
@@ -1031,153 +1028,153 @@ msgid ""
 "32. Fees and subscriptions paid to professional associations and learned "
 "societies"
 msgstr ""
-"32. Cotisations versées aux associations professionnelles et aux sociétés "
-"savantes"
+"32. Käschten an Abonnementer bezuele fir professionell Associatiounen a "
+"Gespréicher"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_337
 msgid "33. Papers and periodicals for business purposes"
-msgstr "33. Papiers et périodiques à des fins professionnelles"
+msgstr "33. Pabeieren an Periodesch fir Geschäftszwecker"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_115
 msgid "34a. Expenses for work carried out by sub-contractors"
-msgstr "34a. Dépenses pour les travaux effectués par des sous-traitants"
+msgstr "34a.Ausgaben fir Aarbecht duerch Ënnerkonft duerchgefouert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_188
 msgid "34b. Expenses for other work carried out by third parties"
-msgstr "34b. Dépenses pour d'autres travaux effectués par des tiers"
+msgstr "34B.Ausgaben fir aner Aarbecht duerch Drëtt Parteien duerchgefouert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_343
 msgid "35. Shipping and transport expenses"
-msgstr "35. Frais d'expédition et de transport"
+msgstr "35. Verschécken an Transportkäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_345
 msgid "36. Work clothes"
-msgstr "36. Vêtements de travail"
+msgstr "36. Aarbecht Kleeder"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_363
 msgid "363 - Book (net asset) value at the beginning of the financial year"
-msgstr "363 - Valeur comptable (actif net) au début de l'exercice"
+msgstr "363 - Buch (Net Asset) Wäert am Ufank vum finanziellen Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_364
 msgid "364 - Acquisitions during the financial year"
-msgstr "364 - Acquisitions au cours de l'exercice"
+msgstr "364 - Acquisitiounen am finanzielle Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_365
 msgid "365 - Sales during the financial year"
-msgstr "365 - Ventes de l'exercice"
+msgstr "365 - Verkaf während dem finanzielle Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_366
 msgid "366 - Depreciation during the financial year"
-msgstr "366 - Amortissements de l'exercice"
+msgstr "366 - Ofkierzung während dem finanzielle Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_367
 msgid "367 - Book (net asset) value at the end of the financial year"
-msgstr "367 - Valeur comptable (actif net) à la fin de l'exercice"
+msgstr "367 - Buch (Net Asset) Wäert um Enn vum finanziellen Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_368
 msgid "368 - Fuel (petrol, diesel) and lubricants"
-msgstr "368 - Carburant (essence, diesel) et lubrifiants"
+msgstr "368 - Brennstoff (Bensin, Diesel) an Lubricanten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_369
 msgid "369 - Fuel (petrol, diesel) and lubricants"
-msgstr "369 - Carburant (essence, diesel) et lubrifiants"
+msgstr "369 - Brennstoff (Bensin, Diesel) an Lubricanten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_347
 msgid "37. Advertising and publicity"
-msgstr "37. Publicité"
+msgstr "37. Annoncéieren an der Verëffentlechung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_372
 msgid "372 - LPG"
-msgstr "372 - GPL"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_373
 msgid "373 - LPG"
-msgstr "373 - GPL"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_374
 msgid "374 - Repairs and servicing"
-msgstr "374 - Réparations et entretien"
+msgstr "374 - Fléckaarbechte a Portioun"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_375
 msgid "375 - Repairs and servicing"
-msgstr "375 - Réparation et entretien"
+msgstr "375 - Fléckaarbechte a Servicing"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_376
 msgid "376 - Tyres, etc."
-msgstr "376 - Pneus, etc."
+msgstr "376 - Pneuen, etc."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_377
 msgid "377 - Tyres, etc."
-msgstr "377 - Pneus, etc."
+msgstr "377 - Pneuen, etc."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_378
 msgid "378 - Leasing / renting"
-msgstr "378 - Leasing / location"
+msgstr "378 - Locatioun / Loyer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_379
 msgid "379 - Leasing / renting"
-msgstr "379 - Leasing / location"
+msgstr "379 - Locatioun / Loyer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_349
 msgid "38. Packaging"
-msgstr "38. Emballage"
+msgstr "38. Verpackung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_380
 msgid "380 - Depreciation"
-msgstr "380 - Dépréciation"
+msgstr "380 - Depreiz"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_383
 msgid "383 - km travelled"
-msgstr "383 - km parcourus"
+msgstr "383 - Km gereest"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_384
 msgid "384 - non-business portion (km)"
-msgstr "384 - partie non commerciale (km)"
+msgstr "384 - Net-Business Portioun (km)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_385
 msgid "385 - non-business portion (in %)"
-msgstr "385 - part non commerciale (en %)"
+msgstr "385 - Net-Business Portioun (an%)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_386
 msgid "386 - Non-business part of expenditures for motor vehicules"
-msgstr "386 - Partie non commerciale des dépenses pour les véhicules à moteur"
+msgstr "386 - Net Business Deel vun Ausgaben fir Autoen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_387
 msgid "387 - Other (name)"
-msgstr "387 - Autres (nom)"
+msgstr "387 - Aner (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_388
 msgid "388 - Other (value)"
-msgstr "388 - Autres (valeur)"
+msgstr "388 - Aner (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_total_taxable
@@ -1185,43 +1182,44 @@ msgid ""
 "389 - Assessment total of the taxable amount for non-business use of assets "
 "allocated to business"
 msgstr ""
-"389 - Total de l'évaluation de la base imposable pour l'utilisation non "
-"professionnelle d'actifs affectés à l'entreprise"
+"389 - Bewäertung am Ganzen vum besteierbaren Betrag fir Net-"
+"Geschäftsverbrauch vun Verméigen, déi op Geschäft zouginn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_351
 msgid "39. Repair and maintenance of equipment and machinery"
-msgstr "39. Réparation et entretien des équipements et des machines"
+msgstr "39. Reparatur an Ënnerhalt vun Ausrüstung a Maschinnen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_394
 msgid "394 - Custom rate (%)"
-msgstr "394 - Taux de personnalisation (%)"
+msgstr "394 - personaliséiert Taux (%)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_396
 msgid "396 - Custom rate (%)"
-msgstr "396 - Taux de personnalisation (%)"
+msgstr "396 - Benotzerdefinéiert Taux (%)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_397
 msgid "397 - Name"
-msgstr "397 - Nom"
+msgstr "397 - Numm"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_398
 msgid "398 - Address"
-msgstr "398 - Adresse"
+msgstr "398 - Adress"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_399
 msgid "399 - Address"
-msgstr "399 - Adresse"
+msgstr "399 - Adress"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_250
 msgid "4. Compulsory social security contributions (employer's share)"
-msgstr "4. Cotisations obligatoires de sécurité sociale (part de l'employeur)"
+msgstr ""
+"4. Obligatoresch Sozialversécherung Contributiounen (Deelen vum Patron)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3_4
@@ -1229,84 +1227,84 @@ msgid ""
 "4. Loans to undertakings with which the undertaking is linked by virtue of "
 "participating interests"
 msgstr ""
-"4. Créances sur des entreprises avec lesquelles l’entreprise a un lien de "
-"participation"
+"4. Prêten zu Schäfferoten mat deenen d'Entreprise verbonne sinn duerch "
+"Participatioun vun deelhuelende Interessen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_2_4
 msgid "4. Other debtors"
-msgstr "4. Autres créances"
+msgstr "4. Aner Scholden"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_4
 msgid "4. Other operating income"
-msgstr "4. Autres produits d’exploitation"
+msgstr "4. Aner Operatioun Akommes"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4_4
 msgid "4. Other reserves, including the fair value reserve"
-msgstr "4. Autres réserves, y compris la réserve de juste valeur"
+msgstr "4. Aner Reserven, abegraff déi fair Wäertreserver"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_payments
 msgid "4. Payments made on account by clients"
-msgstr "4. Les acomptes versés par les clients"
+msgstr "4. Bezuelen gemaach op Kont vu Clienten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_1_4
 msgid "4. Payments on account"
-msgstr "4. Acomptes versés"
+msgstr "4. Bezuelen op Kont"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1_4
 msgid "4. Payments on account and intangible assets under development"
-msgstr "4. Acomptes versés et immobilisations incorporelles en cours"
+msgstr "4. Bezuelen op Kont an immaterielle Verméigen ënner der Entwécklung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_2_4
 msgid ""
 "4. Payments on account and tangible assets in the course of construction"
-msgstr "4. Acomptes versés et immobilisations corporelles en cours"
+msgstr "4. Bezuelungen op Kont a knaschteg Verméigen am Bau vum Bau"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_4
 msgid "4. Trade creditors"
-msgstr "4. Dettes sur achats et prestations de services"
+msgstr "4. Trade Kreditter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_353
 msgid "40. Other repairs"
-msgstr "40. Autres réparations"
+msgstr "40. Aner Reparaturen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_400
 msgid "400 - Name"
-msgstr "400 - Nom"
+msgstr "400 - Numm"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_401
 msgid "401 - Address"
-msgstr "401 - Adresse"
+msgstr "401 - Adress"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_402
 msgid "402 - Address"
-msgstr "402 - Adresse"
+msgstr "402 - Adress"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_404
 msgid "404 - Due under the reverse charge"
-msgstr "404 - Dû au titre de l'autoliquidation"
+msgstr "404 - Wéinst ënner dem ëmgedréite charge"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_405
 msgid "405 - Due under the reverse charge"
-msgstr "405 - Dû au titre de l'autoliquidation"
+msgstr "405 - Wéinst ënner der ëmgedréite Charge"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_406
 msgid "406 - Due under the reverse charge"
-msgstr "406 - Dû au titre de l'autoliquidation"
+msgstr "406 - Wéinst ënner der ëmgedréinter charge"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_355
@@ -1314,8 +1312,8 @@ msgid ""
 "41. New acquisitions (tools and equipment) if their cost can be fully "
 "allocated to the year of acquisition or creation"
 msgstr ""
-"41. Nouvelles acquisitions (outils et équipements) si leur coût peut être "
-"entièrement imputé à l'année d'acquisition ou de création."
+"41. Nei Acquisitiounen (Tools an Ausrüstung) Wann hir Käschte fir d'Joer vun"
+" der Acquisitioun an der Schafung ausgeléist ginn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_419
@@ -1323,29 +1321,29 @@ msgid ""
 "419 - Inland supplies for which the customer is liable for the payment of "
 "VAT"
 msgstr ""
-"419 - Livraisons intérieures pour lesquelles le client est redevable de la "
-"TVA"
+"419 - Inland liwweren fir déi de Client haftbar fir d'Bezuelung vum TVA ass"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_357
 msgid "42. Custom (name)"
-msgstr "42. Personnalisé (nom)"
+msgstr "42. Personnage (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_358
 msgid "42. Custom (value)"
-msgstr "42. Personnalisé (valeur)"
+msgstr "42. Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_423
 msgid ""
 "423 - not exempt in the MS where the customer is liable for payment of VAT"
-msgstr "423 - non exonéré dans l'EM où le client est redevable de la TVA"
+msgstr ""
+"423 - net befreit an de MS, wou de Client haftbar fir Bezuelen vun TVA"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_exemptions_deductible_424
 msgid "424 - exempt in the MS where the customer is identified"
-msgstr "424 - exonéré dans l'État membre où le client est identifié"
+msgstr "424 - befreit an der MS wou de Client identifizéiert gëtt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_361
@@ -1353,13 +1351,13 @@ msgid ""
 "43. Total 'Appendix to Operational expenditures' (brought forward from "
 "Operational expenditures)"
 msgstr ""
-"43. Total \"Annexe aux dépenses opérationnelles\" (reporté des dépenses "
-"opérationnelles)"
+"43. Total 'Appendix op operationell Ausgaben' (huet aus operationeller "
+"Ausgaben weidergeleet)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_190
 msgid "44. Car expenses"
-msgstr "44. Frais de voiture"
+msgstr "44. Autoskäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_tax_report_line_1b_8_supplies_carried_out_domestic
@@ -1367,8 +1365,8 @@ msgid ""
 "481 - Supplies carried out within the scope of the domestic SME scheme of "
 "article 57bis (7)"
 msgstr ""
-"481 - Fournitures effectuées dans le cadre du régime national des PME de "
-"l'article 57bis (7)"
+"481 - Liwwerungen an der Ëmfang vun der Terraf vum Indium Schema vun den "
+"Artikel 57bis (7)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_tax_report_line_1b_9_supplies_carried_out_cross_border
@@ -1376,49 +1374,49 @@ msgid ""
 "482 - Supplies carried out within the scope of the cross-border SME scheme "
 "of article 57quater "
 msgstr ""
-"482 - Fournitures effectuées dans le cadre du régime des PME "
-"transfrontalières de l'article 57 quater"
+"482 - Liwwerungen hunn am Ëmfang vun der Cross-Grenz Schema vum Artikel 57 "
+"Chapé duerchgefouert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_253
 msgid "5. Accident insurance"
-msgstr "5. Assurance accidents"
+msgstr "5. Accident Versécherung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_5
 msgid "5. Bills of exchange payable"
-msgstr "5. Dettes représentées par des effets de commerce"
+msgstr "5. Rechnungen vun Austausch"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3_5
 msgid "5. Investments held as fixed assets"
-msgstr "5. Titres ayant le caractère d’immobilisations"
+msgstr "5. Investitioune gehale wéi fix Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_5
 msgid "5. Raw materials and consumables and other external expenses"
-msgstr "5. Matières premières et consommables et autres charges externes"
+msgstr "5. Matière première a Verbraucher an aner extern Ausgaben"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_6
 msgid "6. Amounts owed to affiliated undertakings"
-msgstr "6. Dettes envers des entreprises liées"
+msgstr "6. Montanten verdanken fir undiliéiert Ënnerbewosstsinn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_256
 msgid "6. Commissions"
-msgstr "6. Les commissions"
+msgstr "6. Kommissiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3_6
 msgid "6. Other loans"
-msgstr "6. Autres prêts"
+msgstr "6. Aner Prêten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_6
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_6
 msgid "6. Staff costs"
-msgstr "6. Frais de personnel"
+msgstr "6. Personalkäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_7
@@ -1426,226 +1424,226 @@ msgid ""
 "7. Amounts owed to undertakings with which the undertaking is linked by "
 "virtue of participating interests"
 msgstr ""
-"7. Dettes envers des entreprises avec lesquelles l'entreprise a un lien de "
-"participation"
+"7. Mengen verdanken ze maachen mat deem d'Entreprise vun der Tugend vu "
+"Partizipéierungsinteresse verbonne sinn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_260
 msgid "7. Staff travel and representation expenses"
-msgstr "7. Frais de voyage et de représentation du personnel"
+msgstr "7. Personalrees a Representatiounskäschte"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_7
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_7
 msgid "7. Value adjustments"
-msgstr "7. Corrections de valeur"
+msgstr "7. Wäert Upassungen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_771
 msgid "771 - rate of 17%"
-msgstr "771 - taux de 17"
+msgstr "771 - Taux vu 17%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_772
 msgid "772 - rate of 14%"
-msgstr "772 - taux de 14"
+msgstr "772 - Taux vu 14%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_773
 msgid "773 - rate of 8%"
-msgstr "773 - taux de 8"
+msgstr "773 - Taux vun 8%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_774
 msgid "774 - rate of 12%"
-msgstr "774 - taux de 12"
+msgstr "774 - Taux vun 12%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_776
 msgid "776 - rate of 17%"
-msgstr "776 - taux de 17"
+msgstr "776 - Taux vu 17%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_777
 msgid "777 - rate of 14%"
-msgstr "777 - taux de 14"
+msgstr "777 - Taux vu 14%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_778
 msgid "778 - rate of 8%"
-msgstr "778 - taux de 8"
+msgstr "778 - Taux vun 8%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_781
 msgid "781 - rate of 17%"
-msgstr "781 - taux de 17"
+msgstr "781 - Taux vu 17%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_782
 msgid "782 - rate of 14%"
-msgstr "782 - taux de 14"
+msgstr "782 - Taux vu 14%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_783
 msgid "783 - rate of 8%"
-msgstr "783 - taux de 8"
+msgstr "783 - Taux vun 8%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_791
 msgid "791 - rate of 17%"
-msgstr "791 - taux de 17"
+msgstr "791 - Taux vu 17%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_793
 msgid "793 - rate of 14%"
-msgstr "793 - taux de 14"
+msgstr "793 - Taux vu 14%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_795
 msgid "795 - rate of 8%"
-msgstr "795 - taux de 8"
+msgstr "795 - Taux vun 8%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_797
 msgid "797 - rate of 12%"
-msgstr "797 - taux de 12"
+msgstr "797 - Taux vun 12%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_264
 msgid "8. Custom (name)"
-msgstr "8. Personnalisé (nom)"
+msgstr "8. Benotzerdefinéiert (Numm)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_265
 msgid "8. Custom (value)"
-msgstr "8. Personnalisé (valeur)"
+msgstr "8. Benotzerdefinéiert (Wäert)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_8
 msgid "8. Other creditors"
-msgstr "8. Autres dettes"
+msgstr "8. Aner Kreditter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_8
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_8
 msgid "8. Other operating expenses"
-msgstr "8. Autres charges d’exploitation"
+msgstr "8. Aner Operatiounskäschte"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a_269
 msgid "9. Accounting and bookkeeping fees"
-msgstr "9. Frais de comptabilité et de tenue de livres"
+msgstr "9. Accounting a Bookkeeping Käschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_9
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_9
 msgid "9. Income from participating interests"
-msgstr "9. Produits provenant de participations"
+msgstr "9. Akommes vun deelhuelende Interessen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_971
 msgid "971 - rate of 16%"
-msgstr "971 - taux de 16"
+msgstr "971 - Taux vu 16%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_972
 msgid "972 - rate of 13%"
-msgstr "972 - taux de 13"
+msgstr "972 - Taux vun 13%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_973
 msgid "973 - rate of 7%"
-msgstr "973 - taux de 7"
+msgstr "973 - Taux vu 7%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_976
 msgid "976 - rate of 16%"
-msgstr "976 - taux de 16"
+msgstr "976 - Taux vun 16%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_977
 msgid "977 - rate of 13%"
-msgstr "977 - taux de 13"
+msgstr "977 - Taux vun 13%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_978
 msgid "978 - rate of 7%"
-msgstr "978 - taux de 7"
+msgstr "978 - Taux vu 7%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_981
 msgid "981 - rate of 16%"
-msgstr "981 - taux de 16"
+msgstr "981 - Taux vun 16%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_982
 msgid "982 - rate of 13%"
-msgstr "982 - taux de 13"
+msgstr "982 - Taux vun 13%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d_983
 msgid "983 - rate of 7%"
-msgstr "983 - taux de 7"
+msgstr "983 - Taux vu 7%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_991
 msgid "991 - rate of 16%"
-msgstr "991 - taux de 16"
+msgstr "991 - Taux vun 16%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_993
 msgid "993 - rate of 13%"
-msgstr "993 - taux de 13"
+msgstr "993 - Taux vun 13%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e_995
 msgid "995 - rate of 7%"
-msgstr "995 - taux de 7"
+msgstr "995 - Taux vu 7%"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1
 msgid "A. Capital and reserves"
-msgstr "A. Capitaux propres"
+msgstr "A. Kapital a Reserven"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_1
 msgid "A. Subscribed capital unpaid"
-msgstr "A. Capital souscrit non versé"
+msgstr "A. Abonnéiert Kapital onbezuelten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1
 msgid "ASSETS"
-msgstr "ACTIFS"
+msgstr "Verméigen"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__bs__abr
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__pl__abr
 msgid "Abridged"
-msgstr "Abrégé"
+msgstr "Ofgelenkt"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Modèle de plan comptable"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_account_report
 msgid "Accounting Report"
-msgstr "Rapport comptable"
+msgstr ""
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/l10n_lu_annual_tax_report.py:0
 msgid "Add appendix lines"
-msgstr "Ajouter des lignes d'annexe"
+msgstr "Füügt Appendix Linnen"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.account_financial_report_ec_sales_amount
 msgid "Amount"
-msgstr "Montant"
+msgstr "Mobil Bet an der Offer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_458
@@ -1653,8 +1651,8 @@ msgid ""
 "Amount still to be allocated (fields 077, 081, 085): 458 - Invoiced by other"
 " taxable persons for goods or services supplied"
 msgstr ""
-"Montant restant à affecter (rubriques 077, 081, 085) : 458 - Facturation par"
-" d'autres assujettis de livraisons de biens ou de prestations de services"
+"Betrag nach ëmmer zougewisen (Felder 077, 081, 085): 458 - vun aneren "
+"bestellbare Persounen fir Wueren oder Servicer geliwwert"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_459
@@ -1662,8 +1660,8 @@ msgid ""
 "Amount still to be allocated (fields 078, 082, 086): 459 - Due in respect of"
 " Intra-Community acquistions of goods"
 msgstr ""
-"Montant restant à affecter (rubriques 078, 082, 086) : 459 - Dû au titre des"
-" acquisitions intracommunautaires de biens"
+"Betrag nach ëmmer ze verdeelen (Felder 078, 082, 086): 459 - Duerch de "
+"Respekt vun der Intra-Gemeinschaftsbewerungen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_460
@@ -1671,8 +1669,8 @@ msgid ""
 "Amount still to be allocated (fields 079, 083, 087): 460 - Due or paid in "
 "respect of mportation of goods"
 msgstr ""
-"Montant restant à affecter (zones 079, 083, 087) : 460 - Sommes dues ou "
-"payées au titre de l'importation de marchandises"
+"Betrag nach ëmmer zougewisen (Felder 079, 083, 087): 460 - wéinst oder "
+"bezuelte vun der Respekt vum Deporter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_461
@@ -1680,108 +1678,107 @@ msgid ""
 "Amount still to be allocated (fields 404, 405, 406): 461 - Due under the "
 "reverse charge"
 msgstr ""
-"Montant restant à affecter (rubriques 404, 405, 406) : 461 - Dû au titre de "
-"l'autoliquidation"
+"Betrag nach ëmmer ze verdeelen (Felder 404, 405, 406): 461 - Wéinst ënner "
+"dem ëmgedréite Käschte"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_other_assimilated_supplies_455
 msgid "Amount still to be allocated: 455 - Other assimilated supplies"
-msgstr "Montant restant à attribuer : 455 - Autres fournitures assimilées"
+msgstr "Betrag nach ëmmer ze verlobten: 455 - Aner assimiliséierter Ëmgeréits"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_other_assimilated_supplies_456
 msgid "Amount still to be allocated: 456 - Other assimilated supplies"
-msgstr "Montant restant à attribuer : 456 - Autres fournitures assimilées"
+msgstr "Betrag nach ëmmer ze verlobten: 456 - Aner assimiliséierter Ëmgeréits"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_457
 msgid "Amount still to be allocated: 457 - Intra-Community supply"
-msgstr ""
-"Montant restant à attribuer : 457 - Approvisionnement intra-communautaire"
+msgstr "Betrag nach ëmmer ze verdeelen: 457 - Intra-Gemeinschaftsversuergung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_total_sales
 msgid "Amount still to be allocated: 472 - Total Sales / Receipts"
-msgstr "Montant restant à répartir : 472 - Total des ventes / recettes"
+msgstr "Betrag nach ëmmer ze verdeelen: 472 - Gesamtverkaaf / Empfang"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_tax_report__period__a
 msgid "Annual"
-msgstr "Annuel"
+msgstr "Jéineseg Iwwerhousse fir"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report
 msgid "Annual VAT Declaration"
-msgstr "Déclaration annuelle de TVA"
+msgstr "Alljährlech VAT Deklaratioun"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_annual
 msgid "Annual accounts"
-msgstr "Comptes annuels"
+msgstr "Äre Kontin"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_a
 msgid "Appendix A"
-msgstr "Annexe A"
+msgstr "Appendix a"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_bc
 msgid "Appendix B, C"
-msgstr "Annexe B, C"
+msgstr "Appendix b, c"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_d
 msgid "Appendix D"
-msgstr "Annexe D"
+msgstr "Appendix d"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_e
 msgid "Appendix E"
-msgstr "Annexe E"
+msgstr "Appendix e"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_fg
 msgid "Appendix F, G"
-msgstr "Annexe F, G"
+msgstr "Appendix f, g"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_yearly_tax_report_appendix_view_tree
 msgid "Appendix line"
-msgstr "Ligne d'annexe"
+msgstr "Appendix Linn"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_opex
 msgid "Appendix to Operational Expenditures"
-msgstr "Annexe aux dépenses opérationnelles"
+msgstr "Appendix zu operationell Ausgaben"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/l10n_lu_annual_tax_report.py:0
 msgid "Appendix to the Operational Expenditures"
-msgstr "Annexe aux dépenses opérationnelles"
+msgstr "Appendix op déi operationell Ausgaben"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__attachment_id
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_stored_intra_report_view_tree
 msgid "Attachment"
-msgstr "Pièce jointe"
+msgstr "Unteritioune vergaartegdeg"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__avg_nb_employees
 msgid "Average number of employees for the fiscal year"
-msgstr "Nombre de personnes occupées (moyenne de l'année)"
+msgstr "Duerchschnëttlech Unzuel u Mataarbechter fir de Steierjoer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_2
 msgid "B. Formation expenses"
-msgstr "B. Frais d’établissement"
+msgstr "B. Bildungskäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_2
 msgid "B. Provisions"
-msgstr "B. Dispositions"
+msgstr "B. Bestëmmunge"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_column
@@ -1794,7 +1791,7 @@ msgstr "B. Dispositions"
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_balance
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345_balance
 msgid "Balance"
-msgstr ""
+msgstr "Esch Bapport"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.account_financial_report_l10n_lu_bs
@@ -1804,121 +1801,119 @@ msgstr "Bilan"
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr
 msgid "Balance Sheet (abridged)"
-msgstr "Bilan (abrégé)"
+msgstr "Bilan Gepäck (verkierzt)"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_accounts_report
 msgid "Balance sheet version"
-msgstr "Version du Bilan"
+msgstr "Bilan Gepäck Versioun"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__bs
 msgid "Bs"
-msgstr ""
+msgstr "BS"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_vat_excluded
 msgid "Business portion - VAT excluded"
-msgstr "Partie affaires - hors TVA"
+msgstr "Business Deel - TVA ausgeschloss"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_vat_invoiced
 msgid "Business portion - of VAT invoiced"
-msgstr "Part professionnelle - de la TVA facturée"
+msgstr "Business Deel - vun TVA Rechnung"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__report_section_412
 msgid "Business portion expenditures VAT excluded (412)"
-msgstr "Dépenses de la partie affaires exclues de la TVA (412)"
+msgstr "Business Portioun Ausgaben, déi ofschwätzen (412)"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__report_section_413
 msgid "Business portion of VAT invoiced (413)"
-msgstr "Part professionnelle de la TVA facturée (413)"
+msgstr "Business Deel vun der TVA opgeruff (413)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_3
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3
 msgid "C. Creditors"
-msgstr "C. Dettes"
+msgstr "C. Kreditter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_3
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3
 msgid "C. Fixed assets"
-msgstr "C. Actif immobilisé"
+msgstr "C. Fixéiert Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_c
 msgid "C. Number of km travelled during the financial year"
-msgstr "C. Nombre de km parcourus au cours de l'exercice"
+msgstr "C. Zuel vu Klamm am finanzielle Joer gereest"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2
 msgid "CAPITAL, RESERVES AND LIABILITIES"
-msgstr "CAPITAUX PROPRES ET PASSIF"
+msgstr "Kapital, Reserven a Verbëndlechkeete"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_financial_report.py:0
 msgid "Cannot export them."
-msgstr "Impossible de les exporter."
+msgstr "Kann se net exportéieren."
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "Check from/to dates. XML must cover 1 full month or 1 full quarter."
 msgstr ""
-"Vérifier les dates de début et de fin. XML doit couvrir 1 mois ou 1 "
-"trimestre complet."
+"Préift vun / op Datumen.XML muss 1 Voll Mount oder 1 voller Véierel "
+"ofdecken."
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_coa_report.py:0
 msgid "CoA report for Luxembourg not supported for years previous to 2019."
-msgstr ""
-"Rapport de plan comptable pour le Luxembourg non pris en charge pour les "
-"années antérieures à 2019."
+msgstr "Coa Bericht fir Lëtzebuerg net fir Joeren virdru bis 189 ënnerstëtzt."
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__coa_only
 msgid "Coa Only"
-msgstr "Seulement le plan comptable"
+msgstr "Coa nëmmen"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__codes
 msgid "Codes"
-msgstr ""
+msgstr "Codces"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_res_company
 msgid "Companies"
-msgstr "Sociétés"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__company_id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__company_id
 msgid "Company"
-msgstr "Entreprise"
+msgstr "Firma"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_partner__l10n_lu_agent_rcs_number
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_users__l10n_lu_agent_rcs_number
 msgid "Company Registry"
-msgstr "Registre des entreprises"
+msgstr "Firma Registry"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/wizard/l10n_lu_generate_xml.py:0
 msgid "Company: %s"
-msgstr "Entreprise : %s"
+msgstr "Firma:% s"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/wizard/l10n_lu_generate_xml.py:0
 msgid "Configure"
-msgstr "Configurer"
+msgstr "Konfiguréieren"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_res_partner
@@ -1928,7 +1923,7 @@ msgstr ""
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.account_financial_report_ec_sales_country
 msgid "Country Code"
-msgstr "Code pays"
+msgstr "Landcode"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__create_uid
@@ -1939,7 +1934,7 @@ msgstr "Code pays"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__create_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Erstallt duerch"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__create_date
@@ -1950,12 +1945,14 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__create_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__create_date
 msgid "Created on"
-msgstr "Créé le"
+msgstr "Erstallt op"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_appendix_a_tax_report_handler
 msgid "Custom Handler for the Appendix A of the LU Annual Tax Report"
-msgstr "Manipulateur à façon pour l'annexe A du rapport fiscal annuel de LU"
+msgstr ""
+"Benotzerdefinéiert Handler fir den Appendix A vum LU alljährlechen "
+"Steierbericht"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_appendix_opex_tax_report_handler
@@ -1963,25 +1960,25 @@ msgid ""
 "Custom Handler for the Appendix to Operational Expenditures of the LU Annual"
 " Tax Report"
 msgstr ""
-"Manipulateur à façon pour l'annexe aux dépenses opérationnelles du rapport "
-"fiscal annuel de LU"
+"Benotzerdefinéiert Handler fir den Appendix op operationell Ausgaben vum LU "
+"alljährlechen Steierberichter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4
 msgid "D. Current assets"
-msgstr "D. Actif circulant"
+msgstr "D. aktuell Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_4
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_4
 msgid "D. Deferred income"
-msgstr "D. Comptes de régularisation"
+msgstr "D. ofgeleet Akommes"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__report_section_411
 msgid "Detail of expenses line 43 (411)"
-msgstr "Détail des dépenses ligne 43 (411)"
+msgstr "Detail vu Ausgaben Linn 43 (411)"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__display_name
@@ -1992,60 +1989,60 @@ msgstr "Détail des dépenses ligne 43 (411)"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__display_name
 msgid "Display Name"
-msgstr "Nom d'affichage"
+msgstr "Unzeigenumm"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_5
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_5
 msgid "E. Prepayments"
-msgstr "E. Comptes de régularisation"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.actions.act_window,name:l10n_lu_reports.action_l10n_lu_stored_intra_report
 #: model:ir.ui.menu,name:l10n_lu_reports.menu_action_l10n_lu_stored_intra_report
 msgid "EC Sales - Stored Reports"
-msgstr "Ventes CE - Rapports enregistrés"
+msgstr "EC Sales - gespäichert Berichter"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_partner__l10n_lu_agent_ecdf_prefix
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_users__l10n_lu_agent_ecdf_prefix
 msgid "ECDF Prefix"
-msgstr "Préfixe ECDF"
+msgstr "Ecdf Präfix"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_accounts_report
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_vat_intra_report
 msgid "EXPORT XML"
-msgstr "EXPORTER XML"
+msgstr "Export XML"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_end
 msgid "End of financial year"
-msgstr "Fin de l'exercice"
+msgstr "Enn vum finanzielle Joer"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "Error in file "
-msgstr "Erreur dans le fichier "
+msgstr "Feeler beim Fichier"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_opex_vat_excluded
 msgid "Expenditures VAT excluded"
-msgstr "Dépenses hors TVA"
+msgstr "Ausgaben déi ausgeschloss hunn"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_financial_report.py:0
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "Export"
-msgstr "Exportation"
+msgstr ""
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_general_ledger.py:0
 msgid "FAIA"
-msgstr ""
+msgstr "Maach dat"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2054,8 +2051,6 @@ msgid ""
 "Fields 164 and 165 are mandatory when 163 is filled in and must add up to "
 "field 163."
 msgstr ""
-"Les champs 164 et 165 sont obligatoires lorsque le champ 163 est rempli et "
-"doivent être additionnés au champ 163 (annexe E)."
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__filename
@@ -2064,23 +2059,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__filename
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__filename
 msgid "Filename"
-msgstr "Nom de fichier"
+msgstr "DATANAMAMEAMBL"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__bs__full
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__pl__full
 msgid "Full"
-msgstr "Complet"
+msgstr "Voll agin"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_account_general_ledger_report_handler
 msgid "General Ledger Custom Handler"
-msgstr "Gestionnaire personnalisé du grand livre"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_generate_accounts_report
 msgid "Generate Accounts Report"
-msgstr "Générer un rapport sur les comptes"
+msgstr "Generéiere Konten Bericht"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_accounts_report
@@ -2088,67 +2083,67 @@ msgid ""
 "Generate Chart of Accounts only (Non-automated generation of the balance "
 "sheet and the profit and loss account)"
 msgstr ""
-"Générer uniquement le plan comptable (génération non automatisée du bilan et"
-" du compte de résultat)"
+"Generéiere Charts vum Konten (net automatiséiert Generatioun vum "
+"Gläichgewiicht an de Gewënner-Kont)"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_generate_vat_intra_report
 msgid "Generate Sales Report"
-msgstr "Générer un rapport de vente"
+msgstr "Generéiere Verkeefer Rapport"
 
 #. module: l10n_lu_reports
 #: model:ir.actions.act_window,name:l10n_lu_reports.action_l10n_lu_generate_vat_intra_report
 msgid "Generate Sales report"
-msgstr "Générer un rapport de vente"
+msgstr "Generéiere Verkeefer Rapport"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_generate_tax_report
 msgid "Generate Tax Report"
-msgstr "Générer un rapport d'impôt"
+msgstr "Generéiere Steierrapport"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_generate_asset_report
 msgid "Generate XML for Luxembourg"
-msgstr "Générer XML pour le Luxembourg"
+msgstr "Generéieren XML fir Lëtzebuerg"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_generate_xml
 msgid "Generate Xml 2.0"
-msgstr "Générer Xml 2.0"
+msgstr "Generéiere XML 2.0"
 
 #. module: l10n_lu_reports
 #: model:ir.actions.act_window,name:l10n_lu_reports.action_l10n_lu_generate_accounts_report
 msgid "Generate accounts report"
-msgstr "Générer un rapport sur les comptes"
+msgstr "Generéiere Konten Bericht"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_assessment_turnover
 msgid "I. ASSESSMENT OF TAXABLE TURNOVER"
-msgstr "I. ÉVALUATION DU CHIFFRE D'AFFAIRES IMPOSABLE"
+msgstr "I. Bewäertung vum besteierbaren Ëmsaz"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_3_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1
 msgid "I. Intangible assets"
-msgstr "I. Immobilisations incorporelles"
+msgstr "I. immensibel Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_1
 msgid "I. Stocks"
-msgstr "I. Les actions"
+msgstr "I. Aktien"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_1
 msgid "I. Subscribed capital"
-msgstr "I. Capital souscrit"
+msgstr "I. abonnéiert Kapital"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_1_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_1_1
 msgid "I. Subscribed capital not called"
-msgstr "I. Capital souscrit non appelé"
+msgstr "I. Abonnéiert Kapital net genannt"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__id
@@ -2159,78 +2154,76 @@ msgstr "I. Capital souscrit non appelé"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__id
 msgid "ID"
-msgstr ""
+msgstr "Ö €"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_2
 msgid "II. Debtors"
-msgstr "II. Créances"
+msgstr "II.Scholden"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_2
 msgid "II. Share premium account"
-msgstr "II. Primes d'émission"
+msgstr "II.Deelen Premium Kont"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_1_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_1_2
 msgid "II. Subscribed capital called but unpaid"
-msgstr "II. Capital souscrit appelé et non versé"
+msgstr "II.Abonnéiert Kapital, awer onbezuelten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_3_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_2
 msgid "II. Tangible assets"
-msgstr "II. Immobilisations corporelles"
+msgstr "II.Kulmen Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_assessment_deductible_tax
 msgid "III. ASSESSMENT OF DEDUCTIBLE TAX (input tax)"
-msgstr "III. ÉVALUATION DE LA TAXE DÉDUCTIBLE (taxe en amont)"
+msgstr "III.Bewäertung vun der dedukter Steier (Input Steier)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_3_3
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_3
 msgid "III. Financial assets"
-msgstr "III. Immobilisations financières"
+msgstr "III.Finanziell Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4_3
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_3
 msgid "III. Investments"
-msgstr "III. Valeurs mobilières"
+msgstr "III.Investment"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_3
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_3
 msgid "III. Revaluation reserve"
-msgstr "III. Réserve de réévaluation"
+msgstr "III.Revaluatiounspreinung"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4_4
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_4_4
 msgid "IV. Cash at bank and in hand"
-msgstr ""
-"IV. Avoirs en banques, avoirs en compte de chèques postaux, chèques et "
-"encaisse"
+msgstr "Iv.Cash op der Bank an an der Hand"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_4
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4
 msgid "IV. Reserves"
-msgstr "IV. Réserve"
+msgstr "Iv.Reserven"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_tax_to_be_reclaimed
 msgid "IV. TAX TO BE PAID OR TO BE RECLAIMED"
-msgstr "IV. TAXE A PAYER OU A RECUPERER"
+msgstr "Iv.Steier fir bezuelt ze ginn oder zréckzekommen"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__import_notes_as_references
 msgid "Import Notes As References"
-msgstr "Importer des notes en tant que références"
+msgstr "Import Notizen als Referenzen"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2242,17 +2235,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_partner__l10n_lu_is_representative
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_users__l10n_lu_is_representative
 msgid "L10N Lu Is Representative"
-msgstr ""
+msgstr "L10n Lu ass Vertrieder"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__l10n_lu_stored_report_ids
 msgid "L10N Lu Stored Report"
-msgstr "Rapport stocké L10N Lu"
+msgstr "L10N L Lager Bericht"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__size__large
 msgid "Large-Sized Undertaking"
-msgstr "Entreprise de grande envergure"
+msgstr "Grouss-Gréisst Drage"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__write_uid
@@ -2263,7 +2256,7 @@ msgstr "Entreprise de grande envergure"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__write_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr "Lescht aktualiséiert vum"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__write_date
@@ -2274,42 +2267,42 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__write_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr "Lescht aktualiséiert op"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_partner_form
 msgid "Luxembourg"
-msgstr ""
+msgstr "Lëtzebuerg"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_annual_tax_report_handler
 msgid "Luxembourgish Annual Tax Report Custom Handler"
-msgstr "Rapport fiscal annuel luxembourgeois Custom Handler"
+msgstr "Ingenieur als Luxembourg Steierer mellen Condresser Handler"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_ec_sales_report_handler
 msgid "Luxembourgish EC Sales Report Custom Handler"
-msgstr "Rapport de vente de la CE luxembourgeoise Custom Handler"
+msgstr "Ingenie Everkeefer Bericht Benotzerdefinéiert Handler"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_report_handler
 msgid "Luxembourgish Financial Report Custom Handler"
-msgstr "Rapport financier luxembourgeois Custom Handler"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_tax_report_handler
 msgid "Luxembourgish Tax Report Custom Handler"
-msgstr "Gestionnaire personnalisé de la déclaration fiscale luxembourgeoise"
+msgstr ""
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.lux_ec_sales_report
 msgid "Luxemburgese EC sales Report"
-msgstr "Rapport sur les ventes de la CE au Luxembourg"
+msgstr "Newsise EC Salsbericht"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.EcSalesLuXMLReport
 msgid "MODL5"
-msgstr ""
+msgstr "Modl5"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2318,22 +2311,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_partner__l10n_lu_agent_matr_number
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_users__l10n_lu_agent_matr_number
 msgid "Matr Number"
-msgstr "Numéro de matricule"
+msgstr "Nëmmen d'Nummer"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__size__medium
 msgid "Medium-Sized Undertaking"
-msgstr "Entreprise de taille moyenne"
+msgstr "Mëttelgrousse Verweigerung"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_tax_report__period__m
 msgid "Monthly"
-msgstr "Mensuel"
+msgstr "Mag etwäit"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_names
 msgid "Names and addresses to be specified"
-msgstr "Noms et adresses à préciser"
+msgstr "Nimm an Adresse fir spezifizéiert ze ginn"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,help:l10n_lu_reports.field_res_partner__l10n_lu_agent_matr_number
@@ -2342,13 +2335,13 @@ msgid ""
 "National ID number of the accounting firm (agent company) acting as the "
 "declarer in eCDF declarations"
 msgstr ""
-"Numéro d'identification de l'entreprise de comptabilité (agent d'entreprise)"
-" actant comme déclarant dans les déclarations eCDF"
+"National ID Zuel vun der Comptabilitéitsfirma (Agent Company) handelen als "
+"deklaréiert an dem Ecdfdekratiounen"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_vat_intra_report
 msgid "Old declarations to update/correct"
-msgstr "Anciennes déclarations à mettre à jour/corriger"
+msgstr "Al Deklaratioune fir ze aktualiséieren / richteg"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2357,58 +2350,58 @@ msgid ""
 "Only assets having EUR currency for companies using EUR currency can be "
 "reported."
 msgstr ""
-"Seuls les actifs libellés en euros pour les sociétés utilisant cette monnaie"
-" peuvent être déclarés."
+"Nëmme Verméigen hunn EUR Währung fir Firmen déi d'EUR Währung déi gemellt "
+"ginn."
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__optional_remarks
 msgid "Optional Remarks"
-msgstr "Remarques facultatives"
+msgstr "Fakultativ Bemierkungen"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__period
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__period
 msgid "Period"
-msgstr "Période"
+msgstr "Perzäitelméisseg"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__pl
 msgid "Pl"
-msgstr ""
+msgstr "Ele pl"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_financial_report.py:0
 msgid "Please set valid eCDF Prefix for your company."
-msgstr "Veuillez définir un préfixe eCDF valide pour votre entreprise."
+msgstr "Set w.e.g. gëlteg EDDF Präfix fir Är Firma."
 
 #. module: l10n_lu_reports
 #. odoo-javascript
 #: code:addons/l10n_lu_reports/static/src/components/appendix/line_name.js:0
 msgid "Proceed"
-msgstr "Procéder"
+msgstr "Fo weidergoen"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.account_financial_report_l10n_lu_pl
 #: model:ir.actions.client,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_action
 msgid "Profit & Loss"
-msgstr "Profits et Pertes"
+msgstr "Profitt & Verloscht"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr
 #: model:ir.actions.client,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_action
 msgid "Profit & Loss (abridged)"
-msgstr "Profits et Pertes (abrégé)"
+msgstr "Profitt & Verloscht (verkierzt)"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_accounts_report
 msgid "Profit and loss report version"
-msgstr "Version du rapport de Compte de Résultat"
+msgstr "Gewënn a Verloscht Bericht Versioun"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_tax_report__period__t
 msgid "Quarterly"
-msgstr "Trimestrielle"
+msgstr "Véierel"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,help:l10n_lu_reports.field_res_partner__l10n_lu_agent_rcs_number
@@ -2417,14 +2410,14 @@ msgid ""
 "RCS (Régistre de Commerce et des Sociétés) of the accounting firm (agent "
 "company) acting as the declarer in eCDF declarations"
 msgstr ""
-"RCS (Régistre de Commerce et des Sociétés) du cabinet comptable (société "
-"mandataire) agissant en tant que déclarant dans les déclarations eCDF"
+"RCs (Commerce an Firmenransportrechter) vun der Comptabilitéitsfirma "
+"(Agentfirma) handelen als de Deklarer an dem Ecdf Deklaratioune"
 
 #. module: l10n_lu_reports
 #. odoo-javascript
 #: code:addons/l10n_lu_reports/static/src/components/appendix/line_name.xml:0
 msgid "Recompute"
-msgstr "Recalculer"
+msgstr "Recomputer"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__report_data
@@ -2433,32 +2426,32 @@ msgstr "Recalculer"
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__report_data
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__report_data
 msgid "Report file"
-msgstr "Fichier de rapport"
+msgstr "Rez-Fac Datei"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_stored_intra_report_view_tree
 msgid "Reports"
-msgstr "Rapports"
+msgstr "Derauszen"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1
 msgid "Section I"
-msgstr ""
+msgstr "Sektioun I"
 
 #. module: l10n_lu_reports
 #: model:account.report,name:l10n_lu_reports.l10n_lu_annual_tax_report_sections_345
 msgid "Sections III, IV, V"
-msgstr ""
+msgstr "III III, IV, V"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__simplified_declaration
 msgid "Simplified Declaration"
-msgstr "Déclaration simplifiée"
+msgstr "Vereinfacht Deklaratioun"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__size
 msgid "Size"
-msgstr "Taille"
+msgstr "Gréisst"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.view_l10n_lu_generate_accounts_report
@@ -2466,13 +2459,13 @@ msgid ""
 "Size (criteria specified by Articles 35 and 47 of the amended law of "
 "December 19th 2002)"
 msgstr ""
-"Taille (critère spécifié par les articles 35 et 47 de la loi amendée de "
-"décembre 2002)"
+"Gréisst (Critèren, déi vun Artikelen 35 a 47 Prozent vum 19. Dezember vun "
+"den 19. Dezember 2002 uginn)"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_generate_accounts_report__size__small
 msgid "Small-Sized Undertaking"
-msgstr "Entreprise de petite taille"
+msgstr "Klengt-Gréisst Entreprise"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2481,8 +2474,8 @@ msgid ""
 "Some fields required for the export are missing or invalid. Please verify "
 "them."
 msgstr ""
-"Certains champs nécessaires à l'exportation sont manquants ou invalides. "
-"Veuillez les vérifier."
+"E puer Felder erfuerderlech fir den Export fehlt oder ongëlteg.Kontrolléiert"
+" se w.e.g."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2491,15 +2484,14 @@ msgid ""
 "Some problems with the comparison declarations occurred. The comparison "
 "declarations must refer to earlier periods."
 msgstr ""
-"Des problèmes sont apparus avec les déclarations de comparaison. Les "
-"déclarations de comparaison doivent se référer à des périodes antérieures."
+"E puer Probleemer mam Verglach erkläert.De Verglach deklaréieren "
+"d'Deklaratioune musse fréiere Perioden bezéien."
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_general_ledger.py:0
 msgid "Some products are missing `Internal Reference`, please define them."
-msgstr ""
-"Certains produits n'ont pas de `Référence interne`, veuillez les définir."
+msgstr "E puer Produkter feelen `intern Reference`, definéiert se."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2507,36 +2499,33 @@ msgstr ""
 msgid ""
 "Some products have duplicate 'Internal Reference', please make them unique."
 msgstr ""
-"Certains produits ont une \"Référence interne\" dupliquée, veuillez la "
-"rendre unique."
+"E puer Produkter hunn duplizéiert 'intern Referenz', maacht se eenzegaarteg."
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_financial_report.py:0
 msgid "Some references are not in the requested format (max. 10 characters):"
-msgstr ""
-"Certaines références ne sont pas dans le format demandé (max. 10 "
-"caractères):"
+msgstr "E puer Referenzen sinn net am ugefrote Format (Max. 10 Zeechen):"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_start
 msgid "Start of financial year"
-msgstr "Début de l'exercice"
+msgstr "Ufank vum finanzielle Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_stock
 msgid "Stock / Miscellaneous"
-msgstr "Stock / Divers"
+msgstr "Lager / Verschiddenes"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__save_report
 msgid "Store generated report"
-msgstr "Sauvegarder le rapport généré"
+msgstr "Store generéiert Bericht"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_fg_998
 msgid "Submitted to the Trade and Companies Register (RCS)"
-msgstr "Dépôt au Registre du Commerce et des Sociétés (RCS)"
+msgstr "Presentéiert dem Handel a Firmenregister (RCS)"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_stored_intra_report__codes__lts
@@ -2544,8 +2533,8 @@ msgid ""
 "Supply of goods (normal/in the context of triangular operations) and supply "
 "of services"
 msgstr ""
-"Fourniture de biens (normalement dans le cadre d'opérations triangulaires) "
-"et fourniture de services"
+"Liwwerung vu Wueren (normal / am Kontext vun der dräieckeger Operatiounen) a"
+" Versuergung vu Servicer"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_stored_intra_report__codes__lt
@@ -2553,55 +2542,53 @@ msgid ""
 "Supply of goods and supply of goods made in the context of triangular "
 "operations"
 msgstr ""
-"Fournitures de biens et livraisons de biens effectuées dans le cadre "
-"d'opérations triangulaires"
+"Liwwerung vu Wueren a Versuergung vu Wueren déi am Kontext vun der "
+"dräieckeger Operatiounen gemaach goufen"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_stored_intra_report__codes__s
 msgid "Supply of services"
-msgstr "Prestations de services"
+msgstr "Liwwerung vun Servicer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_6
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_6
 msgid "TOTAL (ASSETS)"
-msgstr "TOTAL (ACTIFS)"
+msgstr "Total (Verméigen)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_5
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_5
 msgid "TOTAL (CAPITAL, RESERVES AND LIABILITIES)"
-msgstr "TOTAL (CAPITAUX PROPRES ET PASSIF)"
+msgstr "Total (Kapital, Reserven a Verbëndlechkeete)"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_total
 msgid "TOTAL if applicable VAT included"
-msgstr "TOTAL si applicable TVA incluse"
+msgstr "Total wann applicabel TVA abegraff"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.saft_template_inherit_l10n_lu_saft
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_information_inherit_l10n_lu_saft
 msgid "TVA-"
-msgstr ""
+msgstr "Tva-"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.account_financial_report_ec_sales_tax
 msgid "Tax Code"
-msgstr "Code fiscal"
+msgstr "Steiero-Code"
 
 #. module: l10n_lu_reports
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.saft_template_inherit_l10n_lu_saft
 msgid "Taxe sur la valeur ajoutée"
-msgstr ""
+msgstr "Oddat"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/res_partner.py:0
 msgid ""
 "The Agent's ECDF Prefix is not valid. There should be exactly 6 characters."
-msgstr ""
-"Le préfixe ECDF de l'agent n'est pas valide. Il doit comporter exactement 6 "
-"caractères."
+msgstr "Den AGDF Präfix ass net gëlteg.Et sollt genau 6 Zeechen sinn."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2610,8 +2597,8 @@ msgid ""
 "The Agent's Matr. Number is not valid. There should be between 11 and 13 "
 "digits."
 msgstr ""
-"Le numéro de matricule de l'agent n'est pas valide. n'est pas valide. Il "
-"doit comporter entre 11 et 13 chiffres."
+"Den ARENTS Mater.Zuel ass net valabel.Et sollt tëscht 11 an 13 Zifferen "
+"sinn."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2620,8 +2607,8 @@ msgid ""
 "The ECDF Prefix hasn't been defined. Please add the ECDF prefix in the "
 "company's information."
 msgstr ""
-"Le préfixe ECDF n'a pas été défini. Veuillez ajouter le préfixe ECDF dans "
-"les informations relatives à l'entreprise."
+"Den Ecdf Präfix gouf net definéiert.Füügt w.e.g. den ECDF Präfix an der "
+"Firma vun der Firma."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2629,9 +2616,7 @@ msgstr ""
 msgid ""
 "The company's ECDF Prefix is not valid. There should be exactly 6 "
 "characters."
-msgstr ""
-"Le préfixe ECDF de l'entreprise n'est pas valide. Il doit comporter "
-"exactement 6 caractères."
+msgstr "De Ekdf Präfix ass net valabel.Et sollt genau 6 Zeechen sinn."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2640,9 +2625,8 @@ msgid ""
 "The company's Matr. Number hasn't been defined. Please configure it in the "
 "company's information."
 msgstr ""
-"Le numéro de matricule de l'entreprise n'a pas été défini. de l'entreprise "
-"n'a pas été défini. Veuillez le configurer dans les informations de "
-"l'entreprise."
+"De Mater vun der Firma.Nummer ass net definéiert ginn.Configuréiert et an "
+"der Informatioun vun der Firma."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2651,8 +2635,8 @@ msgid ""
 "The company's Matr. Number is not valid. There should be between 11 and 13 "
 "digits."
 msgstr ""
-"Le numéro de matricule de l'entreprise n'est pas valide. n'est pas valide. "
-"Il doit comporter entre 11 et 13 chiffres."
+"De Mater vun der Firma.Zuel ass net valabel.Et sollt tëscht 11 an 13 "
+"Zifferen sinn."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2661,7 +2645,6 @@ msgid ""
 "The field %(field)s must be filled in because one of the dependent fields "
 "(%(dependent_fields)s) is filled in."
 msgstr ""
-"Le champ %s doit être rempli car l'un des champs dépendants est rempli."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2670,9 +2653,6 @@ msgid ""
 "The field 010 in Section 1 is mandatory if you fill in the field 389 in "
 "'Appendix B'. Field 010 must be equal to field 389"
 msgstr ""
-"La zone 010 de la rubrique \"Autres fournitures assimilées\" est obligatoire"
-" si vous remplissez la zone 389 de l'annexe B. Le champ 010 doit être égal "
-"au champ 389"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2681,8 +2661,8 @@ msgid ""
 "The fiscal period you have selected is invalid, please verify. Valid periods"
 " are : Month, Quarter and Year."
 msgstr ""
-"La période fiscale que vous avez sélectionnée n'est pas valide, veuillez la "
-"vérifier. Les périodes valides sont : Mois, Trimestre et Année."
+"D'Steierperiod déi Dir gewielt hutt ass ongëlteg, kuckt w.e.g.Valid Perioden"
+" sinn: Mount, Véierel a Joer."
 
 #. module: l10n_lu_reports
 #. odoo-javascript
@@ -2703,22 +2683,20 @@ msgid ""
 "The following must be set on your company:\n"
 "- %s"
 msgstr ""
-"Les éléments suivants doivent être définis dans votre entreprise :\n"
-"- %s"
+"Déi folgend muss op Ärer Firma gesat ginn:\n"
+"-% s"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "The provided comparison file is not a proper eCDF XML declaration!"
-msgstr ""
-"Le fichier de comparaison fourni n'est pas une déclaration XML eCDF valide !"
+msgstr "D'Studie ass keng richteg méiglech Acmf -LReck!"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "The provided comparison file is not a properly formatted XML."
-msgstr ""
-"Le fichier de comparaison fourni n'est pas un XML correctement formaté."
+msgstr "Déi ausgeliwwert Verglach Datei ass net e richteg formatéiert XML."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2727,9 +2705,9 @@ msgid ""
 "The report can't be saved, because it isn't a valid eCDF declaration. Either"
 " both 'L' and 'T' codes should be selected, or none of them"
 msgstr ""
-"Le rapport ne peut pas être enregistré, car il n'est pas une déclaration "
-"eCDF valide. Soit les codes 'L' et 'T' doivent être sélectionnés, soit aucun"
-" de les deux"
+"De Rapport kann gespäichert sinn, well et ass net eng gëlteg EDDF "
+"Deklaratioun.Entweder béid 'l' an 'T' Coden soll gewielt ginn, oder keen vun"
+" hinnen"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2737,8 +2715,8 @@ msgstr ""
 msgid ""
 "The selected period is not supported for the selected declaration type."
 msgstr ""
-"La période sélectionnée n'est pas prise en charge par le type de déclaration"
-" sélectionné."
+"Déi gewielte Period gëtt net fir déi gewielte Deklaratiounsschapp "
+"ënnerstëtzt."
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2755,83 +2733,83 @@ msgid ""
 "There are no Intracommunity VAT declarations for the declaring company in "
 "the provided file!"
 msgstr ""
-"Il n'y a pas de déclarations de TVA Intracommunautaire pour la société "
-"déclarante dans le fichier fourni !"
+"Et ginn net intracompstunktik stellt Patriepiounen fir déi "
+"Dekrolperebellschaft an der virgesinn Datei!"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_total_opex
 msgid "Total operational expenditures"
-msgstr "Total des dépenses opérationnelles"
+msgstr "Total operationell Ausgaben"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/l10n_lu_annual_tax_report.py:0
 msgid "Total to be carried forward to line 43"
-msgstr "Total à reporter à la ligne 43"
+msgstr "Total fir weider op d'Linn 43 ze ginn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_1_transactions_abroad
 msgid "Transactions carried out (for which the place of supply is) abroad"
 msgstr ""
-"Opérations effectuées (pour lesquelles le lieu de prestation est) à "
-"l'étranger"
+"Transaktiounen duerchgefouert (fir wéi eng Plaz vun der Versuergung ass) am "
+"Ausland"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_additional_information
 msgid "V. ADDITIONAL INFORMATION"
-msgstr "V. INFORMATIONS COMPLÉMENTAIRES"
+msgstr "V. zousätzlech Informatioun"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_5
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_5
 msgid "V. Profit or loss brought forward"
-msgstr "V. Résultats reportés"
+msgstr "V. Profitt oder Verloscht bruecht"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "VAT"
-msgstr "TVA"
+msgstr "Oddat"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.account_financial_report_ec_sales_vat
 msgid "VAT Number"
-msgstr "Numéro de TVA"
+msgstr "Vat Nummer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_6
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_6
 msgid "VI. Profit or loss for the financial year"
-msgstr "VI. Résultat de l'exercice"
+msgstr "Vi.Gewënn oder Verloscht fir dat finanziell Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_7
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_7
 msgid "VII. Interim dividends"
-msgstr "VII. Acomptes sur dividendes"
+msgstr "Vii.Interim Dividenden"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_2_1_8
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_8
 msgid "VIII. Capital investment subsidies"
-msgstr "VIII. Subventions d’investissement en capital"
+msgstr "Viii.Kapital Investitiouns Subventiounen"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/wizard/l10n_lu_generate_xml.py:0
 msgid "Verify"
-msgstr "Vérifier"
+msgstr "Z'iwwerpréiwen"
 
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_general_ledger.py:0
 msgid "View Products"
-msgstr "Voir les produits"
+msgstr "View Produkter"
 
 #. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_l10n_lu_stored_intra_report
 msgid "Wrapper for an attachment, adds the financial report data"
-msgstr "Enveloppe d'une pièce jointe, ajoute les données du rapport financier"
+msgstr "Wrapper fir en Unhang, füügt de finanzielle Rapport Daten"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -2847,7 +2825,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__year
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__year
 msgid "Year"
-msgstr "Année"
+msgstr "Joer"
 
 #. module: l10n_lu_reports
 #. odoo-javascript
@@ -2856,35 +2834,35 @@ msgid ""
 "You are about to delete all this year's appendix lines and calculate new "
 "ones. This action is irreversible."
 msgstr ""
-"Vous êtes sur le point de supprimer toutes les lignes de l'annexe de cette "
-"année et d'en calculer de nouvelles. Cette action est irréversible."
+"Dir sidd amgaang all dëst Joer vun dësem Joer vun dësem Joer ze läschen an "
+"nei ze berechnen.Dës Aktioun ass irreversibel."
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1_1
 msgid "a) Convertible loans"
-msgstr "a) Emprunts convertibles"
+msgstr "a) Cabriolet Prêten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_5_1
 msgid "a) Raw materials and consumables"
-msgstr "a) Matières  premières et consommables"
+msgstr "a) Rohmaterialien a Verbraucher"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_8_1
 msgid "a) Tax authorities"
-msgstr "a) Dettes f iscales"
+msgstr "a) Steier Autoritéiten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_6_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_6_1
 msgid "a) Wages and salaries"
-msgstr "a) Salaires et traitements"
+msgstr "a) Léin a Gehälter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1_2_1
 msgid ""
 "a) acquired for valuable consideration and need not be shown under C.I.3"
-msgstr "a) acquis à titre onéreux, sans devoir f igurer sous C.I.3"
+msgstr "a) kaaft fir wäertvoll Iwwerleeung a brauch net ënner C.I.3 gewisen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4_2_1
@@ -2900,13 +2878,13 @@ msgstr "a) acquis à titre onéreux, sans devoir f igurer sous C.I.3"
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_6_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_7_1
 msgid "a) becoming due and payable within one year"
-msgstr "a) dont la durée résiduelle est inf érieure ou égale à un an"
+msgstr "a) Gitt an engem Joer bezuelt a bezuelt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_14_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_14_1
 msgid "a) concerning affiliated undertakings"
-msgstr "a) concernant des entreprises liées"
+msgstr "a) betreffend allgemeng Ënnerbewosstsinn"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_10_1
@@ -2916,7 +2894,7 @@ msgstr "a) concernant des entreprises liées"
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_11_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_9_1
 msgid "a) derived from affiliated undertakings"
-msgstr "a) provenant d’entreprises liées"
+msgstr "a) ofgeleet vu verbonne vun der Entreprise"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_7_1
@@ -2925,13 +2903,13 @@ msgid ""
 "a) in respect of formation expenses and of tangible and intangible fixed "
 "assets"
 msgstr ""
-"a) sur frais d'établissement et sur immobilisations corporelles et "
-"incorporelles"
+"a) am Respekt vun der Formatkäschten a vun konkreten an immaterielle fixen "
+"Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4_4_1
 msgid "a) other available reserves"
-msgstr "a) autres réserves disponibles"
+msgstr "a) aner verfügbar Reserven"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_a
@@ -2939,35 +2917,34 @@ msgid ""
 "a. Stock not falling within the scope of Art. 56ter-1 and 56ter-2 and "
 "manufactured tobacco referred to in b. excluded"
 msgstr ""
-"a. Le stock ne relevant pas des articles 56ter-1 et 56ter-2 et les tabacs "
-"manufacturés visés à l'article b. sont exclus. 56ter-1 et 56ter-2 et tabacs "
-"manufacturés visés au point b. exclus"
+"A.Stock net am Ëmfang vun der Konscht falen.56ter-1 an 56ter-2 a fabrizéiert"
+" Tubak bezeechent zu b.ausgeschloss"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_section_appendix_b_a
 msgid "a. Values"
-msgstr "a. Valeurs"
+msgstr "A.Wäerter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1_2
 msgid "b) Non convertible loans"
-msgstr "b) Emprunts non  convertibles"
+msgstr "b) net konvertibel Prêten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_5_2
 msgid "b) Other external expenses"
-msgstr "b) Autres charges externes"
+msgstr "b) aner extern Ausgaben"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_8_2
 msgid "b) Social security authorities"
-msgstr "b) Dettes au titre de la sécurité sociale"
+msgstr "b) Sozialversécherungsautoritéiten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_6_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_6_2
 msgid "b) Social security costs"
-msgstr "b) Charges sociales "
+msgstr "b) Sozialversécherungskäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_abr_line_1_4_2_2
@@ -2983,68 +2960,68 @@ msgstr "b) Charges sociales "
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_6_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_7_2
 msgid "b) becoming due and payable after more than one year"
-msgstr "b) dont la durée résiduelle est supérieure à un an"
+msgstr "b) Wéinst an bezuelt Dir méi wéi ee Joer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_1_3_1_2_2
 msgid "b) created by the undertaking itself"
-msgstr "b) créés par l’entreprise elle-même"
+msgstr "b) erstallt duerch d'Schlag selwer"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_7_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_7_2
 msgid "b) in respect of current assets"
-msgstr "b) sur éléments de l'actif circulant"
+msgstr "b) Am Respekt vun aktuellen Verméigen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_9_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_9_2
 msgid "b) other income from participating interests"
-msgstr "b) provenant des autres participations"
+msgstr "b) Aner Akommes vun deelzehuelen Interesse"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_10_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_10_2
 msgid "b) other income not included under a)"
-msgstr "b) autres produits ne figurant pas sous a)"
+msgstr "b) Aner Akommes net ënner engem) abegraff)"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_14_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_14_2
 msgid "b) other interest and similar expenses"
-msgstr "b) autres intérêts et charges financières"
+msgstr "b) Aner Interesse an ähnlech Ausgaben"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_11_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_11_2
 msgid "b) other interest and similar income"
-msgstr "b) autres intérêts et produits financiers"
+msgstr "b) Aner Interesse an Ähnlech Akommes"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_1_4_4_2
 msgid "b) other non available reserves"
-msgstr "b) autres réserves non disponibles"
+msgstr "b) Aner net verfügbar Reserven"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_b
 msgid "b. Manufactured tobacco in stock"
-msgstr "b. Tabacs manufacturés en stock"
+msgstr "b.Hiergestallt Tubak op Lager"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_8_3
 msgid "c) Other creditors"
-msgstr "c) Autres dettes"
+msgstr "c) aner Kreditter"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_6_3
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_6_3
 msgid "c) Other staff costs"
-msgstr "c) Autres frais de personnel"
+msgstr "c) Aner Mataarbechter Käschten"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_res_company__ecdf_prefix
 msgid "eCDF Prefix"
-msgstr "Préfixe eCDF"
+msgstr "ecdf Präfix"
 
 #. module: l10n_lu_reports
 #. odoo-python
@@ -3053,8 +3030,8 @@ msgid ""
 "eCDF Prefix `{0}` associated with `{1}` company is invalid.\n"
 "The expected format is ABCD12 (Six digits of numbers or capital letters)"
 msgstr ""
-"Le préfixe eCDF `{0}` associé à la société `{1}` n'est pas valide.\n"
-"Le format attendu est ABCD12 (six chiffres ou lettres majuscules)."
+"Ecdf Präfix `{0}` assoziéiert mat `{1}` Firma ongëlteg.\n"
+"Den erwaart Format ass abcd12 (sechs Ziffere vun Zuelen oder Haaptbréiwer)"
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,help:l10n_lu_reports.field_res_partner__l10n_lu_agent_ecdf_prefix
@@ -3063,41 +3040,41 @@ msgid ""
 "eCDF prefix (identifier) of the accounting firm (agent company) acting as "
 "the declarer in eCDF declarations"
 msgstr ""
-"Préfixe eCDF (identifiant) de l'entreprise (agent) qui agit comme déclarant "
-"dans les déclarations eCDF"
+"Ecdf Präfix (Identifizéierer) vun der Comptabilitéitsfirma (Agent Company) "
+"handelen als deklaréiert an dem Ecdf Deklaratioune"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1_1_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1_2_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_8_3_1
 msgid "i) becoming due and payable within one year"
-msgstr "i) dont la durée résiduelle est inf érieure ou égale à un an"
+msgstr "i) ginn an ee Joer bezuelt a bezuelt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_6_2_1
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_6_2_1
 msgid "i) relating to pensions"
-msgstr "i) couvrant les pensions"
+msgstr "i) bezitt op Pensiounen"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1_1_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_1_2_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_bs_line_2_3_8_3_2
 msgid "ii) becoming due and payable after more than one year"
-msgstr "ii) dont la durée résiduelle est supérieure à un an"
+msgstr "II) ginn duerch méi wéi ee Joer bezuelt a bezuelt"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_abr_line_6_2_2
 #: model:account.report.line,name:l10n_lu_reports.account_financial_report_l10n_lu_pl_line_6_2_2
 msgid "ii) other social security costs"
-msgstr "ii) autres charges sociales"
+msgstr "II) aner Sozialversécherungskäschten"
 
 #. module: l10n_lu_reports
 #: model:account.report.column,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_opex_balance_invoiced
 msgid "of VAT invoiced"
-msgstr "de la TVA facturée"
+msgstr "vu va opgeruff"
 
 #. module: l10n_lu_reports
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_a1
 msgid "which of total under 1.a. is"
-msgstr "dont le total sous 1.a. est"
+msgstr "wéi eng vun am Ganzen ënner 1.A.ass"

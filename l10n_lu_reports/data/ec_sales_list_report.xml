@@ -9,6 +9,8 @@
         <!-- Add the report variant -->
         <record id="lux_ec_sales_report" model="account.report">
             <field name="name">Luxemburgese EC sales Report</field>
+            <field name="name@fr">Rapport sur les ventes de la CE au Luxembourg</field>
+            <field name="name@lb">Newsise EC Salsbericht</field>
             <field name="country_id" ref="base.lu"/>
             <field name="root_report_id" ref="account_reports.generic_ec_sales_report"/>
             <field name="load_more_limit" eval="80"/>
@@ -18,24 +20,35 @@
             <field name="column_ids">
                 <record id="account_financial_report_ec_sales_country" model="account.report.column">
                     <field name="name">Country Code</field>
+                    <field name="name@fr">Code pays</field>
+                    <field name="name@de">Ländercode</field>
+                    <field name="name@lb">Landcode</field>
                     <field name="expression_label">country_code</field>
                     <field name="figure_type">string</field>
                     <field name="sortable" eval="True"/>
                 </record>
                 <record id="account_financial_report_ec_sales_vat" model="account.report.column">
                     <field name="name">VAT Number</field>
+                    <field name="name@fr">Numéro de TVA</field>
+                    <field name="name@de">Umsatzsteuer-Identifikationsnummer</field>
+                    <field name="name@lb">Vat Nummer</field>
                     <field name="expression_label">vat_number</field>
                     <field name="figure_type">string</field>
                     <field name="sortable" eval="True"/>
                 </record>
                 <record id="account_financial_report_ec_sales_tax" model="account.report.column">
                     <field name="name">Tax Code</field>
+                    <field name="name@fr">Code fiscal</field>
+                    <field name="name@lb">Steiero-Code</field>
                     <field name="expression_label">sales_type_code</field>
                     <field name="figure_type">string</field>
                     <field name="sortable" eval="True"/>
                 </record>
                 <record id="account_financial_report_ec_sales_amount" model="account.report.column">
                     <field name="name">Amount</field>
+                    <field name="name@fr">Montant</field>
+                    <field name="name@de">Betrag</field>
+                    <field name="name@lb">Mobil Bet an der Offer</field>
                     <field name="expression_label">balance</field>
                     <field name="sortable" eval="True"/>
                 </record>
