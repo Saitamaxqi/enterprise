@@ -20,14 +20,13 @@
             <div class="o-section-subtitle mt-4">Possible values</div>
             <Checkbox
                 className="'restrict_to_range mb-1'"
-                label.translate="Restrict values to a range"
+                label.translate="Restrict values to ranges"
                 onChange.bind="toggleRangeRestriction"
                 value="state.rangeRestriction"
             />
             <SelectionInput
                 t-if="state.rangeRestriction"
                 ranges="store.rangesForSelectionInput"
-                hasSingleRange="true"
                 required="true"
                 onSelectionChanged.bind="onRangeChanged"
                 onSelectionConfirmed.bind="onRangeConfirmed"

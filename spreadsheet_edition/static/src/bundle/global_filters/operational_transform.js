@@ -21,17 +21,17 @@ otRegistry.addTransformation(
 
 function transformTextFilterRange(toTransform, executed) {
     const filter = toTransform.filter;
-    if (filter.type === "text" && filter.rangeOfAllowedValues) {
-        const transformedRange = transformRangeData(filter.rangeOfAllowedValues, executed);
-        if (transformedRange) {
-            return {
-                ...toTransform,
-                filter: {
-                    ...filter,
-                    rangeOfAllowedValues: transformedRange,
-                },
-            };
-        }
+    if (filter.type === "text" && filter.rangesOfAllowedValues) {
+        const transformedRanges = filter.rangesOfAllowedValues
+            .map((rangeData) => transformRangeData(rangeData, executed))
+            .filter(Boolean);
+        return {
+            ...toTransform,
+            filter: {
+                ...filter,
+                rangesOfAllowedValues: transformedRanges?.length ? transformedRanges : undefined,
+            },
+        };
     }
     return toTransform;
 }

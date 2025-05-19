@@ -147,17 +147,14 @@ export class FilterEditorStore extends SpreadsheetStore {
     }
 
     get rangesForSelectionInput() {
-        // SelectionInput expects an array of ranges
-        const range = this.filter.rangeOfAllowedValues;
+        const range = this.filter.rangesOfAllowedValues;
         if (!range) {
             return [];
         }
-        return [
-            this.getters.getRangeString(
-                this.filter.rangeOfAllowedValues,
-                this.getters.getActiveSheetId()
-            ),
-        ];
+        const sheetId = this.getters.getActiveSheetId();
+        return this.filter.rangesOfAllowedValues.map((range) =>
+            this.getters.getRangeString(range, sheetId)
+        );
     }
 
     get relationModelLabel() {
@@ -187,11 +184,11 @@ export class FilterEditorStore extends SpreadsheetStore {
     }
 
     get textOptions() {
-        if (!this.filter.rangeOfAllowedValues) {
+        if (!this.filter.rangesOfAllowedValues) {
             return [];
         }
-        return this.getters.getTextFilterOptionsFromRange(
-            this.filter.rangeOfAllowedValues,
+        return this.getters.getTextFilterOptionsFromRanges(
+            this.filter.rangesOfAllowedValues,
             this.filter.defaultValue
         );
     }
@@ -299,10 +296,15 @@ export class FilterEditorStore extends SpreadsheetStore {
             this.sidePanelStore.open("GLOBAL_FILTERS_SIDE_PANEL");
             return;
         }
-        const filter = this.draft;
-        if (filter.rangeOfAllowedValues) {
-            // rangeOfAllowedValues is a RangeData in the command
-            filter.rangeOfAllowedValues = this.getters.getRangeData(filter.rangeOfAllowedValues);
+        let filter = this.draft;
+        if (filter.rangesOfAllowedValues) {
+            // rangesOfAllowedValues is an array of RangeData in the command
+            filter = {
+                ...filter,
+                rangesOfAllowedValues: filter.rangesOfAllowedValues.map((range) =>
+                    this.getters.getRangeData(range)
+                ),
+            };
         }
         const command = this.isNew ? "ADD_GLOBAL_FILTER" : "EDIT_GLOBAL_FILTER";
         const result = this.model.dispatch(command, {

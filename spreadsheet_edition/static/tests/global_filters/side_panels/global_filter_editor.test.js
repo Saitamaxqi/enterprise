@@ -214,7 +214,7 @@ test("Create a new text global filter", async function () {
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
     expect(globalFilter.defaultValue).toEqual(["Default Value"]);
-    expect(globalFilter.rangeOfAllowedValues).toBe(undefined);
+    expect(globalFilter.rangesOfAllowedValues).toBe(undefined);
 });
 
 test("Create a new text global filter with a range", async function () {
@@ -228,7 +228,8 @@ test("Create a new text global filter with a range", async function () {
     expect(".o-selection-input input").toHaveValue("B1");
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.rangeOfAllowedValues.zone).toEqual(toZone("B1"));
+    expect(globalFilter.rangesOfAllowedValues.length).toBe(1);
+    expect(globalFilter.rangesOfAllowedValues[0].zone).toEqual(toZone("B1"));
 });
 
 test("Create a new text global filter with a default value from a range", async function () {
@@ -277,7 +278,7 @@ test("edit a text global filter with a default value not from the range", async 
         type: "text",
         label: "a filter",
         defaultValue: ["Hi"],
-        rangeOfAllowedValues: toRangeData(sheetId, "B2"),
+        rangesOfAllowedValues: [toRangeData(sheetId, "B2")],
     });
     setCellContent(model, "B2", "hello"); // the range does not contain the default value
     await animationFrame();
@@ -300,7 +301,7 @@ test("check range text filter but don't select any range", async function () {
     expect(".o-selection-input input").toHaveValue("");
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.rangeOfAllowedValues).toBe(undefined);
+    expect(globalFilter.rangesOfAllowedValues).toBe(undefined);
 });
 
 test("check and uncheck range for text filter", async function () {
@@ -315,7 +316,7 @@ test("check and uncheck range for text filter", async function () {
     await contains(".restrict_to_range input[type=checkbox]").click();
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.rangeOfAllowedValues).toBe(undefined);
+    expect(globalFilter.rangesOfAllowedValues).toBe(undefined);
 });
 
 test("Create a new relational global filter", async function () {

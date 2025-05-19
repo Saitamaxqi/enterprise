@@ -24,7 +24,7 @@ export class TextFilterEditorSidePanel extends AbstractFilterEditorSidePanel {
     setup() {
         super.setup();
         this.state = useState({
-            rangeRestriction: !!this.store.filter.rangeOfAllowedValues,
+            rangeRestriction: !!this.store.filter.rangesOfAllowedValues,
         });
     }
 
@@ -35,24 +35,23 @@ export class TextFilterEditorSidePanel extends AbstractFilterEditorSidePanel {
     toggleRangeRestriction(isChecked) {
         if (!isChecked) {
             this.onRangeChanged([]);
-            this.store.update({ rangeOfAllowedValues: undefined });
+            this.store.update({ rangesOfAllowedValues: undefined });
         }
         this.state.rangeRestriction = isChecked;
     }
 
     onRangeChanged(ranges) {
-        this.range = ranges[0];
+        this.ranges = ranges;
     }
 
     onRangeConfirmed() {
-        const rangeOfAllowedValues =
-            this.state.rangeRestriction &&
-            this.range &&
-            this.env.model.getters.getRangeFromSheetXC(
-                this.env.model.getters.getActiveSheetId(),
-                this.range
+        if (this.state.rangeRestriction && this.ranges.length) {
+            const sheetId = this.env.model.getters.getActiveSheetId();
+            const rangesOfAllowedValues = this.ranges.map((range) =>
+                this.env.model.getters.getRangeFromSheetXC(sheetId, range)
             );
-        this.range = undefined;
-        this.store.update({ rangeOfAllowedValues });
+            this.ranges = [];
+            this.store.update({ rangesOfAllowedValues });
+        }
     }
 }
