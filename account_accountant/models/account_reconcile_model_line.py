@@ -103,22 +103,21 @@ class AccountReconcileModelLine(models.Model):
             if not target_field:
                 continue
             if match := re.search(amount_string, target_field):
-                if not match.groups():
-                    raise RedirectWarning(_("It seems that the regular expression for the counterpart amount is not in the correct format. "
-                        "Please make sure that the part of the regex capturing the amount is the first (or only) one in parentheses, for example: BRT: ([\\d,.]+)."),
-                        {
-                            'type': 'ir.actions.act_window',
-                            'view_mode': 'form',
-                            'res_model': 'account.reconcile.model',
-                            'res_id': self.model_id.id,
-                            'views': [[False, 'form']],
-                        },
-                        _("Open reconcile model")
-                    )
                 try:
                     extracted_match_group = re.search(r'\d+[,.]?\d*', match.group(1))
                     extracted_balance = float(extracted_match_group.group().replace(',', '.'))
                     return copysign(extracted_balance * sign, residual_amount_currency)
-                except ValueError:
-                    continue
+                except IndexError:         # from .group(1) if the regex doesn't contain a parenthesis part
+                    raise RedirectWarning(_("The regular expression for capturing the counterpart amount appears to be incorrectly formatted.\n"
+                        "Please make sure that the part of the regex capturing the amount is the first (or only) one in parentheses, for example: BRT: ([\\d,.]+)."),
+                        self.model_id._get_records_action(),
+                        _("Open reconcile model")
+                    )
+                except AttributeError:     # from an inconclusive search -> None.group().replace(...)
+                    raise RedirectWarning(_("The regular expression for capturing the counterpart amount appears to be incorrectly formatted.\n"
+                        "Please make sure that the part of the regex capturing the amount (in parentheses) cannot capture an empty value (usually by an incorrect use of ? or *) "
+                        "or any value with no digit. For example: BRT: ([\\d,.]+)."),
+                        self.model_id._get_records_action(),
+                        _("Open reconcile model")
+                    )
         return 0.0

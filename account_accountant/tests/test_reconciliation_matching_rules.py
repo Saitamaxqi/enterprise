@@ -3,6 +3,7 @@ from freezegun import freeze_time
 from contextlib import closing
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.exceptions import RedirectWarning
 from odoo.tests import Form, tagged
 from odoo import Command
 
@@ -1088,6 +1089,63 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         short_common_refs = ['Great ' + x for x in ('power', 'responsibility')]
         short_common_bl = [self._create_st_line(payment_ref=x) for x in short_common_refs]
         self.assertEqual(short_common_bl[0]._get_common_substring([x.payment_ref for x in short_common_bl]), None)
+
+    def test_apply_reco_model_with_bad_counterpart_regex(self):
+        bad_regex_model = self.env['account.reconcile.model'].create({
+            'name': 'new rule',
+            'line_ids': [
+                Command.create({
+                    'account_id': self.current_assets_account.id,
+                    'amount_type': 'regex',
+                    'amount_string': r'missing parentheses: \d+',
+                    'label': 'Should raise a (caught) IndexError',
+                }),
+                Command.create({
+                    'account_id': self.current_assets_account.id,
+                    'amount_type': 'regex',
+                    'amount_string': r'does not capture a float value: ([a-z]+)',
+                    'label': 'Should raise a (caught) AttributeError',
+                }),
+                Command.create({
+                    'account_id': self.current_assets_account.id,
+                    'amount_type': 'regex',
+                    'amount_string': r'can capture an empty value: ([\d]*)',
+                    'label': 'Can raise a (caught) AttributeError',
+                }),
+            ],
+        })
+
+        bank_line_1 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'missing parentheses: 1234',
+                'amount': 1234,
+            },
+        ])
+        bank_line_2 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'does not capture a float value: notafloatvalue',
+                'amount': 1234,
+            },
+        ])
+        bank_line_3 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'can capture an empty value:    ',
+                'amount': 1234,
+            },
+        ])
+
+        with self.assertRaises(RedirectWarning, msg="The regex has to capture the amount in parenthesis"):
+            bad_regex_model._trigger_reconciliation_model(bank_line_1)
+        with self.assertRaises(RedirectWarning, msg="The regex has to capture a float value"):
+            bad_regex_model._trigger_reconciliation_model(bank_line_2)
+        with self.assertRaises(RedirectWarning, msg="The regex cannot capture an empty value"):
+            bad_regex_model._trigger_reconciliation_model(bank_line_3)
 
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
