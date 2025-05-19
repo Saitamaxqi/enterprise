@@ -8,6 +8,8 @@ from odoo.tools import formataddr
 from odoo.addons.mail.tests.common import MockEmail
 from .sign_request_common import SignRequestCommon
 
+from datetime import timedelta
+
 
 class TestSignRequest(SignRequestCommon, MockEmail):
     def test_sign_request_create(self):
@@ -526,3 +528,9 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(sign_request_item_company.state, 'sent', 'The sign.request.item should be sent')
         completed_document = sign_request_3_roles.get_completed_document()
         self.assertIsNotNone(completed_document, 'The completed document should be available for download.')
+
+    def test_remove_validity_date_of_sign_request(self):
+        validity_date = fields.Date.to_date(fields.Date.today()) + timedelta(days=1)
+        sign_request = self.create_sign_request_no_item(signer=self.partner_1, cc_partners=self.partner_4, validity=validity_date)
+        sign_request.validity = False
+        self.assertEqual(sign_request.state, 'sent')

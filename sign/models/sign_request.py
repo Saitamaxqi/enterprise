@@ -161,7 +161,7 @@ class SignRequest(models.Model):
 
     def write(self, vals):
         today = fields.Date.today()
-        if 'validity' in vals and fields.Date.from_string(vals['validity']) < today:
+        if vals.get('validity') and fields.Date.from_string(vals['validity']) < today:
             vals['state'] = 'expired'
 
         res = super().write(vals)
