@@ -1139,7 +1139,7 @@ test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () =>
 
     await contains(".o_web_studio_sidebar input#domain").click();
     expect(".modal .modal-body").toHaveText(
-        "Match\nall\nof the following rules:\nDisplay name\nis equal\nis not equal\ncontains\ndoes not contain\nis in\nis not in\nset\nnot set\nstarts with\nends with\nparent.display_name\nNew Rule"
+        "Match\nall\nof the following rules:\nDisplay name\nequals\nnot equals\ncontains\nnot contains\nis in\nis not in\nset\nnot set\nstarts with\nends with\nparent.display_name\nNew Rule"
     );
 
     // Close the modal and remove the domain on invisible attr
