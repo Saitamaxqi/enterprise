@@ -976,7 +976,7 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No tasks found. Let's create one!
-            </p><p>Schedule your tasks and assign them to your workers.</p>
+            </p><p>Schedule your tasks and assign them to your technicians.</p>
         </field>
     </record>
 
@@ -1030,7 +1030,7 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No tasks found. Let's create one!
-            </p><p>Schedule your tasks and assign them to your workers.</p>
+            </p><p>Schedule your tasks and assign them to your technicians.</p>
         </field>
     </record>
 
@@ -1151,7 +1151,7 @@
             <p class='o_view_nocontent_smiling_face'>
                 No tasks found. Let's create one!
             </p><p>
-                Schedule your tasks and assign them to your workers.
+                Schedule your tasks and assign them to your technicians.
             </p>
         </field>
     </record>
@@ -1225,7 +1225,7 @@
             <p class='o_view_nocontent_smiling_face'>
                 No tasks found. Let's create one!
             </p><p>
-                Schedule your tasks and assign them to your workers.
+                Schedule your tasks and assign them to your technicians.
             </p>
         </field>
     </record>
@@ -1311,7 +1311,7 @@
             <p class='o_view_nocontent_smiling_face'>
                 No tasks found. Let's create one!
             </p><p>
-                Schedule your tasks and assign them to your workers.
+                Schedule your tasks and assign them to your technicians.
             </p>
         </field>
     </record>
@@ -1385,7 +1385,7 @@
             <p class='o_view_nocontent_smiling_face'>
                 No tasks found. Let's create one!
             </p><p>
-                Schedule your tasks and assign them to your workers.
+                Schedule your tasks and assign them to your technicians.
             </p>
         </field>
     </record>
@@ -1472,7 +1472,7 @@
                 No tasks found. Let's create one!
             </p>
             <p>
-                Schedule your tasks and assign them to your workers.
+                Schedule your tasks and assign them to your technicians.
             </p>
         </field>
     </record>
@@ -1554,7 +1554,7 @@
                 No tasks found. Let's create one!
             </p>
             <p>
-                Schedule your tasks and assign them to your workers.
+                Schedule your tasks and assign them to your technicians.
             </p>
         </field>
     </record>

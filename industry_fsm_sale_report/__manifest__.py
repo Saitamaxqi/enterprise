@@ -3,7 +3,7 @@
 {
     'name': 'Field Service Reports - Sale',
     'category': 'Services/Field Service',
-    'summary': 'Create Reports for Field service workers',
+    'summary': 'Create Reports for Field service technicians',
     'depends': ['industry_fsm_sale', 'industry_fsm_report'],
     'data': [
         'views/product_template_views.xml',

@@ -8,7 +8,7 @@
                     <div t-att-class="'col-6' if report_type == 'pdf' else 'col-md-6 col-12'">
                         <div class="mb-3" t-foreach="doc.user_ids" t-as="user">
                             <div>
-                                <strong>Worker: </strong>
+                                <strong>Technician: </strong>
                             </div>
                             <div t-out="user" t-options='{
                                 "widget": "contact",
@@ -42,7 +42,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-start">Date</th>
-                                        <th class="text-start">Worker</th>
+                                        <th class="text-start">Technician</th>
                                         <th class="text-start">Description</th>
                                         <th class="text-end">Time Spent</th>
                                     </tr>
@@ -54,7 +54,7 @@
                                                 <span t-field="line.date">2023-01-01</span>
                                             </td>
                                             <td>
-                                                <span t-field="line.employee_id.name">Jane Worker</span>
+                                                <span t-field="line.employee_id.name">Jane Technician</span>
                                             </td>
                                             <td class="text-start">
                                                 <span t-field="line.name">Manage SME</span>

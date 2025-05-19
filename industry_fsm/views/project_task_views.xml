@@ -265,7 +265,7 @@
                         <setting class="col-lg-12" help="Manage tasks in the Field Service module" groups="base.group_no_one">
                             <field name="is_fsm"/>
                         </setting>
-                        <setting class="col-lg-12" help="Track worker location when running the timer" invisible="not (is_fsm and allow_timesheets)">
+                        <setting class="col-lg-12" help="Track technician location when running the timer" invisible="not (is_fsm and allow_timesheets)">
                             <field name="allow_geolocation"/>
                         </setting>
                      </div>

@@ -107,6 +107,6 @@ class WorksheetTemplate(models.Model):
         }, {
             'name': 'x_worker_signature',
             'ttype': 'binary',
-            'field_description': 'Worker Signature',
+            'field_description': 'Technician Signature',
             'model_id': model_id,
         }])

@@ -13,7 +13,7 @@ class ProjectProject(models.Model):
     allow_geolocation = fields.Boolean(
         "Geolocation",
         compute='_compute_allow_geolocation', store=True, readonly=False,
-        help="Track worker location when running the timer.",
+        help="Track technician location when running the timer.",
     )
 
     @api.depends('is_fsm', 'is_internal_project', 'company_id')

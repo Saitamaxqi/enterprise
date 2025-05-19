@@ -12,7 +12,7 @@ It installs the following apps:
 
 Adds the following options:
 - reports on tasks
-- FSM app with custom view for onsite worker
+- FSM app with custom view for onsite technician
 - add products on tasks
 
     """,

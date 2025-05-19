@@ -3,7 +3,7 @@
 {
     'name': 'Field Service Reports',
     'category': 'Services/Field Service',
-    'summary': 'Create Reports for Field service workers',
+    'summary': 'Create Reports for Field service technicians',
     'description': """
 Create Reports for Field Service
 ================================
