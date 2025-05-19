@@ -64,7 +64,7 @@
                                 <span t-att-class="amountClasses" class="text-end" t-esc="formattedAmount"/>
                             </div>
                             <div class="text-end hide-mobile">
-                                <i class="fa-solid fa" t-att-class="{'fa-chevron-up': isUnfolded, 'fa-chevron-down': !isUnfolded}"/>
+                                <i class="fa" t-att-class="{'fa-chevron-up': isUnfolded, 'fa-chevron-down': !isUnfolded}"/>
                             </div>
                         </div>
 

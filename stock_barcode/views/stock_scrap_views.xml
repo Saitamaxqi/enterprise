@@ -65,7 +65,7 @@
                 </div>
                 <div class="row" groups="stock.group_stock_multi_locations">
                     <div class="col-12 my-2 d-flex align-items-baseline">
-                        <i class="fa fa-fw fa-lg fa-solid fa-map-marker me-3" title="Source Location" />
+                        <i class="fa fa-fw fa-lg fa-map-marker me-3" title="Source Location" />
                         <field name="location_id" placeholder="Source Location"
                                readonly="state == 'done'"/>
                         <i class="fa fa-fw fa-lg fa-long-arrow-right me-3" title="Scrap Location" />

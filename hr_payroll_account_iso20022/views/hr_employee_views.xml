@@ -17,14 +17,14 @@
                         <button
                             title="Trust Bank Account"
                             class="icon-button" 
-                            icon="fa-solid fa-toggle-off fa-lg"  
+                            icon="fa-toggle-off fa-lg"  
                             type="object" 
                             name="action_trust_bank_accounts" 
                             invisible="is_trusted_bank_account"/>
                         <button 
                             title="Untrust Bank Account"
                             class="icon-button button-on" 
-                            icon="fa-solid fa-toggle-on fa-lg"   
+                            icon="fa-toggle-on fa-lg"   
                             type="object" 
                             name="action_untrust_bank_accounts" 
                             invisible="not is_trusted_bank_account"/>
