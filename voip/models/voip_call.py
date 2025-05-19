@@ -151,7 +151,7 @@ class VoipCall(models.Model):
     def _get_voip_store_fields(self):
         return [
             "country_code_from_phone",
-            Store.Attr("create_date", rename="creationDate"),
+            "create_date",
             "direction",
             Store.Attr("display_name", rename="displayName"),
             Store.Attr("end_date", rename="endDate"),

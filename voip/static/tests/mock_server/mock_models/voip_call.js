@@ -86,7 +86,7 @@ export class VoipCall extends models.ServerModel {
         for (const call of records) {
             const data = {
                 id: call.id,
-                creationDate: call.create_date,
+                create_date: call.create_date,
                 direction: call.direction,
                 endDate: call.end_date,
                 phoneNumber: call.phone_number,

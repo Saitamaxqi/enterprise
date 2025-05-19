@@ -18,8 +18,8 @@ export class Call extends Record {
         if (data.partner) {
             this.partner = this.store.Persona.insert({ ...data.partner, type: "partner" });
         }
-        if (data.creationDate) {
-            this.creationDate = deserializeDateTime(data.creationDate);
+        if (data.create_date) {
+            this.create_date = deserializeDateTime(data.create_date);
         }
         if (data.startDate) {
             this.startDate = deserializeDateTime(data.startDate);
@@ -33,7 +33,7 @@ export class Call extends Record {
     /** @type {string} */
     country_code_from_phone;
     /** @type {luxon.DateTime} */
-    creationDate;
+    create_date;
     /** @type {"incoming"|"outgoing"} */
     direction;
     /** @type {string} */
@@ -78,7 +78,7 @@ export class Call extends Record {
         if (this.state === "terminated") {
             return this.startDate.toLocaleString(luxon.DateTime.TIME_SIMPLE);
         }
-        return this.creationDate.toLocaleString(luxon.DateTime.TIME_SIMPLE);
+        return this.create_date.toLocaleString(luxon.DateTime.TIME_SIMPLE);
     }
 
     /** @returns {number} */
