@@ -76,7 +76,8 @@ class PosPreparationState(models.Model):
             pdis_state.prep_line_id.pos_order_line_id.service_time = compute_seconds_since(old_last_stage_change)
 
         # If the order is done, write the completion_time
-        if pdis_state.stage_id.is_stage_position(-1) and pdis_state.prep_line_id.prep_order_id.id not in prep_order_completion_time:
+        # Also, if all the quantities are cancelled (don't have pos_order_line_id in that case), no need to update the completion_time
+        if pdis_state.stage_id.is_stage_position(-1) and pdis_state.prep_line_id.prep_order_id.id not in prep_order_completion_time and pdis_state.prep_line_id.prep_order_id.prep_line_ids.pos_order_line_id:
             order_completion_seconds = max(
                 pdis_state.prep_line_id.prep_order_id.prep_line_ids.pos_order_line_id.mapped(
                     lambda line: line.service_time + line.preparation_time
