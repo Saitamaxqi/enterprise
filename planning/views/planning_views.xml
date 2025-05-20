@@ -500,6 +500,7 @@
                 progress_bar="resource_id"
                 pill_label="True">
                 <field name="allocated_hours"/>
+                <field name="allocated_percentage"/>
                 <field name="recurrency_id" />
                 <field name="repeat" invisible="1"/>
                 <field name="state"/>
