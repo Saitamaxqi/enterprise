@@ -30,6 +30,20 @@ class TestSepaDirectDebit(SepaDirectDebitCommon):
         AccountBankStatementLine._cron_confirm_sepa_transactions()
         self.assertEqual(tx.state, 'done')
 
+    def test_bank_statement_confirms_transaction_and_mandate_based_on_partner_name(self):
+        tx = self._create_transaction(flow='direct', state='pending', mandate_id=self.mandate.id)
+        AccountBankStatementLine = self.env['account.bank.statement.line']
+        AccountBankStatementLine.create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'partner_name': self.mandate.partner_id.name,
+            'amount_currency': tx.amount,
+            'foreign_currency_id': tx.currency_id.id,
+            'payment_ref': tx.reference,
+            'account_number': self.partner_bank_number
+        })
+        AccountBankStatementLine._cron_confirm_sepa_transactions()
+        self.assertEqual(tx.state, 'done')
+
     def test_confirming_transaction_creates_token(self):
         tx = self._create_transaction(flow='direct', state='pending', mandate_id=self.mandate.id)
         tx._set_done()

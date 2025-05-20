@@ -53,7 +53,13 @@ class AccountBankStatementLine(models.Model):
             for tx in txs_list:
                 if any(
                     line.payment_ref == tx.reference
-                    and line.partner_id == tx.partner_id.commercial_partner_id
+                    and (
+                        line.partner_id == tx.partner_id.commercial_partner_id
+                        or (
+                            not line.partner_id
+                            and line.partner_name == tx.partner_id.commercial_partner_id.name
+                        )
+                    )
                     and (
                         not line.account_number
                         or line.account_number == tx.mandate_id.partner_bank_id.sanitized_acc_number
