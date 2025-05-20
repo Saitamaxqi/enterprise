@@ -485,7 +485,7 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             'end_time': 17.996,
             'duration_days': 1,
         })
-        self.assertEqual(shift_template.name, '08:59 - 17:59')
+        self.assertEqual(shift_template.name, '8:59 - 17:59')
 
     def test_copy_planning_shift(self):
         """ Test state of the planning shift is only copied once we are in the planning split tool

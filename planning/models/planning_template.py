@@ -1,4 +1,6 @@
 import math
+import re
+
 from datetime import time
 from odoo import api, fields, models, _
 from odoo.tools import format_time
@@ -44,17 +46,12 @@ class PlanningSlotTemplate(models.Model):
         for shift_template in self:
             if not (0 <= shift_template.start_time < 24 and 0 <= shift_template.end_time < 24):
                 raise ValidationError(_('The start and end hours must be greater or equal to 0 and lower than 24.'))
-            start_time = time(hour=int(shift_template.start_time), minute=min(59, round(math.modf(shift_template.start_time)[0] / (1 / 60.0))))
-            end_time = time(hour=int(shift_template.end_time), minute=min(59, round(math.modf(shift_template.end_time)[0] / (1 / 60.0))))
-            shift_template.name = '%s - %s' % (
-                format_time(shift_template.env, start_time, time_format='short').replace(':00 ', ' '),
-                format_time(shift_template.env, end_time, time_format='short').replace(':00 ', ' '),
-            )
+            shift_template.name = shift_template._get_name()
 
     @api.depends('name', 'duration_days', 'role_id')
     def _compute_display_name(self):
         for shift_template in self:
-            display_name = [shift_template.name]
+            display_name = [shift_template._get_name(time_condensed=True)]
             if shift_template.duration_days > 1:
                 display_name.append(_('(%s days span)', shift_template.duration_days))
             if shift_template.role_id:
@@ -70,3 +67,29 @@ class PlanningSlotTemplate(models.Model):
             if 'end_time' in data:
                 data['end_time'] = float_to_time(data['end_time']).strftime('%H:%M')
         return res
+
+    def _get_name(self, time_condensed=False):
+
+        def _format_time(float_time):
+            time_str = format_time(
+                self.env,
+                time(hour=int(float_time), minute=min(59, round(math.modf(float_time)[0] / (1 / 60.0)))),
+                time_format='short'
+            )
+            match = re.match(r'0?(\d{1,2}):(\d{2})', time_str)
+            if match:
+                hour = match.group(1)
+                minute = match.group(2)
+                if time_condensed and minute == '00':
+                    return hour
+                else:
+                    return f"{hour}:{minute}"
+            return time_str
+
+        start_time_formatted = _format_time(self.start_time)
+        end_time_formatted = _format_time(self.end_time)
+
+        return '%s - %s' % (
+            start_time_formatted,
+            end_time_formatted,
+        )
