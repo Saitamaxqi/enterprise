@@ -102,9 +102,6 @@
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="arch" type="xml">
-            <button name="action_cancel" position="before">
-                <button name="button_maintenance_req" type="object" string="Maintenance Request"/>
-            </button>
             <div name="button_box" position="inside">
                 <button name="open_maintenance_request_mo" type="object" class="oe_stat_button" icon="fa-wrench" invisible="maintenance_count == 0" context="{'search_default_production_id': id}">
                     <div class="o_field_widget o_stat_info">
@@ -113,6 +110,18 @@
                     </div>
                 </button>
             </div>
+        </field>
+    </record>
+
+    <record id="action_production_maintenance_request" model="ir.actions.server">
+        <field name="name">Maintenance Request</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.button_maintenance_req()
         </field>
     </record>
 </odoo>
