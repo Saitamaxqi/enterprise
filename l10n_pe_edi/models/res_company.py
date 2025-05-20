@@ -20,10 +20,11 @@ class ResCompany(models.Model):
         help="The password used to login to SUNAT SOL",
         groups='base.group_system')
     l10n_pe_edi_provider = fields.Selection(
-        selection=[('digiflow', 'Digiflow'), ('sunat', 'SUNAT'), ('iap', 'IAP')],
+        selection=[('digiflow', 'Estela (formerly Digiflow)'), ('sunat', 'SUNAT'), ('iap', 'IAP')],
         string="Electronic Service Provider (ESP)", default="iap",
         help="Selector for the service we are going to use to report the invoices:"
-             "DIGIFLOW: With the certified that digiflow provide you, user and password you will report the invoices to them."
+             "Estela (formerly DIGIFLOW): With the certificate that estela (formerly digiflow) provided you, user and "
+             "password you will report the invoices to them."
              "SUNAT: You will report the invoices directly to them using your own certified, user and password."
              "IAP: This is an odoo service that will send the unsigned documents to a PSE and process their response.")
     l10n_pe_edi_address_type_code = fields.Char(

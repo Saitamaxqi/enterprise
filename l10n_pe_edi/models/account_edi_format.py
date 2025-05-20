@@ -151,9 +151,10 @@ class AccountEdiFormat(models.Model):
             '3128': _lt("As you have a document that must be detracted (withheld) which mean a document over 700 "
                         "Soles With services you must select on the 'Operation Type field the correct code 1001 "
                         "for example"),
-            '154': _lt("Your RUC is not linked to Digiflow as OSE, please make sure you have follow this process in the SUNAT portal:\n"
-                       "1. Linked Digiflow as OSE.\n"
-                       "2. Authorize Digiflow as PSE.\n"
+            '154': _lt("Your RUC is not linked to Estela (formerly Digiflow) as OSE, please make sure you have "
+                       "followed this process in the SUNAT portal:\n"
+                       "1. Linked Estela (formerly Digiflow) as OSE.\n"
+                       "2. Authorize Estela (formerly Digiflow) as PSE.\n"
                        "Reference: \n"
                        "https://www.odoo.com/documentation/master/applications/finance/accounting/fiscal_localizations/localizations/peru.html#what-do-you-need-to-do"),
             '98': _lt("The cancellation request has not yet finished processing by SUNAT. Please retry in a few minutes."),
@@ -167,8 +168,8 @@ class AccountEdiFormat(models.Model):
     @api.model
     def _l10n_pe_edi_response_code_digiflow(self, cdr_tree):
         """
-        Digiflow (our OSE)+IAP vs SUNAT have different responses, for digiflow:
-        Example part of xml from Digiflow.-
+        Estela (formerly Digiflow) (our OSE)+IAP vs SUNAT have different responses, for estela (formerly digiflow):
+        Example part of xml from Estela (formerly Digiflow).-
         <s:Body>
             <s:Fault>
             <faultcode>s:Client</faultcode>
@@ -189,7 +190,7 @@ class AccountEdiFormat(models.Model):
     @api.model
     def _l10n_pe_edi_response_code_sunat(self, cdr_tree):
         """
-        Digiflow (our OSE)+IAP vs SUNAT have different responses
+        Estela (formerly Digiflow) (our OSE)+IAP vs SUNAT have different responses
         Example part of xml from SUNAT:
         <soap-env:Body>
             <soap-env:Fault xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -209,7 +210,7 @@ class AccountEdiFormat(models.Model):
 
     def _l10n_pe_edi_decode_soap_response(self, soap_response):
         """
-        Parse the SOAP response returned by any of the endpoints (IAP, Digiflow or SUNAT)
+        Parse the SOAP response returned by any of the endpoints (IAP, Estela (formerly Digiflow) or SUNAT)
         for any of the SOAP operations (sendBill, getStatus, sendSummary, getStatusCdr),
         and extract, if they exist, the error, the response code, the CDR, etc.
 
@@ -225,7 +226,7 @@ class AccountEdiFormat(models.Model):
         except etree.LxmlError:
             return {'error': self._l10n_pe_edi_get_general_error_messages()['L10NPE08']}
         if response_tree.find('.//{*}Fault') is not None:
-            if response_tree.find('.//{*}message') is not None:  # It comes from Digiflow
+            if response_tree.find('.//{*}message') is not None:  # It comes from Estela (formerly Digiflow)
                 message_element, code = self._l10n_pe_edi_response_code_digiflow(response_tree)
             else:  # It comes from SUNAT
                 message_element, code = self._l10n_pe_edi_response_code_sunat(response_tree)
@@ -517,7 +518,7 @@ class AccountEdiFormat(models.Model):
         return {'success': True, 'cdr': cdr}
 
     # -------------------------------------------------------------------------
-    # EDI: SUNAT / DIGIFLOW services
+    # EDI: SUNAT / Estela (formerly DIGIFLOW) services
     # -------------------------------------------------------------------------
 
     def _l10n_pe_edi_post_invoice_web_service(self, invoice, edi_filename, edi_str):
