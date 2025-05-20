@@ -439,8 +439,9 @@ export class DocumentService {
     }
 
     async uploadDocument(files, accessToken, context) {
+        const fileArray = [...files];
         const maxUploadSize = await loadMaxUploadSize(null, this.orm);
-        const validFiles = [...files].filter((file) => file.size <= maxUploadSize);
+        const validFiles = fileArray.filter((file) => file.size <= maxUploadSize);
         if (validFiles.length !== 0) {
             const encodedToken = encodeURIComponent(accessToken || "");
             await this.fileUpload.upload(`/documents/upload/${encodedToken}`, validFiles, {
@@ -467,7 +468,7 @@ export class DocumentService {
                 displayErrorNotification: false,
             });
         }
-        if (validFiles.length >= files.length) {
+        if (validFiles.length >= fileArray.length) {
             return;
         }
         const message = _t(

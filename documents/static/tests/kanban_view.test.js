@@ -2,10 +2,12 @@ import { browser } from "@web/core/browser/browser";
 import {
     contains,
     defineModels,
+    mockService,
     onRpc,
     patchWithCleanup,
     webModels,
 } from "@web/../tests/web_test_helpers";
+import { inputFiles } from "@web/../tests/utils";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
 import { keyDown, queryAll, queryAllTexts, queryFirst, waitFor, waitForNone } from "@odoo/hoot-dom";
@@ -397,4 +399,37 @@ test("Thumbnail: webp thumbnail generation", async function () {
     });
     await mountDocumentsKanbanView();
     expect.verifySteps(["thumbnail generated"]);
+});
+
+test("Document Request Upload", async function () {
+    mockService("file_upload", {
+        upload: (route, files, params) => {
+            if (route === "/documents/upload/accessToken") {
+                expect.step("upload_done");
+            }
+        },
+    });
+
+    const serverData = getDocumentsTestServerData([
+        {
+            folder_id: 1,
+            id: 2,
+            name: "Test Request",
+            access_token: "accessToken",
+        },
+    ]);
+
+    const archWithRequest = basicDocumentsKanbanArch.replace(
+        '<field name="name"/>',
+        '<field name="name"/>\n' +
+            '<t t-set="isRequest" t-value="record.type.raw_value === \'binary\' and !record.attachment_id.raw_value"/>\n' +
+            '<input t-if="isRequest" type="file" class="o_hidden o_kanban_replace_document"/>\n'
+    );
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView({ arch: archWithRequest });
+
+    const file = new File(["hello world"], "text.txt", { type: "text/plain" });
+    await inputFiles("input.o_kanban_replace_document", [file]);
+    await animationFrame();
+    expect.verifySteps(["upload_done"]);
 });
