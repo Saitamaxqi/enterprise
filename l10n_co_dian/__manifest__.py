@@ -18,6 +18,7 @@
         'views/report_invoice.xml',
         'views/res_config_settings_views.xml',
         'views/templates.xml',
+        'views/res_partner_views.xml',
     ],
     'demo': [
         'demo/demo.xml',

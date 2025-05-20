@@ -12,6 +12,7 @@ import uuid
 from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tools import file_open
+from odoo.addons.l10n_co_dian.models.res_partner import ResPartner
 from odoo.addons.l10n_co_edi.models.res_partner import FINAL_CONSUMER_VAT
 
 
@@ -163,6 +164,15 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
             **kwargs,
         })
 
+    def _generate_xml(self, invoice, with_error=False):
+        with self._disable_get_acquirer_call():
+            result = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)
+
+        if with_error:
+            return result
+        else:
+            return result[0]
+
     def _assert_document_dian(self, xml, file):
         expected_dian = self._read_file(file, 'rb')
         self.assertXmlTreeEqual(
@@ -226,10 +236,14 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
     def _mock_get_status(self):
         return patch(f'{self.document_path}._get_status', return_value=self._mocked_response('GetStatus_invoice.xml', 200))
 
+    def _disable_get_acquirer_call(self):
+        return patch.object(ResPartner, attribute='_l10n_co_dian_call_get_acquirer', return_value=dict())
+
     def _mock_send_and_print(self, move, response_file, response_code=200):
         with (
             self._mock_get_status(),
             patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response(response_file, response_code)),
+            self._disable_get_acquirer_call(),
         ):
             self.env['account.move.send.wizard'] \
                 .with_context(active_model=move._name, active_ids=move.ids) \

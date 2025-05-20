@@ -228,7 +228,10 @@ class TestDianFlows(TestCoDianCommon):
             invoice_date=datetime.today(),
             journal_id=self.support_document_journal.id,
         )
-        with patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response('SendBillSync_warnings.xml', 200)):
+        with (
+            patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response('SendBillSync_warnings.xml', 200)),
+            self._disable_get_acquirer_call(),
+        ):
             bill.l10n_co_dian_action_send_bill_support_document()
 
         self.assertTrue(bill.l10n_co_dian_attachment_id)
@@ -238,4 +241,20 @@ class TestDianFlows(TestCoDianCommon):
             'message': "<p>Procesado Correctamente.</p>"
                        "<ul><li>Regla: FAJ44b, Notificación: Nit o Documento de Identificación informado No BlaBlaBla.</li>"
                        "<li>Regla: FAJ43b, Notificación: Nombre informado No corresponde al registrado en el BlaBlaBla.</li></ul>",
+        }])
+
+    def test_get_acquirer(self):
+        """ Get Partner Data """
+        partner = self._create_partner(
+            country_id=self.env.ref('base.co').id,
+            vat='213123432-1',
+            email='test@mail.com',
+        )
+
+        with patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response('GetAcquirer_partner.xml', 200)):
+            partner.button_l10n_co_dian_refresh_data()
+
+        self.assertRecordValues(partner, [{
+            'name': 'Real Company Name',
+            'email': 'company@mail.com',
         }])

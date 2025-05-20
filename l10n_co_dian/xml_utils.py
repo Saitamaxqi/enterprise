@@ -19,6 +19,8 @@ NS_MAP = {'ds': "http://www.w3.org/2000/09/xmldsig#"}
 TEST_ENDPOINT = "https://vpfe-hab.dian.gov.co/WcfDianCustomerServices.svc?wsdl"
 ENDPOINT = "https://vpfe.dian.gov.co/WcfDianCustomerServices.svc?wsdl"
 
+FORCED_PROD_SERVICES = {'GetAcquirer'}
+
 
 def _canonicalize_node(node, **kwargs):
     """
@@ -143,7 +145,7 @@ def _build_and_send_request(self, payload, service, company):
     # Send the request
     try:
         response = requests.post(
-            url=TEST_ENDPOINT if company.l10n_co_dian_test_environment else ENDPOINT,
+            url=TEST_ENDPOINT if company.l10n_co_dian_test_environment and service not in FORCED_PROD_SERVICES else ENDPOINT,
             data=etree.tostring(envelope),
             timeout=3,
             headers={"Content-Type": f'application/soap+xml;charset=UTF-8;action="http://wcf.dian.colombia/IWcfDianCustomerServices/{service}"'},

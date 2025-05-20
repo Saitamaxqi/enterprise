@@ -87,6 +87,13 @@
         </wcf:GetStatus>
     </template>
 
+    <template id="get_acquirer">
+        <wcf:GetAcquirer xmlns:wcf="http://wcf.dian.colombia">
+            <wcf:identificationType t-out="identification_type"/>
+            <wcf:identificationNumber t-out="identification_number"/>
+        </wcf:GetAcquirer>
+    </template>
+
     <template id="ubl_extension_dian">
         <ext:UBLExtensions
             xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
