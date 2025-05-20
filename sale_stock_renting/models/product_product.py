@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import timedelta
 from odoo import _, api, models
 from odoo.osv import expression
 
@@ -112,7 +113,7 @@ class ProductProduct(models.Model):
         include_bounds = to_date == from_date
         domain += [
             ('return_date', '>' if kwargs.get('rental_pivot_date') else ">=", from_date),
-            '|', ('reservation_begin', '<=' if include_bounds else '<', to_date),
+            '|', ('reservation_begin', '<=' if include_bounds else '<', to_date - timedelta(hours=self.preparation_time if kwargs.get('rental_pivot_date') else 0)),
                  ('qty_delivered', '>', 0),
         ]
 
