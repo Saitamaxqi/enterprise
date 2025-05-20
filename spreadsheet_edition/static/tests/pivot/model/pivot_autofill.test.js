@@ -970,13 +970,13 @@ test("Can autofill pivot with collapsed dimensions", async () => {
 
     expect(getCell(model, "A1").content).toBe(`=PIVOT.HEADER(1,"date:year",2016)`);
     expect(getCell(model, "A2").content).toBe(
-        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016, 4, 1))`
+        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016,4,1))`
     );
     expect(getCell(model, "A3").content).toBe(
-        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016, 10, 1))`
+        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016,10,1))`
     );
     expect(getCell(model, "A4").content).toBe(
-        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016, 12, 1))`
+        `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016,12,1))`
     );
     expect(getCell(model, "A5").content).toBe(`=PIVOT.HEADER(1)`);
 });
