@@ -103,7 +103,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
         if (this.env.isSmall || !this.isPlanningManager || this.model.useSampleModel) {
             return;
         }
-        if (this.isDragging || this.connectorDragState.draging) {
+        if (this.isDragging || this.connectorDragState.dragging) {
             return;
         }
         const { pill: pillEl } = this.hovered;
