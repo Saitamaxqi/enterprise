@@ -1,3 +1,5 @@
+import { ProjectTaskControlPanel } from "@project/views/project_task_control_panel/project_task_control_panel";
+
 import { ganttView } from "@web_gantt/gantt_view";
 import { TaskGanttController } from "./task_gantt_controller";
 import { registry } from "@web/core/registry";
@@ -10,6 +12,7 @@ const viewRegistry = registry.category("views");
 
 export const taskGanttView = {
     ...ganttView,
+    ControlPanel: ProjectTaskControlPanel,
     Controller: TaskGanttController,
     ArchParser: TaskGanttArchParser,
     Model: TaskGanttModel,

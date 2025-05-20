@@ -207,39 +207,6 @@
         </field>
     </record>
 
-    <record id="view_project_enterprise_task_graph" model="ir.ui.view">
-        <field name="name">project.enterprise.task.graph</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_project_task_graph"/>
-        <field name="arch" type="xml">
-            <xpath expr="//graph" position="attributes">
-                <attribute name="js_class">project_enterprise_task_graph</attribute>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="view_project_enterprise_task_pivot" model="ir.ui.view">
-        <field name="name">project.enterprise.task.pivot</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_project_task_pivot"/>
-        <field name="arch" type="xml">
-            <xpath expr="//pivot" position="attributes">
-                <attribute name="js_class">project_enterprise_task_pivot</attribute>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="project_enterprise_task_view_activity" model="ir.ui.view">
-        <field name="name">project.enterprise.task.activity.view</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.project_task_view_activity"/>
-        <field name="arch" type="xml">
-            <activity position="attributes">
-                <attribute name="js_class">project_enterprise_activity</attribute>
-            </activity>
-        </field>
-    </record>
-
     <!-- Adding map view to project-->
     <record id="project_task_map_view" model="ir.ui.view">
         <field name="name">project.task.view.map</field>
@@ -331,12 +298,6 @@
         <field name="view_mode">map</field>
         <field name="act_window_id" ref="project.action_view_task"/>
         <field name="view_id" ref="project_task_map_view_no_title"/>
-    </record>
-
-    <record id="project_task_graph_action_view" model="ir.actions.act_window.view">
-        <field name="view_mode">graph</field>
-        <field name="act_window_id" ref="project.action_view_task"/>
-        <field name="view_id" ref="view_project_enterprise_task_graph"/>
     </record>
 
     <record id="project.action_view_task_from_milestone" model="ir.actions.act_window">

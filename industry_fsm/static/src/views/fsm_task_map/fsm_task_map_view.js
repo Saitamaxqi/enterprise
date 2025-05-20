@@ -1,9 +1,9 @@
 import { registry } from "@web/core/registry";
-import { mapView } from "@web_map/map_view/map_view";
+import { projectTaskMapView } from "@project_enterprise/views/project_task_map/project_task_map_view";
 import { FsmTaskMapRenderer } from "./fsm_task_map_renderer";
 
 export const fsmTaskMapView = {
-    ...mapView,
+    ...projectTaskMapView,
     Renderer: FsmTaskMapRenderer,
 };
 

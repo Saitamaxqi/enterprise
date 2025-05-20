@@ -3,6 +3,7 @@ import { GanttModel } from "@web_gantt/gantt_model";
 import { sortBy } from "@web/core/utils/arrays";
 import { Domain } from "@web/core/domain";
 import { useProjectModelActions } from "../project_highlight_tasks";
+import { ProjectTaskModelMixin } from "@project/views/project_task_model_mixin";
 
 const MAP_MANY_2_MANY_FIELDS = [
     {
@@ -11,7 +12,7 @@ const MAP_MANY_2_MANY_FIELDS = [
     },
 ];
 
-export class TaskGanttModel extends GanttModel {
+export class TaskGanttModel extends ProjectTaskModelMixin(GanttModel) {
     //-------------------------------------------------------------------------
     // Public
     //-------------------------------------------------------------------------
@@ -228,7 +229,8 @@ export class TaskGanttModel extends GanttModel {
      * @override
      */
     load(searchParams) {
-        const { context, domain, groupBy } = searchParams;
+        let domain = searchParams?.domain || [];
+        const { context, groupBy } = searchParams;
         let displayUnassigned = false;
         if (groupBy.length === 0 || groupBy[groupBy.length - 1] === "user_ids") {
             for (const node of domain) {
@@ -238,8 +240,9 @@ export class TaskGanttModel extends GanttModel {
             }
         }
         if (displayUnassigned) {
-            searchParams.domain = Domain.or([domain, "[('user_ids', '=', false)]"]).toList();
+            domain = Domain.or([domain, "[('user_ids', '=', false)]"]).toList();
         }
+        searchParams.domain = this._processSearchDomain(domain);
         return super.load({ ...searchParams, context: { ...context }, displayUnassigned });
     }
 
