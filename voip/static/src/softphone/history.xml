@@ -11,11 +11,11 @@
     >
         <t t-set-slot="entry" t-slot-scope="slot">
             <t t-set="call" t-value="slot.item"/>
-            <t t-set="title" t-value="call.partner?.voipName ?? call.phoneNumber"/>
+            <t t-set="title" t-value="call.partner_id?.voipName ?? call.phone_number"/>
             <t t-set="countryCode" t-value="call.country_code_from_phone"/>
             <t t-set="phoneNumber" t-value="call.phoneNumber"/>
             <TabEntry
-                avatarUrl="call.partner?.avatarUrl ?? '/base/static/img/avatar_grey.png'"
+                avatarUrl="call.partner_id?.avatarUrl ?? '/base/static/img/avatar_grey.png'"
                 countryCode="countryCode"
                 title="title"
                 subtitle="getStatusText(call)"
@@ -38,9 +38,9 @@
                             <i t-else="" class="fa fa-phone fa-fw me-1"/>
                             <span t-att-class="{ 'align-middle': countryCode }" t-esc="phoneNumber"/>
                         </p>
-                        <p t-if="call.partner?.commercial_company_name" class="m-0 text-muted">
+                        <p t-if="call.partner_id?.commercial_company_name" class="m-0 text-muted">
                             <i class="fa fa-fw fa-building-o me-1" aria-hidden="true"/>
-                            <t t-esc="call.partner?.commercial_company_name"/>
+                            <t t-esc="call.partner_id?.commercial_company_name"/>
                         </p>
                     </div>
                 </t>
@@ -48,11 +48,11 @@
                     <ActionButton
                         name.translate="Contact"
                         title.translate="View customer details"
-                        icon="call.partner ? 'oi-user' : 'oi-user-plus'"
+                        icon="call.partner_id ? 'oi-user' : 'oi-user-plus'"
                         onClick="() => this.onClickContact(call)"
                     />
                     <t class="o-voip-History-applicant-xpathTarget"/>
-                    <ActionButton t-if="call.partner"
+                    <ActionButton t-if="call.partner_id"
                         name.translate="Activity"
                         title.translate="Schedule an activity"
                         icon="'oi-activity-plus'"
@@ -60,8 +60,7 @@
                     />
                 </t>
                 <t t-set-slot="call-to-action">
-                    <!-- TODO: Replace Email with SMS feature ? -->
-                    <ActionButton t-if="call.partner?.email"
+                    <ActionButton t-if="call.partner_id?.email"
                         name.translate="Email"
                         title.translate="Send e-mail"
                         icon="'fa-envelope-o'"

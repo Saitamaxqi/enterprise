@@ -48,8 +48,8 @@ export class InCallView extends Component {
             target: this.ui.isSmall ? "new" : "current",
             context: {},
         };
-        if (this.props.call.partner) {
-            action.res_id = this.props.call.partner.id;
+        if (this.props.call.partner_id) {
+            action.res_id = this.props.call.partner_id.id;
         } else {
             action.context.default_phone = this.props.call.phoneNumber;
         }

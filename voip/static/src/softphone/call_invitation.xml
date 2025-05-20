@@ -6,7 +6,7 @@
             <ContactInfo call="props.call"/>
             <div class="d-flex justify-content-center gap-3">
                 <ActionButton
-                    t-if="props.call.partner"
+                    t-if="props.call.partner_id"
                     name.translate="Contact"
                     title.translate="View caller information"
                     icon="'oi-user'"

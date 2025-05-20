@@ -40,9 +40,9 @@ export class CallInvitation extends Component {
                 default_activity_type_id: this.voip.callActivityTypeId,
             },
         };
-        if (this.props.call.partner) {
+        if (this.props.call.partner_id) {
             Object.assign(action.context, {
-                default_res_id: this.props.call.partner.id,
+                default_res_id: this.props.call.partner_id.id,
                 default_res_model: "res.partner",
             });
         }
@@ -54,7 +54,7 @@ export class CallInvitation extends Component {
         this.action.doAction({
             type: "ir.actions.act_window",
             res_model: "res.partner",
-            res_id: this.props.call.partner.id,
+            res_id: this.props.call.partner_id.id,
             views: [[false, "form"]],
             target: this.ui.isSmall ? "new" : "current",
         });

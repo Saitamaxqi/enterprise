@@ -155,7 +155,7 @@ class VoipCall(models.Model):
             "direction",
             "display_name",
             "end_date",
-            Store.One("partner_id", self.partner_id._voip_get_store_fields(), rename="partner"),
+            Store.One("partner_id", self.partner_id._voip_get_store_fields()),
             Store.Attr("phone_number", rename="phoneNumber"),
             Store.Attr("start_date", rename="startDate"),
             "state",

@@ -55,7 +55,7 @@ export class CallSummary extends Component {
             target: "new",
             context: {
                 default_activity_type_id: this.voip.callActivityTypeId,
-                default_res_id: this.call.partner.id,
+                default_res_id: this.call.partner_id.id,
                 default_res_model: "res.partner",
             },
         });
@@ -64,7 +64,7 @@ export class CallSummary extends Component {
     /** @param {MouseEvent} ev */
     onClickCall(ev) {
         this.userAgent.makeCall({
-            partner: this.call.partner,
+            partner: this.call.partner_id,
             phone_number: this.call.phoneNumber,
         });
     }
@@ -77,8 +77,8 @@ export class CallSummary extends Component {
             views: [[false, "form"]],
             target: this.ui.isSmall ? "new" : "current",
         };
-        if (this.call.partner) {
-            action.res_id = this.call.partner.id;
+        if (this.call.partner_id) {
+            action.res_id = this.call.partner_id.id;
         } else {
             action.context = { default_phone: this.call.phoneNumber };
         }

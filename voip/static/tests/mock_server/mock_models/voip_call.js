@@ -94,7 +94,7 @@ export class VoipCall extends models.ServerModel {
                 state: call.state,
             };
             if (Number.isInteger(call.partner_id)) {
-                data.partner = ResPartner._format_contacts([call.partner_id])[0];
+                data.partner_id = ResPartner._format_contacts([call.partner_id])[0];
             }
             formattedCalls.push(data);
         }

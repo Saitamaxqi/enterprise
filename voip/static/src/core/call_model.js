@@ -15,8 +15,8 @@ export class Call extends Record {
      */
     update(data) {
         super.update(...arguments);
-        if (data.partner) {
-            this.partner = this.store.Persona.insert({ ...data.partner, type: "partner" });
+        if (data.partner_id) {
+            this.partner_id = this.store.Persona.insert({ ...data.partner_id, type: "partner" });
         }
         if (data.create_date) {
             this.create_date = deserializeDateTime(data.create_date);
@@ -41,7 +41,7 @@ export class Call extends Record {
     /** @type {luxon.DateTime} */
     end_date;
     /** @type {import("@mail/core/persona_model").Persona | undefined} */
-    partner;
+    partner_id;
     /** @type {string} */
     phoneNumber;
     /** @type {luxon.DateTime} */

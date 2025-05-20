@@ -11,10 +11,10 @@
             <ActionButton
                 name.translate="Contact"
                 title.translate="View contact information"
-                icon="call.partner ? 'oi-user' : 'oi-user-plus'"
+                icon="call.partner_id ? 'oi-user' : 'oi-user-plus'"
                 onClick.bind="onClickContact"
             />
-            <ActionButton t-if="call.partner"
+            <ActionButton t-if="call.partner_id"
                 name.translate="Activity"
                 title.translate="Schedule an activity"
                 icon="'oi-activity-plus'"

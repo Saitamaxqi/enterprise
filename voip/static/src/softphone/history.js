@@ -54,7 +54,7 @@ export class History extends Component {
             return calls;
         }
         return calls.filter((call) => {
-            if (call.partner && isSubstring(call.partner.name, searchTerms)) {
+            if (call.partner_id && isSubstring(call.partner_id.name, searchTerms)) {
                 return true;
             }
             return isSubstring(call.phoneNumber, searchTerms);
@@ -137,15 +137,15 @@ export class History extends Component {
                 default_activity_type_id: this.voip.callActivityTypeId,
             },
         };
-        if (call.partner) {
-            action.context.default_res_id = call.partner.id;
+        if (call.partner_id) {
+            action.context.default_res_id = call.partner_id.id;
             action.context.default_res_model = "res.partner";
         }
         this.action.doAction(action);
     }
 
     onClickCall(call) {
-        this.userAgent.makeCall({ partner: call.partner, phone_number: call.phoneNumber });
+        this.userAgent.makeCall({ partner: call.partner_id, phone_number: call.phone_number });
     }
 
     onClickContact(call) {
@@ -156,8 +156,8 @@ export class History extends Component {
             target: this.ui.isSmall ? "new" : "current",
             context: {},
         };
-        if (call.partner) {
-            action.res_id = call.partner.id;
+        if (call.partner_id) {
+            action.res_id = call.partner_id.id;
         } else {
             action.context.default_phone = call.phoneNumber;
         }
@@ -171,9 +171,9 @@ export class History extends Component {
             views: [[false, "form"]],
             target: "new",
             context: {
-                default_res_ids: [call.partner.id],
+                default_res_ids: [call.partner_id.id],
                 default_model: "res.partner",
-                default_partner_ids: [call.partner.id],
+                default_partner_ids: [call.partner_id.id],
                 default_composition_mode: "comment",
                 default_use_template: true,
             },

@@ -27,7 +27,7 @@ export class CallService {
         if (activity) {
             call.activity = activity;
         }
-        if (!call.partner) {
+        if (!call.partner_id) {
             this.orm.call("voip.call", "get_contact_info", [[call.id]]).then((data) => {
                 if (data) {
                     this.store.insert(data);
