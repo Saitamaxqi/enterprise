@@ -312,7 +312,7 @@ msgstr "Adenda (MX)"
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Amount Paid"
-msgstr ""
+msgstr "Importe Pagado"
 
 #. module: l10n_mx_edi
 #. odoo-python
@@ -373,7 +373,7 @@ msgstr "Motivos de cancelación disponibles"
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Balance"
-msgstr ""
+msgstr "Saldo"
 
 #. module: l10n_mx_edi
 #: model:ir.model,name:l10n_mx_edi.model_res_bank
@@ -1098,12 +1098,12 @@ msgstr "Factura"
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Invoice Date"
-msgstr ""
+msgstr "Fecha de la Factura"
 
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Invoice Number"
-msgstr ""
+msgstr "Número de Factura"
 
 #. module: l10n_mx_edi
 #. odoo-python
@@ -1387,7 +1387,7 @@ msgstr "Origen"
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Original Amount"
-msgstr ""
+msgstr "Importe Original"
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields.selection,name:l10n_mx_edi.selection__account_move__l10n_mx_edi_usage__i08
@@ -1439,7 +1439,7 @@ msgstr "Pago PUE"
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Partiality"
-msgstr ""
+msgstr "Parcialidad"
 
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.res_config_settings_view_form
@@ -1485,12 +1485,12 @@ msgstr "Política de pago"
 #. module: l10n_mx_edi
 #: model:ir.actions.report,name:l10n_mx_edi.action_report_bank_transaction_receipt
 msgid "Payment Receipt"
-msgstr ""
+msgstr "Recibo de Pago"
 
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_bank_transaction_receipt_document
 msgid "Payment Receipt:"
-msgstr ""
+msgstr "Recibo de Pago:"
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields.selection,name:l10n_mx_edi.selection__l10n_mx_edi_document__state__payment_sent_failed
@@ -1566,7 +1566,7 @@ msgstr "Hora publicada"
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_cfdi
 msgid "Previous balance"
-msgstr ""
+msgstr "Saldo anterior"
 
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.account_move_form_inherit_l10n_mx_edi
