@@ -110,6 +110,9 @@ class PosOrder(models.Model):
             if order.get('to_invoice', False) and self.env['pos.session'].browse(order['session_id']).company_id.country_id.code == 'MX':
                 order['l10n_mx_edi_cfdi_to_public'] = order.get('l10n_mx_edi_cfdi_to_public', False)
                 order['l10n_mx_edi_usage'] = order.get('l10n_mx_edi_usage', False)
+            else:
+                # If no invoice set usage to default value
+                order['l10n_mx_edi_usage'] = 'G03'
 
         data = super().sync_from_ui(orders)
         if len(orders) > 0:

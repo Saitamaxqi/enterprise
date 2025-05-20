@@ -3,6 +3,7 @@ from .common import TestMxEdiPosCommon
 import odoo
 from odoo.tests import tagged
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
+from odoo import Command, fields
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -151,3 +152,56 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
         self.main_pos_config.with_user(self.user).open_ui()
         self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'pos_settle_account_due', login="accountman")
         self.assertEqual(self.partner_test_1.total_due, 0)
+
+    def test_usage_mx_pos_invoice_order(self):
+        self.main_pos_config.open_ui()
+
+        self.product_a = self.env['product.product'].create({
+            'name': 'Test Product 1',
+            'is_storable': True,
+            'list_price': 10.0,
+            'taxes_id': False,
+        })
+        order_data = {
+            "amount_paid": 10,
+            "amount_tax": 0,
+            "amount_return": 0,
+            "amount_total": 10,
+            "date_order": fields.Datetime.to_string(fields.Datetime.now()),
+            "fiscal_position_id": False,
+            "lines": [
+                Command.create({
+                    "discount": 0,
+                    "pack_lot_ids": [],
+                    "price_unit": 10.0,
+                    "product_id": self.product_a.id,
+                    "price_subtotal": 10.0,
+                    "price_subtotal_incl": 10.0,
+                    "tax_ids": [[6, False, []]],
+                    "qty": 1,
+                }),
+            ],
+            "name": "Order 12345-123-1234",
+            "partner_id": self.partner_a.id,
+            "session_id": self.main_pos_config.current_session_id.id,
+            "sequence_number": 2,
+            "payment_ids": [
+                    Command.create({
+                        "amount": 10,
+                        "name": fields.Datetime.now(),
+                        "payment_method_id": self.bank_payment_method.id,
+                    }),
+            ],
+            "uuid": "12345-123-1234",
+            "last_order_preparation_change": "{}",
+            "user_id": self.env.uid,
+            "to_invoice": False,
+            "l10n_mx_edi_usage": False,
+        }
+
+        order = self.env["pos.order"].sync_from_ui([order_data])["pos.order"][0]
+        self.assertTrue(order, "No POS order was created during the tour.")
+
+        usage = order['l10n_mx_edi_usage']
+        self.assertTrue(usage, "The invoice has no usage set.")
+        self.assertEqual(usage, "G03", f"Expected CFDI usage to be 'G03', got '{usage}' instead.")
