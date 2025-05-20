@@ -37,19 +37,12 @@ class ProductTemplate(models.Model):
     def _compute_display_price(self):
         rental_products = self.filtered('rent_ok')
         rental_priced_products = rental_products.filtered('product_pricing_ids')
-        main_company = self.env['res.company']._get_main_company()
         (self - rental_products).display_price = ""
         for product in (rental_products - rental_priced_products):
-            currency = product.currency_id
-            if not currency:
-                # There is a bug in the ORM when currency is given along display_price
-                # in the first onchange. task: https://www.odoo.com/odoo/1364/tasks/4264573
-                company = product.company_id or main_company
-                currency = company.currency_id
             # No rental pricing defined, fallback on list price
             product.display_price = _(
                 "%(amount)s (fixed)",
-                amount=format_amount(self.env, product.list_price, currency),
+                amount=format_amount(self.env, product.list_price, product.currency_id),
             )
         for product in rental_priced_products:
             product.display_price = product.product_pricing_ids[0].description
