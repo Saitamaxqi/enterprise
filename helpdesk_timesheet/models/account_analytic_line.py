@@ -5,6 +5,7 @@ from collections import defaultdict
 from odoo import api, fields, models, _
 from odoo.osv import expression
 from odoo.exceptions import ValidationError
+from odoo.tools.sql import column_exists, create_column
 
 
 class AccountAnalyticLine(models.Model):
@@ -17,6 +18,12 @@ class AccountAnalyticLine(models.Model):
     project_id = fields.Many2one(inverse="_inverse_project_id")
     has_helpdesk_team = fields.Boolean(related='project_id.has_helpdesk_team', export_string_translation=False)
     display_task = fields.Boolean(compute="_compute_display_task", export_string_translation=False)
+
+    def _auto_init(self):
+        # At install implementation of `_compute_helpdesk_ticket_id` -> default value of NULL for all rows
+        if not column_exists(self.env.cr, 'account_analytic_line', 'helpdesk_ticket_id'):
+            create_column(self.env.cr, 'account_analytic_line', 'helpdesk_ticket_id', 'int4')
+        return super()._auto_init()
 
     @api.depends('has_helpdesk_team', 'project_id', 'task_id', 'helpdesk_ticket_id')
     def _compute_display_task(self):
@@ -64,7 +71,13 @@ class AccountAnalyticLine(models.Model):
     @api.constrains('task_id', 'helpdesk_ticket_id')
     def _check_no_link_task_and_ticket(self):
         # Check if any timesheets are not linked to a ticket and a task at the same time
-        if any(timesheet.task_id and timesheet.helpdesk_ticket_id for timesheet in self):
+        has_linked_to_both = self.env['account.analytic.line'].search(
+            [('id', 'in', self.ids),
+             ('task_id', '!=', False),
+             ('helpdesk_ticket_id', '!=', False)],
+            limit=1,
+        )
+        if has_linked_to_both:
             raise ValidationError(_("You cannot link a timesheet entry to a task and a ticket at the same time."))
 
     @api.depends('helpdesk_ticket_id.partner_id')
