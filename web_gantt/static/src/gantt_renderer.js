@@ -13,7 +13,7 @@ import {
 } from "@odoo/owl";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
-import { serializeDate, serializeDateTime } from "@web/core/l10n/dates";
+import { getCondensedFormat, serializeDate, serializeDateTime } from "@web/core/l10n/dates";
 import { is24HourFormat } from "@web/core/l10n/time";
 import { localization } from "@web/core/l10n/localization";
 import { _t } from "@web/core/l10n/translation";
@@ -1617,32 +1617,39 @@ export class GanttRenderer extends Component {
                     stopDate.diff(stopDate.startOf("day"), "hours").toObject().hours >= 3));
 
         /** @type {string[]} */
-        const labelElements = [];
+        const labels = [];
 
         // Start & End Dates
         if (scaleId === "year" && !spanAccrossDays) {
-            labelElements.push(startDate.toLocaleString(yearlessDateFormat));
+            labels.push(startDate.toLocaleString(yearlessDateFormat));
         } else if (
             scaleId === "year" ||
             (spanAccrossDays &&
                 (startDate < this.currentStartDate || this.currentStopDate.endOf("day") < stopDate))
         ) {
-            labelElements.push(startDate.toLocaleString(yearlessDateFormat));
-            labelElements.push(stopDate.toLocaleString(yearlessDateFormat));
+            labels.push(startDate.toLocaleString(yearlessDateFormat));
+            labels.push(stopDate.toLocaleString(yearlessDateFormat));
         }
 
         // Start & End Times
         if (record.allocated_hours && !spanAccrossDays && ["week", "month"].includes(scaleId)) {
             const durationStr = this.getDurationStr(record);
-            labelElements.push(startDate.toFormat("t"), `${stopDate.toFormat("t")}${durationStr}`);
+            const timeFormat = getCondensedFormat(localization.shortTimeFormat);
+            labels.push(
+                startDate.toFormat(timeFormat),
+                `${stopDate.toFormat(timeFormat)}${durationStr}`
+            );
         }
+
+        /** @type {string[]} */
+        const labelElements = [labels.join(" - ")];
 
         // Original Display Name
         if (scaleId !== "month" || !record.allocated_hours || spanAccrossDays) {
             labelElements.push(record.display_name);
         }
 
-        return labelElements.filter((el) => !!el).join(" - ");
+        return labelElements.filter((el) => !!el).join(" ");
     }
 
     /**

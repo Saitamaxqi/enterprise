@@ -567,7 +567,7 @@ test("The date and task name appears in the pill title when the pill_label optio
         arch: `<gantt date_start="start" date_stop="stop" default_range="week" scales="week" pill_label="True"/>`,
     });
     expect(queryAllTexts(SELECTORS.pill)).toEqual([
-        "11/30 - 12/31 - Task 1", // the task span across in week then DateTime should be displayed on the pill label
+        "11/30 - 12/31 Task 1", // the task span across in week then DateTime should be displayed on the pill label
         "Task 2", // the task does not span across in week scale then DateTime shouldn't be displayed on the pill label
         "Task 4",
         "Task 7",
@@ -626,11 +626,11 @@ test("A task should always have a title (pill_label='1', scale 'week')", async (
         },
     });
     const titleMapping = [
-        { name: "Task 4", title: "12/8 - 2/18 - Task 4" },
+        { name: "Task 4", title: "12/8 - 2/18 Task 4" },
         { name: "Task 1", title: "Task 1" },
-        { name: "Task 2", title: "9:30 AM - 8:30 PM (6h) - Task 2" },
+        { name: "Task 2", title: "9:30 - 20:30 (6h) Task 2" },
         { name: "Task 3", title: "Task 3" },
-        { name: "Task 5", title: "12/18 - 2/18 - Task 5" },
+        { name: "Task 5", title: "12/18 - 2/18 Task 5" },
     ];
     expect(queryAllTexts(".o_gantt_pill")).toEqual(titleMapping.map((e) => e.title));
     const pills = queryAll(".o_gantt_pill");
@@ -686,9 +686,9 @@ test("A task should always have a title (pill_label='1', scale 'month')", async 
     });
     const titleMapping = [
         { name: "Task 1", title: "Task 1" },
-        { name: "Task 2", title: "9:30 AM - 8:30 PM (6h)" },
+        { name: "Task 2", title: "9:30 - 20:30 (6h)" },
         { name: "Task 3", title: "Task 3" },
-        { name: "Task 4", title: "12/16 - 2/18 - Task 4" },
+        { name: "Task 4", title: "12/16 - 2/18 Task 4" },
     ];
     expect(queryAllTexts(".o_gantt_pill")).toEqual(titleMapping.map((e) => e.title));
     const pills = queryAll(".o_gantt_pill");
@@ -743,10 +743,10 @@ test("A task should always have a title (pill_label='1', scale 'year')", async (
         },
     });
     const titleMapping = [
-        { name: "Task 1", title: "12/15 - Task 1" },
-        { name: "Task 2", title: "12/16 - Task 2" },
-        { name: "Task 3", title: "12/16 - 12/17 - Task 3" },
-        { name: "Task 4", title: "12/16 - 2/18 - Task 4" },
+        { name: "Task 1", title: "12/15 Task 1" },
+        { name: "Task 2", title: "12/16 Task 2" },
+        { name: "Task 3", title: "12/16 - 12/17 Task 3" },
+        { name: "Task 4", title: "12/16 - 2/18 Task 4" },
     ];
     expect(queryAllTexts(".o_gantt_pill")).toEqual(titleMapping.map((e) => e.title));
     const pills = queryAll(".o_gantt_pill");
@@ -1828,8 +1828,8 @@ test("The date and task should appear even if the pill is planned on 2 days but 
     });
     expect(".o_gantt_pill").toHaveCount(3, { message: "should have 3 pills in the gantt view" });
     expect(queryAllTexts(".o_gantt_pill_title")).toEqual([
-        "4:00 PM - 1:00 AM (4h) - Task 9",
-        "4:00 PM - 2:00 AM (4h) - Task 10",
+        "16:00 - 1:00 (4h) Task 9",
+        "16:00 - 2:00 (4h) Task 10",
         "Task 11",
     ]);
 });

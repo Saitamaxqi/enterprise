@@ -139,11 +139,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
      */
     getDurationStr(record) {
         const { allocated_hours, allocated_percentage } = record;
-        let res = "";
-        if (allocated_percentage !== 100 && allocated_hours) {
-            res = super.getDurationStr(...arguments);
-        }
-        return res;
+        return (allocated_percentage !== 100 && allocated_hours) ? super.getDurationStr(...arguments) : "";
     }
 
     getSpan({ grid }) {

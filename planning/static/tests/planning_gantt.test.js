@@ -569,8 +569,8 @@ test("Gantt Planning : pill name should not display allocated hours if allocated
         groupBy: ["resource_id"],
     });
     expect(queryAllTexts(".o_gantt_pill")).toEqual([
-        "9:30 AM - 6:30 PM (4h) - Shift 1",
-        "9:30 AM - 6:30 PM - Shift 2",
+        "9:30 - 18:30 (4h) Shift 1",
+        "9:30 - 18:30 Shift 2",
     ]);
 });
 
