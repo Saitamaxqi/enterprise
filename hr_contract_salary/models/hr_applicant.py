@@ -72,7 +72,7 @@ class HrApplicant(models.Model):
     def action_show_offers(self):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('hr_contract_salary.hr_contract_salary_offer_action')
-        action['domain'] = [('id', 'in', self.salary_offer_ids.ids)]
+        action['domain'] = [('applicant_id', '=', self.id)]
         action['context'] = {'default_applicant_id': self.id}
         if self.salary_offers_count == 1:
             action.update({

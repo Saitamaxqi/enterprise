@@ -13,6 +13,10 @@ class HrContractSalaryOffer(models.Model):
     @api.model
     def default_get(self, fields):
         result = super().default_get(fields)
+        contract_id = result.get('employee_contract_id')
+        if contract_id:
+            contract = self.env['hr.contract'].browse(contract_id)
+            result['employee_id'] = contract.employee_id.id
         for field in fields:
             if field.startswith('x_') and 'active_id' in self.env.context:
                 model = self.env.context.get('active_model')
