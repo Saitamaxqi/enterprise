@@ -2753,6 +2753,8 @@ class AccountReport(models.Model):
         if self.allow_account_audit_status_on_lines:
             lines = self._add_account_status_on_lines(lines, options)
 
+        self._inject_account_names_for_consolidation(lines)
+
         if self.custom_handler_model_id:
             lines = self.env[self.custom_handler_model_name]._custom_line_postprocessor(self, options, lines)
 
@@ -3143,6 +3145,30 @@ class AccountReport(models.Model):
             'sortable': col_data.get('sortable', False),
             'comparison_mode': col_data.get('comparison_mode'),
         }
+
+    def _inject_account_names_for_consolidation(self, lines):
+        """ When grouping by account_code, in order to make the consolidation clearer, we add the account name in the context
+            of the current company next to the account_code.
+        """
+        account_codes = []
+        for line in lines:
+            markup = self._get_markup(line['id'])
+            if isinstance(markup, dict) and markup.get('groupby') == 'account_code':
+                account_codes.append(line['name'])
+        if not account_codes:
+            return
+
+        account_code_to_account_name_dict = {account.code: account.name for account in self.env['account.account'].search([
+            *self.env['account.account']._check_company_domain(self.env.company),
+            ('code', 'in', account_codes),
+        ])}
+        for line in lines:
+            markup = self._get_markup(line['id'])
+            if isinstance(markup, dict) and markup.get('groupby') == 'account_code':
+                account_code = line['name']
+                account_name = account_code_to_account_name_dict.get(account_code)
+                if account_code and account_name:
+                    line['name'] = f'{account_code} {account_name}'
 
     def _get_dynamic_lines(self, options, all_column_groups_expression_totals, warnings=None):
         if self.custom_handler_model_id:
@@ -5422,6 +5448,8 @@ class AccountReport(models.Model):
 
         if self.allow_account_audit_status_on_lines:
             lines = self._add_account_status_on_lines(lines, options)
+
+        self._inject_account_names_for_consolidation(lines)
 
         if self.custom_handler_model_id:
             lines = self.env[self.custom_handler_model_name]._custom_line_postprocessor(self, options, lines)

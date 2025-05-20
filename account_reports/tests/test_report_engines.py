@@ -1976,3 +1976,126 @@ class TestReportEngines(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_account_name_added_in_account_code_grouping(self):
+        company_a = self.env['res.company'].sudo().create({
+            'name': "Company A",
+        })
+        company_b = self.env['res.company'].sudo().create({
+            'name': "Company B",
+        })
+        context = {
+            **self.env.context,
+            'allowed_company_ids': [company_a.id, company_b.id],
+        }
+        journal_vals = {
+            'name': "Misc",
+            'type': 'general',
+            'code': "MSC",
+        }
+        AccountJournal = self.env['account.journal'].with_context(context)
+        AccountJournal.create(journal_vals | {'company_id': company_a.id})
+        AccountJournal.with_company(company_b).create(journal_vals | {'company_id': company_b.id})
+
+        AccountAccount = self.env['account.account'].with_context(context)
+        account_a = AccountAccount.create({
+            'name': "Account A",
+            'code': "100000",
+            'company_ids': company_a.ids,
+        })
+        counterpart_account_a = AccountAccount.create({
+            'name': "Some account",
+            'code': "200000",
+            'company_ids': company_a.ids,
+        })
+        account_b1 = AccountAccount.create({
+            'name': "Mapping to Account A code",
+            'code': "300000",
+            'company_ids': company_b.ids,
+        })
+        account_b2 = AccountAccount.create({
+            'name': "Mapping to a code that doesn't exist in company A",
+            'code': "400000",
+            'company_ids': company_b.ids,
+        })
+        account_b3 = AccountAccount.create({
+            'name': "No mapping in company A",
+            'code': "500000",
+            'company_ids': company_b.ids,
+        })
+
+        account_b1.code = account_a.code
+        account_b2.code = "600000"
+
+        date = '2025-01-01'
+
+        AccountMove = self.env['account.move'].with_context(context)
+        AccountMove.create({
+            'move_type': 'entry',
+            'date': date,
+            'line_ids': [
+                Command.create({
+                    'account_id': account_a.id,
+                    'balance': 20,
+                }),
+                Command.create({
+                    'account_id': counterpart_account_a.id,
+                    'balance': -20,
+                }),
+            ],
+            'company_id': company_a.id,
+        }).action_post()
+        AccountMove.create({
+            'move_type': 'entry',
+            'date': date,
+            'line_ids': [
+                Command.create({
+                    'account_id': account_b1.id,
+                    'balance': 30,
+                }),
+                Command.create({
+                    'account_id': account_b2.id,
+                    'balance': 70,
+                }),
+                Command.create({
+                    'account_id': account_b3.id,
+                    'balance': -100,
+                }),
+            ],
+            'company_id': company_b.id,
+        }).action_post()
+
+        report = self.env['account.report'].with_context(context).create({
+            'name': "Simple Report",
+            'filter_multi_company': 'selector',
+            'column_ids': [Command.create({
+                'name': "Balance",
+                'expression_label': 'balance',
+            })],
+            'line_ids': [Command.create({
+                'name': "The line",
+                'groupby': 'account_code',
+                'expression_ids': [Command.create({
+                    'label': 'balance',
+                    'engine': 'domain',
+                    'formula': [],
+                    'subformula': 'sum',
+                })],
+            })],
+        })
+        options = self._generate_options(report, date, date)
+        lines = report._get_lines(options)
+
+        self.assertLinesValues(
+            # pylint: disable=bad-whitespace
+            lines,
+            [   0,                                                                       1],
+            [
+                (report.line_ids.name,                                                   0),
+                (f'{account_a.code} {account_a.name}',                                  50),
+                (f'{counterpart_account_a.code} {counterpart_account_a.name}',         -20),
+                (account_b2.code,                                                       70),
+                ('Undefined',                                                         -100),
+            ],
+            options,
+        )
