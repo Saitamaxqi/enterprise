@@ -471,7 +471,7 @@ class HrAppraisal(models.Model):
             raise UserError(_("Oops! You can only delete draft appraisals."))
 
     def read(self, fields=None, load='_classic_read'):
-        fields_set = set(fields) if fields is not None else {}
+        fields_set = set(fields) if fields is not None else set()
         check_feedback = fields_set & {'manager_feedback', 'employee_feedback'}
         check_notes = fields_set & {'note', 'assessment_note'}
         if check_feedback:
