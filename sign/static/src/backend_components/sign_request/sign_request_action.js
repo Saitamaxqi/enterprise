@@ -55,8 +55,27 @@ export class SignRequest extends Component {
         }
 
         this.documentRoot = useRef("sign-document");
-        onWillStart(() => this.fetchDocument());
+        onWillStart(() =>
+            Promise.all([
+                this.fetchSignRequestDocuments(),
+                this.fetchDocument(),
+            ])
+        );
     }
+
+    async fetchSignRequestDocuments() {
+        const { original_documents } = await rpc(
+            `/sign/get_original_documents/${this.signInfo.get('documentId')}/${this.signInfo.get('signRequestToken')}`
+        );
+        this.signInfo.set({ original_documents });
+        if (this.signInfo.get('signRequestState') === 'signed') {
+            const {completed_documents} = await rpc(
+                `/sign/get_completed_documents/${this.signInfo.get('documentId')}/${this.signInfo.get('signRequestToken')}`
+            );
+            this.signInfo.set({ completed_documents });
+        }
+    }
+
 
     async fetchDocument() {
         if (!this.signInfo.get("documentId")) {

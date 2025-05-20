@@ -6,33 +6,63 @@
                 <div class="d-flex gap-1">
                     <button t-if="signInfo.get('needToSign')" type="button" class="btn btn-primary me-2 o_sign_sign_directly" t-on-click="signDocument">Sign Now</button>
                     <button t-if="nextTemplate &amp;&amp; nextTemplate.template" type="button" class="btn btn-primary me-2" t-on-click="goToNextDocument">Next Document</button>
-                    <button t-if="allowCancel" type="button" class="btn btn-secondary me-2 o_sign_cancel" t-on-click="cancelDocument">Cancel</button>
-                    <div class="btn-group me-1" t-if="signInfo.get('signRequestState') == 'signed'">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-hotkey="c">
-                            Download
-                        </button>
-                        <ul class="dropdown-menu">
-                            <t t-foreach="signInfo.get('completed_documents') || []" t-as="doc" t-key="doc.id">
-                                <li>
-                                    <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/completed/{{doc.id}}">
-                                        <t t-esc="doc.name"/>
-                                    </a>
-                                </li>
-                            </t>
-                            <li class="dropdown-divider"/>
-                            <li t-if="(signInfo.get('completed_documents')||[]).length > 1">
-                                <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/completed">
-                                    All Documents (zip)
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/log">
-                                    Certificates
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <t t-if="signInfo.get('signRequestState') == 'signed' || signInfo.get('needToSign')">
+                        <div class="btn-group me-1">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-hotkey="c">
+                                Download
+                            </button>
+                            <ul class="dropdown-menu">
+                                <t t-if="signInfo.get('signRequestState') == 'signed'">
+                                    <t t-foreach="signInfo.get('completed_documents') || []" t-as="doc" t-key="doc.id">
+                                        <li>
+                                            <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/completed/{{doc.id}}">
+                                                <t t-esc="doc.name"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                    <li t-if="(signInfo.get('completed_documents')||[]).length > 1" class="dropdown-divider"/>
+                                    <li t-if="(signInfo.get('completed_documents')||[]).length > 1">
+                                        <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/completed">
+                                            All Documents (zip)
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/log">
+                                            Certificate
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-if="signInfo.get('needToSign')">
+                                    <t t-foreach="signInfo.get('original_documents') || []" t-as="doc" t-key="doc.id">
+                                        <li>
+                                            <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/origin/{{doc.id}}">
+                                                <t t-esc="doc.name"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                    <li t-if="(signInfo.get('original_documents')||[]).length > 1" class="dropdown-divider"/>
+                                    <li t-if="(signInfo.get('original_documents')||[]).length > 1">
+                                        <a class="dropdown-item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/origin">
+                                            All Documents (zip)
+                                        </a>
+                                    </li>
+                                </t>
+                            </ul>
+                        </div>
+                    </t>
                 </div>
+            </t>
+            <t t-if="allowCancel" t-set-slot="control-panel-additional-actions">
+                <Dropdown>
+                    <button class="btn p-0 ms-1 border-0">
+                        <i class="fa fa-cog"/>
+                    </button>
+                    <t t-set-slot="content">
+                        <DropdownItem class="'o_menu_item'" onSelected.bind="cancelDocument">
+                            Cancel
+                        </DropdownItem>
+                    </t>
+                </Dropdown>
             </t>
             <t t-set-slot="control-panel-navigation-additional">
                 <div class="signer-status">

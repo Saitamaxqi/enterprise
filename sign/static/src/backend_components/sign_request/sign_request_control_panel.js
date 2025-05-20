@@ -1,8 +1,10 @@
 import { user } from "@web/core/user";
-import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 import { Component, useEffect, useComponent, markup } from "@odoo/owl";
-import { useService } from "@web/core/utils/hooks";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import multiFileUpload from "@sign/backend_components/multi_file_upload";
 
@@ -50,6 +52,8 @@ export class SignRequestControlPanel extends Component {
     static template = "sign.SignRequestControlPanel";
     static components = {
         ControlPanel,
+        Dropdown,
+        DropdownItem,
     };
     static props = {
         signerStatus: {
@@ -66,7 +70,7 @@ export class SignRequestControlPanel extends Component {
         this.signInfo = useService("signInfo");
         this.nextTemplate = multiFileUpload.getNext();
         useResendButtons();
-        this.fetchCompletedDocuments();
+        this.addDialog = useOwnedDialogs();
     }
 
     get markupSignerStatus() {
@@ -94,14 +98,20 @@ export class SignRequestControlPanel extends Component {
     }
 
     async cancelDocument() {
-        await this.orm.call("sign.request", "cancel", [this.signInfo.get("documentId")]);
-        const result = await this.orm.call(
-            "sign.request",
-            "get_close_values",
-            [[this.signInfo.get("documentId")]],
-        );
-        const context = result.custom_action ? {} : {clearBreadcrumbs: true};
-        this.env.services.action.doAction(result.action, context);
+        this.addDialog(ConfirmationDialog, {
+            body: _t("Are you sure you want to cancel this sign request?"),
+            confirm: async () => {
+                await this.orm.call("sign.request", "cancel", [this.signInfo.get("documentId")]);
+                const result = await this.orm.call(
+                    "sign.request",
+                    "get_close_values",
+                    [[this.signInfo.get("documentId")]],
+                );
+                const context = result.custom_action ? {} : { clearBreadcrumbs: true };
+                this.env.services.action.doAction(result.action, context);
+            },
+            cancel: () => {},
+        });
     }
 
     async goToNextDocument() {
@@ -121,16 +131,5 @@ export class SignRequestControlPanel extends Component {
             },
             { clear_breadcrumbs: true }
         );
-    }
-
-    async fetchCompletedDocuments() {
-        if (this.signInfo.get('signRequestState') === 'signed') {
-            const {completed_documents} = await rpc(
-                `/sign/get_completed_documents/${this.signInfo.get('documentId')}/${this.signInfo.get('signRequestToken')}`
-            );
-            this.signInfo.set({ completed_documents });
-            console.log(this.signInfo.get('completed_documents'));
-            this.render();
-        }
     }
 }
