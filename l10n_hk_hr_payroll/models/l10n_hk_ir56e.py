@@ -33,7 +33,7 @@ class L10n_HkIr56e(models.Model):
                 ppnum = f'{employee.passport_id}, {employee.l10n_hk_passport_place_of_issue}'
 
             spouse_name, spouse_hkid, spouse_passport = '', '', ''
-            if employee.marital == 'married':
+            if employee.marital == 'married' and employee.spouse_complete_name:
                 spouse_name = employee.spouse_complete_name.upper()
                 if employee.l10n_hk_spouse_identification_id:
                     spouse_hkid = employee.l10n_hk_spouse_identification_id.strip().upper()
