@@ -6,14 +6,21 @@ patch(AddIoTBoxFormController.prototype, {
     setup() {
         super.setup();
     },
-    notifyIoTBoxFound(found) {
-        if (!found || this.successNotification || this.newIoTBoxes.length === 0) {
-            return this.notification.add(_t("No IoT Box found"), { type: "warning" });
+    async notifyIoTBoxFound(found) {
+        if (!found || this.newIoTBoxes.length === 0) {
+            return;
+        }
+
+        const posConfigAmount = await this.orm.searchCount("pos.config", [["active", "=", true]]);
+
+        this.notification.add(_t("New IoT Box connected!"), { type: "success" });
+
+        if (posConfigAmount === 0) {
+            this.env.services.action.doAction({ type: "ir.actions.act_window_close" });
+            return;
         }
 
         const iotBoxIdentifier = this.newIoTBoxes[0].identifier;
-        this.closeConnectingNotification?.();
-        this.notification.add(_t("New IoT Box connected!"), { type: "success" });
         this.closeConnectingNotification = this.notification.add(
             _t("We're waiting for your IoT Box to send its devices..."),
             {
@@ -30,6 +37,7 @@ patch(AddIoTBoxFormController.prototype, {
 
             if (connectedDevicesAmount > 0) {
                 clearInterval(this.interval);
+                this.closeConnectingNotification();
                 this.env.services.action.doAction({
                     type: "ir.actions.act_window",
                     name: _t("Connect to a Point of Sale"),

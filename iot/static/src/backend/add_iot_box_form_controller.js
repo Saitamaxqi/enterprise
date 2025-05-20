@@ -13,7 +13,6 @@ export class AddIoTBoxFormController extends FormController {
         this.orm = useService("orm");
         this.iotBoxesBeforeConnection = [];
         this.newIoTBoxes = [];              // List of new IoT boxes found
-        this.successNotification = null;    // Notification to show when a new IoT box is found
         this.iotCheckTimer = null;          // Timer to manage polling
 
         onMounted(async () => {
@@ -36,6 +35,7 @@ export class AddIoTBoxFormController extends FormController {
         this.iotCheckTimer = setInterval(async () => {
             if (await this.lookForNewIoTBox()) {
                 this.notifyIoTBoxFound(true);
+                clearInterval(this.iotCheckTimer);
             }
         }, 5000);
 
@@ -63,7 +63,7 @@ export class AddIoTBoxFormController extends FormController {
      * @param {boolean} found Whether a new IoT Box has been found.
      */
     notifyIoTBoxFound(found) {
-        if (found && !this.successNotification) {
+        if (found) {
             this.env.services.action.doAction({ type: "ir.actions.act_window_close" });
             this.notification.add(_t("New IoT Box connected!"), { type: "success" });
         }
@@ -76,7 +76,6 @@ export class AddIoTBoxFormController extends FormController {
         if (this.iotCheckTimer) {
             clearInterval(this.iotCheckTimer);
         }
-        this.closeConnectingNotification?.();
     }
 }
 
