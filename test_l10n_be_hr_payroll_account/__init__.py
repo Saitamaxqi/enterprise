@@ -70,60 +70,64 @@ def _generate_payslips(env):
 
         # Generate skills logs
         employee_skills_vals = []
-        logs_vals = []
         data_vals = []
         today = fields.Date.today()
         all_skills = env['hr.skill'].search([])
-        all_skills_types = all_skills.mapped('skill_type_id')
-        max_skill_level = 0
-        for skill_types in all_skills_types:
-            max_skill_level = max(max_skill_level, len(skill_types.skill_level_ids.ids))
-        all_employees = env['hr.employee'].search([])
-        env['hr.employee.skill.log'].search([]).unlink()
-        env['hr.employee.skill'].search([]).unlink()
-        for employee in all_employees:
-            for skill in all_skills:
-                if randint(0, 100) > 85:
-                    array = skill.skill_type_id.skill_level_ids.ids
-                    skill_level = array[-1]
-                    max_level = array[0]
-                    for index in range(max_skill_level):
-                        logs_vals.append({
+        regular_skills = all_skills.filtered(lambda skill: not skill.skill_type_id.is_certification)
+        all_belgium_employees = env['hr.employee'].search([('company_id', '=', env.ref('base.demo_company_be').id)])
+        # To unlink expired one and expire no expired one
+        env['hr.employee.skill'].search([('employee_id.company_id', '=', env.ref('base.demo_company_be').id)]).unlink()
+        # To unlink new expired one
+        env['hr.employee.skill'].search([('employee_id.company_id', '=', env.ref('base.demo_company_be').id)]).unlink()
+        for employee in all_belgium_employees:
+            for skill in regular_skills:
+                if randint(0, 100) > 90:
+                    array = skill.skill_type_id.skill_level_ids.sorted('level_progress')
+                    max_level_index = len(array) - 1
+                    level_index = 0
+                    skills_vals = []
+                    for index in range(6):
+                        if randint(1, 5) == 1 and level_index < max_level_index:
+                            level_index = level_index + 1
+                            if skills_vals:
+                                skills_vals[-1]['valid_to'] = today + relativedelta(months=(index - 6 - 1) * 6, day=1)
+                            skills_vals.append({
+                                'employee_id': employee.id,
+                                'skill_id': skill.id,
+                                'skill_type_id': skill.skill_type_id.id,
+                                'skill_level_id': array[level_index].id,
+                                'valid_from': today + relativedelta(months=(index - 6 - 1) * 6, day=2),
+                                'valid_to': False
+                            })
+                    employee_skills_vals = employee_skills_vals + skills_vals
+            for skill in all_skills - regular_skills:
+                if randint(1, 4) == 1:
+                    number_of_certification = randint(1, 3)
+                    has_no_valid_to = randint(1, 4) == 1
+                    array = skill.skill_type_id.skill_level_ids.sorted('level_progress')
+                    max_level_index = len(array) - 1
+                    level_index = 0
+                    for index in range(number_of_certification):
+                        employee_skills_vals.append({
                             'employee_id': employee.id,
-                            'department_id': employee.department_id.id,
                             'skill_id': skill.id,
                             'skill_type_id': skill.skill_type_id.id,
-                            'skill_level_id': skill_level,
-                            'date': today + relativedelta(months=(index - max_skill_level) * 4)
+                            'skill_level_id': array[level_index].id,
+                            'valid_from': today + relativedelta(months=(index - number_of_certification - 1) * 6 + 2),
+                            'valid_to': False if number_of_certification - 1 == index and has_no_valid_to else today + relativedelta(months=(index - number_of_certification) * 6 + 2, days=-1)
                         })
                         if randint(1, 4) == 1:
-                            skill_level = min(max_level, skill_level + 1)
-                    employee_skills_vals.append({
-                        'employee_id': employee.id,
-                        'skill_id': skill.id,
-                        'skill_type_id': skill.skill_type_id.id,
-                        'skill_level_id': skill_level,
-                    })
+                            level_index = min(max_level_index, level_index + 1)
         employee_skills = env['hr.employee.skill'].create(employee_skills_vals)
-        skill_logs = env['hr.employee.skill.log'].create(logs_vals)
         prefix = 'test_l10n_be_hr_payroll_account'
-        for log in skill_logs:
-            employee_id = log.employee_id.id
-            skill_id = log.skill_id.id
-            level_id = log.skill_level_id.id
-            data_vals.append({
-                'name': f'{prefix}.skill_log_employee_{employee_id}_skill_{skill_id}_level_{level_id}_{log.date}',
-                'module': prefix,
-                'res_id': log.id,
-                'model': 'hr.employee.skill.log',
-                'noupdate': True,
-            })
         for skill in employee_skills:
             employee_id = skill.employee_id.id
             skill_id = skill.skill_id.id
             level_id = skill.skill_level_id.id
+            valid_from = skill.valid_from
+            valid_to = skill.valid_to
             data_vals.append({
-                'name': f'{prefix}.skill_employee_{employee_id}_skill_{skill_id}_level_{level_id}',
+                'name': f'{prefix}.skill_employee_{employee_id}_skill_{skill_id}_level_{level_id}_{valid_from}_{valid_to}',
                 'module': prefix,
                 'res_id': skill.id,
                 'model': 'hr.employee.skill',

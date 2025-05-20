@@ -64,10 +64,10 @@ class HrAppraisalSkillReport(models.BaseModel):
             END AS evolution_sequence
             FROM hr_employee e
             JOIN hr_version v ON v.id = e.current_version_id
-            JOIN hr_appraisal_skill s ON e.id = s.employee_id
+            JOIN hr_appraisal a ON e.id = a.employee_id
+            JOIN hr_appraisal_skill s ON a.id = s.appraisal_id
             JOIN hr_skill_level sl ON sl.id = s.skill_level_id
             LEFT JOIN hr_skill_level sl_p ON sl_p.id = s.previous_skill_level_id
-            JOIN hr_appraisal a ON a.id = s.appraisal_id
             JOIN hr_skill_type st ON st.id = s.skill_type_id
             WHERE a.id = (
                 SELECT a2.id FROM hr_appraisal a2

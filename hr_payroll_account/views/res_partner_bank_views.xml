@@ -66,7 +66,7 @@
             id="menu_hr_employee_bank_account"
             name="Bank Accounts"
             action="action_res_partner_bank_account_form"
-            groups="hr.group_hr_user"
+            groups="hr.group_hr_user,base.group_no_one"
             parent="hr.menu_hr_employee_payroll"
             sequence="7"
         />

@@ -401,7 +401,7 @@ class HrAppraisal(models.Model):
                     partner_ids=appraisal.message_partner_ids.ids,
                 )
                 self.message_post(body=body)
-        result = super(HrAppraisal, self).write(vals)
+        result = super().write(vals)
         if force_published:
             for appraisal in force_published:
                 role = _('Manager') if self.env.user.employee_id in appraisal.manager_ids else _('Appraisal Officer')
