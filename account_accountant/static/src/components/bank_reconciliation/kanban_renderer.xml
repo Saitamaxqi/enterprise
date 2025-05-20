@@ -63,6 +63,7 @@
                     isChatterAside="!ui.isSmall"
                     hasParentReloadOnActivityChanged="true"
                     hasParentReloadOnAttachmentsChanged="true"
+                    isAttachmentBoxVisibleInitially="true"
                 />
             </div>
         </xpath>

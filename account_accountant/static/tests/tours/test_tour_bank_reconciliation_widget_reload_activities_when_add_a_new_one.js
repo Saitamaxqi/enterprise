@@ -29,7 +29,7 @@ registry
             },
             {
                 content: "Open chatter",
-                trigger: "i.fa.fa-lg.fa-comments-o",
+                trigger: "i.fa.fa-lg.fa-comments-o:not(:visible)",
                 run: "click",
             },
             {
@@ -52,7 +52,7 @@ registry
             },
             {
                 content: "Activity is reloaded in the widget",
-                trigger: "div.activity-container > i.fa.fa-lg.fa-clock-o.text-info",
+                trigger: "div.activity-container > i.fa.fa-lg.fa-clock-o",
             },
         ],
     });

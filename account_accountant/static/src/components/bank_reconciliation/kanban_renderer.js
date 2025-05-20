@@ -7,7 +7,7 @@ import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
-import { onWillStart, useState } from "@odoo/owl";
+import { onWillStart, useState, onWillDestroy } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "./bank_reconciliation_service";
@@ -52,6 +52,11 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             await this.bankReconciliation.computeAvailableReconcileModels(
                 this.env.model.root.records
             );
+        });
+
+        onWillDestroy(() => {
+            this.bankReconciliation.chatterState.visible = false;
+            this.bankReconciliation.chatterState.statementLine = null;
         });
     }
 

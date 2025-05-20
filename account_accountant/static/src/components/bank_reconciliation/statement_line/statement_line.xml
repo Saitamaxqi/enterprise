@@ -17,24 +17,22 @@
                         Statement
                     </button>
                 </div>
-                <div name="bank_statement_line" class="o_statement_line" t-on-click="toggleUnfold">
+                <div name="bank_statement_line" class="o_statement_line w-100" t-on-click="toggleUnfold" t-att-class="{'o_selected_statement_line': isSelected}">
                     <div class="o_grid_container">
                         <div class="o_row">
                             <div class="d-flex gap-3">
                                 <t t-esc="formattedDate"/>
-                                <div t-on-click.stop="openChatter" t-if="!ui.isSmall">
+                                <div t-on-click.stop="openChatter" t-if="!ui.isSmall" class="o_chatter_icon btn-link text-action" t-att-class="{'visible': activityNumber or hasAttachment}">
                                     <div t-if="activityNumber" class="activity-container">
-                                        <i class="fa fa-lg fa-clock-o" role="img" aria-label="Activities" t-att-class="{'text-info': isChatterOpen}"/>
+                                        <i class="fa fa-lg fa-clock-o" role="img" aria-label="Activities"/>
                                         <span class="activity-badge badge rounded-pill" t-esc="activityNumber"/>
                                     </div>
-                                    <i t-elif="hasAttachment and (isUnfolded or isChatterOpen)"
+                                    <i t-elif="hasAttachment"
                                        class="fa fa-lg fa-paperclip"
-                                       t-att-class="{'text-info': isChatterOpen}"
                                        role="img"
                                        aria-label="Attachment"
                                     />
-                                    <i t-elif="isUnfolded or isChatterOpen"
-                                       t-att-class="{'text-info': isChatterOpen}"
+                                    <i t-elif="!isChatterOpen"
                                        class="fa fa-lg fa-comments-o"
                                        role="img"
                                        aria-label="Journal Entry"

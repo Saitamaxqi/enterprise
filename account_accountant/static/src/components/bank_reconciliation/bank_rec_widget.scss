@@ -41,6 +41,10 @@
         }
 
         .o_statement_line {
+            border-left: 3px solid transparent;
+            padding-left: 3px;
+            box-sizing: border-box;
+
             .o_grid_container {
                 display: grid;
                 grid-template-columns: 130px minmax(70px, auto) 110px;
@@ -88,6 +92,18 @@
 
             .o_button_line {
                 grid-column: 1 / 3;
+            }
+
+            .o_chatter_icon {
+                visibility: hidden;
+            }
+
+            &:hover .o_chatter_icon {
+                visibility: visible;
+            }
+
+            &.o_selected_statement_line {
+                border-left: 3px solid $link-color;
             }
         }
     }

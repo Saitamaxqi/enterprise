@@ -34,6 +34,7 @@ export class BankRecKanbanController extends KanbanController {
             },
         };
 
+        params.config.activeFields.attachment_ids = makeActiveField();
         params.config.activeFields.partner_id = makeActiveField();
         params.config.activeFields.partner_id.related = {
             fields: {
@@ -110,6 +111,7 @@ export class BankRecKanbanController extends KanbanController {
                 amount_residual: { name: "amount_residual", type: "monetary" },
                 amount_residual_currency: { name: "amount_residual_currency", type: "monetary" },
                 currency_id: { name: "currency_id", type: "many2one" },
+                move_attachment_ids: { name: "move_attachment_ids", type: "move_attachment_ids" },
             },
             activeFields: {
                 id: makeActiveField(),
@@ -121,6 +123,7 @@ export class BankRecKanbanController extends KanbanController {
                 amount_residual: makeActiveField(),
                 amount_residual_currency: makeActiveField(),
                 currency_id: makeActiveField(),
+                move_attachment_ids: makeActiveField(),
             },
         };
         params.config.activeFields.line_ids.related.activeFields.reconciled_lines_excluding_exchange_diff_ids.related = {

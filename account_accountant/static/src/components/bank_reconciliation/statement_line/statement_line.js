@@ -66,9 +66,9 @@ export class BankRecStatementLine extends KanbanRecord {
     }
 
     async removePartner() {
-        await this.orm.write("account.bank.statement.line", [this.recordData.id],
-            { partner_id: false },
-        );
+        await this.orm.write("account.bank.statement.line", [this.recordData.id], {
+            partner_id: false,
+        });
         this.record.load();
     }
 
@@ -144,8 +144,40 @@ export class BankRecStatementLine extends KanbanRecord {
         return this.recordData.activity_ids.count;
     }
 
+    /**
+     * Checks if there is at least one attachment associated with the bank statement line or its related records.
+     *
+     * This getter aggregates attachment counts from:
+     * - The bank statement line record itself.
+     * - The related move.
+     * - The related move lines themselves, if they have attachments directly associated (`line.move_attachment_ids`).
+     * - The lines reconciled with the related move lines, specifically checking for attachments on the
+     *   move associated with those reconciled lines.
+     *
+     * This check ensures that all attachments from associated invoices, bills, and other related documents are considered.
+     *
+     * @returns {number} The total number of attachments found. A return value greater than 0 indicates the presence of attachments.
+     */
     get hasAttachment() {
-        return this.recordData.move_id.attachment_ids.length;
+        return (
+            this.recordData.attachment_ids.records.length +
+            this.recordData.move_id.attachment_ids.length +
+            this.linesToReconcile
+                .flatMap((line) => line.reconciled_lines_ids.records)
+                .filter((line) => line.data.move_attachment_ids?.length)
+                .reduce(
+                    (accumulator, line) =>
+                        parseInt(accumulator) + parseInt(line.data.move_attachment_ids.length),
+                    0
+                ) +
+            this.linesToReconcile
+                .filter((line) => line.move_attachment_ids?.length)
+                .reduce(
+                    (accumulator, line) =>
+                        parseInt(accumulator) + parseInt(line.move_attachment_ids.length),
+                    0
+                )
+        );
     }
 
     get amountClasses() {
@@ -186,7 +218,9 @@ export class BankRecStatementLine extends KanbanRecord {
                 line.reconciled_lines_excluding_exchange_diff_ids.records.length === 1 &&
                 line.reconciled_lines_excluding_exchange_diff_ids.records[0].data.move_name
             ) {
-                reconciledLineName.push(line.reconciled_lines_excluding_exchange_diff_ids.records[0].data.move_name);
+                reconciledLineName.push(
+                    line.reconciled_lines_excluding_exchange_diff_ids.records[0].data.move_name
+                );
             } else {
                 reconciledLineName.push(line.account_id.display_name);
             }
@@ -194,10 +228,11 @@ export class BankRecStatementLine extends KanbanRecord {
         return reconciledLineName.join(", ");
     }
 
+    get isSelected() {
+        return this.recordData.move_id.id === this.bankReconciliation.statementLineMoveId;
+    }
+
     get isChatterOpen() {
-        return (
-            this.bankReconciliation.chatterState.visible &&
-            this.recordData.move_id.id === this.bankReconciliation.statementLineMoveId
-        );
+        return this.bankReconciliation.chatterState.visible;
     }
 }
