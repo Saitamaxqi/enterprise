@@ -59,9 +59,10 @@ class L10n_DeEcSalesReportHandler(models.AbstractModel):
         line_chunks = []
         chunks = [lines[i * 1000:(i + 1) * 1000] for i in range(math.ceil(len(lines) / 1000))]
         for chunk in chunks:
-            content = 'Länderkennzeichen,USt-IdNr.,Betrag (Euro),Art der Leistung\n'
-            for val in chunk:
-                content += ','.join([val[0], val[1], str(val[3]), val[2]]) + '\n'
+            content = 'Umsatzsteuer-Identifikationsnummer (USt-IdNr.),Betrag (Euro),Art der Leistung\n'
+            for vat_country_code, vat_number, service_type, amount, *vals in chunk:
+                full_vat_number = f'{vat_country_code}{vat_number}' if vat_country_code and vat_number else ''
+                content += f'{full_vat_number},{amount},{service_type}\n'
             line_chunks.append(content)
         return line_chunks
 
