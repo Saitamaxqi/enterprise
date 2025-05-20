@@ -3,12 +3,14 @@
 
 import base64
 
-from lxml import etree
+from lxml import html
 from collections import defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import format_date
+
+etree = html.etree
 
 
 class L10n_HkIr56b(models.Model):
@@ -52,44 +54,47 @@ class L10n_HkIr56b(models.Model):
                 ('date_from', '>=', sheet.start_period),
                 ('date_to', '<=', sheet.end_period),
             ])
-            all_employees = all_payslips.employee_id.filtered(lambda e: not e.contract_warning)
-            sheet.update({
-                'line_ids': [(5, 0, 0)] + [(0, 0, {
+            valid_employees = all_payslips.employee_id.filtered(lambda e: e.is_in_contract)
+
+            line_item_values = []
+            for employee in valid_employees:
+                line_item_values.append((0, 0, {
                     'employee_id': employee.id,
                     'res_model': 'l10n_hk.ir56b',
                     'res_id': sheet.id,
-                }) for employee in all_employees]
-            })
+                }))
+            sheet.update({'line_ids': [(5, 0, 0)] + line_item_values})
+
         return super().action_generate_declarations()
 
     @api.depends('start_period', 'end_period')
     def _compute_display_name(self):
+        lang_code = self.env.user.lang or 'en_US'
         for sheet in self:
-            sheet.display_name = _("From %(start_period)s to %(end_period)s",
-                start_period=format_date(self.env, sheet.start_period, date_format="MMMM y", lang_code=self.env.user.lang),
-                end_period=format_date(self.env, sheet.end_period, date_format="MMMM y", lang_code=self.env.user.lang),
-            )
+            if sheet.start_period and sheet.end_period:
+                sheet.display_name = _("From %(start_period)s to %(end_period)s",
+                                       start_period=format_date(self.env, sheet.start_period, date_format="MMMM y", lang_code=lang_code),
+                                       end_period=format_date(self.env, sheet.end_period, date_format="MMMM y", lang_code=lang_code))
+            else:
+                sheet.display_name = _("IR56B Sheet")
 
     def _get_rendering_data(self, employees):
         self.ensure_one()
-        employees_data = []
-        salary_structure = self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary')
-        all_payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
-            ('date_from', '>=', self.start_period),
-            ('date_to', '<=', self.end_period),
-            ('employee_id', 'in', employees.ids),
-            ('struct_id', '=', salary_structure.id),
-        ])
-        if not all_payslips:
-            return {'error': _('There are no confirmed payslips for this period.')}
-        all_employees = all_payslips.employee_id
 
-        employees_error = self._check_employees(all_employees)
+        employees_error = self._check_employees(employees)
         if employees_error:
             return {'error': employees_error}
 
-        main_data = self._get_main_data()
+        report_info = self._get_report_info_data()
+
+        payslip_info = False
+        try:
+            payslip_info = self._get_employees_payslip_data(employees)
+        except UserError as e:
+            return {'error': str(e)}
+
+        all_payslips = payslip_info['all_payslips']
+
         employee_payslips = defaultdict(lambda: self.env['hr.payslip'])
         for payslip in all_payslips:
             employee_payslips[payslip.employee_id] |= payslip
@@ -98,6 +103,7 @@ class L10n_HkIr56b(models.Model):
         all_line_values = all_payslips._get_line_values(line_codes, vals_list=['total', 'quantity'])
 
         sequence = 0
+        employees_data = []
         for employee in employee_payslips:
             payslips = employee_payslips[employee]
             sequence += 1
@@ -105,30 +111,6 @@ class L10n_HkIr56b(models.Model):
             mapped_total = {
                 code: sum(all_line_values[code][p.id]['total'] for p in payslips)
                 for code in line_codes}
-
-            hkid, ppnum = '', ''
-            if employee.identification_id:
-                hkid = employee.identification_id.strip().upper()
-            else:
-                ppnum = f'{employee.passport_id}, {employee.l10n_hk_passport_place_of_issue}'
-
-            spouse_name, spouse_hkid, spouse_passport = '', '', ''
-            if employee.marital == 'married':
-                spouse_name = employee.spouse_complete_name.upper() if employee.spouse_complete_name else ''
-                if employee.l10n_hk_spouse_identification_id:
-                    spouse_hkid = employee.l10n_hk_spouse_identification_id.strip().upper()
-                if employee.l10n_hk_spouse_passport_id or employee.l10n_hk_spouse_passport_place_of_issue:
-                    spouse_passport = ', '.join(i for i in [employee.l10n_hk_spouse_passport_id, employee.l10n_hk_spouse_passport_place_of_issue] if i)
-
-            employee_address = ', '.join(i for i in [
-                employee.private_street, employee.private_street2, employee.private_city, employee.private_state_id.name, employee.private_country_id.name] if i)
-
-            AREA_CODE_MAP = {
-                'HK': 'H',
-                'KLN': 'K',
-                'NT': 'N',
-            }
-            area_code = AREA_CODE_MAP.get(employee.private_state_id.code, 'F')
 
             start_date = self.start_period if self.start_period > employee.contract_date_start else employee.contract_date_start
 
@@ -139,28 +121,12 @@ class L10n_HkIr56b(models.Model):
             ]).sorted('date_start')
 
             sheet_values = {
-                'employee': employee,
-                'employee_id': employee.id,
+                **self._get_employee_data(employee),
+                **self._get_employee_spouse_data(employee),
                 'date_from': self.start_period,
                 'date_to': self.end_period,
                 'SheetNo': sequence,
-                'HKID': hkid,
                 'TypeOfForm': self.type_of_form,
-                'Surname': employee.l10n_hk_surname,
-                'GivenName': employee.l10n_hk_given_name,
-                'NameInChinese': employee.l10n_hk_name_in_chinese,
-                'Sex': 'M' if employee.sex == 'male' else 'F',
-                'MaritalStatus': 2 if employee.marital == 'married' else 1,
-                'PpNum': ppnum,
-                'SpouseName': spouse_name,
-                'SpouseHKID': spouse_hkid,
-                'SpousePpNum': spouse_passport,
-                'RES_ADDR_LINE1': employee.private_street,
-                'RES_ADDR_LINE2': employee.private_street2,
-                'RES_ADDR_LINE3': employee.private_city,
-                'employee_address': employee_address,
-                'AreaCodeResAddr': area_code,
-                'Capacity': employee.job_title,
                 'RTN_ASS_YR': self.end_year,
                 'StartDateOfEmp': start_date,
                 'EndDateOfEmp': self.end_period,
@@ -194,8 +160,10 @@ class L10n_HkIr56b(models.Model):
                     ('date_to', '<=', rental.date_end or self.end_period),
                 ])
                 date_start_rental = rental.date_start if rental.date_start > start_date else start_date
-                date_start_rental_str = date_start_rental.strftime('%Y%m%d')
-                date_end_rental_str = (rental.date_end or self.end_period).strftime('%Y%m%d')
+                date_end_rental = rental.date_end or self.end_period
+
+                date_start_rental_str = date_start_rental.strftime('%Y%m%d') if date_start_rental else ''
+                date_end_rental_str = date_end_rental.strftime('%Y%m%d') if date_end_rental else ''
                 period_rental_str = '{} - {}'.format(date_start_rental_str, date_end_rental_str)
 
                 amount_rental = sum(all_line_values['HRA'][p.id]['total'] for p in payslips_rental)
@@ -217,11 +185,11 @@ class L10n_HkIr56b(models.Model):
             'TotIncomeBatch': int(sum(all_line_values['MPF_GROSS'][p.id]['total'] for p in all_payslips)),
         }
 
-        return {'data': main_data, 'employees_data': employees_data, 'total_data': total_data}
+        return {'data': report_info, 'employees_data': employees_data, 'total_data': total_data}
 
     def action_generate_xml(self):
         self.ensure_one()
-        self.xml_filename = 'IR56B_-_%s.xml' % (self.start_year)
+        self.xml_filename = f'IR56B_-_{self.start_year}.xml'
         data = self._get_rendering_data(self.line_ids.employee_id)
         if 'error' in data:
             raise UserError(data['error'])

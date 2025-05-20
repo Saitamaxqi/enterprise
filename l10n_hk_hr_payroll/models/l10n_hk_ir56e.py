@@ -13,8 +13,12 @@ class L10n_HkIr56e(models.Model):
 
     @api.depends('submission_date')
     def _compute_display_name(self):
+        lang_code = self.env.user.lang or 'en_US'
         for sheet in self:
-            sheet.display_name = format_date(self.env, sheet.submission_date, date_format="MMMM y", lang_code=self.env.user.lang)
+            if sheet.submission_date:
+                sheet.display_name = format_date(self.env, sheet.submission_date, date_format="MMMM y", lang_code=lang_code)
+            else:
+                sheet.display_name = _("IR56E Sheet")
 
     def _get_rendering_data(self, employees):
         self.ensure_one()
@@ -23,43 +27,14 @@ class L10n_HkIr56e(models.Model):
         if employees_error:
             return {'error': employees_error}
 
-        main_data = self._get_main_data()
+        report_info = self._get_report_info_data()
+
         employees_data = []
         for employee in employees:
-            hkid, ppnum = '', ''
-            if employee.identification_id:
-                hkid = employee.identification_id.strip().upper()
-            else:
-                ppnum = f'{employee.passport_id}, {employee.l10n_hk_passport_place_of_issue}'
-
-            spouse_name, spouse_hkid, spouse_passport = '', '', ''
-            if employee.marital == 'married' and employee.spouse_complete_name:
-                spouse_name = employee.spouse_complete_name.upper()
-                if employee.l10n_hk_spouse_identification_id:
-                    spouse_hkid = employee.l10n_hk_spouse_identification_id.strip().upper()
-                if employee.l10n_hk_spouse_passport_id or employee.l10n_hk_spouse_passport_place_of_issue:
-                    spouse_passport = ', '.join(i for i in [employee.l10n_hk_spouse_passport_id, employee.l10n_hk_spouse_passport_place_of_issue] if i)
-
-            employee_address = ', '.join(i for i in [
-                employee.private_street, employee.private_street2, employee.private_city, employee.private_state_id.name, employee.private_country_id.name] if i)
-
             sheet_values = {
-                'employee': employee,
-                'employee_id': employee.id,
-                'HKID': hkid,
+                **self._get_employee_data(employee),
+                **self._get_employee_spouse_data(employee),
                 'TypeOfForm': self.type_of_form,
-                'Surname': employee.l10n_hk_surname,
-                'GivenName': employee.l10n_hk_given_name,
-                'NameInChinese': employee.l10n_hk_name_in_chinese,
-                'Sex': 'M' if employee.sex == 'male' else 'F',
-                'MaritalStatus': 2 if employee.marital == 'married' else 1,
-                'PpNum': ppnum,
-                'SpouseName': spouse_name,
-                'SpouseHKID': spouse_hkid,
-                'SpousePpNum': spouse_passport,
-                'employee_address': employee_address,
-                'Capacity': employee.job_title,
-                'date_of_commencement': employee.contract_date_start,
                 'monthly_salary': employee.version_id.wage,
                 'PlaceOfResInd': int(bool(employee.l10n_hk_rental_id)),
             }
@@ -74,7 +49,7 @@ class L10n_HkIr56e(models.Model):
 
             employees_data.append(sheet_values)
 
-        return {'data': main_data, 'employees_data': employees_data}
+        return {'data': report_info, 'employees_data': employees_data}
 
     def _get_pdf_report(self):
         return self.env.ref('l10n_hk_hr_payroll.action_report_employee_ir56e')
