@@ -154,7 +154,7 @@ class AccountMove(models.Model):
                 else:
                     message = str(e)
                 move.message_post(
-                    body=Markup("%s <br/> %s") % (_("Fetching IRN details failed with error(s):", message))
+                    body=Markup("%s <br/> %s") % (_("Fetching IRN details failed with error(s):"), message)
                 )
                 continue
             attachment = self.env['ir.attachment'].create({
