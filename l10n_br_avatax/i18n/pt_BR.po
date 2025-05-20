@@ -1159,7 +1159,7 @@ msgid ""
 "%(errors)s"
 msgstr ""
 "Não foi possível calcular os impostos para %(record)s:\n"
-"%(errors)"
+"%(errors)s"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_taxpayer__exempt
