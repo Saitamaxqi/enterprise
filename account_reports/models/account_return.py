@@ -363,6 +363,7 @@ class AccountReturnType(models.Model):
 
 class AccountReturn(models.Model):
     _name = "account.return"
+    _inherit = ['mail.thread.main.attachment', 'mail.activity.mixin']
     _description = "Accounting Return"
     _order = "date_deadline, name, id"
     _check_company_domain = check_company_domain_account_return
@@ -371,14 +372,13 @@ class AccountReturn(models.Model):
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     type_id = fields.Many2one(comodel_name='account.return.type', string="Return Type", required=True)
-    state = fields.Char(string="Current State", required=True, default='new')
-    is_completed = fields.Boolean(string="Is Completed", default=False)  # Set to true when all steps are done
+    state = fields.Char(string="State", required=True, default='new', tracking=True)
+    is_completed = fields.Boolean(string="Is Completed", default=False, tracking=True)  # Set to true when all steps are done
     company_id = fields.Many2one(comodel_name='res.company', string="Company", required=True)
     tax_unit_id = fields.Many2one(comodel_name='account.tax.unit', string="Tax Unit")
     company_ids = fields.Many2many(comodel_name='res.company', string="Companies", compute="_compute_company_ids", compute_sudo=True, store=True, precompute=True)
-    closing_move_ids = fields.One2many(comodel_name='account.move', inverse_name='closing_return_id')
+    closing_move_ids = fields.One2many(comodel_name='account.move', inverse_name='closing_return_id', tracking=True)
     attachment_ids = fields.Many2many(comodel_name='ir.attachment')
-    attachment_count = fields.Integer(compute="_compute_attachment_count")
     type_external_id = fields.Char(compute="_compute_type_external_id")
     date_deadline = fields.Date(string="Deadline", compute="_compute_deadline", store=True)
     date_submission = fields.Date(string="Submission Date")
@@ -481,11 +481,6 @@ class AccountReturn(models.Model):
     def _compute_resolved_check_count(self):
         for record in self:
             record.resolved_check_count = len(record.check_ids.filtered(lambda check: check.state == record.state)) - record.unresolved_check_count
-
-    @api.depends('attachment_ids')
-    def _compute_attachment_count(self):
-        for record in self:
-            record.attachment_count = len(record.attachment_ids)
 
     @api.depends('type_id')
     def _compute_type_external_id(self):

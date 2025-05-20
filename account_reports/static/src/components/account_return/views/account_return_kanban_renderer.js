@@ -1,39 +1,32 @@
+import { Chatter } from "@mail/chatter/web_portal/chatter";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { isNull } from "@web/views/utils";
-import { KanbanRecord } from "@web/views/kanban/kanban_record";
-
-import { Component, useEffect} from "@odoo/owl";
+import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
+import { AccountReturnKanbanRecord } from "@account_reports/components/account_return/views/account_return_kanban_record";
+import { useEffect } from "@odoo/owl";
 const { DateTime } = luxon;
+import { browser } from "@web/core/browser/browser";
 
-export class AccountReturnKanbanRenderer extends Component {
+
+export class AccountReturnKanbanRenderer extends KanbanRenderer {
     static template="account_reports.account_return_kanban_renderer";
 
     static props = [
-        "archInfo",
-        "Compiler",
-        "list",
-        "deleteRecord",
-        "openRecord",
-        "readonly?",
-        "forceGlobalClick?",
-        "noContentHelp?",
-        "scrollTop?",
-        "canQuickCreate?",
-        "quickCreateState?",
-        "progressBarState?",
-        "addLabel?",
-        "onAdd?",
-    ];
+        ...KanbanRenderer.props,
+        "chatterState",
+    ]
 
     static components = {
-        KanbanRecord,
+        ...KanbanRenderer.components,
+        AccountReturnKanbanRecord,
+        Chatter,
     };
 
     setup() {
         super.setup();
         this.orm = useService("orm");
+        this.ui = useService("ui");
         useEffect(() => {this.runAllReturnChecks()}, () => []);
-
         useBus(this.env.bus, "return_reload_model", (ev) => {
             const recordIds = ev.detail.resIds;
             let recordToReload = this.records.filter((record) => recordIds.includes(record.resId));
@@ -41,6 +34,13 @@ export class AccountReturnKanbanRenderer extends Component {
                 record.model.load();
             }
         });
+        useEffect(() => {
+            if (!this.visibleReturnIds.has(this.props.chatterState.returnId)) {
+                this.props.chatterState.returnId = null;
+                this.props.chatterState.visible = false;
+                browser.sessionStorage.removeItem("account_return.chatterReturnId");
+            }
+        }, () => [this.props.list]);
     }
 
     async runAllReturnChecks() {
@@ -96,4 +96,19 @@ export class AccountReturnKanbanRenderer extends Component {
         }
         return false;
     }
+
+    get visibleReturnIds() {
+        const { list } = this.props;
+        if (!list.isGrouped) {
+            return new Set(
+                list.records.map(record => record.resId)
+            );
+        }
+        return new Set(
+            list.groups.flatMap(group =>
+                group.list.records.map(record => record.resId)
+            )
+        );
+    }
+
 }

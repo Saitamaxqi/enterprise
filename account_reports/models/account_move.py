@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import _, models, fields
 
 
 class AccountMove(models.Model):
@@ -11,3 +11,18 @@ class AccountMove(models.Model):
         if action['res_model'] == 'account.return':
             del action['context']
         return action
+
+    def unlink(self):
+        for move in self:
+            if move.closing_return_id:
+                if len(move.closing_return_id.company_ids) == 1:
+                    move.closing_return_id.message_post(
+                        body=_("Closing entry deleted"),
+                        message_type='comment',
+                    )
+                else:
+                    move.closing_return_id.message_post(
+                        body=_("Closing entry deleted for company %s", move.closing_return_id.company_id),
+                        message_type='comment',
+                    )
+        return super().unlink()

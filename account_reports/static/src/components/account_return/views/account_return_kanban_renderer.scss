@@ -1,29 +1,61 @@
-.o_account-return-kanban {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    gap: 5px;
-
-    .o_kanban_record {
-        width: 80%;
-        padding: 5px;
+.o_account_return_kanban_container {
+    .o_account-return-kanban {
         display: flex;
-        flex-direction: row;
-        position: relative;
+        flex-direction: column;
+        align-items: center;
+        padding-block: 20px;
+        gap: 5px;
+        overflow: auto;
+        flex-grow: 1;
+
+        .o_kanban_record {
+            width: calc(100% - 5vw);
+            padding: 5px;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            flex-grow: 0;
+
+            @include media-breakpoint-up(md) {
+                &.account_return_selected {
+                    box-shadow: inset 0 0px 0px 3px var(--KanbanColumn__highlight-selected-border);
+                }
+            }
+
+            .container{
+                max-width: none;
+
+                .row{
+                    --gutter-x: 0;
+                }
+            }
+        }
+
+        .return-group-header {
+            width: calc(100% - 5vw);
+            display: block;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 10px;
+        }
     }
 
-    .return-group-header {
-        width: 80%;
-        display: block;
-        font-weight: 700;
-        font-size: 1rem;
-        padding: 10px 10px;
-    }
+    .o_account_return_chatter {
+        border-left: 1px solid var(--border-color);
+        max-width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
+        transition: max-width 0.2s ease-in-out;
 
-    .return-check-card-success {
-        background-color: var(--AccountReturnCheck-card-success-bg-color, #eafaeb);
+        .o-mail-Chatter-topbar {
+            padding-top: 0.25rem;
+        }
+
+        .o-mail-ActivityList {
+            padding-left: 0.25rem;
+        }
+
+        &.o_account_return_chatter_hidden{
+            max-width: 0;
+            transition: max-width 0.2s ease-in-out;
+        }
     }
 }

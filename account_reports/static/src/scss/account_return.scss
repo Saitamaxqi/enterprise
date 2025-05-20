@@ -1,6 +1,7 @@
 .o_account_return_state {
     display: flex;
     justify-content: center;
+    padding: 10px 0;
 
     .state-container {
         width:75px;
@@ -94,5 +95,9 @@
         padding: 0;
         margin-left: 20px;
         margin-right: 20px;
+    }
+
+    .return-check-card-success {
+        background-color: var(--AccountReturnCheck-card-success-bg-color, #eafaeb);
     }
 }
