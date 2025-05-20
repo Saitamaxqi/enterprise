@@ -113,7 +113,7 @@ class AccountReconcileModel(models.Model):
         }
 
     def _apply_reconcile_models(self, statement_lines):
-        if not self:
+        if not self or not statement_lines:
             return
         self.env['account.reconcile.model'].flush_model()
         statement_lines.flush_recordset(['journal_id', 'amount', 'amount_residual', 'transaction_details', 'payment_ref', 'partner_id', 'company_id'])
