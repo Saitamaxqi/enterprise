@@ -24,7 +24,7 @@ class TestInvoiceSignature(AccountTestInvoicingCommon):
             'login': 'another_accountant',
             'password': 'another_accountant',
             'group_ids': [
-                Command.set(cls.env.user.group_ids.ids),
+                Command.set(cls.env.ref('account.group_account_user').ids),
             ],
             'sign_signature': cls.signature_fake_2,
         })
@@ -72,10 +72,11 @@ class TestInvoiceSignature(AccountTestInvoicingCommon):
         self.assertEqual(self.invoice.signature, self.signature_fake_2, "The signature should be from `self.another_user`")
 
     def test_invoice_signing_user_should_be_reprensative_user_if_there_is_one(self):
-        self.env.company.signing_user = self.another_user  # set the representative user of the company
-        self.invoice.action_post()
-        self.assertEqual(self.invoice.signing_user, self.another_user, "The signing user should be the representative person set in the settings")
-        self.assertEqual(self.invoice.signature, self.signature_fake_2, "The signature should be from `self.another_user`, the representative user")
+        self.env.company.signing_user = self.user  # set the representative user of the company
+        invoice = self.invoice.with_user(self.another_user)
+        invoice.action_post()
+        self.assertEqual(invoice.signing_user, self.user, "The signing user should be the representative person set in the settings")
+        self.assertEqual(invoice.signature, self.signature_fake_1, "The signature should be from `self.another_user`, the representative user")
 
     def test_setting_representative_user_shouldnt_change_signer_of_already_posted_invoice(self):
         # Note: Changing this behavior might not be a good idea as having all account.move updated at once

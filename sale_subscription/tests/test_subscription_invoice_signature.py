@@ -14,6 +14,7 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
     def setUp(self):
         super().setUp()
         self.sale_subscription_cron = self.env.ref("sale_subscription.account_analytic_cron_for_invoice")
+        self.another_user.group_ids += self.env.ref("sales_team.group_sale_salesman")
         self.subscription = self.env['sale.order'].with_user(self.another_user).create({
                 'partner_id': self.partner_a.id,
                 'company_id': self.company_data['company'].id,

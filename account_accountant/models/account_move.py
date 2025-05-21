@@ -106,7 +106,7 @@ class AccountMove(models.Model):
         invoice_with_signature = self - moves_not_to_sign
         invoice_with_signature.show_signature_area = True
         for invoice in invoice_with_signature:
-            invoice.signature = invoice.signing_user.sign_signature
+            invoice.signature = invoice.signing_user.sudo().sign_signature
 
     def _post(self, soft=True):
         # Deferred management
