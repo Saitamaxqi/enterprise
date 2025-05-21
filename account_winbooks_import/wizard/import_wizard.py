@@ -273,21 +273,39 @@ class AccountWinbooksImportWizard(models.TransientModel):
         journal_data = {}
         journals = self.env['account.journal']
         AccountJournal = self.env['account.journal']
+        existing_journals = AccountJournal.search(AccountJournal._check_company_domain(self.env.company))
+        used_codes = set(existing_journals.mapped('code'))
+        processed_records = set()   # used to filter out duplicate records
+        code_inc = 0
         for rec in dbf_records:
-            if not rec.get('DBKID'):
+            if not rec.get('DBKID') or rec.get('DBKID') in processed_records:
                 continue
-            journal = AccountJournal.search([
-                *AccountJournal._check_company_domain(self.env.company),
-                ('code', '=', rec.get('DBKID')),
-            ], limit=1)
+            journal = existing_journals.filtered(lambda j: j.code == rec.get('DBKID'))
             if not journal:
                 if rec.get('DBKTYPE') == '4':
                     journal_type = 'bank' if 'IBAN' in rec.get('DBKOPT') else 'cash'
                 else:
                     journal_type = journal_types.get(rec.get('DBKTYPE'), 'general')
+                # The code of a journal is limited to a size of 5 characters.
+                # The following process is applied to the received code:
+                # 1) Check if the 5 first characters is used.
+                # 2) Check if the 5 last characters is used.
+                # 3) Fall back on a generic code.
+                # The format of this code will be the "*" character followed by an incremented number.
+                # The possible values will range from "*1" to "*9999".
+                # There are only 9999 possibilities, but it should be more than enough to handle the duplicate codes.
+                # The purpose of this generic code is to not prevent the jounal creation and to be able
+                # to quickly find it once created if we want to change it manually.
+                code = rec.get('DBKID')[:5]
+                if code in used_codes:
+                    code = rec.get('DBKID')[-5:]
+                while code in used_codes and code_inc < 10000:
+                    code_inc += 1
+                    code = '*%s' % code_inc
+                used_codes.add(code)
                 data = {
                     'name': rec.get('DBKDESC'),
-                    'code': rec.get('DBKID'),
+                    'code': code,
                     'type': journal_type,
                 }
                 if data['type'] == 'sale':
@@ -297,6 +315,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 journal = AccountJournal.create(data)
             journal_data[rec.get('DBKID')] = journal.id
             journals += journal
+            processed_records.add(rec.get('DBKID'))
         return journal_data, journals
 
     def _import_move(self, dbf_records, pdffiles, account_data, account_central, journal_data, partner_data, vatcode_data, param_data):
