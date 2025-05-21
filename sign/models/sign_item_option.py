@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import fields, models, _
+from odoo.exceptions import UserError
 
 
 class SignItemOption(models.Model):
@@ -22,6 +23,9 @@ class SignItemOption(models.Model):
         (both existing and newly created).
         """
         options = [option.strip() for option in options]
+        if len(options) != len(set(options)):
+            duplicates = [option for option in options if options.count(option) > 1]
+            raise UserError(_("Your selection field contains duplicate options: %s") % ', '.join(set(duplicates)))
         existing_values = {opt['value'] for opt in self.search_read([('value', 'in', options)], fields=['value'])}
         new_options = [option for option in options if option not in existing_values]
         if new_options:

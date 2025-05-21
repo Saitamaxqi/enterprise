@@ -428,6 +428,8 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 } else if (signItem.data[key] !== data[key]) {
                     changes[key] = data[key];
                 }
+            } else {
+                changes[key] = data[key];
             }
             return changes;
         }, {});

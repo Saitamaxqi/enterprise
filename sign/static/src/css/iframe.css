@@ -436,6 +436,11 @@ select:focus {
     width: calc(100% - 54px);
 }
 
+.o_sign_field_error {
+    border: 2px solid #ff0000 !important;
+    outline: none;
+}
+
 .o_sign_editable_config_area{
     font-size: 0.4em !important;
 }

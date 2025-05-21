@@ -170,7 +170,7 @@ class SignTemplate(models.Model):
 
     def _check_send_ready(self):
         if any(item.type_id.item_type == 'selection' and not item.option_ids for item in self.sign_item_ids):
-            raise UserError(_("One or more selection items have no associated options"))
+            raise UserError(_("There are no values in selection field."))
 
     def toggle_favorited(self):
         self.ensure_one()

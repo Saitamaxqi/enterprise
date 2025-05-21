@@ -4,7 +4,7 @@
         <div class="popover" style="max-width: 25rem;">
             <div class="popover-header d-flex align-items-center justify-content-between">
                 <span class="fw-bold" t-esc="props.header_title"/>
-                <button type="button" title="Close" class="btn btn-default oi oi-close p-0" t-on-click="props.onClose"/>
+                <button type="button" title="Close" class="btn btn-default oi oi-close p-0" t-on-click="onClose"/>
             </div>
             <div class="popover-body">
                 <div t-if="!['strikethrough', 'radio', 'checkbox'].includes(props.type)" class="clearfix o_popover_placeholder mb-3">

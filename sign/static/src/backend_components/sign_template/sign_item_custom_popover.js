@@ -84,6 +84,15 @@ export class SignItemCustomPopover extends Component {
         this.state[key] = value;
     }
 
+    onClose() {
+        if (this.props.type === "selection" && this.props.option_ids.length === 0) {
+            this.notification.add(_t("Selection field cannot be empty. Please add at least one option."), {
+                type: "warning",
+            });
+        }
+        this.props.onClose();
+    }
+
     async onValidate() {
         if (this.props.type === "selection" && !this.state.selectionOptionsText) {
             this.notification.add(_t("Selection field cannot be empty. Please add at least one option."), {
