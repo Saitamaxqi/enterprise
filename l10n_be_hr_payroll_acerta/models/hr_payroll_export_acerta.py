@@ -41,6 +41,10 @@ class L10nBeHrPayrollExportAcerta(models.Model):
             raise UserError(_(
                 'Acerta code is missing for work entry type %(work_entry_type)s',
                 work_entry_type=work_entry.work_entry_type_id.name))
+        if not self.company_id.acerta_code:
+            raise UserError(_(
+                'Acerta Affiliation Number is missing for company: %(company)s',
+                company=self.company_id.name))
         duration = we_dotdict.duration
         return 'KLX1' + self.company_id.acerta_code + contract.acerta_code.zfill(20) \
             + work_entry.date_start.strftime('%d/%m/%Y') + '  '  \

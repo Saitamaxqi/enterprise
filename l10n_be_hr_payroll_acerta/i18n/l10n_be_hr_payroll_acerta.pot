@@ -28,6 +28,12 @@ msgid "Acerta Affiliation Number"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
+msgid "Acerta Affiliation Number is missing for company: %(company)s"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
 #: model:ir.model,name:l10n_be_hr_payroll_acerta.model_l10n_be_hr_payroll_export_acerta_employee
 msgid "Acerta Export Employee"
 msgstr ""
