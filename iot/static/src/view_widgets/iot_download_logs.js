@@ -3,6 +3,7 @@ import { useService } from '@web/core/utils/hooks';
 import { _t } from '@web/core/l10n/translation';
 import { Component } from "@odoo/owl";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
+import { formatEndpoint } from "@iot_base/network_utils/http";
 
 export class IoTBoxDownloadLogs extends Component {
     static template = `iot.HeaderButton`;
@@ -18,7 +19,7 @@ export class IoTBoxDownloadLogs extends Component {
         this.http = useService('http');
     }
     get ip_url() {
-        return this.props.record.data.ip_url;
+        return formatEndpoint(this.props.record.data.ip, '');
     }
     get name() {
         return this.props.record.data.name;

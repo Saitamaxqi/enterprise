@@ -4,6 +4,7 @@ import { useService } from "@web/core/utils/hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { Component } from "@odoo/owl";
+import { formatEndpoint } from "@iot_base/network_utils/http";
 
 let restarting = false;
 
@@ -22,8 +23,8 @@ export class IoTRestartOdoo extends Component {
         this.notification = useService("notification");
     }
 
-    get ip_url() {
-        return this.props.record.data.ip_url;
+    get iotIp() {
+        return this.props.record.data.ip;
     }
 
     get name() {
@@ -60,7 +61,9 @@ export class IoTRestartOdoo extends Component {
                 _t("Restarting"),
                 "warning"
             );
-            const response = await this.http.get(`${this.ip_url}/hw_posbox_homepage/restart_odoo_service`);
+            const response = await this.http.get(
+                formatEndpoint(this.iotIp, "/hw_posbox_homepage/restart_odoo_service")
+            );
             return response.status;
         } catch (error) {
             this.doWarnFail();
@@ -75,7 +78,10 @@ export class IoTRestartOdoo extends Component {
         const responseInterval = setInterval(async () => {
             let server_response;
             try {
-                server_response = await this.http.get(this.ip_url + "/hw_proxy/hello", "text");
+                server_response = await this.http.get(
+                    formatEndpoint(this.iotIp, "/hw_proxy/hello"),
+                    "text"
+                );
                 if (server_response === "ping" && restarting) {
                     this.showMsgAndClearInterval(
                         responseInterval,
