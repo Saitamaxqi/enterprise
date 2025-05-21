@@ -116,11 +116,19 @@ class IoTDeviceController extends formView.Controller {
                 this.onPrinterEvent(event, () => device.removeListener())
             );
 
-            const actionResponse = await device.action({ action: "status" });
-            if (!actionResponse.result) {
-                this.notificationService.add(_t("Printer is disconnected"), {
-                    type: "danger",
-                });
+            try {
+                const actionResponse = await device.action({ action: "status" });
+                if (!actionResponse.result) {
+                    this.notificationService.add(_t("Printer is disconnected"), {
+                        type: "danger",
+                    });
+                    device.removeListener();
+                }
+            } catch (error) {
+                if (error.message !== "Longpolling action failed") {
+                    console.error(error);
+                    this.notificationService.add(_t("Test print failed"), { type: "danger" });
+                }
                 device.removeListener();
             }
         }
