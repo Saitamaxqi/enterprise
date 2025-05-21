@@ -4,13 +4,23 @@
     <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document" priority="50">
         <xpath expr="//div[@name='informations_reference']" position="after">
             <t t-if="doc.is_subscription">
-                <div class="col" name="plan">
+                <div t-if="doc.start_date and doc.end_date" class="col-4" name="plan">
                     <strong>Recurring Plan</strong>
                     <div t-field="doc.plan_id.name"/>
+                    <div class="text-muted small">
+                        From <span t-field="doc.start_date"/>
+                        - Until <span t-field="doc.end_date"/>
+                    </div>
                 </div>
-                <div t-if="doc.start_date" class="col" name="subscription_start_date">
-                    <strong>Start Date</strong>
-                    <div t-field="doc.start_date"/>
+                <div t-else="" class="col" name="plan">
+                    <strong>Recurring Plan</strong>
+                    <div t-field="doc.plan_id.name"/>
+                    <span t-if="doc.start_date" class="text-muted small">
+                        From <span t-field="doc.start_date"/>
+                    </span>
+                    <span t-if="doc.end_date" class="text-muted small">
+                        Until <span t-field="doc.end_date"/>
+                    </span>
                 </div>
             </t>
         </xpath>
