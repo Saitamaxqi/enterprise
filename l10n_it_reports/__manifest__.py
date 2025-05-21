@@ -23,5 +23,10 @@ Accounting reports for Italy
     'auto_install': ['l10n_it', 'account_reports'],
     'installable': True,
     'author': 'Odoo S.A.',
+    'assets': {
+        'account_reports.assets_pdf_export': [
+            'l10n_it_reports/static/src/scss/pdf_export_template.scss',
+        ],
+    },
     'license': 'OEEL-1',
 }

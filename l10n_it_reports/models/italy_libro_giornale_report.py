@@ -42,10 +42,10 @@ class LibroGiornaleReportHandler(models.AbstractModel):
         columns =[
             {'name': _('Document'), 'label': 'journal_entry', 'class': 'o_bold'},
             {'name': _('Date'), 'label': 'date'},
-            {'name': _('Line'), 'label': 'line_number', 'class': 'o_right_alignment'},
+            {'name': _('Line'), 'label': 'line_number', 'class': 'o_fixed_column_width'},
             {'name': _('Account Code'), 'label': 'account_code'},
             {'name': _('Account Name'), 'label': 'account_name'},
-            {'name': _('Name'), 'label': 'name'},
+            {'name': _('Name'), 'label': 'name', 'class': 'o_overflow_name'},
             {'name': _('Debit'), 'label': 'debit', 'class': 'o_right_alignment '},
             {'name': _('Credit'), 'label': 'credit', 'class': 'o_right_alignment '}
         ]
