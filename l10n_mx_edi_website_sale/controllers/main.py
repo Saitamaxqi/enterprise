@@ -72,10 +72,11 @@ class WebsiteSaleL10nMX(WebsiteSale):
                 if not default_vals['vat']:
                     errors['vat'] = _("The VAT number is required")
                 elif can_edit_vat:
-                    if not request.env['res.partner']._run_vat_checks(partner.country_id, default_vals['vat'], validation='setnull'):
+                    vat, _country_code = request.env['res.partner']._run_vat_checks(partner.country_id, default_vals['vat'], validation='setnull')
+                    if not vat:
                         errors['vat'] = partner._build_vat_error_message(partner.country_id.code.lower(), default_vals['vat'], partner.name)
                     else:
-                        vat = request.env['res.partner']._run_vat_checks(partner.country_id, default_vals['vat'],
+                        vat, _country_code = request.env['res.partner']._run_vat_checks(partner.country_id, default_vals['vat'],
                                                                          validation=False)
                         partner_vals['vat'] = vat
                 # Other fields
