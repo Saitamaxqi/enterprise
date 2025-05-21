@@ -38,7 +38,7 @@
     <t t-name="stock_barcode.LineQuantity">
         <div class="d-flex justify-content-between align-items-end">
             <div name="quantity">
-                <span class="text-muted" t-if="line.packaging_uom_id &amp;&amp; line.packaging_uom_id.id !== line.product_uom_id.id">
+                <span class="o_packaging text-muted" t-if="line.packaging_uom_id &amp;&amp; line.packaging_uom_id.id !== line.product_uom_id.id">
                     Packaging: <span t-esc="line.packaging_uom_qty"/> <span t-esc="line.packaging_uom_id.name"/>
                 </span>
                 <br/>

@@ -5893,6 +5893,88 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mixed_uom", {
+    steps: () => [
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan SPOPWMU",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "0/12 Units");
+                const line = helper.getLine({ barcode: "love" });
+                helper.assert(
+                    line.querySelector(".o_packaging").innerText,
+                    "Packaging: 2 Pack of 6"
+                );
+            },
+        },
+        // Scan a pack of 6
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains('6')",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "6/12 Units");
+            },
+        },
+        // Scan 2 units of Lovely product
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains('8')",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "8/12 Units");
+            },
+        },
+        // Scan a pack of 6
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains('12')",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "12/12 Units");
+                helper.assertLineQty(1, "2 Units");
+                const [line1, line2] = helper.getLines({ barcode: "love" });
+                helper.assert(
+                    line1.querySelector(".o_packaging").innerText,
+                    "Packaging: 2 Pack of 6"
+                );
+                helper.assert(line2.querySelector(".o_packaging"), null);
+            },
+        },
+        // Scan a pack of 6
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .o_line_uom:contains('Pack')",
+            run: () => {
+                helper.assertLinesCount(3);
+                helper.assertLineQty(0, "12/12 Units");
+                helper.assertLineQty(1, "2 Units");
+                helper.assertLineQty(2, "1 Pack of 6");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_multi_company_record_access_in_barcode", {
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan company2_receipt" },

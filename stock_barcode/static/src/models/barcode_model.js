@@ -1446,6 +1446,24 @@ export default class BarcodeModel extends EventBus {
             }
         }
 
+        // If line found is expressed in an different unit than its packaging adapt the
+        // barcodeData to update the line properly or force the creation of a new line
+        const expressedInPackagingUom =
+            currentLine &&
+            barcodeData.uom &&
+            barcodeData.uom.id !== currentLine.product_uom_id.id &&
+            barcodeData.uom.id === currentLine.packaging_uom_id.id;
+        if (expressedInPackagingUom) {
+            if (!this._lineIsNotComplete(currentLine)) {
+                currentLine = false;
+            } else {
+                barcodeData.quantity =
+                    (barcodeData.quantity * currentLine.packaging_uom_id.factor) /
+                    currentLine.product_uom_id.factor;
+                barcodeData.uom = currentLine.product_uom_id;
+            }
+        }
+
         // Updates or creates a line based on barcode data.
         if (currentLine) {
             // If line found, can it be incremented ?
@@ -1482,6 +1500,10 @@ export default class BarcodeModel extends EventBus {
                     copyOf: currentLine,
                     fieldsParams,
                 });
+                if (expressedInPackagingUom) {
+                    currentLine.packaging_uom_id = undefined;
+                    currentLine.packaging_uom_qty = 0;
+                }
             }
         } else {
             // No line found, so creates a new one.
@@ -1715,7 +1737,11 @@ export default class BarcodeModel extends EventBus {
             if (line.product_id.id !== product.id) {
                 continue; // Not the same product.
             }
-            if (uom ? (line.product_uom_id.id !== uom.id) : (line.product_uom_id.id !== product.uom_id)) { // If uom is not set on barcodeData, it means that the new line is in product base unit
+            if (
+                uom
+                    ? line.product_uom_id.id !== uom.id && line.packaging_uom_id?.id !== uom.id
+                    : line.product_uom_id.id !== product.uom_id
+            ) {
                 continue; // Not the same UoM.
             }
             if (quantPackage && (!line.package_id || line.package_id.id !== quantPackage.id)) {

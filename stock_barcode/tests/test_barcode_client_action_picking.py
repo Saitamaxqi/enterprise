@@ -3448,6 +3448,47 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         }).action_confirm()
         self.start_tour('/odoo/barcode', 'test_validate_uncomplete_return', login='admin')
 
+    def test_scan_packaging_on_picking_with_mixed_uom(self):
+        """
+        Create a delivery for 12 units of a product packed in pack of 6. Process it
+        in barcode and check that 6 units are added each time a pack is scanned.
+        """
+        self.env.user.write({'group_ids': [Command.link(self.ref('uom.group_uom'))]})
+        lovely_product = self.env['product.product'].create({
+            'name': 'Lovely product',
+            'is_storable': True,
+            'barcode': 'love',
+            'uom_id': self.ref('uom.product_uom_unit'),
+            'uom_ids': [Command.link(self.ref('uom.product_uom_pack_6'))],
+            'product_uom_ids': [Command.create({
+                'uom_id': self.ref('uom.product_uom_pack_6'),
+                'barcode': '6love',
+            })]
+        })
+        self.env['stock.quant']._update_available_quantity(lovely_product, self.stock_location, 20)
+        delivery = self.env['stock.picking'].create({
+            'name': "SPOPWMU",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'name': "Lovely move",
+                'product_id': lovely_product.id,
+                'product_uom_qty': 12,
+            })]
+        })
+        delivery.move_ids.packaging_uom_id = self.env.ref('uom.product_uom_pack_6')
+        delivery.action_confirm()
+        self.assertRecordValues(delivery.move_ids, [
+            {'product_uom_qty': 12.0, 'quantity': 12.0, 'picked': False, 'packaging_uom_qty': 2, 'packaging_uom_id': self.ref('uom.product_uom_pack_6')}
+        ])
+
+        action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = f"/web#action={action.id}"
+        self.start_tour(url, 'test_scan_packaging_on_picking_with_mixed_uom', login='admin')
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """
