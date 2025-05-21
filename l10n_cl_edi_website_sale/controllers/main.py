@@ -70,6 +70,7 @@ class L10nCLWebsiteSale(WebsiteSale):
         }
         if request.httprequest.method == 'POST':
             if (values['errors_fields'] or values['errors_empty']) and kw['l10n_cl_type_document'] != 'ticket':
+                values.update(request.website._get_checkout_step_values())
                 return request.render("l10n_cl_edi_website_sale.l10n_cl_edi_invoicing_info", values)
             self._l10n_cl_update_order(order_sudo, **kw)
             return request.redirect("/shop/confirm_order")
