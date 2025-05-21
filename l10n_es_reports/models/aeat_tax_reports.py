@@ -4,7 +4,7 @@
 from odoo import fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
 import odoo.release
-from odoo.tools import SQL
+from odoo.tools import SQL, float_is_zero
 from odoo.tools.float_utils import float_split_str, float_compare
 
 from datetime import datetime
@@ -1340,6 +1340,8 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                             # To be sure we don't add a move value twice (in case there is multiple refunds for a same move),
                             # we add it to a list
                             if matching_move.id not in treated_moves:
+                                if float_is_zero(matching_move.amount_residual, precision_digits=2) and options.get('export_mode') == 'file':
+                                    result_dict['value'] += matching_move.amount_total
                                 result_dict['value'] += matching_move.amount_residual
                                 treated_moves.append(matching_move.id)
 
@@ -1401,7 +1403,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         # Build query
         query = report._get_report_query(options, 'strict_range', domain=domain)
         groupby_field_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else SQL()
-
+        self.env.flush_all()
         query = SQL("""
             SELECT DISTINCT account_move.id AS move_id,
                 %(select_from_groupby)s
@@ -1494,7 +1496,14 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
         matched_moves = []
         period_dict = {}
-        for refund_invoice in self.env['account.move'].search([('date', '<=', report_date_to), ('date', '>=', report_date_from), ('move_type', 'in', ['in_refund', 'out_refund']), ('l10n_es_reports_mod349_invoice_type', '=', mod_349_type), ('partner_id', '=', line_partner.id)]):
+        for refund_invoice in self.env['account.move'].search([
+            ('date', '<=', report_date_to),
+            ('date', '>=', report_date_from),
+            ('move_type', 'in', ['in_refund', 'out_refund']),
+            ('l10n_es_reports_mod349_invoice_type', '=', mod_349_type),
+            ('partner_id', '=', line_partner.id),
+            ('state', '=', 'posted'),
+        ]):
             original_invoice = refund_invoice.reversed_entry_id
 
             if not original_invoice:
@@ -1541,7 +1550,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
         # Wizard with manually-entered data
         boe_wizard = self._retrieve_boe_manual_wizard(options, 349)
-
+        options['export_mode'] = 'file'
         if boe_wizard.trimester_2months_report:
             if period[-1] == 'T':
                 options = options.copy()
