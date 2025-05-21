@@ -21,6 +21,7 @@ import {
     getCellContent,
     getCellValue,
     getEvaluatedCell,
+    getEvaluatedGrid,
 } from "@spreadsheet/../tests/helpers/getters";
 import { getZoneOfInsertedDataSource } from "@spreadsheet/../tests/helpers/pivot";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
@@ -1221,4 +1222,40 @@ test("The table has the correct number of headers when inserting a pivot", async
     expect(tables[0].range.zone).toEqual(pivotZone);
     expect(tables[0].type).toBe("static");
     expect(tables[0].config.numberOfHeaders).toBe(3);
+});
+
+test("Can collapse pivot header group", async function () {
+    const { model } = await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": /* xml */ `
+                            <pivot>
+                                <field name="date" interval="year" type="col"/>
+                                <field name="date" interval="month" type="col"/>
+                                <field name="probability" type="measure"/>
+                            </pivot>`,
+                "partner,false,search": /* xml */ `<search/>`,
+            },
+        },
+    });
+    selectCell(model, "A20");
+    await animationFrame();
+    setCellContent(model, "A20", "=PIVOT(1)");
+    await contains(".o-pivot-collapse-icon").click();
+
+    const [pivotId] = model.getters.getPivotIds();
+    const definition = model.getters.getPivotCoreDefinition(pivotId);
+    expect(definition.collapsedDomains).toEqual({
+        COL: [[{ field: "date:year", value: 2016, type: "date" }]],
+        ROW: [],
+    });
+
+    // prettier-ignore
+    expect(getEvaluatedGrid(model, "A20:C23")).toEqual([
+        ["(#1) Untitled by Date (Year)",    2016,           ""],
+        ["",                                "",             "Total"],
+        ["",                                "Probability",  "Probability"],
+        ["Total",                           131,            131],
+    ]);
 });

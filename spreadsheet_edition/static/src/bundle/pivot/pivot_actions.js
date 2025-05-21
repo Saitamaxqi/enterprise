@@ -12,9 +12,9 @@ export const REINSERT_DYNAMIC_PIVOT_CHILDREN = (env) =>
             if (type === "ODOO") {
                 const dataSource = env.model.getters.getPivot(pivotId);
                 const model = await dataSource.copyModelWithOriginalDomain();
-                table = model.getTableStructure().export();
+                table = model.getCollapsedTableStructure().export();
             } else {
-                table = env.model.getters.getPivot(pivotId).getTableStructure().export();
+                table = env.model.getters.getPivot(pivotId).getCollapsedTableStructure().export();
             }
             env.model.dispatch("INSERT_PIVOT_WITH_TABLE", {
                 ...position,
@@ -39,9 +39,9 @@ export const REINSERT_STATIC_PIVOT_CHILDREN = (env) =>
             if (type === "ODOO") {
                 const dataSource = env.model.getters.getPivot(pivotId);
                 const model = await dataSource.copyModelWithOriginalDomain();
-                table = model.getTableStructure().export();
+                table = model.getExpandedTableStructure().export();
             } else {
-                table = env.model.getters.getPivot(pivotId).getTableStructure().export();
+                table = env.model.getters.getPivot(pivotId).getExpandedTableStructure().export();
             }
             env.model.dispatch("INSERT_PIVOT_WITH_TABLE", {
                 ...position,

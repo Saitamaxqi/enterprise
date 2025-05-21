@@ -111,7 +111,7 @@ test("Rename and remove a pivot concurrently", async () => {
 test("Insert and remove a pivot concurrently", async () => {
     await insertPivot(alice);
     await network.concurrent(() => {
-        const table = alice.getters.getPivot("PIVOT#1").getTableStructure().export();
+        const table = alice.getters.getPivot("PIVOT#1").getCollapsedTableStructure().export();
         alice.dispatch("INSERT_PIVOT", {
             pivotId: "PIVOT#1",
             col: 0,
