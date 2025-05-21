@@ -58,7 +58,7 @@ class ChHrPayslipEmployees(models.TransientModel):
             'l10n_ch_pay_13th_month': self.pay_13th
         })
 
-        contract_domain = [('state', 'in', ['open', 'close']), ('company_id', '=', self.company_id.id)]
+        contract_domain = [('employee_id', '!=', False), ('state', 'in', ['open', 'close']), ('company_id', '=', self.company_id.id)]
         if self.employee_ids:
             contract_domain = expression.AND([contract_domain, [
                 ('employee_id', 'in', self.employee_ids.ids),
@@ -66,17 +66,17 @@ class ChHrPayslipEmployees(models.TransientModel):
 
         if self.department_id:
             contract_domain = expression.AND([contract_domain, [
-                ('department_id', '=', self.department_id.id),
+                ('department_id', 'in', self.department_id.ids),
             ]])
 
         if self.contract_type:
             contract_domain = expression.AND([contract_domain, [
-                ('contract_type_id', '=', self.contract_type.ids),
+                ('contract_type_id', 'in', self.contract_type.ids),
             ]])
 
         if self.workplace_id:
             contract_domain = expression.AND([contract_domain, [
-                ('l10n_ch_location_unit_id', '=', self.contract_type.ids),
+                ('l10n_ch_location_unit_id', 'in', self.workplace_id.ids),
             ]])
 
         all_contracts = self.env['hr.contract'].search(contract_domain)
