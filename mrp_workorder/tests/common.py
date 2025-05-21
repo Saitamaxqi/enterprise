@@ -10,3 +10,14 @@ class TestMrpWorkorderCommon(TestMrpCommon):
         super().setUpClass()
         grp_workorder = cls.env.ref('mrp.group_mrp_routings')
         cls.env.user.write({'group_ids': [(4, grp_workorder.id)]})
+
+    @classmethod
+    def get_backorder_wo(cls, workorder):
+        production = workorder.production_id
+        backorder = production.procurement_group_id.mrp_production_ids.filtered(lambda p: p.backorder_sequence == production.backorder_sequence + 1)
+        if workorder.operation_id:
+            return backorder.workorder_ids.filtered(lambda wo: wo.operation_id == workorder.operation_id)
+        else:
+            index = list(production.workorder_ids).index(workorder)
+            return backorder.workorder_ids[index]
+        return False

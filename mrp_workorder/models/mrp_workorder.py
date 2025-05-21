@@ -422,13 +422,16 @@ class MrpWorkorder(models.Model):
         backorder = False
         # Trigger the backorder process if we produce less than expected
         if float_compare(self.qty_producing, self.qty_remaining, precision_rounding=self.product_uom_id.rounding) == -1 and self.is_first_started_wo:
-            backorder = self.production_id._split_productions()[1:]
-            for workorder in backorder.workorder_ids:
-                if workorder.product_tracking == 'serial':
-                    workorder.qty_producing = 1
-                elif not self.env.context.get('no_start_next', False):
-                    workorder.qty_producing = workorder.qty_remaining
-            self.production_id.product_qty = self.qty_producing
+            match self.production_id.picking_type_id.create_backorder:
+                case "ask":
+                    return self.production_id.with_context(workorder_id_to_finish=self.id)._action_generate_backorder_wizard(self.production_id)
+                case "always":
+                    backorder = self.production_id._split_productions()[1:]
+                    for workorder in backorder.workorder_ids:
+                        if workorder.product_tracking == 'serial':
+                            workorder.qty_producing = 1
+                        else:
+                            workorder.qty_producing = workorder.qty_remaining
         else:
             if self.operation_id:
                 backorder = (self.production_id.procurement_group_id.mrp_production_ids - self.production_id).filtered(
@@ -440,26 +443,18 @@ class MrpWorkorder(models.Model):
                     lambda p: index < len(p.workorder_ids) and p.workorder_ids[index].state not in ('cancel', 'done')
                 )[:1]
 
+        return self.post_record_production(backorder)
+
+    def post_record_production(self, backorders=False):
+
         self.button_finish()
 
-        if backorder:
-            for wo in (self.production_id | backorder).workorder_ids:
+        if backorders:
+            for wo in (self.production_id | backorders).workorder_ids:
                 if wo.state in ('done', 'cancel'):
                     continue
                 wo.current_quality_check_id.update(wo._defaults_from_move(wo.move_id))
-            if not self.env.context.get('no_start_next'):
-                next_wo = self.env['mrp.workorder']
-                if self.operation_id:
-                    next_wo = backorder.workorder_ids.filtered(lambda wo: wo.operation_id == self.operation_id and wo.state in ('ready', 'progress'))
-                else:
-                    index = list(self.production_id.workorder_ids).index(self)
-                    if backorder.workorder_ids[index].state in ('ready', 'progress'):
-                        next_wo = backorder.workorder_ids[index]
-                if next_wo:
-                    action = next_wo.open_tablet_view()
-                    if self.employee_id:
-                        action['context']['employee_id'] = self.employee_id.id
-                    return action
+
         return self.action_back()
 
     def _defaults_from_move(self, move):

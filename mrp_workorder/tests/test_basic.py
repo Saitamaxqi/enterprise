@@ -167,6 +167,7 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         and produce some quantities. When cancelled, the MO must be marked as
         done and the WO must be cancelled.
         """
+        self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')]).create_backorder = "always"
         # Create MO
         product_to_build = self.env['product.product'].create({
             'name': 'Young Tom',
@@ -397,6 +398,7 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
 
     def test_backorder_2(self):
         """Test if all the quality checks are retained when a backorder is created from the tablet view"""
+        self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')]).create_backorder = "always"
 
         finished_product = self.env['product.product'].create({
             'name': 'finished_product',
@@ -448,8 +450,8 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         wo = mo.workorder_ids[0]
         wo.button_start()
         wo.action_generate_serial()
-        result = wo.do_finish()
-        wo_backorder = self.env['mrp.workorder'].browse(result['res_id'])
+        wo.do_finish()
+        wo_backorder = self.get_backorder_wo(wo)
         self.assertEqual(len(wo_backorder.check_ids), len(wo.check_ids))
 
 
@@ -612,6 +614,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         bom.bom_line_ids.filtered(lambda p: p.product_id == product_table_sheet).operation_id = bom.operation_ids[0]
         bom.bom_line_ids.filtered(lambda p: p.product_id == product_table_leg).operation_id = bom.operation_ids[1]
         bom.bom_line_ids.filtered(lambda p: p.product_id == product_bolt).operation_id = bom.operation_ids[2]
+
+        self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')]).create_backorder = "always"
 
         production_table_form = Form(self.env['mrp.production'])
         production_table_form.product_id = dining_table
@@ -1008,6 +1012,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
 
     def test_03_test_serial_number_defaults(self):
         """ Test that the correct serial number is suggested on consecutive work orders. """
+        self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')]).create_backorder = "always"
+
         laptop = self.laptop
         graphics_card = self.graphics_card
         unit = self.env.ref("uom.product_uom_unit")
@@ -1058,15 +1064,17 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         workorders = mo_laptop.workorder_ids.sorted()
         self.assertEqual(len(workorders), 3)
 
-        workorders[0].open_tablet_view()
         workorder = workorders[0]
+        workorder.button_start()
         serial_a = self.env['stock.lot'].create({'product_id': laptop.id})
         workorder.finished_lot_id = serial_a
-        workorder = self.env['mrp.workorder'].browse(workorder.record_production()['res_id'])
+        workorder.record_production()
+        workorder = self.get_backorder_wo(workorder)
         self.assertTrue(workorder)
         serial_b = self.env['stock.lot'].create({'product_id': laptop.id})
         workorder.finished_lot_id = serial_b
-        workorder = self.env['mrp.workorder'].browse(workorder.record_production()['res_id'])
+        workorder.record_production()
+        workorder = self.get_backorder_wo(workorder)
         serial_c = self.env['stock.lot'].create({'product_id': laptop.id})
         workorder.finished_lot_id = serial_c
         workorder.record_production()
@@ -1075,9 +1083,11 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         for workorder in workorders - workorders[0]:
             workorder.button_start()
             self.assertEqual(workorder.finished_lot_id, serial_a)
-            workorder = self.env['mrp.workorder'].browse(workorder.record_production()['res_id'])
+            workorder.record_production()
+            workorder = self.get_backorder_wo(workorder)
             self.assertEqual(workorder.finished_lot_id, serial_b)
-            workorder = self.env['mrp.workorder'].browse(workorder.record_production()['res_id'])
+            workorder.record_production()
+            workorder = self.get_backorder_wo(workorder)
             self.assertEqual(workorder.finished_lot_id, serial_c)
             workorder.record_production()
             self.assertEqual(workorder.state, 'done')
@@ -1089,6 +1099,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         serial number. It should be allowed since the first workorder did not
         specify a seiral number.
         """
+        self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')]).create_backorder = "always"
+
         drawer = self.env['product.product'].create({
             'name': 'Drawer',
             'is_storable': True,
@@ -1192,8 +1204,9 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         mo.action_confirm()
         mo.button_plan()
         workorder_0 = mo.workorder_ids[0]
-        workorder_0.open_tablet_view()
-        workorder_0 = self.env['mrp.workorder'].browse(workorder_0.record_production()['res_id'])
+        workorder_0.button_start()
+        workorder_0.record_production()
+        workorder_0 = self.get_backorder_wo(workorder_0)
         workorder_0.record_production()
 
         workorder_1 = mo.workorder_ids[1]
@@ -1203,7 +1216,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         # `workorder.finished_lot_id = workorder.production_id.lot_producing_id`
         with Form(workorder_1.production_id) as wo_production:
             wo_production.lot_producing_id = lot_1
-        workorder_1 = self.env['mrp.workorder'].browse(workorder_1.record_production()['res_id'])
+        workorder_1.record_production()
+        workorder_1 = self.get_backorder_wo(workorder_1)
 
         with Form(workorder_1.production_id) as wo_production:
             wo_production.lot_producing_id = lot_2
@@ -2292,6 +2306,8 @@ class TestRoutingAndKits(TransactionCase):
         """ Produce 10 units of product tracked by lot on two workorder. On the
         first one, produce 4 onto lot1 then 6 onto lot1 as well. The second
         workorder should be prefilled with 10 units and lot1"""
+        self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')]).create_backorder = "always"
+
         self.finished1.tracking = 'lot'
         lot1 = self.env['stock.lot'].create({
             'product_id': self.finished1.id,
