@@ -167,26 +167,28 @@ export const EditablePDFIframeMixin = (pdfClass) =>
              * The minimum height is 1% of the page height
              */
             if (change.width >= 0.01 && change.height >= 0.01) {
-                Object.assign(signItem.el.style, {
-                    height: `${change.height * 100}%`,
-                    width: `${change.width * 100}%`,
-                });
-                Object.assign(signItem.data, {
-                    width: change.width,
-                    height: change.height,
-                    updated: true,
-                });
-                Object.assign(this.getSignItemById(signItem.data.id).data, {
-                    width: change.width,
-                    height: change.height,
-                    updated: true,
-                });
-                this.updateSignItemFontSize(signItem);
-
-                if (signItem.data.type === "signature") {
-                    this.setSignatureImage(signItem, signItem.data.roleName);
-                } else if (signItem.data.type === "initial") {
-                    this.setSignatureImage(signItem, this.getInitialsText(signItem.data.roleName));
+                const signItemIds = signItem.data.type === "radio" ? this.radioSets[signItem.data.radio_set_id].radio_item_ids : [signItem.data.id];
+                for (const id of signItemIds) {
+                    const signItem = this.getSignItemById(id);
+                    if (!signItem) {
+                        continue;
+                    }
+                    Object.assign(signItem.el.style, {
+                        height: `${change.height * 100}%`,
+                        width: `${change.width * 100}%`,
+                    });
+                    Object.assign(this.getSignItemById(signItem.data.id).data, {
+                        width: change.width,
+                        height: change.height,
+                        updated: true,
+                    });
+                    this.updateSignItemFontSize(signItem);
+    
+                    if (signItem.data.type === "signature") {
+                        this.setSignatureImage(signItem, signItem.data.roleName);
+                    } else if (signItem.data.type === "initial") {
+                        this.setSignatureImage(signItem, this.getInitialsText(signItem.data.roleName));
+                    }
                 }
             }
             if (end) {
@@ -1079,7 +1081,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             const signItemData1 = { ...data };
             const signItemData2 = { ...data };
             signItemData2['id'] = id2;
-            signItemData2['posY'] += 0.04;
+            signItemData2['posY'] += 0.02;
             this.signItems[data.page][data.id] = {
                 data: signItemData1,
                 el: this.renderSignItem(signItemData1, this.getPageContainer(data.page)),

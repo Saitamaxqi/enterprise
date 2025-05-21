@@ -115,6 +115,7 @@ export class SignTemplateBody extends Component {
         this.signItems.forEach((item) => {
             item.radio_set_id = item?.radio_set_id[0] || undefined;
             item.roleName = item.responsible_id[1];
+            item.document_id = item.document_id[0];
         });
     }
 
@@ -245,7 +246,7 @@ export class SignTemplateBody extends Component {
                         width: signItem.width,
                         height: signItem.height,
                         radio_set_id: signItem.radio_set_id,
-                        document_id: signItem.documentId,
+                        document_id: signItem.document_id,
                     };
 
                     if (id < 0) {

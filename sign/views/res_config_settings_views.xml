@@ -45,9 +45,6 @@
                         <setting id="sms" string="Authenticate by SMS" documentation="/applications/marketing/sms_marketing/pricing/pricing_and_faq.html" help="Deliver one-time codes by SMS to identify signatories when signing a document">
                             <widget name="iap_buy_more_credits" service_name="sms" hide_service="1"/>
                         </setting>
-                        <setting id="field_types" string="Field Types" help="Configure the field types that can be used to sign documents (placeholder, auto-completion, ...), as well as the values for selection fields in signable documents">
-                            <button name="%(sign.sign_item_type_action)d" icon="oi-arrow-right" type="action" string="Edit field types" class="btn-link"/>
-                        </setting>
                         <setting id="company_sign_info" string="Cryptographic signature" help="Allow users to provide the files used in the cryptographic signature process." groups="base.group_system">
                             <group>
                                 <field name="signing_certificate_id" options="{'no_quick_create': True}"/>
