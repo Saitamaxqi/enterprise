@@ -161,6 +161,7 @@ CURRENCY_PROVIDER_SELECTION = [
     (['PL'], 'nbp', '[PL] National Bank of Poland'),
     (['RO'], 'bnr', '[RO] National Bank of Romania'),
     (['SE'], 'srb', '[SE] Sveriges Riksbank'),
+    (['SI'], 'bsi', '[SI] Bank of Slovenia'),
     (['TH'], 'bot', '[TH] Bank of Thailand'),
     (['TR'], 'tcmb', '[TR] Central Bank of the Republic of Türkiye'),
     (['UK'], 'hmrc', '[UK] HM Revenue & Customs'),
@@ -288,6 +289,46 @@ class ResCompany(models.Model):
                         already_existing_rate.rate = rate_value
                     else:
                         CurrencyRate.create({'currency_id': currency_object.id, 'rate': rate_value, 'name': date_rate, 'company_id': company.id})
+
+    @api.model
+    def _parse_bsi_data(self, available_currencies):
+        """
+        Fetches exchange rates from the Bank of Slovenia API and parses the JSON response.
+        Rates are provided against EUR and include various currencies.
+        """
+
+        bsi_url = 'https://api.bsi.si/'
+        endpoints = ['exchange/daily', 'exchange/exotic']
+        available_currency_names = available_currencies.mapped('name')
+        currency_rates_entries = []
+        rates = {}
+
+        # Using a session since we're doing requests from multiple endpoints.
+        session = requests.Session()
+        for endpoint in endpoints:
+            try:
+                response = session.get(f"{bsi_url}{endpoint}", timeout=30)
+                response.raise_for_status()
+                currency_rates_entries.extend(response.json().get('data', []))
+            except requests.RequestException as e:
+                _logger.error(e)
+
+        for currency_rate_entry in currency_rates_entries:
+            currency_code = currency_rate_entry.get('code')
+            rate = currency_rate_entry.get('value')
+            date = currency_rate_entry.get('date')
+
+            # Validate values
+            if not (currency_code and rate and date):
+                continue
+            date_obj = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+
+            if currency_code in available_currency_names and rate:
+                rates[currency_code] = (float(rate), date_obj)
+
+        # Include EUR with a fixed rate of 1.0
+        rates['EUR'] = (1.0, datetime.datetime.now().date())
+        return rates
 
     def _parse_fta_data(self, available_currencies):
         ''' Parses the data returned in xml by FTA servers and returns it in a more

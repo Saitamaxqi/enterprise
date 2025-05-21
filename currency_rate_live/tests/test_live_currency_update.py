@@ -207,3 +207,21 @@ class CurrencyTestCase(TransactionCase):
         self.assertEqual(len(huf.rate_ids), huf_rates_count + 1)
         self.assertEqual(huf.rate_ids[-1].rate, 1.0)
         self.assertEqual(len(usd.rate_ids), usd_rates_count + 1)
+
+    def test_live_currency_update_bsi(self):
+        """Test currency rate update from Bank of Slovenia (BSI)"""
+        eur = self.env.ref('base.EUR')
+        eur.active = True
+        usd = self.env.ref('base.USD')
+        usd.active = True
+        self.test_company.write({
+            'currency_provider': 'bsi',
+            'currency_id': eur.id
+        })
+        eur_rates_count = len(eur.rate_ids)
+        usd_rates_count = len(self.currency_usd.rate_ids)
+        res = self.test_company.update_currency_rates()
+        self.assertTrue(res)
+        self.assertEqual(len(eur.rate_ids), eur_rates_count + 1)
+        self.assertEqual(eur.rate_ids[-1].rate, 1.0)
+        self.assertEqual(len(usd.rate_ids), usd_rates_count + 1)
