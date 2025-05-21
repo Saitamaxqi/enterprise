@@ -263,6 +263,7 @@ class AccountBankStatementLine(models.Model):
 
         # process then remove matched statement lines
         processed_st_line_ids = set()
+        lines_to_assign_models_ids = set()
         for st_line_id, all_aml_ids, total_residual, ref_aml_ids in self._cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             if total_residual == st_line.amount:
@@ -273,8 +274,15 @@ class AccountBankStatementLine(models.Model):
                 # no valid candidates yet
                 continue
             processed_st_line_ids.add(st_line_id)
+            if not st_line.currency_id.is_zero(st_line.amount_residual):
+                lines_to_assign_models_ids.add(st_line_id)
         remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
         remaining_st_lines = self.filtered(lambda x: x.id not in processed_st_line_ids)
+
+        if lines_to_assign_models_ids:
+            lines_to_assign_models = self.browse(lines_to_assign_models_ids).with_prefetch(self._prefetch_ids)
+            reco_models._apply_reconcile_models(lines_to_assign_models)
+
         # early return if we already processed everything
         if not remaining_st_lines:
             self.write({'cron_last_check': fields.Datetime.now()})
@@ -374,7 +382,8 @@ class AccountBankStatementLine(models.Model):
         for st_line_id, aml_id in self._cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             st_line.set_line_bank_statement_line(aml_id)
-            processed_st_line_ids.add(st_line_id)
+            if st_line.currency_id.is_zero(st_line.amount_residual):
+                processed_st_line_ids.add(st_line_id)
         remaining_st_line_ids = list(set(remaining_st_line_ids) - processed_st_line_ids)
 
         if remaining_st_line_ids:

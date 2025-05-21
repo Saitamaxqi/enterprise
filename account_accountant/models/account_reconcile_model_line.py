@@ -29,9 +29,10 @@ class AccountReconcileModelLine(models.Model):
             'name': self.label,
             'partner_id': partner.id,
             'analytic_distribution': self.analytic_distribution,
-            'tax_ids': [Command.set(taxes.ids)],
             'reconcile_model_id': self.model_id.id,
         }
+        if taxes:
+            values['tax_ids'] = [Command.set(taxes.ids)]
         if self.account_id:
             values['account_id'] = self.account_id.id
         return values

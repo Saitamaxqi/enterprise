@@ -218,14 +218,15 @@ class AccountReconcileModel(models.Model):
 
     def _trigger_reconciliation_model(self, statement_line):
         self.ensure_one()
-        liquidity_line, _suspense_line, _other_lines = statement_line._seek_for_lines()
+        liquidity_line, suspense_line, other_lines = statement_line._seek_for_lines()
 
         amls_to_create = [
             {**line, 'balance': line['amount_currency']}
-            for line in self._apply_lines_for_bank_widget(-sum(liquidity_line.mapped('balance')), statement_line.partner_id, statement_line)
+            for line in
+            self._apply_lines_for_bank_widget(sum(suspense_line.mapped('balance')), statement_line.partner_id, statement_line)
         ]
 
-        statement_line._set_move_line_to_statement_line_move(liquidity_line, amls_to_create)
+        statement_line._set_move_line_to_statement_line_move(liquidity_line + other_lines, amls_to_create)
         if any(aml.get('tax_ids') for aml in amls_to_create):
             statement_line._recompute_tax_lines()
         statement_line.move_id._message_log(body=_("Reconciliation model %s applied", self.name))
