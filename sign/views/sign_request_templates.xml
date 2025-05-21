@@ -19,6 +19,7 @@
         <input id="o_sign_input_sign_request_id" type="hidden" t-att-value="sign_request.id"/>
         <input id="o_sign_input_sign_request_token" type="hidden" t-att-value="sign_request.access_token"/>
         <input id="o_sign_input_sign_request_state" type="hidden" t-att-value="sign_request.state"/>
+        <input id="o_sign_input_sign_request_item_id" type="hidden" t-att-value="current_request_item.id"/>
         <input id="o_sign_input_access_token" type="hidden" t-att-value="token"/>
         <input id="o_sign_input_today_formatted_date" type="hidden" t-att-value="today_formatted_date"/>
         <input id="o_sign_input_date_format" type="hidden" t-att-value="date_format"/>

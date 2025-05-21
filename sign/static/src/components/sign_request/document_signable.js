@@ -58,6 +58,7 @@ export class Document extends Component {
                     documentId: this.requestID,
                     signRequestToken: this.requestToken,
                     signRequestState: this.requestState,
+                    signRequestItemId: this.signRequestItemId,
                     signRequestItemToken: this.accessToken,
                     todayFormattedDate: this.todayFormattedDate,
                     dateFormat: this.dateFormat,
@@ -222,6 +223,7 @@ export class Document extends Component {
         this.requestID = parseInt(parentEl.querySelector("#o_sign_input_sign_request_id")?.value);
         this.requestToken = parentEl.querySelector("#o_sign_input_sign_request_token")?.value;
         this.requestState = parentEl.querySelector("#o_sign_input_sign_request_state")?.value;
+        this.signRequestItemId = parseInt(parentEl.querySelector("#o_sign_input_sign_request_item_id")?.value);
         this.accessToken = parentEl.querySelector("#o_sign_input_access_token")?.value;
         this.todayFormattedDate = parentEl.querySelector("#o_sign_input_today_formatted_date")?.value;
         this.dateFormat= parentEl.querySelector("#o_sign_input_date_format")?.value;

@@ -126,7 +126,7 @@ export class ThankYouDialog extends Component {
                     window.open(
                         "https://www.odoo.com/trial?selected_app=sign&utm_source=db&utm_medium=sign",
                         "_blank"
-                    ); 
+                    );
                 },
             };
         }
@@ -136,10 +136,10 @@ export class ThankYouDialog extends Component {
         if (this.suggestSignUp) {
             window.open(`https://odoo.com/app/sign`, "_self");
             return;
-        } 
+        }
         if (session.is_frontend) {
-            const signatureRequestId = this.signInfo.get("documentId");
-            window.location.assign(`/my/signature/${signatureRequestId}`);
+            const signRequestItemId = this.signInfo.get("signRequestItemId");
+            window.location.assign(`/my/signature/${signRequestItemId}`);
         } else {
             this.props.close();
             this.env.services.action.doAction(this.closeAction, this.closeContext);
