@@ -2360,7 +2360,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour("/odoo/barcode", "test_scrap", login="admin", timeout=180)
 
     def test_scrap_change_source_location(self):
-        self.env.user.group_ids += self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.group_ids = [
+            Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            Command.link(self.env.ref('stock.group_production_lot').id),
+        ]
         self.product1.tracking = 'lot'
         lot1 = self.env['stock.lot'].create({
             'name': 'Lot1',
