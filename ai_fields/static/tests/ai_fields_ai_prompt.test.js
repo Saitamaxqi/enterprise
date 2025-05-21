@@ -55,7 +55,7 @@ test("AI Prompt - Readonly", async () => {
     await mountWithCleanup(AiPrompt, {
         props: {
             readonly: true,
-            prompt: "<p>Hello <t t-out='object.name'>World</t></p>",
+            prompt: '<p>Hello <span data-ai-field="name">World</span></p>',
             onChange: () => {},
         },
     });
@@ -68,7 +68,7 @@ test("AI Prompt - Editable", async () => {
         props: {
             model: "dummy",
             onChange: (change) => expect.step("change " + change),
-            prompt: "<p>Hello <t t-out='object.name'>World</t></p>",
+            prompt: '<p>Hello <span data-ai-field="name">World</span></p>',
         },
     });
     expect("div.o_ai_prompt").toHaveCount(1);
@@ -77,7 +77,7 @@ test("AI Prompt - Editable", async () => {
     await insertText(htmlEditor, " bloups");
     expect("div.o_ai_prompt").toHaveText("Hello World bloups");
     await click(document.body);
-    expect.verifySteps(['change <p>Hello <t t-out="object.name">World</t> bloups</p>']);
+    expect.verifySteps(['change <p>Hello <span data-ai-field="name">World</span> bloups</p>']);
 });
 
 test("AI Prompt - Field selector without template editor group", async () => {
@@ -110,7 +110,7 @@ test("AI Prompt - Field selector without template editor group", async () => {
     expect(".o_model_field_selector_popover").toHaveCount(1);
     await click(document.body);
     expect.verifySteps([
-        'change <p>Hello <span data-oe-protected="true" class="o_ai_field"><span class="d-none">{"display_name":</span><t t-out="object.display_name">Display name</t><span class="d-none">}</span></span> </p>',
+        'change <p>Hello <span data-oe-protected="true" data-ai-field="display_name">Display name</span> </p>',
     ]);
 });
 
@@ -139,14 +139,14 @@ test("AI Prompt - Field selector with template editor group", async () => {
     await expect(".o_model_field_selector_popover .badge").toHaveCount(2);
     await click(".btn-primary");
     await animationFrame();
-    expect("div.o_ai_prompt").toHaveText(/Hello\s+Created on\s+Display name/);
+    expect("div.o_ai_prompt").toHaveText(/Hello\s+Created on,\s+Display name/);
     // clicking on the record should reopen the field selector
-    await click("div.o_ai_prompt .o_ai_field");
+    await click("div.o_ai_prompt span[data-ai-field]");
     await animationFrame();
     expect(".o_model_field_selector_popover").toHaveCount(1);
     await click(document.body);
     expect.verifySteps([
-        `change <p>Hello </p><div t-out="object._ai_read('create_date','display_name')" class="o_ai_field"><span data-ai-field="create_date">Created on</span><br><span data-ai-field="display_name">Display name</span><br></div><p><br></p>`
+        `change <p>Hello <span data-oe-protected="true" data-ai-field="create_date">Created on</span>, <span data-oe-protected="true" data-ai-field="display_name">Display name</span>&nbsp;</p>`
     ]);
 });
 
@@ -172,7 +172,7 @@ test("AI prompt - Insert messages", async () => {
     expect("div.o_ai_prompt").toHaveText("Messages Messages");
     await click(document.body);
     expect.verifySteps([
-        'change <p>Messages <t data-ai-field="message_ids" t-out="object.message_ids._ai_format_mail_messages()" class="o_ai_field">Messages</t> </p>',
+        'change <p>Messages <span data-oe-protected="true" data-ai-field="message_ids">Messages</span>&nbsp;</p>',
     ]);
 });
 
@@ -181,7 +181,7 @@ test("AI Prompt - Without comodel", async () => {
         props: {
             model: "dummy",
             onChange: (change) => expect.step("change " + change),
-            prompt: "<p>Hello <t t-out='object.name'>World</t></p>",
+            prompt: '<p>Hello <span data-ai-field="name">World</span></p>',
         },
     });
     setSelection({ anchorNode: queryOne(".o_ai_prompt .odoo-editor-editable p"), anchorOffset: 1 });
@@ -209,9 +209,7 @@ test("AI Prompt - With comodel", async () => {
     await click(".o-we-command");
     await animationFrame();
     // focus moved out of editable, onchange triggered
-    expect.verifySteps([
-        'change <p>Hello </p><div class="o_ai_record o_ai_default_record" data-oe-protected="true" contenteditable="false"><div class="d-none"></div><span>0 records</span></div>',
-    ]);
+    expect.verifySteps(["change <p>Hello </p>"]);
     await animationFrame();
     await click(".o_records_selector_popover input");
     await animationFrame();
@@ -226,13 +224,25 @@ test("AI Prompt - With comodel", async () => {
     await animationFrame();
     await click(".o_records_selector_popover .btn-primary");
     await animationFrame();
-    expect("div.o_ai_prompt").toHaveText("Hello Bob Patrick");
+    expect("div.o_ai_prompt").toHaveText("Hello Bob, Patrick");
     // clicking on the record should reopen the field selector
-    await click("div.o_ai_prompt .o_ai_record");
+    await click("div.o_ai_prompt span[data-ai-record-id]");
     await animationFrame();
     expect(".o_records_selector_popover").toHaveCount(1);
     await click(document.body);
     expect.verifySteps([
-        'change <p>Hello <span class="o_ai_record" data-oe-protected="true"><span class="d-none">{1:</span><span>Bob</span><span class="d-none">}</span></span> <span class="o_ai_record" data-oe-protected="true"><span class="d-none">{2:</span><span>Patrick</span><span class="d-none">}</span></span> </p>',
+        'change <p>Hello <span data-oe-protected="true" data-ai-record-id="1">Bob</span>, <span data-oe-protected="true" data-ai-record-id="2">Patrick</span>&nbsp;</p>',
     ]);
+});
+
+test("AI Prompt - Invalid records", async () => {
+    await mountWithCleanup(AiPrompt, {
+        props: {
+            comodel: "dummy",
+            model: "dummy",
+            onChange: (change) => expect.step("change " + change),
+            prompt: '<p>Hello <span data-oe-protected data-ai-record-id="5">Larry</span></p>',
+        },
+    });
+    expect(".o_ai_prompt").toHaveText("Hello Invalid Record");
 });

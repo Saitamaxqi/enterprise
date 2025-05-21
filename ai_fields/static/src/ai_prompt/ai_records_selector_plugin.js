@@ -1,13 +1,16 @@
 import { RecordsSelectorPopover } from "@ai_fields/views/records_selector_popover/records_selector_popover";
 import { Plugin } from "@html_editor/plugin";
 import { Domain } from "@web/core/domain";
+import { ERROR_INACCESSIBLE_OR_MISSING } from "@web/core/name_service";
 import { _t } from "@web/core/l10n/translation";
 import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
+
+export const AI_RECORD_SELECTOR = "span[data-ai-record-id]";
 
 export class AIRecordsSelectorPlugin extends Plugin {
     static id = "AIRecordsSelector";
     static dependencies = ["overlay", "selection", "history", "dom"];
-    static shared = ["open"];
+    static shared = ["open", "updateDisplayNames"];
     resources = {
         user_commands: [
             {
@@ -20,7 +23,9 @@ export class AIRecordsSelectorPlugin extends Plugin {
                     !!this.config.recordsSelectorResModel && isHtmlContentSupported(selection),
             },
         ],
+        normalize_handlers: this.normalize.bind(this),
         powerbox_items: { categoryId: "ai_prompt_tools", commandId: "openAIRecordsSelector" },
+        start_edition_handlers: this.updateDisplayNames.bind(this),
     };
 
     setup() {
@@ -28,18 +33,43 @@ export class AIRecordsSelectorPlugin extends Plugin {
         this.overlay = this.dependencies.overlay.createOverlay(RecordsSelectorPopover, {
             hasAutofocus: true,
             className: "popover",
-            closeOnPointerdown: false,
         });
     }
 
-    open(noTrailingSpace) {
-        this.noTrailingSpace = noTrailingSpace;
+    normalize(element) {
+        // make sure records are always protected (could be added without this plugin)
+        if (element.matches(AI_RECORD_SELECTOR)) {
+            element.dataset.oeProtected = true;
+        }
+    }
+
+    async updateDisplayNames() {
+        // display names might have been updated, making the prompt incoherent (because references
+        // to these records in the prompt were not updated). They are therefore updated so that the
+        // user can observe that the prompt needs to be reworked.
+        const recordEls = this.editable.querySelectorAll(AI_RECORD_SELECTOR);
+        const recordIds = [...recordEls].map((el) => Number(el.dataset.aiRecordId));
+        const displayNames = await this.services.name.loadDisplayNames(
+            this.config.recordsSelectorResModel,
+            recordIds,
+        );
+        for (const recordEl of recordEls) {
+            if (displayNames[recordEl.dataset.aiRecordId] === ERROR_INACCESSIBLE_OR_MISSING) {
+                recordEl.innerText = _t("Invalid Record");
+            } else if (recordEl.innerText !== displayNames[recordEl.dataset.aiRecordId]) {
+                recordEl.innerText = displayNames[recordEl.dataset.aiRecordId];
+            }
+        }
+    }
+
+    open(resIds = []) {
         this.overlay.open({
             props: {
                 close: this.close.bind(this),
                 domain: new Domain(this.config.recordsSelectorDomain || "[]").toList(),
                 resModel: this.config.recordsSelectorResModel,
-                validate: (resIds) => this.validate(resIds, noTrailingSpace),
+                validate: (resIds) => this.insert(resIds),
+                resIds: resIds,
             },
         });
     }
@@ -49,41 +79,21 @@ export class AIRecordsSelectorPlugin extends Plugin {
         this.dependencies.selection.focusEditable();
     }
 
-    async validate(resIds, noTrailingSpace) {
+    async insert(resIds) {
         if (!resIds?.length) {
             return;
         }
         const displayNames = await this.services.name.loadDisplayNames(
             this.config.recordsSelectorResModel,
-            resIds
+            resIds,
         );
 
         for (const resId of resIds) {
-            const container = document.createElement("span");
-            container.classList.add("o_ai_record");
-            container.setAttribute("data-oe-protected", "true");
-            container.setAttribute("contenteditable", "false");
-
-            const elId = document.createElement("span");
-            elId.classList.add("d-none");
-            elId.innerText = `{${resId}:`;
-            container.appendChild(elId);
-
-            const elName = document.createElement("span");
-            container.setAttribute("data-oe-protected", "true");
-            container.setAttribute("contenteditable", "false");
-            elName.innerText = displayNames[resId];
-            container.appendChild(elName);
-
-            const elClose = document.createElement("span");
-            elClose.classList.add("d-none");
-            elClose.innerText = `}`;
-            container.appendChild(elClose);
-
-            this.dependencies.dom.insert(container);
-            if (resId != resIds.at(-1) || !noTrailingSpace) {
-                this.dependencies.dom.insert(" ");
-            }
+            const span = document.createElement("span");
+            span.dataset.aiRecordId = resId;
+            span.innerText = displayNames[resId];
+            this.dependencies.dom.insert(span);
+            this.dependencies.dom.insert(resId === resIds.at(-1) ? " " : ", ");
         }
         this.dependencies.history.addStep();
     }

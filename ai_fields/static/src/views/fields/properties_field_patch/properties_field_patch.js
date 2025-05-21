@@ -60,11 +60,6 @@ patch(PropertyDefinition.prototype, {
         this.state.propertyDefinition = propertyDefinition;
     },
 
-    async onModelChange(newModel) {
-        this.state.propertyDefinition.system_prompt = undefined;
-        return super.onModelChange(newModel);
-    },
-
     onSystemPromptChange(newPrompt) {
         const propertyDefinition = {
             ...this.state.propertyDefinition,

@@ -12,7 +12,7 @@ class TestAiServerActions(TransactionCase):
 
     def test_ai_server_action(self):
         def _mocked_llm_api_request(cls, method, endpoint, headers, body):
-            self.assertEqual(body.get('input'), "Write 1337")
+            self.assertEqual(body['input'][0]['content'][0]['text'], "Write 1337")
             return {'output': [{'content': [{'text': '{"value": "1337"}'}]}]}
 
         partner = self.env["res.partner"].create({"name": "Partner"})

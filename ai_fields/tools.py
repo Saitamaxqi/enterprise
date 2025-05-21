@@ -2,7 +2,6 @@
 
 import json
 import pytz
-import re
 import requests
 from datetime import datetime
 from dateutil.parser import isoparse
@@ -10,8 +9,9 @@ try:
     from markdown2 import markdown
 except ImportError:
     markdown = None
+from lxml import html
 
-from odoo import fields, _
+from odoo import fields
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.exceptions import UserError
 from odoo.tools import html_sanitize
@@ -25,8 +25,16 @@ Your task is to resolve a single value for a specific ERP field based on the use
 
 ## Input Format
 You will receive free-text prompts referring to ERP-related entities, values, or attributes, which may contain:
-- Field references: {field_name: value}
-- Record references: {id: name}
+- Field references: {{field_path}} - their values are added in a context dict, provided below
+- A context dict: it is an ORM snapshot that has the following structure:
+    {
+        <model_name>: [
+                'id': <record_id>
+                <field_name>: value | {'model': <model_name>, 'ids': [<res_id>]}
+            ]
+        }
+    }
+Where {'model': <model_name>, 'ids': [<res_id>]} are relational values and <file_#idx> refers to the additional inputs in the input array.
 
 ## Output Format
 You must return a structured output:
@@ -52,17 +60,22 @@ class UnresolvedQuery(UserError):
     pass
 
 
-def get_ai_value(env, field_type, user_prompt, allowed_values):
+def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values):
     """Query a LLM with the given prompt and return the cast value.
 
+    :param record: the record for which the value should be obtained
     :param field_type: the field type for which the response should be cast
-    :param user_prompt: the "user" prompt to pass to the LLM
-    :param allowed_values: as set containing the values that are allowed
+    :param user_prompt: the "user prompt" to pass to the LLM (the request)
+    :param context_fields: list of field paths that needs to be included in the context dict
+    :param allowed_values: a dict containing the values that are allowed
 
     :return: the value with the type expected for the given field type, or False if the value
         could not be cast or is not in allowed_values
     """
-    llm_api = LLMApiService(env, 'openai')
+    if field_type in ('many2many', 'many2one', 'selection', 'tags') and not allowed_values:
+        raise UnresolvedQuery(record.env._("No allowed values are provided in the prompt."))
+    context_dict, files = record._get_ai_context(context_fields)
+    llm_api = LLMApiService(record.env, 'openai')
     if field_type == 'boolean':
         schema = {
             'type': 'boolean',
@@ -136,19 +149,23 @@ def get_ai_value(env, field_type, user_prompt, allowed_values):
     else:
         schema = {'type': 'text'}
 
-    instructions = f"{AI_FIELDS_INSTRUCTIONS}\n# Context\n"
+    instructions = f"{AI_FIELDS_INSTRUCTIONS}\n# Context"
     if allowed_values:
-        instructions += f"Allowed Values: {json.dumps(allowed_values)}\n"
-    instructions += f"The current date is {datetime.now(pytz.utc).astimezone().isoformat()}"
+        instructions += f"\n## Allowed Values\n{json.dumps(allowed_values)}"
+    instructions += f"\n The current date is {datetime.now(pytz.utc).astimezone().replace(second=0, microsecond=0).isoformat()}"
+
+    if context_dict:
+        user_prompt += f"\n# Context Dict\n{json.dumps(context_dict, ensure_ascii=False, indent=2)}"
+        user_prompt += f"\nThe current record is {{'model': {record._name}, 'id': {record._origin.id}}}"
 
     web_search_params = {
         'user_location':
         {
             'type': 'approximate',
             'country': country_code,
-            'city': env.company.partner_id.city,
+            'city': record.env.company.partner_id.city,
         }
-    } if (country_code := env.company.country_id.code) else {}
+    } if (country_code := record.env.company.country_id.code) else {}
 
     try:
         llm_response = llm_api._request(
@@ -158,7 +175,20 @@ def get_ai_value(env, field_type, user_prompt, allowed_values):
             body={
                 'model': OPENAI_MODEL,
                 'instructions': instructions,
-                'input': user_prompt,
+                'input': [{
+                    'role': 'user',
+                    'content': [
+                        {'type': 'input_text', 'text': user_prompt},
+                        *(
+                            {'type': 'input_text', 'text': file['value']}
+                            if file['type'] == 'text' else
+                            {'type': 'input_image', 'image_url': file['value']}
+                            if file['type'] == 'image' else
+                            {'type': 'input_file', 'filename': f"file_{idx}.pdf", 'file_data': file['value']}
+                            for idx, file in enumerate(files, start=1)
+                        )
+                    ]
+                }],
                 'store': False,
                 'temperature': 0.2,
                 'text': {
@@ -192,9 +222,9 @@ def get_ai_value(env, field_type, user_prompt, allowed_values):
             }
         )
     except requests.exceptions.Timeout:
-        raise UserError(_("Oops, the request timed out."))
+        raise UserError(record.env._("Oops, the request timed out."))
     except requests.exceptions.ConnectionError:
-        raise UserError(_("Oops, the connection failed."))
+        raise UserError(record.env._("Oops, the connection failed."))
 
     if (error := llm_response.get('error')):
         raise UserError(error.get('message'))
@@ -204,12 +234,12 @@ def get_ai_value(env, field_type, user_prompt, allowed_values):
         or not (content := output[-1].get('content'))
         or not (response := content[0].get('text'))
         ):
-        raise UserError(_("Oops, an unexpected error occurred."))
+        raise UserError(record.env._("Oops, an unexpected error occurred."))
 
     try:
         response = json.loads(response, strict=False)
     except json.JSONDecodeError:
-        raise UserError(_("Oops, the response could not be processed."))
+        raise UserError(record.env._("Oops, the response could not be processed."))
     if response.get('could_not_resolve'):
         raise UnresolvedQuery(response.get('unresolved_cause'))
 
@@ -220,21 +250,20 @@ def get_ai_value(env, field_type, user_prompt, allowed_values):
     )
 
 
-def get_field_allowed_vals(env, field, field_prompt=None):
+def get_field_prompt_vals(env, field, field_prompt=None):
     """Get the allowed values for the given field.
 
     :param field: the field from which to obtain the allowed values
 
     :return: The allowed values if the field requires specific values
     """
+    user_prompt, fields, allowed_values = parse_ai_prompt_values(env, field_prompt or field.ai, field.comodel_name)
     if field.type == 'selection':
-        return field._selection
-    elif field.type in ('many2one', 'many2many'):
-        return parse_ai_prompt_records(env, field_prompt or field.ai, field.comodel_name)
-    return None
+        allowed_values = field._selection
+    return user_prompt, fields, allowed_values  # do we need html_to_inner_content?
 
 
-def get_property_allowed_vals(env, property_definition):
+def get_property_prompt_vals(env, property_definition):
     """Get the allowed values for the given property field.
 
     :param property_definition: the property definition from which to obtain the allowed values
@@ -242,19 +271,46 @@ def get_property_allowed_vals(env, property_definition):
     :return: the allowed values if the property requires specific values
     """
     property_type = property_definition.get('type')
+    user_prompt = property_definition.get('system_prompt')
+    user_prompt, fields, allowed_values = parse_ai_prompt_values(env, user_prompt, property_definition.get('comodel'))
     if property_type == 'selection':
-        return dict(property_definition.get('selection', {}))
-    elif property_type in ('many2one', 'many2many'):
-        return parse_ai_prompt_records(env, property_definition.get('system_prompt'), property_definition.get('comodel'))
+        allowed_values = dict(property_definition.get('selection', {}))
     elif property_type == 'tags':
-        return {name: label for name, label, color in (property_definition.get('tags') or [])}
-    return None
+        allowed_values = {name: label for name, label, color in (property_definition.get('tags') or [])}
+    return user_prompt, fields, allowed_values  # do we need html_to_inner_content?
 
 
-def parse_ai_prompt_records(env, prompt, relation):
-    if not prompt or not relation:
-        return []
-    return list(env[relation].browse({int(m.group(1)) for m in re.finditer(r'{\s*([0-9]+)\s*:.*?}', prompt)}).exists().ids)
+def parse_ai_prompt_values(env, prompt, comodel, replace_prompt=True):
+    fields = set()
+    records = None
+    tree = html.fromstring(prompt)
+
+    for el in tree.xpath('//span[@data-ai-field]'):
+        field_path = el.attrib.get('data-ai-field')
+        if replace_prompt:
+            if field_path:
+                el.text = f"{{{{{field_path}}}}}"
+            else:
+                el.drop_tree()
+        fields.add(field_path)
+
+    if comodel:
+        els = tree.xpath('//span[@data-ai-record-id]')
+        ids = {int(i) for el in els if (i := el.attrib.get('data-ai-record-id'))}
+        if replace_prompt:
+            ids = {r.id: r for r in env[comodel].browse(ids).exists()}
+            records = {}
+            for el in els:
+                if record := ids.get(int(el.attrib.get('data-ai-record-id'))):
+                    el.text = record.display_name
+                    records[record.id] = record.display_name
+                else:
+                    el.drop_tree()
+        else:
+            records = ids
+    if replace_prompt:
+        return html_to_inner_content(html.tostring(tree, encoding='unicode')), fields, records
+    return prompt, fields, records
 
 
 def parse_ai_response(response, field_type, allowed_values):
@@ -298,11 +354,3 @@ def parse_ai_response(response, field_type, allowed_values):
         return html_sanitize(response or "")
     else:
         return response
-
-
-def render_prompt(record, prompt):
-    record.ensure_one()
-    # usage of html_to_inner_content to remove noise (such as history steps for html fields)
-    return html_to_inner_content(
-        record.env['mail.render.mixin']._render_template_qweb(prompt, record._name, record._ids)[record.id]
-    )

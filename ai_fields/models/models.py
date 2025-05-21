@@ -1,16 +1,20 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
+import base64
 import collections
-import json
 import logging
 
 from odoo import _, api, Command, models
-from odoo.addons.ai_fields.tools import get_ai_value, get_field_allowed_vals, get_property_allowed_vals, render_prompt
+from odoo.addons.ai_fields.tools import get_ai_value, get_field_prompt_vals, get_property_prompt_vals, parse_ai_prompt_values
 from odoo.exceptions import AccessError
 from odoo.fields import Domain
-from odoo.tools import html_sanitize
-from odoo.tools.json import json_default
+from odoo.tools import html_sanitize, OrderedSet
+from odoo.tools.mail import html_to_inner_content
+from odoo.tools.misc import formatLang
+from odoo.tools.mimetypes import guess_mimetype
+
+AI_SUPPORTED_IMG_TYPES = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
 
 _logger = logging.getLogger(__name__)
 
@@ -88,8 +92,8 @@ class Base(models.AbstractModel):
                 # Equivalent of `sanitize='email_outgoing'` on mail template body
                 property_definition['system_prompt'] = html_sanitize(
                     property_definition['system_prompt'],
-                    sanitize_tags=False,  # keep <t/>
-                    sanitize_attributes=False,  # keep t-out
+                    sanitize_tags=True,
+                    sanitize_attributes=True,
                     sanitize_style=True,
                     strip_style=True,
                     output_method='xml',
@@ -116,30 +120,169 @@ class Base(models.AbstractModel):
         for property_definition in properties_definition:
             if prompt := property_definition.get('system_prompt'):
                 model_names = [properties_field.model_name for properties_field in field.properties_fields]
-                model_names = model_names or [None]
-
+                __, expressions, record_ids = parse_ai_prompt_values(self.env, prompt, property_definition.get('comodel'), False)
                 for model_name in model_names:
-                    if self.env['mail.render.mixin']._has_unsafe_expression_template_qweb(prompt, model_name):
-                        raise AccessError(_("You can not use that prompt expression."))
+                    allowed_expressions = self.env[model_name].mail_allowed_qweb_expressions()
+                    for expression in expressions:
+                        if f"object.{expression}" not in allowed_expressions:
+                            raise AccessError(_("You can not use the field %(field)s in a prompt."))
+                if (comodel := property_definition.get('comodel')) and record_ids:
+                    self.env[comodel].browse(record_ids).check_access("read")
 
     ################
     #  Extensions  #
     ################
 
-    def _ai_read(self, *paths_to_read):
-        specification = {}
-        for path in paths_to_read:
-            current_spec = specification
-            for field in path.split('.'):
-                if field not in current_spec:
-                    current_spec[field] = {"fields": {}}
-                current_spec = current_spec[field]["fields"]
+    def _ai_format(self, files_dict):
+        # meant to be overridden by models for which one wants to send more than just the
+        # display name or filter records to send (see mail.message for an example)
+        # todo: add a limit?
+        return self._ai_read(['display_name'], files_dict)
 
-        return json.dumps(
-            self.web_read(specification),
-            ensure_ascii=False,
-            default=json_default,
-        )
+    def _ai_read(self, fnames, files_dict):
+        if not fnames:
+            return self._ai_format(files_dict)
+        vals_list = self.read(fnames, load=None)
+        for fname in fnames:
+            field = self._fields.get(fname)
+            if field.type in ('binary', 'image'):
+                if field.attachment and (len(self) > 1 or self._origin.id):  # attachment is not created yet in quick creation
+                    attachments = self.env['ir.attachment'].search([
+                        ('res_model', '=', self._name),
+                        ('res_field', '=', fname),
+                        ('res_id', 'in', self.ids)  # ._origin?
+                    ])
+                    attachments._ai_format(files_dict)  # populate the files_dict
+                    attachments_by_resid = {att.res_id: att for att in attachments}
+                    for vals in vals_list:
+                        if not vals[fname] or (res_id := vals['id'] or vals['id'].origin) not in attachments_by_resid:
+                            continue
+                        vals[fname] = files_dict[attachments_by_resid[res_id].checksum]['file_ref']
+                else:
+                    for vals in vals_list:
+                        checksum = self.env['ir.attachment']._compute_checksum(vals[fname])
+                        if checksum not in files_dict:
+                            raw = base64.b64decode(vals[fname])
+                            mimetype = guess_mimetype(raw)
+                            extension = mimetype.split("/")[-1]
+                            file_ref = f'<file_#{len(files_dict) + 1}>'
+                            if is_uri := extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
+                                value = f'data:{mimetype};base64,{vals[fname].decode()}'
+                            else:
+                                try:
+                                    value = self._index(vals[fname], mimetype, checksum=checksum)
+                                except TypeError:
+                                    value = self._index(vals[fname], mimetype)
+                            files_dict[checksum] = {
+                                'type': 'pdf' if extension == 'pdf' else 'image' if is_uri else 'text',
+                                'value': value,
+                                'file_ref': file_ref,
+                            }
+                        vals[fname] = files_dict[checksum]['file_ref']
+            elif field.type in ('date', 'datetime'):
+                for vals in vals_list:
+                    vals[fname] = field.to_string(vals[fname])
+            elif field.type == 'html':
+                for vals in vals_list:
+                    vals[fname] = html_to_inner_content(vals[fname])
+            elif field.type in ('many2many', 'many2one', 'one2many'):
+                for vals in vals_list:
+                    vals[fname] = {'model': field.comodel_name, 'ids': vals[fname]}
+            elif field.type in ('many2one_reference', 'reference'):
+                vals_by_ids = {vals['id']: vals for vals in vals_list}
+                for record in self:
+                    record_vals = vals_by_ids[record.id]
+                    if not record[fname]:
+                        record_vals[fname] = False  # keep falsy values consistent for the LLM
+                    if field.type == 'many2one_reference':
+                        record_vals[fname] = {'model': model, 'ids': record_vals[fname]} if (model := record[field.model_field]) else False
+                    else:
+                        record_vals[fname] = {'model': record._name, 'ids': record.id}
+            elif field.type == 'monetary':
+                currency_field = field.get_currency_field(self)
+                if currency_field:
+                    currency = self[currency_field]
+                    for vals in vals_list:
+                        vals[fname] = formatLang(self.env, vals[fname], currency_obj=currency)
+
+        for vals in vals_list:
+            if not vals['id']:
+                vals['id'] = self._origin.id
+        return vals_list
+
+    def _get_ai_context(self, field_paths):
+        """ Get the context dict for a record given a list of field paths.
+        The context dict is a mini-orm snapshot with values formatted for LLM usage.
+        It is a dictionary of the form:
+
+        .. code-block:: python
+
+            {
+                "model_A": [
+                    {
+                        "id": 1,
+                        "field_A": "val_1",
+                        "field_B": {"model": "model_B", "ids": [3]},
+                    },
+                    {
+                        "id": 2,
+                        "field_A": "val_2",
+                        "field_B": {"model": "model_B", "ids": [4]},
+                    }
+                ],
+                "model_B": [
+                    {
+                        "id": 3,
+                        "field_C": "val_3"
+                    },
+                    {
+                        "id": 4,
+                        "field_C": "val_4"
+                    }
+                ]
+            }
+        """
+        self.ensure_one()
+        models = {}
+
+        def _map_to_models(records, path):
+            model = records._name
+            ids = OrderedSet(records.ids)
+            if model not in models:
+                models[model] = {'fields': OrderedSet(), 'ids': ids}
+            else:
+                models[model]['ids'] |= ids
+            if not path:
+                return
+            fname = path[0]
+            field = records._fields.get(fname)
+            if not field:
+                return
+            if field.type in ('many2many', 'many2one', 'one2many'):
+                _map_to_models(records[fname], path[1:])
+            elif field.type == 'reference':
+                for record in records:
+                    if record[fname]:
+                        _map_to_models(record[fname], path[1:])
+            elif field.type == 'many2one_reference':
+                for record in records:
+                    if (ref_model := record[field.model_field]) and (ref_id := record[fname]):
+                        _map_to_models(self.env[ref_model].browse(ref_id), path[1:])
+            models[model]['fields'].add(fname)
+
+        # get a mapping {model: {fields, ids}} to know which fields to read on which records
+        for path in field_paths:
+            _map_to_models(self, path.split("."))
+
+        snapshot = {}
+        files_dict = {}  # files are sent separately to LLMs
+        for model, info in models.items():
+            records = self.env[model].browse(info['ids'])
+            if model == self._name and not self.id:
+                records = records.filtered(lambda r: r.id != self._origin.id) | self  # unsaved changes
+            snapshot[model] = records._ai_read(info['fields'], files_dict)
+
+        return snapshot, list(files_dict.values())
 
     def _fill_ai_field(self, field, field_prompt=None):
         """Assign a value to the specified field in the given records based on the response of a
@@ -151,20 +294,15 @@ class Base(models.AbstractModel):
 
         :return None
         """
-
-        cache = {}
         if field_prompt is None and not (hasattr(field, 'ai') and field.ai):
             raise ValueError(f"The field {field.name} has no AI prompt")
-        allowed_values = get_field_allowed_vals(self.env, field, field_prompt)
+        user_prompt, context_fields, allowed_values = get_field_prompt_vals(self.env, field, field_prompt)
         for record in self:
-            user_prompt = render_prompt(record, field_prompt or field.ai) + (record._get_currency_prompt(field) if field.type == 'monetary' else '')
-            if user_prompt not in cache:
-                try:
-                    cache[user_prompt] = get_ai_value(record.env, field.type, user_prompt, allowed_values)
-                except Exception as e:  # noqa: BLE001
-                    _logger.info("Could not get a value for an AI Field (%s on %s): %s", field.name, field.model_name, e)
-                    cache[user_prompt] = ""  # prevent query llm again for the field (unresolvable/timeout)
-            record[field.name] = cache[user_prompt]
+            try:
+                record[field.name] = get_ai_value(record, field.type, user_prompt, context_fields, allowed_values)
+            except Exception as e:  # noqa: BLE001
+                _logger.info("Could not get a value for an AI Field (%s on %s): %s", field.name, field.model_name, e)
+                record[field.name] = ""  # prevent query llm again for the field (unresolvable/timeout)
 
     def _fill_ai_property(self, fname, property_definition):
         """Assign values to the specified AI property field for the records in `self` using LLM.
@@ -175,26 +313,22 @@ class Base(models.AbstractModel):
 
         :return: None
         """
-
-        cache = {}
         if not property_definition.get('system_prompt'):
             raise ValueError(f"The property {property_definition['string']} has no AI prompt")
-        allowed_values = get_property_allowed_vals(self.env, property_definition)
+        user_prompt, context_fields, allowed_values = get_property_prompt_vals(self.env, property_definition)
         properties = {v['id']: v[fname] for v in self.read([fname])}
         for record in self:
-            user_prompt = render_prompt(record, property_definition.get('system_prompt'))
-            if user_prompt not in cache:
-                try:
-                    cache[user_prompt] = get_ai_value(record.env, property_definition.get('type'), user_prompt, allowed_values)
-                except Exception as e:  # noqa: BLE001
-                    _logger.info("Could not get a value for an AI property (%s in %s on %s): %s", property_definition['name'], fname, self._name, e)
-                    cache[user_prompt] = False  # prevent query llm again for the property (unresolvable/timeout)
+            try:
+                value = get_ai_value(record, property_definition.get('type'), user_prompt, context_fields, allowed_values)
+            except Exception as e:  # noqa: BLE001
+                _logger.info("Could not get a value for an AI property (%s in %s on %s): %s", property_definition['name'], fname, self._name, e)
+                value = False  # prevent query llm again for the property (unresolvable/timeout)
 
             # update the property value (without overriding existing properties)
             # we don't write the definition otherwise we will retrigger the cron if there
             # is a property that has not been processed yet
             record[fname] = {
-                p['name']: cache[user_prompt] if p['name'] == property_definition['name'] else p.get('value')
+                p['name']: value if p['name'] == property_definition['name'] else p.get('value')
                 for p in properties.get(record.id, [])
                 if p['name'] == property_definition['name'] or 'value' in p
             }
@@ -217,10 +351,12 @@ class Base(models.AbstractModel):
             raise ValueError(f"The field {fname} is not defined on {self._name}")
         if not (hasattr(field, 'ai') and field.ai):
             raise ValueError(f"The field {fname} has no AI prompt")
-        val = get_ai_value(self.env, field.type,
-            render_prompt(record, field.ai) + (self._get_currency_prompt(field) if field.type == 'monetary' else ''),
-            get_field_allowed_vals(self.env, field),
-        )
+        user_prompt, context_fields, allowed_values = get_field_prompt_vals(self.env, field)
+        if field.type in ('many2many', 'many2one') and not allowed_values:
+            # add most frequent records if no record in prompt
+            records = self.ai_find_default_records(field.comodel_name, field.domain, fname)
+            allowed_values = {r.id: r.display_name for r in records}
+        val = get_ai_value(record, field.type, user_prompt, context_fields, allowed_values)  # currency?
         if field.type == 'many2one':
             return bool(val) and self.env[field.comodel_name].browse(val).read(['id', 'display_name'])[0]
         elif field.type == 'many2many':
@@ -264,10 +400,12 @@ class Base(models.AbstractModel):
         if property_type in ('many2many', 'many2one'):
             if not property_definition.get('comodel'):
                 return property_type == 'many2many' and []
-        val = get_ai_value(self.env, property_type,
-            render_prompt(record, property_definition.get('system_prompt')),
-            get_property_allowed_vals(self.env, property_definition),
-        )
+        user_prompt, context_fields, allowed_values = get_property_prompt_vals(self.env, property_definition)
+        if property_type in ('many2many', 'many2one') and not allowed_values and property_definition.get('comodel'):
+            # add most frequent records if no record in prompt
+            records = self.ai_find_default_records(property_definition.get('comodel'), property_definition.get('domain'), fname, pname)
+            allowed_values = {r.id: r.display_name for r in records}
+        val = get_ai_value(record, property_type, user_prompt, context_fields, allowed_values)
         if property_type == 'many2one':
             return bool(val) and self.env[property_definition['comodel']].browse(val).read(['id', 'display_name'])[0]
         if property_type == 'many2many':
@@ -317,4 +455,4 @@ class Base(models.AbstractModel):
                 order="id DESC",
             )
 
-        return [[r.id, r.display_name] for r in records]
+        return records

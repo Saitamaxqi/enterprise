@@ -22,7 +22,8 @@ class IrModelFields(models.Model):
     ai_domain = fields.Char(string="AI field domain", compute="_compute_ai_domain", store=True)
     system_prompt = fields.Html(
         string="AI Prompt",
-        sanitize="email_outgoing",
+        sanitize=True,
+        sanitize_output_method='xml',
         help="Prompt given to the AI model to compute the field value")
 
     @api.depends('ai')

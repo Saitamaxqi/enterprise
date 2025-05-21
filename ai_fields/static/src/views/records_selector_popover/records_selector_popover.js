@@ -10,11 +10,12 @@ export class RecordsSelectorPopover extends Component {
         close: { type: Function },
         domain: { type: Array, optional: true },
         validate: { type: Function },
+        resIds: { type: Array, optional: true },
     };
 
     setup() {
         this.state = useState({
-            resIds: [],
+            resIds: this.props.resIds || [],
         });
     }
 
