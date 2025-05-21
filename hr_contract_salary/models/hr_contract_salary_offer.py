@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.fields import Domain
 from werkzeug.urls import url_encode
 
 
@@ -24,7 +23,7 @@ class HrContractSalaryOffer(models.Model):
                     result[field] = version[field]
         return result
 
-    display_name = fields.Char(string="Title", readonly=False)  # TODO read-only=False, but not inversed?
+    display_name = fields.Char(string="Title", compute="_compute_display_name", readonly=False, store=True)
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id, required=True)
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(
@@ -90,24 +89,8 @@ class HrContractSalaryOffer(models.Model):
                     offer.applicant_id.partner_id.name or \
                     offer.applicant_id.partner_name
             else:
-                name = offer.employee_version_id.employee_id.name or \
-                    offer.employee_id.name
+                name = offer.employee_id.name
             offer.display_name = _("Offer for %(recipient)s", recipient=name) if name else ""
-
-    def _search_display_name(self, operator, value):
-        if Domain.is_negative_operator(operator):
-            return NotImplemented
-        return [
-            "|",
-                ('applicant_id', 'any', [
-                    ('employee_id.name', operator, value),
-                    ('partner_id.name', operator, value),
-                    ('partner_name', operator, value),
-                ]),
-            "&",
-                ('applicant_id', '=', False),
-                ('employee_version_id.employee_id.name', operator, value),
-        ]
 
     @api.depends('create_date')
     def _compute_offer_create_date(self):
