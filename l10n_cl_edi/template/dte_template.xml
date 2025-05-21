@@ -29,7 +29,7 @@
                     <Acteco t-out="activity.code"/>
                 </t>
                     <Sucursal t-if="move.journal_id.l10n_cl_point_of_sale_name and not move.l10n_latam_document_type_id._is_doc_type_voucher()" t-out="format_length(move.journal_id.l10n_cl_point_of_sale_name, 9)"/>
-                    <DirOrigen t-out="format_length('%s %s' % (move.company_id.partner_id.street, (move.company_id.partner_id.street2 or '')), 70)"/>
+                    <DirOrigen t-out="format_length(('%s %s' % (move.company_id.partner_id.street, move.company_id.partner_id.street2 or '')).strip(), 70)"/>
                     <CmnaOrigen t-out="move.company_id.partner_id.city or ''"/>
                     <CdgVendedor t-if="not move.l10n_latam_document_type_id._is_doc_type_voucher() and move.user_id" t-out="format_length(move.user_id.name, 60)"/>
                 </Emisor>
