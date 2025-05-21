@@ -938,7 +938,20 @@ class AccountJournalReportHandler(models.AbstractModel):
             'line_class': 'o_even ' if even else 'o_odd ',
             'document': {'data': document, 'class': 'o_bold ' if line_index == 0 else ''},
             'account_code': {'data': line_entry['account_code']},
-            'account_label': {'data': account_label if export_type != 'pdf' else line_entry["account_code"]},
+            'account_label': {
+                'data': (
+                    account_label
+                    if export_type != 'pdf'
+                    else (
+                        f"{line_entry['account_code']} "
+                        + (
+                            line_entry['account_name'][:35] + '...'
+                            if len(line_entry['account_name']) > 35
+                            else line_entry['account_name']
+                        )
+                    )
+                )
+            },
             'name': {'data': name},
             'debit': {
                 'data': report._format_value(options, line_entry['debit'], 'monetary'),
