@@ -169,7 +169,7 @@ class AccountBatchPayment(models.Model):
             self.l10n_ca_cpa005_file_creation_number = file_creation_nr
 
         records.append(self._l10n_ca_cpa005_generate_header(currency, file_creation_nr))
-        for payment in self.payment_ids:
+        for payment in self.payment_ids.sorted():
             records.append(self._l10n_ca_cpa005_outgoing_payment(file_creation_nr, payment, len(records) + 1))
         records.append(self._l10n_ca_cpa005_generate_footer(file_creation_nr, len(records) + 1))
 
