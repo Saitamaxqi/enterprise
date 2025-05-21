@@ -537,3 +537,17 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_to': date(2015, 11, 30)
         })
         payslip.compute_sheet()
+
+    def test_payslip_warning_message_without_duration_dates(self):
+        payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip of Richard',
+            'employee_id': self.richard_emp.id,
+            'version_id': self.contract_cdi.id,
+            'date_from': date(2016, 1, 15),
+            'date_to': date(2016, 1, 31)
+        })
+        self.assertTrue(payslip.warning_message)
+
+        payslip_form = Form(payslip)
+        payslip_form.date_from = None
+        self.assertFalse(payslip_form.warning_message)

@@ -1107,7 +1107,7 @@ class HrPayslip(models.Model):
 
     @api.depends('date_from', 'date_to', 'struct_id')
     def _compute_warning_message(self):
-        for slip in self.filtered(lambda p: p.date_to):
+        for slip in self:
             slip.warning_message = False
             if not slip.date_from or not slip.date_to:
                 continue
