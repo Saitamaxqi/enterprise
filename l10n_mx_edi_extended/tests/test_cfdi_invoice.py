@@ -122,3 +122,28 @@ class TestCFDIInvoice(TestMxExtendedEdiCommon):
 
             if RATE_WITH_USD == TEST_RATE_WITH_USD or not EXTERNAL_MODE:
                 self._assert_invoice_cfdi(invoice, 'test_invoice_external_trade_more_digits')
+
+    def test_invoice_external_trade_null_qty(self):
+        chf = self.setup_other_currency('CHF', rates=[(self.frozen_today, 17.0)])
+
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                l10n_mx_edi_external_trade_type='02',
+                currency_id=chf.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 17000.0,
+                        'quantity': 5,
+                        'discount': 20.0,
+                        'l10n_mx_edi_qty_umt': 0.0,
+                        'l10n_mx_edi_price_unit_umt': self.product.lst_price,
+                        'tax_ids': [Command.set(self.tax_0.ids)],
+                    }),
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+            if RATE_WITH_USD == TEST_RATE_WITH_USD or not EXTERNAL_MODE:
+                self._assert_invoice_cfdi(invoice, 'test_invoice_external_trade_null_qty')

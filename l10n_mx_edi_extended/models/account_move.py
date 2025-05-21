@@ -206,7 +206,10 @@ class AccountMove(models.Model):
                 total_usd = usd.round(product_values['total'] * to_usd_rate)
                 weighted_prices = sum(price_unit * qty for (price_unit, qty) in zip(product_values['price_unit_list'], product_values['quantity_list']))
                 weights = sum(product_values['quantity_list'])
-                amount = weighted_prices / weights
+                if weights != 0:
+                    amount = weighted_prices / weights
+                else:
+                    amount = sum(product_values['price_unit_list']) / len(product_values['price_unit_list'])
                 ext_trade_values['mercancia_list'].append({
                     'no_identificacion': product.default_code,
                     'fraccion_arancelaria': product.l10n_mx_edi_tariff_fraction_id.code,
