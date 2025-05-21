@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="sign.SignTemplateSidebarRoleItems">
-        <div t-attf-class="o_sign_sidebar_signer py-3 border-bottom {{ props.isCollapsed || props.hasSignRequests ? '' : 'o_sign_sidebar_signer_selected' }}" t-on-click="() => this.onExpandSigner(props.id)">
+        <div t-attf-class="o_sign_sidebar_signer border-bottom {{ props.isCollapsed || props.hasSignRequests ? '' : 'o_sign_sidebar_signer_selected' }}" t-on-click="() => this.onExpandSigner(props.id)">
             <div class="o_sign_sidebar_signer_header">
                 <div t-attf-class="{{ (props.hasSignRequests || props.isCollapsed || !state.canEditSignerName) ? 'd-none' : 'o_sign_sidebar_signer_header' }} d-flex flex-grow-1">
                     <div class="o_sign_sidebar_role_input_container w-100">

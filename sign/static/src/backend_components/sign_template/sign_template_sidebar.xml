@@ -48,6 +48,7 @@
                     <t t-call="sign.SignViews.buttons"/>
                 </div>
             </div>
+            <hr/>
             <div>
                 <t t-foreach="props.signers" t-as="signer" t-key="signer.id">
                     <SignTemplateSidebarRoleItems t-props="getSidebarRoleItemsProps(signer.id)"/>

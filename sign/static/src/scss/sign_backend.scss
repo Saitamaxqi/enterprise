@@ -41,7 +41,7 @@
     .o_sign_sidebar_document_name {
         padding: 5px;
         width: 100%;
-        height: 55px;
+        height: 45px;
         align-items: center;
         display: flex;
         &:hover {
@@ -51,6 +51,7 @@
     }
 
     .o_sign_sidebar_document_name_text {
+        overflow: hidden;
         width: 100%;
         padding-right: 10px;
         cursor: pointer;
@@ -177,12 +178,12 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        overflow: hidden;
     }
 
     .o_sign_sidebar_signer {
         position: relative;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding: 10px 5px;
         &:hover {
             cursor: pointer;
             background-color: #e9ecef;
@@ -213,13 +214,13 @@
 
     .o_sign_sidebar_signer_name {
         width: 100%;
+        overflow: hidden;
     }
 
     .o_sign_sidebar_item_grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 4px; /* Small gap between buttons */
-        background-color: #FFFFFF;
         padding: 4px;
         border-radius: 5px;
     }
