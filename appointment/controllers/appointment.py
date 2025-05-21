@@ -2,7 +2,6 @@
 
 import json
 import pytz
-import re
 
 from pytz.exceptions import UnknownTimeZoneError
 from werkzeug.exceptions import BadRequest
@@ -736,20 +735,14 @@ class AppointmentController(http.Controller):
                 'lang': request.lang.code,
             })
 
-        # partner_inputs dictionary structures all answer inputs received on the appointment submission: key is question id, value
-        # is answer id (as string) for choice questions, text input for text questions, array of ids for multiple choice questions.
+        # partner_inputs dictionary structures all answer inputs received on the appointment submission per question_id:
+        # {'q_id': [a1_id, a2_id, ...] for multi choice, 'q_id': value (as text) for the rest, if set}
         partner_inputs = {}
-        appointment_question_ids = appointment_type.question_ids.ids
-        for k_key, k_value in [item for item in kwargs.items() if item[1]]:
-            question_id_str = re.match(r"\bquestion_([0-9]+)\b", k_key)
-            if question_id_str and int(question_id_str.group(1)) in appointment_question_ids:
-                partner_inputs[int(question_id_str.group(1))] = k_value
-                continue
-            checkbox_ids_str = re.match(r"\bquestion_([0-9]+)_answer_([0-9]+)\b", k_key)
-            if checkbox_ids_str:
-                question_id, answer_id = [int(checkbox_ids_str.group(1)), int(checkbox_ids_str.group(2))]
-                if question_id in appointment_question_ids:
-                    partner_inputs[question_id] = partner_inputs.get(question_id, []) + [answer_id]
+        for question in appointment_type.question_ids:
+            if question.question_type == 'checkbox':
+                partner_inputs[question.id] = question.answer_ids.filtered(lambda answer: kwargs.get(f'question_{question.id}_answer_{answer.id}')).ids
+            elif answer := kwargs.get(f'question_{question.id}'):
+                partner_inputs[question.id] = answer
 
         # The answer inputs will be created in _prepare_calendar_event_values from the values in answer_input_values
         answer_input_values = []
@@ -758,12 +751,12 @@ class AppointmentController(http.Controller):
             'partner_id': customer.id,
         }
 
-        for question in appointment_type.question_ids.filtered(lambda question: question.id in partner_inputs.keys()):
+        for question in appointment_type.question_ids.filtered(lambda question: question.id in partner_inputs):
             if question.question_type == 'checkbox':
-                answers = question.answer_ids.filtered(lambda answer: answer.id in partner_inputs[question.id])
-                answer_input_values.extend([
-                    dict(base_answer_input_vals, question_id=question.id, value_answer_id=answer.id) for answer in answers
-                ])
+                if answer_ids := partner_inputs[question.id]:
+                    answer_input_values.extend(
+                        dict(base_answer_input_vals, question_id=question.id, value_answer_id=answer_id) for answer_id in answer_ids
+                    )
             elif question.question_type in ['select', 'radio']:
                 answer_input_values.append(
                     dict(base_answer_input_vals, question_id=question.id, value_answer_id=int(partner_inputs[question.id]))
