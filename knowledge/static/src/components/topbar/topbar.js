@@ -101,6 +101,7 @@ export const knowledgeTopbar = {
     component: KnowledgeTopbar,
     fieldDependencies: [
         { name: "create_uid", type: "many2one", relation: "res.users" },
+        { name: "display_name", type: "char" },
         { name: "last_edition_uid", type: "many2one", relation: "res.users" },
         { name: "active", type: "boolean" },
         { name: "article_properties", type: "jsonb" },
