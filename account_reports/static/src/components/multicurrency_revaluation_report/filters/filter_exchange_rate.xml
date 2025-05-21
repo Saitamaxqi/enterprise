@@ -17,11 +17,12 @@
                 <t t-foreach="Object.values(this.controller.options.currency_rates)" t-as="currencyRate" t-key="currencyRate.currency_id">
                     <div class="dropdown-item">
                         <div>
-                            <input type="text"
-                                   inputmode="numeric"
-                                   t-att-value="currencyRate.rate"
-                                   t-att-name="currencyRate.currency_id"
-                                   t-on-change="(ev) => this.filterExchangeRate(ev, currencyRate.currency_id)"
+                            <input
+                                type="text"
+                                inputmode="decimal"
+                                t-att-value="currencyRate.rate"
+                                t-att-name="currencyRate.currency_id"
+                                t-on-change="(ev) => this.filterExchangeRate(ev, currencyRate.currency_id)"
                             />
                         </div>
                         <label class="d-flex align-items-center" t-att-for="currencyRate.currency_id">
