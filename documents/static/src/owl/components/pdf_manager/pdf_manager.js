@@ -800,10 +800,10 @@ export class PdfManager extends Component {
         data.append(
             "vals",
             JSON.stringify({
-                folder_id: document.folder_id[0],
+                folder_id: document.folder_id.id,
                 tag_ids: document.tag_ids.currentIds,
-                owner_id: document.owner_id[0],
-                partner_id: document.partner_id[0],
+                owner_id: document.owner_id.id,
+                partner_id: document.partner_id.id,
                 active: this.state.keepDocument,
             })
         );

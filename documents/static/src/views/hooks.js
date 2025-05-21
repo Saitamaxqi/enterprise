@@ -121,7 +121,7 @@ export function useDocumentView(helpers) {
 
     // Opens Share Dialog
     const _openShareDialog = async ({ id, shortcut_document_id }) => {
-        const document = shortcut_document_id ? { id: shortcut_document_id[0] } : { id };
+        const document = shortcut_document_id ? { id: shortcut_document_id.id } : { id };
         dialogService.add(DocumentsPermissionPanel, {
             document,
             onChangesSaved: () => env.searchModel.trigger("update"),

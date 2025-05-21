@@ -100,7 +100,7 @@ export class DocumentsDetailsPanel extends Component {
     }
 
     get rootFolderPlaceholder() {
-        return this.props.record.data?.owner_id[0] === user.userId
+        return this.props.record.data?.owner_id.id === user.userId
             ? _t("My Drive")
             : this.props.record.data?.owner_id
                 ? _t("Shared with me")

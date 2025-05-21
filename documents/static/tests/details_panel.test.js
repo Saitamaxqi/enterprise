@@ -154,3 +154,40 @@ test("Details panel rendering for viewers - m2o/m2m pseudo-placeholders", async 
         "No alias tags"
     );
 });
+
+test("Details panel root folder placeholders", async function () {
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "In COMPANY"),
+        makeDocumentRecordData(3, "In MY DRIVE", { owner_id: serverState.userId }),
+        makeDocumentRecordData(4, "In SHARED WITH ME", { owner_id: serverState.odoobotId }),
+        makeDocumentRecordData(5, "In COMPANY (readonly)", { user_permission: "view" }),
+    ]);
+    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await mountDocumentsKanbanView({ arch: archWithTags });
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    // Edit mode
+    for (const [documentName, rootPlaceholder] of [
+        ["In COMPANY", "Company"],
+        ["In MY DRIVE", "My Drive"],
+        ["In SHARED WITH ME", "Shared with me"],
+    ]) {
+        await contains(`.o_kanban_record:contains('${documentName}')`).click();
+        await animationFrame();
+        expect(dp(".o_documents_details_panel_name input")).toHaveCount(1);
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue(documentName);
+        expect(dp(".fa-folder + .o_field_many2one input")).toHaveAttribute(
+            "placeholder",
+            rootPlaceholder,
+            { message: "Document should have correct root folder placeholder (editors)." }
+        );
+    }
+    // Readonly mode
+    await contains(".o_kanban_record:contains('In COMPANY (readonly)')").click();
+    await animationFrame();
+    expect(dp(".o_documents_details_panel_name span")).toHaveCount(1);
+    expect(dp(".o_documents_details_panel_name span")).toHaveText("In COMPANY (readonly)");
+    expect(dp(".fa-folder + .o_field_many2one .o_documents_details_panel_placeholder")).toHaveText(
+        "Company",
+        { message: "Document should have correct root folder placeholder (viewers)." }
+    );
+});
