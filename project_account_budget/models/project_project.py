@@ -46,7 +46,7 @@ class ProjectProject(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "budget.analytic",
             "res_id": budget_lines.budget_analytic_id.id,
-            'context': {'create': False, 'edit': False},
+            'context': {'create': False},
             "name": _("Budget Items"),
             'view_mode': 'form',
         }
