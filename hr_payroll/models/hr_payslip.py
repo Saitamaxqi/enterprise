@@ -79,7 +79,7 @@ class HrPayslip(models.Model):
         compute='_compute_line_ids', store=True, readonly=False, copy=True)
     company_id = fields.Many2one(
         'res.company', string='Company', copy=False, required=True,
-        compute='_compute_company_id', store=True, readonly=False,
+        compute='_compute_company_id', store=True, readonly=True,
         default=lambda self: self.env.company)
     country_id = fields.Many2one(
         'res.country', string='Country',
@@ -482,6 +482,10 @@ class HrPayslip(models.Model):
             raise ValidationError(_('The following employees have a contract outside of the payslip period:\n%s', '\n'.join(invalid_payslips.mapped('employee_id.name'))))
         if any(slip.state == 'cancel' for slip in self):
             raise ValidationError(_("You can't validate a cancelled payslip."))
+        if mismatched_slips := self.filtered(lambda slip: slip.payslip_run_id and slip.company_id != slip.payslip_run_id.company_id):
+            raise ValidationError(_(
+                "The following payslips company differs from the batch's company:\n%s", "\n".join(mismatched_slips.mapped('name')))
+            )
         self.write({'state' : 'done'})
 
         line_values = self._get_line_values(['NET'])
