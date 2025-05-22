@@ -126,14 +126,14 @@
                                     )
                                 </div>
                             </div>
-                            <field name="full_amount_switch_html" string="" widget="apply_amount_html" invisible="not reconciled_lines_ids"/>
-                            <field name="account_id" readonly="reconciled_lines_ids"/>
-                            <field name="partner_id" readonly="reconciled_lines_ids"/>
-                            <field name="name" readonly="reconciled_lines_ids"/>
+                            <field name="full_amount_switch_html" string="" widget="apply_amount_html" invisible="not reconciled_lines_excluding_exchange_diff_ids"/>
+                            <field name="account_id" readonly="reconciled_lines_excluding_exchange_diff_ids"/>
+                            <field name="partner_id" readonly="reconciled_lines_excluding_exchange_diff_ids"/>
+                            <field name="name" readonly="reconciled_lines_excluding_exchange_diff_ids"/>
                         </group>
                         <group name="right_group">
-                            <field name="date" readonly="reconciled_lines_ids"/>
-                            <field name="tax_ids" widget="many2many_tags" invisible="reconciled_lines_ids" context="{'append_fields': ['type_tax_use']}"/>
+                            <field name="date" readonly="reconciled_lines_excluding_exchange_diff_ids"/>
+                            <field name="tax_ids" widget="many2many_tags" invisible="reconciled_lines_excluding_exchange_diff_ids" context="{'append_fields': ['type_tax_use']}"/>
                             <field name="analytic_distribution" groups="analytic.group_analytic_accounting" widget="analytic_distribution"
                                    options="{'account_field': 'account_id', 'business_domain': 'general'}"
                             />

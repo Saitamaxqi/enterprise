@@ -14,10 +14,12 @@
                 </a>
             </span>
             <div class="o_line_amount d-flex align-items-center justify-content-between">
-                <span class="text-muted w-50 text-end" t-if="sourceBalanceBiggerThanLineBalance">
-                    <t t-esc="formattedBalanceSourceAml"/>
+                <span class="text-muted w-50 text-end" t-if="hasDifferentCurrencies">
+                    <span t-ref="line-info-ref" t-on-click.stop="openLineInfoPopOver" t-esc="formattedAmountCurrencyOfLine"/>
                 </span>
-                <span class="text-end" t-att-class="{'w-50': sourceBalanceBiggerThanLineBalance, 'w-100': !sourceBalanceBiggerThanLineBalance}" t-esc="formattedAmountCurrency"/>
+                <span class="text-end w-100" t-if="!hasDifferentCurrencies">
+                    <span t-ref="line-info-ref" t-on-click.stop="openLineInfoPopOver" t-esc="formattedAmountCurrencyOfStatementLine"/>
+                </span>
             </div>
             <div class="o_line_to_reconcile_button hide-mobile">
                 <i class="fa fa-pencil" t-on-click.stop="toggleEditLine"/>

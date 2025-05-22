@@ -16,7 +16,13 @@ export class BankRecWidgetApplyAmountHtmlField extends HtmlField {
         const fetchReconciledLines = async (fields = []) => {
             return await this.orm.searchRead(
                 "account.move.line",
-                [["id", "in", ...root.data.reconciled_lines_ids._currentIds]],
+                [
+                    [
+                        "id",
+                        "in",
+                        ...root.data.reconciled_lines_excluding_exchange_diff_ids._currentIds,
+                    ],
+                ],
                 fields
             );
         };

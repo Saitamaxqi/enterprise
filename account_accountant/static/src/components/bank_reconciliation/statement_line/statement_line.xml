@@ -88,7 +88,7 @@
                                 <div class="o_button_line">
                                     <BankRecButtonList t-if="!recordData.is_reconciled" suspenseAccountLine="suspenseAccountLine" t-props="buttonListProps"/>
                                 </div>
-                                <div t-if="suspenseAccountLine" class="fw-bold text-muted d-flex align-items-center justify-content-end">
+                                <div t-if="suspenseAccountLine" class="fw-bold text-muted d-flex align-items-center justify-content-end" t-att-class="hasForeignCurrencyAndSameCurrencyForAllLines ? 'w-50' : 'w-100'">
                                     <t t-esc="suspenseAccountLineFormattedAmount"/>
                                 </div>
                             </div>

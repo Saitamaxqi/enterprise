@@ -1,9 +1,11 @@
-import { Component } from "@odoo/owl";
+import { Component, useRef } from "@odoo/owl";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "../bank_reconciliation_service";
+import { usePopover } from "@web/core/popover/popover_hook";
+import { BankRecLineInfoPopOver } from "../line_info_pop_over/line_info_pop_over";
 
 export class BankRecLineToReconcile extends Component {
     static template = "account_accountant.BankRecLineToReconcile";
@@ -18,6 +20,12 @@ export class BankRecLineToReconcile extends Component {
         this.orm = useService("orm");
         this.dialogService = useService("dialog");
         this.bankReconciliation = useBankReconciliation();
+
+        this.lineInfoRef = useRef("line-info-ref");
+        this.lineInfoPopOver = usePopover(BankRecLineInfoPopOver, {
+            position: "left",
+            closeOnClickAway: true,
+        });
     }
 
     /**
@@ -101,6 +109,19 @@ export class BankRecLineToReconcile extends Component {
         });
     }
 
+    openLineInfoPopOver() {
+        if (this.lineInfoPopOver.isOpen || !this.showLineInfo) {
+            this.lineInfoPopOver.close();
+        } else {
+            this.lineInfoPopOver.open(this.lineInfoRef.el, {
+                statementLineData: this.statementLineData,
+                lineData: this.lineData,
+                exchangeMove: this.exchangeMove,
+                isPartiallyReconciled: this.isPartiallyReconciled,
+            });
+        }
+    }
+
     // -----------------------------------------------------------------------------
     // GETTER
     // -----------------------------------------------------------------------------
@@ -125,45 +146,44 @@ export class BankRecLineToReconcile extends Component {
     }
 
     get moveData() {
-        return this.reconciledLineId?.move_id || this.reconciledLineExcludingExchangeDiffId?.move_id || this.lineData.move_id;
+        return (
+            this.reconciledLineId?.move_id ||
+            this.reconciledLineExcludingExchangeDiffId?.move_id ||
+            this.lineData.move_id
+        );
     }
 
-    get sourceBalanceBiggerThanLineBalance() {
+    get isPartiallyReconciled() {
         if (!this.reconciledLineId) {
             return false;
         }
-
-        if (this.statementLineData.amount > 0) {
-            return this.reconciledLineId?.amount_residual * -1 < this.lineData.balance;
-        }
-        return this.reconciledLineId?.amount_residual * -1 > this.lineData.balance;
+        return !this.reconciledLineId.full_reconcile_id?.id;
     }
 
     get hasDifferentCurrencies() {
         return this.lineData.currency_id.id !== this.statementLineData.currency_id.id;
     }
 
-    get formattedBalanceSourceAml() {
-        return formatMonetary(this.reconciledLineId?.amount_currency, {
-            currencyId: this.reconciledLineId.currency_id?.id,
-        });
-    }
-
-    get formattedAmountCurrencySourceAml() {
-        const currencyId = this.lineData.is_same_currency
-            ? this.statementLineData.company_id.currency_id.id
-            : this.statementLineData.journal_id.currency_id?.id;
-        return formatMonetary(this.reconciledLineId?.amount_currency, {
-            currencyId: currencyId,
-        });
-    }
-
-    get formattedAmountCurrency() {
-        const currencyId = this.hasDifferentCurrencies
-            ? this.lineData.currency_id.id
-            : this.statementLineData.currency_id.id;
+    get formattedAmountCurrencyOfLine() {
         return formatMonetary(this.lineData.amount_currency, {
-            currencyId: currencyId,
+            currencyId: this.lineData.currency_id.id,
         });
+    }
+
+    get formattedAmountCurrencyOfStatementLine() {
+        return formatMonetary(this.lineData.amount_currency, {
+            currencyId: this.statementLineData.currency_id.id,
+        });
+    }
+
+    get exchangeMove() {
+        return (
+            this.lineData.matched_debit_ids.records[0]?.data.exchange_move_id ||
+            this.lineData.matched_credit_ids.records[0]?.data.exchange_move_id
+        );
+    }
+
+    get showLineInfo() {
+        return this.isPartiallyReconciled || this.exchangeMove?.id;
     }
 }

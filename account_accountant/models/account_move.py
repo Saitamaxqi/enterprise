@@ -507,7 +507,7 @@ class AccountMoveLine(models.Model):
     @api.depends('balance')
     def _compute_full_amount_switch_html(self):
         for line in self:
-            if not (reconciled_lines := line.reconciled_lines_ids):
+            if not (reconciled_lines := line.reconciled_lines_excluding_exchange_diff_ids):
                 line.full_amount_switch_html = False
                 continue
 

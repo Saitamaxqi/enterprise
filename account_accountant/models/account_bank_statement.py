@@ -450,7 +450,7 @@ class AccountBankStatementLine(models.Model):
     def _action_manual_reco_model(self, reco_model_id):
         self.move_id.line_ids.filtered(lambda x: x.account_id == x.move_id.journal_id.suspense_account_id).reconcile_model_id = reco_model_id
 
-    def _get_counterpart_aml(self, open_balance):
+    def _get_counterpart_aml(self, open_balance, open_amount_currency, is_same_currency):
         """ Generates a counterpart account move line based on the given open balance.
 
             :param open_balance: The open balance amount that will be used to create the counterpart account move line.
@@ -464,7 +464,7 @@ class AccountBankStatementLine(models.Model):
             'account_id': self.journal_id.suspense_account_id.id,
             'balance': -open_balance,
             'currency_id': currency.id,
-            'amount_currency': currency.round(-open_balance * currency.rate)
+            'amount_currency': -open_amount_currency if is_same_currency else currency.round(-open_balance * currency.rate),
         }
 
     def _get_partner_id(self, lines_to_add_partner_ids):
@@ -501,8 +501,18 @@ class AccountBankStatementLine(models.Model):
 
         open_balance = sum(lines_to_set.mapped('balance')) + lines_to_add_balance
         if not self.company_currency_id.is_zero(open_balance):
+            if not self.foreign_currency_id:
+                lines_to_add_amount_currency = sum(line['amount_currency'] for line in lines_to_add)
+                open_amount_currency = sum(lines_to_set.mapped('amount_currency')) + lines_to_add_amount_currency
+                is_same_currency = len(lines_to_set.currency_id) == 1 and all(line['currency_id'] == lines_to_set.currency_id.id for line in lines_to_add)
+            else:
+                liquidity_lines, _suspense_lines, _other_lines = self._seek_for_lines()
+                lines_to_add_amount_currency = sum(line['amount_currency'] for line in lines_to_add)
+                open_amount_currency = self.amount_currency + sum((lines_to_set - liquidity_lines).mapped('amount_currency')) + lines_to_add_amount_currency
+                # We know that the liquidity is in foreign so
+                is_same_currency = len(lines_to_set.currency_id) == 1 and all(line['currency_id'] == self.foreign_currency_id.id for line in lines_to_add)
             lines_commands.append(Command.create(
-                self._get_counterpart_aml(open_balance)
+                self._get_counterpart_aml(open_balance, open_amount_currency, is_same_currency)
             ))
         move = self.move_id.with_context(force_delete=True, skip_readonly_check=True)
         move.line_ids = lines_commands
@@ -808,8 +818,10 @@ class AccountBankStatementLine(models.Model):
 
         new_lines = []
         is_early_payment_discount = False
+        has_exchange_diff = False
         for move_line in move_lines:
             exchange_diff_balance = self._lines_get_account_balance_exchange_diff(move_line)
+            has_exchange_diff = not move_line.currency_id.is_zero(exchange_diff_balance)
             current_balance = -(move_line.amount_residual + exchange_diff_balance)
 
             new_line_balance = current_balance
@@ -833,7 +845,7 @@ class AccountBankStatementLine(models.Model):
         if is_early_payment_discount and open_amount_currency and self._qualifies_for_early_payment(transaction_currency, open_amount_currency, total_early_payment_discount):
             new_lines.extend(self._set_early_payment_discount_lines(early_pay_aml_values_list, open_balance))
 
-        self._add_move_line_to_statement_line_move(new_lines)
+        self.with_context(no_exchange_difference_no_recursive=not has_exchange_diff)._add_move_line_to_statement_line_move(new_lines)
 
     def _get_partial_amounts(self, current_balance, move_line, open_amount_currency, open_balance):
         def has_enough(currency, open_amount, current_amount):
@@ -901,6 +913,11 @@ class AccountBankStatementLine(models.Model):
             origin_balance = move_line.currency_id._convert(move_line.amount_residual_currency, transaction_currency_id, self.company_id, self.date)
 
         # Compute the exchange difference balance.
+        # Useful for example when the currency has a rounding of 1 and that we have a exchange diff of 0.01, we don't want
+        # the exchange diff to be created.
+        if move_line.currency_id.is_zero(origin_balance - move_line.amount_residual):
+            return 0.0
+
         return self.company_currency_id.round(origin_balance - move_line.amount_residual)
 
     @api.model

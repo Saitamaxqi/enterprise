@@ -100,8 +100,9 @@ export class BankRecStatementLine extends KanbanRecord {
     }
 
     get formattedAmount() {
-        const currencyId = this.recordData.currency_id.id;
-        return formatMonetary(this.recordData.amount, { currencyId });
+        return formatMonetary(this.recordData.amount, {
+            currencyId: this.recordData.currency_id.id,
+        });
     }
 
     get formattedDate() {
@@ -132,6 +133,16 @@ export class BankRecStatementLine extends KanbanRecord {
 
     get accountMoveLines() {
         return [...this.recordData.line_ids.records.map((line) => line.data)];
+    }
+
+    get hasForeignCurrencyAndSameCurrencyForAllLines() {
+        return (
+            this.recordData.foreign_currency_id &&
+            this.linesToReconcile &&
+            this.linesToReconcile.filter((line) => {
+                return line.currency_id.id !== this.recordData.foreign_currency_id.id;
+            }).length === 0
+        );
     }
 
     get suspenseAccountLineFormattedAmount() {

@@ -1306,3 +1306,53 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
         reco_model = self.env.ref(f'account.account_reco_model_fee_{st_line.journal_id.id}', raise_if_not_found=False)
         self.assertTrue(reco_model, "A new reco model for fees should have been created")
+
+    def test_exchange_diff_single_currency(self):
+        """
+        This test will create a new journal with another currencies as the one from the company with a rounding of 1. Then do a
+        statement line in that currency and adding an invoice in that currency aswell, it should not create an exchange diff move
+        """
+        currency_yen = self.setup_other_currency('JPY', rounding=1.0, rates=[('2017-01-01', 133.62)])
+        new_journal = self.env['account.journal'].create({
+            'name': 'test',
+            'code': 'TBNK',
+            'type': 'bank',
+            'currency_id': currency_yen.id,
+        })
+        st_line = self._create_st_line(50.0, journal_id=new_journal.id, update_create_date=False)
+        inv_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}], currency_id=currency_yen.id)
+        st_line.set_line_bank_statement_line(inv_line.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 50.0, 'currency_id': currency_yen.id, 'balance': 0.37, 'reconciled': False},
+            {'account_id': self.partner_a.property_account_receivable_id.id, 'amount_currency': -50.0, 'currency_id': currency_yen.id, 'balance': -0.37, 'reconciled': True},
+        ])
+        self.assertFalse(st_line.line_ids[1].matched_debit_ids.exchange_move_id)
+
+    def test_multi_currency_with_foreign(self):
+        currency_yen = self.setup_other_currency('JPY', rounding=1.0, rates=[('2017-01-01', 10.00)])
+        new_journal = self.env['account.journal'].create({
+            'name': 'test',
+            'code': 'TBNK',
+            'type': 'bank',
+            'currency_id': currency_yen.id,
+        })
+        st_line = self._create_st_line(
+            1000.0,
+            journal_id=new_journal.id,
+            update_create_date=False,
+            foreign_currency_id=self.company_data['currency'].id,
+        )
+        inv_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}], currency_id=self.other_currency.id)
+        st_line.set_line_bank_statement_line(inv_line.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 1000.0, 'currency_id': currency_yen.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': inv_line.account_id.id, 'amount_currency': -100.0, 'currency_id': self.other_currency.id, 'balance': -50.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -50.0, 'currency_id': self.company_data['currency'].id, 'balance': -50.0, 'reconciled': False},
+        ])
+        inv_line2 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 50.0}], currency_id=self.company_data['currency'].id)
+        st_line.set_line_bank_statement_line(inv_line2.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 1000.0, 'currency_id': currency_yen.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': inv_line.account_id.id, 'amount_currency': -100.0, 'currency_id': self.other_currency.id, 'balance': -50.0, 'reconciled': True},
+            {'account_id': inv_line2.account_id.id, 'amount_currency': -50.0, 'currency_id': self.company_data['currency'].id, 'balance': -50.0, 'reconciled': True},
+        ])

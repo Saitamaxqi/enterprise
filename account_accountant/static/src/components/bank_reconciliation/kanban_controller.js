@@ -48,8 +48,8 @@ export class BankRecKanbanController extends KanbanController {
                     name: "property_account_payable_id",
                     type: "many2one",
                 },
-                customer_rank: { name: "customer_rank", type: "int"},
-                supplier_rank: { name: "supplier_rank", type: "int"},
+                customer_rank: { name: "customer_rank", type: "int" },
+                supplier_rank: { name: "supplier_rank", type: "int" },
             },
             activeFields: {
                 id: makeActiveField(),
@@ -78,7 +78,12 @@ export class BankRecKanbanController extends KanbanController {
                 move_id: { name: "move_id", type: "many2one" },
                 move_attachment_ids: { name: "move_attachment_ids", type: "move_attachment_ids" },
                 reconciled_lines_ids: { name: "reconciled_lines_ids", type: "many2many" },
-                reconciled_lines_excluding_exchange_diff_ids: { name: "reconciled_lines_excluding_exchange_diff_ids", type: "many2many" },
+                reconciled_lines_excluding_exchange_diff_ids: {
+                    name: "reconciled_lines_excluding_exchange_diff_ids",
+                    type: "many2many",
+                },
+                matched_debit_ids: { name: "matched_debit_ids", type: "one2many" },
+                matched_credit_ids: { name: "matched_credit_ids", type: "one2many" },
                 reconcile_model_id: { name: "reconcile_model_id", type: "many2one" },
             },
             activeFields: {
@@ -97,47 +102,120 @@ export class BankRecKanbanController extends KanbanController {
                 move_attachment_ids: makeActiveField(),
                 reconciled_lines_ids: makeActiveField(),
                 reconciled_lines_excluding_exchange_diff_ids: makeActiveField(),
+                matched_debit_ids: makeActiveField(),
+                matched_credit_ids: makeActiveField(),
                 reconcile_model_id: makeActiveField(),
             },
         };
+        params.config.activeFields.line_ids.related.activeFields.matched_debit_ids.related = {
+            fields: {
+                id: { name: "id", type: "int" },
+                display_name: { name: "display_name", type: "char" },
+                exchange_move_id: { name: "exchange_move_id", type: "many2one" },
+            },
+            activeFields: {
+                id: makeActiveField(),
+                display_name: makeActiveField(),
+                exchange_move_id: makeActiveField(),
+            },
+        };
+        params.config.activeFields.line_ids.related.activeFields.matched_debit_ids.related.activeFields.exchange_move_id.related =
+            {
+                fields: {
+                    id: { name: "id", type: "int" },
+                    display_name: { name: "display_name", type: "char" },
+                    line_ids: { name: "line_ids", type: "one2many" },
+                },
+                activeFields: {
+                    id: makeActiveField(),
+                    display_name: makeActiveField(),
+                    line_ids: makeActiveField(),
+                },
+            };
+        params.config.activeFields.line_ids.related.activeFields.matched_debit_ids.related.activeFields.exchange_move_id.related.activeFields.line_ids.related =
+            {
+                fields: {
+                    id: { name: "id", type: "int" },
+                    display_name: { name: "display_name", type: "char" },
+                    balance: { name: "balance", type: "monetary" },
+                },
+                activeFields: {
+                    id: makeActiveField(),
+                    display_name: makeActiveField(),
+                    balance: makeActiveField(),
+                },
+            };
+        params.config.activeFields.line_ids.related.activeFields.matched_credit_ids.related = {
+            fields: {
+                id: { name: "id", type: "int" },
+                display_name: { name: "display_name", type: "char" },
+                exchange_move_id: { name: "exchange_move_id", type: "many2one" },
+            },
+            activeFields: {
+                id: makeActiveField(),
+                display_name: makeActiveField(),
+                exchange_move_id: makeActiveField(),
+            },
+        };
+        params.config.activeFields.line_ids.related.activeFields.matched_credit_ids.related.activeFields.exchange_move_id.related =
+            {
+                fields: {
+                    id: { name: "id", type: "int" },
+                    display_name: { name: "display_name", type: "char" },
+                    line_ids: { name: "line_ids", type: "one2many" },
+                },
+                activeFields: {
+                    id: makeActiveField(),
+                    display_name: makeActiveField(),
+                    line_ids: makeActiveField(),
+                },
+            };
+        params.config.activeFields.line_ids.related.activeFields.matched_credit_ids.related.activeFields.exchange_move_id.related.activeFields.line_ids.related =
+            {
+                fields: {
+                    id: { name: "id", type: "int" },
+                    display_name: { name: "display_name", type: "char" },
+                    balance: { name: "balance", type: "monetary" },
+                },
+                activeFields: {
+                    id: makeActiveField(),
+                    display_name: makeActiveField(),
+                    balance: makeActiveField(),
+                },
+            };
         params.config.activeFields.line_ids.related.activeFields.reconciled_lines_ids.related = {
             fields: {
                 id: { name: "id", type: "int" },
                 display_name: { name: "display_name", type: "char" },
                 move_name: { name: "move_name", type: "char" },
                 move_id: { name: "move_id", type: "many2one" },
-                balance: { name: "balance", type: "monetary" },
                 amount_currency: { name: "amount_currency", type: "monetary" },
-                amount_residual: { name: "amount_residual", type: "monetary" },
-                amount_residual_currency: { name: "amount_residual_currency", type: "monetary" },
+                full_reconcile_id: { name: "full_reconcile_id", type: "many2one" },
                 currency_id: { name: "currency_id", type: "many2one" },
-                move_attachment_ids: { name: "move_attachment_ids", type: "move_attachment_ids" },
             },
             activeFields: {
                 id: makeActiveField(),
                 display_name: makeActiveField(),
                 move_name: makeActiveField(),
                 move_id: makeActiveField(),
-                balance: makeActiveField(),
                 amount_currency: makeActiveField(),
-                amount_residual: makeActiveField(),
-                amount_residual_currency: makeActiveField(),
+                full_reconcile_id: makeActiveField(),
                 currency_id: makeActiveField(),
-                move_attachment_ids: makeActiveField(),
             },
         };
-        params.config.activeFields.line_ids.related.activeFields.reconciled_lines_excluding_exchange_diff_ids.related = {
-            fields: {
-                id: { name: "id", type: "int" },
-                move_name: { name: "move_name", type: "char" },
-                move_id: { name: "move_id", type: "many2one" },
-            },
-            activeFields: {
-                id: makeActiveField(),
-                move_name: makeActiveField(),
-                move_id: makeActiveField(),
-            },
-        };
+        params.config.activeFields.line_ids.related.activeFields.reconciled_lines_excluding_exchange_diff_ids.related =
+            {
+                fields: {
+                    id: { name: "id", type: "int" },
+                    move_name: { name: "move_name", type: "char" },
+                    move_id: { name: "move_id", type: "many2one" },
+                },
+                activeFields: {
+                    id: makeActiveField(),
+                    move_name: makeActiveField(),
+                    move_id: makeActiveField(),
+                },
+            };
         params.config.activeFields.line_ids.related.activeFields.partner_id.related = {
             fields: {
                 id: { name: "id", type: "int" },
