@@ -428,7 +428,15 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
         swissdec_declaration = SwissdecDeclaration()
         swissdec_structure_rules = self.env.ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm').rule_ids
         paid_slips = self.env["hr.payslip"]._read_group(
-            domain=[("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "done"]), ('struct_id.code', '=', 'CHMONTHLYELM')],
+            domain=[
+                ("employee_id", 'in', self.employee_id.ids),
+                ("state", "in", ["paid", "done"]),
+                ('struct_id.code', '=', 'CHMONTHLYELM'),
+                ('l10n_ch_social_insurance_id', '!=', False),
+                ('l10n_ch_laa_group', '!=', False),
+                ('l10n_ch_location_unit_id', '!=', False),
+                ('l10n_ch_compensation_fund_id', '!=', False),
+            ],
             groupby=["employee_id", "date_to:year", "date_to:month"],
             aggregates=["id:recordset"])
         rule_codes = swissdec_structure_rules.mapped('code')

@@ -23,8 +23,9 @@ class L10nCHInsuranceReport(models.Model):
     caf_institution_ids = fields.Many2many('l10n.ch.compensation.fund')
 
     def _compute_actionable_warnings(self):
+        super()._compute_actionable_warnings()
         for declaration in self:
-            actionable_warnings = {}
+            actionable_warnings = declaration.actionable_warnings or {}
             i = 0
             if declaration.l10n_ch_declare_salary_data:
                 for person in declaration.l10n_ch_declare_salary_data["Staff"]["Person"]:

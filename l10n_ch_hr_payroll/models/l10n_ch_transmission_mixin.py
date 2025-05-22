@@ -43,7 +43,7 @@ class L10nCHSwissdecTransmitter(models.AbstractModel):
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company, domain=lambda self: [('country_id', '=', self.env.ref('base.ch'))])
 
     l10n_ch_declare_salary_data = fields.Json()
-    actionable_warnings = fields.Json()
+    actionable_warnings = fields.Json(compute="_compute_actionable_warnings", store=True)
 
     l10n_ch_swissdec_declaration_ids = fields.One2many("l10n.ch.swissdec.declaration", "res_id")
     l10n_ch_swissdec_declaration_ids_size = fields.Integer(compute="_compute_l10n_ch_swissdec_declaration_ids_size")
@@ -53,6 +53,53 @@ class L10nCHSwissdecTransmitter(models.AbstractModel):
 
     test_transmission = fields.Boolean(string="Test Transmission")
     attachment_ids = fields.One2many('ir.attachment', 'res_id', string='Attachments')
+
+    @api.depends('l10n_ch_declare_salary_data')
+    def _compute_actionable_warnings(self):
+        for declaration in self:
+            to_check = [declaration.l10n_ch_declare_salary_data]
+            missing_entries = []
+            for value in to_check:
+                if value:
+                    missing_entries.extend(self.env['l10n.ch.employee.monthly.values']._find_structured_missing(value))
+
+            snapshot_warnings = {}
+            if missing_entries:
+                snapshot_warnings[0] = {
+                    "message": _("Payslips for this month were validated without completing all the necessary information, leading to possible wrong calculations. Please recompute the Payslips of the declaration period without any missing data on your Employees."),
+                    "level": "warning",
+                }
+            for missing_index, missing_dict in enumerate(missing_entries):
+                res_model = missing_dict.get("res_model")
+                res_id = missing_dict.get("res_id")
+                res_field = missing_dict.get("res_field")
+                employee_id = missing_dict.get("employee_id")
+                if res_model and res_id:
+                    field_description = self.env[res_model]._fields[res_field].string
+
+                    if res_model == 'hr.version' and employee_id:
+                        record = self.env['hr.employee'].browse(employee_id)
+                        action = record._get_records_action()
+                        action['context'].update({
+                            'version_id': res_id
+                        })
+                    else:
+                        record = self.env[res_model].browse(res_id)
+                        action = record._get_records_action()
+
+                    snapshot_warnings[missing_index + 1] = {
+                        "message": _("Missing"),
+                        "level": "warning",
+                        "action": action,
+                        "action_text": field_description,
+                    }
+
+            declaration.actionable_warnings = snapshot_warnings
+
+    def _validate_declaration(self):
+        self.ensure_one()
+        if self.actionable_warnings:
+            raise ValidationError(_("Declaration data is not valid, some payslips were validated with missing information, please recompute them with valid employee information"))
 
     def action_prepare_data(self):
         if self.year < fields.Date.today().year - 1 or self.year > fields.Date.today().year:
@@ -71,6 +118,7 @@ class L10nCHSwissdecTransmitter(models.AbstractModel):
 
     def action_declare_salary(self):
         self.ensure_one()
+        self._validate_declaration()
         declare_salary = self._get_declaration()
 
         result = self.env.company._l10n_ch_swissdec_request('declare_salary', data=declare_salary, is_test=self.test_transmission)

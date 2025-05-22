@@ -82,7 +82,7 @@
                 </group>
 
                 <group colspan="2">
-                    <label for="laac_institution_ids" string="LAA"/>
+                    <label for="laac_institution_ids" string="LAAC"/>
                     <div class="d-flex align-items-center gap-3 mt-2">
                         <field name="laac_institution_ids"
                                nolabel="1"

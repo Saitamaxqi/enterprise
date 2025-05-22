@@ -237,7 +237,15 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
     def _get_monthly_tax_at_source(self, year, month, company_id):
         swissdec_declaration = SwissdecDeclaration()
         paid_slips = self.env["hr.payslip"]._read_group(
-            domain=[("company_id", '=', company_id.id), ("state", "in", ["paid", "done"]), ('struct_id.code', '=', 'CHMONTHLYELM')],
+            domain=[
+                ("company_id", '=', company_id.id),
+                ("state", "in", ["paid", "done"]),
+                ('struct_id.code', '=', 'CHMONTHLYELM'),
+                ('l10n_ch_social_insurance_id', '!=', False),
+                ('l10n_ch_laa_group', '!=', False),
+                ('l10n_ch_location_unit_id', '!=', False),
+                ('l10n_ch_compensation_fund_id', '!=', False),
+            ],
             groupby=["employee_id", "date_to:year", "date_to:month"],
             aggregates=["id:recordset"])
         yearly_values = self.env["l10n.ch.employee.yearly.values"].search([("year", '=', year), ('employee_id.company_id', '=', company_id.id)])
@@ -868,6 +876,8 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
 
                 is_18th_anniversary_this_contract = False
                 birthdate = snapshot.employee_id.birthday
+                if not birthdate:
+                    continue
                 eighteenth_birthday = birthdate.replace(year=birthdate.year + 18)
                 is_18th_anniversary = (eighteenth_birthday.year == year and eighteenth_birthday.month == month)
 
@@ -1283,7 +1293,13 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
 
     def _get_yearly_retrospective(self, year, month, company_id, incomplete_declaration=False):
         swissdec_declaration = SwissdecDeclaration()
-        mapped_payslips, line_values = self._get_yearly_mapped_payslips(domain=[("company_id", '=', company_id.id), ("state", "in", ["paid", "done"])])
+        mapped_payslips, line_values = self._get_yearly_mapped_payslips(
+            domain=[("company_id", '=', company_id.id),
+                    ("state", "in", ["paid", "done"]),
+                    ('l10n_ch_social_insurance_id', '!=', False),
+                    ('l10n_ch_laa_group', '!=', False),
+                    ('l10n_ch_location_unit_id', '!=', False),
+                    ('l10n_ch_compensation_fund_id', '!=', False)])
         yearly_values = self.env["l10n.ch.employee.yearly.values"].search([("year", '=', year), ('employee_id.company_id', '=', company_id.id)])
         swissdec_structure_rules = self.env.ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm').rule_ids
         rules_grouped_by_certificate_section = swissdec_structure_rules.grouped('l10n_ch_salary_certificate')
@@ -1661,7 +1677,6 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
                                 tax_crossborder_salaries.append(txb_salary)
 
                 all_profiles = snapshot.employee_id.l10n_ch_salary_certificate_profiles.sorted('valid_from')
-
                 for i, current_certificate in enumerate(all_profiles):
                     next_profile_start = datetime.date(9999, 12, 31)
                     if i + 1 < len(all_profiles):
@@ -1735,7 +1750,9 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
                     "Person": staff
                 }
             }
-            institutions_to_process = list(set(global_avs_institutions)) + list(set(global_caf_institutions)) + list(set(global_ijm_institutions)) + list(set(global_laa_institutions)) + list(set(global_laac_institutions)) + list(set(global_txb_institutions)) + tax_institution
+            institutions_to_process = list(set(global_avs_institutions)) + list(set(global_caf_institutions)) + list(set(global_ijm_institutions)) + list(set(global_laa_institutions)) + list(set(global_laac_institutions)) + list(set(global_txb_institutions))
+            if tax_institution:
+                institutions_to_process += tax_institution
             declaration = {
                 **swissdec_declaration.get_company_description(company_id),
                 **staff_declaration,

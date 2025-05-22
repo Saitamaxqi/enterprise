@@ -287,6 +287,15 @@ class HrVersion(models.Model):
     l10n_ch_has_hourly = fields.Boolean("Has Hourly Wage", groups="hr.group_hr_user")
     l10n_ch_has_lesson = fields.Boolean("Has Lesson Wage", groups="hr.group_hr_user")
 
+    @api.constrains('l10n_ch_municipality', 'l10n_ch_weekly_residence_municipality', 'private_country_id')
+    def _check_swiss_address(self):
+        for record in self:
+            if record.private_country_id.code == 'CH':
+                if record.l10n_ch_municipality and not record.l10n_ch_municipality.isdigit():
+                    raise ValidationError(_('The residence Municipality must contain only numbers for Switzerland.'))
+                if record.l10n_ch_weekly_residence_municipality and not record.l10n_ch_weekly_residence_municipality.isdigit():
+                    raise ValidationError(_('The weekly residence municipality must contain only numbers for Switzerland.'))
+
     @api.constrains("l10n_ch_foreign_tax_id", "private_country_id")
     def _check_l10n_ch_foreign_tax_id(self):
         pattern = r"[A-Z]{6}[0-9]{2}(A|B|C|D|E|H|L|M|P|R|S|T)[0-9]{2}[A-Z]{1}[0-9]{3}[A-Z]{1}"
