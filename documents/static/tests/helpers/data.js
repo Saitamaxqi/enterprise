@@ -326,6 +326,8 @@ export function getDocumentsTestServerModelsData(additionalRecords = []) {
                 name: "runbot.odoo.com",
             },
         ],
+
+        "res.company": serverState.companies,
     };
 }
 

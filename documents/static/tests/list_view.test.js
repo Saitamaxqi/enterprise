@@ -1,8 +1,15 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import { contains, defineModels, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import {
+    contains,
+    defineModels,
+    onRpc,
+    patchWithCleanup,
+    serverState,
+} from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
+import { user } from "@web/core/user";
 
 import {
     DocumentsModels,
@@ -202,4 +209,43 @@ test("documents list: don't unselect all when interacting with the headers", asy
     await contains("th:eq(2) .o_resize", { visible: false }).dragAndDrop("th:eq(3)");
 
     expect(".o_data_row_selected").toHaveCount(2);
+});
+
+test("company_id field visibility for internal in multicompany", async function () {
+    serverState.companies = [
+        { id: 1, name: "Company 1", sequence: 1, parent_id: false, child_ids: [] },
+        { id: 2, name: "Company 2", sequence: 2, parent_id: false, child_ids: [] },
+    ];
+    const serverData = getDocumentsTestServerModelsData();
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsListView({
+        context: {
+            allowed_company_ids: [1, 2],
+        },
+    });
+    expect("thead th[data-name='company_id']").toHaveCount(1);
+});
+
+test("company_id field visibility for portal in multicompany", async function () {
+    serverState.companies = [
+        { id: 1, name: "Company 1", sequence: 1, parent_id: false, child_ids: [] },
+        { id: 2, name: "Company 2", sequence: 2, parent_id: false, child_ids: [] },
+    ];
+    const testUserGroups = ["base.group_portal", "base.group_multi_company"];
+    // We need to do this here and not on the model because has_group("base.group_user")
+    // is already in cache before the model method is called the first time.
+    patchWithCleanup(user, {
+        hasGroup: (group) => testUserGroups.includes(group),
+    });
+    const serverData = getDocumentsTestServerModelsData();
+    const currentUser = serverData["res.users"].find((u) => u.id === serverState.userId);
+    // Sync server data for consistency even if it is not really used.
+    Object.assign(currentUser, { group_ids: [], share: true });
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsListView({
+        context: {
+            allowed_company_ids: [1, 2],
+        },
+    });
+    expect("thead th[data-name='company_id']").toHaveCount(0);
 });

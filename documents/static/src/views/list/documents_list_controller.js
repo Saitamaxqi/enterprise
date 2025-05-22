@@ -1,9 +1,9 @@
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { useService } from "@web/core/utils/hooks";
 import { ListController } from "@web/views/list/list_controller";
 import { DocumentsControllerMixin } from "@documents/views/documents_controller_mixin";
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
 import { useEffect, useRef, useState } from "@odoo/owl";
-import { useService } from "@web/core/utils/hooks";
-import { Dropdown } from "@web/core/dropdown/dropdown";
 
 export class DocumentsListController extends DocumentsControllerMixin(ListController) {
     static template = "documents.DocumentsListController";
@@ -24,14 +24,21 @@ export class DocumentsListController extends DocumentsControllerMixin(ListContro
         });
         this.rightPanelState = useState(this.documentService.rightPanelReactive);
 
-        useEffect(() => {
-            this.documentService.getSelectionActions = () => {
-                return {
+        if (!this.documentService.userIsInternal) {
+            this.archInfo.columns = this.archInfo.columns.filter(
+                (col) => !this.internalOnlyColumns.includes(col.name)
+            );
+        }
+
+        useEffect(
+            () => {
+                this.documentService.getSelectionActions = () => ({
                     getTopbarActions: () => this.getTopBarActionMenuItems(),
-                    getMenuProps: () => this.actionMenuProps
-                };
-            }
-        }, () => []);
+                    getMenuProps: () => this.actionMenuProps,
+                });
+            },
+            () => []
+        );
     }
 
     get hasSelectedRecords() {
@@ -40,6 +47,10 @@ export class DocumentsListController extends DocumentsControllerMixin(ListContro
 
     get targetRecords() {
         return this.model.targetRecords;
+    }
+
+    get internalOnlyColumns() {
+        return ["company_id"];
     }
 
     /**

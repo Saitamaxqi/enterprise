@@ -253,7 +253,7 @@
                 <field name="tag_ids" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
                 <field name="url" optional="hide"/>
                 <field name="lock_uid" groups="base.group_user" optional="hide"/>
-                <field name="company_id" groups="base.group_user" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
                 <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="create_date" optional="hide"/>
                 <field name="write_date" optional="show"/>
