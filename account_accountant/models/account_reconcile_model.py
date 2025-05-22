@@ -109,6 +109,8 @@ class AccountReconcileModel(models.Model):
         }
 
     def _apply_reconcile_models(self, statement_lines):
+        if not self:
+            return
         self.env['account.reconcile.model'].flush_model()
         statement_lines.flush_recordset(['journal_id', 'amount', 'transaction_details', 'payment_ref', 'partner_id', 'company_id'])
         self._cr.execute(SQL("""
@@ -210,3 +212,18 @@ class AccountReconcileModel(models.Model):
 
         statement_line = self.env['account.bank.statement.line'].browse(statement_line_id).exists()
         self._trigger_reconciliation_model(statement_line)
+
+    def write(self, vals):
+        res = super().write(vals)
+        unreconciled_statement_lines = self.env['account.bank.statement.line'].search([
+            *self._check_company_domain(self.env.company),
+            ('is_reconciled', '=', False),
+        ])
+        if unreconciled_statement_lines:
+            unreconciled_statement_lines.line_ids.filtered(
+                lambda line:
+                line.account_id == line.move_id.journal_id.suspense_account_id and line.reconcile_model_id in self
+            ).reconcile_model_id = False
+            self._apply_reconcile_models(unreconciled_statement_lines)
+
+        return res

@@ -499,6 +499,39 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             "Match the partner, the amount and the label"
         )
 
+    def test_modify_reco_model_apply_on_statement_line(self):
+        """
+        This test will check that modifying a reco model will change the suggestion on statement lines
+        """
+        bank_line_1, bank_line_2 = self.env['account.bank.statement.line'].with_context(auto_statement_processing=True).create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'fees',
+                'amount': 100,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'blblbl',
+                'amount': 100,
+            },
+        ])
+        self._check_st_line_matching(bank_line_1, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': self.rule_2.id},
+        ], reconciled_amls=False)
+
+        self.rule_2.match_label_param = 'blblbl'
+        self._check_st_line_matching(bank_line_1, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': False},
+        ], reconciled_amls=False)
+        self._check_st_line_matching(bank_line_2, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': self.rule_2.id},
+        ], reconciled_amls=False)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes
