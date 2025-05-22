@@ -529,6 +529,11 @@ class TestStudioExports(StudioExportCase):
             "model2_id": model2_record.id,
             "model3_id": model3_record.id
         })
+        model2c_record = self.TestModel2.create({"name": "Yet another record"})
+        model2_record.write({
+            "res_model": self.TestModel2._name,
+            "res_id": model2c_record.id,
+        })
 
         self.create_export_model(self.TestModel2._name)
         self.create_export_model(self.TestModel3._name)
@@ -555,9 +560,14 @@ class TestStudioExports(StudioExportCase):
         self.assertXML(
             "data/test_studio_export_model2.xml",
             f"""<odoo noupdate="1">
+            <record id="{self.get_xmlid(model2c_record)}" model="test.studio_export.model2">
+                <field name="name">Yet another record</field>
+            </record>
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
                 <field name="name">Some other record</field>
                 <field name="model3_id" ref="{self.get_xmlid(model3_record)}"/>
+                <field name="res_model">test.studio_export.model2</field>
+                <field name="res_id" ref="{self.get_xmlid(model2c_record)}"/>
             </record>
             <record id="{self.get_xmlid(model2b_record)}" model="test.studio_export.model2">
                 <field name="name">Some other record</field>

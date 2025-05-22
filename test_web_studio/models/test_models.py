@@ -46,6 +46,8 @@ class TestStudio_ExportModel2(models.Model):
     name = fields.Char()
     model2_id = fields.Many2one("test.studio_export.model2")
     model3_id = fields.Many2one("test.studio_export.model3")
+    res_model = fields.Char()
+    res_id = fields.Many2oneReference(model_field="res_model")
 
 
 class TestStudio_ExportModel3(models.Model):

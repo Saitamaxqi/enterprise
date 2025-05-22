@@ -442,6 +442,12 @@ class StudioExportUtils:
         if field.type in ('many2one', 'one2many', 'many2many', 'reference'):
             return record[field.name]
 
+        if field.type == 'many2one_reference':
+            related_model = record[field.model_field]
+            if not related_model:
+                return
+            return record.env[related_model].browse(record[field.name])
+
         if field.model_name == 'ir.model.fields':
             # Some fields (depends, related, relation_field) are of type char, but
             # refer to other fields that must be defined beforehand
