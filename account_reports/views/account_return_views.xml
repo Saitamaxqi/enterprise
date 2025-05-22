@@ -17,6 +17,7 @@
                     <field name="is_main_company_active"/>
                     <field name="show_companies"/>
                     <field name="show_amount_to_pay"/>
+                    <field name="date_submission"/>
 
                     <t t-name="card" class="p-0 border-start-0">
                         <div class="border-start border-3" t-att-class="{'border-dark': !record.is_completed.raw_value, 'border-success': record.is_completed.raw_value}"/>
@@ -33,7 +34,7 @@
                                         </div>
                                     </div>
                                     <div class="row o_field_widget">
-                                        <t t-if="!date_submission">
+                                        <t t-if="!record.date_submission.raw_value">
                                             <span class="oe_stat_text pe-1 text-info">Deadline: </span><field class="oe_stat_value ps-0 text-info" name="date_deadline"/>
                                         </t>
                                         <t t-else="">
