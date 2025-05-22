@@ -1203,7 +1203,6 @@ class L10n_InGstReturnPeriod(models.Model):
             return_json['hsn'] = {
                 hsn_section: _process_hsn_data(hsn_json[hsn_section])
                 for hsn_section in hsn_json
-                if hsn_json.get(hsn_section)
             }
         return return_json
 
@@ -1225,6 +1224,8 @@ class L10n_InGstReturnPeriod(models.Model):
                 raise ValidationError(_("Can not send GSTR-1 data because the required scheduled action '%s' is not active.\nPlease contact your system administrator.", cron_sudo.cron_name))
 
         self._check_config(next_gst_action='send_gstr1')
+        if not self.env['account.move.line'].search_count(self._get_section_domain('hsn'), limit=1):
+            raise ValidationError(_("There are no transactions available for the current period to send for GSTR-1 filing."))
         self.sudo().write({
             "gstr1_error": False,
             "gstr1_blocking_level": False,
