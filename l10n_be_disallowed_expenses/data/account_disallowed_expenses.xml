@@ -21,7 +21,7 @@
             <field name="rate_ids">
                 <record id="1203_2_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">0</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>
@@ -45,7 +45,7 @@
             <field name="rate_ids">
                 <record id="1205_1_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">0</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>
@@ -57,7 +57,7 @@
             <field name="rate_ids">
                 <record id="1205_2_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">75</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>
@@ -87,7 +87,7 @@
             <field name="rate_ids">
                 <record id="1207_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">50</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>
@@ -99,7 +99,7 @@
             <field name="rate_ids">
                 <record id="1208_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">69</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>
@@ -111,7 +111,7 @@
             <field name="rate_ids">
                 <record id="1208_1_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">50</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>
@@ -165,7 +165,7 @@
             <field name="rate_ids">
                 <record id="1216_1_rate_1" model="account.disallowed.expenses.rate">
                     <field name="rate">120</field>
-                    <field name="date_from" eval="datetime.now()"/>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
         </record>

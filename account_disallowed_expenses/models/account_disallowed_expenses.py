@@ -34,8 +34,8 @@ class AccountDisallowedExpensesCategory(models.Model):
     def _compute_current_rate(self):
         rates = self._get_current_rates()
         for rec in self:
-            rate = rates.get(rec._origin.id)
-            rec.current_rate = ('%g%%' % rate) if rate else None
+            rate = rates.get(rec._origin.id, 100)
+            rec.current_rate = ('%g%%' % rate)
 
     def _get_current_rates(self):
         if not self.ids:
@@ -45,7 +45,7 @@ class AccountDisallowedExpensesCategory(models.Model):
                     DISTINCT category_id,
                     first_value(rate) OVER (PARTITION BY category_id ORDER BY date_from DESC)
                 FROM account_disallowed_expenses_rate
-                WHERE date_from < CURRENT_DATE
+                WHERE date_from <= CURRENT_DATE
                 AND category_id IN %s """,
             tuple(self.ids),
         )))

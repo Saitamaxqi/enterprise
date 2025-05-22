@@ -354,6 +354,8 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         return all(values[key][0] == x for x in values[key]) and values[key][0]
 
     def _get_current_rate(self, values):
+        if all(v is None for v in values['account_rate']):
+            return '100.00%'
         return self._get_single_value(values, 'account_rate') or None
 
     def _get_current_disallowed_amount(self, values):
