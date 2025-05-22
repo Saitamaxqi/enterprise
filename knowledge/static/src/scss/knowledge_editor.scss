@@ -5,23 +5,18 @@
     }
 }
 
-@include media-breakpoint-down(xl) {
-    .o_knowledge_editor .o_field_knowledge_html_field_container:not(.oe_empty) .note-editable,
-    .o_knowledge_editor .o_readonly {
-        padding-bottom: 1rem !important; //overriding html field's padding (web_enterprise style)
+@media screen {
+    @include media-breakpoint-down(xl) {
+        .o_knowledge_editor:not(:has(.o_knowledge_helper)) .note-editable,
+        .o_knowledge_editor:not(:has(.o_knowledge_helper)) .o_readonly {
+            padding-bottom: 1rem;
+        }
     }
-}
 
-@include media-breakpoint-up(lg) {
-    .o_knowledge_editor .o_field_knowledge_html_field_container:not(.oe_empty) .note-editable,
-    .o_knowledge_editor .o_readonly {
-        padding-bottom: 50vh !important; //overriding html field's padding (web_enterprise style)
-    }
-}
-
-@media print {
-    .o_knowledge_editor .note-editable,
-    .o_knowledge_editor .o_readonly {
-        padding-bottom: 0 !important; // overriding html field's padding (web_enterprise style)
+    @include media-breakpoint-up(lg) {
+        .o_knowledge_editor:not(:has(.o_knowledge_helper)) .note-editable,
+        .o_knowledge_editor:not(:has(.o_knowledge_helper)) .o_readonly {
+            padding-bottom: 50vh;
+        }
     }
 }
