@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 from itertools import product
 
 from odoo import Command, _, api, fields, models, SUPERUSER_ID
+from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -654,6 +655,7 @@ class AccountBankStatementLine(models.Model):
         self._create_account_model_fee(account_id)
         account_move_line = self.line_ids.filtered(lambda line: line.id == aml_id)
         account_move_line.account_id = account_id
+        account_move_line.move_id._compute_checked()  # to add to compute dependencies
 
         self._handle_reconciliation_rule(account_move_line, account_id)
         new_rule = self._check_and_create_reconciliation_rule(account_id, self.env.company.id)
@@ -966,6 +968,7 @@ class AccountBankStatementLine(models.Model):
                 currency_id=move_line.currency_id.id,
                 reconciled_lines_ids=[Command.set(move_line.ids)],
             ))
+            self.move_id._compute_checked()  # to add to compute dependencies
 
         if is_early_payment_discount and open_amount_currency and self._qualifies_for_early_payment(transaction_currency, open_amount_currency, total_early_payment_discount):
             new_lines.extend(self._set_early_payment_discount_lines(early_pay_aml_values_list, open_balance))
@@ -1080,6 +1083,9 @@ class AccountBankStatementLine(models.Model):
             :param move_line_ids: A list of move line IDs to be deleted.
         """
         self.ensure_one()
+        if self.checked and self.is_reconciled and not self.move_id._is_user_able_to_review():
+            raise ValidationError(_("Validated entries can only be changed by your accountant."))
+
         move_lines_to_remove = self.env['account.move.line'].browse(move_line_ids)
         liquidity_line, _suspense_lines, other_lines = self._seek_for_lines()
 
@@ -1097,6 +1103,9 @@ class AccountBankStatementLine(models.Model):
             :param record_data: A dictionary containing the data to update the move line with.
         """
         self.ensure_one()
+        if self.checked and self.is_reconciled and not self.move_id._is_user_able_to_review():
+            raise ValidationError(_("Validated entries can only be changed by your accountant."))
+
         move_line_to_edit = self.env['account.move.line'].browse(move_line_id)
         liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
 

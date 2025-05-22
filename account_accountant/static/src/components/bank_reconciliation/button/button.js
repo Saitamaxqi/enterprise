@@ -8,6 +8,7 @@ export class BankRecButton extends Component {
         action: { type: Function, optional: true },
         count: { type: [Number, { value: null }], optional: true },
         primary: { type: Boolean, optional: true },
+        toReview: { type: Boolean, optional: true },
     };
     static defaultProps = {
         primary: false,

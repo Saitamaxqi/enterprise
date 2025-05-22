@@ -31,7 +31,7 @@ class TestAccountAsset(TestAccountReportsCommon):
         moves_to_post = cls.env['account.move'].search([
             ('state', '=', 'draft'),
             ('auto_post', '!=', 'no'),
-            '|', ('checked', '=', True), ('journal_id.autocheck_on_post', '=', True),
+            ('checked', '=', True),
         ])
         moves_to_post._post()
 

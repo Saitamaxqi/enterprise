@@ -20,6 +20,17 @@ export class BankRecKanbanController extends KanbanController {
         this.env.bus.trigger("createRecordQuickCreate");
     }
 
+    getCheckedField() {
+        return {
+            fields: {
+                checked: { name: "checked", type: "char", }
+            },
+            activeFields : {
+                checked: makeActiveField(),
+            }
+        }
+    }
+
     get modelParams() {
         const params = super.modelParams;
         params.config.activeFields.move_id = makeActiveField();
@@ -28,9 +39,11 @@ export class BankRecKanbanController extends KanbanController {
                 id: { name: "id", type: "int" },
                 display_name: { name: "display_name", type: "char" },
                 attachment_ids: { name: "attachment_ids", type: "one2many" },
+                checked: { name: "checked", type: "char" },
             },
             activeFields: {
                 attachment_ids: makeActiveField(),
+                checked: makeActiveField(),
             },
         };
 
@@ -218,6 +231,9 @@ export class BankRecKanbanController extends KanbanController {
                     move_id: makeActiveField(),
                 },
             };
+        params.config.activeFields.line_ids.related.activeFields.reconciled_lines_ids.related.activeFields.move_id.related = this.getCheckedField();
+        params.config.activeFields.line_ids.related.activeFields.reconciled_lines_excluding_exchange_diff_ids.related.activeFields.move_id.related = this.getCheckedField();
+        params.config.activeFields.line_ids.related.activeFields.move_id.related = this.getCheckedField();
         params.config.activeFields.line_ids.related.activeFields.partner_id.related = {
             fields: {
                 id: { name: "id", type: "int" },

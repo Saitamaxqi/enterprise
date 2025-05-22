@@ -1,10 +1,10 @@
 import { Component, useRef } from "@odoo/owl";
-import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "../bank_reconciliation_service";
 import { usePopover } from "@web/core/popover/popover_hook";
+import { BankRecFormDialog } from "../bankrec_form_dialog/bankrec_form_dialog";
 import { BankRecLineInfoPopOver } from "../line_info_pop_over/line_info_pop_over";
 
 export class BankRecLineToReconcile extends Component {
@@ -46,12 +46,13 @@ export class BankRecLineToReconcile extends Component {
      *   - Updates the chatter on the related journal entry.
      */
     toggleEditLine() {
-        this.dialogService.add(FormViewDialog, {
+        this.dialogService.add(BankRecFormDialog, {
             title: _t("Edit Line"),
             resModel: "account.move.line",
             resId: this.lineData.id,
             context: {
                 form_view_ref: "account_accountant.view_bank_rec_edit_line",
+                is_reviewed: this.lineData.move_id.checked,
             },
             onRecordSave: async (record) => {
                 await this.orm.call("account.bank.statement.line", "edit_reconcile_line", [

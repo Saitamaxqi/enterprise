@@ -6,7 +6,7 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_account_invoice_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="//filter[@name='to_check']" position="after">
+                <xpath expr="//filter[@name='out_refund']" position="after">
                     <filter name="has_sdd_mandate" string="SDD Mandate" domain="[('sdd_has_usable_mandate', '=', True)]" help="Invoices matching a valid SEPA Direct Debit Mandate"/>
                 </xpath>
             </field>

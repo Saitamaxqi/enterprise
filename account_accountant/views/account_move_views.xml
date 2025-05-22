@@ -108,7 +108,7 @@
         <field name="name">account.move.line.bank.rec.edit.line</field>
         <field name="model">account.move.line</field>
         <field name="arch" type="xml">
-            <form string="Journal Item">
+            <form string="Journal Item" js_class="bankrec_edit_line">
                 <sheet>
                     <group>
                         <group name="left_group">

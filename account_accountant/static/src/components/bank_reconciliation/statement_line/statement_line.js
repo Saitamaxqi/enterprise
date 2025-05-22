@@ -3,8 +3,9 @@ import { BankRecLineToReconcile } from "../line_to_reconcile/line_to_reconcile";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { formatMonetary } from "@web/views/fields/formatters";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { useState } from "@odoo/owl";
+import { onWillStart, useState } from "@odoo/owl";
 import { useBankReconciliation } from "../bank_reconciliation_service";
 
 export class BankRecStatementLine extends KanbanRecord {
@@ -27,6 +28,9 @@ export class BankRecStatementLine extends KanbanRecord {
         if (this.env.model.config.context?.default_st_line_id) {
             this.state.isUnfolded = true;
         }
+        onWillStart(async () => {
+            this.userCanReview = await user.hasGroup("account.group_account_user");
+        })
     }
 
     // -----------------------------------------------------------------------------

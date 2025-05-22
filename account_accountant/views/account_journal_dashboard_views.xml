@@ -31,7 +31,7 @@
                 <t t-if="dashboard.number_to_check > 0">
                     <div class="row" groups="account.group_account_readonly">
                         <div class="col overflow-hidden text-start">
-                            <a type="object" name="action_open_to_check"><t t-out="dashboard.number_to_check"/> to check</a>
+                            <a type="object" name="action_open_to_check"><t t-out="dashboard.number_to_check"/> To Review</a>
                         </div>
                         <div class="col-auto text-end">
                             <span dir="ltr"><t t-out="dashboard.to_check_balance"/></span>

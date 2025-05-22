@@ -233,6 +233,17 @@ export class BankRecButtonList extends Component {
         });
     }
 
+    /**
+     * Set the move of the statement line as to check
+     */
+    async setStatementLineAsReviewed() {
+        await this.orm.call("account.move", "set_moves_checked", [
+            this.statementLineData.move_id.id,
+        ]);
+        this.props.statementLine.load();
+        this.bankReconciliation.reloadChatter();
+    }
+
     // -----------------------------------------------------------------------------
     // Reconciliation Model
     // -----------------------------------------------------------------------------
@@ -373,6 +384,14 @@ export class BankRecButtonList extends Component {
             };
         }
 
+        if (this.props.statementLine.data.is_reconciled && !this.props.statementLine.data.checked) {
+            buttonsToDisplay.toReview = {
+                label: _t("Reviewed"),
+                action: this.setStatementLineAsReviewed.bind(this),
+                toReview: true,
+            };
+        }
+
         if (!this.ui.isSmall) {
             for (const model of this.props.reconcileModels
                 .filter((model) => model.id !== this.props?.preSelectedReconciliationModel?.id)
@@ -394,6 +413,10 @@ export class BankRecButtonList extends Component {
      */
     get buttonsToDisplay() {
         const buttons = this.buttons || {};
+
+        if (buttons.toReview) {
+            return [buttons.toReview];
+        }
 
         // This ensures that all buttons are visible in secondary when reco model is primary
         if (this.props.preSelectedReconciliationModel && !this.props.isTopLine) {

@@ -59,7 +59,12 @@
             </button>
             <groupby name="partner_id" position="after">
                 <groupby name="move_id">
-                    <button name="button_set_checked" type="object" string="Set as Checked" invisible="checked or state == 'draft'"/>
+                    <button name="button_set_checked"
+                            class="btn-info"
+                            type="object"
+                            string="Set as Reviewed"
+                            invisible="checked or state == 'draft'"
+                            groups="account.group_account_user"/>
                 </groupby>
             </groupby>
             <field name="invoice_date" position="attributes">

@@ -108,6 +108,8 @@
                     <filter name="deposits" string="Deposits" domain="[('amount', '>', 0.0)]"/>
                     <filter name="payments" string="Payments" domain="[('amount', '&lt;', 0.0)]"/>
                     <separator/>
+                    <filter name="to_check" string="To Review" domain="[('checked', '=', False)]"/>
+                    <separator/>
                     <filter name="no_statement" string="No statement" domain="[('statement_id', '=', False)]"/>
                     <filter name="invalid_statement" string="Invalid statements"
                             domain="['|',('statement_complete', '=', False), ('statement_valid', '=', False)]"/>

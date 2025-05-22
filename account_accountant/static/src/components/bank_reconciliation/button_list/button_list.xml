@@ -2,7 +2,7 @@
 <templates>
     <t t-name="account_accountant.BankRecButtonList">
         <div class="d-flex gap-1">
-            <t t-if="props.isTopLine and props.preSelectedReconciliationModel">
+            <t t-if="props.isTopLine and props.preSelectedReconciliationModel and !props.statementLine.data.is_reconciled">
                 <BankRecButton
                     label="props.preSelectedReconciliationModel.display_name"
                     primary="true"
