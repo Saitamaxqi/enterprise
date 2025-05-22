@@ -194,4 +194,4 @@ class TestRecruitmentExtractProcess(TestHrCommon, TestExtractMixin):
             [('applicant_id', '=', self.applicant.id)],
         ).mapped('skill_id.id')
 
-        self.assertCountEqual(created_applicant_skills, skill_type.skill_ids.mapped('id'))
+        self.assertCountEqual(created_applicant_skills, skill_type.skill_ids.ids)

@@ -2918,7 +2918,7 @@ class KnowledgeArticle(models.Model):
         } for article_item in article_items])
 
         stages_by_parent_id = self.env['knowledge.article.stage'].search([
-            ('parent_id', 'in', article_items.mapped('id'))
+            ('parent_id', 'in', article_items.ids)
         ]).grouped('parent_id')
 
         for article_item, new_article_item in zip(article_items, new_article_items):

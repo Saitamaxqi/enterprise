@@ -26,7 +26,7 @@ class IrAttachment(models.Model):
                 .mapped('res_id')
             )
             .filtered(lambda thread: thread.has_access('read'))
-            .mapped('id')
+            .ids
         )
         attachments_with_token  = self.filtered(
             lambda attachment:

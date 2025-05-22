@@ -249,5 +249,5 @@ class SignRequestCommon(TransactionCase):
             str(sign_id): 'a'
             for sign_id in sign_item_ids
             .filtered(lambda r: not r.responsible_id or r.responsible_id.id == role_id)
-            .mapped('id')
+            .ids
         }

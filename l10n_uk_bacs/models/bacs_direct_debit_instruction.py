@@ -85,7 +85,7 @@ class BacsDdi(models.Model):
 
     def _compute_from_moves(self):
         ''' Retrieve the invoices reconciled to the payments through the reconciliation (account.partial.reconcile). '''
-        stored_ddis = self.mapped('id')
+        stored_ddis = self.ids
         if not stored_ddis:
             self.paid_invoices_len = 0
             self.payments_len = 0

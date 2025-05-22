@@ -441,7 +441,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_receipt_product_not_consecutively', login='admin', timeout=180)
 
         self.assertEqual(len(receipt_picking.move_line_ids), 2)
-        self.assertEqual(receipt_picking.move_line_ids.product_id.mapped('id'), [self.product1.id, self.product2.id])
+        self.assertEqual(receipt_picking.move_line_ids.product_id.ids, [self.product1.id, self.product2.id])
         self.assertEqual(receipt_picking.move_line_ids.mapped('quantity'), [2, 1])
 
     def test_delivery_source_location(self):

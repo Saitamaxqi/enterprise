@@ -4507,7 +4507,7 @@ class AccountReport(models.Model):
             },
             'domain': [('id', 'in', self._get_variants(options['variants_source_id']).filtered(
                 lambda x: x._is_available_for(options)
-            ).mapped('id'))],
+            ).ids)],
         }
 
     def _get_audit_line_domain(self, column_group_options, expression, params):

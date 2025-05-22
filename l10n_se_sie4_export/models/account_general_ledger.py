@@ -125,9 +125,9 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         report._init_currency_table(prev_year_options)
         report._init_currency_table(options)
         report._init_currency_table(next_year_options)
-        prev_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.mapped('id'), prev_year_options)
-        curr_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.mapped('id'), options)
-        next_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.mapped('id'), next_year_options)
+        prev_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.ids, prev_year_options)
+        curr_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.ids, options)
+        next_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.ids, next_year_options)
 
         for ib_values in (prev_ib_values, curr_ib_values, next_ib_values):
             for account_id, (account, ib_map) in ib_values.items():
