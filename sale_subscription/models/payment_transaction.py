@@ -50,10 +50,11 @@ class PaymentTransaction(models.Model):
         # Convert start and end dates into datetime by setting the time to midnight.
         # Payment providers require the start_datetime of the mandate to not be lesser than yesterday
         # e.g., stripe: https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card-mandate_options-start_date
+        current_time = fields.Datetime.now()
+        start_date = self.sale_order_ids.start_date or current_time
         start_datetime = max(
-            self.sale_order_ids.start_date and datetime.combine(
-                self.sale_order_ids.start_date, time()
-            ), fields.Datetime.now() - timedelta(days=1)
+            datetime.combine(start_date, time()),
+            current_time - timedelta(days=1)
         )
         end_datetime = self.sale_order_ids.end_date \
             and datetime.combine(self.sale_order_ids.end_date, time())

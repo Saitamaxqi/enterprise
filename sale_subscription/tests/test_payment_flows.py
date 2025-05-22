@@ -287,3 +287,15 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
         self.assertEqual(res.status_code, 200, "Response should = OK")
         content = res.content.decode("utf-8")
         self.assertTrue("There is nothing to pay." in content, "There is nothing to pay for payment link of renewed order")
+
+    def test_check_mandate_no_start_date(self):
+        now = fields.Datetime.now()
+        self.subscription.write({'start_date': None})
+        tx = self._create_transaction(
+            'direct', tokenize=True, sale_order_ids=[self.subscription.id]
+        )
+        tx_mandate_values = tx._get_mandate_values()
+        self.assertGreaterEqual(
+            tx_mandate_values['start_datetime'].timestamp(), (now - timedelta(days=1)).timestamp(),
+            f"Subscription mandate should start at least {now}",
+        )
