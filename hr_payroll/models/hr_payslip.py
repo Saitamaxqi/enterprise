@@ -1108,7 +1108,7 @@ class HrPayslip(models.Model):
             cache[key] = format_date(env=self.env, value=date, lang_code=lang, date_format=date_format)
         return cache[key]
 
-    @api.depends('employee_id', 'struct_id', 'date_from', 'date_to')
+    @api.depends('employee_id.legal_name', 'employee_id.lang', 'struct_id', 'date_from', 'date_to')
     def _compute_name(self):
         formated_date_cache = {}
         for slip in self.filtered(lambda p: p.employee_id and p.date_from and p.date_to):
