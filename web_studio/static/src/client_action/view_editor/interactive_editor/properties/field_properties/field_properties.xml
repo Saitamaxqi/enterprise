@@ -76,6 +76,16 @@
                 <i class="fa fa-pencil"/> Edit Values
             </button>
         </t>
+        <Property
+            t-if="isAttributeSupported('width')"
+            name="'width'"
+            tooltip.translate="If not set, the width is automatically computed to fit optimally"
+            type="'string'"
+            value="props.node.attrs.width || props.node.field.width"
+            onChange.bind="onChangeAttribute"
+        >
+            Column Width (px)
+        </Property>
     </ViewStructureProperties>
     </div>
 </t>

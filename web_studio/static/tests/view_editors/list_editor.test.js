@@ -1632,3 +1632,23 @@ test("groupby fields should not be included", async () => {
     await contains(".modal .btn-primary").click();
     expect.verifySteps(["edit_view"]);
 });
+
+test("field column width in list editor", async () => {
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect.step("edit_view");
+        expect(params.operations[0].new_attrs).toEqual({
+            width: "100",
+        });
+    });
+    await mountViewEditor({
+        type: "list",
+        resModel: "partner",
+        arch: `<list><field name='display_name'/></list>`,
+    });
+
+    await contains(".o_web_studio_view_renderer [data-studio-xpath").click();
+    expect(".o_web_studio_sidebar .o_web_studio_property_width").toHaveCount(1);
+    await contains(".o_web_studio_sidebar .o_web_studio_property_width input").edit(100);
+    expect.verifySteps(["edit_view"]);
+});

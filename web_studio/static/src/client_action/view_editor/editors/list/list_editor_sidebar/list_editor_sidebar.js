@@ -68,6 +68,7 @@ export class ListEditorSidebar extends Component {
                         "string",
                         "help",
                         "optional",
+                        "width",
                     ],
                 },
             },
