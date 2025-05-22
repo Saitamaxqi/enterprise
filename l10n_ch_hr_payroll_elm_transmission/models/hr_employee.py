@@ -163,6 +163,16 @@ It involves additional information required to account for the specific characte
     l10n_ch_municipality = fields.Char(compute="_compute_autocomplete_private_address", store=True, readonly=False)
     private_city = fields.Char(compute="_compute_autocomplete_private_address", store=True, readonly=False)
 
+    @api.depends('l10n_ch_legal_first_name', 'l10n_ch_legal_last_name')
+    def _compute_legal_name(self):
+        ch_employees = self.filtered(lambda e: e.company_id.country_code == 'CH')
+        for employee in ch_employees:
+            if employee.l10n_ch_legal_first_name and employee.l10n_ch_legal_last_name:
+                employee.legal_name = f'{employee.l10n_ch_legal_first_name} {employee.l10n_ch_legal_last_name}'
+            else:
+                employee.legal_name = employee.name
+        super(HrEmployee, self - ch_employees)._compute_legal_name()
+
     @api.constrains("l10n_ch_foreign_tax_id")
     def _check_l10n_ch_foreign_tax_id(self):
         pattern = r"[A-Z]{6}[0-9]{2}(A|B|C|D|E|H|L|M|P|R|S|T)[0-9]{2}[A-Z]{1}[0-9]{3}[A-Z]{1}"
