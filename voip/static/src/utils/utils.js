@@ -1,4 +1,4 @@
-import { normalize } from "@voip/utils/normalize";
+import { normalize } from "@web/core/l10n/utils";
 
 /**
  * Removes whitespaces, dashes, slashes and periods from a phone number.

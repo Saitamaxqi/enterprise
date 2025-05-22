@@ -5,9 +5,9 @@ import { Component, htmlEscape, markup, useEffect, useRef } from "@odoo/owl";
 
 import { KeypadModel } from "@voip/softphone/softphone_model";
 import { tabComponents } from "@voip/softphone/tab";
-import { normalize, normalizedMatch } from "@voip/utils/normalize";
 
 import { _t } from "@web/core/l10n/translation";
+import { normalize, normalizedMatch } from "@web/core/l10n/utils";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { escapeRegExp } from "@web/core/utils/strings";
