@@ -239,7 +239,7 @@
                                 <strong t-else="">Event Details</strong>
                             </t>
                             <li t-if="appointment_type_manage_capacity"><strong>Booked for: </strong> <t t-out="resource_total_capacity_reserved"/></li>
-                            <li t-if="appointment_type_id"><strong>Type: </strong> <t t-out="appointment_type_id[1]"/></li>
+                            <li t-if="appointment_type_id"><strong>Type: </strong> <t t-out="appointment_type_id.display_name"/></li>
                             <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
                             <li><strong>Stop Date: </strong> <t t-out="stop.toFormat('f')"/></li>
                             <li t-if="appointment_status" class="o_field_selection d-flex align-items-center gap-2 mt-2">
