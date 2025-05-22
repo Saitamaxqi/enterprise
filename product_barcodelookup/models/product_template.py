@@ -214,7 +214,7 @@ class ProductTemplate(models.Model):
         for product in products:
             if 'is_published' in product and not self.env.context.get('website_published') and product.public_categ_ids:
                 product.is_published = True
-            if 'available_in_pos' in product and not self.env.context.get('can_be_sold') and product.pos_categ_ids:
+            if 'available_in_pos' in product and not self.env.context.get('can_be_sold') and product.sudo().pos_categ_ids:
                 product.available_in_pos = True
         return products
 
