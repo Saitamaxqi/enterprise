@@ -120,6 +120,7 @@ export class UserAgent extends Reactive {
             ),
             sessionDescriptionHandlerFactoryOptions: { iceGatheringTimeout: 1000 },
             transportOptions: {
+                keepAliveInterval: 20,
                 server: this.voip.webSocketUrl,
                 traceSip: isDebug,
             },
