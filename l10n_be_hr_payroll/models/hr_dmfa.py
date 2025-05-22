@@ -875,7 +875,7 @@ class L10n_BeDmfa(models.Model):
     ], default='normal', compute='_compute_validation_state', store=True)
     error_message = fields.Char(store=True, compute='_compute_validation_state', string="Error Message")
 
-    __unique = models.Constraint(
+    _unique = models.Constraint(
         'unique (company_id, year, quarter, file_type)',
         "Only one DMFA per year/ quarter / declaration type is allowed. Another one already exists.",
     )
@@ -1212,7 +1212,7 @@ class L10n_BeDmfaLocationUnit(models.Model):
         self.ensure_one()
         return self.code
 
-    __unique = models.Constraint(
+    _unique = models.Constraint(
         'unique (company_id, partner_id)',
         "A DMFA location cannot be set more than once for the same company and partner.",
     )

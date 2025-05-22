@@ -20,7 +20,7 @@ class HrRuleParameterValue(models.Model):
     parameter_value = fields.Text(help="Python data structure")
     country_id = fields.Many2one(related="rule_parameter_id.country_id")
 
-    __unique = models.Constraint(
+    _unique_parameter = models.Constraint(
         'unique (rule_parameter_id, date_from)',
         "Two rules with the same code cannot start the same day",
     )
@@ -63,7 +63,7 @@ class HrRuleParameter(models.Model):
     salary_rule_ids = fields.One2many('hr.salary.rule', compute='_compute_salary_rule', string='Salary Rules')
     salary_rule_count = fields.Integer(compute='_compute_salary_rule')
 
-    __unique = models.Constraint(
+    _unique_code = models.Constraint(
         'unique (code)',
         "Two rule parameters cannot have the same code.",
     )

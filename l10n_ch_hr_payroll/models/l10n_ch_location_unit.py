@@ -51,7 +51,7 @@ class L10nChLocationUnit(models.Model):
     weekly_hours = fields.Float(string="Weekly Hours", default=40)
     weekly_lessons = fields.Float(string="Weekly Lessons")
 
-    __unique = models.Constraint(
+    _unique = models.Constraint(
         'unique (company_id, partner_id)',
         "A work location cannot be set more than once for the same company and partner.",
     )

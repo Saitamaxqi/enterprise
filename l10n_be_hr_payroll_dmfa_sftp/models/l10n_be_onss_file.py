@@ -115,7 +115,7 @@ class L10nBeOnssFile(models.Model):
     employee_id = fields.Many2one('hr.employee')
     company_id = fields.Many2one('res.company', related="onss_declaration_id.company_id", store=True)
 
-    __unique = models.Constraint(
+    _unique = models.Constraint(
         'unique (name)',
         "ONSS file name should be unique!",
     )
