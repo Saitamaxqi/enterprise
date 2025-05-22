@@ -676,6 +676,8 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         # required fields on invoice
         if not move.l10n_co_dian_post_time:
             constraints['l10n_co_dian_post_time'] = _("A posted time is required to compute the CUFE/CUDE/CUDS.")
+        if not move.l10n_co_edi_type:
+            constraints['l10n_co_edi_type'] = _("An Electronic Invoice Type must be selected before sending the invoice.")
         # required fields on company
         operation_mode = self._dian_get_operation_mode(move)
         if not operation_mode:
@@ -971,7 +973,7 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
 
     def _dian_get_document_type_code(self, invoice):
         """ Returns the document type, used for the 'InvoiceTypeCode'/'CreditNoteTypeCode' node """
-        if not invoice.l10n_co_edi_is_support_document:
+        if not invoice.l10n_co_edi_is_support_document and invoice.l10n_co_edi_type:
             return invoice.l10n_co_edi_type.rjust(2, '0')
         elif invoice.move_type == 'in_refund':
             return '95'  # Nota de ajuste al documento soporte

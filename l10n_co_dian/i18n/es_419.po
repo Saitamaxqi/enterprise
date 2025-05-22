@@ -327,6 +327,12 @@ msgstr "El porcentaje de alcohol debe establecerse en el campo del %(field_descr
 " para el producto: %(product_name)s al usar impuestos ICL."
 
 #. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid "An Electronic Invoice Type must be selected before sending the invoice."
+msgstr "Debe seleccionar un Tipo de Documento Electrónico antes de enviar la factura."
+
+#. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__attachment_id
 msgid "Attachment"
 msgstr "Adjunto"
