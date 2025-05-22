@@ -219,7 +219,7 @@ export class KanbanEditorSidebar extends Component {
     }
 
     async editDefaultGroupBy(value) {
-        await this.editAttribute(value, "default_group_by");
+        await this.editAttribute(value || "", "default_group_by");
         this.getGroupByField();
     }
 

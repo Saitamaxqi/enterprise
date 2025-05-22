@@ -2048,3 +2048,27 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         field_name = self.env["ir.model.fields"]._get("res.partner", "name")
         ir_default = self.env["ir.default"].search(["&", ("field_id", "=", field_name.id), ("company_id", "=", company2.id)])
         self.assertEqual(ir_default.json_value, '"from studio"')
+
+    def test_empty_default_group_by(self):
+        self.testView.write({
+            "type": "kanban",
+            "arch": '''<kanban default_group_by="active">
+                <templates>
+                    <t t-name="card">
+                        <field name="display_name"/>
+                    </t>
+                </templates>
+            </kanban>
+        '''
+        })
+        self.testAction.write({
+            "view_ids": [Command.clear(), Command.create({"view_id": self.testView.id, "view_mode": "kanban"})]
+        })
+        self.start_tour("/odoo?debug=tests", 'web_studio_empty_default_group_by', login="admin")
+        studio_view = _get_studio_view(self.testView)
+        assertViewArchEqual(self, studio_view.arch, '''
+        <data>
+            <xpath expr="//kanban[1]" position="attributes">
+                <attribute name="default_group_by"/>
+            </xpath>
+        </data>''')

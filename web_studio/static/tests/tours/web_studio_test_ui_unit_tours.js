@@ -2114,3 +2114,29 @@ registry.category("web_tour.tours").add("web_studio_test_default_value_company",
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_empty_default_group_by", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_kanban_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_kanban_view_editor",
+        },
+        {
+            trigger: 'div[name="default_group_by"] .o_select_menu_toggler_clear',
+            run: "click",
+        },
+        {
+            trigger: 'div[name="default_group_by"]:not(:has(.o_select_menu_toggler_clear))',
+        },
+    ],
+});
