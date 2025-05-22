@@ -65,6 +65,12 @@ class StockMove(models.Model):
             self.picked = True
         return True
 
+    def action_undo(self):
+        if self.check_id:
+            self.check_id.write({'quality_state': 'none'})
+        self.picked = False
+        self.quantity = self.product_uom_qty
+
     def get_quant_from_barcode(self, barcode):
         self.ensure_one()
         if self.product_id.tracking == 'none':

@@ -38,6 +38,13 @@ export class StockMove extends QualityCheck {
         return this.check ? super.label : this.props.record.data.product_id.display_name;
     }
 
+    get icon() {
+        if (this.isTracked) {
+            return this.displayCheck ? "check" : "plus"; // Make sure to display check for prefilled quality check moves
+        }
+        return this.isComplete ? "undo" : "pencil"; // No move lines for untracked moves, work directly on the move
+    }
+
     get isComplete() {
         return this.check ? super.isComplete : Boolean(this.props.record.data.picked);
     }
@@ -72,42 +79,33 @@ export class StockMove extends QualityCheck {
     }
 
     get visibleMoveLines() {
-        const { move_line_ids, picking_type_prefill_shop_floor_lots, has_tracking } =
-            this.props.record.data;
-        return picking_type_prefill_shop_floor_lots || has_tracking === "none"
+        if (!this.isTracked) {
+            return [];
+        }
+        const { move_line_ids, picking_type_prefill_shop_floor_lots } = this.props.record.data;
+        return picking_type_prefill_shop_floor_lots
             ? move_line_ids.records
             : move_line_ids.records.filter((ml) => ml.data.picked);
     }
 
     get displayCheck() {
-        const { picking_type_prefill_shop_floor_lots, has_tracking } = this.props.record.data;
         return (
             this.check &&
             !this.isComplete &&
-            (!has_tracking || picking_type_prefill_shop_floor_lots)
+            this.props.record.data.picking_type_prefill_shop_floor_lots &&
+            this.props.record.data.move_line_ids.records.length
         );
     }
 
-    async doActionAndNext(action, stateToSet = "pass", actionParams = {}) {
-        const { model, resModel, resId, _parentRecord } = this.props.check;
-        const result = await model.orm.call(resModel, action, [resId]);
-        if ("next_check_id" in result) {
-            this.check.quality_state = stateToSet;
-            this.props.record.data.picked = true;
-            _parentRecord.data.current_quality_check_id = [result.next_check_id];
-        }
-        return this.props.startWorking();
+    get isTracked() {
+        return this.props.record.data.has_tracking !== "none";
     }
 
-    clicked() {
-        if (this.displayCheck) {
-            return this.doActionAndNext("action_next");
-        }
-        const tracked = this.props.record.data.has_tracking !== "none";
+    addMoveLine() {
         const product = this.props.record.data.product_id;
         this.dialog.add(MrpSelectQuantDialog, {
             resModel: "stock.quant",
-            noCreate: !tracked,
+            noCreate: !this.isTracked,
             multiSelect: false,
             domain: [["product_id", "=", product.id]],
             title: _t("Add line: %(productName)s", { productName: product.display_name }),
@@ -116,13 +114,52 @@ export class StockMove extends QualityCheck {
                 list_view_ref: "stock.view_stock_quant_tree_simple",
                 search_default_on_hand: true,
                 search_default_in_stock: true,
-                hide_lot: this.props.record.data.has_tracking === "none",
+                hide_lot: !this.isTracked,
                 hide_available: true,
             },
             onSelected: (resIds) => this.selectQuant(resIds),
             onCreateEdit: () => this.createQuant(),
             record: this.props.record,
         });
+    }
+
+    async markAsDone() {
+        const { model, resModel, resId, _parentRecord } = this.props.check;
+        const result = await model.orm.call(resModel, "action_next", [resId]);
+        if ("next_check_id" in result) {
+            this.check.quality_state = "pass";
+            this.props.record.data.picked = true;
+            _parentRecord.data.current_quality_check_id = [result.next_check_id];
+        }
+    }
+
+    async undo() {
+        const { resModel, resId, _parentRecord } = this.props.record;
+        await this.props.record.model.orm.call(resModel, "action_undo", [[resId]]);
+        await this.env.reload(_parentRecord);
+    }
+
+    editUntrackedMove() {
+        this.dialog.add(MrpQuantityDialog, {
+            record: this.props.record,
+            confirm: this.env.reload.bind(this, this.props.record._parentRecord),
+        });
+    }
+
+    async clicked() {
+        if (this.isTracked) {
+            if (this.displayCheck) {
+                await this.markAsDone(); // check button: accept prefilled values and confirm QC
+            } else {
+                this.addMoveLine(); // plus button: add a move line by selecting quant
+            }
+        } else {
+            if (this.isComplete) {
+                await this.undo(); // undo button: reset move data for untracked move
+            } else {
+                this.editUntrackedMove(); // pencil button: edit untracked move quantity
+            }
+        }
         return this.props.startWorking();
     }
 

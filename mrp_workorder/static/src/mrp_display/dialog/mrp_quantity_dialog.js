@@ -13,7 +13,11 @@ export class MrpQuantityDialog extends ConfirmationDialog {
     };
 
     async apply() {
+        const { resModel, model, resId } = this.props.record;
         await this.props.record.save({ reload: false });
+        if (resModel === "stock.move") {
+            await model.orm.call(resModel, "action_pass", [[resId]]);
+        }
         return this._confirm();
     }
 

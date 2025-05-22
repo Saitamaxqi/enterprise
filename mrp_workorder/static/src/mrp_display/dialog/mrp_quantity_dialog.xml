@@ -6,7 +6,8 @@
                 <FloatField name="'quantity'" record="props.record"/>
                 <t t-set-slot="footer">
                     <button class="btn btn-lg btn-primary" t-on-click="apply">Apply</button>
-                    <button class="btn btn-lg btn-danger" t-on-click="remove">Remove</button>
+                    <button t-if="props.record.resModel === 'stock.move.line'"
+                            class="btn btn-lg btn-danger" t-on-click="remove">Remove</button>
                 </t>
             </Dialog>
         </div>
