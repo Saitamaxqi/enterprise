@@ -52,7 +52,6 @@ FIELDS_TO_EXPORT = {
         "trg_selection_field_id",
         "trigger_field_ids",
         "trigger",
-        "url",
     ],
     "ir.actions.act_window": [
         "binding_model_id",
