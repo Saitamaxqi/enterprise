@@ -29,7 +29,6 @@ It gives the Administrator user access to important invoicing features such as b
         'views/account_move_views.xml',
         'views/account_payment_views.xml',
         'views/account_reconcile_views.xml',
-        'views/account_reconcile_model_views.xml',
         'views/account_accountant_menuitems.xml',
         'views/digest_views.xml',
         'views/res_config_settings_views.xml',

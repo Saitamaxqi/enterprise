@@ -191,12 +191,6 @@ class AccountReconcileModel(models.Model):
                 reco_model._trigger_reconciliation_model(st_line)
             processed_st_line_ids.add(st_line_id)
 
-    def run_auto_reconciliation(self):
-        """ Tries to assign/process the button on existing unreconciled statement lines
-        """
-        all_unreconciled_st_lines = self.env['account.bank.statement.line'].search([('is_reconciled', '!=', True)])
-        self._apply_reconcile_models(all_unreconciled_st_lines)
-
     def _trigger_reconciliation_model(self, statement_line):
         self.ensure_one()
         liquidity_line, _suspense_line, _other_lines = statement_line._seek_for_lines()
