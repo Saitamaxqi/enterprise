@@ -818,6 +818,9 @@ class PosOrder(models.Model):
 
         :return: An action to open the wizard.
         """
+        if self.env.company.country_code != "MX":
+            raise UserError(_("You cannot create a global invoice as your company is not Mexican."))
+
         return {
             'name': _("Create Global Invoice"),
             'type': 'ir.actions.act_window',
