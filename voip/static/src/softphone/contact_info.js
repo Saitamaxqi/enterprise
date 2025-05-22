@@ -18,7 +18,7 @@ export class ContactInfo extends Component {
         if (!this.contact) {
             return _t("Default profile picture");
         }
-        return _t("Profile picture of %(user)", { user: this.contact.name });
+        return _t("Profile picture of %(user)s", { user: this.contact.name });
     }
 
     /** @returns {string} */
