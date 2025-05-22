@@ -23,11 +23,6 @@ patch(PosStore.prototype, {
     _loadIotDevice(devices) {
         const iotLongpolling = this.env.services.iot_longpolling;
         for (const device of devices) {
-            // FIXME POSREF this seems like it can't work, we're pushing an id to an array of
-            // objects expected to be of the form { ip, ip_url }, so this seems useless?
-            if (!this.hardwareProxy.iotBoxes.includes(device.iot_id.id)) {
-                this.hardwareProxy.iotBoxes.push(device.iot_id.id);
-            }
             const { deviceControllers } = this.hardwareProxy;
             const { type, identifier } = device;
             const deviceProxy = new DeviceController(iotLongpolling, device);

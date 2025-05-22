@@ -3,6 +3,7 @@ import { registry } from "@web/core/registry";
 import { useDebounced } from "@web/core/utils/timing";
 import { CharField, charField } from "@web/views/fields/char/char_field";
 import { useState } from "@odoo/owl";
+import { formatEndpoint } from "@iot_base/network_utils/http";
 
 const DEBOUNCE_DELAY_MS = 500;
 
@@ -15,12 +16,12 @@ export class SixTerminalIdField extends CharField {
 
         this.sendTerminalIdToIotBox = useDebounced(async (terminalId) => {
             try {
-                const iotBoxUrl = this.props.record.data.iot_box_url;
+                const iotBoxIp = this.props.record.data.iot_box_ip;
                 if (terminalId) {
                     const body = { params: { terminal_id: terminalId } };
                     const headers = new Headers({ "Content-Type": "application/json" });
                     const response = await browser.fetch(
-                        `${iotBoxUrl}/hw_posbox_homepage/six_payment_terminal_add`,
+                        formatEndpoint(iotBoxIp, "/hw_posbox_homepage/six_payment_terminal_add"),
                         {
                             method: "POST",
                             headers,
@@ -30,7 +31,7 @@ export class SixTerminalIdField extends CharField {
                     this.state.terminalIdSentSuccessfully = response.ok;
                 } else {
                     const response = await browser.fetch(
-                        `${iotBoxUrl}/hw_posbox_homepage/six_payment_terminal_clear`
+                        formatEndpoint(iotBoxIp, "/hw_posbox_homepage/six_payment_terminal_clear")
                     );
                     this.state.terminalIdSentSuccessfully = response.ok;
                 }

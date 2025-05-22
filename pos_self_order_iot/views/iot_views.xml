@@ -18,7 +18,6 @@
             <!-- Add screen_orientation to IoT form view -->
             <xpath expr="//form/sheet/group/group/field[last()]" position="after">
                 <field name="screen_orientation" invisible="not can_be_kiosk"/>
-                <field name="ip_url" invisible="True"/>  <!-- The `iot_box_form` js class depends on ip_url -->
             </xpath>
         </field>
     </record>

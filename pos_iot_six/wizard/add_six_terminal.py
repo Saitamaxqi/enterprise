@@ -14,7 +14,7 @@ class Pos_Iot_SixAdd_Six_Terminal(models.TransientModel):
         required=True,
         default=lambda self: self._get_existing_iot_box_id()
     )
-    iot_box_url = fields.Char(related="iot_box_id.ip_url")
+    iot_box_ip = fields.Char(related="iot_box_id.ip")
     six_terminal_id = fields.Char(related="iot_box_id.six_terminal_id", readonly=False)
     terminal_device_id = fields.Many2one("iot.device", string="Terminal Device", required=True, default=lambda self: self._get_existing_terminal_device_id())
 

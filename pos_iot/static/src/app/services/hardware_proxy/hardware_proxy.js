@@ -5,6 +5,7 @@ import {
 import { browser } from "@web/core/browser/browser";
 import { patch } from "@web/core/utils/patch";
 import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
+import { formatEndpoint } from "@iot_base/network_utils/http";
 
 patch(hardwareProxyService, {
     dependencies: [...hardwareProxyService.dependencies, "orm"],
@@ -26,11 +27,11 @@ patch(HardwareProxy.prototype, {
      */
     pingBoxes() {
         this.setConnectionInfo({ status: "connecting" });
-        for (const { ip, ip_url } of this.iotBoxes) {
+        for (const { ip } of this.iotBoxes) {
             const timeoutController = new AbortController();
             setTimeout(() => timeoutController.abort(), 1000);
             browser
-                .fetch(`${ip_url}/hw_proxy/hello`, { signal: timeoutController.signal })
+                .fetch(formatEndpoint(ip, "/hw_proxy/hello"), { signal: timeoutController.signal })
                 .catch(() => ({}))
                 .then((response) => this.setProxyConnectionStatus(ip, response.ok || false));
         }

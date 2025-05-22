@@ -28,10 +28,6 @@ class PosConfig(models.Model):
         models += ['iot.device']
         return models
 
-    def get_available_iot_box_ids(self):
-        self.self_ordering_iot_available_iot_box_ids = self.env['iot.box'].search([('can_be_kiosk', '=', True)])
-        return self.self_ordering_iot_available_iot_box_ids.read(['id', 'name', 'ip_url'])
-
     def action_open_wizard(self):
         """Override the ir.action.act_url to open the kiosk on the selected IoT Boxes (if any)."""
         url_in_new_tab_action = super().action_open_wizard()  # Configure pos session

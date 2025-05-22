@@ -1,8 +1,10 @@
 from datetime import timedelta
 import logging
 import secrets
+from urllib.parse import urlsplit
 
 from odoo import api, fields, models
+from odoo.http import request
 from odoo.addons.iot_base.tools.payload_signature import hmac_sign
 
 _logger = logging.getLogger(__name__)
@@ -17,7 +19,6 @@ class IotBox(models.Model):
     device_ids = fields.One2many('iot.device', 'iot_id', string="Devices")
     device_count = fields.Integer(compute='_compute_device_count')
     ip = fields.Char('Domain Address', readonly=True)
-    ip_url = fields.Char('IoT Box Home Page', readonly=True, compute='_compute_ip_url')
     drivers_auto_update = fields.Boolean('Automatic drivers update', help='Automatically update drivers when the IoT Box boots', default=True)
     version = fields.Char('Image Version', readonly=True)
     company_id = fields.Many2one('res.company', 'Company')
@@ -70,14 +71,6 @@ class IotBox(models.Model):
             ),
         }
 
-    def _compute_ip_url(self):
-        for box in self:
-            if not box.ip:
-                box.ip_url = False
-            else:
-                url = 'https://%s' if box.get_base_url()[:5] == 'https' else 'http://%s:8069'
-                box.ip_url = url % box.ip
-
     def _compute_device_count(self):
         for box in self:
             box.device_count = len(box.device_ids)
@@ -90,9 +83,10 @@ class IotBox(models.Model):
 
     def open_homepage(self):
         self.ensure_one()
+        scheme = urlsplit(request.httprequest.referrer).scheme
         return {
             'type': 'ir.actions.act_url',
-            'url': self.ip_url,
+            'url': f'{scheme}://{self.ip}' if scheme == 'https' else f'{scheme}://{self.ip}:8069',
             'target': 'new',
         }
 
