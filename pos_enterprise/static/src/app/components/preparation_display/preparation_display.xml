@@ -111,7 +111,7 @@
                             <t t-foreach="time_filters" t-as="time_filter" t-key="time_filter[0]">
                                 <div class="d-flex justify-content-between m-0 py-2 border-bottom border-light cursor-pointer"
                                     t-att-class="{ 'product-selected bg-info bg-opacity-25 px-2 me-n2': this.prepDisplay.selectedTime == time_filter[0]}"
-                                    t-on-click="() => this.setTime(time_filter[0])">
+                                    t-on-click="() => this.prepDisplay.toggleTime(time_filter[0])">
                                     <div class="pe-2 text-truncate">
                                         <span class="pe-2" t-esc="time_filter[1]"/>
                                     </div>

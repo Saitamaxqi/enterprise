@@ -54,7 +54,7 @@ export class PrepDisplay extends Component {
     resetFilter() {
         this.prepDisplay.selectedCategoryIds = new Set();
         this.prepDisplay.selectedProductIds = new Set();
-        this.preparationDisplay.selectedTime = "all";
+        this.prepDisplay.selectedTime = "all";
         this.prepDisplay.saveFilterToLocalStorage();
     }
     toggleCategoryFilter() {

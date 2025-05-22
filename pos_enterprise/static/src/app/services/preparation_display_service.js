@@ -182,6 +182,9 @@ export class PrepDisplay extends WithLazyGetterTrap {
             this.selectedCategoryIds
         );
     }
+    toggleTime(time) {
+        this.selectedTime = time;
+    }
     checkStateVisibility(state) {
         const selectedCategoryIds = this.selectedCategoryIds;
         const selectedProductIds = this.selectedProductIds;
