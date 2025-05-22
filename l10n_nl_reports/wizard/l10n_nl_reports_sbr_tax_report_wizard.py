@@ -315,7 +315,7 @@ class L10n_Nl_ReportsSbrTaxReportWizard(models.TransientModel):
             'kenmerk': kenmerk,
             'company_id': self.env.company.id,
             'report_name': self.env['account.report'].browse(options['report_id']).name,
-            'closing_entry_id': closing_move.id,
+            'closing_entry_id': closing_move and closing_move.id,
             'is_test': self.is_test,
         })
         status_service_cron = self.env.ref('l10n_nl_reports.cron_l10n_nl_reports_status_process')
