@@ -1846,8 +1846,16 @@ class HrPayslip(models.Model):
         return [employer_cost, employees_trends]
 
     @api.model
+    def _get_dashboard_employee_count(self):
+        admin_employee = self.env.ref('hr.employee_admin', raise_if_not_found=False)
+        domain = [('company_id', 'in', self.env.companies.ids)]
+        if admin_employee:
+            domain += [('id', '!=', admin_employee.id)]
+        return self.env['hr.employee'].search_count(domain, limit=1)
+
+    @api.model
     def _get_dashboard_default_sections(self):
-        return ['batches', 'stats']
+        return ['batches', 'stats', 'employee_count']
 
     @api.model
     def _get_dashboard_batch_fields(self):
@@ -1889,4 +1897,6 @@ class HrPayslip(models.Model):
             result['batches'] = batches_read_result
         if 'stats' in sections:
             result['stats'] = self._get_dashboard_stats()
+        if 'employee_count' in sections:
+            result['employee_count'] = self._get_dashboard_employee_count()
         return result

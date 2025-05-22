@@ -1,6 +1,7 @@
 import { registry } from '@web/core/registry';
 import { useService } from "@web/core/utils/hooks";
 
+import { DashboardEmptyScreen } from '@hr_payroll/components/dashboard_empty_screen/dashboard_empty_screen';
 import { PayrollDashboardActionBox } from '@hr_payroll/components/dashboard/action_box/action_box';
 import { PayrollDashboardPayslipBatch } from '@hr_payroll/components/dashboard/payslip_batch/payslip_batch';
 import { PayrollDashboardTodo } from '@hr_payroll/components/dashboard/todo_list/todo_list';
@@ -11,6 +12,7 @@ import { standardActionServiceProps } from "@web/webclient/actions/action_servic
 class PayrollDashboardComponent extends Component {
     static template = "hr_payroll.Dashboard";
     static components = {
+        DashboardEmptyScreen,
         PayrollDashboardActionBox,
         PayrollDashboardPayslipBatch,
         PayrollDashboardTodo,

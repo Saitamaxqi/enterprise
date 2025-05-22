@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
     <t t-name="hr_payroll.Dashboard">
+        <t t-if="dashboardData.employee_count === 0">
+            <DashboardEmptyScreen/>
+        </t>
+        <t t-else="">
         <div class="o_hr_payroll_dashboard_sheet container-fluid h-100 overflow-auto m-2 m-md-3 p-0">
             <div class="row g-0 g-lg-3 h-lg-100">
                 <div class="col-12 col-lg-7 row p-0 pe-3 pe-lg-0 m-0 h-100">
@@ -24,5 +28,6 @@
                 </div>
             </div>
         </div>
+        </t>
     </t>
 </template>
