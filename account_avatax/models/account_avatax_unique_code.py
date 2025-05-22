@@ -21,19 +21,9 @@ class AccountAvataxUniqueCode(models.AbstractModel):
         help="Use this code to cross-reference in the Avalara portal."
     )
 
-    def _get_avatax_description(self):
-        """This is used to describe records in Avatax.
-
-        E.g. 'Customer 10' with this function returning 'Customer'.
-
-        :returns: a name for this model
-        :rtype: str
-        """
-        raise NotImplementedError()
-
     def _compute_avatax_unique_code(self):
         for record in self:
-            record.avatax_unique_code = '%s %s' % (record._get_avatax_description(), record.id)
+            record.avatax_unique_code = '%s %s' % (record._description, record.id)
 
     def _search_avatax_unique_code(self, operator, value):
         if operator in ('like', 'ilike'):
@@ -43,7 +33,7 @@ class AccountAvataxUniqueCode(models.AbstractModel):
             return NotImplemented
 
         # allow searching with or without prefix
-        prefix = self._get_avatax_description().lower() + " "
+        prefix = self._description.lower() + " "
         try:
             ids = [
                 int(number_v)

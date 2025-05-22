@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models
+from odoo import models, api
 
 
 class AccountExternalTaxMixin(models.AbstractModel):
@@ -19,18 +19,19 @@ class AccountExternalTaxMixin(models.AbstractModel):
         # 'shipFrom' and 'shipTo' values for that line.
         # More at: https://developer.avalara.com/avatax/dev-guide/customizing-transaction/address-types/
         res = {
-            'shipFrom': self._get_avatax_address_from_partner(warehouse_id.partner_id),
-            'shipTo': self._get_avatax_address_from_partner(partner),
+            'shipFrom': self._get_avatax_address(warehouse_id.partner_id),
+            'shipTo': self._get_avatax_address(partner),
         }
         return res
 
-    def _get_avatax_invoice_line(self, line_data):
+    @api.model
+    def _prepare_avatax_document_line_service_call(self, line_data, is_refund):
         """ Override to set addresses that will contain the originating and destination locations. """
-        res = super()._get_avatax_invoice_line(line_data)
+        res = super()._prepare_avatax_document_line_service_call(line_data, is_refund)
 
         warehouse = line_data['warehouse_id']
         # If the product is shipped from a different address, add the correct address to the LineItemModel
-        if warehouse and warehouse.partner_id != self.company_id.partner_id:
-            res['addresses'] = self._get_avatax_line_addresses(self._get_avatax_ship_to_partner(), warehouse)
+        if warehouse and warehouse.partner_id != line_data['base_line']['record'].company_id.partner_id:
+            res['addresses'] = self._get_avatax_line_addresses(line_data['shipping_partner'], warehouse)
 
         return res

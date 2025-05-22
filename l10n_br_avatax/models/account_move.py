@@ -12,8 +12,8 @@ class AccountMove(models.Model):
     def _get_line_data_for_external_taxes(self):
         """ Override to set the operation_type per line. """
         res = super()._get_line_data_for_external_taxes()
-        for i, line in enumerate(self._get_lines_eligible_for_external_taxes()):
-            res[i]['operation_type'] = line.l10n_br_goods_operation_type_id or self.l10n_br_goods_operation_type_id
+        for line in res:
+            line['operation_type'] = line['base_line']['record'].l10n_br_goods_operation_type_id or line['base_line']['record'].move_id.l10n_br_goods_operation_type_id
         return res
 
     def _compute_l10n_br_is_avatax_depends(self):
@@ -105,49 +105,45 @@ class AccountMove(models.Model):
 
         return res
 
-    def _l10n_br_get_origin_invoice(self):
-        return self.debit_origin_id or self.reversed_entry_id
+    def _get_l10n_br_avatax_service_params(self):
+        params = super()._get_l10n_br_avatax_service_params()
+        if origin := self.debit_origin_id or self.reversed_entry_id:
+            params['origin_record'] = origin
+            params['invoice_refs'] = {
+                'invoicesRefs': [
+                    {
+                        'type': 'documentCode',
+                        'documentCode': f'{origin._name}_{origin.id}',
+                    }
+                ]
+            }
 
-    def _l10n_br_invoice_refs_for_code(self, ref_type, document_code):
-        return {
-            "invoicesRefs": [
-                {
-                    "type": ref_type,
-                    ref_type: document_code,
-                }
-            ]
-        }
-
-    def _l10n_br_get_invoice_refs(self):
-        """account.external.tax.mixin override."""
-        if origin := self._l10n_br_get_origin_invoice():
-            return self._l10n_br_invoice_refs_for_code("documentCode", f"{origin._name}_{origin.id}")
-
-        return {}
-
-    def _l10n_br_get_installments(self):
-        """account.external.tax.mixin override."""
-        payments = self.line_ids.filtered(lambda line: line.display_type == "payment_term" and line.date_maturity)
+        payments = self.line_ids.filtered(lambda line: line.display_type == 'payment_term' and line.date_maturity)
         future_payments = payments.filtered(
             lambda line: line.date_maturity > (self.invoice_date or fields.Date.context_today(self))
         )
-        if not future_payments:
-            return None
+        if future_payments:
+            params['installments'] = {
+                'installmentTerms': '1' if len(payments) == 1 else '5',
+                'bill': {
+                    'nFat': self.name,
+                    'vNet': self.amount_total,
+                    'vOrig': self.amount_total,
+                },
+                'installment': [
+                    {
+                        'documentNumber': f'{index + 1:03}',
+                        'date': payment.date_maturity.isoformat(),
+                        'grossValue': payment.balance,
+                        'netValue': payment.balance,
+                    }
+                    for index, payment in enumerate(payments.sorted('date_maturity'))
+                ],
+            }
 
-        return {
-            "installmentTerms": "1" if len(payments) == 1 else "5",
-            "bill": {
-                "nFat": self.name,
-                "vNet": self.amount_total,
-                "vOrig": self.amount_total,
-            },
-            "installment": [
-                {
-                    "documentNumber": f"{index + 1:03}",
-                    "date": payment.date_maturity.isoformat(),
-                    "grossValue": payment.balance,
-                    "netValue": payment.balance,
-                }
-                for index, payment in enumerate(payments.sorted("date_maturity"))
-            ],
-        }
+        params.update({
+            'document_date': self.invoice_date,
+            'partner_shipping': self.partner_shipping_id,
+        })
+
+        return params

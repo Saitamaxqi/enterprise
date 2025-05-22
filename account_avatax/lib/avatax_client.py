@@ -86,13 +86,17 @@ class AvataxClient:
     def create_transaction(self, model, include=None):
         return self.request('POST', 'transactions/createoradjust', params=include, json={'createTransactionModel': model})
 
-    def uncommit_transaction(self, companyCode, transactionCode, include=None):
-        return self.request('POST', 'companies/{}/transactions/{}/uncommit'.format(companyCode, transactionCode),
-                            params=include, json=None)
+    def commit_transaction(self, companyCode, transactionCode):
+        return self.request('POST', f'companies/{companyCode}/transactions/{transactionCode}/commit',
+                            params=None, json={'commit': True})
 
-    def void_transaction(self, companyCode, transactionCode, model, include=None):
+    def uncommit_transaction(self, companyCode, transactionCode):
+        return self.request('POST', 'companies/{}/transactions/{}/uncommit'.format(companyCode, transactionCode),
+                            params=None, json=None)
+
+    def void_transaction(self, companyCode, transactionCode):
         return self.request('POST', 'companies/{}/transactions/{}/void'.format(companyCode, transactionCode),
-                            params=include, json=model)
+                            params=None, json={"code": "DocVoided"})
 
     def ping(self):
         return self.request('GET', 'utilities/ping', params=None, json=None)

@@ -46,7 +46,7 @@ class TestL10nBREDIPOSCommon(TestL10nBREDICommon):
         json_module = json
         expected_communications = iter(expected_communications)
 
-        def mocked_l10n_br_iap_request(self, route, json=None, company=None):
+        def mocked_l10n_br_iap_request(self, route, company, json=None):
 
             def replace_ignore(dict_to_replace):
                 """Replace `___ignore___` in the expected request JSONs by unittest.mock.ANY,
@@ -72,7 +72,8 @@ class TestL10nBREDIPOSCommon(TestL10nBREDICommon):
 
                 if expected_route == "calculate_tax":
                     expected_lines = api_response["lines"]
-                    lines = self.lines
+                    order = self.env['pos.order'].browse(int(json['header']['documentCode'].split('_')[1]))
+                    lines = order.lines
                     test_case.assertEqual(
                         len(lines), len(expected_lines), f"The sent order was expected to have {len(expected_lines)} lines."
                     )

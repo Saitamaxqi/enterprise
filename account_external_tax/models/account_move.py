@@ -30,29 +30,15 @@ class AccountMove(models.Model):
         eligible_moves._set_external_taxes(eligible_moves._get_external_taxes())
         return super()._get_and_set_external_taxes_on_eligible_records()
 
-    def _get_lines_eligible_for_external_taxes(self):
-        """ account.external.tax.mixin override. """
-        return self.invoice_line_ids.filtered(lambda line: line.display_type == 'product' and not line._get_downpayment_lines())
-
-    def _get_date_for_external_taxes(self):
-        """ account.external.tax.mixin override. """
-        return self.invoice_date
-
     def _get_line_data_for_external_taxes(self):
         """ account.external.tax.mixin override. """
         res = []
-        for line in self._get_lines_eligible_for_external_taxes():
+        base_lines_values = [value for value in self._get_rounded_base_and_tax_lines()[0] if not value['record']._get_downpayment_lines()]
+
+        for base_line in base_lines_values:
             res.append({
-                "id": line.id,
-                "model_name": line._name,
-                "product_id": line.product_id,
-                "description": line.name,
-                "qty": line.quantity,
-                "uom_id": line.product_uom_id,
-                "price_subtotal": line.price_subtotal,
-                "price_unit": line.price_unit,
-                "discount": line.discount,
-                "is_refund": self.move_type == 'out_refund',
+                'base_line': base_line,
+                'description': base_line['record'].name,
             })
 
         return res

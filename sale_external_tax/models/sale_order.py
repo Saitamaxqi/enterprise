@@ -19,35 +19,17 @@ class SaleOrder(models.Model):
     def _get_and_set_external_taxes_on_eligible_records(self):
         """ account.external.tax.mixin override. """
         eligible_orders = self.filtered(
-            lambda order: order.is_tax_computed_externally and order._get_lines_eligible_for_external_taxes() and
-                          order.state in ('draft', 'sent', 'sale') and not order.locked
+            lambda order: order.is_tax_computed_externally and order.state in ('draft', 'sent', 'sale') and not order.locked
         )
         eligible_orders._set_external_taxes(eligible_orders._get_external_taxes())
         return super()._get_and_set_external_taxes_on_eligible_records()
 
-    def _get_lines_eligible_for_external_taxes(self):
-        """ account.external.tax.mixin override. """
-        return self.order_line.filtered(lambda l: not l.display_type and not l.is_downpayment)
-
     def _get_line_data_for_external_taxes(self):
         """ account.external.tax.mixin override. """
-        res = []
-        for line in self._get_lines_eligible_for_external_taxes():
-            res.append({
-                "id": line.id,
-                "model_name": line._name,
-                "product_id": line.product_id,
-                "description": line.name,
-                "qty": line.product_uom_qty,
-                "uom_id": line.product_uom_id,
-                "price_subtotal": line.price_subtotal,
-                "price_unit": line.price_unit,
-                "discount": line.discount,
-                "is_refund": False,
-            })
-
-        return res
-
-    def _get_date_for_external_taxes(self):
-        """ account.external.tax.mixin override. """
-        return self.date_order
+        AccountTax = self.env['account.tax']
+        order_lines = self.order_line.filtered(lambda line: not line.display_type and not line.is_downpayment)
+        base_lines = [line._prepare_base_line_for_taxes_computation() for line in order_lines]
+        base_lines += self._add_base_lines_for_early_payment_discount()
+        AccountTax._add_tax_details_in_base_lines(base_lines, self.company_id)
+        AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
+        return [{'base_line': base_line, 'description': base_line['record'].name} for base_line in base_lines]

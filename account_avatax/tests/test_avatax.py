@@ -105,7 +105,11 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
 
         # Amounts should be sent as negative for refunds:
         # https://developer.avalara.com/erp-integration-guide/sales-tax-badge/transactions/test-refunds/
-        for line in refund._get_avatax_invoice_lines():
+        lines = [
+            refund._prepare_avatax_document_line_service_call(line_data, True)
+            for line_data in refund._get_line_data_for_external_taxes()
+        ]
+        for line in lines:
             if 'Discount' in line['description']:
                 self.assertGreater(line['amount'], 0)
             else:
@@ -263,10 +267,15 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
         'Quantity of items in this line. This quantity value should always be a positive value representing the quantity
         of product that changed hands, even when handling returns or refunds.'
         """
+        base_line = defaultdict(lambda: False)
+        base_line['product_id'] = self.product_accounting
+        base_line['quantity'] = -1
+        base_line['record'] = self.env['account.move.line']
+        base_line['tax_details'] = defaultdict(lambda: False)
+
         line_data = defaultdict(lambda: False)
-        line_data["product_id"] = self.product_accounting
-        line_data["qty"] = -1
-        res = self.env['account.external.tax.mixin']._get_avatax_invoice_line(line_data)
+        line_data['base_line'] = base_line
+        res = self.env['account.external.tax.mixin']._prepare_avatax_document_line_service_call(line_data, False)
         self.assertEqual(res['quantity'], 1, 'Quantities sent to Avatax should always be positive.')
 
     def test_multi_currency_exempted_tax(self):
@@ -516,15 +525,15 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
             invoice.button_external_tax_calculation()
 
         self.assertRecordValues(
-            invoice.line_ids,
+            invoice.line_ids.sorted('balance'),
             [
                 {'name': 'Accounting', 'balance': -295.00},  # Income account
-                {'name': 'Odoo User Initial Discount', 'balance': 295.00},  # Income account
-                {'name': False, 'balance': sum(t['tax'] for t in response['summary'])},  # AR
                 {'name': 'CA STATE 6%', 'balance': -17.7},
-                {'name': 'CA COUNTY 0.25%', 'balance': -0.74},
                 {'name': 'CA SPECIAL 3%', 'balance': -8.85},
                 {'name': 'CA SPECIAL 1%', 'balance': -2.95},
+                {'name': 'CA COUNTY 0.25%', 'balance': -0.74},
+                {'name': False, 'balance': sum(t['tax'] for t in response['summary'])},  # AR
+                {'name': 'Odoo User Initial Discount', 'balance': 295.00},  # Income account
             ]
         )
 

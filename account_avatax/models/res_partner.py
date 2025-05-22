@@ -35,9 +35,6 @@ class ResPartner(models.Model):
             company = partner.company_id or self.env.company
             partner.avalara_show_address_validation = company.avalara_address_validation and partner.street and (not partner.country_id or partner.fiscal_country_codes in ('US', 'CA'))
 
-    def _get_avatax_description(self):
-        return 'Contact'
-
     def action_open_validation_wizard(self):
         self.ensure_one()
         return {

@@ -19,6 +19,12 @@ class SaleOrder(models.Model):
     def _get_line_data_for_external_taxes(self):
         """ Override to set the operation_type per line. """
         res = super()._get_line_data_for_external_taxes()
-        for i, line in enumerate(self._get_lines_eligible_for_external_taxes()):
-            res[i]['operation_type'] = line.l10n_br_goods_operation_type_id or self.l10n_br_goods_operation_type_id
+        for line in res:
+            sale_line = line['base_line']['record']
+            line['operation_type'] = sale_line.l10n_br_goods_operation_type_id or sale_line.order_id.l10n_br_goods_operation_type_id
         return res
+
+    def _get_l10n_br_avatax_service_params(self):
+        params = super()._get_l10n_br_avatax_service_params()
+        params['partner_shipping'] = self.partner_shipping_id
+        return params

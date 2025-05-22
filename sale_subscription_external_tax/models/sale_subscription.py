@@ -15,16 +15,26 @@ class SaleOrder(models.Model):
         invoice._get_and_set_external_taxes_on_eligible_records()
         return super()._do_payment(payment_token, invoice, auto_commit=auto_commit)
 
-    def _get_lines_eligible_for_external_taxes(self):
-        """Override to exclude non-invoicable lines. Only override for confirmed orders. Non-confirmed orders never have
-        invoicable lines and can be paid through /my/orders which will ask to pay all lines. """
-        subscriptions = self.filtered(lambda sub: sub.state == 'sale' and sub.is_subscription)
-        subscription_lines = super(SaleOrder, subscriptions)._get_lines_eligible_for_external_taxes() & subscriptions._get_invoiceable_lines()
-        return subscription_lines | super(SaleOrder, self - subscriptions)._get_lines_eligible_for_external_taxes()
+    def _get_external_tax_service_params(self):
+        params = super()._get_external_tax_service_params()
+        if self.is_subscription:
+            params['document_date'] = self.next_invoice_date or fields.Date.context_today(self)
+        return params
 
-    def _get_date_for_external_taxes(self):
-        """Override to always send a current date for subscriptions. order_date will never change and if taxes change
-        it will never be reflected on the subscription. This overrides it to be either the next invoice date so
-        customers know what they will be charged. Or it will be the current date for new or churned subscriptions
-        without a next invoice date."""
-        return (self.next_invoice_date or fields.Date.context_today(self)) if self.is_subscription else super()._get_date_for_external_taxes()
+    def _get_line_data_for_external_taxes(self):
+        """EXTENDS 'account.external.tax.mixin'. Override to exclude non-invoicable lines. Only override for confirmed
+        orders. Non-confirmed orders never have invoicable lines and can be paid through /my/orders which will ask to
+        pay all lines. """
+        res = super()._get_line_data_for_external_taxes()
+        filtered_res = []
+
+        for line in res:
+            sale_line = line['base_line']['record']
+            order = sale_line.order_id
+            if order.is_subscription and order.state == 'sale':
+                if sale_line in order._get_invoiceable_lines():
+                    filtered_res.append(line)
+            else:
+                filtered_res.append(line)
+
+        return filtered_res

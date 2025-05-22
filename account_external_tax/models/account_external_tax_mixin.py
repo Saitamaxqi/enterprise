@@ -33,8 +33,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
     def _get_external_taxes(self):
         """ Required hook that should return tax information calculated by an external service.
 
-        :returns: Dictionary line_to_base_lines that maps records to their related taxes. The related taxes dict should
-            be a dict prepared by _default_external_tax_base_line().
+        :returns: a dictionary prepared by `_process_external_taxes()` that maps each record to it's base line with the
+          appropriate manual_tax_amounts.
         """
         return {}
 
@@ -57,34 +57,32 @@ class AccountExternalTaxMixin(models.AbstractModel):
         """
         return
 
-    def _get_lines_eligible_for_external_taxes(self):
-        """ Should be overridden on documents that want external tax calculation (e.g. account.move and sale.order).
-
-        This method will be called to decide what document lines to pass to the external tax integration and on which
-        tax will be calculated. This should filter out lines that are not "real", like section lines etc.
-        """
-        return []
-
     def _get_line_data_for_external_taxes(self):
         """ Should be overridden on documents that want external tax calculation (e.g. account.move and sale.order).
 
-        This method returns model-agnostic line data to be used when doing an external tax request. It filters
-        lines that should be sent to the external tax service already (via _get_lines_eligible_for_external_taxes).
-        The returned dict always includes at least the following keys: id, model_name, product_id, description, qty,
-        uom_id, price_subtotal, price_unit, discount, is_refund.
+        This method returns model-agnostic line data to be used when doing an external tax request. It should at least
+        have base_line and description keys.
         """
         return []
 
-    def _get_date_for_external_taxes(self):
-        """ Should be overridden on documents that want external tax calculation (e.g. account.move and sale.order).
-
-        This returns the date of the record on which tax calculation should be based.
-        """
-        return
-
     # Other methods
-    # ================
+    # =============
+    def _get_external_tax_service_params(self):
+        """ Gets service params common to all models. """
+        return {
+            'line_data': self._get_line_data_for_external_taxes(),
+            'company_partner': self.company_id.partner_id,
+
+            # To be filled by models
+            'document_date': None,
+        }
+
+    @api.model
     def _set_external_taxes(self, mapped_taxes):
+        """ Sets extra_tax_data based on a dict that maps line records to base lines. """
+        for line in mapped_taxes:
+            line.tax_ids = False
+
         for line, base_line in mapped_taxes.items():
             extra_tax_data = self.env["account.tax"]._export_base_line_extra_tax_data(base_line)
             line.write({
@@ -92,25 +90,77 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 "tax_ids": [Command.set([int(tax_id) for tax_id in extra_tax_data["manual_tax_amounts"]])],
             })
 
-    def _default_external_tax_base_line(self, record):
-        if hasattr(record, '_prepare_base_line_for_taxes_computation'):
-            return record._prepare_base_line_for_taxes_computation()
-        else:
-            return self.env['account.tax']._prepare_base_line_for_taxes_computation(record)
-
     @api.model
-    def _update_external_tax_amounts(self, record_details, tax, tax_amount):
-        """ Helper method to increase `tax` by `tax_amount` in manual_tax_amounts of `base_line`.
+    def _process_external_taxes(self, company, base_line_with_tax_values, tax_key_field, search_archived_taxes=False):
+        """ Takes in base lines with tax values, generates missing account.tax and account.tax.group records and returns a
+         dictionary that maps line records to base lines with the right manual_tax_amounts, ready to be sent to _set_external_taxes."""
+        # Retrieve the tax groups.
+        tax_group_names = {
+            tax_group_values['name']: tax_group_values
+            for base_line, tax_values_list in base_line_with_tax_values
+            for tax_group_values, tax_values, _amount in tax_values_list
+        }
+        tax_group_by_name = {
+            tax_group.name: tax_group
+            for tax_group in self.env['account.tax.group'].search([
+                *self.env['account.tax.group']._check_company_domain(company),
+                ('name', 'in', tax_group_names.keys()),
+            ])
+        }
+        missing_tax_groups = self.env['account.tax.group'].sudo().create([
+            tax_group_names[tax_group_name]
+            for tax_group_name in tax_group_names.keys() - tax_group_by_name.keys()
+        ])
+        for tax_group in missing_tax_groups:
+            tax_group_by_name[tax_group.name] = tax_group
 
-        :param base_line (dict): The base line to update, generated by `_prepare_base_line_for_taxes_computation()`.
-        :param tax (Model<account.tax>): The tax to increase.
-        :param tax (float): The tax amount to add. """
-        if not record_details['manual_tax_amounts']:
-            record_details['manual_tax_amounts'] = {}
+        # Retrieve the taxes.
+        tax_names = {
+            tax_values['name']: tax_values
+            for base_line, tax_values_list in base_line_with_tax_values
+            for tax_group_values, tax_values, _amount in tax_values_list
+        }
+        tax_name_x_tax_group = {
+            tax_values['name']: tax_group_values['name']
+            for base_line, tax_values_list in base_line_with_tax_values
+            for tax_group_values, tax_values, _amount in tax_values_list
+        }
 
-        manual_tax_amounts = record_details['manual_tax_amounts']
-        manual_tax_amounts.setdefault(str(tax.id), defaultdict(float))
-        manual_tax_amounts[str(tax.id)]['tax_amount_currency'] += tax_amount
+        tax_by_name = {}
+        for tax_name, tax_values in tax_names.items():
+            price_include_override_domain = []
+            if 'price_include_override' in tax_values:
+                price_include_override_domain = [('price_include_override', '=', tax_values['price_include_override'])]
+
+            existing_tax = self.env['account.tax'].with_context(active_test=not search_archived_taxes).search([
+                *self.env['account.tax']._check_company_domain(company),
+                (tax_key_field, 'in', tax_name),
+                *price_include_override_domain,
+            ], limit=1)
+            if existing_tax:
+                tax_by_name[existing_tax[tax_key_field]] = existing_tax
+
+                if search_archived_taxes and not existing_tax.active:
+                    existing_tax.active = True
+
+        missing_taxes = self.env['account.tax'].sudo().create([
+            {
+                **tax_names[tax_name],
+                'tax_group_id': tax_group_by_name[tax_name_x_tax_group[tax_name]].id,
+            }
+            for tax_name in tax_names.keys() - tax_by_name.keys()
+        ])
+        for tax in missing_taxes:
+            tax_by_name[tax[tax_key_field]] = tax
+
+        for base_line, tax_values_list in base_line_with_tax_values:
+            manual_tax_amounts = base_line['manual_tax_amounts'] = {}  # clear old taxes
+            for _tax_group_values, tax_values, amount in tax_values_list:
+                tax_id = str(tax_by_name[tax_values['name']].id)
+                manual_tax_amounts.setdefault(tax_id, defaultdict(float))
+                manual_tax_amounts[tax_id]['tax_amount_currency'] += amount
+
+        return {base_line['record']: base_line for base_line, _amount in base_line_with_tax_values}
 
     def button_external_tax_calculation(self):
         self._get_and_set_external_taxes_on_eligible_records()

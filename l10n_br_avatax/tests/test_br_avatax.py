@@ -301,7 +301,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             (15.00, 1.58, 3.15, 4.74), # note that the insurance amount is different from the line above to ensure the total adds up to 20
         ]
 
-        api_request = invoice._l10n_br_get_calculate_payload()
+        api_request = invoice._prepare_l10n_br_avatax_document_service_call(invoice._get_l10n_br_avatax_service_params())
         actual_lines = api_request['lines']
         self.assertEqual(len(expecteds), len(actual_lines), 'Different amount of expected and actual lines.')
 
@@ -340,7 +340,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         credit_note = self.env['account.move'].search([('reversed_entry_id', '=', invoice.id)])
         self.assertTrue(credit_note, "A credit note should have been created.")
 
-        payload = credit_note._l10n_br_get_calculate_payload()
+        payload = credit_note._prepare_l10n_br_avatax_document_service_call(credit_note._get_l10n_br_avatax_service_params())
         self.assertTrue(all(line['operationType'] == 'salesReturn' for line in payload['lines']), 'The default operationType for credit notes should be salesReturn.')
         self.assertEqual(payload['header']['invoicesRefs'][0]['documentCode'], f'account.move_{invoice.id}', 'The credit note should reference the original invoice.')
 
@@ -353,7 +353,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             'amount_tax': 0.0,
         }])
 
-        payload = invoice._l10n_br_get_calculate_payload()
+        payload = invoice._prepare_l10n_br_avatax_document_service_call(invoice._get_l10n_br_avatax_service_params())
         operation_types = [line['operationType'] for line in payload['lines']]
         expected_operation_types = ['standardSales', 'complementary', 'amountComplementary', 'salesReturn']
         self.assertEqual(operation_types, expected_operation_types, 'The expected operation types are not properly set. It should be unique per line.')
@@ -374,7 +374,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             'amount_tax': 0.0,
         }])
 
-        payload = invoice._l10n_br_get_calculate_payload()
+        payload = invoice._prepare_l10n_br_avatax_document_service_call(invoice._get_l10n_br_avatax_service_params())
         operation_types = [line['operationType'] for line in payload['lines']]
         expected_operation_types = ['standardSales', 'complementary', 'standardSales', 'standardSales']
         self.assertEqual(operation_types, expected_operation_types, 'The expected operation types are not properly set.')
@@ -392,7 +392,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         with self._capture_request_br(return_value=response) as patched:
             bill.action_post()
 
-        payload = patched.call_args.args[1]
+        payload = patched.call_args.args[2]
         self.assertEqual(
             payload['header']['operationType'],
             'standardPurchase',
@@ -456,7 +456,7 @@ class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
         with self._capture_request_br(return_value={}) as mocked_request:
             self.settings.create_account()
 
-        for k, v in mocked_request.call_args[0][1].items():
+        for k, v in mocked_request.call_args[0][2].items():
             self.assertNotEqual(v, False, f"{k} was False instead of empty string")
 
     def test_05_formatted_vat(self):
@@ -464,7 +464,7 @@ class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
         with self._capture_request_br(return_value={}) as mocked_request:
             self.settings.create_account()
 
-        arguments = mocked_request.call_args[0][1]
+        arguments = mocked_request.call_args[0][2]
         self.assertEqual(self.settings.company_id.vat, '00623904000173', 'CNPJ should be compacted in internal storage')
         self.assertEqual(arguments['cnpj'], '00.623.904/0001-73', 'CNPJ must be formatted for account creation')
 

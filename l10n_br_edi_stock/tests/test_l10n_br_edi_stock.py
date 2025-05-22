@@ -46,7 +46,7 @@ class TestL10nBrEDIStock(TestL10nBREDICommon):
         invoice.l10n_br_package_ids = invoice.l10n_br_related_package_ids  # select all related packages
 
         self.partner_customer.property_account_position_id = self.avatax_fp
-        with self.with_patched_account_move("_l10n_br_iap_request"), self.with_patched_account_move("_l10n_br_call_avatax_taxes"):
+        with self.with_patched_account_move("_l10n_br_iap_request"), self.with_patched_account_move("_get_and_set_external_taxes_on_eligible_records"):
             invoice.action_post()
         invoice.l10n_br_edi_avatax_data = json.dumps({"header": {}})  # normally set by account.external.tax.mixin
         invoice.l10n_br_plate_number = "12345678"
@@ -56,7 +56,7 @@ class TestL10nBrEDIStock(TestL10nBREDICommon):
         with self.with_patched_account_move("_l10n_br_iap_request") as patched_submit:
             wizard.action_send_and_print(allow_fallback_pdf=True)  # allow_fallback_pdf to avoid raising on errors
 
-        sent_request = patched_submit.call_args.args[2]
+        sent_request = patched_submit.call_args.args[3]
 
         self.assertIn("volumes", sent_request["header"]["goods"]["transport"], "Transport data wasn't sent in request.")
         self.assertEqual(len(sent_request["header"]["goods"]["transport"]["volumes"]), 1, "Exactly one volume should be sent.")

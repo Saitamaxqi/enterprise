@@ -107,7 +107,7 @@ class TestSaleSubscriptionExternal(TestSubscriptionCommon, TestSaleSubscriptionE
         today = '2024-02-02'
         with freeze_time(today):
             self.assertEqual(
-                self.subscription._get_date_for_external_taxes(),
+                self.subscription._get_external_tax_service_params()['document_date'],
                 fields.Date.from_string(today),
                 'The current date should be sent for subscriptions.'
             )

@@ -6,19 +6,11 @@ class PosOrder(models.Model):
     _name = 'pos.order'
     _inherit = ['pos.order', 'account.external.tax.mixin', 'account.avatax.unique.code']
 
-    # Main mixin overrides
-    def _get_date_for_external_taxes(self):
-        return self.date_order
-
     def _get_and_set_external_taxes_on_eligible_records(self):
         """ account.external.tax.mixin override. """
         eligible_orders = self.filtered(lambda order: order.is_tax_computed_externally and order.state in ('draft'))
         eligible_orders._set_external_taxes(eligible_orders._get_external_taxes())
         return super()._get_and_set_external_taxes_on_eligible_records()
-
-    def _get_lines_eligible_for_external_taxes(self):
-        """ account.external.tax.mixin override. """
-        return self.lines
 
     def _get_line_data_for_external_taxes(self):
         """ account.external.tax.mixin override. """
@@ -43,21 +35,9 @@ class PosOrder(models.Model):
             })
         return res
 
-    def _get_avatax_dates(self):
-        """ account.external.tax.mixin override. """
-        return self._get_date_for_external_taxes(), self._get_date_for_external_taxes()
-
     def _get_avatax_ship_to_partner(self):
         """ account.external.tax.mixin override. """
         return self.partner_id
-
-    def _get_avatax_document_type(self):
-        """ account.external.tax.mixin override. """
-        return 'SalesOrder'
-
-    def _get_avatax_description(self):
-        """ account.external.tax.mixin override. """
-        return 'PoS Order'
 
     def _get_invoice_grouping_keys(self):
         res = super()._get_invoice_grouping_keys()

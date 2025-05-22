@@ -107,7 +107,7 @@ class TestSaleAvalaraBr(TestTaxCommonSale, TestAvalaraBrCommon):
         """Tax calculation with unique operation types on each line."""
         order = self._create_sale_order_with_operation_types()
 
-        payload = order._l10n_br_get_calculate_payload()
+        payload = order._prepare_l10n_br_avatax_document_service_call(order._get_l10n_br_avatax_service_params())
         operationTypes = [line['operationType'] for line in payload['lines']]
         expected_operation_types = ['standardSales', 'complementary', 'amountComplementary', 'salesReturn']
         self.assertEqual(operationTypes, expected_operation_types, 'The expected operation types are not properly set. It should be unique per line.')
@@ -122,7 +122,7 @@ class TestSaleAvalaraBr(TestTaxCommonSale, TestAvalaraBrCommon):
         )
         order = self._create_sale_order_with_operation_types(operation_types=operation_types)
 
-        payload = order._l10n_br_get_calculate_payload()
+        payload = order._prepare_l10n_br_avatax_document_service_call(order._get_l10n_br_avatax_service_params())
         operationTypes = [line['operationType'] for line in payload['lines']]
         expected_operation_types = ['standardSales', 'standardSales', 'complementary', 'standardSales']
         self.assertEqual(operationTypes, expected_operation_types, 'The expected operation types are not properly set.')

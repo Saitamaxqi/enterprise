@@ -119,11 +119,6 @@ class PosOrder(models.Model):
         for order in self:
             order.l10n_br_edi_number = pattern.search(order.name).group(0).zfill(9)
 
-    def _get_date_for_external_taxes(self):
-        """Returns the transactionDate. This should be the time at which the transaction happens, i.e., now. If it's more
-        than 5 minutes in the past, we get an error."""
-        return fields.Datetime.context_timestamp(self, fields.Datetime.now())
-
     @api.depends("config_id.l10n_br_is_nfce")
     def _compute_l10n_br_is_avatax(self):
         """account.external.tax.mixin override. Don't rely on fiscal positions for the POS."""
@@ -145,38 +140,66 @@ class PosOrder(models.Model):
 
         return super()._get_and_set_external_taxes_on_eligible_records()
 
-    def _get_lines_eligible_for_external_taxes(self):
-        """account.external.tax.mixin override."""
-        if not any([order.l10n_br_is_avatax for order in self]):
-            return super()._get_lines_eligible_for_external_taxes()
+    def _get_l10n_br_avatax_service_params(self):
+        # EXTENDS 'account.external.tax.mixin'
+        res = super()._get_l10n_br_avatax_service_params()
+        access_key = self._l10n_br_generate_access_key()
+        res.update({
+            # This should be the time at which the transaction happens, i.e., now. If it's more
+            # than 5 minutes in the past, we get an error.
+            'document_date': fields.Datetime.context_timestamp(self, fields.Datetime.now()),
 
-        return self.lines
+            'partner_shipping': self.partner_id,
+            'operation_type': self.env.ref("l10n_br_avatax.operation_type_1"),
+            'access_key': access_key,
+            'edi_number': self.l10n_br_edi_number,
+            'invoice_serial': self.config_id.l10n_br_invoice_serial,
+            'url_key': self._l10n_br_get_url_key(),
+            'nfce_qr_code': self._l10n_br_generate_nfce_qr_code(access_key),
+            **self._l10n_br_prepare_payment_info(),
+        })
+
+        if refunded_order := self.refunded_order_id:
+            if refunded_order.l10n_br_last_avatax_status != "accepted" or not refunded_order.l10n_br_access_key:
+                raise ValidationError(
+                    _(
+                        "%(order_name)s must be successfully invoiced before invoicing this refund.",
+                        order_name=refunded_order.display_name,
+                    )
+                )
+
+            res['invoice_refs'] = {
+                "invoicesRefs": [
+                    {
+                        "type": "refNFe",
+                        "refNFe": refunded_order.l10n_br_access_key,
+                    }
+                ]
+            }
+
+        return res
 
     def _get_line_data_for_external_taxes(self):
         """account.external.tax.mixin override."""
         if not any([order.l10n_br_is_avatax for order in self]):
             return super()._get_line_data_for_external_taxes()
 
-        res = []
-        operation_type = self.env.ref("l10n_br_avatax.operation_type_1")
-        for line in self._get_lines_eligible_for_external_taxes():
-            res.append(
-                {
-                    "id": line.id,
-                    "product_id": line.product_id,
-                    "description": line.product_id.name,
-                    "qty": line.qty,
-                    "uom_id": line.product_uom_id,
-                    "price_unit": line.price_unit,
-                    "discount": line.discount,
-                    "operation_type": operation_type,
-                }
-            )
-        return res
+        AccountTax = self.env['account.tax']
+        base_lines = self._prepare_tax_base_line_values()
+        AccountTax._add_tax_details_in_base_lines(base_lines, self.company_id)
+        AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
+        AccountTax._add_accounting_data_in_base_lines_tax_details(base_lines, self.company_id)
 
-    def _l10n_br_get_operation_type(self):
-        """account.external.tax.mixin override. POS is always "sale of goods"."""
-        return self.env.ref("l10n_br_avatax.operation_type_1").technical_name
+        operation_type = self.env.ref("l10n_br_avatax.operation_type_1")
+        res = []
+        for line in base_lines:
+            res.append({
+                'base_line': line,
+                'description': line['record'].product_id.name,
+                'operation_type': operation_type,
+            })
+
+        return res
 
     def _l10n_br_do_edi(self, save_avalara_pdf=False):
         """Do both tax calculation and EDI in one step. Unlike for other models, we don't support the in-between state
@@ -355,42 +378,15 @@ class PosOrder(models.Model):
 
         return result
 
-    def _l10n_br_call_avatax_taxes(self):
+    def _l10n_br_call_avatax_taxes(self, company, document_data):
         """Override to store the retrieved Avatax data."""
-        document_to_response = super()._l10n_br_call_avatax_taxes()
-
-        for document, response in document_to_response.items():
-            if not self._l10n_br_get_error_from_response(response):
-                document.l10n_br_edi_avatax_data = {
-                    "header": response.get("header"),
-                    "lines": response.get("lines"),
-                    "summary": response.get("summary"),
-                }
-
-        return document_to_response
-
-    def _l10n_br_get_invoice_refs(self):
-        """Override. Returns a reference sent for the initial order."""
-        refunded_order = self.refunded_order_id
-        if not refunded_order:
-            return {}
-
-        if refunded_order.l10n_br_last_avatax_status != "accepted" or not refunded_order.l10n_br_access_key:
-            raise ValidationError(
-                _(
-                    "%(order_name)s must be successfully invoiced before invoicing this refund.",
-                    order_name=refunded_order.display_name,
-                )
-            )
-
-        return {
-            "invoicesRefs": [
-                {
-                    "type": "refNFe",
-                    "refNFe": refunded_order.l10n_br_access_key,
-                }
-            ]
+        api_response = super()._l10n_br_call_avatax_taxes(company, document_data)
+        self.l10n_br_edi_avatax_data = {
+            "header": api_response.get("header"),
+            "lines": api_response.get("lines"),
+            "summary": api_response.get("summary"),
         }
+        return api_response
 
     def _l10n_br_edi_get_tax_data(self):
         """Copy of account.move. Due to Avalara bugs they're unable to resolve we have to change their tax calculation response before
@@ -442,6 +438,7 @@ class PosOrder(models.Model):
             "paymentMode": payment_modes,
         }
 
+    @api.model
     def _l10n_br_get_location_dict(self, partner):
         """Copy of account.move."""
         return {
@@ -478,16 +475,6 @@ class PosOrder(models.Model):
             "address": {
                 "state": company_partner.state_id.code,
             },
-        }
-
-    def _l10n_br_get_locations(self, customer, company_partner):
-        return {
-            "entity": (
-                self._l10n_br_get_location_dict(customer)
-                if customer
-                else self._l10n_br_get_anonymous_location_dict(company_partner)
-            ),
-            "establishment": self._l10n_br_get_location_dict(company_partner),
         }
 
     def _l10n_br_calculate_access_key_check_digit(self, access_key):
@@ -654,28 +641,32 @@ class PosOrder(models.Model):
             "TO": ("http://www.sefaz.to.gov.br/nfce/qrcode?p=",),
         }[state_code][0 if self.company_id.l10n_br_avalara_environment == "production" else -1]
 
-    def _l10n_br_get_calculate_payload(self):
-        """Override for tax calculation payload. Add more data in this step instead of delaying it until EDI. This way
-        we have it available on l10n_br_edi_avatax_data which is used for the receipt."""
-        payload = super()._l10n_br_get_calculate_payload()
-        customer = self.partner_id
-        company_partner = self.company_id.partner_id
-
-        goods_nfe, goods_goal = self._l10n_br_edi_get_goods_values()
-        access_key = self._l10n_br_generate_access_key()
+    @api.model
+    def _prepare_l10n_br_avatax_document_service_call(self, params):
+        # EXTENDS 'account.external.tax.mixin'
+        payload = super()._prepare_l10n_br_avatax_document_service_call(params)
+        customer = params['partner']
+        company_partner = params['company_partner']
         extra_payload = {
             "header": {
                 "companyLocation": company_partner.vat,
-                "invoiceNumber": self.l10n_br_edi_number,
-                "invoiceSerial": self.config_id.l10n_br_invoice_serial,
-                "locations": self._l10n_br_get_locations(customer, company_partner),
+                "invoiceNumber": params['edi_number'],
+                "invoiceSerial": params['invoice_serial'],
+                "locations": {
+                    "entity": (
+                        self._l10n_br_get_location_dict(customer)
+                        if customer
+                        else self._l10n_br_get_anonymous_location_dict(company_partner)
+                    ),
+                    "establishment": self._l10n_br_get_location_dict(company_partner),
+                },
                 "goods": {
                     "model": self.env.ref("l10n_br.dt_65").code,
                     "tplmp": "4",  # DANFe NFC-e
-                    "goal": goods_goal,
-                    "finNFe": goods_nfe,
-                    "urlKey": self._l10n_br_get_url_key(),
-                    "nfceQrCode": self._l10n_br_generate_nfce_qr_code(access_key),
+                    "goal": "Normal",
+                    "finNFe": 1,
+                    "urlKey": params['url_key'],
+                    "nfceQrCode": params['nfce_qr_code'],
                     "tpImp": "4",
                     "indPres": "1",  # An in-person transaction.
                     "transport": {
@@ -685,7 +676,7 @@ class PosOrder(models.Model):
                 "payment": {
                     "paymentInfo": self._l10n_br_prepare_payment_info(),
                 },
-                "invoiceAccessKey": access_key,
+                "invoiceAccessKey": params['access_key'],
             },
         }
 
@@ -699,7 +690,6 @@ class PosOrder(models.Model):
         # Avatax return various errors: e.g. "Falha na estrutura enviada". This is to avoid having lots of if
         # statements.
         deep_update(payload, deep_clean(extra_payload))
-
         return payload
 
     def _l10n_br_prepare_invoice_payload(self):
@@ -708,7 +698,8 @@ class PosOrder(models.Model):
         # Don't raise because we don't want to block the POS
         try:
             # The /transaction payload requires a superset of the /calculate payload we use for tax calculation.
-            payload = self._l10n_br_get_calculate_payload()
+            service_params = self._get_l10n_br_avatax_service_params()
+            payload = self._prepare_l10n_br_avatax_document_service_call(service_params)
         except (UserError, ValidationError) as e:
             payload = {}
             errors.append(str(e).replace("- ", ""))
@@ -727,7 +718,7 @@ class PosOrder(models.Model):
 
     def _l10n_br_submit_invoice(self, payload):
         try:
-            response = self._l10n_br_iap_request("submit_invoice_goods", payload)
+            response = self._l10n_br_iap_request("submit_invoice_goods", self.company_id, payload)
             return response, self._l10n_br_get_error_from_response(response)
         except (UserError, InsufficientCreditError) as e:
             # These exceptions can be thrown by iap_jsonrpc()

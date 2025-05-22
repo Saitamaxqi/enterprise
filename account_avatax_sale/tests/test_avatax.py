@@ -152,10 +152,6 @@ class TestSaleAvalara(TestTaxCommonSale, TestAccountAvataxSaleCommon):
             downpayment_invoice.sudo().action_post()
 
         self.assertIsNone(capture.val, "Shouldn't call Avatax when posting a down payment invoice.")
-        self.assertEqual(len(order.order_line.filtered(lambda line: not line.display_type)), 6, "Should have generated a new down payment line.")
-        downpayment_amount = order.amount_total * downpayment_pct / 100
-        self.assertAlmostEqual(downpayment_invoice.amount_total, downpayment_amount, msg="Down payment has the wrong amount.")
-
         wizard = (
             self.env["sale.advance.payment.inv"]
                 .with_context(**payment_ctx)
@@ -177,11 +173,11 @@ class TestSaleAvalara(TestTaxCommonSale, TestAccountAvataxSaleCommon):
             {'price_unit': 15.0, 'price_total': 16.28},
             {'price_unit': 15.0, 'price_total': 16.28},
             {'price_unit': 0.0, 'price_total': 0.00},
-            {'price_unit': 47.27, 'price_total': -48.84},
+            {'price_unit': 42.33, 'price_total': -50.01},
         ])
 
         with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
-            final_invoice.sudo().action_post()
+            final_invoice.sudo().button_external_tax_calculation()
             sent_lines = capture.val['json']['createTransactionModel']['lines']
             self.assertEqual(len(sent_lines), 5, "Should send only the regular lines.")
 
@@ -314,7 +310,7 @@ class TestAccountAvalaraSalesTaxItemsIntegration(TestAccountAvataxSaleCommon):
 
         with self._capture_request({'lines': [], 'summary': []}) as capture:
             invoice.action_post()
-        self.assertTrue(capture.val['json']['createTransactionModel']['commit'])
+        self.assertTrue(capture.val['json']['commit'])
 
     def test_commit_tax(self):
         """Ensure that invoices are committed/posted for reporting appropriately."""
@@ -323,7 +319,7 @@ class TestAccountAvalaraSalesTaxItemsIntegration(TestAccountAvataxSaleCommon):
             self.sale_order.action_confirm()
             invoice = self.sale_order._create_invoices()
             invoice.action_post()
-        self.assertTrue(capture.val['json']['createTransactionModel']['commit'])
+        self.assertTrue(capture.val['json']['commit'])
 
     def test_merge_sale_orders(self):
         """Ensure sale orders with different shipping partner are not merged

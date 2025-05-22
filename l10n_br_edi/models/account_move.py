@@ -123,20 +123,17 @@ class AccountMove(models.Model):
         help="Brazil: After an NFS-e invoice is issued and confirmed by the municipality, a unique code is provided for online verification of its authenticity.",
     )
 
-    def _l10n_br_call_avatax_taxes(self):
-        """Override to store the retrieved Avatax data."""
-        document_to_response = super()._l10n_br_call_avatax_taxes()
-
-        for document, response in document_to_response.items():
-            document.l10n_br_edi_avatax_data = json.dumps(
-                {
-                    "header": response.get("header"),
-                    "lines": response.get("lines"),
-                    "summary": response.get("summary"),
-                }
-            )
-
-        return document_to_response
+    def _l10n_br_call_avatax_taxes(self, company, document_data):
+        # EXTENDS 'account.external.tax.mixin' to store the retrieved Avatax data.
+        api_response = super()._l10n_br_call_avatax_taxes(company, document_data)
+        self.l10n_br_edi_avatax_data = json.dumps(
+            {
+                "header": api_response.get("header"),
+                "lines": api_response.get("lines"),
+                "summary": api_response.get("summary"),
+            }
+        )
+        return api_response
 
     @api.depends("l10n_br_last_edi_status")
     def _compute_show_reset_to_draft_button(self):
@@ -241,8 +238,8 @@ class AccountMove(models.Model):
 
         return {}
 
-    def _l10n_br_check_origin_access_key(self):
-        if origin := self._l10n_br_get_origin_invoice():
+    def _l10n_br_check_origin_access_key(self, service_params):
+        if origin := service_params['origin_record']:
             if not origin.l10n_br_access_key:
                 return {
                     "origin_missing_access_key": {
@@ -273,7 +270,7 @@ class AccountMove(models.Model):
                 **(move.l10n_br_avatax_warnings or {}),
                 **move._l10n_br_edi_check_calculated_tax(),
                 **move._l10n_br_edi_check_partners(self.partner_id | self.company_id.partner_id | self._l10n_br_get_transporter()),
-                **move._l10n_br_check_origin_access_key(),
+                **move._l10n_br_check_origin_access_key(move._get_l10n_br_avatax_service_params()),
             }
 
     def _depends_l10n_br_avatax_warnings(self):
@@ -337,6 +334,7 @@ class AccountMove(models.Model):
 
         response = self._l10n_br_iap_request(
             "get_invoice_services",
+            self.company_id,
             {
                 "serie": self.journal_id.l10n_br_invoice_serial,
                 "number": self.l10n_latam_document_number,
@@ -385,13 +383,13 @@ class AccountMove(models.Model):
         )
 
     def _l10n_br_iap_cancel_invoice_goods(self, transaction):
-        return self._l10n_br_iap_request("cancel_invoice_goods", transaction)
+        return self._l10n_br_iap_request("cancel_invoice_goods", self.company_id, transaction)
 
     def _l10n_br_iap_correct_invoice_goods(self, transaction):
-        return self._l10n_br_iap_request("correct_invoice_goods", transaction)
+        return self._l10n_br_iap_request("correct_invoice_goods", self.company_id, transaction)
 
     def _l10n_br_iap_cancel_range_goods(self, transaction, company):
-        return self._l10n_br_iap_request("cancel_range_goods", transaction, company=company)
+        return self._l10n_br_iap_request("cancel_range_goods", company, transaction)
 
     def _l10n_br_edi_get_xml_attachment_name(self):
         return f"{self.name}_edi.xml"
@@ -453,6 +451,8 @@ class AccountMove(models.Model):
                 # Now that the invoice is submitted and accepted we no longer need the saved tax computation data.
                 invoice.l10n_br_edi_avatax_data = False
 
+        return None
+
     def _l10n_br_edi_get_goods_values(self):
         """Returns the appropriate (finNFe, goal) tuple for the goods section in the header."""
         if self.debit_origin_id:
@@ -462,16 +462,27 @@ class AccountMove(models.Model):
         else:
             return 1, "Normal"
 
-    def _l10n_br_edi_get_invoice_refs(self):
-        """For credit and debit notes this returns the appropriate reference to the original invoice. For tax
+    def _get_l10n_br_avatax_service_params(self):
+        """ EXTENDS 'account.move'
+        For credit and debit notes this returns the appropriate reference to the original invoice. For tax
         calculation we send these references as documentCode, which are Odoo references (e.g. account.move_31).
         For EDI the government requires these references as refNFe instead. They should contain the access key
-        assigned when the original invoice was e-invoiced. Returns a (dict, errors) tuple."""
-        if origin := self._l10n_br_get_origin_invoice():
-            # origin.l10n_br_access_key's existence is checked by l10n_br_avatax_warnings
-            return self._l10n_br_invoice_refs_for_code("refNFe", origin.l10n_br_access_key)
+        assigned when the original invoice was e-invoiced. """
+        params = super()._get_l10n_br_avatax_service_params()
 
-        return {}
+        params['invoice_refs_edi'] = {}
+        if origin := params['origin_record']:
+            # origin.l10n_br_access_key's existence is checked by l10n_br_avatax_warnings
+            params['invoice_refs_edi'] = {
+                'invoicesRefs': [
+                    {
+                        'type': 'refNFe',
+                        'refNFe': origin.l10n_br_access_key,
+                    }
+                ]
+            }
+
+        return params
 
     def _l10n_br_edi_get_tax_data(self):
         """Due to Avalara bugs they're unable to resolve we have to change their tax calculation response before
@@ -635,18 +646,18 @@ class AccountMove(models.Model):
             return cleaned_dict or None
 
         # The /transaction payload requires a superset of the /calculate payload we use for tax calculation.
-        payload = self._l10n_br_get_calculate_payload()
+        service_params = self._get_l10n_br_avatax_service_params()
+        payload = self._prepare_l10n_br_avatax_document_service_call(service_params)
 
         customer = self.partner_id
         company_partner = self.company_id.partner_id
         transporter = self._l10n_br_get_transporter()
 
-        invoice_refs = self._l10n_br_edi_get_invoice_refs()
         tax_data_to_include, tax_data_header = self._l10n_br_edi_get_tax_data()
         extra_payload = {
             "header": {
                 "companyLocation": company_partner.vat,
-                **invoice_refs,
+                **service_params['invoice_refs_edi'],
                 **self._l10n_br_type_specific_header(tax_data_header),
                 "locations": self._l10n_br_get_locations(
                     customer,
@@ -687,7 +698,7 @@ class AccountMove(models.Model):
     def _l10n_br_submit_invoice(self, invoice, payload):
         try:
             route = "submit_invoice_services" if self.l10n_br_is_service_transaction else "submit_invoice_goods"
-            response = invoice._l10n_br_iap_request(route, payload)
+            response = invoice._l10n_br_iap_request(route, self.company_id, payload)
             return response, self._l10n_br_get_error_from_response(response)
         except (UserError, InsufficientCreditError) as e:
             # These exceptions can be thrown by iap_jsonrpc()
