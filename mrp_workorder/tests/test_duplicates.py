@@ -67,6 +67,8 @@ class TestDuplicateProducts(common.TransactionCase):
             'product_qty': 1.0,
             'bom_id': cls.bom_boat.id})
 
+        cls.bom_boat.bom_line_ids.operation_id = cls.bom_boat.operation_ids
+
         # Update quantities
         cls.location_1 = cls.env.ref('stock.stock_location_stock')
         Quant = cls.env['stock.quant']
@@ -176,8 +178,8 @@ class TestDuplicateProducts(common.TransactionCase):
         wo.move_raw_ids[2].move_line_ids[0].lot_id = self.p1
         wo.move_raw_ids[2].move_line_ids[0].quantity = 1
         # Byproduct
-        wo.move_finished_ids[1].move_line_ids[0].lot_id = self.p2
-        wo.move_finished_ids[1].move_line_ids[0].quantity = 1
+        production.move_finished_ids[1].move_line_ids[0].lot_id = self.p2
+        production.move_finished_ids[1].move_line_ids[0].quantity = 1
         wo.move_raw_ids.picked = True
         wo.do_finish()
         production.button_mark_done()

@@ -476,7 +476,6 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         product_bolt = self.product_bolt
         product_screw = self.product_screw
         mrp_bom_desk = self.mrp_bom_desk
-        mrp_bom_desk.bom_line_ids.operation_id = False
 
         self.env['stock.move'].search([('product_id', 'in', [product_bolt.id, product_screw.id])])._do_unreserve()
 
@@ -2135,6 +2134,7 @@ class TestRoutingAndKits(TransactionCase):
                 Command.create({'sequence': 2, 'name': 'finished operation 2', 'workcenter_id': cls.workcenter_finished1.id}),
             ],
         })
+        cls.bom_finished1.bom_line_ids.operation_id = cls.bom_finished1.operation_ids[1]
         cls.bom_kit1 = cls.env['mrp.bom'].create({
             'product_id': cls.kit1.id,
             'product_tmpl_id': cls.kit1.product_tmpl_id.id,
@@ -2148,6 +2148,7 @@ class TestRoutingAndKits(TransactionCase):
                 Command.create({'name': 'Kit operation', 'workcenter_id': cls.workcenter_kit1.id}),
             ]
         })
+        cls.bom_kit1.bom_line_ids.operation_id = cls.bom_kit1.operation_ids
 
     def test_1(self):
         """Operations are set on `self.bom_kit1` but none on `self.bom_finished1`."""
@@ -2225,7 +2226,7 @@ class TestRoutingAndKits(TransactionCase):
             'type': 'phantom',
             'bom_line_ids': [Command.create({'product_id': compkit2.id, 'product_qty': 1})]
         })
-        self.bom_finished1.write({'bom_line_ids': [Command.create({'product_id': kit2.id, 'product_qty': 1})]})
+        self.bom_finished1.write({'bom_line_ids': [Command.create({'product_id': kit2.id, 'product_qty': 1, 'operation_id': self.bom_finished1.operation_ids[1].id})]})
 
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.finished1
@@ -2248,8 +2249,6 @@ class TestRoutingAndKits(TransactionCase):
         bomline_compfinished.operation_id = self.bom_finished1.operation_ids[0]
 
         # Main bom: the kit do not have an operation set but there's one on its bom
-        bomline_kit1 = self.bom_finished1.bom_line_ids - bomline_compfinished
-        self.assertFalse(bomline_kit1.operation_id.id)
         self.bom_kit1.bom_line_ids.operation_id = self.bom_kit1.operation_ids
 
         # Main bom: add a kit without routing
@@ -2269,7 +2268,7 @@ class TestRoutingAndKits(TransactionCase):
             'type': 'phantom',
             'bom_line_ids': [Command.create({'product_id': compkit2.id, 'product_qty': 1})]
         })
-        self.bom_finished1.write({'bom_line_ids': [Command.create({'product_id': kit2.id, 'product_qty': 1})]})
+        self.bom_finished1.write({'bom_line_ids': [Command.create({'product_id': kit2.id, 'product_qty': 1, 'operation_id': self.bom_finished1.operation_ids[1].id})]})
 
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.finished1
