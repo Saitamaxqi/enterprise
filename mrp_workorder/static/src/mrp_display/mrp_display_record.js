@@ -160,12 +160,18 @@ export class MrpDisplayRecord extends Component {
     }
 
     get moves() {
-        return this.resModel === "mrp.production"
-            ? []
-            : this.props.record.data.move_raw_ids.records.filter(
-                  (move) =>
-                      !move.data.scrapped && !move.data.check_id.count && move.data.operation_id
-              );
+        if (this.resModel === "mrp.production") {
+            return this.props.record.data.move_raw_ids.records.filter(
+                (move) => !move.data.scrapped && !move.data.bom_line_id
+            );
+        }
+        const woMovesNoCheck = this.props.record.data.move_raw_ids.records.filter(
+            (move) => !move.data.scrapped && !move.data.check_id.count
+        );
+        const moMovesNoBomLine = this.props.production.data.move_raw_ids.records.filter(
+            (move) => !move.data.scrapped && !move.data.bom_line_id
+        );
+        return [...woMovesNoCheck, ...moMovesNoBomLine];
     }
 
     get workorders() {
