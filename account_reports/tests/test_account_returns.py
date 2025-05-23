@@ -488,6 +488,8 @@ class TestAccountReturn(TestAccountReportsCommon):
             first_return.action_lock()
             second_return.action_lock()
 
+        self.company_data['company'].tax_lock_date = date(2023, 12, 31)
+
         with self.assertRaises(UserError):
             first_return.action_reset_tax_return_common()
 

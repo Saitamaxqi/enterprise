@@ -85,3 +85,6 @@ class AccountMoveLine(models.Model):
             ),
             SQL(', ').join(fields_to_insert)
         )
+
+    def _affect_tax_report(self):
+        return super()._affect_tax_report() or self.move_id.closing_return_id

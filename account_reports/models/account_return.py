@@ -901,6 +901,24 @@ class AccountReturn(models.Model):
 
             # delete carryover if possible
             if report := self.type_id.report_id:
+
+                if not report.country_id or report.country_id == self.company_id.account_fiscal_country_id:
+                    # Check for locked return
+                    violated_lock_dates = []
+                    for company in self.company_ids:
+                        violated_lock_dates = company._get_lock_date_violations(
+                            self.date_to,
+                            fiscalyear=False,
+                            sale=False,
+                            purchase=False,
+                            tax=True,
+                            hard=True,
+                        )
+                        if violated_lock_dates:
+                            raise UserError(_("The operation is refused as it would impact an already issued tax statement. "
+                                            "Please change the following lock dates to proceed: %(lock_date_info)s.",
+                                            lock_date_info=self.env['res.company']._format_lock_dates(violated_lock_dates)))
+
                 carryover_values = self.env['account.report.external.value'].search(
                     [
                         ('carryover_origin_report_line_id', 'in', report.line_ids.ids),
