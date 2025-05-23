@@ -6,7 +6,7 @@ import { patchTranslations } from "@web/../tests/web_test_helpers";
 async function readFecTestFile(fileName, format) {
     const filePath = `/l10n_fr_fec_import/static/tests/fec_test_files/${fileName}`;
     const response = await globals.fetch.call(window, filePath);
-    const fileUnit8Array = (await response.body.getReader().read()).value;
+    const fileUnit8Array = new Uint8Array(await response.arrayBuffer());
 
     if (format === "base64") {
         return btoa(String.fromCharCode(...fileUnit8Array));
