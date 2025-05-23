@@ -10,7 +10,7 @@ class AccountAnalyticLine(models.Model):
 
     def _should_not_display_timer(self):
         self.ensure_one()
-        return super()._should_not_display_timer() or self.task_id.is_timeoff_task
+        return super()._should_not_display_timer() or self.task_id.sudo().is_timeoff_task
 
     def action_merge_timesheets(self):
         if self.holiday_id:
@@ -30,6 +30,6 @@ class AccountAnalyticLine(models.Model):
         )
 
     def action_timer_start(self):
-        if self.task_id.is_timeoff_task:
+        if self.task_id.sudo().is_timeoff_task:
             raise UserError(_('You cannot start a timer for a task that is linked to a time off request. To request additional time off, please use the Time Off application.'))
         return super().action_timer_start()

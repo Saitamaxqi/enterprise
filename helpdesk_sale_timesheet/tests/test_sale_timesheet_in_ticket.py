@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged, Form
+from odoo.tests import tagged, Form, new_test_user
 from odoo.addons.sale_timesheet.tests.common import TestCommonSaleTimesheet
 
 
@@ -231,6 +231,26 @@ class TestSaleTimesheetInTicket(TestCommonSaleTimesheet):
             'employee_id': self.employee_user.id,
         })
         self.assertEqual(timesheet.commercial_partner_id, ticket.commercial_partner_id)
+
+    def test_compute_display_sol(self):
+        project = self.env['project.project'].create({
+            'name': 'Test Project',
+            'privacy_visibility': 'followers',
+        })
+        timesheet = self.env['account.analytic.line'].create({
+            'name': 'Test Timesheet',
+            'project_id': project.id,
+            'employee_id': self.employee_user.id,
+        })
+        timesheet_manager_no_project_user = new_test_user(
+            self.env,
+            login='no_project_user',
+            groups='hr_timesheet.group_timesheet_manager'
+        )
+        self.assertFalse(
+            timesheet.with_user(timesheet_manager_no_project_user).display_sol,
+            "display_sol should be False"
+        )
 
     def test_allowing_service_product_type_sol_in_helpdesk(self):
         """ Test to validate allowing service product type in ticket """

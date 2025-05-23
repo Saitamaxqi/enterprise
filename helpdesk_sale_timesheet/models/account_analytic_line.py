@@ -21,7 +21,7 @@ class AccountAnalyticLine(models.Model):
     def _compute_display_sol(self):
         sale_project_ids = set(self.env['project.project']._search([('helpdesk_team.use_helpdesk_sale_timesheet', '=', True)]))
         for line in self:
-            if line.project_id and not line.project_id.allow_billable and line.project_id.id not in sale_project_ids:
+            if line.project_id and not line.project_id.sudo().allow_billable and line.project_id.id not in sale_project_ids:
                 line.display_sol = False
             else:
                 line.display_sol = not line.helpdesk_ticket_id or line.helpdesk_ticket_id.use_helpdesk_sale_timesheet

@@ -12,6 +12,27 @@ from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 
 class TestTimesheetGridHolidays(TestCommonTimesheet):
 
+    def test_timer_methods_handle_project_access_restrictions(self):
+        """Ensure timer visibility computation does not raise AccessError for restricted users.
+            1. Create a private project with a task and a linked timesheet.
+            2. Use a Timesheet Manager user without project access.
+            3. Call _should_not_display_timer() and action_timer_start() as that user.
+            4. Verify that no AccessError is raised due to the use of sudo() within these methods.
+        """
+        self.timesheet_manager_no_project_user.action_create_employee()
+        employee = self.timesheet_manager_no_project_user.employee_id
+        timesheet = self.timesheet.with_user(self.timesheet_manager_no_project_user)
+        timesheet.employee_id = employee
+        self.assertFalse(
+            timesheet._should_not_display_timer(),
+            "_should_not_display_timer() should be True"
+        )
+        timesheet.action_timer_start()
+        self.assertTrue(
+            timesheet.is_timer_running,
+            "Timer should be running after action_timer_start()"
+        )
+
     def test_overtime_calcution_timesheet_holiday_flow(self):
         """ Employee's leave is not calculated as overtime hours when employee is on time off."""
         self.empl_employee.write({
