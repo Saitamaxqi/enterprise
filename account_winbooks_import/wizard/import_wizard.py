@@ -123,7 +123,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 if len(partner_data_dict) % 100 == 0:
                     _logger.info("Advancement: %s", len(partner_data_dict))
 
-        partner_ids = ResPartner.create(partner_data_dict.values())
+        partner_ids = ResPartner.create(tuple(partner_data_dict.values()))
         for partner in partner_ids:
             partner_data[partner.ref] = partner.id
         return partner_data, partner_ids
