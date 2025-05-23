@@ -49,6 +49,8 @@ Features:
         'views/mail_activity_plan_views.xml',
         'views/mail_activity_views.xml',
 
+        'views/sale_subscription_menus.xml',
+
         'data/mail_template_data.xml',
         'data/sale_subscription_data.xml',
         'data/sms_template_data.xml',

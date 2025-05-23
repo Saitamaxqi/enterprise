@@ -578,31 +578,4 @@ if records:
         </field>
     </record>
 
-    <!-- Menuitems -->
-    <menuitem id="menu_sale_subscription_root" name="Subscriptions" sequence="40" web_icon="sale_subscription,static/description/icon.png" groups="sales_team.group_sale_salesman"/>
-
-    <menuitem id="menu_sale_subscription" name="Subscriptions" parent="menu_sale_subscription_root" sequence="5"/>
-    <menuitem action="sale_subscription_action" id="menu_sale_subscription_action" sequence="10" parent="menu_sale_subscription"/>
-    <menuitem action="sale_subscription_action_quotes" id="menu_sale_subscription_quotes" sequence="20" parent="menu_sale_subscription"/>
-    <menuitem action="sale_subscription_action_pending" id="menu_sale_subscription_pending" sequence="30" parent="menu_sale_subscription"/>
-    <menuitem action="sale_subscription_action_upsell" id="menu_sale_subscription_upsell" sequence="40" parent="menu_sale_subscription"/>
-    <menuitem id="menu_orders_customers" name="Customers" action="account.res_partner_action_customer" sequence="50" parent="menu_sale_subscription"/>
-
-    <menuitem id="product_menu_catalog"
-            name="Products"
-            groups="sales_team.group_sale_salesman"
-            parent="menu_sale_subscription_root"
-            sequence="30">
-            <menuitem id="menu_sale_subscription_product"
-                action="product_action_subscription"
-                sequence="10"/>
-        </menuitem>
-
-    <menuitem action="product.product_pricelist_action2" id="menu_sale_subscription_pricelist" sequence="50" parent="product_menu_catalog" groups="product.group_product_pricelist"/>
-
-    <menuitem id="menu_sale_subscription_config" name="Configuration" sequence="100" parent="menu_sale_subscription_root" groups="sales_team.group_sale_manager"/>
-    <menuitem id="menu_sale_subscription_settings" name="Settings" parent="menu_sale_subscription_config" sequence="1" action="sale.action_sale_config_settings" groups="base.group_system"/>
-    <menuitem id="menu_sale_subscription_plans" name="Recurring Plans" action="sale_subscription_plan_action" parent="menu_sale_subscription_config" sequence="2"/>
-    <menuitem id="menu_template_of_subscription" action="sale_subscription_template_action" parent="menu_sale_subscription_config" sequence="4" groups="sale_management.group_sale_order_template"/>
-    <menuitem id="menu_sale_subscription_close_reason_action" action="sale_subscription_close_reason_action" parent="menu_sale_subscription_config" sequence="10"/>
 </odoo>
