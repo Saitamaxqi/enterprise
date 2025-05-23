@@ -7,11 +7,20 @@
     </div>
 
     <div id="employee_email" position="replace"/>
+    <div id="employee_job_title" position="replace"/>
+    <div id="employee_department" position="replace"/>
     <div id="employee_marital" position="replace"/>
     <div id="employee_person_in_charge" position="replace"/>
     <div id="computed_on" position="replace"/>
     <div id="contract_start" position="replace"/>
     <div id="working_schedule" position="replace"/>
+
+    <xpath expr="//div[@id='pay_period']" position="after">
+        <div id="pay_date">
+            <strong class="me-2">Pay Date:</strong>
+            <span t-field="o.paid_date"/>
+        </div>
+    </xpath>
 
     <xpath expr="//div[@id='payslip_lines_table']" position="after">
         <div>
@@ -56,6 +65,9 @@
     <td id="worked_days_total_hours" position="after">
         <td/>
     </td>
+    <th id="work_days_header_days" position="replace"/>
+    <td id="worked_days_days" position="replace"/>
+    <td id="worked_days_total_days" position="replace"/>
 
     <th id="line_header_amount" position="replace"/>
     <th id="line_header_quantity" position="replace"/>
@@ -63,6 +75,16 @@
     <td id="payslip_line_amount" position="replace"/>
     <td id="payslip_line_quantity" position="replace"/>
     <td id="payslip_line_rate" position="replace"/>
+
+    <xpath expr="//p[@id='to_pay_line']" position="replace">
+        <span>
+            Deposited to the account
+            <b>
+                <span t-out="('X' * (len(o.employee_id.bank_account_id.acc_number)-4) + o.employee_id.bank_account_id.acc_number[-4:]) if o.employee_id.bank_account_id else 'xxxxxxxxxxxx'"/>
+            </b> of <i><span t-field="o.employee_id.legal_name"/></i>: <span t-field="o.net_wage" class="fw-bold"/>
+        </span>
+    </xpath>
+
 </template>
 
 <template id="report_payslip_us_lang">
@@ -79,6 +101,18 @@
         <td>SSN:</td>
         <td class="text-end"><strong t-out="('XXX-XX-' + o.employee_id.ssnid[-4:]) if o.employee_id.ssnid else ''"/></td>
     </tr>
+
+    <tr id="employee_job_title" position="replace"/>
+    <tr id="employee_department" position="replace"/>
+
+    <xpath expr="//tr[@id='pay_period']" position="after">
+        <tr id="pay_date">
+            <td>Pay Date:</td>
+            <td class="text-end fw-bold">
+                <span t-field="o.paid_date"/>
+            </td>
+        </tr>
+    </xpath>
 
     <xpath expr="//div[@id='payslip_lines_table']" position="after">
         <div>
@@ -109,6 +143,16 @@
             </table>
         </div>
     </xpath>
+
+    <xpath expr="//p[@id='to_pay_line']" position="replace">
+        <span>
+            Deposited to the account
+            <b>
+                <span t-out="('X' * (len(o.employee_id.bank_account_id.acc_number)-4) + o.employee_id.bank_account_id.acc_number[-4:]) if o.employee_id.bank_account_id else 'xxxxxxxxxxxx'"/>
+            </b> of <i><span t-field="o.employee_id.legal_name"/></i>: <span t-field="o.net_wage" class="fw-bold"/>
+        </span>
+    </xpath>
+
 </template>
 
 <template id="report_light_payslip_us_lang">

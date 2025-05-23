@@ -74,7 +74,7 @@
                 </table>
             </div>
             <div id="to_pay">
-                <p t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id">xxxxxxxxxxxx</span></b> of <i><span t-field="o.employee_id"/></i>: <span t-field="o.net_wage" class="fw-bold"/></p>
+                <p id="to_pay_line" t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id">xxxxxxxxxxxx</span></b> of <i><span t-field="o.employee_id"/></i>: <span t-field="o.net_wage" class="fw-bold"/></p>
                 <p t-if="o.net_wage &lt; 0">The net amount will be recovered from the first positive remuneration established after this.</p>
             </div>
         </div>

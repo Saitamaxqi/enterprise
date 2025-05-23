@@ -16,7 +16,7 @@
                     <thead class="o_black_border">
                         <tr>
                             <th>Employee Information</th>
-                            <th>Other Information</th>
+                            <th class="w-50">Other Information</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                                 <div id="employee_id">
                                     <strong class="me-2">ID:</strong>
                                     <span t-if="o.version_id.identification_id" t-field="o.version_id.identification_id"/>
-                                    <span t-else="" class="fw-bold">No ID number on the employee !!!</span>
+                                    <span t-else="" class="fw-bold">No ID number on the employee</span>
                                 </div>
                                 <div id="employee_email" t-if="o.employee_id.work_email">
                                     <strong class="me-2">Email:</strong>
@@ -194,7 +194,7 @@
                 <div class="oe_structure"></div>
             </div>
             <div id="to_pay">
-                <p t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id">xxxxxxxxxxxx</span></b> of <i><span t-field="o.employee_id.legal_name"/></i>: <span t-field="o.net_wage" class="fw-bold"/></p>
+                <p id="to_pay_line" t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id">xxxxxxxxxxxx</span></b> of <i><span t-field="o.employee_id.legal_name"/></i>: <span t-field="o.net_wage" class="fw-bold"/></p>
                 <p t-if="o.net_wage &lt; 0">The net amount will be recovered from the first positive remuneration established after this.</p>
             </div>
         </div>
