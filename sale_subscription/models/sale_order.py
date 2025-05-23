@@ -899,7 +899,7 @@ class SaleOrder(models.Model):
     def _check_token_saving_conditions(self):
         """ Check if all conditions match for saving the payment token on the subscription. """
         self.ensure_one()
-        last_transaction = self.transaction_ids.sudo()._get_last()
+        last_transaction = self.sudo().transaction_ids._get_last()
         last_token = last_transaction.token_id
         subscription_fully_paid = self.currency_id.compare_amounts(last_transaction.amount, self.amount_total) >= 0
         transaction_authorized = last_transaction and last_transaction.renewal_state == "authorized"
@@ -907,7 +907,7 @@ class SaleOrder(models.Model):
 
     def _save_token_from_payment(self):
         self.ensure_one()
-        last_token = self.transaction_ids.sudo()._get_last().token_id.id
+        last_token = self.sudo().transaction_ids._get_last().token_id.id
         if last_token:
             self.payment_token_id = last_token
 
