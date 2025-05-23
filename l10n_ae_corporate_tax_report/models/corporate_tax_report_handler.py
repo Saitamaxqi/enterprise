@@ -57,11 +57,11 @@ class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
             'line_ids': [
                 Command.create({
                     'account_id': company.l10n_ae_tax_report_counterpart_account.id,
-                    'credit': amount,
+                    'debit': amount,
                 }),
                 Command.create({
                     'account_id': company.l10n_ae_tax_report_liabilities_account.id,
-                    'debit': amount,
+                    'credit': amount,
                 })
             ],
         })
