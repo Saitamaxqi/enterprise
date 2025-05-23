@@ -8,7 +8,6 @@ from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsApp
 from odoo.tests import tagged, users
 from odoo.tools import mute_logger
-from odoo.tools.misc import limited_field_access_token
 
 
 class WhatsAppSecurityCase(WhatsAppCommon):
@@ -254,9 +253,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                 ),
                                 "res.partner": self._filter_partners_fields(
                                     {
-                                        "avatar_128_access_token": limited_field_access_token(
-                                            self.partner_admin, "avatar_128"
-                                        ),
+                                        "avatar_128_access_token": self.partner_admin._get_avatar_128_access_token(),
                                         "id": self.user_admin.partner_id.id,
                                         "isInternalUser": True,
                                         "is_company": False,
@@ -293,12 +290,11 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                             "res.partner": self._filter_partners_fields(
                                 {
                                     "active": True,
-                                    "avatar_128_access_token": limited_field_access_token(
-                                        self.partner_admin, "avatar_128"
-                                    ),
+                                    "avatar_128_access_token": self.partner_admin._get_avatar_128_access_token(),
                                     "email": "test.admin@test.example.com",
                                     "id": self.user_admin.partner_id.id,
                                     "im_status": "offline",
+                                    "im_status_access_token": self.partner_admin._get_im_status_access_token(),
                                     "isInternalUser": True,
                                     "is_company": False,
                                     "name": "Mitchell Admin",
