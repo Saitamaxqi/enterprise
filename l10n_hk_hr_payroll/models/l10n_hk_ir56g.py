@@ -65,7 +65,7 @@ class L10n_HkIr56g(models.Model):
 
             spouse_name, spouse_hkid, spouse_passport = '', '', ''
             if employee.marital == 'married':
-                spouse_name = employee.spouse_complete_name.upper()
+                spouse_name = employee.spouse_complete_name.upper() if employee.spouse_complete_name else ''
                 if employee.l10n_hk_spouse_identification_id:
                     spouse_hkid = employee.l10n_hk_spouse_identification_id.strip().upper()
                 if employee.l10n_hk_spouse_passport_id or employee.l10n_hk_spouse_passport_place_of_issue:
