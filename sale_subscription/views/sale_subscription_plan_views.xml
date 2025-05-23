@@ -98,7 +98,11 @@
         <field name="model">sale.subscription.plan</field>
         <field name="arch" type="xml">
             <search string="Recurring Plan">
-                <field name="name" string="Plan" filter_domain="['|', ('name', 'ilike', self), ('billing_period_display', 'ilike', self)]"/>
+                <field name="name"/>
+                <field name="auto_close_limit" string="Automatic Closing After" filter_domain="[('auto_close_limit', '=', self)]"/>
+                <filter name="closable" string="Closable" domain="[('user_closable', '=', 'True')]"/>
+                <filter name="renew" string="Renew" domain="[('user_extend', '=', 'True')]"/>
+                <filter name="add_product" string="Add Products" domain="[('user_quantity', '=', 'True')]"/>
             </search>
         </field>
     </record>
@@ -107,9 +111,9 @@
         <field name="name">Recurring Plans</field>
         <field name="res_model">sale.subscription.plan</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" eval='sale_subscription_plan_search'/>
+        <field name="search_view_id" eval="sale_subscription_plan_search"/>
         <field name="context">
-            {'search_default_subscription_plan': 1 }
+            { 'search_default_subscription_plan': 1 }
         </field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -117,4 +121,5 @@
             </p>
         </field>
     </record>
+
 </odoo>
