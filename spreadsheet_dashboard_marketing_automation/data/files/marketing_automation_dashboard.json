@@ -1178,6 +1178,11 @@
         "active_ids": [1],
         "default_mass_mailing_id": 1
       },
+      "sortedColumn": {
+        "measure": "__count:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
       ],
@@ -1206,6 +1211,11 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
+      },
+      "sortedColumn": {
+        "measure": "__count:sum",
+        "order": "desc",
+        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
@@ -1237,6 +1247,11 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
+      },
+      "sortedColumn": {
+        "measure": "__count:sum",
+        "order": "desc",
+        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
@@ -1272,6 +1287,11 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
+      },
+      "sortedColumn": {
+        "measure": "__count:sum",
+        "order": "desc",
+        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
@@ -1421,6 +1441,11 @@
         "active_id": 1,
         "active_ids": [1],
         "default_mass_mailing_id": 1
+      },
+      "sortedColumn": {
+        "measure": "__count:sum",
+        "order": "desc",
+        "domain": []
       },
       "measures": [
         { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }

@@ -3015,6 +3015,11 @@
         ["location_dest_usage", "=", "customer"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "product_uom_qty:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
         {
@@ -3089,6 +3094,11 @@
         ["location_dest_usage", "=", "customer"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "product_uom_qty:sum",
+        "order": "asc",
+        "domain": []
+      },
       "measures": [
         { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
         {
@@ -3165,6 +3175,11 @@
         ["picking_type_code", "=", "outgoing"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "product_qty:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -3203,6 +3218,11 @@
         ["picking_type_code", "=", "outgoing"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "product_qty:sum",
+        "order": "asc",
+        "domain": []
+      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -3335,6 +3355,11 @@
         ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
+      "sortedColumn": {
+        "measure": "quantity_product_uom:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3378,6 +3403,11 @@
         ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
+      "sortedColumn": {
+        "measure": "quantity_product_uom:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3413,6 +3443,11 @@
         ["location_dest_id.scrap_location", "=", true]
       ],
       "context": { "create": 0 },
+      "sortedColumn": {
+        "measure": "quantity_product_uom:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",
@@ -3448,6 +3483,11 @@
         ["location_dest_id.scrap_location", "=", true]
       ],
       "context": { "create": 0 },
+      "sortedColumn": {
+        "measure": "quantity_product_uom:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "quantity_product_uom:sum",

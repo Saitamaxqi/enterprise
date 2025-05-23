@@ -1187,6 +1187,11 @@
       ],
       "model": "sale.subscription.report",
       "name": "Subscription Analysis",
+      "sortedColumn": {
+        "measure": "recurring_monthly:sum",
+        "order": "desc",
+        "domain": []
+      },
       "formulaId": "2",
       "columns": [],
       "rows": []
@@ -1216,7 +1221,7 @@
       "model": "sale.order.log.report",
       "name": "Sale Order Log Analysis by Event Date (Year)",
       "sortedColumn": {
-        "measure": "arr_change_normalized",
+        "measure": "mrr_change_normalized",
         "order": "asc",
         "domain": []
       },

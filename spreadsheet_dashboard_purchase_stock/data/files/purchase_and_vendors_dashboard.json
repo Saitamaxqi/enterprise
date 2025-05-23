@@ -1393,6 +1393,11 @@
         "active_id": 27,
         "active_ids": [27]
       },
+      "sortedColumn": {
+        "measure": "on_time_rate:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "on_time_rate:sum",
@@ -1506,6 +1511,11 @@
         "active_id": 27,
         "active_ids": [27]
       },
+      "sortedColumn": {
+        "measure": "on_time_rate:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "on_time_rate:sum",
@@ -1540,6 +1550,11 @@
         ["state", "!=", "cancel"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "price_total:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -1603,6 +1618,11 @@
         ["picking_type_code", "=", "incoming"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "delay:avg",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         { "id": "delay:avg", "fieldName": "delay", "aggregator": "avg" },
         { "id": "__count", "fieldName": "__count" }
@@ -1633,6 +1653,11 @@
         ["state", "!=", "cancel"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "price_total:sum",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
         {
@@ -1680,6 +1705,11 @@
         ["picking_type_code", "=", "incoming"]
       ],
       "context": {},
+      "sortedColumn": {
+        "measure": "delay:avg",
+        "order": "desc",
+        "domain": []
+      },
       "measures": [
         {
           "id": "delay:avg",
