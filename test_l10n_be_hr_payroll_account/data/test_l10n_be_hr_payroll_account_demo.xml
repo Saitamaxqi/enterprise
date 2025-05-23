@@ -2156,7 +2156,7 @@
         <field name="name">CDI - Joseph Noluck - Experienced Developer - 2019</field>
         <field name="department_id" ref="hr_department_2"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
-        <field name="job_id" ref="l10n_be_hr_contract_salary.job_developer_belgium"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="wage">3000</field>
         <field name="wage_on_signature">3000</field>
@@ -2182,7 +2182,7 @@
         <field name="name">CDI - Joseph Noluck - Experienced Developer - 2020</field>
         <field name="department_id" ref="hr_department_2"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
-        <field name="job_id" ref="l10n_be_hr_contract_salary.job_developer_belgium"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="wage_on_signature">3200</field>
         <field name="wage">3200</field>

@@ -34,17 +34,6 @@
         <field name="company_id" ref="base.demo_company_tr"/>
     </record>
 
-    <record id="tr_hr_job_marketing_manager" model="hr.job">
-        <field name="name">Marketing Manager TR</field>
-        <field name="department_id" ref="tr_hr_department_marketing"/>
-        <field name="company_id" ref="base.demo_company_tr"/>
-    </record>
-    <record id="tr_hr_job_accounting_manager" model="hr.job">
-        <field name="name">Accounting Manager TR</field>
-        <field name="department_id" ref="tr_hr_department_accounting"/>
-        <field name="company_id" ref="base.demo_company_tr"/>
-    </record>
-
     <record id="res_partner_deniz" model="res.partner">
         <field name="name">Deniz Hasim</field>
         <field name="street">İstiklal Caddesi</field>
@@ -135,7 +124,7 @@
     <record id="hr_employee_deniz" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_deniz')).name"/>
         <field name="job_title">Marketing Manager</field>
-        <field name="job_id" ref="l10n_tr_hr_payroll.tr_hr_job_marketing_manager"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_marketing"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">0999-1230001</field>
@@ -169,7 +158,7 @@
     <record id="hr_employee_narin" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_tr_hr_payroll.res_partner_narin')).name"/>
         <field name="job_title">Accounting Manager</field>
-        <field name="job_id" ref="l10n_tr_hr_payroll.tr_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_accounting"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">0999-1230002</field>
@@ -211,7 +200,7 @@
     <record id="hr_contract_deniz" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Temporary Contract - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_deniz')).name + ' - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_deniz')).job_title"/>
         <field name="employee_id" ref="l10n_tr_hr_payroll.hr_employee_deniz"/>
-        <field name="job_id" ref="l10n_tr_hr_payroll.tr_hr_job_marketing_manager"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_marketing"/>
         <field name="company_id" ref="base.demo_company_tr"/>
         <field name="wage_type">monthly</field>
@@ -225,7 +214,7 @@
     <record id="hr_contract_narin" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Full-Time Contract - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_narin')).name + ' - ' + obj(ref('l10n_tr_hr_payroll.hr_employee_narin')).job_title"/>
         <field name="employee_id" ref="l10n_tr_hr_payroll.hr_employee_narin"/>
-        <field name="job_id" ref="l10n_tr_hr_payroll.tr_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_accounting"/>
         <field name="company_id" ref="base.demo_company_tr"/>
         <field name="wage_type">monthly</field>

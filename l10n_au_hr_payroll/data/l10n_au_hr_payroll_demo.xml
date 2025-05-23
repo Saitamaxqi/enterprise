@@ -25,20 +25,6 @@
         <field name="company_id" ref="base.demo_company_au"/>
     </record>
 
-    <record id="au_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead AU</field>
-        <field name="department_id" ref="au_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_au"/>
-    </record>
-
-    <record id="au_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer AU</field>
-        <field name="department_id" ref="au_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_au"/>
-    </record>
-
     <record id="res_partner_roger" model="res.partner">
         <field name="name">Roger Woodrum</field>
         <field name="street">Hotline St. 82d</field>
@@ -231,7 +217,7 @@
     <record id="hr_contract_roger" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Employement Contract - ' + obj(ref('l10n_au_hr_payroll.hr_employee_roger')).name + ' - ' + obj(ref('l10n_au_hr_payroll.hr_employee_roger')).job_title"/>
         <field name="employee_id" ref="l10n_au_hr_payroll.hr_employee_roger"/>
-        <field name="job_id" ref="l10n_au_hr_payroll.au_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_au"/>
         <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
@@ -250,7 +236,7 @@
         <field name="name" model="hr.employee" eval="'Permanent Employement Contract - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).name + ' - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).job_title"/>
         <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
         <field name="employee_id" ref="hr_employee_dennis"/>
-        <field name="job_id" ref="l10n_au_hr_payroll.au_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
         <field name="wage">4940</field>
         <field name="wage_type">hourly</field>
@@ -268,7 +254,7 @@
         <field name="name" model="hr.employee" eval="'Permanent Employement Contract - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).name + ' - ' + obj(ref('l10n_au_hr_payroll.hr_employee_dennis')).job_title"/>
         <field name="department_id" ref="l10n_au_hr_payroll.au_hr_department_rd"/>
         <field name="employee_id" ref="hr_employee_dennis"/>
-        <field name="job_id" ref="l10n_au_hr_payroll.au_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_hrm"/>
         <field name="structure_type_id" ref="l10n_au_hr_payroll.structure_type_schedule_1"/>
         <field name="wage">4940</field>
         <field name="wage_type">hourly</field>

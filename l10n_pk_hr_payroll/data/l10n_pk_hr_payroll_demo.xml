@@ -33,18 +33,6 @@
         <field name="company_id" ref="base.demo_company_pk"/>
     </record>
 
-    <record id="pk_hr_job_marketing_manager" model="hr.job">
-        <field name="name">Marketing Manager PK</field>
-        <field name="department_id" ref="pk_hr_department_marketing"/>
-        <field name="company_id" ref="base.demo_company_pk"/>
-    </record>
-  
-    <record id="pk_hr_job_accounting_manager" model="hr.job">
-        <field name="name">Accounting Manager PK</field>
-        <field name="department_id" ref="pk_hr_department_accounting"/>
-        <field name="company_id" ref="base.demo_company_pk"/>
-    </record>
-
     <record id="res_partner_shahid" model="res.partner">
         <field name="name">Shahid Manzoor</field>
         <field name="street">Main Boulevard Gulberg</field>
@@ -135,7 +123,7 @@
     <record id="hr_employee_shahid" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_pk_hr_payroll.res_partner_shahid')).name"/>
         <field name="job_title">Marketing Manager</field>
-        <field name="job_id" ref="l10n_pk_hr_payroll.pk_hr_job_marketing_manager"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pk_hr_payroll.pk_hr_department_marketing"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_al-image.jpg"/>
         <field name="work_phone">0999-1230001</field>
@@ -168,7 +156,7 @@
     <record id="hr_employee_shazia" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_pk_hr_payroll.res_partner_shazia')).name"/>
         <field name="job_title">Accounting Manager</field>
-        <field name="job_id" ref="l10n_pk_hr_payroll.pk_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_pk_hr_payroll.pk_hr_department_accounting"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">0999-1230002</field>
@@ -210,7 +198,7 @@
     <record id="hr_contract_shahid" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Temporary Contract - ' + obj(ref('l10n_pk_hr_payroll.hr_employee_shahid')).name + ' - ' + obj(ref('l10n_pk_hr_payroll.hr_employee_shahid')).job_title"/>
         <field name="employee_id" ref="l10n_pk_hr_payroll.hr_employee_shahid"/>
-        <field name="job_id" ref="l10n_pk_hr_payroll.pk_hr_job_marketing_manager"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pk_hr_payroll.pk_hr_department_marketing"/>
         <field name="company_id" ref="base.demo_company_pk"/>
         <field name="wage_type">monthly</field>
@@ -223,7 +211,7 @@
     <record id="hr_contract_shazia" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Full-Time Contract - ' + obj(ref('l10n_pk_hr_payroll.hr_employee_shazia')).name + ' - ' + obj(ref('l10n_pk_hr_payroll.hr_employee_shazia')).job_title"/>
         <field name="employee_id" ref="l10n_pk_hr_payroll.hr_employee_shazia"/>
-        <field name="job_id" ref="l10n_pk_hr_payroll.pk_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_pk_hr_payroll.pk_hr_department_accounting"/>
         <field name="company_id" ref="base.demo_company_pk"/>
         <field name="wage_type">monthly</field>

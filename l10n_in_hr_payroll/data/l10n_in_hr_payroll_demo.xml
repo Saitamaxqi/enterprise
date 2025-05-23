@@ -139,19 +139,6 @@
             <field name="company_id" ref="base.demo_company_in"/>
         </record>
 
-        <record id="l10n_in_job_developer" model="hr.job">
-            <field name="name">Experienced Developer</field>
-            <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_rd"/>
-            <field name="no_of_recruitment">5</field>
-            <field name="company_id" ref="base.demo_company_in"/>
-        </record>
-        <record id="l10n_in_job_intern" model="hr.job">
-            <field name="name">Technical Support &amp; Investigation Intern</field>
-            <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_tech_support"/>
-            <field name="no_of_recruitment">10</field>
-            <field name="company_id" ref="base.demo_company_in"/>
-        </record>
-
         <!-- Employee -->
         <record id="l10n_in_hr_employee_vihaan" model="hr.employee">
             <field name="name">Vihaan Sengupta</field>
@@ -167,7 +154,7 @@
             <field name="private_country_id" ref="base.in"/>
             <field name="private_phone">+91 7654321098</field>
             <field name="private_email">vihaan.sengupta123@example.com</field>
-            <field name="job_id" ref="l10n_in_hr_payroll.l10n_in_job_developer"/>
+            <field name="job_id" ref="hr.job_consultant"/>
             <field name="job_title">Software Developer</field>
             <field name="work_contact_id" ref="l10n_in_hr_payroll.l10n_in_res_partner_vihaan"/>
             <field name="emergency_contact">Harshiv Sengupta</field>
@@ -191,7 +178,7 @@
         </record>
         <record id="l10n_in_hr_employee_shaurya" model="hr.employee">
             <field name="name">Shaurya Khurana</field>
-            <field name="job_id" ref="l10n_in_hr_payroll.l10n_in_job_developer"/>
+            <field name="job_id" ref="hr.job_developer"/>
             <field name="gender">male</field>
             <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_tech_support"/>
             <field name="work_contact_id" ref="l10n_in_hr_payroll.l10n_in_partner_shaurya_khurana"/>
@@ -221,7 +208,7 @@
         </record>
         <record id="l10n_in_hr_employee_alisha_sharma" model="hr.employee">
             <field name="name">Alisha Sharma</field>
-            <field name="job_id" ref="l10n_in_hr_payroll.l10n_in_job_intern"/>
+            <field name="job_id" ref="hr.job_hrm"/>
             <field name="department_id" ref="l10n_in_hr_payroll.l10n_in_hr_department_marketing"/>
             <field name="work_contact_id" ref="l10n_in_hr_payroll.l10n_in_partner_aisha_sharma"/>
             <field name="gender">female</field>

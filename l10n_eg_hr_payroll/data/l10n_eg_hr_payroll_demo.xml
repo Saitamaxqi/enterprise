@@ -32,19 +32,6 @@
         <field name="company_id" ref="base.demo_company_eg"/>
     </record>
 
-    <record id="eg_hr_job_marketing_manager" model="hr.job">
-        <field name="name">Marketing Manager EG</field>
-        <field name="no_of_recruitment">3</field>
-        <field name="department_id" ref="l10n_eg_hr_payroll.eg_hr_department_marketing"/>
-        <field name="company_id" ref="base.demo_company_eg"/>
-    </record>
-    <record id="eg_hr_job_accounting_manager" model="hr.job">
-        <field name="name">Accounting Manager EG</field>
-        <field name="no_of_recruitment">2</field>
-        <field name="department_id" ref="l10n_eg_hr_payroll.eg_hr_department_accounting"/>
-        <field name="company_id" ref="base.demo_company_eg"/>
-    </record>
-
     <record id="res_partner_abeer" model="res.partner">
         <field name="name">Abeer Ehab Abdullah</field>
         <field name="street">New Cairo 1</field>
@@ -135,7 +122,7 @@
     <record id="hr_employee_abeer" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).name"/>
         <field name="job_title">Marketing Manager</field>
-        <field name="job_id" ref="l10n_eg_hr_payroll.eg_hr_job_marketing_manager"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
         <field name="work_phone">99 1234 5678</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -168,7 +155,7 @@
     <record id="hr_employee_hany" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name"/>
         <field name="job_title">Accounting Manager</field>
-        <field name="job_id" ref="eg_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_ngh-image.jpg"/>
         <field name="work_phone">99 0011 2345</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name.replace(' ', '.').lower() + '@example.com'"/>
@@ -210,7 +197,7 @@
     <record id="hr_contract_abeer" model="hr.contract">
         <field name="name" model="res.partner" eval="'Permanent Contract - ' + obj(ref('l10n_eg_hr_payroll.res_partner_abeer')).name"/>
         <field name="employee_id" ref="l10n_eg_hr_payroll.hr_employee_abeer"/>
-        <field name="job_id" ref="eg_hr_job_marketing_manager"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="eg_hr_department_marketing"/>
         <field name="company_id" ref="base.demo_company_eg"/>
         <field name="wage">35000</field>
@@ -225,7 +212,7 @@
     <record id="hr_contract_hany_previous" model="hr.contract">
         <field name="name" model="res.partner" eval="'Permanent Contract - ' + obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name"/>
         <field name="employee_id" ref="l10n_eg_hr_payroll.hr_employee_hany"/>
-        <field name="job_id" ref="eg_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="eg_hr_department_accounting"/>
         <field name="company_id" ref="base.demo_company_eg"/>
         <field name="wage">40000</field>
@@ -240,7 +227,7 @@
     <record id="hr_contract_hany" model="hr.contract">
         <field name="name" model="res.partner" eval="'Permanent Contract - ' + obj(ref('l10n_eg_hr_payroll.res_partner_hany')).name"/>
         <field name="employee_id" ref="l10n_eg_hr_payroll.hr_employee_hany"/>
-        <field name="job_id" ref="eg_hr_job_accounting_manager"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="eg_hr_department_accounting"/>
         <field name="company_id" ref="base.demo_company_eg"/>
         <field name="wage">42000</field>

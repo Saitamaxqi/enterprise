@@ -22,16 +22,9 @@
         <field name="company_id" ref="base.demo_company_my"/>
     </record>
 
-    <record id="job_developer_malaysia" model="hr.job">
-        <field name="name">Experienced Developer MY</field>
-        <field name="department_id" ref="hr_department_rdmy"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_my"/>
-    </record>
-
     <record id="hr_employee_kah_yoon_ooi" model="hr.employee">
         <field name="name">Kah Yoon Ooi</field>
-        <field name="job_id" ref="job_developer_malaysia"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="country_id" ref="base.my"/>
         <field name="company_id" ref="base.demo_company_my"/>
         <field name="image_1920" type="base64" file="l10n_my_hr_payroll/static/img/hr_employee_kah_yoon_ooi.jpg"/>
@@ -116,7 +109,7 @@
         <field name="name">CDI - Xiu Mei Lee - Experienced Developer</field>
         <field name="department_id" ref="hr_department_rdmy"/>
         <field name="employee_id" ref="hr_employee_xiu_mei_lee"/>
-        <field name="job_id" ref="l10n_my_hr_payroll.job_developer_malaysia"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="l10n_my_hr_payroll.structure_type_employee_my"/>
         <field name="wage">7000</field>
         <field name="state">close</field>
@@ -131,7 +124,7 @@
         <field name="name">CDI - Xiu Mei Lee - Experienced Developer</field>
         <field name="department_id" ref="hr_department_rdmy"/>
         <field name="employee_id" ref="hr_employee_xiu_mei_lee"/>
-        <field name="job_id" ref="l10n_my_hr_payroll.job_developer_malaysia"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="l10n_my_hr_payroll.structure_type_employee_my"/>
         <field name="wage">10000</field>
         <field name="state">open</field>

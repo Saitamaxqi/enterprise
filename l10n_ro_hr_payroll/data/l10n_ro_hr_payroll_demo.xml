@@ -29,20 +29,6 @@
         <field name="company_id" ref="base.demo_company_ro"/>
     </record>
 
-    <record id="ro_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead RO</field>
-        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_ro"/>
-    </record>
-
-    <record id="ro_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer RO</field>
-        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_ro"/>
-    </record>
-
     <record id="res_partner_ionel" model="res.partner">
         <field name="name">Ionel Oprea</field>
         <field name="street">Strada Hagi Dina 210</field>
@@ -206,7 +192,7 @@
     <record id="hr_contract_ionel" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CIM - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_ionel')).name + ' - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_ionel')).job_title"/>
         <field name="employee_id" ref="l10n_ro_hr_payroll.hr_employee_ionel"/>
-        <field name="job_id" ref="l10n_ro_hr_payroll.ro_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ro"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>
@@ -221,7 +207,7 @@
     <record id="hr_contract_demetra_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CIM - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).name + ' - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).job_title"/>
         <field name="employee_id" ref="l10n_ro_hr_payroll.hr_employee_demetra"/>
-        <field name="job_id" ref="l10n_ro_hr_payroll.ro_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ro"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>
@@ -237,7 +223,7 @@
     <record id="hr_contract_demetra" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CIM - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).name + ' - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).job_title"/>
         <field name="employee_id" ref="l10n_ro_hr_payroll.hr_employee_demetra"/>
-        <field name="job_id" ref="l10n_ro_hr_payroll.ro_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ro"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>

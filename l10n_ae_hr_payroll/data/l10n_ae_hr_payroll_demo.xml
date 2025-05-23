@@ -36,19 +36,6 @@
         <field name="company_id" ref="base.demo_company_ae"/>
     </record>
 
-    <record id="ae_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead AE</field>
-        <field name="no_of_recruitment">1</field>
-        <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_ae"/>
-    </record>
-
-    <record id="ae_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer AE</field>
-        <field name="no_of_recruitment">5</field>
-        <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_ae"/>
-    </record>
 
     <record id="res_partner_aisha" model="res.partner">
         <field name="name">Aisha Al Shehhi</field>
@@ -213,7 +200,7 @@
     <record id="hr_contract_aisha" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_aisha')).name + ' - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_aisha')).job_title"/>
         <field name="employee_id" ref="l10n_ae_hr_payroll.hr_employee_aisha"/>
-        <field name="job_id" ref="l10n_ae_hr_payroll.ae_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ae"/>
         <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
@@ -227,7 +214,7 @@
     <record id="hr_contract_saeed" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).name + ' - ' + obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).job_title"/>
         <field name="employee_id" ref="l10n_ae_hr_payroll.hr_employee_saeed"/>
-        <field name="job_id" ref="l10n_ae_hr_payroll.ae_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ae"/>
         <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>

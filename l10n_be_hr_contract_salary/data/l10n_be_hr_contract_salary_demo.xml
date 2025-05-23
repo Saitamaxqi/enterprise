@@ -5,16 +5,9 @@
         <field name="company_id" ref="base.demo_company_be"/>
     </record>
 
-    <record id="job_developer_belgium" model="hr.job">
-        <field name="name">Junior Developer BE</field>
-        <field name="department_id" ref="hr_department_rdbe"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_be"/>
-    </record>
-
     <record id="employee_max" model="hr.employee">
         <field name="name">Max Durand</field>
-        <field name="job_id" ref="job_developer_belgium"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="country_id" ref="base.be"/>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="image_1920" type="base64" file="hr_contract_salary/static/img/hr_employee_max_durand.jpg"/>
@@ -150,7 +143,7 @@
     <record id="hr_contract_cdi_experienced_developer" model="hr.contract">
         <field name="name">CDI - Experienced Developer (BE)</field>
         <field name="department_id" ref="hr.dep_rd"/>
-        <field name="job_id" ref="l10n_be_hr_contract_salary.job_developer_belgium"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="wage">2650</field>
         <field name="wage_on_signature">2650</field>
@@ -166,7 +159,7 @@
         <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
     </record>
 
-    <record id="l10n_be_hr_contract_salary.job_developer_belgium" model="hr.job">
+    <record id="hr.job_developer" model="hr.job">
         <field name="default_contract_id" ref="l10n_be_hr_contract_salary.hr_contract_cdi_experienced_developer"/>
     </record>
 
@@ -174,7 +167,7 @@
         <field name="name">CDI - Laurie Poiret - Experienced Developer</field>
         <field name="department_id" ref="hr.dep_rd"/>
         <field name="employee_id" ref="hr_employee_laurie_poiret"/>
-        <field name="job_id" ref="l10n_be_hr_contract_salary.job_developer_belgium"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="wage_on_signature">2500</field>
         <field name="wage">2500</field>
@@ -201,7 +194,7 @@
         <field name="name">CDI - Laurie Poiret - Experienced Developer</field>
         <field name="department_id" ref="hr.dep_rd"/>
         <field name="employee_id" ref="hr_employee_laurie_poiret"/>
-        <field name="job_id" ref="l10n_be_hr_contract_salary.job_developer_belgium"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="wage">2650</field>
         <field name="wage_on_signature">2650</field>

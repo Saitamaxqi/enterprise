@@ -28,20 +28,6 @@
         <field name="company_id" ref="base.demo_company_sk"/>
     </record>
 
-    <record id="sk_hr_job_technical_lead" model="hr.job">
-        <field name="name">technical Lead SK</field>
-        <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_sk"/>
-    </record>
-
-    <record id="sk_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer SK</field>
-        <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_sk"/>
-    </record>
-
     <record id="res_partner_richard" model="res.partner">
         <field name="name">Richard Hečko</field>
         <field name="street">Galandova 2843</field>
@@ -201,7 +187,7 @@
     <record id="hr_contract_richard" model="hr.contract">
         <field name="name" model="hr.employee" eval="'ZDN - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_richard')).name + ' - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_richard')).job_title"/>
         <field name="employee_id" ref="l10n_sk_hr_payroll.hr_employee_richard"/>
-        <field name="job_id" ref="l10n_sk_hr_payroll.sk_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_sk"/>
         <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>
@@ -216,7 +202,7 @@
     <record id="hr_contract_frantiska_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'ZDN - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).name + ' - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).job_title"/>
         <field name="employee_id" ref="l10n_sk_hr_payroll.hr_employee_frantiska"/>
-        <field name="job_id" ref="l10n_sk_hr_payroll.sk_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_sk"/>
         <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>
@@ -234,7 +220,7 @@
     <record id="hr_contract_frantiska" model="hr.contract">
         <field name="name" model="hr.employee" eval="'ZDN - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).name + ' - ' + obj(ref('l10n_sk_hr_payroll.hr_employee_frantiska')).job_title"/>
         <field name="employee_id" ref="l10n_sk_hr_payroll.hr_employee_frantiska"/>
-        <field name="job_id" ref="l10n_sk_hr_payroll.sk_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_sk"/>
         <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>

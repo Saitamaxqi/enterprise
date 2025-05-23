@@ -37,20 +37,6 @@
         <field name="company_id" ref="base.demo_company_ke"/>
     </record>
 
-    <record id="ke_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead KE</field>
-        <field name="department_id" ref="l10n_ke_hr_payroll.ke_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_ke"/>
-    </record>
-
-    <record id="ke_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer KE</field>
-        <field name="department_id" ref="l10n_ke_hr_payroll.ke_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_ke"/>
-    </record>
-
     <record id="res_partner_ahmed" model="res.partner">
         <field name="name">Ahmed Kalejaiye</field>
         <field name="street">Red Hill Rd</field>
@@ -229,7 +215,7 @@
     <record id="hr_contract_ahmed" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_ke_hr_payroll.hr_employee_ahmed')).name + ' - ' + obj(ref('l10n_ke_hr_payroll.hr_employee_ahmed')).job_title"/>
         <field name="employee_id" ref="hr_employee_ahmed"/>
-        <field name="job_id" ref="l10n_ke_hr_payroll.ke_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ke_hr_payroll.ke_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ke"/>
         <field name="structure_type_id" ref="l10n_ke_hr_payroll.structure_type_employee_ken"/>
@@ -254,7 +240,7 @@
     <record id="hr_contract_barack_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_ke_hr_payroll.hr_employee_barack')).name + ' - ' + obj(ref('l10n_ke_hr_payroll.hr_employee_barack')).job_title"/>
         <field name="employee_id" ref="hr_employee_barack"/>
-        <field name="job_id" ref="l10n_ke_hr_payroll.ke_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_ke_hr_payroll.ke_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ke"/>
         <field name="structure_type_id" ref="l10n_ke_hr_payroll.structure_type_employee_ken"/>
@@ -280,7 +266,7 @@
     <record id="hr_contract_barack" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Employment Contract - ' + obj(ref('l10n_ke_hr_payroll.hr_employee_barack')).name + ' - ' + obj(ref('l10n_ke_hr_payroll.hr_employee_barack')).job_title"/>
         <field name="employee_id" ref="hr_employee_barack"/>
-        <field name="job_id" ref="l10n_ke_hr_payroll.ke_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_hrm"/>
         <field name="department_id" ref="l10n_ke_hr_payroll.ke_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ke"/>
         <field name="structure_type_id" ref="l10n_ke_hr_payroll.structure_type_employee_ken"/>

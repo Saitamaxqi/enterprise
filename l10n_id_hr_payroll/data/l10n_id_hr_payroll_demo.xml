@@ -29,20 +29,6 @@
         <field name="company_id" ref="base.demo_company_id"/>
     </record>
 
-    <record id="id_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead ID</field>
-        <field name="no_of_recruitment">1</field>
-        <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_id"/>
-    </record>
-
-    <record id="id_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer ID</field>
-        <field name="no_of_recruitment">5</field>
-        <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_id"/>
-    </record>
-
     <record id="res_partner_siti" model="res.partner">
         <field name="name">Siti Kusuma</field>
         <field name="street">Jalan Kenanga</field>
@@ -214,7 +200,7 @@
     <record id="hr_contract_siti" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_id_hr_payroll.hr_employee_siti')).name + ' - ' + obj(ref('l10n_id_hr_payroll.hr_employee_siti')).job_title"/>
         <field name="employee_id" ref="l10n_id_hr_payroll.hr_employee_siti"/>
-        <field name="job_id" ref="l10n_id_hr_payroll.id_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_id"/>
         <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>
@@ -228,7 +214,7 @@
     <record id="hr_contract_agus" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Permanent Contract - ' + obj(ref('l10n_id_hr_payroll.hr_employee_agus')).name + ' - ' + obj(ref('l10n_id_hr_payroll.hr_employee_agus')).job_title"/>
         <field name="employee_id" ref="l10n_id_hr_payroll.hr_employee_agus"/>
-        <field name="job_id" ref="l10n_id_hr_payroll.id_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_id"/>
         <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>

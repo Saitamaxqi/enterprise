@@ -28,20 +28,6 @@
         <field name="company_id" ref="base.demo_company_pl"/>
     </record>
 
-    <record id="pl_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead PL</field>
-        <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_pl"/>
-    </record>
-
-    <record id="pl_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer PL</field>
-        <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_pl"/>
-    </record>
-
     <record id="res_partner_blazej" model="res.partner">
         <field name="name">Błażej Czarnecki</field>
         <field name="street">Ratuszowa 1/3</field>
@@ -205,7 +191,7 @@
     <record id="hr_contract_blazej" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Umowa Na Czas Nieokreślony - ' + obj(ref('l10n_pl_hr_payroll.hr_employee_blazej')).name + ' - ' + obj(ref('l10n_pl_hr_payroll.hr_employee_blazej')).job_title"/>
         <field name="employee_id" ref="l10n_pl_hr_payroll.hr_employee_blazej"/>
-        <field name="job_id" ref="l10n_pl_hr_payroll.pl_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_pl"/>
         <field name="structure_type_id" ref="l10n_pl_hr_payroll.structure_type_employee_pl"/>
@@ -220,7 +206,7 @@
     <record id="hr_contract_antonina_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Umowa Na Czas Nieokreślony - ' + obj(ref('l10n_pl_hr_payroll.hr_employee_antonina')).name + ' - ' + obj(ref('l10n_pl_hr_payroll.hr_employee_antonina')).job_title"/>
         <field name="employee_id" ref="l10n_pl_hr_payroll.hr_employee_antonina"/>
-        <field name="job_id" ref="l10n_pl_hr_payroll.pl_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_pl"/>
         <field name="structure_type_id" ref="l10n_pl_hr_payroll.structure_type_employee_pl"/>
@@ -236,7 +222,7 @@
     <record id="hr_contract_antonina" model="hr.contract">
         <field name="name" model="hr.employee" eval="'Umowa Na Czas Nieokreślony - ' + obj(ref('l10n_pl_hr_payroll.hr_employee_antonina')).name + ' - ' + obj(ref('l10n_pl_hr_payroll.hr_employee_antonina')).job_title"/>
         <field name="employee_id" ref="l10n_pl_hr_payroll.hr_employee_antonina"/>
-        <field name="job_id" ref="l10n_pl_hr_payroll.pl_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_pl"/>
         <field name="structure_type_id" ref="l10n_pl_hr_payroll.structure_type_employee_pl"/>

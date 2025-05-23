@@ -35,27 +35,6 @@
         <field name="company_id" ref="base.demo_company_lu"/>
     </record>
 
-    <record id="lu_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead LU</field>
-        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_lu"/>
-    </record>
-
-    <record id="lu_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer LU</field>
-        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_lu"/>
-    </record>
-
-    <record id="lu_hr_job_cook" model="hr.job">
-        <field name="name">Cook LU</field>
-        <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_kitchen"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_lu"/>
-    </record>
-
     <record id="res_partner_tom" model="res.partner">
         <field name="name">Tom Schmit</field>
         <field name="street">245 Rue Alfred de Musset</field>
@@ -293,7 +272,7 @@
     <record id="hr_contract_tom" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_tom')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_tom')).job_title"/>
         <field name="employee_id" ref="hr_employee_tom"/>
-        <field name="job_id" ref="l10n_lu_hr_payroll.lu_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_lu"/>
         <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
@@ -312,7 +291,7 @@
     <record id="hr_contract_frida_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).job_title"/>
         <field name="employee_id" ref="hr_employee_frida"/>
-        <field name="job_id" ref="l10n_lu_hr_payroll.lu_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_lu"/>
         <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
@@ -327,7 +306,7 @@
     <record id="hr_contract_frida" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_frida')).job_title"/>
         <field name="employee_id" ref="hr_employee_frida"/>
-        <field name="job_id" ref="l10n_lu_hr_payroll.lu_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_lu"/>
         <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
@@ -347,7 +326,7 @@
     <record id="hr_contract_simone" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CDI -' + obj(ref('l10n_lu_hr_payroll.hr_employee_simone')).name + ' - ' + obj(ref('l10n_lu_hr_payroll.hr_employee_simone')).job_title"/>
         <field name="employee_id" ref="hr_employee_simone"/>
-        <field name="job_id" ref="l10n_lu_hr_payroll.lu_hr_job_cook"/>
+        <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_lu_hr_payroll.lu_hr_department_kitchen"/>
         <field name="company_id" ref="base.demo_company_lu"/>
         <field name="structure_type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>

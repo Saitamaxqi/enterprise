@@ -28,20 +28,6 @@
         <field name="company_id" ref="base.demo_company_mx"/>
     </record>
 
-    <record id="mx_hr_job_technical_lead" model="hr.job">
-        <field name="name">Technical Lead MX</field>
-        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="no_of_recruitment">1</field>
-        <field name="company_id" ref="base.demo_company_mx"/>
-    </record>
-
-    <record id="mx_hr_job_developer" model="hr.job">
-        <field name="name">Experienced Developer MX</field>
-        <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
-        <field name="no_of_recruitment">5</field>
-        <field name="company_id" ref="base.demo_company_mx"/>
-    </record>
-
     <record id="res_partner_mx_work_address" model="res.partner">
         <field name="name">MX Offices</field>
         <field name="street">Paseo Ensenada 901</field>
@@ -380,7 +366,7 @@
     <record id="hr_contract_cesar" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cesar')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).job_title"/>
         <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_cesar"/>
-        <field name="job_id" ref="l10n_mx_hr_payroll.mx_hr_job_technical_lead"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -400,7 +386,7 @@
    <record id="hr_contract_cecilia_previous" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).job_title"/>
         <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_cecilia"/>
-        <field name="job_id" ref="l10n_mx_hr_payroll.mx_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -419,7 +405,7 @@
     <record id="hr_contract_cecilia" model="hr.contract">
         <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_cecilia')).job_title"/>
         <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_cecilia"/>
-        <field name="job_id" ref="l10n_mx_hr_payroll.mx_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -444,7 +430,7 @@
     <record id="hr_contract_xochitl" model="hr.contract">
          <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_xochitl')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_xochitl')).job_title"/>
         <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_xochitl"/>
-        <field name="job_id" ref="l10n_mx_hr_payroll.mx_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -465,7 +451,7 @@
     <record id="hr_contract_karla" model="hr.contract">
        <field name="name" model="hr.employee" eval="'CTI - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_karla')).name + ' - ' + obj(ref('l10n_mx_hr_payroll.hr_employee_karla')).job_title"/>
         <field name="employee_id" ref="l10n_mx_hr_payroll.hr_employee_karla"/>
-        <field name="job_id" ref="l10n_mx_hr_payroll.mx_hr_job_developer"/>
+        <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
