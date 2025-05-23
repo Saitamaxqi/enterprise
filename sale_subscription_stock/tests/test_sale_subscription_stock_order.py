@@ -409,7 +409,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                 'A move should be added to the picking after invoicing'
             )
             self.assertTrue(
-                self.sub_product_order.name in self.subscription_order_with_bom.picking_ids[0].move_ids[0].description_bom_line,
+                self.sub_product_order.name in self.subscription_order_with_bom.picking_ids[0].move_ids[0].description_picking,
                 'The description should contain the bom line name'
             )
             self.assertEqual(self.subscription_order_with_bom.order_line[0].product_id.qty_available, 98)
@@ -441,7 +441,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             )
             self.assertEqual(self.subscription_order_with_bom.order_line[0].product_id.qty_available, 99)
             self.assertTrue(
-                self.sub_product_order.name in picking_1.move_ids[0].description_bom_line,
+                self.sub_product_order.name in picking_1.move_ids[0].description_picking,
                 'The description should contain the bom line name'
             )
             self.assertEqual(

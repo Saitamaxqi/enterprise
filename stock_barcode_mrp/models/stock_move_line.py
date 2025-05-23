@@ -74,4 +74,4 @@ class StockMoveLine(models.Model):
         return move_vals
 
     def _get_fields_stock_barcode(self):
-        return super()._get_fields_stock_barcode() + ['description_bom_line', 'manual_consumption']
+        return super()._get_fields_stock_barcode() + ['manual_consumption']
