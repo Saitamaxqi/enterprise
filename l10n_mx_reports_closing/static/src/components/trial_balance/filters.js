@@ -32,4 +32,4 @@ export class L10nMXTrialBalanceReportFilters extends AccountReportFilters {
     }
 }
 
-AccountReport.registerCustomComponent(L10nMXTrialBalanceReportFilters, "l10n_mx_reports_closing");
+AccountReport.registerCustomComponent(L10nMXTrialBalanceReportFilters);

@@ -3,7 +3,7 @@ import { _t } from "@web/core/l10n/translation";
 import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
 
-export class L10nPhSlspReportFilters extends AccountReportFilters {
+export class L10nPHSlspReportFilters extends AccountReportFilters {
     get filterExtraOptionsData() {
         return {
             ...super.filterExtraOptionsData,
@@ -38,4 +38,4 @@ export class L10nPhSlspReportFilters extends AccountReportFilters {
     }
 };
 
-AccountReport.registerCustomComponent(L10nPhSlspReportFilters, "l10n_ph_reports");
+AccountReport.registerCustomComponent(L10nPHSlspReportFilters);

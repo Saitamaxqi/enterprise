@@ -23,7 +23,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
                 'AccountReportLineName': 'account_reports.AgedPartnerBalanceLineName',
             },
             'components': {
-                'AccountReportFilters': 'account_reports.AgedPartnerBalanceFilters',
+                'AccountReportFilters': 'AgedPartnerBalanceFilters',
             },
         }
 

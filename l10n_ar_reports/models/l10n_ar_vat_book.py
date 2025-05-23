@@ -22,7 +22,7 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
                 'AccountReportFilters': 'l10n_ar_reports.L10nArTaxReportFiltersCustomizable',
             },
             'components': {
-                'AccountReportFilters': 'l10n_ar_reports.L10nArTaxReportFilters',
+                'AccountReportFilters': 'L10nARTaxReportFilters',
             },
         }
 

@@ -10,7 +10,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
     def _get_custom_display_config(self):
         return {
             'components': {
-                'AccountReportFilters': 'l10n_mx_reports_closing.L10nMXTrialBalanceReportFilters',
+                'AccountReportFilters': 'L10nMXTrialBalanceReportFilters',
             },
         }
 

@@ -14,7 +14,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         return {
             **super()._get_custom_display_config(),
             'components': {
-                'AccountReportFilters': 'account_reports.DisallowedExpenseFleetFilters',
+                'AccountReportFilters': 'DisallowedExpenseFleetFilters',
             },
         }
 

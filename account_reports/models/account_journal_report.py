@@ -37,8 +37,8 @@ class AccountJournalReportHandler(models.AbstractModel):
             'css_custom_class': 'journal_report',
             'pdf_css_custom_class': 'journal_report_pdf',
             'components': {
-                'AccountReportLine': 'account_reports.JournalReportLine',
-                'AccountReportFilters': 'account_reports.JournalReportFilters',
+                'AccountReportLine': 'JournalReportLine',
+                'AccountReportFilters': 'JournalReportFilters',
             },
             'templates': {
                 'AccountReportLineName': 'account_reports.JournalReportLineName',

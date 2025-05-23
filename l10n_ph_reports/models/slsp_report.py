@@ -26,7 +26,7 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
         return {
             **super()._get_custom_display_config(),
             'components': {
-                'AccountReportFilters': 'l10n_ph_reports.L10nPhSlspReportFilters',
+                'AccountReportFilters': 'L10nPHSlspReportFilters',
             }
         }
 

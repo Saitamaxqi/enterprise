@@ -26,4 +26,4 @@ export class InstrastReportFilters extends AccountReportFilters {
     }
 };
 
-AccountReport.registerCustomComponent(InstrastReportFilters, "account_intrastat");
+AccountReport.registerCustomComponent(InstrastReportFilters);

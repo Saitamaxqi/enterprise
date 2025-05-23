@@ -13,7 +13,7 @@ class AccountEcSalesReportHandler(models.AbstractModel):
     def _get_custom_display_config(self):
         return {
             'components': {
-                'AccountReportFilters': 'account_reports.SalesReportFilters',
+                'AccountReportFilters': 'SalesReportFilters',
             },
         }
 

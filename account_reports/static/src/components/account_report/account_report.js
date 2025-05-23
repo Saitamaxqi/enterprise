@@ -77,8 +77,8 @@ export class AccountReport extends Component {
     // -----------------------------------------------------------------------------------------------------------------
     // Custom overrides
     // -----------------------------------------------------------------------------------------------------------------
-    static registerCustomComponent(customComponent, moduleName = "account_reports") {
-        registry.category("account_reports_custom_components").add(`${ moduleName }.${ customComponent.name }`, customComponent);
+    static registerCustomComponent(customComponent) {
+        registry.category("account_reports_custom_components").add(customComponent.name, customComponent);
     }
 
     get cssCustomClass() {

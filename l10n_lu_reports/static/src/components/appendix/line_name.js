@@ -4,7 +4,7 @@ import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_d
 import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportLineName } from "@account_reports/components/account_report/line_name/line_name";
 
-export class LUAppendixLineName extends AccountReportLineName {
+export class L10nLUAppendixLineName extends AccountReportLineName {
     static template = "l10n_lu_reports.AppendixLineName";
 
     setup() {
@@ -26,4 +26,4 @@ export class LUAppendixLineName extends AccountReportLineName {
     }
 }
 
-AccountReport.registerCustomComponent(LUAppendixLineName, "l10n_lu_reports");
+AccountReport.registerCustomComponent(L10nLUAppendixLineName);

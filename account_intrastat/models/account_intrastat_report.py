@@ -57,7 +57,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 'AccountReportFilters': 'account_intrastat.IntrastatReportFilters',
             },
             'components': {
-                'AccountReportFilters': 'account_intrastat.InstrastReportFilters',
+                'AccountReportFilters': 'InstrastReportFilters',
             },
         }
 

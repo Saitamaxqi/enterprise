@@ -26,7 +26,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
     def _get_custom_display_config(self):
         return {
             'components': {
-                'AccountReportFilters': 'account_reports.MulticurrencyRevaluationReportFilters',
+                'AccountReportFilters': 'MulticurrencyRevaluationReportFilters',
             },
             'templates': {
                 'AccountReportLineName': 'account_reports.MulticurrencyRevaluationReportLineName',

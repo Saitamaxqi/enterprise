@@ -18,7 +18,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         return {
             'css_custom_class': 'partner_ledger',
             'components': {
-                'AccountReportLineCell': 'account_reports.PartnerLedgerLineCell',
+                'AccountReportLineCell': 'PartnerLedgerLineCell',
             },
             'templates': {
                 'AccountReportLineName': 'account_reports.PartnerLedgerLineName',
