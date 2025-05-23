@@ -2,7 +2,7 @@
 <odoo>
     <!-- Lower & Upper Tax Bracket Boundaries -->
     <record id="rule_parameter_l10n_eg_lower_boundary" model="hr.rule.parameter">
-        <field name="name">Income Tax: Lower Salary Boundary</field>
+        <field name="name">Income Tax: Personal Exempt</field>
         <field name="code">l10n_eg_lower_boundary</field>
         <field name="country_id" ref="base.eg"/>
     </record>
