@@ -7,8 +7,8 @@ from . import ir_http
 from . import payment_provider
 from . import payment_token
 from . import payment_transaction
-from . import product
 from . import product_pricelist
+from . import product_template
 from . import res_partner
 from . import sale_order_close_reason
 from . import sale_order_line

@@ -28,17 +28,19 @@ Features:
     'data': [
         'security/sale_subscription_security.xml',
         'security/ir.model.access.csv',
+
         'wizard/sale_subscription_close_reason_wizard_views.xml',
         'wizard/sale_subscription_change_customer_wizard_views.xml',
         'wizard/res_config_settings_views.xml',
+
         'views/sale_subscription_plan_views.xml',
         'views/sale_order_views.xml',
-        'views/sale_order_template.xml',
+        'views/sale_order_template_views.xml',
         'views/product_template_views.xml',
         'views/product_pricelist_views.xml',
-        'views/product_views.xml',
+        'views/product_product_views.xml',
         'views/sale_subscription_views.xml',
-        'views/sale_order_line_view.xml',
+        'views/sale_order_line_views.xml',
         'views/res_partner_views.xml',
         'views/account_analytic_account_views.xml',
         'views/sale_subscription_portal_templates.xml',
@@ -46,10 +48,12 @@ Features:
         'views/payment_form_templates.xml',
         'views/mail_activity_plan_views.xml',
         'views/mail_activity_views.xml',
+
         'data/mail_template_data.xml',
         'data/sale_subscription_data.xml',
         'data/sms_template_data.xml',
         'data/sale_subscription_tour.xml',
+
         'report/sale_subscription_report_view.xml',
         'report/sale_order_log_report_view.xml',
     ],
