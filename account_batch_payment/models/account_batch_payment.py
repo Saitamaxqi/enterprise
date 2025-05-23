@@ -32,6 +32,7 @@ class AccountBatchPayment(models.Model):
     )
     company_id = fields.Many2one('res.company', related='journal_id.company_id', readonly=True)
     payment_ids = fields.One2many('account.payment', 'batch_payment_id', string="Payments", required=True)
+    payment_ids_domain = fields.Char(compute='_compute_payment_ids_domain')
     currency_id = fields.Many2one('res.currency', compute='_compute_currency', store=True, readonly=True)
     company_currency_id = fields.Many2one(
         string="Company Currency",
@@ -69,6 +70,19 @@ class AccountBatchPayment(models.Model):
     export_filename = fields.Char(string='File Name', help="Name of the export file generated for this batch", store=True, copy=False)
 
     file_generation_enabled = fields.Boolean(help="Whether or not this batch payment should display the 'Generate File' button instead of 'Print' in form view.", compute='_compute_file_generation_enabled')
+
+    @api.depends('batch_type', 'journal_id', 'payment_method_id')
+    def _compute_payment_ids_domain(self):
+        for batch in self:
+            batch.payment_ids_domain = str([
+                ('batch_payment_id', '=', False),
+                ('state', 'in', self._valid_payment_states()),
+                ('is_sent', '=', False),
+                ('payment_method_id', '=', batch.payment_method_id.id),
+                ('journal_id', '=', batch.journal_id.id),
+                ('payment_type', '=', batch.batch_type),
+                ('amount', '!=', 0),
+            ])
 
     def _valid_payment_states(self):
         return ['in_process', 'paid'] if self.env['account.move']._get_invoice_in_payment_state() == 'paid' else ['in_process']

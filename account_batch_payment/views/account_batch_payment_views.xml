@@ -49,15 +49,7 @@ if records:
                                    readonly="state != 'draft'"
                                    force_save="1"
                                    widget="many2many"
-                                   domain="[
-                                       ('batch_payment_id', '=', False),
-                                       ('state', '=', 'in_process'),
-                                       ('is_sent', '=', False),
-                                       ('payment_method_id', '=', payment_method_id),
-                                       ('journal_id', '=', journal_id),
-                                       ('payment_type','=',batch_type),
-                                       ('amount', '!=', 0),
-                                    ]"
+                                   domain="payment_ids_domain"
                                    options="{'no_create': True}">
                                 <list string="Payments" decoration-muted="state == 'draft'" decoration-danger="state in ('rejected', 'canceled')" create="false" editable="top" open_form_view="True">
                                     <field name="name" readonly="1"/>

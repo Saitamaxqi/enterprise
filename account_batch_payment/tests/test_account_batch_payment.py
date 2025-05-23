@@ -133,11 +133,15 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         )
         payments[0].action_validate()
 
-        with self.assertRaisesRegex(RedirectWarning, "To validate the batch, payments must be in process"):
-            batch_payment.validate_batch()
-
-        payments[0].action_draft()
-        payments[0].action_post()
+        # In accounting, we can only validate a batch if all the payments are in process
+        # While in enterprise invoicing, we can validate a batch even if some payments are paid
+        is_accounting_installed = self.env['account.move']._get_invoice_in_payment_state() == 'in_payment'
+        if is_accounting_installed:
+            with self.assertRaisesRegex(RedirectWarning, "To validate the batch, payments must be in process"):
+                batch_payment.validate_batch()
+            # Set payment to in process state
+            payments[0].action_draft()
+            payments[0].action_post()
         action = batch_payment.validate_batch()
         self.assertFalse(action)
 
