@@ -113,6 +113,14 @@ export class GlobalFiltersSidePanel extends Component {
         return this.dnd.itemsStyle[filter.id] || "";
     }
 
+    setGlobalFilterValue(id, value, displayNames) {
+        this.env.model.dispatch("SET_GLOBAL_FILTER_VALUE", {
+            id,
+            value,
+            displayNames,
+        });
+    }
+
     onDragEnd(filterId, finalIndex) {
         const originalIndex = this.filters.findIndex((filter) => filter.id === filterId);
         const delta = finalIndex - originalIndex;
