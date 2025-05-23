@@ -4,7 +4,7 @@ from odoo import fields, models
 class HrPayslipRun(models.Model):
     _inherit = 'hr.payslip.run'
 
-    nacha_effective_date = fields.Date('The effective date of the NACHA file generated for this batch')
+    nacha_effective_date = fields.Date('The payment date of the NACHA file generated for this batch')
 
     def action_payment_report(self, export_format='nacha'):
         self.ensure_one()

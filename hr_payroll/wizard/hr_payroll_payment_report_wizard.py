@@ -20,14 +20,14 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     ], string='Export Format', required=True, default='csv')
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     effective_date = fields.Date(
-        string='Effective Date',
-        help='Effective Entry Date: the banking day on which you intend the payslip batch to be settled.',
+        string='Payment Date',
+        help='Payment Entry Date: the banking day on which you intend the payslip batch to be settled.',
         default=fields.Date.context_today, required=True)
 
     def _create_csv_binary(self):
         output = StringIO()
         report_data = csv.writer(output)
-        report_data.writerow([_('Sequence'), _('Effective Date'), _('Report Date'), _('Payslip Period'), _('Employee name'), _('Bank account'), _('BIC'), _('Amount to pay')])
+        report_data.writerow([_('Sequence'), _('Payment Date'), _('Report Date'), _('Payslip Period'), _('Employee name'), _('Bank account'), _('BIC'), _('Amount to pay')])
         rows = []
         for index, slip in enumerate(self.payslip_ids):
             rows.append((
@@ -84,6 +84,11 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
                 "Untrusted bank account for the following employees:\n%s",
                 untrusted_banks_employee_ids.mapped('name')))
 
+    def _write_payment_date(self):
+        self.payslip_ids.write({
+            'paid_date': self.effective_date
+        })
+
     def generate_payment_report(self):
         """
         Extend this function and first call super().generate_payment_report().
@@ -91,6 +96,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         """
         self.ensure_one()
         self._perform_checks()
+        self._write_payment_date()
         if self.export_format == 'csv':
             payment_report = self._create_csv_binary()
             self._write_file(payment_report, '.csv')

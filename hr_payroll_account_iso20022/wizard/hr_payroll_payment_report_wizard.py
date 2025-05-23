@@ -29,6 +29,8 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def _perform_checks(self):
         super()._perform_checks()
         if self.export_format in ['sepa', 'iso20022_ch']:
+            if self.effective_date < fields.Date.today():
+                raise ValidationError(_("The payment date cannot be in the past."))
             employees = self.payslip_ids.employee_id.filtered(lambda e: not e.work_contact_id)
             if employees:
                 raise UserError(_("Some employees (%s) don't have a work contact.", employees.mapped('name')))
@@ -46,8 +48,6 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def generate_payment_report(self):
         super().generate_payment_report()
         if self.export_format in ['sepa', 'iso20022_ch']:
-            if self.effective_date < fields.Date.today():
-                raise ValidationError(_("The effective date cannot be in the past."))
             if self.export_format == 'sepa':
                 payment_report = self.with_context(payment_method='sepa_ct')._create_sepa_binary()
             elif self.export_format == 'iso20022_ch':
