@@ -26,8 +26,8 @@ that have no counterpart in the general financial accounts.
         'web.assets_backend_lazy': [
             'analytic_enterprise/static/src/**/*',
         ],
-        'web.qunit_suite_tests': [
-            'analytic_enterprise/static/tests/**/*',
+        'web.assets_unit_tests': [
+            'analytic_enterprise/static/tests/**/*.test.js',
         ],
     },
 }
