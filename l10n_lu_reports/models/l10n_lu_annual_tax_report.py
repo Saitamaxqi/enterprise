@@ -253,7 +253,7 @@ class L10n_LuAppendixOpexTaxReportHandler(models.AbstractModel):
 
     def _get_custom_display_config(self):
         parent_config = super()._get_custom_display_config()
-        parent_config.setdefault('components', {})['AccountReportLineName'] = 'l10n_lu_reports.AppendixLineName'
+        parent_config.setdefault('components', {})['AccountReportLineName'] = 'l10n_lu_reports.LUAppendixLineName'
         return parent_config
 
     def action_open_appendix_view(self, options, params=None):

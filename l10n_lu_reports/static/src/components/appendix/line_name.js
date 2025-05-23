@@ -26,4 +26,4 @@ export class LUAppendixLineName extends AccountReportLineName {
     }
 }
 
-AccountReport.registerCustomComponent(LUAppendixLineName);
+AccountReport.registerCustomComponent(LUAppendixLineName, "l10n_lu_reports");
