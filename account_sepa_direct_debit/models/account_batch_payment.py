@@ -276,6 +276,9 @@ class AccountBatchPayment(models.Model):
         :return: None
         """
         res = super()._send_after_validation()
+        if self.env['ir.config_parameter'].sudo().get_param('account_sepa_direct_debit.disable_sdd_pre_notification'):
+            return res
+
         template = self.env.ref('account_sepa_direct_debit.email_template_sdd_pre_notification')
         sdd_codes = set(self.env['account.payment.method']._get_sdd_payment_method_code())
         for payment in self.payment_ids.filtered(lambda payment: payment.payment_method_code in sdd_codes and payment.sdd_mandate_id):
