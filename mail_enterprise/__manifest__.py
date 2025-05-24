@@ -20,6 +20,12 @@ screen devices.
             'mail_enterprise/static/src/core/common/**/*',
             'mail_enterprise/static/src/**/*',
         ],
+        'im_livechat.assets_embed_core': [
+            'mail_enterprise/static/src/core/common/**/*',
+        ],
+        'mail.assets_public': [
+            'mail_enterprise/static/src/core/common/**/*',
+        ],
         'web.assets_tests': [
             'mail_enterprise/static/tests/tours/**/*',
         ],
