@@ -65,6 +65,6 @@
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
         <field name="binding_view_types">list,kanban</field>
         <field name="state">code</field>
-        <field name="code">records._fetch_shipment_label()</field>
+        <field name="code">records._sync_shopee_pickings()</field>
     </record>
 </odoo>

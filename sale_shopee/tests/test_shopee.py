@@ -854,3 +854,18 @@ class TestShopee(common.TestShopeeCommon):
         self.assertEqual(item.product_id.default_code, self.product.default_code)
         msg = "The correct product should now be assigned to the item."
         self.assertNotEqual(item.product_id, default_product, msg)
+
+    def test_sync_shopee_pickings_with_non_shopee_picking(self):
+        """ Test calling the shipment label generation on a non Shopee picking doesn't do anything.
+        """
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'location_dest_id': self.env.ref('stock.stock_location_customers').id,
+        })
+        picking.action_confirm()
+        action_shipping_label = self.env.ref('sale_shopee.action_fetch_shipping_label')
+        with patch('odoo.addons.sale_shopee.utils.make_shopee_api_request') as mock_api:
+            result = action_shipping_label.with_context(active_model='stock.picking', active_ids=picking.id).run()
+            self.assertFalse(result, msg="Fetching the label of a non-shopee picking shouldn't raise.")
+            mock_api.assert_not_called()
