@@ -2194,3 +2194,31 @@ class SaleOrder(models.Model):
     def _is_subscription_postpaid(self):
         self.ensure_one()
         return any(sol._is_postpaid_line() for sol in self.order_line)
+
+    # === CATALOG MIXIN === #
+
+    def _get_product_catalog_order_line_info(self, product_ids, child_field=False, **kwargs):
+        if self.plan_id:
+            # plan must be forwarded to ensure the right price is computed for recurring products
+            kwargs['plan_id'] = self.plan_id.id
+
+        res = super()._get_product_catalog_order_line_info(
+            product_ids, child_field=child_field, **kwargs
+        )
+        if not self.plan_id:
+            return res
+
+        # Add the plan name for recurring products
+        for product in self.env['product.product'].browse(product_ids):
+            if not product.recurring_invoice or not res.get(product.id):
+                continue
+            res[product.id]['plan_name'] = self.plan_id.name
+
+        return res
+
+    def _update_order_line_info(self, product_id, quantity, **kwargs):
+        if self.plan_id:
+            # plan must be forwarded to ensure the right price is computed for recurring products
+            kwargs['plan_id'] = self.plan_id.id
+
+        return super()._update_order_line_info(product_id, quantity, **kwargs)
