@@ -385,3 +385,26 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
         ticket.team_id = helpdesk_team_without_timesheet
         self.assertFalse(ticket.is_timer_running, 'The timer should have been stopped after changing the helpdesk team since the timesheet feature is disabled on that team')
         self.assertFalse(timesheet.exists(), 'The timesheet should have been deleted after the timer was stopped since the unit_amount is 0')
+
+    def test_total_hours_spent(self):
+        """ Test the total_hours_spent field is correctly computed """
+        # create 5 tickets with a timesheet each of 10 minutes
+        tickets = self.env['helpdesk.ticket'].create([{
+            'name': f'Ticket {i}',
+            'team_id': self.helpdesk_team.id,
+            'partner_id': self.partner.id,
+        } for i in range(5)])
+
+        for ticket in tickets:
+            self.env['account.analytic.line'].create({
+                'name': 'Test Timesheet',
+                'unit_amount': 1 / 6,  # 10 minutes in hours
+                'project_id': self.project.id,
+                'helpdesk_ticket_id': ticket.id,
+                'employee_id': self.empl_employee.id,
+            })
+
+        # check sum of total_hours_spent is 5/6 hours
+        total_hours_spent = sum(ticket.total_hours_spent for ticket in tickets)
+        self.assertAlmostEqual(total_hours_spent, 5 / 6, places=2,
+                               msg="The total hours spent across all tickets should be 5/6 hours (50 minutes).")

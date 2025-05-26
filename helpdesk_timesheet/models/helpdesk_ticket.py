@@ -55,7 +55,7 @@ class HelpdeskTicket(models.Model):
     def _compute_total_hours_spent(self):
         if not any(self._ids):
             for ticket in self:
-                ticket.total_hours_spent = round(sum(ticket.timesheet_ids.mapped('unit_amount')), 2)
+                ticket.total_hours_spent = sum(ticket.timesheet_ids.mapped('unit_amount'))
             return
         timesheet_read_group = self.env['account.analytic.line']._read_group(
             [('helpdesk_ticket_id', 'in', self.ids)],
@@ -64,7 +64,7 @@ class HelpdeskTicket(models.Model):
         )
         timesheets_per_ticket = {helpdesk_ticket.id: unit_amount_sum for helpdesk_ticket, unit_amount_sum in timesheet_read_group}
         for ticket in self:
-            ticket.total_hours_spent = round(timesheets_per_ticket.get(ticket.id, 0.0), 2)
+            ticket.total_hours_spent = timesheets_per_ticket.get(ticket.id, 0.0)
 
     @api.onchange('team_id')
     def _onchange_team_id(self):
