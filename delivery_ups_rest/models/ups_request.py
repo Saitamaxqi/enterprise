@@ -183,11 +183,18 @@ class UPSRequest:
         package_type_key = 'Packaging' if ship else 'PackagingType'
         res_packages = []
         for p in packages:
+            # merchandise description: product names (len: [1-35]), strip non-alphanumeric chars
+            desc = ','.join(['%s' % re.sub(r'[\W_]+', ' ', c.product_id.name) for c in p.commodities])
+            if is_return:
+                desc = 'return ' + desc
+            if len(desc) > 35:
+                desc = desc[:32] + '...'
+
             package = {
                 package_type_key: {
                     'Code': p.packaging_type or '00',
                 },
-                'Description': 'Return of package' if is_return else None,
+                'Description': desc or 'UPS shipment',
                 'PackageWeight': {
                     'UnitOfMeasurement': {
                         'Code': carrier.ups_package_weight_unit,
