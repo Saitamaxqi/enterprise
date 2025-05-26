@@ -108,6 +108,47 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         # Check that we still keep it
         self.assertEqual(batch_payment.amount, 200)
 
+    def test_change_payment_state_valid(self):
+        """
+        Check if the amount is well computed when we change a payment state into a non valid payment status
+        """
+        payments = self.env['account.payment']
+        bank_journal_2 = self.company_data['default_journal_bank'].copy()
+        for _ in range(2):
+            payments += self.env['account.payment'].create({
+                'amount': 100.0,
+                'payment_type': 'inbound',
+                'partner_type': 'supplier',
+                'partner_id': self.partner_a.id,
+                'journal_id': bank_journal_2.id,
+            })
+        payments.action_post()
+
+        batch_payment = self.env['account.batch.payment'].create(
+            {
+                'journal_id': payments.journal_id.id,
+                'payment_method_id': payments.payment_method_id.id,
+                'payment_ids': [
+                    (6, 0, payments.ids)
+                ],
+            }
+        )
+
+        self.assertRecordValues(batch_payment, [{
+            'amount': 200.0,
+            'amount_residual': 200.0,
+            'amount_residual_currency': 200.0,
+        }])
+
+        payments[0].action_validate()
+
+        # Check that we still keep it
+        self.assertRecordValues(batch_payment, [{
+            'amount': 200.0,
+            'amount_residual': 100.0,
+            'amount_residual_currency': 100.0,
+        }])
+
     def test_validate_batch(self):
         """
         Check that we can only validate a batch if all the payments are in progress

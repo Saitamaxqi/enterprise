@@ -188,6 +188,7 @@ class AccountBatchPayment(models.Model):
                         )
                     else:
                         amount_in_batch_currency = payment.amount_signed
+                    amount += amount_in_batch_currency
                     if payment.state in valid_payment_states:
                         if payment.currency_id != batch.company_id.currency_id:
                             amount_in_company_currency = payment.currency_id._convert(
@@ -198,7 +199,6 @@ class AccountBatchPayment(models.Model):
                             )
                         else:
                             amount_in_company_currency = payment.amount_signed
-                        amount += amount_in_batch_currency
                         amount_residual += amount_in_company_currency
                         amount_residual_currency += amount_in_batch_currency
 
