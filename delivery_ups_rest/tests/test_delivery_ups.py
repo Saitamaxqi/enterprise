@@ -106,3 +106,7 @@ class TestDeliveryUPS(DeliveryUPSCommon):
             self.assertEqual(picking.carrier_price, 5.5, 'Price should be set from mock response')
             picking.cancel_shipment()
             self.assertEqual(picking.carrier_tracking_ref, False, 'Shipment cancel failed')
+
+    def test_ups_rest_sends_correct_delivery_type_for_amazon(self):
+        amazon_expected_delivery_type = self.ups_delivery._get_delivery_type()
+        self.assertEqual(amazon_expected_delivery_type, 'ups')

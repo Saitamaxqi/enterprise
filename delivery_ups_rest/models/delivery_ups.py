@@ -283,3 +283,10 @@ class DeliveryCarrier(models.Model):
             return weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_lb'), round=False)
         else:
             raise ValueError
+
+    def _get_delivery_type(self):
+        """ Override of delivery to return the ups delivery type."""
+        res = super()._get_delivery_type()
+        if self.delivery_type != 'ups_rest':
+            return res
+        return 'ups'
