@@ -303,12 +303,12 @@
         }
         .o_knowledge_sidebar {
             @include o-position-absolute(0, 50px, 0, 0);
-            z-index: 3; // should be greater than the backdrop z-index
+            z-index: $zindex-modal-backdrop - 1; // should be greater than the backdrop z-index
         }
         .o_knowledge_backdrop {
             @include o-position-absolute(0, 0, 0, 0);
             background: rgba(0, 0, 0, .3);
-            z-index: 2; // should be greater than the action helper z-index
+            z-index: $zindex-modal-backdrop - 2; // should be greater than the action helper z-index
         }
     }
 }
