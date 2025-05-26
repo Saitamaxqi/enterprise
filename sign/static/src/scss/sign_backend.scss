@@ -253,16 +253,23 @@
         display: flex;
         align-items: center;
         border-radius: 5px;
-        background-color: #ffeb9a;
+        background-color: white;
         min-width: 400px;
         min-height: 60px;
         position: fixed;
         right: 30px;
-        padding-left: 10px;
         margin-top: 10px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         font-size: 15px;
         overflow: hidden;
+        color: black;
+    }
+
+    .o_sign_notification_bar {
+        height: 100%;
+        width: 10px;
+        min-height: 60px;
+        margin-right: 10px;
     }
 
     .o_sign_save_template_dialog_div {
@@ -429,8 +436,8 @@
 
 .o_sign_template_tags_and_save {
     position: absolute;
-    width: 500px;
-    right: 50px;
+    width: 300px;
+    right: 10px;
     top: 50px;
 
     .o_field_widget.o_field_many2many_tags {
