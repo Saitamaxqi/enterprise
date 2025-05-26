@@ -5702,6 +5702,36 @@ registry.category("web_tour.tours").add("test_split_uncomplete_moves_on_exit", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_split_uncomplete_manually_assigned_moves_on_exit", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line",
+            run: "scan product1",
+        },
+        {
+            trigger: ".o_barcode_line[data-barcode='product1'] .qty-done:contains('1')",
+            run() {},
+        },
+        // Leave and re-open the picking it directly
+        {
+            trigger: "button.o_exit",
+            run: "click",
+        },
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan SUMAMOE",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "0/2");
+                helper.assertLineQty(1, "1/1");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_sml_sort_order_by_product_category", {
     steps: () => [
         {

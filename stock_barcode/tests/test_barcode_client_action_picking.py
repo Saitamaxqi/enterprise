@@ -3164,6 +3164,43 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {"quantity": 4.0, "picked": False},
         ])
 
+    def test_split_uncomplete_manually_assigned_moves_on_exit(self):
+        """
+        Check that the uncompleted moves are splitted in the backend when you exit
+        the barcode, so that the demand of the picking is correctly displayed the
+        next time you open the record.
+        """
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
+        # Avoid picking reservation at confirm
+        self.picking_type_out.write({
+            'reservation_method': 'manual',
+            'restrict_scan_source_location': 'no',
+        })
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 5)
+        delivery = self.env['stock.picking'].create({
+            'name': "SUMAMOE",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'name': 'Lovely move',
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'product_id': self.product1.id,
+                'product_uom': self.product1.uom_id.id,
+                'product_uom_qty': 3,
+            })],
+        })
+        delivery.action_confirm()
+        delivery.action_assign()
+        url = self._get_client_action_url(delivery.id)
+        self.start_tour(url, 'test_split_uncomplete_manually_assigned_moves_on_exit', login='admin')
+        self.assertRecordValues(delivery.move_ids.sorted('quantity'), [
+            {"quantity": 1.0, "picked": True},
+            {"quantity": 2.0, "picked": False},
+        ])
+
     def test_split_uncomplete_moves_on_exit_with_neutral_changes(self):
         """
         Check that the post barcode process does change the state of the record if
