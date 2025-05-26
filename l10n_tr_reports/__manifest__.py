@@ -20,6 +20,11 @@ Accounting reports for Türkiye
         'views/account_journal_views.xml',
         'views/product_view.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'l10n_tr_reports/static/src/components/**/*',
+        ],
+    },
     'installable': True,
     'auto_install': True,
     'author': 'Odoo S.A.',
