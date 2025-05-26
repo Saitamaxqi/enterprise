@@ -192,12 +192,12 @@ export const DocumentsModelMixin = (component) =>
                 return;
             }
             const record = this.targetRecords[0];
-            if (record.data.lock_uid && record.data.lock_uid[0] !== user.userId) {
+            if (record.data.lock_uid && record.data.lock_uid.id !== user.userId) {
                 this.dialogService.add(ConfirmationDialog, {
                     title: _t("Warning"),
                     body: _t(
                         "This document is locked by %s.\nAre you sure you want to unlock it?",
-                        record.data.lock_uid[1]
+                        record.data.lock_uid.display_name
                     ),
                     confirmLabel: _t("Unlock"),
                     confirm: async () => {
