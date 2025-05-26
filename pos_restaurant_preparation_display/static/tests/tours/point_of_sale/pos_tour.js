@@ -207,3 +207,18 @@ registry.category("web_tour.tours").add("test_update_internal_note_of_order", {
             ReceiptScreen.isShown(),
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("test_receipt_screen_after_unsent_order_dialog", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            FloorScreen.clickTable("5"),
+            ProductScreen.clickDisplayedProduct("Coca-Cola"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickValidate(),
+            ReceiptScreen.confirmOrderWarningDialog(),
+            ReceiptScreen.isShown(),
+        ].flat(),
+});

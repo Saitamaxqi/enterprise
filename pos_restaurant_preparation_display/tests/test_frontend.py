@@ -163,3 +163,16 @@ class TestUi(test_frontend.TestFrontendCommon, TestPreparationDisplayHttpCommon)
         self.assertEqual(order_lines[1]['internal_note'], '[]')
         self.assertEqual(order_lines[1]['quantity'], 1)
         self.assertEqual(order_lines[1]['cancelled'], 1)
+
+    def test_receipt_screen_after_unsent_order_dialog(self):
+        self.env['pos.prep.display'].create({
+            'name': 'Preparation Display',
+            'pos_config_ids': [(4, self.pos_config.id)],
+        })
+        self.pos_config.printer_ids.unlink()
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_pos_tour('test_receipt_screen_after_unsent_order_dialog')
+        order = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
+        pdis_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)
+        self.assertEqual(len(pdis_order.prep_line_ids), 1, "Should have 1 preparation orderline")
+        self.assertEqual(pdis_order.prep_line_ids.quantity, 1, "Should have 1 quantity of Coca-Cola")
