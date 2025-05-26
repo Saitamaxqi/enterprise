@@ -205,7 +205,7 @@ export class KnowledgeArticleFormController extends FormController {
                 await this.ensureArticleName();
                 if (await this.model.root.isDirty()) {
                     await this.model.root.save({
-                        onError: this.onSaveError.bind(this),
+                        onError: (error, options) => this.onSaveError(error, options, true),
                         nextId: resId,
                     });
                 } else {
