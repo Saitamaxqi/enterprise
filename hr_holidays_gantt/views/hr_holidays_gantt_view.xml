@@ -24,7 +24,6 @@
                     <field name="state" invisible="1"/>
                     <field name="holiday_status_id" invisible="1"/>
                     <field name="number_of_days" invisible="1"/>
-                    <field name="manager_id" invisible="1"/>
                     <field name="can_approve" invisible="1"/>
                     <field name="can_validate" invisible="1"/>
                     <field name="can_refuse" invisible="1"/>
