@@ -19,7 +19,6 @@
                 t-if="!env.model.getters.isReadonly() and props.edit"
                 t-key="state.thread.localId"
                 composer="state.thread.composer"
-                mode="'extended'"
                 type="'note'"
                 placeholder.translate="Add a comment..."
                 showFullComposer="false"

@@ -89,7 +89,7 @@ test("Send messages from the popover", async () => {
 
     await contains(".o-mail-Composer textarea", { visible: false }).edit("msg2");
     await animationFrame();
-    await contains(".o-mail-Composer-send").click();
+    await contains(".o-mail-Composer button[name='send-message']").click();
     expect(".o-mail-Message").toHaveCount(2);
 
     threadIds = model.getters.getCellThreads(model.getters.getActivePosition());
@@ -133,4 +133,17 @@ test("edit comment from the thread popover", async () => {
     await contains(".o-mail-Composer textarea").press("Enter");
     await waitFor(".o-mail-Message-content:contains(msg1 (edited))");
     expect(".o-mail-Message-content").toHaveText("msg1 (edited)");
+});
+
+test("Spreadsheet cell thread composer shows only one send button", async () => {
+    const { model, pyEnv } = await setupWithThreads();
+    const sheetId = model.getters.getActiveSheetId();
+    await createThread(model, pyEnv, { sheetId, ...toCartesian("A2") }, ["wave"]);
+
+    selectCell(model, "A2");
+    await animationFrame();
+
+    // There should only be one send button (from chat window composer)
+    expect(".o-mail-Composer .o-mail-Composer-send").toHaveCount(0);
+    expect(".o-mail-Composer button[name='send-message']").toHaveCount(1);
 });

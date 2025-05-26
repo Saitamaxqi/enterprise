@@ -18,7 +18,6 @@
                 placeholder.translate="Add a comment..."
                 composer="state.thread.composer"
                 type="'note'"
-                mode="'extended'"
                 showFullComposer="false"
                 onPostCallback.bind="insertNewThread"
                 autofocus="1"
