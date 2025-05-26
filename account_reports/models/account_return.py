@@ -319,7 +319,7 @@ class AccountReturnType(models.Model):
                 period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
 
         country_code = ""
-        if not minimal or main_company.account_fiscal_country_id.code != self.report_id.country_id.code:
+        if self.report_id and self.report_id.country_id and main_company.account_fiscal_country_id != self.report_id.country_id:
             if self.report_id and self.report_id.country_id:
                 country_code = f"({self.report_id.country_id.code})"
             else:
