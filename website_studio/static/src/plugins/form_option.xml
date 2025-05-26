@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-<t t-inherit="html_builder.website.s_website_form_form_option" t-inherit-mode="extension">
+<t t-inherit="website.s_website_form_form_option" t-inherit-mode="extension">
     <xpath expr="//t[@t-foreach='models']" position="after">
         <BuilderSelectItem action="'studioMoreModels'">More models</BuilderSelectItem>
     </xpath>
