@@ -337,3 +337,72 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             self.assertEqual(sum(achievements.mapped('achieved')), 150, 'Regular invoice, 100 percent of 9000 conveted to USD = 150')
             self.assertEqual(sum(commissions.mapped('achieved')), 150, 'Regular invoice, 100 percent of 9000 conveted to USD = 150')
             self.assertEqual(sum(commissions.mapped('commission')), 150, 'Regular invoice, 100 percent of 9000 conveted to USD = 150')
+
+    def test_sub_commission_duplicated_id(self):
+        # make sure two log created the same day are counted as two achievements
+        first_now = datetime.datetime(2024, 2, 2, 8, 0, 0)
+        second_now = datetime.datetime(2024, 3, 2, 8, 0, 0)
+        third_now = datetime.datetime(2024, 3, 3, 9, 0, 0)
+        with freeze_time("2024-02-02"), patch.object(self.env.cr, 'now', lambda: first_now):
+            context_mail = {'tracking_disable': False, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, 'mail_notrack': False}
+            sub = self.env['sale.order'].with_context(context_mail).create({
+                'name': 'TestSubscription Duplicated ID',
+                'is_subscription': True,
+                'plan_id': self.plan_month.id,
+                'note': "original subscription description",
+                'partner_id': self.user_portal.partner_id.id,
+                'sale_order_template_id': self.subscription_tmpl.id,
+                'user_id': self.commission_user_1.id
+            })
+            sub._onchange_sale_order_template_id()
+            sub.order_line.price_unit = 50
+            sub.start_date = False
+            sub.next_invoice_date = False
+            self.commission_plan_sub.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
+                'type': 'mrr',
+                'rate': 0.1,
+                'plan_id': self.commission_plan_sub.id,
+                'recurring_plan_id': sub.plan_id.id,
+            }])
+            self.flush_tracking()
+            sub.action_confirm()
+            self.flush_tracking()
+            self.commission_plan_sub.action_approve()
+            inv = sub._create_recurring_invoice()
+            self.assertAlmostEqual(inv.amount_untaxed, 100, 2, msg="The untaxed invoiced amount should be equal to 1000")
+            self.assertEqual(sub.recurring_monthly, 100)
+            self.flush_tracking()
+        with freeze_time("2024-03-03"), patch.object(self.env.cr, 'now', lambda: second_now):
+            sub.order_line.product_uom_qty = 5
+            self.flush_tracking()
+        with freeze_time("2024-03-04"), patch.object(self.env.cr, 'now', lambda: third_now):
+            sub.order_line.product_uom_qty = 10
+            self.flush_tracking()
+            self.assertEqual(sub.recurring_monthly, 1000, "We need to logs on the same date")
+            inv = sub._create_invoices()
+            inv._post()
+            self.flush_tracking()  # needed to run precommit _update_effective_date
+            order_log_ids = sub.order_log_ids.sorted('id')
+            sub_data = [(
+                log.event_type,
+                log.event_date,
+                log.subscription_state,
+                log.amount_signed,
+                log.recurring_monthly,
+                log.effective_date,
+                log.create_date
+            ) for log in order_log_ids]
+            self.assertEqual(sub_data, [
+                ('0_creation', datetime.date(2024, 2, 2), '1_draft', 100, 100, datetime.date(2024, 2, 2), datetime.datetime(2024, 2, 2, 8, 0)),
+                ('1_expansion', datetime.date(2024, 3, 3), '3_progress', 400.0, 500.0, datetime.date(2024, 3, 2), datetime.datetime(2024, 3, 2, 8, 0)),
+                ('1_expansion', datetime.date(2024, 3, 4), '3_progress', 500.0, 1000.0, datetime.date(2024, 3, 2), datetime.datetime(2024, 3, 3, 9, 0))
+            ])
+            self.flush_tracking()
+            self.env.invalidate_all()
+            achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+            self.assertEqual(sum(achievements.mapped('achieved')), 100, 'Regular invoice, 10 percent of 100')
+            self.assertEqual(len(achievements), 3, "3 achievements")
+            self.assertEqual(achievements.mapped('related_res_id'), [sub.id, sub.id, sub.id])
+            # remove duplicates
+            achievement_ids = set(achievements.ids)
+            self.assertEqual(len(achievement_ids), 3, "Three achievements should have different ids")

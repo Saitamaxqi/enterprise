@@ -101,7 +101,9 @@ subscription_rules AS (
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id) AS company_id,
-        log.order_id AS related_res_id
+        log.order_id AS related_res_id,
+        -- create_date because _update_effective_date could update several logs at the same time
+        MAX(log.create_date) AS entropy_date
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
@@ -127,7 +129,8 @@ subscription_rules AS (
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id) AS company_id,
-        log.order_id AS related_res_id
+        log.order_id AS related_res_id,
+        MAX(log.write_date) AS entropy_date
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id

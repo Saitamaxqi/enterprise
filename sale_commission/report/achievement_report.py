@@ -80,7 +80,7 @@ class SaleCommissionAchievementReport(models.Model):
         return f"""
 WITH {self._commission_lines_query(users=users, teams=teams)}
 SELECT
-    (cl.plan_id *10^13 + cl.related_res_id * 10^5 + 10^3 * LENGTH(cl.related_res_model) + cl.user_id + to_char(era.date_from, 'YYMMDD')::integer)::bigint  AS id,
+    (cl.plan_id *10^13 + cl.related_res_id * 10^5 + 10^3 * LENGTH(cl.related_res_model) + cl.user_id + TO_CHAR(entropy_date, 'YYYYMMDDHH24MISS')::bigint + TO_CHAR(cl.date, 'YYMMDD')::integer)::bigint  AS id,
     era.id AS target_id,
     cl.user_id AS user_id,
     cl.team_id AS team_id,
@@ -144,7 +144,8 @@ JOIN sale_commission_plan_target era
                     currency_rate,
                     company_id,
                     user_id,
-                    date_order
+                    date_order,
+                    write_date
               FROM sale_order
              WHERE state = 'sale'
                {company_condition}
@@ -184,7 +185,8 @@ JOIN sale_commission_plan_target era
                     invoice_currency_rate,
                     company_id,
                     invoice_user_id,
-                    date
+                    date,
+                    write_date
               FROM account_move
              WHERE move_type IN ('out_invoice', 'out_refund')
                AND state = 'posted'
@@ -229,7 +231,8 @@ JOIN sale_commission_plan_target era
           {self.env.company.currency_id.id} AS currency_id,
           MAX(fm.date) AS date,
           MAX(rules.company_id) AS company_id,
-          fm.id AS related_res_id
+          fm.id AS related_res_id,
+          MAX(fm.write_date) as entropy_date
         """
 
     @api.model
@@ -267,7 +270,8 @@ JOIN sale_commission_plan_target era
     @api.model
     def _select_sales(self):
         return """
-          fo.id AS related_res_id
+          fo.id AS related_res_id,
+          MAX(fo.write_date) as entropy_date
         """
 
     @api.model
@@ -330,7 +334,8 @@ JOIN sale_commission_plan_target era
                     currency_id,
                     currency_rate,
                     achieved,
-                    date
+                    date,
+                    write_date
               FROM sale_commission_achievement a
              {company_condition}
              {'AND team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
@@ -354,6 +359,7 @@ achievement_commission_lines_add AS (
         fa.date AS date,
         scp.company_id,
         fa.id AS related_res_id,
+        MAX(fa.write_date) AS entropy_date,
         'sale.commission.achievement' AS related_res_model
     FROM filtered_adjustments fa
     JOIN sale_commission_plan_user scpu ON scpu.id = fa.add_user_id
@@ -387,6 +393,7 @@ achievement_commission_lines_rem AS (
         fa.date AS date,
         scp.company_id,
         fa.id AS related_res_id,
+        MAX(fa.write_date) AS entropy_date,
         'sale.commission.achievement' AS related_res_model
     FROM filtered_adjustments fa
     JOIN sale_commission_plan_user scpu ON scpu.id = fa.reduce_user_id
