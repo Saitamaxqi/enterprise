@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <record id="product_pricing_tree" model="ir.ui.view">
         <field name="name">product.pricing.list</field>
         <field name="model">product.pricing</field>
         <field name="arch" type="xml">
             <list string="Prices" editable="bottom">
                 <field name="product_template_id" readonly="1"/>
-                <field name="product_variant_ids" widget="many2many_tags"
-                      groups="product.group_product_variant"
-                      domain="[('product_tmpl_id', '=', parent.id)]"
-                      readonly="1"
-                      column_invisible="parent.product_variant_count &lt; 2"/>
-                    <field name="recurrence_id" readonly="1"/>
-                    <field name="pricelist_id" groups="product.group_product_pricelist"/>
-                    <field name="currency_id" column_invisible="True"/>
-                    <field name="price"/>
+                <field
+                    name="product_variant_ids"
+                    widget="many2many_tags"
+                    groups="product.group_product_variant"
+                    readonly="1"
+                />
+                <field name="recurrence_id" readonly="1"/>
+                <field name="pricelist_id" groups="product.group_product_pricelist"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="price"/>
             </list>
         </field>
     </record>
@@ -29,4 +31,5 @@
             </p>
         </field>
     </record>
+
 </odoo>
