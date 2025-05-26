@@ -127,6 +127,6 @@ class ProjectTask(models.Model):
                 ('validated', '=', True),
             ],
             [],
-            ['unit_amount']
+            ['unit_amount:sum']
         )[0][0] or 0.0
         return total_hours_dict
