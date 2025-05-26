@@ -3309,7 +3309,11 @@ class AccountReport(models.Model):
                         )
 
                         if (in_monetary_column and not expression.figure_type) or expression.figure_type == 'monetary':
-                            expression_value = float_round(expression_value, precision_digits=0, rounding_method=column_group_options['integer_rounding'])
+                            method = column_group_options['integer_rounding']
+                            if isinstance(expression_value, list):
+                                expression_value = [(key, float_round(value, precision_digits=0, rounding_method=method)) for key, value in expression_value]
+                            else:
+                                expression_value = float_round(expression_value, precision_digits=0, rounding_method=method)
 
                     expression_result = {
                         'value': expression_value,
