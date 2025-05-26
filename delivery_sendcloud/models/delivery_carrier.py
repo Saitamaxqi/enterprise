@@ -376,3 +376,10 @@ class DeliveryCarrier(models.Model):
         doc_ids = self.env['ir.attachment'].create(docs)
 
         return list(parcel_ids.values()), parcel_tracking_numbers, doc_ids
+
+    def _get_delivery_type(self):
+        """ Override of delivery to return the sendcloud delivery type."""
+        res = super()._get_delivery_type()
+        if self.delivery_type != 'sendcloud':
+            return res
+        return self.sendcloud_shipping_id.carrier

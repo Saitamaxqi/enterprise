@@ -659,3 +659,7 @@ class TestDeliverySendCloud(TransactionCase):
         with _mock_sendcloud_call(self.warehouse_id):
             res_baleares = self.sendcloud.sendcloud_rate_shipment(sale_order_spain)
             self.assertEqual(res_baleares['price'], 6.6)
+
+    def test_sendcloud_sends_correct_delivery_type_for_amazon(self):
+        amazon_expected_delivery_type = self.sendcloud._get_delivery_type()
+        self.assertEqual(amazon_expected_delivery_type, 'test')
