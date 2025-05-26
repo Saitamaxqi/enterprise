@@ -12,6 +12,7 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
         cls.other_currency = cls.setup_other_currency('EUR')
+        cls.other_currency_2 = cls.setup_other_currency('CHF')
 
         cls.payment_debit_account_id = cls.copy_account(cls.inbound_payment_method_line.payment_account_id)
         cls.payment_credit_account_id = cls.copy_account(cls.outbound_payment_method_line.payment_account_id)
@@ -101,12 +102,20 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
             }
         )
 
-        self.assertEqual(batch_payment.amount, 200)
+        self.assertRecordValues(batch_payment, [{
+            'amount': 200.0,
+            'amount_residual': 200.0,
+            'amount_residual_currency': 200.0,
+        }])
 
         payments[0].move_id.button_draft()
 
         # Check that we still keep it
-        self.assertEqual(batch_payment.amount, 200)
+        self.assertRecordValues(batch_payment, [{
+            'amount': 200.0,
+            'amount_residual': 200.0,
+            'amount_residual_currency': 200.0,
+        }])
 
     def test_change_payment_state_valid(self):
         """
@@ -262,9 +271,87 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         payments.action_post()
         batch_payment_action = payments.create_batch_payment()
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
-        self.assertEqual(batch_payment.amount, 110)
-        self.assertEqual(batch_payment.amount_residual, 110)
-        self.assertEqual(batch_payment.amount_residual_currency, 110)
+        self.assertRecordValues(batch_payment, [{
+            'amount': 110.0,
+            'amount_residual': 110.0,
+            'amount_residual_currency': 110.0,
+        }])
+
+    def test_batch_payment_move_different_currencies(self):
+        """
+        Make sure that payments linked to a move in foreign currency 1 are converted correctly when
+        the batch is in foreign currency 2
+        """
+        payments = self.env['account.payment']
+        bank_journal_2 = self.company_data['default_journal_bank'].copy({'currency_id': self.other_currency_2.id})
+
+        outstanding_payment_B = self.inbound_payment_method_line.payment_account_id.copy()
+        bank_journal_2.inbound_payment_method_line_ids.payment_account_id = outstanding_payment_B
+
+        for currency, rate in [(self.other_currency, 10), (self.other_currency_2, 20)]:
+            self.env['res.currency.rate'].create({
+                'name': '2024-05-14',
+                'rate': rate,
+                'currency_id': currency.id,
+                'company_id': self.env.company.id,
+            })
+
+        for amount in (100.0, 15.0):
+            payments += self.env['account.payment'].create({
+                'amount': amount,
+                'payment_type': 'inbound',
+                'partner_type': 'supplier',
+                'partner_id': self.partner_a.id,
+                'currency_id': self.other_currency.id,
+                'journal_id': bank_journal_2.id,
+                'date': '2024-05-14',
+            })
+
+        payments.action_post()
+        batch_payment_action = payments.create_batch_payment()
+        batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
+        self.assertRecordValues(batch_payment, [{
+            'amount': 230.0,
+            'amount_residual': 11.5,
+            'amount_residual_currency': 230.0,
+        }])
+
+    def test_foreign_currency_batch_payment(self):
+        """
+        Make sure that payments in company_currency are converted when the batch is in
+        foreign currency
+        """
+        payments = self.env['account.payment']
+        foreign_currency = self.other_currency
+
+        bank_journal_2 = self.company_data['default_journal_bank'].copy()
+
+        self.env['res.currency.rate'].create({
+            'name': '2024-05-14',
+            'rate': 10,
+            'currency_id': foreign_currency.id,
+            'company_id': self.env.company.id,
+        })
+
+        for amount in (100, 15):
+            payments += self.env['account.payment'].create({
+                'amount': amount,
+                'payment_type': 'inbound',
+                'partner_type': 'supplier',
+                'partner_id': self.partner_a.id,
+                'currency_id': self.other_currency.id,
+                'date': '2024-05-14',
+                'journal_id': bank_journal_2.id,
+            })
+
+        payments.action_post()
+        batch_payment_action = payments.create_batch_payment()
+        batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
+        self.assertRecordValues(batch_payment, [{
+            'amount': 11.5,
+            'amount_residual': 11.5,
+            'amount_residual_currency': 11.5,
+        }])
 
     def test_batch_payment_journal_foreign_currency(self):
         """
@@ -305,9 +392,11 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         payments.action_post()
         batch_payment_action = payments.create_batch_payment()
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
-        self.assertEqual(batch_payment.amount, 1100)
-        self.assertEqual(batch_payment.amount_residual, 110)
-        self.assertEqual(batch_payment.amount_residual_currency, 1100)
+        self.assertRecordValues(batch_payment, [{
+            'amount': 1100.0,
+            'amount_residual': 110.0,
+            'amount_residual_currency': 1100.0,
+        }])
 
     def test_create_batch_from_payment_already_in_batch(self):
         payment = self.env['account.payment'].create({
