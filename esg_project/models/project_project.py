@@ -14,6 +14,9 @@ class ProjectProject(models.Model):
         else:
             domain = [('project_id', '=', project.id)]
         action['domain'] = domain
+        initiative_action = self.env.ref("esg_project.esg_initiatives_server_action", raise_if_not_found=False)
+        if path := (initiative_action.path if initiative_action else None):
+            action["path"] = path
         return action
 
     @api.ondelete(at_uninstall=False)
