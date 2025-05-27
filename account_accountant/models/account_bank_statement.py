@@ -541,10 +541,13 @@ class AccountBankStatementLine(models.Model):
 
     def set_account_bank_statement_line(self, aml_id, account_id):
         """ Sets the specified account to the given account move line.
+            Also creates a reco model for fees for this journal and this account if it's in the 3% range
+            Also can delete or try to create new reco model depending on the pattern
 
             :param aml_id: The ID of the account move line to update.
             :param account_id: The ID of the account to set on the specified account move line.
         """
+        self._create_account_model_fee(account_id)
         account_move_line = self.line_ids.filtered(lambda line: line.id == aml_id)
         account_move_line.account_id = account_id
 
@@ -703,6 +706,61 @@ class AccountBankStatementLine(models.Model):
             substring = get_longest_common_substring(substring, normalised[i])
 
         return substring
+
+    def _create_account_model_fee(self, account_id):
+        """
+            In case of a statement line nearly matching an invoice (entering money on the statement line),
+            when a user puts the leftover on an account,
+            create a new model for these type of fees with the account if it does not exist already
+        """
+        def create_reco_model_xml_id(name, journal):
+            self.env['account.reconcile.model']._load_records([{
+                'xml_id': f'account.account_reco_model_fee_{journal.id}',
+                'values': {
+                    'company_id': journal.company_id.id,
+                    'match_journal_ids': journal.ids,
+                    'name': name,
+                    'line_ids': [Command.create({
+                        'account_id': account_id,
+                        'label': _('Bank Fees'),
+                        'amount_type': 'percentage',
+                        'amount_string': '100',
+                    })]
+                },
+            }])
+        if (
+            self.currency_id.compare_amounts(self.amount, 0) < 0
+            or self.currency_id.compare_amounts(self.amount_residual, 0) < 0
+            or self.currency_id.compare_amounts(abs(self.amount_residual), 0.03 * (self.amount_currency if self.foreign_currency_id else self.amount)) > 0
+        ):
+            return
+
+        journal = self.journal_id
+        if self.env.ref(f'account.account_reco_model_fee_{journal.id}', raise_if_not_found=False):
+            return
+
+        base_model_name = f'Fees ({journal.name})'
+        existing_journal_names = set(
+            self.env['account.reconcile.model'].search_fetch(
+                [
+                    ('name', 'like', base_model_name + '%'),
+                    *self.env['account.journal']._check_company_domain(journal.company_id)
+                ],
+                ['name'],
+            ).mapped('name')
+        )
+        if base_model_name not in existing_journal_names:
+            create_reco_model_xml_id(base_model_name, journal)
+        else:
+            for num in range(2, 100):
+                new_model_name = f'{base_model_name} {num}'
+                if new_model_name not in existing_journal_names:
+                    create_reco_model_xml_id(new_model_name, journal)
+                    return
+
+            # If we could not find a valid code due to multiple journals with the same name,
+            # do it with the journal name and the journal code (which is unique)
+            create_reco_model_xml_id(f'Fees ({journal.name} - {journal.code})', journal)
 
     def set_line_bank_statement_line(self, move_lines_ids):
         """ Sets the specified move lines to the bank statement line and performs reconciliation.

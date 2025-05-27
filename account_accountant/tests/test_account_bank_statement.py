@@ -1205,6 +1205,29 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': st_line.journal_id.suspense_account_id.id, 'balance': 10.0, 'reconciled': False},
         ])
 
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
+        reco_model = self.env.ref(f'account.account_reco_model_fee_{st_line.journal_id.id}', raise_if_not_found=False)
+        self.assertTrue(reco_model, "A new reco model for fees should have been created")
+
+        self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            invoice_date='2020-01-01',
+            invoice_line_ids=[{'price_unit': 500.0}],
+        )
+        st_line = self._create_st_line(
+            490.0,
+            date='2020-01-05',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        st_line._try_auto_reconcile_statement_lines()
+        self.assertEqual(
+            st_line.line_ids[-1].reconcile_model_id,
+            reco_model,
+            "The fees reco model should be assigned to a new line that is close to the invoice",
+        )
+
     def test_partial_auto_tolerance_multicurrency(self):
         other_currency = self.setup_other_currency('JPY', rates=[('2020-01-01', 10.0), ('2020-01-20', 9.9)])
         inv1 = self._create_invoice_line(
@@ -1229,3 +1252,57 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': 10.0, 'currency_id': self.company_data['currency'].id, 'balance': 10.0, 'reconciled': False},
         ])
         self.assertEqual(inv1.amount_residual, 0)
+
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
+        reco_model = self.env.ref(f'account.account_reco_model_fee_{st_line.journal_id.id}', raise_if_not_found=False)
+        self.assertTrue(reco_model, "A new reco model for fees should have been created")
+        inv1 = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            currency_id=other_currency.id,
+            invoice_date='2020-01-20',
+            invoice_line_ids=[{'price_unit': 4950.0}],
+        )
+        st_line = self._create_st_line(
+            485.0,
+            date='2020-01-01',
+            partner_id=self.partner_a.id,
+            payment_ref=inv1.name,
+            update_create_date=False,
+        )
+        st_line._try_auto_reconcile_statement_lines()
+        self.assertEqual(
+            st_line.line_ids[-1].reconcile_model_id,
+            reco_model,
+            "The fees reco model should be assigned to a new line that is close to the invoice",
+        )
+
+    def test_partial_auto_tolerance_st_line_foreign_currency(self):
+        other_currency = self.setup_other_currency('JPY', rates=[('2020-01-01', 9.5)])
+        inv1 = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            invoice_date='2020-01-20',
+            invoice_line_ids=[{'price_unit': 495.0}],
+        )
+        st_line = self._create_st_line(
+            485.0,
+            date='2020-01-01',
+            foreign_currency_id=other_currency.id,
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+            amount_currency=4900,
+        )
+        st_line.set_line_bank_statement_line([inv1.id])
+
+        # with the exchange diff, it's not 500 but 495 that is reconciled. And so the invoice is fully paid
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 485.0, 'currency_id': self.company_data['currency'].id, 'balance': 485.0, 'reconciled': False},
+            {'account_id': inv1.account_id.id, 'amount_currency': -495.0, 'currency_id': self.company_data['currency'].id, 'balance': -495.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': 95.0, 'currency_id': other_currency.id, 'balance': 10.0, 'reconciled': False},
+        ])
+        self.assertEqual(inv1.amount_residual, 0)
+
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
+        reco_model = self.env.ref(f'account.account_reco_model_fee_{st_line.journal_id.id}', raise_if_not_found=False)
+        self.assertTrue(reco_model, "A new reco model for fees should have been created")
