@@ -104,8 +104,8 @@ test("switch view and close Studio", async () => {
     expect(".o_web_studio_list_view_editor").toHaveCount(1);
 
     await click(".o_web_studio_leave");
-    await animationFrame();
-    expect(".o_list_view").toHaveCount(1);
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_list_view");
     expect(".o_web_studio_editor_manager").toHaveCount(0);
 });
 
@@ -157,16 +157,15 @@ test("navigation in Studio with act_window", async () => {
     ]);
 
     await click(".o_web_studio_leave");
-    await animationFrame();
-
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_list_view");
     expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
 
     expect(".o_web_studio_editor_manager").toHaveCount(0);
-    expect(".o_list_view").toHaveCount(1);
 });
 
 test("keep action context when leaving Studio", async () => {
-    expect.assertions(3);
+    expect.assertions(2);
     let nbLoadAction = 0;
     onRpc("/web/action/load", async (request) => {
         nbLoadAction++;
@@ -189,9 +188,9 @@ test("keep action context when leaving Studio", async () => {
     await waitFor(".o_web_studio_editor_manager .o_web_studio_list_view_editor");
 
     await click(".o_web_studio_leave");
-    await animationFrame();
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_list_view");
 
-    expect(".o_list_view").toHaveCount(1);
     expect(nbLoadAction).toBe(3);
 });
 
@@ -371,7 +370,8 @@ test("open same record when leaving form", async () => {
     );
 
     await click(".o_web_studio_leave");
-    await animationFrame();
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_form_view");
 
     expect(".o_form_view .o_field_widget[name=name] input").toHaveValue("Applejack");
 });
@@ -642,11 +642,10 @@ test("auto-save feature works in studio (not editing a view)", async () => {
     await animationFrame();
 
     await click(".o_web_studio_leave");
-    await animationFrame();
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_kanban_view");
 
     expect.verifySteps(['web_save: base.automation: [[],{"name":"created base automation"}]']);
-    expect(".o_studio").toHaveCount(0);
-    expect(".o_kanban_view").toHaveCount(1);
 });
 
 test("load with active_id active_ids", async () => {
@@ -706,12 +705,13 @@ test("can edit ir.actions.act_window without id", async () => {
     expect(".o_web_studio_thumbnail_item.pe-none").toHaveCount(10);
 
     await click(".o_web_studio_leave");
-    await animationFrame();
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_form_view");
 
     expect(".o_form_view .o_field_widget[name='name'] input").toHaveValue("Rainbow Dash");
     expect(".o_breadcrumb").toHaveText("partner Action\nYop\nRainbow Dash");
     expect(browser.location.pathname).toBe("/odoo/action-1/1/m-pony/1");
-    expect(browser.location.search).toBe("?view_type=form");
+    expect(browser.location.search).toBe(""); // no view type in search means the default view type of the action is taken
 });
 
 test("enter and leave with multirecord view (invalid to load)", async () => {
@@ -729,8 +729,8 @@ test("enter and leave with multirecord view (invalid to load)", async () => {
     expect(".o_web_studio_view_renderer .o_pivot_view").toHaveCount(1);
 
     await contains(".o_web_studio_leave").click();
-    await animationFrame();
-    expect(".o_home_menu").toHaveCount(1);
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_home_menu");
     expect(".o_main_navbar .o_menu_toggle").toHaveCount(0);
     expect(".o_studio").toHaveCount(0);
     expect(".o_menu_toggle_back").toHaveCount(0);
@@ -754,8 +754,8 @@ test("enter and leave on home menu with multirecord view (invalid to load)", asy
     expect(".o_studio .o_home_menu").toHaveCount(1);
 
     await contains(".o_web_studio_leave").click();
-    await animationFrame();
-    expect(".o_home_menu").toHaveCount(1);
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_home_menu");
     expect(".o_main_navbar .o_menu_toggle").toHaveCount(0);
     expect(".o_studio").toHaveCount(0);
     expect(".o_menu_toggle_back").toHaveCount(0);
@@ -787,8 +787,8 @@ test("enter and leave on home menu with multirecord view (invalid to load) and a
     expect(".o_studio .o_home_menu").toHaveCount(1);
 
     await contains(".o_web_studio_leave").click();
-    await animationFrame();
-    expect(".o_home_menu").toHaveCount(1);
+    await waitFor(".o_action_manager:first:not(:has(.o_studio))");
+    await waitFor(".o_home_menu");
     expect(".o_studio").toHaveCount(0);
     await contains(".o_menu_toggle_back").click();
     expect(".o_form_view").toHaveCount(1);
