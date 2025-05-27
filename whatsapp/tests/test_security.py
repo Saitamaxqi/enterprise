@@ -202,7 +202,8 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                 "mail.message": self._filter_messages_fields(
                                     {
                                         "attachment_ids": [],
-                                        "author": {
+                                        "author_guest_id": False,
+                                        "author_id": {
                                             "id": self.user_admin.partner_id.id,
                                             "type": "partner",
                                         },
