@@ -217,8 +217,10 @@ class DeliveryCarrier(models.Model):
         json is to replace the static file request by an API request if easypost
         implements a way to do it.
         """
-        packages = json.load(file_open('delivery_easypost/static/data/package_types_by_carriers.json'))
-        services = json.load(file_open('delivery_easypost/static/data/services_by_carriers.json'))
+        with file_open('delivery_easypost/static/data/package_types_by_carriers.json') as f:
+            packages = json.load(f)
+        with file_open('delivery_easypost/static/data/services_by_carriers.json') as f:
+            services = json.load(f)
         return packages, services
 
     @api.onchange('delivery_type')

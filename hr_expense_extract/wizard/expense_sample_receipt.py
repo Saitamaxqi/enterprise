@@ -61,7 +61,8 @@ class ExpenseSampleReceipt(models.Model):
 
         # 6/ Link the attachment
         image_path = 'hr_expense_extract/static/img/receipt_sample.webp'
-        image = base64.b64encode(file_open(image_path, 'rb').read())
+        with file_open(image_path, 'rb') as f:
+            image = base64.b64encode(f.read())
         self.env['ir.attachment'].create({
             'name': 'sample_receipt.jpeg',
             'res_id': expense.id,

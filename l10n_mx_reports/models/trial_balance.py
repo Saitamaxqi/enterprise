@@ -57,11 +57,12 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         if not certificate_sudo:
             return tree
 
-        cadena_transformer = etree.parse(tools.file_open(path_xslt))
-        cadena = str(etree.XSLT(cadena_transformer)(tree))
-        tree.attrib['Sello'] = certificate_sudo._sign(cadena)
-        tree.attrib['noCertificado'] = ('%x' % int(certificate_sudo.serial_number))[1::2]
-        tree.attrib['Certificado'] = certificate_sudo.pem_certificate
+        with tools.file_open(path_xslt) as f:
+            cadena_transformer = etree.parse(f)
+            cadena = str(etree.XSLT(cadena_transformer)(tree))
+            tree.attrib['Sello'] = certificate_sudo._sign(cadena)
+            tree.attrib['noCertificado'] = ('%x' % int(certificate_sudo.serial_number))[1::2]
+            tree.attrib['Certificado'] = certificate_sudo.pem_certificate
         return tree
 
     def _l10n_mx_get_sat_values(self, options):

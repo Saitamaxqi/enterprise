@@ -127,7 +127,8 @@ class ResCompany(models.Model):
         self.ensure_one()
         if not self.vat:
             raise UserError(_('To create demo CAF files, you must define the company VAT first.'))
-        caf_file_template = misc.file_open('l10n_cl_edi/tests/template/caf_file_template.xml').read()
+        with misc.file_open('l10n_cl_edi/tests/template/caf_file_template.xml') as f:
+            caf_file_template = f.read()
         today_string_date = fields.Date.to_string(fields.Date.context_today(
             self.with_context(tz='America/Santiago')))
         caf_file_template = caf_file_template. \

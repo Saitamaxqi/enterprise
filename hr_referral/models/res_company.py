@@ -10,7 +10,8 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     def _get_default_referral_background(self):
-        return encodebytes(file_open('hr_referral/static/src/img/bg.jpg', 'rb').read())
+        with file_open('hr_referral/static/src/img/bg.jpg', 'rb') as f:
+            return encodebytes(f.read())
 
     hr_referral_background = fields.Image(string='Referral Background', default=_get_default_referral_background, required=True)
 

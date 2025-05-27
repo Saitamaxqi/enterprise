@@ -133,6 +133,10 @@ class ResCompany(models.Model):
         assign a random certificate to the demo companies. It is also available as button in the res.config.settings
         wizard to let the user change the certificate randomly if the one been set is blocked (because someone else
         is using the same certificate in another database) """
+        def read_datas(path):
+            with file_open(path, 'rb') as f:
+                return base64.b64encode(f.read())
+
         for company in self:
             if company.country_code != 'AR':
                 continue
@@ -144,7 +148,7 @@ class ResCompany(models.Model):
                 cert_file = 'l10n_ar_edi/demo/cert%d.crt' % rid
                 new_cert = self.env['certificate.certificate'].create({
                     'name': new_cert_name,
-                    'content': base64.b64encode(file_open(cert_file, 'rb').read()),
+                    'content': read_datas(cert_file),
                     'private_key_id': company.l10n_ar_afip_ws_key_id.id,
                     'company_id': company.id,
                 })

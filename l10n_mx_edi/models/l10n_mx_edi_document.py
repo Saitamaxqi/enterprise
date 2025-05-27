@@ -1967,8 +1967,9 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         def get_cadena(cfdi_node, template):
             if cfdi_node is None:
                 return None
-            cadena_root = etree.parse(tools.file_open(template))
-            return str(etree.XSLT(cadena_root)(cfdi_node))
+            with tools.file_open(template) as f:
+                cadena_root = etree.parse(f)
+                return str(etree.XSLT(cadena_root)(cfdi_node))
 
         def get_node(node, xpath):
             nodes = node.xpath(xpath)

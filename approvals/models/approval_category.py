@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -21,8 +20,8 @@ class ApprovalCategory(models.Model):
     _check_company_auto = True
 
     def _get_default_image(self):
-        default_image_path = 'approvals/static/src/img/Folder.png'
-        return base64.b64encode(tools.misc.file_open(default_image_path, 'rb').read())
+        with tools.file_open('approvals/static/src/img/Folder.png', 'rb') as f:
+            return base64.b64encode(f.read())
 
     name = fields.Char(string="Name", translate=True, required=True)
     company_id = fields.Many2one(

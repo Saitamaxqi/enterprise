@@ -18,7 +18,8 @@ from odoo.exceptions import UserError
 from odoo.tools import file_open
 
 
-API_DATA = json.loads(file_open('l10n_be_hr_payroll_dimona/data/api_data.json').read())
+with file_open('l10n_be_hr_payroll_dimona/data/api_data.json') as f_api_data:
+    API_DATA = json.load(f_api_data)
 API_ROUTES = API_DATA['routes']['production']
 DIMONA_TIMEOUT = 30
 

@@ -140,7 +140,8 @@ class AIAgent(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        image_placeholder = file_open('ai/static/description/icon.png', 'rb').read()
+        with file_open('ai/static/description/icon.png', 'rb') as f:
+            image_placeholder = f.read()
         for vals in vals_list:
             partner = self.env['res.partner'].create({
                 'name': vals.get('name'),
