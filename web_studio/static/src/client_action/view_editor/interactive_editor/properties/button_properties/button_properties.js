@@ -115,8 +115,8 @@ export class ButtonProperties extends Component {
 
     get types() {
         return [
-            { label: _t("Run a Server Action"), value: _t("action") },
-            { label: _t("Call a method"), value: _t("object") },
+            { label: _t("Run a Server Action"), value: "action" },
+            { label: _t("Call a method"), value: "object" },
         ];
     }
 
