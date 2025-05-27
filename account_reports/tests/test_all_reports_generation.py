@@ -109,7 +109,7 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
                         # without a tax closing entry, so we will exclude it from testing here.
                         continue
                     with self.subTest(button=option_button['name']):
-                        with patch.object(type(self.env['ir.actions.report']), '_run_wkhtmltopdf', lambda *args, **kwargs: b"This is a pdf"):
+                        with self.allow_pdf_render():
                             if not option_button.get('client_tag'):
                                 action_dict = report.dispatch_report_action(
                                     options,
