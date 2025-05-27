@@ -32,7 +32,7 @@ class ProductTemplate(models.Model):
         string='Stores',
         help='Handle products with urban piper and pos config - Product is linked or not with appropriate store.'
     )
-    is_alcoholic_on_urbanpiper = fields.Boolean(string='Is Alchoholic', help='Indicates if the product contains alcohol.')
+    is_alcoholic_on_urbanpiper = fields.Boolean(string='Is Alcoholic', help='Indicates if the product contains alcohol.')
 
     @api.depends('urbanpiper_pos_config_ids')
     def _compute_urbanpiper_pos_config_ids(self):
