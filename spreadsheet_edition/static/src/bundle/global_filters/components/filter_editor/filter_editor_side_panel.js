@@ -33,11 +33,13 @@ export class AbstractFilterEditorSidePanel extends Component {
     };
     static props = {
         id: { type: String, optional: true },
+        label: { type: String, optional: true },
+        fieldMatching: { type: Object, optional: true },
         onCloseSidePanel: { type: Function, optional: true },
     };
 
     setup() {
-        this.store = useLocalStore(FilterEditorStore, this.props.id, this.type);
+        this.store = useLocalStore(FilterEditorStore, this.props, this.type);
         onWillStart(async () => await this.store.loadData);
     }
 

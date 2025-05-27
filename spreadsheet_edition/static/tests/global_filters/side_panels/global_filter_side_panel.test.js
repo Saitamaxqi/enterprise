@@ -1,12 +1,13 @@
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
-import { queryAllTexts } from "@odoo/hoot-dom";
+import { queryAllTexts, waitFor } from "@odoo/hoot-dom";
 import { mockDate } from "@odoo/hoot-mock";
 import { stores } from "@odoo/o-spreadsheet";
-import { addGlobalFilterWithoutReload } from "@spreadsheet/../tests/helpers/commands";
+import { mountSpreadsheet } from "@spreadsheet/../tests/helpers/ui";
+import { addGlobalFilterWithoutReload, updatePivot } from "@spreadsheet/../tests/helpers/commands";
 import { getBasicServerData, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { assertDateDomainEqual } from "@spreadsheet/../tests/helpers/date_domain";
 import { THIS_YEAR_GLOBAL_FILTER } from "@spreadsheet/../tests/helpers/global_filter";
-import { contains, serverState, mountWithCleanup } from "@web/../tests/web_test_helpers";
+import { contains, serverState, mountWithCleanup, onRpc } from "@web/../tests/web_test_helpers";
 
 import { user } from "@web/core/user";
 import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
@@ -492,4 +493,45 @@ test("Can reorder filters with drag & drop", async function () {
     filters = model.getters.getGlobalFilters();
     expect(filters[0].id).toBe(id_2);
     expect(filters[1].id).toBe(id_1);
+});
+
+describe("integration", () => {
+    test("suggestions", async () => {
+        onRpc("get_search_view_archs", ({ args }) => {
+            expect(args).toEqual([["action_partner"]]);
+            return {
+                partner: [
+                    /*xml*/ `
+                    <search>
+                        <field name="product_id" string="My product filter"/>
+                    </search>
+                    `,
+                ],
+            };
+        });
+        const { model } = await createSpreadsheetWithPivot();
+        await mountSpreadsheet(model);
+        const [pivotId] = model.getters.getPivotIds();
+        updatePivot(model, pivotId, { actionXmlId: "action_partner" });
+        await contains(".o_topbar_filter_icon").click();
+        await contains(".global-filter-suggestions .btn").click();
+        await waitFor(".o_spreadsheet_filter_editor_side_panel");
+        await contains(".o_global_filter_save").click();
+        const globalFilter = model.getters.getGlobalFilters()[0];
+        const filterId = globalFilter.id;
+        expect(model.getters.getPivotFieldMatching(pivotId, filterId)).toEqual({
+            chain: "product_id",
+            type: "many2one",
+        });
+        expect(globalFilter).toEqual({
+            id: filterId,
+            defaultValue: [],
+            domainOfAllowedValues: [],
+            label: "My product filter",
+            modelName: "product",
+            type: "relation",
+        });
+        await waitFor(".o_spreadsheet_global_filters_side_panel");
+        expect(".global-filter-suggestions").toHaveCount(0);
+    });
 });

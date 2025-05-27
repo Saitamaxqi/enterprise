@@ -428,3 +428,41 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         self.assertEqual(revisions[2].author_id, test_user_3)
         spreadsheet.with_user(self.env.ref("base.user_admin")).dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
         self.assertEqual(spreadsheet.sudo().spreadsheet_revision_ids[-1].author_id, self.env.ref("base.user_admin"))
+
+    def test_get_search_arch(self):
+
+        # default search view
+        arch = '<search><field name="name"/></search>'
+        self.env["ir.ui.view"].create({
+            "name": "Search View",
+            "model": "res.partner",
+            "type": "search",
+            "arch": arch,
+        })
+        action = self.env["ir.actions.act_window"].create({
+            "name": "Action2",
+            "res_model": "res.partner",
+        })
+        xml_id = "spreadsheet_test_partner_search_view"
+        module = "test_spreadsheet_edition"
+        self.env["ir.model.data"].create({
+            "name": xml_id,
+            "model": "ir.actions.act_window",
+            "module": module,
+            "res_id": action.id,
+        })
+        xml_id = f"{module}.{xml_id}"
+        result = self.env["spreadsheet.mixin"].get_search_view_archs([xml_id])
+        self.assertEqual(result, {"res.partner": [arch]})
+
+        # with a custom search view
+        custom_arch = '<search><field name="name" string="custom search view"/></search>'
+        custom_search_view = self.env["ir.ui.view"].create({
+            "name": "Custom Search View",
+            "model": "res.partner",
+            "type": "search",
+            "arch": custom_arch,
+        })
+        action.search_view_id = custom_search_view
+        result = self.env["spreadsheet.mixin"].get_search_view_archs([xml_id])
+        self.assertEqual(result, {"res.partner": [custom_arch]})

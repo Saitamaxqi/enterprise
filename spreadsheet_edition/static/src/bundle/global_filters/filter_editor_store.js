@@ -21,14 +21,14 @@ export class FilterEditorStore extends SpreadsheetStore {
         "updateRelationModelLabel",
     ];
 
-    constructor(get, filterId, type, orm, fieldService) {
+    constructor(get, initialProps, type, orm, fieldService) {
         super(get);
-        this.isNew = !filterId;
-        this.filterId = filterId || new UuidGenerator().smallUuid();
+        this.isNew = !initialProps.id;
+        this.filterId = initialProps.id || new UuidGenerator().smallUuid();
         if (this.isNew) {
             this.draft = {
                 id: this.filterId,
-                label: "",
+                label: initialProps.label ?? "",
                 type,
             };
         }
@@ -36,7 +36,7 @@ export class FilterEditorStore extends SpreadsheetStore {
         this.missingLabelError = false; // Only set to true when the user tries to update the filter without the label
         this.notificationStore = this.get(NotificationStore);
         this.sidePanelStore = this.get(SidePanelStore);
-        this.loadDataPromise = this._loadData();
+        this.loadDataPromise = this._loadData(initialProps);
         this._canUseChildOf = this.filter.includeChildren;
         this._fieldsMatching = [];
         this._relationModelLabel = "";
@@ -245,9 +245,12 @@ export class FilterEditorStore extends SpreadsheetStore {
         }
     }
 
-    async _loadData() {
+    async _loadData({ modelName, modelDisplayName, fieldMatching } = {}) {
         this._allModelsExist = await this._waitForDataSourcesBeReady();
-        await this._loadFilterMatchings();
+        if (this.isNew && this.filter.type === "relation" && modelName) {
+            this.selectRelatedModel(modelName, modelDisplayName);
+        }
+        await this._loadFilterMatchings(fieldMatching);
     }
 
     async _waitForDataSourcesBeReady() {
@@ -268,21 +271,24 @@ export class FilterEditorStore extends SpreadsheetStore {
         return true;
     }
 
-    async _loadFilterMatchings() {
+    async _loadFilterMatchings(initialFieldMatching = {}) {
         let id = 0;
         for (const type of globalFieldMatchingRegistry.getKeys()) {
             const el = globalFieldMatchingRegistry.get(type);
-            for (const objectId of el.getIds(this.model.getters)) {
-                const tag = await el.getTag(this.model.getters, objectId);
+            for (const dataSourceId of el.getIds(this.model.getters)) {
+                const model = el.getModel(this.model.getters, dataSourceId);
+                const tag = await el.getTag(this.model.getters, dataSourceId);
                 this._fieldsMatching.push({
                     id,
-                    name: el.getDisplayName(this.model.getters, objectId),
+                    name: el.getDisplayName(this.model.getters, dataSourceId),
                     tag,
                     fieldMatch:
-                        el.getFieldMatching(this.model.getters, objectId, this.filterId) || {},
-                    fields: () => el.getFields(this.model.getters, objectId),
-                    model: () => el.getModel(this.model.getters, objectId),
-                    payload: () => ({ id: objectId, type }),
+                        initialFieldMatching[model] ||
+                        el.getFieldMatching(this.model.getters, dataSourceId, this.filterId) ||
+                        {},
+                    fields: () => el.getFields(this.model.getters, dataSourceId),
+                    model: () => model,
+                    payload: () => ({ id: dataSourceId, type }),
                     isValid: true,
                 });
                 id++;

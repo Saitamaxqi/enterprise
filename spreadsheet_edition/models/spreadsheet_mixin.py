@@ -6,6 +6,7 @@ import base64
 import psycopg2
 import uuid
 
+from collections import defaultdict
 from datetime import timedelta
 from typing import Dict, Any, List, Optional
 
@@ -477,6 +478,22 @@ class SpreadsheetMixin(models.AbstractModel):
                 'next': self.action_open_spreadsheet(),
             }
         }
+
+    @api.model
+    def get_search_view_archs(self, action_xml_ids: List[str]):
+        records = [self.env.ref(xml_id, raise_if_not_found=False) for xml_id in action_xml_ids]
+        actions_data = [
+            record._get_action_dict()
+            for record in records
+            if record and record._name == 'ir.actions.act_window'
+        ]
+        search_views = defaultdict(list)
+        for action in actions_data:
+            res_model = action['res_model']
+            search_view_id = action['search_view_id'][0] if action['search_view_id'] else False
+            views = self.env[res_model].get_views(views=[(search_view_id, 'search')])
+            search_views[res_model].append(views['views']['search']['arch'])
+        return dict(search_views)
 
     def _get_context_company_colors(self):
         companies = self.env.companies

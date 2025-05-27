@@ -495,15 +495,16 @@ test("Only related models can be selected", async function () {
     const { model, env } = await createSpreadsheetWithPivot({ serverData: { models: data } });
     await openSidePanelForCreation(model, env, "relation");
     await contains(".o_side_panel_related_model input").click();
-    const [model1, model2, model3, model4, model5, model6] = target.querySelectorAll(
-        ".o-autocomplete--dropdown-item a"
-    );
+    const [model1, model2, model3, model4, model5, model6, model7, model8] =
+        target.querySelectorAll(".o-autocomplete--dropdown-item a");
     expect(model1).toHaveText("Apple");
     expect(model2).toHaveText("Computer");
-    expect(model3).toHaveText("Partner");
-    expect(model4).toHaveText("Product");
-    expect(model5).toHaveText("Users");
-    expect(model6).toHaveText("Vehicle");
+    expect(model3).toHaveText("Currency");
+    expect(model4).toHaveText("Partner");
+    expect(model5).toHaveText("Product");
+    expect(model6).toHaveText("Tag");
+    expect(model7).toHaveText("Users");
+    expect(model8).toHaveText("Vehicle");
 });
 
 test("Fields are ordered by global filter type then relation", async function () {

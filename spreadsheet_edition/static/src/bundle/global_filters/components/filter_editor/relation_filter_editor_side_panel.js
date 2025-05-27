@@ -31,6 +31,11 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         SidePanelDomain,
         ValidationMessages,
     };
+    static props = {
+        ...AbstractFilterEditorSidePanel.props,
+        modelName: { type: String, optional: true },
+        modelDisplayName: { type: String, optional: true },
+    };
     setup() {
         super.setup();
 

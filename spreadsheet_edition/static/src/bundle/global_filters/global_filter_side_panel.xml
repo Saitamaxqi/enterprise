@@ -52,6 +52,7 @@
                     </button>
                 </div>
             </div>
+            <GlobalFilterSuggestions t-if="!isReadonly"/>
         </div>
     </div>
 </templates>

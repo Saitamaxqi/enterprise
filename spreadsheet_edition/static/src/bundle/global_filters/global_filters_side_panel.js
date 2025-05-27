@@ -2,6 +2,7 @@ import { FilterValue } from "@spreadsheet/global_filters/components/filter_value
 import { _t } from "@web/core/l10n/translation";
 import { Component, useRef } from "@odoo/owl";
 import { hooks, components } from "@odoo/o-spreadsheet";
+import { GlobalFilterSuggestions } from "./global_filter_suggestions/global_filter_suggestions";
 
 const { Section } = components;
 
@@ -11,7 +12,7 @@ const { Section } = components;
  */
 export class GlobalFiltersSidePanel extends Component {
     static template = "spreadsheet_edition.GlobalFiltersSidePanel";
-    static components = { FilterValue, Section };
+    static components = { FilterValue, GlobalFilterSuggestions, Section };
     static props = {
         onCloseSidePanel: { type: Function, optional: true },
     };
