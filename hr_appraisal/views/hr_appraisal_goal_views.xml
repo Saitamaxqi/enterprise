@@ -59,7 +59,7 @@
                 <field name="activity_ids" widget="list_activity" optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags" readonly="1" optional="hide" options="{'color_field': 'color'}"/>
                 <field name="deadline" widget="remaining_days"/>
-                <field name="create_date" widget="timeless_datetime" optional="hide"/>
+                <field name="create_date" options="{'show_time': False}" optional="hide"/>
             </list>
         </field>
     </record>
