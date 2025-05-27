@@ -668,6 +668,7 @@ class PosOrder(models.Model):
         # == Check the config ==
         orders = self.filtered(lambda order: not order.refunded_order_id)
         orders |= self.env['pos.order.line'].search([('refunded_orderline_id.order_id', 'in', orders.ids)]).order_id
+        pos_journal = self.config_id.invoice_journal_id
         errors = []
         for order in orders:
             errors += order._l10n_mx_edi_cfdi_check_order_config()
@@ -678,9 +679,26 @@ class PosOrder(models.Model):
         # == Lock ==
         self.env['res.company']._with_locked_records(orders)
 
+        def _set_issued_address(cfdi_values):
+            """
+            Sets the `l10n_mx_address_issued_id` if it exists.
+            The `l10n_mx_address_issued_id` field is defined in the `l10n_mx_edi_extended` module.
+            """
+            if 'l10n_mx_address_issued_id' not in pos_journal._fields:
+                return
+            if (
+                    (issued_addresses := pos_journal.l10n_mx_address_issued_id)
+                    and not all(j.l10n_mx_address_issued_id == issued_addresses for j in pos_journal)
+            ):
+                raise UserError(_("You cannot create a global invoice for POS orders that use different journals with different issuing addresses."))
+            if issued_address := pos_journal.l10n_mx_address_issued_id:
+                cfdi_values.update({'issued_address': issued_address})
+
         # == Send ==
         def on_populate(cfdi_values):
             cfdi_lines = []
+            _set_issued_address(cfdi_values)
+
             for order in orders:
                 # The refund are managed by the refunded order.
                 if order.refunded_order_id:

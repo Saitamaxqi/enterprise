@@ -454,6 +454,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_mx_edi_pos/models/pos_order.py:0
 msgid ""
+"You cannot create a global invoice for POS orders that use different "
+"journals with different issuing addresses."
+msgstr ""
+
+#. module: l10n_mx_edi_pos
+#. odoo-python
+#: code:addons/l10n_mx_edi_pos/models/pos_order.py:0
+msgid ""
 "You cannot invoice this refund since the related order is not invoiced yet."
 msgstr ""
 
