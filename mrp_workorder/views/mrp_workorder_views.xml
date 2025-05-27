@@ -121,7 +121,7 @@
                                 <ul class="ps-1 mb-0 list-unstyled">
                                     <li><strong>Start Date: </strong> <t t-esc="date_start.toFormat('F')"/></li>
                                     <li><strong>Stop Date: </strong> <t t-esc="date_finished.toFormat('F')"/></li>
-                                    <li><strong>Workcenter: </strong> <t t-esc="workcenter_id[1]"/></li>
+                                    <li><strong>Workcenter: </strong> <t t-esc="workcenter_id.display_name"/></li>
                                 </ul>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                                 <ul class="ps-1 mb-0 list-unstyled">
                                     <li><strong>Start Date: </strong><t t-esc="date_start.toFormat('F')"/></li>
                                     <li><strong>Stop Date: </strong><t t-esc="date_finished.toFormat('F')"/></li>
-                                    <li><strong>Workcenter: </strong> <t t-esc="workcenter_id[1]"/></li>
+                                    <li><strong>Workcenter: </strong> <t t-esc="workcenter_id.display_name"/></li>
                                 </ul>
                             </div>
                         </div>

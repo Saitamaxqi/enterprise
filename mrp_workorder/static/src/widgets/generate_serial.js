@@ -8,10 +8,10 @@ patch(GenerateDialog.prototype, {
     async _onGenerate() {
         if (!this.props.move.context.default_picking_type_id) {
             this.props.move.context.default_picking_type_id =
-                this.props.move.data.picking_type_id[0];
+                this.props.move.data.picking_type_id.id;
         }
         if (!this.props.move.context.default_company_id) {
-            this.props.move.context.default_company_id = this.props.move.data.company_id[0];
+            this.props.move.context.default_company_id = this.props.move.data.company_id.id;
         }
         super._onGenerate();
     },

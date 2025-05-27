@@ -35,7 +35,7 @@ export class StockMove extends QualityCheck {
     }
 
     get label() {
-        return this.check ? super.label : this.props.record.data.product_id[1];
+        return this.check ? super.label : this.props.record.data.product_id.display_name;
     }
 
     get isComplete() {
@@ -104,13 +104,13 @@ export class StockMove extends QualityCheck {
             return this.doActionAndNext("action_next");
         }
         const tracked = this.props.record.data.has_tracking !== "none";
-        const [productId, productName] = this.props.record.data.product_id;
+        const product = this.props.record.data.product_id;
         this.dialog.add(MrpSelectQuantDialog, {
             resModel: "stock.quant",
             noCreate: !tracked,
             multiSelect: false,
-            domain: [["product_id", "=", productId]],
-            title: _t("Add line: %(productName)s", { productName }),
+            domain: [["product_id", "=", product.id]],
+            title: _t("Add line: %(productName)s", { productName: product.display_name }),
             context: {
                 single_product: true,
                 list_view_ref: "stock.view_stock_quant_tree_simple",
@@ -136,7 +136,7 @@ export class StockMove extends QualityCheck {
         return this.openQuantRecord({
             context: {
                 form_view_ref: "stock.view_stock_quant_form",
-                default_product_id: this.props.record.data.product_id[0],
+                default_product_id: this.props.record.data.product_id.id,
             },
             immediate: true,
         });
