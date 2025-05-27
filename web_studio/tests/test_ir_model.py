@@ -438,14 +438,17 @@ class TestStudioIrModel(TransactionCase):
         """Test number of call to _setup_models__ when creating a model with multiple"""
         count_setup_models = 0
         orig_setup_models = odoo.modules.registry.Registry._setup_models__
-        def _setup_models(registry, cr):
+
+        def _setup_models(registry, cr, *args, **kwargs):
             nonlocal count_setup_models
             count_setup_models += 1
-            orig_setup_models(registry, cr)
+            orig_setup_models(registry, cr, *args, **kwargs)
+
         with patch('odoo.modules.registry.Registry._setup_models__', new=_setup_models):
             # not: using a specific model (PerformanceIssues and not Rockets) is important since after the rollback of the test,
             # the model will be missing but x_rockets is still in the pool, breaking some optimizations
             self.env['ir.model'].with_context(studio=True).studio_model_create('PerformanceIssues', options=OPTIONS_WL)
+
         self.assertEqual(count_setup_models, 1)
 
     def test_update_xmlid(self):
