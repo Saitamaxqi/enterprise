@@ -1,7 +1,7 @@
 import { EnterpriseNavBar } from "@web_enterprise/webclient/navbar/navbar";
 import { SpreadsheetName } from "../../actions/control_panel/spreadsheet_name";
 import { useService } from "@web/core/utils/hooks";
-import { useState } from "@odoo/owl";
+import { onMounted, useState, onWillUnmount } from "@odoo/owl";
 
 export class SpreadsheetNavbar extends EnterpriseNavBar {
     static template = "spreadsheet_edition.SpreadsheetNavbar";
@@ -20,12 +20,25 @@ export class SpreadsheetNavbar extends EnterpriseNavBar {
             type: Object,
             optional: true,
         },
+        model: {
+            type: Object,
+            optional: true,
+        },
     };
 
     setup() {
         super.setup();
         this.actionService = useService("action");
         this.breadcrumbs = useState(this.env.config.breadcrumbs);
+
+        if (this.props.model) {
+            onMounted(() => {
+                this.props.model.on("update", this, () => this.render(true));
+            });
+            onWillUnmount(() => {
+                this.props.model.off("update", this);
+            });
+        }
     }
 
     get breadcrumbTitle() {
@@ -39,5 +52,9 @@ export class SpreadsheetNavbar extends EnterpriseNavBar {
         if (this.breadcrumbs.length > 1) {
             this.actionService.restore(this.breadcrumbs.at(-2).id);
         }
+    }
+
+    get isSynced() {
+        return this.props.model && this.props.model.getters.isFullySynchronized();
     }
 }

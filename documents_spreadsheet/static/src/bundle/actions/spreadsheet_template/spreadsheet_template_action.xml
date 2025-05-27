@@ -2,7 +2,7 @@
 <templates>
 
 <div t-name="documents_spreadsheet.SpreadsheetTemplateAction" class="o_spreadsheet_action" style="height: 100%;">
-    <SpreadsheetNavbar t-props="navbarProps"/>
+    <SpreadsheetNavbar t-props="navbarProps" model="model"/>
     <SpreadsheetComponent model="model"/>
 </div>
 

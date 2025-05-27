@@ -187,3 +187,19 @@ test("Can Insert odoo formulas from Insert > Functions > Odoo", async function (
 
     expect(getCellContent(model, "A1")).toBe("=ODOO.CURRENCY.RATE()");
 });
+
+test("Sync status when not synchronized", async function () {
+    const { model } = await createSpreadsheet();
+    model.getters.isFullySynchronized = () => false;
+    setCellContent(model, "A1", "abc");
+    await animationFrame();
+
+    expect(".o_spreadsheet_sync_status").toHaveText("Saving");
+});
+
+test("Sync status when synchronized", async function () {
+    await createSpreadsheet();
+    await animationFrame();
+
+    expect(".o_spreadsheet_sync_status").toHaveText("Saved");
+});

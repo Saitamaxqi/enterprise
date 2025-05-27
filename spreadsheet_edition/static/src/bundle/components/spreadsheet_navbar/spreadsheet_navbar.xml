@@ -30,6 +30,14 @@
                 </t>
                 <SpreadsheetName name="props.spreadsheetName" isReadonly="props.isReadonly" onSpreadsheetNameChanged="props.onSpreadsheetNameChanged" />
                 <t t-slot="navbar-additional-actions"/>
+                <div t-if="!props.isReadonly" class="o_spreadsheet_sync_status text-muted fst-italic">
+                    <t t-if="isSynced">
+                        <i class="fa fa-check" /> Saved
+                    </t>
+                    <t t-else="">
+                        <i class="fa fa-circle-o-notch fa-spin" /> Saving
+                    </t>
+                </div>
             </div>
         </xpath>
         <xpath expr="//t[@t-call='web.NavBar.SectionsMenu']" position="replace"/>

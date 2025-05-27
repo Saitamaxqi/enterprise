@@ -6,8 +6,9 @@ const { topbarMenuRegistry } = spreadsheet.registries;
 import { useSubEnv } from "@odoo/owl";
 
 topbarMenuRegistry.addChild("add_document_to_dashboard", ["file"], {
-    name: _t("Add to dashboard"),
-    sequence: 200,
+    name: _t("Add to Dashboard"),
+    sequence: 80,
+    separator: true,
     isVisible: (env) => env.canAddToDashboard?.(),
     execute: (env) => env.createDashboardFromDocument(env.model),
     icon: "o-spreadsheet-Icon.ADD_TO_DASHBOARD",

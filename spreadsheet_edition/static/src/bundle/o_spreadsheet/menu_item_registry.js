@@ -21,48 +21,49 @@ topbarMenuRegistry.addChild("new_sheet", ["file"], {
     execute: (env) => env.newSpreadsheet(),
     icon: "o-spreadsheet-Icon.NEW",
 });
+
 topbarMenuRegistry.addChild("make_copy", ["file"], {
     name: _t("Make a copy"),
     sequence: 20,
     isVisible: (env) => env.makeCopy,
     execute: (env) => env.makeCopy(),
+    separator: true,
     icon: "o-spreadsheet-Icon.COPY_FILE",
 });
-topbarMenuRegistry.addChild("save_as_template", ["file"], {
-    name: _t("Save as template"),
-    sequence: 40,
-    isVisible: (env) => env.saveAsTemplate,
-    execute: (env) => env.saveAsTemplate(),
-    icon: "o-spreadsheet-Icon.SAVE",
-});
+
 topbarMenuRegistry.addChild("download", ["file"], {
     name: _t("Download"),
-    sequence: 50,
+    sequence: 40,
     isVisible: (env) => env.download,
     execute: (env) => env.download(),
     isReadonlyAllowed: true,
     icon: "o-spreadsheet-Icon.DOWNLOAD",
 });
 
-topbarMenuRegistry.addChild("clear_history", ["file"], {
-    name: _t("Snapshot"),
-    sequence: 60,
-    isVisible: (env) => env.debug,
-    execute: (env) => {
-        env.model.session.snapshot(env.model.exportData());
-        env.model.garbageCollectExternalResources();
-        window.location.reload();
-    },
-    icon: "o-spreadsheet-Icon.CAMERA",
-});
-
 topbarMenuRegistry.addChild("download_as_json", ["file"], {
     name: _t("Download as JSON"),
-    sequence: 70,
+    sequence: 50,
     isVisible: (env) => env.debug && env.downloadAsJson,
     execute: (env) => env.downloadAsJson(),
     isReadonlyAllowed: true,
     icon: "o-spreadsheet-Icon.DOWNLOAD_AS_JSON",
+});
+
+topbarMenuRegistry.addChild("print", ["file"], {
+    name: _t("Print"),
+    sequence: 60,
+    separator: true,
+    isVisible: (env) => env.print,
+    execute: (env) => env.print(),
+    icon: "o-spreadsheet-Icon.PRINT",
+});
+
+topbarMenuRegistry.addChild("save_as_template", ["file"], {
+    name: _t("Save as template"),
+    sequence: 70,
+    isVisible: (env) => env.saveAsTemplate,
+    execute: (env) => env.saveAsTemplate(),
+    icon: "o-spreadsheet-Icon.SAVE",
 });
 
 topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
@@ -159,14 +160,6 @@ const reInsertListMenu = {
     icon: "o-spreadsheet-Icon.INSERT_LIST",
 };
 
-const printMenu = {
-    name: _t("Print"),
-    sequence: 60,
-    isVisible: (env) => env.print,
-    execute: (env) => env.print(),
-    icon: "o-spreadsheet-Icon.PRINT",
-};
-
 const insertPivotMenu = {
     name: _t("Pivot table"),
     sequence: 52,
@@ -197,7 +190,6 @@ const insertPivotMenu = {
     isVisible: (env) => !env.isSmall,
 };
 
-topbarMenuRegistry.addChild("print", ["file"], printMenu);
 topbarMenuRegistry.addChild("reinsert_list", ["data"], reInsertListMenu);
 topbarMenuRegistry.replaceChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicPivotMenu);
 topbarMenuRegistry.replaceChild("reinsert_static_pivot", ["data"], reinsertStaticPivotMenu);

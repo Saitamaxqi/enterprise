@@ -79,6 +79,9 @@
   <t t-name="o-spreadsheet-Icon.PRINT">
     <i class="fa fa-print text-center o-icon"/>
   </t>
+  <t t-name="o-spreadsheet-Icon.SHARE">
+    <i class="fa fa-share-alt o-icon"/>
+  </t>
   <t t-name="o-spreadsheet-Icon.UNUSED_LIST_WARNING">
     <div class="o-unused-list-icon text-warning" title="This list is not used">
         <t t-call="o-spreadsheet-Icon.TRIANGLE_EXCLAMATION"/>

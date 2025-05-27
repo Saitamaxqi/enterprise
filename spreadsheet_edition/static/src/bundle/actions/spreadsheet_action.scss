@@ -11,9 +11,18 @@
 .o_spreadsheet_user {
     img {
         box-sizing: content-box;
-        height: 2rem;
-        width: 2rem;
+        height: 1.5rem;
+        width: 1.5rem;
     }
+}
+
+.o_spreadsheet_more_users {
+    box-sizing: content-box;
+    height: 1.75rem;
+    width: 1.75rem;
+    background-color: lightgrey;
+    border-radius: 0.25rem;
+    text-align: center;
 }
 
 .o_spreadsheet_status {

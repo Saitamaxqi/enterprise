@@ -5,7 +5,6 @@ import { Model, stores, LocalTransportService } from "@odoo/o-spreadsheet";
 
 import { CollaborativeStatus } from "@spreadsheet_edition/bundle/components/collaborative_status/collaborative_status";
 import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
-import { animationFrame } from "@odoo/hoot-mock";
 const { useStoreProvider, ModelStore, ClientFocusStore } = stores;
 
 describe.current.tags("desktop");
@@ -41,6 +40,9 @@ const CLIENTS = {
         userId: 1,
     },
     bob: { id: "bob", name: "Bob", position: { sheetId: "BobSheet", col: 20, row: 20 }, userId: 2 },
+    fromId(id) {
+        return { id, name: id, position: { sheetId: "AliceSheet", col: 2, row: 2 }, userId: id };
+    },
 };
 
 async function mountCollaborativeStatusComponent(clients = []) {
@@ -60,30 +62,25 @@ async function mountCollaborativeStatusComponent(clients = []) {
     return { env, model, transportService, parent };
 }
 
-test("not synchronized", async function () {
-    const { model, parent } = await mountCollaborativeStatusComponent();
-    model.getters.isFullySynchronized = () => false;
-    await parent.render(true);
-    await animationFrame();
-
-    expect(".o_spreadsheet_sync_status").toHaveText("Saving");
-    expect(".o_spreadsheet_number_users").toHaveText("1");
-    expect(".o_spreadsheet_number_users i.fa").toHaveClass("fa-user");
-});
-
-test("synchronized", async function () {
-    await mountCollaborativeStatusComponent();
-
-    expect(".o_spreadsheet_sync_status").toHaveText("Saved");
-    expect(".o_spreadsheet_number_users").toHaveText("1");
-    expect(".o_spreadsheet_number_users i.fa").toHaveClass("fa-user");
-});
-
-test("more than one user", async function () {
+test("Show user bubble with less than 10 users", async function () {
     await mountCollaborativeStatusComponent([CLIENTS.alice, CLIENTS.bob]);
+    expect(".o_spreadsheet_user").toHaveCount(2);
+});
 
-    expect(".o_spreadsheet_number_users").toHaveText("3");
-    expect(".o_spreadsheet_number_users i.fa").toHaveClass("fa-users");
+test("Show user bubble with more than 10 users", async function () {
+    const clients = [CLIENTS.alice, CLIENTS.bob].concat(
+        Array(10)
+            .keys()
+            .map((x) => CLIENTS.fromId(3 + x))
+            .toArray()
+    );
+    await mountCollaborativeStatusComponent(clients);
+
+    expect(".o_spreadsheet_user .justify-content-between").toHaveCount(10);
+    expect(".o_spreadsheet_more_users").toHaveText("+2");
+
+    await contains(".o_spreadsheet_more_users").hover();
+    expect(".o_spreadsheet_user").toHaveCount(12);
 });
 
 test("Jump to user", async function () {
@@ -95,8 +92,7 @@ test("Jump to user", async function () {
         funSpy.push(clientId);
     };
 
-    await contains(".o_spreadsheet_number_users").hover();
-    await contains(".o_popover div:nth-child(2) div").click();
+    await contains(".o_spreadsheet_users div:nth-child(1) img").click();
 
     expect(funSpy).toInclude("alice");
 });
@@ -105,8 +101,7 @@ test("Show client tags on hover", async function () {
     const { parent } = await mountCollaborativeStatusComponent([CLIENTS.alice, CLIENTS.bob]);
     const clientFocusStore = parent.env.getStore(ClientFocusStore);
 
-    await contains(".o_spreadsheet_number_users").hover();
+    await contains(".o_spreadsheet_users div:nth-child(1) img").hover();
 
     expect(clientFocusStore.focusedClients).toInclude("alice");
-    expect(clientFocusStore.focusedClients).toInclude("bob");
 });

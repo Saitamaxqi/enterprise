@@ -58,6 +58,7 @@ test("Open history version from the menu", async function () {
             expect.step(action);
         },
     });
+    expect(".o_navbar").toHaveCount(1)
     const file = topbarMenuRegistry.getAll().find((item) => item.id === "file");
     const showHistory = file.children.find((item) => item.id === "version_history");
     await showHistory.execute(env);

@@ -2,7 +2,6 @@ import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests
 import {
     createSpreadsheet,
     displayedConnectedUsers,
-    getConnectedUsersElImage,
     getSynchedStatus,
 } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, test } from "@odoo/hoot";
@@ -21,38 +20,33 @@ describe.current.tags("desktop");
 
 test("Number of connected users is correctly rendered", async function () {
     const { transportService } = await createSpreadsheet();
-    expect(displayedConnectedUsers()).toBe(1, {
-        message: "It should display one connected user",
-    });
-    expect(getConnectedUsersElImage()).toHaveClass("fa-user", {
-        message: "It should display the fa-user icon",
+    await animationFrame();
+    expect(displayedConnectedUsers()).toBe(0, {
+        message: "It should display no other connected user",
     });
     joinSession(transportService, { id: 1234, userId: 9999 });
     await animationFrame();
-    expect(displayedConnectedUsers()).toBe(2, {
-        message: "It should display two connected users",
-    });
-    expect(getConnectedUsersElImage()).toHaveClass("fa-users", {
-        message: "It should display the fa-users icon",
+    expect(displayedConnectedUsers()).toBe(1, {
+        message: "It should display one other connected users",
     });
 
     // The same user is connected with two different tabs.
     joinSession(transportService, { id: 4321, userId: 9999 });
     await animationFrame();
-    expect(displayedConnectedUsers()).toBe(2, {
-        message: "It should display two connected users",
+    expect(displayedConnectedUsers()).toBe(1, {
+        message: "It should display one other connected users",
     });
 
     leaveSession(transportService, 4321);
     await animationFrame();
-    expect(displayedConnectedUsers()).toBe(2, {
-        message: "It should display two connected users",
+    expect(displayedConnectedUsers()).toBe(1, {
+        message: "It should display one other connected users",
     });
 
     leaveSession(transportService, 1234);
     await animationFrame();
-    expect(displayedConnectedUsers()).toBe(1, {
-        message: "It should display one connected user",
+    expect(displayedConnectedUsers()).toBe(0, {
+        message: "It should display no other connected user",
     });
 });
 

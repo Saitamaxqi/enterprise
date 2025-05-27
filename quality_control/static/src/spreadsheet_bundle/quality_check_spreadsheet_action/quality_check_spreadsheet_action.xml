@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
     <div t-name="quality_control_spreadsheet.QualityCheckSpreadsheetAction" class="o_action">
-        <SpreadsheetNavbar t-props="navbarProps">
+        <SpreadsheetNavbar t-props="navbarProps" model="model">
             <t t-set-slot="navbar-additional-actions">
                 <button
                     t-if="qualityCheckWizardId or qualityCheckId"
@@ -12,7 +12,7 @@
                     Save in <t t-esc="data.quality_check_display_name"/>
                 </button>
             </t>
-        </SpreadsheetNavbar>
+        </SpreadsheetNavbar >
         <SpreadsheetComponent model="model"/>
     </div>
 

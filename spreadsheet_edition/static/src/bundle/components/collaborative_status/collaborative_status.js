@@ -1,9 +1,15 @@
 import { Component, onWillUnmount } from "@odoo/owl";
-import { registries, stores } from "@spreadsheet/o_spreadsheet/o_spreadsheet";
+import {
+    registries,
+    stores,
+    ClientDisconnectedError,
+} from "@spreadsheet/o_spreadsheet/o_spreadsheet";
 import { usePopover } from "@web/core/popover/popover_hook";
 
 const { useStore, ClientFocusStore } = stores;
 const { topbarComponentRegistry } = registries;
+
+const SHOWN_USER_THUMBNAIL = 10;
 
 class SpreadsheetUsersTooltip extends Component {
     static template = "spreadsheet_edition.SpreadsheetUsersTooltip";
@@ -32,17 +38,31 @@ export class CollaborativeStatus extends Component {
         });
     }
 
-    get isSynced() {
-        return this.env.model.getters.isFullySynchronized();
+    jumpToUser(user) {
+        this.clientFocusStore.jumpToClient(user.clientId);
     }
 
     get connectedUsers() {
         const connectedUsers = [];
+        let currentClientId;
+        try {
+            currentClientId = this.env.model.getters.getCurrentClient().id;
+        } catch (error) {
+            if (error instanceof ClientDisconnectedError) {
+                // We are currently disconnecting
+                return connectedUsers;
+            }
+            throw error;
+        }
         for (const client of this.env.model.getters.getConnectedClients()) {
-            if (!connectedUsers.some((user) => user.id === client.userId)) {
+            if (
+                client.id !== currentClientId &&
+                !connectedUsers.some((user) => user.id === client.userId)
+            ) {
                 connectedUsers.push({
                     id: client.userId,
                     name: client.name,
+                    avatar: `/web/image?model=res.users&field=avatar_128&id=${client.userId}`,
                     clientId: client.id,
                     color: client.color,
                 });
@@ -51,24 +71,18 @@ export class CollaborativeStatus extends Component {
         return connectedUsers;
     }
 
-    get tooltipInfo() {
-        return this.connectedUsers.map((/**@type User*/ user) => ({
-            name: user.name,
-            avatar: `/web/image?model=res.users&field=avatar_128&id=${user.id}`,
-            id: user.id,
-            clientId: user.clientId,
-            color: user.color,
-        }));
+    get usersThumbnail() {
+        return this.connectedUsers.slice(0, SHOWN_USER_THUMBNAIL);
     }
 
-    jumpToUser(user) {
-        this.clientFocusStore.jumpToClient(user.clientId);
+    get tooltipInfo() {
+        return this.connectedUsers.slice(SHOWN_USER_THUMBNAIL);
     }
 
     openPopover(ev) {
         if (this.timeoutId) {
             clearTimeout(this.timeoutId);
-        } else if (this.connectedUsers.length > 1) {
+        } else {
             this.popover.open(ev.currentTarget, {
                 users: this.tooltipInfo,
                 onMouseEnter: this.openPopover.bind(this),
@@ -87,6 +101,14 @@ export class CollaborativeStatus extends Component {
         this.timeoutId = undefined;
         this.popover.close();
         this.clientFocusStore.hideClientTag();
+    }
+
+    showUser(user) {
+        this.clientFocusStore.focusClient(user.clientId);
+    }
+
+    hideUser(user) {
+        this.clientFocusStore.unfocusClient(user.clientId);
     }
 }
 

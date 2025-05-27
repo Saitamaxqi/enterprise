@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
     <div t-name="spreadsheet_sale_management.SpreadsheetFieldSyncAction" class="o_action">
-        <SpreadsheetNavbar t-props="navbarProps">
+        <SpreadsheetNavbar t-props="navbarProps" model="model">
             <t t-set-slot="navbar-additional-actions">
                 <button
                     t-if="data.order_id"

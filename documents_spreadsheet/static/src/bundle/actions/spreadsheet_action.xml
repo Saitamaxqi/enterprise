@@ -6,6 +6,7 @@
         <SpreadsheetNavbar
             t-props="navbarProps"
             isReadonly="isReadonly || !!accessToken"
+            model="model"
         >
             <t t-set-slot="navbar-additional-actions">
                 <a

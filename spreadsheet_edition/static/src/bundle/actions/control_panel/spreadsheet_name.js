@@ -74,7 +74,7 @@ export class SpreadsheetName extends Component {
      */
     _isUntitled(name) {
         name = name.trim();
-        return !name || name === UNTITLED_SPREADSHEET_NAME.toString();
+        return !name || name === this.placeholder.toString();
     }
 
     /**
@@ -83,6 +83,7 @@ export class SpreadsheetName extends Component {
      */
     _onFocus(ev) {
         if (this._isUntitled(ev.target.value)) {
+            this.state.name = this.placeholder;
             ev.target.value = this.placeholder;
             ev.target.select();
         }

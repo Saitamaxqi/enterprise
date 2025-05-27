@@ -4,6 +4,7 @@
         <SpreadsheetNavbar
             spreadsheetName="state.spreadsheetName"
             isReadonly="true"
+            model="model"
         />
         <SpreadsheetComponent model="model" />
     </div>

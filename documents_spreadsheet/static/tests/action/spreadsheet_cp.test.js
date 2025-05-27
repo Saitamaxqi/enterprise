@@ -28,10 +28,12 @@ test("spreadsheet with generic untitled name is styled", async function () {
         message: "It should be styled as untitled",
     });
     await contains(input).edit("My");
+    await animationFrame();
     expect(input).not.toHaveClass("o-sp-untitled", {
         message: "It should not be styled as untitled",
     });
     await contains(input).edit("Untitled spreadsheet");
+    await animationFrame();
     expect(input).toHaveClass("o-sp-untitled", {
         message: "It should be styled as untitled",
     });
@@ -108,6 +110,7 @@ test("trailing white spaces are trimmed", async function () {
     const input = target.querySelector(".o_sp_name input");
     const width = input.offsetWidth;
     await contains(input).edit("My spreadsheet  ");
+    await animationFrame();
     expect(input).toHaveValue("My spreadsheet", {
         message: "It should not have trailing white spaces",
     });
@@ -173,7 +176,9 @@ test("Freeze&Share spreadsheet from control panel", async function () {
         },
     });
     expect(target.querySelector(".spreadsheet_share_dropdown")).toBe(null);
-    await contains("button:contains(Freeze and share)").click();
+    await contains(".o-topbar-menu[data-id=file]").click();
+    await contains(".o-menu-item[data-name=share]").click();
+    await contains(".o-menu-item[data-name=freeze_and_share]").click();
 
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
     expect.verifySteps(["spreadsheet_shared", "permission_panel_data", "Document url copied"]);
@@ -232,6 +237,7 @@ test("toggle favorite", async function () {
     });
     expect(".favorite_button_enabled").toHaveCount(0);
     await contains(".o-sp-favorite").click();
+    await animationFrame();
     expect(".favorite_button_enabled").toHaveCount(1);
     expect.verifySteps(["favorite_toggled"]);
 });

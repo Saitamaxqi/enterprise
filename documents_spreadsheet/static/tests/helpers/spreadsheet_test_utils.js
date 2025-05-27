@@ -1,7 +1,7 @@
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { SpreadsheetTemplateAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_template/spreadsheet_template_action";
-import { animationFrame, queryFirst, queryText } from "@odoo/hoot-dom";
+import { animationFrame, queryText, queryAll } from "@odoo/hoot-dom";
 import { getBasicServerData } from "@documents_spreadsheet/../tests/helpers/data";
 import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";
 import {
@@ -128,22 +128,6 @@ export function mockActionService(doAction) {
 }
 
 /**
- * @param {HTMLElement} [root]
- * @returns {HTMLElement}
- */
-export function getConnectedUsersEl(root) {
-    return queryFirst(".o_spreadsheet_number_users", { root });
-}
-
-/**
- * @param {HTMLElement} [root]
- * @returns {HTMLElement}
- */
-export function getConnectedUsersElImage(root) {
-    return queryFirst(".o_spreadsheet_number_users i", { root });
-}
-
-/**
  *
  * @param {HTMLElement} [root]
  * @returns {string}
@@ -157,5 +141,5 @@ export function getSynchedStatus(root) {
  * @returns {number}
  */
 export function displayedConnectedUsers(root) {
-    return parseInt(queryText(getConnectedUsersEl(root)));
+    return queryAll(".o_spreadsheet_user", { root }).length;
 }
