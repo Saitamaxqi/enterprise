@@ -9,9 +9,9 @@
                 <button class="btn btn-link p-0" t-esc="lineData.partner_id.display_name" t-on-click.stop="openPartner"/>
             </div>
             <span t-if="!!moveData.display_name" class="hide-mobile">
-                <button class="btn btn-link p-0" t-on-click.stop="openMove">
+                <a t-att-class="this.moveData.id !== this.statementLineData.move_id.id ? 'btn btn-link p-0': 'text-muted'" t-on-click.stop="openMove">
                     <t t-esc="moveData.display_name"/>
-                </button>
+                </a>
             </span>
             <div class="o_line_amount d-flex align-items-center justify-content-between">
                 <span class="text-muted w-50 text-end" t-if="sourceBalanceBiggerThanLineBalance">
