@@ -42,6 +42,7 @@ United States Payroll Rules.
         'views/res_config_settings_views.xml',
         'views/l10n_us_w2_views.xml',
         'views/l10n_us_worker_compensation_views.xml',
+        'views/hr_leave_type_views.xml',
         'views/hr_views.xml',
         'data/menuitems.xml',
         'data/hr_payroll_dashboard_warning_data.xml',

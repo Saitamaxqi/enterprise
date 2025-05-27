@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='payroll']" position="inside">
                 <field name="l10n_us_show_on_payslip" invisible="country_code != 'US'" nolabel="1"/>
-                <label for="allows_negative" invisible="country_code != 'US'"/>
+                <label for="l10n_us_show_on_payslip" invisible="country_code != 'US'"/>
             </xpath>
         </field>
     </record>
