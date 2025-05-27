@@ -49,6 +49,6 @@ class BelgiumGeneralLedgerTest(AccountSalesReportCommon):
         annual_accounts_data = self.env[report.custom_handler_model_name].l10n_be_get_annual_accounts(options)
         expected = b"""400000\tCustomers\t1000,0\t0,0
 440000\tSuppliers\t250,0\t0,0
-600000\tRaw materials\t0,0\t250,0
+600000\tRaw Materials\t0,0\t250,0
 700000\tSales in Belgium (Trade Goods)\t0,0\t1000,0"""
         self.assertEqual(annual_accounts_data['file_content'], expected)

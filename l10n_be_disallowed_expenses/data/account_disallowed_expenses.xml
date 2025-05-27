@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="demo_disallowed_expenses_category_1073" model="account.disallowed.expenses.category">
+            <field name="name">Increased deduction of fees related to electronic invoicing programs</field>
+            <field name="name@nl">Verhoogde aftrek van kosten gerelateerd aan elektronische facturatieprogramma's</field>
+            <field name="name@fr">Augmentation de la déduction des frais liés aux programmes de facturation électronique</field>
+            <field name="code">1073</field>
+            <field name="rate_ids">
+                <record id="1073_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">120</field>
+                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+                </record>
+            </field>
+        </record>
         <record id="demo_disallowed_expenses_category_1201" model="account.disallowed.expenses.category">
             <field name="name">Non-deductible taxes</field>
             <field name="name@nl">Niet-aftrekbare belastingen</field>
@@ -103,18 +115,6 @@
                 </record>
             </field>
         </record>
-        <record id="demo_disallowed_expenses_category_1208_1" model="account.disallowed.expenses.category">
-            <field name="name">Non-deductible restaurant expenses</field>
-            <field name="name@nl">Niet-aftrekbare restaurantkosten</field>
-            <field name="name@fr">Frais de restaurant non déductibles</field>
-            <field name="code">1208.1</field>
-            <field name="rate_ids">
-                <record id="1208_1_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">50</field>
-                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
-                </record>
-            </field>
-        </record>
         <record id="demo_disallowed_expenses_category_1209" model="account.disallowed.expenses.category">
             <field name="name">Non-specific professional clothing expenses</field>
             <field name="name@nl">Kosten voor niet-specifieke beroepskledij</field>
@@ -156,18 +156,6 @@
             <field name="name@nl">Liberaliteiten</field>
             <field name="name@fr">Libéralités</field>
             <field name="code">1216</field>
-        </record>
-        <record id="demo_disallowed_expenses_category_1216_1" model="account.disallowed.expenses.category">
-            <field name="name">Liberalities</field>
-            <field name="name@nl">Liberaliteiten</field>
-            <field name="name@fr">Libéralités</field>
-            <field name="code">1216.1</field>
-            <field name="rate_ids">
-                <record id="1216_1_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">20</field>
-                    <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
-                </record>
-            </field>
         </record>
         <record id="demo_disallowed_expenses_category_1217" model="account.disallowed.expenses.category">
             <field name="name">Reductions in value and losses on shares or parts</field>
