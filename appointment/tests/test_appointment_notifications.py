@@ -4,8 +4,9 @@
 from datetime import datetime, timedelta
 from freezegun import freeze_time
 
-from odoo import Command
-from odoo.tests import tagged, users
+from odoo import Command, http
+from odoo.tests import Form, tagged, users
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 from odoo.addons.mail.tests.common import MailCase
 from odoo.addons.appointment.tests.common import AppointmentCommon
 
@@ -106,3 +107,76 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
             'notification_ids': self.env['mail.notification'],
             'subtype_id': self.env.ref('mail.mt_note'),
         })
+
+    @freeze_time('2017-01-01')
+    @users('apt_manager')
+    def test_request_meeting_message_for_manual_confirmation(self):
+        """ Make sure appointments send a custom mail on request to all relevant contacts """
+        apt_type = self.apt_type_bxls_2days
+        apt_type.appointment_manual_confirmation = True
+        apt_type.schedule_based_on = 'users'
+
+        self.authenticate(self.env.user.login, self.env.user.login)
+        now_str = self.reference_now.strftime(DTF)
+        with self.mock_mail_gateway(), self.mock_mail_app():
+            apt_data = {
+                "asked_capacity": 1,
+                "available_resource_ids": None,
+                "csrf_token": http.Request.csrf_token(self),
+                "datetime_str": now_str,
+                "duration_str": "1.0",
+                "email": self.env.user.email,
+                "name": "Test Online Meeting",
+                "phone": "12345",
+                "staff_user_id": self.staff_user_bxls.id
+            }
+            response = self.url_open(f"/appointment/{apt_type.id}/submit", data=apt_data)
+
+            self.assertEqual(response.status_code, 200)
+            self.flush_tracking()
+
+        calendar_event = self.env['calendar.event'].search([
+            ('name', '=', 'Test Online Meeting - Bxls Appt Type Booking')
+        ], limit=1)
+        self.assertTrue(calendar_event, "Calendar event was not created.")
+
+        # Request mails
+        self.assertEqual(len(self._new_mails), 4)
+        self.assertMailMailWRecord(
+            calendar_event,
+            [self.apt_type_follower],
+            'sent',
+            author=self.staff_user_bxls.partner_id,
+            email_values={
+                'subject': 'Appointment Requested: Bxls Appt Type',
+                'email_from': self.staff_user_bxls.email_formatted,
+            },
+        )
+        self.assertMailMailWRecord(
+            calendar_event,
+            self.env.user.partner_id | self.staff_user_bxls.partner_id,
+            'sent',
+            author=self.staff_user_bxls.partner_id,
+            email_values={
+                'subject': 'Invitation to Test Online Meeting - Bxls Appt Type Booking',
+                'email_from': self.staff_user_bxls.email_formatted,
+            },
+        )
+
+        with self.mock_mail_gateway(), self.mock_mail_app():
+            # Confirm the appointment manually
+            with Form(calendar_event) as form:
+                form.appointment_status = 'booked'
+
+        # Confirmation mails
+        self.assertEqual(len(self._new_mails), 2)
+        self.assertMailMailWRecord(
+            calendar_event,
+            self.env.user.partner_id | self.staff_user_bxls.partner_id,
+            'sent',
+            author=self.staff_user_bxls.partner_id,
+            email_values={
+                'subject': 'Invitation to Test Online Meeting - Bxls Appt Type Booking',
+                'email_from': self.staff_user_bxls.email_formatted,
+            },
+        )

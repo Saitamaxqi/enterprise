@@ -429,7 +429,7 @@ class CalendarEvent(models.Model):
         # set 'author_id' and 'email_from' based on the organizer
         vals = {'author_id': self.user_id.partner_id.id, 'email_from': self.user_id.email_formatted} if self.user_id else {}
 
-        if 'appointment_type_id' in changes and self.appointment_status == 'booked':
+        if 'appointment_type_id' in changes and (self.appointment_status == 'booked' or self.appointment_status == 'request'):
             try:
                 booked_template = self.env.ref('appointment.appointment_booked_mail_template')
             except ValueError as e:

@@ -5,7 +5,7 @@
         <record id="appointment_booked_mail_template" model="mail.template">
             <field name="name">Appointment: Appointment Booked</field>
             <field name="model_id" ref="calendar.model_calendar_event"/>
-            <field name="subject">Appointment Booked: {{ object.appointment_type_id.name }}</field>
+            <field name="subject">{{ 'Appointment Requested: ' if object.appointment_type_id.appointment_manual_confirmation and object.appointment_status == 'request' else 'Appointment Booked: ' }}{{ object.appointment_type_id.name }}</field>
             <field name="email_from">{{ (user.email_formatted or object.user_id.email_formatted) }}</field>
             <field name="use_default_to" eval="True"/>
             <field name="description">Sent to followers of an appointment type when a meeting is booked</field>
@@ -16,7 +16,12 @@
     <t t-set="mail_tz" t-value="object._get_mail_tz() or ctx.get('mail_tz')" />
     <t t-set="attendee_description" t-value="object._get_attendee_description()"/>
     <p>
-    Appointment booked for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
+    <t t-if="object.appointment_type_id.appointment_manual_confirmation and object.appointment_status == 'request'">
+        Appointment requested for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
+    </t>
+    <t t-else="">
+        Appointment booked for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
+    </t>
     <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t>.
     </p>
     <div style="text-align: center; padding: 16px 0px 16px 0px;">
