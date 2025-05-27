@@ -92,7 +92,7 @@ export class MrpDisplay extends Component {
         useSubEnv({
             model: this.model,
             reload: async (record = false) => {
-                if (record) {
+                if (record && !record.dismiss) {
                     while (record && record.resModel !== "mrp.production") {
                         record = record._parentRecord;
                     }
