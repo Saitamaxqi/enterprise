@@ -306,11 +306,15 @@ class TestInGstrPosGSTR(TestInGstrPosBase):
                 })
 
         # Step 3: Generate and verify old GSTR1
-        old_return_period = self.env['l10n_in.gst.return.period'].create({
-            'company_id': self.company_data["company"].id,
-            'periodicity': 'monthly',
-            'year': old_return_period_date.strftime('%Y'),
-            'month': old_return_period_date.strftime('%m'),
+        account_return_type = self.env.ref('l10n_in_reports.in_gstr1_return_type')
+        return_company = self.company_data["company"]
+        start_date, end_date = account_return_type._get_period_boundaries(return_company, old_return_period_date)
+        old_return_period = self.env['account.return'].create({
+            'name': 'Old Tax Return',
+            'type_id': account_return_type.id,
+            'company_id': return_company.id,
+            'date_from': start_date,
+            'date_to': end_date
         })
         old_return_period_json = old_return_period._get_gstr1_json()
         self.assertDictEqual(old_return_period_json, expected_gstr1_pos_response_old_period)
@@ -320,13 +324,14 @@ class TestInGstrPosGSTR(TestInGstrPosBase):
 
         # Step 5: Generate and verify current GSTR1
         current_return_period_date = date(2025, 7, 20)
-        current_return_period = self.env['l10n_in.gst.return.period'].create({
-            'company_id': self.company_data["company"].id,
-            'periodicity': 'monthly',
-            'year': current_return_period_date.strftime('%Y'),
-            'month': current_return_period_date.strftime('%m'),
+        start_date, end_date = account_return_type._get_period_boundaries(return_company, current_return_period_date)
+        current_return_period = self.env['account.return'].create({
+            'name': 'Current Tax Return',
+            'type_id': account_return_type.id,
+            'company_id': return_company.id,
+            'date_from': start_date,
+            'date_to': end_date
         })
-
         current_gstr1_report_json = current_return_period._get_gstr1_json()
         self.assertDictEqual(current_gstr1_report_json, expected_gstr1_pos_response_current_period)
 

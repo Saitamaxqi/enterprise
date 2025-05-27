@@ -26,7 +26,7 @@ class GSTRDocumentSummaryLine(models.Model):
     _description = 'GSTR Document Summary Line'
     _order = 'nature_of_document asc'
 
-    return_period_id = fields.Many2one('l10n_in.gst.return.period', required=True, ondelete='cascade')
+    return_period_id = fields.Many2one('account.return', required=True, ondelete='cascade')
     company_id = fields.Many2one(related='return_period_id.company_id')
     nature_of_document = fields.Selection(DOCUMENT_TYPE_LIST, string='Nature of Document', required=True)
     serial_from = fields.Char(string="Sr. No. From", required=True)

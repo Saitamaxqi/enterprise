@@ -25,17 +25,23 @@ class TestInGstrPosBase(TestInPosBase):
             "l10n_in_gst_efiling_feature": True,
         })
 
-        cls.gstr1_report = cls.env['l10n_in.gst.return.period'].create({
-            'company_id': cls.company_data["company"].id,
-            'periodicity': 'monthly',
-            'year': TEST_DATE.strftime('%Y'),
-            'month': TEST_DATE.strftime('%m'),
+        account_return_type = cls.env.ref('l10n_in_reports.in_gstr1_return_type')
+        return_company = cls.company_data["company"]
+        start_date, end_date = account_return_type._get_period_boundaries(return_company, TEST_DATE)
+        cls.gstr1_report = cls.env['account.return'].create({
+            'name': 'IN Tax Return',
+            'type_id': account_return_type.id,
+            'company_id': return_company.id,
+            'date_from': start_date,
+            'date_to': end_date
         })
-        cls.gstr1_report_may_2025 = cls.env['l10n_in.gst.return.period'].create({
-            'company_id': cls.company_data["company"].id,
-            'periodicity': 'monthly',
-            'year': HSN_SCHEMA_TEST_DATE.strftime('%Y'),
-            'month': HSN_SCHEMA_TEST_DATE.strftime('%m'),
+        date_from, date_to = account_return_type._get_period_boundaries(return_company, HSN_SCHEMA_TEST_DATE)
+        cls.gstr1_report_may_2025 = cls.env['account.return'].create({
+            'name': 'GSTR-1 May 2025',
+            'company_id': return_company.id,
+            'type_id': account_return_type.id,
+            'date_from': date_from,
+            'date_to': date_to
         })
 
     @classmethod

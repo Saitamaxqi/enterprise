@@ -48,7 +48,8 @@ class L10n_InGstOtpValidation(models.TransientModel):
     def gst_send_otp(self):
         self.check_gst_number()
         self._l10n_in_reports_gstr_check_gst_token()
-        response = self.env["l10n_in.gst.return.period"]._otp_request(self.company_id)
+        response = self.env["account.return"]._otp_request(self.company_id)
+
         if response.get('error'):
             error_message = "\n".join(["[%s] %s" % (error.get('code'), error.get('message')) for error in response.get("error", {})])
             raise UserError(error_message)
@@ -66,7 +67,7 @@ class L10n_InGstOtpValidation(models.TransientModel):
         }
 
     def validate_otp(self):
-        response = self.env["l10n_in.gst.return.period"]._otp_auth_request(
+        response = self.env["account.return"]._otp_auth_request(
             company=self.company_id, transaction=self.gst_token, otp=self.gst_otp)
         if response.get('error'):
             error_codes = [e.get('code') for e in response["error"]]
@@ -99,22 +100,4 @@ class L10n_InGstOtpValidation(models.TransientModel):
                     'message': _("Invalid OTP. Please enter a valid 6-digit OTP"),
                 }
             }
-        response = self.validate_otp()
-        next_gst_action = self.env.context.get('next_gst_action')
-        active_model = self.env.context.get('active_model')
-        if next_gst_action and active_model:
-            response_message = False
-            record = self.env[active_model].browse(self.env.context.get('active_id'))
-            if next_gst_action == "fetch_irn_from_account_move" and active_model == 'account.move':
-                response_message = record.l10n_in_update_move_using_irn()
-            elif active_model == 'l10n_in.gst.return.period':
-                action_method = {
-                    "send_gstr1": record.button_send_gstr1,
-                    "gstr1_status": record.button_check_gstr1_status,
-                    "fetch_gstr2b": record.action_get_gstr2b_data,
-                    "fetch_irn": record.action_get_irn_data,
-                }.get(next_gst_action)
-                response_message = action_method and action_method()
-            if response_message:
-                response['params']['next'] = response_message
-        return response
+        return self.validate_otp()

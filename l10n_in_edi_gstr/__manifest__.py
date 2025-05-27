@@ -9,7 +9,7 @@ This bridge module allows to manage Indian GSTR with E-invoice module.
     'category': 'Accounting/Localizations/Reporting',
     'depends': ['l10n_in_edi', 'l10n_in_reports'],
     'data': [
-        'views/gst_return_period.xml',
+        'views/account_return.xml',
     ],
     'auto_install': True,
     'author': 'Odoo S.A.',

@@ -18,12 +18,16 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.partner_b.vat = "36AABCT1332L011"
-        cls.report = cls.gstr_report = cls.env['l10n_in.gst.return.period'].create({
+        account_return_type = cls.env.ref('l10n_in_reports.in_gstr2b_return_type')
+        start_date, end_date = account_return_type._get_period_boundaries(cls.default_company, cls.test_date)
+        cls.report = cls.gstr_report = cls.env['account.return'].create({
+            'name': 'IN Tax Return',
+            'type_id': account_return_type.id,
             'company_id': cls.default_company.id,
-            'periodicity': 'monthly',
-            'year': cls.test_date.strftime('%Y'),
-            'month': cls.test_date.strftime('%m'),
+            'date_from': start_date,
+            'date_to': end_date
         })
+
         AccountChartTemplate = cls.env['account.chart.template']
         cls.purchase_igst_1 = AccountChartTemplate.ref('igst_purchase_1')
         cls.purchase_igst_18 = AccountChartTemplate.ref('igst_purchase_18')
@@ -33,7 +37,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
     def test_irn_process(self):
         # Attach list of IRN JSON data as attachments
         irn_list = self._read_mock_json('list_of_irn_response.json')
-        self.report.list_of_irn_json_attachment_ids = self.env['ir.attachment'].create([
+        self.report.l10n_in_irn_json_attachment_ids = self.env['ir.attachment'].create([
             {
                 'name': 'file_for_list_of_irn.json',
                 'mimetype': 'application/json',
@@ -72,7 +76,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
     def test_irn_process_with_reverse_charge_taxes(self):
         # Attach list of IRN JSON data as attachments
         irn_list = self._read_mock_json('list_of_irn_response.json')
-        self.report.list_of_irn_json_attachment_ids = self.env['ir.attachment'].create([
+        self.report.l10n_in_irn_json_attachment_ids = self.env['ir.attachment'].create([
             {
                 'name': 'file_for_list_of_irn.json',
                 'mimetype': 'application/json',
@@ -112,7 +116,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
     def test_irn_process_with_unknown_taxes(self):
         # Attach list of IRN JSON data as attachments
         irn_list = self._read_mock_json('list_of_irn_response.json')
-        self.report.list_of_irn_json_attachment_ids = self.env['ir.attachment'].create([
+        self.report.l10n_in_irn_json_attachment_ids = self.env['ir.attachment'].create([
             {
                 'name': 'file_for_list_of_irn.json',
                 'mimetype': 'application/json',

@@ -68,24 +68,27 @@ class TestReports(L10nInTestAccountReportsCommon):
         )
         cls.bill_with_no_tax.line_ids.tax_ids.unlink()
         cls.bill_with_no_tax.action_post()
-        cls.report = cls.gstr_report = cls.env['l10n_in.gst.return.period'].create({
+        account_return_type = cls.env.ref('l10n_in_reports.in_gstr2b_return_type')
+        start_date, end_date = account_return_type._get_period_boundaries(cls.default_company, cls.test_date)
+        cls.report = cls.gstr_report = cls.env['account.return'].create({
+            'name': 'IN Tax Return',
+            'type_id': account_return_type.id,
             'company_id': cls.default_company.id,
-            'periodicity': 'monthly',
-            'year': cls.test_date.strftime('%Y'),
-            'month': cls.test_date.strftime('%m'),
+            'date_from': start_date,
+            'date_to': end_date
         })
 
     def test_gstr2b(self):
 
         gstr2b_json = self._read_mock_json('gstr2b_response.json')
-        self.report.gstr2b_json_from_portal_ids = self.env['ir.attachment'].create({
+        self.report.l10n_in_gstr2b_json_ids = self.env['ir.attachment'].create({
             'name': 'gstr2b.json',
             'mimetype': 'application/json',
             'raw': json.dumps(gstr2b_json),
         })
         self.report.gstr2b_match_data()
 
-        self.assertEqual(self.report.gstr2b_status, "partially_matched")
+        self.assertEqual(self.report.l10n_in_gstr2b_status, "partially_matched")
         self.assertEqual(self.fully_matched_bill.l10n_in_gstr2b_reconciliation_status, "matched")
         self.assertEqual(bool(self.fully_matched_bill.l10n_in_exception), False)
         self.assertEqual(self.fully_matched_bill_refund.l10n_in_gstr2b_reconciliation_status, "matched")
@@ -126,7 +129,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         self.assertRecordValues(
             self.bill_with_no_tax,
             [{
-                'l10n_in_gst_return_period_id': False,
+                'l10n_in_account_return_id': False,
                 'l10n_in_gstr2b_reconciliation_status': 'pending',  # Default value
             }]
         )
@@ -140,7 +143,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         """
         previous_invoice = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=self.partner_b, invoice_date=self.test_date - relativedelta(months=1), line_vals={'price_unit': 100})
         gstr2b_late_reconciliation_data = self._read_mock_json('gstr2b_late_reconciliation_data.json')
-        self.report.gstr2b_json_from_portal_ids = self.env['ir.attachment'].create({
+        self.report.l10n_in_gstr2b_json_ids = self.env['ir.attachment'].create({
             'name': 'gstr2b.json',
             'mimetype': 'application/json',
             'raw': json.dumps(gstr2b_late_reconciliation_data),
@@ -149,7 +152,7 @@ class TestReports(L10nInTestAccountReportsCommon):
 
         self.assertEqual(previous_invoice.l10n_in_gstr2b_reconciliation_status, "matched")
         self.assertFalse(previous_invoice.l10n_in_exception)
-        self.assertEqual(previous_invoice.l10n_in_gst_return_period_id, self.report)
+        self.assertEqual(previous_invoice.l10n_in_account_return_id, self.report)
 
     def test_gstr2b_reconciliation_different_partner(self):
         """
@@ -169,7 +172,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         partner_c = self.partner_b.copy({'name': 'Partner_c', 'vat': '24WXYCM1234E1ZE'})
         bill_with_partner_c = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=partner_c, invoice_date=self.test_date, line_vals={'price_unit': 800})
         gstr2b_reconciliation_different_partner = self._read_mock_json('gstr2b_reconciliation_different_partner.json')
-        self.report.gstr2b_json_from_portal_ids = self.env['ir.attachment'].create({
+        self.report.l10n_in_gstr2b_json_ids = self.env['ir.attachment'].create({
             'name': 'gstr2b.json',
             'mimetype': 'application/json',
             'raw': json.dumps(gstr2b_reconciliation_different_partner),

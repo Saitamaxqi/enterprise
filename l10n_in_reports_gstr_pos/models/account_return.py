@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 from odoo import models
 
 
-class L10n_InGstReturnPeriod(models.Model):
-    _inherit = "l10n_in.gst.return.period"
+class AccountReturn(models.Model):
+    _inherit = "account.return"
 
     # ===============================
     # GSTR-1
@@ -85,7 +82,7 @@ class L10n_InGstReturnPeriod(models.Model):
 
         def _is_pos_order_line_matched_account_move_line(account_move_line, details_pos_line):
             return details_pos_line['account_id'] == account_move_line.account_id.id \
-                and ((account_move_line.credit > 0.00 and details_pos_line['price_subtotal'] > 0.00) \
+                and ((account_move_line.credit > 0.00 and details_pos_line['price_subtotal'] > 0.00)
                 or (account_move_line.debit > 0.00 and details_pos_line['price_subtotal'] < 0.00)) \
                 and sorted(details_pos_line['tax_ids']) == sorted(account_move_line.tax_ids.ids)
 
@@ -101,7 +98,7 @@ class L10n_InGstReturnPeriod(models.Model):
         pos_order_lines.fetch(['product_id', 'product_uom_id'])
         details_pos_lines_by_move = _set_details_pos_lines(pos_order_lines)
         hsn_new_schema_apply_date = self._get_hsn_new_schema_apply_date()
-        hsn_section = 'data' if self.start_date < hsn_new_schema_apply_date else 'hsn_b2c'
+        hsn_section = 'data' if self.date_from < hsn_new_schema_apply_date else 'hsn_b2c'
         hsn_json.setdefault(hsn_section, {})
         for move_id in pos_journal_items.mapped("move_id"):
             tax_details = tax_details_by_move.get(move_id)

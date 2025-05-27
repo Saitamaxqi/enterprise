@@ -106,12 +106,16 @@ class TestReports(L10nInTestAccountReportsCommon):
         b2b_sez_invoice_gst_and_nil_rated_tax = b2b_invoice_gst_and_nil_rated_tax.copy(default={'l10n_in_gst_treatment': 'special_economic_zone', 'invoice_date': invoice_date})
         b2b_sez_invoice_gst_and_nil_rated_tax.action_post()
 
-    def _create_gstr_report(self, company=None, periodicity='monthly', year=None, month=None):
-        gstr_report = self.env['l10n_in.gst.return.period'].create({
-            'company_id': (company or self.default_company).id,
-            'periodicity': periodicity,
-            'year': year or self.test_date.strftime('%Y'),
-            'month': month or self.test_date.strftime('%m'),
+    def _create_gstr_report(self, company=None):
+        account_return_type = self.env.ref('l10n_in_reports.in_gstr1_return_type')
+        return_company = company or self.default_company
+        start_date, end_date = account_return_type._get_period_boundaries(return_company, self.test_date)
+        gstr_report = self.env['account.return'].create({
+            'name': 'IN Tax Return',
+            'type_id': account_return_type.id,
+            'company_id': return_company.id,
+            'date_from': start_date,
+            'date_to': end_date
         })
         # Generate Document Summary for the following gstr report.
         gstr_report.action_generate_document_summary()
@@ -179,11 +183,14 @@ class TestReports(L10nInTestAccountReportsCommon):
 
     def test_hsn_schema_change_gstr1_json(self):
         self._setup_moves(self._create_credit_note, invoice_date=HSN_CHANGE_TEST_DATE)
-        gstr1_report = self.env['l10n_in.gst.return.period'].create({
+        account_return_type = self.env.ref('l10n_in_reports.in_gstr1_return_type')
+        start_date, end_date = account_return_type._get_period_boundaries(self.company_data["company"], HSN_CHANGE_TEST_DATE)
+        gstr1_report = self.env['account.return'].create({
+            'name': 'IN Tax Return',
+            'type_id': account_return_type.id,
             'company_id': self.company_data["company"].id,
-            'periodicity': 'monthly',
-            'year': HSN_CHANGE_TEST_DATE.strftime('%Y'),
-            'month': HSN_CHANGE_TEST_DATE.strftime('%m'),
+            'date_from': start_date,
+            'date_to': end_date
         })
         gstr1_json = gstr1_report._get_gstr1_json()
         self.assertDictEqual(gstr1_json, self._read_mock_json('gstr1_new_hsn_schema_response.json'))

@@ -13,6 +13,26 @@ from odoo.fields import Domain
 _logger = logging.getLogger(__name__)
 
 
+class AccountReport(models.Model):
+    _inherit = 'account.report'
+
+    def _init_options_buttons(self, options, previous_options):
+        super()._init_options_buttons(options, previous_options)
+        company = self.env.company
+        gstr2b_report = self.env.ref('l10n_in_reports.account_report_gstr2b').id
+
+        # Remove 'Returns' button if company is Indian and eFiling is disabled
+        if company.country_id.code == 'IN' and not self.env.company.l10n_in_gst_efiling_feature:
+            options['buttons'] = [
+                button for button in options['buttons']
+                if button.get('action') != 'action_open_returns'
+            ]
+        if gstr2b_report == options['report_id']:
+            for button in options['buttons']:
+                if button.get('action') == 'action_open_returns':
+                    button['name'] = 'Reconcile'
+
+
 class L10n_InReportHandler(models.AbstractModel):
     _name = 'l10n_in.report.handler'
     _inherit = ['account.generic.tax.report.handler']
@@ -142,7 +162,9 @@ class L10n_InReportHandler(models.AbstractModel):
             ('date', '<=', options['date']['date_to']),
             ('move_type', '=', 'out_refund'),
             ('state', '=', 'posted'),
-            ('line_ids.tax_tag_ids', '!=', False),
+            '|',
+            ('line_ids.tax_ids.l10n_in_tax_type', 'in', ['gst', 'nil_rated', 'exempt', 'non_gst']),
+            ('line_ids.tax_line_id.l10n_in_tax_type', 'in', ['gst', 'nil_rated', 'exempt', 'non_gst'])
         ]
 
     @api.model

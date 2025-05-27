@@ -35,7 +35,7 @@ class ResConfigSettings(models.TransientModel):
     def l10n_in_gstr_logout_gst(self):
         self.ensure_one()
         company = self.company_id
-        response = self.env['l10n_in.gst.return.period']._invalidate_token_request(company)
+        response = self.env['account.return']._invalidate_token_request(company)
         _ = self.env._
 
         def _clear_gst_credentials():

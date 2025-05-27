@@ -53,7 +53,7 @@ class AccountMove(models.Model):
 
     # gstr related fields
     l10n_in_exception = fields.Html("Exception", copy=False)
-    l10n_in_gst_return_period_id = fields.Many2one("l10n_in.gst.return.period", "GST Return Period", copy=False)
+    l10n_in_account_return_id = fields.Many2one("account.return", "GST Tax Return", copy=False)
     l10n_in_gstr2b_reconciliation_status = fields.Selection(selection=[
         ("pending", "Pending"),
         ("matched", "Fully Matched"),
@@ -82,7 +82,7 @@ class AccountMove(models.Model):
     )
     @api.depends("country_code", "l10n_in_state_id", "company_id")
     def _compute_l10n_in_transaction_type(self):
-        self.fetch(['country_code', 'l10n_in_state_id',"company_id"])
+        self.fetch(['country_code', 'l10n_in_state_id', "company_id"])
         for move in self:
             if move.country_code == "IN":
                 if move.l10n_in_state_id and move.l10n_in_state_id == move.company_id.state_id:
@@ -130,9 +130,7 @@ class AccountMove(models.Model):
 
         :returns: action to refresh the form view.
         """
-        context = {'active_id': self.ids, 'active_model': 'account.move'}
-        self.env['l10n_in.gst.return.period'].with_context(context)._check_config(
-            next_gst_action='fetch_irn_from_account_move',
+        self.env['account.return']._check_config(
             company=self.env.company
         )
 
@@ -402,7 +400,7 @@ class AccountMove(models.Model):
 
         :returns: dict containing signed IRN details.
         """
-        response = self.env['l10n_in.gst.return.period']._request(
+        response = self.env['account.return']._request(
             url="/iap/l10n_in_reports/1/einvoice/irndtl",
             params={
                 "irn_number": irn_number,

@@ -634,6 +634,7 @@ class AccountReturn(models.Model):
     is_main_company_active = fields.Boolean(compute="_compute_is_main_company_active")
     return_type_category = fields.Selection(related="type_id.category")
     visible_states = fields.Json(string="Visible States", compute="_compute_visible_states")
+    show_submit_button = fields.Boolean(compute="_compute_show_submit_button")
 
     # Audit
     audit_status = fields.Selection(
@@ -852,6 +853,11 @@ class AccountReturn(models.Model):
         for record in self:
             record.audit_balances_completed_count = len(record.audit_account_status_ids.filtered(lambda r: r.status in ('reviewed', 'supervised')))
 
+    @api.depends('next_state')
+    def _compute_show_submit_button(self):
+        for record in self:
+            record.show_submit_button = record.next_state == "submitted"
+
     @api.model
     def _get_return_from_report_options(self, options):
         report = self.env['account.report'].browse(options['report_id'])
@@ -927,6 +933,7 @@ class AccountReturn(models.Model):
         if not additional_context:
             additional_context = {}
 
+        company._check_tax_return_configuration()
         # Fiscal year is automatically setup with default values as it is a required field
         if not company.account_opening_date:
             if not self.env.user.has_group('account.group_account_manager'):

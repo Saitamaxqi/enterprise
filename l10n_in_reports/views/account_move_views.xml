@@ -88,7 +88,7 @@
         <field name="inherit_id" ref="account.view_account_invoice_filter"/>
         <field name="arch" type="xml">
             <xpath expr="//search/group/filter[@name='status']" position="after">
-                <filter string="GSTR2B status" name="gstr2b_status" context="{'group_by': 'l10n_in_gstr2b_reconciliation_status'}" />
+                <filter string="GSTR2B status" name="l10n_in_gstr2b_status" context="{'group_by': 'l10n_in_gstr2b_reconciliation_status'}" />
             </xpath>
         </field>
     </record>
