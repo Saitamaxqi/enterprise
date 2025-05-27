@@ -64,7 +64,7 @@ class HrSalaryAttachment(models.Model):
         help='Total amount to be paid.',
     )
     has_total_amount = fields.Boolean('Has Total Amount', compute='_compute_has_total_amount')
-    paid_amount = fields.Monetary('Paid Amount', tracking=True)
+    paid_amount = fields.Monetary('Paid Amount', tracking=True, copy=False)
     remaining_amount = fields.Monetary(
         'Remaining Amount', compute='_compute_remaining_amount', store=True,
         help='Remaining amount to be paid.',
