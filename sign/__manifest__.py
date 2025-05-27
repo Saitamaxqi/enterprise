@@ -87,6 +87,7 @@ Let your customers follow the signature process easily.
             'sign/static/src/dialogs/**/*',
             'sign/static/src/services/**/*',
             'sign/static/src/fields/**/*',
+            'sign/static/src/file_viewer/**/*',
             ('remove', 'sign/static/src/views/sign_request_activity/**'),
         ],
         'web.assets_backend_lazy': [
@@ -98,6 +99,7 @@ Let your customers follow the signature process easily.
             'sign/static/src/scss/sign_frontend.scss',
             'sign/static/src/dialogs/**/*',
             'sign/static/src/services/**/*',
+            'sign/static/src/file_viewer/**/*',
         ],
         'web.assets_tests': [
             'sign/static/tests/tours/**/*',

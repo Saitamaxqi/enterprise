@@ -9,6 +9,7 @@ from odoo import api, fields, models, Command, _
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import misc, pdf
+from odoo.tools.pdf import PdfReadError
 
 TTFSearchPath.append(misc.file_path("web/static/fonts/sign"))
 
@@ -398,3 +399,29 @@ class SignTemplate(models.Model):
             'views': [[False, "form"]],
             'context': self.env.context,
         }
+
+    @api.model
+    def create_sign_template_from_ir_attachment_data(self, attachment_id=False, res_id=False, res_model=False):
+        """
+        Create a sign.template record from an existing ir.attachment.
+
+        :param attachment_id: The ID of the `ir.attachment` record to use as the source document.
+        :param res_id: ID of the related record to link as reference.
+        :param res_model: Model name of the related record to link as reference.
+        :return: A tuple containing the ID and name of the newly created `sign.template`.
+        """
+        attachment = self.env['ir.attachment'].browse(attachment_id).exists()
+        if not attachment:
+            raise UserError(_("Attachment not found."))
+
+        attachment_data = {
+            'name': attachment.name,
+            'datas': attachment.datas,
+        }
+
+        try:
+            template_data = self.create_from_attachment_data([attachment_data], active=False)
+        except (ValueError, PdfReadError) as e:
+            raise UserError(self.env._("PDF File is corrupted. Please try with another file.")) from e
+
+        return template_data['id'], template_data['name']

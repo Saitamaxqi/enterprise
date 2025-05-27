@@ -191,7 +191,7 @@ class SignSendRequest(models.TransientModel):
             'validity': self.validity,
             'reminder': self.reminder,
             'reminder_enabled': self.reminder_enabled,
-            'reference_doc': self.reference_doc,
+            'reference_doc': self.reference_doc or self.env.context.get('default_reference_doc'),
             'certificate_reference': self.certificate_reference,
         })
         sign_request.message_subscribe(partner_ids=cc_partner_ids)
