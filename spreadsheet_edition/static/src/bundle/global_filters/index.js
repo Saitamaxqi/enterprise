@@ -16,6 +16,7 @@ import { TextFilterEditorSidePanel } from "./components/filter_editor/text_filte
 import { RelationFilterEditorSidePanel } from "./components/filter_editor/relation_filter_editor_side_panel";
 import { BooleanFilterEditorSidePanel } from "./components/filter_editor/boolean_filter_editor_side_panel";
 import { SelectionFilterEditorSidePanel } from "./components/filter_editor/selection_filter_editor_side_panel";
+import { NumericFilterEditorSidePanel } from "./components/filter_editor/numeric_filter_editor_side_panel";
 
 const { sidePanelRegistry, topbarComponentRegistry, cellMenuRegistry } = spreadsheet.registries;
 
@@ -42,6 +43,11 @@ sidePanelRegistry.add("RELATION_FILTER_SIDE_PANEL", {
 sidePanelRegistry.add("BOOLEAN_FILTERS_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: BooleanFilterEditorSidePanel,
+});
+
+sidePanelRegistry.add("NUMERIC_FILTERS_SIDE_PANEL", {
+    title: _t("Filter properties"),
+    Body: NumericFilterEditorSidePanel,
 });
 
 sidePanelRegistry.add("GLOBAL_FILTERS_SIDE_PANEL", {

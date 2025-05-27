@@ -29,6 +29,7 @@ const FILTER_CREATION_SELECTORS = {
     relation: ".o_global_filter_new_relation",
     boolean: ".o_global_filter_new_boolean",
     selection: ".o_global_filter_new_selection",
+    numeric: ".o_global_filter_new_numeric",
 };
 
 class Parent extends Component {
@@ -75,12 +76,13 @@ test("Simple display", async function () {
     expect(".o_spreadsheet_global_filters_side_panel").toHaveCount(1);
 
     const buttons = target.querySelectorAll(".o_spreadsheet_global_filters_side_panel .o-button");
-    expect(buttons.length).toBe(5);
+    expect(buttons.length).toBe(6);
     expect(buttons[0]).toHaveClass("o_global_filter_new_time");
     expect(buttons[1]).toHaveClass("o_global_filter_new_relation");
     expect(buttons[2]).toHaveClass("o_global_filter_new_text");
     expect(buttons[3]).toHaveClass("o_global_filter_new_boolean");
     expect(buttons[4]).toHaveClass("o_global_filter_new_selection");
+    expect(buttons[5]).toHaveClass("o_global_filter_new_numeric");
 });
 
 test("Display with an existing 'Date' global filter", async function () {
@@ -117,6 +119,14 @@ test("Create a new selection global filter", async function () {
     await openSidePanel(model, env);
     await clickCreateFilter("selection");
     expect.verifySteps(["SELECTION_FILTERS_SIDE_PANEL"]);
+});
+
+test("Create a new numeric global filter", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    env.openSidePanel = (name) => expect.step(name);
+    await openSidePanel(model, env);
+    await clickCreateFilter("numeric");
+    expect.verifySteps(["NUMERIC_FILTERS_SIDE_PANEL"]);
 });
 
 test("Create a new text global filter", async function () {

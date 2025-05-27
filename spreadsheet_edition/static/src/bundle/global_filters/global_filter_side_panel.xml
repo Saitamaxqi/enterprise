@@ -21,6 +21,7 @@
                                 <i t-if="filter.type === 'text'" class="fa fa-font me-2"/>
                                 <i t-if="filter.type === 'boolean'" class="fa fa-toggle-off me-2"/>
                                 <i t-if="filter.type === 'selection'" class="fa fa-caret-down me-2"/>
+                                <i t-if="filter.type === 'numeric'" class="fa fa-hashtag me-2"/>
                                 <span t-esc="filter.label" class="o-fw-bold o_side_panel_filter_label"/>
                             </div>
                             <i class="o-button-icon fa fa-trash pe-1 ps-2" t-on-click="() => this.deleteFilter(filter.id)" />
@@ -50,6 +51,10 @@
                     <button t-if="hasDataSources()" t-on-click="newSelection" class="o-button o_global_filter_new_selection">
                         <i class="fa fa-caret-down me-2"/>
                         <span>Selection</span>
+                    </button>
+                    <button t-on-click="newNumeric" class="o-button o_global_filter_new_numeric">
+                        <i class="fa fa-hashtag me-2"/>
+                        <span>Numeric</span>
                     </button>
                 </div>
             </div>

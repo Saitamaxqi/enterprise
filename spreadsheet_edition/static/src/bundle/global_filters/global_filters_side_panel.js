@@ -64,6 +64,10 @@ export class GlobalFiltersSidePanel extends Component {
         this.env.openSidePanel("BOOLEAN_FILTERS_SIDE_PANEL");
     }
 
+    newNumeric() {
+        this.env.openSidePanel("NUMERIC_FILTERS_SIDE_PANEL");
+    }
+
     /**
      * @param {string} id
      */
@@ -87,6 +91,9 @@ export class GlobalFiltersSidePanel extends Component {
                 break;
             case "selection":
                 this.env.openSidePanel("SELECTION_FILTERS_SIDE_PANEL", { id });
+                break;
+            case "numeric":
+                this.env.openSidePanel("NUMERIC_FILTERS_SIDE_PANEL", { id });
                 break;
         }
     }

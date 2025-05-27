@@ -49,6 +49,7 @@ import { BooleanFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global
 import { DateFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/date_filter_editor_side_panel";
 import { RelationFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel";
 import { TextFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel";
+import { NumericFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/numeric_filter_editor_side_panel";
 import { user } from "@web/core/user";
 import { SelectionFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel";
 
@@ -78,6 +79,7 @@ const SIDE_PANELS = {
     relation: RelationFilterEditorSidePanel,
     boolean: BooleanFilterEditorSidePanel,
     selection: SelectionFilterEditorSidePanel,
+    numeric: NumericFilterEditorSidePanel,
 };
 
 class Parent extends Component {
@@ -203,7 +205,7 @@ test("Create a new boolean global filter", async function () {
     await editGlobalFilterLabel("My Label");
     await selectFieldMatching("active");
     expect(".o_filter_field_offset").toHaveCount(0, {
-        message: "No offset for text filter",
+        message: "No offset for boolean filter",
     });
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
@@ -298,6 +300,20 @@ test("Selecting another field resets the default value", async function () {
     expect(".o_tag_badge_text").toHaveCount(1);
     await selectFieldForSelection("lang");
     expect(".o_tag_badge_text").toHaveCount(0);
+});
+
+test("Create a new numeric global filter", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "numeric");
+    await editGlobalFilterLabel("My Label");
+    await selectFieldMatching("probability");
+    expect(".o_filter_field_offset").toHaveCount(0, {
+        message: "No offset for numeric filter",
+    });
+    await saveGlobalFilter();
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(globalFilter.label).toBe("My Label");
+    expect(globalFilter.type).toBe("numeric");
 });
 
 test("Create a new text global filter", async function () {
@@ -1165,4 +1181,16 @@ test("Cannot save filter with empty label", async function () {
     await contains(".o_global_filter_label").edit("");
     await contains(".o_global_filter_save").click();
     expect.verifySteps(["notifyUser"]);
+});
+
+test("Create a new numeric global filter with empty value", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "numeric");
+    await editGlobalFilterLabel("My Label");
+    await contains(".o-global-filter-numeric-value").edit("");
+    await saveGlobalFilter();
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(globalFilter.label).toBe("My Label");
+    expect(globalFilter.type).toBe("numeric");
+    expect(globalFilter.defaultValue).toBe(undefined);
 });

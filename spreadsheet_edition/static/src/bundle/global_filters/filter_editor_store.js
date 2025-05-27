@@ -56,6 +56,8 @@ export class FilterEditorStore extends SpreadsheetStore {
                 return ["many2one", "many2many", "one2many"];
             case "selection":
                 return ["selection"];
+            case "numeric":
+                return ["integer", "float", "monetary"];
         }
         return [];
     }
@@ -133,6 +135,7 @@ export class FilterEditorStore extends SpreadsheetStore {
             case "text":
             case "date":
             case "boolean":
+            case "numeric":
                 return this._fieldsMatching.length;
             case "relation":
                 return this._fieldsMatching.length && this.filter.modelName;
