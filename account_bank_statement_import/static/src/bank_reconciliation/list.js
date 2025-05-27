@@ -9,11 +9,17 @@ import {
 } from "@account_accountant/components/bank_reconciliation/list_view/list";
 import { useState } from "@odoo/owl";
 
+const synchronizedModes = ["online_sync", "l10n_be_codabox"]
+
 export class BankRecListUploadController extends BankRecListController {
     static components = {
         ...BankRecListController.components,
         AccountFileUploader,
     };
+
+    get showUploadButton() {
+        return !synchronizedModes.includes(this.props.context?.bank_statements_source);
+    }
 }
 
 export class BankRecListUploadRenderer extends BankRecListRenderer {
@@ -32,6 +38,10 @@ export class BankRecListUploadRenderer extends BankRecListRenderer {
         if (ev.dataTransfer.types.includes("Files")) {
             this.dropzoneState.visible = true;
         }
+    }
+
+    get showUploadButton() {
+        return !synchronizedModes.includes(this.env.model.config.context?.bank_statements_source);
     }
 }
 

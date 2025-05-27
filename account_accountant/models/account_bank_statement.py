@@ -85,12 +85,18 @@ class AccountBankStatementLine(models.Model):
 
     @api.model
     def _action_open_bank_reconciliation_widget(self, extra_domain=None, default_context=None, name=None, kanban_first=True):
+        if default_context is None:
+            default_context = {}
         action_reference = 'account_accountant.action_bank_statement_line_transactions' + ('_kanban' if kanban_first else '')
         action = self.env['ir.actions.act_window']._for_xml_id(action_reference)
 
+        default_journal = self.env['account.journal'].browse(
+            default_context.get('default_journal_id', default_context.get('search_default_journal_id'))
+        )
+
         action.update({
             'name': name or _("Bank Matching"),
-            'context': default_context or {},
+            'context': {**default_context, 'bank_statements_source': default_journal.exists().bank_statements_source},
             'domain': (extra_domain or []),
         })
 

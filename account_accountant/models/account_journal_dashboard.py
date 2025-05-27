@@ -44,6 +44,7 @@ class AccountJournal(models.Model):
         return self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
             default_context={
                 'search_default_statement_id': self.env.context.get('statement_id'),
+                'default_journal_id': self.id,
             },
         )
 
