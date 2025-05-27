@@ -108,7 +108,7 @@
     }
 }
 
-.o_sign_validate_banner {
+.o_sign_validate_banner, .o_sign_next_document_banner {
     display: none;
     opacity: 0;
 
@@ -118,14 +118,13 @@
 
     @include font-size(1.25em);
     text-align: center;
-
 }
 
-@media (max-width: 767px) { /* @screen-xs-max */    
-    .o_sign_validate_banner {
+@media (max-width: 767px) { /* @screen-xs-max */
+    .o_sign_validate_banner, .o_sign_next_document_banner {
         padding: 0;
     }
-    .o_validate_button {
+    .o_validate_button, .o_next_document_button {
         text-transform: uppercase;
         width: 100% !important;
         height: 45px;

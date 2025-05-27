@@ -150,10 +150,8 @@ export class SignablePDFIframe extends PDFIframe {
 
     handleInput() {
         this.checkSignItemsCompletion();
-        if(this.isDocumentUnsigned()) {
+        if(this.props.isDocumentUnsigned()) {
             this.navigator.setTip(_t("next"));
-        } else {
-            this.navigator.setTip(_t("next document"));
         }
     }
 
@@ -345,32 +343,14 @@ export class SignablePDFIframe extends PDFIframe {
         }
 
          // Updates the set of unsigned documents if is fully signed or any item gets unsigned
-        const documentsWithUnsignedItems = this.props.documentsWithUnsignedItems();
-        if(itemsToSign.length=== 0 || !documentsWithUnsignedItems.has(this.props.documentId)) {
-            this.props.updateDocumentsWithUnsignedItems(this.props.documentId, itemsToSign.length > 0);
+        const documentsWithUnsignedItems = this.props.getDocumentsWithUnsignedItems();
+        if(itemsToSign.length=== 0) {
+            this.props.updateDocumentsWithUnsignedItems(this.props.documentId, false);
+        } else if(!documentsWithUnsignedItems.has(this.props.documentId)) {
+            this.props.updateDocumentsWithUnsignedItems(this.props.documentId, true);
         }
 
         return itemsToSign;
-    }
-
-    /**
-     * Checks if the current document has unsigned items
-     * @returns {boolean}
-     */
-    isDocumentUnsigned() {
-        const documentsWithUnsignedItems = this.props.documentsWithUnsignedItems();
-        return documentsWithUnsignedItems.has(this.props.documentId);
-    }
-
-    /**
-     * Navigates to the next unsigned document in the set of unsigned documents
-     */
-    goToNextUnsignedDocument() {
-        const documentsWithUnsignedItems = this.props.documentsWithUnsignedItems();
-        if (documentsWithUnsignedItems.size === 0) {
-            return;
-        }
-        this.props.documentNavigateByID([...documentsWithUnsignedItems][0]);
     }
 
     /**
@@ -419,14 +399,13 @@ export class SignablePDFIframe extends PDFIframe {
             this.signItemTypesById,
             this.env,
         );
+        this.navigator.toggle(this.props.signItems.length > 0);
         this.checkSignItemsCompletion();
 
         this.root.querySelector("#viewerContainer").addEventListener("scroll", () => {
             if (!this.navigator.state.isScrolling && this.navigator.state.started) {
-                if(this.isDocumentUnsigned()) {
+                if(this.props.isDocumentUnsigned()) {
                     this.navigator.setTip(_t("next"));
-                } else {
-                    this.navigator.setTip(_t("next document"));
                 }
             }
         });
@@ -437,16 +416,6 @@ export class SignablePDFIframe extends PDFIframe {
             }
             this.navigator.goToNextSignItem();
         });
-
-        // Navigates to the next unsigned document if the navigator is clicked
-        const navigatorElement = this.root.querySelector(".o_sign_sign_item_navigator");
-        if (navigatorElement) {
-            navigatorElement.addEventListener("click", () => {
-                if (!this.isDocumentUnsigned()) {
-                    this.goToNextUnsignedDocument();
-                }
-            });
-        }
     }
 
     signDocument() {
