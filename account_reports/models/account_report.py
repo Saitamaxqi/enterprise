@@ -5788,14 +5788,13 @@ class AccountReport(models.Model):
         action_report = self.env['ir.actions.report']
         files_stream = []
         for is_landscape, reports_with_options in grouped_reports_by_format:
-            bodies = []
-
-            for report, report_options in reports_with_options:
-                bodies.append(report._get_pdf_export_html(
+            bodies = (
+                report._get_pdf_export_html(
                     report_options,
                     report._filter_out_folded_children(report._get_lines(report_options)),
                     additional_context={'base_url': base_url}
-                ))
+                ) for report, report_options in reports_with_options
+            )
 
             files_stream.append(
                 io.BytesIO(action_report._run_wkhtmltopdf(
