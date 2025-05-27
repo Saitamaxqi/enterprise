@@ -24,7 +24,7 @@ class ProjectTask(models.Model):
         fsm_project = False
         if is_fsm_mode and 'project_id' in fields_list and not self._context.get('default_parent_id'):
             company_id = self.env.context.get('default_company_id') or self.env.company.id
-            fsm_project = self.env['project.project'].search([('is_fsm', '=', True), ('company_id', '=', company_id)], order='sequence', limit=1)
+            fsm_project = self.env['project.project'].search([('is_fsm', '=', True), ('company_id', '=', company_id)], order='sequence, name, id', limit=1)
             if fsm_project:
                 context['default_project_id'] = self.env.context.get('default_project_id', fsm_project.id)
         result = super(ProjectTask, self.with_context(context)).default_get(fields_list)
