@@ -482,3 +482,9 @@ msgid ""
 msgstr ""
 "Asegúrese de que haya un diario bancario existente. Verifique si el plan de "
 "cuentas está instalado en su empresa."
+
+#. module: l10n_mx_edi_pos
+#. odoo-python
+#: code:addons/l10n_mx_edi_pos/models/pos_order.py:0
+msgid "The selected PoS orders do not have the same CFDI public flag, usage, and payment method."
+msgstr "Las órdenes de PoS seleccionadas no tienen el mismo indicador público de CFDI, uso y método de pago."

@@ -721,3 +721,55 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
             {'balance': 1000.0, 'account_id': self.env.company.l10n_mx_income_re_invoicing_account_id.id},
             {'balance': -1160.0, 'account_id': self.bank_pm1.receivable_account_id.id},
         ])
+
+    def test_consolidated_billing_pos_orders(self):
+        """
+        Test consolidated billing of PoS orders with l10n_mx_edi fields.
+        Orders with non-matching fields should not consolidated, a error is raised to alert the user.
+        Invoice created from consolidated orders should have the same l10n_mx_edi fields.
+        """
+        with self.with_pos_session():
+            order_1, order_2, order_3 = [
+                self._create_order({
+                    'pos_order_lines_ui_args': [(self.product, 10)],
+                    'payments': [(self.bank_pm1, 11600.0)],
+                    'customer': self.partner_mx,
+                })
+                for _ in range(3)
+            ]
+
+        self.env['pos.order'].browse(order_3.id).write({
+            'l10n_mx_edi_cfdi_to_public': False,
+            'l10n_mx_edi_usage': 'G03',
+            'l10n_mx_edi_payment_method_id': self.bank_pm1.l10n_mx_edi_payment_method_id
+        })
+
+        pos_orders_1_3 = self.env['pos.order'].browse([order_1.id, order_3.id])
+        pos_orders_1_2 = self.env['pos.order'].browse([order_1.id, order_2.id])
+        pos_orders_1_2.write({
+            'l10n_mx_edi_cfdi_to_public': False,
+            'l10n_mx_edi_usage': 'G01',
+            'l10n_mx_edi_payment_method_id': self.bank_pm1.l10n_mx_edi_payment_method_id
+        })
+
+        wizard = self.env['pos.make.invoice']\
+            .create({'consolidated_billing': True})\
+            .with_context({'active_ids': pos_orders_1_3.ids})
+
+        with self.assertRaisesRegex(ValidationError, "The selected PoS orders do not have the same CFDI public flag, usage, and payment method."):
+            wizard.action_create_invoices()
+
+        wizard = self.env['pos.make.invoice']\
+            .create({'consolidated_billing': True})\
+            .with_context({'active_ids': pos_orders_1_2.ids})
+
+        wizard.action_create_invoices()
+
+        invoice = pos_orders_1_2.account_move
+        self.assertRecordValues(invoice, [
+            {
+                'l10n_mx_edi_cfdi_to_public': False,
+                'l10n_mx_edi_usage': 'G01',
+                'l10n_mx_edi_payment_method_id': 1,
+            }
+        ])

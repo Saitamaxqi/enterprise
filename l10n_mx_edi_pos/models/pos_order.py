@@ -131,12 +131,20 @@ class PosOrder(models.Model):
         # EXTENDS 'point_of_sale'
         vals = super()._prepare_invoice_vals()
         if self.company_id.country_id.code == 'MX':
+            is_public = any(self.mapped('l10n_mx_edi_cfdi_to_public'))
+            usages = self.mapped('l10n_mx_edi_usage')
+            payment_methods = self.mapped('l10n_mx_edi_payment_method_id')
+
+            if len(set(usages)) > 1 or len(set(payment_methods)) > 1:
+                raise ValidationError(_("The selected PoS orders do not have the same CFDI public flag, usage, and payment method."))
+
             vals.update({
-                'l10n_mx_edi_cfdi_to_public': self.l10n_mx_edi_cfdi_to_public,
+                'l10n_mx_edi_cfdi_to_public': is_public,
                 # If the invoice was created through the QRCode on the ticket we take the usage from the filled form
-                'l10n_mx_edi_usage': self.env.context.get('default_l10n_mx_edi_usage') or self.l10n_mx_edi_usage,
+                'l10n_mx_edi_usage': self.env.context.get('default_l10n_mx_edi_usage') or usages[0],
                 'l10n_mx_edi_payment_method_id': self.l10n_mx_edi_payment_method_id.id,
             })
+
             account_fiscal_folio = self.refunded_order_id.account_move.l10n_mx_edi_cfdi_uuid
             if account_fiscal_folio:
                 vals['l10n_mx_edi_cfdi_origin'] = self.env['account.move']._l10n_mx_edi_write_cfdi_origin('03', [account_fiscal_folio])
