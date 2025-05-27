@@ -49,7 +49,7 @@ class HelpdeskTicket(models.Model):
             'default_ticket_id': self.id,
             'default_company_id': self.company_id.id,
             'default_description': self.name,
-            'default_sale_order_id': self.sale_order_id.id,
+            'default_sale_order_id': self.sudo().sale_order_id.id,
             'default_user_id': False,
             'default_team_id': False,
             'default_internal_notes': self.description,
