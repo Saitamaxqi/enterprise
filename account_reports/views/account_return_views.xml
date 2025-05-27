@@ -26,19 +26,19 @@
                                 <div class="col-12 col-lg-3">
                                     <div class="row">
                                         <div class="o_field_widget">
-                                            <field class="oe_state_value pe-2" name="name"/>
+                                            <field class="oe_state_value pe-2 fs-5" name="name"/>
                                             <field invisible="unresolved_check_count &lt;= 0" class="oe_state_value pe-1 text-danger" name="unresolved_check_count"/>
-                                            <span invisible="unresolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-danger">Failed</span>
+                                            <span invisible="unresolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-danger">Pending</span>
                                             <field invisible="unresolved_check_count != 0 or resolved_check_count &lt;= 0" class="oe_state_value pe-1 text-success" name="resolved_check_count"/>
                                             <span invisible="unresolved_check_count != 0 or resolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-success">Passed</span>
                                         </div>
                                     </div>
                                     <div class="row o_field_widget">
                                         <t t-if="!record.date_submission.raw_value">
-                                            <span class="oe_stat_text pe-1 text-info">Deadline: </span><field class="oe_stat_value ps-0 text-info" name="date_deadline"/>
+                                            <span class="oe_stat_text pe-1 text-black-50">Deadline: </span><field class="oe_stat_value ps-0 text-black-50" name="date_deadline"/>
                                         </t>
                                         <t t-else="">
-                                            <span class="oe_stat_text pe-1 text-info">Submitted on: </span><field class="oe_stat_value ps-0 text-info" name="date_submission"/>
+                                            <span class="oe_stat_text pe-1 text-black-50">Submitted on: </span><field class="oe_stat_value ps-0 text-black-50" name="date_submission"/>
                                         </t>
                                     </div>
                                     
@@ -142,6 +142,7 @@
             <field name="model">account.return</field>
             <field name="arch" type="xml">
                 <search>
+                    <field name="name"/>
                     <field name="date_to"/>
                     <field name="date_from"/>
                     <field name="date_deadline"/>
@@ -151,6 +152,7 @@
                     <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False)]"/>
                     <filter name="done_returns" string="Done" domain="[('is_completed', '=', True)]"/>
                     <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
+                    <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                 </search>
             </field>
         </record>
