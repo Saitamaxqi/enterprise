@@ -13,8 +13,7 @@
                         <field name ="map_box_token"/>
                         <div class="text-start" style="position:relative;">
                             <a class="oe_link"  href="https://account.mapbox.com/auth/signup/" target="_blank">
-                                <i class="oi oi-arrow-right"/>
-                                Sign up to MapBox to get a free token
+                                <i class="oi oi-arrow-right"/> Sign up to MapBox to get a free token
                             </a>
                         </div>
                     </div>
