@@ -177,7 +177,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                     "message_unread_counter": 0,
                                     "message_unread_counter_bus_id": 0,
                                     "new_message_separator": message.id + 1,
-                                    "persona": {
+                                    "partner_id": {
                                         "id": self.user_admin.partner_id.id,
                                         "type": "partner",
                                     },
@@ -277,7 +277,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                     "fetched_message_id": message.id,
                                     "id": member.id,
                                     "last_seen_dt": "2020-03-22 10:31:06",
-                                    "persona": {
+                                    "partner_id": {
                                         "id": self.user_admin.partner_id.id,
                                         "type": "partner",
                                     },
