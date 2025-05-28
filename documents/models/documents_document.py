@@ -688,7 +688,7 @@ class DocumentsDocument(models.Model):
             return NotImplemented
         values = set(operand)
         if False in values:
-            query = SQL("(%s SELECT document_id FROM last_access_date)")
+            query = SQL("(%s SELECT document_id FROM last_access_date)", self._get_last_access_date_group_cte())
             domain = [('id', 'not in', query)]
             if len(values) > 1:
                 values.remove(False)
