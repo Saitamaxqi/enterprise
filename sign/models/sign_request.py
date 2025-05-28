@@ -40,7 +40,7 @@ class SignRequest(models.Model):
     state = fields.Selection([
         ("shared", "Shared"),
         ("sent", "To Sign"),
-        ("signed", "Fully Signed"),
+        ("signed", "Signed"),
         ("canceled", "Cancelled"),
         ("expired", "Expired"),
     ], default='sent', tracking=True, group_expand=True, copy=False, index=True)
@@ -60,7 +60,7 @@ class SignRequest(models.Model):
     color = fields.Integer()
     request_item_infos = fields.Binary(compute="_compute_request_item_infos")
     last_action_date = fields.Datetime(related="message_ids.create_date", readonly=True, string="Last Action Date")
-    completion_date = fields.Date(string="Completion Date", compute="_compute_progress", compute_sudo=True)
+    completion_date = fields.Date(string="Completion Date", compute="_compute_progress", compute_sudo=True, store=True)
     communication_company_id = fields.Many2one('res.company', string="Company used for communication", default=lambda self: self.env.company)
 
     sign_log_ids = fields.One2many('sign.log', 'sign_request_id', string="Logs", help="Activity logs linked to this request")

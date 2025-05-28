@@ -27,7 +27,7 @@
                     </DropdownItem>
                 </t>
                 <DropdownItem class="'o_menu_item'" onSelected.bind="onPreviewClick">
-                    <i class="fa fa-eye"/> Preview
+                    <i class="fa fa-eye fa-fw"/> Preview
                 </DropdownItem>
             </t>
         </Dropdown>

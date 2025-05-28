@@ -24,11 +24,11 @@
                     <t t-name="card">
                         <div class="d-flex lh-1 mb-1">
                             <t t-if="record.favorited_ids.raw_value.indexOf(context.uid) &lt; 0">
-                                <a type="object" name="toggle_favorited" title="Not in favorites, add it" aria-label="Not in favorites, add it"
+                                <a type="object" name="toggle_favorited" title="Set as favorite" aria-label="Set as favorite"
                                     class="fa fa-lg fa-star-o favorite_sign_button"/>
                             </t>
                             <t t-else="">
-                                <a type="object" name="toggle_favorited" title="In favorites, remove it" aria-label="In favorites, remove it"
+                                <a type="object" name="toggle_favorited" title="Remove from favorites" aria-label="Remove from favorites"
                                     class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button"/>
                             </t>
                             <field name="reference" class="ms-4 fw-bold fs-5"/>
@@ -66,11 +66,13 @@
                     <button type="object" name="send_signature_accesses" class="btn btn-secondary" string="Resend"/>
                     <button type="action" name="%(action_view_sign_requests)d" class="btn btn-secondary" string="Download"/>
                 </header>
-                <field name="create_date" string="Creation Date" readonly="1"/>
+                <field name="create_date" string="Date" readonly="1"/>
                 <field name="reference" readonly="1" string="Template"/>
+                <field name="create_uid" widget="many2one_avatar_user" readonly="1" string="Sent by"/>
                 <field name="template_document_ids" widget="many2many_tags" readonly="1"/>
                 <field name="request_item_ids" string="Signers" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}"/>
                 <field name="template_tags" string="Tags" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
+                <field name="reference_doc" readonly="1" optional="hide"/>
                 <field name="state" string="Status" widget="badge" readonly="1"
                         decoration-danger="state in ['canceled']"
                         decoration-warning="state in ['expired']"
@@ -87,6 +89,28 @@
                 <button name="get_completed_document" invisible="state != 'signed'" string="Download" type="object" icon="fa-download"/>
                 <button name="go_to_signable_document" string="Sign" type="object" invisible="not need_my_signature or state != 'sent'" icon="fa-pencil-square-o"/>
             </list>
+        </field>
+    </record>
+ 
+    <record id="sign_request_view_pivot" model="ir.ui.view">
+        <field name="name">sign.request.pivot</field>
+        <field name="model">sign.request</field>
+        <field name="arch" type="xml">
+            <pivot string="Documents" sample="1">
+                <field name="create_date" type="row" interval="month"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="sign_request_view_graph" model="ir.ui.view">
+        <field name="name">sign.request.graph</field>
+        <field name="model">sign.request</field>
+        <field name="arch" type="xml">
+            <graph string="Documents" sample="1">
+                <field name="create_date" type="row" interval="month"/>
+                <field name="state" type="col"/>
+            </graph>
         </field>
     </record>
 
@@ -107,11 +131,11 @@
                     <field name="active" invisible="1"/>
                     <field name="template_id" invisible="1" kanban_view_ref="1484"/>
                     <field name="favorited_ids" widget="many2many_tags" options="{'color_field': 'color'}" invisible="1"/>
-                    <widget name="web_ribbon" title="Fully Signed" invisible="state != 'signed'"/>
+                    <widget name="web_ribbon" title="Signed" invisible="state != 'signed'"/>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <field name="integrity" invisible="1"/>
                     <div class="oe_title">
-                        <label for="reference" string="Document Name"/>
+                        <label for="reference" string="Template"/>
                         <h1><field name="reference" placeholder="e.g. Non-disclosure agreement" readonly="1"/></h1>
                     </div>
                     <div class="alert alert-warning" role="alert" invisible="integrity">
@@ -182,7 +206,7 @@
                 <filter name="waiting_for_others" string="Waiting for others" domain="[('create_uid', '=', uid), ('state', '=', 'sent'), '|', ('need_my_signature', '=', False), ('nb_wait', '>', 1)]"/>
                 <separator/>
                 <filter name="sent" string="Sent" domain="[('state', '=', 'sent')]"/>
-                <filter name="signed" string="Fully Signed" domain="[('state', '=', 'signed')]"/>
+                <filter name="signed" string="Signed" domain="[('state', '=', 'signed')]"/>
                 <filter name="canceled" string="Cancelled" domain="[('state', '=', 'canceled')]"/>
                 <filter invisible="1" string="My Activities" name="filter_activities_my"
                     domain="[('activity_user_id', '=', uid)]"/>
@@ -209,7 +233,7 @@
         <field name="name">Documents</field>
         <field name="res_model">sign.request</field>
         <field name="path">sign-documents</field>
-        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,activity</field>
         <field name="search_view_id" ref="sign_request_view_search"/>
         <field name="context">{'search_default_my_docs': 1, 'search_default_my_sign_request': 1, 'show_upload_button': True}</field>
         <field name="help" type="html">
@@ -226,7 +250,7 @@
         <field name="name">All Documents</field>
         <field name="res_model">sign.request</field>
         <field name="path">sign-all-documents</field>
-        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,activity</field>
         <field name="context">{'show_upload_button': True}</field>
         <field name="search_view_id" ref="sign_request_view_search"/>
         <field name="help" type="html">

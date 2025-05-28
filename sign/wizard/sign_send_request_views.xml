@@ -20,9 +20,9 @@
                     </group>
                     <group invisible="context.get('sign_directly_without_mail', False)">
                         <field name="validity"/>
-                        <label for="reminder_enabled" string="Reminder"/>
+                        <label for="reminder_enabled" string="Reminders"/>
                         <div class="col">
-                            <field name="reminder_enabled" class="oe_inline mb-0" nolabel="1" widget="boolean_toggle" options="{'autosave': False}"/> Send a reminder
+                            <field name="reminder_enabled" class="oe_inline mb-0" nolabel="1" widget="boolean_toggle" options="{'autosave': False}"/>
                             <span invisible="not reminder_enabled">every<field name="reminder" class="text-center mb-0 o_sign_reminder_field"/> days.</span>
                         </div>
                         <div class="d-flex flex-row align-items-center flex-nowrap">
@@ -30,7 +30,10 @@
                             <span class="ms-1 text-nowrap">Add certificate on each page</span>
                         </div>
                     </group>
-                    <group invisible="not context.get('sign_directly_without_mail', False)" string="Options">
+                    <group invisible="not context.get('sign_directly_without_mail', False)">
+                        <div class="o_horizontal_separator mb-2 text-uppercase fw-bolder small" colspan="2">
+                            Options
+                        </div>
                         <field name="subject" placeholder="Signature Request"/>
                         <field name="cc_partner_ids" widget="many2many_tags" string="Contacts in copy" placeholder="Write email or search contact..." context="{'show_email': True}"/>
                         <div invisible="not cc_partner_ids" colspan="2">
