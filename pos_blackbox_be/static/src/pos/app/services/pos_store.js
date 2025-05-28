@@ -93,7 +93,7 @@ patch(PosStore.prototype, {
         this.removeOrder(order, false);
         this.selectedOrderUuid = null;
         const screen = this.defaultPage;
-        this.pos.navigate(screen.page, screen.params);
+        this.navigate(screen.page, screen.params);
     },
     removeEmptyOrders() {
         const orders = this.models["pos.order"].filter((o) => !o.finalized);

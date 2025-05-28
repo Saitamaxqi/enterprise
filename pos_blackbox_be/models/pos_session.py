@@ -98,7 +98,7 @@ class PosSession(models.Model):
         self.config_id._notify("CLOCKING", {
             'session_id': self.id,
             'data': {
-                'pos.session': self._load_pos_data({}),
+                'pos.session': self._read_pos_record(self.id, self.config_id.id),
             }
         })
 
