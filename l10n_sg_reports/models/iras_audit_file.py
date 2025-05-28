@@ -190,15 +190,23 @@ class AccountReport(models.Model):
                 'mode': 'range',
                 'date_from': fields.Date.from_string(date_from),
                 'date_to': fields.Date.from_string(date_from)
-            }
+            },
         })
         general_ledger_report = self.env.ref('account_reports.general_ledger_report')
         handler = self.env['account.general.ledger.report.handler']
-        accounts_results = handler._query_values(general_ledger_report, options)
+
         all_accounts = self.env['account.account'].search(self.env['account.account']._check_company_domain(company))
+        initial_balances = handler._get_initial_balance_values(general_ledger_report, all_accounts.ids, options)
+        report_values = handler._query_values(general_ledger_report, options)
 
         for account in all_accounts:
-            initial_bal = dict(accounts_results).get(account.id, {'initial_balance': {'balance': 0, 'amount_currency': 0, 'debit': 0, 'credit': 0}})['initial_balance']
+            if account.account_type == 'equity_unaffected':
+                report_vals_by_col_group = dict(report_values).get(account, {'col_group': {'unaffected_earnings': {'balance': 0, 'amount_currency': 0, 'debit': 0, 'credit': 0}}})
+                initial_bal = next(iter(report_vals_by_col_group.values()))['unaffected_earnings']
+            else:
+                _account, initial_bal_by_col_group = initial_balances[account.id]
+                initial_bal = next(iter(initial_bal_by_col_group.values()))
+            balance = initial_bal.get('balance', 0)
             gldata_lines.append({
                 'TransactionDate': date_from,
                 'AccountID': account.code,
@@ -208,11 +216,10 @@ class AccountReport(models.Model):
                 'TransactionID': False,
                 'SourceDocumentID': False,
                 'SourceType': False,
-                'Debit': float_repr(initial_bal['debit'], IRAS_DIGITS),
-                'Credit': float_repr(initial_bal['credit'], IRAS_DIGITS),
-                'Balance': float_repr(initial_bal['balance'], IRAS_DIGITS)
+                'Debit': float_repr(initial_bal.get('debit', 0), IRAS_DIGITS),
+                'Credit': float_repr(initial_bal.get('credit', 0), IRAS_DIGITS),
+                'Balance': float_repr(balance, IRAS_DIGITS),
             })
-            balance = initial_bal['balance']
             for move_line_id in move_line_ids:
                 if move_line_id.account_id.code == account.code:
                     balance = company.currency_id.round(balance + move_line_id.debit - move_line_id.credit)
