@@ -15,11 +15,23 @@ export class MailComposerChatGPT extends Component {
         this.store = useService("mail.store");
         this.orm = useService("orm");
         this.aiChatLauncher = useService("aiChatLauncher");
+        let currentDialog, previousZIndex;
         onMounted(() => {
-            this.store.aiInsertButtonTarget = this.props.record.id
+            this.store.aiInsertButtonTarget = this.props.record.id;
+            currentDialog = document.querySelector(".o-overlay-item:has(.o_dialog");
+            if (currentDialog) {
+                previousZIndex = currentDialog.style.zIndex;
+                // 1020 is the value of the $zindex-sticky which is the z-index value used for the `.o-mail-ChatWindow`
+                // See odoo/addons/mail/static/src/core/common/chat_window.scss
+                // We use this value to ensure that the dialog that contains this component is rendered below the `.o-mail-ChatWindow`s.
+                currentDialog.style.zIndex = "1020";
+            }
         });
         onWillUnmount(() => {
-            this.store.aiInsertButtonTarget = false
+            this.store.aiInsertButtonTarget = false;
+            if (currentDialog) {
+                currentDialog.style.zIndex = previousZIndex;
+            }
         });
     }
 
