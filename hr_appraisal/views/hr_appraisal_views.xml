@@ -5,7 +5,8 @@
     <menuitem name="Configuration"
         id="menu_hr_appraisal_configuration"
         parent="menu_hr_appraisal_root"
-        sequence="99"/>
+        sequence="99"
+        groups="hr_appraisal.group_hr_appraisal_user"/>
 
     <record model="ir.ui.view" id="view_hr_appraisal_form">
         <field name="name">hr.appraisal.form</field>
