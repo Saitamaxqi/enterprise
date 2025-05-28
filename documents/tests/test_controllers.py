@@ -1112,6 +1112,37 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             self.assertTrue('attachment;' in res.headers.get('Content-Disposition'),
                 "attachment is downloaded")
 
+    def test_upload_traceback(self):
+        """
+        Check that route find the correct support_folder, create the
+        traceback file and return the access url
+        """
+        url = '/documents/upload_traceback'
+        self.authenticate('admin', 'admin')
+        with RecordCapturer(self.env["documents.document"], []) as capture:
+            res = self.url_open(url, data={"csrf_token": http.Request.csrf_token(self)}, files={'ufile': ('TEST_traceback.txt', BytesIO(b"TEST traceback"), 'text/plain')})
+            res.raise_for_status()
+            self.assertEqual(res.headers['Content-Type'], 'application/json; charset=utf-8')
+            self.assertIsNotNone(res.json()[0])
+            res = self.url_open(url, data={"csrf_token": http.Request.csrf_token(self)}, files={'ufile': ('TEST_traceback2.txt', BytesIO(b"TEST traceback"), 'text/plain')})
+            res.raise_for_status()
+            self.assertEqual(res.headers['Content-Type'], 'application/json; charset=utf-8')
+            self.assertIsNotNone(res.json()[0])
+        documents = capture.records
+        self.assertEqual(len(documents), 3)
+        self.assertEqual(documents[0].type, 'folder')
+        self.assertEqual(documents[0].name, 'Support')
+        self.assertEqual(documents[1].type, 'binary')
+        self.assertEqual(documents[1].name, 'TEST_traceback.txt')
+        self.assertEqual(documents[1].mimetype, 'text/plain')
+        self.assertEqual(documents[1].raw, b"TEST traceback")
+        self.assertEqual(documents[1].folder_id, documents[0])
+        self.assertEqual(documents[2].type, 'binary')
+        self.assertEqual(documents[2].name, 'TEST_traceback2.txt')
+        self.assertEqual(documents[2].mimetype, 'text/plain')
+        self.assertEqual(documents[2].raw, b"TEST traceback")
+        self.assertEqual(documents[2].folder_id, documents[0])
+
 
 @tagged('post_install', '-at_install')
 class TestCaseSecurityRoutes(HttpCaseWithUserDemo):

@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-inherit="web.ErrorDialog" t-inherit-mode="extension">
         <xpath expr="//t[@t-set-slot='footer']//button" position="after">
-            <button t-if="canUploadTraceback" class="btn btn-secondary ms-auto ms-md-2"
+            <button t-if="documentService.userIsInternal" class="btn btn-secondary ms-auto ms-md-2"
                 t-on-click="shareTraceback" t-att-disabled="state.processed">
                 Share
             </button>

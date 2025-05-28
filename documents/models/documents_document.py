@@ -2282,11 +2282,19 @@ class DocumentsDocument(models.Model):
             if (res_model := self.env.get(model)) is not None and res_model.has_access('read')
         ]
 
-    @api.readonly
     @api.model
-    def can_upload_traceback(self):
-        return self.env.user._is_internal and \
-            bool(self.env.ref('documents.document_support_folder', raise_if_not_found=False))
+    def _get_traceback_folder_sudo(self):
+        folder_id = self.env["ir.config_parameter"].sudo().get_param('documents.support_folder', False)
+        folder_sudo = self.env["documents.document"].sudo().browse(int(folder_id))
+        if not folder_sudo or not folder_sudo.exists():
+            folder_sudo = self.env["documents.document"].sudo().create({
+                'name': self.env._('Support'),
+                'type': 'folder',
+                'access_internal': 'none',
+                'access_via_link': 'none'
+            })
+            self.env["ir.config_parameter"].sudo().set_param('documents.support_folder', folder_sudo.id)
+        return folder_sudo
 
     def unlink(self):
         """Clean unused linked records too.

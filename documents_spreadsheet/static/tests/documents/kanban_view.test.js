@@ -123,9 +123,6 @@ test("share a spreadsheet", async function () {
                 expect.step("permission_panel_data");
                 return getMySpreadsheetPermissionPanelData();
             }
-            if (args.method === "can_upload_traceback") {
-                return false;
-            }
         },
     });
     await mountView({
@@ -176,9 +173,6 @@ test("Freeze&Share a spreadsheet", async function () {
                 expect(args.args[0]).toEqual(frozenSpreadsheetId);
                 expect.step("permission_panel_data");
                 return getMySpreadsheetPermissionPanelData();
-            }
-            if (args.method === "can_upload_traceback") {
-                return false;
             }
         },
     });

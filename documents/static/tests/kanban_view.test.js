@@ -63,9 +63,6 @@ test("Open share with edit user_permission", async function () {
                     user_permission: "edit",
                 });
             }
-            if (args.method === "can_upload_traceback") {
-                return false;
-            }
         },
     });
     await mountDocumentsKanbanView();

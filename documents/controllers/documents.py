@@ -705,12 +705,7 @@ class ShareRoute(http.Controller):
         if not request.env.user._is_internal():
             raise Forbidden()
 
-        folder_sudo = request.env.ref(
-            'documents.document_support_folder',
-            raise_if_not_found=False
-        ).sudo()
-        if not folder_sudo or not folder_sudo.active:
-            raise request.not_found()
+        folder_sudo = request.env['documents.document']._get_traceback_folder_sudo()
 
         files = request.httprequest.files.getlist('ufile')
         if not files:

@@ -5,7 +5,6 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { CopyButton } from "@web/core/copy_button/copy_button";
 
 import { patch } from "@web/core/utils/patch";
-import { onWillStart } from "@odoo/owl";
 
 patch(ErrorDialog.components, {
     CopyButton,
@@ -17,10 +16,10 @@ patch(ErrorDialog.prototype, {
         this.orm = useService("orm");
         this.fileUpload = useService("file_upload");
         this.dialogService = useService("dialog");
+        this.documentService = useService("document.document");
         this.notification = useService("notification");
         this.state.tracebackUrl = null;
         this.state.processed = false;
-        this.canUploadTraceback = false;
         useBus(this.fileUpload.bus, "FILE_UPLOAD_LOADED", async (ev) => {
             if (ev.detail.upload.xhr.status === 200 && this.state.processed) {
                 const response = JSON.parse(ev.detail.upload.xhr.response);
@@ -33,16 +32,6 @@ patch(ErrorDialog.prototype, {
                         });
                     });
                 }
-            }
-        });
-        onWillStart(async () => {
-            try {
-                this.canUploadTraceback = await this.orm.call(
-                    "documents.document",
-                    "can_upload_traceback"
-                );
-            } catch {
-                this.canUploadTraceback = false;
             }
         });
     },

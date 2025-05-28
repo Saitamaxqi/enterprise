@@ -58,9 +58,6 @@ test("Open share with view user_permission", async function () {
                     access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
                 });
             }
-            if (args.method === "can_upload_traceback") {
-                return false;
-            }
         },
     });
     await mountView({
@@ -104,9 +101,6 @@ test("Right panel shows and updates focused or container record only", async fun
     await makeDocumentsMockEnv({
         serverData,
         mockRPC: async function (route, args) {
-            if (args.method === "can_upload_traceback") {
-                return false;
-            }
             if (args.model === "ir.model" && args.method === "display_name_for") {
                 return args.args[0].map((model) => ({ model, display_name: model }));
             }
@@ -175,9 +169,6 @@ test("Document actions are hidden when focused record is not selected", async fu
     await makeDocumentsMockEnv({
         serverData,
         mockRPC: async function (route, args) {
-            if (args.method === "can_upload_traceback") {
-                return false;
-            }
             if (args.model === "ir.model" && args.method === "display_name_for") {
                 return args.args[0].map((model) => ({ model, display_name: model }));
             }

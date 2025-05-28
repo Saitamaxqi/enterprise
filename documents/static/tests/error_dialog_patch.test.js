@@ -7,12 +7,12 @@ import {
     makeServerError,
     mockService,
     mountWithCleanup,
-    onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 
 import { browser } from "@web/core/browser/browser";
 import { MainComponentsContainer } from "@web/core/main_components_container";
+import { user } from "@web/core/user";
 
 defineMailModels();
 
@@ -55,10 +55,6 @@ test("Shareable error dialog", async () => {
     });
 
     await mountWithCleanup(MainComponentsContainer);
-    onRpc("documents.document", "can_upload_traceback", () => {
-        expect.step("Check access rights");
-        return true;
-    });
 
     Promise.reject(error);
     await animationFrame();
@@ -69,17 +65,32 @@ test("Shareable error dialog", async () => {
     await contains(".modal-footer button:contains(Share)").click();
     expect(".modal-footer button:contains(Share)").not.toBeEnabled();
     await animationFrame();
-    expect.verifySteps([
-        "Check access rights",
-        "Upload traceback",
-        "test url",
-        "Success notification",
-    ]);
+    expect.verifySteps(["Upload traceback", "test url", "Success notification"]);
     expect(".modal-footer .o_field_CopyClipboardChar").toHaveCount(1);
     expect(".modal-footer .o_field_CopyClipboardChar").toHaveText("test url");
     await contains(".o_clipboard_button").click();
     await animationFrame();
     expect.verifySteps(["test url"]);
+});
+
+test("Error dialog is not shareable for portal user", async () => {
+    expect.errors(1);
+    patchWithCleanup(user, {
+        hasGroup: () => false,
+    });
+    const error = makeServerError({
+        subType: "Odoo Client Error",
+        message: "Message",
+        errorName: "client error",
+    });
+
+    await mountWithCleanup(MainComponentsContainer);
+
+    Promise.reject(error);
+    await animationFrame();
+    expect.verifyErrors(["Message"]);
+    expect(".modal-footer button:contains(Close)").toHaveCount(1);
+    expect(".modal-footer button:contains(Share)").toHaveCount(0);
 });
 
 test("Multiple error dialogs", async () => {
@@ -131,10 +142,6 @@ test("Multiple error dialogs", async () => {
     });
 
     await mountWithCleanup(MainComponentsContainer);
-    onRpc("documents.document", "can_upload_traceback", () => {
-        expect.step("Check access rights");
-        return true;
-    });
 
     Promise.reject(error1);
     await runAllTimers();
@@ -148,7 +155,6 @@ test("Multiple error dialogs", async () => {
     await runAllTimers();
     await animationFrame();
     expect.verifyErrors(["Message 3"]);
-    expect.verifySteps(["Check access rights", "Check access rights", "Check access rights"]);
     await contains(".modal-footer button:contains(Share):eq(2)").click();
     expect(".modal-footer button:contains(Share):eq(2)").not.toBeEnabled();
     await animationFrame();

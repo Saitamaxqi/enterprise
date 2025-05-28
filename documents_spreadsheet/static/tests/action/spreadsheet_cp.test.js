@@ -170,9 +170,6 @@ test("Freeze&Share spreadsheet from control panel", async function () {
                 expect.step("permission_panel_data");
                 return getMySpreadsheetPermissionPanelData();
             }
-            if (args.method === "can_upload_traceback") {
-                return false;
-            }
         },
     });
     expect(target.querySelector(".spreadsheet_share_dropdown")).toBe(null);
@@ -210,9 +207,6 @@ test("Share spreadsheet from control panel", async function () {
                 expect(args.args[0]).toEqual(spreadsheetId);
                 expect.step("permission_panel_data");
                 return getMySpreadsheetPermissionPanelData();
-            }
-            if (args.method === "can_upload_traceback") {
-                return false;
             }
         },
     });
