@@ -292,9 +292,12 @@ class StudioExportSerializer:
             nodes = [fns[0], *comments]
             root = E.odoo(*nodes)
             content = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
-            # this demo file should be before demo/ir_ui_view.xml
-            index = self.filepaths.index('demo/ir_ui_view.xml')
-            self.filepaths.insert(index, filepath)
+            try:
+                # this demo file should be before 'demo/ir_ui_view.xml' if it exists.
+                index = self.filepaths.index('demo/ir_ui_view.xml')
+                self.filepaths.insert(index, filepath)
+            except ValueError:
+                self.filepaths.append(filepath)
             yield (filepath, content)
 
         # yield a warning file to notify circular dependencies and that some data haven't been exported
