@@ -2,10 +2,7 @@ import { getDocumentsTestServerModelsData } from "@documents/../tests/helpers/da
 import { basicDocumentsKanbanArch } from "@documents/../tests/helpers/views/kanban";
 import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 import { DocumentsSearchPanel } from "@documents/views/search/documents_search_panel";
-import {
-    defineDocumentSpreadsheetModels,
-    getMySpreadsheetPermissionPanelData,
-} from "@documents_spreadsheet/../tests/helpers/data";
+import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { XLSX_MIME_TYPES } from "@documents_spreadsheet/helpers";
@@ -15,13 +12,13 @@ import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
 import {
     contains,
+    mockService,
     mountView,
     onRpc,
     patchWithCleanup,
     preloadBundle,
     serverState,
 } from "@web/../tests/web_test_helpers";
-import { browser } from "@web/core/browser/browser";
 import { download } from "@web/core/network/download";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
 
@@ -108,22 +105,13 @@ test("download frozen spreadsheet", async () => {
 test("share a spreadsheet", async () => {
     const spreadsheetId = 2;
     const serverData = getTestServerData();
-    patchWithCleanup(browser.navigator.clipboard, {
-        writeText: async (url) => {
-            expect.step("Document url copied");
-            expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenMyspreadsheet");
+    mockService("document.document", {
+        openSharingDialog: (documentIds) => {
+            expect(documentIds).toEqual([spreadsheetId]);
+            expect.step("open_share");
         },
     });
-    await makeDocumentsSpreadsheetMockEnv({
-        serverData,
-        mockRPC: async function (route, args) {
-            if (args.method === "permission_panel_data") {
-                expect(args.args[0]).toEqual(spreadsheetId);
-                expect.step("permission_panel_data");
-                return getMySpreadsheetPermissionPanelData();
-            }
-        },
-    });
+    await makeDocumentsSpreadsheetMockEnv({ serverData });
     await mountView({
         type: "kanban",
         resModel: "documents.document",
@@ -135,23 +123,22 @@ test("share a spreadsheet", async () => {
         ctrlKey: true,
     });
     await contains("button:contains(Share)").click();
-
-    await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["permission_panel_data", "Document url copied"]);
+    expect.verifySteps(["open_share"]);
 });
 
 test("Freeze&Share a spreadsheet", async () => {
     const spreadsheetId = 2;
+    const spreadsheetName = "My spreadsheet";
     const frozenSpreadsheetId = 1337;
     const model = new Model();
     const serverData = getTestServerData();
     serverData.models["documents.document"].records[1].spreadsheet_data = JSON.stringify(
         model.exportData()
     );
-    patchWithCleanup(browser.navigator.clipboard, {
-        writeText: async (url) => {
-            expect.step("Document url copied");
-            expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenMyspreadsheet");
+    mockService("document.document", {
+        openSharingDialog: (documentIds) => {
+            expect(documentIds).toEqual([frozenSpreadsheetId]);
+            expect.step("open_share");
         },
     });
     await makeDocumentsSpreadsheetMockEnv({
@@ -165,12 +152,7 @@ test("Freeze&Share a spreadsheet", async () => {
                 expect(args.args[2]).toEqual(excel);
 
                 expect.step("spreadsheet_shared");
-                return { id: frozenSpreadsheetId };
-            }
-            if (args.method === "permission_panel_data") {
-                expect(args.args[0]).toEqual(frozenSpreadsheetId);
-                expect.step("permission_panel_data");
-                return getMySpreadsheetPermissionPanelData();
+                return { id: frozenSpreadsheetId, display_name: spreadsheetName };
             }
         },
     });
@@ -185,8 +167,7 @@ test("Freeze&Share a spreadsheet", async () => {
         ctrlKey: true,
     });
     await contains("button:contains(Freeze and share)").click();
-    await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["spreadsheet_shared", "permission_panel_data", "Document url copied"]);
+    expect.verifySteps(["spreadsheet_shared", "open_share"]);
 });
 
 test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async () => {

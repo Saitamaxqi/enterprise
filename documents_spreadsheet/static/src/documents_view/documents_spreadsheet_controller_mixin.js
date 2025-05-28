@@ -15,6 +15,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
         this.orm = useService("orm");
         this.action = useService("action");
         this.dialogService = useService("dialog");
+        this.documentService = useService("document.document");
         this.notification = useService("notification");
         // Hack-ish way to do this but the function is added by a hook which we can't really override.
         this.baseOnOpenDocumentsPreview = this.onOpenDocumentsPreview.bind(this);
@@ -126,11 +127,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
         ]);
 
         await this.env.searchModel._reloadSearchModel(true);
-        await this.env.documentsView.bus.trigger("documents-open-share", {
-            id: record.id,
-            withUpload: false,
-            shortcut_document_id: record.shortcut_document_id,
-        });
+        await this.documentService.openSharingDialog([record.id]);
     },
 
     getTopBarActionMenuItems() {

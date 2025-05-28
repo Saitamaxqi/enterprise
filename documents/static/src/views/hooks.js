@@ -5,7 +5,6 @@ import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { htmlJoin } from "@web/core/utils/html";
 import { useSetupAction } from "@web/search/action_hook";
-import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { PdfManager } from "@documents/owl/components/pdf_manager/pdf_manager";
 import {
     EventBus,
@@ -119,15 +118,6 @@ export function useDocumentView(helpers) {
     const env = useEnv();
     const bus = env.documentsView.bus;
 
-    // Opens Share Dialog
-    const _openShareDialog = async ({ id, shortcut_document_id }) => {
-        const document = shortcut_document_id ? { id: shortcut_document_id.id } : { id };
-        dialogService.add(DocumentsPermissionPanel, {
-            document,
-            onChangesSaved: () => env.searchModel._reloadSearchModel(true),
-        });
-    };
-
     // Open Automation rules
     const _openAutomations = async ({ folderId, folderDisplayName }) => {
         const checkBaseAutomation = await orm.searchCount("ir.module.module", [
@@ -169,10 +159,6 @@ export function useDocumentView(helpers) {
         getGlobalState: () => ({
             sharedSelection: component.model.exportSelection(),
         }),
-    });
-
-    useBus(bus, "documents-open-share", (ev) => {
-        _openShareDialog(ev.detail);
     });
 
     useBus(bus, "documents-open-automations", (ev) => {
@@ -270,17 +256,10 @@ export function useDocumentView(helpers) {
                     return;
                 }
                 const rec = env.model.root.selection[0];
-                await _openShareDialog({
-                    id: rec.resId,
-                    name: rec._values.name,
-                    shortcut_document_id: rec._values.shortcut_document_id,
-                });
+                await documentService.openSharingDialog([rec.resId]);
             } else {
                 const folder = env.searchModel.getSelectedFolder();
-                await _openShareDialog({
-                    id: folder.id,
-                    shortcut_document_id: folder.shortcut_document_id,
-                });
+                await documentService.openSharingDialog([folder.id]);
             }
         },
     };

@@ -13,6 +13,9 @@
             <xpath expr="//button[@name='action_invite_members']" position="attributes">
                 <attribute name="invisible">error_message_spreadsheet</attribute>
             </xpath>
+            <xpath expr="//button[@name='action_update_rights']" position="attributes">
+                <attribute name="invisible">error_message_spreadsheet</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

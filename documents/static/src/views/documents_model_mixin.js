@@ -340,14 +340,7 @@ export const DocumentsModelMixin = (component) =>
          */
         async onShare() {
             const documents = this.targetRecords;
-            if (documents.length !== 1) {
-                return;
-            }
-
-            this.env.documentsView.bus.trigger("documents-open-share", {
-                id: documents[0].data.id,
-                shortcut_document_id: documents[0].data.shortcut_document_id,
-            });
+            await this.documentService.openSharingDialog(documents.map((d) => d.data.id));
         }
 
         /**

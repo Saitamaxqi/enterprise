@@ -1,7 +1,6 @@
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 
-import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { Model, registries } from "@odoo/o-spreadsheet";
 import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";
 import { AbstractSpreadsheetAction } from "@spreadsheet_edition/bundle/actions/abstract_spreadsheet_action";
@@ -27,6 +26,7 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
         this.threadId = this.params?.thread_id;
         this.notification = useService("notification");
         this.dialogService = useService("dialog");
+        this.documentService = useService("document.document");
         useSubEnv({
             newSpreadsheet: this.createNewSpreadsheet.bind(this),
             makeCopy: this.makeCopy.bind(this),
@@ -96,12 +96,7 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
      * @returns <string> the url to share the spreadsheet
      */
     shareSpreadsheet() {
-        this.dialogService.add(DocumentsPermissionPanel, {
-            document: {
-                id: this.data.shortcut_document_id || this.resId,
-                name: this.data.name,
-            },
-        });
+        this.documentService.openSharingDialog([this.resId]);
     }
 
     async freezeAndShareSpreadsheet() {
@@ -118,12 +113,7 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
             JSON.stringify(data),
             this.model.exportXLSX().files,
         ]);
-        this.dialogService.add(DocumentsPermissionPanel, {
-            document: {
-                id: record.shortcut_document_id || record.id,
-                name: record.name,
-            },
-        });
+        this.documentService.openSharingDialog([record.id]);
     }
 }
 

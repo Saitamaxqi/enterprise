@@ -227,13 +227,14 @@
 
         <record id="mail_template_document_share" model="mail.template">
             <field name="name">Document: Document Share</field>
-            <field name="model_id" ref="model_documents_access"/>
-            <field name="subject">{{ object.document_id.name or 'Document' }} shared with you</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="subject">{{ len(ctx.get('documents', [])) }} document(s) shared with you</field>
             <field name="email_to" eval="False"/>
-            <field name="partner_to">{{ object.partner_id.id or '' }}</field>
+            <field name="partner_to">{{ object.id or '' }}</field>
             <field name="use_default_to" eval="False"/>
             <field name="description">Sent to partner when sharing a document with them</field>
             <field name="body_html" type="html">
+                <t t-set="documents" t-value="ctx.get('documents', object.env['documents.document'])"/>
                 <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
                     <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
                     <tbody>
@@ -242,12 +243,17 @@
                             <td align="center" style="min-width: 590px;">
                                 <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
                                     <tr><td valign="middle">
-                                        <span style="font-size: 10px;">
+                                        <span style="font-size: 10px;" t-if="len(documents) == 1">
                                             Shared Document<br/>
-                                            <span style="font-size: 20px; font-weight: bold;" t-out="object.document_id.name or ''"/>
-                                        </span><br/>
+                                            <span style="font-size: 20px; font-weight: bold;" t-out="documents.name or ''"/>
+                                        </span>
+                                        <span style="font-size: 10px;" t-if="len(documents) &gt; 1">
+                                            Shared Documents<br/>
+                                            <span style="font-size: 20px; font-weight: bold;" t-out="', '.join(documents.filtered('name').mapped('name'))"/>
+                                        </span>
+                                        <br/>
                                     </td><td valign="middle" align="right" t-if="not user.company_id.uses_default_logo">
-                                        <img t-attf-src="/logo.png?company={{ user.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="object.create_uid.company_id.name"/>
+                                        <img t-attf-src="/logo.png?company={{ user.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="user.company_id.name"/>
                                     </td></tr>
                                     <tr><td colspan="2" style="text-align:center;">
                                       <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
@@ -261,27 +267,50 @@
                                 <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
                                     <tr><td valign="top" style="font-size: 13px;">
                                         <div>
-                                            Hello <t t-out="object.partner_id.name"/>,
+                                            Hello <t t-out="object.name"/>,
                                             <br/><br/>
-                                            <t t-if="object.document_id.type == 'folder'" t-set="share_message">share the following folder with you</t>
-                                            <t t-else="" t-set="share_message">share the following document with you</t>
+                                            <t t-if="len(documents) &lt;= 1">
+                                                <t t-if="documents.type == 'folder'" t-set="share_message">shared the following folder with you</t>
+                                                <t t-else="" t-set="share_message">shared the following document with you</t>
+                                            </t>
+                                            <t t-elif="len(documents) > 1">
+                                                <t t-set="document_types" t-value="set(documents.mapped('type'))"/>
+                                                <t t-if="document_types == {'folder'}" t-set="share_message">shared the following folders with you</t>
+                                                <t t-elif="'folder' not in document_types" t-set="share_message">shared the following documents with you</t>
+                                                <t t-else="" t-set="share_message">shared the following documents/folders with you</t>
+                                            </t>
                                             <t t-out="user.name or ''">OdooBot</t> (<t t-out="user.email or ''">odoobot@example.com</t>) <t t-out="share_message"/>:
                                             <br/><br/>
-                                            <center>
-                                                <div t-if="object.document_id.name">
-                                                    <b t-out="object.document_id.name"/>
+                                            <center t-if="len(documents) &lt;= 1">
+                                                <div t-if="len(documents) == 1">
+                                                    <b t-out="documents.name"/>
                                                 </div>
                                                 <div t-if="ctx.get('message')">
                                                     <i t-out="ctx['message']"/>
                                                 </div>
                                                 <br/>
                                                 <div style="margin: 16px 0px 16px 0px;">
-                                                    <a t-att-href="object.document_id.access_url"
+                                                    <a t-att-href="documents.access_url"
                                                         t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
                                                         <b>Get your files</b>
                                                     </a>
                                                 </div>
-                                            </center><br/>
+                                            </center>
+                                            <t t-elif="len(documents) &gt; 1">
+                                                <div t-if="ctx.get('message')">
+                                                    <i t-out="ctx['message']"/>
+                                                </div>
+                                                <ul>
+                                                    <li t-foreach="documents" t-as="document">
+                                                        <a t-att-href="document.access_url"
+                                                           t-attf-style="color: {{user.company_id.email_secondary_color or '#875A7B'}}; font-size:13px;">
+                                                            <b>Get <t t-out="document.name"/></b>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </t>
+
+                                            <br/>
                                             <t t-if="user and user.signature">
                                                 <br/>
                                                 <div>--<br/><t t-out="user.signature"/></div>
@@ -327,7 +356,7 @@
                     </td></tr>
                 </table>
             </field>
-            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="lang">{{ object.lang }}</field>
             <field name="auto_delete" eval="True"/>
         </record>
     </data>

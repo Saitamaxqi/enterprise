@@ -2392,52 +2392,6 @@ class DocumentsDocument(models.Model):
             }
         return super()._get_access_action(access_uid=access_uid, force_website=force_website)
 
-    @api.readonly
-    def permission_panel_data(self):
-        """Provide access related data for a given document/folder"""
-        if self.env.user.share:
-            raise AccessError(_("You are not allowed to read the permission panel data."))
-        specification = self._permission_specification()
-        self.check_access('read')
-        result = self.sudo().with_context(active_test=False).web_search_read([('id', '=', self.id)], specification)
-        record = result['records'][0]
-        selections = {
-            'access_via_link': self._fields.get('access_via_link')._description_selection(self.env),
-            'access_via_link_options': [('1', _("Must have the link to access")), ('0', _("Discoverable"))],
-            'access_internal': self._fields.get('access_internal')._description_selection(self.env),
-            'doc_access_roles': self.env['documents.access']._fields.get('role')._description_selection(self.env)}
-        record['access_ids'] = [a for a in record['access_ids']
-                                if a['role']
-                                and (not record['owner_id'] or a['partner_id'] != record['owner_id']['partner_id'])]
-        return {'record': record, 'selections': selections}
-
-    def _permission_specification(self):
-        partner_id_spec = {'fields': {'email': {}, 'name': {}, 'user_ids': {}}}
-        return {
-            'access_internal': {},
-            'access_via_link': {},
-            'access_url': {},
-            'active': {},
-            'display_name': {},
-            'folder_id': {},
-            'is_access_via_link_hidden': {},
-            'type': {},
-            'user_permission': {},
-            'access_ids': {
-                    'fields': {
-                        'document_id': {},
-                        'partner_id': partner_id_spec,
-                        'role': {},
-                        'expiration_date': {},
-                    },
-                },
-            'owner_id': {
-                'fields': {
-                    'partner_id': partner_id_spec,
-                },
-            }
-        }
-
     @api.model
     def _data_embed_if_records_exist(self, folder_xmlid, server_action_xmlid):
         if (

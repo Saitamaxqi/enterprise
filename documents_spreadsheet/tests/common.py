@@ -31,6 +31,7 @@ class SpreadsheetTestCommon(SpreadsheetTestCase):
         cls.spreadsheet_user = new_test_user(
             cls.env, login="spreadsheetDude", groups="documents.group_documents_user"
         )
+        cls.portal_user = new_test_user(cls.env, "Portal user", groups="base.group_portal")
 
     def create_spreadsheet(self, values=None, *, user=None, name="Untitled Spreadsheet"):
         def _create():

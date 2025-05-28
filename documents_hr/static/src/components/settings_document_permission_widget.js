@@ -1,6 +1,5 @@
 import { registry } from '@web/core/registry';
 import { standardWidgetProps } from '@web/views/widgets/standard_widget_props';
-import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { Component } from '@odoo/owl';
 import { useService } from "@web/core/utils/hooks";
 
@@ -9,13 +8,12 @@ export class SettingDocumentPermissionWidget extends Component {
     static props = { ...standardWidgetProps };
 
     setup() {
-        this.dialogService = useService('dialog');
+        this.documentService = useService("document.document");
     }
 
-    async _openPermissionPanel (event) {
-        this.dialogService.add(DocumentsPermissionPanel, {
-            document: {id: this.props.record.data.documents_employee_folder_id.id},
-        });
+    async _openPermissionPanel() {
+        const folder = this.props.record.data.documents_employee_folder_id;
+        await this.documentService.openSharingDialog([folder.id]);
     }
 }
 

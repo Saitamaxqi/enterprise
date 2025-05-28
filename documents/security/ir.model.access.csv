@@ -19,3 +19,4 @@ access_mail_activity_plan_template_documents_manager,mail.activity.plan.template
 access_documents_redirect_base_system_user,documents_redirect_base_system_user,model_documents_redirect,base.group_system,1,0,0,1
 
 access_documents_sharing_user,access.documents.sharing.user,documents.model_documents_sharing,base.group_user,1,1,1,0
+access_documents_sharing_access_user,access.documents.sharing.access.user,documents.model_documents_sharing_access,base.group_user,1,1,1,0

@@ -6,7 +6,7 @@ import {
 } from "@spreadsheet/../tests/helpers/data";
 import { defineActions, fields, models, onRpc, serverState } from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
-import { getBasicPermissionPanelData, DocumentsModels } from "@documents/../tests/helpers/data";
+import { DocumentsModels } from "@documents/../tests/helpers/data";
 
 const ACCESS_TOKEN_MY_SPREADSHEET = "accessTokenMyspreadsheet";
 const {
@@ -194,14 +194,6 @@ export function defineDocumentSpreadsheetTestAction() {
             ],
         },
     ]);
-}
-
-export function getMySpreadsheetPermissionPanelData() {
-    return getBasicPermissionPanelData({
-        access_url: `https://localhost:8069/odoo/documents/${ACCESS_TOKEN_MY_SPREADSHEET}`,
-        display_name: "My Spreadsheet",
-        handler: "spreadsheet",
-    });
 }
 
 /**
