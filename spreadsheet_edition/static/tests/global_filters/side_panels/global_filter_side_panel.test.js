@@ -8,10 +8,7 @@ import {
 } from "@spreadsheet/../tests/helpers/commands";
 import { getBasicServerData, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { assertDateDomainEqual } from "@spreadsheet/../tests/helpers/date_domain";
-import {
-    LAST_YEAR_GLOBAL_FILTER,
-    THIS_YEAR_GLOBAL_FILTER,
-} from "@spreadsheet/../tests/helpers/global_filter";
+import { THIS_YEAR_GLOBAL_FILTER } from "@spreadsheet/../tests/helpers/global_filter";
 import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
 import { contains, serverState, mountWithCleanup } from "@web/../tests/web_test_helpers";
 
@@ -464,7 +461,6 @@ test("Can clear a date filter values", async function () {
             type: "date",
             label: "Date Filter",
             rangeType: "fixedPeriod",
-            defaultValue: { yearOffset: undefined, period: undefined },
         },
         {
             pivot: { [pivotId]: { chain: "date", type: "date" } },
@@ -600,10 +596,16 @@ test("Can clear automatic default user from the record selector tag", async func
 test("Can reorder filters with drag & drop", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
     addGlobalFilterWithoutReload(model, THIS_YEAR_GLOBAL_FILTER);
-    addGlobalFilterWithoutReload(model, LAST_YEAR_GLOBAL_FILTER);
+    const id_1 = THIS_YEAR_GLOBAL_FILTER.id;
+    const id_2 = "filter_id_2";
+    addGlobalFilterWithoutReload(model, {
+        ...THIS_YEAR_GLOBAL_FILTER,
+        label: "second filter",
+        id: id_2,
+    });
     let filters = model.getters.getGlobalFilters();
-    expect(filters[0].id).toBe(THIS_YEAR_GLOBAL_FILTER.id);
-    expect(filters[1].id).toBe(LAST_YEAR_GLOBAL_FILTER.id);
+    expect(filters[0].id).toBe(id_1);
+    expect(filters[1].id).toBe(id_2);
     await openSidePanel(model, env);
     const handle = target.querySelector(".o-filter-drag-handle");
     const sections = target.querySelectorAll(".pivot_filter_section");
@@ -611,8 +613,8 @@ test("Can reorder filters with drag & drop", async function () {
     await contains(handle, { visible: false }).dragAndDrop(sections[1], { position: "bottom" });
 
     filters = model.getters.getGlobalFilters();
-    expect(filters[0].id).toBe(LAST_YEAR_GLOBAL_FILTER.id);
-    expect(filters[1].id).toBe(THIS_YEAR_GLOBAL_FILTER.id);
+    expect(filters[0].id).toBe(id_2);
+    expect(filters[1].id).toBe(id_1);
 });
 
 test("fixedPeriod date filter possible values change with disabledPeriods ", async function () {
