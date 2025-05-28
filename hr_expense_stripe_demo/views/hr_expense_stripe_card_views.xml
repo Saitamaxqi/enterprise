@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_expense_stripe_card_form_inherit_demo" model="ir.ui.view">
+            <field name="name">hr.expense.stripe.card.view.form.inherit.demo</field>
+            <field name="model">hr.expense.stripe.card</field>
+            <field name="inherit_id" ref="hr_expense_stripe.view_hr_expense_stripe_card_form"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="action_create_test_purchase" string="Simulate Purchase" type="object" class="btn btn-secondary"
+                            groups="base.group_no_one" invisible="state != 'active'"/>
+                </header>
+            </field>
+        </record>
+    </data>
+</odoo>
