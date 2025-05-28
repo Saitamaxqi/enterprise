@@ -148,13 +148,16 @@ export class QualityCheck extends MrpWorkorder {
     }
 
     async showWorksheet() {
-        const { model, resId } = this.props.record;
         let worksheetData = false;
         if (this.check.worksheet_document) {
-            const sheet = await model.orm.read("quality.check", [resId], ["worksheet_document"]);
+            const sheet = await this.props.record.model.orm.read(
+                "quality.check",
+                [this.check.id],
+                ["worksheet_document"]
+            );
             worksheetData = {
                 resModel: "quality.check",
-                resId,
+                resId: this.check.id,
                 resField: "worksheet_document",
                 value: sheet[0].worksheet_document,
                 page: 1,
