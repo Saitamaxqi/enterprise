@@ -26,7 +26,7 @@ class KnowledgeController(http.Controller):
     def redirect_to_article(self, article_id, show_resolved_threads=False):
         """ This route will redirect internal users to the backend view of the
         article and the share users to the frontend view instead."""
-        article = request.env['knowledge.article'].search([('id', '=', article_id)])
+        article = request.env['knowledge.article'].with_context(active_test=False).search([('id', '=', article_id)])
         if not article:
             return werkzeug.exceptions.Forbidden()
 
