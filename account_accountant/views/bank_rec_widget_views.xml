@@ -367,7 +367,7 @@
             <field name="model">account.move.line</field>
             <field name="priority">999</field>
             <field name="arch" type="xml">
-                <list string="Journal Items to Match" create="false" edit="false" decoration-info="parent_state == 'draft'">
+                <list js_class="bank_rec_dialog_list" string="Journal Items to Match" create="false" edit="false" decoration-info="parent_state == 'draft'">
                     <field name="date"/>
                     <field name="move_name" string="Journal Entry" optional="show"/>
                     <field name="account_id" optional="hidden"/>
