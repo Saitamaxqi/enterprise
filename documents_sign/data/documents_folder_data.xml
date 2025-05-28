@@ -6,6 +6,7 @@
             <field name="name">Sign</field>
             <field name="type">folder</field>
             <field name="access_internal">view</field>
+            <field name="sequence">18</field>
         </record>
     </data>
 </odoo>

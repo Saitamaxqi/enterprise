@@ -21,7 +21,6 @@ class TestInvoices(AccountTestInvoicingCommon):
             "category": "upload_file",
             "folder_id": self.env.ref("documents.document_finance_folder").id,
             "res_model": "account.move",
-            "tag_ids": [(6, 0, [self.env.ref('documents.documents_tag_to_validate').id])],
         })
 
         st = self.env['account.bank.statement'].create({

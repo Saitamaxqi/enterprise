@@ -519,12 +519,11 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.env['res.lang']._activate_lang('fr_FR')
         doc = self.env['documents.document'].create({'name': 'A request', 'folder_id': self.folder_a.id})
         self.assertFalse(doc.available_embedded_actions_ids)
-        server_action = self.env.ref('documents.ir_actions_server_tag_add_validated')
-        server_action.with_context(lang='fr_FR').name = "Blablabla"
-        self.env['documents.document'].action_folder_embed_action(self.folder_a.id, server_action.id)
+        self.server_action.with_context(lang='fr_FR').name = "Blablabla"
+        self.env['documents.document'].action_folder_embed_action(self.folder_a.id, self.server_action.id)
         doc.invalidate_recordset(['available_embedded_actions_ids'])
         embedded_action = doc.available_embedded_actions_ids
-        self.assertEqual(embedded_action.name, server_action.name)
+        self.assertEqual(embedded_action.name, self.server_action.name)
         self.assertEqual(embedded_action.with_context(lang='fr_FR').name, "Blablabla")
 
     def test_document_thumbnail_status(self):

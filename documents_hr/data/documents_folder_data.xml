@@ -5,6 +5,7 @@
             <field name="access_internal">view</field>
             <field name="name">HR</field>
             <field name="type">folder</field>
+            <field name="sequence">20</field>
         </record>
     </data>
 </odoo>

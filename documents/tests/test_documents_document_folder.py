@@ -164,7 +164,16 @@ class TestDocumentsDocumentFolder(TransactionCase):
         })
         original_child = original_folder.children_ids[0]
         self.assertFalse(original_folder.available_embedded_actions_ids)
-        server_action = self.env.ref('documents.ir_actions_server_tag_add_validated')
+        server_action = self.env['ir.actions.server'].create({
+            'name': 'Send to Parent Folder',
+            'model_id': self.env.ref('documents.model_documents_document').id,
+            'type': 'ir.actions.server',
+            'group_ids': self.env.ref('base.group_user').ids,
+            'update_path': 'folder_id',
+            'usage': 'documents_embedded',
+            'state': 'object_write',
+            'resource_ref': f'documents.document,{self.parent_folder.id}',
+        })
         self.env['documents.document'].action_folder_embed_action(
             original_folder.id, server_action.id)
         original_child._compute_available_embedded_actions_ids()

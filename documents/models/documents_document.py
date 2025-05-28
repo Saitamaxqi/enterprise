@@ -2408,3 +2408,11 @@ class DocumentsDocument(models.Model):
                 },
             }
         }
+
+    @api.model
+    def _data_embed_if_records_exist(self, folder_xmlid, server_action_xmlid):
+        if (
+            (action := self.env.ref(server_action_xmlid, raise_if_not_found=False))
+            and (folder := self.env.ref(folder_xmlid, raise_if_not_found=False))
+        ):
+            self.action_folder_embed_action(folder.id, action.id)

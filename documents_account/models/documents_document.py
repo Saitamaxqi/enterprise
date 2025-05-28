@@ -3,6 +3,7 @@
 import base64
 import binascii
 import contextlib
+from datetime import datetime
 from itertools import chain
 from xml.etree import ElementTree
 
@@ -170,4 +171,58 @@ class DocumentsDocument(models.Model):
                 [('documents_account_journal_id', '=', False)],
                 [('documents_account_journal_id.company_id', '=', self.env.company.id)],
             ])
+        ])
+
+    @api.model
+    def _ensure_account_documents_exist(self):
+        self._load_records([
+            {
+                "xml_id": "documents.document_finance_folder",
+                "noupdate": True,
+                "values": {
+                    "type": "folder",
+                    "access_internal": "edit",
+                    "name": _("Finance"),
+                    "sequence": 10
+                }
+            }
+        ])
+        self._load_records([
+            {
+                "xml_id": "documents.document_finance_taxes_folder",
+                "noupdate": True,
+                "values": {
+                    "type": "folder",
+                    "access_internal": "edit",
+                    "folder_id": self.env.ref("documents.document_finance_folder").id,
+                    "name": _("Taxes"),
+                    "sequence": 120
+                }
+            }
+        ])
+        self._load_records([
+            {
+                "xml_id": "documents.document_finance_annual_closing_folder",
+                "noupdate": True,
+                "values": {
+                    "type": "folder",
+                    "access_internal": "edit",
+                    "folder_id": self.env.ref("documents.document_finance_folder").id,
+                    "name": _("Annual Closing"),
+                    "sequence": 130
+                }
+            },
+        ])
+        self._load_records([
+            {
+                "xml_id": "documents.document_finance_annual_closing_year_current_folder",
+                "noupdate": True,
+                "values": {
+                    "type": "folder",
+                    "access_internal": "edit",
+                    "folder_id": self.env.ref('documents.document_finance_annual_closing_folder').id,
+                    "name": str(datetime.now().year),
+                    "sequence": 200
+                }
+            },
         ])

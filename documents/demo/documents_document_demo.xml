@@ -54,17 +54,15 @@
         <record id="documents_vendor_bill_inv_007" model="documents.document" forcecreate="0">
             <field name="name">Invoice-INV_2018_0007.pdf</field>
             <field name="datas" type="base64" file="documents/demo/files/Invoice2018_0007.pdf"/>
-            <field name="folder_id" ref="documents.document_finance_folder"/>
+            <field name="folder_id" ref="documents.document_finance_taxes_folder"/>
             <field name="access_internal">edit</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_validated')])]"/>
         </record>
 
         <record id="documents_vendor_bill_extract_azure_interior_document" model="documents.document" forcecreate="0">
             <field name="name">invoice Azure Interior.pdf</field>
             <field name="datas" type="base64" file="documents/demo/files/invoice_azure_interior.pdf"/>
-            <field name="folder_id" ref="documents.document_finance_folder"/>
+            <field name="folder_id" ref="documents.document_finance_taxes_folder"/>
             <field name="access_internal">edit</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_to_validate')])]"/>
         </record>
 
         <!-- inbox -->
@@ -107,7 +105,6 @@
             <field name="mimetype">application/documents-email</field>
             <field name="folder_id" ref="documents.document_inbox_folder"/>
             <field name="access_internal">edit</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_inbox')])]"/>
         </record>
 
         <!-- marketing -->
@@ -117,41 +114,25 @@
             <field name="datas" type="base64" file="documents/demo/files/la.jpg"/>
             <field name="folder_id" ref="documents.document_marketing_brand1_folder"/>
             <field name="access_internal">edit</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_images')])]"/>
         </record>
 
         <record id="documents_attachment_sorry_netsuite_document" model="documents.document" forcecreate="0">
             <field name="name">Sorry Netsuite.jpg</field>
             <field name="datas" type="base64" file="documents/demo/files/sorry_netsuite.jpg"/>
             <field name="folder_id" ref="documents.document_marketing_brand1_shared_folder"/>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_ads')])]"/>
             <field name="access_internal">edit</field>
             <field name="access_via_link">view</field>
         </record>
 
         <!-- server action -->
         <record id="ir_actions_server_send_to_finance" model="ir.actions.server" forcecreate="0">
-            <field name="name">Send To Finance</field>
+            <field name="name">Send to Finance</field>
             <field name="model_id" ref="documents.model_documents_document"/>
             <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="state">code</field>
+            <field name="state">object_write</field>
             <field name="usage">documents_embedded</field>
-            <field name="code">
-target = env.ref('documents.document_finance_folder', raise_if_not_found=False)
-if target:
-    permissions = records.mapped('user_permission')
-    records.action_move_documents(target.id)
-    for record, permission in zip(records, permissions):
-        record.sudo().action_update_access_rights(partners={env.user.partner_id: (permission, None)})
-    action = {
-        'type': 'ir.actions.client',
-        'tag': 'display_notification',
-        'params': {
-            'message': env._("%(nb_records)s document(s) sent to Finance", nb_records=len(records)),
-            'type': 'success',
-        }
-    }
-            </field>
+            <field name="update_path">folder_id</field>
+            <field name="resource_ref" ref='documents.document_finance_folder'/>
         </record>
 
         <function model="documents.document" name="action_folder_embed_action" eval="[

@@ -10,8 +10,7 @@
             <field name="type">binary</field>
             <field name="attachment_id" ref="sign.attachment_sign_3"/>
             <field name="folder_id" ref="documents.document_internal_folder"/>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_validated'),
-                                               ref('documents.documents_tag_contracts'),
+            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_contracts'),
                                                ref('documents.documents_tag_hr')])]"/>
         </record>
 
@@ -20,8 +19,7 @@
             <field name="type">binary</field>
             <field name="attachment_id" ref="sign.attachment_sign_1"/>
             <field name="folder_id" ref="documents.document_internal_folder"/>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_validated'),
-                                               ref('documents.documents_tag_contracts'),
+            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_contracts'),
                                                ref('documents.documents_tag_hr')])]"/>
         </record>
 
