@@ -5,6 +5,7 @@ from odoo import http, fields
 from odoo.fields import Domain
 from odoo.http import request
 from odoo.tools import consteq
+from odoo.tools.image import image_data_uri
 
 class Frontdesk(http.Controller):
     def _get_additional_info(self, frontdesk, lang, is_mobile=False):
@@ -71,20 +72,60 @@ class Frontdesk(http.Controller):
         drink = request.env['frontdesk.drink'].sudo().browse(drink_id)
         return request.env['ir.binary']._get_image_stream_from(drink, 'drink_image').get_response()
 
-    @http.route('/frontdesk/<int:frontdesk_id>/<string:token>/get_hosts', type='jsonrpc', auth='public')
-    def get_hosts(self, frontdesk_id, token, name):
+    @http.route('/frontdesk/<int:frontdesk_id>/<string:token>/hosts_infos', type='jsonrpc', auth='public')
+    def hosts_infos(self, frontdesk_id, token, limit, offset, domain):
         frontdesk = request.env['frontdesk.frontdesk'].sudo().browse(frontdesk_id)
         if not frontdesk.exists() or not self._verify_token(frontdesk, token):
             return request.not_found()
-        domain = Domain([
+        base_domain = Domain([
             ('company_id', '=', frontdesk.company_id.id),
             '|',
                 ('work_email', '!=', False),
                 ('work_phone', '!=', False)
         ])
         if frontdesk.host_ids:
-            domain = Domain.AND([domain, [('id', 'in', frontdesk.host_ids.ids)]])
-        return request.env['hr.employee'].sudo().name_search(name, domain)
+            base_domain = Domain.AND([base_domain, [('id', 'in', frontdesk.host_ids.ids)]])
+        domain = Domain.AND([domain, base_domain])
+        employees = request.env['hr.employee'].sudo().search_fetch(
+            domain, ['id', 'display_name', 'job_id', 'avatar_128'],
+            limit=limit, offset=offset, order="name, id"
+        )
+        employees_data = [{
+            'id': employee.id,
+            'display_name': employee.display_name,
+            'job_id': employee.job_id.name,
+            'avatar': image_data_uri(employee.avatar_128),
+        } for employee in employees]
+        return {
+            'records': employees_data,
+            'length': request.env['hr.employee'].sudo().search_count(domain)
+        }
+
+    @http.route('/frontdesk/<int:frontdesk_id>/<string:token>/get_departments', type='jsonrpc', auth='public')
+    def get_departments(self, frontdesk_id, token):
+        frontdesk = request.env['frontdesk.frontdesk'].sudo().browse(frontdesk_id)
+        if not frontdesk.exists() or not self._verify_token(frontdesk, token):
+            return request.not_found()
+        departments = request.env['hr.department'].sudo().search([('company_id', '=', frontdesk.company_id.id)])
+        department_list = []
+        for department in departments:
+            employee_domain = Domain([
+                ('department_id', '=', department.id),
+                ('company_id', '=', frontdesk.company_id.id),
+                '|',
+                    ('work_email', '!=', False),
+                    ('work_phone', '!=', False)
+            ])
+            if frontdesk.host_ids:
+                employee_domain = Domain.AND([employee_domain, [('id', 'in', frontdesk.host_ids.ids)]])
+            employee_count = request.env['hr.employee'].sudo().search_count(employee_domain)
+            if employee_count:
+                department_list.append({
+                    'id': department.id,
+                    'name': department.name,
+                    'count': employee_count
+                })
+        return department_list
 
     @http.route('/frontdesk/<int:frontdesk_id>/<string:token>/prepare_visitor_data', type='jsonrpc', auth='public', methods=['POST'])
     def prepare_visitor_data(self, frontdesk_id, token, visitor_id=None, **kwargs):

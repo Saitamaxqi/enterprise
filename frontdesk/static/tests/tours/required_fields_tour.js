@@ -33,23 +33,23 @@ registry.category("web_tour.tours").add("required_fields_tour", {
             run: "click",
         },
         {
-            content: "Clicking on the selection field",
-            trigger: 'input[type="text"]',
+            content: "Click on Browse All Hosts button",
+            trigger: ".btn:contains('Browse All Hosts')",
             run: "click",
         },
         {
-            content: "Filling the details",
-            trigger: 'input[type="text"]',
+            content: "Search for host in manual selection",
+            trigger: 'input[placeholder="Search..."]',
             run: "edit Test",
         },
         {
-            content: "Select the host from the dropdown",
-            trigger: '.ui-autocomplete.dropdown-menu a:contains("Test Host Employee")',
+            content: "Select the host from the card list",
+            trigger: '.card:contains("Test Host Employee")',
             run: "click",
         },
         {
-            content: "Click on the check in button",
-            trigger: ".btn:contains('Confirm')",
+            content: "Click on the Continue button",
+            trigger: ".btn:contains('Continue')",
             run: "click",
         },
         {

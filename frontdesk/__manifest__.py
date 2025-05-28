@@ -55,6 +55,7 @@
             'web/static/lib/bootstrap/scss/_variables-dark.scss',
             'web/static/lib/bootstrap/scss/_maps.scss',
             ("include", "web._assets_bootstrap_frontend"),
+            ('include', 'web._assets_bootstrap_backend'),
 
             #4 Frontdesk's specific assets
             'web/static/lib/zxing-library/zxing-library.js',

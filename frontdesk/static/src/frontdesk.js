@@ -211,6 +211,7 @@ export class Frontdesk extends Component {
                 token: this.token,
                 showScreen: this.showScreen.bind(this),
                 setHostData: this.setHostData.bind(this),
+                theme: this.station.theme,
             };
         } else if (this.state.currentComponent === RegisterPage) {
             props = {

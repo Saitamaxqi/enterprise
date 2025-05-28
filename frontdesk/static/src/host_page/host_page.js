@@ -1,19 +1,21 @@
 import { registry } from "@web/core/registry";
 import { Component, useState } from "@odoo/owl";
-import { Many2One } from "./many2one/many2one";
+import { HostManualSelection } from "@frontdesk/host_page/host_manual_selection";
 
 export class HostPage extends Component {
     static template = "frontdesk.HostPage";
-    static components = { Many2One };
+    static components = { HostManualSelection };
     static props = {
         setHostData: Function,
         showScreen: Function,
         stationId: Number,
         token: String,
+        theme: String,
     };
 
     setup() {
         this.state = useState({
+            showManualSelection: false,
             hostName: "",
         });
     }
@@ -35,6 +37,15 @@ export class HostPage extends Component {
     selectedHost(host) {
         this.host = host;
         this.state.hostName = host?.display_name ?? "";
+        this.state.showManualSelection = false;
+    }
+
+    showManualSelection() {
+        this.state.showManualSelection = true;
+    }
+
+    goBackFromManualSelection() {
+        this.state.showManualSelection = false;
     }
 }
 
