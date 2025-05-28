@@ -34,7 +34,6 @@ class TestChatbotCreateTicket(HelpdeskChatbotCase):
 
     def _chatbot_create_helpdesk_ticket(self):
         data = self.make_jsonrpc_request("/im_livechat/get_session", {
-            'anonymous_name': 'Test Visitor',
             'channel_id': self.livechat_channel.id,
             'chatbot_script_id': self.chatbot_script.id,
         })
