@@ -4,7 +4,7 @@
         <div t-attf-class="o_sign_sidebar_signer border-bottom {{ props.isCollapsed || props.hasSignRequests ? '' : 'o_sign_sidebar_signer_selected' }}" t-on-click="() => this.onExpandSigner(props.id)">
             <div class="o_sign_sidebar_signer_header">
                 <div t-attf-class="{{ (props.hasSignRequests || props.isCollapsed || !state.canEditSignerName) ? 'd-none' : 'o_sign_sidebar_signer_header' }} d-flex flex-grow-1">
-                    <div class="o_sign_sidebar_role_input_container w-100">
+                    <div class="o_sign_sidebar_role_input_container w-100 mx-1">
                         <input type="text"
                             t-att-data-role-id="props.roleId"
                             t-att-value="state.roleName"
@@ -19,7 +19,7 @@
                     t-on-click="onSignerNameTextClick"
                     t-att-data-role-id="props.roleId"
                 >
-                    <span t-att-title="state.roleName">
+                    <span t-att-title="state.roleName" class="mx-1">
                         <t t-esc="state.roleName"/>
                     </span>
                 </span>

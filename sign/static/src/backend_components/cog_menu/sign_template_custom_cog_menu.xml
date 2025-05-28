@@ -16,7 +16,7 @@
                         <i class="fa fa-save fa-fw"/> Save as Template
                     </DropdownItem>
                 </t>
-                <t t-else="">
+                <t t-if="env.debug">
                     <DropdownItem class="'o_menu_item'" onSelected.bind="onTemplatePropertiesClick">
                         <i class="fa fa-cog fa-fw"/> Properties
                     </DropdownItem>

@@ -16,7 +16,7 @@ class SignItemRole(models.Model):
 
     auth_method = fields.Selection(string="Extra Authentication Step", selection=[
         ('sms', 'Unique Code via SMS')
-    ], default=False, help="Force the signatory to identify using a second authentication method")
+    ], placeholder="by email, by phone, etc.", default=False, help="Force the signatory to identify using a second authentication method")
 
     change_authorized = fields.Boolean('Change Authorized', help="If checked, recipient of a document with this role can be changed after having sent the request. Useful to replace a signatory who is out of office, etc.")
 
