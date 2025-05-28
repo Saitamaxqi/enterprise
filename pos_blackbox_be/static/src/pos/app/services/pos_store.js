@@ -452,38 +452,53 @@ patch(PosStore.prototype, {
             ],
         ]);
     },
-    //#region Push to Blackbox
+    /**
+     * #region Push to Blackbox
+     * Push data to the blackbox using either longpolling or websocket.
+     *
+     * @param {Object} data The data to send to the blackbox.
+     * @param {string} action The action to perform on the blackbox, e.g. "registerReceipt", "registerPIN", etc.
+     * @return {Promise<Object>} The data returned from the blackbox, should look like this:
+     * ```
+     * {
+     *      value: {
+     *          signature: "123456789",
+     *          vsc: "123456789",
+     *          fdm_number: "123456789",
+     *          ticket_counter: 12,
+     *          total_ticket_counter: 99,
+     *          time: "123456",
+     *          date: "20240101",
+     *          // error: {
+     *          //     errorCode: "209000",
+     *          //     errorMessage: "Fiscal Data Module real time clock corrupt.",
+     *          // },
+     *          error: {
+     *              errorCode: "000000",
+     *              errorMessage: "No error.",
+     *          },
+     *      },
+     * };
+     * ```
+     */
     async pushDataToBlackbox(data, action) {
-        // The return value should be someting like this:
-        // {
-        //     value: {
-        //         signature: "123456789",
-        //         vsc: "123456789",
-        //         fdm_number: "123456789",
-        //         ticket_counter: 12,
-        //         total_ticket_counter: 99,
-        //         time: "123456",
-        //         date: "20240101",
-        //         // error: {
-        //         //     errorCode: "209000",
-        //         //     errorMessage: "Fiscal Data Module real time clock corrupt.",
-        //         // },
-        //         error: {
-        //             errorCode: "000000",
-        //             errorMessage: "No error.",
-        //         },
-        //     },
-        // };
         const fdm = this.hardwareProxy.deviceControllers.fiscal_data_module;
+
         return new Promise((resolve, reject) => {
-            fdm.addListener((data) => {
-                fdm.removeListener(data);
-                return data.status.status === "connected" ? resolve(data) : reject(data);
-            });
-            fdm.action({
-                action: action,
-                high_level_message: data,
-            });
+            const callback = (result) => {
+                if (result?.status?.status !== "connected") {
+                    reject(result);
+                } else {
+                    resolve(result);
+                }
+            };
+            this.iotHttp.action(
+                fdm.iotId,
+                fdm.identifier,
+                { action, high_level_message: data },
+                callback,
+                callback
+            );
         });
     },
     async pushOrderToBlackbox(order) {

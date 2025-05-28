@@ -29,11 +29,12 @@ patch(IoTLongpolling.prototype, {
      * @param iotBoxIp IP Address of the IoT Box
      * @param message Data to send to the device
      * @param messageId Unique identifier for the message
+     * @param fallback If longpolling has a fallback option (e.g. websocket), do not display errors to the user
      * @returns {Promise<*>} messageId if the request didn't throw an error
      */
-    async sendMessage(iotBoxIp, message, messageId = null) {
+    async sendMessage(iotBoxIp, message, messageId = null, fallback = false) {
         messageId ??= uuid();
-        await this._rpcIoT(iotBoxIp, '/hw_drivers/action', { session_id: messageId, ...message });
+        await this._rpcIoT(iotBoxIp, '/hw_drivers/action', { session_id: messageId, ...message }, undefined, fallback);
 
         return messageId;
     },
@@ -49,15 +50,15 @@ patch(IoTLongpolling.prototype, {
         iotBoxIp,
         iotDeviceIdentifier,
         onSuccess = (_message, _deviceIdentifier, _messageId) => {},
-        onFailure = (_deviceIdentifier, _messageId) => {},
+        onFailure = (_message, _deviceIdentifier, _messageId) => {},
     ) {
         const listenerId = uniqueId('listener-');
         const listenerCallback = (message) => {
             this.removeListener(iotBoxIp, iotDeviceIdentifier, listenerId);
-            if (message.status !== 'success') {
-                onFailure(iotDeviceIdentifier, listenerId);
-            } else {
+            if (message.status === "success" || message.status?.status === "connected") { // 'connected' is the serial driver success status
                 onSuccess(message, iotDeviceIdentifier, listenerId);
+            } else {
+                onFailure(message, iotDeviceIdentifier, listenerId);
             }
         }
         return this.addListener(iotBoxIp, [ iotDeviceIdentifier ], listenerId, listenerCallback, true);

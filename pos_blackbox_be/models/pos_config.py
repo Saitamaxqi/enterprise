@@ -275,7 +275,7 @@ class PosConfig(models.Model):
                     "id": iface_fiscal_data_module.id,
                 }],
             },
-            "action": "registerReceiptWeb",
+            "action": "registerReceipt",
             "high_level_message": blackbox_data,
             "id": order.id,
         }

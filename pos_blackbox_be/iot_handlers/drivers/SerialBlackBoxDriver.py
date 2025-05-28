@@ -5,7 +5,6 @@ import serial
 import requests
 
 from odoo.addons.hw_drivers.tools import helpers
-from odoo.addons.hw_drivers.event_manager import event_manager
 from odoo.addons.hw_drivers.iot_handlers.drivers.SerialBaseDriver import SerialDriver, SerialProtocol, serial_connection
 
 _logger = logging.getLogger(__name__)
@@ -71,7 +70,6 @@ class BlackBoxDriver(SerialDriver):
         """Initializes `self._actions`, a map of action keys sent by the frontend to backend action methods."""
 
         self._actions.update({
-            'registerReceiptWeb': self._request_registerReceiptWeb,  # 'H' from server (websocket) so requires an answer
             'registerReceipt': self._request_registerReceipt,  # 'H'
             'registerPIN': self._request_registerPIN,  # 'P'
         })
@@ -187,16 +185,6 @@ class BlackBoxDriver(SerialDriver):
         except requests.exceptions.RequestException:
             _logger.exception('Could not reach confirmation status URL: %s', server_url)
 
-    def _request_registerReceiptWeb(self, data):
-        self._request_registerReceipt(data)
-
-        self.send_blackbox_response({
-            'order_id': data['id'],
-            'device_identifier': self.device_identifier,
-            'blackbox_response': self.data['value'],
-            'iot_mac': helpers.get_identifier()
-        })
-
     def _request_registerReceipt(self, data):
         if data['high_level_message'].get('clock'):
             packet = self._wrap_low_level_message_around(self._wrap_high_level_message_around('I', data['high_level_message']))
@@ -206,14 +194,12 @@ class BlackBoxDriver(SerialDriver):
         blackbox_response = self._send_to_blackbox(packet, 109, self._connection)
         if blackbox_response:
             self.data['value'] = self._parse_blackbox_response(blackbox_response)
-        event_manager.device_changed(self)
 
     def _request_registerPIN(self, data):
         packet = self._wrap_low_level_message_around("P040%s" % data['high_level_message'])
         blackbox_response = self._send_to_blackbox(packet, 35, self._connection)
         if blackbox_response:
             self.data['value'] = self._parse_blackbox_response(blackbox_response)
-        event_manager.device_changed(self)
 
     def _send_to_blackbox(self, packet, response_size, connection):
         """Sends a message to and wait for a response from the blackbox.

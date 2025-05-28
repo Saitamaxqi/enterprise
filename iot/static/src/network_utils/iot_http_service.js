@@ -1,6 +1,5 @@
 import { registry } from "@web/core/registry";
 import { post } from "@iot_base/network_utils/http";
-import { IoTLongpolling } from "@iot_base/network_utils/longpolling"
 import { IotWebsocket } from "@iot/network_utils/iot_websocket";
 import { _t } from "@web/core/l10n/translation";
 
@@ -43,7 +42,7 @@ export class IotAction {
         deviceIdentifier,
         data,
         onSuccess = (_message, _deviceIdentifier, _operationId) => {},
-        onFailure = (deviceIdentifier, messageId) => this.onFailure(deviceIdentifier, messageId),
+        onFailure = (_message, deviceIdentifier, messageId) => this.onFailure(deviceIdentifier, messageId),
     ) {
         if (!["number", "string"].includes(typeof iotBoxId)) {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
@@ -54,7 +53,7 @@ export class IotAction {
         const connectionTypes = [
             async () => {
                 this.longpolling.onMessage(ip, deviceIdentifier, onSuccess); // failure handled by websocket
-                await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data });
+                await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, null, true);
             },
             async () => {
                 this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailure);
@@ -78,15 +77,14 @@ export class IotAction {
 
 
 export const iotHttpService = {
-    dependencies: ["notification", "orm", "bus_service"],
+    dependencies: ["notification", "orm", "bus_service", "iot_longpolling"],
 
-    start(env, { notification, orm, bus_service }) {
-        const iotLongpolling = new IoTLongpolling({ notification, orm });
+    start(env, { notification, orm, bus_service, iot_longpolling }) {
         const iotWebsocket = new IotWebsocket({ bus_service, orm });
 
         const longpolling = {
-            sendMessage: iotLongpolling.sendMessage.bind(iotLongpolling),
-            onMessage: iotLongpolling.onMessage.bind(iotLongpolling),
+            sendMessage: iot_longpolling.sendMessage.bind(iot_longpolling),
+            onMessage: iot_longpolling.onMessage.bind(iot_longpolling),
         };
 
         const websocket = {
@@ -94,7 +92,7 @@ export const iotHttpService = {
             onMessage: iotWebsocket.onMessage.bind(iotWebsocket),
         }
 
-        const iotAction = new IotAction(iotLongpolling, iotWebsocket, notification, orm);
+        const iotAction = new IotAction(iot_longpolling, iotWebsocket, notification, orm);
         const action = iotAction.action.bind(iotAction);
 
         // Expose only those functions to the environment

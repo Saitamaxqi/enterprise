@@ -1,11 +1,19 @@
 import { patch } from "@web/core/utils/patch";
-import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { PosStore, posService } from "@point_of_sale/app/services/pos_store";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { DeviceController } from "@iot_base/device_controller";
 import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
 
+patch(posService, {
+    dependencies: [...posService.dependencies, "iot_http"],
+});
+
 patch(PosStore.prototype, {
+    async setup(env, { iot_http }) {
+        await super.setup(...arguments);
+        this.iotHttp = iot_http;
+    },
     async processServerData(loadedData) {
         await super.processServerData(...arguments);
 

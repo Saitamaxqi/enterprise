@@ -47,7 +47,7 @@ export class IotWebsocket {
         iotBoxIdentifier,
         deviceIdentifier,
         onSuccess = (_message, _deviceIdentifier, _messageId) => {},
-        onFailure = (_messageId, _deviceIdentifier) => {},
+        onFailure = (_message, _messageId, _deviceIdentifier) => {},
         messageType = 'operation_confirmation',
     ) {
         if (!this.iotChannel) {
