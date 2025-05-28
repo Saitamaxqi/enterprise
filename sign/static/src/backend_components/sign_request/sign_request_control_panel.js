@@ -32,6 +32,8 @@ function useResendButtons() {
                 ".o_sign_signer_status.o_sign_signer_waiting"
             );
             Array.from(signerNames).forEach((signerNameEl) => {
+                signerNameEl.style.display = "flex";
+                signerNameEl.style.alignItems = "flex-end";
                 const stateSet =
                     component.signInfo.get("requestItemStates")[signerNameEl.dataset.id];
                 const title = stateSet ? _t("Resend the invitation") : _t("Send the invitation");
@@ -40,8 +42,7 @@ function useResendButtons() {
                 button.title = title;
                 button.innerText = text;
                 button.className = "o_sign_resend_access_button btn btn-link ms-2 me-2";
-                button.style = "vertical-align: baseline;";
-                signerNameEl.insertBefore(button, signerNameEl.firstChild);
+                signerNameEl.appendChild(button);
                 button.addEventListener("click", onClickResend);
             });
         },
