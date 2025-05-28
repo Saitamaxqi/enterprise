@@ -130,6 +130,9 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
         with self.mockWhatsappGateway():
             self._receive_whatsapp_message(self.whatsapp_account, "test", "32499123456")
         discuss_channel = self.assertWhatsAppDiscussChannel("32499123456", wa_msg_count=1, msg_count=1)
+        channel = (self.cr.dbname, "discuss.channel", discuss_channel.id)
+        partner = self.env.user.partner_id
+        guest = self.env["mail.guest"]
         message = discuss_channel.message_ids[0]
         with self.mockWhatsappGateway():
             self._receive_whatsapp_message(
@@ -143,10 +146,7 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
                 },
             )
         with self.assertBus(
-            [
-                (self.cr.dbname, "discuss.channel", discuss_channel.id),
-                (self.cr.dbname, "discuss.channel", discuss_channel.id),
-            ],
+            [channel] * 2,
             [
                 {
                     "type": "mail.record/insert",
@@ -204,3 +204,86 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
                         "type": "reaction",
                     },
                 )
+
+        reaction = message.reaction_ids
+        self.assertEqual(len(reaction), 1, "One reaction should be present.")
+        self.assertEqual(reaction.content, "👍", "The reaction emoji should be 👍.")
+        self._reset_bus()
+        with self.assertBus(
+            [channel] * 3,
+            [{
+                "type": "mail.record/insert",
+                "payload": {
+                    "MessageReactions": [{
+                        "content": "🚀",
+                        "count": 1,
+                        "guests": [],
+                        "message": message.id,
+                        "partners": [partner.id],
+                        "sequence": message.reaction_ids.ids[0] + 1,
+                    }],
+                    "mail.message": self._filter_messages_fields({
+                        "id": message.id,
+                        "reactions": [["ADD", [{"message": message.id, "content": "🚀"}]]],
+                    }),
+                    "res.partner": self._filter_partners_fields({
+                        "avatar_128_access_token": partner._get_avatar_128_access_token(),
+                        "id": partner.id,
+                        "name": partner.name,
+                        "write_date": fields.Datetime.to_string(partner.write_date),
+                    }),
+                },
+            }, {
+                "type": "mail.record/insert",
+                "payload": {
+                    "mail.message": self._filter_messages_fields({
+                        "id": message.id,
+                        "reactions": [["DELETE", {"message": message.id, "content": "🚀"}]],
+                    }),
+                },
+            }, {
+                "type": "mail.record/insert",
+                "payload": {
+                    "MessageReactions": [{
+                        "content": "🔥",
+                        "count": 1,
+                        "guests": [],
+                        "message": message.id,
+                        "partners": [partner.id],
+                        "sequence": message.reaction_ids.ids[0] + 2,
+                    }],
+                    "mail.message": self._filter_messages_fields({
+                        "id": message.id,
+                        "reactions": [["ADD", [{"message": message.id, "content": "🔥"}]]],
+                    }),
+                    "res.partner": self._filter_partners_fields({
+                        "avatar_128_access_token": partner._get_avatar_128_access_token(),
+                        "id": partner.id,
+                        "name": partner.name,
+                        "write_date": fields.Datetime.to_string(partner.write_date),
+                    }),
+                },
+            }]
+        ):
+            with self.mockWhatsappGateway():
+                # Add first reaction 🚀 (user sent)
+                message._message_reaction("🚀", "add", partner, guest)
+
+                # Assert total 2 reactions now (🚀 from Odoo user, 👍 from WA user)
+                reactions = message.reaction_ids
+                self.assertEqual(len(reactions), 2)
+                self.assertSetEqual(set(reactions.mapped("content")), {"🚀", "👍"})
+
+                # Replace 🚀 with 🔥
+                message._message_reaction("🔥", "add", partner, guest)
+
+                # Assert reaction still count to 2, and Odoo user reaction is 🔥
+                reactions = message.reaction_ids
+                self.assertEqual(len(reactions), 2)
+                self.assertSetEqual(set(reactions.mapped("content")), {"🔥", "👍"})
+
+                # Try re-adding 🔥 (should not resend API call)
+                message._message_reaction("🔥", "add", partner, guest)
+
+            self.assertEqual(len(self._wa_msg_sent_vals), 2, "Two API calls should've been made for two different emojis (🚀 → 🔥).")
+            self.assertEqual(self._wa_msg_sent_vals[-1]["emoji"], "🔥", "Last API call should've sent 🔥 as emoji.")

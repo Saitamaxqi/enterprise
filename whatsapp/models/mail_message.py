@@ -2,6 +2,9 @@
 
 from odoo import models, fields
 from odoo.addons.mail.tools.discuss import Store
+from odoo.addons.whatsapp.tools.whatsapp_api import WhatsAppApi
+from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
+from odoo.exceptions import UserError
 
 
 class MailMessage(models.Model):
@@ -12,6 +15,36 @@ class MailMessage(models.Model):
         ondelete={'whatsapp_message': lambda recs: recs.write({'message_type': 'comment'})},
     )
     wa_message_ids = fields.One2many('whatsapp.message', 'mail_message_id', string='Related WhatsApp Messages')
+
+    def _message_reaction(self, content, action, partner, guest, store: Store = None):
+        if self.message_type == "whatsapp_message" and self.wa_message_ids:
+            if action == "add":
+                # Only allow one emoji, remove any existing one first
+                previous_reaction = self.env["mail.message.reaction"].search([
+                    ("message_id", "=", self.id),
+                    ("partner_id", "=", partner.id),
+                    ("guest_id", "=", guest.id),
+                ], limit=1)
+                if previous_reaction:
+                    # If the same reaction already exists, do nothing
+                    previous_reaction_emoji = previous_reaction.content
+                    if previous_reaction_emoji == content:
+                        return
+                    previous_reaction.unlink()
+                    self._bus_send_reaction_group(previous_reaction_emoji)
+
+            wa_msg = self.wa_message_ids[0]
+            wa_api = WhatsAppApi(wa_msg.wa_account_id)
+            send_vals = {
+                "message_id": wa_msg.msg_uid,
+                "emoji": content if action == "add" else ""
+            }
+            try:
+                wa_api._send_whatsapp(wa_msg.mobile_number, message_type="reaction", send_vals=send_vals)
+            except WhatsAppError as e:
+                raise UserError(str(e))
+
+        super()._message_reaction(content, action, partner, guest, store)
 
     def _post_whatsapp_reaction(self, reaction_content, partner_id):
         self.ensure_one()

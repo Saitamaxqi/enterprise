@@ -248,7 +248,7 @@ class WhatsAppApi:
                     'message_id': parent_message_id
                 },
             })
-        if message_type in ('template', 'text', 'document', 'image', 'audio', 'video'):
+        if message_type in ('template', 'text', 'document', 'image', 'audio', 'video', 'reaction'):
             data.update({
                 'type': message_type,
                 message_type: send_vals
