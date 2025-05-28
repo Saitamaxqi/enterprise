@@ -23,14 +23,15 @@ class QualityCheck(models.Model):
 
     worksheet_template_id = fields.Many2one(
         'worksheet.template', 'Quality Template',
-        domain="[('res_model', '=', 'quality.check'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+        domain="[('res_model', '=', 'quality.check'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        compute='_compute_worksheet_template_id', store=True, readonly=False)
     worksheet_count = fields.Integer(compute='_compute_worksheet_count')
 
-    @api.onchange('point_id')
-    def _onchange_point_id(self):
-        super()._onchange_point_id()
-        if self.point_id and self.point_id.test_type == 'worksheet':
-            self.worksheet_template_id = self.point_id.worksheet_template_id
+    @api.depends('point_id')
+    def _compute_worksheet_template_id(self):
+        for check in self:
+            if check.point_id and check.point_id.test_type == 'worksheet':
+                check.worksheet_template_id = check.point_id.worksheet_template_id
 
     @api.depends('worksheet_template_id')
     def _compute_worksheet_count(self):

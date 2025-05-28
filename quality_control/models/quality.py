@@ -8,10 +8,12 @@ import random
 from odoo import api, Command, models, fields, _
 from odoo.fields import Domain
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_round, SQL
+from odoo.exceptions import ValidationError
 
 
 class QualityPoint(models.Model):
     _inherit = "quality.point"
+    _rec_names_search = ["name", "title"]
 
     failure_message = fields.Html('Failure Message')
     measure_on = fields.Selection([
@@ -52,13 +54,9 @@ class QualityPoint(models.Model):
     )
 
     @api.depends('name', 'title')
-    @api.depends_context('on_demand_wizard')
     def _compute_display_name(self):
-        if 'on_demand_wizard' in self.env.context:
-            for record in self:
-                record.display_name = f'{record.name} - {record.title}' if record.title else record.name
-        else:
-            super()._compute_display_name()
+        for point in self:
+            point.display_name = f'{point.name} - {point.title}' if point.title else point.name
 
     @api.depends('testing_percentage_within_lot')
     def _compute_is_lot_tested_fractionally(self):
@@ -206,6 +204,14 @@ class QualityPoint(models.Model):
 class QualityCheck(models.Model):
     _inherit = "quality.check"
 
+    product_id = fields.Many2one(
+        compute='_compute_product_id',
+        store=True, readonly=False)
+
+    lot_ids = fields.Many2many(
+        compute='_compute_lot_ids',
+        store=True, readonly=False)
+
     failure_message = fields.Html(related='point_id.failure_message', readonly=True)
     measure = fields.Float('Measure', default=0.0, digits='Quality Tests', tracking=True)
     measure_success = fields.Selection([
@@ -223,6 +229,7 @@ class QualityCheck(models.Model):
         ('operation', 'Operation'),
         ('product', 'Product'),
         ('move_line', 'Quantity')], string="Control per", default='product', required=True,
+        compute="_compute_measure_on", store=True,
         help="""Operation = One quality check is requested at the operation level.
                   Product = A quality check is requested per product.
                  Quantity = A quality check is requested for each new product quantity registered, with partial quantity checks also possible.""")
@@ -247,10 +254,61 @@ class QualityCheck(models.Model):
         'quality.check.spreadsheet',
         domain="[('company_id', 'in', company_ids)]",
     )
-    spreadsheet_check_cell = fields.Char(
-        related="spreadsheet_id.check_cell",
-        readonly=False,
+    allowed_product_ids = fields.Many2many('product.product', compute='_compute_allowed_product_ids')
+    spreadsheet_template_id = fields.Many2one(
+        'quality.spreadsheet.template',
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        store=True, copy=True, compute='_compute_spreadsheet_template_id',
     )
+    hide_picking_id = fields.Integer(compute='_compute_hide_picking_id')
+    hide_production_id = fields.Integer(compute='_compute_hide_production_id')
+    hide_repair_id = fields.Integer(compute='_compute_hide_repair_id')
+
+    @api.depends('picking_id')
+    def _compute_allowed_product_ids(self):
+        for check in self:
+            check.allowed_product_ids = False
+            if check.picking_id:
+                check.allowed_product_ids = check.picking_id.move_ids.product_id
+
+    @api.depends('picking_id')
+    def _compute_hide_picking_id(self):
+        for check in self:
+            check.hide_picking_id = check._should_hide_picking_id()
+
+    @api.depends('picking_id')
+    def _compute_hide_production_id(self):
+        for check in self:
+            check.hide_production_id = check._should_hide_production_id()
+
+    @api.depends('picking_id')
+    def _compute_hide_repair_id(self):
+        for check in self:
+            check.hide_repair_id = check._should_hide_repair_id()
+
+    @api.depends('point_id')
+    def _compute_spreadsheet_template_id(self):
+        for check in self:
+            if check.point_id and check.point_id.spreadsheet_template_id:
+                check.spreadsheet_template_id = check.point_id.spreadsheet_template_id
+
+    @api.depends('point_id')
+    def _compute_measure_on(self):
+        for check in self:
+            if check.point_id:
+                check.measure_on = check.point_id.measure_on
+
+    @api.depends('measure_on')
+    def _compute_product_id(self):
+        for check in self:
+            if check.measure_on == 'operation':
+                check.product_id = False
+
+    @api.depends('measure_on')
+    def _compute_lot_ids(self):
+        for check in self:
+            if check.measure_on == 'operation':
+                check.lot_ids = False
 
     @api.depends('measure_success')
     def _compute_warning_message(self):
@@ -325,6 +383,21 @@ class QualityCheck(models.Model):
                 qc.show_lot_text = False
             else:
                 qc.show_lot_text = True
+
+    @api.constrains('product_id', 'picking_id')
+    def _check_allowed_product_ids_with_picking(self):
+        for check in self:
+            if check.product_id and check.picking_id and check.product_id not in check.picking_id.move_ids.product_id:
+                raise ValidationError(_("%(product_name)s is not in Picking %(picking_name)s", product_name=check.product_id.name, picking_name=check.picking_id.name))
+
+    def _should_hide_production_id(self):
+        return 1 if bool(self.picking_id) else 0
+
+    def _should_hide_repair_id(self):
+        return 1 if bool(self.picking_id) else 0
+
+    def _should_hide_picking_id(self):
+        return -1 if bool(self.picking_id) else 0
 
     def _is_pass_fail_applicable(self):
         if self.test_type in ['passfail', 'measure']:
@@ -410,7 +483,7 @@ class QualityCheck(models.Model):
 
     def _create_spreadsheet_from_template(self):
         self.ensure_one()
-        spreadsheet_template = self.point_id.spreadsheet_template_id
+        spreadsheet_template = self.spreadsheet_template_id
         spreadsheet = self.env['quality.check.spreadsheet'].create({
             'name': spreadsheet_template.name,
             'spreadsheet_data': spreadsheet_template.spreadsheet_data,
@@ -515,9 +588,14 @@ class QualityCheck(models.Model):
             action_name += ' : %s' % self.product_id.display_name
         if self.qty_line and self.uom_id:
             action_name += ' - %s %s' % (self.qty_line, self.uom_id.name)
-        if self.lot_name or self.lot_line_id:
-            action_name += ' - %s' % (self.lot_name or self.lot_line_id.name)
+        if self.lot_name or self.lot_line_id or self.lot_ids:
+            action_name += ' - %s' % (self.lot_name or self.lot_line_id.name or self.lot_ids.name)
         return action_name
+
+    def _get_type_default_domain(self):
+        domain = super()._get_type_default_domain()
+        domain.append(('technical_name', '=', 'passfail'))
+        return domain
 
 
 class QualityAlert(models.Model):

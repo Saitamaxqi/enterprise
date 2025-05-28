@@ -7,7 +7,7 @@ patch(BarcodePickingModel.prototype, {
 
     get displayOnDemandQualityCheckButton() {
         const { record } = this;
-        return record && record.id && !["draft", "done", "cancel"].includes(record.state);
+        return record && record.id;
     },
 
     get hasQualityChecksTodo() {
@@ -41,9 +41,14 @@ patch(BarcodePickingModel.prototype, {
 
     async onDemandQualityCheck() {
         await this.save();
-        const res = await this.orm.call(this.resModel, "action_open_on_demand_quality_check", [
-            [this.resId],
-        ]);
+        const res = await this.orm.call(
+            this.resModel,
+            "action_open_on_demand_quality_check",
+            [[this.resId]],
+            {
+                context: { from_barcode: true },
+            }
+        );
         if (typeof res === "object" && res !== null) {
             return this.action.doAction(res, {
                 onClose: () => this.trigger("refresh", { recordId: this.record.id }),

@@ -18,9 +18,8 @@ class StockPicking(models.Model):
         for picking in self:
             todo = False
             fail = False
-            checkable_products = picking.move_line_ids.filtered(lambda ml: not float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)).mapped('product_id')
             for check in picking.check_ids:
-                if check.quality_state == 'none' and (check.product_id in checkable_products or check.measure_on == 'operation'):
+                if check.quality_state == 'none':
                     todo = True
                 elif check.quality_state == 'fail':
                     fail = True
@@ -105,19 +104,15 @@ class StockPicking(models.Model):
 
     def action_open_on_demand_quality_check(self):
         self.ensure_one()
-        if self.state in ['draft', 'done', 'cancel']:
-            raise UserError(_('You can not create quality check for a draft, done or cancelled transfer.'))
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('On-Demand Quality Check'),
-            'res_model': 'quality.check.on.demand',
-            'views': [(self.env.ref('quality_control.quality_check_on_demand_view_form').id, 'form')],
-            'target': 'new',
-            'context': {
-                'default_picking_id': self.id,
-                'on_demand_wizard': True,
-            }
+        action = self.env["ir.actions.actions"]._for_xml_id("quality_control.quality_check_action_main")
+        action['views'] = [(False, 'form')]
+        action['context'] = {
+            **self.env.context,
+            'default_product_id': self.product_id.id if len(self.move_ids.ids) == 1 else False,
+            'default_product_tmpl_id': self.move_ids.product_tmpl_id.ids,
+            'default_picking_id': self.id,
         }
+        return action
 
     def button_quality_alert(self):
         self.ensure_one()

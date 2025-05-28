@@ -70,6 +70,9 @@
             <xpath expr="//field[@name='measure_on']" position="after">
                 <field name="operation_id" string="Work Order Operation" invisible="not operation_id" groups="mrp.group_mrp_routings"/>
             </xpath>
+            <xpath expr="//field[@name='point_id']" position="attributes">
+                <attribute name="domain">[('operation_id', '=', False)]</attribute>
+            </xpath>
         </field>
     </record>
 

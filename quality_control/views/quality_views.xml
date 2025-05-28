@@ -225,14 +225,15 @@
                     <group>
                         <group>
                             <field name="company_id" invisible="1"/>
-                            <field name="product_id" invisible="measure_on == 'operation'"/>
+                            <field name="title"/>
                             <field name="measure_on" readonly="point_id"/>
+                            <field name="product_id" invisible="measure_on == 'operation'" domain="[('id', 'in', allowed_product_ids), ('type', '=', 'consu')] if allowed_product_ids else [('type', '=', 'consu')]"/>
                             <field name="show_lot_text" invisible="1"/>
                             <field name="move_line_id" invisible="1"/>
                             <field name="product_tracking" invisible="1"/>
                             <field name="is_lot_tested_fractionally" invisible="1"/>
                             <field name="lot_name" invisible="product_tracking == 'none' or not show_lot_text or not move_line_id"/>
-                            <field name="lot_ids" invisible="product_tracking == 'none' or show_lot_text" widget="many2many_tags" options="{'edit_tags': True}"/>
+                            <field name="lot_ids" invisible="product_tracking == 'none' or show_lot_text or not product_id or measure_on == 'operation'" widget="many2many_tags" options="{'edit_tags': True} or not product_id or measure_on == 'operation'" context="{'default_product_id': product_id}"/>
                             <label for="qty_line" invisible="not move_line_id or quality_state == 'fail'"/>
                             <label for="qty_line" invisible="not move_line_id or quality_state != 'fail'" string="Failed Quantity"/>
                             <div class="o_row" invisible="not move_line_id">
@@ -255,10 +256,16 @@
                             <field name="alert_ids" invisible="1"/>
                         </group>
                         <group>
-                            <field name="picking_id" invisible="quality_state in ('pass', 'fail') and not picking_id"/>
+                            <field name="picking_id" invisible="(quality_state in ('pass', 'fail') and not picking_id) or context.get('from_barcode') or hide_picking_id > 0"/>
                             <field name="point_id"/>
-                            <field string="Type" name="test_type_id" options="{'no_open': True, 'no_create': True}" readonly="point_id"/>
-                            <field name="spreadsheet_check_cell" invisible="test_type != 'spreadsheet'"/>
+                            <field string="Type" name="test_type_id" options="{'no_open': True, 'no_create': True}" readonly="point_id" domain="[('technical_name', 'not in', ['register_consumed_materials', 'register_production', 'print_label', 'register_byproducts'])]"/>
+                            <field
+                                name="spreadsheet_template_id"
+                                invisible="test_type != 'spreadsheet'"
+                                required="test_type == 'spreadsheet'"
+                                widget="many2one_spreadsheet"
+                                readonly="point_id and point_id.spreadsheet_template_id"
+                            />
                             <field name="control_date" invisible="1"/>
                             <field name="team_id"/>
                             <field name="company_id" groups="base.group_multi_company"/>
@@ -314,6 +321,7 @@
         <field name="arch" type="xml">
             <list default_order="id desc" sample="1" decoration-info="quality_state == 'none'">
                 <field name="name" decoration-bf="1"/>
+                <field name="title" decoration-bf="1" optional="show"/>
                 <field name="measure_on" optional="hide"/>
                 <field name='product_id' optional="show"/>
                 <field name="lot_ids" column_invisible="context.get('show_lots_text')" widget="many2many_tags"/>

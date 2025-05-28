@@ -180,10 +180,18 @@ class QualityCheck(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _check_company_auto = True
 
+    def _get_default_team_id(self):
+        company_id = self.company_id.id or self.env.context.get('default_company_id', self.env.company.id)
+        return self.team_id._get_quality_team(self.env['quality.alert.team']._check_company_domain(company_id))
+
+    def _get_default_test_type_id(self):
+        domain = self._get_type_default_domain()
+        return self.env['quality.point.test_type'].search(domain, limit=1).id
+
     name = fields.Char('Reference', copy=False)
     point_id = fields.Many2one(
         'quality.point', 'Control Point', check_company=True, index='btree_not_null')
-    title = fields.Char('Title', compute='_compute_title', store=True, precompute=True, readonly=False)
+    title = fields.Char('Title', compute='_compute_title', store=True, readonly=False)
     quality_state = fields.Selection([
         ('none', 'To do'),
         ('pass', 'Passed'),
@@ -202,16 +210,18 @@ class QualityCheck(models.Model):
         domain="[('product_id', '=', product_id)]")
     user_id = fields.Many2one('res.users', 'Responsible', tracking=True)
     team_id = fields.Many2one(
-        'quality.alert.team', 'Team', required=True, check_company=True)
+        'quality.alert.team', 'Team', required=True, check_company=True,
+        store=True, compute="_compute_team_id", readonly=False,
+        default=lambda qc: qc._get_default_team_id())
     company_id = fields.Many2one(
         'res.company', 'Company', required=True, index=True,
         default=lambda self: self.env.company)
     alert_ids = fields.One2many('quality.alert', 'check_id', string='Alerts')
     alert_count = fields.Integer('# Quality Alerts', compute="_compute_alert_count")
-    note = fields.Html('Note')
+    note = fields.Html('Note', compute="_compute_note", store=True, readonly=False)
     test_type_id = fields.Many2one(
-        'quality.point.test_type', 'Test Type',
-        required=True)
+        'quality.point.test_type', 'Test Type', store=True, copy=True, compute="_compute_test_type_id",
+        required=True, default=_get_default_test_type_id)
     test_type = fields.Char(related='test_type_id.technical_name')
     picture = fields.Binary('Picture', attachment=True)
     additional_note = fields.Text(
@@ -224,15 +234,29 @@ class QualityCheck(models.Model):
         for check in self:
             check.alert_count = alert_result.get(check.id, 0)
 
+    @api.depends('point_id')
     def _compute_title(self):
         for check in self:
-            check.title = check.point_id.title
+            if check.point_id:
+                check.title = check.point_id.title
 
-    @api.onchange('point_id')
-    def _onchange_point_id(self):
-        if self.point_id:
-            self.team_id = self.point_id.team_id.id
-            self.test_type_id = self.point_id.test_type_id.id
+    @api.depends('point_id')
+    def _compute_note(self):
+        for check in self:
+            if check.point_id:
+                check.note = check.point_id.note
+
+    @api.depends('point_id')
+    def _compute_team_id(self):
+        for check in self:
+            if check.point_id:
+                check.team_id = check.point_id.team_id.id
+
+    @api.depends('point_id')
+    def _compute_test_type_id(self):
+        for check in self:
+            if check.point_id:
+                check.test_type_id = check.point_id.test_type_id.id
 
     def _is_pass_fail_applicable(self):
         """ Return true if do_fail and do_pass can be applied."""
@@ -243,17 +267,9 @@ class QualityCheck(models.Model):
         for vals in vals_list:
             if 'name' not in vals or vals['name'] == _('New'):
                 vals['name'] = self.env['ir.sequence'].next_by_code('quality.check') or _('New')
-            if 'point_id' in vals and not vals.get('test_type_id'):
-                vals['test_type_id'] = self.env['quality.point'].browse(vals['point_id']).test_type_id.id
-            if 'point_id' in vals and not vals.get('note'):
-                vals['note'] = self.env['quality.point'].browse(vals['point_id']).note
-            if vals.get('note', False) == '<p data-oe-version="1.1"><br></p>':
-                vals['note'] = False
         return super().create(vals_list)
 
     def write(self, vals):
-        if vals.get('note', False) == '<p data-oe-version="1.1"><br></p>':
-            vals['note'] = False
         res = super().write(vals)
         if 'quality_state' in vals and not vals.get('user_id') or not vals.get('control_date'):
             if vals.get('quality_state') == 'pass':
@@ -272,6 +288,9 @@ class QualityCheck(models.Model):
         self.write({'quality_state': 'pass',
                     'user_id': self.env.user.id,
                     'control_date': datetime.now()})
+
+    def _get_type_default_domain(self):
+        return []
 
 
 class QualityAlert(models.Model):
