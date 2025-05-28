@@ -3,3 +3,4 @@
 from . import account_chart_template
 from . import account_check_register
 from . import account_return
+from . import tax_report
