@@ -10,6 +10,7 @@ export class StockMove extends QualityCheck {
         ...QualityCheck.props,
         displayUOM: Boolean,
         check: { optional: true, type: Object },
+        label: { optional: true, type: String },
     };
     static template = "mrp_workorder.StockMove";
 
@@ -35,7 +36,11 @@ export class StockMove extends QualityCheck {
     }
 
     get label() {
-        return this.check ? super.label : this.props.record.data.product_id.display_name;
+        const productName = this.props.record.data.product_id.display_name;
+        if (this.props.record.data.production_id) {
+            return _t("Register %(productName)s", { productName });
+        }
+        return this.check ? super.label : productName;
     }
 
     get icon() {

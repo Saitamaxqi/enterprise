@@ -67,7 +67,7 @@
                 <!-- Display a line to register each byproduct who isn't linked to a workorder.
                 Only displayed in the production card. -->
                 <t t-foreach="byProducts" t-as="byproductMove" t-key="byproductMove.id">
-                    <StockMove t-props="subRecordProps(byproductMove)" label="getByproductLabel(byproductMove)"/>
+                    <StockMove t-props="subRecordProps(byproductMove)"/>
                 </t>
             </ul>
             <div class="card-footer d-flex justify-content-between align-items-center border-top-0 rounded-bottom p-2 bg-view"

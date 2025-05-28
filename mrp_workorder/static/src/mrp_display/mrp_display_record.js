@@ -104,10 +104,6 @@ export class MrpDisplayRecord extends Component {
         return `${qtyProducing}${this.quantityToProduce} ${this.uom}`;
     }
 
-    getByproductLabel(record) {
-        return _t("Register %s", record.data.product_id.display_name);
-    }
-
     get cssClass() {
         const active = this.active ? "o_active" : "";
         const disabled = this.disabled ? "o_disabled" : "";
