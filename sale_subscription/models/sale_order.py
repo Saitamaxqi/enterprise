@@ -126,6 +126,7 @@ class SaleOrder(models.Model):
     internal_note = fields.Html()
     internal_note_display = fields.Html(compute='_compute_internal_note_display', inverse='_inverse_internal_note_display')
     is_closing = fields.Boolean(string="To Be Closed", compute='_compute_is_closing', store=True)
+    warn_system_closing = fields.Boolean(string="Warn System Closing", compute='_compute_warn_system_closing')
 
     ###########
     # UI / UX #
@@ -340,6 +341,18 @@ class SaleOrder(models.Model):
             else:
                 # First contract of the sequence
                 so.first_contract_date = so.start_date
+
+    @api.depends('next_invoice_date', 'plan_id')
+    def _compute_warn_system_closing(self):
+        """ Compute if subscription is going to be closed by the system
+        according to the next_invoice_date and the plan's auto close limit."""
+        for order in self:
+            auto_close_limit = order.plan_id.auto_close_limit or 15
+            order.warn_system_closing = (
+                order.subscription_state == '3_progress'
+                and order.next_invoice_date
+                and order.next_invoice_date + relativedelta(days=auto_close_limit) <= fields.Date.today()
+            )
 
     @api.depends('next_invoice_date', 'end_date', 'subscription_state')
     def _compute_is_closing(self):

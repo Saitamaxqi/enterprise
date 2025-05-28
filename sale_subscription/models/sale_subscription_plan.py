@@ -50,10 +50,8 @@ class SaleSubscriptionPlan(models.Model):
 
     # Invoicing
     auto_close_limit = fields.Integer(string="Automatic Closing", default=15,
-                                      help="Unpaid subscription after the due date majored by this number of days will be automatically closed by "
-                                      "the subscriptions expiration scheduled action. \n"
-                                      "If the chosen payment method has failed to renew the subscription after this time, "
-                                      "the subscription is automatically closed.")
+                                      help="Subscriptions late in renewing (e.g., automatic payment is failing continuously,"
+                                            "customer didn't pay, etc.) will be automatically closed after this period.")
 
     auto_close_limit_display = fields.Char(string="Automatic Closing After", compute="_compute_auto_close_limit_display")
 

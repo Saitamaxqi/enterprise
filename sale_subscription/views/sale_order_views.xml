@@ -60,6 +60,11 @@
             <xpath expr="//sheet/div[hasclass('badge')]" position="attributes">
                 <attribute name="invisible" add="subscription_state == '5_renewed'" separator="or"></attribute>
             </xpath>
+            <xpath expr="//sheet" position="before">
+                <div role="alert" class="alert alert-info text-center" invisible="not warn_system_closing">
+                    <p class="mt-3">This subscription is overdue and exceeds the auto-close limit of the recurring plan. It will be closed soon by the system.</p>
+                </div>
+            </xpath>
             <div name="button_box" position="inside">
                 <button invisible="not is_renewing"
                     name="open_subscription_renewal"
