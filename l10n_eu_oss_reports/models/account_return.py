@@ -114,15 +114,14 @@ class AccountReturn(models.Model):
                 'views': [[False, 'list'], [False, 'form']],
             }
 
-            summary_string = _("%(count)s Partners", count=business_partners_count) if business_partners_count > 1 else _("1 Partner")
-
             checks.append({
                 'code': 'check_oss_only_b2c_customer',
                 'name': _("Only B2C transactions"),
                 'message': _("""
                     Only B2C transactions should be included in the OSS report.
                 """),
-                'summary': summary_string,
+                'records_count': business_partners_count,
+                'records_name': _("Partner") if business_partners_count == 1 else _("Partners"),
                 'action': review_action if business_partner_ids else False,
                 'result': 'success' if not business_partner_ids else 'failure',
             })

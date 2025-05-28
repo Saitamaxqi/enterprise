@@ -211,7 +211,8 @@ class AccountReturn(models.Model):
                 'name': _("No customer without country"),
                 'message': _("Review invoices having a customer with no country specified."),
                 'code': 'customer_without_country',
-                'summary': self._format_record_count(no_country_moves_count, _("Invoice"), _("Invoices")),
+                'records_count': no_country_moves_count,
+                'records_name': _("Invoice") if no_country_moves_count == 1 else _("Invoices"),
                 'result': 'failure' if no_country_moves_count else 'success',
                 'action': action if no_country_moves_count else False,
             }

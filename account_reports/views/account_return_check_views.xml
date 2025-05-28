@@ -17,7 +17,9 @@
                         <t t-set="result" t-value="record.result.raw_value"/>
                         <t t-set="bypassed" t-value="record.bypassed.raw_value"/>
                         <t t-set="message" t-value="record.message.raw_value"/>
-                        <t t-set="summary" t-value="record.summary.raw_value"/>
+                        <t t-set="records_count" t-value="record.records_count.raw_value"/>
+                        <t t-set="records_name" t-value="record.records_name.raw_value"/>
+                        <t t-set="return_name" t-value="record.return_name.raw_value"/>
 
                         <div class="w-100" t-att-class="result == 'success' or bypassed ? 'return-check-card-success' : ''">
                             <div class="container w-100 h-100 p-2 border-1 align-items-center align-self-center">
@@ -27,24 +29,85 @@
                                             <i invisible="result != 'success'" class="fa fa-check text-success align-self-center" title="success"/>
                                             <i invisible="result == 'success'" class="fa fa-times text-danger align-self-center" title="failure"/>
                                             <field class="oe_inline px-2" name="name" readonly="1" nolabel="1"/>
-                                            <field invisible="not summary or result != 'failure'" name="summary" class="text-muted small"/>
+                                            <span invisible="result != 'failure'" class="text-muted small">
+                                                <field name="records_count" invisible="not records_count or records_count &gt;= 21"/>
+                                                <span invisible="not records_count or records_count &lt; 21">20+</span>
+                                                <span invisible="not records_count"> </span>
+                                                <field name="records_name"/>
+                                            </span>
                                         </div>
                                         <div invisible="not message" class="row text-muted">
                                             <field name="message" class="mt-2"/>
                                         </div>
+                                        <div invisible="context.get('hide_return_name', False)" class="mt-2 text-muted">
+                                            <i><field name="return_name"/></i>
+                                        </div>
                                     </div>
-
-                                    <div class="col-12 col-md-4 h-full d-flex justify-content-end align-items-center my-auto">
-                                        <span invisible="(result != 'failure' and result != 'manual') or not bypassed or state == return_state" class="text-muted fw-bold">Ignored</span>
-                                        <button invisible="result != 'failure' or bypassed" type="object" class="btn btn-secondary" name="action_bypass_or_undo" string="Ignore"/>
-                                        <button invisible="(result != 'failure' and result != 'manual') or not bypassed or state != return_state" type="object" class="btn btn-secondary" name="action_bypass_or_undo" string="Restore"/>
-                                        <button invisible="result != 'manual' or bypassed" type="object" class="btn btn-primary" name="action_bypass_or_undo" string="Mark Done"/>
+                                    <div class="col-12 col-md-4 h-full d-flex justify-content-end  align-items-center my-auto">
+                                        <field name="approver_ids" widget="kanban.many2many_avatar_user_approver"/>
+                                        <button invisible="result == 'success' or bypassed" type="object" class="btn btn-secondary ms-1" name="action_bypass_or_undo" string="Validate"/>
+                                        <button invisible="result == 'success' or not bypassed" type="object" class="btn btn-secondary ms-1" name="action_bypass_or_undo" string="Reset"/>
+                                        <button type="object" name="action_open_form_view" title="Open form view" icon="fa-pencil-square-o ms-1" class="btn-link fa-lg p-0 text-dark"/>
+                                        <field name="activity_ids" widget="kanban_activity" class="ms-1"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </t>
                 </kanban>
+            </field>
+        </record>
+
+        <record id="account_return_check_form_view" model="ir.ui.view">
+            <field name="name">account.return.check.form</field>
+            <field name="model">account.return.check</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" invisible="not action">
+                            <button name="action_review"
+                                    class="oe_stat_button"
+                                    icon="fa-bars"
+                                    type="object"
+                            >
+                                <div class="o_stat_info">
+                                    <field name="records_name" nolabel="1" readonly="True"/>
+                                    <field name="records_count" widget="statinfo" nolabel="1" invisible="not records_count or records_count &gt;= 21"/>
+                                    <div invisible="not records_count or records_count &lt; 21">20+</div>
+                                </div>
+                            </button>
+                        </div>
+                        <h1 class="oe_title">
+                            <field name="name" readonly="True"/>
+                        </h1>
+                        <group>
+                            <field name="message" type="html" readonly="True"/>
+                            <field name="approver_ids" widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page name="notes_page" string="Notes">
+                                <field
+                                    name="notes"
+                                    type="html"
+                                />
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="account_return_check_list_view" model="ir.ui.view">
+            <field name="name">account.return.check.list</field>
+            <field name="model">account.return.check</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="activity_ids" widget="list_activity"/>
+                    <field name="return_id"/>
+                    <field name="date_deadline"/>
+                </list>
             </field>
         </record>
 
@@ -55,6 +118,17 @@
                 <search>
                     <field name="result"/>
                     <field name="name"/>
+                    <separator/>
+                    <filter invisible="1" string="My Activities" name="filter_activities_my"
+                        domain="[('activity_user_id', '=', uid)]"/>
+                    <separator invisible="1"/>
+                    <filter invisible="1" string="Late Activities" name="activities_overdue"
+                        domain="[('activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                        help="Show all records whose next activity date is past"/>
+                    <filter invisible="1" string="Today Activities" name="activities_today"
+                        domain="[('activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                        domain="[('activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 </search>
             </field>
         </record>

@@ -758,12 +758,15 @@ class AccountReturn(models.Model):
     ####################################################################################################
     ####  Revert Actions
     ####################################################################################################
-    def _delete_checks_for_states(self, states):
-        checks_to_unlink = self.check_ids.filtered(lambda check: check.state in states)
-        checks_to_unlink.unlink()
+    def _reset_checks_for_states(self, states):
+        checks_to_reset = self.check_ids.filtered(lambda check: check.state in states)
+        checks_to_reset.write({
+            'bypassed': False,
+            'approver_ids': False,
+        })
 
     def action_reset_to_new(self):
-        self._delete_checks_for_states([self.state, 'new'])
+        self._reset_checks_for_states([self.state, 'new'])
         self.state = 'new'
 
     def action_reset_to_reviewed(self):
@@ -809,14 +812,14 @@ class AccountReturn(models.Model):
         self.closing_move_ids.unlink()
         self.attachment_ids.unlink()
 
-        self._delete_checks_for_states([self.state, 'reviewed'])
+        self._reset_checks_for_states([self.state, 'reviewed'])
         self.date_submission = False
         self.report_opened_once = False
         self.state = 'reviewed'
 
     def action_reset_to_submitted(self):
         self.ensure_one()
-        self._delete_checks_for_states([self.state, 'submitted'])
+        self._reset_checks_for_states([self.state, 'submitted'])
         self.is_completed = False
         self.state = 'submitted'
 
@@ -893,6 +896,7 @@ class AccountReturn(models.Model):
             'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban'), (False, 'search')],
             'domain': [('return_id', '=', self.id), ('state', '=', self.state)],
             'view_mode': 'kanban,search',
+            'context': {'hide_return_name': True},
         }
 
     def action_review_all_checks(self):
@@ -1248,14 +1252,6 @@ class AccountReturn(models.Model):
         self.ensure_one()
         return self.state == 'new'
 
-    def _format_record_count(self, count, record_singlular, record_plural):
-        if count > 20:
-            return _("20+ %(name)s", name=record_plural)
-        elif count > 1:
-            return _("%(count)s %(name)s", count=count, name=record_plural)
-        else:
-            return _("1 %(name)s", name=record_singlular)
-
     def _run_checks(self, check_codes_to_ignore):
         """
         To override in l10n for specific checks by type
@@ -1298,7 +1294,7 @@ class AccountReturn(models.Model):
                     such as using the wrong VAT rate, wrongly exempting transactions.
                 """),
                 'code': 'check_company_data',
-                'summary': self.company_id.name,
+                'records_name': _("Company Data"),
                 'action': review_action,
                 'result': 'failure' if not is_company_config_valid else 'success',
             })
@@ -1344,7 +1340,8 @@ class AccountReturn(models.Model):
                 'name': _("Bill attachments"),
                 'code': 'check_bills_attachment',
                 'message': _("Each bill should have its own document attached as a proof in case of audit."),
-                'summary': self._format_record_count(bills_without_attachments_count, _("Bill"), _("Bills")),
+                'records_count': bills_without_attachments_count,
+                'records_name': _("Bill") if bills_without_attachments_count == 1 else _("Bills"),
                 'action': review_action if bills_without_attachments_count else None,
                 'result': 'failure' if bills_without_attachments_count else 'success',
             })
@@ -1389,6 +1386,7 @@ class AccountReturn(models.Model):
             ))
 
             country_error_move_ids = self._cr.fetchone()[0]
+            country_error_moves_count = len(country_error_move_ids or [])
 
             review_action = {
                 'type': 'ir.actions.act_window',
@@ -1402,7 +1400,8 @@ class AccountReturn(models.Model):
                 'name': _("Taxes and countries matching"),
                 'code': 'check_tax_countries',
                 'message': _("Ensure the taxes on invoices and bills match the customer’s country."),
-                'summary': _("%(count)s Invoices", count=len(country_error_move_ids)) if len(country_error_move_ids or []) > 1 else _("1 Invoice"),
+                'records_count': country_error_moves_count,
+                'records_name': _("Invoice") if country_error_moves_count == 1 else _("Invoices"),
                 'action': review_action if country_error_move_ids else None,
                 'result': 'failure' if country_error_move_ids else 'success',
             })
@@ -1546,7 +1545,8 @@ class AccountReturn(models.Model):
                     'name': _("Deferred Entries"),
                     'message': _("Odoo manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
                     'code': 'check_deferred_entries',
-                    'summary': self._format_record_count(deferred_entries_count, _("Entry"), _("Entries")),
+                    'records_count': deferred_entries_count,
+                    'records_name': _("Entry") if deferred_entries_count == 1 else _("Entries"),
                     'result': 'manual',
                 })
 
@@ -1595,7 +1595,6 @@ class AccountReturn(models.Model):
             )[0][0]
 
             invalid_vies_partners_count = len(invalid_vies_partners)
-            summary_string = _("%(count)s Partners", count=invalid_vies_partners_count) if invalid_vies_partners_count > 1 else _("1 Partner")
 
             review_action = {
                 'type': 'ir.actions.act_window',
@@ -1611,7 +1610,8 @@ class AccountReturn(models.Model):
                 'code': 'check_partner_vies',
                 'message': _("""All customer VAT numbers are valid under <a href="https://ec.europa.eu/taxation_customs/vies" target="_blank">VIES</a>."""),
                 'state': 'new',
-                'summary': summary_string,
+                'records_count': invalid_vies_partners_count,
+                'records_name': _("Partner") if invalid_vies_partners_count == 1 else _("Partners"),
                 'action': review_action if invalid_vies_partners_count else None,
                 'result': 'failure' if invalid_vies_partners_count else 'success',
             })
@@ -1749,7 +1749,8 @@ class AccountReturn(models.Model):
             'name': name,
             'message': message,
             'code': code,
-            'summary': self._format_record_count(unreconciled_bank_entries_count, _("Transaction"), _("Transactions")),
+            'records_count': unreconciled_bank_entries_count,
+            'records_name': _("Transaction") if unreconciled_bank_entries_count == 1 else _("Transactions"),
             'action': review_action if unreconciled_bank_entries_count else None,
             'result': 'failure' if unreconciled_bank_entries_count else 'success',
         }
@@ -1778,7 +1779,8 @@ class AccountReturn(models.Model):
             'name': name,
             'code': code,
             'message': message,
-            'summary': self._format_record_count(draft_entries_count, _("Entry"), _("Entries")),
+            'records_count': draft_entries_count,
+            'records_name': _("Entry") if draft_entries_count == 1 else _("Entries"),
             'action': review_action if draft_entries_count else None,
             'result': 'failure' if draft_entries_count else 'success',
         }
@@ -1787,12 +1789,18 @@ class AccountReturn(models.Model):
 class AccountReturnCheck(models.Model):
     _name = "account.return.check"
     _description = "Accounting Return Check"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "result, bypassed, name, id"
 
-    name = fields.Char(string="Name", required=True)
-    return_id = fields.Many2one(comodel_name='account.return', string="Account Return", required=True, ondelete="cascade")
     code = fields.Char(string="Check ID", required=True)
+
+    # Refreshed fields
+    name = fields.Char(string="Name", required=True)
+    message = fields.Char(string="Description")
     state = fields.Char(string="Return State To Check For", default='new', required=True)
+    records_count = fields.Integer(readonly=True)
+    records_name = fields.Char()
+    action = fields.Json()
     result = fields.Selection(
         selection=[
             ('success', "Passed"),
@@ -1802,11 +1810,17 @@ class AccountReturnCheck(models.Model):
         default='manual',
         required=True,
     )
-    action = fields.Json()
-    bypassed = fields.Boolean(string="Bypassed")
-    message = fields.Html(string="Message")
-    summary = fields.Char(string="Resume")
-    return_state = fields.Char(related="return_id.state")
+
+    # Return related
+    return_id = fields.Many2one(comodel_name='account.return', string="Account Return", required=True, ondelete="cascade")
+    return_state = fields.Char(string="Return State", related="return_id.state", store=True, tracking=10)
+    return_name = fields.Char(string="Return Name", related="return_id.name")
+    date_deadline = fields.Date("Deadline", related="return_id.date_deadline")
+
+    # Editable fields
+    bypassed = fields.Boolean(string="Bypassed", tracking=True)
+    approver_ids = fields.Many2many('res.users', string="Approved By", tracking=True)
+    notes = fields.Html()
 
     @api.constrains('code')
     def _check_code(self):
@@ -1823,6 +1837,15 @@ class AccountReturnCheck(models.Model):
         self.ensure_one()
         self.bypassed = not self.bypassed
 
+    def action_open_form_view(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.return.check',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'target': 'current',
+        }
+
     def _get_next_state_action_func_for_current_state(self):
         """
         Can be overridden
@@ -1835,3 +1858,19 @@ class AccountReturnCheck(models.Model):
             'reviewed': self.return_id.action_submit,
             'submitted': self.return_id.action_pay,
         }
+
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+
+        states = ['new', 'reviewed', 'submitted', 'paid']
+        init_state = init_values.get('return_state')
+        current_state = self.return_state
+        if (
+            init_state
+            and init_state in states
+            and current_state in states
+            and states.index(current_state) < states.index(init_state)
+        ):
+            return self.env.ref('account_reports.subtype_check_return_reset')
+
+        return super()._track_subtype(init_values)

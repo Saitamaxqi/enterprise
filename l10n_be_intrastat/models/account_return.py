@@ -113,7 +113,8 @@ class AccountReturn(models.Model):
                 'message': _("""
                     Exclude sales made to private individuals from the listing.
                 """),
-                'summary': self._format_record_count(non_business_partners_count, _("Partner"), _("Partners")),
+                'records_count': non_business_partners_count,
+                'records_name': _("Partner") if non_business_partners_count == 1 else _("Partners"),
                 'action': review_action if non_business_partner_ids else False,
                 'result': 'success' if not non_business_partner_ids else 'failure',
             })

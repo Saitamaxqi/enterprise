@@ -28,7 +28,7 @@
                 record="record"
                 archInfo="props.archInfo"
                 Compiler="props.Compiler"
-                readonly="true"
+                readonly="false"
                 forceGlobalClick="false"
                 openRecord.bind="openRecord"
                 canResequence="false"
