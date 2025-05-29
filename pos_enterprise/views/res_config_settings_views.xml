@@ -17,7 +17,7 @@
                 </div>
             </xpath>
             <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="after">
-                <block title="Food Delivery Connector" id="pos_urban_piper_section">
+                <block title="Food Delivery Connector" id="pos_urban_piper_section" invisible="is_kiosk_mode">
                     <setting id="urban_piper_setting" string="Urban Piper" documentation="https://www.urbanpiper.com/" company_dependent="1" help="Manage your online orders with Urban Piper.">
                         <field name="pos_module_pos_urban_piper" readonly="pos_has_active_session"/>
                         <div class="content-group"/>
