@@ -1,6 +1,7 @@
 import re
 
 from odoo import models
+from odoo.tools.misc import partition
 
 # These codes correspond to the tax affectation reasons used in Peru for
 # issuing free invoices according to SUNAT regulations. Invoices with these
@@ -208,24 +209,47 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
 
         return vals
 
+    def _get_document_allowance_charge_vals_list(self, invoice, taxes_vals=None):
+        # EXTENDS account.edi.xml.ubl_21
+        res = super()._get_document_allowance_charge_vals_list(invoice)
+        total_discount = 0.0
+        for line in invoice.invoice_line_ids.filtered(lambda line: line.price_subtotal < 0):
+            res.append({
+                'charge_indicator': 'false',
+                'allowance_charge_reason_code': '02',
+                'amount': abs(line.price_subtotal),
+                'currency_dp': 2,
+                'currency_name': invoice.currency_id.name,
+            })
+            total_discount += abs(line.price_subtotal)
+
+        # The base amount must be the total pre-discount of the invoice.
+        for val in res:
+            if val['charge_indicator'] == 'false' and val['allowance_charge_reason_code'] == '02':
+                val['base_amount'] = taxes_vals['base_amount_currency'] + total_discount
+                val['multiplier_factor'] = self.format_float(val['amount'] / val['base_amount'], 5)
+        return res
+
     def _get_invoice_line_allowance_vals_list(self, line, tax_values_list=None):
         # EXTENDS account.edi.xml.ubl_21
         vals = super()._get_invoice_line_allowance_vals_list(line, tax_values_list)
-        # Line discounts are not handled well by the EDI service. That's why we skip them
-        # and already subtract the discount from the line in the `PriceAmount` tag.
-        vals_without_discounts = []
-        for allowance_vals in vals:
-            if allowance_vals.get('allowance_charge_reason_code') == 'AEO':
-                vals_without_discounts.append(allowance_vals)
-
-        return vals_without_discounts
+        discount_allowance, others = partition(lambda value: value.get('allowance_charge_reason_code') != 'AEO', vals)
+        if discount_allowance:
+            line_data = line._prepare_edi_vals_to_export()
+            discount = discount_allowance[0]
+            discount.update({
+                'allowance_charge_reason_code': '00',
+                'base_amount': line_data['price_subtotal_before_discount'],
+                'multiplier_factor': self.format_float(line.discount / 100.00, 5),
+            })
+            return [discount] + others
+        return vals
 
     def _get_invoice_line_price_vals(self, line):
         # EXTENDS account.edi.xml.ubl_21
         vals = super()._get_invoice_line_price_vals(line)
-        # Line discounts are not handled well by the EDI service. That's why we skip them
-        # and already subtract the discount from the line in the `PriceAmount` tag.
-        vals['price_amount'] = round(line.price_subtotal / line.quantity, 10) if line.quantity and line.l10n_pe_edi_affectation_reason not in FREE_AFFECTATION_REASONS else 0.0
+        if line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS:
+            vals['price_amount'] = 0.0
         return vals
 
     def _get_invoice_line_vals(self, line, taxes_vals, idx=None):
@@ -254,6 +278,10 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             vals['tax_inclusive_amount'] = 0.0
             vals['payable_amount'] = 0.0
         vals['prepaid_amount'] = 0.0
+        # Only certain types of allowances in PE require the AllowanceTotalAmount key added here.
+        # However, none of them are supported in Odoo currently and as such we should just clear them.
+        if vals['allowance_total_amount']:
+            vals['allowance_total_amount'] = 0.0
         return vals
 
     def _export_invoice_vals(self, invoice):
@@ -354,6 +382,14 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                         'document_type_code': invoice.debit_origin_id.l10n_latam_document_type_id.code,
                     },
                 })
+
+        # Remove negative discount lines as they are handled via the global discounts allowances on
+        # the document level.
+        final_line_vals = []
+        for line_vals in vals['vals']['line_vals']:
+            if line_vals['price_vals']['price_amount'] >= 0:
+                final_line_vals.append(line_vals)
+        vals['vals']['line_vals'] = final_line_vals
 
         return vals
 

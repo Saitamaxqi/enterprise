@@ -767,3 +767,78 @@ class TestEdiXmls(TestPeEdiCommon):
                     </xpath>
                 ''')
             self.assertXmlTreeEqual(current_etree, expected_etree)
+
+    def test_invoice_global_discount(self):
+        """ Invoice in USD with a global and line nevel discount."""
+        with freeze_time(self.frozen_today), \
+                patch('odoo.addons.l10n_pe_edi.models.account_edi_format.AccountEdiFormat._l10n_pe_edi_post_invoice_web_service',
+                   new=mocked_l10n_pe_edi_post_invoice_web_service):
+            update_vals_dict = {
+                'invoice_line_ids': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_id': self.env.ref('uom.product_uom_kgm').id,
+                        'price_unit': 2000.0,
+                        'quantity': 5,
+                        'discount': 20.0,
+                        'tax_ids': [(6, 0, self.tax_18.ids)],
+                    }),
+                    Command.create({
+                        "name": "Discount",
+                        "price_unit": -200.0,
+                        "tax_ids": [Command.set(self.tax_18.ids)]
+                    }),
+                ],
+            }
+            invoice = self._create_invoice(**update_vals_dict)
+            invoice.action_post()
+
+            generated_files = self._process_documents_web_services(invoice, {'pe_ubl_2_1'})
+            self.assertTrue(generated_files)
+        zip_edi_str = generated_files[0]
+        edi_xml = self.edi_format._l10n_pe_edi_unzip_edi_document(zip_edi_str)
+        current_etree = self.get_xml_tree_from_string(edi_xml)
+        expected_etree = self.get_xml_tree_from_string(self.expected_invoice_xml_values)
+        expected_etree = self.with_applied_xpath(
+            expected_etree,
+            '''
+            <xpath expr="//Note" position="replace">
+                <Note languageLocaleID="1000">NUEVE MIL DOSCIENTOS CUATRO Y 00/100 DOLLARS</Note>
+            </xpath>
+            <xpath expr="//Invoice/TaxTotal" position="replace">
+                <TaxTotal>
+                    <TaxAmount currencyID="USD">1404.00</TaxAmount>
+                    <TaxSubtotal>
+                        <TaxableAmount currencyID="USD">7800.00</TaxableAmount>
+                        <TaxAmount currencyID="USD">1404.00</TaxAmount>
+                        <TaxCategory>
+                            <TaxScheme>
+                                <ID>1000</ID>
+                                <Name>IGV</Name>
+                                <TaxTypeCode>VAT</TaxTypeCode>
+                            </TaxScheme>
+                        </TaxCategory>
+                    </TaxSubtotal>
+                </TaxTotal>
+            </xpath>
+            <xpath expr="//PaymentTerms" position="after">
+                <AllowanceCharge>
+                    <ChargeIndicator>false</ChargeIndicator>
+                    <AllowanceChargeReasonCode>02</AllowanceChargeReasonCode>
+                    <MultiplierFactorNumeric>0.02500</MultiplierFactorNumeric>
+                    <Amount currencyID="USD">200.00</Amount>
+                    <BaseAmount currencyID="USD">8000.00</BaseAmount>
+                </AllowanceCharge>
+            </xpath>
+            <xpath expr="//LegalMonetaryTotal" position="replace">
+                <LegalMonetaryTotal>
+                    <LineExtensionAmount currencyID="USD">7800.00</LineExtensionAmount>
+                    <TaxExclusiveAmount currencyID="USD">7800.00</TaxExclusiveAmount>
+                    <TaxInclusiveAmount currencyID="USD">9204.00</TaxInclusiveAmount>
+                    <AllowanceTotalAmount currencyID="USD">0.00</AllowanceTotalAmount>
+                    <PrepaidAmount currencyID="USD">0.00</PrepaidAmount>
+                    <PayableAmount currencyID="USD">9204.00</PayableAmount>
+                </LegalMonetaryTotal>
+            </xpath>
+            ''')
+        self.assertXmlTreeEqual(current_etree, expected_etree)

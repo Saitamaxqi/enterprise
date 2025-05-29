@@ -312,6 +312,13 @@ class TestPeEdiCommon(AccountEdiTestCommon):
                             <PriceTypeCode>01</PriceTypeCode>
                         </AlternativeConditionPrice>
                     </PricingReference>
+                    <AllowanceCharge>
+                        <ChargeIndicator>false</ChargeIndicator>
+                        <AllowanceChargeReasonCode>00</AllowanceChargeReasonCode>
+                        <MultiplierFactorNumeric>0.20000</MultiplierFactorNumeric>
+                        <Amount currencyID="USD">2000.00</Amount>
+                        <BaseAmount currencyID="USD">10000.00</BaseAmount>
+                    </AllowanceCharge>
                     <TaxTotal>
                         <TaxAmount currencyID="USD">1440.00</TaxAmount>
                         <TaxSubtotal>
@@ -336,7 +343,7 @@ class TestPeEdiCommon(AccountEdiTestCommon):
                         </CommodityClassification>
                     </Item>
                     <Price>
-                        <PriceAmount currencyID="USD">1600.0</PriceAmount>
+                        <PriceAmount currencyID="USD">2000.0</PriceAmount>
                     </Price>
                 </InvoiceLine>
             </Invoice>
@@ -534,6 +541,13 @@ class TestPeEdiCommon(AccountEdiTestCommon):
                             </TaxCategory>
                         </TaxSubtotal>
                     </TaxTotal>
+                    <AllowanceCharge>
+                        <ChargeIndicator>false</ChargeIndicator>
+                        <AllowanceChargeReasonCode>00</AllowanceChargeReasonCode>
+                        <MultiplierFactorNumeric>0.20000</MultiplierFactorNumeric>
+                        <Amount currencyID="USD">2000.00</Amount>
+                        <BaseAmount currencyID="USD">10000.00</BaseAmount>
+                    </AllowanceCharge>
                     <Item>
                         <Description>product_pe</Description>
                         <Name>product_pe</Name>
@@ -542,7 +556,7 @@ class TestPeEdiCommon(AccountEdiTestCommon):
                         </CommodityClassification>
                     </Item>
                     <Price>
-                        <PriceAmount currencyID="USD">1600.0</PriceAmount>
+                        <PriceAmount currencyID="USD">2000.0</PriceAmount>
                     </Price>
                 </CreditNoteLine>
             </CreditNote>
@@ -743,6 +757,13 @@ class TestPeEdiCommon(AccountEdiTestCommon):
                             </TaxCategory>
                         </TaxSubtotal>
                     </TaxTotal>
+                    <AllowanceCharge>
+                        <ChargeIndicator>false</ChargeIndicator>
+                        <AllowanceChargeReasonCode>00</AllowanceChargeReasonCode>
+                        <MultiplierFactorNumeric>0.20000</MultiplierFactorNumeric>
+                        <Amount currencyID="USD">2000.00</Amount>
+                        <BaseAmount currencyID="USD">10000.00</BaseAmount>
+                    </AllowanceCharge>
                     <Item>
                         <Description>product_pe</Description>
                         <Name>product_pe</Name>
@@ -751,7 +772,7 @@ class TestPeEdiCommon(AccountEdiTestCommon):
                         </CommodityClassification>
                     </Item>
                     <Price>
-                        <PriceAmount currencyID="USD">1600.0</PriceAmount>
+                        <PriceAmount currencyID="USD">2000.0</PriceAmount>
                     </Price>
                 </DebitNoteLine>
             </DebitNote>

@@ -1272,6 +1272,12 @@ msgstr ""
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
+msgid "The credit note cannot have negative quantities or amounts on any line"
+msgstr ""
+
+#. module: l10n_pe_edi
+#. odoo-python
+#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid ""
 "The document type of the invoice related is not the same of this document. "
 "Check the document type of the invoice related and set this document with "
