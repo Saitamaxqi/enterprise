@@ -1624,6 +1624,17 @@
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
 
+    <record id="l10n_us_rule_parameter_wa_eaf_rate" model="hr.rule.parameter">
+        <field name="name">US: Washington EAF Rate</field>
+        <field name="code">l10n_us_wa_eaf_rate</field>
+        <field name="country_id" ref="base.us"/>
+    </record>
+    <record id="l10n_us_rule_parameter_wa_eaf_rate_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.03</field>
+        <field name="rule_parameter_id" ref="l10n_us_rule_parameter_wa_eaf_rate"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
     <record id="rule_parameter_OASDI_tax_rate" model="hr.rule.parameter">
         <field name="name">US: FICA OASDI tax rate</field>
         <field name="code">l10n_us_OASDI_tax_rate</field>
@@ -1700,6 +1711,17 @@
         <field name="parameter_value">8000</field>
         <field name="rule_parameter_id" ref="rule_parameter_al_sui_cap"/>
         <field name="date_from" eval="datetime(2023, 1, 1).date()"/>
+    </record>
+
+    <record id="l10n_us_rule_parameter_al_esa_rate" model="hr.rule.parameter">
+        <field name="name">US: Alabama ESA rate</field>
+        <field name="code">l10n_us_al_esa_rate</field>
+        <field name="country_id" ref="base.us"/>
+    </record>
+    <record id="l10n_us_rule_parameter_al_esa_rate_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.06</field>
+        <field name="rule_parameter_id" ref="l10n_us_rule_parameter_al_esa_rate"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
     <record id="rule_parameter_ak_sui_rate" model="hr.rule.parameter">
@@ -1834,6 +1856,28 @@
     <record id="rule_parameter_co_sui_cap_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">27200</field>
         <field name="rule_parameter_id" ref="rule_parameter_co_sui_cap"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <record id="l10n_us_rule_parameter_co_support_surcharge_rate" model="hr.rule.parameter">
+        <field name="name">US: Colorado Support Surcharge rate</field>
+        <field name="code">l10n_us_co_support_surcharge_rate</field>
+        <field name="country_id" ref="base.us"/>
+    </record>
+    <record id="l10n_us_rule_parameter_co_support_surcharge_rate_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.17</field>
+        <field name="rule_parameter_id" ref="l10n_us_rule_parameter_co_support_surcharge_rate"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <record id="l10n_us_rule_parameter_co_solvency_surcharge_rate" model="hr.rule.parameter">
+        <field name="name">US: Colorado Solvency Surcharge rate</field>
+        <field name="code">l10n_us_co_solvency_surcharge_rate</field>
+        <field name="country_id" ref="base.us"/>
+    </record>
+    <record id="l10n_us_rule_parameter_co_solvency_surcharge_rate_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.135</field>
+        <field name="rule_parameter_id" ref="l10n_us_rule_parameter_co_solvency_surcharge_rate"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 

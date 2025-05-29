@@ -1506,6 +1506,130 @@ result_rate = payslip._rule_parameter('l10n_us_nv_cep_rate')
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
+    <record id="l10n_us_employee_salary_al_esa" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_employer_deductions"/>
+        <field name="name">Employer Taxes: AL ESA</field>
+        <field name="code">COMPANYALESA</field>
+        <field name="sequence">176</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'AL'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['GROSS']
+year_payslips = version.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', version.company_id.id),
+])
+line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
+previous_amounts = line_values['GROSS']['sum']['amount']
+cap = payslip._rule_parameter('l10n_us_al_sui_cap')
+if previous_amounts &gt; cap:
+    result = 0
+else:
+    result = min(cap - previous_amounts, taxable)
+result_rate = payslip._rule_parameter('l10n_us_al_esa_rate')
+        </field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="partner_id" ref="l10n_us_res_partner_dol_al"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_salary_co_support_surcharge" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_employer_deductions"/>
+        <field name="name">Employer Taxes: CO Support Surcharge</field>
+        <field name="code">COMPANYCOSUPPORT</field>
+        <field name="sequence">176</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'CO'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['TAXABLE'] - result_rules['401K']['total']
+year_payslips = version.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', version.company_id.id),
+])
+line_values = year_payslips._get_line_values(['TAXABLE', '401K'], compute_sum=True)
+already_taxed = line_values['TAXABLE']['sum']['total'] - line_values['401K']['sum']['total']
+cap = payslip._rule_parameter('l10n_us_co_sui_cap')
+if already_taxed &gt; cap:
+    result = 0
+else:
+    result = min(cap - already_taxed, taxable)
+result_rate = payslip._rule_parameter('l10n_us_co_support_surcharge_rate')
+        </field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="partner_id" ref="l10n_us_res_partner_dolae_co"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_salary_co_solvency_surcharge" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_employer_deductions"/>
+        <field name="name">Employer Taxes: CO Solvency Surcharge</field>
+        <field name="code">COMPANYCOSOLVENCY</field>
+        <field name="sequence">176</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'CO'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['TAXABLE'] - result_rules['401K']['total']
+year_payslips = version.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', version.company_id.id),
+])
+line_values = year_payslips._get_line_values(['TAXABLE', '401K'], compute_sum=True)
+already_taxed = line_values['TAXABLE']['sum']['total'] - line_values['401K']['sum']['total']
+cap = payslip._rule_parameter('l10n_us_co_sui_cap')
+if already_taxed &gt; cap:
+    result = 0
+else:
+    result = min(cap - already_taxed, taxable)
+result_rate = payslip._rule_parameter('l10n_us_co_solvency_surcharge_rate')
+        </field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="partner_id" ref="l10n_us_res_partner_dolae_co"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_salary_wa_employment_admin_fund" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_employer_deductions"/>
+        <field name="name">Employer Taxes: WA Employment Admin Fund</field>
+        <field name="code">COMPANYWAEAF</field>
+        <field name="sequence">176</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['TAXABLE'] - result_rules['401K']['total']
+year_payslips = version.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', version.company_id.id),
+])
+line_values = year_payslips._get_line_values(['TAXABLE', '401K'], compute_sum=True)
+already_taxed = line_values['TAXABLE']['sum']['total'] - line_values['401K']['sum']['total']
+cap = payslip._rule_parameter('l10n_us_wa_sui_cap')
+if already_taxed &gt; cap:
+    result = 0
+else:
+    result = min(cap - already_taxed, taxable)
+result_rate = payslip._rule_parameter('l10n_us_wa_eaf_rate')
+        </field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="partner_id" ref="res_partner_esd_wa"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
     <record id="l10n_us_employee_salary_company_worker_compensation" model="hr.salary.rule">
         <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_employer_deductions"/>
         <field name="name">Employer Taxes: Worker's Compensation</field>

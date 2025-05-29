@@ -69,4 +69,14 @@
         <field name="name">City of Sheridan Finance Department</field>
         <field name="company_type">company</field>
     </record>
+
+    <record id="l10n_us_res_partner_dol_al" model="res.partner">
+        <field name="name">Alabama Department of Labor (AL DOL)</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="l10n_us_res_partner_dolae_co" model="res.partner">
+        <field name="name">Colorado Department of Labor and Employment</field>
+        <field name="company_type">company</field>
+    </record>
 </odoo>

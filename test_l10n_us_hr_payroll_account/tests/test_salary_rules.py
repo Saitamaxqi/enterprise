@@ -863,23 +863,24 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'children': 2,
         })
 
-        payslip = self._generate_payslip(datetime.date(2023, 4, 1), datetime.date(2023, 4, 7))
+        payslip = self._generate_payslip(datetime.date(2025, 4, 1), datetime.date(2025, 4, 7))
         payslip.compute_sheet()
 
         payslip_results = {
             'BASIC': 850.0,
             'GROSS': 850.0,
             'TAXABLE': 850.0,
-            'FIT': -31.73,
+            'FIT': -27.31,
             'MEDICARE': -12.33,
             'MEDICAREADD': 0,
             'SST': -52.7,
-            'ALINCOMETAX': -29.76,
+            'ALINCOMETAX': -29.98,
             'COMPANYFUTA': 51,
             'COMPANYMEDICARE': 12.33,
             'COMPANYSOCIAL': 52.7,
             'COMPANYSUI': 22.95,
-            'NET': 723.48,
+            'COMPANYALESA': 0.51,
+            'NET': 727.69,
         }
         self._validate_payslip(payslip, payslip_results)
 
@@ -895,25 +896,66 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'l10n_us_filing_status': 'jointly',
         })
 
-        payslip = self._generate_payslip(datetime.date(2024, 4, 1), datetime.date(2024, 4, 30))
+        payslip = self._generate_payslip(datetime.date(2025, 4, 1), datetime.date(2025, 4, 30))
         payslip.compute_sheet()
 
         payslip_results = {
             'BASIC': 3500.0,
             'GROSS': 3500.0,
             'TAXABLE': 3500.0,
-            'FIT': -106.67,
+            'FIT': -100.00,
             'MEDICARE': -50.75,
             'MEDICAREADD': 0.0,
             'SST': -217.0,
             'WACARESFUND': -20.3,
-            'WAPFMLFAMILY': -12.44,
-            'WAPFMLMEDICAL': -6.06,
+            'WAPFMLFAMILY': -15.53,
+            'WAPFMLMEDICAL': -7.5,
             'COMPANYFUTA': 210.0,
             'COMPANYMEDICARE': 50.75,
             'COMPANYSOCIAL': 217.0,
             'COMPANYSUI': 43.75,
-            'COMPANYWAPFML': 7.4,
-            'NET': 3086.78,
+            'COMPANYWAPFML': 9.17,
+            'COMPANYWAEAF': 1.05,
+            'NET': 3088.92,
+        }
+        self._validate_payslip(payslip, payslip_results)
+
+    def test_068_co_state_example_1(self):
+        self.work_address.state_id = self.env.ref('base.state_us_6')
+        self.contract.write({
+            'wage': 5000,
+            'schedule_pay': 'monthly',
+            'l10n_us_pre_retirement_amount': 500,
+            'l10n_us_pre_retirement_type': 'fixed',
+            'l10n_us_health_benefits_medical': 50,
+        })
+        self.employee.write({
+            'l10n_us_filing_status': 'single',
+            'l10n_us_state_filing_status': 'co_status_1',
+        })
+
+        payslip = self._generate_payslip(datetime.date(2025, 4, 1), datetime.date(2025, 4, 30))
+        payslip.compute_sheet()
+
+        payslip_results = {
+            'BASIC': 5000.0,
+            'GROSS': 5000.0,
+            '401K': -500.0,
+            'MEDICAL': -50.0,
+            'TAXABLE': 4450.0,
+            'FIT': -364.13,
+            'MEDICARE': -71.78,
+            'MEDICAREADD': 0.0,
+            'SST': -306.9,
+            'COINCOMETAX': -177.47,
+            'COFAMLI': -22.5,
+            'COMPANYFUTA': 297.0,
+            'COMPANYCOFAMLI': 22.5,
+            'COMPANYMEDICARE': 71.78,
+            'COMPANYSOCIAL': 306.9,
+            'COMPANYSUI': 84.15,
+            'COMPANYCOSOLVENCY': 6.68,
+            'COMPANYCOSUPPORT': 8.42,
+            'NET': 3507.23,
         }
         self._validate_payslip(payslip, payslip_results)
