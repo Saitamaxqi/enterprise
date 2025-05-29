@@ -13,7 +13,7 @@ Add an extra tab in the checkout process of the website/eCommerce with the mexic
 The extra tab only appears if:
 
 - the company linked to the website is mexican
-- the option 'automatic_invoice' is enabled in the website settings ("Generate the invoice automatically when the online payment is confirmed")
+- the option 'automatic_invoice' is enabled in the website settings ("Invoice automatically on payment")
     ''',
     'version': '1.0',
     'category': 'Accounting/Localizations/EDI',
