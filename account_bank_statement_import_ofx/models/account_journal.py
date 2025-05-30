@@ -1,93 +1,19 @@
-
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import datetime
+import importlib
+import importlib.util
 import io
 import logging
 import re
 import unicodedata
 from xml.etree import ElementTree
 
-try:
-    from ofxparse import OfxParser
-    OfxParserClass = OfxParser
-except ImportError:
-    logging.getLogger(__name__).warning("The ofxparse python library is not installed, ofx import will not work.")
-    OfxParser = None
-    OfxParserClass = object
-
-from odoo import models, _
+from odoo import _, models
 from odoo.exceptions import UserError
 
-
-class PatchedOfxParser(OfxParserClass):
-    """ This class monkey-patches the ofxparse library in order to fix the following known bug: ',' is a valid
-        decimal separator for amounts, as we can encounter in ofx files made by european banks.
-    """
-
-    @classmethod
-    def decimal_separator_cleanup(cls, tag):
-        if hasattr(tag, "contents"):
-            tag.string = tag.contents[0].replace(',', '.')
-
-    @classmethod
-    def parseStatement(cls, stmt_ofx):
-        ledger_bal_tag = stmt_ofx.find('ledgerbal')
-        if hasattr(ledger_bal_tag, "contents"):
-            balamt_tag = ledger_bal_tag.find('balamt')
-            cls.decimal_separator_cleanup(balamt_tag)
-        avail_bal_tag = stmt_ofx.find('availbal')
-        if hasattr(avail_bal_tag, "contents"):
-            balamt_tag = avail_bal_tag.find('balamt')
-            cls.decimal_separator_cleanup(balamt_tag)
-        return super().parseStatement(stmt_ofx)
-
-    @classmethod
-    def parseTransaction(cls, txn_ofx):
-        amt_tag = txn_ofx.find('trnamt')
-        cls.decimal_separator_cleanup(amt_tag)
-        return super().parseTransaction(txn_ofx)
-
-    @classmethod
-    def parseInvestmentPosition(cls, ofx):
-        tag = ofx.find('units')
-        cls.decimal_separator_cleanup(tag)
-        tag = ofx.find('unitprice')
-        cls.decimal_separator_cleanup(tag)
-        return super().parseInvestmentPosition(ofx)
-
-    @classmethod
-    def parseInvestmentTransaction(cls, ofx):
-        tag = ofx.find('units')
-        cls.decimal_separator_cleanup(tag)
-        tag = ofx.find('unitprice')
-        cls.decimal_separator_cleanup(tag)
-        return super().parseInvestmentTransaction(ofx)
-
-    @classmethod
-    def parseOfxDateTime(cls, ofxDateTime):
-        res = re.search(r"^[0-9]*\.([0-9]{0,5})", ofxDateTime)
-        if res:
-            msec = datetime.timedelta(seconds=float("0." + res.group(1)))
-        else:
-            msec = datetime.timedelta(seconds=0)
-
-        # Some banks seem to return some OFX dates as YYYY-MM-DD; so we remove
-        # the '-' characters to support them as well
-        ofxDateTime = ofxDateTime.replace('-', '')
-
-        try:
-            local_date = datetime.datetime.strptime(
-                ofxDateTime[:14], '%Y%m%d%H%M%S'
-            )
-            return local_date + msec
-        except Exception:
-            if not ofxDateTime or ofxDateTime[:8] == "00000000":
-                return None
-
-            return datetime.datetime.strptime(
-                ofxDateTime[:8], '%Y%m%d') + msec
+_logger = logging.getLogger(__name__)
+if not importlib.util.find_spec('ofxparse'):
+    _logger.warning("The ofxparse python library is not installed, ofx import will not work.")
 
 
 class AccountJournal(models.Model):
@@ -123,18 +49,20 @@ class AccountJournal(models.Model):
     def _parse_bank_statement_file(self, raw_file):
         if not self._check_ofx(raw_file):
             return super()._parse_bank_statement_file(raw_file)
-        if OfxParser is None:
-            raise UserError(_("The library 'ofxparse' is missing, OFX import cannot proceed."))
+        try:
+            from odoo.addons.account_bank_statement_import_ofx.ofx_parser import OfxParser  # noqa: PLC0415
+        except ImportError as e:
+            raise UserError(_("The library 'ofxparse' is missing, OFX import cannot proceed.")) from e
 
         try:
-            ofx = PatchedOfxParser.parse(io.BytesIO(raw_file))
+            ofx = OfxParser.parse(io.BytesIO(raw_file))
         except UnicodeDecodeError:
             # Replacing utf-8 chars with ascii equivalent
             encoding = re.findall(rb'encoding="(.*?)"', raw_file)
             encoding = encoding[0] if len(encoding) > 1 else 'utf-8'
             try:
                 raw_file = unicodedata.normalize('NFKD', raw_file.decode(encoding)).encode('ascii', 'ignore')
-                ofx = PatchedOfxParser.parse(io.BytesIO(raw_file))
+                ofx = OfxParser.parse(io.BytesIO(raw_file))
             except UnicodeDecodeError:
                 raise UserError(_("There was an issue decoding the file. Please check the file encoding."))
         vals_bank_statement = []
