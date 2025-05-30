@@ -7,12 +7,12 @@ import * as Numpad from "@point_of_sale/../tests/generic_helpers/numpad_util";
 registry.category("web_tour.tours").add("self_kiosk_order_preparation_display", {
     steps: () => [
         Utils.clickBtn("Order Now"),
-        LandingPage.selectKioskLocation("Test-In"),
-        ProductPage.clickKioskProduct("Coca-Cola"),
+        LandingPage.selectLocation("Test-In"),
+        ProductPage.clickProduct("Coca-Cola"),
         Utils.clickBtn("Checkout"),
-        Utils.clickBtn("Pay"),
+        Utils.clickBtn("Order"),
         Numpad.click("3"),
-        Utils.clickBtn("Pay"),
+        Utils.clickBtn("Order"),
         Utils.clickBtn("Close"),
     ],
 });
