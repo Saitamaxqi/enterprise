@@ -161,7 +161,6 @@ patch(TicketScreen.prototype, {
         order = this.pos.models["pos.order"].get(order.id);
         this.state.selectedOrderUuid = order.uuid;
         order.setScreenData({ name: "" });
-        order.uiState.locked = true;
         await super._doneOrder(...arguments);
     },
 

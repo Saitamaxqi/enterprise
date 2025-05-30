@@ -174,8 +174,6 @@ patch(PosStore.prototype, {
                     this.notificationOptions
                 );
             }
-        } else if (deliveryOrder.delivery_status === "food_ready") {
-            deliveryOrder.uiState.locked = true;
         }
     },
 
