@@ -64,7 +64,7 @@
                     <div class="flex-grow-1 position-relative">
                         <div class="o_scroll_view o_knowledge_main_view">
                             <div class="row p-0 m-0" style="height: 100%">
-                                <div class="d-flex col-12 col-lg position-relative p-0">
+                                <div class="col-12 col-lg position-relative p-0">
                                     <div class="o_scroll_view_lg">
                                         <!-- Article body -->
                                         <div class="o_knowledge_body d-flex flex-column"
