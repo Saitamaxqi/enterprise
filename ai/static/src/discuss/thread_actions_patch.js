@@ -3,7 +3,6 @@ import { threadActionsRegistry, threadActionsInternal } from "@mail/core/common/
 
 patch(threadActionsRegistry.get("close"), {
     async open(component) {
-        super.open(component);
         const correspondentPersona = component.thread?.correspondent?.persona;
         const orm = component.store.env.services.orm;
         if (correspondentPersona?.im_status === "agent") {
@@ -18,6 +17,7 @@ patch(threadActionsRegistry.get("close"), {
         } else if (component.thread?.channel_type === "ai_composer") {
             orm.call("discuss.channel", "close_ai_chat", [component.thread.id]);
         }
+        await super.open(component);
     },
 });
 

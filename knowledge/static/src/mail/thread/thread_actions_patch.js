@@ -18,7 +18,7 @@ patch(threadActionsRegistry.get("expand-form"), {
             });
             component.props.chatWindow.close();
         } else {
-            super.open(component);
+            await super.open(component);
         }
     },
 });
