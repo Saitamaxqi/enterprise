@@ -4,7 +4,7 @@ from odoo.tests import tagged
 from odoo.tests.common import BaseCase, HttpCase
 from odoo.addons.web_studio.controllers.export import StudioExporter
 from odoo.addons.web_studio.wizard.studio_export_wizard import _find_circular_dependencies
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 
 class TestExport(HttpCase):

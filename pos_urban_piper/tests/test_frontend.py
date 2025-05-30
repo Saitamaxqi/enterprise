@@ -1,7 +1,7 @@
 import uuid
 import odoo.tests
 from odoo import Command
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.addons.point_of_sale.tests.common import archive_products
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo.addons.pos_urban_piper.models.pos_urban_piper_request import UrbanPiperClient

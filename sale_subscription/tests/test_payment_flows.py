@@ -11,7 +11,7 @@ from odoo.tools import mute_logger
 from odoo.addons.mail.tests.common import MockEmail
 from odoo import fields
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
 
 

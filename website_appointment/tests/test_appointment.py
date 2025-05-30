@@ -8,7 +8,7 @@ from odoo import http
 from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.website_appointment.controllers.appointment import WebsiteAppointment
 from odoo.addons.website.tests.test_website_visitor import MockVisitor
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.exceptions import ValidationError
 from odoo.tests import users, tagged
 from unittest.mock import patch

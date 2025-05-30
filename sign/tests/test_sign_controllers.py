@@ -5,7 +5,7 @@ from json import dumps
 
 from odoo import Command
 from odoo.exceptions import AccessError, ValidationError
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.tests import tagged
 from odoo.tools import formataddr
 from .sign_controller_common import TestSignControllerCommon
