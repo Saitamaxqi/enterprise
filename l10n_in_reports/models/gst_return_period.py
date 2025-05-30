@@ -13,7 +13,7 @@ from markupsafe import Markup
 from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
 
 from odoo.exceptions import UserError, AccessError, ValidationError, RedirectWarning
-from odoo.tools import date_utils, get_lang, html_escape
+from odoo.tools import date_utils, get_lang, html_escape, SQL
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.tools.misc import format_date
 from odoo.addons.l10n_in_reports.tools.gstr1_spreadsheet_generator import GSTR1SpreadsheetGenerator
@@ -1917,6 +1917,19 @@ class L10n_InGstReturnPeriod(models.Model):
             if create_vals:
                 created_move = self.env['account.move'].create(create_vals)
                 checked_bills += created_move
+                self.env.cr.execute(SQL("""
+                    UPDATE ir_attachment
+                    SET res_id = msg.res_id,
+                        res_model = 'account.move'
+                    FROM ir_attachment att
+                    JOIN message_attachment_rel rel ON rel.attachment_id = att.id
+                    JOIN mail_message msg ON msg.id = rel.message_id
+                    WHERE att.id = ir_attachment.id
+                        AND att.res_model IS NULL
+                        AND att.res_id = 0
+                        AND msg.model = 'account.move'
+                        AND msg.res_id IN %(ids)s
+                """, ids=tuple(created_move.ids)))
             return checked_bills
 
         def _get_matching_keys(ref, vat, invoice_date, invoice_type, amount, irn):
