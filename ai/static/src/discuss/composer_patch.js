@@ -11,6 +11,8 @@ patch(Composer.prototype, {
     },
     onFocusin(ev) {
         super.onFocusin();
-        ev.target.select();
+        if (this.thread?.channel_type === "ai_composer") {
+            ev.target.select();
+        }
     }
 });
