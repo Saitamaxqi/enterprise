@@ -7,14 +7,6 @@ from odoo import models
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-    from pdfminer.converter import TextConverter
-    from pdfminer.layout import LAParams
-    from pdfminer.pdfpage import PDFPage
-except ImportError:
-    PDFResourceManager = PDFPageInterpreter = TextConverter = PDFPage = None
-
 
 class IrAttachment(models.Model):
     _inherit = 'ir.attachment'
@@ -22,11 +14,16 @@ class IrAttachment(models.Model):
     def _compute_pdf_content(self):
         """Compute the content of the PDF attachment."""
         self.ensure_one()
-        if PDFResourceManager is None:
-            return
-
         if not self.raw or not self.raw.startswith(b'%PDF-'):
-            return
+            return None
+        try:
+            from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter  # noqa: PLC0415
+            from pdfminer.converter import TextConverter  # noqa: PLC0415
+            from pdfminer.layout import LAParams  # noqa: PLC0415
+            from pdfminer.pdfpage import PDFPage  # noqa: PLC0415
+            logging.getLogger("pdfminer").setLevel(logging.CRITICAL)
+        except ImportError:
+            return None
 
         f = io.BytesIO(self.raw)
         resource_manager = PDFResourceManager()
@@ -43,7 +40,6 @@ class IrAttachment(models.Model):
             content,
             laparams=laparams
         ) as device:
-            logging.getLogger("pdfminer").setLevel(logging.CRITICAL)
             interpreter = PDFPageInterpreter(resource_manager, device)
             for page in PDFPage.get_pages(f):
                 interpreter.process_page(page)

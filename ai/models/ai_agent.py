@@ -202,10 +202,6 @@ class AIAgent(models.Model):
         # Check for invalid attachments
         if invalid_attachments:
             attachment_names = ", ".join([attachment.name for attachment in invalid_attachments])
-            invalid_pdf_attachments = invalid_attachments.filtered(lambda a: a.mimetype == 'application/pdf')
-            if invalid_pdf_attachments:
-                _logger.warning("Attachment indexation of PDF documents might be unavailable because the 'pdfminer' Python library cannot be found on the system. "
-                                "You may install it from https://pypi.org/project/pdfminer.six/ (e.g. `pip3 install pdfminer.six`)")
 
             return {
                 'warning': {
