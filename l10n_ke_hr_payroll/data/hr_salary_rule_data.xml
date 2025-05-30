@@ -482,8 +482,10 @@ else:
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-taxable_pension = min(contract.l10n_ke_pension_contribution, payslip._rule_parameter('l10n_ke_max_pension_contribution')) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
-result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - employee.l10n_ke_mortgage - taxable_pension - result_rules['NSSF_AMOUNT']['total']
+total_pension = result_rules['NSSF_AMOUNT']['total'] + contract.l10n_ke_pension_contribution
+max_pension_contribution = payslip._rule_parameter('l10n_ke_max_pension_contribution')
+non_taxable_pension = min(total_pension, max_pension_contribution) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
+result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - employee.l10n_ke_mortgage - non_taxable_pension
 if payslip.date_to &gt;= datetime(2024,12,27).date():
     result -= result_rules['SHIF_AMOUNT']['total'] + result_rules['AHL_AMOUNT']['total']
         </field>
