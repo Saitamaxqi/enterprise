@@ -19,7 +19,8 @@ export class OnlineAppointmentOption extends BaseOptionComponent {
         this.current_website = this.env.services.website.currentWebsite;
         const onReady = new Deferred();
         this.state = useDomState(
-            (editingElement) => {
+            async (editingElement) => {
+                await onReady;
                 const appointmentTypes = JSON.parse(editingElement.dataset.appointmentTypes);
                 const currentAppointmentId =
                     appointmentTypes.length === 1 ? appointmentTypes[0] : null;
@@ -34,7 +35,6 @@ export class OnlineAppointmentOption extends BaseOptionComponent {
                     staffUserIds: staffUserIds,
                 };
             },
-            { onReady }
         );
         onWillStart(async () => {
             await this.onWillStart();
