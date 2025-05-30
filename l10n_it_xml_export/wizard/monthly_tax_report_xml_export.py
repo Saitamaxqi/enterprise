@@ -129,6 +129,9 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
                     account_return = self.env[model].browse(ctx["active_id"]).return_id
                 case "account.move":
                     account_return = self.env[model].browse(ctx["active_id"]).closing_return_id
+                case "account.journal":
+                    # if the move is posting from journal dashboard
+                    account_return = self.env["account.move"].browse(ctx["l10n_it_moves_to_post"]).closing_return_id
             options = account_return._get_closing_report_options() if account_return else {}
 
         options.update(ctx_options)
