@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+import json
 from unittest.mock import patch
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import HttpCase, TransactionCase, tagged
+from odoo.tools import mute_logger
 from odoo.addons.hr_contract_salary.models.hr_version import HrVersion
 
 
@@ -68,3 +69,59 @@ class TestBenefits(TransactionCase):
         self.version._onchange_final_yearly_costs()
         self.version._onchange_wage_with_holidays()
         self.assertAlmostEqual(self.version.final_yearly_costs, 100000, 2)  # And not 99999.96
+
+
+@tagged('-at_install', 'post_install')
+class TestInformationUpdate(HttpCase):
+
+    @mute_logger('odoo.http')
+    def test_prevent_update_employee_information(self):
+        # Create an offer for an employee
+        job = self.env['hr.job'].create({'name': 'Test job'})
+        employee = self.env['hr.employee'].create({
+            'email': 'test_employee@test.example.com',
+            'name': 'Test Employee',
+            'work_email': 'test_employee@test.example.com',
+            'job_id': job.id,
+            'wage': 1000,
+        })
+        contract_employee = employee.version_id
+        contract_template = self.env['hr.version'].create({
+            'job_id': job.id,
+            'name': "Test Template job",
+            'wage': 1000,
+        })
+        salary_offer = self.env['hr.contract.salary.offer'].create([
+            {
+                'contract_template_id': contract_template.id,
+                'employee_version_id': contract_employee.id,
+            }
+        ])
+
+        data = {
+            "params": {
+                "version_id": None,
+                "offer_id": salary_offer.id,
+                "benefits": {
+                    'version': {
+                        'wage': 1000,
+                        'final_yearly_costs': 1000,
+                    },
+                    'employee': {
+                        'name': 'Edited Test Employee',
+                        'private_email': 'edited_test_employee@test.example.com',
+                        'employee_job_id': None,
+                        'department_id': None,
+                        'job_title': None,
+                    },
+                    'address': {},
+                    'bank_account': {},
+                },
+            },
+        }
+
+        # Public user cannot update information via an offer linked to an existing employee
+        res = self.url_open("/salary_package/submit", json=data)
+        content = json.loads(res.content)
+        self.assertIn('error', content)
+        self.assertIn('AccessError', content['error']['data']['name'])

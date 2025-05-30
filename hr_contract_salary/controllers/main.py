@@ -884,11 +884,10 @@ class HrContractSalary(http.Controller):
         if not offer.applicant_id and not offer.employee_version_id:
             raise UserError(_('This link is invalid. Please contact the HR Responsible to get a new one...'))
 
+        version_id = offer.employee_version_id.id or version_id
         version = self._check_access_rights(version_id)
-        if offer.employee_version_id:
-            version = offer.employee_version_id
-            if version.employee_id.user_id == request.env.user:
-                kw['employee'] = version.employee_id
+        if version.employee_id.user_id == request.env.user:
+            kw['employee'] = version.employee_id
         kw['package_submit'] = True
         new_version = self.create_new_version(version, offer_id, benefits, no_write=True, **kw)
 
