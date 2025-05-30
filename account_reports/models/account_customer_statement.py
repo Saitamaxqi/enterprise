@@ -6,13 +6,6 @@ class CustomerStatementCustomHandler(models.AbstractModel):
     _inherit = 'account.partner.ledger.report.handler'
     _description = 'Customer Statement Custom Handler'
 
-    def _get_custom_display_config(self):
-        display_config = super()._get_custom_display_config()
-        display_config['css_custom_class'] += ' customer_statement'
-        display_config['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
-        display_config['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
-        return display_config
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
 
@@ -22,6 +15,9 @@ class CustomerStatementCustomHandler(models.AbstractModel):
             'sequence': 90,
             'always_show': True,
         })
+        options['custom_display_config']['css_custom_class'] += ' customer_statement'
+        options['custom_display_config']['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
+        options['custom_display_config']['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
 
     def _get_report_send_recipients(self, options):
         partners = options.get('partner_ids', [])

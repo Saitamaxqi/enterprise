@@ -50,16 +50,6 @@ class AccountIntrastatReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Intrastat Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'templates': {
-                'AccountReportFilters': 'account_intrastat.IntrastatReportFilters',
-            },
-            'components': {
-                'AccountReportFilters': 'InstrastReportFilters',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
@@ -117,6 +107,15 @@ class AccountIntrastatReportHandler(models.AbstractModel):
         # When printing the report to xlsx, we want to use country codes instead of names
         xlsx_button_option = next(button_opt for button_opt in options['buttons'] if button_opt.get('action_param') == 'export_to_xlsx')
         xlsx_button_option['action_param'] = 'export_to_xlsx'
+
+        options['custom_display_config'] = {
+            'templates': {
+                'AccountReportFilters': 'account_intrastat.IntrastatReportFilters',
+            },
+            'components': {
+                'AccountReportFilters': 'InstrastReportFilters',
+            },
+        }
 
     @api.model
     def _determine_inclusion(self, options):

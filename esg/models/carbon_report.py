@@ -7,13 +7,6 @@ class CarbonReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Carbon Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'templates': {
-                'AccountReportFilters': 'esg.CarbonReportFilters',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
@@ -30,6 +23,12 @@ class CarbonReportHandler(models.AbstractModel):
         ]
 
         options['columns'] = [col_opt for col_opt in options['columns'] if col_opt['expression_label'] in {*selected_gas, 'co2e'}]
+
+        options['custom_display_config'] = {
+            'templates': {
+                'AccountReportFilters': 'esg.CarbonReportFilters',
+            }
+        }
 
     def _report_custom_engine_carbon_report(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         report = self.env['account.report'].browse(options['report_id'])

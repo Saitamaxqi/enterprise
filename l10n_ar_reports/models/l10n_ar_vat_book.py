@@ -15,17 +15,6 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
     _inherit = ['account.tax.report.handler']
     _description = 'Argentinian Tax Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            **super()._get_custom_display_config(),
-            'templates': {
-                'AccountReportFilters': 'l10n_ar_reports.L10nArTaxReportFiltersCustomizable',
-            },
-            'components': {
-                'AccountReportFilters': 'L10nARTaxReportFilters',
-            },
-        }
-
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         # dict of the form {move_id: {column_group_key: {expression_label: value}}}
         move_info_dict = {}
@@ -152,6 +141,14 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
             columns_to_remove.append('vat_5')
 
         options['columns'] = [col for col in options['columns'] if col['expression_label'] not in columns_to_remove]
+        options['custom_display_config'] = {
+            'templates': {
+                'AccountReportFilters': 'l10n_ar_reports.L10nArTaxReportFiltersCustomizable',
+            },
+            'components': {
+                'AccountReportFilters': 'L10nARTaxReportFilters',
+            },
+        }
 
     ####################################################
     # REPORT LINES: CORE

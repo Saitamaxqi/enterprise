@@ -19,7 +19,7 @@
                                     <tr>
                                         <th t-att-colspan="(taxesByCountry.length > 1 ? 4 : 3) + extraColumns">
                                             Taxes Applied
-                                            <t t-if="controller.groups.account_user">
+                                            <t t-if="controller.userGroups.account_user">
                                                 <a
                                                     class="btn btn_action"
                                                     t-on-click="(ev) => this.openTaxJournalItems(ev, 'Taxes Applied', 'tax')"
@@ -85,7 +85,7 @@
                                     <tr>
                                         <th t-att-colspan="(hasTaxesGridsSeveralCountries) ? 5 : 4">
                                             Impacted Tax Grids
-                                            <t t-if="controller.groups.account_user">
+                                            <t t-if="controller.userGroups.account_user">
                                                 <a
                                                     class="btn btn_action"
                                                     t-on-click="(ev) => this.openTaxJournalItems(ev, 'Impacted Tax Grids', 'tag')"

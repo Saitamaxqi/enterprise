@@ -32,7 +32,7 @@ patch(AccountReportCogMenu.prototype, {
                         "data-embedded-props",
                         JSON.stringify({
                             name: this.actionService.currentController.action.name,
-                            options: this.env.controller.options,
+                            options: this.env.controller.cachedFilterOptions,
                         })
                     );
                     this.knowledgeCommandsService.setPendingEmbeddedBlueprint({

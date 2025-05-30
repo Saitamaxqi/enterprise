@@ -192,13 +192,6 @@ class AccountDeferredReportHandler(models.AbstractModel):
     # DEFERRED REPORT DISPLAY #
     ###########################
 
-    def _get_custom_display_config(self):
-        return {
-            'templates': {
-                'AccountReportFilters': 'account_reports.DeferredFilters',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
@@ -254,6 +247,12 @@ class AccountDeferredReportHandler(models.AbstractModel):
             or self._get_deferred_report_type() == 'revenue' and self.env.company.generate_deferred_revenue_entries_method == 'manual'
         ):
             options['buttons'].append({'name': _('Generate entry'), 'action': 'action_generate_entry', 'sequence': 80, 'always_show': True})
+
+        options['custom_display_config'] = {
+            'templates': {
+                'AccountReportFilters': 'account_reports.DeferredFilters',
+            },
+        }
 
     def action_audit_cell(self, options, params):
         """ Open a list of invoices/bills and/or deferral entries for the clicked cell in a deferred report.

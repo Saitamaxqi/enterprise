@@ -27,7 +27,7 @@ export class AgedPartnerBalanceFilters extends AccountReportFilters {
             ...super.filterExtraOptionsData,
             'show_currency': {
                 'name': _t("Show Currency"),
-                'show': this.controller.options.multi_currency,
+                'show': this.controller.cachedFilterOptions.multi_currency,
             },
             'show_account': {
                 'name': _t("Show Account"),

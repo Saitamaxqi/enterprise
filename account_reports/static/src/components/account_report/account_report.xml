@@ -18,7 +18,7 @@
                 <!-- Search bar (if configured for report) and filters -->
                 <t t-set-slot="layout-actions">
                    <div class="d-flex gap-1 flex-wrap">
-                       <t t-if="controller.options.search_bar">
+                       <t t-if="controller.cachedFilterOptions.search_bar">
                            <AccountReportSearchBar initialQuery="initialQuery"/>
                            <br/>
                        </t>
@@ -29,24 +29,24 @@
 
             <div class="o_content">
                 <!-- Sections -->
-                <t t-if="controller.options.sections.length">
+                <t t-if="controller.cachedFilterOptions.sections.length">
                     <div id="section_selector" class="section_selector">
-                        <t t-foreach="controller.options.sections" t-as="section" t-key="section_index">
+                        <t t-foreach="controller.cachedFilterOptions.sections" t-as="section" t-key="section_index">
                             <button
-                                t-att-class="(controller.options.selected_section_id === section.id) ? 'btn btn-secondary' : 'btn btn-primary'"
+                                t-att-class="(controller.cachedFilterOptions.selected_section_id === section.id) ? 'btn btn-secondary' : 'btn btn-primary'"
                                 t-on-click="() => controller.switchToSection(section.id)"
                                 t-out="section.name"
                             />
                         </t>
 
-                        <t t-if="controller.options['has_inactive_sections']">
+                        <t t-if="controller.cachedFilterOptions['has_inactive_sections']">
                             <button class="btn btn-secondary" t-on-click="(ev) => controller.reportAction(ev, 'action_display_inactive_sections')" >+</button>
                         </t>
                     </div>
                 </t>
 
                 <!-- Warnings -->
-                <t t-if="controller.warnings">
+                <t t-if="controller.data and controller.warnings">
                     <div id="warnings" class="warnings d-print-none">
                         <t t-foreach="controller.warnings" t-as="warningTemplateRef" t-key="warningTemplateRef">
                             <t t-set="warningParams" t-value="controller.warnings[warningTemplateRef]"/>
@@ -58,7 +58,16 @@
                     </div>
                 </t>
 
-                <t t-if="controller.lines.length">
+                <t t-if="controller.data === undefined">
+                    <div class="o_view_nocontent">
+                        <div class="text-center mt-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <t t-elif="controller.lines.length">
                     <!-- Table -->
                     <div class="mx-auto fit-content w-print-100">
                         <div class="d-flex align-items-start">

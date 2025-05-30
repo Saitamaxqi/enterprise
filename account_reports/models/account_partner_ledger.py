@@ -14,17 +14,6 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Partner Ledger Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'css_custom_class': 'partner_ledger',
-            'components': {
-                'AccountReportLineCell': 'PartnerLedgerLineCell',
-            },
-            'templates': {
-                'AccountReportLineName': 'account_reports.PartnerLedgerLineName',
-            },
-        }
-
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         partner_lines, totals_by_column_group = self._build_partner_lines(report, options)
         lines = report._regroup_lines_by_name_prefix(options, partner_lines, '_report_expand_unfoldable_line_partner_ledger_prefix_group', 0)
@@ -133,6 +122,16 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             options['multi_currency'] = True
         else:
             options['columns'] = [col for col in options['columns'] if col['expression_label'] != 'amount_currency']
+
+        options['custom_display_config'] = {
+            'css_custom_class': 'partner_ledger',
+            'components': {
+                'AccountReportLineCell': 'PartnerLedgerLineCell',
+            },
+            'templates': {
+                'AccountReportLineName': 'account_reports.PartnerLedgerLineName',
+            },
+        }
 
     def _custom_unfold_all_batch_data_generator(self, report, options, lines_to_expand_by_function):
         partner_ids_to_expand = []

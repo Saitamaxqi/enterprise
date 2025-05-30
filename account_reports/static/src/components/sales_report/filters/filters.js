@@ -10,12 +10,12 @@ export class SalesReportFilters extends AccountReportFilters {
     // Getters
     //------------------------------------------------------------------------------------------------------------------
     get selectedEcTaxName() {
-        const selected = this.controller.options.ec_tax_filter_selection.filter(
+        const selected = this.controller.cachedFilterOptions.ec_tax_filter_selection.filter(
             (ecTax) => ecTax.selected,
         );
 
         switch (selected.length) {
-            case this.controller.options.ec_tax_filter_selection.length:
+            case this.controller.cachedFilterOptions.ec_tax_filter_selection.length:
                 return _t("All");
             case 0:
                 return _t("None");

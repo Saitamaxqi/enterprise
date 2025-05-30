@@ -16,17 +16,6 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Aged Partner Balance Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'css_custom_class': 'aged_partner_balance',
-            'templates': {
-                'AccountReportLineName': 'account_reports.AgedPartnerBalanceLineName',
-            },
-            'components': {
-                'AccountReportFilters': 'AgedPartnerBalanceFilters',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         hidden_columns = set()
@@ -62,6 +51,16 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
                 period_number = int(column['expression_label'].replace('period', '')) - 1
                 if 0 <= period_number < 4:
                     column['name'] = f'{interval * period_number + 1}-{interval * (period_number + 1)}'
+
+        options['custom_display_config'] = {
+            'css_custom_class': 'aged_partner_balance',
+            'templates': {
+                'AccountReportLineName': 'account_reports.AgedPartnerBalanceLineName',
+            },
+            'components': {
+                'AccountReportFilters': 'AgedPartnerBalanceFilters',
+            },
+        }
 
     def _custom_line_postprocessor(self, report, options, lines):
         partner_lines_map = {}

@@ -23,16 +23,6 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Multicurrency Revaluation Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'components': {
-                'AccountReportFilters': 'MulticurrencyRevaluationReportFilters',
-            },
-            'templates': {
-                'AccountReportLineName': 'account_reports.MulticurrencyRevaluationReportLineName',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         active_currencies = self.env['res.currency'].search([('active', '=', True)])
@@ -67,6 +57,15 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
 
         options['multi_currency'] = True
         options['buttons'].append({'name': _('Adjustment Entry'), 'sequence': 30, 'action': 'action_multi_currency_revaluation_open_revaluation_wizard', 'always_show': True})
+
+        options['custom_display_config'] = {
+            'components': {
+                'AccountReportFilters': 'MulticurrencyRevaluationReportFilters',
+            },
+            'templates': {
+                'AccountReportLineName': 'account_reports.MulticurrencyRevaluationReportLineName',
+            },
+        }
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         if len(self.env.companies) > 1:

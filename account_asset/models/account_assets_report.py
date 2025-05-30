@@ -13,14 +13,6 @@ class AccountAssetReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Assets Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'client_css_custom_class': 'depreciation_schedule',
-            'templates': {
-                'AccountReportFilters': 'account_asset.DepreciationScheduleFilters',
-            }
-        }
-
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         lines, totals_by_column_group = self._generate_report_lines_without_grouping(report, options)
         # add the groups by grouping_field
@@ -151,6 +143,13 @@ class AccountAssetReportHandler(models.AbstractModel):
         has_account_group = self.env['account.group'].search_count([('company_id', '=', self.env.company.id)], limit=1)
         hierarchy_activated = previous_options.get('hierarchy', True)
         options['hierarchy'] = has_account_group and hierarchy_activated or False
+
+        options['custom_display_config'] = {
+            'client_css_custom_class': 'depreciation_schedule',
+            'templates': {
+                'AccountReportFilters': 'account_asset.DepreciationScheduleFilters',
+            }
+        }
 
     def _query_lines(self, options, prefix_to_match=None, forced_account_id=None):
         """

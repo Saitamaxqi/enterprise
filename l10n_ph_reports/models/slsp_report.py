@@ -18,14 +18,6 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
     _inherit = ['l10n_ph.generic.report.handler']
     _description = 'Summary Lists of Sales and Purchases Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            **super()._get_custom_display_config(),
-            'components': {
-                'AccountReportFilters': 'L10nPHSlspReportFilters',
-            }
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         options.setdefault('buttons', []).append(
@@ -41,6 +33,8 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
         options['include_no_tin'] = previous_options.get('include_no_tin', False)
         # Initialise the custom options for this report.
         options['include_imports'] = previous_options.get('include_imports', False)
+
+        options['custom_display_config']['components'] = {'AccountReportFilters': 'L10nPHSlspReportFilters'}
 
     # First level, month rows
     def _build_month_lines(self, report, options):

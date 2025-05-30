@@ -90,15 +90,6 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
     _inherit = ['account.tax.report.handler']
     _description = 'Belgian Tax Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        parent_config = super()._get_custom_display_config()
-        parent_config.update({
-            'pdf_export': {
-                'pdf_export_filters': 'l10n_be_reports.pdf_export_filters',
-            },
-        })
-        return parent_config
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
@@ -110,6 +101,8 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
             'ask_restitution': previous_options.get('ask_restitution'),
             'client_nihil': previous_options.get('client_nihil'),
         })
+
+        options['custom_display_config']['pdf_export'] = {'pdf_export_filters': 'l10n_be_reports.pdf_export_filters'}
 
     def open_account_report_sales(self, options):
         action = self.env['ir.actions.actions']._for_xml_id('account_reports.action_account_report_sales')

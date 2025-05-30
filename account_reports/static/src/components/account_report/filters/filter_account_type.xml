@@ -7,7 +7,7 @@
             </button>
 
             <t t-set-slot="content">
-                <t t-foreach="controller.options.account_type" t-as="accountTypeItem" t-key="accountTypeItem_index">
+                <t t-foreach="controller.cachedFilterOptions.account_type" t-as="accountTypeItem" t-key="accountTypeItem_index">
                     <DropdownItem
                         class="{ selected: accountTypeItem.selected }"
                         onSelected="() => this.filterClicked({ optionKey: 'account_type.' + accountTypeItem_index + '.selected', reload: true})"

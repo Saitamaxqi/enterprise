@@ -24,9 +24,10 @@ test("can change the date filter by editing textually", async () => {
             filters: {
                 show_period_comparison: false,
             },
-            groups: {},
+            userGroups: {},
+            cachedUserGroups: {},
             incrementCallNumber: (cacheKey) => {},
-            options: {
+            cachedFilterOptions: {
                 available_horizontal_groups: [],
                 available_variants: [],
                 companies: [],

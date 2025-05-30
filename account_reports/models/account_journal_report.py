@@ -27,9 +27,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         # Initialise the custom option for this report.
         options['ignore_totals_below_sections'] = True
         options['show_payment_lines'] = previous_options.get('show_payment_lines', True)
-
-    def _get_custom_display_config(self):
-        return {
+        options['custom_display_config'] = {
             'css_custom_class': 'journal_report',
             'pdf_css_custom_class': 'journal_report_pdf',
             'components': {
@@ -208,7 +206,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         base_url = report.get_base_url()
         print_options = {
             **report.get_options(previous_options={**options, 'export_mode': 'print'}),
-            'css_custom_class': self._get_custom_display_config().get('pdf_css_custom_class', 'journal_report_pdf')
+            'css_custom_class': options['custom_display_config']['pdf_css_custom_class']
         }
         rcontext = {
             'mode': 'print',

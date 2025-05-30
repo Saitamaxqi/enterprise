@@ -26,8 +26,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         # Automatically unfold the report when printing it, unless some specific lines have been unfolded
         options['unfold_all'] = (options['export_mode'] == 'print' and not options.get('unfolded_lines')) or options['unfold_all']
 
-    def _get_custom_display_config(self):
-        return {
+        options['custom_display_config'] = {
             'templates': {
                 'AccountReportLineName': 'account_reports.GeneralLedgerLineName',
             },

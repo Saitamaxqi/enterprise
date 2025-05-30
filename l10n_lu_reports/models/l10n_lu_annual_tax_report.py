@@ -251,10 +251,9 @@ class L10n_LuAppendixOpexTaxReportHandler(models.AbstractModel):
     _inherit = ['account.tax.report.handler']
     _description = 'Custom Handler for the Appendix to Operational Expenditures of the LU Annual Tax Report'
 
-    def _get_custom_display_config(self):
-        parent_config = super()._get_custom_display_config()
-        parent_config.setdefault('components', {})['AccountReportLineName'] = 'L10nLUAppendixLineName'
-        return parent_config
+    def _custom_options_initializer(self, report, options, previous_options):
+        super()._custom_options_initializer(report, options, previous_options=previous_options)
+        options['custom_display_config'].setdefault('components', {})['AccountReportLineName'] = 'L10nLUAppendixLineName'
 
     def action_open_appendix_view(self, options, params=None):
         date_to = options['date']['date_to']

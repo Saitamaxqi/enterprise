@@ -3,10 +3,10 @@
     <t t-name="l10n_mx_reports_closing.TrialBalanceFilterDate" t-inherit="account_reports.AccountReportFilterDate">
 
         <xpath expr="//div[@id='filter_date_divider_range']" position="after">
-            <t t-if="controller.groups.account_user &amp;&amp; 'l10n_mx_month_13' in controller.options &amp;&amp; controller.options.comparison.filter == 'no_comparison'">
+            <t t-if="controller.cachedUserGroups.account_user &amp;&amp; 'l10n_mx_month_13' in controller.cachedFilterOptions &amp;&amp; controller.cachedFilterOptions.comparison.filter == 'no_comparison'">
                 <DropdownItem
                     class="{ 'd-flex justify-content-between date_filter': true, 'selected': (this.isPeriodSelected('year13')) }"
-                    onSelected="() => this.selectDateFilter('year13', 'year13' != controller.options.date.period_type)"
+                    onSelected="() => this.selectDateFilter('year13', 'year13' != controller.cachedFilterOptions.date.period_type)"
                     closingMode="'none'"
                 >
                     <div class="filter_name pe-3">

@@ -7,18 +7,18 @@ export class InstrastReportFilters extends AccountReportFilters {
     get selectedIntrastatOptions() {
         let selectedIntrastatOptions = [];
         // display selected options if any is selected and not all are selected
-        const selected = this.controller.options['intrastat_type']
+        const selected = this.controller.cachedFilterOptions['intrastat_type']
             .filter((optType) => optType.selected)
             .map((optType) => optType.name);
-        if (selected.length && selected.length != this.controller.options['intrastat_type'].length) {
+        if (selected.length && selected.length != this.controller.cachedFilterOptions['intrastat_type'].length) {
             selectedIntrastatOptions.push(selected.join(", "));
         }
 
         selectedIntrastatOptions.push(
-            this.controller.options.intrastat_extended ? _t("Extended mode") : _t("Standard mode"),
+            this.controller.cachedFilterOptions.intrastat_extended ? _t("Extended mode") : _t("Standard mode"),
         );
         selectedIntrastatOptions.push(
-            this.controller.options.intrastat_with_vat
+            this.controller.cachedFilterOptions.intrastat_with_vat
                 ? _t("Partners with VAT numbers")
                 : _t("All partners"),
         );

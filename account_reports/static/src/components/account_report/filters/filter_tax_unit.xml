@@ -7,22 +7,22 @@
             </button>
 
             <t t-set-slot="content">
-                <t t-if="controller.groups.account_readonly">
+                <t t-if="controller.cachedUserGroups.account_readonly">
                     <DropdownItem
-                        class="{ 'selected': controller.options.tax_unit === 'company_only' }"
+                        class="{ 'selected': controller.cachedFilterOptions.tax_unit === 'company_only' }"
                         onSelected="() => this.filterClicked({ optionKey: 'tax_unit', optionValue: 'company_only', reload: true})"
                     >
                         Company Only
                     </DropdownItem>
                 </t>
 
-                <t t-foreach="controller.options.available_tax_units" t-as="taxUnit" t-key="taxUnit_index">
+                <t t-foreach="controller.cachedFilterOptions.available_tax_units" t-as="taxUnit" t-key="taxUnit_index">
                     <t t-if="taxUnit_first">
                         <div class="dropdown-divider"/>
                     </t>
 
                     <DropdownItem
-                        class="{ 'selected': controller.options.tax_unit === taxUnit.id }"
+                        class="{ 'selected': controller.cachedFilterOptions.tax_unit === taxUnit.id }"
                         onSelected="() => this.filterTaxUnit(taxUnit)"
                         t-out="taxUnit.name"
                     />

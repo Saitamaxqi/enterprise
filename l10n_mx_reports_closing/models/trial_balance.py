@@ -7,13 +7,6 @@ from odoo import models, fields, _
 class AccountTrialBalanceReportHandler(models.AbstractModel):
     _inherit = 'account.trial.balance.report.handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'components': {
-                'AccountReportFilters': 'L10nMXTrialBalanceReportFilters',
-            },
-        }
-
     def _l10n_mx_set_options_month_13(self, options):
         ''' Configure the options dict if the 'Month 13' option is active.
 
@@ -95,6 +88,12 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
                 self._l10n_mx_set_options_month_13(options)
             else:
                 self._l10n_mx_set_options_non_month_13(options)
+
+        options['custom_display_config'] = {
+            'components': {
+                'AccountReportFilters': 'L10nMXTrialBalanceReportFilters',
+            },
+        }
 
     def _l10n_mx_get_sat_values(self, options):
         # OVERRIDE

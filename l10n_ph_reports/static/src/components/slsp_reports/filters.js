@@ -19,7 +19,7 @@ export class L10nPHSlspReportFilters extends AccountReportFilters {
     get selectedExtraOptions() {
         let selectedExtraOptionsName = super.selectedExtraOptions;
 
-        if (this.controller.options.include_no_tin) {
+        if (this.controller.cachedFilterOptions.include_no_tin) {
             const includeNoTINName = _t("With Partners without TIN");
 
             selectedExtraOptionsName = selectedExtraOptionsName
@@ -27,7 +27,7 @@ export class L10nPHSlspReportFilters extends AccountReportFilters {
                 : includeNoTINName;
         }
 
-        if (this.controller.options.include_imports) {
+        if (this.controller.cachedFilterOptions.include_imports) {
             const includeImportsName = _t("With Importations");
             selectedExtraOptionsName = selectedExtraOptionsName
                 ? `${selectedExtraOptionsName}, ${includeImportsName}`

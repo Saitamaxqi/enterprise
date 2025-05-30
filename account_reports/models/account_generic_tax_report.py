@@ -69,12 +69,15 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
     _inherit = ['account.tax.report.handler']
     _description = 'Generic Tax Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        parent_config = super()._get_custom_display_config()
-        parent_config['css_custom_class'] = 'generic_tax_report'
-        parent_config.setdefault('templates', {})['AccountReportLineName'] = 'account_reports.TaxReportLineName'
+    def _custom_options_initializer(self, report, options, previous_options):
+        super()._custom_options_initializer(report, options, previous_options)
 
-        return parent_config
+        options['custom_display_config'] = {
+            'css_custom_class': 'generic_tax_report',
+            'templates': {
+                'AccountReportLineName': 'account_reports.TaxReportLineName',
+            },
+        }
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         return self._get_dynamic_lines(report, options, 'default', warnings)

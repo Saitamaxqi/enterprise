@@ -14,10 +14,10 @@ class AccountReport(models.Model):
     )
 
     # OVERRIDE
-    def get_report_information(self, options):
-        info = super().get_report_information(options)
-        info['filters']['show_cash_basis'] = self.filter_cash_basis
-        return info
+    def get_options(self, previous_options):
+        options = super().get_options(previous_options)
+        options['filters']['show_cash_basis'] = self.filter_cash_basis
+        return options
 
     def _init_options_cash_basis(self, options, previous_options):
         if self.filter_cash_basis:

@@ -10,13 +10,6 @@ class AccountEcSalesReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'EC Sales Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'components': {
-                'AccountReportFilters': 'SalesReportFilters',
-            },
-        }
-
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         """
         Generate the dynamic lines for the report in a vertical style (one line per tax per partner).
@@ -118,6 +111,11 @@ class AccountEcSalesReportHandler(models.AbstractModel):
         report._init_options_journals(options, previous_options=previous_options)
 
         options['enable_export_buttons_for_common_vat_in_branches'] = True
+        options['custom_display_config'] = {
+            'components': {
+                'AccountReportFilters': 'SalesReportFilters',
+            },
+        }
 
     def _init_core_custom_options(self, report, options, previous_options):
         """

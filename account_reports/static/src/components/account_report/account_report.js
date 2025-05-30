@@ -82,11 +82,11 @@ export class AccountReport extends Component {
     }
 
     get cssCustomClass() {
-        return this.controller.data.custom_display.css_custom_class || "";
+        return this.controller.options.custom_display_config.css_custom_class || "";
     }
 
     getComponent(name) {
-        const customComponents = this.controller.data.custom_display.components;
+        const customComponents = this.controller.options.custom_display_config.components;
 
         if (customComponents && customComponents[name])
             return registry.category("account_reports_custom_components").get(customComponents[name]);
@@ -95,7 +95,7 @@ export class AccountReport extends Component {
     }
 
     getTemplate(name) {
-        const customTemplates = this.controller.data.custom_display.templates;
+        const customTemplates = this.controller.options.custom_display_config.templates;
 
         if (customTemplates && customTemplates[name])
             return customTemplates[name];

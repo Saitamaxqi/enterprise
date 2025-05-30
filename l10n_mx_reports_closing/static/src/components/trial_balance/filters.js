@@ -26,8 +26,8 @@ export class L10nMXTrialBalanceReportFilters extends AccountReportFilters {
 
     isPeriodSelected(periodType) {
         // This is a hack to use the "Year" behaviour for the "Month 13" date filter without displaying both of them selected at the same time
-        const isYear13Selected = this.controller.options.date.filter.includes("year13");
-        this.controller.options.l10n_mx_month_13 = isYear13Selected;
+        const isYear13Selected = this.controller.cachedFilterOptions.date.filter.includes("year13");
+        this.controller.cachedFilterOptions.l10n_mx_month_13 = isYear13Selected;
         return periodType === "year" && isYear13Selected ? false : super.isPeriodSelected(periodType);
     }
 }

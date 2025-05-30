@@ -9,8 +9,8 @@ registry.category("web_tour.tours").add("account_reports", {
         //--------------------------------------------------------------------------------------------------------------
         {
             content: "Initial foldable",
-            trigger: ".o_content",
-            run: () => {
+            trigger: "table",
+            run: async () => {
                 Asserts.DOMContainsNumber("tbody > tr:not(.d-none):not(.empty)", 28);
 
                 // Since the total line is not displayed (folded), the amount should be on the line

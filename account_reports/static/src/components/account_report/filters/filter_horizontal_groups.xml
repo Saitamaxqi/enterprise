@@ -8,16 +8,16 @@
 
             <t t-set-slot="content">
                 <DropdownItem
-                    class="{ 'selected': controller.options.selected_horizontal_group_id === null }"
+                    class="{ 'selected': controller.cachedFilterOptions.selected_horizontal_group_id === null }"
                     onSelected="() => this.selectHorizontalGroup(null)"
                     closingMode="'none'"
                 >
                     None
                 </DropdownItem>
 
-                <t t-foreach="controller.options.available_horizontal_groups" t-as="horizontalGroup" t-key="horizontalGroup_index">
+                <t t-foreach="controller.cachedFilterOptions.available_horizontal_groups" t-as="horizontalGroup" t-key="horizontalGroup_index">
                     <DropdownItem
-                        class="{ 'selected': controller.options.selected_horizontal_group_id === horizontalGroup.id }"
+                        class="{ 'selected': controller.cachedFilterOptions.selected_horizontal_group_id === horizontalGroup.id }"
                         onSelected="() => this.selectHorizontalGroup(horizontalGroup.id)"
                         closingMode="'none'"
                     >

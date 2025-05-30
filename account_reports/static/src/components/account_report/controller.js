@@ -41,6 +41,7 @@ export class AccountReportController {
         this.reportOptionsMap[cacheKey] = mainReportOptions;
         this.incrementCallNumber(cacheKey);
         this.options["loading_call_number"] = this.loadingCallNumberByCacheKey[cacheKey];
+        this.cachedFilterOptions = this.options;
         this.saveSessionOptions(mainReportOptions);
 
         const activeSectionPromise = this.displayReport(mainReportOptions['report_id']);
@@ -62,28 +63,47 @@ export class AccountReportController {
     async displayReport(reportId) {
         const cacheKey = await this.loadReport(reportId);
         const options = await this.reportOptionsMap[cacheKey];
-        const informationMap = await this.reportInformationMap[cacheKey];
-        if (
-            options !== undefined
+        if (this.serverCallResultCanBeSetAsActive(options, options, cacheKey)) {
+            this.cachedFilterOptions = options;
+        }
+
+        this.loadInformationMap(options, cacheKey);
+    }
+
+    serverCallResultCanBeSetAsActive(callResult, options, cacheKey) {
+        return callResult !== undefined
             && this.loadingCallNumberByCacheKey[cacheKey] === options["loading_call_number"]
-            && (this.lastOpenedSectionByReport === {} || this.lastOpenedSectionByReport[options['selected_variant_id']] === options['selected_section_id'])
-        ) {
-            // the options gotten from the python correspond to the ones that called this displayReport
+            && (this.lastOpenedSectionByReport === {} || this.lastOpenedSectionByReport[options['selected_variant_id']] === options['selected_section_id']);
+    }
+
+    async loadInformationMap(options, cacheKey) {
+        this.loadingData = true;
+        this.displayLoadingSymbolWhenTakingTooLong(options['report_id'] === this.options['report_id']);
+
+        const informationMap = await this.reportInformationMap[cacheKey];
+
+        if (this.serverCallResultCanBeSetAsActive(informationMap, options, cacheKey)) {
+            this.loadingData = false;
             this.options = options;
+            this.data = informationMap;
 
-            // informationMap might be undefined if the promise has been deleted by another call.
-            // Don't need to set data, the call that deleted it is coming to re-put data
-            if (informationMap !== undefined) {
-                this.data = informationMap;
-                // If there is a specific order for lines in the options, we want to use it by default
-                if (this.areLinesOrdered()) {
-                    await this.sortLines();
-                }
-                this.setLineVisibility(this.lines);
-                this.refreshVisibleAnnotations();
-                this.saveSessionOptions(this.options);
+            // If there is a specific order for lines in the options, we want to use it by default
+            if (this.areLinesOrdered()) {
+                await this.sortLines();
             }
+            this.setLineVisibility(this.lines);
+            this.refreshVisibleAnnotations();
+            this.saveSessionOptions(this.options);
+        }
+    }
 
+    async displayLoadingSymbolWhenTakingTooLong(longWaitBeforeLoadAnimation) {
+        // Wait for 200 ms at least to prevent the loading animation from flickering if the report loads quickly.
+        const waitingTime = longWaitBeforeLoadAnimation ? 500 : 200;
+        await new Promise((resolve) => setTimeout(resolve, waitingTime));
+
+        if (this.loadingData) {
+            this.data = undefined;
         }
     }
 
@@ -114,7 +134,8 @@ export class AccountReportController {
             // Preload the first non-loaded section we find amongst this report's sections.
             const cacheKey = this.getCacheKey(this.options['sections_source_id'], section.id);
             if (section.id != this.options['report_id'] && !this.reportInformationMap[cacheKey]) {
-                await this.loadReport(section.id, true);
+                const reportCacheKey = await this.loadReport(section.id, true);
+                await this.reportInformationMap[reportCacheKey];
 
                 sectionLoaded = true;
                 // Stop iterating and schedule next call. We don't go on in the loop in case the cache is reset and we need to restart preloading.
@@ -146,8 +167,6 @@ export class AccountReportController {
                 },
             );
         }
-
-        await this.reportInformationMap[cacheKey];
 
         if (!preloading) {
             if (options['sections'].length)
@@ -216,7 +235,7 @@ export class AccountReportController {
     // Generic data getters
     //------------------------------------------------------------------------------------------------------------------
     get buttons() {
-        return this.options.buttons;
+        return this.cachedFilterOptions.buttons;
     }
 
     get caretOptions() {
@@ -236,15 +255,19 @@ export class AccountReportController {
     }
 
     get filters() {
-        return this.data.filters;
+        return this.cachedFilterOptions.filters;
     }
 
     get annotations() {
         return this.data.annotations;
     }
 
-    get groups() {
-        return this.data.groups;
+    get userGroups() {
+        return this.options.user_groups;
+    }
+
+    get cachedUserGroups() {
+        return this.cachedFilterOptions.user_groups;
     }
 
     get lines() {
@@ -306,10 +329,6 @@ export class AccountReportController {
         return Boolean(this.options.show_debug_column);
     }
 
-    get hasStringDate() {
-        return "date" in this.options && "string" in this.options.date;
-    }
-
     get hasVisibleAnnotations() {
         return Boolean(this.visibleAnnotations.length);
     }
@@ -321,7 +340,7 @@ export class AccountReportController {
         const optionKeys = optionPath.split(".");
 
         let currentOptionKey = null;
-        let option = this.options;
+        let option = this.cachedFilterOptions;
 
         while (optionKeys.length > 1) {
             currentOptionKey = optionKeys.shift();
@@ -347,7 +366,7 @@ export class AccountReportController {
 
         if (reloadUI) {
             this.incrementCallNumber();
-            await this.reload(optionPath, this.options);
+            await this.reload(optionPath, this.cachedFilterOptions);
         }
     }
 
@@ -364,7 +383,7 @@ export class AccountReportController {
     }
 
     async switchToSection(reportId) {
-        this.saveSessionOptions({...this.options, 'selected_section_id': reportId});
+        this.saveSessionOptions({...this.cachedFilterOptions, 'selected_section_id': reportId});
         this.displayReport(reportId);
     }
 
@@ -776,26 +795,26 @@ export class AccountReportController {
         ev?.preventDefault();
         ev?.stopPropagation();
 
-        let actionOptions = this.options;
+        let actionOptions = this.cachedFilterOptions;
         if (callOnSectionsSource) {
             // When calling the sections source, we want to keep track of all unfolded lines of all sections
-            const allUnfoldedLines =  this.options.sections.length ? [] : [...this.options['unfolded_lines']]
+            const allUnfoldedLines =  this.cachedFilterOptions.sections.length ? [] : [...this.cachedFilterOptions['unfolded_lines']]
 
-            for (const sectionData of this.options['sections']) {
-                const cacheKey = this.getCacheKey(this.options['sections_source_id'], sectionData['id']);
+            for (const sectionData of this.cachedFilterOptions['sections']) {
+                const cacheKey = this.getCacheKey(this.cachedFilterOptions['sections_source_id'], sectionData['id']);
                 const sectionOptions = await this.reportOptionsMap[cacheKey];
                 if (sectionOptions)
                     allUnfoldedLines.push(...sectionOptions['unfolded_lines']);
             }
 
-            actionOptions = {...this.options, unfolded_lines: allUnfoldedLines};
+            actionOptions = {...this.cachedFilterOptions, unfolded_lines: allUnfoldedLines};
         }
 
         const dispatchReportAction = await this.orm.call(
             "account.report",
             "dispatch_report_action",
             [
-                this.options['report_id'],
+                this.cachedFilterOptions['report_id'],
                 actionOptions,
                 action,
                 actionParam,

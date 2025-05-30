@@ -2005,6 +2005,33 @@ class AccountReport(models.Model):
         options['readonly_query'] = options['currency_table']['type'] == 'monocurrency'
 
     ####################################################
+    # OPTIONS: FILTERS
+    ####################################################
+    def _init_options_filters(self, options, previous_options):
+        options['filters'] = {
+            'show_all': self.filter_unfold_all,
+            'show_analytic': options.get('display_analytic', False),
+            'show_analytic_groupby': options.get('display_analytic_groupby', False),
+            'show_analytic_plan_groupby': options.get('display_analytic_plan_groupby', False),
+            'show_draft': self.filter_show_draft,
+            'show_hierarchy': options.get('display_hierarchy_filter', False),
+            'show_period_comparison': self.filter_period_comparison,
+            'show_totals': self.env.company.totals_below_sections and not options.get('ignore_totals_below_sections'),
+            'show_unreconciled': self.filter_unreconciled,
+            'show_hide_0_lines': self.filter_hide_0_lines,
+        }
+
+    ####################################################
+    # OPTIONS: USER GROUPS
+    ####################################################
+    def _init_options_user_groups(self, options, previous_options):
+        options['user_groups'] = {
+            'analytic_accounting': self.env.user.has_group('analytic.group_analytic_accounting'),
+            'account_readonly': self.env.user.has_group('account.group_account_readonly'),
+            'account_user': self.env.user.has_group('account.group_account_user'),
+        }
+
+    ####################################################
     # OPTIONS: CORE
     ####################################################
 
@@ -2014,7 +2041,7 @@ class AccountReport(models.Model):
 
         initializers_in_sequence = self._get_options_initializers_in_sequence()
 
-        options = {}
+        options = {'custom_display_config': {}}
 
         if previous_options.get('_running_export_test'):
             options['_running_export_test'] = True
@@ -5260,37 +5287,12 @@ class AccountReport(models.Model):
         # Convert all_column_groups_expression_totals to a json-friendly form (its keys are records)
         json_friendly_column_group_totals = self._get_json_friendly_column_group_totals(all_column_groups_expression_totals)
 
-        if self.custom_handler_model_name:
-            custom_display_config = self.env[self.custom_handler_model_name]._get_custom_display_config()
-        elif self.root_report_id and self.root_report_id.custom_handler_model_name:
-            custom_display_config = self.env[self.root_report_id.custom_handler_model_name]._get_custom_display_config()
-        else:
-            custom_display_config = {}
-
         return {
             'caret_options': self._get_caret_options(),
             'column_headers_render_data': self._get_column_headers_render_data(options),
             'column_groups_totals': json_friendly_column_group_totals,
             'context': self.env.context,
-            'custom_display': custom_display_config,
-            'filters': {
-                'show_all': self.filter_unfold_all,
-                'show_analytic': options.get('display_analytic', False),
-                'show_analytic_groupby': options.get('display_analytic_groupby', False),
-                'show_analytic_plan_groupby': options.get('display_analytic_plan_groupby', False),
-                'show_draft': self.filter_show_draft,
-                'show_hierarchy': options.get('display_hierarchy_filter', False),
-                'show_period_comparison': self.filter_period_comparison,
-                'show_totals': self.env.company.totals_below_sections and not options.get('ignore_totals_below_sections'),
-                'show_unreconciled': self.filter_unreconciled,
-                'show_hide_0_lines': self.filter_hide_0_lines,
-            },
             'annotations': self.get_annotations(options),
-            'groups': {
-                'analytic_accounting': self.env.user.has_group('analytic.group_analytic_accounting'),
-                'account_readonly': self.env.user.has_group('account.group_account_readonly'),
-                'account_user': self.env.user.has_group('account.group_account_user'),
-            },
             'lines': self._get_lines(options, all_column_groups_expression_totals=all_column_groups_expression_totals, warnings=warnings),
             'warnings': warnings,
             'report': {
@@ -5895,7 +5897,7 @@ class AccountReport(models.Model):
     def _get_pdf_export_html(self, options, lines, additional_context=None, template=None):
         report_info = self.get_report_information(options)
 
-        custom_print_templates = report_info['custom_display'].get('pdf_export', {})
+        custom_print_templates = options['custom_display_config'].get('pdf_export', {})
         template = custom_print_templates.get('pdf_export_main', 'account_reports.pdf_export_main')
 
         render_values = {
@@ -5925,7 +5927,7 @@ class AccountReport(models.Model):
         # Manage annotations.
         render_values['annotations'] = self._build_annotations_list_for_pdf_export(options['date'], lines, report_info['annotations'])
 
-        options['css_custom_class'] = report_info['custom_display'].get('css_custom_class', '')
+        options['css_custom_class'] = options['custom_display_config'].get('css_custom_class', '')
 
         # Render.
         return self.env['ir.qweb']._render(template, render_values)
@@ -7493,27 +7495,6 @@ class AccountReportCustomHandler(models.AbstractModel):
         and returns a dictionary where all results are cached, for use in expansion functions.
         """
         return None
-
-    def _get_custom_display_config(self):
-        """ To be overridden in order to change the templates used by Javascript to render this report (keeping the same
-        OWL components), and/or replace some of the default OWL components by custom-made ones.
-
-        This function returns a dict (possibly empty, if there is no custom display config):
-
-        {
-            'css_custom_class: 'class',
-            'components': {
-
-            },
-            'pdf_export': {
-
-            },
-            'templates': {
-
-            },
-        },
-        """
-        return {}
 
     def _get_custom_groupby_map(self):
         """ Allows the use of custom values in the groupby field of account.report.line, to use them in custom engines. Those custom

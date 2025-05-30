@@ -7,14 +7,14 @@
             </button>
 
             <t t-set-slot="content">
-                <t t-foreach="controller.options.available_variants" t-as="variant" t-key="variant_index">
+                <t t-foreach="controller.cachedFilterOptions.available_variants" t-as="variant" t-key="variant_index">
                     <DropdownItem
-                        class="{ 'selected': controller.options.selected_variant_id === variant.id }"
+                        class="{ 'selected': controller.cachedFilterOptions.selected_variant_id === variant.id }"
                         onSelected="() => this.filterVariant(variant.id)"
                         t-out="variant.name"
                     />
                 </t>
-                <t t-if="controller.options.has_inactive_variants">
+                <t t-if="controller.cachedFilterOptions.has_inactive_variants">
                     <div role="separator" class="dropdown-divider"/>
                     <DropdownItem onSelected="(ev) => controller.reportAction(ev, 'action_view_all_variants', {})">
                         Enable more ...

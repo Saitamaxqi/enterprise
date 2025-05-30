@@ -11,7 +11,7 @@ export class MulticurrencyRevaluationReportFilters extends AccountReportFilters 
     //------------------------------------------------------------------------------------------------------------------
     async filterExchangeRate(ev, currencyId) {
         try {
-            this.controller.options.currency_rates[currencyId].rate = Math.abs(parseFloat(ev.currentTarget.value));
+            this.controller.cachedFilterOptions.currency_rates[currencyId].rate = Math.abs(parseFloat(ev.currentTarget.value));
         } catch {
             this.notification.add(_t("Please enter a valid number."), {
                 type: "danger",

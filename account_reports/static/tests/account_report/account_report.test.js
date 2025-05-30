@@ -76,6 +76,9 @@ const getOptionMockResponse = {
     ],
     "column_groups": {"some_key": {"forced_options": {}, "forced_domain": []}
     },
+    "custom_display_config": {},
+    "filters": {},
+    "user_groups": {},
 }
 
 const getReportInformationMockResponse = {
@@ -83,9 +86,6 @@ const getReportInformationMockResponse = {
     "column_headers_render_data": {"level_colspan": [1], "level_repetitions": [1], "custom_subheaders": []},
     "column_groups_totals": {"some_key": {}},
     "context": {},
-    "custom_display": {},
-    "filters": {},
-    "groups": {},
     "annotations": {},
     "lines": [
         {

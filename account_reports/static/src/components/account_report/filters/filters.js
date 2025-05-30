@@ -27,7 +27,7 @@ export class AccountReportFilters extends Component {
         this.orm = useService("orm");
         this.notification = useService("notification");
         this.controller = useState(this.env.controller);
-        if (this.env.controller.options.date) {
+        if (this.env.controller.cachedFilterOptions.date) {
             this.dateFilter = useState(this.initDateFilters());
         }
         this.budgetName = useState({
@@ -57,7 +57,7 @@ export class AccountReportFilters extends Component {
             },
             'hierarchy': {
                 'name': _t("Hierarchy and Subtotals"),
-                'show': this.controller.options.display_hierarchy_filter,
+                'show': this.controller.cachedFilterOptions.display_hierarchy_filter,
             },
             'unreconciled': {
                 'name': _t("Unreconciled Entries"),
@@ -85,8 +85,8 @@ export class AccountReportFilters extends Component {
     }
 
     get selectedHorizontalGroupName() {
-        for (const horizontalGroup of this.controller.options.available_horizontal_groups) {
-            if (horizontalGroup.id === this.controller.options.selected_horizontal_group_id) {
+        for (const horizontalGroup of this.controller.cachedFilterOptions.available_horizontal_groups) {
+            if (horizontalGroup.id === this.controller.cachedFilterOptions.selected_horizontal_group_id) {
                 return horizontalGroup.name;
             }
         }
@@ -94,14 +94,14 @@ export class AccountReportFilters extends Component {
     }
 
     get isHorizontalGroupSelected() {
-        return this.controller.options.available_horizontal_groups.some((group) => {
-            return group.id === this.controller.options.selected_horizontal_group_id;
+        return this.controller.cachedFilterOptions.available_horizontal_groups.some((group) => {
+            return group.id === this.controller.cachedFilterOptions.selected_horizontal_group_id;
         });
     }
 
     get selectedTaxUnitName() {
-        for (const taxUnit of this.controller.options.available_tax_units) {
-            if (taxUnit.id === this.controller.options.tax_unit) {
+        for (const taxUnit of this.controller.cachedFilterOptions.available_tax_units) {
+            if (taxUnit.id === this.controller.cachedFilterOptions.tax_unit) {
                 return taxUnit.name;
             }
         }
@@ -109,8 +109,8 @@ export class AccountReportFilters extends Component {
     }
 
     get selectedVariantName() {
-        for (const variant of this.controller.options.available_variants) {
-            if (variant.id === this.controller.options.selected_variant_id) {
+        for (const variant of this.controller.cachedFilterOptions.available_variants) {
+            if (variant.id === this.controller.cachedFilterOptions.selected_variant_id) {
                 return variant.name;
             }
         }
@@ -118,18 +118,18 @@ export class AccountReportFilters extends Component {
     }
 
     get selectedSectionName() {
-        for (const section of this.controller.options.sections)
-            if (section.id === this.controller.options.selected_section_id)
+        for (const section of this.controller.cachedFilterOptions.sections)
+            if (section.id === this.controller.cachedFilterOptions.selected_section_id)
                 return section.name;
     }
 
     get selectedAccountType() {
-        let selectedAccountType = this.controller.options.account_type.filter(
+        let selectedAccountType = this.controller.cachedFilterOptions.account_type.filter(
             (accountType) => accountType.selected,
         );
         if (
             !selectedAccountType.length ||
-            selectedAccountType.length === this.controller.options.account_type.length
+            selectedAccountType.length === this.controller.cachedFilterOptions.account_type.length
         ) {
             return _t("All");
         }
@@ -162,7 +162,7 @@ export class AccountReportFilters extends Component {
     }
 
     get selectedAmlIrFilters() {
-        const selectedFilters = this.controller.options.aml_ir_filters.filter(
+        const selectedFilters = this.controller.cachedFilterOptions.aml_ir_filters.filter(
             (irFilter) => irFilter.selected,
         );
 
@@ -180,7 +180,7 @@ export class AccountReportFilters extends Component {
     }
 
     get periodOrder() {
-        return this.controller.options.comparison.period_order === "descending"
+        return this.controller.cachedFilterOptions.comparison.period_order === "descending"
             ? _t("Descending")
             : _t("Ascending");
     }
@@ -188,17 +188,17 @@ export class AccountReportFilters extends Component {
     get selectedExtraOptions() {
         const selectedExtraOptions = [];
 
-        if (this.controller.groups.account_readonly && this.controller.filters.show_draft) {
+        if (this.controller.cachedUserGroups.account_readonly && this.controller.filters.show_draft) {
             selectedExtraOptions.push(
-                this.controller.options.all_entries
+                this.controller.cachedFilterOptions.all_entries
                     ? _t("With Draft Entries")
                     : _t("Posted Entries"),
             );
         }
-        if (this.controller.filters.show_unreconciled && this.controller.options.unreconciled) {
+        if (this.controller.filters.show_unreconciled && this.controller.cachedFilterOptions.unreconciled) {
             selectedExtraOptions.push(_t("Unreconciled Entries"));
         }
-        if (this.controller.options.include_analytic_without_aml) {
+        if (this.controller.cachedFilterOptions.include_analytic_without_aml) {
             selectedExtraOptions.push(_t("Including Analytic Simulations"));
         }
         return selectedExtraOptions.join(", ");
@@ -308,26 +308,26 @@ export class AccountReportFilters extends Component {
     }
 
     get periodLabel() {
-        return this.controller.options.comparison.number_period > 1 ? _t("Periods") : _t("Period");
+        return this.controller.cachedFilterOptions.comparison.number_period > 1 ? _t("Periods") : _t("Period");
     }
     //------------------------------------------------------------------------------------------------------------------
     // Helpers
     //------------------------------------------------------------------------------------------------------------------
     get hasAnalyticGroupbyFilter() {
-        return Boolean(this.controller.groups.analytic_accounting) && (Boolean(this.controller.filters.show_analytic_groupby) || Boolean(this.controller.filters.show_analytic_plan_groupby));
+        return Boolean(this.controller.cachedUserGroups.analytic_accounting) && (Boolean(this.controller.filters.show_analytic_groupby) || Boolean(this.controller.filters.show_analytic_plan_groupby));
     }
 
     get hasCodesFilter() {
-        return Boolean(this.controller.options.sales_report_taxes?.operation_category?.goods);
+        return Boolean(this.controller.cachedFilterOptions.sales_report_taxes?.operation_category?.goods);
     }
 
     isExtraOptionFilterShown(option) {
         let data = this.filterExtraOptionsData[option];
         return (
-            option in this.controller.options &&
+            option in this.controller.cachedFilterOptions &&
             option in this.filterExtraOptionsData &&
             data.show !== false &&
-            (data.group === undefined || this.controller.groups[data.group])
+            (data.group === undefined || this.controller.cachedUserGroups[data.group])
         );
     }
 
@@ -342,7 +342,7 @@ export class AccountReportFilters extends Component {
     }
 
     get isBudgetSelected() {
-        return this.controller.options.budgets?.some((budget) => {
+        return this.controller.cachedFilterOptions.budgets?.some((budget) => {
             return budget.selected;
         });
     }
@@ -352,17 +352,17 @@ export class AccountReportFilters extends Component {
     //------------------------------------------------------------------------------------------------------------------
     // Getters
     dateFrom(optionKey) {
-        return DateTime.fromISO(this.controller.options[optionKey].date_from);
+        return DateTime.fromISO(this.controller.cachedFilterOptions[optionKey].date_from);
     }
 
     dateTo(optionKey) {
-        return DateTime.fromISO(this.controller.options[optionKey].date_to);
+        return DateTime.fromISO(this.controller.cachedFilterOptions[optionKey].date_to);
     }
 
     // Setters
     setDate(optionKey, type, date) {
         if (date) {
-            this.controller.options[optionKey][`date_${type}`] = date;
+            this.controller.cachedFilterOptions[optionKey][`date_${type}`] = date;
             this.applyFilters(optionKey);
         }
         else {
@@ -433,13 +433,13 @@ export class AccountReportFilters extends Component {
             editing: false,
         };
 
-        const specifier = this.controller.options.date.filter.split('_')[0];
-        const periodType = this.controller.options.date.period_type;
+        const specifier = this.controller.cachedFilterOptions.date.filter.split('_')[0];
+        const periodType = this.controller.cachedFilterOptions.date.period_type;
         // In case the period is fiscalyear it will be computed exactly like a year period.
         const period = periodType === "fiscalyear" ? "year" : periodType;
         // Set the filter value based on the specifier.
         if (Object.prototype.hasOwnProperty.call(filters, period)) {
-            filters[period] = this.controller.options.date.period || (specifier === 'previous' ? -1 : specifier === 'next' ? 1 : 0);
+            filters[period] = this.controller.cachedFilterOptions.date.period || (specifier === 'previous' ? -1 : specifier === 'next' ? 1 : 0);
         }
 
         return filters;
@@ -550,7 +550,7 @@ export class AccountReportFilters extends Component {
             if (!dateTo.isValid) {
                 return false;
             }
-            const periodicitySettings = this.controller.options.return_periodicity;
+            const periodicitySettings = this.controller.cachedFilterOptions.return_periodicity;
             const [, compareTo] = this._computeReturnPeriodDates(periodicitySettings, DateTime.now());
             const [, taxPeriodTo] = this._computeReturnPeriodDates(periodicitySettings, dateTo);
             return (
@@ -580,11 +580,11 @@ export class AccountReportFilters extends Component {
     }
 
     isPeriodSelected(periodType) {
-        return this.controller.options.date.filter.endsWith(periodType)
+        return this.controller.cachedFilterOptions.date.filter.endsWith(periodType)
     }
 
     get shouldDisplayReturnPeriod() {
-        const periodicitySettings = this.controller.options.return_periodicity;
+        const periodicitySettings = this.controller.cachedFilterOptions.return_periodicity;
         if (periodicitySettings) {
             return periodicitySettings.start_day !== 1 || periodicitySettings.start_month !== 1 || ![1, 3, 12].includes(periodicitySettings.months_per_period);
         }
@@ -595,7 +595,7 @@ export class AccountReportFilters extends Component {
     displayPeriod(periodType) {
         const dateTo = DateTime.now();
 
-        if (periodType === "return_period" && !this.controller.options.return_periodicity)
+        if (periodType === "return_period" && !this.controller.cachedFilterOptions.return_periodicity)
             periodType = "month";
 
         switch (periodType) {
@@ -637,7 +637,7 @@ export class AccountReportFilters extends Component {
     }
 
     _displayReturnPeriod(dateTo) {
-        const periodicitySettings = this.controller.options.return_periodicity;
+        const periodicitySettings = this.controller.cachedFilterOptions.return_periodicity;
         const targetDateInPeriod = dateTo.plus({months: periodicitySettings.months_per_period * this.dateFilter['return_period']})
         const [start, end] = this._computeReturnPeriodDates(periodicitySettings, targetDateInPeriod);
         return formatDate(start) + ' - ' + formatDate(end);
@@ -676,7 +676,7 @@ export class AccountReportFilters extends Component {
         const numberPeriods = ev.target.value;
 
         if (numberPeriods >= 1)
-            this.controller.options.comparison.number_period = parseInt(numberPeriods);
+            this.controller.cachedFilterOptions.comparison.number_period = parseInt(numberPeriods);
         else
             this.dialog.add(WarningDialog, {
                 title: _t("Odoo Warning"),
@@ -690,7 +690,7 @@ export class AccountReportFilters extends Component {
     getMultiRecordSelectorProps(resModel, optionKey) {
         return {
             resModel,
-            resIds: this.controller.options[optionKey],
+            resIds: this.controller.cachedFilterOptions[optionKey],
             update: (resIds) => {
                 this.filterClicked({ optionKey: optionKey, optionValue: resIds, reload: true});
             },
@@ -701,7 +701,7 @@ export class AccountReportFilters extends Component {
     // Rounding unit
     //------------------------------------------------------------------------------------------------------------------
     roundingUnitName(roundingUnit) {
-        return _t("In %s", this.controller.options["rounding_unit_names"][roundingUnit][0]);
+        return _t("In %s", this.controller.cachedFilterOptions["rounding_unit_names"][roundingUnit][0]);
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -728,7 +728,7 @@ export class AccountReportFilters extends Component {
         this.controller.incrementCallNumber();
 
         this.timeout = setTimeout(async () => {
-            await this.controller.reload(optionKey, this.controller.options);
+            await this.controller.reload(optionKey, this.controller.cachedFilterOptions);
         }, delay);
     }
 
@@ -739,7 +739,7 @@ export class AccountReportFilters extends Component {
         if (journal.model === "account.journal.group") {
             const wasSelected = journal.selected;
             this.ToggleSelectedJournal(journal);
-            this.controller.options.__journal_group_action = {
+            this.controller.cachedFilterOptions.__journal_group_action = {
                 action: wasSelected ? "remove" : "add",
                 id: parseInt(journal.id),
             };
@@ -753,11 +753,11 @@ export class AccountReportFilters extends Component {
 
     ToggleSelectedJournal(selectedJournal) {
         if (selectedJournal.selected) {
-            this.controller.options.journals.forEach((journal) => {
+            this.controller.cachedFilterOptions.journals.forEach((journal) => {
                 journal.selected = false;
             });
         } else {
-            this.controller.options.journals.forEach((journal) => {
+            this.controller.cachedFilterOptions.journals.forEach((journal) => {
                 journal.selected = selectedJournal.journals.includes(journal.id) && journal.model === "account.journal";
             });
         }
@@ -765,7 +765,7 @@ export class AccountReportFilters extends Component {
 
     unfoldCompanyJournals(selectedCompany) {
         let inSelectedCompanySection = false;
-        for (const journal of this.controller.options.journals) {
+        for (const journal of this.controller.cachedFilterOptions.journals) {
             if (journal.id === "divider" && journal.model === "res.company") {
                 if (journal.name === selectedCompany.name) {
                     journal.unfolded = !journal.unfolded;
@@ -782,7 +782,7 @@ export class AccountReportFilters extends Component {
 
     async filterVariant(reportId) {
         this.controller.saveSessionOptions({
-            ...this.controller.options,
+            ...this.controller.cachedFilterOptions,
             selected_variant_id: reportId,
             sections_source_id: reportId,
         });
@@ -796,7 +796,7 @@ export class AccountReportFilters extends Component {
 
     async filterTaxUnit(taxUnit) {
         await this.filterClicked({ optionKey: "tax_unit", optionValue: taxUnit.id});
-        this.controller.saveSessionOptions(this.controller.options);
+        this.controller.saveSessionOptions(this.controller.cachedFilterOptions);
 
         // force the company to those impacted by the tax units, the reload will be force by this function
         user.activateCompanies(taxUnit.company_ids);
@@ -806,32 +806,32 @@ export class AccountReportFilters extends Component {
         // Avoid calling the database when this filter is toggled; as the exact same lines would be returned; just reassign visibility.
         await this.controller.toggleOption("hide_0_lines", false);
 
-        this.controller.saveSessionOptions(this.controller.options);
+        this.controller.saveSessionOptions(this.controller.cachedFilterOptions);
         this.controller.setLineVisibility(this.controller.lines);
     }
 
     async toggleHorizontalSplit() {
         await this.controller.toggleOption("horizontal_split", false);
-        this.controller.saveSessionOptions(this.controller.options);
+        this.controller.saveSessionOptions(this.controller.cachedFilterOptions);
     }
 
     async filterRoundingUnit(rounding) {
         await this.controller.updateOption('rounding_unit', rounding, false);
 
-        this.controller.saveSessionOptions(this.controller.options);
+        this.controller.saveSessionOptions(this.controller.cachedFilterOptions);
 
         this.controller.lines = await this.controller.orm.call(
             "account.report",
             "format_column_values",
             [
-                this.controller.options,
+                this.controller.cachedFilterOptions,
                 this.controller.lines,
             ],
         );
     }
 
     async selectHorizontalGroup(horizontalGroupId) {
-        if (horizontalGroupId === this.controller.options.selected_horizontal_group_id) {
+        if (horizontalGroupId === this.controller.cachedFilterOptions.selected_horizontal_group_id) {
             return;
         }
         await this.filterClicked({ optionKey: "selected_horizontal_group_id", optionValue: horizontalGroupId, reload: true});
@@ -856,11 +856,11 @@ export class AccountReportFilters extends Component {
         ]);
         this.budgetName.value = "";
         this.budgetName.invalid = false;
-        const options = this.controller.options;
+        const cachedFilterOptions = this.controller.cachedFilterOptions;
         this.controller.reload("budgets", {
-            ...options,
+            ...cachedFilterOptions,
             budgets: [
-                ...options.budgets,
+                ...cachedFilterOptions.budgets,
                 // Selected by default if we don't have any horizontal group selected
                 { id: createdId, selected: !this.isHorizontalGroupSelected },
             ],

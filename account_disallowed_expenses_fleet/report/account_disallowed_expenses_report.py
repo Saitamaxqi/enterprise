@@ -10,14 +10,6 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
     _inherit = ['account.disallowed.expenses.report.handler']
     _description = 'Disallowed Expenses Fleet Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            **super()._get_custom_display_config(),
-            'components': {
-                'AccountReportFilters': 'DisallowedExpenseFleetFilters',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
@@ -33,6 +25,9 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
             limit=1,
         )
         options['multi_rate_in_period'] = options.get('multi_rate_in_period') or bool(rg)
+        options['custom_display_config']['components'] = {
+            'AccountReportFilters': 'DisallowedExpenseFleetFilters',
+        }
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         accounts = self.env['account.move.line']._read_group(
