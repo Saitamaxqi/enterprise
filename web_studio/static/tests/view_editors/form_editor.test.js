@@ -3436,7 +3436,7 @@ test("button_box: few visible buttons and no invisible buttons", async () => {
                 </sheet>
             </form>`,
     });
-    expect(editor.env.services.ui.size).toBe(5);
+    expect(editor.env.services.ui.size).toBe(4);
 
     expect(".o_form_sheet_bg > div > .o-form-buttonbox button:first-child").toHaveClass(
         "o_web_studio_add_element"
@@ -3479,7 +3479,7 @@ test("button_box: few mixed buttons", async () => {
                 </sheet>
             </form>`,
     });
-    expect(editor.env.services.ui.size).toBe(5);
+    expect(editor.env.services.ui.size).toBe(4);
 
     expect(".o_form_sheet_bg > div > .o-form-buttonbox button:first-child").toHaveClass(
         "o_web_studio_add_element"
@@ -3531,7 +3531,7 @@ test("button_box: many mixed buttons", async () => {
                 </sheet>
             </form>`,
     });
-    expect(editor.env.services.ui.size).toBe(5);
+    expect(editor.env.services.ui.size).toBe(4);
 
     expect(".o_form_sheet_bg > div > .o-form-buttonbox button:first-child").toHaveClass(
         "o_web_studio_add_element"
