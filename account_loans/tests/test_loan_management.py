@@ -360,7 +360,7 @@ class TestLoanManagement(AccountTestInvoicingCommon):
         wizard.action_save()
         self.assertEqual(len(loan.line_ids), 12)  # default loan term is 1 year = 12 months
         self.assertTrue(all(payment == 2000 for payment in loan.line_ids.mapped('payment')))  # 24,000 / 12 months = 2,000/month
-    
+
     @freeze_time('2024-07-31')
     def test_loan_skip_until_date(self):
         """Test the skip_until_date field"""
@@ -368,8 +368,8 @@ class TestLoanManagement(AccountTestInvoicingCommon):
 
         self.assertEqual(loan.state, 'running')
         self.assertTrue(loan.line_ids.generated_move_ids)
-        self.assertEqual(loan.outstanding_balance, 20_000) # = 24_000 - (2_000 * 2 months (June -> July))
-
+        # Outstanding balance should be 24_000 - 2_000 * 7 months (Jan -> July), including skipped period
+        self.assertEqual(loan.outstanding_balance, 10_000)
 
     @freeze_time('2025-01-01')
     def test_loan_skip_until_date_2(self):

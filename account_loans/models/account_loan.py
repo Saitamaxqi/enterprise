@@ -158,11 +158,12 @@ class AccountLoan(models.Model):
     @api.depends('amount_borrowed', 'line_ids.principal', 'state', 'line_ids.is_payment_move_posted')
     def _compute_outstanding_balance(self):
         for loan in self:
-            loan.outstanding_balance = (
-                loan.amount_borrowed
-                -
-                sum(loan.line_ids.filtered('is_payment_move_posted').mapped('principal'))
-            ) if loan.state == "running" else loan.amount_borrowed
+            outstanding_balance = loan.amount_borrowed
+            if loan.state == 'running':
+                for line in loan.line_ids:
+                    if line.is_payment_move_posted or (loan.skip_until_date and line.date < loan.skip_until_date):
+                        outstanding_balance -= line.principal
+            loan.outstanding_balance = outstanding_balance
 
     @api.depends('asset_group_id')
     def _compute_linked_assets(self):
