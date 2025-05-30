@@ -5,11 +5,6 @@ import calendar
 import io
 from datetime import datetime
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -144,6 +139,7 @@ class HrESICReport(models.Model):
         self.ensure_one()
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         if self.export_report_type == 'esi':
             self.action_export_esi_xlsx(output, workbook)

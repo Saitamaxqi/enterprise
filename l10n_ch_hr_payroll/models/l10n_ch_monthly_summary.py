@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -7,10 +6,6 @@ from collections import defaultdict
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -124,6 +119,7 @@ class L10nChMonthlySummary(models.Model):
 
     def action_generate_xls(self):
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
 
         line_values = self._get_line_values()

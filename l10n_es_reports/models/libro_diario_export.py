@@ -1,10 +1,5 @@
 import io
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
@@ -34,6 +29,7 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
 
     @api.model
     def _es_libro_diario_generate_xlsx_report(self, options):
+        import xlsxwriter  # noqa: PLC0415
         with io.BytesIO() as output:
             with xlsxwriter.Workbook(output, {
                 'in_memory': True,

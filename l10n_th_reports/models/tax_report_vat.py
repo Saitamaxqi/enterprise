@@ -1,11 +1,5 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import io
-
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import _, fields, models
 from odoo.osv import expression
@@ -70,6 +64,7 @@ class L10n_ThTaxReportHandler(models.AbstractModel):
         move_lines_per_move = self.env['account.move.line'].search(domain).grouped('move_id')
 
         file_data = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(file_data, {
             'in_memory': True,
         })

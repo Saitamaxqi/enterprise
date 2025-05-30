@@ -6,10 +6,6 @@ from collections import defaultdict
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
@@ -78,6 +74,7 @@ class HrPayrollMasterReport(models.Model):
         labels = [_('Employee ID'), _('Employee Name'), _('Joining Date'), _('Department'), _('Job Designation')]
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output)
 
         formats = {

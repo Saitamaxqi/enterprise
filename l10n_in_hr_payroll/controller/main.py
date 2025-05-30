@@ -4,11 +4,6 @@ from datetime import datetime
 from io import BytesIO
 from copy import deepcopy
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import http, _
 from odoo.http import request
 
@@ -44,6 +39,7 @@ class L10nInSalaryRegisterController(http.Controller):
                 }
             )
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('salary_register_report')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
@@ -152,6 +148,7 @@ class L10nInHrPayrollLabourWelfareFundController(http.Controller):
                     'status_message': "Please contact an administrator..."})
 
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Worksheet')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})

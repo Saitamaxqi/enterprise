@@ -1,14 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import io
 from collections import defaultdict
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -162,6 +157,7 @@ class L10n_HkManulifeMpf(models.Model):
             raise UserError(_('No employees to generate the report for.'))
 
         file = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(file, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 

@@ -1,11 +1,6 @@
 import io
 from datetime import datetime
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 
 class GSTR1SpreadsheetGenerator:
 
@@ -14,6 +9,7 @@ class GSTR1SpreadsheetGenerator:
 
     def generate(self):
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         cell_formats = self._get_gstr1_cell_formats(workbook)
         self._prepare_b2b_sheet(self.gstr1_json.get('b2b', {}), workbook, cell_formats)

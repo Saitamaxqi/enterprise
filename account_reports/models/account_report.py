@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
@@ -17,10 +16,6 @@ from itertools import groupby
 import markupsafe
 from dateutil.relativedelta import relativedelta
 from PIL import ImageFont
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import Command, models, fields, api, _, osv
 from odoo.addons.web.controllers.utils import clean_action
@@ -5943,6 +5938,7 @@ class AccountReport(models.Model):
 
         self.ensure_one()
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {
             'in_memory': True,
             'strings_to_formulas': False,
@@ -5984,6 +5980,7 @@ class AccountReport(models.Model):
         report_font = fonts[font_type]
 
         # 8.43 is the default width of a column in Excel.
+        import xlsxwriter  # noqa: PLC0415
         if parse_version(xlsxwriter.__version__) >= parse_version('3.0.6'):
             # cols_sizes was removed in 3.0.6 and colinfo was replaced by col_info
             # see https://github.com/jmcnamara/XlsxWriter/commit/860f4a2404549aca1eccf9bf8361df95dc574f44
@@ -6645,6 +6642,7 @@ class AccountReport(models.Model):
             raise UserError(_("The Accounts Coverage Report is not available for this report."))
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet(_('Accounts coverage'))
         worksheet.set_column(0, 0, 20)

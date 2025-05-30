@@ -1,15 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import csv
 import io
 import logging
 import re
-
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import http, fields
 from odoo.addons.hr_payroll.controllers.main import HrPayroll
@@ -31,6 +25,7 @@ class L10nBeHrPayrollEcoVoucherController(http.Controller):
                     'status_message': "Please contact an administrator..."})
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Worksheet')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
@@ -113,6 +108,7 @@ class L10nBeHrPayrollEcoVoucherController(http.Controller):
         )
         return response
 
+
 class L10nBeHrPayrollGroupInsuranceController(http.Controller):
 
     @http.route(["/export/group_insurance/<int:wizard_id>"], type='http', auth='user')
@@ -125,6 +121,7 @@ class L10nBeHrPayrollGroupInsuranceController(http.Controller):
                     'status_message': "Please contact an administrator..."})
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Worksheet')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})

@@ -4,10 +4,6 @@ import zipfile
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import _, models, fields, api
 from odoo.exceptions import UserError
@@ -177,6 +173,7 @@ class IntrastatReportGoodsCustomHandler(models.AbstractModel):
 
     @api.model
     def _ee_generate_xlsx_report(self, options):
+        import xlsxwriter  # noqa: PLC0415
         with io.BytesIO() as output:
             with xlsxwriter.Workbook(output, {
                 'in_memory': True,

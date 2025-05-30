@@ -4,11 +4,6 @@ import io
 import base64
 from datetime import datetime, date
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -110,7 +105,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         self._perform_checks()
 
         output = io.BytesIO()
-
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Payment Advice Report')
         header_format = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})

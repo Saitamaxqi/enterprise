@@ -4,11 +4,6 @@ import base64
 import calendar
 import io
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -131,6 +126,7 @@ class L10nInHrPayrollEpfReport(models.Model):
         self.ensure_one()
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Employee_provident_fund_report')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})

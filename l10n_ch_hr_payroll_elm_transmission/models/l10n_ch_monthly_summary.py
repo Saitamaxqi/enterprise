@@ -1,14 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
 import io
 from collections import defaultdict
-
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import models, _
 from odoo.exceptions import UserError
@@ -132,6 +126,7 @@ class L10nChMonthlySummaryWizard(models.Model):
 
     def action_generate_xls(self):
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
 
         line_values = self._get_line_values()

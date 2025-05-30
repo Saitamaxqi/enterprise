@@ -4,11 +4,6 @@ import copy
 import io
 import zipfile
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import api, models, _
 from odoo.exceptions import UserError
 from odoo.tools import SQL
@@ -116,6 +111,7 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
         this address https://www.dst.dk/en/Indberet/hjaelp-til-indberetning/om-idep-web/intrastat
         in the file examples 'Intrastat eksport/import Excel Line'
         """
+        import xlsxwriter  # noqa: PLC0415
         with io.BytesIO() as output:
             with xlsxwriter.Workbook(output, {
                 'in_memory': True,

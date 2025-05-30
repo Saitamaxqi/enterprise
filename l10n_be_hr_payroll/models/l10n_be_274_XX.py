@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -8,10 +7,6 @@ from datetime import date
 
 from dateutil.relativedelta import relativedelta
 from lxml import etree
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
@@ -422,6 +417,7 @@ class L10n_Be274_Xx(models.Model):
 
     def action_generate_xls(self):
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Exemption Details')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})

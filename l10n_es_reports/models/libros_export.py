@@ -1,11 +1,6 @@
 import io
 from collections import defaultdict
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import models, _, api
 from odoo.exceptions import UserError
 from odoo.tools import format_date
@@ -359,6 +354,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
     def export_libros_de_iva(self, options):
         report = self.env['account.report'].browse(options['report_id'])
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True, 'strings_to_formulas': False})
 
         number_format = workbook.add_format({'num_format': '0.00'})

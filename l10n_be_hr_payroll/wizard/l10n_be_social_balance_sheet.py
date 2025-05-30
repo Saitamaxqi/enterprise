@@ -6,10 +6,6 @@ import logging
 from io import BytesIO
 
 from dateutil.relativedelta import relativedelta
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -409,6 +405,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
     def export_report_xlsx(self):
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sbs_worksheet = workbook.add_worksheet(_('Social Balance Sheet'))
 

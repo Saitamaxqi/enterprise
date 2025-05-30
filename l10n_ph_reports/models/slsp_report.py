@@ -5,10 +5,6 @@ import re
 from importlib import metadata
 
 from PIL import ImageFont
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import api, models, _, fields
 from odoo.osv import expression
@@ -345,6 +341,7 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
 
         # Prepare the workbook.
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {
             'in_memory': True,
             'strings_to_formulas': False,  # As we need to give a default value when using formulas, we need to handle them manually so this is not needed.

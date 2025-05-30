@@ -5,10 +5,6 @@ from collections import defaultdict
 
 from markupsafe import Markup
 from PIL import ImageFont
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import models, _
 from odoo.tools import SQL
@@ -258,6 +254,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         """
         Overrides the default XLSX Generation from account.repor to use a custom one.
         """
+        import xlsxwriter  # noqa: PLC0415
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {
             'in_memory': True,

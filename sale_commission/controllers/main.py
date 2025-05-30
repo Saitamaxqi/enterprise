@@ -2,11 +2,6 @@
 
 import io
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import _
 from odoo.http import Controller, request, route, content_disposition
 
@@ -73,6 +68,7 @@ class SaleCommissionTargetExportController(Controller):
 
     def _generate_xlsx(self, filename="", target_ids=None, headers=None):
         buffer = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(buffer, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         worksheet.write_row(0, 0, headers)

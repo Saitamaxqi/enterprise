@@ -1,14 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
 from io import BytesIO
 
 from dateutil.relativedelta import relativedelta
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -279,6 +274,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
     def export_report_xlsx(self):
         reports_data = self._get_report_data()
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         company_worksheet = workbook.add_worksheet(_('Identification Of The Company And Infos'))
 

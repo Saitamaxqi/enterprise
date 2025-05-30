@@ -1,14 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import io
 import json
 
 from werkzeug.datastructures import FileStorage
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
 
 from odoo import http, _
 from odoo.http import content_disposition, request
@@ -22,6 +17,7 @@ class WebCohort(http.Controller):
         result = json.load(data) if isinstance(data, FileStorage) else json.loads(data)
 
         output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet(result['title'])
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})

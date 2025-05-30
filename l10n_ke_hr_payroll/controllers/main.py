@@ -3,15 +3,11 @@
 from io import BytesIO
 from logging import getLogger
 
-try:
-    import xlsxwriter
-except ImportError:
-    xlsxwriter = None
-
 from odoo import http, _
 from odoo.http import request
 
 _logger = getLogger(__name__)
+
 
 class L10nKeHrPayrollNssfReportController(http.Controller):
 
@@ -30,6 +26,7 @@ class L10nKeHrPayrollNssfReportController(http.Controller):
             )
 
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('nhif_report')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
@@ -145,6 +142,7 @@ class L10nKeHrPayrollNssfReportController(http.Controller):
             )
 
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('nhif_report')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
@@ -229,6 +227,7 @@ class L10nKeHrPayrollNssfReportController(http.Controller):
             )
 
         output = BytesIO()
+        import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('shif_report')
         style_highlight = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
