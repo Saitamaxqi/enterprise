@@ -576,7 +576,7 @@ class L10n_InGstReturnPeriod(models.Model):
             tax_details = tax_details_by_move.get(move_id, {})
             if 'data' in hsn_json:
                 hsn_section = 'data'
-            elif move_id.l10n_in_gst_treatment in {'regular', 'composition', 'deemed_export', 'uin_holders'}:
+            elif move_id.l10n_in_gst_treatment in {'regular', 'composition', 'deemed_export', 'uin_holders', 'special_economic_zone'}:
                 hsn_section = 'hsn_b2b'
             else:
                 hsn_section = 'hsn_b2c'
