@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@odoo/hoot";
-import { click, press, waitFor } from "@odoo/hoot-dom";
+import { click, press, waitFor, delay } from "@odoo/hoot-dom";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import { Component, xml } from "@odoo/owl";
 import {
@@ -707,6 +707,8 @@ test("can edit ir.actions.act_window without id", async () => {
     await click(".o_web_studio_leave");
     await waitFor(".o_action_manager:first:not(:has(.o_studio))");
     await waitFor(".o_form_view");
+    // The router pushes its state just after a setTimeout
+    await delay(0);
 
     expect(".o_form_view .o_field_widget[name='name'] input").toHaveValue("Rainbow Dash");
     expect(".o_breadcrumb").toHaveText("partner Action\nYop\nRainbow Dash");
