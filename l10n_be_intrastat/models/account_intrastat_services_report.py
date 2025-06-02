@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import api, models
+from odoo import api, fields, models
 from odoo.osv import expression
 from odoo.tools import SQL
 from odoo.tools.float_utils import float_round
@@ -143,11 +143,11 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
         return file_content
 
     @api.model
-    def _be_intrastat_get_xml_file_content(self, options, results, company, date):
+    def _be_intrastat_get_xml_file_content(self, options, results, company):
         file_content = self.env['ir.qweb']._render('l10n_be_intrastat.intrastat_services_report_export_xml', {
             'company': company,
             'items': results,
-            'date': date,
+            'date': fields.Date.to_date(options['date']['date_from']).strftime('%Y-%m'),
             'code': options.get('l10n_be_variant'),
             'form': options.get('l10n_be_variant'),
         })
