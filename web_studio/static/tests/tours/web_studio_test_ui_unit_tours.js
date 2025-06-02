@@ -1783,11 +1783,9 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
         },
         {
             trigger: ".nav .o_web_studio_new.active",
-            run() {
-                return waitFor(".o_web_studio_component.o_web_studio_field_menu", {
-                    timeout: 3000,
-                });
-            },
+        },
+        {
+            trigger: ".o_web_studio_component.o_web_studio_field_menu",
         },
         {
             trigger: ".o_web_studio_view_renderer .o_web_studio_hook[data-type='t']",
@@ -2109,11 +2107,10 @@ registry.category("web_tour.tours").add("web_studio_test_default_value_company",
                 rpcBus.addEventListener("RPC:REQUEST", cb);
                 await helpers.edit("from studio");
                 await helpers.press("ENTER");
-                return waitFor(
-                    ".o_web_studio_sidebar input[id='default_value']:value(from studio)",
-                    { timeout: 5000 }
-                );
             },
+        },
+        {
+            trigger: ".o_web_studio_sidebar input[id='default_value']:value(from studio)",
         },
     ],
 });
