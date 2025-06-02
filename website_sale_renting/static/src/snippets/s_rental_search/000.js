@@ -40,7 +40,7 @@ publicWidget.registry.RentalSearchSnippet = publicWidget.Widget.extend(RentingMi
 
         const productAttributeValueId = this.el.querySelector('.s_rental_search_select').value;
         if (productAttributeValueId) {
-            searchParams.append('attrib', `${productAttributeId}-${productAttributeValueId}`);
+            searchParams.append('attribute_values', `${productAttributeId}-${productAttributeValueId}`);
         }
         window.location = `/shop?${searchParams.toString()}`;
     },
