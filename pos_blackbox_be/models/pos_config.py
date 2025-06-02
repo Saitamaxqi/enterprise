@@ -128,7 +128,7 @@ class PosConfig(models.Model):
                 )
             if (
                 not work_product.taxes_id
-                or work_product.taxes_id.amount != 0
+                or any(t.amount != 0 for t in work_product.taxes_id)
             ):
                 raise ValidationError(
                     _("The WORK IN/OUT products must have a taxes with 0%.")
