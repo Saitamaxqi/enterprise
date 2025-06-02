@@ -23,15 +23,15 @@ class TestImportFecFileTour(AccountTestInvoicingHttpCommon):
             accounts = self.env['account.account'].with_company(self.company.id).search(domain, order='code')
 
             expected_values = [{
-                'name': 'Suppliers - Purchase of goods and services',
+                'name': 'Suppliers',
                 'account_type': 'liability_payable',
                 'reconcile': True
             }, {
-                'name': 'Deductible VAT on other goods and services',
+                'name': 'ASSURANCE',
                 'account_type': 'asset_current',
                 'reconcile': False,
             }, {
-                'name': 'Legal and litigation fees',
+                'name': 'Legal costs and litigation',
                 'account_type': 'expense',
                 'reconcile': False,
             }]

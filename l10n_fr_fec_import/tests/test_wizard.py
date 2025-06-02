@@ -304,7 +304,7 @@ class AccountTestFecImport(AccountTestInvoicingCommon):
         self.env['res.lang']._activate_lang('fr_FR')
         self.env['account.account'].search([('name', '=', 'Subscribed capital - uncalled')]).unlink()
         self._import_fec_file('fec_lf_pipe_iso.json')
-        account = self.env['account.account'].search([('name', '=', 'Subscribed capital - uncalled')]).with_context(lang="fr_FR")
+        account = self.env['account.account'].search([('name', '=', 'Capital')]).with_context(lang="fr_FR")
         self.assertEqual(account.name, 'Capital souscrit - non appelé')
 
     def test_currency_rounding_with_decimal_values(self):
@@ -339,3 +339,15 @@ class AccountTestFecImport(AccountTestInvoicingCommon):
         import_summary = self._import_fec_file('fec_lf_tab_utf8.json', duplicate_documents_handling='ignore', document_prefix='PRE').import_summary_id
         self.assertEqual(import_summary.import_summary_have_data, False)
         self.assertEqual(last, self.env['account.move.line'].search([], order='id desc', limit=1))
+
+    def test_account_name(self):
+        """
+        Template should not override the account's name given by the user
+        We defined
+        ACH\tACHATS\tACH000001\t20180808\t45500000\tAssociate's current account\t\t\t1\t20180808\tADVANCE PAYMENT COMPANY FORMALITIES\t0,00\t600,00\t\t\t20190725\t\t
+        We should retrieve the name "Associate's current account"
+        """
+
+        self._import_fec_file('fec_lf_tab_utf8_imbalanced_month.json')
+        account = self.env['account.account'].search([('code', '=', '455000')])
+        self.assertEqual(account.name, "Associate's current account")

@@ -481,7 +481,7 @@ class AccountFecImportWizard(models.TransientModel):
                 template = next((v for k, v in templates.items() if normalize_code(k) == normalize_code(record['code'])), {})
                 if template:
                     for key, value in template.items():
-                        if key not in ['id', 'code']:
+                        if key not in ['id', 'code', 'name']:
                             record[key] = value
                     break
 
