@@ -105,11 +105,7 @@ Let your customers follow the signature process easily.
         ],
         'web.assets_unit_tests': [
             'sign/static/tests/**/*.js',
-            ('remove', 'sign/static/tests/legacy/**/*'),
             ('remove', 'sign/static/tests/tours/**/*'),
-        ],
-        'web.qunit_suite_tests': [
-            'sign/static/tests/legacy/**/*',
         ],
         'sign.assets_public_sign': [
             ('include', 'web._assets_helpers'),

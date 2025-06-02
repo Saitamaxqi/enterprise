@@ -1,36 +1,36 @@
-import { defineMailModels, startServer } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { SignDocument, SignTemplate, SignTemplateTag } from "@sign/../tests/mock_server/mock_models/sign_model";
 import { dragoverFiles, dropFiles } from "@web/../tests/utils";
 import {
     asyncStep,
-    defineModels,
     mountView,
     onRpc,
     waitForSteps,
+    MockServer,
 } from "@web/../tests/web_test_helpers";
+import { defineSignModels, signModels } from "./mock_server/mock_models/sign_model";
 
-defineMailModels();
-defineModels([SignDocument, SignTemplate, SignTemplateTag]);
-
-describe.current.tags("desktop");
-
-let pyEnv;
+const { IrAttachment, SignDocument, SignTemplate } = signModels;
 
 beforeEach(async () => {
-    pyEnv = await startServer();
-    const attachmentId = pyEnv["ir.attachment"].create({
-        name: "yop.pdf",
-        res_model: "sign.template",
-        mimetype: "application/pdf",
-    });
-    const documentId = pyEnv["sign.document"].create({
-        attachment_id: attachmentId,
-    });
-    pyEnv["sign.template"].write(1, {
-        document_ids: [(6, 0, [documentId])],
-    });
+    IrAttachment._records = [
+        {
+            id: 1,
+            name: "yop.pdf",
+            res_model: "sign.template",
+            mimetype: "application/pdf",
+        },
+    ];
+    SignDocument._records = [
+        {
+            id: 1,
+            attachment_id: 1,
+        },
+    ];
+    Object.assign(SignTemplate._records[0], { document_ids: [(6, 0, [1])] });
 });
+
+describe.current.tags("desktop");
+defineSignModels();
 
 test("Drop to upload file in kanban", async () => {
     await mountView({
@@ -59,15 +59,16 @@ test("Drop to upload file in kanban", async () => {
         if (values.params.method === "create_from_attachment_data") {
             expect(values.params.model).toBe("sign.template");
             expect(values.params.args.length).toBe(2);
-            const attachmentID = pyEnv["ir.attachment"].create({
+            const currentEnv = MockServer.current.env;
+            const attachmentID = currentEnv["ir.attachment"].create({
                 name: values.params.args[0][0].name,
                 res_model: values.params.model,
                 datas: values.params.args[0][0].datas,
             });
-            const signTemplateID = pyEnv[values.params.model].create({
+            const signTemplateID = currentEnv[values.params.model].create({
                 active: true,
             });
-            pyEnv['sign.document'].create({
+            currentEnv["sign.document"].create({
                 template_id: signTemplateID,
                 attachment_id: attachmentID,
             });
