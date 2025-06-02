@@ -563,6 +563,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
         # Assert that the reconciliation model has been created with the correct parameters.
         reco_model = self.env['account.reconcile.model'].search([
+            ('created_automatically', '=', True),
             ('match_label', '=', 'match_regex'),
             ('match_label_param', '=', 'VISA PAYMENT RENT ON \\d+-\\d+-\\d+ FOR'),
             ('match_partner_ids', '=', self.partner_a.ids),
@@ -592,6 +593,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
         # Assert that the reconciliation model and that the structured reference has been perserved.
         reco_model = self.env['account.reconcile.model'].search([
+            ('created_automatically', '=', True),
             ('match_label', '=', 'match_regex'),
             ('match_label_param', '=', 'TAX \\+\\+\\+123/12345/1234\\+\\+\\+ \\d+ EUR'),
         ])
@@ -615,6 +617,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
         # Assert that the reconciliation model has been created even if the label is not exactly 10 characters long.
         reco_model = self.env['account.reconcile.model'].search([
+            ('created_automatically', '=', True),
             ('match_label', '=', 'match_regex'),
             ('match_label_param', '=', 'RENT'),
         ])

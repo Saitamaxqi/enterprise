@@ -686,6 +686,7 @@ class AccountBankStatementLine(models.Model):
     def _create_reconciliation_rule(self, rule_data):
         """Creates and returns a  new reconciliation rule based on prepared data."""
         vals = {
+            'created_automatically': True,
             'name': rule_data['name'],
             'match_journal_ids': self.journal_id.ids,
             'match_label': 'match_regex',

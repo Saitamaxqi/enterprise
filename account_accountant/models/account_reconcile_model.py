@@ -1,9 +1,12 @@
-from odoo import api, models, _
+from odoo import api, fields, models, _
 from odoo.tools import SQL
 
 
 class AccountReconcileModel(models.Model):
     _inherit = 'account.reconcile.model'
+
+    # Technical field to know if the rule was created automatically or by a user.
+    created_automatically = fields.Boolean(default=False)
 
     def _apply_lines_for_bank_widget(self, residual_amount_currency, partner, st_line):
         """ Apply the reconciliation model lines to the statement line passed as parameter.
