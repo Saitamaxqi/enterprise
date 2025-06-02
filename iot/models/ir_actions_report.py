@@ -5,6 +5,7 @@ import base64
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError
+from lxml.etree import ParserError
 
 
 class IrActionsReport(models.Model):
@@ -73,3 +74,19 @@ class IrActionsReport(models.Model):
                     'report_id': self.id,
                 },
         }
+
+    def _render_qweb_pdf(self, report_ref, *args, **kwargs):
+        """Override to ensure the user is informed when trying to print an empty report
+        without an IoT printer.
+
+        This can happen when trying to print delivery labels, that have empty reports used for assigning
+        IoT printers.
+        """
+        try:
+            return super()._render_qweb_pdf(report_ref, *args, **kwargs)
+        except ParserError:
+            raise UserError(_(
+                "The report you are trying to print requires an IoT Box to be printed.\n"
+                "Make sure you linked the report '%s' to the corresponding IoT printer device.",
+                report_ref
+            ))
