@@ -67,15 +67,18 @@ class CzechVIESSummaryReportCustomHandler(models.AbstractModel):
                 'country_code': None,
                 'vat_number': None,
                 'supplies_code': None,
-                'supplies_number': int(sum(query_res_line['supplies_number'] for query_res_line in query_res_lines)),
+                'transaction_code': None,
+                'supplies_number': None,
                 'total_value': sum(query_res_line['total_value'] for query_res_line in query_res_lines),
                 'has_sublines': True,
             }
-            if current_groupby and current_groupby != 'id':
+            if current_groupby:
                 result['country_code'] = query_res_lines[0]['country_code']
                 result['vat_number'] = query_res_lines[0]['vat_number']
-            if current_groupby == 'l10n_cz_transaction_code':
-                result['supplies_code'] = query_res_lines[0]['supplies_code']
+                if current_groupby != 'partner_id':
+                    result['transaction_code'] = query_res_lines[0]['transaction_code']
+            if current_groupby != 'move_id':
+                result['supplies_number'] = int(sum(query_res_line['supplies_number'] for query_res_line in query_res_lines))
             return result
 
         def build_result(query_res_lines):
@@ -111,11 +114,12 @@ class CzechVIESSummaryReportCustomHandler(models.AbstractModel):
         query = SQL(
             """
                 SELECT %(select_from_groupby)s
-                    country.code                        AS country_code,
-                    partner.vat                         AS vat_number,
-                    l10n_cz_transaction_code            AS supplies_code,
-                    SUM(account_move_line.quantity)     AS supplies_number,
-                    SUM(account_move_line.price_total)  AS total_value
+                    country.code                                AS country_code,
+                    partner.vat                                 AS vat_number,
+                    l10n_cz_transaction_code                    AS transaction_code,
+                    l10n_cz_transaction_code                    AS supplies_code,
+                    COUNT(DISTINCT account_move_line.move_id)   AS supplies_number,
+                    CEIL(SUM(account_move_line.price_total))    AS total_value
                 FROM %(table_references)s
                 JOIN res_partner                partner         ON account_move_line.partner_id                 = partner.id
                 JOIN res_country                country         ON partner.country_id                           = country.id

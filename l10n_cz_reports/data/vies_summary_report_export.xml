@@ -9,7 +9,7 @@
                     <VetaR
                         t-att-k_stat="line['country_code']"
                         t-att-c_vat="line['vat_number']"
-                        t-att-k_pln_eu="line['supplies_code']"
+                        t-att-k_pln_eu="line['transaction_code']"
                         t-att-pln_pocet="line['supplies_number']"
                         t-att-pln_hodnota="line['total_value']"/>
                 </t>

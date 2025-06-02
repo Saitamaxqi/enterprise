@@ -74,20 +74,20 @@ class CzechVIESReportTest(CzechReportsCommon):
 
         self.assertLinesValues(
             lines,
-            # Name                   county code        vat number            supplies code         supplies number                total
+            # Name                   county code        vat number          transaction code         supplies number                total
             [0,                          1,                 2,                      3,                     4,                        5],
             [
-                ('B. SECTION',          '',                '',                      '',                    21,                       890),
-                ('Partner EU 1',        'FR',              'FR23334175221',         '',                    12,                        510),
-                ('0 Goods',             'FR',              'FR23334175221',         '0',                   4,                        130),
-                ('1 Business asset',    'FR',              'FR23334175221',         '1',                   4,                        240),
-                ('2 Triangular',        'FR',              'FR23334175221',         '2',                   3,                        60),
+                ('B. SECTION',          '',                '',                      '',                    8,                        890),
+                ('Partner EU 1',        'FR',              'FR23334175221',         '',                    5,                        510),
+                ('0 Goods',             'FR',              'FR23334175221',         '0',                   1,                        130),
+                ('1 Business asset',    'FR',              'FR23334175221',         '1',                   2,                        240),
+                ('2 Triangular',        'FR',              'FR23334175221',         '2',                   1,                        60),
                 ('3 Service',           'FR',              'FR23334175221',         '3',                   1,                        80),
-                ('Partner EU 2',        'DE',              'DE123456788',           '',                    6,                        320),
-                ('1 Business asset',    'DE',              'DE123456788',           '1',                   5,                        240),
+                ('Partner EU 2',        'DE',              'DE123456788',           '',                    2,                        320),
+                ('1 Business asset',    'DE',              'DE123456788',           '1',                   1,                        240),
                 ('3 Service',           'DE',              'DE123456788',           '3',                   1,                        80),
-                ('Partner EU 3',        'BE',              'BE0477472701',          '',                    3,                        60),
-                ('2 Triangular',        'BE',              'BE0477472701',          '2',                   3,                        60),
+                ('Partner EU 3',        'BE',              'BE0477472701',          '',                    1,                        60),
+                ('2 Triangular',        'BE',              'BE0477472701',          '2',                   1,                        60),
             ],
             options,
         )
@@ -95,6 +95,17 @@ class CzechVIESReportTest(CzechReportsCommon):
     @freeze_time('2019-12-31')
     def test_cz_vies_report_default_options_export(self):
         report = self.env.ref('l10n_cz_reports.vies_summary_report')
+        self.env['account.move'].create({
+            'invoice_date': '2019-11-12',
+            'taxable_supply_date': '2019-11-12',
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_eu_1.id,
+            'invoice_line_ids': [Command.create(line_data) for line_data in [
+                {'quantity': 1, 'price_unit': 100, 'l10n_cz_transaction_code': '0'},
+                {'quantity': 3, 'price_unit': 10, 'l10n_cz_transaction_code': '0'},
+                {'quantity': 2, 'price_unit': 30, 'l10n_cz_transaction_code': '1'},
+            ]],
+        }).action_post()
         options = report.get_options({})
 
         generated_xml = self.env['l10n_cz.vies.summary.report.handler'].export_to_xml(options)['file_content']
@@ -103,13 +114,13 @@ class CzechVIESReportTest(CzechReportsCommon):
             <DPHSHV verzePis="02.01">
                 <VetaD shvies_forma="N" dokument="SHV" k_uladis="DPH" mesic="11" rok="2019"/>
                 <VetaP typ_ds="P" zkrobchjm="company_1_data" c_pracufo="2001" c_ufo="451" dic="12345679" email="info@company.czexample.com"/>
-                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="0" pln_pocet="4" pln_hodnota="130.0"/>
-                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="1" pln_pocet="4" pln_hodnota="240.0"/>
-                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="2" pln_pocet="3" pln_hodnota="60.0"/>
-                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="3" pln_pocet="1" pln_hodnota="80.0"/>
-                <VetaR k_stat="DE" c_vat="DE123456788"   k_pln_eu="1" pln_pocet="5" pln_hodnota="240.0"/>
-                <VetaR k_stat="DE" c_vat="DE123456788"   k_pln_eu="3" pln_pocet="1" pln_hodnota="80.0"/>
-                <VetaR k_stat="BE" c_vat="BE0477472701"  k_pln_eu="2" pln_pocet="3" pln_hodnota="60.0"/>
+                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="0" pln_pocet="2" pln_hodnota="260"/>
+                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="1" pln_pocet="3" pln_hodnota="300"/>
+                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="2" pln_pocet="1" pln_hodnota="60"/>
+                <VetaR k_stat="FR" c_vat="FR23334175221" k_pln_eu="3" pln_pocet="1" pln_hodnota="80"/>
+                <VetaR k_stat="DE" c_vat="DE123456788"   k_pln_eu="1" pln_pocet="1" pln_hodnota="240"/>
+                <VetaR k_stat="DE" c_vat="DE123456788"   k_pln_eu="3" pln_pocet="1" pln_hodnota="80"/>
+                <VetaR k_stat="BE" c_vat="BE0477472701"  k_pln_eu="2" pln_pocet="1" pln_hodnota="60"/>
             </DPHSHV>
             </Pisemnost>
         """
@@ -185,10 +196,10 @@ class CzechVIESReportTest(CzechReportsCommon):
             report._get_lines({**options, 'unfold_all': True}), [0, 5],
             #        name              total
             [
-                ('B. SECTION',          20),
-                ('Partner EU 1',        20),
-                ('0 Goods',             20),
-                ('BILL/2025/01/0001',   20),
+                ('B. SECTION',          21),
+                ('Partner EU 1',        21),
+                ('0 Goods',             21),
+                ('BILL/2025/01/0001',   21),
             ],
             options,
         )
