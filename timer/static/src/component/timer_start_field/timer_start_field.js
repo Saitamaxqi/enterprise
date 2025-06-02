@@ -39,7 +39,6 @@ export class TimerStartField extends Component {
             let currentTime;
             if (timerPause) {
                 currentTime = timerPause;
-                this.timerReactive.computeOffset(currentTime);
             } else {
                 currentTime = this.timerReactive.getCurrentTime();
             }
