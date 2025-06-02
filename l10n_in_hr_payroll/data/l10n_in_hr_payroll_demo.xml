@@ -356,7 +356,7 @@
 
 
         <!-- payslip  -->
-        <!-- <record id="l10n_in_hr_payslip_in_vihaan_sep" model="hr.payslip">
+        <record id="l10n_in_hr_payslip_in_vihaan_sep" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
             <field name="name">Vihaan Payslip September</field>
             <field name="date_from" eval="DateTime.today() - relativedelta(years=1, month=9, day=1)"/>
@@ -383,9 +383,9 @@
         </record>
         <record id="l10n_in_hr_payslip_in_alisha_sharma" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_alisha_sharma"/>
-            <field name="name">Alisha Sharma November</field>
-            <field name="date_from" eval="DateTime.today() - relativedelta(years=1, month=11, day=1)"/>
-            <field name="date_to" eval="DateTime.today() - relativedelta(years=1, month=11, day=30)"/>
+            <field name="name">Alisha Sharma Payslip (3 months ago)</field>
+            <field name="date_from" eval="DateTime.today() - relativedelta(months=3, day=1)"/>
+            <field name="date_to" eval="DateTime.today() - relativedelta(months=3, day=31)"/>
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_stipend"/>
         </record>
@@ -425,6 +425,6 @@
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_current_month'),
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma_current_month')
             ]"/>
-        </function> -->
+        </function>
     </data>
 </odoo>
