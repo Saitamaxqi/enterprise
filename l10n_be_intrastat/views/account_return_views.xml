@@ -9,8 +9,8 @@
                 <t t-if="record.type_external_id.raw_value == 'l10n_be_intrastat.be_intrastat_goods_return_type'" t-set="states" t-value="[{value: 'reviewed', display:reviewedLabel}, {value: 'submitted', display:submittedLabel}]"/>
             </t>
 
-            <a name="action_reset_to_new" position="after">
-                <a invisible="type_external_id != 'l10n_be_intrastat.be_intrastat_goods_return_type' or state != 'submitted'" class="dropdown-item" type="object" name="reset_to_reviewed_from_completed" string="Reset"/>
+            <a name="action_reset_tax_return_common" position="after">
+                <a invisible="state == 'new' and not is_completed or type_external_id != 'l10n_be_intrastat.be_intrastat_goods_return_type'" class="dropdown-item" type="object" name="l10n_be_reset_2_sates_common" string="Reset"/>
             </a>
         </field>
     </record>

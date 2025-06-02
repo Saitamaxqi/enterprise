@@ -484,10 +484,10 @@ class TestAccountReturn(TestAccountReportsCommon):
             second_return.action_submit()
 
         with self.assertRaises(UserError):
-            first_return.action_reset_to_reviewed()
+            first_return.action_reset_tax_return_common()
 
-        second_return.action_reset_to_reviewed()
-        first_return.action_reset_to_reviewed()
+        second_return.action_reset_tax_return_common()
+        first_return.action_reset_tax_return_common()
 
     def test_cannot_submit_if_previous_not_submitted(self):
         first_return, second_return = self.env['account.return'].search([

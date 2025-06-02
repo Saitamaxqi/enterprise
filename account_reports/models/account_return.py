@@ -803,74 +803,72 @@ class AccountReturn(models.Model):
             'approver_ids': False,
         })
 
-    def action_reset_to_new(self):
-        self._reset_checks_for_states([self.state, 'new'])
-        self.state = 'new'
-
-    def action_reset_to_reviewed(self):
+    def action_reset_tax_return_common(self):
         self.ensure_one()
 
-        # Check if it is the last return closed
-        domain = [
-            ('company_id', '=', self.company_id.id),
-            ('type_id', '=', self.type_id.id),
-            ('date_submission', '!=', False),
-            ('date_deadline', '>', self.date_deadline),
-        ]
+        if self.state == 'paid':
+            self._reset_checks_for_states([self.state, 'submitted'])
+            self.state = 'submitted'
 
-        if self.env['account.return'].search_count(domain, limit=1):
-            raise UserError(_("You cannot reset this return to reviewed, as another return has been posted at a later date."))
+        if self.state == 'submitted':
+            # Check if it is the last return closed
+            domain = [
+                ('company_id', '=', self.company_id.id),
+                ('type_id', '=', self.type_id.id),
+                ('date_submission', '!=', False),
+                ('date_deadline', '>', self.date_deadline),
+            ]
+            if self.env['account.return'].search_count(domain, limit=1):
+                raise UserError(_("You cannot reset this return to reviewed, as another return has been posted at a later date."))
 
-        # delete carryover if possible
-        if report := self.type_id.report_id:
-            carryover_values = self.env['account.report.external.value'].search(
-                [
-                    ('carryover_origin_report_line_id', 'in', report.line_ids.ids),
-                    ('date', '=', self.date_to),
-                    ('company_id', 'in', self.company_ids.ids),
-                ]
-            )
+            # delete carryover if possible
+            if report := self.type_id.report_id:
+                carryover_values = self.env['account.report.external.value'].search(
+                    [
+                        ('carryover_origin_report_line_id', 'in', report.line_ids.ids),
+                        ('date', '=', self.date_to),
+                        ('company_id', 'in', self.company_ids.ids),
+                    ]
+                )
 
-            carryover_impacted_period = self.type_id._get_period_boundaries(self.company_id, self.date_to + relativedelta(days=1))
-            tax_lock_date = self.company_id.tax_lock_date
-            if carryover_values and tax_lock_date and tax_lock_date >= carryover_impacted_period[1]:
-                raise UserError(_("You cannot reset this closing entry to draft, as it would delete carryover values impacting the tax report of a "
-                                  "locked period. To do this, you first need to modify you tax return lock date."))
+                carryover_impacted_period = self.type_id._get_period_boundaries(self.company_id, self.date_to + relativedelta(days=1))
+                tax_lock_date = self.company_id.tax_lock_date
+                if carryover_values and tax_lock_date and tax_lock_date >= carryover_impacted_period[1]:
+                    raise UserError(_("You cannot reset this closing entry to draft, as it would delete carryover values impacting the tax report of a "
+                                      "locked period. To do this, you first need to modify you tax return lock date."))
 
-            carryover_values.unlink()
+                carryover_values.unlink()
 
-            main_company = self.tax_unit_id.main_company_id or self.company_id
-            if report.country_id == main_company.account_fiscal_country_id and main_company.tax_lock_date and self.date_to <= main_company.tax_lock_date:
-                for company in self.company_ids:
-                    company.tax_lock_date = self.date_from + relativedelta(days=-1)
+                main_company = self.tax_unit_id.main_company_id or self.company_id
+                if report.country_id == main_company.account_fiscal_country_id and main_company.tax_lock_date and self.date_to <= main_company.tax_lock_date:
+                    for company in self.company_ids:
+                        company.tax_lock_date = self.date_from + relativedelta(days=-1)
 
-            self.amount_to_pay = 0
+                self.amount_to_pay = 0
 
-        self.closing_move_ids.button_draft()
-        self.closing_move_ids.unlink()
-        self.attachment_ids.unlink()
+            self.closing_move_ids.button_draft()
+            self.closing_move_ids.unlink()
+            self.attachment_ids.unlink()
 
-        self._reset_checks_for_states([self.state, 'reviewed'])
-        self.date_submission = False
-        self.report_opened_once = False
-        self.state = 'reviewed'
+            self.date_submission = False
+            self.report_opened_once = False
+            self._reset_checks_for_states([self.state, 'reviewed'])
+            self.state = 'reviewed'
 
-    def action_reset_to_submitted(self):
+        if self.state == 'reviewed':
+            self._reset_checks_for_states([self.state, 'new'])
+            self.state = 'new'
+
+        self.is_completed = False
+        return True
+
+    def action_reset_annual_closing(self):
         self.ensure_one()
-        self._reset_checks_for_states([self.state, 'submitted'])
+        if self.state == 'submitted':
+            self._reset_checks_for_states([self.state, 'new'])
+            self.state = 'new'
         self.is_completed = False
-        self.state = 'submitted'
-
-    def reset_to_reviewed_from_completed(self):
-        self.action_reset_to_reviewed()
-        self.is_completed = False
-
-    def action_reset_is_completed(self):
-        self.ensure_one()
-        if self.date_submission:
-            raise UserError(_("You cannot reset the completion of a submitted return."))
-        self.is_completed = False
-        self.state = 'new'
+        return True
 
     ####################################################################################################
     ####  Other Actions
