@@ -16,11 +16,10 @@
                     <div t-name="menu">
                         <a role="menuitem" type="object" name="go_to_custom_template" class="d-none d-md-block dropdown-item" context="{'sign_edit_call': 'sign_template_edit'}">Edit</a>
                         <a role="menuitem" type="object" name="stop_sharing" class="dropdown-item" invisible="not is_sharing">Stop Sharing</a>
-                        <a role="menuitem" type="action" name="%(sign.action_sign_duplicate_template_with_pdf)d" class="dropdown-item">Use Layout</a>
+                        <a role="menuitem" type="object" name="action_duplicate" class="dropdown-item">Duplicate</a>
                         <a role="menuitem" type="object" name="action_archive" class="dropdown-item" t-if="record.active.raw_value">Archive</a>
                         <a role="menuitem" type="object" name="action_unarchive" class="dropdown-item" t-if="!record.active.raw_value">Restore</a>
-                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
-
+                        <a role="menuitem" type="object" name="action_template_configuration" class="dropdown-item">Configuration</a>
                         <div role="separator" class="dropdown-divider"/>
                         <div role="separator" class="dropdown-item-text">Color</div>
                         <field name="color" widget="kanban_color_picker"/>

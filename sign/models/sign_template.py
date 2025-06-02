@@ -170,7 +170,7 @@ class SignTemplate(models.Model):
 
     def _check_send_ready(self):
         if any(item.type_id.item_type == 'selection' and not item.option_ids for item in self.sign_item_ids):
-            raise UserError(_("There are no values in selection field."))
+            raise UserError(self.env._("There are no values in selection field."))
 
     def toggle_favorited(self):
         self.ensure_one()
@@ -345,6 +345,13 @@ class SignTemplate(models.Model):
             }
         }
 
+    def action_duplicate(self):
+        self.ensure_one()
+        self.check_access('write')
+        for document in self.document_ids:
+            document.check_access('write')
+        self.copy()
+
     ##################
     # PDF Rendering #
     ##################
@@ -378,3 +385,15 @@ class SignTemplate(models.Model):
                 'colorId': idx,
             })
         return roles_info
+
+    def action_template_configuration(self):
+        """ Open the template properties form view. """
+        self.ensure_one()
+        return {
+            'name': "Edit Template Form",
+            'type': "ir.actions.act_window",
+            'res_model': "sign.template",
+            'res_id': self.id,
+            'views': [[False, "form"]],
+            'context': self.env.context,
+        }
