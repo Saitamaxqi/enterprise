@@ -379,7 +379,7 @@
 
 
         <!-- payslip  -->
-        <record id="l10n_in_hr_payslip_in_vihaan_sep" model="hr.payslip">
+        <!-- <record id="l10n_in_hr_payslip_in_vihaan_sep" model="hr.payslip">
             <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
             <field name="name">Vihaan Payslip September</field>
             <field name="date_from" eval="DateTime.today() - relativedelta(years=1, month=9, day=1)"/>
@@ -448,6 +448,6 @@
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_current_month'),
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma_current_month')
             ]"/>
-        </function>
+        </function> -->
     </data>
 </odoo>
