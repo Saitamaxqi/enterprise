@@ -110,7 +110,7 @@
                     <button name="action_refuse" string="Refuse" type="object" invisible="request_status in ['approved', 'refused', 'cancel'] or user_status != 'pending'" data-hotkey="z"/>
                     <button name="action_withdraw" string="Withdraw" type="object" invisible="request_status == 'new' or user_status in ['waiting', 'pending', 'cancel'] or not user_status" data-hotkey="y"/>
                     <button name="action_draft" string="Back To Draft" type="object" invisible="request_status != 'cancel' or not user_status and not has_access_to_request" data-hotkey="w"/>
-                    <button name="action_cancel" string="Cancel" type="object" invisible="request_status in ['new', 'cancel'] or not user_status and not has_access_to_request or request_owner_id != uid" data-hotkey="x"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="request_status in ['new', 'cancel'] or request_owner_id != uid" data-hotkey="x"/>
                     <widget name="attach_document" string="Attach Document" action="message_post" invisible="(attachment_number &lt; 1 and request_owner_id == uid)"/>
                     <button string="Print" invisible="request_status != 'approved' or approval_type !='purchase'" type="action" name="%(action_report_approval_request)d"/>
                     <field name="request_status" widget="statusbar" statusbar_visible="new,pending,approved,refused" />

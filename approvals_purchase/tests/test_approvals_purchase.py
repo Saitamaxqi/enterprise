@@ -78,10 +78,15 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         })]
 
         # reset the product again, in order to compute seller_id
+        # but we have to draft it as the request has already been approved
+        request_purchase.action_cancel()
+        request_purchase.action_draft()
         with request_form.product_line_ids.edit(0) as line:
             line.product_id = self.product_computer
             line.product_id = self.product_mouse
         request_purchase = request_form.save()
+        request_purchase.with_user(self.user_approver).action_approve()
+        self.assertEqual(request_purchase.request_status, 'approved')
 
         # Should be ok now, check the approval request has purchase order.
         request_purchase.action_create_purchase_orders()

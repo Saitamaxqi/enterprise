@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, Command, fields, models, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 
 class ApprovalRequest(models.Model):
@@ -337,6 +337,18 @@ class ApprovalRequest(models.Model):
             request.update({'approver_ids': approver_id_vals})
 
     def write(self, vals):
+        if not self.env.is_admin():
+            for approval in self:
+                if self.env.user != approval.request_owner_id:
+                    continue
+                # A owner cannot approve or refuse his own requests
+                if vals.get('request_status') in ('approved', 'refused'):
+                    raise AccessError(_("You are not allowed to approved or refused your own approval."))
+                # For a processed request, the only action for the owner is to cancel the request
+                if approval.request_status in ('pending', 'approved', 'refused') \
+                    and (set(vals.keys()) != {'request_status'} or vals['request_status'] != 'cancel'):
+                    raise AccessError(_("You must cancel and then back to draft the approval first."))
+
         if 'request_owner_id' in vals:
             for approval in self:
                 approval.message_unsubscribe(partner_ids=approval.request_owner_id.partner_id.ids)

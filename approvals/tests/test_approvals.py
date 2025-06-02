@@ -3,7 +3,7 @@
 
 from odoo import Command, fields
 from odoo.tests import common, Form, new_test_user
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 
 
 class TestRequest(common.TransactionCase):
@@ -229,3 +229,48 @@ class TestRequest(common.TransactionCase):
             'category_id': category2.id
         })
         self.assertEqual(approval.approver_ids.user_id, user1)
+
+    def test_approval_request_write_approved(self):
+        user_1 = new_test_user(self.env, login="user 1", groups="base.group_user")
+        user_2 = new_test_user(self.env, login="user 2", groups="base.group_user")
+
+        category_test = self.env.ref('approvals.approval_category_data_business_trip')
+        record = self.env['approval.request'].create({
+            'name': 'test request',
+            'request_owner_id': user_1.id,
+            'category_id': category_test.id,
+            'date_start': fields.Datetime.now(),
+            'date_end': fields.Datetime.now(),
+            'location': 'testland'
+        })
+        first_approver = self.env['approval.approver'].create({
+            'user_id': user_2.id,
+            'request_id': record.id,
+            'status': 'new'
+        })
+        record.approver_ids = first_approver
+
+        # approval owner can write on his approval
+        record.with_user(user_1).write({'amount': 10})
+
+        record.action_confirm()
+        self.assertEqual(record.request_status, 'pending')
+
+        record.action_approve(first_approver)
+
+        self.assertEqual(record.request_status, 'approved')
+        # approval owner cannot write on approved approval
+        with self.assertRaises(AccessError):
+            record.with_user(user_1).write({'amount': 20})
+        record.with_user(user_2).write({'amount': 20})
+
+        # approval owner can cancel
+        record.with_user(user_1).write({'request_status': 'cancel'})
+        self.assertEqual(record.request_status, 'cancel')
+
+        record.action_draft()
+        self.assertEqual(record.request_status, 'new')
+
+        # approval owner cannot approved his own approval
+        with self.assertRaises(AccessError):
+            record.with_user(user_1).write({'request_status': 'approved'})
