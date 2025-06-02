@@ -169,4 +169,4 @@ class LLMApiService:
             return response.json()
         except requests.exceptions.RequestException as e:
             _logger.warning("LLM API request to %s failed: %s", route, e)
-            return None
+            raise UserError(_("LLM API request failed: %s", e))
