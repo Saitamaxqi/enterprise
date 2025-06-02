@@ -6,8 +6,8 @@
             t-att-class="{'btn-sm': !ui.isSmall, 'btn-primary': props.primary, 'btn-secondary': !props.primary}"
             t-on-click.stop="() => props?.action()"
         >
-            <span t-esc="props?.label"/>
-            <span class="o_button_count" t-if="props?.count">
+            <span t-esc="props?.label" class="m-auto"/>
+            <span class="o_button_count m-auto" t-if="props?.count">
                 <t t-esc="props.count"/>
             </span>
         </button>
