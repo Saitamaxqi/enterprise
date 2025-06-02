@@ -488,7 +488,6 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             posX: signItem.data.posX + 0.005,
             posY: signItem.data.posY + 0.005,
         });
-        debugger;
         this.signItems[newData.page][newId] = {
             data: newData,
             el: this.renderSignItem(newData, page),
