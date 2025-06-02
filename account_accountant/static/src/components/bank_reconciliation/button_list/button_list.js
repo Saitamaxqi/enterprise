@@ -392,13 +392,13 @@ export class BankRecButtonList extends Component {
             .map((key) => buttons[key]);
 
         if (this.ui.isSmall) {
-            return otherButtons.length ? [otherButtons[0]] : [];
+            return Object.values(buttons).slice(0, 3);
         }
         return otherButtons;
     }
 
     get mobileButtonsToDisplay() {
         const buttons = Object.values(this.buttonsToDisplay);
-        return buttons.slice(1);
+        return buttons.slice(3);
     }
 }

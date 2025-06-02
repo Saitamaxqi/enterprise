@@ -43,13 +43,13 @@ patch(BankRecButtonList.prototype, {
         this.bankReconciliation.reloadChatter();
     },
 
-    get buttons() {
-        const buttons = super.buttons;
+    get mobileButtonsToDisplay() {
+        const buttons = super.mobileButtonsToDisplay;
         if (this.ui.isSmall) {
-            buttons.batches = {
+            buttons.push({
                 label: _t("Batches"),
                 action: this.selectBatchPayment.bind(this),
-            };
+            });
         }
         return buttons;
     },
