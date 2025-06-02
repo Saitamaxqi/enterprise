@@ -121,6 +121,8 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         """
         Check if the amount is well computed when we change a payment state into a non valid payment status
         """
+        if self.env['account.move']._get_invoice_in_payment_state() != 'in_payment':
+            self.skipTest('Accounting not installed')
         payments = self.env['account.payment']
         bank_journal_2 = self.company_data['default_journal_bank'].copy()
         for _ in range(2):
@@ -149,9 +151,9 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
             'amount_residual_currency': 200.0,
         }])
 
+        # Change move state to 'paid', if accounting is installed it won't be a valid payment state for batches
         payments[0].action_validate()
 
-        # Check that we still keep it
         self.assertRecordValues(batch_payment, [{
             'amount': 200.0,
             'amount_residual': 100.0,
