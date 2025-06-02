@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="sign.SignTemplateSidebar">
         <div t-attf-class="o_sign_sidebar {{ isSidebarHidden ? 'd-none' : ''}} w-100 border-end border-secondary">
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2 mt-2">
                 <h6 class="m-0 mx-2">Documents</h6>
                 <div class="d-flex" t-if="!this.props.hasSignRequests">
                     <t t-call="sign.SignViews.buttons"/>
@@ -21,18 +21,18 @@
                                 t-on-change="ev => this.onDocumentNameChanged(document.id, ev)"
                                 t-on-blur="onDocumentNameBlur"
                             />
-                            <div t-attf-class="mx-1 o_sign_sidebar_document_name_text {{ document.id === this.state.editableDocumentId ? 'd-none' : '' }}" t-att-title="document.display_name">
+                            <div t-attf-class="mx-1 o_sign_sidebar_document_name_text {{ document.id === this.state.editableDocumentId ? 'd-none' : '' }}"
+                                t-att-title="document.display_name"
+                                t-on-click="() => document.id === this.props.selectedDocumentId ? this.onDocumentNameTextClick(document.id) : this.onUpdateSelectedDocument(document.id)"
+                            >
                                 <t t-esc="document.display_name"/>
                             </div>
+                            <i t-if="document.id === this.props.selectedDocumentId" class="fa fa-pencil"/>
                             <Dropdown t-if="!this.props.hasSignRequests">
                                 <button t-attf-class="btn o_sign_sidebar_icon">
                                     <i class="oi oi-ellipsis-v"/>
                                 </button>
                                 <t t-set-slot="content">
-                                    <DropdownItem onSelected="() => this.onRenameClick(document.id)">
-                                        <i class="fa fa-pencil"/>
-                                        Rename
-                                    </DropdownItem>
                                     <DropdownItem t-if="this.props.documents.filter((doc) => !doc.deleted).length > 1 &amp; this.props.documents.filter((doc) => !doc.deleted).sort((a,b) => a.sequence - b.sequence)[0].id !== document.id" onSelected="() => this.onMoveDocumentUp(document.id)">
                                         <i class="fa fa-arrow-up fa-fw"/>
                                         Move Up

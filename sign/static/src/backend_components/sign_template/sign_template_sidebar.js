@@ -113,7 +113,7 @@ export class SignTemplateSidebar extends Component {
         this.props.updateSelectedDocument(documentId);
     }
 
-    onRenameClick(documentId) {
+    onDocumentNameTextClick(documentId) {
         this.state.editableDocumentId = documentId;
         const input = document.querySelector(`[data-document-id="${documentId}"]`);
         setTimeout(() => {
