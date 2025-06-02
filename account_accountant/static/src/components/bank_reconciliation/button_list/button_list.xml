@@ -48,12 +48,12 @@
                             </t>
                         </BankRecFileUploader>
                         <div class="dropdown-divider"/>
-                        <t t-foreach="props.reconcileModels" t-as="model" t-key="model.id">
+                        <t t-foreach="extraReconcileModelsToShow" t-as="model" t-key="model.id">
                             <DropdownItem class="'btn btn-link'" onSelected.bind="() => this.triggerReconciliationModel(model.id)">
                                 <t t-esc="model.display_name"/>
                             </DropdownItem>
                         </t>
-                        <div t-if="props.reconcileModels.length" class="dropdown-divider"/>
+                        <div t-if="extraReconcileModelsToShow.length" class="dropdown-divider"/>
                         <DropdownItem class="'btn btn-link'" onSelected.bind="actionViewRecoModels">
                             Manage Models
                         </DropdownItem>

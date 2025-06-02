@@ -310,6 +310,15 @@ export class BankRecButtonList extends Component {
         return this.props.reconcileLineCount === null || this.props.reconcileLineCount;
     }
 
+    get extraReconcileModelsToShow() {
+        if (this.ui.isSmall) {
+            return this.props.reconcileModels;
+        }
+        return this.props.reconcileModels
+            .filter((model) => model.id !== this.props?.preSelectedReconciliationModel?.id)
+            .slice(3);
+    }
+
     /**
      * Dynamically builds the list of action buttons to be shown in the reconciliation interface.
      *
@@ -349,6 +358,17 @@ export class BankRecButtonList extends Component {
                 label: _t("Set Account"),
                 action: this.setAccountOnReconcileLine.bind(this),
             };
+        }
+
+        if (!this.ui.isSmall) {
+            for (const model of this.props.reconcileModels
+                .filter((model) => model.id !== this.props?.preSelectedReconciliationModel?.id)
+                .slice(0, 3)) {
+                buttonsToDisplay[`model_${model.id}`] = {
+                    label: model.display_name,
+                    action: this.triggerReconciliationModel.bind(this, model.id),
+                };
+            }
         }
 
         return buttonsToDisplay;
