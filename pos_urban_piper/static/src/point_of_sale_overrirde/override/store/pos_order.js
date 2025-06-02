@@ -35,4 +35,7 @@ patch(PosOrder.prototype, {
     isFutureOrder() {
         return false;
     },
+    get getProviderOrderId() {
+        return JSON.parse(this.delivery_json || "{}").order?.details?.ext_platforms?.[0].id || "";
+    },
 });
