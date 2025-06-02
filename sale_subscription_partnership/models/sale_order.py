@@ -19,12 +19,17 @@ class SaleOrder(models.Model):
 
     def _remove_partnership(self):
         for so in self:
-            if so.commercial_partner_id.grade_id != so.assigned_grade_id:
+            if so.partner_id.grade_id != so.assigned_grade_id:
                 continue
-            partner_id = so.commercial_partner_id
-            partner_id.grade_id = False
-            if partner_id.specific_property_product_pricelist == so.assigned_grade_id.default_pricelist_id:
-                partner_id.specific_property_product_pricelist = False
+            so.partner_id.grade_id = False
+            if so.partner_id.specific_property_product_pricelist == so.assigned_grade_id.default_pricelist_id:
+                so.partner_id.specific_property_product_pricelist = False
+            for child in so.partner_id.child_ids:
+                if child.grade_id != so.assigned_grade_id:
+                    continue
+                child.grade_id = False
+                if child.specific_property_product_pricelist == so.assigned_grade_id.default_pricelist_id:
+                    child.specific_property_product_pricelist = False
 
     def _confirm_renewal(self):
         res = super()._confirm_renewal()

@@ -78,16 +78,13 @@ class SaleOrder(models.Model):
             })
         return values
 
-    def _add_partnership(self):
-        res = super()._add_partnership()
-        for so in self:
-            if plan := so.assigned_grade_id.default_commission_plan_id:
-                so.commercial_partner_id.commission_plan_id = plan
-        return res
-
     def _remove_partnership(self):
-        res = super()._remove_partnership()
         for so in self:
-            if so.commercial_partner_id.commission_plan_id == so.assigned_grade_id.default_commission_plan_id:
-                so.commercial_partner_id.commission_plan_id = False
-        return res
+            if so.partner_id.grade_id != so.assigned_grade_id:
+                continue
+            if so.partner_id.commission_plan_id == so.assigned_grade_id.default_commission_plan_id:
+                so.partner_id.commission_plan_id = False
+            for child in so.partner_id.child_ids:
+                if child.grade_id == so.assigned_grade_id and child.commission_plan_id == so.assigned_grade_id.default_commission_plan_id:
+                    child.commission_plan_id = False
+        return super()._remove_partnership()
