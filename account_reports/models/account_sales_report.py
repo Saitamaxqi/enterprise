@@ -204,6 +204,7 @@ class AccountEcSalesReportHandler(models.AbstractModel):
         :return:                    (accounts_values, taxes_results)
         '''
         groupby_partners = {}
+        vat_set = set()
 
         def assign_sum(row):
             """
@@ -219,8 +220,13 @@ class AccountEcSalesReportHandler(models.AbstractModel):
             :param dict row:
             """
             if not company_currency.is_zero(row['balance']):
-                groupby_partners.setdefault(row['groupby'], defaultdict(lambda: defaultdict(float)))
+                vat = row['vat_number'] or ''
+                vat_country_code = vat[:2] if vat[:2].isalpha() else None
+                duplicated_vat = vat and vat in vat_set and row['groupby'] not in groupby_partners
+                if vat:
+                    vat_set.add(vat)
 
+                groupby_partners.setdefault(row['groupby'], defaultdict(lambda: defaultdict(float)))
                 groupby_partners_keyed = groupby_partners[row['groupby']][row['column_group_key']]
                 if row['tax_element_id'] in options['sales_report_taxes']['goods']:
                     groupby_partners_keyed['goods'] += row['balance']
@@ -232,8 +238,6 @@ class AccountEcSalesReportHandler(models.AbstractModel):
                 groupby_partners_keyed.setdefault('tax_element_id', []).append(row['tax_element_id'])
                 groupby_partners_keyed.setdefault('sales_type_code', []).append(row['sales_type_code'])
 
-                vat = row['vat_number'] or ''
-                vat_country_code = vat[:2] if vat[:2].isalpha() else None
                 groupby_partners_keyed.setdefault('vat_number', vat if not vat_country_code else vat[2:])
                 groupby_partners_keyed.setdefault('full_vat_number', vat)
                 groupby_partners_keyed.setdefault('country_code', vat_country_code or row.get('country_code'))
@@ -245,11 +249,11 @@ class AccountEcSalesReportHandler(models.AbstractModel):
                         warnings['account_reports.sales_report_warning_missing_vat'] = {'alert_type': 'warning'}
                     if row.get('same_country') and row['country_code']:
                         warnings['account_reports.sales_report_warning_same_country'] = {'alert_type': 'warning'}
-                    if row.get('is_vat_duplicated') and row.get('vat_number'):
+                    if duplicated_vat:
                         if warnings.get('account_reports.sales_report_warning_duplicated_vat'):
-                            warnings['account_reports.sales_report_warning_duplicated_vat']['duplicated_partners_vat'].append(row['vat_number'])
+                            warnings['account_reports.sales_report_warning_duplicated_vat']['duplicated_partners_vat'].append(vat)
                         else:
-                            warnings['account_reports.sales_report_warning_duplicated_vat'] = {'alert_type': 'warning', 'duplicated_partners_vat': [row['vat_number']]}
+                            warnings['account_reports.sales_report_warning_duplicated_vat'] = {'alert_type': 'warning', 'duplicated_partners_vat': [vat]}
 
         company_currency = self.env.company.currency_id
 
@@ -307,8 +311,7 @@ class AccountEcSalesReportHandler(models.AbstractModel):
                     -SUM(%(balance_select)s)        AS balance,
                     %(tax_elem_table_name)s         AS sales_type_code,
                     %(tax_elem_table)s.id           AS tax_element_id,
-                    (comp_partner.country_id = res_partner.country_id) AS same_country,
-                    COUNT(*) OVER (PARTITION BY res_partner.vat) > 1 AS is_vat_duplicated
+                    (comp_partner.country_id = res_partner.country_id) AS same_country
                 FROM %(table_references)s
                 %(currency_table_join)s
                 JOIN %(aml_rel_table)s ON %(aml_rel_table)s.account_move_line_id = account_move_line.id
