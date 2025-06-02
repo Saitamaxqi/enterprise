@@ -75,6 +75,9 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         await this.bankReconciliation.updateAvailableReconcileModels(recordId);
         await this.env.model.load();
         await this.getJournalTotalAmount();
+        await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+            this.env.model.root.records
+        );
 
         if (mode === "add_close") {
             this.globalState.quickCreate.isVisible = false;
