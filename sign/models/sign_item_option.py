@@ -22,10 +22,7 @@ class SignItemOption(models.Model):
         returns a list of IDs corresponding to all provided options
         (both existing and newly created).
         """
-        options = [option.strip() for option in options]
-        if len(options) != len(set(options)):
-            duplicates = [option for option in options if options.count(option) > 1]
-            raise UserError(_("Your selection field contains duplicate options: %s") % ', '.join(set(duplicates)))
+        options = list(set(options))
         existing_values = {opt['value'] for opt in self.search_read([('value', 'in', options)], fields=['value'])}
         new_options = [option for option in options if option not in existing_values]
         if new_options:

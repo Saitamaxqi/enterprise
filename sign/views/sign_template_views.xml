@@ -375,7 +375,7 @@
                         <h1><field name="name" placeholder="e.g. Employee"/></h1>
                     </div>
                     <group>
-                        <field name="auth_method" string="Authentication"/>
+                        <field name="auth_method" string="Authentication" placeholder="By Email"/>
                         <field name="change_authorized" string="Can delegate"/>
                     </group>
                 </sheet>

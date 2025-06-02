@@ -60,7 +60,7 @@ class SignRequest(models.Model):
     color = fields.Integer()
     request_item_infos = fields.Binary(compute="_compute_request_item_infos")
     last_action_date = fields.Datetime(related="message_ids.create_date", readonly=True, string="Last Action Date")
-    completion_date = fields.Date(string="Completion Date", compute="_compute_progress", compute_sudo=True, store=True)
+    completion_date = fields.Date(string="Completion Date", compute="_compute_completion_date", compute_sudo=True, store=True)
     communication_company_id = fields.Many2one('res.company', string="Company used for communication", default=lambda self: self.env.company)
 
     sign_log_ids = fields.One2many('sign.log', 'sign_request_id', string="Logs", help="Activity logs linked to this request")
@@ -128,6 +128,10 @@ class SignRequest(models.Model):
         for rec in self:
             rec.start_sign = bool(rec.nb_closed)
             rec.progress = "{} / {}".format(rec.nb_closed, rec.nb_total)
+
+    @api.depends('request_item_ids.state')
+    def _compute_completion_date(self):
+        for rec in self:
             rec.completion_date = rec.request_item_ids.sorted(key="signing_date", reverse=True)[:1].signing_date if not rec.nb_wait else None
 
     @api.depends('request_item_ids.state', 'request_item_ids.partner_id.name')
