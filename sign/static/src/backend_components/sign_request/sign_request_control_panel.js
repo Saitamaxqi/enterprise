@@ -4,7 +4,7 @@ import { Component, useEffect, useComponent, markup } from "@odoo/owl";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
-import { SignRequestDropdown } from "@sign/backend_components/sign_request/sign_request_documents_dropdown";
+import { SignRequestDocumentsDropdown } from "@sign/backend_components/sign_request/sign_request_documents_dropdown";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import multiFileUpload from "@sign/backend_components/multi_file_upload";
@@ -56,7 +56,7 @@ export class SignRequestControlPanel extends Component {
         ControlPanel,
         Dropdown,
         DropdownItem,
-        SignRequestDropdown,
+        SignRequestDocumentsDropdown,
     };
     static props = {
         signerStatus: {

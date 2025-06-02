@@ -27,7 +27,7 @@
                             >
                                 <t t-esc="document.display_name"/>
                             </div>
-                            <i t-if="document.id === this.props.selectedDocumentId" class="fa fa-pencil"/>
+                            <i t-if="document.id === this.props.selectedDocumentId" class="fa fa-pencil mx-1"/>
                             <Dropdown t-if="!this.props.hasSignRequests">
                                 <button t-attf-class="btn o_sign_sidebar_icon">
                                     <i class="oi oi-ellipsis-v"/>

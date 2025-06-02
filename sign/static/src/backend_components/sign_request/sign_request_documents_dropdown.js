@@ -7,9 +7,13 @@ import { onWillStart } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
-export class SignRequestDropdown extends Component {
-    static template = "sign.SignRequestDropdown";
-    static props = { ...standardFieldProps };
+export class SignRequestDocumentsDropdown extends Component {
+    static template = "sign.SignRequestDocumentsDropdown";
+    static props = {
+        ...standardFieldProps,
+        name: { type: String, optional: true },
+        record: { type: Object, optional: true },
+    };
 
     setup() {
         super.setup();
@@ -67,4 +71,4 @@ export class SignRequestDropdown extends Component {
     }
 }
 
-registry.category("fields").add("sign_request_documents_dropdown", {component: SignRequestDropdown});
+registry.category("fields").add("sign_request_documents_dropdown", {component: SignRequestDocumentsDropdown});

@@ -6,7 +6,7 @@
                 <div class="d-flex gap-1">
                     <button t-if="signInfo.get('needToSign')" type="button" class="btn btn-primary me-2 o_sign_sign_directly" t-on-click="signDocument">Sign Now</button>
                     <button t-if="nextTemplate &amp;&amp; nextTemplate.template" type="button" class="btn btn-primary me-2" t-on-click="goToNextDocument">Next Document</button>
-                    <SignRequestDropdown t-if="signInfo.get('signRequestState') == 'signed' || signInfo.get('needToSign')"/>
+                    <SignRequestDocumentsDropdown t-if="signInfo.get('signRequestState') == 'signed' || signInfo.get('needToSign')"/>
                 </div>
             </t>
             <t t-if="allowCancel" t-set-slot="control-panel-additional-actions">
@@ -16,7 +16,7 @@
                     </button>
                     <t t-set-slot="content">
                         <DropdownItem class="'o_menu_item'" onSelected.bind="cancelDocument">
-                            Cancel
+                            Cancel request
                         </DropdownItem>
                     </t>
                 </Dropdown>
