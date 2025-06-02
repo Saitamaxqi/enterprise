@@ -48,7 +48,8 @@ class ReportL10n_Co_ReportsReport_Certification(models.AbstractModel):
         if not docs:
             raise UserError(_('You have to expand at least one partner.'))
 
-        current_date = fields.Datetime.to_datetime(data['wizard_values'].get("declaration_date")) or datetime.now()
+        date_from = options.get('date', {}).get('date_from') or data['wizard_values'].get("declaration_date")
+        current_date = fields.Datetime.to_datetime(date_from) or datetime.now()
         return {
             'docs': docs,
             'options': data['wizard_values'],
