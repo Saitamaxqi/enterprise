@@ -9,7 +9,7 @@ class HrPayslipInputType(models.Model):
     _name = 'hr.payslip.input.type'
     _description = 'Payslip Input Type'
 
-    name = fields.Char(string='Description', required=True)
+    name = fields.Char(string='Description', required=True, translate=True)
     code = fields.Char(required=True, help="The code that can be used in the salary rules")
     struct_ids = fields.Many2many('hr.payroll.structure', string='Availability in Structure', help='This input will be only available in those structure. If empty, it will be available in all payslip.')
     country_id = fields.Many2one(
