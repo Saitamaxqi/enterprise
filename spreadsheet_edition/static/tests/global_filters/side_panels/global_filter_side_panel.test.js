@@ -12,9 +12,7 @@ import { THIS_YEAR_GLOBAL_FILTER } from "@spreadsheet/../tests/helpers/global_fi
 import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
 import { contains, serverState, mountWithCleanup } from "@web/../tests/web_test_helpers";
 
-import { monthsOptions } from "@spreadsheet/assets_backend/constants";
 import { user } from "@web/core/user";
-import { QUARTER_OPTIONS } from "@web/search/utils/dates";
 import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
 import { createModelWithDataSource } from "@spreadsheet/../tests/helpers/model";
@@ -25,8 +23,8 @@ const { useStoreProvider, ModelStore } = stores;
 defineSpreadsheetModels();
 describe.current.tags("desktop");
 
-const monthsOptionsIds = monthsOptions.map((option) => option.id);
-const quarterOptionsIds = Object.values(QUARTER_OPTIONS).map((option) => option.id);
+const monthsOptionsIds = Array.from({ length: 12 }, (_, i) => `month_${i + 1}`);
+const quarterOptionsIds = Array.from({ length: 4 }, (_, i) => `quarter_${i + 1}`);
 
 /**
  * @typedef {import("@spreadsheet").FixedPeriodDateGlobalFilter} FixedPeriodDateGlobalFilter
@@ -282,8 +280,10 @@ test("Choose any year in a year picker by clicking the picker", async function (
 
     expect(year).toHaveValue("2024");
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
-        period: undefined,
-        yearOffset: 2,
+        type: "year",
+        period: {
+            year: 2024,
+        },
     });
 });
 
@@ -309,15 +309,19 @@ test("Choose any year in a year picker via input", async function () {
     await selectYear(String(this_year - 127));
     expect(year).toHaveValue(String(this_year - 127));
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
-        period: undefined,
-        yearOffset: -127,
+        type: "year",
+        period: {
+            year: this_year - 127,
+        },
     });
 
     await selectYear(String(this_year + 32));
     expect(year).toHaveValue(String(this_year + 32));
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
-        period: undefined,
-        yearOffset: 32,
+        type: "year",
+        period: {
+            year: this_year + 32,
+        },
     });
 });
 
@@ -371,19 +375,22 @@ test("Readonly user can update date filter values", async function () {
     const quarter = pivots[0].querySelector(".pivot_filter_input div.date_filter_values select");
     expect(".pivot_filter_input input.o_datetime_input").toHaveCount(1);
     const year = pivots[0].querySelector(".pivot_filter_input input.o_datetime_input");
-    expect(quarter).toHaveValue("fourth_quarter");
+    expect(quarter).toHaveValue("quarter_4");
     expect(year).toHaveValue("2022");
-    await contains(quarter).select("second_quarter");
+    await contains(quarter).select("quarter_2");
     await animationFrame();
     await selectYear("2021");
     await animationFrame();
 
-    expect(quarter).toHaveValue("second_quarter");
+    expect(quarter).toHaveValue("quarter_2");
     expect(year).toHaveValue("2021");
 
     expect(model.getters.getGlobalFilterValue("43")).toEqual({
-        period: "second_quarter",
-        yearOffset: -1,
+        type: "quarter",
+        period: {
+            year: 2021,
+            quarter: 2,
+        },
     });
 });
 
@@ -425,7 +432,6 @@ test("Can clear a text filter values", async function () {
             id: "42",
             type: "text",
             label: "Text Filter",
-            defaultValue: [],
         },
         {
             pivot: { [pivotId]: { chain: "name", type: "char" } },
@@ -477,9 +483,9 @@ test("Can clear a date filter values", async function () {
     // no default value
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(0);
 
-    await contains(quarter).select("second_quarter");
+    await contains(quarter).select("quarter_2");
     await selectYear("2021");
-    expect(quarter).toHaveValue("second_quarter");
+    expect(quarter).toHaveValue("quarter_2");
     expect(year).toHaveValue("2021");
     expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([
         "&",
@@ -505,7 +511,6 @@ test("Can clear a relation filter values", async function () {
             type: "relation",
             label: "Relation Filter",
             modelName: "product",
-            defaultValue: [],
         },
         {
             pivot: { [pivotId]: { chain: "product_id", type: "many2one" } },

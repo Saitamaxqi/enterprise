@@ -1388,7 +1388,7 @@
       "label": "Year",
       "type": "date",
       "rangeType": "fixedPeriod",
-      "defaultValue": { "yearOffset": 0 }
+      "default_value": "this_year"
     }
   ],
   "lists": {},

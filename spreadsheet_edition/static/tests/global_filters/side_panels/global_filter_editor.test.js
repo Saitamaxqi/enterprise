@@ -1108,8 +1108,11 @@ test("Changing the range of a date global filter reset the current value", async
     await saveGlobalFilter();
 
     expect(model.getters.getGlobalFilterValue("42")).toEqual({
-        period: "third_quarter",
-        yearOffset: 0,
+        type: "quarter",
+        period: {
+            year: 2022,
+            quarter: 3,
+        },
     });
 });
 
@@ -1136,8 +1139,11 @@ test("Date filter automatic filter value checkbox is working", async function ()
     await saveGlobalFilter();
     expect(model.getters.getGlobalFilter("42").defaultValue).toBe("this_month");
     expect(model.getters.getGlobalFilterValue("42")).toEqual({
-        yearOffset: 0,
-        period: "july",
+        type: "month",
+        period: {
+            year: 2022,
+            month: 7,
+        },
     });
 });
 
