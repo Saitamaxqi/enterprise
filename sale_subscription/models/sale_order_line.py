@@ -476,6 +476,10 @@ class SaleOrderLine(models.Model):
             if(
                 self.product_id.invoice_policy == 'order'
                 and self.order_id.subscription_state != '5_renewed'
+                and not float_is_zero(
+                    self.product_uom_qty,
+                    precision_rounding=self.product_id.uom_id.rounding,
+                )
             ):
                 # Invoice due lines
                 line_to_invoice = True

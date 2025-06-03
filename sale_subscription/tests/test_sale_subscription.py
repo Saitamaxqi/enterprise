@@ -2354,6 +2354,26 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.env["sale.order"].sudo()._cron_subscription_expiration()
             self.assertEqual(self.subscription.end_date, datetime.date(2025, 6, 4), "after expiration cron run, end_date should remain unchanged if already set and in the past")
 
+    def test_null_ordered_quantity(self):
+        """ Null recurring line should not appear in the invoice """
+        with freeze_time("2025-06-03"):
+            self.assertEqual(self.product3.invoice_policy, 'order', "We need invoice policy order for this test")
+            self.subscription.order_line = [Command.create({
+                    'name': self.product3.name,
+                    'product_id': self.product3.id,
+                    'product_uom_qty': 0,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'price_unit': 10,
+
+            })]
+            self.subscription.action_confirm()
+            inv = self.subscription._cron_recurring_create_invoice()
+            self.assertEqual(len(inv.invoice_line_ids), 2)
+            product_ids = inv.invoice_line_ids.product_id
+            self.assertEqual(len(product_ids), 2)
+            self.assertTrue(self.product.id in product_ids.ids)
+            self.assertTrue(self.product2.id in product_ids.ids)
+
 
     def test_churn_discount_removal(self):
         """ Test the following flow:
