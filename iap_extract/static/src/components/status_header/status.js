@@ -36,7 +36,16 @@ export class StatusHeader extends Component {
         });
 
         onWillStart(() => {
-            this.subscribeToChannel(this.props.record.data.extract_document_uuid);
+            // When a new document is uploaded (via the Upload button, or by attaching a file),
+            // the server will send a `extract_mixin_new_document` message on the bus with the
+            // `extract_document_uuid` created upon submitting the document to the OCR server.
+            // We can then subscribe for state changes event of this document uuid
+            // (typically when OCR has finished processing it)
+            this.busService.subscribe("extract_mixin_new_document", (params) => {
+                this.state.status = params.status;
+                this.state.errorMessage = params.error_message;
+                this.subscribeToChannel(params.extract_document_uuid);
+            });
             this.busService.subscribe("state_change", ({status, error_message})=> {
                 this.state.status = status;
                 this.state.errorMessage = error_message;
@@ -46,6 +55,7 @@ export class StatusHeader extends Component {
 
         onWillDestroy(() => {
             this.busService.deleteChannel(this.channelName);
+            this.state.status = 'no_extract_requested';
             clearTimeout(this.timeoutId);
         });
 

@@ -265,6 +265,11 @@ class ExtractMixin(models.AbstractModel):
                     self.env['iap.account']._send_success_notification(
                         message=self._get_iap_bus_notification_success(),
                     )
+                    self.env.user._bus_send("extract_mixin_new_document", {
+                        'status': self.extract_state,
+                        'error_message': self.extract_error_message,
+                        'extract_document_uuid': self.extract_document_uuid,
+                    })
                     self._upload_to_extract_success_callback()
                 elif result['status'] == 'error_no_credit':
                     self._send_no_credit_notification()
