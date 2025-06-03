@@ -780,7 +780,7 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         _liquidity_line, _suspense_lines, other_lines = self._seek_for_lines()
 
-        transaction_amount, transaction_currency, journal_amount, journal_currency, company_amount, _company_currency = self._get_accounting_amounts_and_currencies()
+        transaction_amount, transaction_currency, journal_amount, journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
         journal_transaction_rate = abs(transaction_amount / journal_amount) if journal_amount else 0.0
         company_transaction_rate = abs(transaction_amount / company_amount) if company_amount else 0.0
 
@@ -791,45 +791,62 @@ class AccountBankStatementLine(models.Model):
         move_lines = self.env['account.move.line'].browse(move_lines_ids)
 
         for line in other_lines + move_lines:
+            # move_lines are the lines coming from the reconcile button and other_lines are the lines from the bank
+            # statement move (so they are reconciled). We need to invert the sign of move_lines since a positive
+            # move_line need to be put as negative in the bank statement move.
+            # For the other lines, we can use the balance and amount currency since they are the line on the bank move
+            if line in move_lines:
+                sign = -1
+                amount = line.amount_residual
+                amount_currency = line.amount_residual_currency
+            else:
+                sign = 1
+                amount = line.balance
+                amount_currency = line.amount_currency
+
             # Early payment Discount
             if line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date):
-                total_early_payment_discount += line.amount_residual_currency - line.discount_amount_currency
+                total_early_payment_discount += line.amount_currency - line.discount_amount_currency
                 early_pay_aml_values_list.append({
                     'aml': line,
-                    'amount_currency': -line.amount_residual_currency,
-                    'balance': -line.amount_residual,
+                    'amount_currency': -line.amount_currency,
+                    'balance': -amount,
                 })
 
-            # move_lines are the lines coming from the reconcile button and other_lines are the lines from the bank
-            # statement move. We need to invert the sign of move_lines since a positive move_line need to be put as
-            # negative in the bank statement move.
-            sign = -1 if line in move_lines else 1
-
-            exchange_diff_balance = self._lines_get_account_balance_exchange_diff(line)
-            line_balance = line.amount_residual + exchange_diff_balance
+            exchange_diff_balance = self._lines_get_account_balance_exchange_diff(line.currency_id, amount, amount_currency)
+            line_balance = amount + exchange_diff_balance
             open_balance += (line_balance * sign)
 
             if line.currency_id == transaction_currency:
-                open_amount_currency += line.amount_residual_currency * sign
+                open_amount_currency += amount_currency * sign
             elif line.currency_id == journal_currency:
-                open_amount_currency += transaction_currency.round(line.amount_residual_currency * journal_transaction_rate) * sign
+                open_amount_currency += transaction_currency.round(amount_currency * journal_transaction_rate) * sign
             else:
                 open_amount_currency += transaction_currency.round(line_balance * company_transaction_rate) * sign
 
         new_lines = []
         is_early_payment_discount = False
         has_exchange_diff = False
-        for move_line in move_lines:
-            exchange_diff_balance = self._lines_get_account_balance_exchange_diff(move_line)
+        residual_amount = company_amount + sum(line.balance for line in other_lines)
+        for index, move_line in enumerate(move_lines):
+            exchange_diff_balance = self._lines_get_account_balance_exchange_diff(move_line.currency_id, move_line.amount_residual, move_line.amount_residual_currency)
             has_exchange_diff = not move_line.currency_id.is_zero(exchange_diff_balance)
             current_balance = -(move_line.amount_residual + exchange_diff_balance)
+            residual_amount += current_balance
 
             new_line_balance = current_balance
             new_amount_currency = -move_line.amount_residual_currency
 
-            if partial_amounts := self._get_partial_amounts(current_balance, move_line, open_amount_currency, open_balance):
-                new_line_balance = partial_amounts['partial_balance']
-                new_amount_currency = partial_amounts['partial_amount_currency']
+            # Partial amount will be calculated only on the last invoice of the one selected by the user.
+            if index == len(move_lines) - 1:
+                partial_amounts = (
+                    self._get_partial_amounts(current_balance, move_line, open_amount_currency, open_balance)
+                    if (company_currency.compare_amounts(residual_amount, 0) < 0 if company_currency.compare_amounts(company_amount, 0) > 0 else company_currency.compare_amounts(residual_amount, 0) > 0)
+                    else None
+                )
+                if partial_amounts and not company_currency.is_zero(partial_amounts['partial_balance']):
+                    new_line_balance = partial_amounts['partial_balance']
+                    new_amount_currency = partial_amounts['partial_amount_currency']
 
             if is_early_payment_discount := move_line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date):
                 new_line_balance = -move_line.amount_residual
@@ -896,29 +913,29 @@ class AccountBankStatementLine(models.Model):
             }
         return None
 
-    def _lines_get_account_balance_exchange_diff(self, move_line):
+    def _lines_get_account_balance_exchange_diff(self, currency_id, amount, amount_currency):
         # Compute the balance of the line using the rate/currency coming from the bank transaction.
         amounts_in_st_curr = self._prepare_counterpart_amounts_using_st_line_rate(
-            move_line.currency_id,
-            move_line.amount_residual,
-            move_line.amount_residual_currency,
+            currency_id,
+            amount,
+            amount_currency,
         )
         transaction_currency_id = self.foreign_currency_id or self.currency_id
         origin_balance = amounts_in_st_curr['balance']
-        if move_line.currency_id == self.company_currency_id and transaction_currency_id != self.company_currency_id:
+        if currency_id == self.company_currency_id and transaction_currency_id != self.company_currency_id:
             # The reconciliation will be expressed using the rate of the statement line.
-            origin_balance = move_line.amount_residual
-        elif move_line.currency_id != self.company_currency_id and transaction_currency_id == self.company_currency_id:
+            origin_balance = amount
+        elif currency_id != self.company_currency_id and transaction_currency_id == self.company_currency_id:
             # The reconciliation will be expressed using the foreign currency of the aml to cover the Mexican case.
-            origin_balance = move_line.currency_id._convert(move_line.amount_residual_currency, transaction_currency_id, self.company_id, self.date)
+            origin_balance = currency_id._convert(amount_currency, transaction_currency_id, self.company_id, self.date)
 
         # Compute the exchange difference balance.
         # Useful for example when the currency has a rounding of 1 and that we have a exchange diff of 0.01, we don't want
         # the exchange diff to be created.
-        if move_line.currency_id.is_zero(origin_balance - move_line.amount_residual):
+        if currency_id.is_zero(origin_balance - amount):
             return 0.0
 
-        return self.company_currency_id.round(origin_balance - move_line.amount_residual)
+        return self.company_currency_id.round(origin_balance - amount)
 
     @api.model
     def _qualifies_for_early_payment(self, transaction_currency, open_amount_currency, total_early_payment_discount):

@@ -1175,6 +1175,84 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         self.assertEqual(inv1.amount_residual_currency, 0)
         self.assertEqual(inv1.move_id.payment_state, 'paid')
 
+    def test_adding_multiple_invoice_at_once(self):
+        """ In this test we will create a statement line positive and try to add multiple invoice at once. """
+        statement_line = self._create_st_line(amount=160, update_create_date=False)
+        move_line_1 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 25.0}])
+        move_line_2 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 50.0}])
+        move_line_3 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}])
+
+        statement_line.set_line_bank_statement_line((move_line_1 + move_line_2 + move_line_3).ids)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 160.0, 'currency_id': self.company_data['currency'].id, 'balance': 160.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': -25.0, 'currency_id': self.company_data['currency'].id, 'balance': -25.0, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': -50.0, 'currency_id': self.company_data['currency'].id, 'balance': -50.0, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': -85.0, 'currency_id': self.company_data['currency'].id, 'balance': -85.0, 'reconciled': True},
+        ])
+
+    def test_adding_multiple_bill_at_once(self):
+        """ In this test we will create a statement line negative and try to add multiple bill at once."""
+        statement_line = self._create_st_line(amount=-160, update_create_date=False)
+        move_line_1 = self._create_invoice_line('in_invoice', invoice_line_ids=[{'price_unit': 25.0}])
+        move_line_2 = self._create_invoice_line('in_invoice', invoice_line_ids=[{'price_unit': 50.0}])
+        move_line_3 = self._create_invoice_line('in_invoice', invoice_line_ids=[{'price_unit': 100.0}])
+
+        statement_line.set_line_bank_statement_line((move_line_1 + move_line_2 + move_line_3).ids)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -160.0, 'currency_id': self.company_data['currency'].id, 'balance': -160.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 25.0, 'currency_id': self.company_data['currency'].id, 'balance': 25.0, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': 50.0, 'currency_id': self.company_data['currency'].id, 'balance': 50.0, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': 85.0, 'currency_id': self.company_data['currency'].id, 'balance': 85.0, 'reconciled': True},
+        ])
+
+    def test_adding_multiple_moves_and_then_more(self):
+        """
+            In this test we will create a statement line negative and try to add multiple bill and invoice at once.
+            We will have a suspense line, now we add a line that as a bigger amount to see if the partial works correctly.
+        """
+        statement_line = self._create_st_line(amount=160, update_create_date=False)
+        move_line_1 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 25.0}])
+        move_line_2 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 50.0}])
+        move_line_3 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}])
+        move_line_4 = self._create_invoice_line('in_invoice', invoice_line_ids=[{'price_unit': 25.0}])
+
+        statement_line.set_line_bank_statement_line((move_line_1 + move_line_2 + move_line_3 + move_line_4).ids)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 160.0, 'currency_id': self.company_data['currency'].id, 'balance': 160.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': -25.0, 'currency_id': self.company_data['currency'].id, 'balance': -25.0, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': -50.0, 'currency_id': self.company_data['currency'].id, 'balance': -50.0, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': move_line_4.account_id.id, 'amount_currency': 25.0, 'currency_id': self.company_data['currency'].id, 'balance': 25.0, 'reconciled': True},
+            {'account_id': statement_line.journal_id.suspense_account_id.id, 'amount_currency': -10.0, 'currency_id': self.company_data['currency'].id, 'balance': -10.0, 'reconciled': False},
+        ])
+
+        move_line_5 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 20.0}])
+        statement_line.set_line_bank_statement_line(move_line_5.id)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 160.0, 'currency_id': self.company_data['currency'].id, 'balance': 160.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': -25.0, 'currency_id': self.company_data['currency'].id, 'balance': -25.0, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': -50.0, 'currency_id': self.company_data['currency'].id, 'balance': -50.0, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': move_line_4.account_id.id, 'amount_currency': 25.0, 'currency_id': self.company_data['currency'].id, 'balance': 25.0, 'reconciled': True},
+            {'account_id': move_line_5.account_id.id, 'amount_currency': -10.0, 'currency_id': self.company_data['currency'].id, 'balance': -10.0, 'reconciled': True},
+        ])
+
+    def test_adding_multiple_moves_and_then_more_multi_currencies(self):
+        statement_line = self._create_st_line(amount=160, update_create_date=False)
+        move_line_1 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 25.0}])
+        move_line_2 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}], currency_id=self.other_currency.id)
+        move_line_3 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}])
+        move_line_4 = self._create_invoice_line('in_invoice', invoice_line_ids=[{'price_unit': 50.0}], currency_id=self.other_currency.id)
+        statement_line.set_line_bank_statement_line((move_line_1 + move_line_2 + move_line_3 + move_line_4).ids)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 160.0, 'currency_id': self.company_data['currency'].id, 'balance': 160.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': -25.0, 'currency_id': self.company_data['currency'].id, 'balance': -25.0, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': -100.0, 'currency_id': self.other_currency.id, 'balance': -50.0, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': move_line_4.account_id.id, 'amount_currency': 50.0, 'currency_id': self.other_currency.id, 'balance': 25.0, 'reconciled': True},
+            {'account_id': statement_line.journal_id.suspense_account_id.id, 'amount_currency': -10.0, 'currency_id': self.company_data['currency'].id, 'balance': -10.0, 'reconciled': False},
+        ])
+
     def test_partial_auto_tolerance(self):
         inv1 = self._create_invoice_line(
             'out_invoice',
