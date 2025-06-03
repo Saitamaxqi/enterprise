@@ -115,35 +115,18 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
 
     def action_generate_export(self):
         self.ensure_one()
-        ctx = self.env.context
-        ctx_options = ctx.get("l10n_it_xml_export_monthly_tax_report_options", {})
-        report_id = ctx_options.get("report_id")
-        if report_id:
-            options = self.env["account.report"].browse(report_id).get_options({})
-        else:
-            account_return = self.env["account.return"]
-            match model := ctx.get("active_model"):
-                case "account.return":
-                    account_return = self.env[model].browse(ctx["active_id"])
-                case "account.return.check":
-                    account_return = self.env[model].browse(ctx["active_id"]).return_id
-                case "account.move":
-                    account_return = self.env[model].browse(ctx["active_id"]).closing_return_id
-                case "account.journal":
-                    # if the move is posting from journal dashboard
-                    account_return = self.env["account.move"].browse(ctx["l10n_it_moves_to_post"]).closing_return_id
-            options = account_return._get_closing_report_options() if account_return else {}
-
-        options.update(ctx_options)
+        account_return = self.env['account.return'].browse(self._context["active_id"])
+        options = account_return._get_closing_report_options() if account_return else {}
         options.update(self._get_wizard_field_dict())
 
-        if ctx.get("l10n_it_moves_to_post"):
-            self.env["account.move"].browse(ctx["l10n_it_moves_to_post"]).action_post()
+        # Adding the xml export context to attachment the file after generation.
+        file_dict = self.env['l10n_it.monthly.tax.report.handler'].export_tax_report_to_xml(options)
+        account_return._add_attachment(file_dict)
 
         return {
             'type': 'ir_actions_account_report_download',
             'data': {
-                'model': ctx.get('model'),
+                'model': 'account.return',
                 'options': json.dumps(options),
                 'file_generator': 'export_tax_report_to_xml',
             }

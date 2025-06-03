@@ -10,17 +10,6 @@ class ItalianReportCustomHandler(models.AbstractModel):
     _inherit = 'account.tax.report.handler'
     _description = 'Italian Monthly Tax Report Custom Handler'
 
-    def _custom_options_initializer(self, report, options, previous_options=None):
-        super()._custom_options_initializer(report, options, previous_options=previous_options)
-
-        options.setdefault("buttons", []).append({
-            "name": _("XML"),
-            "sequence": 30,
-            "action": "print_tax_report_to_xml",
-            "file_export_type": _("XML"),
-            "branch_allowed": True,
-        })
-
     def print_tax_report_to_xml(self, options):
         view_id = self.env.ref('l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view').id
         return {

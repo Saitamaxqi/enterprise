@@ -1,29 +1,82 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, models
+from odoo import _, api, fields, models
 from odoo.fields import Domain
 from odoo.tools import date_utils
 from odoo.exceptions import UserError
 
 
-class AccountMove(models.Model):
-    _inherit = 'account.move'
+class AccountReturn(models.Model):
+    _inherit = 'account.return'
+    is_quarter_month = fields.Boolean(compute='_compute_is_quarter_month')
+    country_code = fields.Char(compute='_compute_country_code')
 
-    def action_post(self):
+    @api.depends('company_id.country_id')
+    def _compute_country_code(self):
+        for record in self:
+            record.country_code = record.company_id.country_id.code or False
+
+    @api.depends('date_from')
+    def _compute_is_quarter_month(self):
+        for record in self:
+            if record.date_from:
+                month = record.date_from.month
+                record.is_quarter_month = month in [3, 6, 9, 12]
+            else:
+                record.is_quarter_month = False
+
+    def _compute_record_states_for_it(self, record):
+        current_state = record.state
+        visible_states = []
+        active = True
+        state_field = record._get_state_field()
+
+        for state, label in record._fields[state_field].selection:
+            if (
+                    state == 'submitted'
+                    and record.country_code == 'IT'
+                    and not record.is_quarter_month
+            ):
+                label = 'Close'
+
+            if state == current_state:
+                active = False
+
+            if state != 'new':
+                visible_states.append({
+                    'active': active or state == current_state or record.is_completed,
+                    'name': state,
+                    'label': label,
+                })
+
+        record.visible_states = visible_states
+
+    @api.depends('type_id', 'state', 'country_code', 'is_quarter_month')
+    def _compute_visible_states(self):
+        super()._compute_visible_states()
+
+        for record in self:
+            self._compute_record_states_for_it(record)
+
+    def action_submit(self):
         """This action will be called by the POST button on a tax report account move.
            As posting this move will generate the XML report, it won't call `action_post`
            immediately, but will open the wizard that configures this XML file.
            Validating the wizard will resume the `action_post` and take these options in
            consideration when generating the XML report.
         """
-        closing_moves = self.filtered(lambda move: move.closing_return_id)
+        self.ensure_one()
+        if self.country_code != "IT":
+            return super().action_submit()
+
+        super().action_submit()
         # The following process is only required if we are posting an Italian tax closing move.
         if (
-            closing_moves
-            and "IT" in self.mapped('tax_country_code')
+            self.closing_move_ids
             and "l10n_it_xml_export_monthly_tax_report_options" not in self.env.context
+            and self.is_quarter_month
         ):
-            closing_max_date = max(closing_moves.mapped('date'))
+            closing_max_date = max(self.closing_move_ids.mapped('date'))
             last_posted_tax_closing = self.env['account.move'].search(Domain([
                 *self.env['account.move']._check_company_domain(self.company_id),
                 ('closing_return_id', '!=', False),
@@ -87,8 +140,6 @@ class AccountMove(models.Model):
                 },
             })
 
-            super().action_post()
-
             return {
                 'name': _('Post a tax report entry'),
                 'view_mode': 'form',
@@ -98,5 +149,3 @@ class AccountMove(models.Model):
                 'target': 'new',
                 'context': ctx,
             }
-
-        return super().action_post()
