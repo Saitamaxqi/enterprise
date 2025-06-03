@@ -70,7 +70,10 @@ class AppointmentAccountPayment(AppointmentController):
             instead of creating an calendar.event. This prevents synchronizing calendars with non-confirmed events. It will
             be transformed to a calendar.event on payment (or confirmation). See _make_event_from_paid_booking on calendar.booking.
             Redirects to payment if needed. See _redirect_to_payment"""
-        if appointment_type.has_payment_step and appointment_type.product_id.lst_price:
+        if appointment_type.has_payment_step and (
+            appointment_type.product_id.service_tracking in ['task_in_project', 'project_only', 'task_global_project']
+            or appointment_type.product_id.lst_price
+        ):
             calendar_booking = request.env['calendar.booking'].sudo().create([{
                 'allday': bool(allday),
                 'appointment_answer_input_ids': [Command.create(vals) for vals in answer_input_values],

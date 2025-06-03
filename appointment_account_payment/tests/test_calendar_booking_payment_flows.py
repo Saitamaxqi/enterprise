@@ -4,6 +4,7 @@
 from odoo.tests import tagged
 from odoo.tools import mute_logger
 
+from odoo import http
 from odoo.addons.account_payment.tests.common import AccountPaymentCommon
 from odoo.addons.appointment_account_payment.tests.common import AppointmentAccountPaymentCommon
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
@@ -81,3 +82,34 @@ class AppointmentAccountPaymentFlowsTest(AppointmentAccountPaymentFlowsCommon):
         response = self._make_http_get_request(landing_page_url)
         self.assertEqual(response.status_code, 200)
         self.assertIn('/calendar/view', response.url)
+
+    def test_appointment_service_product_type_appointment(self):
+        """Test calendar booking creation for a service product with list price 0."""
+        if self.env['ir.module.module'].search([('name', '=', 'sale_project')]).state == 'uninstalled':
+            self.skipTest("This test won't work if sale_project is not installed")
+        service_product = self.env.ref('appointment_account_payment.default_booking_product')
+        service_product.service_tracking = 'task_global_project'
+        service_product.list_price = 0
+        service_appt_type = self.env['appointment.type'].create({
+            'appointment_tz': 'Europe/Brussels',
+            'name': 'Test Appt Type',
+            'product_id': service_product.id,
+            'has_payment_step': True,
+            'staff_user_ids': [(4, self.staff_user_bxls.id)],
+            'question_ids': False,
+        })
+        self.authenticate(self.env.user.login, self.env.user.login)
+        self.url_open(f"/appointment/{service_appt_type.id}/submit", {
+            'csrf_token': http.Request.csrf_token(self),
+            'datetime_str': '2022-02-14 11:00:00',
+            'duration_str': '1.0',
+            'email': 'test1@test.example.com',
+            'name': 'Test',
+            'staff_user_id': self.staff_user_bxls.id,
+        })
+        self.assertTrue(
+            self.env['calendar.booking'].search([
+                ('appointment_type_id', '=', service_appt_type.id),
+            ]),
+            "Calendar booking should have been created.",
+        )
