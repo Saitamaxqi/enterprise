@@ -14,7 +14,21 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
 
     @classmethod
     def setUpClass(cls):
-        super(TestWorkOrderProcessCommon, cls).setUpClass()
+        super().setUpClass()
+        cls.graphics_card = cls.env['product.product'].create({
+            'name': 'Individual Workplace',
+            'uom_id': cls.uom_unit.id,
+            'type': 'consu',
+            'is_storable': True,
+            'tracking': 'none',
+        })
+        cls.laptop = cls.env['product.product'].create({
+            'name': 'Acoustic Bloc Screens',
+            'uom_id': cls.uom_unit.id,
+            'type': 'consu',
+            'is_storable': True,
+            'tracking': 'none',
+        })
         cls.env.company.resource_calendar_id.tz = "Europe/Brussels"
         # setting up alternative workcenters
         cls.wc_alt_1 = cls.env['mrp.workcenter'].create({
