@@ -227,7 +227,7 @@ class AccountBankStatementLine(models.Model):
                                   )
                               )
                           )
-                      AND reco_model.id IN %s
+                      AND reco_model.id = ANY(%s)
                       AND reco_model.company_id = st_line.company_id
                  ORDER BY reco_model.sequence ASC, reco_model.id ASC
                     LIMIT 1
@@ -235,7 +235,7 @@ class AccountBankStatementLine(models.Model):
            WHERE st_line.id IN %s
              AND st_line.partner_id IS NULL
              AND reco_model.mapped_partner_id IS NOT NULL
-            """, tuple(reco_models.ids), tuple(self.ids)))
+            """, reco_models.ids, tuple(self.ids)))
 
         for st_line_id, mapped_partner_id in self._cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
