@@ -78,7 +78,6 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             'attachment_id': self.attachment.id,
             'template_id': blank_template.id,
         })
-
         self.start_tour("/odoo", "sign_template_creation_tour", login="admin")
         self.assertEqual(document.name, 'new-document-name', 'The tour should have changed the document name')
         self.assertEqual(len(blank_template.sign_item_ids), 5)

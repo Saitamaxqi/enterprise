@@ -52,11 +52,11 @@ export class SignTemplateSidebar extends Component {
             setTimeout(() => {
                 const roleId = this.props.signers.at(-1).roleId;
                 const span = document.querySelector(`span[data-role-id="${roleId}"]`);
-                span.click();
+                span?.click();
                 setTimeout(() => {
                     const input = document.querySelector(`input[data-role-id="${roleId}"]`);
-                    input.focus();
-                    input.select();
+                    input?.focus();
+                    input?.select();
                 }, 100);
             }, 100);
         }

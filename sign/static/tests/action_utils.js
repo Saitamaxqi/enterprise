@@ -25,6 +25,22 @@ export const defaultMockRPC = () =>
         context: {},
     });
 
+export const defaultGetOriginalDocuments = () =>
+    Promise.resolve({
+        original_documents: [{
+            id: 1,
+            name: "test.pdf"
+        }]
+    });
+
+export const defaultGetCompletedDocuments = () =>
+    Promise.resolve({
+        completed_documents: [{
+            id: 1,
+            name: "test.pdf"
+        }]
+    });
+
 export async function createDocumentWebClient(config) {
     config = {
         actionContext: config.actionContext || {},
@@ -58,6 +74,8 @@ export async function createDocumentWebClient(config) {
     });
 
     onRpc("/sign/get_document/5/abc", defaultMockRPC);
+    onRpc("/sign/get_original_documents/5/abc", defaultGetOriginalDocuments);
+    onRpc("/sign/get_completed_documents/5/abc", defaultGetCompletedDocuments);
     defineActions([actions]);
     await mountWebClient();
 }

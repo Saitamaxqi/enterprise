@@ -71,15 +71,20 @@ export class Document extends Component {
 
         useEffect(
             () => {
-                if (!this.state.documentsWithUnsignedItems || !this.state.viewedDocuments) {
+                if (
+                    !this.state.documentsWithUnsignedItems ||
+                    !this.state.viewedDocuments ||
+                    !this.documents ||
+                    this.documents.length === 0
+                ) {
                     return;
                 }
 
                 const hasUnsignedDocs = this.state.documentsWithUnsignedItems.size > 0;
                 const currentDocUnsigned = this.isDocumentUnsigned();
-                const AllDocsViewed = this.state.viewedDocuments.size === this.documents.length;
+                const allDocsViewed = this.state.viewedDocuments.size === this.documents.length;
 
-                if (!hasUnsignedDocs && AllDocsViewed) {
+                if (!hasUnsignedDocs && allDocsViewed) {
                     // If all documents are signed and viewed, show validation banner
                     this.showBanner(this.validateBanner);
                     return;
@@ -112,7 +117,8 @@ export class Document extends Component {
      * Checks if the current document has unsigned items
      * @returns {boolean}
      */
-    isDocumentUnsigned() {
+    isDocumentUnsigned(){
+        if(!this.documents) return false;
         const documentId = this.documents[this.state.openedDocumentIndex].id;
         return this.state.documentsWithUnsignedItems.has(documentId);
     }
