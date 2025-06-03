@@ -35,4 +35,6 @@ ONSS_COUNTRY_CODE_MAPPING = {
     'VA': '00133', 'VC': '00429', 'VE': '00520', 'VG': '00479', 'VI': '00478', 'VN': '00220', 'VU': '00624',
     'WF': '00689', 'WS': '00614', 'XK': '00153', 'YE': '00270', 'ZA': '00325', 'ZM': '00335', 'ZW': '00344',
     'CW': '00129',  # Curaçao "is" part of Netherland and thus we use its code
+    'GG': '00112',  # Guernesey external affairs are managed by the United Kingdom
+    'YT': '00111',  # Mayotte is a part of France
 }
