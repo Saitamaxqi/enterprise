@@ -1658,6 +1658,7 @@ class DocumentsDocument(models.Model):
                             'attachment_id': new_attachment.id,
                             # Avoid recompute based on attachment_id
                             'name': new_binary_sudo.name,
+                            'is_multipage': new_binary_sudo.is_multipage,
                             'url_preview_image': False,
                             'res_id': False,
                             'res_model': False,
