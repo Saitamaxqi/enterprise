@@ -4,13 +4,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 18.4a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 19:20+0000\n"
-"PO-Revision-Date: 2025-03-05 19:20+0000\n"
-"Last-Translator: Katherine Zaoral <kz@adhoc.com.ar>\n"
+"POT-Creation-Date: 2025-06-03 13:30+0000\n"
+"PO-Revision-Date: 2025-06-03 13:30+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -48,6 +47,17 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
+#: code:addons/l10n_ar_edi/models/account_move.py:0
+msgid "%(item)s: \"%(partner)s\" amount %(amount)s"
+msgstr "%(item)s: \"%(partner)s\" importe %(amount)s"
+
+#. module: l10n_ar_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
+msgid ") \n                        <i class=\"fa fa-info-circle\" title=\"This value depends on the receivable account's currency, To change it to Yes change the account to one that use currency that differs to the company currency\" role=\"img\"/>"
+msgstr ") \n                        <i class=\"fa fa-info-circle\" title=\"Este valor depende de la moneda de la cuenta por cobrar. Para cambiarlo a Sí, cambie la cuenta por una que use una moneda diferente a la de la compañía\" role=\"img\"/>"
+
+#. module: l10n_ar_edi
+#. odoo-python
 #: code:addons/l10n_ar_edi/models/res_config_settings.py:0
 msgid "* %(webservice)s: Connection failed. %(message)s"
 msgstr "* %(webservice)s: Conexión fallida. %(message)s"
@@ -66,15 +76,6 @@ msgid "* %(webservice)s: Connection is available"
 msgstr "* %(webservice)s: Conexión disponible"
 
 #. module: l10n_ar_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
-msgid ""
-") \n"
-"                        <i class=\"fa fa-info-circle\" title=\"This value depends on the receivable account's currency, To change it to Yes change the account to one that use currency that differs to the company currency\" role=\"img\"/>"
-msgstr ""
-") \n"
-"                        <i class=\"fa fa-info-circle\" title=\"Este valor depende de la moneda de la cuenta por cobrar, Para cambiarlo a Sicambie la cuenta a una que use moneda distinta a la moneda de la compañía\" role=\"img\"/>"
-
-#. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_l10n_ar_afip_ws_consult__consult_type
 msgid ""
 "* Specific Invoice Number: consult all the invoice information in AFIP for the given number\n"
@@ -88,6 +89,11 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid "17"
 msgstr "17"
+
+#. module: l10n_ar_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
+msgid "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr "<span class=\"fa fa-lg fa-building-o\" title=\"Los valores configurados aquí son específicos de la compañía.\" groups=\"base.group_multi_company\"/>"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
@@ -266,8 +272,14 @@ msgstr "Depende de la moneda de la cuenta"
 msgid ""
 "Account's Currency Dependant → The reporting will follow the currency of the"
 " Accounts Receivable account used for the transaction"
-msgstr "Depende de la moneda de la cuenta → Se informará dependiende de la "
-" moneda en la cuenta por cobrar usada en la transacción"
+msgstr ""
+"Depende de la moneda de la cuenta → Se informará dependiende de la  moneda "
+"en la cuenta por cobrar usada en la transacción"
+
+#. module: l10n_ar_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
+msgid "Add Withholding Legend to Invoice PDF"
+msgstr "Agregar leyenda de retención a la factura PDF"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
@@ -517,14 +529,12 @@ msgstr "Moneda"
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_currency_code
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_currency_code
-#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_payment__l10n_ar_currency_code
 msgid "Currency Code"
 msgstr "Código de Moneda"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_currency_code
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_currency_code
-#: model:ir.model.fields,help:l10n_ar_edi.field_account_payment__l10n_ar_currency_code
 msgid "Currency Code (ISO 4217)"
 msgstr "Código de Moneda (ISO 4217)"
 
@@ -536,7 +546,6 @@ msgstr "Opción de transmisión predeterminada FCE MiPyME"
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_payment_foreign_currency_default
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_payment_foreign_currency_default
-#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_payment__l10n_ar_payment_foreign_currency_default
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_payment_foreign_currency
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_payment_foreign_currency
 msgid "Default Policy for Payment in Foreign Currency"
@@ -553,13 +562,24 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/res_currency.py:0
-#, python-format
-msgid "Did not find any rate last %(max_tries)s days before the given date (%(given_date)s)"
-msgstr "No encontramos cotizaciones en los últimos %(max_tries)s dias antes de la fecha dada (%(given_date)s)"
+msgid ""
+"Did not find any rate last %(max_tries)s days before the given date "
+"(%(given_date)s)"
+msgstr ""
+"No encontramos cotizaciones en los últimos %(max_tries)s dias antes de la "
+"fecha dada (%(given_date)s)"
 
 #. module: l10n_ar_edi
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_journal__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move_reversal__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_certificate_certificate__display_name
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afip_ws_consult__display_name
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afipws_connection__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_product_template__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_currency__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -575,10 +595,25 @@ msgid "Domestic market -without detail- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 
 #. module: l10n_ar_edi
+#: model:account.journal,name:l10n_ar_edi.ws_fex_journal_ri
+msgid "Electronic Exportation Invoice (FEX)"
+msgstr "Factura Electrónica de Exportación (FEX)"
+
+#. module: l10n_ar_edi
+#: model:account.journal,name:l10n_ar_edi.ws_bfe_journal_ri
+msgid "Electronic Fiscal Bond (BFE)"
+msgstr "Bono Fiscal Electrónico (BFE)"
+
+#. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid "Electronic Fiscal Bond - Web Service"
 msgstr "Bono Fiscal Electrónico - Web Service"
+
+#. module: l10n_ar_edi
+#: model:account.journal,name:l10n_ar_edi.ws_fe_journal_ri
+msgid "Electronic Invoice (FE)"
+msgstr "Factura Electrónica (FE)"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -713,7 +748,8 @@ msgstr "Fecha de generación"
 #: code:addons/l10n_ar_edi/models/res_currency.py:0
 msgid "Get AFIP currency rate not implemented for webservice %(afip_ws)s"
 msgstr ""
-"Obtener tasa de moneda en AFIP no esta implementado para el web service %(afip_ws)s"
+"Obtener tasa de moneda en AFIP no esta implementado para el web service "
+"%(afip_ws)s"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.l10n_ar_afip_ws_consult_form
@@ -754,8 +790,16 @@ msgid "How to get certificate for production?"
 msgstr "¿Cómo obtener un certificado para producción?"
 
 #. module: l10n_ar_edi
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_journal__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move_reversal__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_certificate_certificate__id
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afip_ws_consult__id
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afipws_connection__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_product_template__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_currency__id
 msgid "ID"
 msgstr "ID (identificación)"
 
@@ -819,6 +863,12 @@ msgstr ""
 " está definido o lo está de manera errónea. En ese campo debe indicar el "
 "número de factura original sin ningún tipo de prefijo o sufijo, por ejemplo,"
 " “0001-00000001”"
+
+#. module: l10n_ar_edi
+#: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_show_withholding_legend
+#: model:ir.model.fields,help:l10n_ar_edi.field_res_config_settings__l10n_ar_show_withholding_legend
+msgid "If this option is selected, the legend 'Operation Subject to Withholding' will be added below the Document Type letter on the Invoice PDF."
+msgstr "Si se selecciona esta opción, se agregará la leyenda 'Operación Sujeta a Retención' debajo de la letra del Tipo de Documento en el PDF de la factura."
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -945,10 +995,10 @@ msgid "NCM Code"
 msgstr "Código NCM"
 
 #. module: l10n_ar_edi
-#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_payment_foreign_currency__n
-#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__res_company__l10n_ar_payment_foreign_currency__n
+#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_payment_foreign_currency__no
+#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__res_company__l10n_ar_payment_foreign_currency__no
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -1024,9 +1074,17 @@ msgid "Observed"
 msgstr "Obsevado"
 
 #. module: l10n_ar_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ar_edi.custom_header_inherit
+msgid ""
+"<br/>\n"
+"                <span class=\"d-block small mt-1 lh-1\">Operation Subject to Withholding</span>"
+msgstr ""
+"<br/>\n"
+"                <span class=\"d-block small mt-1 lh-1\">OPERACIÓN SUJETA A RETENCIÓN</span>"
+
+#. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_payment_foreign_currency
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_payment_foreign_currency
-#: model:ir.model.fields,field_description:l10n_ar_edi.field_account_payment__l10n_ar_payment_foreign_currency
 msgid "Payment in Foreign Currency"
 msgstr "Pago en Moneda Extranjera"
 
@@ -1081,8 +1139,9 @@ msgid ""
 "Please select the default option that will be used to inform ARCA whether "
 "the payment is made in a foreign currency, as required by RG 5616/2024:"
 msgstr ""
-"Por favor seleccionar la opción por defecto que será usada para informar a ARCA"
-" si el pago se hará en moneda extranjera, como es requerido por la RG 5616/2024:"
+"Por favor seleccionar la opción por defecto que será usada para informar a "
+"ARCA si el pago se hará en moneda extranjera, como es requerido por la RG "
+"5616/2024:"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -1150,13 +1209,13 @@ msgstr "Código QR"
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
-#, python-format
 msgid ""
 "Recently ARCA changed the types VAT Conditions available. Please verify the "
 "AFIP Responsibility in the partner is Deprecated and set a valid one."
 msgstr ""
-"Recientemente ARCA cambió los tipos de Condición de IVA disponibles. Por favor revise si la "
-"Responsabilidad AFIP en el contacto está depreciada and asigne una válida."
+"Recientemente ARCA cambió los tipos de Condición de IVA disponibles. Por "
+"favor revise si la Responsabilidad AFIP en el contacto está depreciada and "
+"asigne una válida."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_verification_result__r
@@ -1195,6 +1254,12 @@ msgstr "Seleccione la clave utilizada para firmar sus documentos AFIP"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form_demo
 msgid "Set another demo certificate"
 msgstr "Establecer otro certificado de demostración"
+
+#. module: l10n_ar_edi
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_show_withholding_legend
+#: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_show_withholding_legend
+msgid "Show Withholding Legend"
+msgstr "Mostrar leyenda de retención"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afipws_connection__sign
@@ -1298,13 +1363,12 @@ msgstr "El país de la empresa debe estar definido antes de esta acción"
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-#, python-format
 msgid ""
-"The currency rate to be reported (%(currency_rate)s) is not valid. It must be between 2%% "
-"and 400%% of the official quote (%(min_rate)s - %(max_rate)s)"
+"The currency rate to be reported (%(currency_rate)s) is not valid. It must "
+"be between 2%% and 400%% of the official quote (%(min_rate)s - %(max_rate)s)"
 msgstr ""
-"La cotización a informar (%(currency_rate)s) no es válida. Debe estar entre el 2%% y 400%% "
-"de la cotización oficial (%(min_rate)s - %(max_rate)s)"
+"La cotización a informar (%(currency_rate)s) no es válida. Debe estar entre "
+"el 2%% y 400%% de la cotización oficial (%(min_rate)s - %(max_rate)s)"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -1378,21 +1442,15 @@ msgstr "El pago será en moneda extranjera:"
 
 #. module: l10n_ar_edi
 #. odoo-python
-#: code:addons/l10n_ar_edi/models/res_company.py:0
-msgid "The private key can not be uploaded!"
-msgstr "¡No fue posible subir la clave privada!"
-
-#. module: l10n_ar_edi
-#. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-#, python-format
 msgid ""
-"The rate to be reported (%(currency_rate)s) differs from that of ARCA Remember that if you "
-"pay in foreign currency you must use the same rate of the last business day "
-"of ARCA (%(arca_rate)s - %(arca_date)s)"
+"The rate to be reported (%(currency_rate)s) differs from that of ARCA "
+"Remember that if you pay in foreign currency you must use the same rate of "
+"the last business day of ARCA (%(arca_rate)s - %(arca_date)s)"
 msgstr ""
-"La cotizacion a informar (%(currency_rate)s) difere de la de ARCA. Recuerde que si paga en moneda"
-" extranjera que debe utilizar la misma cotización del ultimo dia hábil de ARCA (%(arca_rate)s - %(arca_date)s)"
+"La cotizacion a informar (%(currency_rate)s) difere de la de ARCA. Recuerde "
+"que si paga en moneda extranjera que debe utilizar la misma cotización del "
+"ultimo dia hábil de ARCA (%(arca_rate)s - %(arca_date)s)"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -1732,15 +1790,16 @@ msgid "XML Response"
 msgstr "Respuesta XML"
 
 #. module: l10n_ar_edi
-#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_payment_foreign_currency__s
-#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__res_company__l10n_ar_payment_foreign_currency__s
+#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_payment_foreign_currency__yes
+#: model:ir.model.fields.selection,name:l10n_ar_edi.selection__res_company__l10n_ar_payment_foreign_currency__yes
 msgid "Yes"
 msgstr "Si"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
 msgid "Yes → Always report foreign currency payments to ARCA"
-msgstr "Si → Siempre informará a ARCA que los pagos serán en moneda extranjera"
+msgstr ""
+"Si → Siempre informará a ARCA que los pagos serán en moneda extranjera"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -1789,6 +1848,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.l10n_ar_afip_ws_consult_form
 msgid "or"
 msgstr "o"
+
+#. module: l10n_ar_edi
+#. odoo-python
+#: code:addons/l10n_ar_edi/models/account_journal.py:0
+msgid "wsbfe"
+msgstr ""
+
+#. module: l10n_ar_edi
+#. odoo-python
+#: code:addons/l10n_ar_edi/models/account_journal.py:0
+msgid "wsfex"
+msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_currency_form

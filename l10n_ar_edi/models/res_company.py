@@ -50,6 +50,10 @@ class ResCompany(models.Model):
         compute="_compute_l10n_ar_payment_foreign_currency",
         string="Default Policy for Payment in Foreign Currency",
     )
+    l10n_ar_show_withholding_legend = fields.Boolean(
+        string='Show Withholding Legend',
+        help="If this option is selected, the legend 'Operation Subject to Withholding' will be added below the Document Type letter on the Invoice PDF."
+    )
 
     def _compute_l10n_ar_payment_foreign_currency(self):
         for company in self:

@@ -36,6 +36,10 @@
                                 How to get certificate for production?
                             </a>
                         </div>
+                        <div class="mt16">
+                            <field name="l10n_ar_show_withholding_legend"/>
+                            <label for="l10n_ar_show_withholding_legend" string="Add Withholding Legend to Invoice PDF" class="o_light_label col-lg-10"/>
+                        </div>
                     </div>
                 </setting>
                 <setting string="Verify Vendor Bills validity in AFIP" company_dependent="1" help="Allow or Require to do vendor bill verify in AFIP for documents with CAE, CAI or CAEA numbers" invisible="country_code != 'AR'">

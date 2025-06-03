@@ -17,6 +17,11 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.l10n_ar_payment_foreign_currency",
         readonly=False,
         inverse="_inverse_l10n_ar_payment_foreign_currency")
+    l10n_ar_show_withholding_legend = fields.Boolean(
+        related='company_id.l10n_ar_show_withholding_legend',
+        string='Show Withholding Legend',
+        readonly=False,
+    )
 
     def l10n_ar_action_create_certificate_request(self):
         self.ensure_one()
