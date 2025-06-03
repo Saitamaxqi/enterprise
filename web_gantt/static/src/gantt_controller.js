@@ -162,6 +162,7 @@ export class GanttController extends Component {
                 viewId,
                 resId: props.resId,
                 size: props.size,
+                canExpand: props.canExpand,
                 readonly: !canEdit,
                 context: props.context,
                 removeRecord,

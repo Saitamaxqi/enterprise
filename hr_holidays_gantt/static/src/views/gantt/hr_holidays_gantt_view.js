@@ -34,6 +34,7 @@ export class HrHolidaysGanttController extends GanttController {
             ...props,
             title: _t("Time Off Request"),
             size: "md",
+            canExpand: false,
         }, options);
     }
 }
