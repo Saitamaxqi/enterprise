@@ -159,18 +159,10 @@ class AppraisalAskFeedback(models.TransientModel):
         else:
             mail_values['email_to'] = answer.email
 
-        template_ctx = {
-            'message': self.env['mail.message'].sudo().new(dict(body=mail_values['body_html'], record_name=self.survey_template_id.title)),
-            'model_description': self.env['ir.model']._get('appraisal.ask.feedback').display_name,
-            'company': self.env.company,
-            'record': self,
-        }
-        body = self.env['ir.qweb']._render('mail.mail_notification_light', template_ctx, minimal_qcontext=True, raise_if_not_found=False)
-        if body:
-            mail_values['body_html'] = self.env['mail.render.mixin']._replace_local_links(body)
-        else:
-            _logger.warning('QWeb template mail.mail_notification_light not found when sending appraisal feedback mails. Sending without layouting.')
-
+        mail_values['body_html'] = self.env['mail.render.mixin']._render_encapsulate(
+            'mail.mail_notification_light', mail_values['body_html'],
+            context_record=self.survey_template_id,
+        )
         return self.env['mail.mail'].sudo().create(mail_values)
 
     def action_send(self):
