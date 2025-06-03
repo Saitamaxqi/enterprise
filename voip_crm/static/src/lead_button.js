@@ -1,5 +1,5 @@
 import { Call } from "@voip/core/call_model";
-import { Persona } from "@mail/core/common/persona_model";
+import { ResPartner } from "@mail/core/common/res_partner_model";
 
 import { Component } from "@odoo/owl";
 
@@ -10,7 +10,7 @@ import { useService } from "@web/core/utils/hooks";
 export class LeadButton extends Component {
     static components = { ActionButton };
     static props = {
-        contact: { type: Persona, optional: true },
+        contact: { type: ResPartner, optional: true },
         call: { type: Call, optional: true },
     };
     static template = "voip_crm.LeadButton";

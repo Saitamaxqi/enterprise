@@ -19,7 +19,7 @@ const activityPatch = {
     /** @override */
     setup() {
         super.setup();
-        this.partner = fields.One("Persona");
+        this.partner = fields.One("res.partner");
     },
 };
 patch(Activity.prototype, activityPatch);

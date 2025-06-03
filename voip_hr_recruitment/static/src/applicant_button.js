@@ -1,4 +1,4 @@
-import { Persona } from "@mail/core/common/persona_model";
+import { ResPartner } from "@mail/core/common/res_partner_model";
 
 import { Component } from "@odoo/owl";
 
@@ -9,7 +9,7 @@ import { useService } from "@web/core/utils/hooks";
 
 export class ApplicantButton extends Component {
     static components = { ActionButton };
-    static props = { contact: Persona };
+    static props = { contact: ResPartner };
     static template = "voip_hr_recruitment.ApplicantButton";
 
     setup() {

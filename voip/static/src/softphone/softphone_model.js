@@ -71,8 +71,8 @@ export class Softphone {
     }
 
     get contacts() {
-        return Object.values(this.store.Persona.records).filter((persona) =>
-            Boolean(persona.phone)
+        return Object.values(this.store["res.partner"].records).filter((partner) =>
+            Boolean(partner.phone)
         );
     }
 

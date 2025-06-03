@@ -7,7 +7,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { useDebounced } from "@web/core/utils/timing";
 
-/** @typedef {import("@mail/core/common/persona_model").Persona} Persona */
+/** @typedef {import("models").ResPartner} ResPartner */
 
 /**
  * List of contacts, i.e. people you can call.
@@ -35,7 +35,7 @@ export class AddressBook extends Component {
         );
     }
 
-    /** @returns {Map<string, Array<Persona>>} */
+    /** @returns {Map<string, Array<ResPartner>>} */
     get contactsByInitial() {
         const contacts = [...this.filteredContacts];
         const compareFn = new Intl.Collator(user.lang).compare;
@@ -50,7 +50,7 @@ export class AddressBook extends Component {
         return Map.groupBy(contacts, getInitial);
     }
 
-    /** @returns {Persona[]} Contacts filtered by search terms. */
+    /** @returns {ResPartner[]} Contacts filtered by search terms. */
     get filteredContacts() {
         const contacts = this.voip.softphone.contacts;
         const searchTerms = this.state.searchInputValue;
@@ -64,7 +64,7 @@ export class AddressBook extends Component {
     }
 
     /**
-     * @param {Persona} contact
+     * @param {ResPartner} contact
      * @returns {string}
      */
     getSubtitle(contact) {
@@ -81,7 +81,7 @@ export class AddressBook extends Component {
         return info.join(" - ");
     }
 
-    /** @param {Persona} contact */
+    /** @param {ResPartner} contact */
     onClickActivity(contact) {
         this.action.doAction({
             type: "ir.actions.act_window",
@@ -98,12 +98,12 @@ export class AddressBook extends Component {
         });
     }
 
-    /** @param {Persona} contact */
+    /** @param {ResPartner} contact */
     onClickCall(contact) {
         this.userAgent.makeCall({ partner: contact, phone_number: contact.phone });
     }
 
-    /** @param {Persona} contact */
+    /** @param {ResPartner} contact */
     onClickContact(contact) {
         this.action.doAction({
             type: "ir.actions.act_window",

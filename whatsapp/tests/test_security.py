@@ -177,10 +177,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                     "message_unread_counter": 0,
                                     "message_unread_counter_bus_id": 0,
                                     "new_message_separator": message.id + 1,
-                                    "partner_id": {
-                                        "id": self.user_admin.partner_id.id,
-                                        "type": "partner",
-                                    },
+                                    "partner_id": self.user_admin.partner_id.id,
                                     "channel_id": {
                                         "id": employee_channel.id,
                                         "model": "discuss.channel",
@@ -203,10 +200,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                     {
                                         "attachment_ids": [],
                                         "author_guest_id": False,
-                                        "author_id": {
-                                            "id": self.user_admin.partner_id.id,
-                                            "type": "partner",
-                                        },
+                                        "author_id": self.user_admin.partner_id.id,
                                         "body": [
                                             "markup",
                                             '<div class="o_mail_notification">joined the channel</div>',
@@ -277,10 +271,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                     "fetched_message_id": message.id,
                                     "id": member.id,
                                     "last_seen_dt": "2020-03-22 10:31:06",
-                                    "partner_id": {
-                                        "id": self.user_admin.partner_id.id,
-                                        "type": "partner",
-                                    },
+                                    "partner_id": self.user_admin.partner_id.id,
                                     "seen_message_id": message.id,
                                     "channel_id": {
                                         "id": employee_channel.id,

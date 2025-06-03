@@ -169,7 +169,7 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
                                 "count": 1,
                                 "guests": [],
                                 "message": message.id,
-                                "partners": [{"id": message.author_id.id, "type": "partner"}],
+                                "partners": [message.author_id.id],
                                 # new reaction, and there is no way that we can get the id of the reaction, so that the sequence is directly +1
                                 "sequence": message.reaction_ids.ids[0] + 1,
                             }

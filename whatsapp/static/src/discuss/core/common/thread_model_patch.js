@@ -6,7 +6,7 @@ import { patch } from "@web/core/utils/patch";
 const threadPatch = {
     setup() {
         super.setup(...arguments);
-        this.whatsapp_partner_id = fields.One("Persona");
+        this.whatsapp_partner_id = fields.One("res.partner");
         this.whatsappMember = fields.One("discuss.channel.member", {
             /** @this {import("models").Thread} */
             compute() {

@@ -1,11 +1,11 @@
-import { Persona } from "@mail/core/common/persona_model";
+import { ResPartner } from "@mail/core/common/res_partner_model";
 
 // ensure voip patch is applied first
-import "@voip/core/common/persona_model_patch";
+import "@voip/core/common/res_partner_model_patch";
 
 import { patch } from "@web/core/utils/patch";
 
-patch(Persona.prototype, {
+patch(ResPartner.prototype, {
     /**
      * @override
      * @returns {string}

@@ -34,7 +34,7 @@ export class ContactInfo extends Component {
         });
     }
 
-    /** @returns {import("@mail/core/common/persona_model").Persona} */
+    /** @returns {import("models").ResPartner} */
     get contact() {
         return this.props.call.partner_id;
     }
