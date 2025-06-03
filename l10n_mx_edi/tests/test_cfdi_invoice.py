@@ -516,6 +516,25 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 'state': 'invoice_sent_failed',
             }])
 
+    def test_invoice_payment_policy(self):
+        """ Ensure the invoice payment policy isn't override by the partner payment policy. """
+        with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_payment_policy = 'PUE'
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'quantity': 12.0,
+                        'tax_ids': [],
+                    }),
+                ],
+                l10n_mx_edi_payment_policy='PPD',
+            )
+
+        with self.with_mocked_pac_sign_success():
+            invoice._l10n_mx_edi_cfdi_invoice_try_send()
+        self.assertEqual(invoice.l10n_mx_edi_payment_policy, 'PPD')
+
     def test_global_invoice_negative_lines_zero_total(self):
         """ Test an invoice completely refunded by the negative lines. """
         with self.mx_external_setup(self.frozen_today):

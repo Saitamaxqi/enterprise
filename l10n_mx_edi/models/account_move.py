@@ -660,9 +660,9 @@ class AccountMove(models.Model):
         for move in self:
             if move.is_invoice(include_receipts=True) and move.l10n_mx_edi_is_cfdi_needed:
                 move.l10n_mx_edi_payment_policy = (
-                    move.partner_id.l10n_mx_edi_payment_policy
-                    or move.move_type == 'out_refund' and 'PUE'
+                    move.move_type == 'out_refund' and 'PUE'
                     or move.l10n_mx_edi_payment_policy
+                    or move.partner_id.l10n_mx_edi_payment_policy
                 )
                 if (
                     not move.l10n_mx_edi_payment_policy
