@@ -2072,3 +2072,25 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 <attribute name="default_group_by"/>
             </xpath>
         </data>''')
+
+    def test_subview_multiple_occurences(self):
+        self.testView.arch = """
+        <form>
+            <field  name="child_ids" >
+                <list>
+                    <field name="function" column_invisible="1" />
+                    <field name="function" />
+                </list>
+            </field>
+        </form>
+        """
+        self.start_tour("/web?debug=tests", "web_studio_test_subview_multiple_occurences", login="admin")
+        studio_view = _get_studio_view(self.testView)
+
+        assertViewArchEqual(self, studio_view.arch, """
+        <data>
+            <xpath expr="//form[1]/field[@name='child_ids']/list[1]/field[@name='function'][2]" position="attributes">
+                <attribute name="string">new label from tour</attribute>
+            </xpath>
+        </data>
+        """)

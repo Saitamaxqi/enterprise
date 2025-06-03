@@ -197,11 +197,11 @@ class TestEditView(TestStudioController):
                 'tag': 'field',
                 'attrs': {'name': 'group_ids'},
                 'xpath_info': [
-                    {'tag': 'group', 'indice': 1},
-                    {'tag': 'group', 'indice': 2},
+                    {'tag': 'form', 'indice': 1},
+                    {'tag': 'sheet', 'indice': 1},
                     {'tag': 'field', 'indice': 2}
                 ],
-                'subview_xpath': "//field[@name='user_ids']/form"
+                'subview_xpath': "//field[@name='user_ids']/form[2]"
             },
             'position': 'attributes',
             'node': {
@@ -226,8 +226,10 @@ class TestEditView(TestStudioController):
                         <sheet>
                             <field name="display_name"/>
                             <field name="user_ids">
+                                <form />
                                 <form>
                                     <sheet>
+                                        <field name="display_name" />
                                         <field name="group_ids" widget='many2many_tags' options="{'color_field': 'color'}"/>
                                     </sheet>
                                 </form>
@@ -244,8 +246,10 @@ class TestEditView(TestStudioController):
                     <sheet>
                         <field name="display_name"/>
                         <field name="user_ids">
+                            <form />
                             <form>
                                 <sheet>
+                                    <field name="display_name"/>
                                     <field name="group_ids" widget="many2many_tags" options="{&quot;color_field&quot;: &quot;x_color&quot;, &quot;no_create&quot;: true}"/>
                                 </sheet>
                             </form>

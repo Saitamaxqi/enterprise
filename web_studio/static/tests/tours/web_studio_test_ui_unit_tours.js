@@ -2140,3 +2140,49 @@ registry.category("web_tour.tours").add("web_studio_empty_default_group_by", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_subview_multiple_occurences", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view .o_form_editable",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_form_view_editor div[name='child_ids']",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_web_studio_form_view_editor div[name='child_ids'] .o_web_studio_editX2Many[data-type='list']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_list_view_editor th[data-name='function']",
+            run() {
+                assertEqual(
+                    Array.from(document.querySelectorAll("th[data-name='function']")).length,
+                    1
+                );
+            },
+        },
+        {
+            trigger: ".o_web_studio_list_view_editor th[data-name='function']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar input[name='string']",
+            run: "edit new label from tour && click body",
+        },
+        {
+            trigger: ".o_web_studio_snackbar .fa-check",
+        },
+    ],
+});

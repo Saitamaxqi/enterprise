@@ -832,9 +832,15 @@ Are you sure you want to remove the selection values of those records?""", len(r
         return etree.tostring(arch, encoding='unicode', pretty_print=True, method='html')
 
     def _node_to_expr(self, node):
-        if node.get('xpath_info') and not node.get('subview_xpath'):
+        if node.get('xpath_info'):
+            expr_list = node.get('xpath_info')
+            if node.get("subview_xpath"):
+                # The first element of that list is the view's node
+                # If we are editing a subview, this view's node is actually
+                # targetted by subview_xpath, so let's remove it from the xpath_info
+                expr_list = expr_list[1:]
             # Format of expr is /form/tag1[]/tag2[]/[...]/tag[]
-            expr = ''.join(['/%s[%s]' % (parent['tag'], parent['indice']) for parent in node.get('xpath_info')])
+            expr = ''.join(['/%s[%s]' % (parent['tag'], parent['indice']) for parent in expr_list])
         else:
             # Format of expr is //tag[@attr1_name=attr1_value][@attr2_name=attr2_value][...]
             expr = '//' + node['tag']
