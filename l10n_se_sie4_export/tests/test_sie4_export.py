@@ -53,13 +53,26 @@ class AccountTestSIE4Export(TestAccountReportsCommon):
             *self.handler._export_l10n_se_sie4_verification(options),
         ]
 
-        # Remove added OSS accounts in case the l10n_eu_oss module is installed
-        values_to_remove = ('#KONTO 2601 "Outgoing VAT on sales within Sweden, 25% OSS"', '#KTYP  2601 S')
-        for value_to_remove in values_to_remove:
-            if value_to_remove in res:
-                res.remove(value_to_remove)
-
-        return res
+        # Remove/replace added accounts from the OSS and other modules that modifies some of
+        # the base account records. This ensures the result of the test result always stays
+        # the same no matter what module is installed.
+        values_to_remove = {
+            '#KONTO 1934 "Outstanding Payments"',
+            '#KTYP  1934 T',
+            '#KONTO 1935 "Credit Journal"',
+            '#KTYP  1935 S',
+            '#KONTO 2601 "Outgoing VAT on sales within Sweden, 25% OSS"',
+            '#KTYP 2601 S',
+        }
+        values_to_replace = {
+            '#KONTO 1933 "Outstanding Receipts"': '#KONTO 1933 "Credit Journal"',
+            '#KTYP  1933 T': '#KTYP  1933 S',
+        }
+        return [
+            values_to_replace.get(line, line)
+            for line in res
+            if line not in values_to_remove
+        ]
 
     @freeze_time('2024-07-01')
     @patch.object(release, 'version', '99.0')
