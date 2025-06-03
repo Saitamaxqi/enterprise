@@ -626,6 +626,8 @@ class StudioApprovalRule(models.Model):
         ruleSudo = self.sudo()
         domain = self._get_rule_domain(ruleSudo.model_name, ruleSudo.method, ruleSudo.action_id)
         all_rule_ids = tuple(ruleSudo.search(domain).ids)
+        if not all_rule_ids:
+            return None
         self.env.cr.execute('SELECT id FROM studio_approval_rule WHERE id IN %s FOR UPDATE NOWAIT', (all_rule_ids,))
         # NOTE: despite the 'NOWAIT' modifier, the query will actually be retried by
         # Odoo itself (not PG); the NOWAIT ensures that no deadlock will happen
