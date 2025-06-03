@@ -225,3 +225,35 @@ test("only show common available actions", async function () {
     await waitForNone(".o_control_panel_actions:contains('Action 2 only')");
     await waitFor(".o_control_panel_actions:contains('Action 2 and 3')");
 });
+
+test("Required document name", async function () {
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "Testing file", { folder_id: 1 }),
+        makeDocumentRecordData(3, "Testing folder", { folder_id: 1 }),
+    ]);
+    await makeDocumentsMockEnv({ serverData });
+    await mountView({
+        type: "list",
+        resModel: "documents.document",
+        arch: basicDocumentsListArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+    const lr = (documentName, selector) => `.o_data_row:contains('${documentName}') ${selector}`;
+    for (const documentName of ["Testing folder", "Testing file"]) {
+        await contains(lr(documentName, ".o_list_record_selector")).click();
+        await contains(lr(documentName, ".o_data_cell[name='name']")).click();
+        await expect(lr(documentName, ".o_data_cell[name='name'] input")).toHaveCount(1);
+        await expect(lr(documentName, ".o_data_cell[name='name'] input")).toHaveValue(documentName);
+        // Set empty name
+        await contains(lr(documentName, ".o_data_cell[name='name'] input")).edit("");
+        await animationFrame();
+        expect(".o_notification").toHaveCount(1);
+        expect(".o_notification").toHaveText("Name cannot be empty.");
+        await contains(".o_notification .o_notification_close").click();
+        await expect(lr(documentName, ".o_data_cell[name='name'] input")).toHaveValue(documentName);
+        // Remove selection and close record edition
+        await contains(".o_list_renderer").click();
+        await contains(".o_list_button_discard").click();
+        await animationFrame();
+    }
+});

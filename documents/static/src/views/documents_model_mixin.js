@@ -420,6 +420,17 @@ export const DocumentsModelMixin = (component) =>
 export const DocumentsRecordMixin = (component) => class extends component {
 
     async update(changes, options = {}) {
+        if ("name" in changes && !changes.name) {
+            this.model.notification.add(_t("Name cannot be empty."), {
+                type: "danger",
+            });
+            if (Object.keys(changes).length === 1) {
+                this._discard();
+                return;
+            }
+            delete changes.name;
+            this._setEvalContext();
+        }
         const modelMultiEdit = this.model.multiEdit;
         let movedRecordsIds = this.model.root.selection.map((rec) => rec.id);
         if (this.isDetailsPanelRecord) {

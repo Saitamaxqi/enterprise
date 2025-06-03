@@ -155,6 +155,33 @@ test("Details panel rendering for viewers - m2o/m2m pseudo-placeholders", async 
     );
 });
 
+test("Details panel required document name", async function () {
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "Testing file", { folder_id: 1 }),
+        makeDocumentRecordData(3, "Testing folder", { folder_id: 1 }),
+    ]);
+    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await mountDocumentsKanbanView({ arch: archWithTags });
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    for (const documentName of [
+        "Folder 1", // Container
+        "Testing folder",
+        "Testing file",
+    ]) {
+        await contains(`.o_kanban_record:contains('${documentName}')`).click();
+        await animationFrame();
+        expect(dp(".o_documents_details_panel_name input")).toHaveCount(1);
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue(documentName);
+        // Set empty name
+        await contains(".o_documents_details_panel_name input").edit("");
+        await animationFrame();
+        expect(".o_notification").toHaveCount(1);
+        expect(".o_notification").toHaveText("Name cannot be empty.");
+        await contains(".o_notification .o_notification_close").click();
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue(documentName);
+    }
+});
+
 test("Details panel root folder placeholders", async function () {
     const serverData = getDocumentsTestServerData([
         makeDocumentRecordData(2, "In COMPANY"),
