@@ -190,7 +190,7 @@ class AppointmentType(models.Model):
             if appointment_type.id not in mapped_status_data:
                 mapped_status_data[appointment_type.id] = {}
             mapped_status_data[appointment_type.id][status] = count
-            allowed_events[appointment_type.id] = set(event_ids)
+            allowed_events.setdefault(appointment_type.id, set()).update(event_ids)
 
         mapped_upcoming_data = {
             # For performance reasons, we add sudo() to bypass record rules and private field domain

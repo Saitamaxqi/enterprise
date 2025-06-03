@@ -447,6 +447,29 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         self.assertEqual(slots[2]['nb_slots_previous_months'], nb_february_slots + nb_march_slots)
         self.assertEqual(slots[2]['nb_slots_next_months'], 0)
 
+    def test_appointment_type_upcoming_count(self):
+        """
+        Test upcoming count for appointment type regardless of event status.
+        """
+        apt_type = self.apt_type_bxls_2days
+        self.assertEqual(apt_type.appointment_count_upcoming, 0)
+
+        meeting_1 = self._create_meetings(
+            self.staff_user_bxls,
+            [(datetime.now() + timedelta(days=1), (datetime.now() + timedelta(days=2)), False)],
+            appointment_type_id=apt_type.id,
+        )
+        meeting_1.write({'appointment_status': 'booked'})
+        self.assertEqual(apt_type.appointment_count_upcoming, 1)
+
+        meeting_2 = self._create_meetings(
+            self.staff_user_bxls,
+            [(datetime.now() + timedelta(days=1), (datetime.now() + timedelta(days=2)), False)],
+            appointment_type_id=apt_type.id,
+        )
+        meeting_2.write({'appointment_status': 'no_show'})
+        self.assertEqual(apt_type.appointment_count_upcoming, 2)
+
     @freeze_time('2023-01-9')
     def test_booking_validity(self):
         """
