@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
+from freezegun import freeze_time
 from datetime import date, datetime
 
 from odoo.tests import tagged, loaded_demo_data
@@ -17,6 +18,7 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.env.user.group_ids += cls.quick_ref('hr_holidays.group_hr_holidays_manager')
 
+    @freeze_time("2021-01-01")
     def test_eco_vouchers(self):
         # The reference year is 2021, so the reference period is 01/06/2020 -> 31/05/2021 (12 months)
         # Employee is working on:
