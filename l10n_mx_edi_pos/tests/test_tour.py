@@ -151,6 +151,7 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
 
         self.main_pos_config.with_user(self.user).open_ui()
         self.start_tour("/pos/ui/%d" % self.main_pos_config.id, 'pos_settle_account_due', login="accountman")
+        self.main_pos_config.current_session_id.action_pos_session_closing_control()
         self.assertEqual(self.partner_test_1.total_due, 0)
 
     def test_usage_mx_pos_invoice_order(self):
