@@ -3,6 +3,7 @@
 from . import controllers
 from . import models
 from . import report
+from . import utils
 from . import wizard
 from . import PYPDF2_MonkeyPatch
 

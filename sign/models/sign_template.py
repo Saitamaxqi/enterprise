@@ -11,6 +11,8 @@ from odoo.fields import Command, Domain
 from odoo.tools import misc, pdf
 from odoo.tools.pdf import PdfReadError
 
+from odoo.addons.sign.utils.pdf_handling import flatten_pdf
+
 TTFSearchPath.append(misc.file_path("web/static/fonts/sign"))
 
 
@@ -138,11 +140,15 @@ class SignTemplate(models.Model):
         :return: [ID of the newly created sign.template record, name of the template]
         :raises UserError: If the input list is empty or a dictionary is missing required keys.
         """
-        # Update sequence for documents order.
+
+        # Update the document order sequence and flatten the PDF to make form fields read-only.
         count_sequence = len(self.document_ids)
         for att_data in attachment_data_list:
             att_data['sequence'] = count_sequence
             count_sequence += 1
+            original_pdf_base64 = att_data.get('datas')
+            if original_pdf_base64:
+                att_data['datas'] = flatten_pdf(original_pdf_base64)
 
         template = self.create({
             'name': attachment_data_list[0]['name'],
