@@ -79,10 +79,6 @@ export class Document extends Component {
                 const currentDocUnsigned = this.isDocumentUnsigned();
                 const AllDocsViewed = this.state.viewedDocuments.size === this.documents.length;
 
-                console.log("hasUnsignedDocs", hasUnsignedDocs)
-                console.log("AllDocsViewed", AllDocsViewed)
-                console.log("currentDocUnsigned", currentDocUnsigned)
-
                 if (!hasUnsignedDocs && AllDocsViewed) {
                     // If all documents are signed and viewed, show validation banner
                     this.showBanner(this.validateBanner);
@@ -97,7 +93,6 @@ export class Document extends Component {
                     this.hideBanner(this.nextDocumentBanner);
                 } else {
                     // If current document is signed or have nothing to sign, show "next document" banner
-                    console.log("this.nextDocumentBanner")
                     this.showBanner(this.nextDocumentBanner);
                 }
             },
