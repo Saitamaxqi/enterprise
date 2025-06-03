@@ -241,7 +241,7 @@ msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll_elm_transmission.selection__hr_salary_rule__l10n_ch_salary_certificate__2_3
-msgid "2.3 Personal use of the company car"
+msgid "2.3 Additional salary benefits - Other"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
@@ -1665,6 +1665,7 @@ msgid "Cancel"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee__l10n_ch_canton
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_is_mutation__qst_canton
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_location_unit__canton
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_source_tax_institution__canton
@@ -5651,6 +5652,7 @@ msgid "Municipality"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee__l10n_ch_municipality
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_l10n_ch_location_unit__municipality
 msgid "Municipality ID"
 msgstr ""
@@ -6625,6 +6627,11 @@ msgstr ""
 #. module: l10n_ch_hr_payroll_elm_transmission
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll_elm_transmission.hr_employee_view_swissdec_form
 msgid "Private Address"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll_elm_transmission.field_hr_employee__private_city
+msgid "Private City"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission

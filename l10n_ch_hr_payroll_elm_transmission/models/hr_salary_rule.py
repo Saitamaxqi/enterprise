@@ -96,7 +96,7 @@ class HrSalaryRule(models.Model):
         ('1', '1. Salary'),
         ('2.1', '2.1 Room and board'),
         ('2.2', '2.2 Personal use of the company car'),
-        ('2.3', '2.3 Personal use of the company car'),
+        ('2.3', '2.3 Additional salary benefits - Other'),
         ('3', '3. Irregular Benefits'),
         ('4', '4. Capital Benefits'),
         ('5', '5. Ownership right in accordance with supplement'),
