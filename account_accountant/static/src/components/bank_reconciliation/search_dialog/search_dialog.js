@@ -24,7 +24,8 @@ export class BankRecSelectCreateDialog extends SelectCreateDialog {
     setup() {
         super.setup();
         this.orm = useService("orm");
-        this.state.remainingAmount = this.suspenseAccountLine.balance;
+        this.state.remainingAmount = this.suspenseAccountLine.amount_currency;
+        this.state.hideRemainingAmount = false;
 
         this.baseViewProps.onSelectionChanged = (resIds) => {
             this.state.resIds = resIds;
@@ -54,23 +55,50 @@ export class BankRecSelectCreateDialog extends SelectCreateDialog {
             await this.fetchMissingLines([["id", "in", resIdsToFetch]]);
         }
 
-        const selectedLinesSum = this.selectedLines.reduce((sum, id) => {
-            return sum + this.displayedMoveLinesPerId[id].amount_residual;
-        }, 0);
-
-        this.state.remainingAmount = this.suspenseAccountLine.balance + selectedLinesSum;
+        let selectedLinesSum = 0;
+        this.state.hideRemainingAmount = false;
+        // When the suspense currency is different from the company one, we cannot compute the remaining amount correctly
+        // due to the currency rates. So in this case, when the user select multiple currencies we add the remaining amount
+        if (
+            this.suspenseAccountLine.currency_id.id !==
+                this.suspenseAccountLine.company_currency_id.id &&
+            this.selectedLines.length
+        ) {
+            const selectedLineCurrencies = this.selectedLines.map(
+                (id) => this.displayedMoveLinesPerId[id].currency_id
+            );
+            if (
+                selectedLineCurrencies.length !== 1 ||
+                (selectedLineCurrencies.length === 1 &&
+                    selectedLineCurrencies[0] !== this.suspenseAccountLine.currency_id.id)
+            ) {
+                this.state.hideRemainingAmount = true;
+                return;
+            } else {
+                selectedLinesSum = this.selectedLines.reduce((sum, id) => {
+                    return sum + this.displayedMoveLinesPerId[id].amount_residual_currency;
+                }, 0);
+            }
+        } else {
+            selectedLinesSum = this.selectedLines.reduce((sum, id) => {
+                return sum + this.displayedMoveLinesPerId[id].amount_residual;
+            }, 0);
+        }
+        this.state.remainingAmount = this.suspenseAccountLine.amount_currency + selectedLinesSum;
     }
 
     async fetchMissingLines(domain) {
         const moveLines = await this.orm.searchRead(
             "account.move.line",
             domain,
-            ["amount_residual"],
+            ["amount_residual", "amount_residual_currency", "currency_id"],
             { context: this.props.context }
         );
         moveLines.forEach((line) => {
             this.displayedMoveLinesPerId[line.id] = {
                 amount_residual: line.amount_residual,
+                amount_residual_currency: line.amount_residual_currency,
+                currency_id: line.currency_id[0],
             };
         });
     }

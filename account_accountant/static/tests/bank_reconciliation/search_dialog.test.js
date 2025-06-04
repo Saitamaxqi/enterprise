@@ -20,12 +20,51 @@ class AccountMoveLine extends models.Model {
     partner_id = fields.Many2one({ string: "Partner", relation: "partner" });
     amount_residual = fields.Float({ string: "Amount Residual" });
 
+    currency_id = fields.Many2one({ string: "Currency", relation: "res.currency" });
+
+    company_currency_id = fields.Many2one({ string: "Currency", relation: "res.currency" });
+
     _records = [
-        { id: 1, name: "INV/2025/0001", date: "2025-01-11", partner_id: 1, amount_residual: -230 },
-        { id: 2, name: "INV/2025/0002", date: "2025-01-12", partner_id: 1, amount_residual: -150 },
-        { id: 3, name: "INV/2025/0003", date: "2025-01-13", partner_id: 1, amount_residual: -50 },
-        { id: 4, name: "INV/2025/0004", date: "2025-01-14", partner_id: 2, amount_residual: -100 },
-        { id: 5, name: "INV/2025/0005", date: "2025-01-15", partner_id: 3, amount_residual: -125 },
+        {
+            id: 1,
+            name: "INV/2025/0001",
+            date: "2025-01-11",
+            partner_id: 1,
+            amount_residual: -230,
+            currency_id: 1,
+        },
+        {
+            id: 2,
+            name: "INV/2025/0002",
+            date: "2025-01-12",
+            partner_id: 1,
+            amount_residual: -150,
+            currency_id: 1,
+        },
+        {
+            id: 3,
+            name: "INV/2025/0003",
+            date: "2025-01-13",
+            partner_id: 1,
+            amount_residual: -50,
+            currency_id: 1,
+        },
+        {
+            id: 4,
+            name: "INV/2025/0004",
+            date: "2025-01-14",
+            partner_id: 2,
+            amount_residual: -100,
+            currency_id: 1,
+        },
+        {
+            id: 5,
+            name: "INV/2025/0005",
+            date: "2025-01-15",
+            partner_id: 3,
+            amount_residual: -125,
+            currency_id: 1,
+        },
     ];
 
     _views = {
@@ -81,7 +120,11 @@ test("BankRecSelectCreateDialog footer with right information", async () => {
     getService("dialog").add(BankRecSelectCreateDialog, {
         noCreate: true,
         resModel: "account.move.line",
-        suspenseAccountLine: { balance: 233.33, currency_id: { id: 1 } },
+        suspenseAccountLine: {
+            amount_currency: 233.33,
+            currency_id: { id: 1 },
+            company_currency_id: { id: 1 },
+        },
         date: luxon.DateTime.now(),
         reference: "A cool reference to display",
         context: { search_default_partner_id: 1 },
@@ -108,7 +151,11 @@ test("BankRecSelectCreateDialog list view counter", async () => {
     getService("dialog").add(BankRecSelectCreateDialog, {
         noCreate: true,
         resModel: "account.move.line",
-        suspenseAccountLine: { balance: 100, currency_id: { id: 1 } },
+        suspenseAccountLine: {
+            amount_currency: 100,
+            currency_id: { id: 1 },
+            company_currency_id: { id: 1 },
+        },
         reference: "A useless reference",
         date: luxon.DateTime.now(),
         context: { search_default_partner_id: 1 },

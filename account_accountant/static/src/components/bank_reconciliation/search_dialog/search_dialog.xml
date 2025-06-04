@@ -11,7 +11,8 @@
                 <div class="text-truncate" t-esc="props.reference"/>
                 <div class="text-nowrap text-end" name="remaining_amount">
                     <span class="text-muted">Balance: </span>
-                    <t t-esc="remainingAmountFormatted"/>
+                    <t t-if="!this.state.hideRemainingAmount" t-esc="remainingAmountFormatted"/>
+                    <t t-else=""> / </t>
                 </div>
             </div>
         </xpath>
