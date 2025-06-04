@@ -5,7 +5,6 @@
     <template id="l10n_cl_edi_invoicing_info">
         <t t-call="website_sale.checkout_layout">
             <t t-set="additional_title">Billing information</t>
-            <t t-set="show_navigation_button" t-value="False"/>
             <t t-set="oe_structure">
                 <!-- This is the drag-and-drop area for website building blocs at the end of each
                      checkout page. This is append at the of the page in `checkout_layout`. The
@@ -18,7 +17,12 @@
             <section>
                 <div t-attf-class="container">
                     <h3 class="mb-4">Invoicing info</h3>
-                    <form action="/shop/l10n_cl_invoicing_info" method="post">
+                    <form
+                        id="form_l10n_cl_invoicing_info"
+                        action="/shop/l10n_cl_invoicing_info"
+                        method="post"
+                    >
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <h5 t-if="errors_empty" class="text-danger">Some required fields are empty</h5>
                         <t t-if="errors_fields" t-foreach="errors_fields.values()" t-as="err">
                             <h5 class="text-danger" t-out="err"/>
@@ -82,10 +86,6 @@
                                         t-att-value="default_value.get('l10n_cl_dte_email')"/>
                             </div>
                         </div>
-                        <t t-call="website_sale.navigation_buttons">
-                            <t t-set="_form_send_navigation" t-value="True"/>
-                        </t>
-                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     </form>
                 </div>
             </section>

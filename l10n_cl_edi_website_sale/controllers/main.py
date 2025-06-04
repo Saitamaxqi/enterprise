@@ -16,10 +16,12 @@ class L10nCLWebsiteSale(WebsiteSale):
         invoicing_step = request.website._get_checkout_step(
             '/shop/l10n_cl_invoicing_info'
         )
-        invoicing_info_needed = invoicing_step.sudo().is_published = (
+        invoicing_info_needed = (
             request.website.company_id.country_code == 'CL'
             and str2bool(IrConfigParameter.get_param('sale.automatic_invoice'))
         )
+        if invoicing_step.is_published != invoicing_info_needed:
+            invoicing_step.sudo().is_published = invoicing_info_needed
         return invoicing_info_needed
 
     @route()

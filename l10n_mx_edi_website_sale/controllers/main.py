@@ -12,9 +12,9 @@ class WebsiteSaleL10nMX(WebsiteSale):
         invoicing_step = request.website._get_checkout_step(
             '/shop/l10n_mx_invoicing_info'
         )
-        invoicing_info_needed = invoicing_step.sudo().is_published = (
-            request.website.company_id.country_code == 'MX'
-        )
+        invoicing_info_needed = request.website.company_id.country_code == 'MX'
+        if invoicing_step.is_published != invoicing_info_needed:
+            invoicing_step.sudo().is_published = invoicing_info_needed
         return invoicing_info_needed
 
     @route()
