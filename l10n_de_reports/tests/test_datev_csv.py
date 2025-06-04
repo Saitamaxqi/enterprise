@@ -849,8 +849,54 @@ class TestDatevCSV(AccountTestInvoicingCommon):
 
         f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, move))
         reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)
-        data = [[x[0], x[1], x[2], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
-        self.assertIn(['238,00', 'H', 'EUR', '34000000', str(move.partner_id.id + 100000000),
+        data = [[x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
+        self.assertIn(['119,00', 'H', 'XYZ', '2,0', '238,00', 'EUR', '34000000', str(move.partner_id.id + 100000000),
                        self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[0].name], data)
-        self.assertIn(['39,90', 'H', 'EUR', '34000000', str(move.partner_id.id + 100000000),
+        self.assertIn(['19,95', 'H', 'XYZ', '2,0', '39,90', 'EUR', '34000000', str(move.partner_id.id + 100000000),
                        self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[1].name], data)
+
+    def test_datev_entry_in_foreign_currency(self):
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = report.get_options({})
+        options['date'].update({
+            'date_from': '2020-01-01',
+            'date_to': '2020-12-31',
+        })
+        foreign_currency = self.env['res.currency'].create({
+            'name': "XYZ",
+            'symbol': 'X',
+            'rate_ids': [
+                Command.create({'name': '2020-01-01', 'rate': 0.5}),
+            ],
+        })
+
+        move = self.env['account.move'].create([{
+            'move_type': 'entry',
+            'partner_id': self.env['res.partner'].create({'name': 'Partner XYZ'}).id,
+            'date': fields.Date.to_date('2020-12-01'),
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'balance': 100.0,
+                    'amount_currency': 50,
+                    'account_id': self.account_4980.id,
+                    'currency_id': foreign_currency.id,
+                }),
+                Command.create({
+                    'name': 'Counterpart Line',
+                    'balance': -100.0,
+                    'amount_currency': -50.0,
+                    'account_id': self.account_3400.id,
+                    'tax_ids': [],
+                    'currency_id': foreign_currency.id,
+                }),
+            ]
+        }])
+        move.action_post()
+
+        f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, move))
+        reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)
+        data = [[x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
+        self.assertIn(['50,00', 'H', 'XYZ', '2,0', '100,00', 'EUR', '34000000', '49800000',
+                       '', '112', move.name, move.line_ids[1].name], data)

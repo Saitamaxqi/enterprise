@@ -337,18 +337,22 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
                 if aml.price_total:
                     sign = -1 if aml.currency_id.compare_amounts(aml.balance, 0) < 0 else 1
-                    line_amount = abs(aml.price_total) * sign
-                    # convert line_amount in company currency
-                    if aml.currency_id != aml.company_id.currency_id:
-                        line_amount = aml.currency_id._convert(
-                            from_amount=line_amount,
-                            to_currency=aml.company_id.currency_id,
-                            company=aml.company_id,
-                            date=aml.date
-                        )
+                    line_amount_currency = abs(aml.price_total) * sign
+
                 else:
-                    aml_taxes = aml.tax_ids.compute_all(aml.balance, aml.company_id.currency_id, partner=aml.partner_id, handle_price_include=False)
-                    line_amount = aml_taxes['total_included']
+                    aml_taxes = aml.tax_ids.compute_all(aml.amount_currency, aml.currency_id, partner=aml.partner_id, handle_price_include=False)
+                    line_amount_currency = aml_taxes['total_included']
+                # convert line_amount in company currency
+                if aml.currency_id != aml.company_id.currency_id:
+                    line_amount = aml.currency_id._convert(
+                        from_amount=line_amount_currency,
+                        to_currency=aml.company_id.currency_id,
+                        company=aml.company_id,
+                        date=aml.date
+                    )
+                else:
+                    line_amount = line_amount_currency
+
                 move_balance += line_amount
 
                 code_correction = ''
@@ -370,8 +374,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 if to_account_code == account_code and aml.date_maturity:
                     receipt2 = aml.date
 
-                currency = aml.company_id.currency_id
-
                 # Idiotic program needs to have a line with 125 elements ordered in a given fashion as it
                 # does not take into account the header and non mandatory fields
                 array = ['' for x in range(125)]
@@ -379,12 +381,19 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 # credit/debit symbol.
                 array[1] = 'H' if aml.currency_id.compare_amounts(line_amount, 0) < 0 else 'S'
                 line_amount = abs(line_amount)
-                array[0] = float_repr(line_amount, aml.company_id.currency_id.decimal_places).replace('.', ',')
-                array[2] = currency.name
-                if aml.currency_id != currency:
-                    array[3] = str(aml.currency_id.rate).replace('.', ',')
-                    array[4] = float_repr(aml.price_total, aml.currency_id.decimal_places).replace('.', ',')
-                    array[5] = aml.currency_id.name
+                line_amount_currency = abs(line_amount_currency)
+                # Column A: the amount in the currency that was used. It can be a foreign one, it can be the company's.
+                array[0] = float_repr(line_amount_currency, aml.currency_id.decimal_places).replace('.', ',')
+                # Column C: the corresponding foreign currency used on the original record (invoice, bill, entry, ....)
+                array[2] = aml.currency_id.name
+                if aml.currency_id != aml.company_id.currency_id:
+                    # Column D: ratio is E/A if D !=0, else no rate.
+                    rate = line_amount / line_amount_currency if line_amount_currency != 0 else 1.0
+                    array[3] = str(rate).replace('.', ',')
+                    # Column E: the amount converted in the company currency if the original record was in a foreign currency
+                    array[4] = float_repr(line_amount, aml.company_id.currency_id.decimal_places).replace('.', ',')
+                    # Column F: the company currency if the original record was in a foreign currency
+                    array[5] = aml.company_id.currency_id.name
                 array[6] = account_code
                 array[7] = to_account_code
                 array[8] = code_correction
