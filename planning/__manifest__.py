@@ -47,6 +47,9 @@ Schedule your teams and employees with shift.
             ('remove', 'planning/static/src/views/planning_pivot/**'),
             ('remove', 'planning/static/src/views/planning_gantt/**'),
             ('remove', 'planning/static/src/views/planning_contract_gantt/**'),
+            ('remove', 'planning/static/src/views/planning_slot_analysis_graph/**'),
+            ('remove', 'planning/static/src/views/planning_slot_analysis_pivot/**'),
+            ('remove', 'planning/static/src/views/planning_slot_analysis_renderer_mixin.js'),
         ],
         'web.assets_backend_lazy': [
             'planning/static/src/views/planning_graph/**',
@@ -54,6 +57,9 @@ Schedule your teams and employees with shift.
             'planning/static/src/views/planning_gantt/**',
             'planning/static/src/views/planning_contract_gantt/**',
             'planning/static/src/scss/planning_contract_gantt.scss',
+            'planning/static/src/views/planning_slot_analysis_graph/**',
+            'planning/static/src/views/planning_slot_analysis_pivot/**',
+            'planning/static/src/views/planning_slot_analysis_renderer_mixin.js',
         ],
         'web.assets_frontend': [
             'planning/static/src/scss/planning_calendar_report.scss',
