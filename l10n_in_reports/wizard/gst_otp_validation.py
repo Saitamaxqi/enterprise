@@ -90,6 +90,15 @@ class L10n_InGstOtpValidation(models.TransientModel):
         }
 
     def validate_otp_and_do_next_action(self):
+        if not (self.gst_otp and self.gst_otp.isdigit() and len(self.gst_otp) == 6):
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'danger',
+                    'message': _("Invalid OTP. Please enter a valid 6-digit OTP"),
+                }
+            }
         response = self.validate_otp()
         next_gst_action = self._context.get('next_gst_action')
         active_model = self._context.get('active_model')

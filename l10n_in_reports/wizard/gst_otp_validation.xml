@@ -32,9 +32,9 @@
             <form string="Validate OTP">
                 <sheet>
                     <div>
-                        <span>OTP Sent on mobile on registered mobile number with company GST number</span>
+                        <span>An OTP has been sent to the mobile number registered with the company's GST Portal.</span>
                         <group>
-                            <field name="gst_otp" class="oe_inline"/>
+                            <field name="gst_otp" class="oe_inline" required="1"/>
                             <field name="gst_token" groups="base.group_no_one"/>
                         </group>
                     </div>
