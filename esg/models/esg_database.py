@@ -52,7 +52,7 @@ class EsgDatabase(models.Model):
             result = self._action_import_ademe_file()
         else:
             raise ValidationError(self.env._("Database file is missing"))
-        if result['params']['type'] == "success":
+        if 'type' in result and result['type'] == 'ir.actions.act_window':
             self.last_update = self.latest_version
         return result
 
@@ -310,6 +310,7 @@ class EsgDatabase(models.Model):
 
         required_calls = math.ceil(ademe_data['count'] / 10000)  # the api limits the amount of data lines to 10k
 
+        _logger.info("ESG: Fetching ADEME data from their API")
         complete_data = []
         for i in range(0, required_calls):
             data_url = f'{ademe_api_url}/lines?size=10000&format=json&after={10000 * i}'
@@ -318,7 +319,7 @@ class EsgDatabase(models.Model):
                 return data
             complete_data += data['results']
 
-        _logger.info("ESG: Importing ADEME carbon base file")
+        _logger.info("ESG: Reading ADEME carbon data")
         try:
             new_values, write_values = self._get_ademe_emission_factor_values(complete_data)
             _logger.info("ESG: Creating/Writing records")
@@ -331,10 +332,8 @@ class EsgDatabase(models.Model):
             _logger.error(e)
             raise ValidationError(self.env._("The file format doesn't seem to be correct."))
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'type': 'success',
-                'message': self.env._('ADEME data has been successfully imported.'),
-            },
+            'name': self.env._('Emission Factors'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'esg.emission.factor',
+            'views': [(self.env.ref('esg.emission_factor_list_view').id, 'list')],
         }
