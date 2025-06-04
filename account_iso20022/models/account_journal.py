@@ -135,14 +135,16 @@ class AccountJournal(models.Model):
         GrpHdr.append(self._get_InitgPty(payment_method_code))
 
         # Create one PmtInf XML block per execution date, per currency
+        eur_currency = self.env.ref('base.EUR')
+        chf_currency = self.env.ref('base.CHF')
         payments_date_instr_wise = defaultdict(list)
         today = fields.Date.today()
         for payment in payments:
             required_payment_date = max(payment['payment_date'], today)
-            currency = payment['currency_id'] or self.company_id.currency_id.id
+            currency_id = payment['currency_id'] or self.company_id.currency_id.id
             priority = payment['iso20022_priority']
-            payments_date_instr_wise[(required_payment_date, currency, priority)].append(payment)
-        for count, ((payment_date, _currency, priority), payments_list) in enumerate(payments_date_instr_wise.items()):
+            payments_date_instr_wise[required_payment_date, currency_id, priority].append(payment)
+        for count, ((payment_date, currency_id, priority), payments_list) in enumerate(payments_date_instr_wise.items()):
             PmtInf = etree.SubElement(CstmrCdtTrfInitn, "PmtInf")
             PmtInfId = etree.SubElement(PmtInf, "PmtInfId")
             PmtInfId.text = (val_MsgId + str(self.id) + str(count))[-30:]
@@ -155,21 +157,31 @@ class AccountJournal(models.Model):
             CtrlSum = etree.SubElement(PmtInf, "CtrlSum")
             CtrlSum.text = self._get_CtrlSum(payments_list)
 
-            PmtTpInf = self._get_PmtTpInf(payment_method_code, priority)
+            group_payment_method_code = payment_method_code
+            if payment_method_code == 'iso20022_ch':
+                # The Swiss ISO20022 implementation considers SEPA as a subset of what it allows (payment type S),
+                # as well as more generic ISO20022 payments (payment type X). To handle that, we change the payment_method_code
+                # dynamically when adding the grouped payments to the XML file.
+                if currency_id == eur_currency.id:
+                    group_payment_method_code = 'sepa_ct'
+                elif currency_id != chf_currency.id:
+                    group_payment_method_code = 'iso20022'
+
+            PmtTpInf = self._get_PmtTpInf(group_payment_method_code, priority)
             if len(PmtTpInf) != 0:  # Boolean conversion from etree element triggers a deprecation warning ; this is the proper way
                 PmtInf.append(PmtTpInf)
 
-            ReqdExctnDt = self._get_ReqdExctnDt_content(payment_date, payment_method_code)
+            ReqdExctnDt = self._get_ReqdExctnDt_content(payment_date, group_payment_method_code)
             PmtInf.append(ReqdExctnDt)
 
-            PmtInf.append(self._get_Dbtr(payment_method_code))
+            PmtInf.append(self._get_Dbtr(group_payment_method_code))
             PmtInf.append(self._get_DbtrAcct())
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
             FinInstnId = etree.SubElement(DbtrAgt, "FinInstnId")
             bank_account = self.bank_account_id
-            bic_code = self._get_cleaned_bic_code(bank_account, payment_method_code)
+            bic_code = self._get_cleaned_bic_code(bank_account, group_payment_method_code)
             if bic_code:
-                BIC = etree.SubElement(FinInstnId, self._get_bic_tag(payment_method_code))
+                BIC = etree.SubElement(FinInstnId, self._get_bic_tag(group_payment_method_code))
                 BIC.text = bic_code
             else:
                 Othr = etree.SubElement(FinInstnId, "Othr")
@@ -183,12 +195,12 @@ class AccountJournal(models.Model):
             unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
             unique_chrgbr = unique_chrgbr_values.pop() if len(unique_chrgbr_values) == 1 else None
             if unique_chrgbr:
-                PmtInf.append(self._get_ChrgBr(payment_method_code, unique_chrgbr))
+                PmtInf.append(self._get_ChrgBr(group_payment_method_code, unique_chrgbr))
 
             # One CdtTrfTxInf per transaction
             for payment in payments_list:
                 PmtInf.append(self._get_CdtTrfTxInf(
-                    PmtInfId, payment, payment_method_code, include_charge_bearer=not unique_chrgbr
+                    PmtInfId, payment, group_payment_method_code, include_charge_bearer=not unique_chrgbr
                 ))
         return Document
 

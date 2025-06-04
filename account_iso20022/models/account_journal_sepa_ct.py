@@ -51,7 +51,7 @@ class AccountJournal(models.Model):
         return CdtrAgt
 
     def _get_ChrgBr(self, payment_method_code, forced_value):
-        if not forced_value and payment_method_code == 'sepa_ct':
+        if payment_method_code == 'sepa_ct':
             ChrgBr = etree.Element("ChrgBr")
             ChrgBr.text = "SLEV"
             return ChrgBr
