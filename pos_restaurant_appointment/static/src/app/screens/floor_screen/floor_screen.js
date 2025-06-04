@@ -2,7 +2,6 @@ import { patch } from "@web/core/utils/patch";
 import { FloorScreen } from "@pos_restaurant/app/screens/floor_screen/floor_screen";
 import { useSubEnv } from "@odoo/owl";
 import { getMin } from "@point_of_sale/utils";
-import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
 const { DateTime } = luxon;
 
 patch(FloorScreen.prototype, {
@@ -45,11 +44,8 @@ patch(FloorScreen.prototype, {
         }
         const startOfToday = DateTime.now().set({ hours: 0, minutes: 0, seconds: 0 });
         appointments.map((appointment) => {
-            if (
-                deserializeDateTime(appointment.start).toFormat("yyyy-MM-dd") <
-                DateTime.now().toFormat("yyyy-MM-dd")
-            ) {
-                appointment.start = serializeDateTime(startOfToday);
+            if (appointment.start < startOfToday) {
+                appointment.start = startOfToday;
             }
         });
         const dt_now = DateTime.now();
@@ -58,7 +54,7 @@ patch(FloorScreen.prototype, {
             .set({ hours: 0, minutes: 0, seconds: 0 }).ts;
         const possible_appointments = appointments.filter((a) => {
             const ts_now = dt_now - (a.duration / 2) * 3600000;
-            const dt_ts = deserializeDateTime(a.start).ts;
+            const dt_ts = a.start.ts;
             return (
                 dt_ts > ts_now &&
                 dt_ts < dt_tomorrow_ts &&
@@ -70,7 +66,7 @@ patch(FloorScreen.prototype, {
             return false;
         }
         return getMin(possible_appointments, {
-            criterion: (a) => deserializeDateTime(a.start).ts,
+            criterion: (a) => a.start.ts,
         });
     },
     getFormattedDate(date) {
@@ -78,7 +74,7 @@ patch(FloorScreen.prototype, {
     },
     isCustomerLate(table) {
         const dateNow = DateTime.now();
-        const dateStart = deserializeDateTime(this.getFirstAppointment(table)?.start).ts;
+        const dateStart = this.getFirstAppointment(table)?.start;
         return (
             dateNow > dateStart && this.getFirstAppointment(table).appointment_status === "booked"
         );

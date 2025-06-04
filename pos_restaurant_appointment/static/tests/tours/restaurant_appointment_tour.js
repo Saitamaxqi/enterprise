@@ -39,6 +39,7 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
             },
             Chrome.clickPlanButton(),
             RestaurantAppointment.appointmentLabel(5, "Test Lunch"),
+            RestaurantAppointment.checkAppointmentLabelNotPresent(4, "Tomorrow Appointment"),
 
             // Going back to the table, it should still be possible to add items
             FloorScreen.clickTable("4"),

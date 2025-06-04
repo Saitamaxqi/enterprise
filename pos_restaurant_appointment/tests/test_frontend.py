@@ -33,22 +33,40 @@ class TestUi(TestFrontend):
             'appointment_type_id': cls.appointment_type.id,
         })
 
+        cls.main_floor_table_4 = cls.env['restaurant.table'].search([
+            ('table_number', '=', 4),
+            ('floor_id', '=', cls.main_floor.id)
+        ], limit=1)
+
+        cls.table_4_resource = cls.env['appointment.resource'].create({
+            'name': 'Test Main Floor - Table 4',
+            'capacity': 2,
+            'appointment_type_ids': [(6, 0, [cls.appointment_type.id])],
+            'pos_table_ids': [(6, 0, [cls.main_floor_table_4.id])]
+        })
+
         cls.table_5_resource = cls.env['appointment.resource'].create({
             'name': 'Test Main Floor - Table 5',
             'capacity': 2,
             'appointment_type_ids': [(6, 0, [cls.appointment_type.id])],
             'pos_table_ids': [(6, 0, [cls.main_floor_table_5.id])]
         })
+
     def test_pos_restaurant_appointment_tour_basic(self):
         now = fields.Datetime.now()
-        self.env['calendar.event'].create({
+        self.env['calendar.event'].create([{
                     'name': "Test Lunch",
                     'start': now + relativedelta(minutes=30),
                     'stop': now + relativedelta(minutes=150),
                     'appointment_type_id': self.appointment_type.id,
                     'booking_line_ids': [(0, 0, {'appointment_resource_id': self.table_5_resource.id, 'capacity_reserved': 2})],
-        })
-
+                }, {
+                    'name': "Tomorrow Appointment",
+                    'start': now + relativedelta(days=1, minutes=30),
+                    'stop': now + relativedelta(days=1, minutes=90),
+                    'appointment_type_id': self.appointment_type.id,
+                    'booking_line_ids': [(0, 0, {'appointment_resource_id': self.table_4_resource.id, 'capacity_reserved': 2})],
+                }])
         # open a session, the /pos/ui controller will redirect to it
         self.pos_config.with_user(self.pos_admin).open_ui()
 
