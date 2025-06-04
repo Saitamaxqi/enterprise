@@ -11,7 +11,7 @@
             <t t-set-slot="content">
                 <div class="dropdown-item gap-2 align-items-center">
                     <label>Partners</label>
-                    <MultiRecordSelector t-props="getMultiRecordSelectorProps('res.partner', 'partner_ids')" domain="[['parent_id', '=', false]]"/>
+                    <MultiRecordSelector t-props="getMultiRecordSelectorProps('res.partner', 'partner_ids')" domain="['|', ['parent_id', '=', false], ['is_company', '=', true]]"/>
                 </div>
 
                 <div class="dropdown-item gap-2 align-items-center">
