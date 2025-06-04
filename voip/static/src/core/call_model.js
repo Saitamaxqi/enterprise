@@ -63,6 +63,7 @@ export class Call extends Record {
                 case "terminated": {
                     const softphone = this.store.env.services.voip.softphone;
                     softphone.showSummary(this);
+                    softphone.resetInCallViewKeypad();
                     break;
                 }
                 default:

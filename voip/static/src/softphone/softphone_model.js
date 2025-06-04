@@ -92,6 +92,11 @@ export class Softphone {
         });
     }
 
+    resetInCallViewKeypad() {
+        this.inCallView.keypad.isOpen = false;
+        this.inCallView.keypad.state.reset();
+    }
+
     show() {
         this.isDisplayed = true;
         this.shouldFocus = true;
