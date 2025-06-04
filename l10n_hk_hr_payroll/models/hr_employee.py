@@ -57,7 +57,7 @@ class HrEmployee(models.Model):
     )
     l10n_hk_mpf_manulife_account = fields.Char(
         string="MPF Manulife Account",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         copy=False,
     )
