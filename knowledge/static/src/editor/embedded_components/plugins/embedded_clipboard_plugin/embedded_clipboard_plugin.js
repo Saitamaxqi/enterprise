@@ -3,6 +3,7 @@ import { getBaseContainerSelector } from "@html_editor/utils/base_container";
 import { closestElement } from "@html_editor/utils/dom_traversal";
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 export class EmbeddedClipboardPlugin extends Plugin {
     static id = "embeddedClipboard";
@@ -15,6 +16,7 @@ export class EmbeddedClipboardPlugin extends Plugin {
                 description: _t("Add a clipboard section"),
                 icon: "fa-pencil-square",
                 run: this.insertClipboard.bind(this),
+                isAvailable: isHtmlContentSupported,
             },
         ],
         powerbox_items: [

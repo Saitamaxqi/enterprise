@@ -40,6 +40,7 @@ import { TablePlugin } from "@html_editor/main/table/table_plugin";
 import { withSequence } from "@html_editor/utils/resource";
 import { ReportRecordNavigation } from "../report_editor_xml/report_record_navigation";
 import { CheckBox } from "@web/core/checkbox/checkbox";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 class __Record extends _Record.components._Record {
     setup() {
@@ -496,6 +497,9 @@ export class ReportEditorWysiwyg extends Component {
 
     getUserCommands() {
         const isAvailable = (selection) => {
+            if (!isHtmlContentSupported(selection)) {
+                return;
+            }
             const { anchorNode } = selection;
             const { availableQwebVariables } = this.getQwebVariables(
                 anchorNode.nodeType === 1 ? anchorNode : anchorNode.parentElement

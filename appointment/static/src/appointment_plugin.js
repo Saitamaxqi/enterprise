@@ -2,6 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { Plugin } from "@html_editor/plugin";
 import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 class AppointmentFormViewDialog extends FormViewDialog {
     static props = {
@@ -18,7 +19,7 @@ class AppointmentFormViewDialog extends FormViewDialog {
 class AppointmentPlugin extends Plugin {
     static id = "appointment";
     static dependencies = ["selection", "link", "dialog"];
-     resources = {
+    resources = {
         user_commands: [
             {
                 id: "insertAppointment",
@@ -26,6 +27,7 @@ class AppointmentPlugin extends Plugin {
                 description: _t("Add a specific appointment"),
                 icon: "fa-calendar",
                 run: this.addAppointment.bind(this),
+                isAvailable: isHtmlContentSupported,
             },
         ],
         powerbox_items: [

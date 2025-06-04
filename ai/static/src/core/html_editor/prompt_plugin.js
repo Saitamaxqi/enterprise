@@ -1,6 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { Plugin } from "@html_editor/plugin";
 import { DYNAMIC_PLACEHOLDER_PLUGINS } from "@html_editor/backend/plugin_sets";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 export class PromptPlugin extends Plugin {
     static id = "prompt";
@@ -21,6 +22,7 @@ export class PromptPlugin extends Plugin {
                         "o_editor_prompt_content"
                     );
                 },
+                isAvailable: isHtmlContentSupported,
             },
         ],
         powerbox_items: [

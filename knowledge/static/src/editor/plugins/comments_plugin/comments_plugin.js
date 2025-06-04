@@ -19,6 +19,7 @@ import { uniqueId } from "@web/core/utils/functions";
 import { effect } from "@web/core/utils/reactive";
 import { batched } from "@web/core/utils/timing";
 import { withSequence } from "@html_editor/utils/resource";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 function isAllowedBeaconPosition(node) {
     return isPhrasingContent(node) || isParagraphRelatedElement(node) || isListItemElement(node);
@@ -43,6 +44,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 id: "addComments",
                 icon: "fa-commenting-o",
                 run: this.addCommentToSelection.bind(this),
+                isAvailable: isHtmlContentSupported,
             },
         ],
         toolbar_groups: [

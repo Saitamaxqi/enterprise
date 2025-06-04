@@ -4,6 +4,7 @@ import { ItemCalendarPropsDialog } from "@knowledge/components/item_calendar_pro
 import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 function isAvailable(selection) {
     return !closestElement(selection.anchorNode, ".o_editor_banner, table, [data-embedded]");
@@ -22,6 +23,7 @@ export class EmbeddedViewPlugin extends Plugin {
                 run: () => {
                     this.promptInsertEmbeddedView("kanban", true);
                 },
+                isAvailable: isHtmlContentSupported,
             },
             {
                 id: "insertEmbeddedViewCards",
@@ -31,6 +33,7 @@ export class EmbeddedViewPlugin extends Plugin {
                 run: () => {
                     this.promptInsertEmbeddedView("kanban");
                 },
+                isAvailable: isHtmlContentSupported,
             },
             {
                 id: "insertEmbeddedViewList",
@@ -40,6 +43,7 @@ export class EmbeddedViewPlugin extends Plugin {
                 run: () => {
                     this.promptInsertEmbeddedView("list");
                 },
+                isAvailable: isHtmlContentSupported,
             },
             {
                 id: "insertEmbeddedViewCalendar",
@@ -49,7 +53,8 @@ export class EmbeddedViewPlugin extends Plugin {
                 run: () => {
                     this.promptInsertEmbeddedCalendarView();
                 },
-            }
+                isAvailable: isHtmlContentSupported,
+            },
         ],
         powerbox_items: [
             {

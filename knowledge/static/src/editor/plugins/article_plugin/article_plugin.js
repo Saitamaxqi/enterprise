@@ -3,6 +3,7 @@ import { rightPos } from "@html_editor/utils/position";
 import { ArticleSearchDialog } from "@knowledge/components/article_search_dialog/article_search_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 const ARTICLE_LINKS_SELECTOR = ".o_knowledge_article_link";
 export class KnowledgeArticlePlugin extends Plugin {
@@ -16,6 +17,7 @@ export class KnowledgeArticlePlugin extends Plugin {
                 description: _t("Insert an Article shortcut"),
                 icon: "fa-newspaper-o",
                 run: this.addArticle.bind(this),
+                isAvailable: isHtmlContentSupported,
             },
         ],
         powerbox_items: [

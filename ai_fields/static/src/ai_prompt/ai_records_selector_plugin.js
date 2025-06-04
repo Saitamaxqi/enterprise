@@ -2,6 +2,7 @@ import { RecordsSelectorPopover } from "@ai_fields/views/records_selector_popove
 import { Plugin } from "@html_editor/plugin";
 import { Domain } from "@web/core/domain";
 import { _t } from "@web/core/l10n/translation";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 export class AIRecordsSelectorPlugin extends Plugin {
     static id = "AIRecordsSelector";
@@ -15,7 +16,8 @@ export class AIRecordsSelectorPlugin extends Plugin {
                 description: _t("Insert records"),
                 icon: "fa-tasks",
                 run: () => this.open(),
-                isAvailable: () => !!this.config.recordsSelectorResModel,
+                isAvailable: (selection) =>
+                    !!this.config.recordsSelectorResModel && isHtmlContentSupported(selection),
             },
         ],
         powerbox_items: { categoryId: "ai_prompt_tools", commandId: "openAIRecordsSelector" },

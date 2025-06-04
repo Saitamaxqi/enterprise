@@ -2,11 +2,12 @@ import { Plugin } from "@html_editor/plugin";
 import { withSequence } from "@html_editor/utils/resource";
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
+import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
 export class ArticleIndexPlugin extends Plugin {
     static id = "articleIndex";
     static dependencies = ["history", "dom"];
-     resources = {
+    resources = {
         user_commands: [
             {
                 id: "insertArticleIndex",
@@ -14,6 +15,7 @@ export class ArticleIndexPlugin extends Plugin {
                 description: _t("Show nested articles"),
                 icon: "fa-list",
                 run: this.insertArticleIndex.bind(this),
+                isAvailable: isHtmlContentSupported,
             },
         ],
         powerbox_categories: [
@@ -26,7 +28,7 @@ export class ArticleIndexPlugin extends Plugin {
             {
                 categoryId: "knowledge",
                 commandId: "insertArticleIndex",
-            }
+            },
         ],
     };
 
