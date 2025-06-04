@@ -368,6 +368,21 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="struct_id" ref="hr_payroll_structure_eg_employee_salary"/>
     </record>
 
+    <record id="l10n_eg_hr_payroll_structure_eg_employee_salary_expenses_reimbursement" model="hr.salary.rule">
+        <field name="name">Expenses Reimbursement</field>
+        <field name="code">EXPENSES</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="sequence">110</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'EXPENSES' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs['EXPENSES'].amount
+result_name = inputs['EXPENSES'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_eg_employee_salary"/>
+    </record>
+
     <record id="l10n_eg_hr_payroll_structure_eg_employee_salary_net_salary" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.NET"/>
         <field name="name">Net Salary</field>
