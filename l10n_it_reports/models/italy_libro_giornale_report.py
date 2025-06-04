@@ -1,5 +1,6 @@
 from datetime import date
-from odoo import models, _
+from odoo import api, models, _
+from odoo.tools import groupby
 
 
 class LibroGiornaleReportHandler(models.AbstractModel):
@@ -9,11 +10,9 @@ class LibroGiornaleReportHandler(models.AbstractModel):
 
     def _get_base_line(self, report, options, export_type, document, line_entry, line_index, even, has_taxes):
         """Modify base line data for the report"""
-        fixed_even_value = 2  # Fixed value for report layout color
-        line = super()._get_base_line(report, options, export_type, document, line_entry, line_index, fixed_even_value, has_taxes)
 
-        # Remove document key and add other necessary fields
-        line.pop("document", None)  # Safely remove document if it exists
+        line = super()._get_base_line(report, options, export_type, document, line_entry, line_index, even, has_taxes)
+
         line.update({
             "date": {'data': line_entry['date']},
             "line_number": {'data': line_index + 1},
@@ -22,7 +21,7 @@ class LibroGiornaleReportHandler(models.AbstractModel):
             "display_type": {'data': line_entry['display_type']},
             "credit_float": line_entry['credit'],
             "debit_float": line_entry['debit'],
-            "journal_id": line_entry['journal_id']  # To sort journals
+            "journal_id": line_entry['journal_id']
         })
 
         return line
@@ -30,12 +29,11 @@ class LibroGiornaleReportHandler(models.AbstractModel):
     def _get_columns_for_journal(self, journal, export_type='pdf'):
         # Update columns
         columns =[
-            {'name': _('Document'), 'label': 'journal_entry', 'class': 'o_bold'},
-            {'name': _('Date'), 'label': 'date'},
+            {'name': _('Document'), 'label': 'document'},
             {'name': _('Line'), 'label': 'line_number', 'class': 'o_fixed_column_width'},
             {'name': _('Account Code'), 'label': 'account_code'},
             {'name': _('Account Name'), 'label': 'account_name'},
-            {'name': _('Name'), 'label': 'name', 'class': 'o_overflow_name'},
+            {'name': _('Name'), 'label': 'name'},
             {'name': _('Debit'), 'label': 'debit', 'class': 'o_right_alignment '},
             {'name': _('Credit'), 'label': 'credit', 'class': 'o_right_alignment '}
         ]
@@ -51,7 +49,8 @@ class LibroGiornaleReportHandler(models.AbstractModel):
 
         libro_giornale_data = self.build_libro_giornale_data(journals_vals)
         sorted_lines = self.sort_libro_giornale_lines(libro_giornale_data['lines'])
-        libro_giornale_data['lines'] = self.assign_sequential_numbers(sorted_lines)
+
+        libro_giornale_data['lines'] = self._post_process_sorted_libro_giornale_lines(sorted_lines)
 
         total_credit, total_debit = self.calculate_totals(libro_giornale_data['lines'])
         libro_giornale_data['lines'].append({
@@ -118,18 +117,6 @@ class LibroGiornaleReportHandler(models.AbstractModel):
         total_debit = sum(line.get('debit_float', 0.0) for line in lines)
         return total_credit, total_debit
 
-    def assign_sequential_numbers(self, report_lines):
-        """
-        Assigns a sequential line number to each report line.
-        """
-        line_number = 1
-        for line in report_lines:
-            if line.get("account_name"):
-                line["line_number"] = {'data': line_number}
-                line_number += 1
-
-        return report_lines
-
     def _custom_line_postprocessor(self, report, options, lines):
         """Post-process report lines (e.g., remove global tax summary)"""
         report_lines = super()._custom_line_postprocessor(report, options, lines)
@@ -141,3 +128,45 @@ class LibroGiornaleReportHandler(models.AbstractModel):
 
     def _should_use_bank_journal_export(self, journal_vals):
         return False
+
+    @api.model
+    def _post_process_sorted_libro_giornale_lines(self, lines):
+        """
+            Perform post-processing on sorted lines.
+            - Assigns alternating line classes based on journal_entry groups.
+            - Sets 'document.data' for the first and last lines of each group.
+            Assigns sequential 'line_number' if 'account_name' is present.
+        """
+        if not lines:
+            return
+
+        is_odd = True
+        line_number = 1
+
+        # Group lines by journal_entry
+        for move, move_lines in groupby(lines, key=lambda l: l.get('journal_entry', {}).get('data')):
+            for i, line in enumerate(move_lines):
+                # Assign line class
+                line['line_class'] = 'o_odd' if is_odd else 'o_even'
+
+                if 'account_name' in line:
+                    line['line_number'] = {'data': line_number}
+                    line_number += 1
+
+                # Custom logic for the first two lines in the group
+                if len(move_lines) > 1:
+                    if i == 0:
+                        line['document'] = {
+                            'data': line.get('journal_entry', {}).get('data'),
+                            'class': 'o_bold'
+                        }
+                    elif i == 1:
+                        line['document'] = {
+                            'data': line.get('date', {}).get('data'),
+                        }
+                    else:
+                        line['document'] = {}
+
+            is_odd = not is_odd
+
+        return lines
