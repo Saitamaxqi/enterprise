@@ -690,6 +690,15 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             self.start_tour('/odoo/barcode', 'test_rfid_inventory_scan_sgtin', login='admin', timeout=180)
             self.assertEqual(self.call_count, 2)
 
+    def test_inventory_count_with_line_deletion(self):
+        """
+        Check that the quant data of the barcode cache is not
+        corrupted by line deletions.
+        """
+        # Put 5 units of prodcut1 in stock and start an inventory count
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 5)
+        self.start_tour("/odoo/barcode", 'test_inventory_count_with_line_deletion', login='admin')
+
     # === GS1 TESTS ===#
     def test_gs1_inventory_gtin_8(self):
         """ Simulate scanning a product with his gs1 barcode """

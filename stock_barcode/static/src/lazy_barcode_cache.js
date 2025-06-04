@@ -57,7 +57,14 @@ export default class LazyBarcodeCache {
                     if (!this.dbQuantCache[product_id][location_id]) {
                         this.dbQuantCache[product_id][location_id] = [];
                     }
-                    this.dbQuantCache[product_id][location_id].push(record);
+                    const matchIndex = this.dbQuantCache[product_id][location_id].findIndex(
+                        (rec) => rec.id === record.id
+                    );
+                    if (matchIndex !== -1) {
+                        this.dbQuantCache[product_id][location_id][matchIndex] = record;
+                    } else {
+                        this.dbQuantCache[product_id][location_id].push(record);
+                    }
                 } else if (model === "product.product" && cacheData["stock.quant"]) {
                     if (!this.dbQuantCache[record.id]) {
                         this.dbQuantCache[record.id] = {};

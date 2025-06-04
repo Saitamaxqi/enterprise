@@ -1797,3 +1797,44 @@ registry.category("web_tour.tours").add("test_correct_inventory_with_packages", 
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_inventory_count_with_line_deletion", {
+    steps: () => [
+        {
+            trigger: ".o_button_inventory",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan product1",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(1);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "1/5");
+            },
+        },
+        {
+            trigger: ".o_remove_unit",
+            run: "click",
+        },
+        {
+            trigger: ".o_delete_line",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_client_action:not(:has(.o_barcode_line))",
+            run: "scan product1",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(1);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "1");
+            },
+        },
+    ],
+});
