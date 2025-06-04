@@ -2032,6 +2032,18 @@ class AccountReport(models.Model):
         # Sort the buttons list by sequence, for rendering
         options['buttons'] = sorted(options['buttons'], key=lambda x: x.get('sequence', 90))
 
+        # Sanitizing date_from and date_to since they need to be JSON-serializable when exporting the report
+        # on the server side, since the ORM converts them to strings automatically when sending them to the client.
+        for date_dict in (
+            [options.get('date', {})] +
+            [group_data['forced_options']['date'] for group_data in options['column_groups'].values() if group_data.get('forced_options', {}).get('date')]
+        ):
+            if (date_from := date_dict.get('date_from')) and not isinstance(date_from, str):
+                date_dict['date_from'] = fields.Date.to_string(date_from)
+
+            if (date_to := date_dict.get('date_to')) and not isinstance(date_to, str):
+                date_dict['date_to'] = fields.Date.to_string(date_to)
+
         return options
 
     def _get_options_initializers_in_sequence(self):

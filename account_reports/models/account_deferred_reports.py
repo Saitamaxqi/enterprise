@@ -229,13 +229,13 @@ class AccountDeferredReportHandler(models.AbstractModel):
             'name': _('Before'),
             'expression_label': 'before',
             'date_from': DEFERRED_DATE_MIN,
-            'date_to': str(fields.Date.to_date(options['columns'][0]['date_from']) - relativedelta(days=1)),
+            'date_to': fields.Date.to_string(fields.Date.to_date(options['columns'][0]['date_from']) - relativedelta(days=1)),
         }]
         later_column = [{
             **options['columns'][0],
             'name': _('Later'),
             'expression_label': 'later',
-            'date_from': str(fields.Date.to_date(options['columns'][-1]['date_to']) + relativedelta(days=1)),
+            'date_from': fields.Date.to_string(fields.Date.to_date(options['columns'][-1]['date_to']) + relativedelta(days=1)),
             'date_to': DEFERRED_DATE_MAX,
         }]
         recognized_column = [{
