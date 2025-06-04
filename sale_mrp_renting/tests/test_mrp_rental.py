@@ -159,13 +159,14 @@ class TestRentalKits(TestRentalCommon):
         rental.order_line.write({'product_uom_qty': 1, 'is_rental': True})
         rental.action_confirm()
 
+        # The BoM line sequence should be respected when exploding a BoM that contains a kit.
         self.assertRecordValues(rental.picking_ids.move_ids, [
-            {'product_id': self.component_2.id, 'product_qty': 2, 'bom_line_id': bom_line_02.id, 'location_id': stock_location.id},
             {'product_id': self.component_2.id, 'product_qty': 1, 'bom_line_id': bom_line_03.id, 'location_id': stock_location.id},
             {'product_id': component_3.id, 'product_qty': 1, 'bom_line_id': bom_line_04.id, 'location_id': stock_location.id},
-            {'product_id': self.component_2.id, 'product_qty': 2, 'bom_line_id': bom_line_02.id, 'location_id': rental_location.id},
+            {'product_id': self.component_2.id, 'product_qty': 2, 'bom_line_id': bom_line_02.id, 'location_id': stock_location.id},
             {'product_id': self.component_2.id, 'product_qty': 1, 'bom_line_id': bom_line_03.id, 'location_id': rental_location.id},
             {'product_id': component_3.id, 'product_qty': 1, 'bom_line_id': bom_line_04.id, 'location_id': rental_location.id},
+            {'product_id': self.component_2.id, 'product_qty': 2, 'bom_line_id': bom_line_02.id, 'location_id': rental_location.id},
         ])
 
     def test_pickup_kit_from_rental(self):
