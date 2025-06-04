@@ -2027,6 +2027,11 @@ msgid "Without fiscal effects"
 msgstr ""
 
 #. module: l10n_mx_edi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.l10n_mx_fiscal_regime_receptor
+msgid "Without fiscal obligations"
+msgstr ""
+
+#. module: l10n_mx_edi
 #. odoo-python
 #: code:addons/l10n_mx_edi/models/account_move.py:0
 msgid "XML CFDI"
