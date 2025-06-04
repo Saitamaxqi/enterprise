@@ -723,7 +723,7 @@ class AccountJournalReportHandler(models.AbstractModel):
             if journal['tax_summary'].get('tax_grid_summary_lines'):
                 columns.append({'name': _('Tax Grids'), 'label': 'tax_grids'})
 
-        if journal['type'] == 'bank':
+        if self._should_use_bank_journal_export(journal):
             columns.append({
                 'name': _('Balance'),
                 'label': 'balance',
@@ -738,6 +738,10 @@ class AccountJournalReportHandler(models.AbstractModel):
                 })
 
         return columns
+
+    def _should_use_bank_journal_export(self, journal_vals):
+        """Returns True if the journal requires bank-specific export logic."""
+        return journal_vals.get('type') == 'bank'
 
     def _get_export_lines_for_journal(self, report, options, export_type, journal_vals, account_move_vals_list):
         """
@@ -755,7 +759,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         """
         lines = []
 
-        if journal_vals['type'] == 'bank':
+        if self._should_use_bank_journal_export(journal_vals):
             return self._get_export_lines_for_bank_journal(report, options, export_type, journal_vals, account_move_vals_list)
 
         total_credit = 0

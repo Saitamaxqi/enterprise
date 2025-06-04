@@ -189,3 +189,18 @@ class TestLibroGiornaleReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_libro_giornale_with_bank_journal(self):
+        self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2024-01-07',
+            'line_ids': [
+                Command.create({'debit': 100.0, 'credit': 0.0, 'account_id': self.company_data['default_journal_bank'].default_account_id.id}),
+                Command.create({'debit': 0.0, 'credit': 100.0, 'account_id': self.company_data['default_account_revenue'].id}),
+            ],
+        }).action_post()
+        # Get report data
+        lines = self._get_libro_giornale_lines('2024-01-01', '2024-01-31')
+        # Assert the final row is the total row
+        total_row = lines[-1]
+        self.assertEqual(total_row['debit']['data'], total_row['credit']['data'])

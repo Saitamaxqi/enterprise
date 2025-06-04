@@ -7,16 +7,6 @@ class LibroGiornaleReportHandler(models.AbstractModel):
     _inherit = 'account.journal.report.handler'
     _description = 'Libro Giornale Report Handler'
 
-    def _custom_options_initializer(self, report, options, previous_options):
-        """Initialize custom export buttons for Libro Giornale"""
-        super()._custom_options_initializer(report, options, previous_options=previous_options)
-
-        xlsx_button_option = next(button_opt for button_opt in options['buttons'] if button_opt.get('action_param') == 'export_to_xlsx')
-        pdf_button_option = next(button_opt for button_opt in options['buttons'] if button_opt.get('action_param') == 'export_to_pdf')
-        # Rename the PDF and XLSX Buttons to Libro Giornale PDF/XLSX
-        pdf_button_option['name'] = _('Libro Giornale PDF')
-        xlsx_button_option['name'] = _('Libro Giornale XLSX')
-
     def _get_base_line(self, report, options, export_type, document, line_entry, line_index, even, has_taxes):
         """Modify base line data for the report"""
         fixed_even_value = 2  # Fixed value for report layout color
@@ -148,3 +138,6 @@ class LibroGiornaleReportHandler(models.AbstractModel):
             if "tax_report_section" not in report._get_markup(line['id'])
         ]
         return report_lines_tax_free
+
+    def _should_use_bank_journal_export(self, journal_vals):
+        return False
