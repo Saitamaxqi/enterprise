@@ -35,7 +35,7 @@ class AccountMoveLine(models.Model):
         super(AccountMoveLine, lines_to_compute)._compute_tax_ids()
 
     @api.model
-    def _prepare_aml_shadowing_for_report(self, change_equivalence_dict, prefix_fields=False):
+    def _prepare_aml_shadowing_for_report(self, change_equivalence_dict, prefix_fields=False, prefix_fields_to_insert=True):
         """ Prepares the fields lists for creating a temporary table shadowing the account_move_line one.
         This is used to switch the computation mode of the reports, with analytics or financial budgets, for example.
 
@@ -43,7 +43,8 @@ class AccountMoveLine(models.Model):
                                         - aml_field: is a string containing the name of field of account.move.line
                                         - sql_equivalence: is the value to use to shadow aml_field. It can be an SQL object; if
                                           it's not, it'll be escaped in the query.
-        :param prefix_fields: True if you want the returned fields to be prefixed with the `account_move_line` table.
+        :param prefix_fields: True if you want the returned stored fields to be prefixed with the `account_move_line` table.
+        :param prefix_fields_to_insert: True if you want the returned fields to insert to be prefixed with the `account_move_line` table
 
         :return: A tuple of 2 SQL objects, so that:
                  - The first one is the fields list to pass into the INSERT TO part of the query filling up the temporary table
@@ -56,11 +57,13 @@ class AccountMoveLine(models.Model):
 
         fields_to_insert = []
         for fname in stored_fields:
+            name = SQL('"account_move_line.%s"', SQL(fname)) if prefix_fields_to_insert else SQL(fname)
+
             if fname in change_equivalence_dict:
                 fields_to_insert.append(SQL(
                     "%(original)s AS %(asname)s",
                     original=change_equivalence_dict[fname],
-                    asname=SQL('"account_move_line.%s"', SQL(fname)),
+                    asname=name,
                 ))
             else:
                 line_field = line_fields[fname]
@@ -72,7 +75,7 @@ class AccountMoveLine(models.Model):
                 fields_to_insert.append(SQL(
                     "CAST(NULL AS %(typecast)s) AS %(fname)s",
                     typecast=typecast,
-                    fname=SQL('"account_move_line.%s"', SQL(fname)),
+                    fname=name,
                 ))
 
         return (

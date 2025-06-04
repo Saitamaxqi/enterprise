@@ -1972,10 +1972,7 @@ class AccountReport(models.Model):
     # OPTIONS: READONLY QUERY
     ####################################################
     def _init_options_readonly_query(self, options, previous_options):
-        options['readonly_query'] = (
-            options['currency_table']['type'] == 'monocurrency'
-            and not any(budget_opt['selected'] for budget_opt in options.get('budgets', []))
-        )
+        options['readonly_query'] = True
 
     ####################################################
     # OPTIONS: CORE
@@ -2180,8 +2177,7 @@ class AccountReport(models.Model):
         query = self.env['account.move.line']._where_calc(domain)
 
         if options.get('compute_budget'):
-            self._create_report_budget_temp_table(options)
-            query._tables['account_move_line'] = SQL.identifier('account_report_budget_temp_aml')
+            query._tables['account_move_line'] = self._create_aml_shadowing_query_for_budget(options)
             query.add_where(SQL(
                 "%s AND budget_id = %s",
                 query.where_clause,
@@ -2193,12 +2189,8 @@ class AccountReport(models.Model):
 
         return query
 
-    def _create_report_budget_temp_table(self, options):
-        self.env.cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name='account_report_budget_temp_aml'")
-        if self.env.cr.fetchone():
-            return
-
-        stored_aml_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report({
+    def _create_aml_shadowing_query_for_budget(self, options):
+        _stored_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report({
             'id': SQL.identifier("id"),
             'balance': SQL.identifier('amount'),
             'company_id': self.env.company.id,
@@ -2207,36 +2199,20 @@ class AccountReport(models.Model):
             'account_id': SQL.identifier("account_id"),
             'debit': SQL("CASE WHEN (amount > 0) THEN amount else 0 END"),
             'credit': SQL("CASE WHEN (amount < 0) THEN -amount else 0 END"),
-        })
+        }, prefix_fields_to_insert=False)
 
-        self.env.cr.execute(SQL(
+        queries = [SQL(
             """
-                -- Create a temporary table, dropping not null constraints because we're not filling those columns
-                CREATE TEMPORARY TABLE IF NOT EXISTS account_report_budget_temp_aml () inherits (account_move_line) ON COMMIT DROP;
-                ALTER TABLE account_report_budget_temp_aml NO INHERIT account_move_line;
-                ALTER TABLE account_report_budget_temp_aml ALTER COLUMN move_id DROP NOT NULL;
-                ALTER TABLE account_report_budget_temp_aml ALTER COLUMN currency_id DROP NOT NULL;
-                ALTER TABLE account_report_budget_temp_aml ALTER COLUMN journal_id DROP NOT NULL;
-                ALTER TABLE account_report_budget_temp_aml ALTER COLUMN display_type DROP NOT NULL;
-                ALTER TABLE account_report_budget_temp_aml ADD budget_id INTEGER NOT NULL;
-
-                INSERT INTO account_report_budget_temp_aml (%(stored_aml_fields)s, budget_id)
                 SELECT %(fields_to_insert)s, budget_id
                 FROM account_report_budget_item
-                WHERE budget_id IN %(available_budget_ids)s;
-
-                -- Create a supporting index to avoid seq.scans
-                CREATE INDEX IF NOT EXISTS account_report_budget_temp_aml__composite_idx ON account_report_budget_temp_aml (account_id, journal_id, date, company_id);
-                -- Update statistics for correct planning
-                ANALYZE account_report_budget_temp_aml
+                WHERE budget_id IN %(available_budget_ids)s
             """,
-            stored_aml_fields=stored_aml_fields,
             fields_to_insert=fields_to_insert,
             available_budget_ids=tuple(budget_option['id'] for budget_option in options['budgets']),
-        ))
+        )]
 
         if options.get('show_all_accounts'):
-            stored_aml_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report({
+            _stored_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report({
                 # Using nextval will consume a sequence number, we decide to do it to avoid comparing apples and oranges
                 'id': SQL("(SELECT nextval('account_report_budget_item_id_seq'))"),
                 'balance': SQL("0"),
@@ -2246,24 +2222,22 @@ class AccountReport(models.Model):
                 'account_id': SQL.identifier("accounts", "id"),
                 'debit': SQL("0"),
                 'credit': SQL("0"),
-            })
+            }, prefix_fields_to_insert=False)
             accounts_subquery = self.env['account.account']._where_calc([
                 ('company_ids', 'in', self.get_report_company_ids(options)),
                 ('internal_group', 'in', ['income', 'expense']),
             ])
-            self.env.cr.execute(SQL(
+
+            queries.append(SQL(
                 """
-                -- Insert dynamic combinations of account_id and budget_id into the temporary table
-                INSERT INTO account_report_budget_temp_aml (%(stored_aml_fields)s, budget_id)
-                     SELECT %(fields_to_insert)s, budgets.id AS budget_id
-                       FROM (%(accounts_subquery)s) AS accounts
-                 CROSS JOIN (
-                                SELECT id
-                                  FROM account_report_budget
-                                 WHERE id IN %(available_budget_ids)s
-                            ) AS budgets
+                    SELECT %(fields_to_insert)s, budgets.id AS budget_id
+                    FROM (%(accounts_subquery)s) AS accounts
+                    CROSS JOIN (
+                        SELECT id
+                        FROM account_report_budget
+                        WHERE id IN %(available_budget_ids)s
+                    ) AS budgets
                 """,
-                stored_aml_fields=stored_aml_fields,
                 fields_to_insert=fields_to_insert,
                 accounts_subquery=accounts_subquery.select(),
                 available_budget_ids=tuple(budget_option['id'] for budget_option in options['budgets']),
@@ -2271,6 +2245,8 @@ class AccountReport(models.Model):
                 expense='expense%',
                 company_ids=tuple(),
             ))
+
+        return SQL('(%s)', SQL(' UNION ALL ').join(queries))
 
     ####################################################
     # LINE IDS MANAGEMENT HELPERS

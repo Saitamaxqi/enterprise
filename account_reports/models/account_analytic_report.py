@@ -46,10 +46,6 @@ class AccountReport(models.AbstractModel):
 
         self._create_column_analytic(options)
 
-    def _init_options_readonly_query(self, options, previous_options):
-        super()._init_options_readonly_query(options, previous_options)
-        options['readonly_query'] = options['readonly_query'] and not options.get('analytic_groupby_option')
-
     def _create_column_analytic(self, options):
         """ Creates the analytic columns for each plan or account in the filters.
         This will duplicate all previous columns and adding the analytic accounts in the domain of the added columns.
@@ -99,12 +95,10 @@ class AccountReport(models.AbstractModel):
                 ]
 
     @api.model
-    def _prepare_lines_for_analytic_groupby(self):
-        """Prepare the analytic_temp_account_move_line
-
-        This method should be used once before all the SQL queries using the
-        table account_move_line for the analytic columns for the financial reports.
-        It will create a new table with the schema of account_move_line table, but with
+    def _create_aml_shadowing_query_for_analytic_groupby(self):
+        """Prepares a SQL query to shadow the account_move_line table with
+        the data from account_analytic_line in reports.
+        It will return a new table with the schema of account_move_line table, but with
         the data from account_analytic_line.
 
         We inherit the schema of account_move_line, make the correspondence between
@@ -112,10 +106,6 @@ class AccountReport(models.AbstractModel):
         who don't exist in account_analytic_line.
         We also drop the NOT NULL constraints for fields who are not required in account_analytic_line.
         """
-        self.env.cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name='analytic_temp_account_move_line'")
-        if self.env.cr.fetchone():
-            return
-
         project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
         analytic_cols = SQL(", ").join(SQL('"account_analytic_line".%s', SQL.identifier(n._column_name())) for n in (project_plan + other_plans))
         analytic_distribution_equivalent = SQL('to_jsonb(UNNEST(ARRAY[%s]))', analytic_cols)
@@ -143,19 +133,18 @@ class AccountReport(models.AbstractModel):
             if aml_field not in change_equivalence_dict:
                 change_equivalence_dict[aml_field] = SQL('"account_move_line".%s', SQL.identifier(aml_field))
 
-        stored_aml_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report(change_equivalence_dict)
+        _stored_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report(change_equivalence_dict, prefix_fields_to_insert=False)
 
-        query = SQL("""
-            CREATE OR REPLACE TEMPORARY VIEW analytic_temp_account_move_line (%(stored_aml_fields)s) AS
-            SELECT %(fields_to_insert)s
-            FROM account_analytic_line
-            LEFT JOIN account_move_line
-                ON account_analytic_line.move_line_id = account_move_line.id
-            WHERE
-                account_analytic_line.general_account_id IS NOT NULL;
-        """, stored_aml_fields=stored_aml_fields, fields_to_insert=fields_to_insert)
-
-        self.env.cr.execute(query)
+        return SQL("""
+            (
+                SELECT %(fields_to_insert)s
+                FROM account_analytic_line
+                LEFT JOIN account_move_line
+                    ON account_analytic_line.move_line_id = account_move_line.id
+                WHERE
+                    account_analytic_line.general_account_id IS NOT NULL
+            )
+        """, fields_to_insert=fields_to_insert)
 
     def _get_report_query(self, options, date_scope, domain=None) -> Query:
         # Override to add the context key which will eventually trigger the shadowing of the table
@@ -165,7 +154,7 @@ class AccountReport(models.AbstractModel):
         query = super(AccountReport, context_self)._get_report_query(options, date_scope, domain)
         if options.get('analytic_accounts'):
             if 'analytic_accounts_list' in options:
-                # the table will be `analytic_temp_account_move_line` and thus analytic_distribution will be a single ID
+                # the table `account_move_line` will be shadowed by _prepare_lines_for_analytic_groupby and thus analytic_distribution will be a single ID
                 analytic_account_ids = tuple(str(account_id) for account_id in options['analytic_accounts'])
                 query.add_where(SQL("""account_move_line.analytic_distribution IN %s""", analytic_account_ids))
             else:
@@ -254,6 +243,5 @@ class AccountMoveLine(models.Model):
         """
         query = super()._where_calc(domain, active_test)
         if self.env.context.get('account_report_analytic_groupby') and not self.env.context.get('account_report_cash_basis'):
-            self.env['account.report']._prepare_lines_for_analytic_groupby()
-            query._tables['account_move_line'] = SQL.identifier('analytic_temp_account_move_line')
+            query._tables['account_move_line'] = self.env['account.report']._create_aml_shadowing_query_for_analytic_groupby()
         return query
