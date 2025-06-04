@@ -1,13 +1,10 @@
 import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { queryAll } from "@odoo/hoot-dom";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { mockDate } from "@odoo/hoot-mock";
 import { TaskGanttRenderer } from "@project_enterprise/views/task_gantt/task_gantt_renderer";
-import { findComponent, onRpc, mockService } from "@web/../tests/web_test_helpers";
+import { findComponent, onRpc } from "@web/../tests/web_test_helpers";
 import {
-    getConnector,
     getConnectorMap,
-    clickConnectorButton,
     getConnectorStroke,
 } from "@web_gantt/../tests/gantt_dependency_helpers";
 import { SELECTORS, mountGanttView } from "@web_gantt/../tests/web_gantt_test_helpers";
@@ -162,90 +159,6 @@ test("Connectors are correctly computed and rendered.", async () => {
 
     expect(testMap.size).toBe(connectorMap.size);
     expect(SELECTORS.connector).toHaveCount(testMap.size);
-});
-
-test("Connector buttons: reschedule task backward date.", async () => {
-    mockDate("2021-10-10 7:00:00");
-    mockService("notification", {
-        add: (message, options) => {
-            expect(options["type"]).toBe("success");
-            expect(options["buttons"].length).toBe(1);
-            expect(options["buttons"][0].icon).toBe("fa-undo");
-            expect(options["buttons"][0].name).toBe("Undo");
-        },
-    });
-
-    onRpc("project.task", "web_gantt_reschedule", ({ args }) => {
-        expect.step(["web_gantt_reschedule", args]);
-        return {
-            type: "success",
-            message: "Reschedule done successfully.",
-            old_vals_per_pill_id: {
-                2: {
-                    planned_date_begin: "2021-10-12 11:30:00",
-                    date_deadline: "2021-10-12 12:29:59",
-                },
-            },
-        };
-    });
-    await mountGanttView({
-        ...ganttViewParams,
-        searchViewArch: `
-            <search>
-                <filter name="tasks_scheduled" string="Tasks Scheduled" context="{'highlight_planned': 1}"/>
-            </search>
-        `,
-    });
-
-    await clickConnectorButton(getConnector(1), "reschedule-backward");
-    expect(queryAll(".o_gantt_pill:not(.opacity-25)")).toHaveText("Task 2");
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["backward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-    ]);
-});
-
-test("Connector buttons: reschedule task forward date.", async () => {
-    mockDate("2021-10-10 7:00:00");
-    mockService("notification", {
-        add: (message, options) => {
-            expect(options["type"]).toBe("success");
-            expect(options["buttons"].length).toBe(1);
-            expect(options["buttons"][0].icon).toBe("fa-undo");
-            expect(options["buttons"][0].name).toBe("Undo");
-        },
-    });
-    onRpc("project.task", "web_gantt_reschedule", ({ args }) => {
-        expect.step(["web_gantt_reschedule", args]);
-        return {
-            type: "success",
-            message: "Reschedule done successfully.",
-            old_vals_per_pill_id: {
-                1: {
-                    planned_date_begin: "2021-10-12 11:30:00",
-                    date_deadline: "2021-10-12 12:29:59",
-                },
-            },
-        };
-    });
-    await mountGanttView({
-        ...ganttViewParams,
-        searchViewArch: `
-            <search>
-                <filter name="tasks_scheduled" string="Tasks Scheduled" context="{'highlight_planned': 1}"/>
-            </search>
-        `,
-    });
-    await clickConnectorButton(getConnector(1), "reschedule-forward");
-    expect(queryAll(".o_gantt_pill:not(.opacity-25)")).toHaveText("Task 1");
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["forward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-    ]);
 });
 
 test("Connector dotted/dashed when depended task in closed state.", async () => {

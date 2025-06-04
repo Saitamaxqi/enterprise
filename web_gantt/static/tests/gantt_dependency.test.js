@@ -23,6 +23,7 @@ import {
     getPill,
     getPillWrapper,
     mountGanttView,
+    dragPill,
 } from "./web_gantt_test_helpers";
 
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
@@ -438,7 +439,7 @@ test("Buttons are displayed when hovering a connector.", async () => {
     await hover(getConnectorStroke(1));
     await animationFrame();
 
-    expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(3);
+    expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(1);
 });
 
 test("Buttons are displayed when hovering a connector after a pill has been hovered.", async () => {
@@ -455,7 +456,7 @@ test("Buttons are displayed when hovering a connector after a pill has been hove
     await animationFrame();
 
     expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
-    expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(3);
+    expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(1);
 });
 
 test("Connector buttons: remove a dependency", async () => {
@@ -469,113 +470,6 @@ test("Connector buttons: remove a dependency", async () => {
 
     await clickConnectorButton(getConnector(1), "remove");
     expect.verifySteps([["write", [[2], { depend_on_ids: [[3, 1, false]] }]]]);
-});
-
-test("Connector buttons: reschedule task backward date.", async () => {
-    onRpc(({ method, model, args }) => {
-        if (model === "project.task" && ["web_gantt_reschedule", "write"].includes(method)) {
-            expect.step([method, args]);
-            return {};
-        }
-    });
-    await mountGanttView(ganttViewParams);
-
-    await clickConnectorButton(getConnector(1), "reschedule-backward");
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["backward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-    ]);
-});
-
-test("Connector buttons: reschedule task forward date.", async () => {
-    onRpc(({ args, method, model }) => {
-        if (model === "project.task" && ["web_gantt_reschedule", "write"].includes(method)) {
-            expect.step([method, args]);
-            return {};
-        }
-    });
-    await mountGanttView(ganttViewParams);
-
-    await clickConnectorButton(getConnector(1), "reschedule-forward");
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["forward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-    ]);
-});
-
-test("Connector buttons: reschedule task start backward, different data.", async () => {
-    onRpc(({ method, model, args }) => {
-        if (model === "project.task" && ["web_gantt_reschedule", "write"].includes(method)) {
-            expect.step([method, args]);
-            return {};
-        }
-    });
-    await mountGanttView(ganttViewParams);
-
-    await clickConnectorButton(getConnector(1), "reschedule-backward");
-    expect(".o_notification").toHaveCount(1);
-    expect(".o_notification .o_notification_buttons button").toHaveCount(0, {
-        message:
-            "No button should be displayed in the notification since `old_vals_per_pill_id` is not given in the result of `web_gantt_reschedule` call",
-    });
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["backward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-    ]);
-});
-
-test("Connector buttons: reschedule task forward, different data.", async () => {
-    onRpc(({ method, model, args }) => {
-        if (model === "project.task" && ["web_gantt_reschedule", "write"].includes(method)) {
-            expect.step([method, args]);
-            return {};
-        }
-    });
-    await mountGanttView(ganttViewParams);
-
-    await clickConnectorButton(getConnector(1), "reschedule-forward");
-    expect(".o_notification").toHaveCount(1);
-    expect(".o_notification .o_notification_buttons button").toHaveCount(0, {
-        message:
-            "No button should be displayed in the notification since `old_vals_per_pill_id` is not given in the result of `web_gantt_reschedule` call",
-    });
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["forward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-    ]);
-});
-
-test("Connector buttons: reschedule task forward and undo.", async () => {
-    onRpc(({ method, model, args }) => {
-        if (
-            model === "project.task" &&
-            ["web_gantt_reschedule", "action_rollback_scheduling"].includes(method)
-        ) {
-            expect.step([method, args]);
-            return { old_vals_per_pill_id: { 1: { test: true }, 2: { foo: false } } };
-        }
-    });
-    await mountGanttView(ganttViewParams);
-
-    await clickConnectorButton(getConnector(1), "reschedule-forward");
-    expect(".o_notification").toHaveCount(1);
-    expect(".o_notification .o_notification_buttons button").toHaveCount(1);
-    await contains(".o_notification .o_notification_buttons button i.fa-undo").click();
-    expect.verifySteps([
-        [
-            "web_gantt_reschedule",
-            ["forward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
-        ],
-        ["action_rollback_scheduling", [[1, 2], { 1: { test: true }, 2: { foo: false } }]],
-    ]);
 });
 
 test("Connectors are displayed behind pills, except on hover.", async () => {
@@ -798,3 +692,78 @@ test("Connect two very distant pills", async () => {
     expect.verifySteps([[[2], { depend_on_ids: [[4, 1, false]] }]]);
     expect(SELECTORS.connector).toHaveCount(1);
 });
+
+test("move a pill in the same row (Maintain Buffer Reschedule)", async () => {
+    onRpc(({ method, model, args }) => {
+        if (["web_gantt_reschedule", "action_rollback_scheduling"].includes(method)) {
+            expect.step([method, args]);
+            return {
+                type: "success",
+                message: "Tasks rescheduled",
+                old_vals_per_pill_id: {
+                    7: {
+                        start: "2021-10-17 11:30:00",
+                        stop: "2021-10-17 21:29:59",
+                    },
+                },
+            };
+        }
+    });
+
+    await mountGanttView({
+        ...ganttViewParams,
+        context: {
+            default_start_date: "2021-10-01",
+            default_stop_date: "2021-11-30",
+        },
+    });
+
+    const { moveTo, drop } = await dragPill("Task 7");
+    await moveTo({ columnHeader: "21", groupHeader: "October 2021", part: 2 });
+    expect(SELECTORS.startBadge).toHaveText("10/21/2021, 11:30 PM");
+    expect(SELECTORS.stopBadge).toHaveText("10/22/2021, 12:29 AM");
+    expect(SELECTORS.startBadge).toHaveClass("text-success");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
+    await animationFrame();
+
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_notification .o_notification_buttons button").toHaveCount(1);
+    await contains(".o_notification .o_notification_buttons button i.fa-undo").click();
+    expect.verifySteps([
+        [
+          "web_gantt_reschedule",
+          [
+            {
+              date_deadline: "2021-10-21 23:29:59",
+              planned_date_begin: "2021-10-21 22:30:12",
+              user_ids: false,
+            },
+            "maintainBuffer",
+            [
+              7,
+            ],
+            "depend_on_ids",
+            null,
+            "planned_date_begin",
+            "date_deadline",
+          ],
+        ],
+        [
+          "action_rollback_scheduling",
+          [
+            [
+              7,
+            ],
+            {
+              7: {
+                start: "2021-10-17 11:30:00",
+                stop: "2021-10-17 21:29:59",
+              },
+            },
+          ],
+        ],
+      ]
+    );
+});
+

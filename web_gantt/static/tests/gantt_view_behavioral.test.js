@@ -1182,7 +1182,7 @@ test("pill is updated after failed resized", async () => {
     expect.verifySteps(["get_gantt_data", "write", "get_gantt_data"]);
 });
 
-test("move a pill in the same row", async () => {
+test("move a pill in the same row (Manual Reschedule) and undo", async () => {
     expect.assertions(9);
 
     onRpc("write", ({ args }) => {

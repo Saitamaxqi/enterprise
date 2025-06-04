@@ -31,11 +31,15 @@ class ProjectEnterpriseGanttRescheduleCommon(TestProjectCommon):
             1 --> 3: 3 blocked by 1
 
         """
+        def get_overlapping_delta():
+            return cls.task_3_planned_date_begin - cls.task_1_date_deadline + timedelta(hours=1)
+
         super().setUpClass()
 
         test_additional_context = {'mail_create_nolog': True, 'tracking_disable': True, 'mail_notrack': True}
         test_context = dict(cls.env.context, **test_additional_context)
         cls.env = cls.env(context=test_context)
+        cls.maxDiff = None
 
         cls.ProjectTask = cls.env['project.task']
         cls.dependency_field_name = 'depend_on_ids'
@@ -98,18 +102,19 @@ class ProjectEnterpriseGanttRescheduleCommon(TestProjectCommon):
             'date_deadline': cls.task_6_date_deadline,
             'allocated_hours': 8.0,
         })
-        overlapping_delta = cls.task_3_planned_date_begin - cls.task_1_date_deadline + timedelta(hours=1)
-        cls.task_1_date_gantt_reschedule_trigger = {
-            'planned_date_begin': cls.task_1.planned_date_begin + overlapping_delta,
-            'date_deadline': cls.task_1.date_deadline + overlapping_delta,
+
+        cls.project_pigs_intial_dates = lambda cls: {
+            task.name: (task.planned_date_begin, task.date_deadline)
+            for task in cls.project_pigs.task_ids
         }
-        cls.task_3_date_gantt_reschedule_trigger = {
-            'planned_date_begin': cls.task_3.planned_date_begin - overlapping_delta,
-            'date_deadline': cls.task_3.date_deadline - overlapping_delta,
+
+        cls.task_1_date_gantt_reschedule_trigger = lambda cls: {
+            'planned_date_begin':  (cls.task_1.planned_date_begin + get_overlapping_delta()).strftime('%Y-%m-%d %H:%M:%S'),
+            'date_deadline': (cls.task_1.date_deadline + get_overlapping_delta()).strftime('%Y-%m-%d %H:%M:%S'),
         }
-        cls.task_1_no_date_gantt_reschedule_trigger = {
-            'planned_date_begin': cls.task_1.planned_date_begin + overlapping_delta - timedelta(hours=1),
-            'date_deadline': cls.task_1.date_deadline + overlapping_delta - timedelta(hours=1),
+        cls.task_1_no_date_gantt_reschedule_trigger = lambda cls: {
+            'planned_date_begin': cls.task_1.planned_date_begin + get_overlapping_delta() - timedelta(hours=1),
+            'date_deadline': cls.task_1.date_deadline + get_overlapping_delta() - timedelta(hours=1),
         }
         cls.calendar_40h = cls.env['resource.calendar'].create({
             'name': '40h calendar',
@@ -216,12 +221,9 @@ class ProjectEnterpriseGanttRescheduleCommon(TestProjectCommon):
                                      |         v              v                           |
                                      |        [3]            [9]->[10]                    |
                                      |                                                    |
-                                     ---------------------<x>------------------------------
+                                     ------------------------------------------------------
 
             [0]->[1] means 1 blocked by 0
-            <: left arrow to move task 8 backward task 0
-            >: right arrow to move task 0 forward task 8
-            x: delete the dependence
         """
         cls.project2 = cls.env['project.project'].create({
             'name': 'Test dependencies Project',
@@ -313,19 +315,21 @@ class ProjectEnterpriseGanttRescheduleCommon(TestProjectCommon):
         self.env.user.has_group('base.group_system')
 
     @classmethod
-    def gantt_reschedule_forward(cls, master_record, slave_record):
+    def gantt_reschedule_maintain_buffer(cls, record, data):
         return cls.ProjectTask.web_gantt_reschedule(
-            Base._WEB_GANTT_RESCHEDULE_FORWARD,
-            master_record.id, slave_record.id,
+            data,
+            Base._WEB_GANTT_RESCHEDULE_MAINTAIN_BUFFER,
+            record.id,
             cls.dependency_field_name, cls.dependency_inverted_field_name,
             cls.start_date_field_name, cls.stop_date_field_name
         )
 
     @classmethod
-    def gantt_reschedule_backward(cls, master_record, slave_record):
+    def gantt_reschedule_consume_buffer(cls, record, data):
         return cls.ProjectTask.web_gantt_reschedule(
-            Base._WEB_GANTT_RESCHEDULE_BACKWARD,
-            master_record.id, slave_record.id,
+            data,
+            Base._WEB_GANTT_RESCHEDULE_CONSUME_BUFFER,
+            record.id,
             cls.dependency_field_name, cls.dependency_inverted_field_name,
             cls.start_date_field_name, cls.stop_date_field_name
         )

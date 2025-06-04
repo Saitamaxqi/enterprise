@@ -1193,6 +1193,10 @@ export class GanttRenderer extends Component {
         delete this.mappingConnectorToPills[connectorId];
     }
 
+    get isAutoPlan() {
+        return ["consumeBuffer", "maintainBuffer"].includes(this.model.metaData.rescheduleMethod);
+    }
+
     /**
      * @param {Object} params
      * @param {Element} params.pill
@@ -1228,7 +1232,11 @@ export class GanttRenderer extends Component {
                 rowId: cellSrc.dataset.rowId,
             };
             fallbackSchedule = this.model.getSchedule(fallbackParams);
-            await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
+            if (this.isAutoPlan) {
+                await this.model.rescheduleAccordingToDependency(record.id, schedule, this.rescheduleAccordingToDependencyCallback.bind(this));
+            } else {
+                await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
+            }
         }
 
         // If the pill lands on a closed group -> open it
@@ -1250,6 +1258,9 @@ export class GanttRenderer extends Component {
      */
     displayUndoNotificationAfterDrag(resId, dragAction, fallbackData = {}) {
         if (!(dragAction === "copy" || dragAction === "reschedule")) {
+            return;
+        }
+        if (dragAction === "reschedule" && this.isAutoPlan) {
             return;
         }
         const messages = this.getUndoAfterDragMessages(dragAction);
@@ -3008,21 +3019,6 @@ export class GanttRenderer extends Component {
                               },
                           ],
             }
-        );
-    }
-
-    /**
-     *
-     * @param {"forward" | "backward"} direction
-     * @param {ConnectorId} connectorId
-     */
-    async onRescheduleButtonClick(direction, connectorId) {
-        const { masterId, slaveId } = this.getRecordIds(connectorId);
-        await this.model.rescheduleAccordingToDependency(
-            direction,
-            masterId,
-            slaveId,
-            this.rescheduleAccordingToDependencyCallback.bind(this)
         );
     }
 

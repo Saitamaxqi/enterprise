@@ -13,31 +13,15 @@ import { SELECTORS } from "./web_gantt_test_helpers";
 
 /**
  * @param {Target} target
- * @param {"remove" | "reschedule-forward" | "reschedule-backward"} button
+ * @param {"remove"} button
  */
 export async function clickConnectorButton(target, button) {
+    if (button !== "remove") {
+        return;
+    }
     await hover(SELECTORS.connectorStroke, { root: target });
     await runAllTimers();
-    let element = null;
-    switch (button) {
-        case "remove": {
-            element = queryFirst(SELECTORS.connectorRemoveButton, { root: target });
-            break;
-        }
-        case "reschedule-backward": {
-            element = queryFirst(`${SELECTORS.connectorRescheduleButton}:first-of-type`, {
-                root: target,
-            });
-            break;
-        }
-        case "reschedule-forward": {
-            element = queryFirst(`${SELECTORS.connectorRescheduleButton}:last-of-type`, {
-                root: target,
-            });
-            break;
-        }
-    }
-    return contains(element).click();
+    return contains(queryFirst(SELECTORS.connectorRemoveButton, { root: target })).click();
 }
 
 /**

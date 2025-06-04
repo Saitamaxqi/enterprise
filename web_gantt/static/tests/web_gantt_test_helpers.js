@@ -117,7 +117,6 @@ export const SELECTORS = {
     connectorCreatorRight: ".o_connector_creator_right",
     connectorCreatorWrapper: ".o_connector_creator_wrapper",
     connectorRemoveButton: ".o_connector_stroke_remove_button",
-    connectorRescheduleButton: ".o_connector_stroke_reschedule_button",
     connectorStroke: ".o_connector_stroke",
     connectorStrokeButton: ".o_connector_stroke_button",
     highlightedConnector: makeClassSelector(CLASSES.highlightedConnector),

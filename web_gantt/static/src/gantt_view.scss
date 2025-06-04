@@ -685,23 +685,6 @@
 				transition: fill 0.15s;
 			}
 
-			&.o_connector_stroke_reschedule_button {
-				line {
-					stroke: var(--Connector__ButtonReschedule-color);
-					transition: stroke 0.15s;
-				}
-
-				&:hover {
-					>rect {
-						fill: var(--Connector__ButtonReschedule-color);
-					}
-
-					line {
-						stroke: var(--Connector__ButtonAccent-color);
-					}
-				}
-			}
-
 			&.o_connector_stroke_remove_button {
 				g rect {
 					fill: var(--Connector__ButtonRemove-color);

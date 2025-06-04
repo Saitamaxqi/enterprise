@@ -947,6 +947,9 @@ class ProjectTask(models.Model):
         """ task duration is computed as the sum of the durations of the intersections between [task planned_date_begin, task date_deadline]
             and valid_intervals of the user (if only one user is assigned) else valid_intervals of the company
         """
+        if not self:
+            return {}
+
         start_date = min(self.mapped(start_date_field_name))
         end_date = max(self.mapped(stop_date_field_name))
         valid_intervals_per_user = self._web_gantt_get_valid_intervals(start_date, end_date, users, [], False)
@@ -1066,6 +1069,9 @@ class ProjectTask(models.Model):
 
         :rtype: tuple(dict[int, List[Interval]], dict[int, List[Interval]])
         """
+        if not self:
+            return {}
+
         start_date, end_date = start_date.astimezone(utc), end_date.astimezone(utc)
         users_work_intervals, calendar_work_intervals = users._get_valid_work_intervals(start_date, end_date)
         unavailable_intervals = self._web_gantt_get_users_unavailable_intervals(users.ids, start_date, end_date, candidates_ids) if remove_intervals_with_planned_tasks else {}
@@ -1111,63 +1117,193 @@ class ProjectTask(models.Model):
 
         return valid_intervals_per_user
 
-    def _web_gantt_move_candidates(self, start_date_field_name, stop_date_field_name, dependency_field_name, dependency_inverted_field_name, search_forward, candidates_ids, date_candidate=None, all_candidates_ids=None, move_not_in_conflicts_candidates=False):
+    def _get_new_dates(self,
+        valid_intervals_per_user,
+        users_ids,
+        search_forward,
+        first_possible_start_date_per_candidate,
+        last_possible_end_date_per_candidate,
+        candidate_duration,
+        move_in_conflicts_users=None
+    ):
+        """ this method is used for 2 goals:
+            - compute the new dates for a task to plan, users_ids is the task users
+            - compute the start and date dates of the buffer for maintain buffer strategy, users_ids is False
+            if the 2 tasks have differents users (we follow the company calendar) else the assigned users
+        """
+        if move_in_conflicts_users is None:
+            move_in_conflicts_users = set()
+
+        intervals = valid_intervals_per_user[users_ids]._items
+        intervals_durations = 0
+        step = 1 if search_forward else -1
+        index = 0 if search_forward else len(intervals) - 1
+        used_intervals = []
+        compute_start_date, compute_end_date = False, False
+        while users_ids not in move_in_conflicts_users and ((search_forward and index < len(intervals)) or (not search_forward and index >= 0)) and candidate_duration > intervals_durations:
+            start, end, _dummy = intervals[index]
+            index += step
+
+            if search_forward:
+                first_date = first_possible_start_date_per_candidate.get(self.id)
+                if first_date and end <= first_date:
+                    continue
+
+                if not compute_start_date:
+                    if first_date:
+                        start = max(start, first_date)
+                    compute_start_date = start
+
+                compute_end_date = end
+            else:
+                last_date = last_possible_end_date_per_candidate.get(self.id)
+                if last_date and start >= last_date:
+                    continue
+
+                if not compute_end_date:
+                    if last_date:
+                        end = min(end, last_date)
+                    compute_end_date = end
+
+                compute_start_date = start
+
+            duration = (end - start).total_seconds()
+            if intervals_durations + duration > candidate_duration:
+                remaining = intervals_durations + duration - candidate_duration
+                duration -= remaining
+                if search_forward:
+                    end += timedelta(seconds=-remaining)
+                    compute_end_date = end
+                else:
+                    start += timedelta(seconds=remaining)
+                    compute_start_date = start
+
+            intervals_durations += duration
+            used_intervals.append((start, end, self))
+
+        return (used_intervals, intervals_durations, compute_start_date, compute_end_date)
+
+    def _web_gantt_update_next_candidates_dates(self,
+        dependency_field_name,
+        dependency_inverted_field_name,
+        search_forward,
+        consume_buffer,
+        start_date_field_name,
+        stop_date_field_name,
+        first_possible_start_date_per_candidate,
+        last_possible_end_date_per_candidate,
+        old_planned_date_begin,
+        old_date_deadline,
+        compute_start_date,
+        compute_end_date,
+        valid_intervals_per_user,
+        valid_intervals_per_user_for_buffer_computes
+    ):
+        next_candidates = self[dependency_inverted_field_name if search_forward else dependency_field_name]
+        for task in next_candidates:
+            if consume_buffer and not task._web_gantt_reschedule_is_record_candidate(start_date_field_name, stop_date_field_name):
+                continue
+
+            if search_forward:
+                compute_end_date = compute_end_date.astimezone(utc)
+                first_possible_start_date_per_candidate[task.id] = max(first_possible_start_date_per_candidate.get(task.id, compute_end_date), compute_end_date)
+                if not consume_buffer and task[start_date_field_name] > old_date_deadline:
+                    # follow users calendar if both taks belong to same users or follow company calendar
+                    calendar_owner = tuple(self.user_ids.ids) if self.user_ids and self.user_ids == task.user_ids else False
+                    seconds_between_tasks = sum_intervals(Intervals([(old_date_deadline.astimezone(utc), task[start_date_field_name].astimezone(utc), self.env['resource.calendar.attendance'])]) & valid_intervals_per_user_for_buffer_computes.get(calendar_owner, Intervals())) * 3600
+                    if seconds_between_tasks > 0:
+                        _dummy, buffer_duration, _dummy, buffer_end_date = task._get_new_dates(valid_intervals_per_user, calendar_owner, search_forward, first_possible_start_date_per_candidate, last_possible_end_date_per_candidate, seconds_between_tasks)
+                        if not buffer_end_date or buffer_duration < seconds_between_tasks:
+                            return False
+                        first_possible_start_date_per_candidate[task.id] = max(first_possible_start_date_per_candidate[task.id], buffer_end_date)
+            else:
+                compute_start_date = compute_start_date.astimezone(utc)
+                last_possible_end_date_per_candidate[task.id] = min(last_possible_end_date_per_candidate.get(task.id, compute_start_date), compute_start_date)
+                if not consume_buffer and task[stop_date_field_name] < old_planned_date_begin:
+                    # follow users calendar if both taks belong to same users or follow company calendar
+                    calendar_owner = tuple(self.user_ids.ids) if self.user_ids and self.user_ids == task.user_ids else False
+                    seconds_between_tasks = sum_intervals(Intervals([(task[stop_date_field_name].astimezone(utc), old_planned_date_begin.astimezone(utc), self.env['resource.calendar.attendance'])]) & valid_intervals_per_user_for_buffer_computes.get(calendar_owner, Intervals())) * 3600
+
+                    if seconds_between_tasks > 0:
+                        _dummy, buffer_duration, buffer_start_date, _dummy = task._get_new_dates(valid_intervals_per_user, calendar_owner, search_forward, first_possible_start_date_per_candidate, last_possible_end_date_per_candidate, seconds_between_tasks)
+                        if not buffer_start_date or buffer_duration < seconds_between_tasks:
+                            return False
+                        last_possible_end_date_per_candidate[task.id] = min(last_possible_end_date_per_candidate[task.id], buffer_start_date)
+
+        return True
+
+    def _web_gantt_get_valid_intervals_for_buffer(self, candidates_ids, start_date_field_name, stop_date_field_name, users, consume_buffer):
+        if consume_buffer:
+            return {}
+
+        all_candidates = self.browse(candidates_ids)
+
+        buffer_start_date = min(all_candidates.filtered(start_date_field_name).mapped(start_date_field_name)).astimezone(utc)
+        buffer_end_date = max(all_candidates.filtered(stop_date_field_name).mapped(stop_date_field_name)).astimezone(utc)
+        return all_candidates._web_gantt_get_valid_intervals(buffer_start_date, buffer_end_date, users)
+
+    def _web_gantt_move_candidates(self, start_date_field_name, stop_date_field_name, dependency_field_name, dependency_inverted_field_name, search_forward, candidates_ids, consume_buffer, vals):
+        self.ensure_one()
+        tz_info = self._context.get('tz') or 'UTC'
+
+        old_vals_per_pill_id = self.web_gantt_init_old_vals_per_pill_id(vals)
+        if 'user_ids' in vals:
+            new_user = vals['user_ids']
+            old_user_ids = self.user_ids.ids
+            if not new_user:
+                vals['user_ids'] = False
+            else:
+                user_to_assign = self.env['res.users'].browse(new_user)
+                if user_to_assign.id not in old_user_ids:
+                    vals["user_ids"] = user_to_assign.ids
+
+                tz_info = user_to_assign.tz or tz_info
+
+            old_vals_per_pill_id[self.id]['user_ids'] = old_user_ids or False
+
         result = {
             "errors": [],
             "warnings": [],
         }
-        old_vals_per_pill_id = {}
-        candidates = self.browse(candidates_ids)
-        all_candidates = self.browse(all_candidates_ids or candidates_ids)
+
+        candidates = self.browse([id for id in candidates_ids if id != self.id])
         users = candidates.user_ids.sudo()
-        self_dependency_field_name = self[dependency_field_name if search_forward else dependency_inverted_field_name]
+
+        valid_intervals_per_user_for_buffer_computes = self._web_gantt_get_valid_intervals_for_buffer(candidates_ids, start_date_field_name, stop_date_field_name, users, consume_buffer)
+        self.write(vals)
 
         if search_forward:
-            start_date = date_candidate or max((self_dependency_field_name.filtered(stop_date_field_name and start_date_field_name) - candidates).mapped(stop_date_field_name))
+            start_date = self[stop_date_field_name]
             # 53 weeks = 1 year is estimated enough to plan a project (no valid proof)
             end_date = start_date + timedelta(weeks=53)
         else:
-            end_date = date_candidate or min((self_dependency_field_name.filtered(stop_date_field_name and start_date_field_name) - candidates).mapped(start_date_field_name))
+            end_date = self[start_date_field_name]
             start_date = max(datetime.now(), end_date - timedelta(weeks=53))
             if end_date <= start_date:
                 result["errors"].append("past_error")
                 return result, {}
 
-        valid_intervals_per_user = candidates._web_gantt_get_valid_intervals(start_date, end_date, users, all_candidates.ids or candidates.ids)
+        valid_intervals_per_user = candidates._web_gantt_get_valid_intervals(start_date, end_date, users, candidates.ids)
         initial_valid_intervals_per_user = dict(valid_intervals_per_user.items())
+
         move_in_conflicts_users = set()
-        first_possible_start_date_per_candidate = {}
-        last_possible_end_date_per_candidate = {}
+        first_possible_start_date_per_candidate, last_possible_end_date_per_candidate = candidates._web_gantt_get_first_and_last_possible_dates(dependency_field_name, dependency_inverted_field_name, search_forward, stop_date_field_name, start_date_field_name)
 
-        for candidate in candidates:
-            related_candidates = candidate[dependency_field_name] if search_forward else candidate[dependency_inverted_field_name]
-            replanned_candidates = related_candidates.filtered(lambda x: x in candidates)
-
-            # this line is used when planning without conflicts we do it in 2 steps, so all_candidates contains all the tasks to replan and candidates contains the task to replan in the current step
-            all_replanned_candidates = related_candidates.filtered(lambda x: x in all_candidates)
-            not_replanned_candidates = related_candidates - all_replanned_candidates
-
-            if not not_replanned_candidates:
-                continue
-
-            boundary_date = stop_date_field_name if search_forward else start_date_field_name
-            boundary_dates = not_replanned_candidates.filtered(boundary_date).mapped(boundary_date)
-
-            if not boundary_dates:
-                continue
-
-            if search_forward:
-                first_possible_start_date_per_candidate[candidate.id] = max(boundary_dates).astimezone(utc)
-            else:
-                last_possible_end_date_per_candidate[candidate.id] = min(boundary_dates).astimezone(utc)
-
-        step = 1 if search_forward else -1
         candidates_moved_with_conflicts = False
         candidates_passed_initial_deadline = False
         candidates_durations = candidates._get_tasks_durations(users, start_date_field_name, stop_date_field_name)
 
+        update_next_candidates_dates_response = self._web_gantt_update_next_candidates_dates(dependency_field_name, dependency_inverted_field_name, search_forward, consume_buffer, start_date_field_name, stop_date_field_name,
+            first_possible_start_date_per_candidate, last_possible_end_date_per_candidate, old_vals_per_pill_id[self.id][start_date_field_name], old_vals_per_pill_id[self.id][stop_date_field_name],
+            self[start_date_field_name], self[stop_date_field_name], valid_intervals_per_user, valid_intervals_per_user_for_buffer_computes
+        )
+
+        if not update_next_candidates_dates_response:
+            result["errors"].append("no_intervals_error")
+            return result, {}
+
         for candidate in candidates:
-            if not move_not_in_conflicts_candidates and not candidate._web_gantt_is_candidate_in_conflict(start_date_field_name, stop_date_field_name, dependency_field_name, dependency_inverted_field_name):
+            if consume_buffer and not candidate._web_gantt_is_candidate_in_conflict(start_date_field_name, stop_date_field_name, dependency_field_name, dependency_inverted_field_name):
                 continue
 
             candidate_duration = candidates_durations[candidate.id]
@@ -1178,52 +1314,7 @@ class ProjectTask(models.Model):
                 result["errors"].append("no_intervals_error")
                 return result, {}
 
-            intervals = valid_intervals_per_user[users_ids]._items
-            intervals_durations = 0
-            index = 0 if search_forward else len(intervals) - 1
-            used_intervals = []
-            compute_start_date, compute_end_date = False, False
-            while users_ids not in move_in_conflicts_users and ((search_forward and index < len(intervals)) or (not search_forward and index >= 0)) and candidate_duration > intervals_durations:
-                start, end, _dummy = intervals[index]
-                index += step
-                start, end = start.astimezone(utc), end.astimezone(utc)
-
-                if search_forward:
-                    first_date = first_possible_start_date_per_candidate.get(candidate.id)
-                    if first_date and end <= first_date:
-                        continue
-
-                    if not compute_start_date:
-                        if first_date:
-                            start = max(start, first_date)
-                        compute_start_date = start
-
-                    compute_end_date = end
-                else:
-                    last_date = last_possible_end_date_per_candidate.get(candidate.id)
-                    if last_date and start >= last_date:
-                        continue
-
-                    if not compute_end_date:
-                        if last_date:
-                            end = min(end, last_date)
-                        compute_end_date = end
-
-                    compute_start_date = start
-
-                duration = (end - start).total_seconds()
-                if intervals_durations + duration > candidate_duration:
-                    remaining = intervals_durations + duration - candidate_duration
-                    duration -= remaining
-                    if search_forward:
-                        end += timedelta(seconds=-remaining)
-                        compute_end_date = end
-                    else:
-                        start += timedelta(seconds=remaining)
-                        compute_start_date = start
-
-                intervals_durations += duration
-                used_intervals.append((start, end, candidate))
+            used_intervals, intervals_durations, compute_start_date, compute_end_date = candidate._get_new_dates(valid_intervals_per_user, users_ids, search_forward, first_possible_start_date_per_candidate, last_possible_end_date_per_candidate, candidate_duration, move_in_conflicts_users)
 
             if users_ids not in move_in_conflicts_users and candidate_duration == intervals_durations and compute_start_date and compute_end_date:
                 candidates_passed_initial_deadline = candidates_passed_initial_deadline or (not candidate[start_date_field_name] and compute_end_date > candidate[stop_date_field_name].astimezone(utc))
@@ -1272,6 +1363,13 @@ class ProjectTask(models.Model):
                         compute_start_date += timedelta(seconds=remaining)
                     else:
                         compute_end_date += timedelta(seconds=-remaining)
+                elif candidate_duration > needed_intervals_duration:
+                    needed = candidate_duration - needed_intervals_duration
+                    if search_forward:
+                        compute_start_date += timedelta(seconds=-needed)
+                    else:
+                        compute_end_date += timedelta(seconds=needed)
+
                 old_planned_date_begin, old_date_deadline = candidate[start_date_field_name], candidate[stop_date_field_name]
                 if candidate._web_gantt_reschedule_write_new_dates(compute_start_date, compute_end_date, start_date_field_name, stop_date_field_name):
                     old_vals_per_pill_id[candidate.id] = {
@@ -1282,17 +1380,12 @@ class ProjectTask(models.Model):
                     result["errors"].append("past_error")
                     return result, {}
 
-            next_candidates = candidate[dependency_inverted_field_name if search_forward else dependency_field_name]
-            for task in next_candidates:
-                if not task._web_gantt_reschedule_is_record_candidate(start_date_field_name, stop_date_field_name):
-                    continue
-
-                if search_forward:
-                    candidate_date = max(first_possible_start_date_per_candidate[task.id], compute_end_date) if first_possible_start_date_per_candidate.get(task.id) else compute_end_date
-                    first_possible_start_date_per_candidate[task.id] = candidate_date
-                else:
-                    candidate_date = min(last_possible_end_date_per_candidate[task.id], compute_start_date) if last_possible_end_date_per_candidate.get(task.id) else compute_start_date
-                    last_possible_end_date_per_candidate[task.id] = candidate_date
+            update_next_candidates_dates_response = candidate._web_gantt_update_next_candidates_dates(dependency_field_name, dependency_inverted_field_name, search_forward, consume_buffer, start_date_field_name, stop_date_field_name,
+                first_possible_start_date_per_candidate, last_possible_end_date_per_candidate, old_planned_date_begin, old_date_deadline, compute_start_date, compute_end_date, valid_intervals_per_user, valid_intervals_per_user_for_buffer_computes
+            )
+            if not update_next_candidates_dates_response:
+                result["errors"].append("no_intervals_error")
+                return result, {}
 
             used_intervals = Intervals(used_intervals)
             if not users_ids:
@@ -1312,11 +1405,18 @@ class ProjectTask(models.Model):
             result["warnings"].append("conflict")
         return result, old_vals_per_pill_id
 
+    def _web_gantt_record_has_dependencies(self):
+        self.ensure_one()
+        return self.project_id.allow_task_dependencies
+
+    def _web_gantt_reschedule_can_record_be_rescheduled(self, start_date_field_name, stop_date_field_name):
+        self.ensure_one()
+        return super()._web_gantt_reschedule_can_record_be_rescheduled(start_date_field_name, stop_date_field_name) and not self.is_closed
+
     def _web_gantt_reschedule_is_record_candidate(self, start_date_field_name, stop_date_field_name):
         """ Get whether the record is a candidate for the rescheduling. This method is meant to be overridden when
             we need to add a constraint in order to prevent some records to be rescheduled. This method focuses on the
-            record itself (if you need to have information on the relation (master and slave) rather override
-            _web_gantt_reschedule_is_relation_candidate).
+            record itself
 
             :param start_date_field_name: The start date field used in the gantt view.
             :param stop_date_field_name: The stop date field used in the gantt view.
@@ -1324,7 +1424,7 @@ class ProjectTask(models.Model):
             :rtype: bool
         """
         self.ensure_one()
-        return self[start_date_field_name] and self[stop_date_field_name] and self.project_id.allow_task_dependencies and not self.is_closed
+        return super()._web_gantt_reschedule_is_record_candidate(start_date_field_name, stop_date_field_name) and self._web_gantt_record_has_dependencies()
 
     def _web_gantt_get_reschedule_message_per_key(self, key, params=None):
         message = super()._web_gantt_get_reschedule_message_per_key(key, params)
@@ -1552,56 +1652,6 @@ class ProjectTask(models.Model):
             ['name', 'deadline', 'is_deadline_exceeded', 'is_reached', 'project_id'],
         )
         return results
-
-    def _is_task_planned(self):
-        return self.date_deadline and self.planned_date_begin
-
-    def _get_task_duration(self):
-        return self.date_deadline - self.planned_date_begin
-
-    @api.model
-    @api.readonly
-    def get_critical_path(self, domain):
-        """
-        Determines the tasks that forms the critical path of a group of task, i.e. the chain of dependent tasks
-        with the longest duration.
-        :param domain: domain determining the group of task in which a critical path has to be found (in general, all tasks in a given project)
-        :return: List of ordered task ids
-        """
-        tasks = self.env['project.task'].search(domain)
-
-        if not tasks:
-            return []
-
-        dependencies_dict = tasks._get_dependencies_dict()
-        sorted_tasks = topological_sort(dependencies_dict)
-        total_time, task_parent = {}, {}
-        path_last_task = next((t.id for t in sorted_tasks if t._is_task_planned()), sorted_tasks[0].id)
-
-        for task in sorted_tasks:
-            if not task._is_task_planned():
-                continue
-
-            duration = task._get_task_duration()
-            total_time[task.id] = duration
-            for parent_task in dependencies_dict[task]:
-                if not parent_task._is_task_planned():
-                    continue
-
-                parent_task_duration = total_time[parent_task.id]
-                if parent_task_duration + duration > total_time[task.id]:
-                    total_time[task.id] = parent_task_duration + duration
-                    task_parent[task.id] = parent_task.id
-
-            if total_time[task.id] > total_time[path_last_task]:
-                path_last_task = task.id
-
-        path = [path_last_task]
-        while path_last_task in task_parent:
-            path.append(task_parent[path_last_task])
-            path_last_task = task_parent[path_last_task]
-
-        return list(reversed(path))
 
     def _get_template_default_context_whitelist(self):
         return [

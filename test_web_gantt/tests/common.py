@@ -25,7 +25,7 @@ class TestWebGantt(TransactionCase):
         cls.dependency_inverted_field_name = 'dependency_inverted_field'
         cls.date_start_field_name = 'date_start'
         cls.date_stop_field_name = 'date_stop'
-        cls.pill_1_start_date = datetime.now().replace(minute=0, second=0, microsecond=0) + timedelta(weeks=2)
+        cls.pill_1_start_date = datetime(2021, 3, 1, 8)
         cls.pill_1_stop_date = cls.pill_1_start_date + timedelta(hours=8)
         cls.pill_1 = cls.create_pill('Pill 1', cls.pill_1_start_date, cls.pill_1_stop_date)
         cls.pill_2_start_date = cls.pill_1_start_date + timedelta(days=1)
@@ -38,6 +38,10 @@ class TestWebGantt(TransactionCase):
         cls.pill_4_stop_date = cls.pill_4_start_date + timedelta(hours=8)
         cls.pill_4 = cls.create_pill('Pill 4', cls.pill_4_start_date, cls.pill_4_stop_date, [cls.pill_3.id])
         cls.pills_topo_order = [cls.pill_1, cls.pill_2, cls.pill_3, cls.pill_4]
+
+        cls.buffer12 = (cls.pill_2[cls.date_start_field_name] - cls.pill_1[cls.date_stop_field_name]).seconds
+        cls.buffer23 = (cls.pill_3[cls.date_start_field_name] - cls.pill_2[cls.date_stop_field_name]).seconds
+        cls.buffer34 = (cls.pill_4[cls.date_start_field_name] - cls.pill_3[cls.date_stop_field_name]).seconds
 
         """
             Second pills structure (with more nodes and use cases)
@@ -129,6 +133,7 @@ class TestWebGantt(TransactionCase):
         cls.pills2_10.write({
             cls.dependency_field_name: [Command.link(cls.pills2_9.id)],
         })
+        cls.maxDiff = None
 
     @classmethod
     def create_pill(cls, name, date_start, date_stop, master_pill_ids=None):
@@ -142,19 +147,21 @@ class TestWebGantt(TransactionCase):
         })
 
     @classmethod
-    def gantt_reschedule_forward(cls, master_record, slave_record):
+    def gantt_reschedule_maintain_buffer(cls, record, data):
         return cls.TestWebGanttPill.web_gantt_reschedule(
-            Base._WEB_GANTT_RESCHEDULE_FORWARD,
-            master_record.id, slave_record.id,
+            data,
+            Base._WEB_GANTT_RESCHEDULE_MAINTAIN_BUFFER,
+            record.id,
             cls.dependency_field_name, cls.dependency_inverted_field_name,
             cls.date_start_field_name, cls.date_stop_field_name
         )
 
     @classmethod
-    def gantt_reschedule_backward(cls, master_record, slave_record):
+    def gantt_reschedule_consume_buffer(cls, record, data):
         return cls.TestWebGanttPill.web_gantt_reschedule(
-            Base._WEB_GANTT_RESCHEDULE_BACKWARD,
-            master_record.id, slave_record.id,
+            data,
+            Base._WEB_GANTT_RESCHEDULE_CONSUME_BUFFER,
+            record.id,
             cls.dependency_field_name, cls.dependency_inverted_field_name,
             cls.date_start_field_name, cls.date_stop_field_name
         )

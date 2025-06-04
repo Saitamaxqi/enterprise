@@ -49,12 +49,17 @@ const { DateTime } = luxon;
  * @property {string[]} decorationFields
  * @property {ScaleId} defaultRange
  * @property {string} dependencyField
+ * @property {boolean} dependencyEnabled
  * @property {DateTime} stopDate
  *
  * @property {Scale} scale
  * @property {Scale[]} scales
  * @property {DateTime} startDate
  * @property {DateTime} stopDate
+ *
+ * @property {string} defaultRescheduleMethod
+ * @property {string} rescheduleMethod
+ * @property {Object[]} rescheduleMethods
  *
  * @typedef ProgressBar
  * @property {number} value_formatted
@@ -146,6 +151,13 @@ export class GanttModel extends Model {
                 params,
                 this._getInitialRangeParams(this._buildMetaData(params), searchParams)
             );
+        }
+
+        if (this.metaData.dependencyEnabled) {
+            Object.assign(
+                params,
+                this._getInitialRescheduleMethod(this._buildMetaData(params)),
+            )
         }
 
         await this._fetchData(this._buildMetaData(params));
@@ -391,6 +403,14 @@ export class GanttModel extends Model {
         return trimmed;
     }
 
+    _getRescheduleData(ids, schedule) {
+        if (!Array.isArray(ids)) {
+            ids = [ids];
+        }
+        const allData = this._scheduleToData(schedule);
+        return [ids, this.removeRedundantData(allData, ids), this._getRescheduleContext()];
+    }
+
     /**
      * Reschedule a task to the given schedule.
      *
@@ -399,12 +419,8 @@ export class GanttModel extends Model {
      * @param {(result: any) => any} [callback]
      */
     async reschedule(ids, schedule, callback) {
-        if (!Array.isArray(ids)) {
-            ids = [ids];
-        }
-        const allData = this._scheduleToData(schedule);
-        const data = this.removeRedundantData(allData, ids);
-        const context = this._getRescheduleContext();
+        let data, context;
+        [ids, data, context] = this._getRescheduleData(ids, schedule);
         return this.mutex.exec(async () => {
             try {
                 const result = await this._reschedule(ids, data, context);
@@ -425,18 +441,9 @@ export class GanttModel extends Model {
 
     toggleHighlightPlannedFilter(ids) {}
 
-    /**
-     * Reschedule masterId or slaveId according to the direction
-     *
-     * @param {"forward" | "backward"} direction
-     * @param {number} masterId
-     * @param {number} slaveId
-     * @returns {Promise<any>}
-     */
     async rescheduleAccordingToDependency(
-        direction,
-        masterId,
-        slaveId,
+        ids,
+        schedule,
         rescheduleAccordingToDependencyCallback
     ) {
         const {
@@ -447,12 +454,15 @@ export class GanttModel extends Model {
             resModel,
         } = this.metaData;
 
+        let data;
+        [ids, data] = this._getRescheduleData(ids, schedule);
+
         return await this.mutex.exec(async () => {
             try {
                 const result = await this.orm.call(resModel, "web_gantt_reschedule", [
-                    direction,
-                    masterId,
-                    slaveId,
+                    data,
+                    this.metaData.rescheduleMethod,
+                    ids,
                     dependencyField,
                     dependencyInvertedField,
                     dateStartField,
@@ -530,6 +540,10 @@ export class GanttModel extends Model {
             if (this._nextMetaData.rangeId !== "custom") {
                 this._nextMetaData.scale = this._nextMetaData.scales[params.rangeId];
             }
+        }
+        if (params.rescheduleMethod) {
+            browser.localStorage.setItem(this._getRescehduleMethodLocalStorageKey(), params.rescheduleMethod);
+            this._nextMetaData.rescheduleMethod = params.rescheduleMethod;
         }
 
         if ("pagerLimit" in params) {
@@ -985,6 +999,20 @@ export class GanttModel extends Model {
         const { ranges } = metaData;
         const localRangeId = browser.localStorage.getItem(this._getLocalStorageKey());
         return localRangeId in ranges ? localRangeId : null;
+    }
+
+    _getInitialRescheduleMethod(metaData) {
+        return {rescheduleMethod: this._getRescheduleMethodFromLocalStorage(metaData) || metaData.defaultRescheduleMethod};
+    }
+
+    _getRescehduleMethodLocalStorageKey() {
+        return `rescheduleMethod-viewId-${this.env.config.viewId}`
+    }
+
+    _getRescheduleMethodFromLocalStorage(metaData) {
+        const { rescheduleMethods } = metaData;
+        const localRescheduleMethod = browser.localStorage.getItem(this._getRescehduleMethodLocalStorageKey());
+        return localRescheduleMethod in rescheduleMethods ? localRescheduleMethod : null;
     }
 
     /**

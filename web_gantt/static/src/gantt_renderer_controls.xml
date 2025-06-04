@@ -29,6 +29,23 @@
                 </Dropdown>
             </t>
             <t t-else="" t-call="{{ constructor.toolbarContentTemplate }}" />
+            <div t-if="displayRescheduleMethods">
+                <Dropdown>
+                    <button id="reschedule-method" class="btn btn-secondary o-dropdown-caret">
+                        <t t-esc="model.metaData.rescheduleMethods[state.rescheduleMethod]"/>
+                    </button>
+                    <t t-set-slot="content">
+                        <t t-foreach="Object.keys(model.metaData.rescheduleMethods)" t-as="method" t-key="method">
+                            <DropdownItem
+                                class="{ active: method === state.rescheduleMethod }"
+                                onSelected.bind="() => this.selectRescheduleMethod(method)"
+                            >
+                                <t t-esc="model.metaData.rescheduleMethods[method]"/>
+                            </DropdownItem>
+                        </t>
+                    </t>
+                </Dropdown>
+            </div>
         </div>
     </t>
 

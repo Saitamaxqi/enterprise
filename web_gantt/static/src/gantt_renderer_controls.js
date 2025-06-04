@@ -10,7 +10,7 @@ import { GanttScaleSelector } from "./gantt_scale_selector";
 
 const { DateTime } = luxon;
 
-const KEYS = ["startDate", "stopDate", "rangeId", "focusDate"];
+const KEYS = ["startDate", "stopDate", "rangeId", "focusDate", "rescheduleMethod"];
 
 export class GanttRendererControls extends Component {
     static template = "web_gantt.GanttRendererControls";
@@ -110,6 +110,18 @@ export class GanttRendererControls extends Component {
         this.state.startDate = startDate;
         this.state.stopDate = stopdDate;
         this.state.keepCurrentFocusDate = true;
+        this.updateMetaData();
+    }
+
+    get displayRescheduleMethods() {
+        return this.model.metaData.dependencyEnabled && !this.model.useSampleModel && !this.env.isSmall;
+    }
+
+    selectRescheduleMethod(method) {
+        Object.assign(
+            this.state,
+            { rescheduleMethod: method }
+        );
         this.updateMetaData();
     }
 }

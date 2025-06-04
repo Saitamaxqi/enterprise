@@ -79,6 +79,11 @@ const SCALES = {
         groupHeaderTitle: (date) => date.toFormat("yyyy"),
     },
 };
+const RESCHEDULE_METHODS = {
+    manual: "Manual Reschedule",
+    consumeBuffer: "Auto-Reschedule (Use Buffer)",
+    maintainBuffer: "Auto-Reschedule (Keep Buffer)",
+};
 
 /**
  * Formats a date to a special datetime string, in the user's locale settings.
@@ -350,5 +355,7 @@ function getInfoFromRootNode(rootNode) {
         scales,
         string: attrs.string || _t("Gantt View").toString(),
         thumbnails: attrs.thumbnails ? evaluateExpr(attrs.thumbnails) : {},
+        rescheduleMethods: RESCHEDULE_METHODS,
+        defaultRescheduleMethod: "maintainBuffer",
     };
 }

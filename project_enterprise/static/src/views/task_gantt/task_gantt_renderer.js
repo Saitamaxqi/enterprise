@@ -1,16 +1,14 @@
 import { SelectCreateAutoPlanDialog } from "@project_enterprise/views/view_dialogs/select_auto_plan_create_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { Avatar } from "@mail/views/web/fields/avatar/avatar";
-import { markup, onWillStart, useEffect } from "@odoo/owl";
+import { markup, useEffect } from "@odoo/owl";
 import { localization } from "@web/core/l10n/localization";
 import { usePopover } from "@web/core/popover/popover_hook";
-import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
 import { escape } from "@web/core/utils/strings";
 import { MilestonesPopover } from "./milestones_popover";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
-
 import { TaskGanttRendererControls } from "./task_gantt_renderer_controls";
 
 export class TaskGanttRenderer extends GanttRenderer {
@@ -34,27 +32,6 @@ export class TaskGanttRenderer extends GanttRenderer {
         );
         const position = localization.direction === "rtl" ? "bottom" : "right";
         this.milestonePopover = usePopover(MilestonesPopover, { position });
-        this.criticalPathAvailable = false;
-        onWillStart(async () => {
-            const taskDependenciesEnabled = await user.hasGroup(
-                "project.group_project_task_dependencies"
-            );
-            if (taskDependenciesEnabled) {
-                const projectDependencies = this.model.data.records?.[0]?.allow_task_dependencies;
-                // In cross projects view, critical path button is always available
-                this.criticalPathAvailable =
-                    !this.props.model.searchParams.context.default_project_id ||
-                    projectDependencies;
-            }
-        });
-    }
-
-    get controlsProps() {
-        const controlProps = super.controlsProps;
-        if (this.criticalPathAvailable) {
-            controlProps.getCriticalPath = () => this.onCriticalPathClicked();
-        }
-        return controlProps;
     }
 
     /**
@@ -64,9 +41,8 @@ export class TaskGanttRenderer extends GanttRenderer {
         const enrichedPill = super.enrichPill(pill);
         if (enrichedPill?.record) {
             if (
-                (this.props.model.highlightIds &&
-                    !this.props.model.highlightIds.includes(enrichedPill.record.id)) ||
-                this.isNotCriticalPill(pill)
+                this.props.model.highlightIds &&
+                    !this.props.model.highlightIds.includes(enrichedPill.record.id)
             ) {
                 pill.className += " opacity-25";
             }
@@ -338,18 +314,6 @@ export class TaskGanttRenderer extends GanttRenderer {
 
     onMilestoneMouseLeave() {
         this.milestonePopover.close();
-    }
-
-    async onCriticalPathClicked(ev) {
-        if (!this.criticalPathAvailable) {
-            return;
-        }
-        await this.model.toggleCriticalPath();
-    }
-
-    isNotCriticalPill(pill) {
-        const { criticalTaskIds } = this.model;
-        return criticalTaskIds && !criticalTaskIds.includes(pill.record.id);
     }
 
     //--------------------------------------------------------------------------

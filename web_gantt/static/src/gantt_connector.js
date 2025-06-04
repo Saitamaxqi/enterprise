@@ -72,9 +72,7 @@ export class GanttConnector extends Component {
                 dashed: { type: Boolean, optional: true },
             },
         },
-        onLeftButtonClick: { type: Function, optional: true },
         onRemoveButtonClick: { type: Function, optional: true },
-        onRightButtonClick: { type: Function, optional: true },
     };
     static defaultProps = {
         highlighted: false,
@@ -273,21 +271,9 @@ export class GanttConnector extends Component {
     // Handlers
     //-------------------------------------------------------------------------
 
-    onLeftButtonClick() {
-        if (this.props.onLeftButtonClick) {
-            this.props.onLeftButtonClick();
-        }
-    }
-
     onRemoveButtonClick() {
         if (this.props.onRemoveButtonClick) {
             this.props.onRemoveButtonClick();
-        }
-    }
-
-    onRightButtonClick() {
-        if (this.props.onRightButtonClick) {
-            this.props.onRightButtonClick();
         }
     }
 
