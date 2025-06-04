@@ -22,7 +22,7 @@
                 </header>
                 <sheet>
                     <div role="alert" class="alert alert-warning text-center" invisible="period_has_payslips">
-                        No Employees on the selected period.
+                        There is no payslips with an ESIC amount on the selected period.
                     </div>
                     <group>
                         <group>
