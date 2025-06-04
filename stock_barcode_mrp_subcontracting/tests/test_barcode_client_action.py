@@ -147,3 +147,31 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_receipt_subcontract_bom_product_manual_add_src_location', login='admin', timeout=180)
 
         self.assertEqual(receipt.move_line_ids.location_id, self.env.company.subcontracting_location_id)
+
+    def test_partial_subcontract_receipt_and_backorder(self):
+        receipt = self.env['stock.picking'].create({
+            'name': "test_partial_subcontract_receipt_and_backorder",
+            'picking_type_id': self.stock_location.warehouse_id.in_type_id.id,
+            'partner_id': self.subcontractor_partner.id,
+        })
+        self.env['stock.move'].create([{
+            'product_id': prod.id,
+            'product_uom_qty': 5,
+            'product_uom': self.subcontracted_product.uom_id.id,
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_id': receipt.id,
+        } for prod in [self.subcontracted_product, self.subcontracted_component]])
+        receipt.action_confirm()
+
+        # Ensure user has a mail setup
+        user_login = 'admin'
+        user_partner = self.env['res.users'].search([('login', '=', user_login)]).partner_id
+        if not user_partner.email:
+            user_partner.email = 'admin@yourcompany.example.com'
+
+        url = self._get_client_action_url(receipt.id)
+        self.start_tour(url, 'test_partial_subcontract_receipt_and_backorder', login=user_login)
+
+        self.assertEqual(receipt.state, 'done')
+        self.assertTrue(receipt.backorder_ids)
