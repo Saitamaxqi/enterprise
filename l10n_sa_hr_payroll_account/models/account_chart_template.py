@@ -59,6 +59,9 @@ class AccountChartTemplate(models.AbstractModel):
         social_insurance_employee_contribution_rule = self.env.ref('l10n_sa_hr_payroll.ksa_saudi_social_insurance_employee_contribution')
         rules_mapping[social_insurance_employee_contribution_rule]['debit'] = '201022'
 
+        expenses_reimbursement_rule = self.env.ref('l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_expenses_reimbursement')
+        rules_mapping[expenses_reimbursement_rule]['debit'] = '201002'
+
         unpaid_rule = self.env.ref('l10n_sa_hr_payroll.ksa_saudi_unpaid_leave')
         rules_mapping[unpaid_rule]['debit'] = '400074'
 

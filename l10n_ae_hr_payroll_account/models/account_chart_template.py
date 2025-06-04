@@ -123,6 +123,9 @@ class AccountChartTemplate(models.AbstractModel):
         instant_pay_net_rule = self.env.ref('l10n_ae_hr_payroll.l10n_ae_uae_instant_pay_net_salary')
         rules_mapping[instant_pay_net_rule]['credit'] = '201002'
 
+        expenses_reimbursement_rule = self.env.ref('l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_expenses_reimbursement')
+        rules_mapping[expenses_reimbursement_rule]['debit'] = '201002'
+
         net_rule = self.env['hr.salary.rule'].search([
             ('struct_id', '=', self.env.ref('l10n_ae_hr_payroll.uae_employee_payroll_structure').id),
             ('code', '=', 'NET')

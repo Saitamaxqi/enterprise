@@ -91,6 +91,9 @@ class AccountChartTemplate(models.AbstractModel):
         rule = self.env.ref('l10n_eg_hr_payroll.l10n_eg_hr_payroll_structure_eg_employee_salary_reimbursement_salary_rule')
         rules_mapping[rule]['debit'] = '201002'
 
+        rule = self.env.ref('l10n_eg_hr_payroll.l10n_eg_hr_payroll_structure_eg_employee_salary_expenses_reimbursement')
+        rules_mapping[rule]['debit'] = '201002'
+
         rule = self.env['hr.salary.rule'].search([
             ('struct_id', '=', self.env.ref('l10n_eg_hr_payroll.hr_payroll_structure_eg_employee_salary').id),
             ('code', '=', 'NET')
