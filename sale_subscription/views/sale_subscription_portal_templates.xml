@@ -213,7 +213,7 @@
             </div>
         </div>
 
-        <t id="sale_order_portal_sidebar" position="replace">
+        <t t-call="portal.portal_record_sidebar" position="replace">
             <t t-call="sale_subscription.subscription_portal_sidebar"/>
         </t>
 

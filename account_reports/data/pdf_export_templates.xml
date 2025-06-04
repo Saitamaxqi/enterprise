@@ -182,7 +182,7 @@
                     <t t-set="extra_options" t-value="extra_options + [rounding_unit_display_names[rounding_unit]]"/>
                 </t>
 
-                <t name="options" t-out="', '.join(extra_options)"/>
+                <t name="options" t-out="', '.join(str(o) for o in extra_options)"/>
             </span>
         </div>
     </template>
