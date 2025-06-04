@@ -33,7 +33,7 @@ class AccountDuplicateTransactionWizard(models.TransientModel):
     @api.depends('journal_id', 'date')
     def _compute_transaction_ids(self):
         for wizard in self:
-            ids_groups = wizard.journal_id._get_duplicate_transactions(wizard.date)
+            ids_groups = wizard.journal_id._get_duplicate_transactions(wizard.date or fields.Date.today())
             first_ids_in_group = []
             flat_ids = []
             check_set = set()
