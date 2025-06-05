@@ -20,6 +20,7 @@
                                 t-att-disabled="this.props.hasSignRequests"
                                 t-on-change="ev => this.onDocumentNameChanged(document.id, ev)"
                                 t-on-blur="onDocumentNameBlur"
+                                t-on-keyup="ev => this.onFieldNameInputKeyUp(ev)"
                             />
                             <div t-attf-class="mx-1 o_sign_sidebar_document_name_text {{ document.id === this.state.editableDocumentId ? 'd-none' : '' }}"
                                 t-att-title="document.display_name"

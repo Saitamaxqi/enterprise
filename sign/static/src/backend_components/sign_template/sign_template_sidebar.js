@@ -88,6 +88,7 @@ export class SignTemplateSidebar extends Component {
             /* Update callbacks binding for parent props: */
             updateCollapse: (id, value) => this.props.updateCollapse(id, value),
             onDelete: () => this.deleteSigner(id, signer.roleId),
+            onFieldNameInputKeyUp: (ev) => this.onFieldNameInputKeyUp(ev),
             itemsCount: signer.itemsCount,
             hasSignRequests: this.props.hasSignRequests,
         };
@@ -95,6 +96,12 @@ export class SignTemplateSidebar extends Component {
 
     onDocumentNameBlur() {
         this.state.editableDocumentId = false;
+    }
+
+    onFieldNameInputKeyUp(ev) {
+        if (ev.key === "Enter") {
+            ev.target.blur();
+        }
     }
 
     onUpdateSelectedDocument(documentId) {

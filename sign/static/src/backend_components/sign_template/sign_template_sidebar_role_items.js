@@ -28,6 +28,7 @@ export class SignTemplateSidebarRoleItems extends Component {
         onDelete: { type: Function },
         itemsCount: { type: Number },
         hasSignRequests: { type: Boolean },
+        onFieldNameInputKeyUp: { type: Function },
     };
 
     async setup() {
