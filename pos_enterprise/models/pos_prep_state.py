@@ -35,10 +35,11 @@ class PosPreparationState(models.Model):
         elif pdis_state.todo and pdis_state.stage_id.is_stage_position(0) and pdis_state.prep_line_id.pos_order_line_id.preparation_time != -1:
             pdis_state.prep_line_id.pos_order_line_id.preparation_time = -1
         # If second last stage & line is done, write the service_time
-        if not pdis_state.todo and pdis_state.stage_id.is_stage_position(-2) and pdis_state.prep_line_id.pos_order_line_id.service_time == -1:
-            pdis_state.prep_line_id.pos_order_line_id.service_time = compute_seconds_since(pdis_state.last_stage_change)
-        elif pdis_state.todo and pdis_state.stage_id.is_stage_position(-2) and pdis_state.prep_line_id.pos_order_line_id.service_time != -1:
-            pdis_state.prep_line_id.pos_order_line_id.service_time = -1
+        if len(pdis_state.stage_id) > 1:
+            if not pdis_state.todo and pdis_state.stage_id.is_stage_position(-2) and pdis_state.prep_line_id.pos_order_line_id.service_time == -1:
+                pdis_state.prep_line_id.pos_order_line_id.service_time = compute_seconds_since(pdis_state.last_stage_change)
+            elif pdis_state.todo and pdis_state.stage_id.is_stage_position(-2) and pdis_state.prep_line_id.pos_order_line_id.service_time != -1:
+                pdis_state.prep_line_id.pos_order_line_id.service_time = -1
 
     def change_state_stage(self, stages, prep_display_id):
         pdis_state_stages = []
@@ -69,8 +70,9 @@ class PosPreparationState(models.Model):
             if pdis_state.prep_line_id.pos_order_line_id.service_time != -1:
                 pdis_state.prep_line_id.pos_order_line_id.service_time = -1
         # If new stage is the second last one & line is done, write the preparation_time
-        if pdis_state.prep_line_id.pos_order_line_id.preparation_time == -1 and pdis_state.stage_id.is_stage_position(-2):
-            pdis_state.prep_line_id.pos_order_line_id.preparation_time = compute_seconds_since(old_last_stage_change)
+        if len(pdis_state.stage_id) > 1:
+            if pdis_state.prep_line_id.pos_order_line_id.preparation_time == -1 and pdis_state.stage_id.is_stage_position(-2):
+                pdis_state.prep_line_id.pos_order_line_id.preparation_time = compute_seconds_since(old_last_stage_change)
         # If new stage is the last one & line is done, write the service_time
         if pdis_state.prep_line_id.pos_order_line_id.service_time == -1 and pdis_state.stage_id.is_stage_position(-1):
             pdis_state.prep_line_id.pos_order_line_id.service_time = compute_seconds_since(old_last_stage_change)
