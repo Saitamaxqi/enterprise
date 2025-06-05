@@ -570,6 +570,205 @@ msgid "Not applicable"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2601110000
+msgid "Unagglomerated"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2601120000
+msgid "Agglomerates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2601200000
+msgid "Roasted iron pyrites (pyrite ashes)"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2602000000
+msgid ""
+"Manganese ores and concentrates thereof, including ferruginous manganese ores and concentrates thereof, "
+"containing 20 % more by weight of manganese, on dry product."
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2603000000
+msgid "Copper ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2604000000
+msgid "Nickel ores and their concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2605000000
+msgid "Cobalt ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2606000000
+msgid "Aluminium ores and their concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2607000000
+msgid "Lead ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2608000010
+msgid "Low-grade zinc concentrate"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2608000090
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2609000000
+msgid "Tin ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2610000000
+msgid "Chromium ores and their concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2611000000
+msgid "Tungsten ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2612100000
+msgid "Uranium ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2612200000
+msgid "Thorium ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2613100000
+msgid "Toasted"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2613900000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2614000000
+msgid "Titanium ores and their concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2615100000
+msgid "Zirconium ores and their concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2615900000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2616100000
+msgid "Silver ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2616901000
+msgid "Gold ores and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2616909000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2617100000
+msgid "Antimony minerals and concentrates"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2617900000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2618000000
+msgid "Granulated slag (slag sand) from the steel industry"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2619000000
+msgid "Slag (other than granulated), beats and other waste from the iron and steel industry"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620110000
+msgid "Galvanizing mats"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620190000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620210000
+msgid "Leaded gasoline sludge and leaded antiknock compound sludge"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620290000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620300000
+msgid "Containing mainly copper"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620400000
+msgid "Containing mainly aluminium"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620600000
+msgid ""
+"Containing arsenic, mercury, thallium or mixtures thereof, of a kind used for the extraction of arsenic or these metals "
+"or for the manufacture of their chemical compounds"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620910000
+msgid "Containing antimony, beryllium, cadmium, chromium, or mixtures thereof"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620990000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2621100000
+msgid "Ash and residues from the incineration of municipal waste"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2621900000
+msgid "Others"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
 #: model_terms:ir.ui.view,arch_db:l10n_pe_edi_stock.l10n_pe_edi_guiaremision_report_delivery_document
 msgid "Notes:"
 msgstr ""

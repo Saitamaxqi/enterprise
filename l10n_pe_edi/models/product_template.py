@@ -47,6 +47,8 @@ class ProductTemplate(models.Model):
             ('039', 'Minerales no metálicos'),
             ('040', 'Bien inmueble gravado con IGV'),
             ('041', 'Plomo'),
+            ('044', 'Servicio de beneficio de minerales metálicos gravado con el IGV'),
+            ('045', 'Minerales de oro y sus concentrados gravados con el IGV'),
             ('099', 'Ley 30737'),
         ],
         string="Withhold code",
