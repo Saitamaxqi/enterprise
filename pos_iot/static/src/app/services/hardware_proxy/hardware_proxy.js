@@ -8,18 +8,23 @@ import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
 import { formatEndpoint } from "@iot_base/network_utils/http";
 
 patch(hardwareProxyService, {
-    dependencies: [...hardwareProxyService.dependencies, "orm"],
+    dependencies: [...hardwareProxyService.dependencies, "orm", "iot_http"],
 });
 patch(HardwareProxy.prototype, {
-    setup({ orm }) {
+    setup({ orm, iot_http }) {
         super.setup(...arguments);
         this.iotBoxes = [];
+        this.iotHttp = iot_http;
     },
     /**
      * @override
      */
     connectToPrinter() {
-        this.printer = new IoTPrinter({ device: this.deviceControllers.printer });
+        console.log("Connecting to IoT Printer: deviceControllers", this.deviceControllers);
+        this.printer = new IoTPrinter({
+            device: this.deviceControllers.printer,
+            iot_http: this.iotHttp,
+        });
     },
     /**
      * Ping all of the IoT Boxes of the devices set on POS config and update the

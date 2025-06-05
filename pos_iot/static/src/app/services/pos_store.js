@@ -54,7 +54,7 @@ patch(PosStore.prototype, {
                 iot_ip: config.proxy_ip,
                 identifier: config.device_identifier,
             });
-            return new IoTPrinter({ device });
+            return new IoTPrinter({ device, iot_http: this.iotHttp });
         } else {
             return super.createPrinter(...arguments);
         }

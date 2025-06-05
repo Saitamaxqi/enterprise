@@ -23,6 +23,10 @@ patch(ConfirmationPage.prototype, {
     },
 
     canPrintReceipt() {
-        return super.canPrintReceipt && Boolean(this.confirmedOrder.blackbox_signature);
+        const result = super.canPrintReceipt();
+        if (this.selfOrder.config.iface_fiscal_data_module) {
+            return result && Boolean(this.confirmedOrder.blackbox_signature);
+        }
+        return result;
     },
 });

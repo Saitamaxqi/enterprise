@@ -10,6 +10,7 @@ patch(selfOrderService, {
 patch(SelfOrder.prototype, {
     async setup(env, services) {
         this.iot_longpolling = services.iot_longpolling;
+        this.iotHttp = services.iot_http;
         await super.setup(...arguments);
 
         if (!this.config.iface_print_via_proxy || this.config.self_ordering_mode !== "kiosk") {
@@ -19,9 +20,9 @@ patch(SelfOrder.prototype, {
         const device = new DeviceController(this.iot_longpolling, {
             iot_ip: this.config.iface_printer_id.iot_ip,
             identifier: this.config.iface_printer_id.identifier,
+            iot_id: { id: this.config.iface_printer_id.iot_id },
         });
-
-        this.printer.setPrinter(new IoTPrinter({ device }));
+        this.printer.setPrinter(new IoTPrinter({ device, iot_http: this.iotHttp }));
     },
 
     filterPaymentMethods(paymentMethods) {
@@ -38,7 +39,7 @@ patch(SelfOrder.prototype, {
                 iot_ip: printer.proxy_ip,
                 identifier: printer.device_identifier,
             });
-            return new IoTPrinter({ device });
+            return new IoTPrinter({ device, iot_http: this.iotHttp });
         } else {
             return super.createPrinter(...arguments);
         }

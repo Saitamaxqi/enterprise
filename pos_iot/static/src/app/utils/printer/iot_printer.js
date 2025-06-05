@@ -2,26 +2,34 @@ import { _t } from "@web/core/l10n/translation";
 import { BasePrinter } from "@point_of_sale/app/utils/printer/base_printer";
 
 /**
- * Used to send print requests to the IoT box thru the provided `device` - a `DeviceController` instance.
+ * Used to send print requests to the IoT box through the provided `device` - a `DeviceController` instance.
  */
 export class IoTPrinter extends BasePrinter {
-    setup({ device }) {
+    setup({ device, iot_http }) {
         super.setup(...arguments);
         this.device = device;
+        this.iotBox = iot_http;
     }
 
     /**
      * @override
      */
     openCashbox() {
-        return this.device.action({ action: "cashbox" });
+        return this.action({ action: "cashbox" });
     }
 
     /**
      * @override
      */
     sendPrintingJob(img) {
-        return this.device.action({ action: "print_receipt", receipt: img });
+        return this.action({ action: "print_receipt", receipt: img });
+    }
+
+    async action(data) {
+        return new Promise((resolve) => {
+            this.iotBox.action(this.device.iotId, this.device.identifier, data);
+            resolve(true);
+        });
     }
 
     /**
