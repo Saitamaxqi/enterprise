@@ -418,11 +418,7 @@ class ProjectTask(models.Model):
         }
 
     def action_send_report(self):
-        tasks_with_report = self.filtered(
-            lambda task:
-                (task.display_send_report_primary or task.display_send_report_secondary)
-                and task._is_fsm_report_available()
-        )
+        tasks_with_report = self.filtered(lambda task: task._is_fsm_report_available())
         if not tasks_with_report:
             return {
                 'type': 'ir.actions.client',
