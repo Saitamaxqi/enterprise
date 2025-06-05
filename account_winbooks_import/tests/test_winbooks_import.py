@@ -5,7 +5,7 @@ from odoo.tests import common, tagged
 import base64
 import requests
 
-TESTURL = 'https://s3.amazonaws.com/winbooks-public/softwares/winbooks-classic-and-virtual-invoice/Tools/PARFILUX_2013.04.08.zip'
+TESTURL = 'https://files.exact.com/static/downloads/winbooks/PARFILUX_2013.04.08.zip'
 FILENAME = 'PARFILUX_2013.04.08.zip'
 
 
@@ -29,7 +29,7 @@ class TestWinbooksImport(common.TransactionCase):
         # self.env.cr.commit(); return  # uncomment to avoid fetching multiple times locally
         test_company = self.env['res.company'].create({
             'name': 'My Winbooks Company',
-            'currency_id': self.env['res.currency'].search([('name', '=', 'EUR')]).id,
+            'currency_id': self.env['res.currency'].with_context(active_test=False).search([('name', '=', 'EUR')]).id,
             'country_id': self.env.ref('base.be').id,
         })
         self.env['account.chart.template'].try_loading('be_comp', test_company)
