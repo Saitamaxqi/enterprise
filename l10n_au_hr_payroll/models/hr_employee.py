@@ -19,7 +19,7 @@ class HrEmployee(models.Model):
         groups="hr.group_hr_user")
     l10n_au_payroll_id = fields.Char(
         string="Payroll ID",
-        groups="hr.group_hr_user", size=20)
+        groups="hr.group_hr_user")
     l10n_au_medicare_variation_form = fields.Binary(string="Medicare Variation Form", attachment=True, groups="hr.group_hr_user")
     l10n_au_medicare_variation_form_filename = fields.Char(groups="hr.group_hr_user")
     l10n_au_super_account_ids = fields.One2many(

@@ -72,7 +72,7 @@ class L10n_AuPreviousPayrollTransferEmployee(models.TransientModel):
     employee_id = fields.Many2one("hr.employee", required=True, ondelete="cascade")
     previous_payroll_id = fields.Char(
         "Previous Payroll ID",
-        compute="_compute_payroll_id", size=20,
+        compute="_compute_payroll_id",
         required=True, store=True, readonly=False,
     )
     l10n_au_income_stream_type = fields.Selection(

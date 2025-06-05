@@ -9,6 +9,12 @@
             <xpath expr="//block[@id='hr_payroll_accountant']" position="after">
                 <field name="company_country_code" invisible="1"/>
                 <block title="Australian Localization" id="l10n_au_hr_payroll" invisible="company_country_code != 'AU'">
+                    <div class="alert alert-warning mb-2" role="alert">
+                        <strong>Disclaimer</strong> <br/>
+                        Odoo is currently in the process of becoming compliant with STP Phase 2 and SuperStream.
+                        Using any Australian payroll-related features will not actually submit compliant data to the ATO.
+                        An announcement will be made as soon as companies can use Odoo for payroll as a one-stop platform.
+                    </div>
                     <setting string="Company Information">
                         <div name="au_company_information" class="mt16 content-group">
                             <div class="row mt16 ms-2">
