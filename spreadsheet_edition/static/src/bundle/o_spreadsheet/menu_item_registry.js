@@ -89,6 +89,7 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
                 env.model.getters.isListUnused(listId)
                     ? "o-spreadsheet-Icon.UNUSED_LIST_WARNING"
                     : undefined,
+            isVisible: (env) => !env.isSmall,
         };
     });
     const charts_items = env.model.getters.getOdooChartIds().map((chartId, index) => ({
@@ -101,6 +102,7 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
         },
         icon: "o-spreadsheet-Icon.INSERT_CHART",
         separator: index === env.model.getters.getOdooChartIds().length - 1,
+        isVisible: (env) => !env.isSmall,
     }));
     return lists_items.concat(charts_items).concat([
         {
@@ -192,6 +194,7 @@ const insertPivotMenu = {
         },
     ],
     icon: "o-spreadsheet-Icon.PIVOT",
+    isVisible: (env) => !env.isSmall,
 };
 
 topbarMenuRegistry.addChild("print", ["file"], printMenu);

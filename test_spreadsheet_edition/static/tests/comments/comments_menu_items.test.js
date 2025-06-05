@@ -1,4 +1,4 @@
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { helpers, registries } from "@odoo/o-spreadsheet";
 import { getActionMenu } from "@spreadsheet/../tests/helpers/ui";
@@ -10,6 +10,8 @@ const { cellMenuRegistry, topbarMenuRegistry } = registries;
 const { toCartesian } = helpers;
 
 defineTestSpreadsheetEditionModels();
+
+describe.current.tags("desktop");
 
 test("visibility menu", async () => {
     const { model, env } = await setupWithThreads();

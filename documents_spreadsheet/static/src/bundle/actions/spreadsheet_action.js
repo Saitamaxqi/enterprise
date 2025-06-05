@@ -2,12 +2,13 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 
 import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
-import { Model } from "@odoo/o-spreadsheet";
+import { Model, registries } from "@odoo/o-spreadsheet";
 import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";
 import { AbstractSpreadsheetAction } from "@spreadsheet_edition/bundle/actions/abstract_spreadsheet_action";
 import { _t } from "@web/core/l10n/translation";
 
 import { useState, useSubEnv } from "@odoo/owl";
+const { topbarMenuRegistry } = registries;
 
 export class SpreadsheetAction extends AbstractSpreadsheetAction {
     static template = "documents_spreadsheet.SpreadsheetAction";
@@ -133,3 +134,23 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
 }
 
 registry.category("actions").add("action_open_spreadsheet", SpreadsheetAction, { force: true });
+
+topbarMenuRegistry.add("document_share", {
+    name: _t("Share"),
+    sequence: 99,
+
+    isVisible: (env) => env.isSmall && env.onShareSpreadsheet,
+    execute: (env) => env.onShareSpreadsheet(),
+});
+
+topbarMenuRegistry.add("document_freeze_share", {
+    name: _t("Freeze and share"),
+    sequence: 100,
+
+    isVisible: (env) =>
+        env.isSmall &&
+        env.isFrozenSpreadsheet &&
+        !env.isFrozenSpreadsheet() &&
+        env.onFreezeAndShareSpreadsheet,
+    execute: (env) => env.onFreezeAndShareSpreadsheet(),
+});

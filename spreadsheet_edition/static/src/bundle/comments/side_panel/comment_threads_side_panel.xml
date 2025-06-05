@@ -42,7 +42,7 @@
           </div>
         </Section>
       </t>
-      <Menu
+      <MenuPopover
         t-if="menuState.isOpen"
         anchorRect="menuState.anchorRect"
         popoverPositioning="'bottom-left'"

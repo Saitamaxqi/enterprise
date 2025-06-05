@@ -54,7 +54,7 @@ export class FieldSyncHighlightStore extends SpreadsheetStore {
                     fieldName === fieldSync.fieldName
                 ) {
                     highlights.push({
-                        zone: positionToZone(cellPosition),
+                        range: this.getters.getRangeFromZone(sheetId, positionToZone(cellPosition)),
                         sheetId,
                         color: "#875A7B",
                     });

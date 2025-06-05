@@ -68,13 +68,46 @@ test("simple pivot export", async () => {
             },
         },
     });
-    expect(".o_spreadsheet_pivot_side_panel").toHaveCount(1);
     expect(getCellContent(model, "A1")).toBe("");
     expect(getCellContent(model, "A2")).toBe("");
     expect(getCellContent(model, "A3")).toBe("=PIVOT.HEADER(1)");
     expect(getCellContent(model, "B1")).toBe("=PIVOT.HEADER(1)");
     expect(getCellContent(model, "B2")).toBe('=PIVOT.HEADER(1,"measure","foo:sum")');
     expect(getCellContent(model, "B3")).toBe('=PIVOT.VALUE(1,"foo:sum")');
+});
+
+test.tags("desktop");
+test("open side panel in desktop mode", async () => {
+    await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": /* xml */ `
+                        <pivot>
+                            <field name="foo" type="measure"/>
+                        </pivot>`,
+                "partner,false,search": /* xml */ `<search/>`,
+            },
+        },
+    });
+    expect(".o_spreadsheet_pivot_side_panel").toHaveCount(1);
+});
+
+test.tags("mobile");
+test("don't open side panel in mobile mode", async () => {
+    await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": /* xml */ `
+                        <pivot>
+                            <field name="foo" type="measure"/>
+                        </pivot>`,
+                "partner,false,search": /* xml */ `<search/>`,
+            },
+        },
+    });
+    expect(".o_spreadsheet_pivot_side_panel").toHaveCount(0);
 });
 
 test("simple pivot export with two measures", async () => {
@@ -514,6 +547,7 @@ test("Can save a pivot in a new spreadsheet", async () => {
     expect.verifySteps(["action_open_new_spreadsheet"]);
 });
 
+test.tags("desktop");
 test("Can save a pivot in existing spreadsheet", async () => {
     const serverData = {
         models: getBasicData(),

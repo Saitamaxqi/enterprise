@@ -95,10 +95,12 @@ test("Undo a pivot insertion open the side panel with all pivots", async functio
 test("Pivot cells are highlighted when their side panel is open", async function () {
     const { model, env, pivotId } = await createSpreadsheetFromPivotView();
     const sheetId = model.getters.getActiveSheetId();
-    const zone = getZoneOfInsertedDataSource(model, "pivot", pivotId);
-    expect(getHighlightsFromStore(env)).toEqual([
-        { color: "#37A850", sheetId, zone, noFill: true },
-    ]);
+    const range = model.getters.getRangeFromZone(
+        sheetId,
+        getZoneOfInsertedDataSource(model, "pivot", pivotId)
+    );
+
+    expect(getHighlightsFromStore(env)).toEqual([{ color: "#37A850", range, noFill: true }]);
     await contains(".o-sidePanelClose").click();
     expect(getHighlightsFromStore(env)).toEqual([]);
 });

@@ -1,4 +1,4 @@
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { queryText } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries } from "@odoo/o-spreadsheet";
@@ -16,6 +16,8 @@ import {
 import { createDashboardEditAction, createNewDashboard } from "./helpers/test_helpers";
 
 defineSpreadsheetDashboardEditionModels();
+
+describe.current.tags("desktop");
 
 const { topbarMenuRegistry } = registries;
 

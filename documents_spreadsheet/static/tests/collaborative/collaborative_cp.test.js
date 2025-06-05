@@ -5,7 +5,7 @@ import {
     getConnectedUsersElImage,
     getSynchedStatus,
 } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { setCellContent } from "@spreadsheet/../tests/helpers/commands";
 import {
@@ -16,6 +16,8 @@ import { mockService } from "@web/../tests/web_test_helpers";
 import { user } from "@web/core/user";
 
 defineDocumentSpreadsheetModels();
+
+describe.current.tags("desktop");
 
 test("Number of connected users is correctly rendered", async function () {
     const { transportService } = await createSpreadsheet();

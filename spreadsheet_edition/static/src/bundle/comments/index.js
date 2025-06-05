@@ -97,7 +97,8 @@ cellPopoverRegistry.add("OdooCellComment", {
 
 const INSERT_COMMENT_ACTION = {
     name: _t("Insert comment"),
-    isVisible: (env) => env.insertThreadInSheet && env.getStore(CommentsStore).areCommentsActive,
+    isVisible: (env) =>
+        !env.isSmall && env.insertThreadInSheet && env.getStore(CommentsStore).areCommentsActive,
     execute: async (env) => {
         const { col, row } = env.model.getters.getActivePosition();
         env.getStore(CellPopoverStore).open({ col, row }, "OdooCellComment");
@@ -129,7 +130,7 @@ topbarMenuRegistry.addChild("view_comments", ["view"], {
     sequence: 1500,
     execute: (env) => env.openSidePanel("Comments"),
     icon: "o-spreadsheet-Icon.COMMENTS",
-    isVisible: (env) => env.insertThreadInSheet,
+    isVisible: (env) => !env.isSmall && env.insertThreadInSheet,
 });
 
 sidePanelRegistry.add("Comments", {

@@ -1,10 +1,12 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { onRpc } from "@web/../tests/web_test_helpers";
 
 defineDocumentSpreadsheetModels();
+
+describe.current.tags("desktop");
 
 const en_US = {
     name: "English (US)",
@@ -29,15 +31,13 @@ const fr_FR = {
 test("No locale icon if user locale matched spreadsheet locale", async function () {
     onRpc(
         "/spreadsheet/data/*",
-        () => {
-            return {
-                name: "Untitled spreadsheet",
-                user_locale: en_US,
-                data: {
-                    settings: { locale: en_US },
-                },
-            };
-        },
+        () => ({
+            name: "Untitled spreadsheet",
+            user_locale: en_US,
+            data: {
+                settings: { locale: en_US },
+            },
+        }),
         { pure: true }
     );
     await createSpreadsheet();
@@ -47,14 +47,12 @@ test("No locale icon if user locale matched spreadsheet locale", async function 
 test("No locale icon if no user locale is given", async function () {
     onRpc(
         "/spreadsheet/data/*",
-        () => {
-            return {
-                name: "Untitled spreadsheet",
-                data: {
-                    settings: { locale: en_US },
-                },
-            };
-        },
+        () => ({
+            name: "Untitled spreadsheet",
+            data: {
+                settings: { locale: en_US },
+            },
+        }),
         { pure: true }
     );
     await createSpreadsheet();
@@ -85,15 +83,13 @@ test("Different locales between user and spreadsheet: display icon as info", asy
 test("no warning with different locale codes but same formats", async function () {
     onRpc(
         "/spreadsheet/data/*",
-        () => {
-            return {
-                name: "Untitled spreadsheet",
-                user_locale: { ...fr_FR, code: "fr_BE" },
-                data: {
-                    settings: { locale: fr_FR },
-                },
-            };
-        },
+        () => ({
+            name: "Untitled spreadsheet",
+            user_locale: { ...fr_FR, code: "fr_BE" },
+            data: {
+                settings: { locale: fr_FR },
+            },
+        }),
         { pure: true }
     );
     await createSpreadsheet();
@@ -103,15 +99,13 @@ test("no warning with different locale codes but same formats", async function (
 test("changing spreadsheet locale to user locale: remove icon", async function () {
     onRpc(
         "/spreadsheet/data/*",
-        () => {
-            return {
-                name: "Untitled spreadsheet",
-                user_locale: en_US,
-                data: {
-                    settings: { locale: fr_FR },
-                },
-            };
-        },
+        () => ({
+            name: "Untitled spreadsheet",
+            user_locale: en_US,
+            data: {
+                settings: { locale: fr_FR },
+            },
+        }),
         { pure: true }
     );
     const { model } = await createSpreadsheet();

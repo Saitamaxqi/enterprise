@@ -40,7 +40,10 @@ cellMenuRegistry.add("listing_properties", {
     },
     isVisible: (env) => {
         const position = env.model.getters.getActivePosition();
-        return env.model.getters.isExistingList(env.model.getters.getListIdFromPosition(position));
+        return (
+            !env.isSmall &&
+            env.model.getters.isExistingList(env.model.getters.getListIdFromPosition(position))
+        );
     },
     icon: "o-spreadsheet-Icon.ODOO_LIST",
 });

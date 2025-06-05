@@ -8,7 +8,7 @@ import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
 import { animationFrame } from "@odoo/hoot-mock";
 const { useStoreProvider, ModelStore, ClientFocusStore } = stores;
 
-describe.current.tags("headless");
+describe.current.tags("desktop");
 defineSpreadsheetModels();
 
 class Parent extends Component {
