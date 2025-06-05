@@ -211,8 +211,10 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 code = self._l10n_de_datev_find_partner_account(partner.property_account_receivable_id, partner)
             else:
                 code = self._l10n_de_datev_find_partner_account(partner.property_account_payable_id, partner)
-            vat_country, vat_id_no = (partner.vat[:2], partner.vat[2:]) if partner.vat else ('', '')
-            vat_is_valid = vat_country.isalpha() and vat_id_no.isnumeric()
+            vat_is_valid = False
+            if partner.vat and len(partner.vat) > 2:
+                vat_country, vat_id_no = partner._split_vat(partner.vat)
+                vat_is_valid = vat_country and partner._check_vat_number(vat_country, vat_id_no)
             line_value = {
                 'code': code,
                 'company_name': partner.name if partner.is_company else '',

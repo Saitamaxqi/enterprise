@@ -541,6 +541,9 @@ class TestDatevCSV(AccountTestInvoicingCommon):
             {'name': 'partner4', 'vat': ''},
             {'name': 'partner5', 'vat': 'NA'},
             {'name': 'partner6', 'vat': '1234567890'},
+            {'name': 'partner7', 'vat': 'NL000099998B57'},
+            {'name': 'partner8', 'vat': '/'},
+            {'name': 'partner9', 'vat': '12AAAAA1234AAZA'}
         ]
         partners = self.env['res.partner'].create(partners_list)
 
@@ -575,6 +578,9 @@ class TestDatevCSV(AccountTestInvoicingCommon):
                     ["", "partner4", "", "", "1", "", "", ""],
                     ["", "partner5", "", "", "1", "", "", "NA"],
                     ["", "partner6", "", "", "1", "", "", "1234567890"],
+                    ["", "partner7", "", "", "1", "", "NL", "000099998B57"],
+                    ["", "partner8", "", "", "1", "", "", "/"],
+                    ["", "partner9", "", "", "1", "", "", "12AAAAA1234AAZA"],
                 ],
             )
 
