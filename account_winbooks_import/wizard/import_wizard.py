@@ -366,7 +366,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
             # Split lines having a different sign on the balance in company currency and foreign currency
             tmp_val = []
             for rec in val:
-                tmp_val += [rec]
+                tmp_val += [rec.copy()]
                 if (rec['AMOUNTEUR'] or 0) * (rec['CURRAMOUNT'] or 0) < 0:
                     tmp_val[-1]['CURRAMOUNT'] = 0
                     tmp_val += [rec.copy()]
