@@ -65,6 +65,11 @@
                                                 Profession:
                                                 <span t-out="form.partner_job_position"/>
                                             </p>
+                                            <!-- This information is optional -->
+                                            <p class="text-start" t-if="form.partner_is_natural_person and form.partner_citizen_identification">
+                                                National number:
+                                                <span t-out="form.partner_citizen_identification"/>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="row border border-dark border-bottom-0">

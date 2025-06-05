@@ -1134,6 +1134,11 @@ msgid "Profession:"
 msgstr "Beroep:"
 
 #. module: l10n_be_reports
+#: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_281_50_pdf
+msgid "National number:"
+msgstr "Nationaal nummer:"
+
+#. module: l10n_be_reports
 #: model:ir.actions.client,name:l10n_be_reports.action_account_report_be_pl_asso_a
 #: model:ir.actions.client,name:l10n_be_reports.action_account_report_be_pl_asso_f
 #: model:ir.actions.client,name:l10n_be_reports.action_account_report_be_pl_comp_a
