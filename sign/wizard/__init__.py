@@ -2,6 +2,5 @@
 
 from . import sign_send_request
 from . import sign_send_request_signer
-from . import sign_duplicate_template_with_pdf
 from . import sign_template_preview
 from . import sign_download_wizard

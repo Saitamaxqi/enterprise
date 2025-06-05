@@ -20,7 +20,6 @@ Let your customers follow the signature process easily.
         'data/sign_tour.xml',
         'views/sign_template_views_mobile.xml',
         'wizard/sign_download_wizard.xml',
-        'wizard/sign_duplicate_template_with_pdf_views.xml',
         'wizard/sign_template_preview_views.xml',
         'wizard/sign_send_request_views.xml',
         'views/sign_request_templates.xml',
