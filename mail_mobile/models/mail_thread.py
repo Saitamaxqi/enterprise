@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import copy
-import datetime
 import logging as logger
 import re
 import urllib.parse
 
 from odoo import models, api, tools
-from odoo.addons.iap.tools import iap_tools
+from odoo.addons.iap.tools.iap_tools import iap_jsonrpc
 
 _logger = logger.getLogger(__name__)
 
@@ -103,7 +102,7 @@ class MailThread(models.AbstractModel):
 
             for chunk in chunks:
                 try:
-                    iap_tools.iap_jsonrpc(endpoint + '/iap/ocn/send', params=chunk)
+                    iap_jsonrpc(endpoint + '/iap/ocn/send', params=chunk)
                 except Exception as e:
                     _logger.error('An error occurred while contacting the ocn server: %s', e)
 
@@ -153,7 +152,7 @@ class MailThread(models.AbstractModel):
             body = body.decode('utf-8')
 
         at_mention_ids = []
-        regex = r"<a[^>]+data-oe-id=['\"](?P<id>\d+)['\"][^>]+data-oe-model=['\"](?P<model>[\w.]+)['\"][^>]+>@[^<]+<\/a>"
+        regex = r"<a[^>]+data-oe-id=[\'\"](?P<id>\d+)[\'\"][^>]+data-oe-model=[\'\"](?P<model>[\w.]+)['\"][^>]?>@[^<]+<\/a>"
         matches = re.finditer(regex, body)
 
         for match in matches:

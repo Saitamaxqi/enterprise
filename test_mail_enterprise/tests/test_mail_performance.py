@@ -75,11 +75,11 @@ class TestMailPerformance(EnterpriseBaseMailPerformance):
         self.ocn_iap_jsonrpc_mocked.reset_mock()  # reset as executed twice
         self.flush_tracking()
 
-        with self.assertQueryCount(employee=999):  # tmf: 152
+        with self.assertQueryCount(employee=157):  # tme: 152
             new_message = record_ticket.message_post(
                 attachment_ids=attachments.ids,
                 # atmention a user, as it generates a different chunk for ocn
-                body=Markup(f'<p>Test Content<a href="/odoo" data-oe-id="{self.user_admin.partner_id.id}" data-oe-model="res.partner">@user</a>'),
+                body=Markup('<p>Test Content<a href="/odoo" data-oe-id="%(partner_id)s" data-oe-model="res.partner">@user</a>') % {"partner_id": self.user_admin.partner_id.id},
                 email_add_signature=True,
                 mail_auto_delete=True,
                 message_type='comment',

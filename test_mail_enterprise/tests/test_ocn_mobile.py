@@ -91,7 +91,7 @@ class TestPushNotification(SMSCommon):
         cls.group_channel = cls.env['discuss.channel']._create_channel(name='Channel', group_id=None)
         cls.group_channel._add_members(users=cls.user_email | cls.user_inbox)
 
-    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
+    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_jsonrpc')
     def test_push_notifications(self, jsonrpc):
         # Test No Inbox Condition
         self.record_simple.with_user(self.user_inbox).message_notify(
@@ -160,7 +160,7 @@ class TestPushNotification(SMSCommon):
             'No Tracking Message found'
         )
 
-    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
+    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_jsonrpc')
     def test_push_notifications_android_channel(self, jsonrpc):
         # Test Direct Message
         self.direct_message_channel.with_user(self.user_email).message_post(
@@ -218,7 +218,7 @@ class TestPushNotification(SMSCommon):
             'The type of Android channel must be AtMention'
         )
 
-    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
+    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_jsonrpc')
     def test_push_notifications_mail_replay(self, jsonrpc):
         with self.mock_mail_gateway():
             test_record = self.format_and_process(
@@ -254,7 +254,7 @@ class TestPushNotification(SMSCommon):
                 jsonrpc.assert_not_called()
             jsonrpc.reset_mock()
 
-    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
+    @patch('odoo.addons.mail_mobile.models.mail_thread.iap_jsonrpc')
     @patch.object(odoo.addons.mail.models.mail_thread, 'push_to_end_point')
     def test_push_notifications_whatsapp(self, push_to_end_point, iap_jsonrpc):
         """
