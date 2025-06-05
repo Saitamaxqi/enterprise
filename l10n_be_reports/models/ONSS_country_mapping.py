@@ -34,7 +34,27 @@ ONSS_COUNTRY_CODE_MAPPING = {
     'TW': '00204', 'TZ': '00332', 'UA': '00143', 'UG': '00323', 'US': '00402', 'UY': '00519', 'UZ': '00227',
     'VA': '00133', 'VC': '00429', 'VE': '00520', 'VG': '00479', 'VI': '00478', 'VN': '00220', 'VU': '00624',
     'WF': '00689', 'WS': '00614', 'XK': '00153', 'YE': '00270', 'ZA': '00325', 'ZM': '00335', 'ZW': '00344',
+    'BL': '00499', 'ST': '00346', 'TK': '00686',
     'CW': '00129',  # Curaçao "is" part of Netherland and thus we use its code
+    'AW': '00129',  # Aruba "is" part of the Netherland Kingdom
+    'SX': '00129',  # Sint Maarten (Dutch part) is part of the Netherlands kingdom
+    'BQ': '00129',  # Bonaire, Sint Eustatius and Saba "is" part of Netherland
     'GG': '00112',  # Guernesey external affairs are managed by the United Kingdom
+    'IO': '00112',  # currently part of the United Kingdom
+    'IM': '00112',  # Isle of Man "is" a part of the United Kingdom
+    'GS': '00112',  # South Georgia and the South Sandwich Islands is a part of the United Kingdom
+    'JE': '00112',  # Jersey "is" a part of United Kingdom
     'YT': '00111',  # Mayotte is a part of France
+    'TF': '00111',  # French Southern Territories are part of France
+    'MF': '00111',  # Saint Martin (French part) is part of France
+    'BV': '00121',  # Bouvet Island is part of Norway
+    'SJ': '00121',  # Svalbard and Jan Mayen is part of Norway
+    'CX': '00611',  # Christmas Island is part of Australia
+    'CC': '00611',  # Cocos (Keeling) Islands are part of Australia
+    'NF': '00611',  # Norfolk Island has been integrated in Australia in 2016
+    'HM': '00611',  # Heard Island and McDonald Islands are part of Australia
+    'FO': '00108',  # Faroe Islands are part of Denmark
+    'AX': '00110',  # Åland Islands are an autonomous region of Finland
+    'MP': '00402',  # Northern Mariana Islands are parts of the USA
+    'UM': '00402',  # USA Minor Outlying Islands
 }
