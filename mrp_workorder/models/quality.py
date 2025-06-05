@@ -332,12 +332,12 @@ class QualityCheck(models.Model):
 
     def action_register_production(self):
         self.ensure_one()
-        if self.product_tracking in ('lot', 'serial'):
-            self.production_id.action_generate_serial()
-            self.lot_id = self.production_id.lot_producing_id
-        else:
+        if self.product_tracking == 'none':
             self.production_id.qty_producing = self.production_id.product_qty
             self.production_id._set_qty_producing(False)
+        elif not self.lot_id:
+            self.production_id.action_generate_serial()
+            self.lot_id = self.production_id.lot_producing_id
         return {'next_check_id': self._next()}
 
     def _next(self):

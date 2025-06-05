@@ -29,6 +29,9 @@ export class MrpRegisterProductionDialog extends ConfirmationDialog {
         }
         this.formatFloat = formatFloat;
         this.state = useState({ disabled: false });
+        if(["lot", "serial"].includes(this.props.record.data.product_tracking) && ! this.props.record.data.lot_producing_id) {
+            this.props.record.load();
+        }
     }
 
     async validate() {

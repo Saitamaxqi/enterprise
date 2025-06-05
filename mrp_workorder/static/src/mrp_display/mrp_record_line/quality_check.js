@@ -110,7 +110,10 @@ export class QualityCheck extends MrpWorkorder {
             case "picture":
                 return this.fileUploaderToggle.el.click();
             case "register_production":
-                return this.isComplete
+                if(["lot", "serial"].includes(this.check.product_tracking) && !this.check.lot_id) {
+                    await this.props.record.load();
+                }
+                return this.isComplete || this.check.lot_id
                     ? this.props.registerProduction(this.props.record)
                     : this.quickRegisterProduction();
         }
