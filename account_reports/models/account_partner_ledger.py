@@ -267,14 +267,23 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 """
                 (WITH partner_sums AS (
                     SELECT
-                        account_move_line.partner_id            AS groupby,
-                        %(column_group_key)s                    AS column_group_key,
-                        SUM(%(debit_select)s)                   AS debit,
-                        SUM(%(credit_select)s)                  AS credit,
-                        SUM(%(balance_select)s)                 AS amount,
-                        SUM(%(balance_select)s)                 AS balance,
-                        BOOL_AND(account_move_line.reconciled)  AS all_reconciled,
-                        MAX(account_move_line.date)             AS latest_date
+                        account_move_line.partner_id                            AS groupby,
+                        %(column_group_key)s                                    AS column_group_key,
+                        SUM(
+                            CASE WHEN account_move_line.date >= %(date_from)s
+                            THEN %(debit_select)s
+                            ELSE 0
+                            END
+                        )                                                       AS debit,
+                        SUM(
+                            CASE WHEN account_move_line.date >= %(date_from)s
+                            THEN %(credit_select)s
+                            ELSE 0
+                            END
+                        )                                                       AS credit,
+                        SUM(%(balance_select)s)                                 AS amount,
+                        SUM(%(balance_select)s)                                 AS balance,
+                        MAX(account_move_line.date)                             AS latest_date
                     FROM %(table_references)s
                     %(currency_table_join)s
                     WHERE %(search_condition)s
@@ -283,17 +292,16 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 SELECT *
                 FROM partner_sums
                 WHERE partner_sums.balance != 0
-                OR partner_sums.all_reconciled = FALSE
                 OR partner_sums.latest_date >= %(date_from)s
                 )""",
                 column_group_key=column_group_key,
+                date_from=date_from,
                 debit_select=report._currency_table_apply_rate(SQL("account_move_line.debit")),
                 credit_select=report._currency_table_apply_rate(SQL("account_move_line.credit")),
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,
-                date_from=date_from,
             ))
 
         return SQL(' UNION ALL ').join(queries)
@@ -311,8 +319,8 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 SELECT
                     account_move_line.partner_id,
                     %(column_group_key)s          AS column_group_key,
-                    SUM(%(debit_select)s)         AS debit,
-                    SUM(%(credit_select)s)        AS credit,
+                    0                             AS debit,
+                    0                             AS credit,
                     SUM(%(balance_select)s)       AS amount,
                     SUM(%(balance_select)s)       AS balance
                 FROM %(table_references)s
@@ -414,6 +422,9 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 init_balance_by_col_group = self._get_initial_balance_values([record_id], options)[record_id]
             initial_balance_line = report._get_partner_and_general_ledger_initial_balance_line(options, line_dict_id, init_balance_by_col_group, level_shift=level_shift)
             if initial_balance_line:
+                for column in initial_balance_line["columns"]:
+                    if column.get("expression_label") in ("debit", "credit"):
+                        column["blank_if_zero"] = True
                 lines.append(initial_balance_line)
 
                 # For the first expansion of the line, the initial balance line gives the progress
@@ -667,7 +678,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         for column in options['columns']:
             col_expr_label = column['expression_label']
             value = None if options.get('hide_partner_totals') else partner_values[column['column_group_key']].get(col_expr_label)
-            unfoldable = unfoldable or (col_expr_label in ('debit', 'credit', 'amount') and not company_currency.is_zero(value))
+            unfoldable = unfoldable or (col_expr_label in ('debit', 'credit', 'amount') and value and not company_currency.is_zero(value))
             column_values.append(report._build_column_dict(value, column, options=options))
 
 
