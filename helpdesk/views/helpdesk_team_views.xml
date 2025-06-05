@@ -115,7 +115,7 @@
                                     <div class="mt16 d-flex" name="member_ids" invisible="assign_method == 'tags'">
                                         <label for="member_ids"/>
                                         <field name="member_ids" widget="many2many_avatar_user" required="auto_assignment and assign_method != 'tags'"
-                                        class="ms-3" options="{'no_quick_create': True}"/>
+                                        class="ms-3"/>
                                     </div>
                                     <button
                                         name="%(helpdesk.action_helpdesk_tag_assignment)d" string="Configure tags handled by team members"
