@@ -76,6 +76,10 @@ export class AbstractSpreadsheetAction extends Component {
         this.stores = useStoreProvider();
         this.threadId = this.params?.thread_id;
         this.dataFetched = false;
+        this.originalMetaViewportContent = document.querySelector(
+            'head meta[name="viewport"]'
+        ).content;
+
         useSetupAction({
             beforeLeave: this._leaveSpreadsheet.bind(this),
             beforeUnload: this._leaveSpreadsheet.bind(this),
@@ -116,6 +120,12 @@ export class AbstractSpreadsheetAction extends Component {
             }
         });
         onMounted(() => {
+            document
+                .querySelector('head meta[name="viewport"]')
+                .setAttribute(
+                    "content",
+                    this.originalMetaViewportContent + ", interactive-widget=resizes-content"
+                );
             this.execInitCallbacks();
             const commentsStore = this.stores.get(CommentsStore);
             this.props.updateActionState({
@@ -133,6 +143,10 @@ export class AbstractSpreadsheetAction extends Component {
             }
         });
         onWillUnmount(() => {
+            // the meximum scale does not work, need to find another approach
+            document
+                .querySelector('head meta[name="viewport"]')
+                .setAttribute("content", this.originalMetaViewportContent);
             this.model.off("unexpected-revision-id", this);
         });
     }
