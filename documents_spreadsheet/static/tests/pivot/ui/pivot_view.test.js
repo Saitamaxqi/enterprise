@@ -44,7 +44,7 @@ import {
 import { user } from "@web/core/user";
 import { WebClient } from "@web/webclient/webclient";
 
-const { sanitizeSheetName } = helpers;
+const { sanitizeSheetName, toCartesian } = helpers;
 
 defineDocumentSpreadsheetModels();
 defineDocumentSpreadsheetTestAction();
@@ -54,6 +54,26 @@ const { PIVOT_TABLE_CONFIG } = constants;
 beforeEach(() => {
     ResUsers._records = getDocumentBasicData().models["res.users"].records;
 });
+
+function getGridIconEventPosition(model, xc) {
+    const position = toCartesian(xc);
+    const sheetId = model.getters.getActiveSheetId();
+    const icon = model.getters.getCellIcons({ sheetId, ...position })[0];
+    if (!icon) {
+        throw new Error(`No icon inside cell ${xc}`);
+    }
+    const gridPosition = getFixture().querySelector(".o-grid-overlay").getBoundingClientRect();
+    const gridOffset = model.getters.getGridOffset();
+    const rect = model.getters.getCellIconRect(icon);
+    const x = rect.x + rect.width / 2 - gridOffset.x + gridPosition.x;
+    const y = rect.y + rect.height / 2 - gridOffset.y + +gridPosition.y;
+    return { x, y };
+}
+
+async function clickGridIcon(model, xc) {
+    const { x, y } = getGridIconEventPosition(model, xc);
+    await pointerDown(".o-grid-overlay", { position: { x, y } });
+}
 
 test("simple pivot export", async () => {
     const { model } = await createSpreadsheetFromPivotView({
@@ -1276,7 +1296,7 @@ test("Can collapse pivot header group", async function () {
     selectCell(model, "A20");
     await animationFrame();
     setCellContent(model, "A20", "=PIVOT(1)");
-    await contains(".o-pivot-collapse-icon").click();
+    await clickGridIcon(model, "B20");
 
     const [pivotId] = model.getters.getPivotIds();
     const definition = model.getters.getPivotCoreDefinition(pivotId);
