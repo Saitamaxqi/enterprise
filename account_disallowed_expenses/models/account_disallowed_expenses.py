@@ -34,7 +34,7 @@ class AccountDisallowedExpensesCategory(models.Model):
     def _compute_current_rate(self):
         rates = self._get_current_rates()
         for rec in self:
-            rate = rates.get(rec._origin.id, 100)
+            rate = rates.get(rec._origin.id, 0)
             rec.current_rate = ('%g%%' % rate)
 
     def _get_current_rates(self):
@@ -81,7 +81,7 @@ class AccountDisallowedExpensesRate(models.Model):
     _description = "Disallowed Expenses Rate"
     _order = 'date_from desc'
 
-    rate = fields.Float(string='Deductibility (%)', required=True)
+    rate = fields.Float(string='Fiscal Rate (%)', required=True)
     date_from = fields.Date(string='Start Date', required=True)
     category_id = fields.Many2one('account.disallowed.expenses.category', string='Category', required=True, index=True, ondelete='cascade')
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)

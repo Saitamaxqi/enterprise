@@ -20,7 +20,7 @@
             <field name="code">1203</field>
             <field name="rate_ids">
                 <record id="1203_2_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">0</field>
+                    <field name="rate">100</field>
                     <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
@@ -44,7 +44,7 @@
             <field name="code">1205.1</field>
             <field name="rate_ids">
                 <record id="1205_1_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">0</field>
+                    <field name="rate">100</field>
                     <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
@@ -56,7 +56,7 @@
             <field name="code">1205.2</field>
             <field name="rate_ids">
                 <record id="1205_2_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">75</field>
+                    <field name="rate">25</field>
                     <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
@@ -98,7 +98,7 @@
             <field name="code">1208</field>
             <field name="rate_ids">
                 <record id="1208_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">69</field>
+                    <field name="rate">31</field>
                     <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>
@@ -164,7 +164,7 @@
             <field name="code">1216.1</field>
             <field name="rate_ids">
                 <record id="1216_1_rate_1" model="account.disallowed.expenses.rate">
-                    <field name="rate">120</field>
+                    <field name="rate">20</field>
                     <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
                 </record>
             </field>

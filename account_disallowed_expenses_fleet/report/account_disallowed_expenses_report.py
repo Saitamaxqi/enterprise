@@ -64,19 +64,19 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
                 ARRAY_AGG(fleet_rate.rate) fleet_rate,
                 ARRAY_AGG(vehicle.id) vehicle_id,
                 ARRAY_AGG(vehicle.name) vehicle_name,
-                SUM(aml.balance * (100.0 - (
+                SUM(aml.balance * (
                     CASE WHEN fleet_rate.rate IS NOT NULL
                     THEN
                         CASE WHEN rate.rate IS NOT NULL
                         THEN
-                            CASE WHEN fleet_rate.rate > rate.rate
+                            CASE WHEN fleet_rate.rate < rate.rate
                             THEN fleet_rate.rate
                             ELSE rate.rate
                             END
                         ELSE fleet_rate.rate
                         END
                     ELSE rate.rate
-                    END))) / 100 AS fleet_disallowed_amount
+                    END)) / 100 AS fleet_deductible_amount
             """,
             select=select,
         )
@@ -131,10 +131,10 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
             # Expanding an account
             if options.get('vehicle_split'):
                 group_by = SQL("%s, vehicle.id, rate.rate, fleet_rate.rate", group_by)
-                order_by = SQL("ORDER BY vehicle.id, 100 - rate.rate, 100 - fleet_rate.rate")
+                order_by = SQL("ORDER BY vehicle.id, rate.rate, fleet_rate.rate")
             else:
                 group_by = SQL("%s, rate.rate, fleet_rate.rate", group_by)
-                order_by = SQL("ORDER BY 100 - rate.rate, 100 - fleet_rate.rate")
+                order_by = SQL("ORDER BY rate.rate, fleet_rate.rate")
 
         return select, from_, where, group_by, order_by, order_by_rate
 
@@ -287,7 +287,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         if fleet_rate is not False:
             if fleet_rate is not None:
                 if account_rate:
-                    current_rate = max(account_rate, fleet_rate)
+                    current_rate = min(account_rate, fleet_rate)
                 else:
                     current_rate = fleet_rate
             elif account_rate:
@@ -295,10 +295,10 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
 
         return current_rate
 
-    def _get_current_disallowed_amount(self, values):
+    def _get_current_deductible_amount(self, values):
         # EXTENDS account_disallowed_expenses.
-        res = super()._get_current_disallowed_amount(values)
-        return values['fleet_disallowed_amount'] if any(values['vehicle_id']) else res
+        res = super()._get_current_deductible_amount(values)
+        return values['fleet_deductible_amount'] if any(values['vehicle_id']) else res
 
     def _filter_current(self, current, fields):
         return {key: val for key, val in current.items() if key in fields}
