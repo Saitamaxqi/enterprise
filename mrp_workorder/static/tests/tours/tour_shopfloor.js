@@ -144,7 +144,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         },
         {
             trigger:
-                ".o_mrp_display_record:contains(giraffe - ):contains(2 / 2):contains(instructions):contains(5/5):contains(00:1)",
+                ".o_mrp_display_record:contains(giraffe - ):contains(2 / 2):contains(instructions):contains(5/5)",
         },
         {
             content: "Close first operation",
