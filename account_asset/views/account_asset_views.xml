@@ -61,7 +61,11 @@
                     <group invisible="state != 'model'">
                         <group string="Depreciation Method">
                             <field name="method" required="1" readonly="state not in ['draft', 'model']" />
-                            <field name="method_progress_factor" widget="percentage" invisible="method == 'linear'" readonly="state not in ['draft', 'model']" required="method in ('degressive', 'degressive_then_linear')"/>
+                            <label for="method_progress_factor" invisible="method == 'linear'"/>
+                            <div class="o_row" invisible="method == 'linear'">
+                                <field class="oe_inline" name="method_progress_factor" widget="percentage" readonly="state not in ['draft', 'model']" required="method in ('degressive', 'degressive_then_linear')"/>
+                                <span> per year</span>
+                            </div>
                             <label for="method_number" string="Duration"/>
                             <div class="o_row">
                                 <field name="method_number" required="1" readonly="state not in ['draft', 'model']"/>
@@ -168,7 +172,11 @@
                                 </group>
                                 <group string="Depreciation Method">
                                     <field name="method" required="1" readonly="state not in ['draft', 'model']" />
-                                    <field name="method_progress_factor" widget="percentage" invisible="method == 'linear'" readonly="state not in ['draft', 'model']" required="method in ('degressive', 'degressive_then_linear')"/>
+                                    <label for="method_progress_factor" invisible="method == 'linear'"/>
+                                    <div class="o_row" invisible="method == 'linear'">
+                                        <field class="oe_inline" name="method_progress_factor" widget="percentage" readonly="state not in ['draft', 'model']" required="method in ('degressive', 'degressive_then_linear')"/>
+                                        <span> per year</span>
+                                    </div>
                                     <label for="method_number" string="Duration"/>
                                     <div class="o_row">
                                         <field name="method_number" required="1" readonly="state not in ['draft', 'model']" class="oe_inline"/>
