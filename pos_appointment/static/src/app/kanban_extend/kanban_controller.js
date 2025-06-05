@@ -44,7 +44,9 @@ export class PosKanbanController extends KanbanController {
                     `${date
                         .set({ hour: 0, minute: 0, second: 0 })
                         .toUTC()
-                        .toFormat("yyyy-MM-dd HH:mm:ss")}`,
+                        .toFormat("yyyy-MM-dd HH:mm:ss", {
+                            numberingSystem: "latn",
+                        })}`,
                 ],
             ]),
             new Domain([
@@ -54,7 +56,9 @@ export class PosKanbanController extends KanbanController {
                     `${date
                         .set({ hour: 23, minute: 59, second: 59 })
                         .toUTC()
-                        .toFormat("yyyy-MM-dd HH:mm:ss")}`,
+                        .toFormat("yyyy-MM-dd HH:mm:ss", {
+                            numberingSystem: "latn",
+                        })}`,
                 ],
             ]),
         ]);
