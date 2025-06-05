@@ -215,6 +215,16 @@ msgid "Action Needed"
 msgstr ""
 
 #. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__prorata_at_0
+msgid "Actual Use at 0%"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__prorata_at_100
+msgid "Actual Use at 100%"
+msgstr ""
+
+#. module: l10n_be_reports
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__l10n_be_form_325__treatment_type__2
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__l10n_be_form_325_wizard__treatment_type__2
 msgid "Add"
@@ -516,6 +526,17 @@ msgid "Debtor is Natural Person"
 msgstr ""
 
 #. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__prorata
+msgid "Definitive Prorata"
+msgstr ""
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/wizard/vat_report_export.py:0
+msgid "Definitive prorata must be an integer between 1 and 100"
+msgstr ""
+
+#. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_281_50__display_name
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_325__display_name
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_325_wizard__display_name
@@ -751,6 +772,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_281_50__has_message
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_325__has_message
 msgid "Has Message"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__submit_more
+msgid "I want to submit more than 5 specific prorata"
 msgstr ""
 
 #. module: l10n_be_reports
@@ -1111,6 +1137,17 @@ msgid "Profit and Loss"
 msgstr ""
 
 #. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__is_prorata_necessary
+#: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_submission_wizard_form
+msgid "Prorata"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__prorata_year
+msgid "Prorata Year"
+msgstr ""
+
+#. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
 msgid ""
 "RECEPTION DATE\n"
@@ -1213,6 +1250,11 @@ msgid "Sending type"
 msgstr ""
 
 #. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__show_prorata
+msgid "Show Prorata"
+msgstr ""
+
+#. module: l10n_be_reports
 #. odoo-python
 #: code:addons/l10n_be_reports/models/account_report.py:0
 msgid "Some fields required for the export are missing. Please specify them."
@@ -1225,6 +1267,36 @@ msgid ""
 "Some partners are not correctly configured. Please be sure that the "
 "following pieces of information are set: street, zip code, country%s and vat"
 " or citizen identification."
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__special_prorata_1
+msgid "Special Prorata 1"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__special_prorata_2
+msgid "Special Prorata 2"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__special_prorata_3
+msgid "Special Prorata 3"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__special_prorata_4
+msgid "Special Prorata 4"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__special_prorata_5
+msgid "Special Prorata 5"
+msgstr ""
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__special_prorata_deduction
+msgid "Special Prorata Deduction %"
 msgstr ""
 
 #. module: l10n_be_reports
@@ -1287,6 +1359,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_reports/wizard/l10n_be_325_form_wizard.py:0
 msgid "The reference year must be a number."
+msgstr ""
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/wizard/vat_report_export.py:0
+msgid "The sum of the prorata uses must be 100%"
 msgstr ""
 
 #. module: l10n_be_reports

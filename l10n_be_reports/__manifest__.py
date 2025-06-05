@@ -25,6 +25,7 @@ Accounting reports for Belgium
         'data/profit_and_loss_comp_f.xml',
         'data/profit_and_loss_asso_a.xml',
         'data/profit_and_loss_asso_f.xml',
+        'data/prorata_template.xml',
         'data/balance_sheet_comp_acon.xml',
         'data/balance_sheet_comp_acap.xml',
         'data/balance_sheet_comp_fcon.xml',

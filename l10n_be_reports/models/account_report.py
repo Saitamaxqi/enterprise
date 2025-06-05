@@ -266,7 +266,11 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
 
     def _get_deduction_text(self, options):
         # To Override to include deductions in XML
-        return ''
+        deduction_dict = options.get('prorata_deduction', {})
+        if not deduction_dict.get('prorata'):
+            return ''
+
+        return self.env['ir.qweb']._render('l10n_be_reports.vat_export_prorata', deduction_dict)
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         def _evaluate_check(check_func):
