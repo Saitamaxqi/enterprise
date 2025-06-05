@@ -138,7 +138,7 @@ class AccountAssetReportHandler(models.AbstractModel):
                 col['name'] = format_date(self.env, column_group_options['date']['date_to'])
 
         options['custom_columns_subheaders'] = [
-            {"name": _("Characteristics"), "colspan": 4},
+            {"name": _("Characteristics"), "colspan": 3},
             {"name": _("Assets"), "colspan": 4},
             {"name": _("Depreciation"), "colspan": 4},
             {"name": _("Book Value"), "colspan": 1}
