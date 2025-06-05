@@ -3,6 +3,7 @@ import os
 import requests
 import typing
 from logging import getLogger
+import time
 
 from odoo import _
 from odoo.api import Environment
@@ -135,6 +136,71 @@ class LLMApiService:
             body,
         )
 
+    def get_transcription(
+            self,
+            data: bytes,
+            mimetype: str = "audio/ogg",
+            model: str = "whisper-1",
+            prompt: str | None = None,
+            response_format: str = "verbose_json",
+            temperature: float | None = None
+    ):
+        """ Submit audio data for transcription and return the transcribed text
+            Logs real-time factor:  `o_rtf = (transmission + inference_time) / audio_duration`
+            :param data: The audio file as raw bytes (not a filename or path!).
+            :param mimetype: MIME type of the audio data, defaults to "audio/ogg".
+            :param model: model to use for the transcription, defaults to 'whisper-1'
+            :param prompt: Optional text used to guide the model's style or continue a previous audio segment. Only supports english.
+            :param response_format: format of the output of the model. Types: 'json', 'text', 'srt', 'verbose_json', or 'vtt'
+            :param temperature: randomness level of the model. Ranges from 0 to 1.
+            :return: str | None: The transcribed text if successful, or None if the transcription failed.
+
+            Example:
+            ```python
+            from odoo.addons.ai.utils.llm_api_service import LLMApiService
+            service = LLMApiService(self.env)
+            with open("audio.ogg", "rb") as f:
+                audio_bytes = f.read()
+            text = service.get_transcription(audio_bytes, mimetype="audio/ogg")
+            ```
+        """
+        if response_format not in ['json', 'verbose_json']:  # limitation of using response.json() in _request function
+            raise NotImplementedError(f"Response format '{response_format}' is not supported. Request must return json!")
+
+        headers = {
+            'Authorization': f'Bearer {self._get_api_token()}',
+        }
+        body = {
+            "model": model,
+            "response_format": response_format
+        }
+        self._add_if_set(body, "prompt", prompt)
+        self._add_if_set(body, "temperature", temperature)
+
+        start = time.time()
+        response = self._request(
+            method="post",
+            endpoint="/v1/audio/transcriptions",
+            headers=headers,
+            body={},
+            data=body,
+            files={"file": ("audio", data, mimetype)},
+        )
+        elapsed = time.time() - start
+
+        if not response or 'text' not in response:
+            _logger.warning("No transcription received.")
+            return None
+
+        # Observed RTF (request time + transcription time)
+        o_rft_text = ""
+        audio_duration = response.get('duration', False)
+        if audio_duration and audio_duration > 0:
+            o_rtf = elapsed / audio_duration
+            o_rft_text = f"(Observed RTF: {o_rtf:.2f} for {audio_duration:.1f}s audio)"
+        _logger.info("Transcription job done in %.1fs %s", elapsed, o_rft_text)
+        return response.get('text')
+
     def _add_if_set(self, d: dict, key: str, value):
         if value is not None:
             d[key] = value
@@ -155,7 +221,7 @@ class LLMApiService:
             return api_key
         raise UserError(_("No API key set for provider '%s'", self.provider))
 
-    def _request(self, method: str, endpoint: str, headers: dict[str, str], body: dict) -> dict:
+    def _request(self, method: str, endpoint: str, headers: dict[str, str], body: dict, data: dict | None = None, files: dict | None = None) -> dict:
         route = f"{self.base_url}/{endpoint.strip('/')}"
         try:
             response = requests.request(
@@ -163,7 +229,9 @@ class LLMApiService:
                 route,
                 headers=headers,
                 json=body,
+                data=data,
                 timeout=20,
+                files=files
             )
             response.raise_for_status()
             return response.json()
