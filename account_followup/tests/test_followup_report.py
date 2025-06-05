@@ -17,6 +17,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
         super().setUpClass()
 
         cls.partner_a.email = 'partner_a@mypartners.xyz'
+        cls.report = cls.env.ref('account_reports.followup_report')
 
     def test_followup_report(self):
         ''' Test report lines when printing the follow-up report. '''
@@ -177,6 +178,16 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
         attachaments_domain = [('attachment_ids', '=', attachment.id) for attachment in invoice_attachments]
         mail = self.env['mail.mail'].search([('recipient_ids', '=', self.partner_a.id)] + attachaments_domain)
         self.assertTrue(mail, "A payment reminder email should have been sent.")
+
+    def test_followup_report_journal_option_disabled(self):
+        options = {
+            'partner_id': self.partner_a.id,
+            'manual_followup': True,
+        }
+
+        self.report.filter_journals = False
+        with patch.object(self.env.registry['account.report'], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'fake_partner_ledger.pdf', 'file_content': b'', 'file_type': 'pdf'}):
+            self.partner_a.execute_followup(options)
 
     def test_followup_lines_branches(self):
         branch = self.env['res.company'].create({
