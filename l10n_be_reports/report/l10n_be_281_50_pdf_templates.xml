@@ -30,11 +30,11 @@
                                             </p>
                                             <br/>
                                             <p class="text-start border border-dark" style="padding-left: 2%">
-                                                <span t-out="form.form_325_id.sender_name"/> <!-- Company name -->
+                                                <span t-out="form.form_325_id.debtor_name"/> <!-- Company name -->
                                                 <br/>
-                                                <span t-out="form.form_325_id.sender_address"/> <!-- Company Address -->
+                                                <span t-out="form.form_325_id.debtor_address"/> <!-- Company Address -->
                                                 <br/>
-                                                <span t-out="form.form_325_id.sender_zip"/> <span t-out="form.form_325_id.sender_city"/> <!-- Company ZIP & City -->
+                                                <span t-out="form.form_325_id.debtor_zip"/> <span t-out="form.form_325_id.debtor_city"/> <!-- Company ZIP & City -->
                                             </p>
                                             <br/>
                                             <p class="text-start">
