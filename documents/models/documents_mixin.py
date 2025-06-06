@@ -31,10 +31,12 @@ class DocumentsMixin(models.AbstractModel):
                 raise ValueError("Invalid access right values")
 
             owner = self._get_document_owner()
+            folder = self._get_document_folder()
             document_vals = {
                 'attachment_id': attachment.id,
                 'name': attachment.name or self.display_name,
-                'folder_id': self._get_document_folder().id,
+                'folder_id': folder.id,
+                'company_id': folder.company_id.id,
                 'owner_id': owner.id if owner.active else False,
                 'partner_id': self._get_document_partner().id,
                 'tag_ids': [(6, 0, self._get_document_tags().ids)],
