@@ -160,7 +160,8 @@ class CustomerPortal(payment_portal.PaymentPortal):
         missing_periods = 1
         if order_sudo.next_invoice_date:
             rel_period = relativedelta(datetime.datetime.today(), order_sudo.next_invoice_date)
-            missing_periods = ceil(getattr(rel_period, periods[order_sudo.plan_id.billing_period_unit])/order_sudo.plan_id.billing_period_value)//1
+            # In missing_periods, include current period to ensure not show payment form to portal if more than one billing cycle is overdue
+            missing_periods = ceil(getattr(rel_period, periods[order_sudo.plan_id.billing_period_unit]) / order_sudo.plan_id.billing_period_value) + 1
         action = request.env.ref('sale_subscription.sale_subscription_action')
         token_management_url_params = {
             'manage_subscription': True,
