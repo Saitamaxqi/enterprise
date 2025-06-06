@@ -67,6 +67,10 @@ class BusinessCardScanner:
             if not extracted_data:
                 continue
 
+            # Normalize to list of dicts
+            if isinstance(extracted_data, dict):
+                extracted_data = [extracted_data]
+
             fields_allowlist = [
                 'partner_name',
                 'contact_name',
@@ -79,45 +83,46 @@ class BusinessCardScanner:
                 'zip',
             ]
 
-            lead_values = {
-                field: extracted_data[field].strip()
-                for field in fields_allowlist
-                if extracted_data.get(field)
-            }
-            lead_values['type'] = 'opportunity'
+            for data in extracted_data:
+                lead_values = {
+                    field: data[field].strip()
+                    for field in fields_allowlist
+                    if data.get(field)
+                }
+                lead_values['type'] = 'opportunity'
 
-            contact_name = lead_values.get('contact_name')
-            company_name = lead_values.get('partner_name')
-            if contact_name or company_name:
-                lead_values['name'] = _("%(contact_name)s's opportunity", contact_name=contact_name or company_name)
-            else:
-                continue  # safety net as we told AI to return an empty result in this case
+                contact_name = lead_values.get('contact_name')
+                company_name = lead_values.get('partner_name')
+                if contact_name or company_name:
+                    lead_values['name'] = _("%(contact_name)s's opportunity", contact_name=contact_name or company_name)
+                else:
+                    continue  # safety net as we told AI to return an empty result in this case
 
-            # extract country
-            country = False
-            if extracted_data.get('country_code') and len(extracted_data['country_code']) == 2:
-                country = self.env['res.country'].search([('code', '=', extracted_data['country_code'])], limit=1)
-                if country:
-                    lead_values['country_id'] = country.id
+                # extract country
+                country = False
+                if data.get('country_code') and len(data['country_code']) == 2:
+                    country = self.env['res.country'].search([('code', '=', data['country_code'])], limit=1)
+                    if country:
+                        lead_values['country_id'] = country.id
 
-            # extract state
-            if extracted_data.get('state_code'):
-                domain = [('code', '=', extracted_data['state_code'])]
-                if country:
-                    domain = expression.AND([domain, [('country_id', '=', country.id)]])
-                state = self.env['res.country.state'].search(domain, limit=1)
-                if state:
-                    lead_values['state_id'] = state.id
+                # extract state
+                if data.get('state_code'):
+                    domain = [('code', '=', data['state_code'])]
+                    if country:
+                        domain = expression.AND([domain, [('country_id', '=', country.id)]])
+                    state = self.env['res.country.state'].search(domain, limit=1)
+                    if state:
+                        lead_values['state_id'] = state.id
 
-            # format phone
-            if lead_values.get('phone'):
-                lead_values['phone'] = self.env['crm.lead']._phone_format(
-                    number=lead_values['phone'],
-                    country=country,
-                )
+                # format phone
+                if lead_values.get('phone'):
+                    lead_values['phone'] = self.env['crm.lead']._phone_format(
+                        number=lead_values['phone'],
+                        country=country,
+                    )
 
-            lead_values_list.append(lead_values)
-            valid_attachments.append(attachment)
+                lead_values_list.append(lead_values)
+                valid_attachments.append(attachment)
 
         if len(attachments) == 1 and not lead_values_list:
             # special case when a single attachment fails: do not create records
