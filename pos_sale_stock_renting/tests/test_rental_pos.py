@@ -88,6 +88,12 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
             'is_storable': True,
         })
 
+        self.test_product_non_rental = self.env['product.product'].create({
+            'name': 'Test Non Rental',
+            'available_in_pos': True,
+            'is_storable': True,
+        })
+
         warehouse = self.env['stock.warehouse'].search([('company_id', '=', self.env.company.id)], limit=1)
         self.env['stock.quant']._update_available_quantity(self.test_product, warehouse.lot_stock_id, 10.0)
 
@@ -108,12 +114,19 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
             'product_id': self.test_product.id,
             'product_uom_qty': 1.0
         })
+
+        self.order_line_non_rental = self.env['sale.order.line'].sudo().create({
+            'order_id': self.sale_order.id,
+            'product_id': self.test_product_non_rental.id,
+            'product_uom_qty': 1.0,
+        })
+
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.order_line.update({'is_rental': True})
-        pos_order = {'amount_paid': 10,
+        pos_order = {'amount_paid': 20,
            'amount_return': 0,
            'amount_tax': 0,
-           'amount_total': 10,
+           'amount_total': 20,
            'date_order': fields.Datetime.to_string(fields.Datetime.now()),
            'fiscal_position_id': False,
            'to_invoice': True,
@@ -130,13 +143,24 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
               'sale_order_line_id': self.order_line.id,
               'sale_order_origin_id': self.sale_order.id,
               'qty': 1,
+              'tax_ids': []}], [0,
+             0,
+             {'discount': 0,
+              'pack_lot_ids': [],
+              'price_unit': 10,
+              'product_id': self.test_product_non_rental.id,
+              'price_subtotal': 10,
+              'price_subtotal_incl': 10,
+              'sale_order_line_id': self.order_line_non_rental.id,
+              'sale_order_origin_id': self.sale_order.id,
+              'qty': 1,
               'tax_ids': []}]],
            'name': 'Order 00044-003-0014',
            'session_id': self.main_pos_config.current_session_id.id,
            'sequence_number': self.main_pos_config.journal_id.id,
            'payment_ids': [[0,
              0,
-             {'amount': 10,
+             {'amount': 20,
               'name': fields.Datetime.now(),
               'payment_method_id': self.main_pos_config.payment_method_ids[0].id}]],
            'uuid': '00044-003-0014',
@@ -144,10 +168,11 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
 
         self.env['pos.order'].sync_from_ui([pos_order])
 
-        self.assertEqual(self.sale_order.order_line.qty_delivered, 1.0)
+        self.assertEqual(self.order_line.qty_delivered, 1.0)
+        self.assertEqual(self.order_line_non_rental.qty_delivered, 1.0)
         return_action = self.sale_order.action_open_return()
         wizard = Form(self.env['rental.order.wizard'].sudo().with_context(return_action['context'])).save()
         wizard.apply()
 
-        self.assertEqual(self.sale_order.order_line.qty_delivered, 1.0)
-        self.assertEqual(self.sale_order.order_line.qty_returned, 1.0)
+        self.assertEqual(self.order_line.qty_delivered, 1.0)
+        self.assertEqual(self.order_line.qty_returned, 1.0)

@@ -26,5 +26,5 @@ class RentalOrderLine(models.Model):
                         continue
                     qty += move.product_uom._compute_quantity(move.quantity, line.product_uom_id, rounding_method='HALF-UP')
                 line.qty_delivered = qty
-            if all(picking.state == 'done' for picking in line.pos_order_line_ids.order_id.picking_ids):
-                line.qty_delivered += sum((self._convert_qty(line, pos_line.qty, 'p2s') for pos_line in line.pos_order_line_ids if line.product_id.type != 'service'), 0)
+                if all(picking.state == 'done' for picking in line.pos_order_line_ids.order_id.picking_ids):
+                    line.qty_delivered += sum((self._convert_qty(line, pos_line.qty, 'p2s') for pos_line in line.pos_order_line_ids if line.product_id.type != 'service'), 0)
