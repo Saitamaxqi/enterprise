@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import contextlib
 import psycopg2
 
 from odoo import _, api, fields, models, tools, Command
@@ -131,25 +132,22 @@ class Base_ImportImport(models.TransientModel):
         if options.get('bank_stmt_import'):
             savepoint = self.env.cr.savepoint()
             res = super().execute_import(fields, columns, options, dryrun=dryrun)
-            statement = self.env['account.bank.statement'].create({
-                'reference': self.file_name,
-                'line_ids': [Command.set(res.get('ids', []))],
-                **options.get('statement_vals', {}),
-            })
-            if not dryrun and statement.line_ids:
-                # We trigger the schedule action after the import is done, so that the auto reconcile is done in the background
-                # and we avoid having an error when importing the file.
-                self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
-
-            try:
-                savepoint.close(rollback=dryrun)
-                if not dryrun:
+            if not 'statement_id' in fields:
+                statement = self.env['account.bank.statement'].create({
+                    'reference': self.file_name,
+                    'line_ids': [Command.set(res.get('ids', []))],
+                    **options.get('statement_vals', {}),
+                })
+                if not dryrun and statement.line_ids:
+                    # We trigger the schedule action after the import is done, so that the auto reconcile is done in the background
+                    # and we avoid having an error when importing the file.
+                    self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
                     res['messages'].append({
                         'statement_id': statement.id,
                         'type': 'bank_statement'
                         })
-            except psycopg2.InternalError:
-                pass
+            with contextlib.suppress(psycopg2.InternalError):
+                savepoint.close(rollback=dryrun)
             return res
         else:
             return super().execute_import(fields, columns, options, dryrun=dryrun)
