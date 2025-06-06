@@ -106,5 +106,8 @@
         &:not(.o_kanban_ghost) {
             min-height: 220px;
         }
+        @media (max-width: 450px) {
+            width: fit-content;
+        }
     }
 }

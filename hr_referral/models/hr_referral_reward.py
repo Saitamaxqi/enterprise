@@ -115,3 +115,18 @@ class HrReferralReward(models.Model):
         res = super(HrReferralReward, self).write(values)
         old_responsibles._clean_responsibles()
         return res
+
+    def action_open_buy_view(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._('Confirmation'),
+            'res_model': 'hr.referral.reward',
+            'views': [[False, 'form']],
+            'view_id': self.env.ref('hr_referral.hr_referral_view_form_reward_purchase_dialog').id,
+            'target': 'new',
+            'res_id': self.id,
+            'context': {
+                'dialog_size': 'medium'
+            },
+        }

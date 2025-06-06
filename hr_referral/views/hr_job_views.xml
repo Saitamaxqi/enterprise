@@ -63,11 +63,11 @@
                                     <!-- Empty div to ensure the shrinking without the presence of a 4th button -->
                                     <div class="w-25 flex-shrink-1"/>
                                 </div>
-                                <div class="o_to_share d-flex gap-1">
+                                <div class="d-flex gap-1">
                                     <field  name="id" widget="CopyClipboardReferralButton" class="w-25 flex-shrink-1"/>
                                     <a role="button" name="action_share_external" type="object" class="btn btn-secondary w-25 flex-shrink-1" context="{'default_channel': 'facebook'}">
                                         <span title="Share on Facebook">
-                                            <i class="fa fa-lg fa-facebook" role="img" aria-label="Share on facebook"/>
+                                            <i class="fa fa-2x fa-facebook" role="img" aria-label="Share on facebook"/>
                                         </span>
                                         <span class="d-block mt-2 text-primary">
                                             <t t-if="record.facebook_clicks &gt; 0"><field name="facebook_clicks"/> click(s)</t>
@@ -76,7 +76,7 @@
                                     </a>
                                     <a role="button" name="action_share_external" type="object" class="btn btn-secondary w-25 flex-shrink-1" context="{'default_channel': 'twitter'}">
                                         <span title="Share on Twitter">
-                                            <i class="fa fa-lg fa-twitter" role="img" aria-label="Share on twitter"/>
+                                            <i class="fa fa-2x fa-twitter" role="img" aria-label="Share on twitter"/>
                                         </span>
                                         <span class="d-block mt-2 text-primary">
                                             <t t-if="record.twitter_clicks &gt; 0"><field name="twitter_clicks"/> click(s)</t>
@@ -85,7 +85,7 @@
                                     </a>
                                     <a role="button" name="action_share_external" type="object" class="btn btn-secondary w-25 flex-shrink-1" context="{'default_channel': 'linkedin'}">
                                         <span title="Share on Linkedin">
-                                            <i class="fa fa-lg fa-linkedin" role="img" aria-label="Share on linkedin"/>
+                                            <i class="fa fa-2x fa-linkedin" role="img" aria-label="Share on linkedin"/>
                                         </span>
                                         <span class="d-block mt-2 text-primary">
                                             <t t-if="record.linkedin_clicks &gt; 0"><field name="linkedin_clicks"/> click(s)</t>

@@ -20,7 +20,7 @@
                                     <div class="carousel-item_img">
                                         <img t-attf-src="data:image/png;base64,{{item.image}}"/>
                                     </div>
-                                    <p class="carousel-item_text text-center px-5 pt-5"><t t-esc="item.text"/></p>
+                                    <p class="carousel-item_text text-center px-5 pt-3 pt-md-5"><t t-esc="item.text"/></p>
                                 </div>
                             </div>
                         </t>
