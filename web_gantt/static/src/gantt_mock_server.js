@@ -1,10 +1,16 @@
 import { registry } from "@web/core/registry";
 
 function _mockGetGanttData(_, { model, kwargs }) {
-    const { groups, length } = this.mockWebReadGroup(model, {
+    let groups = this._mockFormattedReadGroup(model, {
         ...kwargs,
         aggregates: ["id:array_agg"],
+        limit: null,
+        offset: 0,
     });
+
+    const length = groups.length;
+    const offset = kwargs.offset || 0;
+    groups = groups.slice(offset, kwargs.limit ? kwargs.limit + offset : undefined);
 
     const recordIds = [];
     for (const group of groups) {

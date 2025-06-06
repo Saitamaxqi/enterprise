@@ -3,15 +3,21 @@ import { registry } from "@web/core/registry";
 
 function _mockGetGanttData({ kwargs, model }) {
     kwargs = makeKwArgs(kwargs);
-    const { groups, length } = this.env[model].web_read_group({
+    let groups = this.env[model].formatted_read_group({
         ...kwargs,
         aggregates: ["id:array_agg"],
+        limit: null,
+        offset: 0,
     });
+
+    const length = groups.length;
+    const offset = kwargs.offset || 0;
+    groups = groups.slice(offset, kwargs.limit ? kwargs.limit + offset : undefined);
 
     const recordIds = [];
     for (const group of groups) {
-        group.__record_ids = group["id:array_agg"]
-        delete group["id:array_agg"]
+        group.__record_ids = group["id:array_agg"];
+        delete group["id:array_agg"];
         recordIds.push(...(group.__record_ids || []));
     }
 

@@ -1,16 +1,13 @@
 import { registry } from "@web/core/registry";
 
 function _mockGetGanttData(params) {
-    let { groups, length } = this._mockWebReadGroup({
-        ...params,
-        aggregates: ["id:array_agg"],
-    });
+    let groups = this._mockFormattedReadGroup({ ...params, aggregates: ["id:array_agg"] });
     if (params.limit) {
         // we don't care about pager feature in sample mode
         // but we want to present something coherent
         groups = groups.slice(0, params.limit);
-        length = groups.length;
     }
+    const length = groups.length;
     groups.forEach((g) => (g["id:array_agg"] = g.id)); // the sample server does not use the key id:array_agg
 
     const unavailabilities = {};

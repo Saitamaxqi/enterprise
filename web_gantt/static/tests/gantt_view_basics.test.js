@@ -280,7 +280,7 @@ test("single-level grouped gantt rendering with group_expand", async () => {
         { project_id: [1, "Project 1"], "id:array_agg": [1, 2, 3, 4] },
     ];
     patchWithCleanup(Tasks.prototype, {
-        web_read_group: () => ({ groups, length: groups.length }),
+        formatted_read_group: () => groups,
     });
 
     await mountGanttView({

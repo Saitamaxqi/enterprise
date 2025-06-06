@@ -86,20 +86,37 @@ class Base(models.AbstractModel):
                     }
                 }
         """
-        # Because there is no limit by group, we can fetch record_ids as aggregate
-        final_result = self.with_context(read_group_expand=True).web_read_group(
-            domain, groupby, ['id:array_agg'],
-            limit=limit, offset=offset,
-        )
+        if groupby:
+            # Because there is no limit by group, we can fetch record_ids as aggregate
+            groups, length = self.with_context(read_group_expand=True)._formatted_read_group_with_length(
+                domain, groupby, ['id:array_agg'],
+                offset=offset, limit=limit,
+            )
 
-        all_record_ids = tuple(unique(
-            record_id
-            for one_group in final_result['groups']
-            for record_id in one_group['id:array_agg']
-        ))
+            final_result = {
+                'groups': groups,
+                'length': length,
+            }
 
-        # Do search_fetch to order records (model order can be no-trivial)
-        all_records = self.with_context(active_test=False).search_fetch([('id', 'in', all_record_ids)], read_specification.keys())
+            all_record_ids = tuple(unique(
+                record_id
+                for one_group in groups
+                for record_id in one_group['id:array_agg']
+            ))
+
+            # Do search_fetch to order records (model order can be no-trivial)
+            all_records = self.with_context(active_test=False).search_fetch([('id', 'in', all_record_ids)], read_specification.keys())
+        else:
+            # Not groupby => search records directly and create one group to respect the API
+            all_records = self.search_fetch(domain, read_specification.keys())
+            final_result = {
+                'groups': [{
+                    'id:array_agg': all_records._ids,
+                    '__extra_domain': [],
+                }],
+                'length': 1,
+            }
+
         final_result['records'] = all_records.with_env(self.env).web_read(read_specification)
 
         if unavailability_fields is None:

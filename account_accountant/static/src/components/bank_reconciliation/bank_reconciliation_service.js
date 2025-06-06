@@ -42,7 +42,7 @@ class BankReconciliationService {
     }
 
     async computeReconcileLineCountPerPartnerId(records) {
-        const result = await this.orm.webReadGroup(
+        const groups = await this.orm.formattedReadGroup(
             "account.move.line",
             [
                 ["parent_state", "in", ["draft", "posted"]],
@@ -67,7 +67,7 @@ class BankReconciliationService {
         );
 
         this.reconcileCountPerPartnerId = {};
-        result.groups.forEach((group) => {
+        groups.forEach((group) => {
             this.reconcileCountPerPartnerId[group.partner_id[0]] = group["id:count"];
         });
     }

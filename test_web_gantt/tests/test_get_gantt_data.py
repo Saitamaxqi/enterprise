@@ -28,7 +28,7 @@ class TestUnityWebReadGroupGantt(TransactionCase):
 
     def test_get_gantt_data_without_limit(self):
         self.env.invalidate_all()
-        with self.assertQueryCount(2):  # One for _read_group + One for reading name to compute display_name
+        with self.assertQueryCount(1):  # No _read_group but 1 query for search/reading display_name
             result = self.env['test.web.gantt.pill'].get_gantt_data(
                 [('id', 'in', self.pills.ids)], [], {'display_name': {}},
             )

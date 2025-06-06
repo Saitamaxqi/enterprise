@@ -175,7 +175,7 @@
             <field name="res_model">account.return</field>
             <field name="view_mode">kanban,calendar,search</field>
             <field name="path">tax-return</field>
-            <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1}</field>
+            <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1, 'max_number_opened_groups': 100000}</field>
         </record>
 
         <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_server_open_view_account_return" name="Tax Returns" sequence="100"/>
