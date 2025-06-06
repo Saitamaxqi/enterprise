@@ -195,7 +195,7 @@ test("Edit the value of a relative date filter", async function () {
             id: "42",
             type: "date",
             label: "label",
-            defaultValue: "last_week",
+            defaultValue: "last_7_days",
             rangeType: "relative",
         },
         {
@@ -208,12 +208,12 @@ test("Edit the value of a relative date filter", async function () {
         "",
         ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
     ]);
-    await contains(select).select("last_year");
+    await contains(select).select("last_12_months");
     await animationFrame();
 
-    expect(model.getters.getGlobalFilterValue("42")).toBe("last_year");
+    expect(model.getters.getGlobalFilterValue("42")).toBe("last_12_months");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
-    assertDateDomainEqual("date", "2021-07-15", "2022-07-14", pivotDomain);
+    assertDateDomainEqual("date", "2021-07-01", "2022-06-30", pivotDomain);
 });
 
 test("Edit the value to empty of a relative date filter", async () => {
@@ -225,7 +225,7 @@ test("Edit the value to empty of a relative date filter", async () => {
             id: "42",
             type: "date",
             label: "label",
-            defaultValue: "last_week",
+            defaultValue: "last_7_days",
             rangeType: "relative",
         },
         {

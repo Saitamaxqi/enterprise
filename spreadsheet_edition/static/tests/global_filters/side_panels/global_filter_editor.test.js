@@ -817,7 +817,7 @@ test("Creating a new date filter with large period offsets defaults to 50", asyn
         "",
         ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
     ]);
-    await contains(relativeSelection).select("last_month");
+    await contains(relativeSelection).select("last_30_days");
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     await selectFieldMatching("date", pivotFieldMatching);
     await contains(pivotFieldMatching.querySelector("select")).select("-1");
@@ -895,7 +895,7 @@ test("Create a new relative date filter", async function () {
         "",
         ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
     ]);
-    await contains(relativeSelection).select("last_month");
+    await contains(relativeSelection).select("last_30_days");
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
@@ -917,7 +917,7 @@ test("Create a new relative date filter", async function () {
 
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.defaultValue).toBe("last_month");
+    expect(globalFilter.defaultValue).toBe("last_30_days");
     expect(globalFilter.rangeType).toBe("relative");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
@@ -949,7 +949,7 @@ test("Create a new relative date filter with a negative offset should save the a
         "",
         ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
     ]);
-    await contains(relativeSelection).select("last_month");
+    await contains(relativeSelection).select("last_30_days");
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
@@ -977,7 +977,7 @@ test("Create a new relative date filter with a negative offset should save the a
 
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.defaultValue).toBe("last_month");
+    expect(globalFilter.defaultValue).toBe("last_30_days");
     expect(globalFilter.rangeType).toBe("relative");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
@@ -1082,7 +1082,7 @@ test("Changing the range of a date global filter reset the current value", async
             id: "42",
             type: "date",
             label: "label",
-            defaultValue: "last_week",
+            defaultValue: "last_7_days",
             rangeType: "relative",
         },
         {
@@ -1092,7 +1092,7 @@ test("Changing the range of a date global filter reset the current value", async
     await openSidePanel(model, env, "42");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
     assertDateDomainEqual("date", "2022-07-04", "2022-07-10", pivotDomain);
-    expect(model.getters.getGlobalFilterValue("42")).toBe("last_week");
+    expect(model.getters.getGlobalFilterValue("42")).toBe("last_7_days");
 
     const timeRangeOption = target.querySelectorAll(
         ".o_spreadsheet_filter_editor_side_panel .o-section"
