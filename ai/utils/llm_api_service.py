@@ -68,6 +68,7 @@ class LLMApiService:
             data: bytes,
             mimetype: str = "audio/ogg",
             model: str = "whisper-1",
+            language: str | None = None,
             prompt: str | None = None,
             response_format: str = "verbose_json",
             temperature: float | None = None
@@ -77,6 +78,7 @@ class LLMApiService:
             :param data: The audio file as raw bytes (not a filename or path!).
             :param mimetype: MIME type of the audio data, defaults to "audio/ogg".
             :param model: model to use for the transcription, defaults to 'whisper-1'
+            :param language: language of the audio
             :param prompt: Optional text used to guide the model's style or continue a previous audio segment. Only supports english.
             :param response_format: format of the output of the model. Types: 'json', 'text', 'srt', 'verbose_json', or 'vtt'
             :param temperature: randomness level of the model. Ranges from 0 to 1.
@@ -102,6 +104,7 @@ class LLMApiService:
             "response_format": response_format
         }
         self._add_if_set(body, "prompt", prompt)
+        self._add_if_set(body, "language", language)
         self._add_if_set(body, "temperature", temperature)
 
         start = time.time()
@@ -128,6 +131,27 @@ class LLMApiService:
             o_rft_text = f"(Observed RTF: {o_rtf:.2f} for {audio_duration:.1f}s audio)"
         _logger.info("Transcription job done in %.1fs %s", elapsed, o_rft_text)
         return response.get('text')
+
+    def get_transcription_session(
+        self,
+        client_secret: dict | None = None,
+        input_audio_format: str | None = None,
+        input_audio_noise_reduction: dict | None = None,
+        input_audio_transcription: dict | None = None,
+        modalities: list[str] | None = None,
+        turn_detection: dict | None = None
+    ):
+        body = {}
+        self._add_if_set(body, "client_secret", client_secret)
+        self._add_if_set(body, "input_audio_format", input_audio_format)
+        self._add_if_set(body, "input_audio_noise_reduction", input_audio_noise_reduction)
+        self._add_if_set(body, "input_audio_transcription", input_audio_transcription)
+        self._add_if_set(body, "modalities", modalities)
+        self._add_if_set(body, "turn_detection", turn_detection)
+
+        headers = self._get_base_headers()
+
+        return self._request("post", "/realtime/transcription_sessions", headers, body)
 
     def _add_if_set(self, d: dict, key: str, value):
         if value is not None:

@@ -36,6 +36,7 @@
     'assets': {
         'web.assets_backend': [
             'ai/static/src/**/*',
+            ('remove', 'ai/static/src/worklets/**/*'),
         ],
         'mail.assets_public': [
             'ai/static/src/discuss/core/common/**/*',

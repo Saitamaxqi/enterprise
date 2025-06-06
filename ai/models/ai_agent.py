@@ -350,10 +350,14 @@ class AIAgent(models.Model):
         if not last_cron_time or last_cron_time < fields.Datetime.now() - timedelta(minutes=3):
             self.env.ref('ai.ir_cron_generate_embedding')._trigger()
 
-    def get_direct_response(self, prompt: str, context_message: str = ""):
+    def get_direct_response(self, prompt: str, context_message: str = "", enable_html_response: bool = False):
         """Get a direct response from the agent's provider LLM without chat history or channel creation."""
         self.ensure_one()
         response = self._generate_response(prompt=prompt, extra_system_context=context_message)
+        if enable_html_response and markdown:
+            for i, message in enumerate(response):
+                raw_html = markdown(message, extras=['fenced-code-blocks', 'tables', 'strike'])
+                response[i] = html_sanitize(raw_html)
         return response
 
     def generate_response(self, discuss_channel_id: int, mail_message):

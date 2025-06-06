@@ -108,16 +108,23 @@ export class ChatGPTPlugin extends Plugin {
         };
         dialogParams.baseContainer = this.dependencies.baseContainer.getDefaultNodeName();
         // collapse to end
-        let callerComp, recordModel, recordId, recordData, recordFields, callerId, placeholderPrompt, textSelection;
+        let callerComp,
+            recordModel,
+            recordId,
+            recordData,
+            recordFields,
+            callerId,
+            placeholderPrompt,
+            textSelection;
         const { resModel, resId, data, fields, id } = this.config.getRecordInfo();
         if (selection.isCollapsed) {
             if (resModel === "mail.compose.message") {
                 callerComp = "html_field_composer";
                 recordModel = data.model;
-                recordId = Number(data.res_ids.slice(1,-1));  // resIds should look like so `[id]`, the slice and cast allows to extract the id
+                recordId = Number(data.res_ids.slice(1, -1)); // resIds should look like so `[id]`, the slice and cast allows to extract the id
                 recordData = data;
                 callerId = id;
-                placeholderPrompt =  _t("Write a followup answer");
+                placeholderPrompt = _t("Write a followup answer");
             } else {
                 callerComp = "html_field_record";
                 recordModel = resModel;
@@ -167,7 +174,7 @@ export class ChatGPTPlugin extends Plugin {
     destroy() {
         const { resModel } = this.config.getRecordInfo();
         if (resModel !== "mail.compose.message") {
-            this.services['mail.store'].aiInsertButtonTarget = false;
+            this.services["mail.store"].aiInsertButtonTarget = false;
         }
         super.destroy();
     }

@@ -1,0 +1,35 @@
+[data-embedded="recorder"] {
+  $rounding: 4px;
+
+  .transcript-block {
+    padding: 0.5em 0.5em 0;
+    border-radius: $rounding;
+  }
+
+  .transcript-block>summary {
+    margin: -0.5em -0.5em 0;
+    border-radius: $rounding;
+
+    &::marker {
+      content: "a";
+    }
+  }
+
+  .transcript-block[open] {
+    padding: 0.5em;
+  }
+
+  .transcript-block .detail-content {
+    max-height: 500px;
+  }
+
+  .transcript-block[open]>summary {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.5em;
+    border-radius: $rounding $rounding 0 0;
+  }
+
+  .ai-icon-sm {
+    width: 1rem;
+  }
+}
