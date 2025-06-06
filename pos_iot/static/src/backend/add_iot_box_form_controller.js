@@ -12,23 +12,12 @@ patch(AddIoTBoxFormController.prototype, {
         }
 
         const posConfigAmount = await this.orm.searchCount("pos.config", [["active", "=", true]]);
-
-        this.notification.add(_t("New IoT Box connected!"), { type: "success" });
-
         if (posConfigAmount === 0) {
             this.env.services.action.doAction({ type: "ir.actions.act_window_close" });
             return;
         }
 
         const iotBoxIdentifier = this.newIoTBoxes[0].identifier;
-        this.closeConnectingNotification = this.notification.add(
-            _t("We're waiting for your IoT Box to send its devices..."),
-            {
-                type: "info",
-                sticky: true,
-            }
-        );
-
         // We need a timeout to wait for IoT Box to send its devices unless autoconfigure makes no sense.
         this.interval = setInterval(async () => {
             const connectedDevicesAmount = await this.orm.searchCount("iot.device", [
@@ -37,7 +26,6 @@ patch(AddIoTBoxFormController.prototype, {
 
             if (connectedDevicesAmount > 0) {
                 clearInterval(this.interval);
-                this.closeConnectingNotification();
                 this.env.services.action.doAction({
                     type: "ir.actions.act_window",
                     name: _t("Connect to a Point of Sale"),
