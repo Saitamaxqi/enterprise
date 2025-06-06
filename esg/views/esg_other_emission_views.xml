@@ -18,7 +18,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="date"/>
+                            <field name="date" widget="esg_daterange" options="{'end_date_field': 'date_end'}"/>
                             <field name="esg_emission_factor_id"/>
                             <field name="company_id"/>
                             <field name="note"/>

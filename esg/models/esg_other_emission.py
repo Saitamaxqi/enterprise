@@ -8,6 +8,7 @@ class EsgOtherEmission(models.Model):
     name = fields.Char(required=True)
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     date = fields.Date(required=True)
+    date_end = fields.Date()
     esg_emission_factor_id = fields.Many2one('esg.emission.factor', string='Emission Factor', required=True, index='btree_not_null')
     note = fields.Text()
     quantity = fields.Integer(default=1, required=True)

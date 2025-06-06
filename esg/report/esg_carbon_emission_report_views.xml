@@ -5,7 +5,7 @@
         <field name="model">esg.carbon.emission.report</field>
         <field name="arch" type="xml">
             <list multi_edit="1" editable="bottom" js_class="esg_carbon_emission_list">
-                <field name="date" readonly="id &lt; 0"/>
+                <field name="date" widget="esg_list_daterange" width="200px" options="{'end_date_field': 'date_end'}" readonly="id &lt; 0"/>
                 <field name="name" readonly="id &lt; 0"/>
                 <field name="partner_id" readonly="1" options="{'no_open': True}"/>
                 <field name="esg_emission_factor_id"/>

@@ -8,6 +8,7 @@ class EsgCarbonEmissionReport(models.Model):
     _auto = False
 
     date = fields.Date(required=True)
+    date_end = fields.Date()
     esg_emission_factor_id = fields.Many2one('esg.emission.factor', string='Emission Factor')
     move_id = fields.Many2one('account.move', string='Journal Entry')
     name = fields.Text()
@@ -36,6 +37,7 @@ class EsgCarbonEmissionReport(models.Model):
                 SELECT
                     oe.id AS id,
                     oe.date AS date,
+                    oe.date_end as date_end,
                     oe.esg_emission_factor_id AS esg_emission_factor_id,
                     NULL AS move_id,
                     oe.name as name,
@@ -56,6 +58,7 @@ class EsgCarbonEmissionReport(models.Model):
                 SELECT
                     -aml.id AS id,
                     aml.date AS date,
+                    NULL as date_end,
                     aml.esg_emission_factor_id AS esg_emission_factor_id,
                     aml.move_id as move_id,
                     aml.name as name,
@@ -111,14 +114,14 @@ class EsgCarbonEmissionReport(models.Model):
         account_emissions = self.env['account.move.line'].browse(account_emissions_from_report.mapped(lambda aml: -aml.id))
 
         writable_fields = ['esg_emission_factor_id']
-        writable_other_emissions_fields = writable_fields + ['date', 'quantity', 'note', 'uom_id', 'currency_id', 'name', 'company_id']
+        writable_other_emissions_fields = [*writable_fields, 'date', 'date_end', 'quantity', 'note', 'uom_id', 'currency_id', 'name', 'company_id']
         writable_account_emissions_fields = writable_fields
 
         res = other_emissions.write({k: v for k, v in vals.items() if k in writable_other_emissions_fields}) and \
         account_emissions.write({k: v for k, v in vals.items() if k in writable_account_emissions_fields})
 
         readable_fields = ['esg_emission_factor_id', 'esg_emissions_value', 'esg_uncertainty_value', 'esg_uncertainty_absolute_value']
-        readable_other_emissions_fields = readable_fields + ['date', 'quantity', 'note', 'uom_id', 'currency_id', 'name', 'company_id']
+        readable_other_emissions_fields = [*readable_fields, 'date', 'date_end', 'quantity', 'note', 'uom_id', 'currency_id', 'name', 'company_id']
         readable_account_emissions_fields = readable_fields
 
         for other_emission_from_report, other_emission in zip(other_emissions_from_report, other_emissions):
