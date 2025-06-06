@@ -26,6 +26,8 @@ class AutoConfigPoSIoT(models.TransientModel):
         if not self.iot_box_id:
             return
 
+        iot_box_devices = self.iot_box_id.device_ids
+
         device_types = {
             'display': 'iface_display_id',
             'printer': 'iface_printer_id',
@@ -33,15 +35,21 @@ class AutoConfigPoSIoT(models.TransientModel):
             'scanner': 'iface_scanner_ids'
         }
 
+        usb_receipt_printer = next(
+            (device for device in iot_box_devices if device.type == 'printer' and device.subtype == 'receipt_printer' and device.connection == 'direct'),
+            None
+        )
+
         for pos_config in self.pos_config_ids:
             pos_config.is_posbox = True
 
-            for device in self.iot_box_id.device_ids:
+            for device in iot_box_devices:
                 if device.company_id.id not in [False, self.env.company.id]:
                     continue
 
-                if device.type == 'printer' and device.subtype != 'receipt_printer':
-                    continue
+                if device.type == 'printer':
+                    if (usb_receipt_printer and device != usb_receipt_printer) or device.subtype != 'receipt_printer':
+                        continue
 
                 if device.type == 'scanner':
                     pos_config.iface_scanner_ids.append(device)
