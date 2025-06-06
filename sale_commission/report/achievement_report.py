@@ -338,7 +338,6 @@ JOIN sale_commission_plan_target era
                     write_date
               FROM sale_commission_achievement a
              {company_condition}
-             {'AND team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
              {date_from_condition}
                AND date <= '{datetime.strftime(date_to, "%Y-%m-%d") if date_to else today}'
         )
