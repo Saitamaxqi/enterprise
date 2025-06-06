@@ -181,7 +181,7 @@ patch(PosStore.prototype, {
     async preSyncAllOrders(orders) {
         if (this.useBlackBoxBe() && orders.length > 0) {
             for (const order of orders) {
-                const serialized = order.serializeForORM();
+                const serialized = order.serializeForORM({ keepCommands: true });
                 if (serialized.lines.length === 0 && serialized.state === "draft") {
                     continue;
                 }
@@ -246,7 +246,7 @@ patch(PosStore.prototype, {
             try {
                 this.ui.block();
                 await this.pushCorrection(order);
-                const serializedOrder = order.serializeForORM();
+                const serializedOrder = order.serializeForORM({ keepCommands: true });
                 serializedOrder.blackbox_tax_category_a = 0;
                 serializedOrder.blackbox_tax_category_b = 0;
                 serializedOrder.blackbox_tax_category_c = 0;
@@ -293,7 +293,7 @@ patch(PosStore.prototype, {
         return result;
     },
     async pushProFormaRefundOrder(order, lines = false) {
-        const serializedOrder = order.serializeForORM();
+        const serializedOrder = order.serializeForORM({ keepCommands: true });
         const bbFields = await this.getBlackboxFields(order, "PR");
         Object.assign(serializedOrder, bbFields);
         if (lines) {
@@ -505,7 +505,7 @@ patch(PosStore.prototype, {
         await this.updateBlackboxFields(order);
         const insz = order.uiState.insz?.[1];
         const dataToSend = this.createOrderDataForBlackbox({
-            ...order.serializeForORM(),
+            ...order.serializeForORM({ keepCommands: true }),
             clock: order.uiState.clock,
             insz: insz,
             receipt_type: order.uiState.receipt_type,

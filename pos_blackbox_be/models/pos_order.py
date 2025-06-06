@@ -236,7 +236,7 @@ class PosOrder(models.Model):
             'date': now.strftime('%Y%m%d'),
             'ticket_time': now.strftime('%H%M%S'),
             'insz_or_bis_number': self.sudo().config_id.current_session_id.user_id.insz_or_bis_number,
-            'ticket_number': str(self.blackbox_order_sequence),
+            'ticket_number': str(self.blackbox_order_sequence).lstrip('0'),
             'type': 'NS',
             'receipt_total': f"{abs(self.amount_total * 100):.0f}",
             'vat1': f"{abs(self.blackbox_tax_category_a * 100):03.0f}" if self.blackbox_tax_category_a else '',
