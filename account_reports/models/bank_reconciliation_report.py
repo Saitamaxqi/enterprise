@@ -101,7 +101,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
             """
             SELECT
                 %(select_from_groupby)s,
-                COALESCE(SUM(account_move_line.balance), 0)
+                COALESCE(SUM(COALESCE(NULLIF(account_move_line.amount_currency, 0), account_move_line.balance)), 0)
             FROM %(table_references)s
             WHERE %(search_condition)s
             %(groupby_sql)s
