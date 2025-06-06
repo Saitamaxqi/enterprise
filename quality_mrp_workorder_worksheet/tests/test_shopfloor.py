@@ -11,6 +11,7 @@ from odoo.addons.mrp_workorder.tests.test_shopfloor import TestShopFloor
 class TestShopFloorWorksheet(TestShopFloor, TestQualityWorksheet):
     @unittest.skip  # TODO: tour needs to be updated.
     def test_worksheet_quality_check(self):
+        self.env.ref("base.user_admin").group_ids += self.env.ref('mrp.group_mrp_routings')
         warehouse = self.env.ref("stock.warehouse0")
         final_product, component = self.env['product.product'].create([
             {
