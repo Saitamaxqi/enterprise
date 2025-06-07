@@ -6,7 +6,10 @@ export function getListHighlights(getters, listId) {
     const sheetId = getters.getActiveSheetId();
     const listCellPositions = getVisibleListCellPositions(getters, listId);
     const mergedZones = mergeContiguousZones(listCellPositions.map(positionToZone));
-    return mergedZones.map((zone) => ({ sheetId, zone, noFill: true }));
+    return mergedZones.map((zone) => ({
+        range: getters.getRangeFromZone(sheetId, zone),
+        noFill: true,
+    }));
 }
 
 function getVisibleListCellPositions(getters, listId) {

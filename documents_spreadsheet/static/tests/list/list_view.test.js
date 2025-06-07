@@ -1074,8 +1074,11 @@ test("List cells are highlighted when their side panel is open", async function 
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId: "1" });
     await animationFrame();
 
-    const zone = getZoneOfInsertedDataSource(model, "list", "1");
-    expect(getHighlightsFromStore(env)).toEqual([{ sheetId, zone, noFill: true }]);
+    const range = model.getters.getRangeFromZone(
+        sheetId,
+        getZoneOfInsertedDataSource(model, "list", "1")
+    );
+    expect(getHighlightsFromStore(env)).toEqual([{ range, noFill: true }]);
     await contains(".o-sidePanelClose").click();
     expect(getHighlightsFromStore(env)).toEqual([]);
 });
@@ -1087,8 +1090,11 @@ test("List cells are highlighted when hovering the list menu item", async functi
     await contains(".o-topbar-top div[data-id='data']").click();
 
     await hover("div[data-name='item_list_1']");
-    const zone = getZoneOfInsertedDataSource(model, "list", "1");
-    expect(getHighlightsFromStore(env)).toEqual([{ sheetId, zone, noFill: true }]);
+    const range = model.getters.getRangeFromZone(
+        sheetId,
+        getZoneOfInsertedDataSource(model, "list", "1")
+    );
+    expect(getHighlightsFromStore(env)).toEqual([{ range, noFill: true }]);
 
     await leave("div[data-name='item_list_1']");
     expect(getHighlightsFromStore(env)).toEqual([]);

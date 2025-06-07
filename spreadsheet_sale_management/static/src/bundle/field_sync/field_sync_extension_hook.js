@@ -77,6 +77,7 @@ export function addSpreadsheetFieldSyncExtensionWithCleanUp(cleanUpHook = () => 
             env.openSidePanel("FieldSyncSidePanel", { isNewlyCreate });
         },
         sequence: 2000,
+        isVisible: (env) => !env.isSmall,
     };
     addToRegistryWithCleanup(cleanUpHook, cellMenuRegistry, "add_field_sync", addMenuAction);
     topbarMenuRegistry.replaceChild("add_field_sync", ["insert"], addMenuAction);

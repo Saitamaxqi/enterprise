@@ -44,7 +44,7 @@ import {
 import { user } from "@web/core/user";
 import { WebClient } from "@web/webclient/webclient";
 
-const { sanitizeSheetName } = helpers;
+const { sanitizeSheetName, toCartesian } = helpers;
 
 defineDocumentSpreadsheetModels();
 defineDocumentSpreadsheetTestAction();
@@ -54,6 +54,26 @@ const { PIVOT_TABLE_CONFIG } = constants;
 beforeEach(() => {
     ResUsers._records = getDocumentBasicData().models["res.users"].records;
 });
+
+function getGridIconEventPosition(model, xc) {
+    const position = toCartesian(xc);
+    const sheetId = model.getters.getActiveSheetId();
+    const icon = model.getters.getCellIcons({ sheetId, ...position })[0];
+    if (!icon) {
+        throw new Error(`No icon inside cell ${xc}`);
+    }
+    const gridPosition = getFixture().querySelector(".o-grid-overlay").getBoundingClientRect();
+    const gridOffset = model.getters.getGridOffset();
+    const rect = model.getters.getCellIconRect(icon);
+    const x = rect.x + rect.width / 2 - gridOffset.x + gridPosition.x;
+    const y = rect.y + rect.height / 2 - gridOffset.y + +gridPosition.y;
+    return { x, y };
+}
+
+async function clickGridIcon(model, xc) {
+    const { x, y } = getGridIconEventPosition(model, xc);
+    await pointerDown(".o-grid-overlay", { position: { x, y } });
+}
 
 test("simple pivot export", async () => {
     const { model } = await createSpreadsheetFromPivotView({
@@ -68,13 +88,46 @@ test("simple pivot export", async () => {
             },
         },
     });
-    expect(".o_spreadsheet_pivot_side_panel").toHaveCount(1);
     expect(getCellContent(model, "A1")).toBe("");
     expect(getCellContent(model, "A2")).toBe("");
     expect(getCellContent(model, "A3")).toBe("=PIVOT.HEADER(1)");
     expect(getCellContent(model, "B1")).toBe("=PIVOT.HEADER(1)");
     expect(getCellContent(model, "B2")).toBe('=PIVOT.HEADER(1,"measure","foo:sum")');
     expect(getCellContent(model, "B3")).toBe('=PIVOT.VALUE(1,"foo:sum")');
+});
+
+test.tags("desktop");
+test("open side panel in desktop mode", async () => {
+    await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": /* xml */ `
+                        <pivot>
+                            <field name="foo" type="measure"/>
+                        </pivot>`,
+                "partner,false,search": /* xml */ `<search/>`,
+            },
+        },
+    });
+    expect(".o_spreadsheet_pivot_side_panel").toHaveCount(1);
+});
+
+test.tags("mobile");
+test("don't open side panel in mobile mode", async () => {
+    await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": /* xml */ `
+                        <pivot>
+                            <field name="foo" type="measure"/>
+                        </pivot>`,
+                "partner,false,search": /* xml */ `<search/>`,
+            },
+        },
+    });
+    expect(".o_spreadsheet_pivot_side_panel").toHaveCount(0);
 });
 
 test("simple pivot export with two measures", async () => {
@@ -514,6 +567,7 @@ test("Can save a pivot in a new spreadsheet", async () => {
     expect.verifySteps(["action_open_new_spreadsheet"]);
 });
 
+test.tags("desktop");
 test("Can save a pivot in existing spreadsheet", async () => {
     const serverData = {
         models: getBasicData(),
@@ -1242,7 +1296,7 @@ test("Can collapse pivot header group", async function () {
     selectCell(model, "A20");
     await animationFrame();
     setCellContent(model, "A20", "=PIVOT(1)");
-    await contains(".o-pivot-collapse-icon").click();
+    await clickGridIcon(model, "B20");
 
     const [pivotId] = model.getters.getPivotIds();
     const definition = model.getters.getPivotCoreDefinition(pivotId);

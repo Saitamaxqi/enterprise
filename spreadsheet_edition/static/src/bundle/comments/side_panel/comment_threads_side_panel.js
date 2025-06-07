@@ -6,12 +6,12 @@ import { _t } from "@web/core/l10n/translation";
 
 const { toXC, createActions } = helpers;
 const { useStore } = stores;
-const { Menu, Section } = components;
+const { MenuPopover, Section } = components;
 
 export class CommentThreadsSidePanel extends Component {
     static template = "spreadsheet_edition.CommentThreadsSidePanel";
     static props = { onCloseSidePanel: Function };
-    static components = { CellThread, Menu, Section };
+    static components = { CellThread, MenuPopover, Section };
 
     setup() {
         this.state = useState({

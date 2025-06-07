@@ -46,6 +46,7 @@ test("custom colors in color picker", async function () {
     expect(model.getters.getCustomColors()).toEqual(["#875A7B"]);
 });
 
+test.tags("desktop");
 test("preserve global filters when navigating through breadcrumb", async function () {
     const { model, env } = await createSpreadsheetTestAction("spreadsheet_test_action");
     await insertPivot(model);

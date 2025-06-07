@@ -19,6 +19,8 @@ before(() => {
     addSpreadsheetFieldSyncExtensionWithCleanUp();
 });
 
+describe.current.tags("desktop");
+
 describe("field sync side panel", () => {
     test("display config", async () => {
         const { model, env } = await mountSaleOrderSpreadsheetAction();

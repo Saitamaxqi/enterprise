@@ -123,13 +123,10 @@ describe("field sync action", () => {
         setCellContent(model, "A1", '=ODOO.LIST(1,1,"product_uom_qty")');
         expect(highlightStore.highlights).toHaveLength(0);
         hoverStore.hover({ col: 1, row: 0 });
-        expect(highlightStore.highlights).toEqual([
-            {
-                zone: toZone("A1"),
-                color: "#875A7B",
-                sheetId: model.getters.getActiveSheetId(),
-            },
-        ]);
+        expect(highlightStore.highlights).toHaveLength(1);
+        expect(highlightStore.highlights[0].range.zone).toEqual(toZone("A1"));
+        expect(highlightStore.highlights[0].color).toBe("#875A7B");
+        expect(highlightStore.highlights[0].sheetId).toBe(model.getters.getActiveSheetId());
 
         // with computed list args
         setCellContent(model, "A1", "=ODOO.LIST(A2, A3, A4)");
@@ -138,12 +135,9 @@ describe("field sync action", () => {
         setCellContent(model, "A3", "1");
         setCellContent(model, "A4", "product_uom_qty");
         hoverStore.hover({ col: 1, row: 0 });
-        expect(highlightStore.highlights).toEqual([
-            {
-                zone: toZone("A1"),
-                color: "#875A7B",
-                sheetId: model.getters.getActiveSheetId(),
-            },
-        ]);
+        expect(highlightStore.highlights).toHaveLength(1);
+        expect(highlightStore.highlights[0].range.zone).toEqual(toZone("A1"));
+        expect(highlightStore.highlights[0].color).toBe("#875A7B");
+        expect(highlightStore.highlights[0].sheetId).toBe(model.getters.getActiveSheetId());
     });
 });

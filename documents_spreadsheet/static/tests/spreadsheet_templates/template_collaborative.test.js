@@ -5,7 +5,7 @@ import {
     getConnectedUsersElImage,
     getSynchedStatus,
 } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { setCellContent } from "@spreadsheet/../tests/helpers/commands";
 import {
@@ -14,6 +14,8 @@ import {
 } from "@spreadsheet_edition/../tests/helpers/collaborative_helpers";
 import { mockService } from "@web/../tests/web_test_helpers";
 import { user } from "@web/core/user";
+
+describe.current.tags("desktop");
 
 defineDocumentSpreadsheetModels();
 

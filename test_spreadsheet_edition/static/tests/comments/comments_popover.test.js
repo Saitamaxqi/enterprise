@@ -1,4 +1,4 @@
-import { expect, test, getFixture } from "@odoo/hoot";
+import { describe, expect, test, getFixture } from "@odoo/hoot";
 import { hover, waitFor, press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { helpers, registries, stores } from "@odoo/o-spreadsheet";
@@ -15,6 +15,8 @@ const { topbarMenuRegistry } = registries;
 const { DelayedHoveredCellStore } = stores;
 
 const { toCartesian } = helpers;
+
+describe.current.tags("desktop");
 
 test("Hover cell only shows messages, Composer appears on click", async () => {
     const { model, pyEnv, env } = await setupWithThreads();
