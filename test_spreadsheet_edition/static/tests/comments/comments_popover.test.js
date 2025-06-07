@@ -118,7 +118,7 @@ test("Upload button is not visible for spreadsheet cell threads", async () => {
     await hover(waitFor(".o-mail-Message"));
     expect(".o-mail-Composer button[name='upload-files']").toHaveCount(0);
     await contains(".o-mail-Message [title='Expand']").click();
-    await contains(".o-mail-Message-moreMenu [title='Edit']").click();
+    await contains(".o-dropdown-item:contains('Edit')").click();
     expect(".o-mail-Message button[name='upload-files']").toHaveCount(0);
 });
 
