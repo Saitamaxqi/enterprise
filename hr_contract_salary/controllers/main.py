@@ -487,6 +487,7 @@ class HrContractSalary(http.Controller):
             'contract_update_template_id': version.contract_update_template_id.id,
             'date_version': offer.contract_start_date or fields.Date.today().replace(day=1),
             'contract_date_start': offer.contract_start_date or fields.Date.today().replace(day=1),
+            'contract_date_end': offer.contract_end_date,
             'contract_type_id': version.contract_type_id.id,
             'originated_offer_id': offer.id,
         }

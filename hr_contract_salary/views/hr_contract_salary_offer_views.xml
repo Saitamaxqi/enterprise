@@ -126,7 +126,12 @@
                             <field name="job_title" readonly="state == 'cancelled'"/>
                             <field name="employee_job_id" readonly="state in ['cancelled', 'full_signed']"/>
                             <field name="department_id" readonly="state == 'cancelled'"/>
-                            <field name="contract_start_date" readonly="state in ['cancelled', 'full_signed']"/>
+                            <label for="contract_start_date" string="Contract Date"/>
+                            <div class="o_row">
+                                <field name="contract_start_date" readonly="state in ['cancelled', 'full_signed']"/>
+                                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                <field name="contract_end_date" readonly="state in ['cancelled', 'full_signed']" placeholder="No limit"/>
+                            </div>
                             <field name="offer_create_date" readonly="1"/>
                             <field name="offer_end_date" readonly="state in ['cancelled', 'full_signed']" placeholder="Always valid"/>
                             <field name="url" widget="HrContractSalaryCopyClipboardURL" invisible="not id"/>

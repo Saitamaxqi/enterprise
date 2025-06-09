@@ -54,6 +54,7 @@ class HrContractSalaryOffer(models.Model):
     department_id = fields.Many2one('hr.department', tracking=True)
     contract_start_date = fields.Date(tracking=True,
                                       default=fields.Date.context_today)
+    contract_end_date = fields.Date(tracking=True)
     access_token = fields.Char('Access Token', copy=False, tracking=True)
     validity_days_count = fields.Integer("Validity Days Count",
                               compute="_compute_validity_days_count",
