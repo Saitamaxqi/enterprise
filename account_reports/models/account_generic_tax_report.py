@@ -512,9 +512,10 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 tax_amount = tax_amounts[column['column_group_key']]
 
                 expr_label = column.get('expression_label')
+                col_value = ''
 
-                if expr_label == 'net':
-                    col_value = sign * tax_base_amount if index == len(groupby_fields) - 1 else ''
+                if expr_label == 'net' and index == len(groupby_fields) - 1:
+                    col_value = sign * tax_base_amount
 
                 if expr_label == 'tax':
                     col_value = sign * tax_amount
