@@ -23,7 +23,6 @@ Accounting reports for India
         'data/account_tax_report_tds_tcs_data.xml',
         'data/account_financial_html_report_gstr1.xml',
         'data/account_financial_html_report_gstr3b.xml',
-        'data/balance_sheet.xml',
         'data/profit_and_loss.xml',
         'data/bank_template.xml',
         'data/enet_payment_methods.xml',
