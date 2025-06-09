@@ -883,3 +883,17 @@ Content-Transfer-Encoding: quoted-printable
 
         self.assertEqual(ticket2.partner_id, test_partner2)
         self.assertFalse(ticket2.partner_id.company_id)
+
+    def test_ticket_created_in_closed_stage_sets_close_date(self):
+        """Test that a ticket created directly in a folded (closed) stage sets close_date."""
+        with self._ticket_patch_now("2024-06-01 10:00:00"):
+            ticket = self.env['helpdesk.ticket'].create({
+                'name': 'Closed from start',
+                'team_id': self.test_team.id,
+                'stage_id': self.stage_done.id,
+            })
+        self.assertEqual(
+            ticket.close_date,
+            datetime(2024, 6, 1, 10, 0, 0),
+            "Ticket created in a closed stage should have close_date set to the current datetime"
+        )

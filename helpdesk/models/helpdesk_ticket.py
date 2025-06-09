@@ -562,6 +562,8 @@ class HelpdeskTicket(models.Model):
             if team_id := vals.get('team_id'):
                 if 'stage_id' not in vals:
                     vals['stage_id'] = default_stage_per_team_id[team_id].id
+                if self.env['helpdesk.stage'].browse(vals['stage_id']).fold:
+                    vals['close_date'] = now
                 if 'user_id' not in vals and team_id in assignees_per_team_id:
                     vals['user_id'] = assignees_per_team_id[team_id].pop()
                 if vals.get('user_id'):  # if a user is finally assigned, force ticket assign_date and reset assign_hours
