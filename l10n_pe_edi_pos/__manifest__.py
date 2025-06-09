@@ -12,6 +12,7 @@
     ],
     'assets': {
         'point_of_sale._assets_pos': ['l10n_pe_edi_pos/static/src/**/*'],
+        'web.assets_tests': ['l10n_pe_edi_pos/static/tests/**/*'],
     },
     'installable': True,
     'auto_install': True,
