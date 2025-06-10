@@ -49,6 +49,7 @@ export class Softphone {
     constructor(store, voip) {
         this.store = store;
         this.voip = voip;
+        this.setup();
     }
 
     get activities() {
@@ -74,6 +75,13 @@ export class Softphone {
             Boolean(persona.phone)
         );
     }
+
+    /**
+     * Setup method to be overridden by subclasses.
+     * This method exists because the constructor cannot be overridden,
+     * allowing subclasses to perform initialization logic.
+     */
+    setup() {}
 
     hide() {
         this.isDisplayed = false;

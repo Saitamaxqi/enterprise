@@ -14,6 +14,7 @@
                 icon="call.partner_id ? 'oi-user' : 'oi-user-plus'"
                 onClick.bind="onClickContact"
             />
+            <t class="o-voip-CallSummary-xpathTarget"/>
             <ActionButton t-if="call.partner_id"
                 name.translate="Activity"
                 title.translate="Schedule an activity"

@@ -10,6 +10,9 @@
     "author": "Odoo S.A.",
     "license": "OEEL-1",
     "assets": {
+        "web.assets_backend": [
+            "voip_crm/static/src/**/*",
+        ],
         "web.assets_unit_tests": [
             "voip_crm/static/tests/**/*",
         ],
