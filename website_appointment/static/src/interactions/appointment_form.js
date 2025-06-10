@@ -74,10 +74,10 @@ patch(AppointmentForm.prototype, {
         }
 
         const submitButton = form.querySelector("button.o_appointment_form_confirm_btn");
-        this.turnstile.constructor.disableSubmit(submitButton);
-        submitButton.after(this.turnstile.turnstileEl);
-        this.turnstile.insertScripts(form);
-        this.turnstile.render();
+        this._turnstile.constructor.disableSubmit(submitButton);
+        submitButton.after(this._turnstile.turnstileEl);
+        this._turnstile.insertScripts(form);
+        this._turnstile.render();
 
         return true;
     },
