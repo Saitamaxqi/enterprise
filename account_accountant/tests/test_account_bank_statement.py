@@ -680,18 +680,31 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             'acc_number': '0144748555',
             'partner_id': self.partner_a.id,
         })
-        self.assertEqual(st_line._retrieve_partner(), bank_account.partner_id)
+        st_line.partner_id = False
+        st_line._retrieve_partner()
+        self.assertEqual(st_line.partner_id, bank_account.partner_id)
 
         # Can't retrieve the partner since the bank account is used by multiple partners.
         self.env['res.partner.bank'].create({
             'acc_number': '0144748555',
             'partner_id': self.partner_b.id,
         })
-        self.assertEqual(st_line._retrieve_partner(), self.env['res.partner'])
+        st_line.partner_id = False
+        st_line._retrieve_partner()
+        self.assertEqual(st_line.partner_id, self.env['res.partner'])
 
         # Archive partner_a and see if partner_b is then chosen
         self.partner_a.active = False
-        self.assertEqual(st_line._retrieve_partner(), self.partner_b)
+        st_line.partner_id = False
+        st_line._retrieve_partner()
+        self.assertEqual(st_line.partner_id, self.partner_b)
+
+        self.partner_a.active = True
+        self.partner_b.active = False
+        # Normally, we should have partner_a on the line if we retrieve the partner,
+        # but as the partner is already set on the st_line, the retrieve partner shouldn't change the value.
+        st_line._retrieve_partner()
+        self.assertEqual(st_line.partner_id, self.partner_b)
 
     def test_retrieve_partner_from_account_number_in_other_company(self):
         st_line = self._create_st_line(1000.0, partner_id=None, account_number="014 474 8555", update_create_date=False)
@@ -703,7 +716,8 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         # Bank account is owned by another company.
         new_company = self.env['res.company'].create({'name': "test_retrieve_partner_from_account_number_in_other_company"})
         self.partner_a.company_id = new_company
-        self.assertEqual(st_line._retrieve_partner(), self.env['res.partner'])
+        st_line._retrieve_partner()
+        self.assertEqual(st_line.partner_id, self.env['res.partner'])
 
     def test_retrieve_partner_from_partner_name(self):
         """ Ensure the partner having a name fitting exactly the 'partner_name' is retrieved first.
@@ -727,7 +741,52 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         self.assertEqual(st_line.partner_id, partner_b)
 
         self.env['res.partner'].create({'name': "turlututu"})
-        self.assertFalse(st_line._retrieve_partner())
+        st_line.partner_id = False
+        st_line._retrieve_partner()
+        self.assertFalse(st_line.partner_id)
+
+    def test_retrieve_partner_from_previous_reconciled_st_line(self):
+        """Test the retrieve partner from a previous reconciled st-line."""
+        # Use 2 partner with the same name, so we can't retrieve it from the partner name
+        _partner_a, partner_b = self.env['res.partner'].create([
+            {'name': "Turlututu"},
+            {'name': "Turlututu"},
+        ])
+
+        st_line = self._create_st_line(1000.0, partner_id=None, partner_name="Turlututu", update_create_date=False)
+        # This st_line should be the one we retrieve the partner from
+        st_line_2 = self._create_st_line(1000.0, partner_id=partner_b.id, partner_name="Turlututu", update_create_date=False)
+        inv_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 1000.0}])
+        st_line_2.set_line_bank_statement_line(inv_line.id)
+
+        st_line._retrieve_partner()
+        self.assertEqual(st_line.partner_id, partner_b)
+
+    def test_retrieve_partner_with_multiple_st_line(self):
+        """Test if the retrieve partner in batch works properly"""
+        _partner_a, partner_b, partner_c = self.env['res.partner'].create([
+            {'name': "Turlututu"},
+            {'name': "Turlututu"},
+            {'name': "Turlututu tsoin tsoin"},
+        ])
+        bank_account = self.env['res.partner.bank'].create({
+            'acc_number': '0144748555',
+            'partner_id': self.partner_a.id,
+        })
+
+        st_line_1 = self._create_st_line(1000.0, partner_id=partner_b.id, partner_name="Turlututu", update_create_date=False)
+        inv_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 1000.0}])
+        st_line_1.set_line_bank_statement_line(inv_line.id)
+
+        st_line_2 = self._create_st_line(1000.0, partner_id=None, partner_name="Turlututu", update_create_date=False)
+        st_line_3 = self._create_st_line(1000.0, partner_id=None, account_number="014 474 8555")
+        st_line_4 = self._create_st_line(1000.0, partner_id=None, partner_name="Turlututu tsoin tsoin")
+        st_lines = (st_line_2 + st_line_3 + st_line_4)
+        st_lines.write({'partner_id': False})
+        st_lines._retrieve_partner()
+        self.assertEqual(st_line_2.partner_id, partner_b)
+        self.assertEqual(st_line_3.partner_id, bank_account.partner_id)
+        self.assertEqual(st_line_4.partner_id, partner_c)
 
     def test_res_partner_bank_find_create_when_archived(self):
         """ Test we don't get the "The combination Account Number/Partner must be unique." error with archived

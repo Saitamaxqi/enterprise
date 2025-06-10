@@ -494,58 +494,135 @@ class AccountBankStatementLine(models.Model):
         self.write({'cron_last_check': fields.Datetime.now()})
 
     def _retrieve_partner(self):
-        self.ensure_one()
-
-        # partner already set on the statement line.
-        if self.partner_id:
+        if not (lines_without_partner := self.filtered(lambda stl: not stl.partner_id)):
             return
 
-        # Retrieve the partner from the bank account.
-        if self.account_number:
-            account_number_nums = sanitize_account_number(self.account_number)
-            if account_number_nums:
-                domain = [('sanitized_acc_number', 'ilike', account_number_nums)]
-                for extra_domain in ([('company_id', 'parent_of', self.company_id.id)], [('company_id', '=', False)]):
-                    bank_accounts = self.env['res.partner.bank'].search(extra_domain + domain)
-                    if len(bank_accounts.partner_id) == 1:
-                        return bank_accounts.partner_id
-                    else:
-                        # We have several partner with same account, possibly some archived partner
-                        # so try to filter out inactive partner and if one remains, select this one
-                        bank_accounts = bank_accounts.filtered(lambda bacc: bacc.partner_id.active)
-                        if len(bank_accounts.partner_id) == 1:
-                            return bank_accounts.partner_id
+        self.env.flush_all()
+        retrieve_partner_by_account_query = SQL("""
+            SELECT ARRAY_AGG(DISTINCT partner_bank.partner_id) FILTER (WHERE partner_bank.company_id::TEXT = ANY(STRING_TO_ARRAY(company.parent_path, '/'))) AS account_matching_partner_with_company,
+                   ARRAY_AGG(DISTINCT partner_bank.partner_id) FILTER (WHERE partner_bank.company_id::TEXT = ANY(STRING_TO_ARRAY(company.parent_path, '/')) AND partner.active) AS account_matching_active_partner_with_company,
+                   ARRAY_AGG(DISTINCT partner_bank.partner_id) FILTER (WHERE partner_bank.company_id IS NULL) AS account_matching_partner_without_company,
+                   ARRAY_AGG(DISTINCT partner_bank.partner_id) FILTER (WHERE partner_bank.company_id IS NULL AND partner.active) AS account_matching_active_partner_without_company,
+                   st_line.id AS st_line_id
+              FROM res_partner_bank partner_bank
+              JOIN account_bank_statement_line st_line ON partner_bank.sanitized_acc_number ILIKE '%%' || NULLIF(REGEXP_REPLACE(st_line.account_number, '\\W+', '', 'g'), '') || '%%'
+              JOIN res_company company ON company.id = st_line.company_id
+              JOIN res_partner partner ON partner.id = partner_bank.partner_id
+             WHERE st_line.id IN %(st_line_ids)s
+          GROUP BY st_line.id
+        """,
+             st_line_ids=tuple(lines_without_partner.ids),
+        )
+        retrieve_partner_by_name_query = SQL("""
+            SELECT ARRAY_AGG(DISTINCT partner.id) FILTER (WHERE partner.complete_name ILIKE st_line.partner_name AND partner.company_id::TEXT = ANY(STRING_TO_ARRAY(company.parent_path, '/'))) AS full_name_matching_partner_with_company,
+                   ARRAY_AGG(DISTINCT partner.id) FILTER (WHERE partner.complete_name ILIKE st_line.partner_name AND partner.company_id IS NULL) AS full_name_matching_partner_without_company,
+                   ARRAY_AGG(DISTINCT partner.id) FILTER (WHERE partner.complete_name ILIKE '%%' || st_line.partner_name || '%%' AND partner.company_id::TEXT = ANY(STRING_TO_ARRAY(company.parent_path, '/'))) AS partial_name_matching_partner_with_company,
+                   ARRAY_AGG(DISTINCT partner.id) FILTER (WHERE partner.complete_name ILIKE '%%' || st_line.partner_name || '%%' AND partner.company_id IS NULL) AS partial_name_matching_partner_without_company,
+                   st_line.id AS st_line_id
+              FROM res_partner partner
+              JOIN account_bank_statement_line st_line ON partner.complete_name ILIKE '%%' || NULLIF(TRIM(st_line.partner_name), '') || '%%'
+              JOIN res_company company ON company.id = st_line.company_id
+             WHERE partner.parent_id IS NULL
+               AND st_line.id IN %(st_line_ids)s
+          GROUP BY st_line.id
+        """,
+             st_line_ids=tuple(lines_without_partner.ids),
+        )
+        self.env.cr.execute(retrieve_partner_by_account_query)
+        account_query_result = self.env.cr.dictfetchall()
+        self.env.cr.execute(retrieve_partner_by_name_query)
+        name_query_result = self.env.cr.dictfetchall()
 
-        # Retrieve the partner from the partner name.
-        if self.partner_name:
-            # using 'complete_name' instead of 'name',
-            # as 'complete_name' is the first search criteria in _rec_names_search,
-            # and trigram indexed accordingly.
-            domains = product(
-                [
-                    ('complete_name', '=ilike', self.partner_name),
-                    ('complete_name', 'ilike', self.partner_name),
-                ],
-                [
-                    ('company_id', 'parent_of', self.company_id.id),
-                    ('company_id', '=', False),
-                ],
+        bank_account_matching = {line['st_line_id']: {
+            'account_matching_partner_with_company': line['account_matching_partner_with_company'] or [],
+            'account_matching_active_partner_with_company': line['account_matching_active_partner_with_company'] or [],
+            'account_matching_partner_without_company': line['account_matching_partner_without_company'] or [],
+            'account_matching_active_partner_without_company': line['account_matching_active_partner_without_company'] or [],
+        } for line in account_query_result}
+
+        partner_name_matching = {line['st_line_id']: {
+            'full_name_matching_partner_with_company': line['full_name_matching_partner_with_company'] or [],
+            'full_name_matching_partner_without_company': line['full_name_matching_partner_without_company'] or [],
+            'partial_name_matching_partner_with_company': line['partial_name_matching_partner_with_company'] or [],
+            'partial_name_matching_partner_without_company': line['partial_name_matching_partner_without_company'] or [],
+        } for line in name_query_result}
+
+        partner_names = lines_without_partner.filtered(lambda line: line.partner_name).mapped('partner_name')
+        partners_from_previous_st_line = {}
+        if partner_names:
+            # In case we don't find the partner with the above conditions, we will retrieve it
+            # from existing statement lines
+            retrieve_partner_from_st_line_query = SQL("""
+                WITH st_lines AS (
+                    SELECT st_line.partner_id AS partner_id,
+                           st_line.partner_name AS partner_name,
+                           st_line.company_id as company_id,
+                           ROW_NUMBER() OVER (PARTITION BY st_line.partner_name ORDER BY st_line.id DESC) AS row_number
+                      FROM account_bank_statement_line st_line
+                     WHERE st_line.is_reconciled = TRUE
+                       AND st_line.partner_name = ANY (%(partner_names)s)
+                       AND st_line.company_id IN %(company_ids)s
+                  GROUP BY st_line.id
+                  ORDER BY st_line.id DESC
+                )
+                SELECT MIN(partner_id) AS partner_id,
+                       ARRAY_AGG(DISTINCT company_id) as company_ids,
+                       partner_name
+                  FROM st_lines
+                 WHERE st_lines.row_number <= 3
+              GROUP BY partner_name
+                HAVING COUNT(DISTINCT partner_id) = 1
+            """,
+                partner_names=partner_names,
+                company_ids=(*self.company_id.ids, None),
             )
-            for domain in domains:
-                partner = self.env['res.partner'].search(list(domain) + [('parent_id', '=', False)], limit=2)
-                if len(partner) == 1:
-                    return partner
+            self.env.cr.execute(retrieve_partner_from_st_line_query)
+            query_res_lines = self.env.cr.dictfetchall()
+            partners_from_previous_st_line = {
+                res_line['partner_name']: {
+                    'partner_id': res_line['partner_id'],
+                    'company_ids': res_line['company_ids'],
+                }
+                for res_line in query_res_lines
+            }
 
-            # Retrieve the partner from the last 3 statement lines with the same partner_name
-            grouped_st_lines = self.search([
-                *self._check_company_domain(self.company_id),
-                ('partner_name', '=', self.partner_name), ('is_reconciled', '=', True)
-            ], limit=3).grouped('partner_id')
-            if len(grouped_st_lines) == 1:
-                for partner_id in grouped_st_lines:
-                    return partner_id
+        for st_line in lines_without_partner:
+            # Retrieve the partner from the bank account.
+            if st_line.account_number and st_line.id in bank_account_matching:
+                if len(partner := bank_account_matching[st_line.id]['account_matching_partner_with_company']) == 1:
+                    # First match if company match and partner is active
+                    st_line.partner_id = partner[0]
+                elif len(partner := bank_account_matching[st_line.id]['account_matching_active_partner_with_company']) == 1:
+                    # Second match if company match and partner is inactive
+                    st_line.partner_id = partner[0]
+                elif len(partner := bank_account_matching[st_line.id]['account_matching_partner_without_company']) == 1:
+                    # Third match if company doesn't match and partner is active
+                    st_line.partner_id = partner[0]
+                elif len(partner := bank_account_matching[st_line.id]['account_matching_active_partner_without_company']) == 1:
+                    # Fourth match if company doesn't match and partner is inactive
+                    st_line.partner_id = partner[0]
 
-        return self.env['res.partner']
+            # Retrieve the partner from the partner name.
+            if st_line.partner_name:
+                if st_line.id in partner_name_matching:
+                    if len(partner := partner_name_matching[st_line.id]['full_name_matching_partner_with_company']) == 1:
+                        # First match if partner name full match and company match
+                        st_line.partner_id = partner[0]
+                    elif len(partner := partner_name_matching[st_line.id]['full_name_matching_partner_without_company']) == 1:
+                        # Second match if partner name full match and company doesn't
+                        st_line.partner_id = partner[0]
+                    elif len(partner := partner_name_matching[st_line.id]['partial_name_matching_partner_with_company']) == 1:
+                        # Third match if partner name partially match and company match
+                        st_line.partner_id = partner[0]
+                    elif len(partner := partner_name_matching[st_line.id]['partial_name_matching_partner_without_company']) == 1:
+                        # Fourth match if partner name partially match and company doesn't
+                        st_line.partner_id = partner[0]
+
+                if not st_line.partner_id and st_line.partner_name in partners_from_previous_st_line:
+                    # Last check, if there is no partner yet, try to match with previous statement lines.
+                    match_partner = partners_from_previous_st_line[st_line.partner_name]
+                    if st_line.company_id.id in match_partner['company_ids']:
+                        st_line.partner_id = match_partner['partner_id']
 
     def _action_manual_reco_model(self, reco_model_id):
         self.move_id.line_ids.filtered(lambda x: x.account_id == x.move_id.journal_id.suspense_account_id).reconcile_model_id = reco_model_id
@@ -1275,13 +1352,11 @@ class AccountBankStatementLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         statement_lines = super().create(vals_list)
+        if not self.env.context.get('no_retrieve_partner'):
+            statement_lines._retrieve_partner()
         for statement_line in statement_lines:
             if statement_line.transaction_details:
                 statement_line.move_id.message_post(body=statement_line._format_transaction_details())
-
-            if not statement_line.partner_id and not self.env.context.get('no_retrieve_partner'):
-                # TODO post-freeze: batch processing
-                statement_line.with_context(force_delete=True, skip_readonly_check=True).partner_id = statement_line._retrieve_partner()
 
         # process automatically the new lines in case we pass some context key (i.e coming from the bank reconciliation widget)
         if self.env.context.get('auto_statement_processing', False) and statement_lines:
