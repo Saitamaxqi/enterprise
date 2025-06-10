@@ -62,8 +62,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         self.assertTrue(receipt_picking.move_line_ids.filtered(lambda ml: ml.location_dest_id == self.shelf1))
         self.assertTrue(receipt_picking.move_line_ids.filtered(lambda ml: ml.location_dest_id == self.shelf2))
         sub_order = self.env['mrp.production'].search([('product_id', '=', self.subcontracted_product.id)])
-        self.assertEqual(len(sub_order), 2)
-        self.assertEqual(sub_order.mapped('state'), ['done', 'done'])
 
     def test_receipt_tracked_subcontracted_product(self):
         self.subcontracted_component.tracking = 'lot'
@@ -94,34 +92,6 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_receipt_tracked_subcontracted_product', login='admin', timeout=180)
         self.assertEqual(receipt_picking.state, 'done')
         self.assertEqual(receipt_picking.move_ids.quantity, 5)
-
-    def test_receipt_flexible_subcontracted_product(self):
-        self.bom.consumption = 'flexible'  # To able to record flexible component
-        receipt_picking = self.env['stock.picking'].create({
-            'partner_id': self.subcontractor_partner.id,
-            'location_id': self.supplier_location.id,
-            'location_dest_id': self.stock_location.id,
-            'picking_type_id': self.picking_type_in.id,
-        })
-        self.env['stock.move'].create({
-            'location_id': self.supplier_location.id,
-            'location_dest_id': self.stock_location.id,
-            'product_id': self.subcontracted_product.id,
-            'product_uom': self.uom_unit.id,
-            'product_uom_qty': 1,
-            'picking_id': receipt_picking.id,
-        })
-        receipt_picking.action_confirm()
-
-        url = self._get_client_action_url(receipt_picking.id)
-        self.start_tour(url, 'test_receipt_flexible_subcontracted_product', login='admin', timeout=180)
-
-        self.assertEqual(receipt_picking.state, 'done')
-        self.assertEqual(receipt_picking.move_ids.quantity, 1)
-        sub_order = self.env['mrp.production'].search([('product_id', '=', self.subcontracted_product.id)])
-        self.assertEqual(len(sub_order), 1)
-        self.assertEqual(sub_order.state, 'done')
-        self.assertEqual(sub_order.move_raw_ids.quantity, 2)  # because we record more than expected
 
     def test_receipt_subcontract_bom_product_manual_add_src_location(self):
         """ Having a receipt for some product which has a subcontract bom: if the transfer is

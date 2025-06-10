@@ -5,8 +5,4 @@ patch(BarcodeModel.prototype, {
     showSubcontractingDetails(line) {
         return false;
     },
-
-    get displayActionRecordComponents() {
-        return false;
-    },
 });

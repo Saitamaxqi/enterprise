@@ -16,8 +16,15 @@ class StockMoveLine(models.Model):
             # Hide if not encoding state or it is not a subcontracting picking
             if move_line.state in ('draft', 'cancel', 'done') or not move_line.move_id.is_subcontract:
                 continue
-            if (move_line.move_id._subcontrating_should_be_record() or move_line.move_id._subcontrating_can_be_record()):
-                move_line.is_subcontract_stock_barcode = True  # == mandatory or facultative
+            move_line.is_subcontract_stock_barcode = True
+
+    @api.depends('is_subcontract_stock_barcode')
+    def _compute_hide_lot_name(self):
+        super()._compute_hide_lot_name()
+        for line in self:
+            if line.is_subcontract_stock_barcode and line.tracking in ('lot', 'serial'):
+                line.hide_lot = False
+                line.hide_lot_name = True
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -33,6 +40,20 @@ class StockMoveLine(models.Model):
             if subcontract_move_lines.location_id != move.location_id:
                 subcontract_move_lines.location_id = move.location_id
         return move_lines
+
+    def write(self, vals):
+        """Make sure to use lot_ids instead of lot_names in case of subcontracting moves."""
+        if 'lot_name' in vals and any(l.move_id.is_subcontract for l in self):
+            lot_id = self.env['stock.lot'].search([
+                ('product_id', '=', self.product_id),
+                '|', ('company_id', '=', self.company_id), ('company_id', '=', False),
+                ('name', '=', vals['lot_name']),
+            ])
+            if not lot_id:
+                lot_id = self.env['stock.lot'].create({'product_id': self.product_id.id, 'name': vals['lot_name']})
+            vals['lot_name'] = False
+            vals['lot_id'] = lot_id.id
+        return super().write(vals)
 
     def _get_fields_stock_barcode(self):
         """ Inject info if the line is subcontract and have tracked component """
