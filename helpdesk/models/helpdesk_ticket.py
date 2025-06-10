@@ -935,7 +935,6 @@ class HelpdeskTicket(models.Model):
                 subject=_('You have been invited to follow %s', self.display_name),
                 body=assignation_msg,
                 partner_ids=partner.ids,
-                record_name=self.display_name,
                 email_layout_xmlid='mail.mail_notification_layout',
                 model_description=ticket_model_description,
                 mail_auto_delete=True,

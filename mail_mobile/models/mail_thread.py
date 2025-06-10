@@ -121,7 +121,7 @@ class MailThread(models.AbstractModel):
         body = msg_vals['body'] if 'body' in msg_vals else message.body
         model = msg_vals['model'] if 'model' in msg_vals else message.model
         res_id = msg_vals['res_id'] if 'res_id' in msg_vals else message.res_id
-        record_name = force_record_name or (msg_vals['record_name'] if 'record_name' in msg_vals else message.record_name)
+        record_name = force_record_name or message.record_name
         subject = msg_vals['subject'] if 'subject' in msg_vals else message.subject
 
         payload = {

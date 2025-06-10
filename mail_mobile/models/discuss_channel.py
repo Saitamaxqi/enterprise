@@ -42,7 +42,7 @@ class DiscussChannel(models.Model):
             force_record_name=force_record_name,
         )
         payload['action'] = 'mail.action_discuss'
-        record_name = force_record_name or ( msg_vals['record_name'] if 'record_name' in msg_vals else message.record_name)
+        record_name = force_record_name or message.record_name
         if self.channel_type == 'chat':
             payload['subject'] = payload['author_name']
             payload['type'] = 'chat'

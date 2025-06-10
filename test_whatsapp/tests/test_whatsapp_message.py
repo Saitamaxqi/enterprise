@@ -152,7 +152,6 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
                     mail_message_values={
                         'message_type': 'whatsapp_message',
                         'partner_ids': partner_ids,
-                        'record_name': False,
                         'subtype_id': self.env.ref('mail.mt_note'),
                     },
                 )
@@ -201,7 +200,6 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
                         'message_type': 'whatsapp_message',
                         'model': 'discuss.channel',
                         'partner_ids': self.env['res.partner'],
-                        'record_name': mobile_number,  # probably due to channel name
                         'subtype_id': self.env.ref('mail.mt_comment'),
                     },
                 )

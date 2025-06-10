@@ -673,11 +673,11 @@ class SignRequest(models.Model):
                 author_id=self.create_uid.partner_id.id,
                 body=body,
                 email_from=mail_values.get("email_from"),
+                force_record_name=record_name,
                 force_send=force_send,
                 mail_auto_delete=False,
                 model_description=model_description,
                 partner_ids=partner.ids,
-                record_name=record_name,
                 subject=mail_values.get("subject"),
             )
 
