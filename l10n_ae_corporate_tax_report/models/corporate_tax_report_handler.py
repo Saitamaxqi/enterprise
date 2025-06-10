@@ -47,7 +47,7 @@ class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
         amount = self._get_report_payable_amount(options)
         misc_journal = self.env['account.journal'].search([('code', '=', 'MISC')], limit=1)
         if not misc_journal:
-            misc_journal = self.env['account.journal'].search(['type', '=', 'general'], limit=1)
+            misc_journal = self.env['account.journal'].search([('type', '=', 'general')], limit=1)
 
         # Create the move
         move = self.env['account.move'].create({
