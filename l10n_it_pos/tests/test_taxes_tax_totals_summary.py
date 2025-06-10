@@ -156,8 +156,7 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestTaxCommonPOS, TestTaxesTaxTotalsSum
         self.ensure_products_on_document(test4[1], 'product_4')
         with self.with_new_session(user=self.pos_user) as session:
             self.start_pos_tour('test_taxes_l10n_it_epson_printer_pos')
-            orders = self.env['pos.order'].search([('session_id', '=', session.id)])
-            for order, (test_index, document, expected_values) in zip(orders, tests):
+            for order, (test_index, document, expected_values) in zip(session.order_ids, [test4, test3, test2, test1]):
                 self.assert_pos_order_totals(order, expected_values)
-                if order.account_move:
-                    self.assert_invoice_totals(order.account_move, expected_values)
+                self.assertTrue(order.account_move)
+                self.assert_invoice_totals(order.account_move, expected_values)
