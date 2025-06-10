@@ -29,6 +29,7 @@ export class ResPartner extends mailModels.ResPartner {
             email: contact.email,
             phone: contact.phone,
             name: contact.display_name,
+            t9_name: contact.t9_name,
         }));
     }
 }

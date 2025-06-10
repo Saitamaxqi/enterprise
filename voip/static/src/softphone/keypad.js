@@ -104,7 +104,7 @@ export class Keypad extends Component {
                 // number: no need to go further.
                 continue;
             }
-            if (looksLikeT9) {
+            if (looksLikeT9 && contact.t9_name) {
                 const t9NameParts = contact.t9_name.trim().split(" ");
                 for (let i = 0; i < t9NameParts.length; ++i) {
                     if (!t9NameParts[i].startsWith(searchTerms)) {

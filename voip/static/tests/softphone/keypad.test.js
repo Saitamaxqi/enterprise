@@ -1,4 +1,5 @@
 import { describe, expect, test } from "@odoo/hoot";
+import { edit } from "@odoo/hoot-dom";
 import {
     click,
     contains,
@@ -166,4 +167,45 @@ test("input font size classes update dynamically when input changes", async () =
     await contains(".o-voip-Keypad-input.fs-2:not(.fs-1):not(.fs-3)");
     await insertText(".o-voip-Keypad-searchBar input", "123456789012345678");
     await contains(".o-voip-Keypad-input.fs-3:not(.fs-1):not(.fs-2)");
+});
+
+test("Search works for name, phone number, and T9 input", async () => {
+    const pyEnv = await startServer();
+    pyEnv["res.partner"].create([
+        { name: "John Doe", phone: "+1234567890", t9_name: " 5646 363" },
+        { name: "Jane Smith", phone: "+1987654321", t9_name: " 5263 76484" },
+        { name: "Bob Wilson", phone: "+1122334455", t9_name: " 262 94576" },
+    ]);
+    await start();
+    await click(".o_menu_systray [title='Open Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    // First test T9 search with no results to catch any potential errors
+    await edit("99999");
+    await contains(".o-voip-Keypad .d-flex.flex-column.mx-3", { count: 0 });
+    // Clear and test T9 search that should find results
+    await edit("5646");
+    await contains(".o-voip-Keypad button:contains(John Doe)");
+    // Clear and test name search (letter input)
+    await edit("John");
+    await contains(".o-voip-Keypad button:contains(John Doe)");
+    // Clear and test phone number search
+    await edit("123456");
+    await contains(".o-voip-Keypad button:contains(123456)");
+    // Test T9 search for partial name match
+    await edit("76484");
+    await contains(".o-voip-Keypad button:contains(Jane Smith)");
+});
+
+test("T9 search does not match when contact has falsy t9_name", async () => {
+    const pyEnv = await startServer();
+    pyEnv["res.partner"].create([
+        { name: " ", phone: "+1234567890", t9_name: false },
+    ]);
+    await start();
+    await click(".o_menu_systray [title='Open Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    await insertText(".o-voip-Keypad-searchBar input", "456");
+    await contains(".o-voip-Keypad button:contains(+1234567890)");
+    await edit("66");
+    await contains(".o-voip-Keypad .d-flex.flex-column.mx-3", { count: 0 });
 });
