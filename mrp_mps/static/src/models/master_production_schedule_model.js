@@ -41,10 +41,13 @@ export class MasterProductionScheduleModel extends EventBus {
             [productionScheduleId, this.domain],
         ).then((productionScheduleIds) => {
             productionScheduleIds.push(productionScheduleId);
+            const visibleScheduleIds = new Set(this.data.production_schedule_ids.map(ps => ps.id));
+            const filteredScheduleIds = productionScheduleIds.filter(id => visibleScheduleIds.has(id));
             return this.orm.call(
                 'mrp.production.schedule',
                 'get_production_schedule_view_state',
-                [productionScheduleIds, this.scale],
+                [filteredScheduleIds, this.scale],
+                {context: {'compute_only_parent_schedules': true}},
             );
         }).then((production_schedule_ids) => {
             for (var i = 0; i < production_schedule_ids.length; i++) {
