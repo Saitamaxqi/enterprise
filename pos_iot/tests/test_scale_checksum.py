@@ -1,13 +1,7 @@
 import re
 
 from odoo.tests import HttpCase
-
-
-# This checksum is based on the contents of the scale related
-# files (full list defined in controllers/checksum.py)
-# Any change to these files will require re-certification with LNE.
-# DO NOT CHANGE IT WITHOUT CONTACTING THE POS TEAM FIRST!
-EXPECTED_CHECKSUM = "f3634794000e73c4da22e91a44983cceda05d79d4f020c5c7896739535c7d4c2"
+from odoo.addons.pos_iot.controllers.checksum import EXPECTED_CHECKSUM
 
 
 class TestScaleChecksum(HttpCase):

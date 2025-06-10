@@ -45,6 +45,7 @@ patch(PosScaleService.prototype, {
         this._scaleDevice.addListener((data) => {
             try {
                 this.weight = this._handleScaleMessage(data);
+                this._clearLastWeightIfValid();
                 this._setTareIfRequested();
             } catch (error) {
                 this.onError?.(error.message);
