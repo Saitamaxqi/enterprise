@@ -91,3 +91,32 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
         document = capture.records.ensure_one()
         self.assertEqual(document.partner_id, self.partner_1)
         self.assertEqual(document.tag_ids, self.project_pigs.documents_tag_ids)
+
+    def test_upload_to_project_folder_without_sharing_project(self):
+        """Test sharing the project's folder without sharing the project itself.
+        Ensure that the user can upload documents to the folder without having access to the project.
+        Test Case:
+        ==========
+        1. Create a project
+        2. Get shareable link for the project's folder with permission to upload
+        3. as portal user, upload a document to the folder using the shareable link
+        4. Verify that the document is created and linked to the folder
+        """
+        self.authenticate(self.user_portal.login, self.user_portal.login)
+
+        folder = self.project_pigs.documents_folder_id
+        folder.action_update_access_rights(
+            partners={self.user_portal.partner_id: ('edit', False)},
+            access_via_link='none'
+        )
+
+        with RecordCapturer(self.env['documents.document'], []) as capture:
+            res = self.url_open(f'/documents/upload/{folder.access_token}',
+                data={'csrf_token': http.Request.csrf_token(self)},
+                files={'ufile': ('hello.txt', io.BytesIO(b"Hello"), 'text/plain')},
+                allow_redirects=False)
+            res.raise_for_status()
+        document = capture.records.ensure_one()
+        self.assertEqual(document.name, 'hello.txt')
+        self.assertEqual(document.mimetype, 'text/plain')
+        self.assertEqual(document.folder_id, folder)
