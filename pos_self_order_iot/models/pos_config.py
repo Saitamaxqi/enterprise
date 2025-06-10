@@ -58,3 +58,9 @@ class PosConfig(models.Model):
                 'message': _("Opening the kiosk on %s", ', '.join(self.self_ordering_iot_available_iot_box_ids.mapped('name'))),
             }
         }
+
+    def has_valid_self_payment_method(self):
+        res = super().has_valid_self_payment_method()
+        if self.self_ordering_mode == 'mobile':
+            return res
+        return res or any(pm.iot_device_id for pm in self.payment_method_ids)

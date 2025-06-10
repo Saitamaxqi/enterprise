@@ -17,7 +17,9 @@ class PosSelfOrderPreparationDisplayController(PosSelfOrderController):
         pos_config.env['pos.prep.display']._paper_status_change(pos_config)
 
     def _send_to_preparation_display(self, pos_order_id):
-        """ Send orders to the preparation display. """
-        pos_order = http.request.env['pos.order'].browse(pos_order_id)
-        if pos_order.config_id.self_ordering_mode in ['kiosk', 'mobile']:
+        """ Send only paid orders to the prep display if a valid payment method is configured;
+            otherwise, send all orders.
+        """
+        pos_order = http.request.env['pos.order'].browse(pos_order_id).exists()
+        if not pos_order.config_id.has_valid_self_payment_method() or pos_order.state == "paid":
             pos_order.env['pos.prep.order'].sudo().process_order(pos_order.id)

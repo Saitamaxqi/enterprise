@@ -10,6 +10,11 @@
     'depends': ['pos_online_payment_self_order', 'pos_enterprise'],
     'installable': True,
     'auto_install': True,
+    'assets': {
+        'pos_self_order.assets_tests': [
+            'pos_online_payment_self_order_preparation_display/static/tests/**/*',
+        ],
+    },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }
