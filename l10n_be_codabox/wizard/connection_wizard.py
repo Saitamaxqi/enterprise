@@ -39,7 +39,7 @@ class L10n_Be_CodaboxConnectionWizard(models.TransientModel):
 
     def _compute_company_vat(self):
         for wizard in self:
-            wizard.company_vat = re.sub(r'[^0-9]', '', wizard.company_id.vat or wizard.company_id.company_registry)
+            wizard.company_vat = re.sub(r'[^0-9]', '', wizard.company_id.vat or wizard.company_id.company_registry or '')
 
     def _compute_show_fidu_password(self):
         for wizard in self:
