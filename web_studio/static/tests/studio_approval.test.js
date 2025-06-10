@@ -50,7 +50,6 @@ class Partner extends models.Model {
             <button type="object=" name="someMethod" string="Apply Method"/>
         </form>`,
         list: `<list><field name="display_name"/></list>`,
-        search: `<search/>`,
     };
 
     get_views() {
@@ -102,7 +101,7 @@ test("approval components are synchronous", async () => {
 });
 
 test("approval widget basic rendering", async () => {
-    onRpc("get_approval_spec", async () => {
+    onRpc("get_approval_spec", () => {
         expect.step("get_approval_spec");
         return {
             all_rules: defaultRules,
@@ -163,7 +162,7 @@ test("approval widget basic rendering", async () => {
 });
 
 test("approval check: method button", async () => {
-    onRpc("get_approval_spec", async () => {
+    onRpc("get_approval_spec", () => {
         expect.step("get_approval_spec");
         return {
             all_rules: defaultRules,
@@ -171,7 +170,7 @@ test("approval check: method button", async () => {
         };
     });
 
-    onRpc("check_approval", (params) => {
+    onRpc("check_approval", () => {
         /* the check_approval should not be
         called for method buttons, as the validation
         check is done in the backend side. if this
@@ -181,7 +180,7 @@ test("approval check: method button", async () => {
         expect.step("should_not_happen!");
     });
 
-    onRpc("someMethod", (params) => {
+    onRpc("someMethod", () => {
         expect.step("someMethod");
         return true;
     });
@@ -213,7 +212,7 @@ test("approval check: method button", async () => {
 });
 
 test("approval check: action button", async () => {
-    onRpc("get_approval_spec", async () => {
+    onRpc("get_approval_spec", () => {
         expect.step("get_approval_spec");
         return {
             all_rules: defaultRules,
@@ -221,13 +220,13 @@ test("approval check: action button", async () => {
         };
     });
 
-    onRpc("check_approval", (params) => {
+    onRpc("check_approval", () => {
         expect.step("attempt_action");
-        return Promise.resolve({
+        return {
             approved: false,
             rules: [defaultRules[1]],
             entries: [],
-        });
+        };
     });
 
     await mountView({
@@ -258,7 +257,7 @@ test("approval check: action button", async () => {
 });
 
 test("approval check: rpc is batched", async () => {
-    onRpc("get_approval_spec", async () => {
+    onRpc("get_approval_spec", () => {
         expect.step("get_approval_spec");
         return {
             all_rules: defaultRules,
@@ -303,7 +302,7 @@ test("approval widget basic flow", async () => {
 
     let hasValidatedRule;
 
-    onRpc("get_approval_spec", async () => {
+    onRpc("get_approval_spec", () => {
         const entries = [];
         if (hasValidatedRule !== undefined) {
             entries.push({
@@ -322,16 +321,16 @@ test("approval widget basic flow", async () => {
         };
     });
 
-    onRpc("set_approval", (params) => {
-        hasValidatedRule = params.kwargs.approved;
+    onRpc("set_approval", ({ kwargs }) => {
+        hasValidatedRule = kwargs.approved;
         expect.step(hasValidatedRule ? "approve_rule" : "reject_rule");
-        return Promise.resolve(true);
+        return true;
     });
 
     onRpc("delete_approval", () => {
         hasValidatedRule = undefined;
         expect.step("delete_approval");
-        return Promise.resolve(true);
+        return true;
     });
 
     await mountView({
@@ -369,17 +368,14 @@ test("approval widget basic flow with domain rule", async () => {
     let index = 0;
     const recordIds = [1, 2, 3];
 
-    onRpc("get_approval_spec", async (params) => {
+    onRpc("get_approval_spec", ({ args }) => {
         const currentIndex = index++;
         defaultRules[currentIndex] = { ...defaultRules[1], id: currentIndex };
-        expect(recordIds[currentIndex]).toEqual(params.args[0][0].res_id);
+        expect(recordIds[currentIndex]).toEqual(args[0][0].res_id);
         return {
             all_rules: defaultRules,
             partner: [
-                [
-                    [params.args[0][0].res_id, "someMethod", false],
-                    { rules: [currentIndex], entries: [] },
-                ],
+                [[args[0][0].res_id, "someMethod", false], { rules: [currentIndex], entries: [] }],
             ],
         };
     });
@@ -405,13 +401,11 @@ test("approval widget basic flow with domain rule", async () => {
 });
 
 test("approval on new record: save before check", async () => {
-    onRpc("get_approval_spec", async (params) => {
-        expect.step(`get_approval_spec: ${JSON.stringify(params.args)}`);
+    onRpc("get_approval_spec", ({ args }) => {
+        expect.step(`get_approval_spec: ${JSON.stringify(args)}`);
         return {
             all_rules: defaultRules,
-            partner: [
-                [[params.args[0][0].res_id, false, "someMethod"], { rules: [1], entries: [] }],
-            ],
+            partner: [[[args[0][0].res_id, false, "someMethod"], { rules: [1], entries: [] }]],
         };
     });
 
@@ -419,9 +413,9 @@ test("approval on new record: save before check", async () => {
         expect.step("web_save");
     });
 
-    onRpc("check_approval", (params) => {
-        expect.step(`check_approval: ${JSON.stringify(params.args)}`);
-        return Promise.resolve({
+    onRpc("check_approval", ({ args }) => {
+        expect.step(`check_approval: ${JSON.stringify(args)}`);
+        return {
             approved: false,
             rules: [
                 {
@@ -434,7 +428,7 @@ test("approval on new record: save before check", async () => {
                 },
             ],
             entries: [],
-        });
+        };
     });
 
     await mountView({
@@ -458,13 +452,11 @@ test("approval on new record: save before check", async () => {
 });
 
 test("approval on existing record: save before check", async () => {
-    onRpc("get_approval_spec", async (params) => {
-        expect.step(`get_approval_spec: ${JSON.stringify(params.args)}`);
+    onRpc("get_approval_spec", ({ args }) => {
+        expect.step(`get_approval_spec: ${JSON.stringify(args)}`);
         return {
             all_rules: defaultRules,
-            partner: [
-                [[params.args[0][0].res_id, false, "someaction"], { rules: [1], entries: [] }],
-            ],
+            partner: [[[args[0][0].res_id, false, "someaction"], { rules: [1], entries: [] }]],
         };
     });
 
@@ -472,9 +464,9 @@ test("approval on existing record: save before check", async () => {
         expect.step("web_save");
     });
 
-    onRpc("check_approval", (params) => {
-        expect.step(`check_approval: ${JSON.stringify(params.args)}`);
-        return Promise.resolve({
+    onRpc("check_approval", ({ args }) => {
+        expect.step(`check_approval: ${JSON.stringify(args)}`);
+        return {
             approved: false,
             rules: [
                 {
@@ -487,7 +479,7 @@ test("approval on existing record: save before check", async () => {
                 },
             ],
             entries: [],
-        });
+        };
     });
 
     await mountView({
@@ -518,17 +510,13 @@ test("approval continues to sync after a component has been destroyed", async ()
     /* This uses two exclusive buttons. When one is displayed, the other is not.
     When clicking on the first button, this changes the int_field value which
     then hides the first button and display the second one */
-    onRpc("get_approval_spec", async (params) => {
-        expect.step(`get_approval_spec: ${JSON.stringify(params.args)}`);
+    onRpc("get_approval_spec", ({ args }) => {
+        expect.step(`get_approval_spec: ${JSON.stringify(args)}`);
         return {
             all_rules: defaultRules,
             partner: [
                 [
-                    [
-                        params.args[0][0].res_id,
-                        params.args[0][0].method,
-                        params.args[0][0].action_id,
-                    ],
+                    [args[0][0].res_id, args[0][0].method, args[0][0].action_id],
                     { rules: [1], entries: [] },
                 ],
             ],
@@ -537,21 +525,18 @@ test("approval continues to sync after a component has been destroyed", async ()
 
     onRpc("check_approval", () => {
         expect.step(`check_approval`);
-        return Promise.resolve({
+        return {
             approved: true,
             rules: Object.values(defaultRules),
             entries: [],
-        });
+        };
     });
 
-    onRpc("someMethod", () => {
-        Partner._records[0].int_field = 1;
-        return true;
+    onRpc("someMethod", function ({ args }) {
+        return this.env["partner"].write(args[0], { int_field: 1 });
     });
 
-    onRpc("otherMethod", () => {
-        return true;
-    });
+    onRpc("otherMethod", () => true);
 
     await mountView({
         resModel: "partner",
@@ -581,21 +566,17 @@ test("approval continues to sync after a component has been destroyed", async ()
 });
 
 test("approval with domain: pager", async () => {
-    onRpc("get_approval_spec", async (params) => {
-        expect.step(`get_approval_spec: ${params.args[0][0].res_id}`);
+    onRpc("get_approval_spec", ({ args }) => {
+        expect.step(`get_approval_spec: ${args[0][0].res_id}`);
         const rules = [];
-        if (params.args[0][0].res_id === 1) {
+        if (args[0][0].res_id === 1) {
             rules.push(1);
         }
         return {
             all_rules: defaultRules,
             partner: [
                 [
-                    [
-                        params.args[0][0].res_id,
-                        params.args[0][0].method,
-                        params.args[0][0].action_id,
-                    ],
+                    [args[0][0].res_id, args[0][0].method, args[0][0].action_id],
                     { rules, entries: [] },
                 ],
             ],
@@ -628,29 +609,25 @@ test("approval save a record", async () => {
     Partner._records = [];
     let hasRules = true;
 
-    onRpc("get_approval_spec", async (params) => {
-        expect.step(`get_approval_spec: ${JSON.stringify(params.args[0][0].res_id)}`);
+    onRpc("get_approval_spec", ({ args }) => {
+        expect.step(`get_approval_spec: ${JSON.stringify(args[0][0].res_id)}`);
         const rules = [];
-        if (params.args[0][0].res_id === 1 && hasRules) {
+        if (args[0][0].res_id === 1 && hasRules) {
             rules.push(1);
         }
         return {
             all_rules: defaultRules,
             partner: [
                 [
-                    [
-                        params.args[0][0].res_id,
-                        params.args[0][0].method,
-                        params.args[0][0].action_id,
-                    ],
+                    [args[0][0].res_id, args[0][0].method, args[0][0].action_id],
                     { rules, entries: [] },
                 ],
             ],
         };
     });
 
-    onRpc("web_save", (params) => {
-        expect.step(params.method, params.args);
+    onRpc("web_save", ({ method, args }) => {
+        expect.step(method, args);
     });
 
     await mountView({

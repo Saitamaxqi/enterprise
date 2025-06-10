@@ -7,6 +7,8 @@ import {
     keyUp,
     press,
     queryAll,
+    queryAllProperties,
+    queryAllTexts,
     queryFirst,
     queryText,
 } from "@odoo/hoot-dom";
@@ -31,46 +33,35 @@ import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 defineTimesheetModels();
 beforeEach(() => {
     patchSession();
-    HRTimesheet._views["grid,false"] = HRTimesheet._views["grid,false"].replace(
-        'js_class="timesheet_grid"',
-        'js_class="timer_timesheet_grid"',
-    ).replace(
-        'widget="float_time"',
-        'widget="timesheet_uom"',
-    );
-    HRTimesheet._views["grid,1"] = HRTimesheet._views["grid,1"].replace(
-        'js_class="timesheet_grid"',
-        'js_class="timer_timesheet_grid"',
-    ).replace(
-        'widget="float_time"',
-        'widget="timesheet_uom"',
-    );
+    HRTimesheet._views.grid = HRTimesheet._views.grid
+        .replace('js_class="timesheet_grid"', 'js_class="timer_timesheet_grid"')
+        .replace('widget="float_time"', 'widget="timesheet_uom"');
+    HRTimesheet._views["grid,1"] = HRTimesheet._views["grid,1"]
+        .replace('js_class="timesheet_grid"', 'js_class="timer_timesheet_grid"')
+        .replace('widget="float_time"', 'widget="timesheet_uom"');
 });
-onRpc(({ method }) => {
-    if (method === "get_last_validated_timesheet_date") {
-        return "2017-01-25";
-    } else if (method === "action_start_new_timesheet_timer") {
-        return false;
-    }
-});
+onRpc("get_last_validated_timesheet_date", () => "2017-01-25");
+onRpc("action_start_new_timesheet_timer", () => false);
 
 test("hr.timesheet (grid)(timer): sample data", async () => {
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        arch: HRTimesheet._views["grid,false"].replace(
+        arch: HRTimesheet._views.grid.replace(
             'js_class="timer_timesheet_grid"',
-            'js_class="timer_timesheet_grid" sample="1"',
+            'js_class="timer_timesheet_grid" sample="1"'
         ),
-        groupBy: [ "employee_id", "task_id" ],
+        groupBy: ["employee_id", "task_id"],
         domain: Domain.FALSE.toList(),
     });
 
     expect(".o_grid_view").toHaveCount(1, {
-        message: "The view should be correctly rendered with the sample data enabled when no data is found",
+        message:
+            "The view should be correctly rendered with the sample data enabled when no data is found",
     });
     expect(".o_grid_add_line a").toHaveCount(0, {
-        message: "The 'Add a line' button should not be visible inside the row added via the sample data",
+        message:
+            "The 'Add a line' button should not be visible inside the row added via the sample data",
     });
     expect(".o_grid_button_add:visible").toHaveCount(1, {
         message: "The 'Add a line' button should be visible",
@@ -81,9 +72,9 @@ test("hr.timesheet (grid)(timer): 'Add a line' should be displayed when display_
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        arch: HRTimesheet._views["grid,false"].replace(
+        arch: HRTimesheet._views.grid.replace(
             'js_class="timer_timesheet_grid"',
-            'js_class="timer_timesheet_grid" display_empty="1"',
+            'js_class="timer_timesheet_grid" display_empty="1"'
         ),
     });
 
@@ -95,7 +86,7 @@ test("hr.timesheet (grid)(timer): 'Add a line' should be displayed when display_
     });
     expect(".o_grid_renderer .o_grid_add_line a").toHaveText("Add a line", {
         message: "A button `Add a line` should be displayed in the grid view",
-    })
+    });
 
     await click(".o_grid_add_line a");
     await animationFrame();
@@ -109,7 +100,7 @@ test("hr.timesheet (grid)(timer): 'Add a line' should be displayed when display_
         message: "No Add a line button should be displayed when no data is found",
     });
     expect(".o_grid_button_add:visible").toHaveCount(0, {
-        message:  "'Add a line' control panel button should be visible",
+        message: "'Add a line' control panel button should be visible",
     });
 });
 
@@ -117,7 +108,7 @@ test("hr.timesheet (grid)(timer): basics", async () => {
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     expect(".timesheet-timer").toHaveCount(1, {
@@ -133,10 +124,13 @@ test("hr.timesheet (grid)(timer): basics", async () => {
         message: "A 'start' button should be rendered before each line",
     });
     // Can't do `queryAllTexts` because it retrieves innerText, which is lowercase
-    expect(queryAll("button.btn_timer_line").every(
-        (node) => node.textContent === node.textContent.toUpperCase()
-    )).toBe(true, {
-        message: "The character displayed on each button should be in uppercase"
+    // because of a Bootstrap class on the buttons
+    expect(
+        queryAllProperties("button.btn_timer_line", "textContent").every(
+            (text) => text === text.toUpperCase()
+        )
+    ).toBe(true, {
+        message: "The character displayed on each button should be in uppercase",
     });
     expect("button.btn_timer_line.btn-danger").toHaveCount(0, {
         message: "There shouln't be a running timer on any row",
@@ -169,7 +163,8 @@ test("hr.timesheet (grid)(timer): basics", async () => {
     await click(".btn_stop_timer");
     await animationFrame();
     expect(".btn_stop_timer").toHaveCount(1, {
-        message: "A stop button should be still there since the project_id is invalid because it is required and empty",
+        message:
+            "A stop button should be still there since the project_id is invalid because it is required and empty",
     });
     expect(".timesheet-timer .o_field_widget.o_field_invalid[name=project_id]").toHaveCount(1, {
         message: "The project_id field should be invalid since it is required and empty",
@@ -186,15 +181,11 @@ test("hr.timesheet (grid)(timer): basics", async () => {
 });
 
 test("hr.timesheet (grid)(timer): basics without Add a line button", async () => {
-    onRpc(({ method }) => {
-        if (method === "get_last_validated_timesheet_date") {
-            return "2017-01-30";
-        }
-    });
+    onRpc("get_last_validated_timesheet_date", () => "2017-01-30");
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     expect(".o_grid_add_line .btn-link").toHaveCount(0, {
@@ -210,22 +201,18 @@ test("hr.timesheet (grid)(timer): timer already running", async () => {
         task_id: 1,
         name: "Description",
     });
-    onRpc(({ method }) => {
-        if (method === "get_running_timer") {
-            return {
-                id: 10,
-                start: 5740, // 01:35:40
-                project_id: 1,
-                task_id: 1,
-                description: "Description",
-                step_timer: 30,
-            };
-        }
-    });
+    onRpc("get_running_timer", () => ({
+        id: 10,
+        start: 5740, // 01:35:40
+        project_id: 1,
+        task_id: 1,
+        description: "Description",
+        step_timer: 30,
+    }));
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     expect(".btn_stop_timer").toHaveCount(1, {
@@ -238,9 +225,9 @@ test("hr.timesheet (grid)(timer): timer already running", async () => {
     expect(".timesheet-timer .o_field_widget[name=task_id] input").toHaveValue("BS task");
     expect(".timesheet-timer .o_field_widget[name=name] input").toHaveValue("Description");
     await animationFrame();
-    expect(
-        queryText(".timesheet-timer div[name=display_timer] span")
-    ).toMatch(/01:35:4./, { message: "Timer is set" });
+    expect(queryText(".timesheet-timer div[name=display_timer] span")).toMatch(/01:35:4./, {
+        message: "Timer is set",
+    });
 });
 
 test("hr.timesheet (grid)(timer): stop running timer then restart new one", async () => {
@@ -252,8 +239,8 @@ test("hr.timesheet (grid)(timer): stop running timer then restart new one", asyn
         name: "Description",
     });
     let timerRunning = true;
-    onRpc(({ method, model }) => {
-        if (method === "get_running_timer" && timerRunning) {
+    onRpc("get_running_timer", () => {
+        if (timerRunning) {
             return {
                 step_timer: 30,
                 id: 10,
@@ -262,21 +249,21 @@ test("hr.timesheet (grid)(timer): stop running timer then restart new one", asyn
                 task_id: 1,
                 description: "Description",
             };
-        } else if (method === "action_timer_stop") {
-            timerRunning = false;
-            return 0.15;
-        } else if (
-            !timerRunning &&
-            model === "account.analytic.line" &&
-            method === "formatted_read_group"
-        ) {
+        }
+    });
+    onRpc("action_timer_stop", () => {
+        timerRunning = false;
+        return 0.15;
+    });
+    onRpc("account.analytic.line", "formatted_read_group", () => {
+        if (!timerRunning) {
             expect.step("Reload");
         }
     });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     expect(".timesheet-timer .btn_stop_timer").toHaveCount(1, {
@@ -308,9 +295,9 @@ test("hr.timesheet (grid)(timer): stop running timer then restart new one", asyn
     expect(".timesheet-timer .o_field_widget[name=name] input").toHaveValue("", {
         message: "name field in the timer header should be reset",
     });
-    expect(
-        queryText(".timesheet-timer div[name=display_timer] span")
-    ).toMatch(/00:00:0./, { message: "Timer should be reset" });
+    expect(queryText(".timesheet-timer div[name=display_timer] span")).toMatch(/00:00:0./, {
+        message: "Timer should be reset",
+    });
 });
 
 test("hr.timesheet (grid)(timer): drop running timer then restart new one", async () => {
@@ -322,24 +309,25 @@ test("hr.timesheet (grid)(timer): drop running timer then restart new one", asyn
         name: "Description",
     });
     let timerRunning = true;
-    onRpc(({ method }) => {
-        if (method === "get_running_timer" && timerRunning) {
+    onRpc("get_running_timer", () => {
+        if (timerRunning) {
             return {
                 step_timer: 30,
                 id: 10,
             };
-        } else if (method === "action_timer_unlink") {
-            timerRunning = false;
-            return false;
         }
+    });
+    onRpc("action_timer_unlink", () => {
+        timerRunning = false;
+        return false;
     });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
-    await press("escape")
+    await press("escape");
     await animationFrame();
     expect(".o_grid_row_timer .fa-stop").toHaveCount(0, {
         message: "No row should have a timer running",
@@ -365,9 +353,9 @@ test("hr.timesheet (grid)(timer): drop running timer then restart new one", asyn
     expect(".timesheet-timer .o_field_widget[name=name] input").toHaveValue("", {
         message: "name field in the timer header should be reset",
     });
-    expect(
-        queryText(".timesheet-timer div[name=display_timer] span")
-    ).toMatch(/00:00:0./, { message: "Timer should be reset" });
+    expect(queryText(".timesheet-timer div[name=display_timer] span")).toMatch(/00:00:0./, {
+        message: "Timer should be reset",
+    });
 });
 
 test("hr.timesheet (grid)(timer): start buttons with groupBy", async () => {
@@ -377,55 +365,53 @@ test("hr.timesheet (grid)(timer): start buttons with groupBy", async () => {
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        arch: HRTimesheet._views["grid,false"],
-        searchViewArch: HRTimesheet._views["search,false"],
+        arch: HRTimesheet._views.grid,
+        searchViewArch: HRTimesheet._views.search,
     });
 
     await toggleSearchBarMenu();
     await toggleMenuItem("Task");
     await toggleMenuItem("Project");
     expect("button.btn_timer_line").toHaveCount(5, {
-        message: "The timer button should be rendered for each row displayed in the grid since the project_id is in the rowFields",
+        message:
+            "The timer button should be rendered for each row displayed in the grid since the project_id is in the rowFields",
     });
 
     await toggleMenuItem("Project");
     expect("button.btn_timer_line").toHaveCount(0, {
-        message: "The timer button should not be rendered in any row in the grid view since the project_id field is no longer in the rowFields",
+        message:
+            "The timer button should not be rendered in any row in the grid view since the project_id field is no longer in the rowFields",
     });
 
     await toggleMenuItem("Task");
     await toggleMenuItem("Project");
     expect("button.btn_timer_line").toHaveCount(2, {
-        message: "The timer button should be rendered for each row displayed in the grid since the project_id is in the rowFields",
+        message:
+            "The timer button should be rendered for each row displayed in the grid since the project_id is in the rowFields",
     });
 });
 
-
 test("hr.timesheet (grid)(timer): start button with shift", async () => {
-    let timesheetId = 6;
-    onRpc(({ args, method }) => {
-        if (method === "action_add_time_to_timesheet") {
-            const { project_id, task_id } = args[1];
-            HRTimesheet._records.push({
-                id: ++timesheetId,
-                project_id,
-                task_id,
-                date: "2017-01-25",
-                unit_amount: 0.5,
-            });
-            return timesheetId;
-        }
+    onRpc("action_add_time_to_timesheet", function ({ args }) {
+        const { project_id, task_id } = args[1];
+        return this.env["account.analytic.line"].create({
+            project_id,
+            task_id,
+            date: "2017-01-25",
+            unit_amount: 0.5,
+        });
     });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "task_id", "project_id" ],
+        groupBy: ["task_id", "project_id"],
     });
 
-    const checkHeaderText = () => expect(".timesheet-timer > div > div").toHaveText(
-        "Press Enter or [a] to launch the timer\nPress Shift + [A] to add 30 min",
-        { message: "The text displayed next to Start button should be the default one" },
-    );
+    const checkHeaderText = () =>
+        expect(".timesheet-timer > div > div").toHaveText(
+            "Press Enter or [a] to launch the timer\nPress Shift + [A] to add 30 min",
+            { message: "The text displayed next to Start button should be the default one" }
+        );
 
     checkHeaderText();
     // activeElement should be the start button
@@ -433,9 +419,9 @@ test("hr.timesheet (grid)(timer): start button with shift", async () => {
     await animationFrame();
     checkHeaderText();
 
-    expect(queryAll("button.btn_timer_line").every(
-        (node) => node.textContent === node.textContent.toUpperCase()
-    )).toBe(true, {
+    expect(
+        queryAllTexts("button.btn_timer_line").every((text) => text === text.toUpperCase())
+    ).toBe(true, {
         message: "The character displayed on each button should be in uppercase",
     });
     expect("button.btn_timer_line .text-lowercase").toHaveCount(0, {
@@ -448,9 +434,11 @@ test("hr.timesheet (grid)(timer): start button with shift", async () => {
     await animationFrame();
     await press("a");
     await animationFrame();
-    expect(queryFirst(
-        ".o_grid_row.o_grid_highlightable:not(.o_grid_row_title,.o_grid_row_total,.o_grid_column_total) .bg-info"
-    ).nextElementSibling).toHaveText("1:30");
+    expect(
+        queryFirst(
+            ".o_grid_row.o_grid_highlightable:not(.o_grid_row_title,.o_grid_row_total,.o_grid_column_total) .bg-info"
+        ).nextElementSibling
+    ).toHaveText("1:30");
 
     await keyUp("shift");
     await animationFrame();
@@ -464,44 +452,38 @@ test("hr.timesheet (grid)(timer): start button with shift", async () => {
     await keyDown("shift");
     await animationFrame();
     expect("button.btn_timer_line .text-lowercase").toHaveCount(5, {
-        message: "The character on the button displayed in each row should still be in lowercase as the header is focused",
+        message:
+            "The character on the button displayed in each row should still be in lowercase as the header is focused",
     });
 });
 
 test("hr.timesheet (grid)(timer): start timer from button line", async () => {
-    let timesheetId = 6;
-    onRpc(({ method, args }) => {
-        if (method === "action_start_new_timesheet_timer") {
-            const { project_id, task_id } = args[0];
-            if (!project_id) {
-                return false;
-            }
-            const timesheet = {
-                id: ++timesheetId,
-                project_id,
-                task_id,
-                date: "2017-01-25",
-                unit_amount: 0.0,
-            };
-            HRTimesheet._records.push(timesheet);
-            return timesheet;
-        } else if (method === "action_add_time_to_timesheet") {
-            const { project_id, task_id } = args[1];
-            const timesheet = {
-                id: ++timesheetId,
-                project_id,
-                task_id,
-                date: "2017-01-25",
-                unit_amount: 0.5,
-            };
-            HRTimesheet._records.push(timesheet);
-            return timesheetId;
+    onRpc("action_start_new_timesheet_timer", function ({ args }) {
+        const { project_id, task_id } = args[0];
+        if (!project_id) {
+            return false;
         }
+        const ids = this.env["account.analytic.line"].create({
+            project_id,
+            task_id,
+            date: "2017-01-25",
+            unit_amount: 0.0,
+        });
+        return this.env["account.analytic.line"].read(ids)[0];
+    });
+    onRpc("action_add_time_to_timesheet", function ({ args }) {
+        const { project_id, task_id } = args[1];
+        return this.env["account.analytic.line"].create({
+            project_id,
+            task_id,
+            date: "2017-01-25",
+            unit_amount: 0.5,
+        });
     });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "task_id", "project_id" ],
+        groupBy: ["task_id", "project_id"],
     });
 
     expect(".btn_start_timer").toHaveCount(1, {
@@ -523,10 +505,12 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
         message: "A timer should be running and so the start button should not be displayed",
     });
     expect(".btn_stop_timer").toHaveCount(1, {
-        message: "A timer should be running and so the stop button should be displayed instead of start one",
+        message:
+            "A timer should be running and so the stop button should be displayed instead of start one",
     });
     expect("button.btn_timer_line.btn-danger .fa-stop").toHaveCount(1, {
-        message: "A row should have the timer button red with stop icon to notify the timer is running in that row",
+        message:
+            "A row should have the timer button red with stop icon to notify the timer is running in that row",
     });
     expect("button.btn_timer_line:not(.btn-danger)").toHaveCount(4, {
         message: "4 rows should not have a timer running",
@@ -545,9 +529,9 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
     expect(".timesheet-timer .o_field_widget[name=name] input").toHaveValue("", {
         message: "name field in the timer header should be empty (default value)",
     });
-    expect(
-        queryText(".timesheet-timer div[name=display_timer] span")
-    ).toMatch(/00:00:0./, { message: "Timer should start at 0" });
+    expect(queryText(".timesheet-timer div[name=display_timer] span")).toMatch(/00:00:0./, {
+        message: "Timer should start at 0",
+    });
 
     await click("button.btn_timer_line:not(.btn-danger)");
     await animationFrame();
@@ -555,10 +539,12 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
         message: "A timer should be running and so the start button should not be displayed",
     });
     expect(".btn_stop_timer").toHaveCount(1, {
-        message: "A timer should be running and so the stop button should be displayed instead of start one",
+        message:
+            "A timer should be running and so the stop button should be displayed instead of start one",
     });
     expect("button.btn_timer_line.btn-danger .fa-stop").toHaveCount(1, {
-        message: "A row should have the timer button red with stop icon to notify the timer is running in that row",
+        message:
+            "A row should have the timer button red with stop icon to notify the timer is running in that row",
     });
     expect("button.btn_timer_line:not(.btn-danger)").toHaveCount(4, {
         message: "4 rows should not have a timer running",
@@ -569,58 +555,54 @@ test("hr.timesheet (grid)(timer): start timer from button line", async () => {
     ).toEqual([false, true, false, false, false], {
         message: "Only second row should have the timer runnning",
     });
-    expect(".timesheet-timer .o_field_widget[name=project_id] input").toHaveValue("Webocalypse Now", {
-        message: "project_id in the timer header should be the one in the first row",
-    });
+    expect(".timesheet-timer .o_field_widget[name=project_id] input").toHaveValue(
+        "Webocalypse Now",
+        {
+            message: "project_id in the timer header should be the one in the first row",
+        }
+    );
     expect(".timesheet-timer .o_field_widget[name=task_id] input").toHaveValue("Another BS task", {
-        message: "task_id in the timer header should be the one in the first row (Another BS task is expected)",
+        message:
+            "task_id in the timer header should be the one in the first row (Another BS task is expected)",
     });
     expect(".timesheet-timer .o_field_widget[name=name] input").toHaveValue("", {
         message: "name field in the timer header should be empty (default value)",
     });
-    expect(
-        queryText(".timesheet-timer div[name=display_timer] span")
-    ).toMatch(/00:00:0./, { message: "Timer should start at 0" });
+    expect(queryText(".timesheet-timer div[name=display_timer] span")).toMatch(/00:00:0./, {
+        message: "Timer should start at 0",
+    });
 });
 
 test("hr.timesheet (grid)(timer): change description running timer", async () => {
-    onRpc(({ method }) => {
-        if (method === "get_running_timer") {
-            return { step_timer: 30, id: 1 };
-        }
-    });
+    onRpc("get_running_timer", () => ({ step_timer: 30, id: 1 }));
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     await click(".timesheet-timer div[name=name] input");
     await edit("Description");
     expect(".timesheet-timer div[name=name] input").toHaveValue("Description", {
-        message: "`Description` should correctly be written in the name description in the timer header",
+        message:
+            "`Description` should correctly be written in the name description in the timer header",
     });
 });
 
-
 test("hr.timesheet (grid)(timer): check that individual and total overtime are properly displayed", async () => {
-    onRpc(({ method }) => {
-        if (method === "get_daily_working_hours") {
-            return {
-                "2017-01-22": 0,
-                "2017-01-23": 7,
-                "2017-01-24": 7,
-                "2017-01-25": 7,
-                "2017-01-26": 7,
-                "2017-01-27": 7,
-                "2017-01-28": 0,
-            };
-        }
-    });
+    onRpc("get_daily_working_hours", () => ({
+        "2017-01-22": 0,
+        "2017-01-23": 7,
+        "2017-01-24": 7,
+        "2017-01-25": 7,
+        "2017-01-26": 7,
+        "2017-01-27": 7,
+        "2017-01-28": 0,
+    }));
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     const columnTotalEls = queryAll(".o_grid_column_total");
@@ -647,68 +629,73 @@ test("hr.timesheet (grid)(timer): check that individual and total overtime are p
     }
 
     expect(emptyColumnTotalCells).toBe(4, {
-        message: "4 column totals should not have any number since the employee has recorded nothing",
+        message:
+            "4 column totals should not have any number since the employee has recorded nothing",
     });
     expect(dangerColumnTotalCells).toBe(3, {
-        message: "3 column totals should have a total displayed in red since the employee has not done all his working hours",
+        message:
+            "3 column totals should have a total displayed in red since the employee has not done all his working hours",
     });
     expect(warningColumnTotalCells).toBe(1, {
-        message: "1 column totals should have a total displayed in orange since the employee has done extra working hours",
+        message:
+            "1 column totals should have a total displayed in orange since the employee has done extra working hours",
     });
     expect(".o_grid_bar_chart_container .o_grid_bar_chart_overtime").toHaveCount(4, {
         message: "4 overtimes indication should be displayed in 4 cells displaying barchart total",
     });
-    expect(".o_grid_bar_chart_container:not(.o_grid_highlighted) .o_grid_bar_chart_overtime").toHaveCount(4, {
-        message: "4 overtimes indication should be displayed in 4 cells displaying barchart total should not be visible",
+    expect(
+        ".o_grid_bar_chart_container:not(.o_grid_highlighted) .o_grid_bar_chart_overtime"
+    ).toHaveCount(4, {
+        message:
+            "4 overtimes indication should be displayed in 4 cells displaying barchart total should not be visible",
     });
 
     await hover(columnTotalEl);
     await animationFrame();
     await advanceTime(10); // debounce on mouse over event.
-    expect(".o_grid_bar_chart_container.o_grid_highlighted .o_grid_bar_chart_overtime").toBeDisplayed({
+    expect(
+        ".o_grid_bar_chart_container.o_grid_highlighted .o_grid_bar_chart_overtime"
+    ).toBeDisplayed({
         message: "The overtime of the total column hovered should be visible",
     });
 
-    const overtimeClasses = [ "text-danger", "text-warning", "text-danger", "text-danger" ];
-    queryAll(
-        ".o_grid_bar_chart_container .o_grid_bar_chart_overtime"
-    ).forEach((node, i) => expect(node).toHaveClass(overtimeClasses[i], {
-        message: "Daily overtime should have been displayed in different color",
-    }));
+    const overtimeClasses = ["text-danger", "text-warning", "text-danger", "text-danger"];
+    queryAll(".o_grid_bar_chart_container .o_grid_bar_chart_overtime").forEach((node, i) =>
+        expect(node).toHaveClass(overtimeClasses[i], {
+            message: "Daily overtime should have been displayed in different color",
+        })
+    );
 
     expect(
         ".o_grid_highlightable.position-md-sticky.end-0.d-flex.align-items-center.justify-content-center.fw-bold.text-bg-warning"
     ).toHaveCount(1, {
-        message: "Total overtime should be displayed in orange because employees have done more work than the normal hours",
+        message:
+            "Total overtime should be displayed in orange because employees have done more work than the normal hours",
     });
 });
 
 test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
     let containerRowTimerButton, rowTitle;
-    onRpc(({ method, model, kwargs }) => {
-        if (method === "action_start_new_timesheet_timer") {
-            return {
-                start: 0,
-                project_id: false,
-                task_id: false,
-                description: "",
-            };
-        } else if (method === "name_search") {
-            if (model === "project.project") {
-                kwargs.domain = [["allow_timesheets", "=", true]];
-            } else if (model === "project.task") {
-                kwargs.domain = [];
-            }
-        }
+    onRpc("action_start_new_timesheet_timer", () => ({
+        start: 0,
+        project_id: false,
+        task_id: false,
+        description: "",
+    }));
+    onRpc("project.project", "name_search", ({ kwargs }) => {
+        kwargs.domain = [["allow_timesheets", "=", true]];
+    });
+    onRpc("project.task", "name_search", ({ kwargs }) => {
+        kwargs.domain = [];
     });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     expect(".btn_start_timer").toHaveCount(1, {
-        message: "The timer should be running"
+        message: "The timer should be running",
     });
 
     await click(".btn_start_timer");
@@ -717,37 +704,44 @@ test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
         message: "The timer should be running",
     });
     expect(".btn_stop_timer").toHaveCount(1, {
-        message: "The stop button should be displayed"
+        message: "The stop button should be displayed",
     });
     expect(".o_timer_discard button").toHaveCount(1, {
         message: "The cancel button should be displayed",
     });
 
-    await selectFieldDropdownItem("project_id", "P1")
+    await selectFieldDropdownItem("project_id", "P1");
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
         message: "The timer is running on the row with the project selected",
     });
-    containerRowTimerButton = queryFirst(".btn_timer_line.btn-danger").closest(".o_grid_highlightable");
+    containerRowTimerButton = queryFirst(".btn_timer_line.btn-danger").closest(
+        ".o_grid_highlightable"
+    );
     rowTitle = queryText(
         `.o_grid_row_title[data-grid-row='${containerRowTimerButton.dataset.gridRow}']`
     );
     expect(rowTitle).toMatch(/P1.*/, {
-        message: "The row title with the timer running should contain the project selected in the timer header",
+        message:
+            "The row title with the timer running should contain the project selected in the timer header",
     });
     expect(rowTitle).not.toMatch(/.*BS task/, {
         message: "The row title with the timer running should not contain a task name",
     });
 
-    await selectFieldDropdownItem("task_id", "BS task")
+    await selectFieldDropdownItem("task_id", "BS task");
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
-        message: "The timer is running on the row with the project and task selected in the timer header",
+        message:
+            "The timer is running on the row with the project and task selected in the timer header",
     });
-    containerRowTimerButton = queryFirst(".btn_timer_line.btn-danger").closest(".o_grid_highlightable");
+    containerRowTimerButton = queryFirst(".btn_timer_line.btn-danger").closest(
+        ".o_grid_highlightable"
+    );
     rowTitle = queryText(
         `.o_grid_row_title[data-grid-row='${containerRowTimerButton.dataset.gridRow}']`
     );
     expect(rowTitle).toMatch(/P1.*/, {
-        message: "The row title with the timer running should contain the project selected in the timer header",
+        message:
+            "The row title with the timer running should contain the project selected in the timer header",
     });
     expect(rowTitle).toMatch(/.*BS task/, {
         message: "The row title with the timer running should contain a task name",
@@ -770,26 +764,20 @@ test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
 });
 
 test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (keyboard shortcut)", async () => {
-    let timesheetId = 6;
-    onRpc(({ method, args }) => {
-        if (method === "action_start_new_timesheet_timer") {
-            const { project_id, task_id } = args[0];
-            if (!project_id) {
-                return false;
-            }
-            const timesheet = {
-                id: ++timesheetId,
-                project_id,
-                task_id,
-                date: "2017-01-25",
-                unit_amount: 0.0,
-            };
-            HRTimesheet._records.push(timesheet);
-            return timesheet;
-        } else if (method === "action_timer_stop") {
-            return 0.25;
+    onRpc("action_start_new_timesheet_timer", function ({ args }) {
+        const { project_id, task_id } = args[0];
+        if (!project_id) {
+            return false;
         }
+        const ids = this.env["account.analytic.line"].create({
+            project_id,
+            task_id,
+            date: "2017-01-25",
+            unit_amount: 0.0,
+        });
+        return this.env["account.analytic.line"].read(ids)[0];
     });
+    onRpc("action_timer_stop", () => 0.25);
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
@@ -798,7 +786,8 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
     expect(".btn_start_timer").toHaveCount(1, {
         message: "No timer should be running",
     });
-    const gridTimerButtonContainer = queryFirst('button.btn_timer_line').closest(".o_grid_highlightable");
+    const gridTimerButtonContainer =
+        queryFirst("button.btn_timer_line").closest(".o_grid_highlightable");
     expect(
         `.o_grid_row.o_grid_highlightable.o_grid_cell_today[data-grid-row="${gridTimerButtonContainer.dataset.gridRow}"]`
     ).toHaveText("0:00");
@@ -809,10 +798,12 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
         message: "A timer should be running",
     });
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
-        message: "The row with the GridTimerButton with 'a' letter in the grid view should have the timer running",
+        message:
+            "The row with the GridTimerButton with 'a' letter in the grid view should have the timer running",
     });
     expect("button.btn_timer_line.btn-danger").toHaveCount(1, {
-        message: "The row with the running timer should be the one with the 'a' letter in the GridTimerButton",
+        message:
+            "The row with the running timer should be the one with the 'a' letter in the GridTimerButton",
     });
 
     await press("a");
@@ -821,7 +812,8 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
         message: "The timer should be stopped",
     });
     expect(".btn_timer_line.fa-stop-danger").toHaveCount(0, {
-        message: "The running timer in the row with the GridTimerButton with 'a' letter in the grid should be stopped",
+        message:
+            "The running timer in the row with the GridTimerButton with 'a' letter in the grid should be stopped",
     });
     expect(
         `.o_grid_cell_today[data-grid-row="${gridTimerButtonContainer.dataset.gridRow}"]`
@@ -831,26 +823,20 @@ test("hr.timesheet (grid)(timer): start and stop timer with GridTimerButton (key
 });
 
 test("hr.timesheet (grid)(timer): start timer and then another with GridTimerButton (keyboard shortcut)", async () => {
-    let timesheetId = 6;
-    onRpc(({ method, args }) => {
-        if (method === "action_start_new_timesheet_timer") {
-            const { project_id, task_id } = args[0];
-            if (!project_id) {
-                return false;
-            }
-            const timesheet = {
-                id: ++timesheetId,
-                project_id,
-                task_id,
-                date: "2017-01-25",
-                unit_amount: 0.0,
-            };
-            HRTimesheet._records.push(timesheet);
-            return timesheet;
-        } else if (method === "action_timer_stop") {
-            return 0.25;
+    onRpc("action_start_new_timesheet_timer", function ({ args }) {
+        const { project_id, task_id } = args[0];
+        if (!project_id) {
+            return false;
         }
+        const ids = this.env["account.analytic.line"].create({
+            project_id,
+            task_id,
+            date: "2017-01-25",
+            unit_amount: 0.0,
+        });
+        return this.env["account.analytic.line"].read(ids)[0];
     });
+    onRpc("action_timer_stop", () => 0.25);
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
@@ -859,7 +845,8 @@ test("hr.timesheet (grid)(timer): start timer and then another with GridTimerBut
     expect(".btn_start_timer").toHaveCount(1, {
         message: "No timer should be running",
     });
-    const gridTimerButtonContainer = queryFirst('button.btn_timer_line').closest(".o_grid_highlightable");
+    const gridTimerButtonContainer =
+        queryFirst("button.btn_timer_line").closest(".o_grid_highlightable");
     expect(
         `.o_grid_cell_today[data-grid-row="${gridTimerButtonContainer.dataset.gridRow}"]`
     ).toHaveText("0:00");
@@ -870,10 +857,12 @@ test("hr.timesheet (grid)(timer): start timer and then another with GridTimerBut
         message: "A timer should be running",
     });
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
-        message: "The row with the GridTimerButton with 'a' letter in the grid view should have the timer running",
+        message:
+            "The row with the GridTimerButton with 'a' letter in the grid view should have the timer running",
     });
     expect(".o_grid_row_timer.o_grid_highlightable[data-row='1']").toHaveCount(1, {
-        message: "The row with the running timer should be the one with the 'a' letter in the GridTimerButton",
+        message:
+            "The row with the running timer should be the one with the 'a' letter in the GridTimerButton",
     });
 
     await press("b");
@@ -882,10 +871,12 @@ test("hr.timesheet (grid)(timer): start timer and then another with GridTimerBut
         message: "A timer should be running",
     });
     expect(".btn_timer_line.btn-danger").toHaveCount(1, {
-        message: "The row with the GridTimerButton with 'b' letter in the grid view should have the timer running",
+        message:
+            "The row with the GridTimerButton with 'b' letter in the grid view should have the timer running",
     });
     expect(".o_grid_row_timer.o_grid_highlightable[data-row='2']").toHaveCount(1, {
-        message: "The row with the running timer should be the one with the 'b' letter in the GridTimerButton",
+        message:
+            "The row with the running timer should be the one with the 'b' letter in the GridTimerButton",
     });
     expect(
         `.o_grid_cell_today[data-grid-row="${gridTimerButtonContainer.dataset.gridRow}"]`
@@ -911,7 +902,7 @@ test("hr.timesheet (grid)(timer): GridTimerButton when there are 26+ rows", asyn
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     expect(".o_grid_row_title").toHaveCount(32, {
@@ -922,58 +913,54 @@ test("hr.timesheet (grid)(timer): GridTimerButton when there are 26+ rows", asyn
     });
 
     expect(".btn_timer_line.btn-outline-secondary:has(.fa-play)").toHaveCount(6, {
-        message: "Having 32 total records and only 26 letters for the shortcuts, the last 6 of the GridTimerButton should have fa-play icon instead of a letter",
+        message:
+            "Having 32 total records and only 26 letters for the shortcuts, the last 6 of the GridTimerButton should have fa-play icon instead of a letter",
     });
-    expect(queryFirst("button span span", {
-        root: queryFirst(".o_grid_row:has(.btn_timer_line.btn-outline-secondary):last"),
-    })).toHaveClass("fa-play", {
-        message: "After all letters, GridTimerButton should display a 'fa-play' icon"
+    expect(
+        queryFirst("button span span", {
+            root: queryFirst(".o_grid_row:has(.btn_timer_line.btn-outline-secondary):last"),
+        })
+    ).toHaveClass("fa-play", {
+        message: "After all letters, GridTimerButton should display a 'fa-play' icon",
     });
 });
 
 test("hr.timesheet (grid)(timer): start timer and create a new project and a new task", async () => {
     let reload = false;
-    onRpc(({ method, model, args, kwargs }) => {
-        if (method === "action_start_new_timesheet_timer") {
-            return {
-                rate: 0,
-                project_id: false,
-                task_id: false,
-                description: "",
-            };
-        } else if (method === "action_timer_stop") {
-            // The newly created timesheet need to be pushed on the mockserver model otherwise it will not be fetched
-            // on the reload of the view. The new line will then not be created either, failing the assert on row count.
-            const [ id ] = args;
-            HRTimesheet._records.push({
-                rate: 0,
-                id,
-                project_id: id == 8 ? 1 : 3,
-                task_id: id == 8 ? 4 : false,
-                date: "2017-01-25",
-                description: "",
-            });
-            reload = true;
-            return 0.25;
-        } else if (
-            reload &&
-            model === "account.analytic.line" &&
-            method === "formatted_read_group"
-        ) {
+    onRpc("action_start_new_timesheet_timer", () => ({
+        rate: 0,
+        project_id: false,
+        task_id: false,
+        description: "",
+    }));
+    onRpc("action_timer_stop", function ({ args }) {
+        // The newly created timesheet need to be pushed on the mockserver model otherwise it will not be fetched
+        // on the reload of the view. The new line will then not be created either, failing the assert on row count.
+        const [line] = this.env["account.analytic.line"].browse(args[0]);
+        this.env["account.analytic.line"].create({
+            project_id: line.project_id,
+            task_id: line.task_id,
+            date: "2017-01-25",
+        });
+        reload = true;
+        return 0.25;
+    });
+    onRpc("account.analytic.line", "formatted_read_group", () => {
+        if (reload) {
             expect.step("Reload");
             reload = false;
-        } else if (method === "name_search") {
-            if (model === "project.project") {
-                kwargs.domain = [["allow_timesheets", "=", true]];
-            } else if (model === "project.task") {
-                kwargs.domain = [];
-            }
         }
+    });
+    onRpc("project.project", "name_search", ({ kwargs }) => {
+        kwargs.domain = [["allow_timesheets", "=", true]];
+    });
+    onRpc("project.task", "name_search", ({ kwargs }) => {
+        kwargs.domain = [];
     });
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
 
     // Create a new timesheet with a new project.
@@ -997,7 +984,7 @@ test("hr.timesheet (grid)(timer): start timer and create a new project and a new
     // Create a new timesheet with a new task in an existing project.
     await click(".btn_start_timer");
     await animationFrame();
-    await selectFieldDropdownItem("project_id", "P1")
+    await selectFieldDropdownItem("project_id", "P1");
     await clickFieldDropdown("task_id");
     await edit("a new task");
     await runAllTimers();
@@ -1016,7 +1003,10 @@ test("hr.timesheet (grid)(timer): switch view with GroupBy and start the timer",
     await getService("action").doAction({
         res_model: "account.analytic.line",
         type: "ir.actions.act_window",
-        views: [[false, "grid"], [false, "kanban"]],
+        views: [
+            [false, "grid"],
+            [false, "kanban"],
+        ],
         context: { group_by: ["project_id", "task_id"] },
     });
 
@@ -1030,42 +1020,33 @@ test("hr.timesheet (grid)(timer): switch view with GroupBy and start the timer",
 });
 
 test("hr.timesheet (grid)(timer): total cell bg color", async () => {
-    onRpc(({ method }) => {
-        if (method === "get_daily_working_hours") {
-            return {
-                "2017-01-24": 4,
-                "2017-01-25": 4,
-            };
-        }
-    })
+    onRpc("get_daily_working_hours", () => ({
+        "2017-01-24": 4,
+        "2017-01-25": 4,
+    }));
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "project_id", "task_id" ],
+        groupBy: ["project_id", "task_id"],
     });
     expect(".o_grid_highlightable.text-bg-warning").toHaveCount(1, {
         message: "Total should be an overtime (10 > 8)",
-    })
+    });
 });
 
 test("hr.timesheet (grid)(timer): display sample data and then data + fetch last validate timesheet date", async () => {
-    HRTimesheet._views["grid,false"] = HRTimesheet._views["grid,false"].replace("<grid", "<grid sample='1'");
-    onRpc(({ method }) => {
-        if (method === "get_daily_working_hours") {
-            return {
-                "2017-01-24": 4,
-                "2017-01-25": 4,
-            };
-        } else if (method === "get_last_validated_timesheet_date") {
-            expect.step("get_last_validated_timesheet_date");
-        }
-    });
+    HRTimesheet._views.grid = HRTimesheet._views.grid.replace("<grid", "<grid sample='1'");
+    onRpc("get_daily_working_hours", () => ({
+        "2017-01-24": 4,
+        "2017-01-25": 4,
+    }));
+    onRpc("get_last_validated_timesheet_date", ({ method }) => expect.step(method));
 
     await mountWithCleanup(WebClient);
     await getService("action").doAction({
         res_model: "account.analytic.line",
         type: "ir.actions.act_window",
-        views: [[ false, "grid" ]],
+        views: [[false, "grid"]],
         context: { search_default_nothing: 1 },
     });
 
@@ -1076,16 +1057,17 @@ test("hr.timesheet (grid)(timer): display sample data and then data + fetch last
     expect.verifySteps(["get_last_validated_timesheet_date"]); // the rpc should be called only once
 });
 
-
 test("hr.timesheet (grid)(timer): start button is always in focus", async () => {
-    HRTimesheet._records = [{
-        id: 1,
-        display_timer: true,
-        is_timesheet: true,
-        timer_start: "2017-01-25 00:00:00",
-        company_id: 1,
-        date: "2017-01-25",
-    }];
+    HRTimesheet._records = [
+        {
+            id: 1,
+            display_timer: true,
+            is_timesheet: true,
+            timer_start: "2017-01-25 00:00:00",
+            company_id: 1,
+            date: "2017-01-25",
+        },
+    ];
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
@@ -1107,22 +1089,24 @@ test("hr.timesheet (grid)(timer): start button is always in focus", async () => 
 
     // Check click on select in search popover doesn't focus Start button to avoid unintended effects (e.g. closing an
     // opened dropdown)
-    await click('button.o_searchview_dropdown_toggler');
+    await click("button.o_searchview_dropdown_toggler");
     await animationFrame();
-    await click('button.o_menu_item');
+    await click("button.o_menu_item");
     expect(".btn_start_timer").not.toBeFocused();
 });
 
 describe.current.tags("desktop");
 test("hr.timesheet (grid)(timer): stop button is always in focus", async () => {
-    HRTimesheet._records = [{
-        id: 1,
-        display_timer: true,
-        is_timesheet: true,
-        timer_start: "2017-01-25 00:00:00",
-        company_id: 1,
-        date: "2017-01-25",
-    }];
+    HRTimesheet._records = [
+        {
+            id: 1,
+            display_timer: true,
+            is_timesheet: true,
+            timer_start: "2017-01-25 00:00:00",
+            company_id: 1,
+            date: "2017-01-25",
+        },
+    ];
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",

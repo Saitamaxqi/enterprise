@@ -3,6 +3,7 @@ import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import {
     asyncStep,
     defineModels,
+    MockServer,
     models,
     mountWithCleanup,
     patchWithCleanup,
@@ -37,12 +38,12 @@ async function mountPermissionPanel(articleId) {
                 data = KnowledgeArticle._records.find((record) => record.id === articleId);
             },
             data,
-            update : () => {
-                data["website_published"] = !data["website_published"]
-                asyncStep("toggle publish")
+            update: () => {
+                data["website_published"] = !data["website_published"];
+                asyncStep("toggle publish");
                 pp.render();
             },
-        }
+        },
     };
     await mountWithCleanup(PermissionPanel, { props: { reactiveRecordWrapper } });
     await animationFrame();
@@ -55,8 +56,8 @@ beforeEach(() => {
         setup() {
             super.setup();
             pp = this;
-        }
-    })
+        },
+    });
     patchWithCleanup(navigator.clipboard, {
         writeText(value) {
             expect(value).toBe(articleUrl);
@@ -95,7 +96,7 @@ test("Published readonly article", async () => {
     await animationFrame();
     expect(".knowledge_published_status_message").toHaveText("Article not Published");
     // publish the article
-    KnowledgeArticle._records[0].website_published = true;
+    MockServer.env["knowledge.article"].write(1, { is_published: true });
     pp.load();
     await animationFrame();
     expect(".o_knowledge_permission_panel > div .fw-bold").toHaveText("Article shared to web");

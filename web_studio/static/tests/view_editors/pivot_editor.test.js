@@ -58,7 +58,6 @@ class Stage extends models.Model {
                 <field name='product_id' type='col'/>
                 <field name='partner_id' type='row'/>
             </pivot>`,
-        search: `<search/>`,
     };
 }
 

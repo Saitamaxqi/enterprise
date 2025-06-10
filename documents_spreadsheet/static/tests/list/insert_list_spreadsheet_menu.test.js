@@ -10,16 +10,17 @@ import {
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
-import { Partner, Product } from "@spreadsheet/../tests/helpers/data";
+import { helpers } from "@odoo/o-spreadsheet";
+import { Product } from "@spreadsheet/../tests/helpers/data";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import {
     contains,
+    MockServer,
     onRpc,
     patchWithCleanup,
     toggleActionMenu,
 } from "@web/../tests/web_test_helpers";
-import { helpers } from "@odoo/o-spreadsheet";
 
 const { sanitizeSheetName } = helpers;
 
@@ -195,7 +196,7 @@ test("Grouped list: we take the number of elements not the number of groups", as
     });
 
     await invokeInsertListInSpreadsheetDialog(env);
-    expect("input#threshold").toHaveValue(Partner._records.length);
+    expect("input#threshold").toHaveValue(MockServer.env["partner"].length);
 });
 
 test("Rows of list multi-lines fields are auto-resized", async function () {

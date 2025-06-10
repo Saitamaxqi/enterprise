@@ -32,7 +32,6 @@ class Timeshift extends models.Model {
             <calendar date_start="date_start">
                 <field name="display_name" />
             </calendar>`,
-        search: `<search/>`,
     };
 }
 

@@ -1,13 +1,13 @@
-import { expect, describe, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 import {
-    onRpc,
     clickSave,
-    mountView,
-    patchWithCleanup,
     fieldInput,
+    mockService,
+    mountView,
+    onRpc,
 } from "@web/../tests/web_test_helpers";
 
 import { defineHelpdeskModels } from "@helpdesk/../tests/helpdesk_test_helpers";
@@ -29,11 +29,12 @@ const formViewArch = `
     </form>
 `;
 
-async function mockCheckFeatureEnabled() {
+onRpc("helpdesk.team", "check_features_enabled", function ({ model, method }) {
+    expect.step(method);
     let use_sla = false;
     let use_helpdesk_timesheet = false;
     let use_alias = false;
-    for (const record of HelpdeskTeam._records) {
+    for (const record of this.env[model]) {
         if (record.use_sla) {
             use_sla = true;
         }
@@ -45,18 +46,11 @@ async function mockCheckFeatureEnabled() {
         }
     }
     return { use_sla, use_helpdesk_timesheet, use_alias };
-}
-
-onRpc(({ method, model }) => {
-    if (model === "helpdesk.team" && method === "check_features_enabled") {
-        expect.step(method);
-        return mockCheckFeatureEnabled();
-    } else if (method === "web_save") {
-        expect.step(method);
-    }
 });
 
-test("reload the page when use_sla is disabled in all teams", async (assert) => {
+onRpc("web_save", ({ method }) => expect.step(method));
+
+test("reload the page when use_sla is disabled in all teams", async () => {
     onRpc(({ method, args }) => {
         if (method === "check_modules_to_install") {
             expect.step(method);
@@ -64,19 +58,20 @@ test("reload the page when use_sla is disabled in all teams", async (assert) => 
             return false;
         }
     });
-    const helpdeskForm = await mountView({
-        resModel: "helpdesk.team",
-        type: "form",
-        resIds: [1, 2],
-        resId: 1,
-        arch: formViewArch,
-    });
-    patchWithCleanup(helpdeskForm.env.services.action, {
+    mockService("action", {
         doAction(action) {
             if (action === "reload_context") {
                 expect.step("reload_context");
             }
         },
+    });
+
+    await mountView({
+        resModel: "helpdesk.team",
+        type: "form",
+        resIds: [1, 2],
+        resId: 1,
+        arch: formViewArch,
     });
 
     await click("div[name='use_sla'] input");
@@ -90,27 +85,25 @@ test("reload the page when use_sla is disabled in all teams", async (assert) => 
     ]);
 });
 
-test("reload the page when the feature use_timesheet is enabled in one team", async (assert) => {
-    onRpc(({ method, args }) => {
-        if (method === "check_modules_to_install") {
-            expect.step(method);
-            expect(args[0]).toEqual(["use_helpdesk_timesheet"]);
-            return true;
-        }
+test("reload the page when the feature use_timesheet is enabled in one team", async () => {
+    onRpc("check_modules_to_install", ({ method, args }) => {
+        expect.step(method);
+        expect(args[0]).toEqual(["use_helpdesk_timesheet"]);
+        return true;
     });
-
-    const helpdeskForm = await mountView({
-        resModel: "helpdesk.team",
-        type: "form",
-        resId: 1,
-        arch: formViewArch,
-    });
-    patchWithCleanup(helpdeskForm.env.services.action, {
+    mockService("action", {
         doAction(action) {
             if (action === "reload_context") {
                 expect.step("reload_context");
             }
         },
+    });
+
+    await mountView({
+        resModel: "helpdesk.team",
+        type: "form",
+        resId: 1,
+        arch: formViewArch,
     });
 
     await fieldInput("use_helpdesk_timesheet").check();
@@ -124,28 +117,26 @@ test("reload the page when the feature use_timesheet is enabled in one team", as
     ]);
 });
 
-test("do not reload if the feature is already installed", async (assert) => {
+test("do not reload if the feature is already installed", async () => {
     HelpdeskTeam._records[0].use_helpdesk_timesheet = true;
-    onRpc(({ method, args }) => {
-        if (method === "check_modules_to_install") {
-            expect.step(method);
-            expect(args[0]).toEqual(["use_helpdesk_timesheet"]);
-            return false;
-        }
+    onRpc("check_modules_to_install", ({ method, args }) => {
+        expect.step(method);
+        expect(args[0]).toEqual(["use_helpdesk_timesheet"]);
+        return false;
     });
-
-    const helpdeskForm = await mountView({
-        resModel: "helpdesk.team",
-        type: "form",
-        resId: 2,
-        arch: formViewArch,
-    });
-    patchWithCleanup(helpdeskForm.env.services.action, {
+    mockService("action", {
         doAction(action) {
             if (action === "reload_context") {
                 expect.step("reload_context");
             }
         },
+    });
+
+    await mountView({
+        resModel: "helpdesk.team",
+        type: "form",
+        resId: 2,
+        arch: formViewArch,
     });
 
     await fieldInput("use_helpdesk_timesheet").check();
@@ -155,28 +146,26 @@ test("do not reload if the feature is already installed", async (assert) => {
     expect.verifySteps(["check_features_enabled", "check_modules_to_install", "web_save"]);
 });
 
-test("reload when the feature is disabled in all teams", async (assert) => {
-    onRpc(({ method, args }) => {
-        if (method === "check_modules_to_install") {
-            expect.step(method);
-            expect(args[0]).toEqual(["use_alias"]);
-            return false;
-        }
+test("reload when the feature is disabled in all teams", async () => {
+    onRpc("check_modules_to_install", ({ method, args }) => {
+        expect.step(method);
+        expect(args[0]).toEqual(["use_alias"]);
+        return false;
     });
-
-    const helpdeskForm = await mountView({
-        resModel: "helpdesk.team",
-        type: "form",
-        resIds: [1, 2],
-        resId: 1,
-        arch: formViewArch,
-    });
-    patchWithCleanup(helpdeskForm.env.services.action, {
+    mockService("action", {
         doAction(action) {
             if (action === "reload_context") {
                 expect.step("reload_context");
             }
         },
+    });
+
+    await mountView({
+        resModel: "helpdesk.team",
+        type: "form",
+        resIds: [1, 2],
+        resId: 1,
+        arch: formViewArch,
     });
 
     await click("div[name='use_alias'] input");

@@ -333,22 +333,15 @@ test("progress attribute", async () => {
 
 test("form_view_id attribute", async () => {
     Tasks._views[["form", 42]] = `<form><field name="name"/></form>`;
-    onRpc("get_views", ({ kwargs }) => expect.step(["get_views", kwargs.views]));
     await mountGanttView({
         resModel: "tasks",
         arch: `<gantt string="Tasks" date_start="start" date_stop="stop" form_view_id="42"/>`,
         groupBy: ["project_id"],
     });
+    onRpc("get_views", ({ kwargs }) => expect.step(["get_views", kwargs.views]));
     await contains(queryFirst(SELECTORS.addButton + ":visible")).click();
     expect(".modal .o_form_view").toHaveCount(1);
     expect.verifySteps([
-        [
-            "get_views",
-            [
-                [123456789, "gantt"],
-                [987654321, "search"],
-            ],
-        ], // initial get_views
         ["get_views", [[42, "form"]]], // get_views when form view dialog opens
     ]);
 });

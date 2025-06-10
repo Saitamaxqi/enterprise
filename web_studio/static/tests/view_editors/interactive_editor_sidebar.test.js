@@ -404,28 +404,26 @@ test("open xml editor of component view", async () => {
         arch: `<form/>`,
     });
 
-    onRpc("/web_studio/get_xml_editor_resources", () => {
-        return Promise.resolve({
-            views: [
-                {
-                    active: true,
-                    arch: "<form/>",
-                    id: 1,
-                    inherit_id: false,
-                    name: "base view",
-                },
-                {
-                    active: true,
-                    arch: "<data/>",
-                    id: 42,
-                    inherit_id: 1,
-                    name: "studio view",
-                },
-            ],
-            scss: [],
-            js: [],
-        });
-    });
+    onRpc("/web_studio/get_xml_editor_resources", () => ({
+        views: [
+            {
+                active: true,
+                arch: "<form/>",
+                id: 1,
+                inherit_id: false,
+                name: "base view",
+            },
+            {
+                active: true,
+                arch: "<data/>",
+                id: 42,
+                inherit_id: 1,
+                name: "studio view",
+            },
+        ],
+        scss: [],
+        js: [],
+    }));
 
     await contains(".o_web_studio_sidebar .o_web_studio_view").click();
     await contains(".o_web_studio_open_xml_editor").click();

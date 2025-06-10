@@ -14,7 +14,6 @@ import {
 } from "@web/../tests/web_test_helpers";
 import {
     CLASSES,
-    SELECTORS,
     clickCell,
     dragPill,
     editPill,
@@ -23,6 +22,7 @@ import {
     hoverGridCell,
     mountGanttView,
     resizePill,
+    SELECTORS,
     selectRange,
 } from "@web_gantt/../tests/web_gantt_test_helpers";
 
@@ -32,9 +32,9 @@ import { WebClient } from "@web/webclient/webclient";
 
 import {
     definePlanningModels,
+    HrEmployee,
     PlanningSlot,
     ResourceResource,
-    HrEmployee,
 } from "./planning_mock_models";
 
 describe.current.tags("desktop");
@@ -238,7 +238,7 @@ test('add record in empty gantt with sample="1"', async function () {
     });
 
     expect(".o_gantt_view .o_content").toHaveClass("o_view_sample_data");
-    const rowHeaders = [...queryAll(".o_gantt_row_headers .o_gantt_row_header")];
+    const rowHeaders = queryAll(".o_gantt_row_headers .o_gantt_row_header");
     expect(rowHeaders.length).toBeGreaterThan(2);
     const firstRowHeader = rowHeaders[0];
     expect(firstRowHeader).toHaveText("Open Shifts");
@@ -330,7 +330,7 @@ test("gantt view totals height is taking unavailability into account instead of 
 
     // 2022-10-09 and 2022-10-15 are days off => no pill has to be found in first and last columns
     expect(
-        [...queryAll(".o_gantt_row_total .o_gantt_pill_wrapper")].map(
+        queryAll(".o_gantt_row_total .o_gantt_pill_wrapper").map(
             (el) => el.style.gridColumn.split(" / ")[0]
         )
     ).toEqual(["c2", "c3", "c4", "c5", "c6"], {
@@ -339,7 +339,7 @@ test("gantt view totals height is taking unavailability into account instead of 
     });
 
     // Max of allocated hours = 4:00 (50% * 8:00)
-    expect([...queryAll(".o_gantt_row_total .o_gantt_pill")].map((el) => el.style.height)).toEqual([
+    expect(queryAll(".o_gantt_row_total .o_gantt_pill").map((el) => el.style.height)).toEqual([
         "45%", // => 2:00 = 50% of 4:00 => 0.5 * 90% = 45%
         "56.25%", // => 2:30 = 62.5% of 4:00 => 0.625 * 90% = 56.25%
         "67.5%", // => 3:00 = 75% of 4:00 => 0.75 * 90% = 67.5%
@@ -407,7 +407,7 @@ test("progress bar has the correct unit", async () => {
         expect(kwargs.progress_bar_fields).toEqual(["resource_id"]);
         result.progress_bars = getProgressBars();
         return result;
-    })
+    });
 
     await mountGanttView({
         ...makeViewArgs,
@@ -485,8 +485,8 @@ test("the grouped gantt view is coloured correctly and the occupancy percentage 
     onRpc("get_gantt_data", async ({ parent }) => {
         const result = await parent();
         result.progress_bars = getProgressBars();
-        return result
-    })
+        return result;
+    });
 
     await mountGanttView({
         resModel: "planning.slot",
@@ -677,7 +677,7 @@ test("Test split tool in gantt view", async function () {
         expect(kwargs.values).toEqual({
             start_datetime: "2022-10-11 00:00:00",
             end_datetime: "2022-10-10 23:59:59",
-        })
+        });
         return 3; // copiedShiftId
     });
 
@@ -693,21 +693,18 @@ test("Test split tool in gantt view", async function () {
 
     const thirdCell = queryAll(SELECTORS.cell)[2];
     const { x, y, height } = thirdCell.getBoundingClientRect();
-    await hover(thirdCell, { position: { x: x + 4,  y: y + height / 2 } });
+    await hover(thirdCell, { position: { x: x + 4, y: y + height / 2 } });
     await animationFrame();
     expect(".o_gantt_pill_split_tool").toHaveCount(1, {
         message: "The split tool should only be available on the second pill.",
     });
 
     const secondPill = queryAll(SELECTORS.pill)[1];
-    await click(secondPill, { position: { x: x + 4,  y: y + height / 2 } });
+    await click(secondPill, { position: { x: x + 4, y: y + height / 2 } });
 });
 
 test("Test highlight shifts added by executed action", async function () {
     mockDate("2022-10-05 00:00:00", +1);
-    patchWithCleanup(luxon.Settings, {
-        defaultZone: luxon.IANAZone.create("UTC"),
-    });
     PlanningSlot._records = [
         {
             id: 1,
@@ -726,7 +723,7 @@ test("Test highlight shifts added by executed action", async function () {
     ];
 
     onRpc("action_copy_previous_week", async function () {
-        if (PlanningSlot._records.length === 2) {
+        if (this.env["planning.slot"].length === 2) {
             const newSlotId = await this.env["planning.slot"].create({
                 name: "shift 3",
                 start_datetime: "2022-10-07 16:00:00",
@@ -736,11 +733,11 @@ test("Test highlight shifts added by executed action", async function () {
             return [[newSlotId], [1]];
         }
         return false;
-    })
-    onRpc("auto_plan_ids", async function() {
+    });
+    onRpc("auto_plan_ids", async function () {
         await this.env["planning.slot"].write([2], { resource_id: 1 });
         return { open_shift_assigned: [2] };
-    })
+    });
     onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
 
     await mountGanttView({
@@ -760,7 +757,9 @@ test("Test highlight shifts added by executed action", async function () {
             </search>`,
     });
 
-    await click(".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down");
+    await click(
+        ".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down"
+    );
     await animationFrame();
 
     expect(".o_gantt_button_copy_previous_week").toHaveCount(1, {
@@ -789,7 +788,9 @@ test("Test highlight shifts added by executed action", async function () {
     rows = getGridContent().rows;
     expect(rows.map((r) => r.title)).toEqual(["Open Shifts", "Resource 1"]);
 
-    await click(".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down");
+    await click(
+        ".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down"
+    );
     await animationFrame();
     await click(".o_popover.dropdown-menu .o_gantt_button_auto_plan"); // click on copy button in desktop view
     await animationFrame();
@@ -912,11 +913,13 @@ test("The date should take into the account when created through the button in G
     await contains(".modal .o_form_view .o_field_widget[name=name] input").edit("New Shift");
     await clickSave();
 
-    expect(queryAllTexts(".o_gantt_pill_wrapper")).toEqual(["First Record","New Shift"],
-        { message: "Records should be match for Shifts" });
+    expect(queryAllTexts(".o_gantt_pill_wrapper")).toEqual(["First Record", "New Shift"], {
+        message: "Records should be match for Shifts",
+    });
 
-    expect([...queryAll(".o_gantt_pill_wrapper")].map((node) => node.style.gridRow.split(' / ')[0])).
-        toEqual(["r3","r3"], { message: "The record should be added to the Resource column" });
+    expect(
+        queryAll(".o_gantt_pill_wrapper").map((node) => node.style.gridRow.split(" / ")[0])
+    ).toEqual(["r3", "r3"], { message: "The record should be added to the Resource column" });
 });
 
 test("Gantt Popover delete confirmation", async () => {
@@ -957,14 +960,13 @@ test("date_start in url", async function () {
                 date_start="start_datetime"
                 date_stop="end_datetime"
             />`,
-        search: `<search/>`,
     };
 
     redirect(`/web?date_start=2020-12-10#action=1&view_type=gantt`);
     await mountWithCleanup(WebClient);
     await animationFrame();
 
-    let { groupHeaders, range } = getGridContent();
+    const { groupHeaders, range } = getGridContent();
     expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020"]);
     expect(range).toEqual("Month");
 });
@@ -978,14 +980,13 @@ test("date_start and date_end in url (same week)", async function () {
                 date_start="start_datetime"
                 date_stop="end_datetime"
             />`,
-        search: `<search/>`,
     };
 
     redirect(`/web?date_start=2020-12-06&date_end=2020-12-10#action=1&view_type=gantt`);
     await mountWithCleanup(WebClient);
     await animationFrame();
 
-    let { groupHeaders, range } = getGridContent();
+    const { groupHeaders, range } = getGridContent();
     expect(groupHeaders.map((gh) => gh.title)).toEqual(["Week 50, Dec 6 - Dec 12 2020"]);
     expect(range).toEqual("Week");
 });
@@ -999,14 +1000,13 @@ test("date_start and date_end in url (same month)", async function () {
                 date_start="start_datetime"
                 date_stop="end_datetime"
             />`,
-        search: `<search/>`,
     };
 
     redirect(`/web?date_start=2020-12-06&date_end=2020-12-24#action=1&view_type=gantt`);
     await mountWithCleanup(WebClient);
     await animationFrame();
 
-    let { groupHeaders, range } = getGridContent();
+    const { groupHeaders, range } = getGridContent();
     expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020"]);
     expect(range).toEqual("Month");
 });
@@ -1020,14 +1020,13 @@ test("date_start and date_end in url (not in same month)", async function () {
                 date_start="start_datetime"
                 date_stop="end_datetime"
             />`,
-        search: `<search/>`,
     };
 
     redirect(`/web?date_start=2020-12-06&date_end=2021-01-04#action=1&view_type=gantt`);
     await mountWithCleanup(WebClient);
     await animationFrame();
 
-    let { groupHeaders, range } = getGridContent();
+    const { groupHeaders, range } = getGridContent();
     expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020", "January 2021"]);
     expect(range).toEqual("From: 12/06/2020 to: 01/04/2021");
 });
@@ -1039,11 +1038,11 @@ test("publish on gantt view: default end_datetime should cover full range", asyn
     mockDate("2018-11-20 18:00:00");
     // Expect env localization with {weekStart: 7}
     const ranges = [
-        ["Day",     "2018-11-20 23:59:59"],
-        ["Week",    "2018-11-24 23:59:59"],
-        ["Month",   "2018-11-30 23:59:59"],
+        ["Day", "2018-11-20 23:59:59"],
+        ["Week", "2018-11-24 23:59:59"],
+        ["Month", "2018-11-30 23:59:59"],
         ["Quarter", "2018-12-31 23:59:59"],
-        ["Year",    "2018-12-31 23:59:59"],
+        ["Year", "2018-12-31 23:59:59"],
     ];
     PlanningSlot._records.push({
         name: "First Record",

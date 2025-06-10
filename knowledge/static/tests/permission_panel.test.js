@@ -311,7 +311,7 @@ async function mountPermissionPanel(articleId, user_can_write = undefined) {
         resId: articleId,
         resModel: "knowledge.article",
         type: "form",
-        arch: KnowledgeArticle._views["form,false"],
+        arch: KnowledgeArticle._views.form,
     });
     await click("button[data-hotkey='shift+s']");
     await animationFrame();

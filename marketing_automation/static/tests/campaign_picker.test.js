@@ -90,7 +90,6 @@ const marketingCampaignViews = {
             </sheet>
         </form>
         `,
-    search: `<search></search>`,
 };
 
 class MarketingCampaign extends models.Model {
@@ -104,9 +103,9 @@ class MarketingCampaign extends models.Model {
         },
         {
             id: 2,
-            name: 'Campaign',
+            name: "Campaign",
             marketing_activity_ids: [1, 2, 3, 4, 5, 6],
-        }
+        },
     ];
 
     _views = Object.assign({}, marketingCampaignViews);
@@ -120,26 +119,31 @@ class MarketingActivity extends models.Model {
         {
             id: 1,
             name: "Parent 1",
-        }, {
+        },
+        {
             id: 2,
             name: "Parent 1 > Child 1",
             parent_id: 1,
-        }, {
+        },
+        {
             id: 3,
-            name: 'Parent 2',
-        }, {
+            name: "Parent 2",
+        },
+        {
             id: 4,
-            name: 'Parent 2 > Child 1',
+            name: "Parent 2 > Child 1",
             parent_id: 3,
-        }, {
+        },
+        {
             id: 5,
-            name: 'Parent 2 > Child 2',
+            name: "Parent 2 > Child 2",
             parent_id: 3,
-        }, {
+        },
+        {
             id: 6,
-            name: 'Parent 2 > Child 2 > Child 1',
+            name: "Parent 2 > Child 2 > Child 1",
             parent_id: 5,
-        }
+        },
     ];
 }
 
@@ -185,33 +189,53 @@ onRpc("get_action_marketing_campaign_from_template", (request) => {
     };
 });
 
-test("Marketing Campaign Form - Remove activity", async function() {
+test("Marketing Campaign Form - Remove activity", async function () {
     await mountView({
         resModel: "marketing.campaign",
         type: "form",
         arch: marketingCampaignViews.form,
         resId: 2,
     });
-    // Check that only one grandchildren is displayed 
-    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body').toHaveCount(1);
-    await click(queryOne('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body .fa-trash'));
+    // Check that only one grandchildren is displayed
+    expect(
+        ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body"
+    ).toHaveCount(1);
+    await click(
+        queryOne(
+            ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body .fa-trash"
+        )
+    );
     await animationFrame();
     // Check that the grandchildren activity is removed
-    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body').toHaveCount(0);
+    expect(
+        ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body"
+    ).toHaveCount(0);
     // Check that we have two parent activities
-    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body').toHaveCount(2);
+    expect(
+        ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body"
+    ).toHaveCount(2);
     // Check that we have 3 children activities
-    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body').toHaveCount(3);
+    expect(
+        ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body"
+    ).toHaveCount(3);
     // Delete the first parent
-    await click(queryAll('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body .fa-trash')[0]);
+    await click(
+        queryAll(
+            ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body .fa-trash"
+        )[0]
+    );
     await animationFrame();
     queryOne("div.modal.o_technical_modal"); // ensure confirmation modal has been opened
     await click(queryOne("button:contains('Delete')")); // confirm the deletion
     await animationFrame();
     // Check that a single parent remains
-    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body').toHaveCount(1);
+    expect(
+        ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body"
+    ).toHaveCount(1);
     // Check that we still have 2 children activities (1 child remove with the parent)
-    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body').toHaveCount(2);
+    expect(
+        ".o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body"
+    ).toHaveCount(2);
 });
 
 /**

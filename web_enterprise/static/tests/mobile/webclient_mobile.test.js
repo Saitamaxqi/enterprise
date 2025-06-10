@@ -21,14 +21,14 @@ class Partner extends models.Model {
         { id: 2, name: "Second record" },
     ];
     _views = {
-        "form,false": `
+        form: `
             <form>
                 <group>
                     <field name="name"/>
                 </group>
             </form>
         `,
-        "kanban,false": `
+        kanban: `
             <kanban>
                 <templates>
                     <t t-name="card">
@@ -37,8 +37,7 @@ class Partner extends models.Model {
                 </templates>
             </kanban>
         `,
-        "list,false": `<list><field name="name"/></list>`,
-        "search,false": `<search/>`,
+        list: `<list><field name="name"/></list>`,
     };
 }
 
@@ -57,7 +56,7 @@ defineActions([
         xml_id: "action_1",
         name: "Partners Action 1",
         res_model: "partner",
-        views: [[1, "kanban"]],
+        views: [[false, "kanban"]],
     },
     {
         id: 3,
@@ -66,7 +65,7 @@ defineActions([
         res_model: "partner",
         views: [
             [false, "list"],
-            [1, "kanban"],
+            [false, "kanban"],
             [false, "form"],
         ],
     },
@@ -77,15 +76,12 @@ describe.current.tags("mobile");
 test("scroll position is kept", async () => {
     // This test relies on the fact that the scrollable element in mobile
     // is view's root node.
-    const record = Partner._records[0];
-    Partner._records = [];
-
-    for (let i = 0; i < 80; i++) {
-        const rec = Object.assign({}, record);
-        rec.id = i + 1;
-        rec.name = `Record ${rec.id}`;
-        Partner._records.push(rec);
-    }
+    const firstRecord = Partner._records[0];
+    delete firstRecord.id;
+    Partner._records = [...Array(80)].map((_, i) => ({
+        ...firstRecord,
+        name: `Record ${i + 1}`,
+    }));
 
     // force the html node to be scrollable element
     await mountWithCleanup(WebClientEnterprise);

@@ -8,18 +8,24 @@ import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 defineTimesheetModels();
 beforeEach(() => {
     patchSession();
-    HRTimesheet._views["grid,false"] = HRTimesheet._views["grid,false"].replace('widget="float_time"', 'widget="timesheet_uom"');
-    HRTimesheet._views["grid,1"] = HRTimesheet._views["grid,1"].replace('widget="float_time"', 'widget="timesheet_uom"');
+    HRTimesheet._views.grid = HRTimesheet._views.grid.replace(
+        'widget="float_time"',
+        'widget="timesheet_uom"'
+    );
+    HRTimesheet._views["grid,1"] = HRTimesheet._views["grid,1"].replace(
+        'widget="float_time"',
+        'widget="timesheet_uom"'
+    );
 });
 
 async function mountViewAndGetCell() {
     await mountView({
         type: "grid",
         resModel: "account.analytic.line",
-        groupBy: [ "task_id", "project_id" ],
+        groupBy: ["task_id", "project_id"],
     });
     return queryFirst(".o_grid_row:not(.o_grid_row_total,.o_grid_row_title,.o_grid_column_total)");
-};
+}
 
 test("hr.timesheet (grid): timesheet_uom should be company related", async () => {
     const cell = await mountViewAndGetCell();

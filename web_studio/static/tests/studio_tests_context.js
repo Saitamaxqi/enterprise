@@ -193,7 +193,6 @@ export function defineStudioEnvironment() {
         _name = "settings";
 
         _views = {
-            search: `<search/>`,
             list: `
                 <list sample="1">
                     <field name="display_name"/>
@@ -207,7 +206,6 @@ export function defineStudioEnvironment() {
         name = fields.Char();
 
         _views = {
-            search: `<search/>`,
             list: `
                 <list>
                     <field name="name"/>

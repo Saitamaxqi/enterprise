@@ -960,7 +960,7 @@ test("disable creation(no_create options) in many2many_avatar_user and many2many
 
 test("edit one2many form view (2 level) and check chatter allowed", async () => {
     Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
-    Partner._views = { "list,false": /*xml*/ `<list><field name='display_name'/></list>` };
+    Partner._views = { list: /*xml*/ `<list><field name='display_name'/></list>` };
     Coucou._views = {
         "form,1": /*xml*/ `
             <form>
@@ -980,8 +980,6 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
                 </sheet>
             </form>
         `,
-        "list,false": /*xml*/ `<list></list>`,
-        "search,false": /*xml*/ `<search></search>`,
     };
     const { env: pyEnv } = await makeMockServer();
     const partnerId = pyEnv["partner"].create({ display_name: "jean" });
@@ -1000,7 +998,7 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
             res_model: "coucou",
             res_id: coucouId1,
             type: "ir.actions.act_window",
-            views: [[1, "form"]],
+            views: [[false, "form"]],
         },
     ]);
     handleDefaultStudioRoutes();
@@ -1071,7 +1069,7 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
     expect.verifySteps(["/web_studio/edit_view"]);
 });
 
-test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () => {
+test("edit one2many list view that uses parent key", async () => {
     Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
     Coucou._views = {
         "form,1": /*xml*/ `
@@ -1090,7 +1088,6 @@ test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () =>
                 </sheet>
             </form>
         `,
-        "search,false": /*xml*/ `<search></search>`,
     };
     const { env: pyEnv } = await makeMockServer();
     const partnerId = pyEnv["partner"].create({ display_name: "jacques" });
@@ -1109,7 +1106,7 @@ test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () =>
             res_model: "coucou",
             res_id: coucouId1,
             type: "ir.actions.act_window",
-            views: [[1, "form"]],
+            views: [[false, "form"]],
         },
     ]);
     handleDefaultStudioRoutes();
@@ -1163,7 +1160,6 @@ test("move a field in one2many list", async () => {
                 </sheet>
             </form>
         `,
-        "search,false": /*xml*/ `<search></search>`,
     };
     const { env: pyEnv } = await makeMockServer();
     const coucouId1 = pyEnv["coucou"].create({
@@ -1250,7 +1246,6 @@ test("One2Many list editor column_invisible in attrs ", async () => {
                 </field>
             </form>
         `,
-        "search,false": /*xml*/ `<search></search>`,
     };
     const { env: pyEnv } = await makeMockServer();
     pyEnv["coucou"].create({
@@ -1307,7 +1302,6 @@ test("One2Many form datapoint doesn't contain the parent datapoint", async () =>
                 </field>
             </form>
         `,
-        "search,false": /*xml*/ `<search></search>`,
     };
     Product._views = {
         "list,2": /*xml*/ `<list><field name="display_name" /></list>`,
@@ -2573,7 +2567,6 @@ test("new button in buttonbox through 'Search more'", async () => {
 
     MockServer.env["ir.model.fields"]._views = {
         list: `<list><field name="display_name"/></list>`,
-        search: `<search/>`,
     };
 
     onRpc("ir.model.fields", "web_name_search", () => [{ id: 1, display_name: "Select me" }]);
@@ -3224,7 +3217,6 @@ test("edit_view route includes the context of the action", async () => {
            <form>
                <field name="display_name" />
            </form>`,
-        search: `<search />`,
     };
 
     onRpc("/web_studio/edit_view", async (request) => {
@@ -3241,7 +3233,7 @@ test("edit_view route includes the context of the action", async () => {
         type: "ir.actions.act_window",
         res_model: "coucou",
         res_id: 1,
-        views: [[1, "form"]],
+        views: [[false, "form"]],
         context: { action_key: "some_context_value" },
     });
 
@@ -3829,11 +3821,7 @@ test("edit one2many list view with widget fieldDependencies and some records", a
             super.setup();
             const record = this.props.record;
             onMounted(() => {
-                expect.step(
-                    `widget Dependency: ${JSON.stringify(record.fields.is_dep)} : ${
-                        record.data.is_dep
-                    }`
-                );
+                expect.step(["widget Dependency", record.fields.is_dep, record.data.is_dep]);
             });
         }
     }
@@ -3855,7 +3843,7 @@ test("edit one2many list view with widget fieldDependencies and some records", a
     });
 
     expect.verifySteps([
-        `widget Dependency: {"name":"is_dep","type":"char","readonly":true} : the meters`,
+        ["widget Dependency", { name: "is_dep", type: "char", readonly: true }, "the meters"],
     ]);
 
     expect(".o_web_studio_form_view_editor").toHaveCount(1);
@@ -3864,7 +3852,21 @@ test("edit one2many list view with widget fieldDependencies and some records", a
 
     expect.verifySteps([
         "fields_get",
-        `widget Dependency: {"readonly":false,"required":false,"searchable":true,"sortable":true,"store":true,"groupable":true,"type":"char","string":"Is dep","name":"is_dep"} : the meters`,
+        [
+            "widget Dependency",
+            {
+                readonly: false,
+                required: false,
+                searchable: true,
+                sortable: true,
+                store: true,
+                groupable: true,
+                type: "char",
+                string: "Is dep",
+                name: "is_dep",
+            },
+            "the meters",
+        ],
     ]);
     expect(".o_web_studio_list_view_editor").toHaveCount(1);
 });
@@ -4216,7 +4218,6 @@ test("x2many list with virtual record", async () => {
                     </list>
                </field>
             </form>`,
-        search: `<search/>`,
     };
 
     onRpc("onchange", (params) => ({

@@ -13,7 +13,7 @@ defineTimesheetModels();
 onRpc("get_server_time", () => serializeDateTime(now));
 
 async function _testTimer(expectedRunning) {
-    HRTimesheet._views["form,false"] = HRTimesheet._views["form,false"].replace(
+    HRTimesheet._views.form = HRTimesheet._views.form.replace(
         '<field name="date"/>',
         '<field name="timer_start" widget="timer_start_field"/>'
     );

@@ -32,7 +32,6 @@ class Stage extends models.Model {
 
     _views = {
         "graph,1": `<graph/>`,
-        search: `<search/>`,
     };
 }
 
@@ -144,29 +143,26 @@ test("open xml editor of graph component view and close it", async () => {
         },
     });
 
-    onRpc("/web_studio/get_xml_editor_resources", () => {
-        const arch = "<graph />";
-        return Promise.resolve({
-            views: [
-                {
-                    active: true,
-                    arch: arch,
-                    id: 1,
-                    inherit_id: false,
-                    name: "base view",
-                },
-                {
-                    active: true,
-                    arch: "<data/>",
-                    id: 42,
-                    inherit_id: 1,
-                    name: "studio view",
-                },
-            ],
-            scss: [],
-            js: [],
-        });
-    });
+    onRpc("/web_studio/get_xml_editor_resources", () => ({
+        views: [
+            {
+                active: true,
+                arch: "<graph />",
+                id: 1,
+                inherit_id: false,
+                name: "base view",
+            },
+            {
+                active: true,
+                arch: "<data/>",
+                id: 42,
+                inherit_id: 1,
+                name: "studio view",
+            },
+        ],
+        scss: [],
+        js: [],
+    }));
 
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();

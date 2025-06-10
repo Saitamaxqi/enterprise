@@ -1,9 +1,9 @@
-import { expect, test, beforeEach, describe } from "@odoo/hoot";
-import { queryFirst, queryAll, click } from "@odoo/hoot-dom";
+import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { click, queryAll, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 
-import { fields, onRpc, mountView } from "@web/../tests/web_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { fields, mountView, onRpc } from "@web/../tests/web_test_helpers";
 
 import { definePlanningModels, planningModels } from "./planning_mock_models";
 
@@ -158,6 +158,11 @@ planningModels.HrEmployeePublic = HrEmployeePublic;
 
 definePlanningModels();
 
+onRpc("get_avatar_card_data", function ({ args }) {
+    const [ids, fields] = args[0];
+    return this.env["resource.resource"].read(ids, fields);
+});
+
 beforeEach(() => {
     mailModels.ResUsers._records.push({
         id: 1,
@@ -304,7 +309,7 @@ test("Employee avatar in Gantt view", async () => {
             "material icon should be displayed for the first two gantt rows (material resources)",
     });
     expect(".o_gantt_row_title .o_avatar img").toHaveCount(2, {
-        message: "avatar should be displayed for the third and fourth gantt rows (human resources)"
+        message: "avatar should be displayed for the third and fourth gantt rows (human resources)",
     });
     expect(queryAll(".o_gantt_row_title .o_avatar img")[1].getAttribute("data-src")).toBe(
         "/web/image/resource.resource/4/avatar_128",

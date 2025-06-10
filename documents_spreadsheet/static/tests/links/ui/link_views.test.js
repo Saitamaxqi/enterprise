@@ -103,7 +103,7 @@ beforeEach(() => {
             views: [
                 [1, "list"],
                 [2, "kanban"],
-                [3, "graph"],
+                [false, "graph"],
                 [4, "calendar"],
                 [5, "pivot"],
                 [6, "map"],

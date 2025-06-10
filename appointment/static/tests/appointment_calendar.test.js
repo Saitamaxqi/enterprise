@@ -3,13 +3,14 @@ import { queryOne } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 
 import { clickAllDaySlot, toggleFilter } from "@web/../tests/views/calendar/calendar_test_helpers";
-import { contains, mountView, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import {
-    AppointmentSlot,
-    AppointmentType,
-    defineAppointmentModels,
-    FilterPartner,
-} from "./appointment_tests_common";
+    contains,
+    MockServer,
+    mountView,
+    onRpc,
+    patchWithCleanup,
+} from "@web/../tests/web_test_helpers";
+import { defineAppointmentModels, FilterPartner } from "./appointment_tests_common";
 
 import { session } from "@web/session";
 
@@ -18,7 +19,6 @@ defineAppointmentModels();
 
 beforeEach(function () {
     mockDate("2022-01-05 00:00:00");
-    onRpc("check_synchronization_status", () => ({}));
 });
 
 onRpc("/appointment/appointment_type/get_staff_user_appointment_types", function () {
@@ -37,19 +37,17 @@ onRpc("/appointment/appointment_type/get_staff_user_appointment_types", function
     };
 });
 
-onRpc("/web/dataset/call_kw/res.partner/get_attendee_detail", () => []);
+onRpc("res.partner", "get_attendee_detail", () => []);
 
-onRpc("/web/dataset/call_kw/res.users/has_group", () => true);
+onRpc("res.users", "has_group", () => true);
 
 onRpc("/calendar/check_credentials", () => ({}));
 
-onRpc("/web/dataset/call_kw/calendar.event/get_default_duration", () => {
-    return 1;
-});
+onRpc("calendar.event", "get_default_duration", () => 1);
+
+onRpc("check_synchronization_status", () => ({}));
 
 test("verify appointment links button are displayed", async () => {
-    expect.assertions(4);
-
     await mountView({
         type: "calendar",
         resModel: "calendar.event",
@@ -113,7 +111,9 @@ test("create/search anytime appointment type", async () => {
     await animationFrame();
 
     expect.verifySteps(["/appointment/appointment_type/search_create_anytime"]);
-    expect(AppointmentType._records).toHaveLength(3, { message: "Create a new appointment type" });
+    expect(MockServer.env["appointment.type"]).toHaveLength(3, {
+        message: "Create a new appointment type",
+    });
 
     await contains(".o_appointment_discard_slots").click();
     await contains(".dropdownAppointmentLink").click();
@@ -122,19 +122,21 @@ test("create/search anytime appointment type", async () => {
     await animationFrame();
 
     expect.verifySteps(["/appointment/appointment_type/search_create_anytime"]);
-    expect(AppointmentType._records).toHaveLength(3, {
+    expect(MockServer.env["appointment.type"]).toHaveLength(3, {
         message: "Does not create a new appointment type",
     });
 });
 
 test("discard slot in calendar", async () => {
     expect.assertions(11);
-    FilterPartner._records = [{
-        id: 1,
-        user_id: 7,
-        partner_id: 214,
-        partner_checked: true,
-    }];
+    FilterPartner._records = [
+        {
+            id: 1,
+            user_id: 7,
+            partner_id: 214,
+            partner_checked: true,
+        },
+    ];
     onRpc("/appointment/appointment_type/search_create_anytime", () => {
         expect.step("/appointment/appointment_type/search_create_anytime");
     });
@@ -183,12 +185,14 @@ test("discard slot in calendar", async () => {
 
 test("cannot move real event in slots-creation mode", async () => {
     expect.assertions(4);
-    FilterPartner._records = [{
-        id: 1,
-        user_id: 7,
-        partner_id: 214,
-        partner_checked: true,
-    }];
+    FilterPartner._records = [
+        {
+            id: 1,
+            user_id: 7,
+            partner_id: 214,
+            partner_checked: true,
+        },
+    ];
     onRpc("write", () => {
         expect.step("write event");
     });
@@ -220,12 +224,14 @@ test("cannot move real event in slots-creation mode", async () => {
 
 test("create slots for custom appointment type", async () => {
     expect.assertions(12);
-    FilterPartner._records = [{
-        id: 1,
-        user_id: 7,
-        partner_id: 214,
-        partner_checked: true,
-    }];
+    FilterPartner._records = [
+        {
+            id: 1,
+            user_id: 7,
+            partner_id: 214,
+            partner_checked: true,
+        },
+    ];
     patchWithCleanup(navigator, {
         clipboard: {
             writeText: (value) => {
@@ -274,17 +280,19 @@ test("create slots for custom appointment type", async () => {
     expect.verifySteps(["/appointment/appointment_type/create_custom"]);
     expect(".fc-event").toHaveCount(1);
     expect(".o_calendar_slot").toHaveCount(0);
-    expect(AppointmentSlot._records).toHaveLength(1);
+    expect(MockServer.env["appointment.slot"]).toHaveLength(1);
 });
 
 test("filter works in slots-creation mode", async () => {
     expect.assertions(11);
-    FilterPartner._records = [{
-        id: 1,
-        user_id: 7,
-        partner_id: 214,
-        partner_checked: true,
-    }];
+    FilterPartner._records = [
+        {
+            id: 1,
+            user_id: 7,
+            partner_id: 214,
+            partner_checked: true,
+        },
+    ];
     await mountView({
         type: "calendar",
         resModel: "calendar.event",

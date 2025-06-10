@@ -1,8 +1,8 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { mockDate } from "@odoo/hoot-mock";
 
-import { mountView, onRpc } from "@web/../tests/web_test_helpers";
 import { clickDate } from "@web/../tests/views/calendar/calendar_test_helpers";
+import { mountView, onRpc } from "@web/../tests/web_test_helpers";
 
 import { defineProjectModels } from "@project/../tests/project_models";
 import { ProjectTask } from "@project_enterprise/../tests/task_gant_model";
@@ -24,7 +24,7 @@ test("Fsm task calendar view", async () => {
     await mountView({
         resModel: "project.task",
         type: "calendar",
-        arch: `
+        arch: /* xml */ `
             <calendar
                 date_start="planned_date_start"
                 date_stop="date_deadline"
@@ -34,7 +34,6 @@ test("Fsm task calendar view", async () => {
                 quick_create="0"
             />
         `,
-        config: { views: [[false, "form"]] },
     });
 
     expect(".o_calendar_view").toHaveCount(1);

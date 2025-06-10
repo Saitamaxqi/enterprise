@@ -34,7 +34,6 @@ class Timeshift extends models.Model {
     _views = {
         "gantt,1": `<gantt date_start='start' date_stop='stop' />`,
         "gantt,2": `<gantt date_start='start' date_stop='stop' scales="day,month"/>`,
-        search: `<search/>`,
     };
 }
 
@@ -61,7 +60,7 @@ test("empty gantt editor", async () => {
         view_mode: "gantt",
         views: [
             [1, "gantt"],
-            [1, "search"],
+            [false, "search"],
         ],
         group_ids: [],
     });
@@ -88,7 +87,7 @@ test("only show allowed scales as default scale", async () => {
         view_mode: "gantt",
         views: [
             [2, "gantt"],
-            [1, "search"],
+            [false, "search"],
         ],
         group_ids: [],
     });

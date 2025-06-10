@@ -7,8 +7,4 @@ export class CRMLead extends models.ServerModel {
     get_formview_id() {
         return false;
     }
-
-    _views = {
-        form: "<form />",
-    };
 }

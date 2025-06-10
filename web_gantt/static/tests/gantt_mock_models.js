@@ -172,9 +172,6 @@ export class Tasks extends models.Model {
             progress: 80,
         },
     ];
-    _views = {
-        search: /* xml */ `<search />`,
-    };
 }
 
 export function defineGanttModels() {

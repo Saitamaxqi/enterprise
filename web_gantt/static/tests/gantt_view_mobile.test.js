@@ -35,7 +35,6 @@ test("ungrouped gantt rendering", async () => {
     const startDateLocalString = deserializeDateTime(task5.start).toFormat("f");
     const stopDateLocalString = deserializeDateTime(task5.stop).toFormat("f");
     Tasks._views.gantt = `<gantt date_start="start" date_stop="stop"/>`;
-    Tasks._views.search = `<search/>`;
 
     onRpc("get_gantt_data", ({ model }) => expect.step(model));
     await mountWithCleanup(WebClient);
@@ -329,7 +328,6 @@ test("Progressbar: grouped row", async () => {
 });
 
 test("horizontal scroll applies to the content [SMALL SCREEN]", async () => {
-    Tasks._views.search = `<search/>`;
     Tasks._views.gantt = `<gantt date_start="start" date_stop="stop"><field name="user_id"/></gantt>`;
     await mountWithCleanup(WebClient);
     await getService("action").doAction({

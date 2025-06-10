@@ -13,7 +13,7 @@ export class ProductProduct extends models.Model {
     ];
 
     _views = {
-        "kanban,false": `
+        kanban: `
             <kanban records_draggable="0" js_class="fsm_product_kanban">
                 <templates>
                     <t t-name="card">

@@ -47,7 +47,7 @@ defineActions([
         xml_id: "action_1",
         name: "Partners Action 1",
         res_model: "partner",
-        views: [[1, "kanban"]],
+        views: [[false, "kanban"]],
     },
     {
         id: 2,
@@ -61,7 +61,7 @@ defineActions([
         res_model: "partner",
         views: [
             [false, "list"],
-            [1, "kanban"],
+            [false, "kanban"],
             [false, "form"],
         ],
     },
@@ -71,8 +71,8 @@ defineActions([
         name: "Partners Action 4",
         res_model: "partner",
         views: [
-            [1, "kanban"],
-            [2, "list"],
+            [false, "kanban"],
+            [false, "list"],
             [false, "form"],
         ],
     },
@@ -238,7 +238,7 @@ describe("basic flow with home menu", () => {
 
     test.tags("desktop");
     test("4 -- push a third action in the breadcrumb", async () => {
-        Partner._views["form,false"] = `
+        Partner._views["form"] = `
             <form>
                 <field name="display_name"/>
                 <field name="parent_id" open_target="current"/>
@@ -263,7 +263,7 @@ describe("basic flow with home menu", () => {
     });
 
     test("5 -- switch to HomeMenu from an action with 2 breadcrumbs", async () => {
-        Partner._views["form,false"] = `
+        Partner._views["form"] = `
             <form>
                 <field name="display_name"/>
                 <field name="parent_id" open_target="current"/>
@@ -290,7 +290,7 @@ describe("basic flow with home menu", () => {
 
     test.tags("desktop");
     test("6 -- back to underlying action with many breadcrumbs", async () => {
-        Partner._views["form,false"] = `
+        Partner._views["form"] = `
             <form>
                 <field name="display_name"/>
                 <field name="parent_id" open_target="current"/>

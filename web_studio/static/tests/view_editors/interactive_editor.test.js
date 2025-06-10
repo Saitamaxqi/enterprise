@@ -418,12 +418,10 @@ test("add a one2many lines field", async () => {
 
 test("add a many2many field", async () => {
     expect.assertions(6);
-    onRpc("name_search", () => {
-        return Promise.resolve([
-            [1, "Model 1"],
-            [2, "Model 2"],
-        ]);
-    });
+    onRpc("name_search", () => [
+        [1, "Model 1"],
+        [2, "Model 2"],
+    ]);
 
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
@@ -465,12 +463,10 @@ test("add a many2many field", async () => {
 
 test("add a many2one field", async () => {
     expect.assertions(6);
-    onRpc("name_search", () => {
-        return Promise.resolve([
-            [1, "Model 1"],
-            [2, "Model 2"],
-        ]);
-    });
+    onRpc("name_search", () => [
+        [1, "Model 1"],
+        [2, "Model 2"],
+    ]);
 
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
@@ -551,7 +547,7 @@ test("open XML editor in read-only", async () => {
         const { params } = await request.json();
         expect.step("editor_resources");
         expect(params.key).toBe(99999999);
-        return Promise.resolve({
+        return {
             views: [
                 {
                     active: true,
@@ -562,7 +558,7 @@ test("open XML editor in read-only", async () => {
             ],
             scss: [],
             js: [],
-        });
+        };
     });
 
     await mountViewEditor({
@@ -602,7 +598,7 @@ test("XML editor: reset operations stack", async () => {
     onRpc("/web_studio/get_xml_editor_resources", async (request) => {
         const { params } = await request.json();
         expect(params.key).toBe(99999999);
-        return Promise.resolve({
+        return {
             views: [
                 {
                     active: true,
@@ -622,7 +618,7 @@ test("XML editor: reset operations stack", async () => {
             ],
             scss: [],
             js: [],
-        });
+        };
     });
 
     onRpc("/web_studio/edit_view", async (request) => {

@@ -23,8 +23,6 @@ beforeEach(() => mockDate("2018-12-20T08:00:00", +1));
 test(`empty grouped gantt with sample="1"`, async () => {
     Tasks._views = {
         gantt: `<gantt date_start="start" date_stop="stop" sample="1"/>`,
-        graph: `<graph/>`,
-        search: `<search/>`,
     };
 
     await mountWithCleanup(WebClient);
@@ -55,8 +53,6 @@ test(`empty grouped gantt with sample="1"`, async () => {
 test("empty gantt with sample data and default_group_by", async () => {
     Tasks._views = {
         gantt: `<gantt date_start="start" date_stop="stop" sample="1" default_group_by="project_id"/>`,
-        graph: `<graph/>`,
-        search: `<search/>`,
     };
 
     await mountWithCleanup(WebClient);
@@ -87,8 +83,6 @@ test("empty gantt with sample data and default_group_by", async () => {
 test("empty gantt with sample data and default_group_by (switch view)", async () => {
     Tasks._views = {
         gantt: `<gantt date_start="start" date_stop="stop" sample="1" default_group_by="project_id"/>`,
-        list: `<list/>`,
-        search: `<search/>`,
     };
 
     await mountWithCleanup(WebClient);
@@ -133,8 +127,6 @@ test("empty gantt with sample data and default_group_by (switch view)", async ()
 test(`empty gantt with sample="1"`, async () => {
     Tasks._views = {
         gantt: `<gantt date_start="start" date_stop="stop" sample="1"/>`,
-        graph: `<graph/>`,
-        search: `<search/>`,
     };
 
     await mountWithCleanup(WebClient);

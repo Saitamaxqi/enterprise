@@ -147,14 +147,6 @@ export class SpreadsheetTemplate extends models.Model {
     };
 }
 
-export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
-    _views = {
-        search: /* xml */ `<search/>`,
-        list: /* xml */ `<list/>`,
-        form: /* xml */ `<form/>`,
-    };
-}
-
 onRpc(
     "/spreadsheet/data/documents.document/*",
     function (request) {
@@ -181,7 +173,6 @@ export function defineDocumentSpreadsheetModels() {
         DocumentsTag,
         SpreadsheetTemplate,
         IrEmbeddedActions,
-        IrUIMenu,
     };
     Object.assign(SpreadsheetModels, SpreadsheetDocumentModels);
     defineSpreadsheetModels();

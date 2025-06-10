@@ -1,7 +1,13 @@
 import { defineKnowledgeModels } from "@knowledge/../tests/knowledge_test_helpers";
 import { click, contains } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, test } from "@odoo/hoot";
-import { asyncStep, mountView, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
+import {
+    asyncStep,
+    mountView,
+    onRpc,
+    serverState,
+    waitForSteps,
+} from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineKnowledgeModels();
@@ -43,7 +49,6 @@ test("cannot search for article when creating invalid record", async () => {
     await mountView({
         type: "form",
         resModel: "res.partner",
-        viewId: 1,
         arch: /* xml */ `
             <form string="Partners">
                 <sheet>

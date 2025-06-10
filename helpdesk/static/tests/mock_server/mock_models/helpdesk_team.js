@@ -11,6 +11,6 @@ export class HelpdeskTeam extends models.Model {
 
     _records = [
         { id: 1, name: "Team 1", use_sla: true, use_alias: true },
-        { id: 2 ,name: "Team 2", use_alias: true },
+        { id: 2, name: "Team 2", use_alias: true },
     ];
 }

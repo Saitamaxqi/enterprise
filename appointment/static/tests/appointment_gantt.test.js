@@ -45,7 +45,6 @@ async function mountGanttViewWithStatus(status) {
 
     await mountGanttView({
         resModel: "calendar.event",
-        viewId: 1,
     });
 }
 
@@ -78,7 +77,7 @@ const STATUS_CLASSNAMES = {
 };
 
 // minimalist version of the appointment gantt view
-CalendarEvent._views["gantt,1"] = /* xml */ `
+CalendarEvent._views.gantt = /* xml */ `
     <gantt
         js_class="appointment_booking_gantt"
         date_start="start"
@@ -111,7 +110,7 @@ test("empty default group gantt rendering", async () => {
     CalendarEvent._records[0].appointment_type_id = 1;
     CalendarEvent._records[1].appointment_type_id = 1;
     CalendarEvent._records[2].appointment_type_id = 1;
-    CalendarEvent._views["gantt,1"] = CalendarEvent._views["gantt,1"]
+    CalendarEvent._views.gantt = CalendarEvent._views.gantt
         .replace(`default_range="day"`, "")
         .replace(`default_scale="day"`, "");
 
@@ -151,10 +150,7 @@ test("empty default group gantt rendering", async () => {
             asyncStep("get_gantt_data");
         }
     });
-    await mountGanttView({
-        resModel: "calendar.event",
-        viewId: 1,
-    });
+    await mountGanttView({ resModel: "calendar.event" });
     const { rows } = getGridContent();
     for (let pid = 0; pid < partners.length; pid++) {
         expect(rows[pid].title).toBe(partners[pid]);
@@ -181,7 +177,6 @@ test("'Add Closing Days' button rendering - 1", async () => {
     await mountGanttView({
         resModel: "calendar.event",
         groupBy: ["resource_ids"],
-        viewId: 1,
     });
     expect(".o_appointment_booking_gantt_button_add_leaves").toHaveCount(1, {
         message: "the button should have been rendered",
@@ -197,7 +192,6 @@ test("'Add Closing Days' button rendering - 2", async () => {
     await mountGanttView({
         resModel: "calendar.event",
         groupBy: ["resource_ids"],
-        viewId: 1,
     });
     expect(".o_appointment_booking_gantt_button_add_leaves").toHaveCount(0, {
         message: "the button should not have been rendered: the user is not an appointment manager",
@@ -213,7 +207,6 @@ test("'Add Closing Days' button rendering - 3", async () => {
     await mountGanttView({
         resModel: "calendar.event",
         groupBy: ["partner_ids"],
-        viewId: 1,
     });
     expect(".o_appointment_booking_gantt_button_add_leaves").toHaveCount(0, {
         message: "the button should not have been rendered: not grouped by 'resource_ids'",
@@ -239,7 +232,6 @@ test("group pill colors", async () => {
     });
     await mountGanttView({
         resModel: "calendar.event",
-        viewId: 1,
     });
     testGroupPillColorsCheckColors();
     await click(SELECTORS.sparse);

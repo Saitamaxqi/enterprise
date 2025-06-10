@@ -1,10 +1,4 @@
 import {
-    createBoxesData,
-    defineAccountInvoiceExtractModels,
-} from "./account_invoice_extract_test_helpers";
-import { expect, beforeEach, test } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
-import {
     click,
     contains,
     focus,
@@ -14,7 +8,13 @@ import {
     start,
     startServer,
 } from "@mail/../tests/mail_test_helpers";
+import { beforeEach, expect, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
 import { onRpc } from "@web/../tests/web_test_helpers";
+import {
+    createBoxesData,
+    defineAccountInvoiceExtractModels,
+} from "./account_invoice_extract_test_helpers";
 
 defineAccountInvoiceExtractModels();
 
@@ -24,6 +24,14 @@ beforeEach(() => {
 
 test("basic", async () => {
     const pyEnv = await startServer();
+    pyEnv["res.partner"]._views.form = /* xml */ `
+        <form>
+            <group>
+                <field name="name" readonly="0"/>
+                <field name="vat" readonly="0"/>
+            </group>
+        </form>
+    `;
     const resCurrencyId1 = pyEnv["res.currency"].create({ name: "USD" });
     const resCurrencyId2 = pyEnv["res.currency"].create({ name: "EUR" });
     const resPartnerId1 = pyEnv["res.partner"].create({
@@ -84,15 +92,6 @@ test("basic", async () => {
         }
     });
     await start();
-    await openFormView("res.partner", resPartnerId1, {
-        arch: `
-            <form>
-                <group>
-                    <field name="name" readonly="0"/>
-                    <field name="vat" readonly="0"/>
-                </group>
-            </form>`,
-    });
     await openFormView("account.move", accountMoveId1, {
         arch: `
         <form string="Account Invoice" js_class="account_move_form">

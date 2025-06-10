@@ -1,15 +1,8 @@
 import { expect, test, beforeEach, describe, getFixture } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { mockDate } from "@odoo/hoot-mock";
-import {
-    contains,
-} from "@mail/../tests/mail_test_helpers";
-import {
-    onRpc,
-    mountWithCleanup,
-    getService,
-    defineActions,
-} from "@web/../tests/web_test_helpers";
+import { contains } from "@mail/../tests/mail_test_helpers";
+import { onRpc, mountWithCleanup, getService, defineActions } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 
 import {
@@ -27,7 +20,6 @@ class PlanningSlot extends planningModels.PlanningSlot {
         list: `<list js_class="planning_tree">
                     <field name="recurrency_id" column_invisible="True"/>
                 </list>`,
-        search: `<search/>`,
     };
 }
 
@@ -40,9 +32,7 @@ defineActions([
         name: "planning action",
         res_model: "planning.slot",
         type: "ir.actions.act_window",
-        views: [
-            [false, "list"],
-        ],
+        views: [[false, "list"]],
     },
 ]);
 
@@ -83,13 +73,11 @@ beforeEach(() => {
             state: "published",
         },
     ];
-    PlanningRecurrency._records = [
-        { id: 1, repeat_interval: 1 },
-    ],
-    ResourceResource._records = [
-        { id: 1, name: "Chaganlal" },
-        { id: 2, name: "Maganlal" },
-    ];
+    (PlanningRecurrency._records = [{ id: 1, repeat_interval: 1 }]),
+        (ResourceResource._records = [
+            { id: 1, name: "Chaganlal" },
+            { id: 2, name: "Maganlal" },
+        ]);
     PlanningRole._records = [
         { id: 1, name: "JavaScript Developer", color: 1 },
         { id: 2, name: "Functional Consultant", color: 2 },
@@ -116,7 +104,7 @@ test("Display modal to choose recurrence type when deleting recurrent task", asy
     await click(".fa-trash-o");
 
     await contains("h4.modal-title");
-    expect(target.querySelector("h4.modal-title")).toHaveText("Delete Recurring Shift")
+    expect(target.querySelector("h4.modal-title")).toHaveText("Delete Recurring Shift");
 });
 
 test("Display confirm delete modal when deleting non recurrent task", async () => {

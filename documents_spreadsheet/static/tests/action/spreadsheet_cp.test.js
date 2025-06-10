@@ -1,16 +1,15 @@
 import {
     defineDocumentSpreadsheetModels,
-    DocumentsDocument,
-    getMySpreadsheetPermissionPanelData,
     getBasicData,
     getBasicServerData,
+    getMySpreadsheetPermissionPanelData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
-import { contains, getService, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import { contains, getService, MockServer, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 
 defineDocumentSpreadsheetModels();
@@ -85,12 +84,12 @@ test("input width changes when content changes", async function () {
     await contains(input).edit("My", { confirm: false });
     let width = input.offsetWidth;
     await contains(input).edit("My title", { confirm: false });
-    expect(width < input.offsetWidth).toBe(true, {
+    expect(width).toBeLessThan(input.offsetWidth, {
         message: "It should have grown to fit content",
     });
     width = input.offsetWidth;
     await contains(input).edit("");
-    expect(originalWidth === input.offsetWidth).toBe(true, {
+    expect(originalWidth).toBe(input.offsetWidth, {
         message: "It should have the size of the previous content",
     });
 });
@@ -99,7 +98,7 @@ test("changing the input saves the name", async function () {
     const serverData = getBasicServerData();
     await createSpreadsheet({ spreadsheetId: 2, serverData });
     await contains(".o_sp_name input").edit("My spreadsheet");
-    expect(DocumentsDocument._records[1].name).toBe("My spreadsheet", {
+    expect(MockServer.env["documents.document"][1].name).toBe("My spreadsheet", {
         message: "It should have updated the name",
     });
 });
@@ -112,7 +111,7 @@ test("trailing white spaces are trimmed", async function () {
     expect(input).toHaveValue("My spreadsheet", {
         message: "It should not have trailing white spaces",
     });
-    expect(width > input.offsetWidth).toBe(true, {
+    expect(width).toBeGreaterThan(input.offsetWidth, {
         message: "It should have resized",
     });
 });
@@ -277,7 +276,6 @@ test("Spreadsheet action is named in breadcrumb with the updated name", async fu
                                 <field name="foo" type="row"/>
                                 <field name="probability" type="measure"/>
                             </pivot>`,
-                "partner,false,search": `<search/>`,
             },
         },
     });

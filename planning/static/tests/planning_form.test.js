@@ -19,7 +19,6 @@ test("quit form view when save actually deletes", async () => {
     PlanningSlot._views = {
         form: `<form js_class="planning_form"><field name="name"/></form>`,
         list: `<list><field name="name"/></list>`,
-        search: `<search></search>`,
     };
     // Say a recurrence that repeats for ever.
     // If, on the n'th occurrence, we change the recurrence to have max n-1 occurrences,

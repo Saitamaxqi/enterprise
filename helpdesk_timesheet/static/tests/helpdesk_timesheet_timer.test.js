@@ -11,9 +11,7 @@ defineHelpdeskTimesheetModels();
 
 beforeEach(() => {
     patchSession();
-    hrTimesheetModels.HRTimesheet._views["grid,false"] = hrTimesheetModels.HRTimesheet._views[
-        "grid,false"
-    ]
+    hrTimesheetModels.HRTimesheet._views.grid = hrTimesheetModels.HRTimesheet._views.grid
         .replace("timesheet_grid", "timer_timesheet_grid")
         .replace('widget="float_time"', 'widget="timesheet_uom"');
     hrTimesheetModels.HRTimesheet._views["grid,1"] = hrTimesheetModels.HRTimesheet._views["grid,1"]
@@ -40,20 +38,14 @@ beforeEach(() => {
     });
 });
 
-onRpc(({ method }) => {
-    if (method === "has_group") {
-        return true;
-    }
-    if (method === "get_running_timer") {
-        return {
-            id: 10,
-            start: 5740, // 01:35:40
-            project_id: 1,
-            description: "Description",
-            step_timer: 30,
-        };
-    }
-});
+onRpc("has_group", () => true);
+onRpc("get_running_timer", () => ({
+    id: 10,
+    start: 5740, // 01:35:40
+    project_id: 1,
+    description: "Description",
+    step_timer: 30,
+}));
 
 test("Timer already running with helpdesk ticket", async () => {
     await mountView({

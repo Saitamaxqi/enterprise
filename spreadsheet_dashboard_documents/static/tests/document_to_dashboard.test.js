@@ -16,7 +16,6 @@ const { topbarMenuRegistry } = spreadsheet.registries;
 
 class DocumentsToDashboardWizard extends models.Model {
     _name = "spreadsheet.document.to.dashboard";
-    _views = { form: "<form/>" };
 }
 defineModels({ DocumentsToDashboardWizard });
 

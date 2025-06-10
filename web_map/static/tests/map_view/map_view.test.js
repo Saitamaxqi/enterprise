@@ -1592,8 +1592,6 @@ describe("map_view_desktop", () => {
      */
 
     test("Content of the marker popup with one field", async () => {
-        Task._views.form = "<form/>";
-
         Task._records = TEST_RECORDS.task.oneRecord;
         Partner._records = TEST_RECORDS.partner.twoRecordsAddressCoordinates;
 
@@ -1627,8 +1625,6 @@ describe("map_view_desktop", () => {
     });
 
     test("Content of the marker popup with date time", async () => {
-        Task._views.form = "<form/>";
-
         mockTimeZone(+2); // UTC+2
         patchWithCleanup(session, { map_box_token: MAP_BOX_TOKEN });
 
@@ -1665,8 +1661,6 @@ describe("map_view_desktop", () => {
      */
 
     test("Content of the marker with no field", async () => {
-        Task._views.form = "<form/>";
-
         Task._records = TEST_RECORDS.task.twoRecords;
         Partner._records = TEST_RECORDS.partner.twoRecordsAddressNoCoordinates;
         patchWithCleanup(session, { map_box_token: MAP_BOX_TOKEN });
@@ -2148,7 +2142,6 @@ describe("map_view_desktop", () => {
                 expect(props).toEqual({ resId: 1 }, { message: "Props should be correct" });
             },
         });
-        Task._views.form = "<form/>";
 
         Task._records = TEST_RECORDS.task.oneRecord;
         Partner._records = TEST_RECORDS.partner.oneLocatedRecord;

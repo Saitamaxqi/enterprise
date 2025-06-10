@@ -60,7 +60,6 @@ test("ungrouped gantt rendering", async () => {
     const startDateLocalString = deserializeDateTime(task2.start).toFormat("f");
     const stopDateLocalString = deserializeDateTime(task2.stop).toFormat("f");
     Tasks._views.gantt = `<gantt date_start="start" date_stop="stop"/>`;
-    Tasks._views.search = `<search/>`;
 
     onRpc("get_gantt_data", ({ model }) => expect.step(model));
     await mountWithCleanup(WebClient);

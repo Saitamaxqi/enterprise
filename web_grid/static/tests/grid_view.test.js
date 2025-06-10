@@ -163,7 +163,6 @@ class Task extends models.Model {
 
     _views = {
         form: `<form><field name="display_name"/></form>`,
-        search: `<search/>`,
     };
 }
 
@@ -1488,7 +1487,7 @@ describe("grid_view_desktop", () => {
     });
 
     test("stop edition when the user clicks outside", async () => {
-        const arch = Line._views["grid,false"].replace("<grid>", '<grid editable="1">');
+        const arch = Line._views["grid"].replace("<grid>", '<grid editable="1">');
         await mountView({
             type: "grid",
             resModel: "analytic.line",
@@ -1508,7 +1507,7 @@ describe("grid_view_desktop", () => {
     });
 
     test("display no content helper when no data and sample data is used (with display_empty='1')", async () => {
-        const arch = Line._views["grid,false"].replace(
+        const arch = Line._views["grid"].replace(
             "<grid>",
             `<grid create_inline="1"
                     form_view_id="%(timesheet_grid.my_timesheet_form_view)d"
@@ -1964,7 +1963,7 @@ describe("grid_view_desktop", () => {
             localStorage: {
                 setItem(key, value) {
                     if (key === "grid.isWeekendVisible") {
-                      expect.step(`${key}-${value}`);
+                        expect.step(`${key}-${value}`);
                     }
                 },
                 getItem(key) {
@@ -2083,7 +2082,7 @@ describe("grid_view_desktop", () => {
     });
 
     test("export navigationInfo when col is not a range", async () => {
-        Line._views["grid,false"] = `<grid>
+        Line._views["grid"] = `<grid>
             <field name="project_id" type="row"/>
             <field name="task_id" type="col"/>
             <field name="unit_amount" type="measure" widget="float_time"/>

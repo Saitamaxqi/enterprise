@@ -33,13 +33,13 @@ class Subscription extends models.Model {
 
     _records = [
         { id: 1, start: "2017-07-12", stop: "2017-08-11", recurring: 10 },
-        { id: 2, start: "2017-08-14", stop: null, recurring: 20 },
+        { id: 2, start: "2017-08-14", recurring: 20 },
         { id: 3, start: "2017-08-21", stop: "2017-08-29", recurring: 10 },
-        { id: 4, start: "2017-08-21", stop: null, recurring: 20 },
-        { id: 5, start: "2017-08-23", stop: null, recurring: 10 },
-        { id: 6, start: "2017-08-24", stop: null, recurring: 22 },
+        { id: 4, start: "2017-08-21", recurring: 20 },
+        { id: 5, start: "2017-08-23", recurring: 10 },
+        { id: 6, start: "2017-08-24", recurring: 22 },
         { id: 7, start: "2017-08-24", stop: "2017-08-29", recurring: 10 },
-        { id: 8, start: "2017-08-24", stop: null, recurring: 22 },
+        { id: 8, start: "2017-08-24", recurring: 22 },
     ];
 }
 
@@ -50,13 +50,13 @@ class Lead extends models.Model {
 
     _records = [
         { id: 1, start: "2017-07-12", stop: "2017-08-11", revenue: 1200.2 },
-        { id: 2, start: "2017-08-14", stop: null, revenue: 500 },
+        { id: 2, start: "2017-08-14", revenue: 500 },
         { id: 3, start: "2017-08-21", stop: "2017-08-29", revenue: 5599.99 },
-        { id: 4, start: "2017-08-21", stop: null, revenue: 13500 },
-        { id: 5, start: "2017-08-23", stop: null, revenue: 6000 },
-        { id: 6, start: "2017-08-24", stop: null, revenue: 1499.99 },
+        { id: 4, start: "2017-08-21", revenue: 13500 },
+        { id: 5, start: "2017-08-23", revenue: 6000 },
+        { id: 6, start: "2017-08-24", revenue: 1499.99 },
         { id: 7, start: "2017-08-24", stop: "2017-08-29", revenue: 16000 },
-        { id: 8, start: "2017-08-24", stop: null, revenue: 22000 },
+        { id: 8, start: "2017-08-24", revenue: 22000 },
     ];
 }
 
@@ -418,7 +418,6 @@ test("when clicked on cell redirects to the correct list/form view ", async () =
                     <field name="recurring"/>
                     <field name="start"/>
                 </form>`,
-        search: `<search></search>`,
     };
 
     await mountWithCleanup(WebClient);
@@ -534,7 +533,6 @@ test("when clicked on cell redirects to the action list/form view passed in cont
                     <field name="recurring"/>
                     <field name="start"/>
                 </form>`,
-        search: `<search></search>`,
     };
 
     await mountWithCleanup(WebClient);
@@ -814,7 +812,6 @@ test("when middle clicked on cell open records in new window ", async () => {
                     <field name="start"/>
                     <field name="stop"/>
                 </form>`,
-        search: `<search></search>`,
     };
 
     await mountWithCleanup(WebClient);

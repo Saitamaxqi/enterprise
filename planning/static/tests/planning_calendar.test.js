@@ -1,11 +1,11 @@
-import { beforeEach, describe, expect, test, getFixture } from "@odoo/hoot";
+import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { click, queryText, waitFor } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import {
+    clickDate,
     clickEvent,
     resizeEventToTime,
     toggleFilter,
-    clickDate,
 } from "@web/../tests/views/calendar/calendar_test_helpers";
 import {
     definePlanningModels,
@@ -14,68 +14,21 @@ import {
     ResourceResource,
 } from "./planning_mock_models";
 
+import { contains } from "@mail/../tests/mail_test_helpers";
 import {
     defineActions,
     getService,
     mockService,
+    mountView,
     mountWithCleanup,
     onRpc,
-    mountView,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
-import {
-    contains,
-} from "@mail/../tests/mail_test_helpers";
 
 describe.current.tags("desktop");
 
 class PlanningSlot extends planningModels.PlanningSlot {
-    _views = {
-        calendar: `<calendar class="o_planning_calendar_test"
-                        event_open_popup="true"
-                        date_start="start_datetime"
-                        date_stop="end_datetime"
-                        color="color"
-                        mode="week"
-                        js_class="planning_calendar">
-                            <field name="resource_id" />
-                            <field name="role_id" filters="1" color="color"/>
-                            <field name="state"/>
-                            <field name="repeat"/>
-                            <field name="recurrence_update"/>
-                            <field name="end_datetime"/>
-                    </calendar>`,
-        list: `<list js_class="planning_tree">
-                    <field name="resource_id"/>
-                    <field name="repeat" column_invisible="True"/>
-                </list>`,
-        search: `<search/>`,
-        form: `<form>
-                    <field name="start_datetime"/>
-                    <field name="end_datetime"/>
-                </form>`,
-    };
-}
-
-planningModels.PlanningSlot = PlanningSlot;
-
-definePlanningModels();
-defineActions([
-    {
-        id: 1,
-        name: "planning action",
-        res_model: "planning.slot",
-        views: [
-            [false, "calendar"],
-            [false, "list"],
-        ],
-    },
-]);
-
-let target;
-
-beforeEach(() => {
-    PlanningSlot._records = [
+    _records = [
         {
             id: 1,
             name: "First Record",
@@ -98,6 +51,47 @@ beforeEach(() => {
             state: "published",
         },
     ];
+    _views = {
+        calendar: `<calendar class="o_planning_calendar_test"
+                        event_open_popup="true"
+                        date_start="start_datetime"
+                        date_stop="end_datetime"
+                        color="color"
+                        mode="week"
+                        js_class="planning_calendar">
+                            <field name="resource_id" />
+                            <field name="role_id" filters="1" color="color"/>
+                            <field name="state"/>
+                            <field name="repeat"/>
+                            <field name="recurrence_update"/>
+                            <field name="end_datetime"/>
+                    </calendar>`,
+        list: `<list js_class="planning_tree"><field name="resource_id"/></list>`,
+        "form,1": `<form>
+                    <field name="start_datetime"/>
+                    <field name="end_datetime"/>
+                </form>`,
+    };
+}
+
+planningModels.PlanningSlot = PlanningSlot;
+
+definePlanningModels();
+defineActions([
+    {
+        id: 1,
+        name: "planning action",
+        res_model: "planning.slot",
+        views: [
+            [false, "calendar"],
+            [false, "list"],
+        ],
+    },
+]);
+
+onRpc("has_access", () => true);
+
+beforeEach(() => {
     ResourceResource._records = [
         { id: 1, name: "Chaganlal" },
         { id: 2, name: "Maganlal" },
@@ -107,12 +101,7 @@ beforeEach(() => {
         { id: 2, name: "Functional Consultant", color: 2 },
     ];
 
-    onRpc("has_access", () => {
-        return true;
-    });
-
     mockDate("2019-03-13 00:00:00", +1);
-    target = getFixture();
 });
 
 test("planning calendar view: copy previous week", async () => {
@@ -283,18 +272,18 @@ test("Display modal to choose recurrence type when deleting recurrent task", asy
     await click(".o_cw_popover_delete");
     await contains("h4.modal-title");
 
-    expect(target.querySelector("h4.modal-title")).toHaveText("Delete Recurring Shift")
+    expect("h4.modal-title").toHaveText("Delete Recurring Shift");
 });
 
 test("Display confirm delete modal when deleting non recurrent task", async () => {
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
 
-    await target.querySelectorAll(".fc-event-main")[1].click();
+    await click(".fc-event-main:eq(1)");
     await contains(".o_cw_popover_delete");
 
     await click(".o_cw_popover_delete");
     await contains("h4.modal-title");
 
-    expect(target.querySelector("h4.modal-title")).toHaveText("Bye-bye, record!");
+    expect("h4.modal-title").toHaveText("Bye-bye, record!");
 });

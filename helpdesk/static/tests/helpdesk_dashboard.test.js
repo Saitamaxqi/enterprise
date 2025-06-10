@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
@@ -33,37 +33,26 @@ const mountViewParams = {
     `,
 };
 
-beforeEach(() => {
-    this.dashboardData = {
-        "7days": { count: 0, rating: 0, success: 0 },
-        helpdesk_target_closed: 12,
-        helpdesk_target_rating: 0,
-        helpdesk_target_success: 0,
-        my_all: { count: 0, hours: 0, failed: 0 },
-        my_high: { count: 0, hours: 0, failed: 0 },
-        my_urgent: { count: 0, hours: 0, failed: 0 },
-        rating_enable: false,
-        show_demo: false,
-        success_rate_enable: false,
-        today: { count: 0, rating: 0, success: 0 },
-    };
-});
+onRpc("helpdesk.team", "retrieve_dashboard", () => ({
+    "7days": { count: 0, rating: 0, success: 0 },
+    helpdesk_target_closed: 12,
+    helpdesk_target_rating: 0,
+    helpdesk_target_success: 0,
+    my_all: { count: 0, hours: 0, failed: 0 },
+    my_high: { count: 0, hours: 0, failed: 0 },
+    my_urgent: { count: 0, hours: 0, failed: 0 },
+    rating_enable: false,
+    show_demo: false,
+    success_rate_enable: false,
+    today: { count: 0, rating: 0, success: 0 },
+}));
 
-onRpc(({ method, model, args }) => {
-    if (model === "helpdesk.team" && method === "retrieve_dashboard") {
-        return this.dashboardData;
-    } else if (method === "check_modules_to_install") {
-        expect.step(method);
-        expect(args[0]).toEqual(["use_sla"]);
-        return false;
-    } else if (method === "web_save") {
-        expect.step(method);
-    } else if (model === "res.users" && method === "write") {
-        expect(true).toBe(true, { message: "should modify helpdesk_target_closed" });
-        this.dashboardData.helpdesk_target_closed = args[1].helpdesk_target_closed;
-        return true;
-    }
+onRpc("check_modules_to_install", ({ method, args }) => {
+    expect.step(method);
+    expect(args[0]).toEqual(["use_sla"]);
+    return false;
 });
+onRpc("web_save", ({ method }) => expect.step(method));
 
 test("dashboard basic rendering", async () => {
     await mountView(mountViewParams);
@@ -80,11 +69,6 @@ test("edit the target", async () => {
     ResUsers._fields.helpdesk_target_closed = fields.Integer({
         string: "helpdesk target closed",
         default: 1,
-    });
-    Object.assign(ResUsers._records, {
-        id: 1,
-        name: "Pierre",
-        helpdesk_target_closed: 0,
     });
 
     await mountView(mountViewParams);
@@ -122,16 +106,6 @@ test("dashboard rendering with empty many2one", async () => {
     ResPartner._fields.helpdesk_partner_id = fields.Many2one({
         string: "Partner",
         relation: "helpdesk.partner",
-    });
-    Object.assign(ResPartner._records, {
-        id: 1,
-        name: "Pierre",
-        helpdesk_partner_id: false,
-    });
-    Object.assign(ResUsers._records, {
-        id: 1,
-        name: "Pierre",
-        partner_id: 1,
     });
 
     await mountView(mountViewParams);

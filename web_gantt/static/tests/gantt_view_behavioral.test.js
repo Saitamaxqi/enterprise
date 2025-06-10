@@ -1672,7 +1672,6 @@ test("unavailabilities should not be reloaded when period changes if display_una
 
 test("close tooltip when drag pill", async () => {
     Tasks._records[1].start = "2018-12-16 03:00:00";
-    Tasks._views = { form: "<form/>" };
 
     await mountGanttView({
         resModel: "tasks",
@@ -1728,7 +1727,6 @@ test("drag&drop on other pill in grouped view", async () => {
     Tasks._records[0].start = "2018-12-16 05:00:00";
     Tasks._records[0].stop = "2018-12-16 07:00:00";
     Tasks._records[1].stop = "2018-12-17 13:00:00";
-    Tasks._views = { form: `<form />` };
 
     const def = new Deferred();
     onRpc("write", () => def);
@@ -2853,7 +2851,7 @@ test("gantt popover: on close, reload if record changed", async () => {
     });
     Tasks._records = Tasks._records.slice(0, 1);
     Tasks._records[0].user_ids = [1];
-    Tasks._views.kanban = `
+    Tasks._views["kanban,42"] = `
             <kanban>
                 <templates>
                     <t t-name="card">

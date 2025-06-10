@@ -200,7 +200,6 @@ test("check default planned dates on the plan dialog", async function () {
         start_datetime: false,
         end_datetime: false,
     });
-    PlanningSlot._views = { list: `<list/>` };
 
     onRpc("gantt_resource_work_interval", () => []);
 

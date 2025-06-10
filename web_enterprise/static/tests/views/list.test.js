@@ -255,8 +255,7 @@ test("upsell studio feature is not polluted by another view", async () => {
         name = fields.Char();
 
         _views = {
-            "list,false": `<list><field name="display_name" /> <field name="name" optional="1" /></list>`,
-            "search,false": `<search />`,
+            list: `<list><field name="display_name" /> <field name="name" optional="1" /></list>`,
         };
     }
 

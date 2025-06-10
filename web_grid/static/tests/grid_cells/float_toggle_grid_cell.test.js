@@ -25,21 +25,23 @@ class Grid extends models.Model {
     ];
 
     _views = {
-        "grid,false": `<grid editable="1">
-            <field name="foo_id" type="row"/>
-            <field name="date" type="col">
-                <range name="day" string="Day" span="day" step="day"/>
-            </field>
-            <field name="time" type="measure" widget="float_toggle"/>
+        grid: /* xml */ `
+            <grid editable="1">
+                <field name="foo_id" type="row"/>
+                <field name="date" type="col">
+                    <range name="day" string="Day" span="day" step="day"/>
+                </field>
+                <field name="time" type="measure" widget="float_toggle"/>
         </grid>`,
-        "grid,1": `<grid editable="1">
-            <field name="foo_id" type="row"/>
-            <field name="date" type="col">
-                <range name="day" string="Day" span="day" step="day"/>
-                <range name="week" string="Week" span="week" step="day" default="1"/>
-            </field>
-            <field name="time" type="measure" widget="float_toggle"/>
-        </grid>`,
+        "grid,1": /* xml */ `
+            <grid editable="1">
+                <field name="foo_id" type="row"/>
+                <field name="date" type="col">
+                    <range name="day" string="Day" span="day" step="day"/>
+                    <range name="week" string="Week" span="week" step="day" default="1"/>
+                </field>
+                <field name="time" type="measure" widget="float_toggle"/>
+            </grid>`,
     };
 }
 

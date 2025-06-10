@@ -1,17 +1,18 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { queryAll, click } from "@odoo/hoot-dom";
+import { describe, expect, test } from "@odoo/hoot";
+import { click, queryAll } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import {
-    models,
-    fields,
-    defineModels,
     defineActions,
+    defineModels,
+    fields,
     getService,
+    models,
     mountWithCleanup,
+    onRpc,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
 
 import { definePlanningModels, planningModels } from "./planning_mock_models";
 
@@ -56,7 +57,6 @@ class ResourceTask extends models.Model {
                 <field name="resource_ids" widget="many2many_avatar_resource"/>
             </form>
         `,
-        search: `<search/>`,
     };
 }
 
@@ -76,7 +76,7 @@ class PlanningRole extends planningModels.PlanningRole {
 }
 
 class ResourceResource extends planningModels.ResourceResource {
-    color = fields.Integer({ default: () => Math.floor(Math.random() * 10)})
+    color = fields.Integer({ default: () => Math.floor(Math.random() * 10) });
     _records = [
         {
             id: 1,
@@ -106,6 +106,11 @@ class ResourceResource extends planningModels.ResourceResource {
         },
     ];
 }
+
+onRpc("get_avatar_card_data", function ({ args }) {
+    const [ids, fields] = args[0];
+    return this.env["resource.resource"].read(ids, fields);
+});
 
 class HrEmployee extends planningModels.HrEmployee {
     _records = [

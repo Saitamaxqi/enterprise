@@ -68,7 +68,6 @@ test("List export with a invisible field", async () => {
                             <field name="foo" column_invisible="1"/>
                             <field name="bar"/>
                         </list>`,
-                "partner,false,search": "<search/>",
             },
         },
     });
@@ -85,7 +84,6 @@ test("List export with a widget handle", async () => {
                                 <field name="foo" widget="handle"/>
                                 <field name="bar"/>
                             </list>`,
-                "partner,false,search": "<search/>",
             },
         },
     });
@@ -143,7 +141,6 @@ test("property fields are not exported", async () => {
                             <field name="bar"/>
                             <field name="partner_properties"/>
                         </list>`,
-                "partner,false,search": "<search/>",
             },
         },
     });
@@ -161,7 +158,6 @@ test("json fields are not exported", async () => {
                             <field name="jsonField"/>
                             <field name="bar"/>
                         </list>`,
-                "partner,false,search": "<search/>",
             },
         },
     });
@@ -478,7 +474,6 @@ test("Selected records from current page are inserted correctly", async function
                     <list limit="2">
                         <field name="foo"/>
                     </list>`,
-            "partner,false,search": "<search/>",
         },
     };
     await spawnListViewForSpreadsheet({
@@ -525,7 +520,6 @@ test("Selected all records from current page are inserted correctly", async func
                     <list limit="2">
                         <field name="foo"/>
                     </list>`,
-            "partner,false,search": "<search/>",
         },
     };
     await spawnListViewForSpreadsheet({

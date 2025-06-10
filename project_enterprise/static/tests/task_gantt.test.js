@@ -258,8 +258,8 @@ test("Lines are displayed in alphabetic order, except for the first one", async 
 });
 
 test("Display milestones deadline in project.task gantt view", async () => {
-    onRpc("get_all_deadlines", () => {
-        const [milestone1, milestone2] = projectModels.ProjectMilestone._records;
+    onRpc("get_all_deadlines", function () {
+        const [milestone1, milestone2] = this.env["project.milestone"].browse([1, 2]);
         return {
             milestone_id: [
                 {
@@ -297,8 +297,8 @@ test("Display milestones deadline in project.task gantt view", async () => {
 });
 
 test("Display milestones deadline in gantt view of tasks in a project", async () => {
-    onRpc("get_all_deadlines", () => {
-        const [milestone1, milestone2] = projectModels.ProjectMilestone._records;
+    onRpc("get_all_deadlines", function () {
+        const [milestone1, milestone2] = this.env["project.milestone"].browse([1, 2]);
         return {
             milestone_id: [
                 {
@@ -380,7 +380,7 @@ test("Display project and milestones deadline in the gantt view of task", async 
         date: "2021-06-28",
     });
     onRpc("get_all_deadlines", function () {
-        const [milestone1, milestone2] = projectModels.ProjectMilestone._records;
+        const [milestone1, milestone2] = this.env["project.milestone"].browse([1, 2]);
         return {
             milestone_id: [
                 {
@@ -443,7 +443,7 @@ test("Display project and milestones deadline in the gantt view of task", async 
 
 test("Display project deadline and milestone date in the same date", async () => {
     onRpc("get_all_deadlines", function () {
-        const milestone3 = projectModels.ProjectMilestone._records[2];
+        const [milestone3] = this.env["project.milestone"].browse(3);
         return {
             milestone_id: [
                 {
@@ -480,9 +480,8 @@ test("Display 2 milestones in different project at the same date", async () => {
         deadline: "2021-06-24",
         project_id: 2,
     });
-    onRpc("get_all_deadlines", () => {
-        const milestone3 = projectModels.ProjectMilestone._records[2];
-        const milestone4 = projectModels.ProjectMilestone._records[3];
+    onRpc("get_all_deadlines", function () {
+        const [milestone3, milestone4] = this.env["project.milestone"].browse([3, 4]);
         return {
             milestone_id: [
                 {

@@ -84,7 +84,6 @@ test("simple pivot export", async () => {
                         <pivot>
                             <field name="foo" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -140,7 +139,6 @@ test("simple pivot export with two measures", async () => {
                             <field name="foo" type="measure"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -260,7 +258,6 @@ test("groupby date field without interval defaults to month", async () => {
                             <field name="date" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -322,7 +319,6 @@ test("groupby date field on row gives correct name", async () => {
                             <field name="date" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -350,7 +346,6 @@ test("pivot with two levels of group bys in rows", async () => {
                             <field name="product_id" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -385,7 +380,6 @@ test("verify that there is a record for an undefined many2one header", async () 
                             <field name="product_id" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -414,7 +408,6 @@ test("undefined date is inserted in pivot", async () => {
                             <field name="date" interval="day" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -432,7 +425,6 @@ test("pivot with two levels of group bys in cols", async () => {
                             <field name="product_id" type="col"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -462,7 +454,6 @@ test("pivot with count as measure", async () => {
                         <pivot>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
         actions: async (target) => {
@@ -500,7 +491,6 @@ test("pivot with two levels of group bys in cols with not enough cols", async ()
                                 <field name="foo" type="row"/>
                                 <field name="probability" type="measure"/>
                             </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -519,7 +509,6 @@ test("groupby week is sorted", async () => {
                             <field name="date" interval="week" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -537,7 +526,6 @@ test("Can save a pivot in a new spreadsheet", async () => {
                  <pivot string="Partners">
                      <field name="probability" type="measure"/>
                  </pivot>`,
-            "partner,false,search": /* xml */ `<search/>`,
         },
     };
     await prepareWebClientForSpreadsheet();
@@ -576,7 +564,6 @@ test("Can save a pivot in existing spreadsheet", async () => {
                     <pivot>
                         <field name="probability" type="measure"/>
                     </pivot>`,
-            "partner,false,search": /* xml */ `<search/>`,
         },
     };
     await prepareWebClientForSpreadsheet();
@@ -766,7 +753,6 @@ test("pivot with a quote in name", async function () {
                             <field name="display_name" type="col"/>
                             <field name="id" type="row"/>
                         </pivot>`,
-                "product,false,search": `<search/>`,
             },
         },
     });
@@ -785,7 +771,6 @@ test("group by related field with archived record", async function () {
                             <field name="name" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -805,7 +790,6 @@ test("group by regular field with archived record", async function () {
                             <field name="foo" type="row"/>
                             <field name="probability" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });
@@ -1007,7 +991,6 @@ test("sort second pivot measure (ascending)", async () => {
                             <field name="probability" type="measure"/>
                             <field name="foo" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
         actions: async (target) => {
@@ -1038,7 +1021,6 @@ test("sort second pivot measure (descending)", async () => {
                             <field name="probability" type="measure"/>
                             <field name="foo" type="measure"/>
                         </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
         actions: async (target) => {
@@ -1070,7 +1052,6 @@ test("remove sorting if measure is removed", async () => {
                         <field name="probability" type="measure"/>
                         <field name="foo" type="measure"/>
                     </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
         actions: async (target) => {
@@ -1199,7 +1180,6 @@ test("Check pivot measures with m2o field", async function () {
                                 <field name="bar" type="row"/>
                                 <field name="product_id" type="measure"/>
                             </pivot>`,
-                "partner,false,search": `<search/>`,
             },
         },
     });
@@ -1264,7 +1244,6 @@ test("The table has the correct number of headers when inserting a pivot", async
                                 <field name="probability" type="row"/>
                                 <field name="foo" type="measure"/>
                             </pivot>`,
-                "partner,false,search": /* xml */ `<search/>`,
             },
         },
     });

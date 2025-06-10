@@ -4,29 +4,29 @@ import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { helpers, stores } from "@odoo/o-spreadsheet";
 import {
     addGlobalFilter,
+    addGlobalFilterWithoutReload,
+    createSheet,
     selectCell,
     setCellContent,
-    createSheet,
-    addGlobalFilterWithoutReload,
 } from "@spreadsheet/../tests/helpers/commands";
 import {
+    defineSpreadsheetModels,
     getBasicData,
     getBasicPivotArch,
     getBasicServerData,
     IrModel,
     Partner,
-    defineSpreadsheetModels,
 } from "@spreadsheet/../tests/helpers/data";
 import { assertDateDomainEqual } from "@spreadsheet/../tests/helpers/date_domain";
 import { getCellValue } from "@spreadsheet/../tests/helpers/getters";
 import { THIS_YEAR_GLOBAL_FILTER } from "@spreadsheet/../tests/helpers/global_filter";
 import {
-    insertListInSpreadsheet,
     createSpreadsheetWithList,
+    insertListInSpreadsheet,
 } from "@spreadsheet/../tests/helpers/list";
 import {
-    insertPivotInSpreadsheet,
     createSpreadsheetWithPivot,
+    insertPivotInSpreadsheet,
 } from "@spreadsheet/../tests/helpers/pivot";
 import { toRangeData } from "@spreadsheet/../tests/helpers/zones";
 import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
@@ -36,21 +36,21 @@ import {
     defineModels,
     fields,
     models,
-    onRpc,
     mountWithCleanup,
+    onRpc,
 } from "@web/../tests/web_test_helpers";
 
+import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
 import {
     createSpreadsheetWithChart,
     insertChartInSpreadsheet,
 } from "@spreadsheet/../tests/helpers/chart";
-import { user } from "@web/core/user";
-import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
-import { TextFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel";
+import { createModelWithDataSource } from "@spreadsheet/../tests/helpers/model";
+import { BooleanFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/boolean_filter_editor_side_panel";
 import { DateFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/date_filter_editor_side_panel";
 import { RelationFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel";
-import { BooleanFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/boolean_filter_editor_side_panel";
-import { createModelWithDataSource } from "@spreadsheet/../tests/helpers/model";
+import { TextFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel";
+import { user } from "@web/core/user";
 
 const { useStoreProvider, ModelStore, NotificationStore } = stores;
 
@@ -1015,7 +1015,7 @@ test("Change all domains -> Set corresponding model should allow saving", async 
     const vehicle_ids = fields.Many2many({ relation: "vehicle", string: "Vehicle" });
     Partner._fields.vehicle_ids = vehicle_ids;
     serverData.models["ir.model"].records = [
-        ...IrModel,
+        ...IrModel._records,
         {
             id: 34,
             name: "Vehicle",

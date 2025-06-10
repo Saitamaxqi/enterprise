@@ -69,14 +69,12 @@ test("Delete a column in grouped on m2o", async (assert) => {
         type: "kanban",
         arch: kanbanViewArch,
     });
-    onRpc(({ method, model }) => {
-        if (model === "helpdesk.stage" && method === "action_unlink_wizard") {
-            expect.step(method);
-            return {
-                type: "ir.actions.client",
-                tag: "reload",
-            };
-        }
+    onRpc("helpdesk.stage", "action_unlink_wizard", ({ method }) => {
+        expect.step(method);
+        return {
+            type: "ir.actions.client",
+            tag: "reload",
+        };
     });
 
     const clickColumnAction = await toggleKanbanColumnActions(1);
@@ -85,7 +83,7 @@ test("Delete a column in grouped on m2o", async (assert) => {
 });
 
 test("Prevent helpdesk users from reordering ticket stages", async () => {
-    onRpc("has_group", (group) => group === "helpdesk.group_helpdesk_user");
+    onRpc("has_group", ({ args }) => args[0][1] === "helpdesk.group_helpdesk_user");
     await mountView({
         resModel: "helpdesk.ticket",
         type: "kanban",
@@ -106,7 +104,11 @@ test("Access for helpdesk manager to reordering ticket stages", async () => {
 });
 
 test("Verify stages nocontent helper is visible when all task stages are deleted in Task Kanban view", async () => {
-    const teamId = HelpdeskTeam._records.push({ name: "Team 3", stage_ids: undefined });
+    const newTeam = {
+        id: 3,
+        name: "Team 3",
+    };
+    HelpdeskTeam._records.push(newTeam);
 
     await mountView({
         resModel: "helpdesk.ticket",
@@ -114,9 +116,9 @@ test("Verify stages nocontent helper is visible when all task stages are deleted
         arch: kanbanViewArch,
         context: {
             active_model: "helpdesk.stage.delete.wizard", // simulate stage deletion wizard
-            default_team_id: teamId,
+            default_team_id: newTeam.id,
         },
-        domain: [["team_id", "=", teamId]],
+        domain: [["team_id", "=", newTeam.id]],
     });
 
     // Assertions to check for ghost column visibility

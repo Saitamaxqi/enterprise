@@ -160,7 +160,6 @@ test("breadcrumb is rendered the navbar", async function () {
     };
     const views = {
         "documents.document,false,list": '<list><field name="name"/></list>',
-        "documents.document,false,search": "<search></search>",
     };
     const serverData = { actions, models: getBasicData(), views };
     await prepareWebClientForSpreadsheet();
