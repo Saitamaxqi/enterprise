@@ -5,6 +5,10 @@ import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { Component } from "@odoo/owl";
 import { retrieveHMRCClientInfo } from "../../hmrc_api";
 
+function isValidUuid(str) {
+    return /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(str);
+}
+
 export class SendHmrcButton extends Component {
     static template = "l10n_uk_reports.SendHmrcButton";
     static props = {...standardWidgetProps};
@@ -22,6 +26,9 @@ export class SendHmrcButton extends Component {
         try {
             if (!localStorage.getItem('hmrc_gov_client_device_id')) {
                 localStorage.setItem('hmrc_gov_client_device_id', this.hmrcGovClientDeviceIdentifier);
+            }
+            if (!isValidUuid(localStorage.getItem('hmrc_gov_client_device_id'))) {
+                localStorage.removeItem('hmrc_gov_client_device_id');
             }
             let clientData = retrieveHMRCClientInfo();
             clientData.hmrc_gov_client_device_id = localStorage.getItem('hmrc_gov_client_device_id');
