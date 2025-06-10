@@ -15,6 +15,7 @@
         <record id="nl_tax_return_type" model="account.return.type">
             <field name="name">Tax</field>
             <field name="report_id" ref="l10n_nl.tax_report"/>
+            <field name="country_id" ref="base.nl" />
             <field name="payment_partner_bank_id" ref="l10n_nl_reports.belastingdienst_current_account"/>
         </record>
     </data>

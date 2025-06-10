@@ -17,6 +17,7 @@
         <record id="be_vat_return_type" model="account.return.type">
             <field name="name">VAT</field>
             <field name="report_id" ref="l10n_be.tax_report_vat"/>
+            <field name="country_id" ref="base.be" />
             <field name="payment_partner_bank_id" ref="l10n_be_reports.fps_vat_current_account"/>
         </record>
 
@@ -24,6 +25,7 @@
         <record id="be_vat_listing_return_type" model="account.return.type">
             <field name="name">VAT Listing</field>
             <field name="report_id" ref="l10n_be_reports.l10n_be_partner_vat_listing"/>
+            <field name="country_id" ref="base.be" />
             <field name="deadline_periodicity">year</field>
         </record>
 
@@ -52,6 +54,7 @@
             <field name="name@fr">Versement anticipé</field>
             <field name="name@de">Vorauszahlung</field>
             <field name="deadline_periodicity">trimester</field>
+            <field name="country_id" ref="base.be" />
             <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
         </record>
     </data>

@@ -42,6 +42,10 @@ class AccountReturnType(models.Model):
     name = fields.Char(string="Name", required=True, translate=True)
     report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree')
     report_country_id = fields.Many2one(related='report_id.country_id')
+    # country_id allows creating automatically the return for the country of the report and isn't mandatory as
+    # some returns may need to be generated regardless of the country of the company or for multiples such as Europe.
+    # and some returns may need to add conditions for it to be generated such as a minimum amount of tax to be paid.
+    country_id = fields.Many2one(comodel_name='res.country', string="Return Type Country")
     payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank")
     payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id')
 
@@ -134,6 +138,10 @@ class AccountReturnType(models.Model):
         :param main_company: the main company for which we generate returns
         """
         self.env.ref('account_reports.annual_corporate_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
+
+        country_id = self.env['res.country'].sudo().search([('code', '=', country_code)], limit=1)
+        for report_type in self.env['account.return.type'].sudo().search([('country_id', '=', country_id.id)]):
+            report_type._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
     def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, forced_date_from=None, forced_date_to=None):
         """
