@@ -12,11 +12,13 @@ from json.decoder import JSONDecodeError
 from lxml import etree
 from odoo.tools.zeep import Client, Transport
 from pytz import timezone
+from werkzeug.urls import url_quote_plus
 
 from odoo import _, api, models, modules, fields, tools
 from odoo.fields import Domain
 from odoo.tools import frozendict
 from odoo.tools.float_utils import float_is_zero, float_round
+from odoo.addons.base.models.ir_qweb import keep_query
 
 CFDI_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 CANCELLATION_REASON_SELECTION = [
@@ -2309,6 +2311,26 @@ Content-Disposition: form-data; name="xml"; filename="xml"
 
         if self._can_commit():
             self.env.cr.commit()
+
+    def _l10n_mx_edi_get_extra_common_report_values(self, l10n_mx_edi_cfdi_attachment):
+        cfdi_infos = self._decode_cfdi_attachment(l10n_mx_edi_cfdi_attachment.raw)
+        if not cfdi_infos:
+            return {}
+
+        barcode_value_params = keep_query(
+            id=cfdi_infos['uuid'],
+            re=cfdi_infos['supplier_rfc'],
+            rr=cfdi_infos['customer_rfc'],
+            tt=cfdi_infos['amount_total'],
+        )
+        barcode_sello = url_quote_plus(cfdi_infos['sello'][-8:], safe='=/').replace('%2B', '+')
+        barcode_value = url_quote_plus(f'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?{barcode_value_params}&fe={barcode_sello}')
+        barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180'
+
+        return {
+            **cfdi_infos,
+            'barcode_src': barcode_src,
+        }
 
     # -------------------------------------------------------------------------
     # SAT

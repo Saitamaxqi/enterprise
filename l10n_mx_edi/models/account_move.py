@@ -4,7 +4,6 @@ import logging
 from lxml import etree
 from pytz import timezone
 import re
-from werkzeug.urls import url_quote_plus
 
 from odoo import api, fields, models, Command, _
 from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import (
@@ -18,7 +17,6 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.tools import frozendict
 from odoo.tools.float_utils import float_round
 from odoo.tools.sql import column_exists, create_column
-from odoo.addons.base.models.ir_qweb import keep_query
 
 _logger = logging.getLogger(__name__)
 
@@ -410,34 +408,13 @@ class AccountMove(models.Model):
         '''
         return '%s|%s' % (code, ','.join(uuids))
 
-    def _l10n_mx_edi_get_extra_common_report_values(self):
-        self.ensure_one()
-        cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(self.l10n_mx_edi_cfdi_attachment_id.raw)
-        if not cfdi_infos:
-            return {}
-
-        barcode_value_params = keep_query(
-            id=cfdi_infos['uuid'],
-            re=cfdi_infos['supplier_rfc'],
-            rr=cfdi_infos['customer_rfc'],
-            tt=cfdi_infos['amount_total'],
-        )
-        barcode_sello = url_quote_plus(cfdi_infos['sello'][-8:], safe='=/').replace('%2B', '+')
-        barcode_value = url_quote_plus(f'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?{barcode_value_params}&fe={barcode_sello}')
-        barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180&quiet=0'
-
-        return {
-            **cfdi_infos,
-            'barcode_src': barcode_src,
-        }
-
     def _l10n_mx_edi_get_extra_invoice_report_values(self):
         """ Collect extra values used to render the invoice PDF report containing CFDI information.
 
         :return: A python dictionary.
         """
         self.ensure_one()
-        cfdi_infos = self._l10n_mx_edi_get_extra_common_report_values()
+        cfdi_infos = self.env['l10n_mx_edi.document']._l10n_mx_edi_get_extra_common_report_values(self.l10n_mx_edi_cfdi_attachment_id)
         if not cfdi_infos:
             return cfdi_infos
 
@@ -455,7 +432,7 @@ class AccountMove(models.Model):
         :return: A python dictionary.
         """
         self.ensure_one()
-        cfdi_infos = self._l10n_mx_edi_get_extra_common_report_values()
+        cfdi_infos = self.env['l10n_mx_edi.document']._l10n_mx_edi_get_extra_common_report_values(self.l10n_mx_edi_cfdi_attachment_id)
         if not cfdi_infos:
             return cfdi_infos
 

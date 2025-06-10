@@ -3,6 +3,7 @@ import uuid
 
 import requests
 from werkzeug.urls import url_quote, url_quote_plus
+from datetime import datetime
 
 from odoo import api, models, fields, _
 from odoo.addons.base.models.ir_qweb import keep_query
@@ -214,11 +215,15 @@ class StockPicking(models.Model):
                 'transp_internac': "No",
             }
 
+        # Get stamp date in ISO 8601 Format for the QR code
+        cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(self.l10n_mx_edi_cfdi_attachment_id.raw)
+        stamp_date = datetime.strptime(cfdi_infos['stamp_date'], "%Y-%m-%d %H:%M:%S").isoformat()
+
         # Generate QR code of the URL to access the service regarding the current guide document (legal requirement)
         barcode_value = url_quote_plus(f"https://verificacfdi.facturaelectronica.sat.gob.mx/verificaccp/default.aspx?"
                                        f"IdCCP={cfdi_values['idccp']}&"
                                        f"FechaOrig={cfdi_values['cfdi_date']}&"
-                                       f"FechaTimb={cfdi_values['scheduled_date']}")
+                                       f"FechaTimb={stamp_date}")
         barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180&quiet=0'
 
         return {
@@ -264,22 +269,7 @@ class StockPicking(models.Model):
 
     def _l10n_mx_edi_get_extra_picking_report_values(self):
         self.ensure_one()
-        cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(self.l10n_mx_edi_cfdi_attachment_id.raw)
-
-        barcode_value_params = keep_query(
-            id=cfdi_infos['uuid'],
-            re=cfdi_infos['supplier_rfc'],
-            rr=cfdi_infos['customer_rfc'],
-            tt=cfdi_infos['amount_total'],
-        )
-        barcode_sello = url_quote_plus(cfdi_infos['sello'][-8:], safe='=/').replace('%2B', '+')
-        barcode_value = url_quote_plus(f'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?{barcode_value_params}&fe={barcode_sello}')
-        barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180&quiet=0'
-
-        return {
-            **cfdi_infos,
-            'barcode_src': barcode_src,
-        }
+        return self.env['l10n_mx_edi.document']._l10n_mx_edi_get_extra_common_report_values(self.l10n_mx_edi_cfdi_attachment_id)
 
     def _get_mail_thread_data_attachments(self):
         # EXTENDS 'stock'
@@ -516,6 +506,7 @@ class StockPicking(models.Model):
             'estado': partner.state_id.code,
             'pais': partner.country_id.l10n_mx_edi_code,
             'municipio': partner.city_id.l10n_mx_edi_code or partner.city,
+            'localidad': partner.l10n_mx_edi_locality,
         }
 
     @api.model
