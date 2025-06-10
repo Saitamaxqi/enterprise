@@ -814,12 +814,9 @@ registry.category("web_tour.tours").add("web_studio.test_report_xml_other_record
         },
         {
             trigger: ".o-web-studio-report-container :iframe body p:contains(partner_1)",
-            run() {
-                assertEqual(
-                    document.querySelector(".o-web-studio-report-search-record input").value,
-                    "partner_1"
-                );
-            },
+        },
+        {
+            trigger: ".o-web-studio-report-search-record input:value(partner_1)",
         },
         {
             trigger: ".o-web-studio-report-pager .o_pager_next",
@@ -827,12 +824,9 @@ registry.category("web_tour.tours").add("web_studio.test_report_xml_other_record
         },
         {
             trigger: ".o-web-studio-report-container :iframe body p:contains(partner_2)",
-            run() {
-                assertEqual(
-                    document.querySelector(".o-web-studio-report-search-record input").value,
-                    "partner_2"
-                );
-            },
+        },
+        {
+            trigger: ".o-web-studio-report-search-record input:value(partner_2)",
         },
     ],
 });
