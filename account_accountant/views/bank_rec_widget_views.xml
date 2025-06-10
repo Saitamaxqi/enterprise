@@ -382,6 +382,7 @@
                     <field name="company_currency_id" column_invisible="True"/>
                     <field name="amount_residual_currency" decoration-muted="amount_residual_currency &lt; 0" string="Amount Due"/>
                     <field name="currency_id" column_invisible="True"/>
+                    <field name="move_id" column_invisible="True"/>
                 </list>
             </field>
         </record>

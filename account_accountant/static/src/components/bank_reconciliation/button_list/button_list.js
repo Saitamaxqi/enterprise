@@ -88,12 +88,8 @@ export class BankRecButtonList extends Component {
             list_view_ref: "account_accountant.view_account_list_bank_rec_widget",
             search_view_ref: "account_accountant.view_account_search_bank_rec_widget",
             ...(this.statementLineData.amount > 0
-                ? { search_default_bankrec_income: 1, preferred_account_type: "income" }
-                : {
-                      search_default_bankrec_expense: 1,
-                      search_default_bankrec_currentasset: 1,
-                      preferred_account_type: "expense",
-                  }),
+                ? { preferred_account_type: "income" }
+                : { preferred_account_type: "expense" }),
         };
 
         this.addDialog(SelectCreateDialog, {

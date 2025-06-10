@@ -51,11 +51,11 @@
                                 </t>
                             </div>
                             <!-- Only available on large screen -->
-                            <div class="hide-mobile o_top_button_line text-truncate">
+                            <div class="hide-mobile o_top_button_line text-truncate align-items-start">
                                 <BankRecButtonList t-props="buttonListProps" isTopLine="true" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled"/>
                                 <span name="reconciled_line_name" class="text-start text-truncate text-muted" t-esc="reconciledLineName" t-if="!isUnfolded"/>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-start justify-content-between">
                                 <span class="text-muted w-50 text-end" t-if="recordData.foreign_currency_id">
                                     <t t-esc="formattedAmountCurrencyInForeign"/>
                                 </span>
