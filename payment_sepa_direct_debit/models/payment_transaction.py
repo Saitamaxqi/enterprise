@@ -1,9 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import logging
+
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.payment import utils as payment_utils
+
+_logger = logging.getLogger(__name__)
 
 
 class PaymentTransaction(models.Model):
@@ -29,79 +32,36 @@ class PaymentTransaction(models.Model):
 
     def _get_specific_processing_values(self, processing_values):
         """ Override of `payment` to return SEPA-specific processing values. """
-        res = super()._get_specific_processing_values(processing_values)
         if self.provider_id.custom_mode != 'sepa_direct_debit' or self.operation == 'online_token':
-            return res
+            return super()._get_specific_processing_values(processing_values)
 
         return {
             'access_token': payment_utils.generate_access_token(self.reference),
         }
 
     def _send_payment_request(self):
-        """ Override of payment to create the related `account.payment` and notify the customer.
-
-        Note: self.ensure_one()
-
-        :return: None
-        :raise: UserError if the transaction is not linked to a token
-        :raise: UserError if the transaction is not linked to a valid mandate
-        """
-        super()._send_payment_request()
+        """Override of `payment` to create the related `account.payment` and notify the customer."""
         if self.provider_id.custom_mode != 'sepa_direct_debit':
-            return
-
-        if not self.token_id:
-            raise UserError("SEPA: " + _("The transaction is not linked to a token."))
+            return super()._send_payment_request()
 
         mandate = self.token_id.sdd_mandate_id
         if not mandate:
-            raise UserError("SEPA: " + _("The token is not linked to a mandate."))
+            self._set_error(_("The token is not linked to a mandate."))
+            return
 
         mandate._update_and_partition_state_by_validity()
         if mandate.state != 'active':
-            raise UserError("SEPA: " + _("The mandate is invalid."))
-
-        # There is no provider to send a payment request to, but we handle empty notification data
-        # to let the payment engine call the generic processing methods.
-        self._handle_notification_data('sepa_direct_debit', {'reference': self.reference})
-
-    def _get_tx_from_notification_data(self, provider_code, notification_data):
-        """ Override of `payment` to find the transaction based on dummy data.
-
-        :param str provider_code: The provider_code of the provider that handled the transaction.
-        :param dict notification_data: The dummy notification data.
-        :return: The transaction if found.
-        :rtype: recordset of `payment.transaction`
-        :raise ValidationError: If the data match no transaction.
-        """
-        tx = super()._get_tx_from_notification_data(provider_code, notification_data)
-        if provider_code != 'sepa_direct_debit' or len(tx) == 1:
-            return tx
-
-        reference = notification_data.get('reference')
-        tx = self.search([
-            ('reference', '=', reference),
-            ('provider_code', '=', 'custom'),
-            ('provider_id.custom_mode', '=', 'sepa_direct_debit'),
-        ])
-        if not tx:
-            raise ValidationError(
-                "SEPA: " + _("No transaction found matching reference %s.", reference)
-            )
-        return tx
-
-    def _process_notification_data(self, notification_data):
-        """ Override of `payment` to process the transaction based on dummy data.
-
-        Note: self.ensure_one()
-
-        :param dict notification_data: The dummy notification data.
-        :return: None
-        :raise ValidationError: If inconsistent data were received.
-        """
-        super()._process_notification_data(notification_data)
-        if self.provider_id.custom_mode != 'sepa_direct_debit':
+            self._set_error(_("The mandate is invalid."))
             return
+
+        # There is no provider to send a payment request to, but we handle empty payment data
+        # to let the payment engine call the generic processing methods.
+        self._process('sepa_direct_debit', {'reference': self.reference})
+
+    def _apply_updates(self, payment_data):
+        """Override of `payment` to update the transaction based on the payment data."""
+        if self.provider_id.custom_mode != 'sepa_direct_debit':
+            return super()._apply_updates(payment_data)
 
         if self.operation in ('online_token', 'offline'):
             self._set_done()  # SEPA transactions are confirmed as soon as the mandate is valid.

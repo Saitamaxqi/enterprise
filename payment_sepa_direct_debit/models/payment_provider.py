@@ -15,7 +15,7 @@ class PaymentProvider(models.Model):
 
     custom_mode = fields.Selection(selection_add=[('sepa_direct_debit', "SEPA Direct Debit")])
 
-    #=== COMPUTE METHODS ===#
+    # === COMPUTE METHODS === #
 
     def _compute_feature_support_fields(self):
         """ Override of `payment` to enable additional features. """
@@ -24,7 +24,14 @@ class PaymentProvider(models.Model):
             'support_tokenization': True,
         })
 
-    #=== CONSTRAINT METHODS ===#
+    def _get_supported_currencies(self):
+        """ Override of `payment` to return EUR as the only supported currency. """
+        supported_currencies = super()._get_supported_currencies()
+        if self.custom_mode == 'sepa_direct_debit':
+            supported_currencies = supported_currencies.filtered(lambda c: c.name == 'EUR')
+        return supported_currencies
+
+    # === CONSTRAINT METHODS === #
 
     @api.constrains('state', 'journal_id')
     def _check_journal_iban_is_valid(self):
@@ -59,7 +66,16 @@ class PaymentProvider(models.Model):
                     ', '.join(non_sepa_countries.mapped('name'))
                 ))
 
-    #=== BUSINESS METHODS ===#
+    # === CRUD METHODS === #
+
+    def _get_default_payment_method_codes(self):
+        """ Override of `payment` to return the default payment method codes. """
+        self.ensure_one()
+        if self.custom_mode != 'sepa_direct_debit':
+            return super()._get_default_payment_method_codes()
+        return const.DEFAULT_PAYMENT_METHOD_CODES
+
+    # === BUSINESS METHODS === #
 
     @api.model
     def _get_compatible_providers(self, *args, is_validation=False, report=None, **kwargs):
@@ -85,13 +101,6 @@ class PaymentProvider(models.Model):
             )
 
         return providers
-
-    def _get_supported_currencies(self):
-        """ Override of `payment` to return EUR as the only supported currency. """
-        supported_currencies = super()._get_supported_currencies()
-        if self.custom_mode == 'sepa_direct_debit':
-            supported_currencies = supported_currencies.filtered(lambda c: c.name == 'EUR')
-        return supported_currencies
 
     def _is_tokenization_required(self, **kwargs):
         """ Override of payment to hide the "Save my payment details" input in checkout forms.
@@ -174,7 +183,7 @@ class PaymentProvider(models.Model):
         """
         # Since we're in a sudoed env, we need to verify the partner
         if mandate.partner_id != partner.commercial_partner_id:
-            raise AccessError("SEPA: " + _("The mandate owner and customer do not match."))
+            raise AccessError(_("The mandate owner and customer do not match."))
 
         return self.env['payment.token'].create({
             'provider_id': self.id,
@@ -185,12 +194,7 @@ class PaymentProvider(models.Model):
             'sdd_mandate_id': mandate.id,
         })
 
-    def _get_provider_name(self):
-        """ Override of `payment` to display "Managed by SEPA" instead of "Managed by Custom" on the
-        payment form. """
-        if self.code != 'custom' or self.custom_mode != 'sepa_direct_debit':
-            return super()._get_provider_name()
-        return dict(self._fields['custom_mode']._description_selection(self.env))[self.custom_mode]
+    # === SETUP METHODS === #
 
     def _get_code(self):
         """ Override of `payment` to trick the JS into believing the code is 'sepa_direct_debit'.
@@ -199,10 +203,3 @@ class PaymentProvider(models.Model):
         if self.code == 'custom' and self.custom_mode == 'sepa_direct_debit':
             return self.custom_mode
         return res
-
-    def _get_default_payment_method_codes(self):
-        """ Override of `payment` to return the default payment method codes. """
-        default_codes = super()._get_default_payment_method_codes()
-        if self.custom_mode != 'sepa_direct_debit':
-            return default_codes
-        return const.DEFAULT_PAYMENT_METHOD_CODES

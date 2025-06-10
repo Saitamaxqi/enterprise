@@ -184,7 +184,7 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
         )
         with patch(
             'odoo.addons.payment.models.payment_transaction.PaymentTransaction'
-            '._send_payment_request'
+            '._charge_with_token'
         ) as patched:
             self.subscription._do_payment(self._create_token(), self.invoice)
             patched.assert_called_once()

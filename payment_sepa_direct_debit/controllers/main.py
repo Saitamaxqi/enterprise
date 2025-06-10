@@ -21,13 +21,13 @@ class SepaDirectDebitController(Controller):
         :param str iban: The IBAN of the partner's bank account.
         :param str access_token: The access token used to verify the transaction's reference.
         :return: None
-        :raise ValidationError: If the transaction wasn't found.
-        :raise ValidationError: If the IBAN is invalid.
         :raise NotFound: If the access token is invalid.
         """
-        tx_sudo = request.env['payment.transaction'].sudo()._get_tx_from_notification_data(
+        tx_sudo = request.env['payment.transaction'].sudo()._search_by_reference(
             'sepa_direct_debit', {'reference': reference}
         )
+        if not tx_sudo:
+            return
 
         if not payment_utils.check_access_token(access_token, tx_sudo.reference):
             raise NotFound()
@@ -56,5 +56,5 @@ class SepaDirectDebitController(Controller):
         iban = sanitize_account_number(iban)
         validate_iban(iban)
         if not iban:
-            raise ValidationError("SEPA: " + _("Missing or invalid IBAN."))
+            raise ValidationError(_("Missing or invalid IBAN."))
         return iban
