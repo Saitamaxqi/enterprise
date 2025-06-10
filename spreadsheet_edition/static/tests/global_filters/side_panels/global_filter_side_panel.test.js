@@ -281,9 +281,7 @@ test("Choose any year in a year picker by clicking the picker", async function (
     expect(year).toHaveValue("2024");
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
         type: "year",
-        period: {
-            year: 2024,
-        },
+        year: 2024,
     });
 });
 
@@ -310,18 +308,14 @@ test("Choose any year in a year picker via input", async function () {
     expect(year).toHaveValue(String(this_year - 127));
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
         type: "year",
-        period: {
-            year: this_year - 127,
-        },
+        year: this_year - 127,
     });
 
     await selectYear(String(this_year + 32));
     expect(year).toHaveValue(String(this_year + 32));
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
         type: "year",
-        period: {
-            year: this_year + 32,
-        },
+        year: this_year + 32,
     });
 });
 
@@ -387,10 +381,8 @@ test("Readonly user can update date filter values", async function () {
 
     expect(model.getters.getGlobalFilterValue("43")).toEqual({
         type: "quarter",
-        period: {
-            year: 2021,
-            quarter: 2,
-        },
+        year: 2021,
+        quarter: 2,
     });
 });
 
