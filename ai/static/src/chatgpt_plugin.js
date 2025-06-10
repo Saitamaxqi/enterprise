@@ -5,6 +5,7 @@ import { withSequence } from "@html_editor/utils/resource";
 import { isContentEditable } from "@html_editor/utils/dom_info";
 import { unwrapContents } from "@html_editor/utils/dom";
 import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
+import { user } from "@web/core/user";
 
 export class ChatGPTPlugin extends Plugin {
     static id = "chatgpt";
@@ -24,6 +25,7 @@ export class ChatGPTPlugin extends Plugin {
                 title: _t("ChatGPT"),
                 description: _t("Generate or transform content with AI"),
                 run: this.openDialog.bind(this),
+                isAvailable: () => user.isInternalUser,
             },
         ],
         toolbar_items: [
@@ -43,7 +45,6 @@ export class ChatGPTPlugin extends Plugin {
             categoryId: "ai",
             commandId: "openChatGPTDialog",
             icon: "fa-magic",
-            // isAvailable: () => !this.odooEditor.isSelectionInBlockRoot(), // TODO!
         },
 
         power_buttons: withSequence(20, {
