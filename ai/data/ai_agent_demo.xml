@@ -17,6 +17,5 @@ To do so, keep your answer really short, making it as clear as possible.
         <field name="llm_model">gpt-4</field>
         <field name="attachment_ids" eval="[(4, ref('attachment_ai_agent_1'))]"/>
         <field name="create_uid" ref="base.user_admin"/>
-        <field name="urls">https://www.odoo.com/privacy&#10;https://www.odoo.com/gdpr&#10;https://iap.odoo.com/privacy</field>
     </record>
 </odoo>
