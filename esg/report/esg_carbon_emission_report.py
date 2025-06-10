@@ -76,7 +76,7 @@ class EsgCarbonEmissionReport(models.Model):
                 FROM account_move_line aml
                 LEFT JOIN esg_emission_factor ef ON ef.id = aml.esg_emission_factor_id
                 LEFT JOIN account_account aa ON aa.id = aml.account_id
-                WHERE aml.quantity > 0 AND aml.parent_state = 'posted' AND aa.account_type IN ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed')
+                WHERE aml.quantity > 0 AND aml.parent_state = 'posted' AND aa.account_type IN {self.env['account.account'].ESG_VALID_ACCOUNT_TYPES}
             )
         """)
 

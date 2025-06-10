@@ -26,7 +26,7 @@ class FactorsAutoAssignmentWizard(models.TransientModel):
         if not self.replace_previous_factors:
             domain &= Domain('esg_emission_factor_id', '=', False)
 
-        domain &= Domain('account_id.account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'))
+        domain &= Domain('account_id.account_type', 'in', self.env['account.account'].ESG_VALID_ACCOUNT_TYPES)
         move_lines = self.env['account.move.line'].search(domain)
         updated_amls.update(-id for id in move_lines._assign_factors_to_move_lines(factors=emission_factors))
 

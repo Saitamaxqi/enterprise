@@ -27,7 +27,7 @@ class AccountMoveLine(models.Model):
     )
     def _compute_esg_emission_multiplicator(self):
         for line in self:
-            if line.account_type not in ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed') or not line.esg_emission_factor_id:
+            if line.account_type not in self.env['account.account'].ESG_VALID_ACCOUNT_TYPES or not line.esg_emission_factor_id:
                 line.esg_emission_multiplicator = 0
             elif line.esg_emission_factor_id.compute_method == 'monetary':
                 aml_currency = line.currency_id or line.company_id.currency_id
@@ -57,7 +57,7 @@ class AccountMoveLine(models.Model):
     @api.depends('esg_emission_multiplicator', 'esg_emission_factor_id.esg_emissions_value')
     def _compute_esg_emissions_value(self):
         for line in self:
-            if line.account_type not in ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'):
+            if line.account_type not in self.env['account.account'].ESG_VALID_ACCOUNT_TYPES:
                 line.esg_emissions_value = 0
             else:
                 line.esg_emissions_value = line.esg_emission_factor_id.esg_emissions_value * line.esg_emission_multiplicator
@@ -65,14 +65,14 @@ class AccountMoveLine(models.Model):
     @api.depends('esg_emissions_value', 'esg_uncertainty_value')
     def _compute_esg_uncertainty_absolute_value(self):
         for line in self:
-            if line.account_type not in ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'):
+            if line.account_type not in self.env['account.account'].ESG_VALID_ACCOUNT_TYPES:
                 line.esg_uncertainty_absolute_value = 0
             else:
                 line.esg_uncertainty_absolute_value = line.esg_emissions_value * line.esg_uncertainty_value
 
     @api.depends('product_id', 'account_id', 'partner_id')
     def _compute_esg_emission_factor_id(self):
-        move_lines = self.filtered(lambda aml: aml.account_type in ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'))
+        move_lines = self.filtered(lambda aml: aml.account_type in self.env['account.account'].ESG_VALID_ACCOUNT_TYPES)
         if move_lines:
             move_lines._assign_factors_to_move_lines(no_match_reset=True)
 

@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import format_list
 
 
 class EsgAssignationLine(models.Model):
@@ -10,7 +11,7 @@ class EsgAssignationLine(models.Model):
     account_id = fields.Many2one(
         'account.account',
         groups='account.group_account_invoice',
-        domain=[('account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed'))],
+        domain=lambda self: [('account_type', 'in', self.env['account.account'].ESG_VALID_ACCOUNT_TYPES)],
     )
     partner_id = fields.Many2one('res.partner')
     product_id = fields.Many2one('product.product')
@@ -22,6 +23,11 @@ class EsgAssignationLine(models.Model):
 
     @api.constrains('account_id', 'partner_id', 'product_id')
     def _check_unique_assignation_line_from_all_factors(self):
+        if any(account_type not in self.env['account.account'].ESG_VALID_ACCOUNT_TYPES for account_type in self.account_id.mapped('account_type')):
+            raise ValidationError(self.env._(
+                'The account type must be of type %(valid_account_type_names)s.',
+                valid_account_type_names=format_list(self.env, self.env['account.account'].ESG_VALID_ACCOUNT_TYPE_NAMES, 'or'),
+            ))
         data = self.env['esg.assignation.line']._read_group(
             domain=[
                 '|', '|',

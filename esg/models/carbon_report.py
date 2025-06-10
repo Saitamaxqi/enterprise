@@ -101,7 +101,7 @@ class CarbonReportHandler(models.AbstractModel):
                     WHERE account_id IN (
                         SELECT id
                         FROM account_account
-                        WHERE account_type IN ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed')
+                        WHERE account_type IN %(valid_account_types)s
                     )
 
                     UNION ALL
@@ -127,6 +127,7 @@ class CarbonReportHandler(models.AbstractModel):
             select_groupby_sql=SQL(', %s AS grouping_key', groupby_sql) if groupby_sql else SQL(),
             table_references=query.from_clause,
             stored_aml_fields=stored_aml_fields,
+            valid_account_types=self.env['account.account'].ESG_VALID_ACCOUNT_TYPES,
             emission_shadowing_fields_to_insert=emission_shadowing_fields_to_insert,
             search_condition=query.where_clause,
             group_by_groupby_sql=SQL('GROUP BY %s', groupby_sql) if groupby_sql else SQL(),

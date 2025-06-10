@@ -6,10 +6,6 @@ from odoo.tests import Form
 
 class TestEsgSource(TestEsgCommon):
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
     def test_emission_source_flows(self):
         source_1 = self.env['esg.emission.source'].create({
             'name': 'Source 1',

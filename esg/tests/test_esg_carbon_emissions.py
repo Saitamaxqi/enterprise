@@ -3,15 +3,12 @@ from freezegun import freeze_time
 
 from odoo import fields
 from odoo.tools import float_compare
+from odoo.exceptions import ValidationError
 
 from odoo.addons.esg.tests.esg_common import TestEsgCommon
 
 
 class TestEsgCarbonEmission(TestEsgCommon):
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
 
     def test_physical_method_other_emission_value(self):
         other_emission = self.env['esg.other.emission'].create({
@@ -196,7 +193,7 @@ class TestEsgCarbonEmission(TestEsgCommon):
         for account, esg_usable in self.accounts_to_esg_usable.items():
             # Test with all usable account types and a non-usable one.
             with self.subTest(account=account, esg_usable=esg_usable):
-                self.env['esg.assignation.line'].create([
+                create_values = [
                     {
                         'product_id': self.product_a.id,
                         'partner_id': self.partner_a.id,
@@ -209,17 +206,22 @@ class TestEsgCarbonEmission(TestEsgCommon):
                         'account_id': account.id,
                         'esg_emission_factor_id': self.emission_factor_delivery_transportation.id,
                     },
-                ])
-                bill_line = self.env['account.move.line'].create({
-                    'move_id': self.bill_1.id,
-                    'product_id': self.product_b.id,
-                    'account_id': account.id,
-                })
-                self.assertEqual(
-                    bill_line.esg_emission_factor_id,
-                    self.emission_factor_delivery_transportation if esg_usable else self.env['esg.emission.factor'],
-                    'The assignation rule 2 matches the most criteria, so it should be used to assign this emission factor to the move line',
-                )
+                ]
+                if not esg_usable:
+                    with self.assertRaises(ValidationError, msg='The account should have a valid type for ESG assignation rules'):
+                        self.env['esg.assignation.line'].create(create_values)
+                else:
+                    self.env['esg.assignation.line'].create(create_values)
+                    bill_line = self.env['account.move.line'].create({
+                        'move_id': self.bill_1.id,
+                        'product_id': self.product_b.id,
+                        'account_id': account.id,
+                    })
+                    self.assertEqual(
+                        bill_line.esg_emission_factor_id,
+                        self.emission_factor_delivery_transportation if esg_usable else self.env['esg.emission.factor'],
+                        'The assignation rule 2 matches the most criteria, so it should be used to assign this emission factor to the move line',
+                    )
 
     def test_auto_assign_factor_to_account_move_line_case_2(self):
         # Assignation rule 1 and 2
@@ -253,21 +255,26 @@ class TestEsgCarbonEmission(TestEsgCommon):
         for account, esg_usable in self.accounts_to_esg_usable.items():
             # Test with all usable account types and a non-usable one.
             with self.subTest(account=account, esg_usable=esg_usable):
-                self.env['esg.assignation.line'].create([{
+                create_values = {
                     'partner_id': self.partner_a.id,
                     'account_id': account.id,
                     'esg_emission_factor_id': self.emission_factor_delivery_transportation.id,
-                }])
-                bill_line = self.env['account.move.line'].create({
-                    'move_id': self.bill_1.id,
-                    'product_id': self.product_a.id,
-                    'account_id': account.id,
-                })
-                self.assertEqual(
-                    bill_line.esg_emission_factor_id,
-                    self.emission_factor_computers_production if esg_usable else self.env['esg.emission.factor'],
-                    'The assignation rule 1 matches the most important criteria (product > partner > account), so it should be used to assign this emission factor to the move line',
-                )
+                }
+                if not esg_usable:
+                    with self.assertRaises(ValidationError, msg='The account should have a valid type for ESG assignation rules'):
+                        self.env['esg.assignation.line'].create(create_values)
+                else:
+                    self.env['esg.assignation.line'].create(create_values)
+                    bill_line = self.env['account.move.line'].create({
+                        'move_id': self.bill_1.id,
+                        'product_id': self.product_a.id,
+                        'account_id': account.id,
+                    })
+                    self.assertEqual(
+                        bill_line.esg_emission_factor_id,
+                        self.emission_factor_computers_production if esg_usable else self.env['esg.emission.factor'],
+                        'The assignation rule 1 matches the most important criteria (product > partner > account), so it should be used to assign this emission factor to the move line',
+                    )
 
     def test_auto_assign_factor_to_account_move_line_change_product(self):
         # Assignation rule 1 and 2

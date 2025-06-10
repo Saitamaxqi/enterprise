@@ -94,7 +94,7 @@ class EsgDashboard(Controller):
             ('esg_emission_factor_id', '=', False),
             ('quantity', '>', 0),
             ('parent_state', '=', 'posted'),
-            ('account_id.account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost', 'asset_fixed')),
+            ('account_id.account_type', 'in', request.env['account.account'].ESG_VALID_ACCOUNT_TYPES),
         ], limit=1)
         return {
             'has_unassigned_emissions':  has_unassigned_emissions,

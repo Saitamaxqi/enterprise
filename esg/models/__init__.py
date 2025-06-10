@@ -1,4 +1,5 @@
 from . import (
+    account_account,
     account_move,
     account_move_line,
     carbon_report,
