@@ -203,8 +203,9 @@
                 <field name="previous_appraisal_date" optional="hide"/>
                 <field name="next_appraisal_date" optional="hide"/>
                 <field name="assessment_note" optional="hide"/>
-                <field name="state" widget="badge" readonly="1" 
-                    invisible="state == '1_new'" decoration-success="state == '2_pending'"/>
+                <field name="state" widget="badge" readonly="1"
+                    invisible="state == '1_new'" decoration-success="state == '2_pending'"
+                    decoration-primary="state == '3_done'"/>
                 <field name="company_id" readonly="1" optional="hide"/>
                 <field name="activity_exception_decoration" widget="activity_exception"/>
             </list>
@@ -282,7 +283,7 @@
                 <field name="state"/>
                 <field name="manager_ids" />
                 <field name="waiting_feedback"/>
-                <progressbar field="state" colors='{"1_new": "secondary", "2_pending": "warning", "3_done": "success"}'/>
+                <progressbar field="state" colors='{"1_new": "secondary", "2_pending": "success", "3_done": "primary"}'/>
                 <header>
                     <button name="%(action_open_appraisal_campaign_wizard)d"
                             class="btn btn-secondary"
@@ -293,7 +294,7 @@
                 </header>
                 <templates>
                     <t t-name="card" class="flex-row">
-                            <widget name="web_ribbon" title="Done" bg_color="text-bg-secondary" invisible="state != '3_done'"/>
+                            <widget name="web_ribbon" title="Done" bg_color="text-bg-primary" invisible="state != '3_done'"/>
                             <widget name="web_ribbon" title="Confirmed" bg_color="text-bg-success" invisible="state != '2_pending'"/>
                             <aside class="o_kanban_aside_full">
                                 <field name="avatar_128" widget="background_image" class="d-block position-relative"/>
