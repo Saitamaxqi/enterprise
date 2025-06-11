@@ -16,12 +16,12 @@ patch(PlanningGanttRenderer.prototype, {
     getPlanDialogDomain() {
         let domain = super.getPlanDialogDomain(...arguments);
         if (this.roleIds.length) {
-            domain = Domain.and([domain, [['role_id', 'in', this.roleIds]]]);
+            domain = Domain.and([domain, [["role_id", "in", this.roleIds]]]);
         }
         return Domain.and([
             domain,
-            [['sale_line_id.state', '!=', 'cancel']],
-            [["sale_line_id", "!=", false]]
+            [["sale_line_id.state", "!=", "cancel"]],
+            [["sale_line_id", "!=", false]],
         ]).toList({});
     },
     getSelectCreateDialogProps() {
@@ -30,13 +30,6 @@ patch(PlanningGanttRenderer.prototype, {
         Object.assign(props.context, {
             default_start_datetime: props.context.start_datetime,
             default_end_datetime: props.context.end_datetime,
-            search_default_group_by_resource: false,
-            search_default_group_by_role: false,
-            search_default_role_id: props.context.role_id || false,
-            search_default_project_id: props.context.project_id || false,
-            planning_slots_to_schedule: true,
-            search_default_sale_order_id:
-            props.context.planning_gantt_active_sale_order_id || null,
         });
         const template = xml`
             <p class="o_view_nocontent_smiling_face">${escape(_t("No shifts found!"))}</p>
@@ -115,12 +108,16 @@ patch(PlanningGanttRenderer.prototype, {
         const popoverProps = await super.getPopoverProps(pill);
         const { record } = pill;
         if (record.sale_line_plannable && this.isPlanningManager) {
-            const deleteBtnIndex = popoverProps.buttons.findIndex((btn) => btn.class.includes("btn-delete"));
+            const deleteBtnIndex = popoverProps.buttons.findIndex((btn) =>
+                btn.class.includes("btn-delete")
+            );
             const unscheduleBtn = {
                 text: _t("Unschedule"),
                 class: "btn btn-secondary",
                 onClick: async () => {
-                    await this.model.orm.call(this.model.metaData.resModel, "action_unschedule", [record.id]);
+                    await this.model.orm.call(this.model.metaData.resModel, "action_unschedule", [
+                        record.id,
+                    ]);
                 },
             };
 

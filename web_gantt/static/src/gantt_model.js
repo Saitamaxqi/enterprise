@@ -244,8 +244,12 @@ export class GanttModel extends Model {
         const context = { ...this.getSchedule(params) };
 
         if (params.withDefault) {
+            const { dateStartField, dateStopField } = this.metaData;
             for (const k in context) {
                 context[sprintf("default_%s", k)] = context[k];
+                if (![dateStartField, dateStopField].includes(k)) {
+                    context[sprintf("search_default_%s", k)] = context[k];
+                }
             }
         }
 
