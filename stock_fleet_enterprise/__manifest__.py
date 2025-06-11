@@ -13,4 +13,5 @@
         "views/stock_picking_view.xml",
         "views/stock_picking_batch.xml",
     ],
+    'uninstall_hook': 'uninstall_hook',
 }
