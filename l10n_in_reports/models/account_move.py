@@ -71,7 +71,7 @@ class AccountMove(models.Model):
         string="Display reversed entry warning",
         compute="_compute_l10n_in_reversed_entry_warning"
     )
-    l10n_in_irn_number = fields.Char('IRN Number', readonly=True)
+    l10n_in_irn_number = fields.Char('IRN Number', readonly=True, copy=False)
     l10n_in_gstr_activate_einvoice_fetch = fields.Selection(related="company_id.l10n_in_gstr_activate_einvoice_fetch")
     l10n_in_gst_efiling_feature_enabled = fields.Boolean(related="company_id.l10n_in_gst_efiling_feature")
 
