@@ -85,7 +85,9 @@ class Sign(http.Controller):
         lang_code = sign_request.communication_company_id.partner_id.lang
         lang = request.env['res.lang']._lang_get(lang_code)
         locale = babel_locale_parse(lang_code)
-        date_format = posix_to_ldml(lang.date_format, locale=locale)
+        date_format = ""
+        if lang:
+            date_format = posix_to_ldml(lang.date_format, locale=locale)
 
         return {
             'sign_request': sign_request,
