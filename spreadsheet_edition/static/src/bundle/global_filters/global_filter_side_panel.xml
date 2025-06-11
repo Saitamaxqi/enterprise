@@ -32,18 +32,22 @@
                 </div>
             </div>
             <div t-if="!isReadonly" class="o-section">
-                <div class="o_add_filter o-section-title mb-3">Add a new filter...</div>
-                <div class="o-sidePanelButtons">
+                <div class="o_add_filter o-section-title">Create filter</div>
+                <div class="o_filter_buttons_wrap grid">
                     <button t-on-click="newDate" class="o-button o_global_filter_new_time">
+                        <i class="fa fa-calendar me-2"/>
                         <span>Date</span>
                     </button>
                     <button t-if="hasDataSources()" t-on-click="newRelation" class="o-button o_global_filter_new_relation">
+                        <i class="fa fa-link me-2"/>
                         <span>Relation</span>
                     </button>
                     <button t-on-click="newText" class="o-button o_global_filter_new_text">
+                        <i class="fa fa-font me-2"/>
                         <span>Text</span>
                     </button>
                     <button t-on-click="newBoolean" class="o-button o_global_filter_new_boolean">
+                        <i class="fa fa-toggle-off me-2"/>
                         <span>Yes/No</span>
                     </button>
                 </div>

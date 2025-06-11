@@ -115,4 +115,9 @@
             }
         }
     }
+
+    .o_filter_buttons_wrap {
+        --#{$prefix}columns: 2;
+        --#{$prefix}gap: #{map-get($spacers, 1)};
+    }
 }
