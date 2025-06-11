@@ -10,6 +10,7 @@ class AppointmentQuestion(models.Model):
     _description = "Appointment Questions"
     _order = "sequence,id"
 
+    active = fields.Boolean('Active', default=True)
     sequence = fields.Integer('Sequence')
     appointment_type_ids = fields.Many2many('appointment.type', relation='appointment_type_appointment_question_rel', string='Appointment Types')
     appointment_count = fields.Integer('# Appointments', compute='_compute_appointment_count')

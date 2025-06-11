@@ -12,6 +12,8 @@
                 <separator/>
                 <filter name="filter_is_reusable" string="Reusable" domain="[('is_reusable', '=', True)]"/>
                 <filter name="filter_is_not_reusable" string="Not Reusable" domain="[('is_reusable', '=', False)]"/>
+                <separator/>
+                <filter name="filter_archive" string="Archived" domain="[('active', '=', False)]"/>
                 <group>
                     <filter string="Appointment" name="group_by_appointment" context="{'group_by': 'appointment_type_ids'}"/>
                 </group>
@@ -25,6 +27,8 @@
         <field name="arch" type="xml">
             <form string="Question">
                 <sheet>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="alert alert-warning" role="alert" invisible="appointment_count == 0">
                         This question is used by
                         <button class="oe_link p-0 align-baseline" type="object" name="action_view_appointment_types">

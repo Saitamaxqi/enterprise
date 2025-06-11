@@ -20,7 +20,7 @@ class AppointmentAnswerInput(models.Model):
     _description = "Appointment Answer Inputs"
     _order = "id desc"
 
-    question_id = fields.Many2one('appointment.question', 'Question', required=True, index=True, ondelete="cascade")
+    question_id = fields.Many2one('appointment.question', 'Question', required=True, index=True, ondelete="restrict")
     value_answer_id = fields.Many2one('appointment.answer', 'Selected Answer', ondelete="restrict")
     value_text_box = fields.Text('Text Answer')
     # Reporting
