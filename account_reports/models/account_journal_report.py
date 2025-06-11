@@ -366,6 +366,7 @@ class AccountJournalReportHandler(models.AbstractModel):
                 document_data['global_tax_summary']
             )
 
+        report._add_options_xlsx_sheet(workbook, [print_options])
         workbook.close()
         output.seek(0)
         generated_file = output.read()
