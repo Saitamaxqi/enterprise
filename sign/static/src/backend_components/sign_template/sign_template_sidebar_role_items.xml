@@ -50,7 +50,7 @@
             </div>
             <div t-attf-class="o_sign_sidebar_signer_content {{ props.isCollapsed || props.hasSignRequests? 'd-none' : ''}}">
                 <!-- Sign items for the selected role. -->
-                <div t-attf-class="o_sign_field_type_toolbar_items mt-3">
+                <div t-attf-class="o_sign_field_type_toolbar_items mt-1">
                     <div class="o_sign_sidebar_item_grid">
                         <t t-foreach="props.signItemTypes" t-as="itemType" t-key="itemType.id">
                             <button

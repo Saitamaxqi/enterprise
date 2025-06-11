@@ -30,6 +30,14 @@
         }
     }
 
+    .o_sign_sidebar_documents_header_title,.o_sign_sidebar_signers_header_title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 33px;
+        border-bottom: 1px solid #d8dadd;
+    }
+
     .o_sign_sidebar_signer .fa-pencil {
         display: none;
     }
@@ -48,6 +56,8 @@
             cursor: pointer;
             background-color: #e9ecef;
         }
+        border-bottom: 1px solid #d8dadd;
+        overflow: hidden;
     }
 
     .o_sign_sidebar_document_name_text {
@@ -146,6 +156,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
+        background-color: white;
     }
 
     .o_sign_sidebar_icon {
@@ -182,7 +193,7 @@
 
     .o_sign_sidebar_signer {
         position: relative;
-        padding: 10px 5px;
+        padding: 5px;
         &:hover {
             cursor: pointer;
             background-color: #e9ecef;
@@ -214,6 +225,7 @@
     .o_sign_sidebar_signer_name {
         width: 100%;
         overflow: hidden;
+        height: 35px;
     }
 
     .o_sign_sidebar_item_grid {
@@ -239,6 +251,7 @@
     .o_sign_sidebar_role_input_container {
         display: flex;
         align-items: center;
+        height: 35px;
     }
 
     .o_sign_sidebar_role_muted_input {
