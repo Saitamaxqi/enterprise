@@ -217,7 +217,13 @@ patch(TicketScreen.prototype, {
      */
     getDate(order) {
         if (order?.delivery_identifier) {
-            return order.date_order.setZone("local").toFormat("MM/dd/yyyy HH:mm:ss");
+            if (
+                order.date_order.toLocal().startOf("day").ts ===
+                luxon.DateTime.now().startOf("day").ts
+            ) {
+                return _t("Today");
+            }
+            return order.date_order.toFormat("MM/dd/yyyy");
         }
         return super.getDate(order);
     },

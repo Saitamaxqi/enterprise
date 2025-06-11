@@ -61,7 +61,7 @@
             <attribute name="t-if">!order?.delivery_identifier and ui.isSmall</attribute>
         </xpath>
         <xpath expr="//div[@name='delete-column']" position="before">
-            <div class="info-column">
+            <div class="d-flex align-items-center info-column">
                 <CenteredIcon t-if="ui.isSmall and order?.delivery_identifier" icon="'fa fa-info-circle'" class="'btn btn-lg'" t-on-click="() => this._onInfoOrder(order)"/>
             </div>
         </xpath>
