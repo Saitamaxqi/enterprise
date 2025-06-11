@@ -2,12 +2,12 @@ import { expect, test, before, describe } from "@odoo/hoot";
 import { click, queryAll, queryOne, queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import {
+    contains,
     mountWithCleanup,
     defineModels,
     models,
     fields,
     getService,
-    onRpc,
 } from "@web/../tests/web_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
@@ -19,6 +19,8 @@ class AccountMoveLine extends models.Model {
     date = fields.Date({ string: "Date" });
     partner_id = fields.Many2one({ string: "Partner", relation: "partner" });
     amount_residual = fields.Float({ string: "Amount Residual" });
+
+    amount_residual_currency = fields.Float({ string: "Amount Residual Currency" });
 
     currency_id = fields.Many2one({ string: "Currency", relation: "res.currency" });
 
@@ -69,11 +71,13 @@ class AccountMoveLine extends models.Model {
 
     _views = {
         list: /* xml */ `
-            <list string="Account Move Line">
+            <list js_class="bank_rec_dialog_list" string="Account Move Line">
                 <field name="date"/>
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="amount_residual"/>
+                <field name="amount_residual_currency"/>
+                <field name="currency_id"/>
             </list>
         `,
         search: /* xml */ `
@@ -139,14 +143,7 @@ test("BankRecSelectCreateDialog footer with right information", async () => {
     expect(bankReconciliationInfo[2]).toBe("Balance: $ 233.33");
 });
 
-test("BankRecSelectCreateDialog list view counter", async () => {
-    let rpcCounter = 0;
-    onRpc("search_read", async (kwargs) => {
-        if (kwargs.model === "account.move.line" && kwargs.method === "search_read") {
-            rpcCounter++;
-        }
-    });
-
+test("BankRecSelectCreateDialog list view single currency", async () => {
     await mountWithCleanup(WebClient);
     getService("dialog").add(BankRecSelectCreateDialog, {
         noCreate: true,
@@ -165,8 +162,6 @@ test("BankRecSelectCreateDialog list view counter", async () => {
 
     expect("div[name='remaining_amount']").toHaveText("Balance: $ 100.00");
     expect("div.o_facet_values > small.o_facet_value").toHaveText("Jean Pierre");
-    // Check that we only got one call (when the component is set up)
-    expect(rpcCounter).toBe(1);
     // Check that we have 4 checkboxes (Select all + 3 elements)
     let checkboxes = queryAll(".form-check > .form-check-input[type='checkbox']");
     expect(checkboxes.length).toBe(4);
@@ -176,19 +171,95 @@ test("BankRecSelectCreateDialog list view counter", async () => {
     // Unselect this element
     await click(checkboxes[2]);
     await animationFrame();
-    // Check that the rpcCounter is not incremented as we already fetched the data
-    expect(rpcCounter).toBe(1);
+
     await click("div.o_facet_values > button.o_facet_remove");
     await animationFrame();
     // Check that we have 6 checkboxes (Select all + 5 elements)
     checkboxes = queryAll(".form-check > .form-check-input[type='checkbox']");
     expect(checkboxes.length).toBe(6);
-    // Select an element which is not fetched
+
     await click(checkboxes[4]);
     await animationFrame();
     await animationFrame();
-    // Check that we entered a second time in the fetch
-    expect(rpcCounter).toBe(2);
     // Check that the balance is correctly affected by the selection
     expect("div[name='remaining_amount']").toHaveText("Balance: $ 0.00");
+
+    await click(checkboxes[4]);
+    await animationFrame();
+    await animationFrame();
+    expect("div[name='remaining_amount']").toHaveText("Balance: $ 100.00");
+
+    await click(".o_pager_value");
+    await animationFrame();
+    expect(".o_pager_counter .o_pager_value").toHaveValue("1-5");
+
+    await contains("input.o_pager_value").edit("1-2");
+    await click(document.body);
+    await animationFrame();
+
+    checkboxes = queryAll(".form-check > .form-check-input[type='checkbox']");
+    expect(checkboxes.length).toBe(3);
+    await click(checkboxes[0]);
+    await animationFrame();
+
+    await contains(`.o_select_domain`).click();
+    await animationFrame();
+
+    expect("div[name='remaining_amount']").toHaveText("Balance: $ -935.00");
+});
+
+test("BankRecSelectCreateDialog list view multi currencies", async () => {
+    AccountMoveLine._records.push({
+        id: 6,
+        name: "INV/2025/0006",
+        date: "2025-01-15",
+        partner_id: 3,
+        amount_residual: -100,
+        amount_residual_currency: -200,
+        currency_id: 2,
+    });
+    AccountMoveLine._records.push({
+        id: 7,
+        name: "INV/2025/0007",
+        date: "2025-01-15",
+        partner_id: 3,
+        amount_residual: -100,
+        amount_residual_currency: -100,
+        currency_id: 1,
+    });
+    await mountWithCleanup(WebClient);
+    getService("dialog").add(BankRecSelectCreateDialog, {
+        noCreate: true,
+        resModel: "account.move.line",
+        suspenseAccountLine: {
+            amount_currency: 100,
+            currency_id: { id: 2 },
+            company_currency_id: { id: 1 },
+        },
+        reference: "A useless reference",
+        date: luxon.DateTime.now(),
+        context: { search_default_partner_id: 3 },
+        domain: [],
+    });
+    await animationFrame();
+    expect("div[name='remaining_amount']").toHaveText("Balance: 100.00 €");
+
+    const checkboxes = queryAll(".form-check > .form-check-input[type='checkbox']");
+    expect(checkboxes.length).toBe(4);
+
+    await click(checkboxes[2]);
+    await animationFrame();
+    await animationFrame();
+    expect("div[name='remaining_amount']").toHaveText("Balance: -100.00 €");
+
+    await click(checkboxes[2]);
+    await animationFrame();
+    await animationFrame();
+    expect("div[name='remaining_amount']").toHaveText("Balance: 100.00 €");
+
+    // Different currencies cannot be computed together
+    await click(checkboxes[3]);
+    await animationFrame();
+    await animationFrame();
+    expect("div[name='remaining_amount']").toHaveText("Balance: /");
 });
