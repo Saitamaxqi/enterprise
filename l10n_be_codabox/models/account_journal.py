@@ -142,7 +142,7 @@ class AccountJournal(models.Model):
                     else:
                         skipped_bank_accounts.add(f"{account_number} ({currency})")
                         continue
-                    stmt_vals = journal._complete_bank_statement_vals(stmt_vals, journal, account_number, 'tmp.coda')
+                    stmt_vals = journal._complete_bank_statement_vals(stmt_vals, journal, account_number, coda_attachment)
                     statement_ids.extend(journal.with_context(skip_pdf_attachment_generation=True)
                                          ._create_bank_statements(stmt_vals, raise_no_imported_file=False)[0])
                 if statement_ids:
@@ -155,7 +155,7 @@ class AccountJournal(models.Model):
                         'res_model': 'account.bank.statement',
                         'res_id': statement_ids[0],
                     })
-                    self.env['account.bank.statement'].browse(statement_ids).attachment_ids |= pdf + coda_attachment
+                    self.env['account.bank.statement'].browse(statement_ids).attachment_ids |= pdf
                     # We may have a lot of statements to import, so we commit after each so that a later error doesn't discard previous work
                     if not modules.module.current_test:
                         self.env.cr.commit()

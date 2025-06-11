@@ -37,6 +37,7 @@ class AccountJournal(models.Model):
         })
         ctx['wizard_id'] = import_wizard.id
         ctx['default_journal_id'] = self.id
+        ctx['attachment_ids'] = attachments.ids
         return {
             'type': 'ir.actions.client',
             'tag': 'import_bank_stmt',

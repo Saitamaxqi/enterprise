@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 
-from odoo import models, tools, _
+from odoo import Command, _, models, tools
 from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.exceptions import UserError, RedirectWarning
 
@@ -60,7 +60,7 @@ class AccountJournal(models.Model):
                             errors[attachment.name].append(_('You have to set a Default Account for the journal: %s', journal.name))
                             continue
                         # Prepare statement data to be used for bank statements creation
-                        stmts_vals = self._complete_bank_statement_vals(stmts_vals, journal, account_number, attachment.name)
+                        stmts_vals = self._complete_bank_statement_vals(stmts_vals, journal, account_number, attachment)
                         # Create the bank statements
                         statement_ids, ignored_qty = self._create_bank_statements(stmts_vals)
                         attachment_ignored_qty += ignored_qty
@@ -229,10 +229,11 @@ class AccountJournal(models.Model):
             raise UserError(message)
         return journal
 
-    def _complete_bank_statement_vals(self, stmts_vals, journal, account_number, attachment_name):
+    def _complete_bank_statement_vals(self, stmts_vals, journal, account_number, attachment):
         for st_vals in stmts_vals:
             if not st_vals.get('reference'):
-                st_vals['reference'] = attachment_name
+                st_vals['reference'] = attachment.name
+                st_vals['attachment_ids'] = [Command.set(attachment.ids)]
             for line_vals in st_vals['transactions']:
                 line_vals['journal_id'] = journal.id
                 unique_import_id = line_vals.get('unique_import_id')
@@ -287,7 +288,7 @@ class AccountJournal(models.Model):
                 # Remove values that won't be used to create records
                 st_vals.pop('transactions', None)
                 # Create the statement
-                st_vals['line_ids'] = [[0, False, line] for line in filtered_st_lines]
+                st_vals['line_ids'] = [Command.create(line) for line in filtered_st_lines]
                 statement = BankStatement.with_context(default_journal_id=self.id).create(st_vals)
                 if not statement.name:
                     statement.name = st_vals['reference']
