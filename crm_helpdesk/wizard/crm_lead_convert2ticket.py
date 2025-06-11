@@ -73,6 +73,7 @@ class CrmLeadConvert2ticket(models.TransientModel):
         # move attachments
         attachments = self.env['ir.attachment'].search([('res_model', '=', 'crm.lead'), ('res_id', '=', lead.id)])
         attachments.sudo().write({'res_model': 'helpdesk.ticket', 'res_id': ticket_sudo.id})
+        lead._message_log(body=_("Lead converted into ticket %s", ticket_sudo._get_html_link()))
         # archive the lead
         lead.action_archive()
 
