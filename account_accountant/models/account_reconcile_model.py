@@ -251,3 +251,15 @@ class AccountReconcileModel(models.Model):
             self._apply_reconcile_models(unreconciled_statement_lines)
 
         return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        reco_models = super().create(vals_list)
+        unreconciled_statement_lines = self.env['account.bank.statement.line'].search([
+            *self._check_company_domain(self.env.company),
+            ('is_reconciled', '=', False),
+        ])
+        if unreconciled_statement_lines:
+            reco_models._apply_reconcile_models(unreconciled_statement_lines)
+
+        return reco_models

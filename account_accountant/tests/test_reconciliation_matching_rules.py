@@ -592,6 +592,34 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': self.rule_2.id},
         ], reconciled_amls=False)
 
+    def test_create_reco_model_apply_on_statement_line(self):
+        bank_line = self.env['account.bank.statement.line'].with_context(auto_statement_processing=True).create([{
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'blblbl',
+                'amount': 100,
+            }]
+        )
+
+        self._check_st_line_matching(bank_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': False},
+        ], reconciled_amls=False)
+
+        new_rule = self.env['account.reconcile.model'].create({
+            'name': 'new rule',
+            'sequence': 3,
+            'match_journal_ids': [Command.set([self.bank_journal.id])],
+            'match_label': 'contains',
+            'match_label_param': 'blblbl',
+            'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+        })
+
+        self._check_st_line_matching(bank_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': new_rule.id},
+        ], reconciled_amls=False)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes
