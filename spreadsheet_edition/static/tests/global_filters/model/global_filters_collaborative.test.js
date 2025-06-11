@@ -38,7 +38,6 @@ test("Add a filter with a default value", async () => {
         label: "41",
         defaultValue: [41],
         modelName: undefined,
-        rangeType: undefined,
     };
     await waitForDataLoaded(alice);
     await waitForDataLoaded(bob);
@@ -67,7 +66,6 @@ test("Edit a filter", async () => {
         defaultValue: [41],
         modelID: undefined,
         modelName: undefined,
-        rangeType: undefined,
     };
     await waitForDataLoaded(bob);
     await waitForDataLoaded(charlie);
@@ -94,7 +92,6 @@ test("Edit a filter and remove it concurrently", async () => {
         defaultValue: [41],
         modelID: undefined,
         modelName: undefined,
-        rangeType: undefined,
     };
     await addGlobalFilter(alice, filter);
     await animationFrame();
@@ -116,7 +113,6 @@ test("Remove a filter and edit it concurrently", async () => {
         defaultValue: [41],
         modelID: undefined,
         modelName: undefined,
-        rangeType: undefined,
     };
     await addGlobalFilter(alice, filter);
     await animationFrame();
@@ -138,7 +134,6 @@ test("Remove a filter and edit another concurrently", async () => {
         defaultValue: [41],
         modelID: undefined,
         modelName: undefined,
-        rangeType: undefined,
     };
     const filter2 = {
         id: "37",
@@ -147,7 +142,6 @@ test("Remove a filter and edit another concurrently", async () => {
         defaultValue: [37],
         modelID: undefined,
         modelName: undefined,
-        rangeType: undefined,
     };
     await addGlobalFilter(alice, filter1);
     await addGlobalFilter(alice, filter2);

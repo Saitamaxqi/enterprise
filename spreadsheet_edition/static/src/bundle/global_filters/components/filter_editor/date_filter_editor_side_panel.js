@@ -1,13 +1,12 @@
 /** @ts-check */
 
 import { AbstractFilterEditorSidePanel } from "./filter_editor_side_panel";
-import { Select } from "../../../components/select/select";
+import { DefaultDateValue } from "@spreadsheet/global_filters/components/default_date_value/default_date_value";
 
 /**
  * @typedef {import("@spreadsheet").GlobalFilter} GlobalFilter
  * @typedef {import("@spreadsheet").OdooField} OdooField
  * @typedef {import("@spreadsheet").FieldMatching} FieldMatching
- * @typedef {import("@spreadsheet").FixedPeriods} FixedPeriods
  */
 
 /**
@@ -17,15 +16,11 @@ export class DateFilterEditorSidePanel extends AbstractFilterEditorSidePanel {
     static template = "spreadsheet_edition.DateFilterEditorSidePanel";
     static components = {
         ...AbstractFilterEditorSidePanel.components,
-        Select,
+        DefaultDateValue,
     };
 
     get type() {
         return "date";
-    }
-
-    onRangeTypeSelected(rangeType) {
-        this.store.update({ rangeType, defaultValue: undefined });
     }
 
     /**

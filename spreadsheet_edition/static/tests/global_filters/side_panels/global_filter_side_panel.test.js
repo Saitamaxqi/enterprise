@@ -1,15 +1,11 @@
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { queryAllTexts } from "@odoo/hoot-dom";
-import { animationFrame, mockDate } from "@odoo/hoot-mock";
+import { mockDate } from "@odoo/hoot-mock";
 import { stores } from "@odoo/o-spreadsheet";
-import {
-    editGlobalFilter,
-    addGlobalFilterWithoutReload,
-} from "@spreadsheet/../tests/helpers/commands";
+import { addGlobalFilterWithoutReload } from "@spreadsheet/../tests/helpers/commands";
 import { getBasicServerData, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { assertDateDomainEqual } from "@spreadsheet/../tests/helpers/date_domain";
 import { THIS_YEAR_GLOBAL_FILTER } from "@spreadsheet/../tests/helpers/global_filter";
-import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
 import { contains, serverState, mountWithCleanup } from "@web/../tests/web_test_helpers";
 
 import { user } from "@web/core/user";
@@ -23,9 +19,6 @@ const { useStoreProvider, ModelStore } = stores;
 defineSpreadsheetModels();
 describe.current.tags("desktop");
 
-const monthsOptionsIds = Array.from({ length: 12 }, (_, i) => `month_${i + 1}`);
-const quarterOptionsIds = Array.from({ length: 4 }, (_, i) => `quarter_${i + 1}`);
-
 /**
  * @typedef {import("@spreadsheet").FixedPeriodDateGlobalFilter} FixedPeriodDateGlobalFilter
  */
@@ -38,15 +31,6 @@ const FILTER_CREATION_SELECTORS = {
     relation: ".o_global_filter_new_relation",
     boolean: ".o_global_filter_new_boolean",
 };
-
-async function selectYear(yearString) {
-    const input = target.querySelector("input.o_datetime_input");
-    // open the YearPicker
-    await contains(input).click();
-    // Change input value
-    await contains(input).edit(yearString);
-    await animationFrame();
-}
 
 class Parent extends Component {
     static template = xml`<GlobalFiltersSidePanel/>`;
@@ -105,7 +89,6 @@ test("Display with an existing 'Date' global filter", async function () {
     addGlobalFilterWithoutReload(model, {
         id: "42",
         type: "date",
-        rangeType: "fixedPeriod",
         label,
     });
     env.openSidePanel = (_, props) => expect.step(props.id);
@@ -196,22 +179,19 @@ test("Edit the value of a relative date filter", async function () {
             type: "date",
             label: "label",
             defaultValue: "last_7_days",
-            rangeType: "relative",
         },
         {
             pivot: { [pivotId]: { chain: "date", type: "date" } },
         }
     );
     await openSidePanel(model, env);
-    const select = target.querySelector("select");
-    expect([...select.querySelectorAll("option")].map((val) => val.value)).toEqual([
-        "",
-        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
-    ]);
-    await contains(select).select("last_12_months");
-    await animationFrame();
+    await contains(".o-filter-value input").click();
+    await contains(".o-dropdown-item[data-id='last_12_months']").click();
 
-    expect(model.getters.getGlobalFilterValue("42")).toBe("last_12_months");
+    expect(model.getters.getGlobalFilterValue("42")).toEqual({
+        type: "relative",
+        period: "last_12_months",
+    });
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
     assertDateDomainEqual("date", "2021-07-01", "2022-06-30", pivotDomain);
 });
@@ -226,97 +206,19 @@ test("Edit the value to empty of a relative date filter", async () => {
             type: "date",
             label: "label",
             defaultValue: "last_7_days",
-            rangeType: "relative",
         },
         {
             pivot: { [pivotId]: { chain: "date", type: "date" } },
         }
     );
     await openSidePanel(model, env);
-    const select = target.querySelector("select");
-    expect([...select.querySelectorAll("option")].map((val) => val.value)).toEqual([
-        "",
-        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
-    ]);
-    await contains(select).select("");
-    await animationFrame();
+    await contains(".o-filter-value input").click();
+    await contains(".o-dropdown-item:not([data-id])").click();
 
     expect(model.getters.getGlobalFilterValue("42")).toBe(undefined);
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
 
     expect(pivotDomain).toEqual([]);
-});
-
-test("Choose any year in a year picker by clicking the picker", async function () {
-    mockDate("2022-07-10 00:00:00");
-    const { model, env } = await createSpreadsheetWithPivot();
-    addGlobalFilterWithoutReload(model, THIS_YEAR_GLOBAL_FILTER);
-    await openSidePanel(model, env);
-
-    const pivots = target.querySelectorAll(".pivot_filter_section");
-    expect(".pivot_filter_section").toHaveCount(1);
-    expect("i.o_side_panel_filter_icon.fa-cog").toHaveCount(1);
-    expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(1);
-    expect(pivots[0].querySelector(".o_side_panel_filter_label")).toHaveText(
-        THIS_YEAR_GLOBAL_FILTER.label
-    );
-
-    expect(".pivot_filter_input input.o_datetime_input").toHaveCount(1);
-    const year = pivots[0].querySelector(".pivot_filter_input input.o_datetime_input");
-
-    const this_year = luxon.DateTime.utc().year;
-    expect(year).toHaveValue(String(this_year));
-
-    await contains(year).click();
-
-    expect(target.querySelector(".o_datetime_picker")).not.toBe(null, {
-        message: "The picker is visible", // Note: don't check actual visibility, because it spawns with an animation and opacity: 0
-    });
-    expect("button.o_zoom_out.o_datetime_button").toHaveProperty("title", "Select decade", {
-        message: "The picker should be displaying the years",
-    });
-
-    await contains(".o_date_item_cell:contains(2024)").click();
-
-    expect(year).toHaveValue("2024");
-    expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
-        type: "year",
-        year: 2024,
-    });
-});
-
-test("Choose any year in a year picker via input", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    addGlobalFilterWithoutReload(model, THIS_YEAR_GLOBAL_FILTER);
-    await openSidePanel(model, env);
-
-    const pivots = target.querySelectorAll(".pivot_filter_section");
-    expect(".pivot_filter_section").toHaveCount(1);
-    expect("i.o_side_panel_filter_icon.fa-cog").toHaveCount(1);
-    expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(1);
-    expect(pivots[0].querySelector(".o_side_panel_filter_label")).toHaveText(
-        THIS_YEAR_GLOBAL_FILTER.label
-    );
-
-    expect(".pivot_filter_input input.o_datetime_input").toHaveCount(1);
-    const year = pivots[0].querySelector(".pivot_filter_input input.o_datetime_input");
-
-    const this_year = luxon.DateTime.utc().year;
-    expect(year).toHaveValue(String(this_year));
-
-    await selectYear(String(this_year - 127));
-    expect(year).toHaveValue(String(this_year - 127));
-    expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
-        type: "year",
-        year: this_year - 127,
-    });
-
-    await selectYear(String(this_year + 32));
-    expect(year).toHaveValue(String(this_year + 32));
-    expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
-        type: "year",
-        year: this_year + 32,
-    });
 });
 
 test("Readonly user can update text filter values", async function () {
@@ -352,7 +254,6 @@ test("Readonly user can update date filter values", async function () {
         id: "43",
         type: "date",
         label: "Date Filter",
-        rangeType: "fixedPeriod",
         defaultValue: "this_quarter",
     });
     model.updateMode("readonly");
@@ -365,24 +266,13 @@ test("Readonly user can update date filter values", async function () {
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(1);
     expect(pivots[0].querySelector(".o_side_panel_filter_label")).toHaveText("Date Filter");
 
-    expect(".pivot_filter_input div.date_filter_values select").toHaveCount(1);
-    const quarter = pivots[0].querySelector(".pivot_filter_input div.date_filter_values select");
-    expect(".pivot_filter_input input.o_datetime_input").toHaveCount(1);
-    const year = pivots[0].querySelector(".pivot_filter_input input.o_datetime_input");
-    expect(quarter).toHaveValue("quarter_4");
-    expect(year).toHaveValue("2022");
-    await contains(quarter).select("quarter_2");
-    await animationFrame();
-    await selectYear("2021");
-    await animationFrame();
-
-    expect(quarter).toHaveValue("quarter_2");
-    expect(year).toHaveValue("2021");
+    await contains(".o-filter-value input").click();
+    await contains(".o-dropdown-item[data-id='quarter'] .btn-previous").click();
 
     expect(model.getters.getGlobalFilterValue("43")).toEqual({
         type: "quarter",
-        year: 2021,
-        quarter: 2,
+        year: 2022,
+        quarter: 3,
     });
 });
 
@@ -458,38 +348,28 @@ test("Can clear a date filter values", async function () {
             id: "43",
             type: "date",
             label: "Date Filter",
-            rangeType: "fixedPeriod",
         },
         {
             pivot: { [pivotId]: { chain: "date", type: "date" } },
         }
     );
     await openSidePanel(model, env);
-    const pivots = target.querySelectorAll(".pivot_filter_section");
-    const quarter = pivots[0].querySelector(".pivot_filter_input div.date_filter_values select");
-    const year = pivots[0].querySelector(".pivot_filter_input input.o_datetime_input");
-    expect(quarter).toHaveValue("empty");
-    expect(year.placeholder).toBe("Select year...");
-    expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([]);
     expect("i.o_side_panel_filter_icon.fa-cog").toHaveCount(1);
     // no default value
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(0);
 
-    await contains(quarter).select("quarter_2");
-    await selectYear("2021");
-    expect(quarter).toHaveValue("quarter_2");
-    expect(year).toHaveValue("2021");
+    await contains(".o-filter-value input").click();
+    await contains(".o-dropdown-item[data-id='last_7_days']").click();
+
     expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([
         "&",
-        ["date", ">=", "2021-04-01"],
-        ["date", "<=", "2021-06-30"],
+        ["date", ">=", "2022-11-04"],
+        ["date", "<=", "2022-11-10"],
     ]);
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(1);
 
     await contains("i.o_side_panel_filter_icon.fa-times").click();
     expect("i.o_side_panel_filter_icon.fa-times").toHaveCount(0);
-    expect(quarter).toHaveValue("empty");
-    expect(year.placeholder).toBe("Select year...");
     expect(model.getters.getPivotComputedDomain(pivotId)).toEqual([]);
 });
 
@@ -612,33 +492,4 @@ test("Can reorder filters with drag & drop", async function () {
     filters = model.getters.getGlobalFilters();
     expect(filters[0].id).toBe(id_2);
     expect(filters[1].id).toBe(id_1);
-});
-
-test("fixedPeriod date filter possible values change with disabledPeriods ", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    const filter = /** @type {FixedPeriodDateGlobalFilter} */ ({
-        id: "43",
-        type: "date",
-        label: "Date Filter",
-        rangeType: "fixedPeriod",
-    });
-    addGlobalFilterWithoutReload(model, filter);
-    await openSidePanel(model, env);
-
-    const filterValuesSelect = target.querySelector(".date_filter_values select");
-    let options = [...filterValuesSelect.querySelectorAll("option")].map((option) => option.value);
-
-    expect(options).toEqual(["empty", ...quarterOptionsIds, ...monthsOptionsIds]);
-
-    await editGlobalFilter(model, { ...filter, disabledPeriods: ["month"] });
-    await animationFrame();
-    options = [...filterValuesSelect.querySelectorAll("option")].map((option) => option.value);
-    expect(options).toEqual(["empty", ...quarterOptionsIds]);
-
-    await editGlobalFilter(model, { ...filter, disabledPeriods: ["quarter"] });
-    options = [...filterValuesSelect.querySelectorAll("option")].map((option) => option.value);
-    expect(options).toEqual(["empty", ...monthsOptionsIds]);
-
-    await editGlobalFilter(model, { ...filter, disabledPeriods: ["month", "quarter"] });
-    expect(".date_filter_values select").toHaveCount(0);
 });

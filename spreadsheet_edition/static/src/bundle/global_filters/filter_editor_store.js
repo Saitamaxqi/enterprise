@@ -3,7 +3,6 @@ import { ModelNotFoundError } from "@spreadsheet/data_sources/data_source";
 import { Domain } from "@web/core/domain";
 import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
-import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
 import { CommandResult } from "@spreadsheet/o_spreadsheet/cancelled_reason";
 import { globalFieldMatchingRegistry } from "@spreadsheet/global_filters/helpers";
 
@@ -11,24 +10,10 @@ const { UuidGenerator } = helpers;
 
 const { SpreadsheetStore, NotificationStore, SidePanelStore } = stores;
 
-const RANGE_TYPES = [
-    { value: "fixedPeriod", description: _t("Month / Quarter") },
-    { value: "relative", description: _t("Relative Period") },
-    { value: "from_to", description: _t("From / To") },
-];
-
-const FIXED_PERIOD_OPTIONS = {
-    this_year: { value: "this_year", description: _t("Current year") },
-    this_month: { value: "this_month", description: _t("Current month") },
-    this_quarter: { value: "this_quarter", description: _t("Current quarter") },
-};
-
 export class FilterEditorStore extends SpreadsheetStore {
     mutators = [
         "saveGlobalFilter",
         "selectRelatedModel",
-        "toggleAllowedPeriod",
-        "toggleDateDefaultValue",
         "update",
         "updateCanUseChildOf",
         "updateFieldMatching",
@@ -46,10 +31,6 @@ export class FilterEditorStore extends SpreadsheetStore {
                 label: "",
                 type,
             };
-            if (type === "date") {
-                this.draft.rangeType = "fixedPeriod";
-                this.draft.disabledPeriods = [];
-            }
         }
         this._allModelsExist = false;
         this.missingLabelError = false; // Only set to true when the user tries to update the filter without the label
@@ -75,10 +56,6 @@ export class FilterEditorStore extends SpreadsheetStore {
         return [];
     }
 
-    get availableRangeTypes() {
-        return RANGE_TYPES;
-    }
-
     get canSave() {
         return (
             (this.filter.type !== "relation" || this.filter.modelName) &&
@@ -88,14 +65,6 @@ export class FilterEditorStore extends SpreadsheetStore {
 
     get canUseChildOf() {
         return this.filter.type === "relation" && this._canUseChildOf;
-    }
-
-    get evaluatedDefaultValue() {
-        const defaultValue = this.filter.defaultValue ?? [];
-        if (this.filter.type === "date" && typeof defaultValue === "object") {
-            return "";
-        }
-        return defaultValue;
     }
 
     get evaluatedDomain() {
@@ -117,17 +86,6 @@ export class FilterEditorStore extends SpreadsheetStore {
                 label: _t(this.getters.getGlobalFilter(this.filterId).label),
             }
         );
-    }
-
-    get fixedPeriodOptions() {
-        const options = [{ value: "", description: "" }, FIXED_PERIOD_OPTIONS["this_year"]];
-        if (!this.filter.disabledPeriods?.includes("month")) {
-            options.push(FIXED_PERIOD_OPTIONS["this_month"]);
-        }
-        if (!this.filter.disabledPeriods?.includes("quarter")) {
-            options.push(FIXED_PERIOD_OPTIONS["this_quarter"]);
-        }
-        return options;
     }
 
     get isResUserRelation() {
@@ -159,16 +117,6 @@ export class FilterEditorStore extends SpreadsheetStore {
 
     get relationModelLabel() {
         return this._relationModelLabel;
-    }
-
-    get relativeOptions() {
-        return [
-            { value: "", description: "" },
-            ...RELATIVE_DATE_RANGE_TYPES.map((options) => ({
-                value: options.type,
-                description: options.description,
-            })),
-        ];
     }
 
     get shouldDisplayFieldMatching() {
@@ -264,28 +212,6 @@ export class FilterEditorStore extends SpreadsheetStore {
         }
         fieldMatch.fieldMatch.offset = offset;
         this.draft = this.filter;
-    }
-
-    toggleAllowedPeriod(period) {
-        const disabledPeriods = this.filter.disabledPeriods || [];
-        if (disabledPeriods.includes(period)) {
-            this.update({ disabledPeriods: disabledPeriods.filter((p) => p !== period) });
-        } else {
-            this.update({ disabledPeriods: [...disabledPeriods, period] });
-        }
-        const defaultValue = this.filter.defaultValue;
-        if (defaultValue === "this_month" && disabledPeriods.includes("month")) {
-            this.update({ defaultValue: "this_year" });
-        } else if (defaultValue === "this_quarter" && disabledPeriods.includes("quarter")) {
-            this.update({ defaultValue: "this_year" });
-        }
-    }
-
-    toggleDateDefaultValue(checked) {
-        const defaultValue = this.filter.disabledPeriods?.includes("month")
-            ? "this_year"
-            : "this_month";
-        this.update({ defaultValue: checked ? defaultValue : undefined });
     }
 
     saveGlobalFilter() {

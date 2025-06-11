@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
-import { queryAllTexts, queryAllValues, queryFirst } from "@odoo/hoot-dom";
+import { queryAllTexts, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { helpers, stores } from "@odoo/o-spreadsheet";
 import {
@@ -29,7 +29,6 @@ import {
     insertPivotInSpreadsheet,
 } from "@spreadsheet/../tests/helpers/pivot";
 import { toRangeData } from "@spreadsheet/../tests/helpers/zones";
-import { RELATIVE_DATE_RANGE_TYPES } from "@spreadsheet/helpers/constants";
 import * as domainHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 import {
     contains,
@@ -164,7 +163,6 @@ test("Pivot display name is displayed in field matching", async function () {
     addGlobalFilterWithoutReload(model, {
         id: "42",
         type: "date",
-        rangeType: "fixedPeriod",
         label: "This year",
     });
     await openSidePanel(model, env, "42");
@@ -179,7 +177,6 @@ test("List display name is displayed in field matching", async function () {
     await addGlobalFilter(model, {
         id: "42",
         type: "date",
-        rangeType: "fixedPeriod",
         label: "This year",
     });
 
@@ -706,10 +703,8 @@ test("Create a new date filter", async function () {
     await openSidePanelForCreation(model, env, "date");
     await editGlobalFilterLabel("My Label");
 
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("fixedPeriod");
-
-    await contains("input[name=date_automatic_filter]").click();
+    await contains(".o-default-value-section input").click();
+    await contains(".o-dropdown-item[data-id='this_month']").click();
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
@@ -723,7 +718,6 @@ test("Create a new date filter", async function () {
 
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.rangeType).toBe("fixedPeriod");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
     assertDateDomainEqual("date", "2022-07-01", "2022-07-31", pivotDomain);
@@ -749,10 +743,8 @@ test("Create a new date filter with period offsets", async function () {
     await openSidePanelForCreation(model, env, "date");
     await editGlobalFilterLabel("My Label");
 
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("fixedPeriod");
-
-    await contains("input[name=date_automatic_filter]").click();
+    await contains(".o-default-value-section input").click();
+    await contains(".o-dropdown-item[data-id='this_month']").click();
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
@@ -775,7 +767,6 @@ test("Create a new date filter with period offsets", async function () {
 
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.rangeType).toBe("fixedPeriod");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
 
@@ -809,15 +800,10 @@ test("Creating a new date filter with large period offsets defaults to 50", asyn
     const { model, pivotId, env } = await createSpreadsheetWithPivot();
     await openSidePanelForCreation(model, env, "date");
     await editGlobalFilterLabel("My Label");
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("relative");
-    const relativeSelection = target.querySelector("select.o_relative_date_selection");
-    const values = relativeSelection.querySelectorAll("option");
-    expect([...values].map((val) => val.value)).toEqual([
-        "",
-        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
-    ]);
-    await contains(relativeSelection).select("last_30_days");
+
+    await contains(".o-default-value-section input").click();
+    await contains(".o-dropdown-item[data-id='last_30_days']").click();
+
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     await selectFieldMatching("date", pivotFieldMatching);
     await contains(pivotFieldMatching.querySelector("select")).select("-1");
@@ -837,17 +823,6 @@ test("Create a new relative date filter with an empty default value", async () =
     await openSidePanelForCreation(model, env, "date");
     await editGlobalFilterLabel("My Label");
 
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("relative");
-
-    const relativeSelection = target.querySelector("select.o_relative_date_selection");
-    const values = relativeSelection.querySelectorAll("option");
-    expect([...values].map((val) => val.value)).toEqual([
-        "",
-        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
-    ]);
-    await contains(relativeSelection).select("");
-
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
     const graphFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[2];
@@ -863,8 +838,7 @@ test("Create a new relative date filter with an empty default value", async () =
 
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.defaultValue).toBe("");
-    expect(globalFilter.rangeType).toBe("relative");
+    expect(globalFilter.defaultValue).toBe(undefined);
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
     expect(pivotDomain).toEqual([]);
@@ -886,16 +860,8 @@ test("Create a new relative date filter", async function () {
     await openSidePanelForCreation(model, env, "date");
     await editGlobalFilterLabel("My Label");
 
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("relative");
-
-    const relativeSelection = target.querySelector("select.o_relative_date_selection");
-    const values = relativeSelection.querySelectorAll("option");
-    expect([...values].map((val) => val.value)).toEqual([
-        "",
-        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
-    ]);
-    await contains(relativeSelection).select("last_30_days");
+    await contains(".o-default-value-section input").click();
+    await contains(".o-dropdown-item[data-id='last_30_days']").click();
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
@@ -918,7 +884,6 @@ test("Create a new relative date filter", async function () {
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
     expect(globalFilter.defaultValue).toBe("last_30_days");
-    expect(globalFilter.rangeType).toBe("relative");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
     assertDateDomainEqual("date", "2021-11-17", "2021-12-16", pivotDomain);
@@ -940,16 +905,8 @@ test("Create a new relative date filter with a negative offset should save the a
     await openSidePanelForCreation(model, env, "date");
     await editGlobalFilterLabel("My Label");
 
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("relative");
-
-    const relativeSelection = target.querySelector("select.o_relative_date_selection");
-    const values = relativeSelection.querySelectorAll("option");
-    expect([...values].map((val) => val.value)).toEqual([
-        "",
-        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
-    ]);
-    await contains(relativeSelection).select("last_30_days");
+    await contains(".o-default-value-section input").click();
+    await contains(".o-dropdown-item[data-id='last_30_days']").click();
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
     const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
@@ -978,7 +935,6 @@ test("Create a new relative date filter with a negative offset should save the a
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
     expect(globalFilter.defaultValue).toBe("last_30_days");
-    expect(globalFilter.rangeType).toBe("relative");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
     assertDateDomainEqual("date", "2021-11-17", "2021-12-16", pivotDomain);
@@ -987,26 +943,6 @@ test("Create a new relative date filter with a negative offset should save the a
     const chartId = model.getters.getOdooChartIds()[0];
     const chartDomain = model.getters.getChartDataSource(chartId).getComputedDomain();
     assertDateDomainEqual("date", "2022-04-16", "2022-05-15", chartDomain);
-});
-
-test("Create a new from_to date filter", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    insertListInSpreadsheet(model, {
-        model: "partner",
-        columns: ["foo", "bar", "date", "product_id"],
-    });
-    insertChartInSpreadsheet(model);
-    await openSidePanelForCreation(model, env, "date");
-    await editGlobalFilterLabel("My Label");
-
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("from_to");
-    await saveGlobalFilter();
-    const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.rangeType).toBe("from_to");
-    expect(globalFilter.type).toBe("date");
-    expect(globalFilter.defaultValue).toBe(undefined);
 });
 
 test("Change all domains -> Set corresponding model should allow saving", async function () {
@@ -1046,103 +982,6 @@ test("Change all domains -> Set corresponding model should allow saving", async 
     expect(model.getters.getGlobalFilters()[0].label).toBe("test case");
 });
 
-test("Changing the range of a date global filter reset the default value", async function () {
-    const { model, pivotId, env } = await createSpreadsheetWithPivot();
-    addGlobalFilterWithoutReload(
-        model,
-        {
-            id: "42",
-            type: "date",
-            rangeType: "fixedPeriod",
-            label: "This month",
-            defaultValue: "this_month",
-        },
-        {
-            pivot: {
-                [pivotId]: { chain: "date", type: "date" },
-            },
-        }
-    );
-    await openSidePanel(model, env, "42");
-    const timeRangeOption = target.querySelectorAll(
-        ".o_spreadsheet_filter_editor_side_panel .o-section"
-    )[1];
-    const selectField = timeRangeOption.querySelector("select");
-    await contains(selectField).select("fixedPeriod");
-    await saveGlobalFilter();
-    expect(model.getters.getGlobalFilters()[0].defaultValue).toEqual(undefined);
-});
-
-test("Changing the range of a date global filter reset the current value", async function () {
-    mockDate("2022-07-10 00:00:00");
-    const { model, pivotId, env } = await createSpreadsheetWithPivot();
-    addGlobalFilterWithoutReload(
-        model,
-        {
-            id: "42",
-            type: "date",
-            label: "label",
-            defaultValue: "last_7_days",
-            rangeType: "relative",
-        },
-        {
-            pivot: { [pivotId]: { chain: "date", type: "date" } },
-        }
-    );
-    await openSidePanel(model, env, "42");
-    const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
-    assertDateDomainEqual("date", "2022-07-04", "2022-07-10", pivotDomain);
-    expect(model.getters.getGlobalFilterValue("42")).toBe("last_7_days");
-
-    const timeRangeOption = target.querySelectorAll(
-        ".o_spreadsheet_filter_editor_side_panel .o-section"
-    )[1];
-    const selectField = timeRangeOption.querySelector("select");
-    await contains(selectField).select("fixedPeriod");
-    await contains("input[name=date_automatic_filter]").click();
-    const automaticTimeRangeOption = target.querySelectorAll(
-        ".o_spreadsheet_filter_editor_side_panel .o-section"
-    )[2];
-    const selectPeriodField = automaticTimeRangeOption.querySelector("select");
-    await contains(selectPeriodField).select("this_quarter");
-    await saveGlobalFilter();
-
-    expect(model.getters.getGlobalFilterValue("42")).toEqual({
-        type: "quarter",
-        year: 2022,
-        quarter: 3,
-    });
-});
-
-test("Date filter automatic filter value checkbox is working", async function () {
-    mockDate("2022-07-10 00:00:00");
-    const { model, pivotId, env } = await createSpreadsheetWithPivot();
-    addGlobalFilterWithoutReload(
-        model,
-        {
-            id: "42",
-            type: "date",
-            rangeType: "fixedPeriod",
-            label: "date",
-        },
-        {
-            pivot: {
-                [pivotId]: { chain: "date", type: "date" },
-            },
-        }
-    );
-    await openSidePanel(model, env, "42");
-    await contains("input[name=date_automatic_filter]").click();
-
-    await saveGlobalFilter();
-    expect(model.getters.getGlobalFilter("42").defaultValue).toBe("this_month");
-    expect(model.getters.getGlobalFilterValue("42")).toEqual({
-        type: "month",
-        year: 2022,
-        month: 7,
-    });
-});
-
 test("Filter edit side panel is initialized with the correct values", async function () {
     const { model, pivotId, env } = await createSpreadsheetWithPivot();
     insertListInSpreadsheet(model, {
@@ -1154,7 +993,6 @@ test("Filter edit side panel is initialized with the correct values", async func
         {
             id: "42",
             type: "date",
-            rangeType: "fixedPeriod",
             label: "This month",
             defaultValue: "this_month",
         },
@@ -1170,7 +1008,6 @@ test("Filter edit side panel is initialized with the correct values", async func
     await openSidePanel(model, env, "42");
 
     expect(".o_global_filter_label").toHaveValue("This month");
-    expect(".o-filter-range-type").toHaveValue("fixedPeriod");
 
     const pivotField = ".o_spreadsheet_field_matching:eq(0)";
     const pivotFieldValue = `${pivotField} .o_model_field_selector_value span`;
@@ -1231,71 +1068,6 @@ test("Can clear a field matching an invalid field", async function () {
     expect(".o_spreadsheet_field_matching .o_model_field_selector").toHaveText("not_a_field");
     await contains(".o_model_field_selector .fa.fa-times").click();
     expect(".o_spreadsheet_field_matching .o_model_field_selector").toHaveText("");
-});
-
-test("Can change fixedPeriod date filter disabledPeriods in the side panel", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    const filter = /** @type {FixedPeriodDateGlobalFilter} */ ({
-        id: "43",
-        type: "date",
-        label: "Date Filter",
-        rangeType: "fixedPeriod",
-    });
-    addGlobalFilterWithoutReload(model, filter);
-    await openSidePanel(model, env, "43");
-
-    expect(target.querySelector("input[name='month']").checked).toBe(true);
-    await contains('input[name="month"]').click();
-    await saveGlobalFilter();
-
-    expect(model.getters.getGlobalFilter("43").disabledPeriods).toEqual(["month"]);
-
-    expect(target.querySelector("input[name='month']").checked).toBe(false);
-});
-
-test("invalid fixed period automatic value is removed when changing disabledPeriods", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    const filter = /** @type {FixedPeriodDateGlobalFilter} */ ({
-        id: "43",
-        type: "date",
-        label: "Date Filter",
-        rangeType: "fixedPeriod",
-        defaultValue: "this_month",
-    });
-    addGlobalFilterWithoutReload(model, filter);
-    await openSidePanel(model, env, "43");
-
-    expect(".date_filter_automatic_value").toHaveValue("this_month");
-
-    // Disable "month" period
-    await contains("input[name='month']").click();
-    expect(".date_filter_automatic_value").toHaveValue("");
-    expect(queryAllValues(".date_filter_automatic_value option")).toEqual([
-        "",
-        "this_year",
-        "this_quarter",
-    ]);
-});
-
-test("Disabled period section is not present for non fixedPeriod date filters", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    const filter = /** @type {FixedPeriodDateGlobalFilter} */ ({
-        id: "43",
-        type: "date",
-        label: "Date Filter",
-        rangeType: "fixedPeriod",
-    });
-    addGlobalFilterWithoutReload(model, filter);
-    await openSidePanel(model, env, "43");
-
-    expect("input[name='month']").toHaveCount(1);
-
-    const range = target.querySelector(".o-filter-range-type");
-    await contains(range).select("from_to");
-    expect("input[name='month']").toHaveCount(0);
-
-    await contains(range).select("relative");
-    expect("input[name='month']").toHaveCount(0);
 });
 
 test("Create a new relational global filter with a list snapshot", async function () {

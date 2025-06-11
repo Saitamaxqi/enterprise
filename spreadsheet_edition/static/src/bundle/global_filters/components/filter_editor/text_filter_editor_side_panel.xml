@@ -13,7 +13,7 @@
         <Section title.translate="Filter value">
             <div class="o-section-subtitle">Default value</div>
             <TextFilterValue
-                value="store.evaluatedDefaultValue"
+                value="store.filter.defaultValue ?? []"
                 options="store.textOptions"
                 onValueChanged.bind="updateDefaultValue"
             />

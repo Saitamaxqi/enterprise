@@ -32,7 +32,7 @@
                 <div class="pivot_filter_input" t-if="store.filter.defaultValue !== 'current_user'">
                     <MultiRecordSelector
                         resModel="store.filter.modelName"
-                        resIds="store.evaluatedDefaultValue"
+                        resIds="store.filter.defaultValue ?? []"
                         t-key="store.filter.modelName"
                         placeholder="''"
                         domain="store.evaluatedDomain"

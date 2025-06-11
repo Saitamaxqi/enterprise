@@ -12,7 +12,7 @@
         </Section>
         <Section title.translate="Default value">
             <BooleanMultiSelector
-                selectedValues="store.evaluatedDefaultValue"
+                selectedValues="store.filter.defaultValue ?? []"
                 update.bind="updateDefaultValue"
             />
         </Section>
