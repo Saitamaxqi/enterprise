@@ -68,9 +68,7 @@ function useParentedStaticList(model, parentRecord, resIds) {
 
     model._createRoot = (config, data) => {
         const options = { parent: parentRecord };
-        const list = new model.constructor.StaticList(model, { ...config }, data, options);
-        list.selection = [];
-        return list;
+        return new model.constructor.StaticList(model, { ...config }, data, options);
     };
     model._createEmptyRoot = () => null;
 }
