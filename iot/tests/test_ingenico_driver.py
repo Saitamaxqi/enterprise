@@ -16,13 +16,13 @@ class MockSocket:
 class TestIncomingTransactionResponse(BaseCase):
     @patch.dict(
         "sys.modules", {
-            # Mock out all of hw_drivers to avoid side-effects from starting services,
+            # Mock out all of iot_drivers to avoid side-effects from starting services,
             # additional dependencies and modifying global imports
-            "odoo.addons.hw_drivers": MagicMock(),
+            "odoo.addons.iot_drivers": MagicMock(),
             # Mock the modules IngenicoDriver imports so the imports don't fail
-            "odoo.addons.hw_drivers.driver": MagicMock(),
-            "odoo.addons.hw_drivers.event_manager": MagicMock(),
-            "odoo.addons.hw_drivers.iot_handlers.interfaces.SocketInterface": MagicMock(),
+            "odoo.addons.iot_drivers.driver": MagicMock(),
+            "odoo.addons.iot_drivers.event_manager": MagicMock(),
+            "odoo.addons.iot_drivers.iot_handlers.interfaces.SocketInterface": MagicMock(),
         }
     )
     def setUp(self):
@@ -48,13 +48,13 @@ class TestIncomingTransactionResponse(BaseCase):
 class TestOutgoingIngenicoMessage(BaseCase):
     @patch.dict(
         "sys.modules", {
-            # Mock out all of hw_drivers to avoid side-effects from starting services,
+            # Mock out all of iot_drivers to avoid side-effects from starting services,
             # additional dependencies and modifying global imports
-            "odoo.addons.hw_drivers": MagicMock(),
+            "odoo.addons.iot_drivers": MagicMock(),
             # Mock the modules IngenicoDriver imports so the imports don't fail
-            "odoo.addons.hw_drivers.driver": MagicMock(),
-            "odoo.addons.hw_drivers.event_manager": MagicMock(),
-            "odoo.addons.hw_drivers.iot_handlers.interfaces.SocketInterface": MagicMock(),
+            "odoo.addons.iot_drivers.driver": MagicMock(),
+            "odoo.addons.iot_drivers.event_manager": MagicMock(),
+            "odoo.addons.iot_drivers.iot_handlers.interfaces.SocketInterface": MagicMock(),
         }
     )
     def setUp(self):

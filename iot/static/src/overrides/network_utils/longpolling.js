@@ -34,7 +34,7 @@ patch(IoTLongpolling.prototype, {
      */
     async sendMessage(iotBoxIp, message, messageId = null, fallback = false) {
         messageId ??= uuid();
-        await this._rpcIoT(iotBoxIp, '/hw_drivers/action', { session_id: messageId, ...message }, undefined, fallback);
+        await this._rpcIoT(iotBoxIp, '/iot_drivers/action', { session_id: messageId, ...message }, undefined, fallback);
 
         return messageId;
     },

@@ -1,27 +1,21 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ctypes
-from pathlib import Path
 import os
 import logging
 import subprocess
 from platform import system
 
-from odoo.addons.hw_drivers.interface import Interface
-from odoo.addons.hw_drivers.tools import helpers
+from odoo.addons.iot_drivers.interface import Interface
+from odoo.addons.iot_drivers.tools import helpers
 from odoo.tools.misc import file_path
-from odoo.addons.hw_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library
+from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library
 
 
 _logger = logging.getLogger(__name__)
 
-if system() == 'Windows':
-    LIB_PATH = Path('odoo/addons/hw_drivers/iot_handlers/lib')
-    DOWNLOAD_URL = 'https://nightly.odoo.com/master/posbox/iotbox/six-timapiv23_09_w.zip'
-else:
-    LIB_PATH = file_path('hw_drivers/iot_handlers/lib')
-    DOWNLOAD_URL = 'https://nightly.odoo.com/master/posbox/iotbox/six-timapiv23_09_l.zip'
+LIB_PATH = file_path('iot_drivers/iot_handlers/lib')
+DOWNLOAD_URL = 'https://nightly.odoo.com/master/posbox/iotbox/six-timapiv23_09_l.zip'
 
 # Download and unzip timapi library, overwriting the existing one
 TIMAPI_ZIP_PATH = f'{LIB_PATH}/tim.zip'
@@ -30,12 +24,12 @@ helpers.unzip_file(TIMAPI_ZIP_PATH, f'{LIB_PATH}/tim')
 
 # Make TIM SDK dependency libraries visible for the linker
 if system() == 'Windows':
-    LIB_PATH = file_path('hw_drivers/iot_handlers/lib')
-    os.environ['PATH'] = file_path('hw_drivers/iot_handlers/lib/tim') + os.pathsep + os.environ['PATH']
+    LIB_PATH = file_path('iot_drivers/iot_handlers/lib')
+    os.environ['PATH'] = file_path('iot_drivers/iot_handlers/lib/tim') + os.pathsep + os.environ['PATH']
 else:
     TIMAPI_DEPENDANCY_LIB = 'libtimapi.so.3'
     TIMAPI_DEPENDANCY_LIB_V = f'{TIMAPI_DEPENDANCY_LIB}.31.1-2272'
-    DEP_LIB_PATH = file_path('hw_drivers/iot_handlers/lib/tim')
+    DEP_LIB_PATH = file_path('iot_drivers/iot_handlers/lib/tim')
     USR_LIB_PATH = '/usr/lib'
     try:
         with helpers.writable():

@@ -4,9 +4,9 @@ import dbus
 from gatt import Device
 import logging
 
-from odoo.addons.hw_drivers.driver import Driver
-from odoo.addons.hw_drivers.event_manager import event_manager
-from odoo.addons.hw_drivers.iot_handlers.interfaces.BTInterface_L import bt_devices
+from odoo.addons.iot_drivers.driver import Driver
+from odoo.addons.iot_drivers.event_manager import event_manager
+from odoo.addons.iot_drivers.iot_handlers.interfaces.BTInterface_L import bt_devices
 
 _logger = logging.getLogger(__name__)
 

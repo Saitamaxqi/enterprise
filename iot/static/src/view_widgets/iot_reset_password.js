@@ -28,7 +28,7 @@ export class IoTResetPassword extends Component {
 
     async onClick() {
         try {
-            const response = await this.longpolling.action(this.ip, null, null, false, "/hw_posbox_homepage/generate_password");
+            const response = await this.longpolling.action(this.ip, null, null, false, "/iot_drivers/generate_password");
             if (!response?.result?.password) {
                 return this.doWarnFail();
             }

@@ -28,7 +28,7 @@ export class IoTBoxDownloadLogs extends Component {
         try {
             const response = await this.http.get(this.ip_url + '/hw_proxy/hello', 'text');
             if (response == 'ping') {
-                window.location = this.ip_url + '/hw_drivers/download_logs';
+                window.location = this.ip_url + '/iot_drivers/download_logs';
             } else {
                 this.doWarnFail();
             }

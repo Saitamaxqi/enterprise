@@ -6,13 +6,13 @@ from pathlib import Path
 import os
 import logging
 
-from odoo.addons.hw_drivers.interface import Interface
-from odoo.addons.hw_drivers.tools.helpers import download_from_url, unzip_file
-from odoo.addons.hw_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library, create_ctypes_string_buffer
+from odoo.addons.iot_drivers.interface import Interface
+from odoo.addons.iot_drivers.tools.helpers import download_from_url, unzip_file
+from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library, create_ctypes_string_buffer
 
 _logger = logging.getLogger(__name__)
 
-libPath = Path('odoo/addons/hw_drivers/iot_handlers/lib')
+libPath = Path('odoo/addons/iot_drivers/iot_handlers/lib')
 easyCTEPPath = libPath / 'ctep_w/libeasyctep.dll'
 zipPath = str(libPath / 'ctep_w.zip')
 

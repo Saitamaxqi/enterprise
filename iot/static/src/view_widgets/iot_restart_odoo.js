@@ -53,7 +53,7 @@ export class IoTRestartOdoo extends Component {
     }
 
     async callRestartMethodOnServer() {
-        /// Call restart method from "hw_posbox_homepage" controller
+        /// Call restart method from "iot_drivers" controller
         try {
             this.showMsgAndClearInterval(
                 null,
@@ -62,7 +62,7 @@ export class IoTRestartOdoo extends Component {
                 "warning"
             );
             const response = await this.http.get(
-                formatEndpoint(this.iotIp, "/hw_posbox_homepage/restart_odoo_service")
+                formatEndpoint(this.iotIp, "/iot_drivers/restart_odoo_service")
             );
             return response.status;
         } catch (error) {

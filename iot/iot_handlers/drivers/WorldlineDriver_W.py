@@ -5,7 +5,13 @@ import ctypes
 import datetime
 import logging
 
-from odoo.addons.hw_drivers.iot_handlers.lib.ctypes_terminal_driver import CtypesTerminalDriver, ulong_pointer, double_pointer, import_ctypes_library, create_ctypes_string_buffer
+from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import (
+    CtypesTerminalDriver,
+    ulong_pointer,  # noqa: F401
+    double_pointer,  # noqa: F401
+    import_ctypes_library,
+    create_ctypes_string_buffer,
+)
 
 _logger = logging.getLogger(__name__)
 

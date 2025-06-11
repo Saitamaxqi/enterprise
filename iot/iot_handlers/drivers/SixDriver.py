@@ -6,7 +6,7 @@ import ctypes
 from time import sleep
 from logging import getLogger
 
-from odoo.addons.hw_drivers.iot_handlers.lib.ctypes_terminal_driver import CtypesTerminalDriver, import_ctypes_library, CTYPES_BUFFER_SIZE, create_ctypes_string_buffer
+from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import CtypesTerminalDriver, import_ctypes_library, CTYPES_BUFFER_SIZE, create_ctypes_string_buffer
 
 
 _logger = getLogger(__name__)

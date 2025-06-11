@@ -5,16 +5,16 @@ import ctypes
 import subprocess
 import logging
 
-from odoo.addons.hw_drivers.interface import Interface
-from odoo.addons.hw_drivers.tools.helpers import path_file, writable
-from odoo.addons.hw_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library, create_ctypes_string_buffer
+from odoo.addons.iot_drivers.interface import Interface
+from odoo.addons.iot_drivers.tools.helpers import path_file, writable
+from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library, create_ctypes_string_buffer
 
 
 _logger = logging.getLogger(__name__)
 
 # Check if the Worldline CTEP library exists, download it and set up the linker otherwise
-if not path_file('odoo/addons/hw_drivers/iot_handlers/lib/ctep/libeasyctep.so').exists():
-    load_worldline_library_script = path_file('odoo/addons/hw_drivers/iot_handlers/lib/load_worldline_library.sh')
+if not path_file('odoo/addons/iot_drivers/iot_handlers/lib/ctep/libeasyctep.so').exists():
+    load_worldline_library_script = path_file('odoo/addons/iot_drivers/iot_handlers/lib/load_worldline_library.sh')
     try:
         with writable():
             subprocess.run(["sudo", "sh", load_worldline_library_script], check=True)

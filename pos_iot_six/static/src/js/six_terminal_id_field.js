@@ -21,7 +21,7 @@ export class SixTerminalIdField extends CharField {
                     const body = { params: { terminal_id: terminalId } };
                     const headers = new Headers({ "Content-Type": "application/json" });
                     const response = await browser.fetch(
-                        formatEndpoint(iotBoxIp, "/hw_posbox_homepage/six_payment_terminal_add"),
+                        formatEndpoint(iotBoxIp, "/iot_drivers/six_payment_terminal_add"),
                         {
                             method: "POST",
                             headers,
@@ -31,7 +31,7 @@ export class SixTerminalIdField extends CharField {
                     this.state.terminalIdSentSuccessfully = response.ok;
                 } else {
                     const response = await browser.fetch(
-                        formatEndpoint(iotBoxIp, "/hw_posbox_homepage/six_payment_terminal_clear")
+                        formatEndpoint(iotBoxIp, "/iot_drivers/six_payment_terminal_clear")
                     );
                     this.state.terminalIdSentSuccessfully = response.ok;
                 }

@@ -4,8 +4,8 @@ import base64
 import logging
 import subprocess
 
-from odoo.addons.hw_drivers.driver import Driver
-from odoo.addons.hw_drivers.event_manager import event_manager
+from odoo.addons.iot_drivers.driver import Driver
+from odoo.addons.iot_drivers.event_manager import event_manager
 
 _logger = logging.getLogger(__name__)
 

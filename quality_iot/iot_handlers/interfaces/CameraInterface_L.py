@@ -1,7 +1,7 @@
 from libcamera import CameraManager
 from pathlib import Path
 
-from odoo.addons.hw_drivers.interface import Interface
+from odoo.addons.iot_drivers.interface import Interface
 
 
 class CameraInterface(Interface):

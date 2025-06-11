@@ -10,8 +10,8 @@ from queue import Queue
 from time import sleep
 
 
-from odoo.addons.hw_drivers.driver import Driver
-from odoo.addons.hw_drivers.event_manager import event_manager
+from odoo.addons.iot_drivers.driver import Driver
+from odoo.addons.iot_drivers.event_manager import event_manager
 from odoo.tools.misc import file_path
 
 _logger = logging.getLogger(__name__)
@@ -27,9 +27,9 @@ double_pointer = ctypes.POINTER(ctypes.c_double)
 def import_ctypes_library(lib_subfolder, lib_name):
     """
     Import a library using ctypes, independently of the OS.
-    :param lib_subfolder: The subfolder where the library is located under "hw_drivers/iot_handlers/lib"
+    :param lib_subfolder: The subfolder where the library is located under "iot_drivers/iot_handlers/lib"
     :param lib_name: The name of the library file. Must respect the OS extension (.so/.dll), otherwise ValueError will be raised
-    Example: if the library is located under "hw_drivers/iot_handlers/lib/ctep/libeasyctep.so", then
+    Example: if the library is located under "iot_drivers/iot_handlers/lib/ctep/libeasyctep.so", then
     lib_subfolder = "ctep" and lib_name = "libeasyctep.so"
     """
     if system() == 'Windows':
@@ -40,12 +40,12 @@ def import_ctypes_library(lib_subfolder, lib_name):
         import_library_method = ctypes.CDLL
 
     try:
-        lib_path = file_path(f'hw_drivers/iot_handlers/lib/{lib_subfolder}/{lib_name}', supported_lib_extensions)
+        lib_path = file_path(f'iot_drivers/iot_handlers/lib/{lib_subfolder}/{lib_name}', supported_lib_extensions)
         ctypes_lib = import_library_method(lib_path)
         _logger.info('Successfully imported ctypes library "%s" from %s', lib_name, lib_path)
         return ctypes_lib
     except (OSError, ValueError, FileNotFoundError):
-        _logger.exception('Failed to import ctypes library "%s" from hw_drivers/iot_handlers/lib/%s/', lib_name, lib_subfolder)
+        _logger.exception('Failed to import ctypes library "%s" from iot_drivers/iot_handlers/lib/%s/', lib_name, lib_subfolder)
 
 def create_ctypes_string_buffer():
     """

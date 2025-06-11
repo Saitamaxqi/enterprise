@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PATH_ZIP_LIB=/home/pi/odoo/addons/hw_drivers/iot_handlers/lib/
+PATH_ZIP_LIB=/home/pi/odoo/addons/iot_drivers/iot_handlers/lib/
 PATH_LIB=${PATH_ZIP_LIB}ctep/lib/
 
 curl -sS https://download.odoo.com/master/posbox/iotbox/worldline-ctepv21_07.zip -o  "${PATH_ZIP_LIB}worldline-ctepv21_07.zip"
