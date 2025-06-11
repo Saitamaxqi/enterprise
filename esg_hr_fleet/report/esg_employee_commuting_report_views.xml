@@ -22,7 +22,7 @@
         <field name="name">employee_commuting.report.pivot</field>
         <field name="model">esg.employee.commuting.report</field>
         <field name="arch" type="xml">
-            <pivot string="Employee Commuting" disable_linking="1">
+            <pivot string="Employee Commuting" disable_linking="1" js_class="esg_employee_commuting_report_pivot">
                 <field name="driver_id" type="row"/>
                 <field name="date_from" interval="year" type="col"/>
                 <field name="total_co2" type="measure"/>

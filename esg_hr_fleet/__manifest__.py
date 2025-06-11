@@ -7,11 +7,22 @@
         'hr_fleet',
     ],
     'data': [
+        'data/esg_hr_fleet_data.xml',
         'security/ir.model.access.csv',
         'report/esg_employee_commuting_report_views.xml',
         'views/esg_menus.xml',
         'views/res_config_settings_views.xml',
+        'wizard/employee_commuting_emissions_wizard.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'esg_hr_fleet/static/src/**/*',
+            ('remove', 'esg_hr_fleet/static/src/views/esg_employee_commuting_report_pivot/**'),
+        ],
+        'web.assets_backend_lazy': [
+            'esg_hr_fleet/static/src/views/esg_employee_commuting_report_pivot/**',
+        ],
+    },
     'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
