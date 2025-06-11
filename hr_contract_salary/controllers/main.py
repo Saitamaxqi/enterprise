@@ -997,6 +997,16 @@ class HrContractSalary(http.Controller):
             ('role_id', '=', request.env.ref('sign.sign_item_role_employee').id)
         ]).access_token
 
+        if not access_token:
+            employee_roles = request.env['hr.contract.signatory'].search([
+                ('signatory', '=', 'employee'),
+                ('contract_template_id', '=', version.id),
+            ], limit=1)
+            if employee_roles:
+                access_token = request.env['sign.request.item'].sudo().search([
+                    ('sign_request_id', '=', sign_request_sudo.id),
+                    ('role_id', 'in', employee_roles.sign_role_id.id),
+                ]).access_token
         new_version.sign_request_ids += sign_request_sudo
         offer.sign_request_ids += sign_request_sudo
 
