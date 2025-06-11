@@ -9,6 +9,8 @@ export class StudioDynamicPlaceholderPopover extends DynamicPlaceholderPopover {
         this.loadFieldInfo = useLoadFieldInfo();
     }
 
+    _loadAllowedExpressions() {}
+
     filter(fieldDef) {
         if (this.props.showOnlyX2ManyFields) {
             return ["one2many", "many2many"].includes(fieldDef.type);
