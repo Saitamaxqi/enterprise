@@ -901,8 +901,8 @@ describe("map_view_desktop", () => {
 
         expect("a.btn.btn-primary").toHaveAttribute(
             "href",
-            "https://www.google.com/maps/dir/?api=1&waypoints=10,10.5",
-            { message: "The link's URL should contain the right sets of coordinates" }
+            "https://www.google.com/maps/dir/?api=1&waypoints=Chauss%C3%A9e%20de%20Louvain%2094%2C%205310%20%C3%89ghez%C3%A9e|Chauss%C3%A9e%20de%20Namur%2040%2C%201367%2C%20Ramillies",
+            { message: "The link's URL should contain the address" }
         );
 
         await contains(".leaflet-marker-icon").click();
@@ -925,8 +925,8 @@ describe("map_view_desktop", () => {
 
         expect("a.btn.btn-primary").toHaveAttribute(
             "href",
-            "https://www.google.com/maps/dir/?api=1&destination=10,10.5",
-            { message: "The link's URL should contain the right sets of coordinates" }
+            "https://www.google.com/maps/dir/?api=1&destination=Chauss%C3%A9e%20de%20Namur%2040%2C%201367%2C%20Ramillies&waypoints=Chauss%C3%A9e%20de%20Louvain%2094%2C%205310%20%C3%89ghez%C3%A9e",
+            { message: "The link's URL should contain the address" }
         );
 
         await contains(".leaflet-marker-icon").click();
@@ -950,8 +950,8 @@ describe("map_view_desktop", () => {
         });
         expect("a.btn.btn-primary").toHaveAttribute(
             "href",
-            "https://www.google.com/maps/dir/?api=1&waypoints=10.5,10",
-            { message: "The link's URL should contain unqiue sets of coordinates" }
+            "https://www.google.com/maps/dir/?api=1&waypoints=Chauss%C3%A9e%20de%20Louvain%2094%2C%205310%20%C3%89ghez%C3%A9e",
+            { message: "The link's URL should contain the address" }
         );
         await contains(".leaflet-marker-icon").click();
         expect("div.leaflet-popup a.btn.btn-primary").toHaveAttribute(
@@ -2252,8 +2252,8 @@ describe("map_view_desktop", () => {
 
         expect("a.btn.btn-primary").toHaveAttribute(
             "href",
-            "https://www.google.com/maps/dir/?api=1&waypoints=10,10.5|11,11.5",
-            { message: "The link's URL initially should contain the coordinates for all records" }
+            "https://www.google.com/maps/dir/?api=1&waypoints=Chauss%C3%A9e%20de%20Namur%2040%2C%201367%2C%20Ramillies|Chauss%C3%A9e%20de%20Wavre%2050%2C%201367%2C%20Ramillies",
+            { message: "The link's URL initially should contain the addresses for all records" }
         );
 
         //apply domain and check that the Google Maps URL on the button reflects the changes
@@ -2261,10 +2261,10 @@ describe("map_view_desktop", () => {
         await toggleMenuItem("FooProject only");
         expect("a.btn.btn-primary").toHaveAttribute(
             "href",
-            "https://www.google.com/maps/dir/?api=1&waypoints=10,10.5",
+            "https://www.google.com/maps/dir/?api=1&waypoints=Chauss%C3%A9e%20de%20Namur%2040%2C%201367%2C%20Ramillies",
             {
                 message:
-                    "The link's URL after domain is applied should only contain coordinates for filtered records",
+                    "The link's URL after domain is applied should only contain addresses for filtered records",
             }
         );
     });
@@ -2283,8 +2283,8 @@ describe("map_view_desktop", () => {
 
         expect("a.btn.btn-primary").toHaveAttribute(
             "href",
-            "https://www.google.com/maps/dir/?api=1&destination=11,11.5&waypoints=10,10.5",
-            { message: "The link's URL initially should contain the coordinates for all records" }
+            "https://www.google.com/maps/dir/?api=1&destination=Chauss%C3%A9e%20de%20Wavre%2050%2C%201367%2C%20Ramillies&waypoints=Chauss%C3%A9e%20de%20Namur%2040%2C%201367%2C%20Ramillies",
+            { message: "The link's URL initially should contain the addresses for all records" }
         );
     });
 

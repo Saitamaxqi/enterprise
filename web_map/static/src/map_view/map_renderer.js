@@ -393,22 +393,22 @@ export class MapRenderer extends Component {
     get googleMapUrl() {
         let url = "https://www.google.com/maps/dir/?api=1";
         if (this.props.model.data.records.length) {
-            const allCoordinates = this.props.model.data.records.filter(
-                ({ partner }) => partner && partner.partner_latitude && partner.partner_longitude
+            const allAddresses = this.props.model.data.records.filter(
+                ({ partner }) => partner && partner.contact_address_complete
             );
-            const uniqueCoordinates = allCoordinates.reduce((coords, { partner }) => {
-                const coord = partner.partner_latitude + "," + partner.partner_longitude;
-                if (!coords.includes(coord)) {
-                    coords.push(coord);
+            const uniqueAddresses = allAddresses.reduce((addrs, { partner }) => {
+                const addr = encodeURIComponent(partner.contact_address_complete);
+                if (!addrs.includes(addr)) {
+                    addrs.push(addr);
                 }
-                return coords;
+                return addrs;
             }, []);
-            if (uniqueCoordinates.length && this.props.model.metaData.routing) {
+            if (uniqueAddresses.length && this.props.model.metaData.routing) {
                 // When routing is enabled, make last record the destination
-                url += `&destination=${uniqueCoordinates.pop()}`;
+                url += `&destination=${uniqueAddresses.pop()}`;
             }
-            if (uniqueCoordinates.length) {
-                url += `&waypoints=${uniqueCoordinates.join("|")}`;
+            if (uniqueAddresses.length) {
+                url += `&waypoints=${uniqueAddresses.join("|")}`;
             }
         }
         return url;
