@@ -97,7 +97,7 @@ class AccountBankStatementLine(models.Model):
         action.update({
             'name': name or _("Bank Matching"),
             'context': {**default_context, 'bank_statements_source': default_journal.exists().bank_statements_source},
-            'domain': (extra_domain or []),
+            'domain': [('state', '!=', 'cancel')] + (extra_domain or []),
         })
 
         return action
