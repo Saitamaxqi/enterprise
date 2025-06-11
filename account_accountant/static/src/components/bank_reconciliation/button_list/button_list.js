@@ -209,11 +209,11 @@ export class BankRecButtonList extends Component {
         return [
             ["parent_state", "in", ["draft", "posted"]],
             ["company_id", "child_of", this.statementLineData.company_id.id],
-            ["account_id.reconcile", "=", true],
+            ["search_account_id.reconcile", "=", true],
             ["display_type", "not in", ["line_section", "line_note"]],
             ["reconciled", "=", false],
             "|",
-            ["account_id.account_type", "not in", ["asset_receivable", "liability_payable"]],
+            ["search_account_id.account_type", "not in", ["asset_receivable", "liability_payable"]],
             ["payment_id", "=", false],
             ["statement_line_id", "!=", this.statementLineData.id],
         ];
