@@ -40,6 +40,9 @@ export class DocumentsKanbanRecord extends DocumentsRecordMixin(RelationalModel.
         await this.model.env.documentsView.bus.trigger("documents-upload-files", {
             files: ev.target.files,
             accessToken: this.data.access_token,
+            context: {
+                document_id: this.data.id,
+            }
         });
         ev.target.value = "";
     }

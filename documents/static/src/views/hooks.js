@@ -495,7 +495,13 @@ function useDocumentsViewFileUpload() {
     };
 
     useBus(bus, "documents-upload-files", (ev) => {
-        component.uploadFiles({ context: component.props.context, ...ev.detail });
+        component.uploadFiles({
+            ...ev.detail,
+            context: {
+                ...component.props.context,
+                ...ev.detail.context,
+            },
+        });
     });
 
     return {
