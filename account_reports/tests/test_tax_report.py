@@ -2385,3 +2385,90 @@ class TestTaxReport(TestAccountReportsCommon):
                 ],
             }
         )
+
+    def test_multiple_same_tax_lines_with_multiple_analytics(self):
+        """ One Invoice line with analytic_distribution and another with another analytic_distribution, both with the same tax"""
+        analytic_plan = self.env['account.analytic.plan'].create({'name': 'Plan with Tax details'})
+        analytic_account_1 = self.env['account.analytic.account'].create({
+            'name': 'Analytic account with Tax details',
+            'plan_id': analytic_plan.id,
+            'company_id': False,
+        })
+        analytic_account_2 = self.env['account.analytic.account'].create({
+            'name': ' testAnalytic account',
+            'plan_id': analytic_plan.id,
+            'company_id': False,
+        })
+        tax_10 = self.env['account.tax'].create({
+            'name': "tax_10",
+            'amount_type': 'percent',
+            'amount': 10.0,
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2019-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'line1',
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'price_unit': 200.0,
+                    'tax_ids': [Command.set(tax_10.ids)],
+                    'analytic_distribution': {
+                        analytic_account_1.id: 100,
+                    },
+                }),
+                Command.create({
+                    'name': 'line2',
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'price_unit': 100.0,
+                    'tax_ids': [Command.set(tax_10.ids)],
+                    'analytic_distribution': {
+                        analytic_account_2.id: 100,
+                    },
+                }),
+            ]
+        })
+        invoice.action_post()
+
+        self.assertRecordValues(invoice.line_ids, [
+            {'name': 'line1', 'debit': 0.00, 'credit': 200.0},
+            {'name': 'line2', 'debit': 0.00, 'credit': 100.0},
+            {'name': tax_10.name, 'debit': 0.00, 'credit': 20.0},
+            {'name': tax_10.name, 'debit': 0.00, 'credit': 10.0},
+            {'name': invoice.name, 'debit': 330.0, 'credit': 0.00}
+        ])
+
+        report = self.env.ref('account.generic_tax_report_account_tax')
+        options = self._generate_options(report, invoice.date, invoice.date)
+
+        self.assertLinesValues(
+            report._get_lines(options),
+            #   Name                                                                          Base      Tax
+            [   0,                                                                             1,        2],
+            [
+                ('Sales',                                                                     "",     30.0),
+                (self.company_data['default_account_revenue'].display_name,                   "",     30.0),
+                (f'{tax_10.name} ({tax_10.amount}%)',                                      300.0,     30.0),
+                (f'Total {self.company_data["default_account_revenue"].display_name}',        "",     30.0),
+                ('Total Sales',                                                               "",     30.0),
+            ],
+            options
+        )
+
+        report = self.env.ref("account.generic_tax_report_tax_account")
+        options['report_id'] = report.id
+
+        self.assertLinesValues(
+            report._get_lines(options),
+            #   Name                                                                           Base      Tax
+            [   0,                                                                              1,        2],
+            [
+                ('Sales',                                                                      "",     30.0),
+                (f'{tax_10.name} ({tax_10.amount}%)',                                          "",     30.0),
+                (self.company_data['default_account_revenue'].display_name,                 300.0,     30.0),
+                (f'Total {tax_10.name} ({tax_10.amount}%)',                                    "",     30.0),
+                ('Total Sales',                                                                "",     30.0),
+            ],
+            options
+        )
