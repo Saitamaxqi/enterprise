@@ -11,6 +11,9 @@
         'views/project_project_views.xml',
         'views/esg_menus.xml',
     ],
+    'demo': [
+        'demo/demo_data.xml',
+    ],
     'assets': {
         'web.assets_backend': [
             'esg_project/static/src/**/*',
