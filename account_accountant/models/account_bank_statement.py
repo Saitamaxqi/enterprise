@@ -210,8 +210,8 @@ class AccountBankStatementLine(models.Model):
                               ) OR (
                                   reco_model.match_label = 'match_regex'
                                   AND (
-                                      st_line.payment_ref ~ reco_model.match_label_param
-                                      OR st_line.transaction_details::TEXT ~ reco_model.match_label_param
+                                      st_line.payment_ref ~* reco_model.match_label_param
+                                      OR st_line.transaction_details::TEXT ~* reco_model.match_label_param
                                   )
                               )
                           )
@@ -601,17 +601,27 @@ class AccountBankStatementLine(models.Model):
     def set_account_bank_statement_line(self, aml_id, account_id):
         """ Sets the specified account to the given account move line.
             Also creates a reco model for fees for this journal and this account if it's in the 3% range
-            Also can delete or try to create new reco model depending on the pattern
+            Also can delete or try to create new reco model depending on the pattern and if a model is created, returns
+            the any unreconciled statement lines that can now use the new rule for matching for the JS to reload them.
 
             :param aml_id: The ID of the account move line to update.
             :param account_id: The ID of the account to set on the specified account move line.
+            :return: The recordset of unreconciled statement lines that can now use the new rule for matching, if created.
         """
+        self.ensure_one()
         self._create_account_model_fee(account_id)
         account_move_line = self.line_ids.filtered(lambda line: line.id == aml_id)
         account_move_line.account_id = account_id
 
         self._handle_reconciliation_rule(account_move_line, account_id)
-        self._check_and_create_reconciliation_rule(account_id, self.env.company.id)
+        new_rule = self._check_and_create_reconciliation_rule(account_id, self.env.company.id)
+        if new_rule:
+            return self.env['account.bank.statement.line'].search([
+                ('journal_id', '=', self.journal_id.id),
+                ('is_reconciled', '=', False),
+                ('move_id.line_ids.reconcile_model_id', '=', new_rule.id)
+            ])
+        return self.env['account.bank.statement.line']
 
     def _handle_reconciliation_rule(self, aml, account_id):
         # If a rule has been created by Odoo and is recommended to the user but another account is chosen, the rule
@@ -625,9 +635,15 @@ class AccountBankStatementLine(models.Model):
             aml.reconcile_model_id.sudo().unlink()
 
     def _check_and_create_reconciliation_rule(self, account_id, company_id):
-        """Checks and creates reconciliation rules based on statement patterns."""
+        """Checks if a reconciliation rule exists for the given account and company. If not, attempts to create one
+        based on previous statement line patterns.
+
+        :param account_id: ID of the account to check for rules
+        :param company_id: ID of the company
+        :return: The newly created reconciliation rule if created, None otherwise
+        """
         if self._reconciliation_rule_exists(account_id, company_id):
-            return
+            return None
 
         bank_stmt_line_domain = [
             ('company_id', '=', company_id),
@@ -639,11 +655,12 @@ class AccountBankStatementLine(models.Model):
             bank_stmt_line_domain, limit=5, order='internal_index desc'
         )
         if len(previous_statement_lines) <= 1:
-            return
+            return None
 
         rule_data = self._prepare_reconciliation_rule_data(previous_statement_lines, account_id)
-        if rule_data.get('common_substring_length') > 10:
-            self._create_reconciliation_rule(rule_data)
+        if rule_data.get('common_substring'):
+            return self._create_reconciliation_rule(rule_data)
+        return None
 
     def _reconciliation_rule_exists(self, account_id, company_id):
         """Checks if a reconciliation rule already exists."""
@@ -656,21 +673,18 @@ class AccountBankStatementLine(models.Model):
     def _prepare_reconciliation_rule_data(self, statement_lines, account_id):
         """Prepares data for reconciliation rule creation."""
         payment_refs = [line.payment_ref for line in statement_lines]
-        amounts = [line.amount for line in statement_lines]
         common_substring = self._get_common_substring(payment_refs).strip()
         account = self.env['account.account'].browse(account_id)
 
         return {
             'name': account.name,
             'common_substring': common_substring,
-            'common_substring_length': len(common_substring),
             'account': account,
             'partner_ids': statement_lines.partner_id.ids if len(statement_lines.partner_id.ids) == 1 else [],
-            'amount': amounts[0] if len(set(amounts)) == 1 else None
         }
 
     def _create_reconciliation_rule(self, rule_data):
-        """Creates a new reconciliation rule based on prepared data."""
+        """Creates and returns a  new reconciliation rule based on prepared data."""
         vals = {
             'name': rule_data['name'],
             'match_journal_ids': self.journal_id.ids,
@@ -689,19 +703,17 @@ class AccountBankStatementLine(models.Model):
         if rule_data['partner_ids']:
             vals['match_partner_ids'] = rule_data['partner_ids']
 
-        if rule_data['amount'] is not None:
-            vals.update({
-                'match_amount': 'between',
-                # The +- 0.01 is a hacky way to have "equal to" behaviour. This is due to the query that matches the
-                # rules with the lines not having a separate condition for the "between", instead applying both
-                # "greater" and "lower" conditions.
-                'match_amount_min': rule_data['amount'] - 0.01,
-                'match_amount_max': rule_data['amount'] + 0.01,
-            })
-
-        self.with_user(SUPERUSER_ID).with_company(self.journal_id.company_id).env['account.reconcile.model'].create(vals)
+        return self.with_user(SUPERUSER_ID).with_company(self.journal_id.company_id).env['account.reconcile.model'].create(vals)
 
     def _get_common_substring(self, labels):
+        """
+        Returns the normalised longest common substring that is at least 10 characters long from a list
+        of labels. For shorter substrings, returns the first label if all labels are identical after
+        normalisation, otherwise returns None.
+
+        :param labels: List of string labels to process
+        :return: Longest common substring if 10+ chars, first label if all identical, otherwise None
+        """
         def normalise_label(label):
             # Keep structured references.
             structured_refs = re.findall(r'\+{3}\d+/\d+/\d+\+{3}', label)
@@ -751,7 +763,10 @@ class AccountBankStatementLine(models.Model):
 
             return s1[end_pos_s1 - longest:end_pos_s1]
 
-        normalised = [normalise_label(label) for label in labels if label]
+        normalised = [normalise_label(label.upper()) for label in labels if label]
+        # If they're all the same after normalising, then we don't care about the size being 10 chars or more.
+        if all(label == normalised[0] for label in normalised[1:]):
+            return normalised[0]
         # Sorting by length, so we start with the shortest strings first. This will allow us to exit early
         # if the size of the substring drops under 10.
         normalised.sort(key=len)
@@ -760,9 +775,9 @@ class AccountBankStatementLine(models.Model):
         # To do this, we get the one from the first two, then the result with the next string and so on.
         substring = get_longest_common_substring(normalised[0], normalised[1])
         for i in range(2, len(normalised)):
-            if len(substring) < 10:
-                break
             substring = get_longest_common_substring(substring, normalised[i])
+            if len(substring) < 10:
+                return None
 
         return substring
 

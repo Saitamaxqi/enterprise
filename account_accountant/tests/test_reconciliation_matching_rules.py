@@ -556,8 +556,8 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             'code': "020202",
             'account_type': "asset_current",
         })
-        bank_stmt_line_1 = self._create_st_line(amount=1000, payment_ref='VISA PAYMENT RENT ON 2020-01-01 FOR JAN')
-        bank_stmt_line_2 = self._create_st_line(amount=1000, payment_ref='VISA PAYMENT RENT ON 2020-02-01 FOR FEB')
+        bank_stmt_line_1 = self._create_st_line(amount=10, payment_ref='VISA PAYMENT RENT ON 2020-01-01 FOR JAN')
+        bank_stmt_line_2 = self._create_st_line(amount=100, payment_ref='VISA PAYMENT RENT ON 2020-02-01 FOR FEB')
 
         bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
         bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
@@ -566,9 +566,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             ('match_label', '=', 'match_regex'),
             ('match_label_param', '=', 'VISA PAYMENT RENT ON \\d+-\\d+-\\d+ FOR'),
             ('match_partner_ids', '=', self.partner_a.ids),
-            ('match_amount', '=', 'between'),
-            ('match_amount_min', '=', 1000 - 0.01),
-            ('match_amount_max', '=', 1000 + 0.01),
             ('line_ids.account_id', '=', account_a.id),
         ])
         self.assertTrue(reco_model.exists())
@@ -604,6 +601,45 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         bank_stmt_line_3._try_auto_reconcile_statement_lines()
         # Assert that the created model will be used as a suggestion.
         self.assertEqual(bank_stmt_line_3.line_ids[-1].reconcile_model_id.id, reco_model.id)
+
+    def test_auto_rule_creation_and_matching_case_insensitive_label_less_than_10(self):
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        bank_stmt_line_1 = self._create_st_line(amount=100, payment_ref='Rent')
+        bank_stmt_line_2 = self._create_st_line(amount=200, payment_ref='RENT')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
+        # Assert that the reconciliation model has been created even if the label is not exactly 10 characters long.
+        reco_model = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', '=', 'RENT'),
+        ])
+        self.assertTrue(reco_model.exists())
+
+        bank_stmt_line_3 = self._create_st_line(amount=300, payment_ref='rent')
+        bank_stmt_line_3._try_auto_reconcile_statement_lines()
+        # Assert that the created model will be used as a suggestion.
+        self.assertEqual(bank_stmt_line_3.line_ids[-1].reconcile_model_id.id, reco_model.id)
+
+    def test_auto_rule_creation_unreconciled_lines_to_match(self):
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        line_to_match_1 = self._create_st_line(amount=100, payment_ref='Payment')
+        line_to_match_2 = self._create_st_line(amount=200, payment_ref='Payment')
+        unreconciled_line = self._create_st_line(amount=300, payment_ref='Payment')  # To stay unreconciled.
+
+        line_to_match_1.set_account_bank_statement_line(line_to_match_1.line_ids[-1].id, account_a.id)
+        # Assert that the reconciliation model has been created and set_account_bank_statement_line returns the existing
+        # unreconciled lines that can now match with the new rule.
+        lines_to_reload = line_to_match_2.set_account_bank_statement_line(line_to_match_2.line_ids[-1].id, account_a.id)
+        self.assertEqual(lines_to_reload, unreconciled_line)
 
     def test_discount_amount(self):
         _invoice_line_1 = self._create_invoice_line(100, self.partner_1, 'out_invoice')

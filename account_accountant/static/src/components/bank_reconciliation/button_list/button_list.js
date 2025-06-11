@@ -99,7 +99,20 @@ export class BankRecButtonList extends Component {
             context: context,
             resModel: "account.account",
             onSelected: async (account) => {
-                await this._setAccountOnReconcileLine(this.lastAccountMoveLine.data.id, account[0]);
+                // After setting an account on a line, a new reconciliation model may be automatically created. If so,
+                // we need to reload the records that will use this model to make sure the new model is displayed.
+                const linesToLoad = await this._setAccountOnReconcileLine(
+                    this.lastAccountMoveLine.data.id,
+                    account[0]
+                );
+                const recordsToLoad = [
+                    ...this.env.model.root.records.filter((record) =>
+                        linesToLoad.includes(record.data.id)
+                    ),
+                    this.props.statementLine,
+                ];
+                await this.bankReconciliation.reloadRecords(recordsToLoad);
+                this.bankReconciliation.reloadChatter();
             },
         });
     }
@@ -109,15 +122,15 @@ export class BankRecButtonList extends Component {
      *
      * @param {number} amlId - ID of the account move line to update.
      * @param {number} accountId - ID of the selected account to assign.
+     *
+     * @returns {Promise<list>} - The list of IDs of lines to reload in case of auto-rule creation.
      */
     async _setAccountOnReconcileLine(amlId, accountId) {
-        await this.orm.call("account.bank.statement.line", "set_account_bank_statement_line", [
-            this.statementLineData.id,
-            amlId,
-            accountId,
-        ]);
-        this.props.statementLine.load();
-        this.bankReconciliation.reloadChatter();
+        return await this.orm.call(
+            "account.bank.statement.line",
+            "set_account_bank_statement_line",
+            [this.statementLineData.id, amlId, accountId]
+        );
     }
 
     /**

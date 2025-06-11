@@ -63,8 +63,8 @@ class AccountReconcileModel(models.Model):
                 LEFT JOIN account_reconcile_model_line reco_model_line ON reco_model_line.model_id = reco_model.id
                     WHERE (matching_journal_ids.ids IS NULL OR st_line.journal_id = ANY(matching_journal_ids.ids))
                       AND (matching_partner_ids.ids IS NULL OR st_line.partner_id = ANY(matching_partner_ids.ids))
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR ABS(st_line.amount) > reco_model.match_amount_min)
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR ABS(st_line.amount) < reco_model.match_amount_max)
+                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR st_line.amount >= reco_model.match_amount_min)
+                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR st_line.amount <= reco_model.match_amount_max)
                       AND (
                               reco_model.match_label IS NULL
                               OR (
@@ -82,8 +82,8 @@ class AccountReconcileModel(models.Model):
                               ) OR (
                                   reco_model.match_label = 'match_regex'
                                   AND (
-                                      st_line.payment_ref ~ reco_model.match_label_param
-                                      OR st_line.transaction_details::TEXT ~ reco_model.match_label_param
+                                      st_line.payment_ref ~* reco_model.match_label_param
+                                      OR st_line.transaction_details::TEXT ~* reco_model.match_label_param
                                   )
                               )
                           )
@@ -153,8 +153,8 @@ class AccountReconcileModel(models.Model):
                 LEFT JOIN matching_partner_ids ON reco_model.id = matching_partner_ids.account_reconcile_model_id
                     WHERE (matching_journal_ids.ids IS NULL OR st_line.journal_id = ANY(matching_journal_ids.ids))
                       AND (matching_partner_ids.ids IS NULL OR st_line.partner_id = ANY(matching_partner_ids.ids))
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR ABS(st_line.amount) > reco_model.match_amount_min)
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR ABS(st_line.amount) < reco_model.match_amount_max)
+                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR st_line.amount > reco_model.match_amount_min)
+                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR st_line.amount < reco_model.match_amount_max)
                       AND (
                               reco_model.match_label IS NULL
                               OR (
@@ -174,9 +174,9 @@ class AccountReconcileModel(models.Model):
                               ) OR (
                                   reco_model.match_label = 'match_regex'
                                   AND (
-                                      st_line.payment_ref ~ reco_model.match_label_param
-                                      OR st_line.transaction_details::TEXT ~ reco_model.match_label_param
-                                      OR move.narration::TEXT ~ reco_model.match_label_param
+                                      st_line.payment_ref ~* reco_model.match_label_param
+                                      OR st_line.transaction_details::TEXT ~* reco_model.match_label_param
+                                      OR move.narration::TEXT ~* reco_model.match_label_param
                                   )
                               )
                           )
