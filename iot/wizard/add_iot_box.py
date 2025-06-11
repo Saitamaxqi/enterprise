@@ -18,12 +18,17 @@ class AddIotBox(models.TransientModel):
         ('start', 'Start'),
         ('connect', 'Connect'),
         ('manual', 'Manual'),
+        ('pair_offline', 'Offline Pairing'),
     ], string='Stage', default='start')
 
     discovered_box_ids = fields.One2many("iot.discovered.box", "add_iot_box_wizard_id")
     iot_box_to_connect = fields.Many2one("iot.discovered.box")
     serial_number = fields.Char(string='Serial Number', help="Serial number of the IoT Box")
     pairing_code = fields.Char(string='Pairing Code', help="Pairing code of the IoT Box")
+
+    offline_pairing_token = fields.Char(
+        "Token", default=lambda self: self._compute_pairing_token(), readonly=True, store=False
+    )
 
     # ------------------------- IOT-PROXY CALLING METHODS -------------------------
     def _connect_iot_box_with_pairing_code(self):
@@ -161,3 +166,31 @@ class AddIotBox(models.TransientModel):
                 return self._open_enter_pairing_code_action()
             case 'connect':
                 return self._connect_iot_box_with_pairing_code()
+        return None
+
+    def pair_offline(self):
+        """Use the token to pair an IoT Box.
+        Allows to pair an IoT Box that is not connected to the internet
+        """
+        if self.stage == 'pair_offline':
+            self.stage = 'start'
+            return self._start_stage()
+
+        self.stage = 'pair_offline'
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'add.iot.box',
+            'res_id': self.id,
+            'name': _("Pair an IoT Box offline"),
+            'views': [[self.env.ref('iot.view_pair_offline').id, 'form']],
+            'target': 'new',
+        }
+
+    def _compute_pairing_token(self):
+        icp_sudo = self.env['ir.config_parameter'].sudo()
+        token = self.env['iot.box']._default_token()
+        url = self.get_base_url()
+        db_uuid = icp_sudo.get_param('database.uuid', default='')
+        enterprise_code = icp_sudo.get_param('database.enterprise_code', default='')
+
+        return f"{url}?token={token}&db_uuid={db_uuid}&enterprise_code={enterprise_code}"
