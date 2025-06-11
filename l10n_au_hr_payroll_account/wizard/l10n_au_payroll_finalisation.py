@@ -94,7 +94,7 @@ class L10n_AuPayrollFinalisationWizard(models.TransientModel):
             ("company_id", "=", self.company_id.id),
             ("date_from", ">=", self.date_start),
             ("date_from", "<=", self.date_end),
-            ("state", "in", ("done", "paid")),
+            ("state", "in", ("validated", "paid")),
             ("l10n_au_finalised", "!=", self.finalisation),
             "|",
                 ("employee_id.departure_date", ">=", self.date_start),
@@ -183,7 +183,7 @@ class L10n_AuPayrollFinalisationWizardEmp(models.TransientModel):
                     ("employee_id", "=", rec.employee_id.id),
                     ("date_from", ">=", rec.l10n_au_payroll_finalisation_id.date_start),
                     ("date_from", "<=", rec.l10n_au_payroll_finalisation_id.date_end),
-                    ("state", "in", ("done", "paid")),
+                    ("state", "in", ("validated", "paid")),
                     ("l10n_au_finalised", "!=", rec.l10n_au_payroll_finalisation_id.finalisation),
                 ]
             )

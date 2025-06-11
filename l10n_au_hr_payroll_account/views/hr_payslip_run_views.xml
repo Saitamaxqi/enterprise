@@ -32,7 +32,7 @@
                     invisible="l10n_au_stp_status != 'ready' or country_code != 'AU'"/>
                 <button name="action_register_payment"
                         type="object" string="Pay"
-                        invisible="state != '03_close' or l10n_au_stp_status != 'sent' or country_code != 'AU'"
+                        invisible="state != '02_close' or l10n_au_stp_status != 'sent' or country_code != 'AU'"
                         class="oe_highlight"
                         context="{'dont_redirect_to_payments': True, 'hr_payroll_payment_register': True, 'hr_payroll_payment_register_batch': id}"/>
             </button>
@@ -40,7 +40,7 @@
                 <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and country_code == 'AU')"/>
             </button>
             <button name="action_payment_report" position="attributes">
-                <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and state != '04_paid' and country_code == 'AU')"/>
+                <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and state != '03_paid' and country_code == 'AU')"/>
             </button>
         </field>
     </record>

@@ -150,7 +150,7 @@ class L10n_HkIrd(models.AbstractModel):
             raise UserError(_("Salary structure 'CAP57: Employees Monthly Pay' not found."))
 
         all_payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', self.start_period),
             ('date_to', '<=', self.end_period),
             ('employee_id', 'in', employees.ids),

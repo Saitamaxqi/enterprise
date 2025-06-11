@@ -159,7 +159,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def _perform_checks(self):
         super()._perform_checks()
         if self.company_id.country_code == 'IN':
-            payslip_ids = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
+            payslip_ids = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
             invalid_ifsc_employee_ids = payslip_ids.employee_id._get_employees_with_invalid_ifsc()
             if invalid_ifsc_employee_ids:
                 raise UserError(_(

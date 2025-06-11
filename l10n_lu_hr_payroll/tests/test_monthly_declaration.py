@@ -22,9 +22,10 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'date_start': '2022-03-01',
             'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
-            'state': '02_verify',
+            'state': '01_ready',
         })
         self.payslip_run.generate_payslips(employee_ids=[self.employee_david.id])
+        self.payslip_run.action_validate()
 
     def test_01_generate_missing_identification(self):
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
@@ -111,10 +112,11 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'date_start': '2022-03-01',
             'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
-            'state': '02_verify',
+            'state': '01_ready',
         })
 
         batch.generate_payslips(employee_ids=[self.employee_david.id, madison_employee.id, laura_employee.id])
+        batch.action_validate()
 
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
             'month': '3',
@@ -215,9 +217,10 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'date_start': '2022-03-01',
             'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
-            'state': '02_verify',
+            'state': '01_ready',
         })
         batch.generate_payslips(employee_ids=[self.employee_david.id, jade_employee.id])
+        batch.action_validate()
 
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
             'month': '3',

@@ -50,7 +50,7 @@ class L10n_HkIr56b(models.Model):
     def action_generate_declarations(self):
         for sheet in self:
             all_payslips = self.env['hr.payslip'].search([
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', sheet.company_id.id),
                 ('date_from', '>=', sheet.start_period),
                 ('date_to', '<=', sheet.end_period),

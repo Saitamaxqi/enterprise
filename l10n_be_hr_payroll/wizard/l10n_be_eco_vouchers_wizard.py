@@ -88,7 +88,7 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
                 ('company_id', '=', wizard.company_id.id),
                 ('date_from', '>=', wizard.date_start + relativedelta(months=1)),
                 ('date_to', '<=', wizard.date_end),
-                ('state', 'in', ['done', 'paid', 'verify'] if batch_specific else ['done', 'paid'])
+                ('state', 'in', ['validated', 'paid', 'draft'] if batch_specific else ['validated', 'paid'])
             ])
             # Remove out employees who already got their eco-vouchers during the year
             if not batch_specific:
@@ -169,13 +169,14 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
             open_payslips = self.env['hr.payslip'].search([
                 ('employee_id', 'in', self.line_ids.employee_id.ids),
                 ('struct_id', '=', payslip_structure_type.id),
-                ('state', '=', 'verify'),
+                ('state', '=', 'draft'),
+                ('line_ids', '!=', False),
             ])
         else:
             open_payslips = batch.slip_ids.filtered_domain([
                 ('employee_id', 'in', self.line_ids.employee_id.ids),
                 ('struct_id', '=', payslip_structure_type.id),
-                ('state', 'in', ['draft', 'verify']),
+                ('state', '=', 'draft'),
             ])
 
         for line in self.line_ids:

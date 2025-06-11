@@ -46,7 +46,7 @@ class HrPayslip(models.Model):
         payslips_by_employee = self._read_group(
             domain=[
                 ('struct_id.country_id', '=', 'SA'),
-                ('state', 'in', ('done', 'paid')),
+                ('state', 'in', ('validated', 'paid')),
                 ('employee_id', 'in', self.employee_id.ids),
                 ('input_line_ids.code', '=', 'ADV'),
             ],

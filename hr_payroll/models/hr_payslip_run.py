@@ -11,11 +11,10 @@ from odoo.fields import Domain
 from odoo.tools.date_utils import get_month
 
 STATUS_COLOR = {
-    '01_draft': 4,  # info light blue
-    '02_verify': 2,  # warning orange
-    '03_close': 10,  # success green
-    '04_paid': 5,  # primary purple
-    '05_cancel': 0,  # default grey
+    '01_ready': 4,  # info light blue
+    '02_close': 10,  # success green
+    '03_paid': 5,  # primary purple
+    '04_cancel': 0,  # default grey
     False: 0,  # default grey -- for studio
 }
 
@@ -30,14 +29,13 @@ class HrPayslipRun(models.Model):
     name = fields.Char(required=True)
     slip_ids = fields.One2many('hr.payslip', 'payslip_run_id', string='Payslips')
     state = fields.Selection([
-        ('01_draft', 'New'),
-        ('02_verify', 'Waiting'),
-        ('03_close', 'Done'),
-        ('04_paid', 'Paid'),
-        ('05_cancel', 'Cancelled'),
-    ],
+            ('01_ready', 'Ready'),
+            ('02_close', 'Done'),
+            ('03_paid', 'Paid'),
+            ('04_cancel', 'Cancelled'),
+        ],
         string='Status', index=True, readonly=True, copy=False,
-        default='01_draft', tracking=True,
+        default='01_ready', tracking=True,
         compute='_compute_state', store=True)
     color = fields.Integer(compute='_compute_color', export_string_translation=False)
     date_start = fields.Date(
@@ -62,6 +60,9 @@ class HrPayslipRun(models.Model):
         ('daily', 'Daily')],
         compute='_compute_schedule_pay', default="monthly", readonly=False, store=True, precompute=True, string='Pay Schedule')
     payslip_count = fields.Integer(compute='_compute_payslip_count', store=True)
+    payslips_with_issues = fields.Integer(compute='_compute_payslips_with_issues')
+    has_error = fields.Boolean(compute='_compute_has_error')
+    empty_payslips = fields.Integer(compute='_compute_empty_payslips')
     company_id = fields.Many2one('res.company', string='Company', required=True,
         default=lambda self: self.env.company)
     country_id = fields.Many2one(
@@ -188,17 +189,15 @@ class HrPayslipRun(models.Model):
         for payslip_run in self:
             states = payslip_run.mapped('slip_ids.state')
             if any(state == "draft" for state in states) or not payslip_run.slip_ids:
-                payslip_run.state = '01_draft'
-            elif any(state == "verify" for state in states):
-                payslip_run.state = '02_verify'
-            elif any(state == "done" for state in states):
-                payslip_run.state = '03_close'
+                payslip_run.state = '01_ready'
+            elif any(state == "validated" for state in states):
+                payslip_run.state = '02_close'
             elif any(state == "paid" for state in states):
-                payslip_run.state = '04_paid'
+                payslip_run.state = '03_paid'
             elif all(state == "cancel" for state in states):
-                payslip_run.state = '05_cancel'
+                payslip_run.state = '04_cancel'
             else:
-                payslip_run.state = '01_draft'
+                payslip_run.state = '01_ready'
 
     @api.depends('state')
     def _compute_color(self):
@@ -231,6 +230,23 @@ class HrPayslipRun(models.Model):
             if not vals.get("name"):
                 vals["name"] = self._get_name_for_period(vals, formated_date_cache)
         return super().create(vals_list)
+
+    @api.depends('slip_ids.error_count', 'slip_ids.warning_count')
+    def _compute_payslips_with_issues(self):
+        for run in self:
+            run.payslips_with_issues = len(run.slip_ids.filtered(lambda ps: ps.error_count or ps.warning_count))
+
+    @api.depends('slip_ids.error_count')
+    def _compute_has_error(self):
+        for run in self:
+            run.has_error = bool(run.slip_ids.filtered('error_count'))
+
+    @api.depends('slip_ids.line_ids')
+    def _compute_empty_payslips(self):
+        for run in self:
+            run.empty_payslips = len(run.slip_ids.filtered(
+                lambda slip: not slip.line_ids
+            ))
 
     def action_draft(self):
         if self.slip_ids.filtered(lambda s: s.state == 'paid'):
@@ -265,8 +281,9 @@ class HrPayslipRun(models.Model):
         self.slip_ids.action_payslip_unpaid()
 
     def action_validate(self):
-        payslip_done_result = self.mapped('slip_ids').filtered(lambda slip: slip.state not in ['draft', 'cancel']).action_payslip_done()
-        return payslip_done_result
+        return self.slip_ids.filtered(
+            lambda slip: slip.state != 'cancel' and slip.line_ids
+        ).action_payslip_done()
 
     def action_confirm(self):
         self.slip_ids.filtered(lambda slip: slip.state == 'draft').compute_sheet()
@@ -299,6 +316,20 @@ class HrPayslipRun(models.Model):
         filtered_version_ids = set(valid_version_ids) - set(existing_version_ids)
         action['domain'] = [("id", "in", list(filtered_version_ids))]
         return action
+
+    def action_review_issues(self):
+        self.ensure_one()
+        return {
+            'name': 'Issue Payslips',
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'res_model': 'hr.payslip',
+            'view_mode': 'list,form',
+            'context': {
+                'search_default_payslip_run_id': self.id,
+                'search_default_filter_issue': 1,
+            }
+        }
 
     def generate_payslips(self, version_ids=None, employee_ids=None):
         self.ensure_one()
@@ -365,8 +396,7 @@ class HrPayslipRun(models.Model):
             payslips_vals.append(values)
         self.slip_ids |= Payslip.with_context(tracking_disable=True).create(payslips_vals)
         self.slip_ids.compute_sheet()
-        self.slip_ids.write({'state': 'verify'})
-        self.state = '02_verify'
+        self.state = '01_ready'
 
         return 1
 
@@ -376,7 +406,7 @@ class HrPayslipRun(models.Model):
             raise UserError(self.env._("You can't delete a pay run with payslips if they are not draft or cancelled."))
 
     def _are_payslips_ready(self):
-        return any(slip.state in ['done', 'cancel'] for slip in self.mapped('slip_ids'))
+        return any(slip.state in ['validated', 'cancel'] for slip in self.mapped('slip_ids'))
 
     @api.model
     def get_unusual_days(self, date_from, date_to=None):

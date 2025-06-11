@@ -70,7 +70,7 @@ class L10nKeHrPayrollNssfReportWizard(models.TransientModel):
             payslips = self.env['hr.payslip'].search([
                 ('date_from', '>=', date(int(wizard.reference_year), int(wizard.reference_month), 1)),
                 ('date_to', '<=', date(int(wizard.reference_year), int(wizard.reference_month), 1) + relativedelta(day=31)),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', wizard.company_id.id),
             ])
             result = [(5, 0, 0)]

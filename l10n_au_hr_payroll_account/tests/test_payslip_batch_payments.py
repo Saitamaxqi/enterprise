@@ -30,7 +30,7 @@ class TestPayslipRun(L10nPayrollAccountCommon):
     def test_batch_payment(self):
         payslip_run = self._prepare_payslip_run()
         self.assertEqual(
-            payslip_run.state, "03_close", "Payslip run should be in close state"
+            payslip_run.state, "02_close", "Payslip run should be in close state"
         )
         # Post journal entries
         payslip_run.slip_ids.move_id._post()
@@ -41,7 +41,7 @@ class TestPayslipRun(L10nPayrollAccountCommon):
         self.assertEqual(payslip_run.l10n_au_payment_batch_id.payment_method_id, self.env.ref("l10n_au_aba.account_payment_method_aba_ct"))
 
         self.assertTrue(all(payslip.state == 'paid' for payslip in payslip_run.slip_ids), "All payslips must be marked paid!")
-        self.assertEqual(payslip_run.state, '04_paid', "The payslip batch should be marked as paid!")
+        self.assertEqual(payslip_run.state, '03_paid', "The payslip batch should be marked as paid!")
         for payment in payments:
             slip = payslip_run.slip_ids.filtered(lambda p: p.employee_id.work_contact_id == payment.partner_id)
             self.assertEqual(payment.amount, slip.line_ids.filtered(lambda x: x.code == 'NET').total)
@@ -78,7 +78,7 @@ class TestPayslipRun(L10nPayrollAccountCommon):
     def test_payslip_aba(self):
         payslip_run = self._prepare_payslip_run()
         self.assertEqual(
-            payslip_run.state, "03_close", "Payslip run should be in close state"
+            payslip_run.state, "02_close", "Payslip run should be in close state"
         )
         action = payslip_run.action_payment_report('aba')
         self.env["hr.payroll.payment.report.wizard"].with_context(
@@ -98,7 +98,7 @@ class TestPayslipRun(L10nPayrollAccountCommon):
     def test_single_payslip_payment(self):
         payslip_run = self._prepare_payslip_run()
         self.assertEqual(
-            payslip_run.state, "03_close", "Payslip run should be in close state"
+            payslip_run.state, "02_close", "Payslip run should be in close state"
         )
         payslip_run.slip_ids.move_id._post()
         payslip = payslip_run.slip_ids[0]

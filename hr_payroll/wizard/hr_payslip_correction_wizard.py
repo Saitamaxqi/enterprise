@@ -31,7 +31,7 @@ class HrPayslipCorrectionWizard(models.TransientModel):
         for wizard in self:
             domain = Domain.AND([
                 Domain('employee_id', '=', wizard.employee_id.id),
-                Domain('state', 'in', ['done', 'paid']),
+                Domain('state', 'in', ['validated', 'paid']),
                 Domain.OR([
                     Domain('is_wrong_version', '=', True),
                     Domain('has_wrong_data', '=', True),

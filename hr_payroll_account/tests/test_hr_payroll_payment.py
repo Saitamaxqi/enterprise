@@ -43,8 +43,8 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
         # I validate the payslip.
         self.hr_payslip_john.action_payslip_done()
 
-        # I verify the payslip is in done state.
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State not changed!')
+        # I verify the payslip is in validated state.
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State not changed!')
 
         # I verify that the Accounting Entry is created.
         self.assertTrue(self.hr_payslip_john.move_id, 'Accounting entry has not been created!')
@@ -86,7 +86,7 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
         payslip.compute_sheet()
         payslip.action_payslip_done()
 
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
         self.assertTrue(payslip.move_id)
 
         payslip.move_id.line_ids.unlink()

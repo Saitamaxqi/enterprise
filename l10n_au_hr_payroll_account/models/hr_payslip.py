@@ -50,7 +50,7 @@ class HrPayslip(models.Model):
         for payslip in self:
             if payslip.country_code != 'AU':
                 payslip.l10n_au_stp_status = False
-            elif payslip.state not in ('done', 'paid'):
+            elif payslip.state not in ('validated', 'paid'):
                 payslip.l10n_au_stp_status = 'draft'
             else:
                 # Use latest STP record for the payslip for ffr

@@ -26,7 +26,7 @@ export class HrPayslipRun extends models.ServerModel {
         {
             id: 1,
             name: "Basic Pay Run",
-            state: "01_draft",
+            state: "01_ready",
             currency_id: 1,
             display_name: "Basic Pay Run",
         },

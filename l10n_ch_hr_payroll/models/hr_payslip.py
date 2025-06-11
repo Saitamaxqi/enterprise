@@ -5,7 +5,6 @@ from datetime import date
 from calendar import monthrange
 
 from odoo import api, fields, models, Command, _
-from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_round
 from dateutil.relativedelta import relativedelta
 from odoo.tools import date_utils
@@ -67,7 +66,6 @@ class HrPayslip(models.Model):
     l10n_ch_is_correction = fields.Many2one('hr.employee.is.line', compute="_compute_l10n_ch_is_correction", store=True)
     l10n_ch_monthly_snapshot = fields.Many2one('l10n.ch.employee.monthly.values', compute="_compute_l10n_ch_monthly_snapshot", store=True)
     l10n_ch_swiss_wage_ids = fields.One2many('l10n.ch.swiss.wage.component', 'payslip_id', compute="_compute_l10n_ch_swiss_wage_ids", store=True)
-    l10n_ch_validation_errors = fields.Json(related="l10n_ch_monthly_snapshot.validation_errors")
 
     l10n_ch_entry = fields.Date(compute="_compute_l10n_ch_occupation", store=True)
     l10n_ch_withdrawal = fields.Date(compute="_compute_l10n_ch_occupation", store=True)
@@ -92,6 +90,17 @@ class HrPayslip(models.Model):
         else:
             return super()._get_schedule_timedelta()
 
+    @api.model
+    def _issues_dependencies(self):
+        return super()._issues_dependencies() + ['l10n_ch_monthly_snapshot.validation_errors']
+
+    def _get_warnings_by_slip(self):
+        warnings_by_slip = super()._get_warnings_by_slip()
+        for slip in self:
+            if warnings := slip.l10n_ch_monthly_snapshot.validation_errors:
+                warnings_by_slip[slip].extend(warnings.values())
+        return warnings_by_slip
+
     @api.depends('date_from', 'struct_id')
     def _compute_date_to(self):
         swissdec_slips = self.filtered(lambda p: p.struct_id.code == 'CHMONTHLYELM')
@@ -104,42 +113,42 @@ class HrPayslip(models.Model):
     @api.depends('version_id.l10n_ch_social_insurance_id', 'state')
     def _compute_l10n_ch_social_insurance_id(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_social_insurance_id = payslip.version_id.l10n_ch_social_insurance_id
 
     @api.depends('version_id.l10n_ch_lpp_insurance_id', 'state')
     def _compute_l10n_ch_lpp_insurance_id(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_lpp_insurance_id = payslip.version_id.l10n_ch_lpp_insurance_id
 
     @api.depends('version_id.l10n_ch_accident_insurance_line_id', 'state')
     def _compute_l10n_ch_accident_insurance_line_id(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_accident_insurance_line_id = payslip.version_id.l10n_ch_accident_insurance_line_id
 
     @api.depends('version_id.l10n_ch_additional_accident_insurance_line_ids', 'state')
     def _compute_l10n_ch_additional_accident_insurance_line_ids(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_additional_accident_insurance_line_ids = [(6, 0, payslip.version_id.l10n_ch_additional_accident_insurance_line_ids.ids)]
 
     @api.depends('version_id.l10n_ch_sickness_insurance_line_ids', 'state')
     def _compute_l10n_ch_sickness_insurance_line_ids(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_sickness_insurance_line_ids = [(6, 0, payslip.version_id.l10n_ch_sickness_insurance_line_ids.ids)]
 
     @api.depends('version_id.l10n_ch_compensation_fund_id', 'state')
     def _compute_l10n_ch_compensation_fund_id(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_compensation_fund_id = payslip.version_id.l10n_ch_compensation_fund_id
 
@@ -147,7 +156,7 @@ class HrPayslip(models.Model):
     def _compute_l10n_ch_pay_13th_month(self):
         payslip_to_recompute = self.env['hr.payslip']
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done'] or not payslip.payslip_run_id:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated'] or not payslip.payslip_run_id:
                 continue
             if payslip.l10n_ch_pay_13th_month != payslip.payslip_run_id.l10n_ch_pay_13th_month:
                 if payslip.state == "waiting":
@@ -160,7 +169,7 @@ class HrPayslip(models.Model):
     def _compute_l10n_ch_avs_status(self):
         for payslip in self:
             contract = payslip.version_id
-            if payslip.state not in ['draft', 'verify'] or self.env.context.get('ch_skip_payslip_update'):
+            if payslip.state != 'draft' or self.env.context.get('ch_skip_payslip_update'):
                 continue
             payslip.l10n_ch_avs_status = contract.l10n_ch_avs_status
 
@@ -170,14 +179,14 @@ class HrPayslip(models.Model):
             if payslip.struct_id.country_id.code != "CH":
                 continue
             contract = payslip.version_id
-            if payslip.state not in ['draft', 'verify']:
+            if payslip.state != 'draft':
                 continue
             payslip.l10n_ch_is_model = contract.l10n_ch_is_model
 
     @api.depends('version_id.l10n_ch_lpp_not_insured', 'state')
     def _compute_l10n_ch_lpp_not_insured(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "CH" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_ch_lpp_not_insured = payslip.version_id.l10n_ch_lpp_not_insured
 
@@ -524,7 +533,7 @@ class HrPayslip(models.Model):
             if self.l10n_ch_after_departure_payment:
                 reference_payslip = self.env['hr.payslip'].search([
                     ('employee_id', '=', self.employee_id.id),
-                    ('state', 'in', ['done', 'paid']),
+                    ('state', 'in', ['validated', 'paid']),
                     ('struct_id.code', '=', 'CHMONTHLYELM'),
                     ('l10n_ch_after_departure_payment', '=', False),
                 ], order="date_from DESC", limit=1)
@@ -540,7 +549,7 @@ class HrPayslip(models.Model):
                     ('employee_id', '=', self.employee_id.id),
                     ('date_from', '>=', date_from),
                     ('date_to', '<', date_to),
-                    ('state', 'in', ['done', 'paid']),
+                    ('state', 'in', ['validated', 'paid']),
                     ('struct_id.code', '=', 'CHMONTHLYELM'),
                 ]),
             })
@@ -549,27 +558,27 @@ class HrPayslip(models.Model):
     @api.depends('version_id.l10n_ch_location_unit_id')
     def _compute_l10n_ch_location_unit_id(self):
         for payslip in self:
-            if payslip.state not in ['draft', 'verify'] or payslip.company_id.country_id.code != "CH":
+            if payslip.state != 'draft' or payslip.company_id.country_id.code != "CH":
                 continue
             payslip.l10n_ch_location_unit_id = payslip.version_id.l10n_ch_location_unit_id
 
     @api.depends('version_id.l10n_ch_laa_group')
     def _compute_l10n_ch_laa_group(self):
         for payslip in self:
-            if payslip.state not in ['draft', 'verify'] or payslip.company_id.country_id.code != "CH":
+            if payslip.state != 'draft' or payslip.company_id.country_id.code != "CH":
                 continue
             payslip.l10n_ch_laa_group = payslip.version_id.l10n_ch_laa_group
 
     @api.depends('version_id.laa_solution_number')
     def _compute_laa_solution_number(self):
         for payslip in self:
-            if payslip.state not in ['draft', 'verify'] or payslip.company_id.country_id.code != "CH":
+            if payslip.state != 'draft' or payslip.company_id.country_id.code != "CH":
                 continue
             payslip.laa_solution_number = payslip.version_id.laa_solution_number
 
     def compute_sheet(self):
         # Complete compute Sheet override to avoid any overrides from other apps
-        payslips = self.filtered(lambda slip: slip.state in ['draft', 'verify'] and slip.struct_id.code == "CHMONTHLYELM")
+        payslips = self.filtered(lambda slip: slip.state == 'draft' and slip.struct_id.code == "CHMONTHLYELM")
         if not payslips:
             return super().compute_sheet()
         payslips.line_ids.unlink()
@@ -582,17 +591,11 @@ class HrPayslip(models.Model):
         today = fields.Date.today()
         for payslip in payslips:
             payslip.write({
-                'state': 'verify',
                 'compute_date': today
             })
         self.env['hr.payslip.line'].create(payslips._get_payslip_lines())
 
         super(HrPayslip, self - payslips).compute_sheet()
-
-    @api.constrains('version_id', 'date_from', 'date_to')
-    def _check_version_dates(self):
-        swiss_payslips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM")
-        super(HrPayslip, self - swiss_payslips)._check_version_dates()
 
     def action_payslip_done(self):
         res = super().action_payslip_done()
@@ -616,7 +619,7 @@ class HrPayslip(models.Model):
     @api.depends('employee_id', 'l10n_ch_monthly_snapshot')
     def _compute_l10n_ch_is_code(self):
         for payslip in self:
-            if payslip.state not in ['draft', 'verify'] or payslip.company_id.country_id.code != "CH":
+            if payslip.state != 'draft' or payslip.company_id.country_id.code != "CH":
                 continue
             valid_source_tax_snapshot = payslip.l10n_ch_monthly_snapshot
             source_tax_code = False
@@ -749,7 +752,7 @@ class HrPayslip(models.Model):
                     ('employee_id', '=', self.employee_id.id),
                     ('date_from', '>=', date(payslip_to_reverse.date_from.year, 1, 1)),
                     ('date_to', '<', payslip_to_reverse.date_to),
-                    ('state', 'in', ['done', 'paid']),
+                    ('state', 'in', ['validated', 'paid']),
                     ('struct_id.code', '=', 'CHMONTHLYELM'),
                 ])
                 if new_code in ['NON', 'NOY']:
@@ -903,7 +906,7 @@ class HrPayslip(models.Model):
                 payslip.l10n_ch_is_model = False
 
     def action_refresh_from_work_entries(self):
-        swiss_slips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM" and p.state in ['draft', 'verify'])
+        swiss_slips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM" and p.state == 'draft')
         if not swiss_slips:
             return super().action_refresh_from_work_entries()
         swiss_slips.mapped('l10n_ch_swiss_wage_ids').unlink()

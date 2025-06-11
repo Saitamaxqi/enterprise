@@ -15,7 +15,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def _create_sepa_binary(self):
         # Map the necessary data
         payments_data = []
-        for slip in self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0):
+        for slip in self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0):
             payments_data.append(slip._get_payments_vals(self.journal_id, self.effective_date))
         payment_method_code = self.env.context.get('payment_method') or 'sepa_ct'
 

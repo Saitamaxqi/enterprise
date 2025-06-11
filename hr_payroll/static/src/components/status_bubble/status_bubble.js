@@ -7,20 +7,25 @@ export class StatusBubble extends Component {
     static template = "hr_payroll.StatusBubble";
     static props = {
         record: { type: Object },
-        warningCount: { type: Number, optional: true },
-        errorCount: { type: Number, optional: true },
         removeStates: { type: Array, optional: true },
     };
     static defaultProps = {
-        warningCount: 0,
-        errorCount: 0,
         removeStates: [],
     };
 
     setup() {
+        this.props.issueCount = this.props.record.data['payslips_without_issues'];
         this.selection = this.props.record.fields.state.selection.filter(
             (o) => !this.props?.removeStates.includes(o[0])
         );
+    }
+
+    get hasError() {
+        return this.props.record.data.has_error ?? false;
+    }
+
+    get issueCount() {
+        return this.props.record.data.payslips_with_issues ?? 0;
     }
 
     get activeIndex() {
@@ -37,14 +42,14 @@ export const statusBubbleField = {
     displayName: _t("Status Bubble"),
     supportedOptions: [
         {
-            label: _t("Warning Count"),
-            name: "warning_count",
+            label: _t("Issue Count"),
+            name: "issue_count_field",
             type: "integer",
         },
         {
-            label: _t("Error Count"),
-            name: "error_count",
-            type: "integer",
+            label: _t("Has Error"),
+            name: "has_error_field",
+            type: "boolean",
         },
         {
             label: _t("Remove State"),
@@ -52,11 +57,13 @@ export const statusBubbleField = {
             type: "string",
         },
     ],
+    fieldDependencies: [
+        { name: "payslips_with_issues", type: "integer"},
+        { name: "has_error", type: "boolean"},
+    ],
     supportedTypes: ["many2one", "selection"],
     extractProps({ options }) {
         return {
-            warningCount: options.warning_count,
-            errorCount: options.error_count,
             removeStates: options.remove_states,
         };
     },

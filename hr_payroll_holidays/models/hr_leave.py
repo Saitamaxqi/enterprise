@@ -32,9 +32,8 @@ class HrLeave(models.Model):
         # Get employees payslips
         all_payslips = self.env['hr.payslip'].sudo().search([
             ('employee_id', 'in', self.mapped('employee_id').ids),
-            ('state', 'in', ['done', 'paid', 'verify']),
         ]).filtered(lambda p: p.is_regular)
-        done_payslips = all_payslips.filtered(lambda p: p.state in ['done', 'paid'])
+        done_payslips = all_payslips.filtered(lambda p: p.state in ['validated', 'paid'])
         waiting_payslips = all_payslips - done_payslips
         # Mark Leaves to Defer
         for leave in self:
@@ -81,16 +80,16 @@ class HrLeave(models.Model):
         # Recompute draft/waiting payslips
         all_payslips = self.env['hr.payslip'].sudo().search([
             ('employee_id', 'in', self.mapped('employee_id').ids),
-            ('state', 'in', ['draft', 'verify']),
+            ('state', '=', 'draft'),
         ]).filtered(lambda p: p.is_regular)
         draft_payslips = self.env['hr.payslip']
         waiting_payslips = self.env['hr.payslip']
         for leave in self:
             for payslip in all_payslips:
                 if payslip.employee_id == leave.employee_id and (payslip.date_from <= leave.date_to.date() and payslip.date_to >= leave.date_from.date()):
-                    if payslip.state == 'draft':
+                    if not payslip.line_ids:
                         draft_payslips |= payslip
-                    elif payslip.state == 'verify':
+                    else:
                         waiting_payslips |= payslip
         if draft_payslips:
             draft_payslips._compute_worked_days_line_ids()
@@ -159,7 +158,7 @@ class HrLeave(models.Model):
             ('employee_id', 'in', self.employee_id.ids),
             ('date_from', '<=', max(self.mapped('date_to'))),
             ('date_to', '>=', min(self.mapped('date_from'))),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
         ])
         leaves_in_payslip = defaultdict(bool)
         for leave in self:
@@ -179,7 +178,7 @@ class HrLeave(models.Model):
             ('employee_id', 'in', self.employee_id.ids),
             ('date_from', '<=', max(self.mapped('date_to'))),
             ('date_to', '>=', min(self.mapped('date_from'))),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
         ])
         for leave in self:
             if any(

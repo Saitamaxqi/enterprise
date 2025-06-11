@@ -55,16 +55,13 @@
                 <field name="l10n_ch_after_departure_payment" string="After Departure Payment"/>
                 <field name="l10n_ch_is_code" invisible="not l10n_ch_is_code"/>
             </field>
-            <notebook position="before">
-                <field name="l10n_ch_validation_errors" class="w-100" widget="actionable_warnings"/>
-            </notebook>
             <page name="worked_days_input" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
             <page name="worked_days_input" position="before">
                 <page string="Wage Types">
                 <separator string="Monthly Wages"/>
-                <field name="l10n_ch_swiss_wage_ids" readonly="state in ['cancel', 'done', 'paid']">
+                <field name="l10n_ch_swiss_wage_ids" readonly="state in ['cancel', 'validated', 'paid']">
                     <list string="Base Wage Components" editable="bottom" create="1" delete="1" decoration-danger="amount==0">
                         <field name="work_entry_type_id" options="{'no_open': True, 'no_create': True}"/>
                         <field name="name" string="Description"/>
@@ -76,7 +73,7 @@
                     </list>
                 </field>
                 <separator string="Additional Wage Types"/>
-                <field name="input_line_ids" colspan="4" nolabel="1" readonly="state in ['cancel', 'done', 'paid']">
+                <field name="input_line_ids" colspan="4" nolabel="1" readonly="state in ['cancel', 'validated', 'paid']">
                     <list string="Input Data" editable="bottom">
                         <!--
                             Required 0 to force client to send on change request even when not defined

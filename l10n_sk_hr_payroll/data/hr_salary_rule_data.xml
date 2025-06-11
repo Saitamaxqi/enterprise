@@ -283,7 +283,7 @@ result_rate = 10
 taxable = categories['GROSS']
 already_taxed = payslip.search([
     ('employee_id', '=', payslip.employee_id.id),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(day=31, months=-1)),
 ])._get_line_values(['GROSS'], compute_sum=True)['GROSS']['sum']['total']
@@ -310,7 +310,7 @@ result_rate = -19
 taxable = categories['GROSS']
 already_taxed = payslip.search([
     ('employee_id', '=', payslip.employee_id.id),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(day=31, months=-1)),
 ])._get_line_values(['GROSS'], compute_sum=True)['GROSS']['sum']['total']

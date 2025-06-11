@@ -62,12 +62,12 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         #A leave should only be set to defer if ALL colliding with the time period of the time off are in a done state
         # it should not happen if a payslip for that time period is still in a waiting state
 
-        #create payslip -> waiting
+        # create payslip -> waiting
         waiting_payslip = self.env['hr.payslip'].create({
             'name': 'Donald Payslip draft',
             'employee_id': self.emp.id,
         })
-        #payslip -> done
+        # payslip -> validated
         done_payslip = self.env['hr.payslip'].create({
             'name': 'Donald Payslip done',
             'employee_id': self.emp.id,
@@ -100,7 +100,8 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
 
         payslip.compute_sheet()
-        self.assertEqual(payslip.state, 'verify')
+        self.assertEqual(payslip.state, 'draft')
+        self.assertTrue(payslip.line_ids)
 
         leave_1 = self.env['hr.leave'].with_user(self.vlad).create({
             'name': 'Tennis',
@@ -110,7 +111,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             'request_date_to': '2022-01-12',
         })
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave_1.sudo().action_approve()
         self.assertEqual(leave_1.payslip_state, 'blocked', 'Leave should be to defer')
@@ -157,7 +158,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
         payslip.compute_sheet()
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave = self.env['hr.leave'].new({
             'name': 'Tennis',
@@ -199,7 +200,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
         payslip.compute_sheet()
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave = self.env['hr.leave'].new({
             'name': 'Tennis',
@@ -240,7 +241,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
         payslip.compute_sheet()
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave = self.env['hr.leave'].new({
             'name': 'Tennis',
@@ -270,7 +271,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
         payslip.compute_sheet()
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave = self.env['hr.leave'].new({
             'name': 'Tennis',
@@ -300,7 +301,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
         payslip.compute_sheet()
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave = self.env['hr.leave'].new({
             'name': 'Tennis',
@@ -344,7 +345,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         })
         payslip.compute_sheet()
         payslip.action_payslip_done()
-        self.assertEqual(payslip.state, 'done')
+        self.assertEqual(payslip.state, 'validated')
 
         leave_data = [{
             'name': 'Paid Time Off',

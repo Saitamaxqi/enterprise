@@ -23,7 +23,7 @@ class HrPayslipSwissWage(models.Model):
     @api.depends('payslip_id', 'salary_base', 'rate')
     def _compute_amount(self):
         for worked_days in self:
-            if worked_days.payslip_id.edited or worked_days.payslip_id.state not in ['draft', 'verify']:
+            if worked_days.payslip_id.edited or worked_days.payslip_id.state != 'draft':
                 continue
             worked_days.amount = worked_days.salary_base * worked_days.rate
 

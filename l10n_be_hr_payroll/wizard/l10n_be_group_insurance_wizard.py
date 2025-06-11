@@ -32,7 +32,7 @@ class L10nBeGroupInsuranceWizard(models.TransientModel):
                 ('company_id', '=', wizard.company_id.id),
                 ('date_from', '>=', wizard.date_from),
                 ('date_to', '<=', wizard.date_to),
-                ('state', 'in', ['done', 'paid'])
+                ('state', 'in', ['validated', 'paid'])
             ])
             line_values = all_payslips._get_line_values(
                 ['GROUPINSURANCE'],

@@ -63,7 +63,7 @@ class HrESICReport(models.Model):
             ('employee_id', 'in', indian_employees.ids),
             ('date_from', '>=', date(year, month, 1)),
             ('date_to', '<=', date(year, month, end_date)),
-            ('state', 'in', ('done', 'paid'))
+            ('state', 'in', ('validated', 'paid'))
         ])
         return indian_employees, payslips
 

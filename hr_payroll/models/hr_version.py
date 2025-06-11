@@ -442,7 +442,7 @@ class HrVersion(models.Model):
         self.ensure_one()
         all_payslips = self.env['hr.payslip'].sudo().search([
             ('version_id', '=', self.id),
-            ('state', 'in', ['draft', 'verify']),
+            ('state', '=', 'draft'),
             ('date_from', '<=', date_to),
             ('date_to', '>=', date_from),
             ('company_id', '=', self.env.company.id),

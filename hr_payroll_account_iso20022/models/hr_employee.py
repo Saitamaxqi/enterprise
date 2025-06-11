@@ -2,7 +2,18 @@
 
 from odoo import fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.addons.hr_payroll_account.wizard.hr_payroll_payment_report_wizard import _is_iban_valid
+from odoo.addons.base_iban.models.res_partner_bank import validate_iban
+
+
+def _is_iban_valid(iban):
+    if iban is None:
+        return False
+    try:
+        validate_iban(iban)
+        return True
+    except ValidationError:
+        pass
+    return False
 
 
 class HrEmployee(models.Model):

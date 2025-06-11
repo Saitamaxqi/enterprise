@@ -15,7 +15,7 @@ class HrEmployee(models.Model):
         payslip_ids = self.slip_ids.filtered_domain([
             ('date_from', '>=', date_start),
             ('date_from', '<=', date_end),
-            ('state', 'in', ('done', 'paid')),
+            ('state', 'in', ('validated', 'paid')),
             ('l10n_au_finalised', '=', finalised)
         ])
 

@@ -242,7 +242,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
             domain=[("employee_id", 'in', self.employee_id.ids),
                     ('l10n_ch_lpp_not_insured', '!=', True),
                     ('l10n_ch_compensation_fund_id', '!=', False),
-                    ("state", "in", ["paid", "done"]),
+                    ("state", "in", ["paid", "validated"]),
                     ('struct_id.code', '=', 'CHMONTHLYELM')],
             groupby=["employee_id", "date_to:year", "date_to:month"],
             aggregates=["id:recordset"])
@@ -257,7 +257,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
             mapped_bvg_lpp_declarations[comp][year][int(month)] = declaration
 
         line_values = self.env["hr.payslip"].search(
-            [("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "done"]), ('struct_id.code', '=', 'CHMONTHLYELM')])._get_line_values(rule_codes)
+            [("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "validated"]), ('struct_id.code', '=', 'CHMONTHLYELM')])._get_line_values(rule_codes)
 
         mapped_payslips = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: self.env["hr.payslip"])))
 
@@ -430,7 +430,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
         paid_slips = self.env["hr.payslip"]._read_group(
             domain=[
                 ("employee_id", 'in', self.employee_id.ids),
-                ("state", "in", ["paid", "done"]),
+                ("state", "in", ["paid", "validated"]),
                 ('struct_id.code', '=', 'CHMONTHLYELM'),
                 ('l10n_ch_social_insurance_id', '!=', False),
                 ('l10n_ch_laa_group', '!=', False),
@@ -444,7 +444,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
         rules_grouped_by_yearly_statistic = swissdec_structure_rules.filtered(lambda r: r.l10n_ch_yearly_statement).grouped('l10n_ch_yearly_statement')
 
         line_values = self.env["hr.payslip"].search(
-            [("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "done"]), ('struct_id.code', '=', 'CHMONTHLYELM')])._get_line_values(
+            [("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "validated"]), ('struct_id.code', '=', 'CHMONTHLYELM')])._get_line_values(
             rule_codes)
 
         mapped_payslips = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: self.env["hr.payslip"])))
@@ -624,7 +624,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
         paid_slips = self.env["hr.payslip"]._read_group(
             domain=[("employee_id", 'in', self.employee_id.ids),
                     ("l10n_ch_is_correction", '!=', False),
-                    ("state", "in", ["paid", "done"]),
+                    ("state", "in", ["paid", "validated"]),
                     ('struct_id.code', '=', 'CHMONTHLYELM')],
             groupby=["employee_id", "date_to:year", "date_to:month"],
             aggregates=["id:recordset"])

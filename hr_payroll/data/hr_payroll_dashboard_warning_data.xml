@@ -193,7 +193,7 @@ if untrusted_bank_accounts:
             <field name="evaluation_code">
 today = date.today()
 done_payslips = self.env['hr.payslip'].search([
-    ('state', '=', 'done'),
+    ('state', '=', 'validated'),
     ('company_id', 'in', self.env.companies.ids),
 ])
 overdue_payslips = self.env['hr.payslip']

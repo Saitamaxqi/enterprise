@@ -11,7 +11,7 @@ class HrEmployeeIsLine(models.Model):
     active = fields.Boolean(default=True)
     employee_id = fields.Many2one('hr.employee', required=True)
     reason = fields.Char()
-    payslips_to_correct = fields.Many2many('hr.payslip', domain="[('employee_id', '=', employee_id), ('state', 'in', ['done', 'paid'])]")
+    payslips_to_correct = fields.Many2many('hr.payslip', domain="[('employee_id', '=', employee_id), ('state', 'in', ['validated', 'paid'])]")
     state = fields.Selection(selection=[("draft", "Draft"),
                                         ("pending", "Pending Correction"),
                                         ("confirmed", "Confirmed")], default="draft")
@@ -53,7 +53,7 @@ class L10nCHIsCorrectionLine(models.Model):
     is_correction_id = fields.Many2one('hr.employee.is.line', required=True)
     employee_id = fields.Many2one(related='is_correction_id.employee_id')
     state = fields.Selection(related='is_correction_id.state')
-    payslip_id = fields.Many2one('hr.payslip', required=True, domain="[('employee_id', '=', employee_id), ('state', 'in', ['done', 'paid'])]", help="Payslip you wish to correct")
+    payslip_id = fields.Many2one('hr.payslip', required=True, domain="[('employee_id', '=', employee_id), ('state', 'in', ['validated', 'paid'])]", help="Payslip you wish to correct")
     l10n_ch_tax_scale_type = fields.Selection(string="Tax Scale Type", required=True, selection=lambda self: self.env['hr.employee']._fields['l10n_ch_tax_scale_type']._description_selection(self.env))
     l10n_ch_tax_scale = fields.Selection(string="Tax Scale", selection=lambda self: self.env['hr.employee']._fields['l10n_ch_tax_scale']._description_selection(self.env))
     l10n_ch_pre_defined_tax_scale = fields.Selection(string="Predefined Tax Scale", selection=lambda self: self.env['hr.employee']._fields['l10n_ch_pre_defined_tax_scale']._description_selection(self.env))

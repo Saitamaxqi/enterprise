@@ -33,7 +33,7 @@ class L10n_HkIr56f(models.Model):
             xml_root = etree.fromstring(base64.b64decode(record.xml_file))
             try:
                 schema.assertValid(xml_root)
-                record.xml_validation_state = 'done'
+                record.xml_validation_state = 'validated'
             except etree.DocumentInvalid as err:
                 record.xml_validation_state = 'invalid'
                 record.error_message = str(err)

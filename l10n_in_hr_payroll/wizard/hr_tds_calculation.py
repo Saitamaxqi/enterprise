@@ -20,7 +20,7 @@ class L10nInTdsComputationWizard(models.TransientModel):
                 ('version_id', '=', version_id.id),
                 ('employee_id', '=', version_id.employee_id.id),
                 ('date_from', '>=', version_id.contract_date_start),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
             ], limit=1, order='date_from desc').id
         if not res.get('currency_id') and self.env.company.currency_id:
             res['currency_id'] = self.env.company.currency_id.id

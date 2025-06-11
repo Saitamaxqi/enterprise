@@ -537,10 +537,10 @@ class L10nCHSwissdecJobResult(models.Model):
             # Find payslips covering the given month (target_date is first day of month)
             first_day = target_date.replace(day=1)
             last_day = (first_day + relativedelta(months=1)) - relativedelta(days=1)
-            # Payslips that overlap this month and are done or paid
+            # Payslips that overlap this month and are validated or paid
             payslips = self.env['hr.payslip'].search([
                 ('employee_id', '=', employee.id),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('date_from', '<=', last_day),
                 ('date_to', '>=', first_day),
             ])

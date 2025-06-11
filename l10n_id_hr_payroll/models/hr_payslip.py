@@ -30,7 +30,7 @@ class HrPayslip(models.Model):
         payslips = self.env['hr.payslip'].search([
             ('date_to', '>', date_start),
             ('date_to', '<', self.date_to),
-            ('state', 'in', ['done', 'paid'])
+            ('state', 'in', ['validated', 'paid'])
         ])
         vals = payslips._get_line_values(codes, compute_sum=True)
         return sum(vals[code]['sum']['total'] for code in codes)
@@ -62,7 +62,7 @@ class HrPayslip(models.Model):
         payslips = self.env['hr.payslip'].search([
             ('date_to', '>', date_start),
             ('date_to', '<', self.date_to),
-            ('state', 'in', ['done', 'paid'])
+            ('state', 'in', ['validated', 'paid'])
         ])
         vals = payslips._get_line_values(['GROSS'])['GROSS']
         gross_lines = [vals[i]['total'] for i in payslips.ids]

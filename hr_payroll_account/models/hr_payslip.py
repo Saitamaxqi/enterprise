@@ -3,7 +3,7 @@
 from collections import defaultdict
 from markupsafe import Markup
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare, float_is_zero, plaintext2html
 
@@ -18,6 +18,23 @@ class HrPayslip(models.Model):
     move_state = fields.Selection(related='move_id.state', string='Move State', export_string_translation=False)
     batch_payroll_move_lines = fields.Boolean(related='company_id.batch_payroll_move_lines')
 
+    @api.model
+    def _issues_dependencies(self):
+        return super()._issues_dependencies() + ['struct_id.journal_id']
+
+    def _get_warnings_by_slip(self):
+        warnings_by_slip = super()._get_warnings_by_slip()
+        for slip in self.filtered(
+            lambda slip: slip.state in ['draft', 'validated'] and slip.struct_id and not slip.journal_id
+        ):
+            warnings_by_slip[slip].append({
+                'message': _("Account Journal not configured on Structure"),
+                'action_text': _("Structure"),
+                'action': slip.struct_id._get_records_action(target='new'),
+                'level': 'warning',
+            })
+        return warnings_by_slip
+
     def action_payslip_cancel(self):
         moves = self.mapped('move_id')
         moves._unlink_or_reverse()
@@ -31,7 +48,7 @@ class HrPayslip(models.Model):
         if any(slip.state == 'paid' for slip in self):
             raise ValidationError(_("You can't create a journal entry for a paid payslip."))
         res = super().action_payslip_done()
-        self._action_create_account_move()
+        self.filtered('journal_id')._action_create_account_move()
         return res
 
     def _action_create_account_move(self):
@@ -43,8 +60,8 @@ class HrPayslip(models.Model):
             if run._are_payslips_ready():
                 all_payslips |= run.slip_ids
 
-        # A payslip need to have a done state and not an accounting move.
-        payslips_to_post = all_payslips.filtered(lambda slip: slip.state == 'done' and not slip.move_id)
+        # A payslip need to have a validated state and not an accounting move.
+        payslips_to_post = all_payslips.filtered(lambda slip: slip.state == 'validated' and not slip.move_id)
 
         # Check that a journal exists on all the structures
         contracts_no_structure_type = payslips_to_post.version_id.filtered(lambda c: not c.structure_type_id)

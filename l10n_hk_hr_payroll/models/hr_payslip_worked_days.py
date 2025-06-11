@@ -13,7 +13,7 @@ class HrPayslipWorkedDays(models.Model):
         hk_worked_days = self.filtered(lambda wd: wd.payslip_id.struct_id.country_id.code == "HK")
 
         for worked_days in hk_worked_days:
-            if worked_days.payslip_id.edited or worked_days.payslip_id.state not in ['draft', 'verify']:
+            if worked_days.payslip_id.edited or worked_days.payslip_id.state != 'draft':
                 continue
             if not worked_days.version_id or worked_days.code == 'OUT' or not worked_days.is_paid or worked_days.is_credit_time:
                 worked_days.amount = 0
@@ -32,7 +32,7 @@ class HrPayslipWorkedDays(models.Model):
                         ('employee_id', '=', worked_days.payslip_id.employee_id.id),
                         ('date_from', '<=', worked_days.l10n_hk_leave_id.date_from),
                         ('date_to', '>=', worked_days.l10n_hk_leave_id.date_from),
-                        ('state', 'in', ['done', 'paid']),
+                        ('state', 'in', ['validated', 'paid']),
                     ], limit=1) or worked_days.payslip_id
                 attendance_hours = sum(
                     wd.number_of_hours for wd in payslip.worked_days_line_ids

@@ -572,11 +572,11 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_from': date(2016, 1, 15),
             'date_to': date(2016, 1, 31)
         })
-        self.assertTrue(payslip.warning_message)
+        self.assertTrue(payslip.issues)
 
         payslip_form = Form(payslip)
-        payslip_form.date_from = None
-        self.assertFalse(payslip_form.warning_message)
+        payslip_form.date_from = date(2016, 1, 16)  # setting any other date reset the end date
+        self.assertFalse(payslip_form.issues)
 
     def test_payslip_state_effect_on_work_entries(self):
         richard_work_entry = self.env['hr.work.entry'].create({

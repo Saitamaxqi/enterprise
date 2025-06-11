@@ -13,7 +13,7 @@ days_of_year_in_contract_until_payslip = (payslip.date_to - first_day).days + 1
 unpaid_worked_days = payslip.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
     ('structure_code', '=', 'MX_REGULAR'),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '>=', date(payslip.date_to.year, 1, 1)),
     ('date_to', '&lt;=', payslip.date_to),
 ])._get_worked_days_line_values(['LEAVE90', 'LEAVE1000', 'LEAVE1100', 'LEAVE1200'], ['number_of_days'], True)

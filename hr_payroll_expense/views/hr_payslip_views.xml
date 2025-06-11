@@ -11,7 +11,7 @@
                 </button>
             </div>
             <field name="country_id" position="after">
-                <field name="expense_ids" invisible="1" readonly="state in ['cancel', 'done']"/>
+                <field name="expense_ids" invisible="1" readonly="state in ['cancel', 'validated']"/>
             </field>
         </field>
     </record>

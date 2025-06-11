@@ -235,7 +235,7 @@ if first_mpf_date.day != 1:
         first_mpf_date = first_mpf_date - relativedelta(months=1)
 if first_mpf_date == payslip.date_from:
     past_payslip_ids = payslip.env['hr.payslip'].search([
-        ('state', 'in', ['paid', 'done']),
+        ('state', 'in', ['paid', 'validated']),
         ('date_to', '&gt;=', employee.contract_date_start),
         ('date_to', '&lt;', payslip.date_from),
         ('employee_id', '=', employee.id),

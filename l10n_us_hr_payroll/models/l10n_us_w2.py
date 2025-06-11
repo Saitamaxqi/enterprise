@@ -59,7 +59,7 @@ class L10nUsW2(models.Model):
     def _get_allowed_payslips_domain(self):
         self.ensure_one()
         return [
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '<=', self.date_end),
             ('date_to', '>=', self.date_start),
             ('company_id', '=', self.company_id.id),

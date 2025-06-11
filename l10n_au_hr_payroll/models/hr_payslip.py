@@ -141,7 +141,7 @@ class HrPayslip(models.Model):
         for payslip in self:
             if payslip.country_code != "AU":
                 continue
-            if payslip.state not in ['draft', 'verify']:
+            if payslip.state != 'draft':
                 continue
             payslip.l10n_au_extra_negotiated_super = payslip.version_id.l10n_au_extra_negotiated_super
 
@@ -150,7 +150,7 @@ class HrPayslip(models.Model):
         for payslip in self:
             if payslip.country_code != "AU":
                 continue
-            if payslip.state not in ['draft', 'verify']:
+            if payslip.state != 'draft':
                 continue
             payslip.l10n_au_extra_compulsory_super = payslip.version_id.l10n_au_extra_compulsory_super
 
@@ -159,7 +159,7 @@ class HrPayslip(models.Model):
         for payslip in self:
             if payslip.country_code != "AU":
                 continue
-            if payslip.state not in ['draft', 'verify']:
+            if payslip.state != 'draft':
                 continue
             payslip.l10n_au_salary_sacrifice_superannuation = payslip.version_id.l10n_au_salary_sacrifice_superannuation
 
@@ -168,7 +168,7 @@ class HrPayslip(models.Model):
         for payslip in self:
             if payslip.country_code != "AU":
                 continue
-            if payslip.state not in ['draft', 'verify']:
+            if payslip.state != 'draft':
                 continue
             payslip.l10n_au_salary_sacrifice_other = payslip.version_id.l10n_au_salary_sacrifice_other
 
@@ -298,6 +298,51 @@ class HrPayslip(models.Model):
                 totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"][input_line.input_type_id.id]["amount"] += input_line.amount
             payslip.payslip_ytd_totals = totals
 
+    @api.model
+    def _issues_dependencies(self):
+        return [
+            'input_line_ids',
+            'input_line_ids.input_type_id',
+            'input_line_ids.name',
+            'input_line_ids.input_type_id.l10n_au_payment_type',
+            'l10n_au_termination_type',
+            'employee_id.birthday',
+        ]
+
+    def _get_errors_by_slip(self):
+        errors_by_slip = super()._get_errors_by_slip()
+        draft_slips = self.filtered(lambda ps: ps.state == 'draft')
+
+        lump_sum_type = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
+        invalid_lines = draft_slips.input_line_ids.filtered(lambda line: (
+            line.input_type_id == lump_sum_type
+            and not (line.name.isnumeric() and len(line.name) == 4)
+        ))
+        for slip in invalid_lines.payslip_id:
+            errors_by_slip[slip].append({
+                'message': _('Description of input Lump Sum E must be financial year'),
+                'level': 'danger',
+            })
+
+        missing_birthday = draft_slips.filtered_domain([
+            ('employee_id.birthday', '=', False),
+            ('l10n_au_termination_type', '!=', False),
+            ('input_line_ids', 'any',
+                [('input_type_id.l10n_au_payment_type', '=', 'etp')]
+            ),
+        ])
+        for employee, slips in missing_birthday.grouped('employee_id').items():
+            error = {
+                'message': _('Missing birth date on employee'),
+                'action_text': _('Employee'),
+                'action': employee._get_records_action(),
+                'level': 'danger',
+            }
+            for slip in slips:
+                errors_by_slip[slip].append(error)
+
+        return errors_by_slip
+
     @api.constrains('input_line_ids', 'employee_id')
     def _check_input_lines(self):
         for payslip in self:
@@ -322,6 +367,7 @@ class HrPayslip(models.Model):
             if payslip.input_line_ids.filtered(lambda x: x.code == "BACKPAY.INPUT") and employee.l10n_au_income_stream_type == "OSP":
                 raise ValidationError(_("Bonuses and Commissions are not allowed for income stream type 'OSP'."))
 
+            # handle separately
             overtime_lines = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id.l10n_au_work_stp_code == "T")
             overtime_inputs = payslip.input_line_ids.filtered(lambda l: l.l10n_au_payroll_code == "Overtime")
             if (overtime_lines or overtime_inputs) and employee.l10n_au_income_stream_type in ["OSP", "LAB", "VOL"]:
@@ -351,31 +397,20 @@ class HrPayslip(models.Model):
         self.sudo()._add_unused_leaves_to_payslip()
         super().action_refresh_from_work_entries()
 
-    def action_payslip_done(self):
-        lump_sum_e = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
-        for line in self.input_line_ids:
-            if line.input_type_id == lump_sum_e:
-                if not line.name.isnumeric() or len(line.name) != 4:
-                    raise UserError(_(
-                        "Invalid Financial year on Payslip %s. The description of input Lump Sum E should be the financial year.",
-                        self.name
-                    ))
-        super().action_payslip_done()
-
     def _l10n_au_get_year_to_date_slips(self, l10n_au_include_current_slip=False):
         """ Returns a list of all payslips in the same fiscal year as the current payslip.
-            Current slip is included if it is done. Else it can be forced to be included using
+            Current slip is included if it is validated. Else it can be forced to be included using
             'l10n_au_include_current_slip=True'
         """
         start_year = self.version_id._l10n_au_get_financial_year_start(self.date_from)
         year_slips = self.env["hr.payslip"].search([
             ("employee_id", "=", self.employee_id.id),
             ("company_id", "=", self.company_id.id),
-            ("state", "in", ["paid", "done"]),
+            ("state", "in", ["paid", "validated"]),
             ("date_from", ">=", start_year),
             ("date_from", "<=", self.date_from),
         ], order="date_from")
-        # To include the current slip while its not done
+        # To include the current slip while its not validated
         if l10n_au_include_current_slip:
             year_slips |= self
         return year_slips
@@ -665,9 +700,6 @@ class HrPayslip(models.Model):
         # The withholding amount varies depending on whether the employee has reached their preservation age by the
         # end of the income year in which the payment is made.
         employee_id = self.employee_id
-        if not employee_id.birthday:
-            raise UserError(_("In order to process a termination payment, a birth date should be set on the private information tab of the employee's form view."))
-
         tfn_provided = employee_id.l10n_au_tfn_declaration != "000000000"
         is_non_resident = employee_id.is_non_resident
         life_benefits_etp_rates = self._rule_parameter("l10n_au_etp_withholding_life_benefits_schedule_11")
@@ -821,7 +853,7 @@ class HrPayslip(models.Model):
             )
         termination_slips = self.filtered(
             lambda p: p.country_code == "AU"
-                and p.state in ["draft", "verify"]
+                and p.state == 'draft'
                 and p.l10n_au_termination_type
         )
         termination_slips.input_line_ids.filtered(lambda x: x.code in ['AL', 'LSL']).unlink()

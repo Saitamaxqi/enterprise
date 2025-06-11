@@ -31,7 +31,7 @@ result = payslip.paid_amount
 result_rate = payslip._rule_parameter('l10n_pl_pension_employee_rate')
 already_taxed = payslip.search([
     ('employee_id', '=', payslip.employee_id.id),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(day=31, months=-1)),
 ])._get_line_values(['BASIC'], compute_sum=True)['BASIC']['sum']['total']
@@ -58,7 +58,7 @@ else:
 result_rate = payslip._rule_parameter('l10n_pl_pension_employer_rate')
 already_taxed = payslip.search([
     ('employee_id', '=', payslip.employee_id.id),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(day=31, months=-1)),
 ])._get_line_values(['BASIC'], compute_sum=True)['BASIC']['sum']['total']
@@ -228,7 +228,7 @@ result = categories['GROSS'] + result_rules['STANDARD.EARNING']['total']
 taxable = categories['TAXABLE']
 already_taxed = payslip.search([
     ('employee_id', '=', payslip.employee_id.id),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(day=31, months=-1)),
 ])._get_line_values(['TAXABLE'], compute_sum=True)['TAXABLE']['sum']['total']

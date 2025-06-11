@@ -60,8 +60,8 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         # I validate the payslip.
         self.hr_payslip_john.action_payslip_done()
 
-        # I verify the payslip is in done state.
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State not changed!')
+        # I verify the payslip is in validated state.
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State not changed!')
 
         # I make the SEPA payment.
         file = self.env['hr.payroll.payment.report.wizard'].create({
@@ -74,13 +74,13 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         # I verify if a file is created.
         self.assertTrue(file, 'SEPA payment has not been created!')
 
-        # I verify the payslip is in done state.
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State should not change!')
+        # I verify the payslip is in validated state.
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State should not change!')
 
     def test_01_hr_payroll_account_iso20022(self):
         """ Checking the process of payslip run when you create a SEPA payment. """
         # I verify the payslip run is in draft state.
-        self.assertEqual(self.payslip_run.state, '01_draft', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '01_ready', 'State not changed!')
 
         # I create a payslip employee.
         self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id])
@@ -88,14 +88,11 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
-        # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
-
         # I confirm the payslip run.
         self.payslip_run.action_validate()
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, '03_close', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '02_close', 'State not changed!')
 
         # I make the SEPA payment.
         file = self.env['hr.payroll.payment.report.wizard'].create({
@@ -109,20 +106,19 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         self.assertTrue(file, 'SEPA payment has not been created!')
 
         # I verify the payslip is in paid state.
-        self.assertEqual(self.payslip_run.state, '03_close', 'State should not change!')
+        self.assertEqual(self.payslip_run.state, '02_close', 'State should not change!')
 
     def test_02_hr_payroll_account_iso20022_ch(self):
-        self.assertEqual(self.payslip_run.state, '01_draft')
+        self.assertEqual(self.payslip_run.state, '01_ready')
 
         # I create a payslip employee.
         self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id])
 
         self.assertTrue(len(self.payslip_run.slip_ids) > 0)
-        self.assertEqual(self.payslip_run.state, '02_verify')
 
         self.payslip_run.action_validate()
 
-        self.assertEqual(self.payslip_run.state, '03_close')
+        self.assertEqual(self.payslip_run.state, '02_close')
 
         file = self.env['hr.payroll.payment.report.wizard'].create({
             'payslip_ids': self.payslip_run.slip_ids.ids,
@@ -132,7 +128,7 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         })._create_sepa_binary()
 
         self.assertTrue(file)
-        self.assertEqual(self.payslip_run.state, '03_close')
+        self.assertEqual(self.payslip_run.state, '02_close')
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard')
 class TestPayrollSEPACreditTransferXmlValidity(TestPayrollSEPACreditTransferCommon):

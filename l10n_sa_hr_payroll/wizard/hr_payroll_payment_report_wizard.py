@@ -47,7 +47,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             company = self._l10n_sa_get_company_wps(raise_if_multi=True)
             if company.country_code != 'SA':
                 raise UserError(_("Saudi WPS report can only be printed for KSA companies"))
-            payslips = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
+            payslips = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
             employees = payslips.employee_id
             invalid_banks_employee_ids = employees.filtered(lambda e: not e.bank_account_id.bank_id.l10n_sa_sarie_code)
             if invalid_banks_employee_ids:

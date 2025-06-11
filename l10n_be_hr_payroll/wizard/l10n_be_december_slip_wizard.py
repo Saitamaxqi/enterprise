@@ -67,7 +67,7 @@ class L10nBeDecemberSlipWizard(models.TransientModel):
                 ('employee_id', '=', wizard.employee_id.id),
                 ('date_to', '>=', previous_year),
                 ('date_from', '<', current_year),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('struct_id', '=', monthly_pay.id)])
             wizard.remuneration_n1 = payslips_n1._origin._get_line_values(
                 ['SALARY'], compute_sum=True)['SALARY']['sum']['total']
@@ -89,7 +89,7 @@ class L10nBeDecemberSlipWizard(models.TransientModel):
             payslips_n = self.env['hr.payslip'].search([
                 ('employee_id', '=', wizard.employee_id.id),
                 ('date_to', '>=', current_year),
-                ('state', 'in', ['done', 'paid', 'verify']),
+                ('state', 'in', ['validated', 'paid', 'draft']),
                 ('struct_id', 'in', (monthly_pay + double_pay).ids)])
             double_payslip = payslips_n.filtered(lambda p: p.struct_id == double_pay)
             payslips_n -= double_payslip

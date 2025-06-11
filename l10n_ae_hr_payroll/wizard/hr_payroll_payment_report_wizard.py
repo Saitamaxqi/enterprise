@@ -29,7 +29,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def _perform_checks(self):
         super()._perform_checks()
         if self.export_format == 'l10n_ae_wps':
-            payslips = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
+            payslips = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
             employees = payslips.employee_id
             invalid_banks_employee_ids = employees.filtered(lambda e: not e.bank_account_id.bank_id.l10n_ae_routing_code)
             if invalid_banks_employee_ids:

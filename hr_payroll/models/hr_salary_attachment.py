@@ -193,7 +193,7 @@ class HrSalaryAttachment(models.Model):
     @api.depends("payslip_ids.state")
     def _compute_has_done_payslip(self):
         for record in self:
-            record.has_done_payslip = any(payslip.state in ['done', 'paid'] for payslip in record.payslip_ids)
+            record.has_done_payslip = any(payslip.state in ['validated', 'paid'] for payslip in record.payslip_ids)
 
     def action_done(self):
         self.ensure_one()

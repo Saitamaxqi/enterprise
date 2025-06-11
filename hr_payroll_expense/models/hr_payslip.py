@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _, Command
-from odoo.exceptions import AccessError, UserError
+from odoo.exceptions import AccessError
 
 import logging
 
@@ -29,6 +29,42 @@ class HrPayslip(models.Model):
         for payslip in self:
             payslip.expenses_count = len(payslip.expense_ids)
 
+    @api.model
+    def _issues_dependencies(self):
+        return super()._issues_dependencies() + [
+            'expense_ids',
+            'struct_id.rule_ids',
+            'struct_id.rule_ids.code',
+            'struct_id.rule_ids.account_debit',
+            'struct_id.rule_ids.account_debit.account_type',
+        ]
+
+    def _get_errors_by_slip(self):
+        # EXTENDS hr_payroll
+        errors_by_slip = super()._get_errors_by_slip()
+        draft_slips = self.filtered(lambda ps: ps.state == 'draft')
+        for struct, slips in draft_slips.filtered('expense_ids').grouped('struct_id').items():
+            expense_rules = struct.rule_ids.filtered(lambda rule: rule.code == 'EXPENSES')
+            if not expense_rules:
+                for slip in slips:
+                    errors_by_slip[slip].append({
+                        'message': _('No rule to handle expenses'),
+                        'action_text': _("Rules"),
+                        'action': struct.rule_ids._get_records_action(),
+                        'level': 'danger',
+                    })
+            elif not expense_rules.filtered(
+                lambda rule: rule.account_debit and rule.account_debit.account_type == 'liability_payable'
+            ):
+                for slip in slips:
+                    errors_by_slip[slip].append({
+                        'message': _('No debit account for EXPENSES rules'),
+                        'action_text': _("Expense rules"),
+                        'action': expense_rules._get_records_action(),
+                        'level': 'danger',
+                    })
+        return errors_by_slip
+
     def action_payslip_cancel(self):
         # Remove the link to the cancelled payslip so it can be linked to another payslip
         # EXTENDS hr_payroll
@@ -44,22 +80,6 @@ class HrPayslip(models.Model):
         res = super().action_payslip_draft()
         self._link_expenses_to_payslip(clear_existing=False)  # Add the new expenses to the payslip, but keep the already linked ones
         return res
-
-    def _create_account_move(self, values):
-        # EXTENDS hr_payroll
-        expense_rules = self.filtered('expense_ids').struct_id.rule_ids.filtered(lambda rule: rule.code == 'EXPENSES')
-        if self.expense_ids and not expense_rules:
-            raise UserError(_(
-                "No salary rule was found to handle expenses in structure '%(structure_name)s'.",
-                structure_name=self.struct_id.name
-            ))
-
-        if expense_rules and not expense_rules.filtered(lambda rule: rule.account_debit and rule.account_debit.account_type == 'liability_payable'):
-            raise UserError(_(
-                "The salary rules with the code 'EXPENSES' must have a debit account set to be able to properly "
-                "reimburse the linked expenses. This must be an account of type 'Payable'."
-            ))
-        return super()._create_account_move(values)
 
     @api.model_create_multi
     def create(self, vals_list):

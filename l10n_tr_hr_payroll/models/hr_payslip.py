@@ -28,7 +28,7 @@ class HrPayslip(models.Model):
             domain=[('employee_id', 'in', self.employee_id.ids),
                     ('date_from', '>=', min_date),
                     ('date_to', '<', max_date),
-                    ('state', 'in', ('done', 'paid'))],
+                    ('state', 'in', ('validated', 'paid'))],
             groupby=['employee_id', 'date_from:year'],
             aggregates=['id:recordset']
         )

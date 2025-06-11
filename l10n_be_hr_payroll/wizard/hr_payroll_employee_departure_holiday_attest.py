@@ -84,13 +84,13 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             payslip_n_ids = self.env['hr.payslip'].search([
                 ('employee_id', '=', wizard.employee_id.id),
                 ('date_to', '>=', current_year),
-                ('state', 'in', ['done', 'paid', 'verify']),
+                ('state', 'in', ['validated', 'paid', 'draft']),
                 ('struct_id', 'not in', (structure_warrant + structure_double_holidays + structure_termination + structure_holidays_n + structure_holidays_n1).ids)])
             payslip_n1_ids = self.env['hr.payslip'].search([
                 ('employee_id', '=', wizard.employee_id.id),
                 ('date_to', '>=', previous_year),
                 ('date_from', '<', current_year),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('struct_id', 'not in', (structure_warrant + structure_double_holidays + structure_termination + structure_holidays_n + structure_holidays_n1).ids)])
 
             wizard.payslip_n_ids = [(4, p.id) for p in payslip_n_ids]
@@ -196,7 +196,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             return 0
         payslips = self.env['hr.payslip'].search([
             ('employee_id', '=', self.employee_id.id),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', date_from + relativedelta(months=-12, day=1)),
             ('date_from', '<=', date_from),
         ], order="date_from asc")
@@ -262,7 +262,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
 
         monthly_payslips = self.env['hr.payslip'].search([
             ('employee_id', '=', self.employee_id.id),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('credit_note', '=', False),
             ('struct_id', '=', self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary').id)
         ], order="date_from desc").filtered(
@@ -289,7 +289,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             ('employee_id', '=', self.employee_id.id),
             ('date_from', '>=', current_year_start),
             ('date_to', '<=', current_year_end),
-            ('state', 'in', ['verify', 'done', 'paid'])])
+            ('state', 'in', ['draft', 'validated', 'paid'])])
         european_wds = payslips_n.worked_days_line_ids.filtered(lambda wd: wd.code == 'LEAVE216')
         european_leaves_amount = sum(european_wds.mapped('amount'))
         european_leaves_days = sum(european_wds.mapped('number_of_days'))
@@ -360,7 +360,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
         double_holiday_n = self.env['hr.payslip'].search([
             ('employee_id', '=', self.employee_id.id),
             ('date_to', '>=', current_year),
-            ('state', 'in', ['done', 'paid', 'verify']),
+            ('state', 'in', ['validated', 'paid', 'draft']),
             ('struct_id', '=', double_structure.id)])
         # Part already deducted on the double holiday for year N
         double_amount_n = -double_holiday_n._get_line_values(['EU.LEAVE.DEDUC'], compute_sum=True)['EU.LEAVE.DEDUC']['sum']['total']
@@ -369,7 +369,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             ('employee_id', '=', self.employee_id.id),
             ('date_to', '>=', previous_year),
             ('date_from', '<', current_year),
-            ('state', 'in', ['done', 'paid'])])
+            ('state', 'in', ['validated', 'paid'])])
         legal_time_off_type = self.employee_id.company_id.l10n_be_legal_time_off_type.id
         legal_time_off_lines_allocation = self.time_off_line_ids.filtered(
             lambda t: t.year == previous_year.year and t.leave_type_id.id == legal_time_off_type

@@ -8,7 +8,7 @@
                             record="props.record"
                             string.translate="Submit to ATO"/>
             </t>
-            <t t-set-slot="l10n_au_register_payment" isVisible="payrun.state == '03_close' &amp;&amp; payrun.l10n_au_stp_status == 'sent' &amp;&amp; payrun.country_code == 'AU'">
+            <t t-set-slot="l10n_au_register_payment" isVisible="payrun.state == '02_close' &amp;&amp; payrun.l10n_au_stp_status == 'sent' &amp;&amp; payrun.country_code == 'AU'">
                 <ViewButton className="'btn btn-primary'"
                             clickParams="{type: 'object', name: 'action_register_payment', context: {dont_redirect_to_payments: true, hr_payroll_payment_register: true, hr_payroll_payment_register_batch: props.record.resId}}"
                             record="props.record"
@@ -21,7 +21,7 @@
         </t>
 
         <t t-set-slot="gen_report" position="attributes">
-            <attribute name="isVisible" add="(payrun.l10n_au_stp_status == 'sent' || state != '04_paid' || payrun.country_code != 'AU')" separator="&amp;&amp;"/>
+            <attribute name="isVisible" add="(payrun.l10n_au_stp_status == 'sent' || state != '03_paid' || payrun.country_code != 'AU')" separator="&amp;&amp;"/>
         </t>
 
         <PayRunButtonBox position="inside">

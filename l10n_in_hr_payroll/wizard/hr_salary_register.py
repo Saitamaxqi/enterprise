@@ -22,7 +22,7 @@ class SalaryRegisterWizard(models.TransientModel):
         return fields.Date.today() + relativedelta(day=31)
 
     def _get_employee_ids_domain(self):
-        employees = self.env['hr.payslip'].search([('state', 'in', ['done', 'paid'])]).employee_id.filtered(lambda e: e.company_id.country_id.code == "IN").ids
+        employees = self.env['hr.payslip'].search([('state', 'in', ['validated', 'paid'])]).employee_id.filtered(lambda e: e.company_id.country_id.code == "IN").ids
         return [('id', 'in', employees)]
 
     def _get_struct_id_domain(self):
@@ -33,11 +33,11 @@ class SalaryRegisterWizard(models.TransientModel):
         date_to = self.date_to or self._get_default_date_to()
         domain = [('date_from', '>=', date_from), ('date_to', '<=', date_to), ('company_id', 'in', self.env.companies.ids)]
         if self.include_paid and self.include_done:
-            domain.append(('state', 'in', ['done', 'paid']))
+            domain.append(('state', 'in', ['validated', 'paid']))
         elif self.include_paid:
             domain.append(('state', '=', 'paid'))
         else:
-            domain.append(('state', '=', 'done'))
+            domain.append(('state', '=', 'validated'))
         return domain
 
     employee_ids = fields.Many2many('hr.employee', 'emp_register_rel', 'register_id', 'employee_id', string='Employees', required=True,

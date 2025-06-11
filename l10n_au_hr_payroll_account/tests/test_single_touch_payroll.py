@@ -720,7 +720,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         wizard = self.env["l10n_au.stp.ffr.wizard"].with_context(action['context']).create({})
         wizard.ffr_payslip_ids.write({"to_reset": True})
         wizard.action_create_ffr()
-        self.assertTrue(all(payslip.state == 'verify' for payslip in batch.slip_ids), "The payslips should have been reset!")
+        self.assertTrue(all(payslip.state == 'draft' for payslip in batch.slip_ids), "The payslips should have been reset!")
         self.assertTrue(all(not p.is_reconciled for p in payments), "All payments should be unreconciled!")
         # Add an extra input to the payslip
         payslip_to_update.write({
@@ -728,8 +728,8 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         })
         batch.slip_ids.compute_sheet()
         batch.action_validate()
-        self.assertEqual(batch.slip_ids.mapped("state"), ["done", "done"], "The payslips should have been done!")
-        self.assertEqual(batch.state, "03_close", "The payslip batch should be done!")
+        self.assertEqual(batch.slip_ids.mapped("state"), ["validated", "validated"], "The payslips should have been done!")
+        self.assertEqual(batch.state, "02_close", "The payslip batch should be done!")
         # Submit the new STP record
         ffr = self.env["l10n_au.stp"].search([("payslip_batch_id", "=", batch.id), ("ffr", "=", True)])
         self.assertEqual(ffr.previous_report_id, stp, "The previous report should be the original STP record")

@@ -46,25 +46,25 @@
             </div>
             <div class="o_cell d-flex flex-column o_payrun_state">
                 <StatusBubble record="props.record"
-                              removeStates="['05_cancel']"
+                              removeStates="['04_cancel']"
                 />
             </div>
             <div class="o_cell d-flex flex-column o_payrun_buttons gap-1 w-auto ms-auto">
                 <PayRunButtonBox>
-                    <t t-set-slot="compute" isVisible="payrun.state === '01_draft' &amp;&amp; payrun.payslip_count">
+                    <t t-set-slot="compute" isVisible="payrun.state === '01_ready' &amp;&amp; payrun.empty_payslips">
                         <ViewButton className="'btn btn-primary'"
                                     clickParams="{type: 'object', name: 'action_confirm'}"
                                     record="props.record"
                                     string.translate="Compute"/>
                     </t>
-                    <t t-set-slot="confirm" isVisible="payrun.state === '02_verify'">
+                    <t t-set-slot="confirm" isVisible="payrun.state === '01_ready' &amp;&amp; !payrun.empty_payslips">
                         <ViewButton className="'btn btn-primary'"
                                     clickParams="{type: 'object', name: 'action_validate'}"
                                     context="{'payslip_generate_pdf': True}"
                                     record="props.record"
                                     string.translate="Confirm"/>
                     </t>
-                    <t t-set-slot="paid_prio" isVisible="payrun.state === '03_close'" isPriority="true">
+                    <t t-set-slot="paid_prio" isVisible="payrun.state === '02_close'" isPriority="true">
                         <ViewButton className="'btn btn-primary'"
                                     clickParams="{type: 'object', name: 'action_paid'}"
                                     record="props.record"
@@ -79,25 +79,25 @@
                                formatField="'payment_report_format'"
                         />
                     </t>
-                    <t t-set-slot="revert" isVisible="payrun.state === '04_paid'">
+                    <t t-set-slot="revert" isVisible="payrun.state === '03_paid'">
                         <ViewButton className="'btn btn-secondary'"
                                     clickParams="{type: 'object', name: 'action_unpaid'}"
                                     record="props.record"
                                     string.translate="Revert"/>
                     </t>
-                    <t t-set-slot="gen_report" isVisible="payrun.state === '03_close'">
+                    <t t-set-slot="gen_report" isVisible="payrun.state === '02_close'">
                         <ViewButton className="'btn btn-secondary'"
                                     clickParams="{type: 'object', name: 'action_payment_report'}"
                                     record="props.record"
                                     string.translate="Payment Report"/>
                     </t>
-                    <t t-set-slot="draft" isVisible="['02_verify', '03_close'].includes(payrun.state)">
+                    <t t-set-slot="draft" isVisible="payrun.state == '02_close'">
                         <ViewButton className="'btn btn-secondary'"
                                     clickParams="{type: 'object', name: 'action_draft'}"
                                     record="props.record"
                                     string.translate="Set to Draft"/>
                     </t>
-                    <t t-set-slot="gen_payslip" isVisible="['01_draft', '02_verify', '05_cancel'].includes(payrun.state)">
+                    <t t-set-slot="gen_payslip" isVisible="['01_ready', '04_cancel'].includes(payrun.state)">
                         <ViewButton className="'btn btn-secondary'"
                                     clickParams="{type: 'object', name: 'action_payroll_hr_version_list_view_payrun'}"
                                     record="props.record"

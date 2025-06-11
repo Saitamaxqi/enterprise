@@ -62,7 +62,7 @@ class HrPayslip(models.Model):
     @api.model
     def _get_last_year_payslips_domain(self, date_from, date_to, employee_ids=None):
         domain = Domain([
-            ('state', 'in', ['paid', 'done']),
+            ('state', 'in', ['paid', 'validated']),
             ('date_from', '>=', date_from + relativedelta(months=-12, day=1)),
             ('date_to', '<', date_to + relativedelta(day=1)),
             ('struct_id', '=', self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary').id),
@@ -316,7 +316,7 @@ class HrPayslip(models.Model):
     def write(self, vals):
         res = super().write(vals)
         if 'input_line_ids' in vals:
-            self.filtered(lambda p: p.struct_id.country_id.code == 'HK' and p.state in ['draft', 'verify']).action_refresh_from_work_entries()
+            self.filtered(lambda p: p.struct_id.country_id.code == 'HK' and p.state == 'draft').action_refresh_from_work_entries()
         return res
 
     def action_payslip_done(self):
@@ -325,7 +325,7 @@ class HrPayslip(models.Model):
             return res
         future_payslips = self.sudo().search([
             ('id', 'not in', self.ids),
-            ('state', 'in', ['draft', 'verify']),
+            ('state', '=', 'draft'),
             ('employee_id', 'in', self.mapped('employee_id').ids),
             ('date_from', '>=', min(self.mapped('date_to'))),
         ])

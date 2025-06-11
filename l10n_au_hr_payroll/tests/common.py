@@ -556,4 +556,4 @@ class TestPayrollCommon(TransactionCase):
 
         # 4) Validate the payslip. Mostly useful for testing on a period. Doesn't use action_payslip_done as it would fail
         # if the account payroll module is there (no journal)
-        payslip.state = 'done'
+        payslip.state = 'validated'

@@ -31,8 +31,8 @@ class TestPayslipFlow(TestPayslipBase):
         # Then I click on the 'Confirm' button on payslip
         richard_payslip.action_payslip_done()
 
-        # I verify that the payslip is in done state
-        self.assertEqual(richard_payslip.state, 'done', 'State not changed!')
+        # I verify that the payslip is in validated state
+        self.assertEqual(richard_payslip.state, 'validated', 'State not changed!')
 
         # Then I click on the 'Mark as paid' button on payslip
         richard_payslip.action_payslip_paid()
@@ -146,18 +146,18 @@ class TestPayslipFlow(TestPayslipBase):
         payslip_run.action_validate()
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
-        self.assertTrue(all(payslip.state == 'done' for payslip in payslip_run.slip_ids), 'State not changed!')
+        self.assertTrue(all(payslip.state == 'validated' for payslip in payslip_run.slip_ids), 'State not changed!')
 
         # Mark the first payslip as paid and store the paid date
         payslip_run.slip_ids[0].action_payslip_paid()
         paid_date = payslip_run.slip_ids[0].paid_date
 
         self.assertEqual(payslip_run.slip_ids[0].state, 'paid', 'State not changed!')
-        self.assertEqual(payslip_run.slip_ids[1].state, 'done', 'State not changed!')
+        self.assertEqual(payslip_run.slip_ids[1].state, 'validated', 'State not changed!')
 
         payslip_run.action_paid()
 
-        self.assertEqual(payslip_run.state, '04_paid', 'State not changed!')
+        self.assertEqual(payslip_run.state, '03_paid', 'State not changed!')
         self.assertTrue(all(payslip.state == 'paid' for payslip in payslip_run.slip_ids), 'State not changed!')
         self.assertEqual(payslip_run.slip_ids[0].paid_date, paid_date, 'payslip paid date should not be changed')
 

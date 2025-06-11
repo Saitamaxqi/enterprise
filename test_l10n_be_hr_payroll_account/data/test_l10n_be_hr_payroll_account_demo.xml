@@ -318,7 +318,7 @@
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_lap_november'),
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_lap_december'),
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_lap_13th_month'),
-    ] if p.state in ['draft', 'verify']]]"/>
+    ] if p.state == 'draft']]"/>
     <function model="hr.payslip" name="action_payslip_done" eval="[[
         ref('hr_payslip_demo_lap_january'),
         ref('hr_payslip_demo_lap_february'),
@@ -2421,7 +2421,7 @@
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_13th_month_2019'),
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_january_2020'),
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_february_2020'),
-    ] if p.state in ['draft', 'verify']]]"/>
+    ] if p.state == 'draft']]"/>
 
     <function model="hr.payslip" name="action_payslip_done" eval="[[p.id for p in [
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_march_2020'),
@@ -2442,7 +2442,7 @@
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_13th_month_2019'),
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_january_2020'),
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_february_2020'),
-    ] if p.state in ['draft', 'verify']]]"/>
+    ] if p.state == 'draft']]"/>
 
     <record id="notice_period_wizard" model="hr.payslip.employee.depature.notice" forcecreate="False">
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
@@ -2493,10 +2493,10 @@
     </record>
     <function model="hr.payslip" name="action_refresh_from_work_entries" eval="[[p.id for p in [
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_april_2020')
-    ] if p.state in ['draft', 'verify']]]"/>
+    ] if p.state == 'draft']]"/>
     <function model="hr.payslip" name="action_payslip_done" eval="[[p.id for p in [
         obj().env.ref('test_l10n_be_hr_payroll_account.hr_payslip_demo_jon_april_2020')
-    ] if p.state in ['draft', 'verify']]]"/>
+    ] if p.state == 'draft']]"/>
 
     <!-- Clemence Student -->
     <record id="resource_calendar_1_5_monday_student" model="resource.calendar">

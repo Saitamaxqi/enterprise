@@ -67,7 +67,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             cip = self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cip')
 
             payslips = self.env['hr.payslip'].search([
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('struct_id.type_id', '=', self.env.ref('hr.structure_type_employee_cp200').id),
                 ('company_id', '=', self.company_id.id),
                 ('date_from', '>=', date_from),

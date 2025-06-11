@@ -23,7 +23,7 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
 
     def test_payment_report_advice_xlsx_creation(self):
         payslip_run = self._prepare_payslip_run()
-        self.assertEqual(payslip_run.state, "03_close", "Payslip run should be in Done state")
+        self.assertEqual(payslip_run.state, "02_close", "Payslip run should be in Done state")
 
         # Generating the XLSX report for the batch
         payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({
@@ -41,7 +41,7 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
 
     def test_payment_report_advice_pdf_creation(self):
         payslip_run = self._prepare_payslip_run()
-        self.assertEqual(payslip_run.state, "03_close", "Payslip run should be in Done state")
+        self.assertEqual(payslip_run.state, "02_close", "Payslip run should be in Done state")
 
         # Generating the PDF report for the batch
         payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({
@@ -67,7 +67,7 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
         })
         jethalal_payslip.compute_sheet()
         jethalal_payslip.action_payslip_done()
-        self.assertEqual(jethalal_payslip.state, "done", "Payslip should be in Done state")
+        self.assertEqual(jethalal_payslip.state, "validated", "Payslip should be in Validated state")
 
         # Generating the XLSX report for the payslip
         payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({
@@ -91,7 +91,7 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
         })
         rahul_payslip.compute_sheet()
         rahul_payslip.action_payslip_done()
-        self.assertEqual(rahul_payslip.state, "done", "Payslip should be in Done state")
+        self.assertEqual(rahul_payslip.state, "validated", "Payslip should be in Validated state")
 
         # Generating the PDF report for the payslip
         payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({

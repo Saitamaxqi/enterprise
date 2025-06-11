@@ -191,7 +191,7 @@ class HrEmployee(models.Model):
             ('employee_id', 'in', self.ids),
             ('struct_id', '=', self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary').id),
             ('company_id', '=', self.env.company.id),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
         ])
         line_values = payslips._get_line_values(['HolPayRecN', 'HolPayRecN1'])
         payslips_by_employee = defaultdict(lambda: self.env['hr.payslip'])
@@ -341,7 +341,7 @@ Earnings are made of professional income, remuneration, unemployment allocations
             ('employee_id', '=', self.id),
             ('date_from', '>=', date_from),
             ('date_to', '<=', date_to),
-            ('state', 'in', ['done', 'paid'])
+            ('state', 'in', ['validated', 'paid'])
         ])
         all_days = sum(payslips.worked_days_line_ids.mapped('number_of_days'))
         non_equivalent_days = sum(

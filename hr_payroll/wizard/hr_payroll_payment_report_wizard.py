@@ -4,7 +4,7 @@ import csv
 from io import StringIO
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError
 from odoo.tools.misc import format_amount, format_date
 
 
@@ -73,20 +73,9 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         """
         if not self.payslip_ids:
             raise ValidationError(_('There should be at least one payslip to generate the file.'))
-        payslips = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
+        payslips = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
         if not payslips:
-            raise ValidationError(_('There is no valid payslip (done and net wage > 0) to generate the file.'))
-
-        employees = payslips.employee_id
-        no_bank_employee_ids = employees.filtered(lambda e: not e.bank_account_id)
-        if no_bank_employee_ids:
-            raise UserError(_("Some employees (%s) don't have a bank account.", no_bank_employee_ids.mapped('name')))
-
-        untrusted_banks_employee_ids = employees.filtered(lambda e: not e.bank_account_id.allow_out_payment)
-        if untrusted_banks_employee_ids:
-            raise UserError(_(
-                "Untrusted bank account for the following employees:\n%s",
-                untrusted_banks_employee_ids.mapped('name')))
+            raise ValidationError(_('There is no valid payslip (validated and net wage > 0) to generate the file.'))
 
     def _write_payment_date(self):
         self.payslip_ids.write({
@@ -99,6 +88,8 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         Then make condition(s) for the format(s) you added and corresponding methods.
         """
         self.ensure_one()
+        if self.payslip_ids.filtered('error_count'):
+            raise ValidationError(self._get_error_message())
         self._perform_checks()
         self._write_payment_date()
         if self.export_format == 'csv':

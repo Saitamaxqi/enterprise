@@ -116,7 +116,7 @@ class L10n_Be274_Xx(models.Model):
 
     def _get_valid_payslips(self):
         domain = Domain([
-            ('state', 'in', ['paid', 'done']),
+            ('state', 'in', ['paid', 'validated']),
             ('company_id', '=', self.company_id.id),
             ('date_from', '>=', self.date_start),
             ('date_to', '<=', self.date_end),

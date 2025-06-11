@@ -51,7 +51,7 @@ class L10n_In_Hr_PayrollSalaryStatement(models.Model):
             employees = self.env['hr.payslip'].search([
                 ('date_to', '<=', date_to),
                 ('date_from', '>=', date_from),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', sheet.company_id.id),
             ]).mapped('employee_id')
 
@@ -76,7 +76,7 @@ class L10n_In_Hr_PayrollSalaryStatement(models.Model):
         date_to = date_from + relativedelta(months=1)
         payslips = self.env['hr.payslip'].search([
             ('employee_id', 'in', employees.ids),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', date_from),
             ('date_to', '<=', date_to),
         ])

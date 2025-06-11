@@ -25,8 +25,8 @@ class HrPayslip(models.Model):
 
         if not self.env.user.has_group('hr.group_hr_user'):
             raise UserError(_('You can not send the documents link to the employee.'))
-        if any(payslip.state not in ['done', 'paid'] for payslip in self):
-            return show_notification('warning', _('A payslip should be done or paid to be sent to the employee.'))
+        if any(payslip.state not in ['validated', 'paid'] for payslip in self):
+            return show_notification('warning', _('A payslip should be validated or paid to be sent to the employee.'))
         invalid_employees = self.employee_id.filtered(lambda e: not (e.private_email or e.work_email))
         if invalid_employees:
             raise UserError(

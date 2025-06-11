@@ -41,7 +41,7 @@ class HrExpense(models.Model):
 
     def action_reset(self):
         # EXTENDS hr_expense
-        if any(slip.state in {'done', 'paid'} for slip in self.payslip_id):
+        if any(slip.state in {'validated', 'paid'} for slip in self.payslip_id):
             raise UserError(_(
                 "You cannot remove an expense from a payslip that has already been validated.\n"
                 "Expenses can only be removed from draft or canceled payslips."

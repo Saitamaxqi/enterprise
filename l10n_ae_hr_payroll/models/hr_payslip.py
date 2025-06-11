@@ -86,7 +86,7 @@ class HrPayslip(models.Model):
     def _get_salary_advance_balances_by_employee(self):
         payslips_by_employee = self._read_group(
             domain=[
-                ('state', 'in', ('done', 'paid')),
+                ('state', 'in', ('validated', 'paid')),
                 ('employee_id', 'in', self.employee_id.ids),
                 ('input_line_ids.code', 'in', ('ADV', 'ADVREC')),
             ],

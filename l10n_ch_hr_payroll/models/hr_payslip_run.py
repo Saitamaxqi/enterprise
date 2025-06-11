@@ -64,7 +64,6 @@ class HrPayslipRun(models.Model):
                 payslips_vals.append(values)
             self.slip_ids |= Payslip.with_context(tracking_disable=True).create(payslips_vals)
             self.slip_ids.compute_sheet()
-            self.slip_ids.write({'state': 'verify'})
-            self.state = '02_verify'
+            self.state = '01_ready'
 
             return 1

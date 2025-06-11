@@ -10,7 +10,7 @@ class HrPayslipWorkedDays(models.Model):
     def _compute_amount(self):
         mx_worked_days = self.filtered(lambda wd: wd.payslip_id.struct_id.country_id.code == "MX")
         for worked_days in mx_worked_days:
-            if worked_days.payslip_id.edited or worked_days.payslip_id.state not in ['draft', 'verify']:
+            if worked_days.payslip_id.edited or worked_days.payslip_id.state != 'draft':
                 continue
             if not worked_days.version_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
                 worked_days.amount = 0

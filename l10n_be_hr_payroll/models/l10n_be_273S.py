@@ -104,7 +104,7 @@ class L10n_Be273s(models.Model):
         date_from = self.period + relativedelta(day=1)
         date_to = self.period + relativedelta(day=31)
         payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('company_id', '=', self.company_id.id),
             ('date_from', '>=', date_from),
             ('date_to', '<=', date_to)])

@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <list string="Payslips" edit="1" sample="1" multi_edit="1" duplicate="0" js_class="hr_payroll_payslip_list">
                 <header>
+                    <button string="Validate" name="action_validate" type="object" class="oe_highlight"/>
                     <button string="Compute Sheet" name="compute_sheet" type="object" class="oe_highlight"/>
                     <button string="Confirm" name="action_payslip_done" type="object" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
                     <button string="Mark as Paid" name="action_payslip_paid" type="object" class="oe_highlight"/>
@@ -14,19 +15,26 @@
                 </header>
                 <field name="company_id" column_invisible="True"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="employee_id" widget="many2one_avatar_employee" readonly="1"/>
+                <field name="employee_id" widget="many2one_avatar_employee" readonly="state != 'draft'"/>
                 <field name="employee_reference" optional="hide"/>
-                <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="1"/>
+                <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'payrun_optional': 'hide'}" readonly="1"/>
                 <field name="date_to" invisible="1" column_invisible="1" readonly="1"/>
-                <field name="payslip_run_id" widget="many2one" readonly="state not in ['draft', 'verify']" options="{'hide_in_payrun': 1, 'no_open': 0}" placeholder="Off-Cycle"/>
-                <field name="struct_id" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
+                <field name="payslip_run_id" optional='show' widget="many2one" readonly="state != 'draft'" options="{'payrun_optional': 'hide', 'no_open': 0}" placeholder="Off-Cycle"/>
+                <field name="struct_id" optional="hide" readonly="state in ['cancel', 'validated', 'paid']"/>
                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="hide"/>
                 <field name="employer_cost" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="basic_wage" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="gross_wage" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="net_wage" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="1" optional="show"/>
-                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'verify'" decoration-success="state == 'done'" decoration-primary="state == 'paid'"/>
-                <button string="Off-Cycle" help="Detach the payslip from the pay run to send it to the Off-Cycle" name="action_move_to_off_cycle" type="object" icon="fa-long-arrow-right" invisible="state not in ['draft', 'verify'] or not payslip_run_id"/>
+                <field
+                    name="state_display" widget="badge"
+                    decoration-info="state_display == 'draft'"
+                    decoration-success="state_display == 'validated'"
+                    decoration-primary="state_display == 'paid'"
+                    decoration-warning="state_display == 'warning'"
+                    decoration-danger="state_display == 'error'"/>
+                <field name="issues" widget="actionable_warnings" optional="hide" options="{'payrun_optional': 'show', 'first_only': True}"/>
+                <button string="Off-Cycle" help="Detach the payslip from the pay run to send it to the Off-Cycle" name="action_move_to_off_cycle" type="object" icon="fa-long-arrow-right" invisible="state != 'draft' or not payslip_run_id"/>
             </list>
         </field>
     </record>
@@ -39,19 +47,18 @@
                 <field name="currency_id"/>
                 <templates>
                     <t t-name="card" class="row g-0">
-                        <field name="employee_id" widget="many2one_avatar_employee" options="{'display_avatar_name': True}" readonly="state not in ['draft', 'verify']" class="col-6 fw-bold mb-1"/>
+                        <field name="employee_id" widget="many2one_avatar_employee" options="{'display_avatar_name': True}" readonly="state != 'draft'" class="col-6 fw-bold mb-1"/>
                         <div class="col-6">
                             <field name="state" class="float-end" widget="badge"
                                 decoration-info="state == 'draft'"
-                                decoration-warning="state == 'verify'"
-                                decoration-success="state == 'done'"
+                                decoration-success="state == 'validated'"
                                 decoration-primary="state == 'paid'"
                             />
                         </div>
                         <div>
-                            <field name="date_from" readonly="state in ['cancel', 'done', 'paid']"/> - <field name="date_to" readonly="state in ['cancel', 'done', 'paid']"/>
+                            <field name="date_from" readonly="state in ['cancel', 'validated', 'paid']"/> - <field name="date_to" readonly="state in ['cancel', 'validated', 'paid']"/>
                         </div>
-                        <field name="name" readonly="state in ['cancel', 'done', 'paid']"/>
+                        <field name="name" readonly="state in ['cancel', 'validated', 'paid']"/>
                         <span>Net - <field name="net_wage"/></span>
                     </t>
                 </templates>
@@ -65,21 +72,21 @@
         <field name="arch" type="xml">
             <form string="Payslip" duplicate="0">
             <header>
-                <button string="Confirm" name="action_payslip_done" type="object" invisible="state != 'verify'" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
-                <button string="Mark as paid" name="action_payslip_paid" type="object" class="oe_highlight" invisible="state != 'done'"/>
-                <button string="Create Payment Report" name="action_payslip_payment_report" type="object" invisible="state != 'done'"/>
+                <button string="Confirm" name="action_payslip_done" type="object" invisible="state != 'draft'" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
+                <button string="Mark as paid" name="action_payslip_paid" type="object" class="oe_highlight" invisible="state != 'validated'"/>
+                <button string="Create Payment Report" name="action_payslip_payment_report" type="object" invisible="state != 'validated'"/>
                 <button string="Revert" name="refund_sheet" type='object' invisible="is_refunded or credit_note or state != 'paid'"
                     confirm="Are you sure you want to revert this payslip? This will create a negative of this payslip."/>
                 <button string="Revert" name="refund_sheet" type='object' invisible="not is_refunded or credit_note or state != 'paid'"
                     confirm="Another refund payslip with the same amount has been found. Do you want to create a new one?"/>
                 <button string="Set to Draft" name="action_payslip_draft" type="object" invisible="state != 'cancel'"/>
                 <button string="Unpaid" name="action_payslip_unpaid" type="object" invisible="state != 'paid'"/>
-                <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'draft' or credit_note" class="oe_highlight" help="Recompute the payslip lines only, not the worked days / input lines"/>
-                <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'verify' or credit_note" help="Recompute the payslip lines only, not the worked days / input lines"/>
-                <button string="Cancel" name="action_payslip_cancel" type="object" invisible="state not in ('draft', 'done', 'verify')"/>
+                <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'draft' or line_ids or credit_note" class="oe_highlight" help="Recompute the payslip lines only, not the worked days / input lines"/>
+                <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'draft' or not line_ids or credit_note" help="Recompute the payslip lines only, not the worked days / input lines"/>
+                <button string="Cancel" name="action_payslip_cancel" type="object" invisible="state not in ('draft', 'validated')"/>
                 <button string="Print" name="action_print_payslip" type="object" invisible= "not line_ids"/>
                 <button string="Export Payslip" name="action_export_payslip" type="object" invisible="not is_superuser"/>
-                <field name="state" widget="statusbar" statusbar_visible="draft,done,paid"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,validated,paid"/>
             </header>
             <div class="alert alert-warning d-flex align-items-center" role="alert" 
                 invisible="(not has_wrong_data) or (is_refunded or is_corrected or keep_wrong_version or is_refund_payslip)">
@@ -94,6 +101,7 @@
                 <button type="object" class="btn btn-link ms-2" name="action_keep_wrong_version">Keep it as is</button>
             </div>
             <sheet>
+                <field name="issues" class="w-100" widget="actionable_warnings" />
                 <div class="oe_button_box" name="button_box">
                     <button type="object" class="oe_stat_button" name="action_open_related_payslips" id="open_related_payslips"
                         icon="fa-files-o" invisible="related_payslip_count == 0">
@@ -115,20 +123,17 @@
                 <div class="row justify-content-between position-relative w-100 m-0">
                     <div class="oe_title mw-75 ps-0 pe-2" name="title">
                         <h1 class="d-flex flex-row align-items-center">
-                            <field name="employee_id" placeholder="Employee" readonly="state not in ['draft', 'verify']" options="{'no_create': True}"/>
+                            <field name="employee_id" placeholder="Employee" readonly="state != 'draft'" options="{'no_create': True}"/>
                         </h1>
                     </div>
                     <div class="o_employee_avatar mw-25 m-0 p-0">
                         <field name="image_1920" widget='image' class="oe_avatar m-0" options='{"zoom": true, "preview_image":"avatar_128"}'/>
                     </div>
                 </div>
-                <div class="alert alert-warning" name="payslip_alert" role="alert" invisible="not warning_message">
-                    <field name="warning_message" style="white-space: pre-wrap;"/>
-                </div>
                 <group col="4">
                     <field name="company_id" invisible="1"/>
                     <field name="version_id" context="{'default_employee_id': employee_id}"
-                        required="1" readonly="state in ['cancel', 'done', 'paid']" string="Employee Record"
+                        required="1" readonly="state in ['cancel', 'validated', 'paid']" string="Employee Record"
                         domain="[('employee_id', '=', employee_id)]"
                         options="{
                             'no_open': True,
@@ -137,29 +142,29 @@
                         }"/>
                     <field name="country_id" invisible="1"/>
                     <field name="country_code" invisible="1"/>
-                    <field name="payslip_run_id" string="Pay Run" readonly="state not in ['draft', 'verify']" placeholder="Off-Cycle"/>
-                    <field name="struct_id" required="1" readonly="state in ['cancel', 'done', 'paid']" 
+                    <field name="payslip_run_id" string="Pay Run" readonly="state != 'draft'" placeholder="Off-Cycle"/>
+                    <field name="struct_id" required="1" readonly="state in ['cancel', 'validated', 'paid']" 
                         options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                         groups="!hr_payroll.group_hr_payroll_manager"/>
-                    <field name="struct_id" required="1" readonly="state in ['cancel', 'done', 'paid']" 
+                    <field name="struct_id" required="1" readonly="state in ['cancel', 'validated', 'paid']" 
                         groups="hr_payroll.group_hr_payroll_manager"/>
                     <field name="salary_attachment_ids" invisible="1" force_save="1"/>
                     <field name="wage_type" invisible="1"/>
                     <field name="sum_worked_hours" invisible="1"/>
-                    <field name="credit_note" invisible="1" readonly="state not in ['draft', 'verify']"/>
+                    <field name="credit_note" invisible="1" readonly="state != 'draft'"/>
                     <field name="is_superuser" invisible="1"/>
                     <field name="use_worked_day_lines" invisible="1"/>
                     <field name="payment_report_filename" invisible="1"/>
                     <field name="payment_report" filename="payment_report_filename" invisible="not payment_report"/>
                     <label for="date_from" string="Period"/>
                     <div>
-                        <field name="date_from" class="oe_inline" readonly="state in ['cancel', 'done', 'paid']"/> - <field name="date_to" class="oe_inline" readonly="state in ['cancel', 'done', 'paid']"/>
+                        <field name="date_from" class="oe_inline" readonly="state in ['cancel', 'validated', 'paid']"/> - <field name="date_to" class="oe_inline" readonly="state in ['cancel', 'validated', 'paid']"/>
                     </div>
                 </group>
                 <notebook>
                     <page string="Worked Days &amp; Inputs" name="worked_days_input" class="o_hr_payroll_worked_days_input">
                         <separator string="Worked Days" invisible="not use_worked_day_lines"/>
-                        <field name="worked_days_line_ids" readonly="state in ['cancel', 'done', 'paid']" invisible=" not use_worked_day_lines">
+                        <field name="worked_days_line_ids" readonly="state in ['cancel', 'validated', 'paid']" invisible=" not use_worked_day_lines">
                             <list string="Worked Days" editable="bottom" create="0" delete="0">
                                 <field name="work_entry_type_id" readonly="1" force_save="1"/>
                                 <field name="name"/>
@@ -193,7 +198,7 @@
                             <field name="negative_net_to_report_message"/>
                             <button name="action_report_negative_amount" class="oe_link" type="object" string=" -> Report"/>
                         </div>
-                        <field name="input_line_ids" colspan="4" nolabel="1" readonly="state in ['cancel', 'done', 'paid']">
+                        <field name="input_line_ids" colspan="4" nolabel="1" readonly="state in ['cancel', 'validated', 'paid']">
                             <list string="Input Data" editable="bottom">
                                 <!--
                                     Required 0 to force client to send on change request even when not defined
@@ -227,7 +232,7 @@
                                 class="btn btn-secondary text-break m-0"/>
                     </page>
                     <page string="Salary Computation" name="salary_computation" class="o_hr_payroll_salary_computation">
-                        <field name="line_ids" colspan="4" nolabel="1" readonly="state not in ['draft', 'verify']">
+                        <field name="line_ids" colspan="4" nolabel="1" readonly="state != 'draft'">
                             <list string="Salary Structure" editable="bottom" decoration-info="total == 0" create="0" delete="0">
                                 <field name="name"/>
                                 <field name="code" readonly="1" force_save="1" optional="hide"/>
@@ -263,18 +268,18 @@
                     <page string="Other Info" name="account_info">
                         <group>
                             <group>
-                                <field name="name" readonly="state in ['cancel', 'done', 'paid']"/>
+                                <field name="name" readonly="state in ['cancel', 'validated', 'paid']"/>
                                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                             </group>
                             <group name="accounting">
                                 <field name="has_negative_net_to_report" invisible="1"/>
                                 <field name="negative_net_to_report_display" invisible="1"/>
                                 <field name="paid_date"/>
-                                <field name="paid" invisible="1" readonly="state not in ['draft', 'verify']"/>
+                                <field name="paid" invisible="1" readonly="state != 'draft'"/>
                             </group>
                         </group>
                         <div colspan="4">
-                            <field name="note" placeholder="Add an internal note..." readonly="state not in ['draft', 'verify']"/>
+                            <field name="note" placeholder="Add an internal note..." readonly="state != 'draft'"/>
                         </div>
                     </page>
                 </notebook>
@@ -310,9 +315,12 @@
                 <field name="struct_id"/>
                 <field name="activity_user_id" string="Activities of"/>
                 <field name="activity_type_id" string="Activity type"/>
-                <filter string="To Compute" name="draft" domain="[('state', '=', 'draft')]" help="Draft Slip"/>
-                <filter string="To Confirm" name="draft" domain="[('state', '=', 'verify')]" help="Slips to Confirm"/>
-                <filter string="Done" name="done" domain="[('state', '=', 'done')]" help="Done Slip"/>
+                <filter
+                    string="Has Issues" name="filter_issue"
+                    domain="['|', ('error_count', '>', 0), ('warning_count', '>', 0)]"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]" help="Draft Slip"/>
+                <filter string="Validated" name="validated" domain="[('state', '=', 'validated')]" help="Done Slip"/>
                 <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]" help="Paid Slip"/>
                 <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]" help="Canceled Slip"/>
                 <separator/>

@@ -65,9 +65,8 @@ export class PayslipListController extends ListController {
         });
 
         this.displayHeaderButtonsTransitions = {
-            draft: "compute_sheet",
-            verify: "action_payslip_done",
-            done: "action_payslip_paid",
+            draft: "action_validate",
+            validated: "action_payslip_paid",
             paid: "action_payslip_draft",
         };
     }

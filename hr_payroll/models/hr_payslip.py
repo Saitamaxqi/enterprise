@@ -65,16 +65,27 @@ class HrPayslip(models.Model):
         compute="_compute_date_to", store=True, precompute=True)
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('verify', 'Waiting'),
-        ('done', 'Done'),
+        ('validated', 'Validated'),
         ('paid', 'Paid'),
         ('cancel', 'Canceled')],
-        string='Status', index=True, readonly=True, copy=False,
+        string='State', index=True, readonly=True, copy=False,
         default='draft', tracking=True,
         help="""* When the payslip is created the status is \'Draft\'
-                \n* If the payslip is under verification, the status is \'Waiting\'.
                 \n* If the payslip is confirmed then status is set to \'Done\'.
                 \n* When the user cancels a payslip, the status is \'Canceled\'.""")
+    state_display = fields.Selection([
+            ('draft', 'Draft'),
+            ('validated', 'Validated'),
+            ('paid', 'Paid'),
+            ('cancel', 'Canceled'),
+            ('warning', 'Warning'),
+            ('error', 'Error'),
+        ],
+        string='Status',
+        compute='_compute_state_display',
+        store=True,
+        readonly=True,
+    )
     line_ids = fields.One2many(
         'hr.payslip.line', 'slip_id', string='Payslip Lines',
         compute='_compute_line_ids', store=True, readonly=False, copy=True)
@@ -126,19 +137,22 @@ class HrPayslip(models.Model):
     gross_wage = fields.Monetary(compute='_compute_basic_net', store=True)
     net_wage = fields.Monetary(compute='_compute_basic_net', store=True)
     currency_id = fields.Many2one(related='version_id.currency_id')
-    warning_message = fields.Char(compute='_compute_warning_message', store=True, readonly=True)
-    is_wrong_duration = fields.Boolean(compute='_compute_is_wrong_duration', compute_sudo=True)
     is_regular = fields.Boolean(compute='_compute_is_regular')
     is_wrong_version = fields.Boolean(compute='_compute_is_wrong_version', store=True)
     has_wrong_data = fields.Boolean(compute='_compute_is_wrong_version', store=True)
     keep_wrong_version = fields.Boolean(default=False)
     has_negative_net_to_report = fields.Boolean()
-    negative_net_to_report_display = fields.Boolean(compute='_compute_negative_net_to_report_display')
-    negative_net_to_report_message = fields.Char(compute='_compute_negative_net_to_report_display')
-    negative_net_to_report_amount = fields.Float(compute='_compute_negative_net_to_report_display')
     is_superuser = fields.Boolean(compute="_compute_is_superuser")
     edited = fields.Boolean()
     queued_for_pdf = fields.Boolean(default=False)
+
+    issues = fields.Json(compute='_compute_issues', store=True, readonly=True)
+    warning_count = fields.Integer(compute='_compute_issues', store=True, readonly=True)
+    error_count = fields.Integer(compute='_compute_issues', store=True, readonly=True)
+    is_wrong_duration = fields.Boolean(compute='_compute_is_wrong_duration', compute_sudo=True)
+    negative_net_to_report_message = fields.Char(compute='_compute_negative_net_to_report_display')
+    negative_net_to_report_amount = fields.Float(compute='_compute_negative_net_to_report_display')
+    negative_net_to_report_display = fields.Boolean(compute='_compute_negative_net_to_report_display')
 
     salary_attachment_ids = fields.Many2many(
         'hr.salary.attachment',
@@ -234,6 +248,16 @@ class HrPayslip(models.Model):
             else:
                 payslip.date_from = payslip._get_schedule_period_start()
 
+    @api.depends('error_count', 'warning_count', 'state')
+    def _compute_state_display(self):
+        for payslip in self:
+            if payslip.error_count:
+                payslip.state_display = 'error'
+            elif payslip.warning_count:
+                payslip.state_display = 'warning'
+            else:
+                payslip.state_display = payslip.state
+
     def _schedule_timedelta(self, schedule, date_from, country_code=False):
         if schedule == 'quarterly':
             timedelta = relativedelta(months=3, days=-1)
@@ -325,7 +349,7 @@ class HrPayslip(models.Model):
             raise_if_not_found=False
         ) or self.env['mail.activity.type']
         for payslip in self:
-            if payslip.state in ['draft', 'verify']:
+            if payslip.state == 'draft':
                 payslips_to_report = self.env['hr.payslip'].search([
                     ('has_negative_net_to_report', '=', True),
                     ('employee_id', 'in', payslip.employee_id.ids),
@@ -336,8 +360,8 @@ class HrPayslip(models.Model):
                 payslip.negative_net_to_report_message = _(
                     'Note: There are previous payslips with a negative amount for a total of %s to report.',
                     round(payslip.negative_net_to_report_amount, 2))
-                if payslips_to_report and payslip.state == 'verify' and payslip.version_id and (
-                    not activity_type or payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type)
+                if payslips_to_report and payslip.state == 'draft' and payslip.line_ids and payslip.version_id and (
+                    not payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type)
                 ):
                     payslip.activity_schedule(
                         'hr_payroll.mail_activity_data_hr_payslip_negative_net',
@@ -384,14 +408,14 @@ class HrPayslip(models.Model):
 
     @api.depends('employee_id.current_version_id', 'version_id.last_modified_date', 'date_from')
     def _compute_is_wrong_version(self):
-        for payslip in self.filtered(lambda slip: slip.state in ("done", "paid")):
+        for payslip in self.filtered(lambda slip: slip.state in ("validated", "paid")):
             payslip.is_wrong_version = payslip.employee_id and payslip.version_id \
                                         and payslip.version_id != payslip.employee_id._get_version(date=payslip.date_from)
             payslip.has_wrong_data = payslip.version_id.last_modified_date > payslip.done_date
 
     def _is_invalid(self):
         self.ensure_one()
-        if self.state not in ['done', 'paid']:
+        if self.state not in ['validated', 'paid']:
             return _("This payslip is not validated. This is not a legal document.")
         return False
 
@@ -399,7 +423,7 @@ class HrPayslip(models.Model):
     def _compute_line_ids(self):
         if not self.env.context.get("payslip_no_recompute"):
             return
-        payslips = self.filtered(lambda p: p.line_ids and p.state in ['draft', 'verify'])
+        payslips = self.filtered(lambda p: p.line_ids and p.state == 'draft')
         for payslip in payslips:
             lines_vals = []
             if payslip.employee_id and payslip.version_id and payslip.date_from and payslip.date_to and payslip.struct_id:
@@ -448,20 +472,6 @@ class HrPayslip(models.Model):
 
     def _compute_is_superuser(self):
         self.is_superuser = self.env.user._is_superuser() and self.env.user.has_group('base.group_no_one')
-
-    @api.constrains('version_id', 'date_from', 'date_to')
-    def _check_version_dates(self):
-        for slip in self:
-            version = slip.version_id
-            if not version or not slip.date_from:
-                continue
-            if not version._is_overlapping_period(slip.date_from, slip.date_to) and not slip.is_refund_payslip:
-                raise ValidationError(
-                    self.env._(
-                        "The employee (%(name)s) contract (%(c_date_from)s - %(c_date_to)s) must be running "
-                        "during the payslip duration (%(p_date_from)s - %(p_date_to)s)",
-                        name=slip.employee_id.name, c_date_from=slip.version_id.contract_date_start,
-                        c_date_to=slip.version_id.contract_date_end, p_date_from=slip.date_from, p_date_to=slip.date_to))
 
     @api.constrains('date_from', 'date_to')
     def _check_dates(self):
@@ -568,17 +578,12 @@ class HrPayslip(models.Model):
         return self.filtered(lambda p: p.version_id and not p.version_id._is_overlapping_period(p.date_from, p.date_to) and not p.is_refund_payslip)
 
     def action_payslip_done(self):
-        invalid_payslips = self._filter_out_of_versions_payslips()
-        if invalid_payslips:
-            raise ValidationError(_('The following employees have a contract outside of the payslip period:\n%s', '\n'.join(invalid_payslips.mapped('employee_id.name'))))
         if any(slip.state == 'cancel' for slip in self):
-            raise ValidationError(_("You can't validate a cancelled payslip."))
-        if mismatched_slips := self.filtered(lambda slip: slip.payslip_run_id and slip.company_id != slip.payslip_run_id.company_id):
-            raise ValidationError(_(
-                "The following payslips company differs from the batch's company:\n%s", "\n".join(mismatched_slips.mapped('name')))
-            )
+            raise ValidationError(_("You can't confirm cancelled payslips."))
+        if self.filtered('error_count'):
+            raise ValidationError(self._get_error_message())
         self.write({
-            'state': 'done',
+            'state': 'validated',
             'done_date': fields.Datetime.now(),
         })
 
@@ -606,15 +611,21 @@ class HrPayslip(models.Model):
                 if payslip_cron:
                     payslip_cron._trigger()
 
+    def action_validate(self):
+        self.filtered(lambda slip: slip.state == 'draft' and not slip.line_ids).compute_sheet()
+        self.filtered(lambda slip: slip.state == 'draft').action_payslip_done()
+
     def action_payslip_cancel(self):
-        if not self.env.user._is_system() and self.filtered(lambda slip: slip.state == 'done'):
-            raise UserError(_("Cannot cancel a payslip that is done."))
+        if not self.env.user._is_system() and self.filtered(lambda slip: slip.state == 'validated'):
+            raise UserError(_("Cannot cancel a payslip that is validated."))
         self.write({'state': 'cancel'})
         self.action_draft_linked_entries()
 
     def action_payslip_paid(self):
-        if any(slip.state not in ['done', 'paid'] for slip in self):
+        if any(slip.state not in ['validated', 'paid'] for slip in self):
             raise UserError(_('Cannot mark payslip as paid if not confirmed.'))
+        if self.filtered('error_count'):
+            raise ValidationError(self._get_error_message())
         self.filtered(lambda p: p.state != 'paid').write({
             'state': 'paid',
             'paid_date': fields.Date.today(),
@@ -640,8 +651,8 @@ class HrPayslip(models.Model):
     def action_payslip_unpaid(self):
         if any(slip.state != 'paid' for slip in self):
             raise UserError(_('You cannot cancel the payment if the payslip has not been paid.'))
-        self.write({'state': 'done'})
-        self.payslip_run_id.write({'state': '03_close'})
+        self.write({'state': 'validated'})
+        self.payslip_run_id.write({'state': '02_close'})
 
     def action_open_work_entries(self):
         self.ensure_one()
@@ -707,7 +718,7 @@ class HrPayslip(models.Model):
                 'credit_note': True,
                 'name': self.env._('Refund: %(payslip)s', payslip=payslip.name),
                 'edited': True,
-                'state': 'verify',
+                'state': 'draft',
                 'origin_payslip_id': payslip.id,
                 'is_refund_payslip': True,
             })
@@ -762,7 +773,9 @@ class HrPayslip(models.Model):
         self.action_draft_linked_entries()
 
     def compute_sheet(self):
-        payslips = self.filtered(lambda slip: slip.state in ['draft', 'verify'])
+        payslips = self.filtered(lambda slip: slip.state == 'draft')
+        if payslips.filtered('error_count'):
+            self._get_error_message()
         # delete old payslip lines
         payslips.line_ids.unlink()
         # this guarantees consistent results
@@ -770,7 +783,7 @@ class HrPayslip(models.Model):
         today = fields.Date.today()
         for payslip in payslips:
             payslip.write({
-                'state': 'verify',
+                'state': 'draft',
                 'compute_date': today
             })
         self.env['hr.payslip.line'].create(payslips._get_payslip_lines())
@@ -781,7 +794,7 @@ class HrPayslip(models.Model):
     def action_refresh_from_work_entries(self):
         # Refresh the whole payslip in case the HR has modified some work entries
         # after the payslip generation
-        if any(p.state not in ['draft', 'verify'] for p in self):
+        if any(p.state != 'draft' for p in self):
             raise UserError(_('The payslips should be in Draft or Waiting state.'))
         payslips = self.filtered(lambda p: not p.edited)
         payslips._compute_payslip_properties()
@@ -911,7 +924,7 @@ class HrPayslip(models.Model):
             SELECT sum(pl.total)
             FROM hr_payslip as hp, hr_payslip_line as pl
             WHERE hp.employee_id = %s
-            AND hp.state in ('done', 'paid')
+            AND hp.state in ('validated', 'paid')
             AND hp.date_from >= %s
             AND hp.date_to <= %s
             AND hp.id = pl.slip_id
@@ -936,7 +949,7 @@ class HrPayslip(models.Model):
                 hr_salary_rule_category as rc,
                 hr_salary_rule as sr
             WHERE hp.employee_id = %s
-            AND hp.state in ('done', 'paid')
+            AND hp.state in ('validated', 'paid')
             AND hp.date_from >= %s
             AND hp.date_to <= %s
             AND hp.id = pl.slip_id
@@ -954,7 +967,7 @@ class HrPayslip(models.Model):
         query = """
             SELECT sum(hwd.amount)
             FROM hr_payslip hp, hr_payslip_worked_days hwd, hr_work_entry_type hwet
-            WHERE hp.state in ('done', 'paid')
+            WHERE hp.state in ('validated', 'paid')
             AND hp.id = hwd.payslip_id
             AND hwet.id = hwd.work_entry_type_id
             AND hp.employee_id = %(employee)s
@@ -1038,7 +1051,7 @@ class HrPayslip(models.Model):
                 ('ytd_computation', '=', True),
                 ('date_to', '>=', earliest_ytd_date_to),
                 ('date_to', '<=', max(self.mapped('date_to'))),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
             ],
             groupby=['employee_id', 'struct_id'],
             aggregates=['id:recordset']
@@ -1087,14 +1100,6 @@ class HrPayslip(models.Model):
         line_values = ytd_payslips._get_line_values(code_set, ['ytd'])
 
         for payslip in self:
-            if not payslip.version_id:
-                raise UserError(_(
-                    'There\'s no contract set on payslip %(payslip_name)s for %(employee_name)s. '
-                    'Check that there is at least a contract set on the employee form.',
-                    payslip_name=payslip.name,
-                    employee_name=payslip.employee_id.name,
-                ))
-
             if lang := payslip.employee_id.lang:
                 # /!\ Don't remove /!\ ensure that the employee will receive their payslip in their language.
                 payslip = payslip.with_context(lang=lang)
@@ -1273,43 +1278,122 @@ class HrPayslip(models.Model):
                 'dates': slip._get_period_name(formated_date_cache),
             }
 
-    @api.depends('date_from', 'date_to', 'struct_id', 'employee_id')
-    def _compute_warning_message(self):
+    @api.model
+    def _issues_dependencies(self):
+        return [
+            'state', 'date_to', 'date_from', 'employee_id',
+            'version_id', 'version_id.contract_date_start', 'version_id.contract_date_end', 'version_id.schedule_pay',
+            'struct_id', 'version_id.structure_type_id.default_schedule_pay',
+            'company_id', 'payslip_run_id.company_id',
+            'employee_id.bank_account_id', 'employee_id.bank_account_id.allow_out_payment',
+        ]
+
+    def _get_errors_by_slip(self):
+        by_state = self.grouped('state')
+        draft_slips = by_state.get('draft', self.env['hr.payslip'])
+        errors_by_slip = {slip: [] for slip in self}
+        for slip in draft_slips._filter_out_of_versions_payslips():
+            errors_by_slip[slip].append({
+                'message': _('No running contract over payslip period'),
+                'action_text': _("Contract"),
+                'action': slip.version_id._get_records_action(),
+                'level': 'danger',
+            })
+        for slip in draft_slips.filtered(lambda slip: slip.payslip_run_id and slip.company_id != slip.payslip_run_id.company_id):
+            errors_by_slip[slip].append({
+                'message': _("The payslip's company doesn't match the batch's"),
+                'action_text': _('Batch'),
+                'action': slip.payslip_run_id._get_records_action(),
+                'level': 'danger',
+            })
+        return errors_by_slip
+
+    def _get_warnings_by_slip(self):
         similar_payslips = self._get_similar_payslips()
-        for slip in self:
-            slip.warning_message = False
-            if not slip.date_from or not slip.date_to:
-                continue
+        warnings_by_slip = {slip: [] for slip in self}
+
+        for slip in self.filtered(lambda s: (
+            s.state in ['draft', 'validated'] and s.date_from and s.date_to
+        )):
             warnings = []
-
-            if slip.version_id and slip.version_id.contract_date_start and ((slip.version_id.contract_date_start > slip.date_to)
-                    or (slip.version_id.contract_date_end and slip.date_from > slip.version_id.contract_date_end)):
-                warnings.append(_("The period selected does not match the contract validity period."))
-
-            if slip.date_to > date_utils.end_of(fields.Date.today(), 'month'):
-                warnings.append(_(
-                    "Work entries may not be generated for the period from %(start)s to %(end)s.",
-                    start=date_utils.add(date_utils.end_of(fields.Date.today(), 'month'), days=1),
-                    end=slip.date_to,
-                ))
+            if slip.version_id and (
+                slip.date_from < slip.version_id.contract_date_start
+                or (slip.version_id.contract_date_end
+                    and slip.date_to > slip.version_id.contract_date_end)
+            ):
+                warnings.append({
+                    'message': _("The period selected does not match the contract validity period."),
+                    'action_text': _("Contract"),
+                    'action': slip.version_id._get_records_action(target='new'),
+                    'level': 'warning',
+                })
 
             if slip.struct_id.use_worked_day_lines \
                     and (slip.version_id.schedule_pay or slip.version_id.structure_type_id.default_schedule_pay) \
+                    and slip.date_from \
                     and slip.date_from + slip._get_schedule_timedelta() != slip.date_to:
-                warnings.append(_("The duration of the payslip is not accurate according to the structure type."))
+                warnings.append({
+                    'message': _("The duration of the payslip is not accurate according to the structure type."),
+                    'level': 'warning',
+                })
 
             if slip.employee_id and slip.struct_id and slip.date_from and slip.date_to:
                 key = (slip.employee_id.id, slip.struct_id.id, slip.date_from, slip.date_to)
-                duplicates = [
-                    p for p in similar_payslips.get(key, [])
-                    if not slip.id or p.id != slip.id
-                ]
+                duplicates = similar_payslips[key].filtered(lambda dup: dup.id != slip.id)
                 if duplicates:
-                    warnings.append(_("Duplicate payslip creation detected. Please verify the details before proceeding."))
+                    warnings.append({
+                        'message': _("Similar payslips found"),
+                        'action_text': _('Duplicate(s)'),
+                        'action': duplicates._get_records_action(),
+                        'level': 'warning',
+                    })
+            warnings_by_slip[slip] = warnings
 
-            if warnings:
-                warnings = [_("This payslip can be erroneous :")] + warnings
-                slip.warning_message = "\n  ・ ".join(warnings)
+        # Payment report related errors
+        for bank, slips in self.filtered(
+            lambda ps: ps.state == 'validated'
+        ).grouped(
+            lambda ps: ps.employee_id.bank_account_id
+        ).items():
+            if not bank:
+                for slip in slips:
+                    warnings_by_slip[slip].append({
+                        'message': _("Missing bank account on employee"),
+                        'action_text': _('Employee'),
+                        'action': slip.employee_id._get_records_action(),
+                        'level': 'warning',
+                    })
+            elif not bank.allow_out_payment:
+                warning = {
+                    'message': _("Untrusted bank account"),
+                    'action_text': _('Bank Account'),
+                    'action': bank._get_records_action(),
+                    'level': 'warning',
+                }
+                for slip in slips:
+                    warnings_by_slip[slip].append(warning)
+        return warnings_by_slip
+
+    @api.depends(lambda self: self._issues_dependencies())
+    def _compute_issues(self):
+        errors_by_slip = self._get_errors_by_slip()
+        warnings_by_slip = self._get_warnings_by_slip()
+
+        for slip in self:
+            warnings = warnings_by_slip[slip]
+            errors = errors_by_slip[slip]
+            slip.warning_count = len(warnings)
+            slip.error_count = len(errors)
+            if not errors and not warnings:
+                slip.issues = {}
+            else:
+                slip.issues = dict(enumerate(errors + warnings))
+
+    def _get_error_message(self):
+        return ('\n').join([f' • {slip.name}: ' + issue['message']
+            for slip in self
+            for issue in (slip.issues or {}).values() if issue['level'] == 'danger'
+        ])
 
     @api.depends('date_from', 'date_to', 'struct_id')
     def _compute_is_wrong_duration(self):
@@ -1373,15 +1457,15 @@ class HrPayslip(models.Model):
             ('struct_id', 'in', done_payslips.struct_id.ids),
             ('date_from', 'in', done_payslips.mapped('date_from')),
             ('date_to', 'in', done_payslips.mapped('date_to')),
-            ('state', 'in', ['done', 'paid'])
+            ('state', 'in', ['validated', 'paid'])
         ]
         all_existing_payslips = self.env['hr.payslip'].search(search_domain)
 
         # Group existing slips for easy lookup
-        existing_payslip_map = defaultdict(list)
+        existing_payslip_map = defaultdict(lambda: self.env['hr.payslip'])
         for slip in all_existing_payslips:
             key = (slip.employee_id.id, slip.struct_id.id, slip.date_from, slip.date_to)
-            existing_payslip_map[key].append(slip)
+            existing_payslip_map[key] |= slip
 
         return existing_payslip_map
 
@@ -1603,7 +1687,7 @@ class HrPayslip(models.Model):
         self.ensure_one()
         if not self.env.user.has_group('hr_payroll.group_hr_payroll_user'):
             raise UserError(_('This action is restricted to payroll officers only.'))
-        if self.state == 'done':
+        if self.state == 'validated':
             raise UserError(_('This action is forbidden on validated payslips.'))
         wizard = self.env['hr.payroll.edit.payslip.lines.wizard'].create({
             'payslip_id': self.id,
@@ -1645,7 +1729,7 @@ class HrPayslip(models.Model):
     @api.model
     def _cron_generate_pdf(self, batch_size=False):
         payslips = self.search([
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('queued_for_pdf', '=', True),
         ])
         if payslips:

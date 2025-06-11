@@ -40,7 +40,7 @@ class L10n_AuStpFfrWizard(models.TransientModel):
             slip.message_post(subject="Single Touch Payroll", body=payslip_reset_message)
 
         if payslips_to_reset.payslip_run_id:
-            payslips_to_reset.payslip_run_id.state = "02_verify"
+            payslips_to_reset.payslip_run_id.state = "01_ready"
             payslips_to_reset.payslip_run_id.message_post(subject="Single Touch Payroll", body=payslip_reset_message)
         payslips_to_reset.compute_sheet()
         self.stp_id.is_replaced = True

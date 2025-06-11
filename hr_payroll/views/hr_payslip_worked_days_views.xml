@@ -39,8 +39,8 @@
                 <field name="name" string="Payslip Work Days" filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
                 <field name="payslip_id" string="Payslip Name"/>
                 <filter string="Paid" name="is_paid" domain="[('payslip_id.state', '=', 'paid')]"/>
-                <filter string="Done" name="is_done" domain="[('payslip_id.state', '=', 'done')]"/>
-                <filter string="Waiting" name="is_waiting" domain="[('payslip_id.state', '=', 'verify')]"/>
+                <filter string="Done" name="is_done" domain="[('payslip_id.state', '=', 'validated')]"/>
+                <filter string="Waiting" name="is_waiting" domain="[('payslip_id.state', '=', 'draft')]"/>
                 <separator />
                 <filter string="Date" name="date_from" date="date_from" default_period="year"/>
             </search>

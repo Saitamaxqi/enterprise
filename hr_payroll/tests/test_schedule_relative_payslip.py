@@ -109,19 +109,16 @@ class TestScheduleRelativePayslip(TransactionCase):
                 'name': 'Black Spot February',
                 'employee_id': self.billy_emp.id,
             })
-            self.assertTrue(
-                payslip.warning_message and "Work entries may not be generated" in payslip.warning_message,
-                "A warning should be set on potentially missing work entries.")
 
             payslip.date_from = Date.to_date('2022-01-31')
             self.assertTrue(
-                payslip.warning_message and "The period selected does not match the contract validity period." in payslip.warning_message,
-                "A warning should be set on potentially missing work entries.")
+                payslip.issues and "The period selected does not match the contract validity period." in [issue['message'] for issue in payslip.issues.values()],
+                "A warning should be set on contract validity.")
 
             payslip.date_to = Date.to_date('2022-05-14')
             self.assertTrue(
-                payslip.warning_message and "The period selected does not match the contract validity period." in payslip.warning_message,
-                "A warning should be set on potentially missing work entries.")
+                payslip.issues and "The period selected does not match the contract validity period." in [issue['message'] for issue in payslip.issues.values()],
+                "A warning should be set on contract validity.")
             self.assertTrue(
-                payslip.warning_message and "The duration of the payslip is not accurate according to the structure type." in payslip.warning_message,
-                "A warning should be set on potentially missing work entries.")
+                payslip.issues and "The duration of the payslip is not accurate according to the structure type." in [issue['message'] for issue in payslip.issues.values()],
+                "A warning should be set on structure type duration.")

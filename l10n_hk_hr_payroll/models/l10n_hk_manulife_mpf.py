@@ -57,7 +57,7 @@ class L10n_HkManulifeMpf(models.Model):
         for sheet in self:
             end_period = sheet.period + relativedelta(months=1, days=-1)
             all_payslips = self.env['hr.payslip'].search([
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', sheet.company_id.id),
                 ('date_from', '>=', sheet.period),
                 ('date_to', '<=', end_period),
@@ -85,7 +85,7 @@ class L10n_HkManulifeMpf(models.Model):
         salary_structure = self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary')
         end_period = self.period + relativedelta(months=1, days=-1)
         all_payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', self.period),
             ('date_to', '<=', end_period),
             ('employee_id', 'in', self.line_ids.employee_id.ids),

@@ -19,7 +19,7 @@ class HrWorkEntry(models.Model):
     def _compute_has_payslip(self):
         all_payslips = self.env['hr.payslip'].search([
             ('employee_id', 'in', self.employee_id.ids),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '<=', max(self.mapped('date'))),
             ('date_to', '>=', min(self.mapped('date'))),
         ])

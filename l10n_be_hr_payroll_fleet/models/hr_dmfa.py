@@ -31,7 +31,7 @@ class L10n_BeDmfa(models.Model):
                 # ('employee_id', 'in', employees.ids),
                 ('date_to', '>=', self.quarter_start),
                 ('date_to', '<=', self.quarter_end),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', self.company_id.id),
                 ('struct_id', '=', monthly_pay.id),
             ]).mapped('vehicle_id')
@@ -53,7 +53,7 @@ class L10n_BeDmfa(models.Model):
         payslips_sudo = self.env['hr.payslip'].sudo().search([
             ('date_to', '>=', self.quarter_start),
             ('date_to', '<=', self.quarter_end),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('struct_id', '=', regular_payslip.id),
             ('company_id', '=', self.company_id.id),
         ])

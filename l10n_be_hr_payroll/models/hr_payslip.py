@@ -281,7 +281,7 @@ class HrPayslip(models.Model):
         payslips_by_employee = self._read_group(
             domain=[
                 ('struct_id.country_id', '=', 'BE'),
-                ('state', 'in', ('done', 'paid')),
+                ('state', 'in', ('validated', 'paid')),
                 ('employee_id', 'in', self.employee_id.ids),
                 ('input_line_ids.code', 'in', ('SALARYADVREC', 'SALARYADV')),
             ],
@@ -378,7 +378,7 @@ class HrPayslip(models.Model):
             return 0
         payslips = self.env['hr.payslip'].search([
             ('employee_id', '=', self.employee_id.id),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', date_from + relativedelta(months=-12, day=1)),
             ('date_from', '<=', date_from),
         ], order="date_from asc")
@@ -388,7 +388,7 @@ class HrPayslip(models.Model):
     def _get_last_year_average_warrant_revenues(self):
         warrant_payslips = self.env['hr.payslip'].search([
             ('employee_id', '=', self.employee_id.id),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('struct_id.code', '=', 'CP200WARRANT'),
             ('date_from', '>=', self.date_from + relativedelta(months=-12, day=1)),
             ('date_from', '<', self.date_from),
@@ -601,7 +601,7 @@ class HrPayslip(models.Model):
             ('employee_id', '=', self.employee_id.id),
             ('date_to', '<=', date(self.date_from.year, 12, 31)),
             ('date_from', '>=', date(self.date_from.year - 2, 1, 1)),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
         ])
         european_time_off_amount = two_years_payslips.filtered(lambda p: p.date_from.year < self.date_from.year)._get_worked_days_line_values(['LEAVE216'], ['amount'], True)['LEAVE216']['sum']['amount']
         already_recovered_amount = two_years_payslips._get_line_values(['EU.LEAVE.DEDUC'], compute_sum=True)['EU.LEAVE.DEDUC']['sum']['total']
@@ -1329,7 +1329,7 @@ class HrPayslip(models.Model):
             ('employee_id', '=', employee.id),
             ('date_from', '>=', date(self.date_from.year, 1, 1)),
             ('date_to', '<=', date(self.date_from.year, 12, 31)),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
         ])
         paid_leave_days = all_payslips_during_civil_year._get_worked_days_line_values(['LEAVE120'], ['number_of_days'], True)['LEAVE120']['sum']['number_of_days']
         remaining_day = number_of_days - paid_leave_days
@@ -1367,7 +1367,7 @@ class HrPayslip(models.Model):
         if self.struct_id.code == "CP200HOLN1":
             existing_double_pay = self.env['hr.payslip'].search([
                 ('employee_id', '=', self.employee_id.id),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('struct_id', '=', self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_double_holiday').id),
                 ('date_from', '>=', date(date_from.year, 1, 1)),
                 ('date_to', '<=', date(date_from.year, 12, 31)),

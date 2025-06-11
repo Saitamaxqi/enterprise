@@ -93,105 +93,105 @@ class HrPayslip(models.Model):
     @api.depends('employee_id.l10n_lu_tax_id_number', 'state')
     def _compute_l10n_lu_tax_id_number(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_tax_id_number = payslip.employee_id.l10n_lu_tax_id_number
 
     @api.depends('employee_id.l10n_lu_tax_classification', 'state')
     def _compute_l10n_lu_tax_classification(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_tax_classification = payslip.employee_id.l10n_lu_tax_classification
 
     @api.depends('employee_id.l10n_lu_tax_rate_no_classification', 'state')
     def _compute_l10n_lu_tax_rate_no_classification(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_tax_rate_no_classification = payslip.employee_id.l10n_lu_tax_rate_no_classification
 
     @api.depends('employee_id.l10n_lu_deduction_fd_daily', 'state')
     def _compute_l10n_lu_deduction_fd_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_fd_daily = payslip.employee_id.l10n_lu_deduction_fd_daily
 
     @api.depends('employee_id.l10n_lu_deduction_ac_ae_daily', 'state')
     def _compute_l10n_lu_deduction_ac_ae_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_ac_ae_daily = payslip.employee_id.l10n_lu_deduction_ac_ae_daily
 
     @api.depends('employee_id.l10n_lu_deduction_ce_daily', 'state')
     def _compute_l10n_lu_deduction_ce_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_ce_daily = payslip.employee_id.l10n_lu_deduction_ce_daily
 
     @api.depends('employee_id.l10n_lu_deduction_ds_daily', 'state')
     def _compute_l10n_lu_deduction_ds_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_ds_daily = payslip.employee_id.l10n_lu_deduction_ds_daily
 
     @api.depends('employee_id.l10n_lu_deduction_ds_daily', 'state')
     def _compute_l10n_lu_deduction_ds_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_ds_daily = payslip.employee_id.l10n_lu_deduction_ds_daily
 
     @api.depends('employee_id.l10n_lu_deduction_fo_daily', 'state')
     def _compute_l10n_lu_deduction_fo_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_fo_daily = payslip.employee_id.l10n_lu_deduction_fo_daily
 
     @api.depends('employee_id.l10n_lu_deduction_amd_daily', 'state')
     def _compute_l10n_lu_deduction_amd_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_deduction_amd_daily = payslip.employee_id.l10n_lu_deduction_amd_daily
 
     @api.depends('employee_id.l10n_lu_package_ffo_daily', 'state')
     def _compute_l10n_lu_package_ffo_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_package_ffo_daily = payslip.employee_id.l10n_lu_package_ffo_daily
 
     @api.depends('employee_id.l10n_lu_package_fds_daily', 'state')
     def _compute_l10n_lu_package_fds_daily(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_package_fds_daily = payslip.employee_id.l10n_lu_package_fds_daily
 
     @api.depends('employee_id.l10n_lu_tax_credit_cis', 'state')
     def _compute_l10n_lu_tax_credit_cis(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_tax_credit_cis = payslip.employee_id.l10n_lu_tax_credit_cis
 
     @api.depends('employee_id.l10n_lu_tax_credit_cip', 'state')
     def _compute_l10n_lu_tax_credit_cip(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_tax_credit_cip = payslip.employee_id.l10n_lu_tax_credit_cip
 
     @api.depends('employee_id.l10n_lu_tax_credit_cim', 'state')
     def _compute_l10n_lu_tax_credit_cim(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'done']:
+            if payslip.company_id.country_id.code != "LU" or payslip.state in ['paid', 'validated']:
                 continue
             payslip.l10n_lu_tax_credit_cim = payslip.employee_id.l10n_lu_tax_credit_cim
 
@@ -250,7 +250,7 @@ class HrPayslip(models.Model):
                 ('date_to', '<=', end_month),
                 ('employee_id', '=', self.employee_id.id),
                 ('id', '!=', self.id),
-                ('state', 'in', ['paid', 'done'])
+                ('state', 'in', ['paid', 'validated'])
             ])
 
             for slip in month_payslips:

@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
             <button name="action_paid" position="before">
                 <button name="action_open_hsbc_autopay_wizard" type="object" string="HSBC Autopay Report" class="btn btn-primary"
-                        invisible="not l10n_hk_autopay or state not in ['03_close', '04_paid'] or l10n_hk_autopay_export_first_batch or l10n_hk_autopay_export_second_batch" />
+                        invisible="not l10n_hk_autopay or state not in ['02_close', '03_paid'] or l10n_hk_autopay_export_first_batch or l10n_hk_autopay_export_second_batch" />
             </button>
             <button name="action_paid" position="after">
                 <button name="action_open_hsbc_autopay_wizard" type="object" string="HSBC Autopay Report" class="btn btn-secondary"
-                        invisible="(not l10n_hk_autopay or state not in ['03_close', '04_paid'] or not l10n_hk_autopay_export_first_batch) and not l10n_hk_autopay_export_second_batch" />
+                        invisible="(not l10n_hk_autopay or state not in ['02_close', '03_paid'] or not l10n_hk_autopay_export_first_batch) and not l10n_hk_autopay_export_second_batch" />
             </button>
             <templates position="before">
                 <field name="l10n_hk_autopay" invisible="1" />

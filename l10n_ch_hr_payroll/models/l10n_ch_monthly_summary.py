@@ -70,7 +70,7 @@ class L10nChMonthlySummary(models.Model):
 
     def _get_valid_payslips(self):
         domain = [
-            ('state', 'in', ['paid', 'done']),
+            ('state', 'in', ['paid', 'validated']),
             ('company_id', 'in', self.company_ids.ids),
             ('date_from', '>=', self.date_start),
             ('date_to', '<=', self.date_end),
@@ -78,7 +78,7 @@ class L10nChMonthlySummary(models.Model):
         ]
         payslips = self.env['hr.payslip'].search(domain)
         if not payslips:
-            raise UserError(_("There is no paid or done payslips over the selected period."))
+            raise UserError(_("There is no paid or validated payslips over the selected period."))
         return payslips
 
     def _get_line_values(self):

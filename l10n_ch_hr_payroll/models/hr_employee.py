@@ -181,7 +181,7 @@ class HrEmployee(models.Model):
             existing_snapshots._toggle_pay_period_lock(lock=False)
 
         # Recompute open payslips automatically on each update since almost all fields cause a change in computation
-        pending_computation_slips = self.slip_ids.filtered(lambda p: p.state in ['draft', 'verify'] and p.struct_id.code == "CHMONTHLYELM")
+        pending_computation_slips = self.slip_ids.filtered(lambda p: p.state == 'draft' and p.struct_id.code == "CHMONTHLYELM")
         if pending_computation_slips:
             pending_computation_slips.action_refresh_from_work_entries()
 

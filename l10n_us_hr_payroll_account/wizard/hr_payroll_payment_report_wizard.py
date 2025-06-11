@@ -129,8 +129,8 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
 
     def _convert_payslips_to_payments(self):
         payments = self.env['account.payment']
-        # Only payslips with state == "done" and net_wage > 0 will be used to generate the report
-        for payslip in self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0):
+        # Only payslips with state == "validated" and net_wage > 0 will be used to generate the report
+        for payslip in self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0):
             payment = self.env["account.payment"].new({
                     "partner_id": payslip.employee_id.work_contact_id.id,
                     "partner_bank_id": payslip.employee_id.bank_account_id.id,
@@ -236,8 +236,8 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def _perform_checks(self):
         super()._perform_checks()
         if self.export_format == 'nacha':
-            # Only payslips with state == "done" and net_wage > 0 will be used to generate the report
-            filtered_payslips = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
+            # Only payslips with state == "validated" and net_wage > 0 will be used to generate the report
+            filtered_payslips = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
             employees = filtered_payslips.employee_id.filtered(lambda e: not e.work_contact_id)
             if employees:
                 raise UserError(_("Some employees (%s) don't have a work contact.", employees.mapped('name')))

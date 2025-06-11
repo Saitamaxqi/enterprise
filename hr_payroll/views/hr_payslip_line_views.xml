@@ -183,8 +183,8 @@
                 <field name="name" string="Payslip Lines" filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
                 <field name="slip_id" string="Payslip Name"/>
                 <filter string="Paid" name="is_paid" domain="[('slip_id.state', '=', 'paid')]"/>
-                <filter string="Done" name="is_done" domain="[('slip_id.state', '=', 'done')]"/>
-                <filter string="Waiting" name="is_waiting" domain="[('slip_id.state', '=', 'verify')]"/>
+                <filter string="Validated" name="is_validated" domain="[('slip_id.state', '=', 'validated')]"/>
+                <filter string="Draft" name="is_draft" domain="[('slip_id.state', '=', 'draft')]"/>
                 <separator />
                 <filter string="Date" name="date_from" date="date_from" default_period="year"/>
             </search>

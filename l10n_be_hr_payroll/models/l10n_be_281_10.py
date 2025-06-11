@@ -160,7 +160,7 @@ class L10n_Be281_10(models.Model):
             all_payslips = self.env['hr.payslip'].search([
                 ('date_to', '<=', date(int(sheet.year), 12, 31)),
                 ('date_from', '>=', date(int(sheet.year), 1, 1)),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', sheet.company_id.id),
                 ('employee_id.employee_type', '!=', 'trainee'),
             ])
@@ -220,7 +220,7 @@ class L10n_Be281_10(models.Model):
         all_payslips = self.env['hr.payslip'].search([
             ('date_to', '<=', date(int(self.year), 12, 31)),
             ('date_from', '>=', date(int(self.year), 1, 1)),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('employee_id', 'in', employees.ids)
         ])
         all_employees = all_payslips.mapped('employee_id')

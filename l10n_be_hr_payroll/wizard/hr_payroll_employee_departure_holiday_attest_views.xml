@@ -59,14 +59,14 @@
                 <group>
                     <field name="payslip_n_ids" nolabel="1" colspan="2">
                         <list create="0" delete="0">
-                            <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
-                            <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="date_to" invisible="1" column_invisible="1" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'verify']"/>
+                            <field name="payslip_run_id" readonly="state not in ['draft', 'draft']"/>
+                            <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="state in ['cancel', 'validated', 'paid']"/>
+                            <field name="date_to" invisible="1" column_invisible="1" readonly="state in ['cancel', 'validated', 'paid']"/>
+                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'draft']"/>
                             <field name="basic_wage" sum="Total basic wage" optional="hide"/>
                             <field name="gross_wage" string="Taxable Wage" sum="Total taxable wage" optional="hide"/>
                             <field name="net_wage" sum="Total net wage" optional="hide"/>
-                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'verify'" decoration-success="state == 'done'" decoration-primary="state == 'paid'"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'draft'" decoration-success="state == 'validated'" decoration-primary="state == 'paid'"/>
                         </list>
                     </field>
                 </group>
@@ -83,14 +83,14 @@
                 <group>
                     <field name="payslip_n1_ids" nolabel="1" colspan="2">
                         <list create="0" delete="0">
-                            <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
-                            <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="date_to" invisible="1" column_invisible="1" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'verify']"/>
+                            <field name="payslip_run_id" readonly="state not in ['draft', 'draft']"/>
+                            <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="state in ['cancel', 'validated', 'paid']"/>
+                            <field name="date_to" invisible="1" column_invisible="1" readonly="state in ['cancel', 'validated', 'paid']"/>
+                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'draft']"/>
                             <field name="basic_wage" sum="Total basic wage" optional="hide"/>
                             <field name="gross_wage" string="Taxable Wage" sum="Total taxable wage" optional="hide"/>
                             <field name="net_wage" sum="Total net wage" optional="hide"/>
-                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'verify'" decoration-success="state == 'done'" decoration-primary="state == 'paid'"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'draft'" decoration-success="state == 'validated'" decoration-primary="state == 'paid'"/>
                         </list>
                     </field>
                 </group>

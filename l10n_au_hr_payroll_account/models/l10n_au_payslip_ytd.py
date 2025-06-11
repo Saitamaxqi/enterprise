@@ -96,7 +96,7 @@ class L10n_AuPayslipYtd(models.Model):
             end_date = start_date + relativedelta(years=1, days=-1)
             if self.env["hr.payslip"].search_count([
                 ("employee_id", "=", rec.employee_id.id),
-                ("state", "in", ("done", "paid")),
+                ("state", "in", ("validated", "paid")),
                 ("date_from", "<=", end_date),
                 ("date_from", ">=", start_date)]):
                 raise UserError(_("You can't create or update YTD opening balances for %s, because there are "

@@ -91,7 +91,7 @@ elif version.l10n_us_pre_retirement_type == "fixed":
 
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -120,7 +120,7 @@ employee_contribution = -result_rules['401K']['total']
 
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -440,7 +440,7 @@ result = - line_4b
 taxable = categories['TAXABLE'] - result_rules['401K']['total']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -483,7 +483,7 @@ result_rate = - 1.45
 medicare_amount = result_rules['MEDICARE']['amount']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -853,7 +853,7 @@ pfl_amount = taxable * rate / 100.0
 
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -900,7 +900,7 @@ result = payroll_deduction * payslip.sum_worked_hours * xp_factor
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1015,7 +1015,7 @@ result = -payslip._rule_parameter('l10n_us_co_opt_sheridan') * 12 / version._get
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1045,7 +1045,7 @@ result_rate = payslip._rule_parameter('l10n_us_wa_pfml_family_rate')
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1107,7 +1107,7 @@ elif version.l10n_us_post_roth_401k_type == "fixed":
 
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1211,7 +1211,7 @@ result_rate = - result_rules['MEDICARE']['rate']
 taxable = categories['TAXABLE'] - result_rules['401K']['total']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1241,7 +1241,7 @@ result_rate = payslip._rule_parameter('l10n_us_FUTA_tax_rate')
         <field name="amount_python_compute">
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1288,7 +1288,7 @@ if version.company_id.l10n_us_ca_ett_tax:
     taxable = categories['TAXABLE'] - result_rules['MEDICALHSA']['total'] - result_rules['401K']['total']
     year_payslips = version.env['hr.payslip'].search([
         ('employee_id', '=', employee.id),
-        ('state', 'in', ['done', 'paid']),
+        ('state', 'in', ['validated', 'paid']),
         ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
         ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
         ('company_id', '=', version.company_id.id),
@@ -1323,7 +1323,7 @@ result_rate = payslip._rule_parameter('l10n_us_ca_ett_rate')
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1354,7 +1354,7 @@ result_rate = payslip._rule_parameter('l10n_us_ny_reemployment_tax_rate')
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1470,7 +1470,7 @@ result = payslip._rule_parameter('l10n_us_co_opt_sheridan') * 12 / version._get_
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1518,7 +1518,7 @@ result_rate = payslip._rule_parameter('l10n_us_nv_cep_rate')
 taxable = categories['GROSS']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1549,7 +1549,7 @@ result_rate = payslip._rule_parameter('l10n_us_al_esa_rate')
 taxable = categories['TAXABLE'] - result_rules['401K']['total']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1580,7 +1580,7 @@ result_rate = payslip._rule_parameter('l10n_us_co_support_surcharge_rate')
 taxable = categories['TAXABLE'] - result_rules['401K']['total']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),
@@ -1611,7 +1611,7 @@ result_rate = payslip._rule_parameter('l10n_us_co_solvency_surcharge_rate')
 taxable = categories['TAXABLE'] - result_rules['401K']['total']
 year_payslips = version.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
+    ('state', 'in', ['validated', 'paid']),
     ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
     ('company_id', '=', version.company_id.id),

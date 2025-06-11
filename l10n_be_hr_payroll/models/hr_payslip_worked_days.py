@@ -9,7 +9,7 @@ class HrPayslipWorkedDays(models.Model):
 
     def _l10n_be_skip_amount_computation(self):
         self.ensure_one()
-        return self.payslip_id.state not in ['draft', 'verify'] \
+        return self.payslip_id.state != 'draft' \
                 or self.payslip_id.edited \
                 or self.payslip_id.wage_type != 'monthly' \
                 or self.payslip_id.struct_id.country_id.code != 'BE' \

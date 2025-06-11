@@ -147,7 +147,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """ Checking the process of payslip run when you create payslip(s) in a payslip run and you validate the payslip run. """
 
         # I verify the payslip run is in draft state.
-        self.assertEqual(self.payslip_run.state, '01_draft', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '01_ready', 'State not changed!')
 
         # I select employees and generate payslips by clicking on Select button wizard.
         self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id])
@@ -155,18 +155,18 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
-        # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
+        # I verify the payslips lines have been computed
+        self.assertTrue(all(slip.line_ids for slip in self.payslip_run.slip_ids), 'Payslip not computed')
 
         # I confirm the payslip run.
         self.payslip_run.action_validate()
 
         # I verify the payslips is in done state.
         for slip in self.payslip_run.slip_ids:
-            self.assertEqual(slip.state, 'done', 'State not changed!')
+            self.assertEqual(slip.state, 'validated', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, '03_close', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '02_close', 'State not changed!')
 
         # I verify that the Accounting Entries are created.
         for slip in self.payslip_run.slip_ids:
@@ -181,18 +181,18 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
-        # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
+        # I verify the payslips lines have been computed
+        self.assertTrue(all(slip.line_ids for slip in self.payslip_run.slip_ids), 'Payslip not computed')
 
         # I confirm all payslip(s) in the payslip run.
         self.payslip_run.slip_ids.action_payslip_done()
 
         # I verify the payslip(s) is in done state.
         for slip in self.payslip_run.slip_ids:
-            self.assertEqual(slip.state, 'done', 'State not changed!')
+            self.assertEqual(slip.state, 'validated', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, '03_close', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '02_close', 'State not changed!')
 
         # I verify that the Accounting Entries are created.
         for slip in self.payslip_run.slip_ids:
@@ -207,8 +207,8 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
-        # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
+        # I verify the payslips lines have been computed
+        self.assertTrue(all(slip.line_ids for slip in self.payslip_run.slip_ids), 'Payslip not computed')
 
         # I confirm all payslip(s) in the payslip run.
         self.payslip_run.slip_ids.action_payslip_cancel()
@@ -218,7 +218,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
             self.assertEqual(slip.state, 'cancel', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, '05_cancel', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '04_cancel', 'State not changed!')
 
         # I verify that the Accounting Entries are not created.
         for slip in self.payslip_run.slip_ids:
@@ -236,8 +236,8 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
-        # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
+        # I verify the payslips lines have been computed
+        self.assertTrue(all(slip.line_ids for slip in self.payslip_run.slip_ids), 'Payslip not computed')
 
         # I cancel one payslip and confirm another in the payslip run.
         payslip_1 = self.payslip_run.slip_ids[0]
@@ -247,10 +247,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
         # I verify the payslips' states.
         self.assertEqual(payslip_1.state, 'cancel', 'State not changed!')
-        self.assertEqual(payslip_2.state, 'done', 'State not changed!')
+        self.assertEqual(payslip_2.state, 'validated', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, '03_close', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '02_close', 'State not changed!')
 
         # I verify that the Accounting Entries are created or not.
         self.assertFalse(payslip_1.move_id, 'Accounting Entries has been created!')
@@ -265,8 +265,8 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
-        # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
+        # I verify the payslips lines have been computed
+        self.assertTrue(all(slip.line_ids for slip in self.payslip_run.slip_ids), 'Payslip not computed')
 
         # Storing the references to slip_ids[0] and slip_ids[1]
         # for later use, because the order of the One2many is not guaranteed
@@ -279,10 +279,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
         # I verify the payslips' states.
         self.assertEqual(slip0.state, 'cancel', 'State not changed!')
-        self.assertEqual(slip1.state, 'done', 'State not changed!')
+        self.assertEqual(slip1.state, 'validated', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, '03_close', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '02_close', 'State not changed!')
 
         # I verify that the Accounting Entries are created or not.
         self.assertFalse(slip0.move_id, 'Accounting Entries has been created!')
@@ -304,10 +304,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.hr_payslip_john.action_payslip_done()
 
         # I verify the payslip is in done state.
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State not changed!')
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.hr_payslip_john.payslip_run_id.state, '03_close', 'State not changed!')
+        self.assertEqual(self.hr_payslip_john.payslip_run_id.state, '02_close', 'State not changed!')
 
         # I verify that the Accounting Entry is created.
         self.assertTrue(self.hr_payslip_john.move_id, 'Accounting entry has not been created!')
@@ -328,11 +328,11 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I validate the payslip run.
         self.hr_payslip_john.payslip_run_id.action_validate()
 
-        # I verify the payslip is in done state.
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State not changed!')
+        # I verify the payslip is in validated state.
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.hr_payslip_john.payslip_run_id.state, '03_close', 'State not changed!')
+        self.assertEqual(self.hr_payslip_john.payslip_run_id.state, '02_close', 'State not changed!')
 
         # I verify that the Accounting Entry is created.
         self.assertTrue(self.hr_payslip_john.move_id, 'Accounting entry has not been created!')
@@ -356,7 +356,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.assertEqual(self.hr_payslip_john.state, 'cancel', 'State not changed!')
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.hr_payslip_john.payslip_run_id.state, '05_cancel', 'State not changed!')
+        self.assertEqual(self.hr_payslip_john.payslip_run_id.state, '04_cancel', 'State not changed!')
 
         # I verify that the Accounting Entry is not created.
         self.assertFalse(self.hr_payslip_john.move_id, 'Accounting entry has been created!')
@@ -369,8 +369,8 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # I validate the payslip.
         self.hr_payslip_john.action_payslip_done()
 
-        # I verify the payslip is in done state.
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State not changed!')
+        # I verify the payslip is in validated state.
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State not changed!')
 
         # I verify that the Accounting Entry is created.
         self.assertTrue(self.hr_payslip_john.move_id, 'Accounting entry has not been created!')
@@ -442,7 +442,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.hr_payslip_john.compute_sheet()
         self.hr_payslip_john.action_payslip_done()
 
-        self.assertEqual(self.hr_payslip_john.state, 'done', 'State not changed!')
+        self.assertEqual(self.hr_payslip_john.state, 'validated', 'State not changed!')
         self.assertTrue(self.hr_payslip_john.move_id, 'Accounting entry has not been created!')
 
         invoice_lines = self.hr_payslip_john.move_id.line_ids.sorted('amount_currency')
@@ -475,7 +475,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
         refund_slip.action_payslip_done()
 
-        self.assertEqual(refund_slip.state, 'done', 'State not changed!')
+        self.assertEqual(refund_slip.state, 'validated', 'State not changed!')
         self.assertTrue(refund_slip.move_id, 'Accounting entry has not been created!')
 
         invoice_lines = refund_slip.move_id.line_ids

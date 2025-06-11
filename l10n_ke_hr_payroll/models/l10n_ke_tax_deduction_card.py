@@ -28,7 +28,7 @@ class L10n_KeTaxDeductionCard(models.Model):
             all_payslips = self.env['hr.payslip'].search([
                 ('date_to', '<=', datetime.date(int(sheet.year), 12, 31)),
                 ('date_from', '>=', datetime.date(int(sheet.year), 1, 1)),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', sheet.company_id.id),
             ])
             all_employees = all_payslips.employee_id
@@ -46,7 +46,7 @@ class L10n_KeTaxDeductionCard(models.Model):
 
         payslips = self.env['hr.payslip'].search([
             ('employee_id', 'in', employees.ids),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', Datetime.now().replace(month=1, day=1, year=int(self.year))),
             ('date_from', '<=', Datetime.now().replace(month=12, day=31, year=int(self.year))),
             '|',

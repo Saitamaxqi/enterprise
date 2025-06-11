@@ -84,7 +84,7 @@ class L10nKeHrPayrollShifReportWizard(models.TransientModel):
             payslips = self.env['hr.payslip'].search([
                 ('date_to', '>=', start_date),
                 ('date_to', '<=', end_date),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('company_id', '=', wizard.company_id.id),
             ])
             result = [Command.clear()]

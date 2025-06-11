@@ -33,7 +33,7 @@ class TestTaxForms(CommonTestPayslips):
         })
 
         # don't call action_payslip_done() because when l10n_us_hr_payroll_account is installed, it will require accounting fields to be set
-        cls.create_payslip_run().slip_ids.write({'state': 'done'})
+        cls.create_payslip_run().slip_ids.write({'state': 'validated'})
 
     def test_form_940(self):
         form_940 = self.env['l10n.us.940'].create({

@@ -247,7 +247,7 @@
 
     <function model="hr.payslip" name="action_refresh_from_work_entries" eval="[[p.id for p in [
         obj().env.ref('l10n_ae_hr_payroll.hr_payslip_saeed_june'),
-    ] if p.state in ['draft', 'verify']]]"/>
+    ] if p.state == 'draft']]"/>
     <function model="hr.payslip" name="action_payslip_done" eval="[[
         ref('l10n_ae_hr_payroll.hr_payslip_saeed_june'),
     ]]"/>

@@ -34,7 +34,7 @@ class HrLeave(models.Model):
             ('employee_id', 'in', self.employee_id.ids),
             ('date_from', '<=', max(self.mapped('date_to'))),
             ('date_to', '>=', min(self.mapped('date_from'))),
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
         ])
 
         for leave in self.filtered(lambda l: l.holiday_status_id.id in payroll_impacting_leave_types.ids):

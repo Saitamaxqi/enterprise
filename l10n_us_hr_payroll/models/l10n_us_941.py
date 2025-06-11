@@ -79,7 +79,7 @@ class L10nUsForm941(models.Model):
         self.ensure_one()
         date_from, date_to = self._get_date_range()
         return [
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('date_from', '>=', date_from),
             ('date_to', '<=', date_to),
             ('company_id', '=', self.company_id.id),

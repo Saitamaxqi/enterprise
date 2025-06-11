@@ -60,7 +60,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
         salary_advance_pay = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_salary_advance')
 
         all_payslips = self.env['hr.payslip'].search([
-            ('state', 'in', ['done', 'paid']),
+            ('state', 'in', ['validated', 'paid']),
             ('struct_id', '!=', warrant_pay.id),
             ('company_id', '=', self.company_id.id),
             ('date_from', '>=', date_from),

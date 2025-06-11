@@ -545,7 +545,7 @@ if gross:
         if end_of_year:
             payslips = version.env['hr.payslip'].search([
                 ('employee_id', '=', version.employee_id.id),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
                 ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
                 ('company_id', '=', version.company_id.id),
@@ -554,7 +554,7 @@ if gross:
         else:
             payslips = version.env['hr.payslip'].search([
                 ('employee_id', '=', version.employee_id.id),
-                ('state', 'in', ['done', 'paid']),
+                ('state', 'in', ['validated', 'paid']),
                 ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1)),
                 ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
                 ('company_id', '=', version.company_id.id),
@@ -744,7 +744,7 @@ if version.schedule_pay in ['monthly', 'bi-monthly']:
 else:
     payslips = version.env['hr.payslip'].search([
         ('employee_id', '=', version.employee_id.id),
-        ('state', 'in', ['done', 'paid']),
+        ('state', 'in', ['validated', 'paid']),
         ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1)),
         ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
         ('company_id', '=', version.company_id.id),
@@ -828,7 +828,7 @@ number_of_days = (end_date - start_date).days + 1
 previous_2_months_commissions = payslip.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
     ('structure_code', '=', 'MX_REGULAR'),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '>=', start_date),
     ('date_to', '&lt;=', end_date),
 ])._get_line_values(['COMMISSIONS'], compute_sum=True)['COMMISSIONS']['sum']['total']
@@ -1334,7 +1334,7 @@ days_of_year_until_payslip = (payslip.date_to - date(payslip.date_to.year, 1, 1)
 unpaid_worked_days = payslip.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
     ('structure_code', '=', 'MX_REGULAR'),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '>=', date(payslip.date_to.year, 1, 1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
 ])._get_worked_days_line_values(['LEAVE90', 'LEAVE1000', 'LEAVE1100', 'LEAVE1200'], ['number_of_days'], True)
@@ -1360,7 +1360,7 @@ christmas_bonus_provision = result_rules['PROVISIONS_CHRISTMAS_BONUS']['total']
 provisioned_to_date = payslip.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
     ('structure_code', '=', 'MX_REGULAR'),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '>=', date(payslip.date_to.year, 1, 1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
 ])._get_line_values(['PERIOD_PROVISIONS_CHRISTMAS_BONUS'], compute_sum=True)['PERIOD_PROVISIONS_CHRISTMAS_BONUS']['sum']['total']
@@ -1402,7 +1402,7 @@ holiday_bonus_provision = result_rules['PROVISIONS_HOLIDAY_BONUS']['total']
 provisioned_to_date = payslip.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
     ('structure_code', '=', 'MX_REGULAR'),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '>=', date(payslip.date_to.year, 1, 1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
 ])._get_line_values(['PERIOD_PROVISIONS_HOLIDAY_BONUS'], compute_sum=True)['PERIOD_PROVISIONS_HOLIDAY_BONUS']['sum']['total']
@@ -1444,7 +1444,7 @@ vacations_bonus_provision = result_rules['PROVISIONS_VACATIONS_BONUS']['total']
 provisioned_to_date = payslip.env['hr.payslip'].search([
     ('employee_id', '=', employee.id),
     ('structure_code', '=', 'MX_REGULAR'),
-    ('state', 'in', ['paid', 'done']),
+    ('state', 'in', ['paid', 'validated']),
     ('date_from', '>=', date(payslip.date_to.year, 1, 1)),
     ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
 ])._get_line_values(['PERIOD_PROVISIONS_VACATIONS_BONUS'], compute_sum=True)['PERIOD_PROVISIONS_VACATIONS_BONUS']['sum']['total']

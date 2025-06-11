@@ -15,7 +15,7 @@ class HrPayslip(models.Model):
 
     @api.depends('version_id.car_id.future_driver_id')
     def _compute_vehicle_id(self):
-        for slip in self.filtered(lambda s: s.state not in ['done', 'cancel']):
+        for slip in self.filtered(lambda s: s.state not in ['validated', 'cancel']):
             contract_sudo = slip.version_id.sudo()
             if contract_sudo.car_id:
                 future_driver = contract_sudo.car_id.future_driver_id

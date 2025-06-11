@@ -141,7 +141,7 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
 
     def _toggle_pay_period_lock(self, lock=False):
         paid_slips = self.env["hr.payslip"]._read_group(
-            domain=[("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "done"]), ('struct_id.code', '=', 'CHMONTHLYELM')],
+            domain=[("employee_id", 'in', self.employee_id.ids), ("state", "in", ["paid", "validated"]), ('struct_id.code', '=', 'CHMONTHLYELM')],
             groupby=["employee_id", "date_to:year", "date_to:month"],
             aggregates=["id:recordset"])
         mapped_payslips = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: self.env["hr.payslip"])))
@@ -239,7 +239,7 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
         paid_slips = self.env["hr.payslip"]._read_group(
             domain=[
                 ("company_id", '=', company_id.id),
-                ("state", "in", ["paid", "done"]),
+                ("state", "in", ["paid", "validated"]),
                 ('struct_id.code', '=', 'CHMONTHLYELM'),
                 ('l10n_ch_social_insurance_id', '!=', False),
                 ('l10n_ch_laa_group', '!=', False),
@@ -815,7 +815,7 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
         swissdec_declaration = SwissdecDeclaration()
 
         paid_slips = self.env["hr.payslip"]._read_group(
-            domain=[("company_id", '=', company_id.id), ("state", "in", ["paid", "done"]), ('struct_id.code', '=', 'CHMONTHLYELM')],
+            domain=[("company_id", '=', company_id.id), ("state", "in", ["paid", "validated"]), ('struct_id.code', '=', 'CHMONTHLYELM')],
             groupby=["employee_id", "date_to:year", "date_to:month"],
             aggregates=["id:recordset"])
 
@@ -1295,7 +1295,7 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
         swissdec_declaration = SwissdecDeclaration()
         mapped_payslips, line_values = self._get_yearly_mapped_payslips(
             domain=[("company_id", '=', company_id.id),
-                    ("state", "in", ["paid", "done"]),
+                    ("state", "in", ["paid", "validated"]),
                     ('l10n_ch_social_insurance_id', '!=', False),
                     ('l10n_ch_laa_group', '!=', False),
                     ('l10n_ch_location_unit_id', '!=', False),
@@ -1777,7 +1777,7 @@ class L10nCHEmployeeYearlySnapshot(models.Model):
 
     def _get_salary_rectificates(self, year, month, company_id, original_date, to_replace):
         swissdec_declaration = SwissdecDeclaration()
-        mapped_payslips, line_values = self._get_yearly_mapped_payslips(domain=[("company_id", '=', company_id.id), ("state", "in", ["paid", "done"])])
+        mapped_payslips, line_values = self._get_yearly_mapped_payslips(domain=[("company_id", '=', company_id.id), ("state", "in", ["paid", "validated"])])
         yearly_values = self.env["l10n.ch.employee.yearly.values"].search([("year", '=', year), ('employee_id.company_id', '=', company_id.id)])
         swissdec_structure_rules = self.env.ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm').rule_ids
         rules_grouped_by_certificate_section = swissdec_structure_rules.grouped('l10n_ch_salary_certificate')
