@@ -27,18 +27,22 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
         transactions = self._create_online_transactions(['2016-01-01', '2016-01-03'])
         self.account_online_account.balance = 1000
         self.BankStatementLine._online_sync_bank_statement(transactions, self.account_online_account)
-        # Since ending balance is 1000$ and we only have 20$ of transactions and that it is the first statement
-        # it should create a statement before this one with the initial statement line
-        created_st_lines = self.BankStatementLine.search([('journal_id', '=', self.euro_bank_journal.id)], order='date asc')
-        self.assertEqual(len(created_st_lines), 3, 'Should have created an initial bank statement line and two for the synchronization')
+        statement_lines = self.env['account.bank.statement.line'].search([('journal_id', '=', self.euro_bank_journal.id)])
+        self.assertEqual(len(statement_lines), 2, "Should have created 2 statement lines for the transactions")
+
+        # Since there were no existing statement lines for the given journal, it should create an opening bank statement along one statement line.
+        statement = self.env['account.bank.statement'].search([('journal_id', '=', self.euro_bank_journal.id)])
+        self.assertEqual(len(statement.line_ids), 1, "Should have created an opening bank statement with exactly one statement line")
+        self.assertEqual(statement.balance_start, 980.0, "Opening Bank statement should have starting balance 980.0")
+
         transactions = self._create_online_transactions(['2016-01-05'])
         self.account_online_account.balance = 2000
         self.BankStatementLine._online_sync_bank_statement(transactions, self.account_online_account)
         created_st_lines = self.BankStatementLine.search([('journal_id', '=', self.euro_bank_journal.id)], order='date asc')
+        # Verify that all imported bank transactions are converted into statement lines in chronological order and match the expected amounts and dates.
         self.assertRecordValues(
             created_st_lines,
             [
-                {'date': fields.Date.from_string('2015-12-31'), 'amount': 980.0},
                 {'date': fields.Date.from_string('2016-01-01'), 'amount': 10.0},
                 {'date': fields.Date.from_string('2016-01-03'), 'amount': 10.0},
                 {'date': fields.Date.from_string('2016-01-05'), 'amount': 10.0},

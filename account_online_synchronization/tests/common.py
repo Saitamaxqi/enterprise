@@ -61,7 +61,7 @@ class AccountOnlineSynchronizationCommon(AccountTestInvoicingCommon):
 
         payment_ref = payment_ref or f'transaction_{transaction_identifier}'
         transaction = {
-            'online_transaction_identifier': transaction_identifier,
+            'online_transaction_identifier': str(transaction_identifier),
             'date': date,
             'payment_ref': payment_ref,
             'amount': amount,

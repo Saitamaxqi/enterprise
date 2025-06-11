@@ -66,19 +66,20 @@ class AccountBankStatementLine(models.Model):
 
                 sorted_transactions = sorted(transactions, key=lambda transaction: transaction['date'])
                 total = self.env.context.get('transactions_total') or sum([transaction['amount'] for transaction in transactions])
-
-                # For first synchronization, an opening line is created to fill the missing bank statement data
                 any_st_line = self.search_count([('journal_id', '=', journal.id)], limit=1)
                 journal_currency = journal.currency_id or journal.company_id.currency_id
-                # If there are neither statement and the ending balance != 0, we create an opening bank statement
-                if not any_st_line and not journal_currency.is_zero(online_account.balance - total):
-                    opening_st_line = self.with_context(skip_statement_line_cron_trigger=True).create({
-                        'date': date_utils.subtract(sorted_transactions[0]['date'], days=1),
+                start_balance = online_account.balance - total
+                # Create an initial bank statement when no prior statement lines exist and the account balance differs from the sum of imported transactions.
+                if not any_st_line and not journal_currency.is_zero(start_balance):
+                    lines_to_reconcile = self.with_context(skip_statement_line_cron_trigger=True).create(sorted_transactions[0])
+                    self.env['account.bank.statement'].create({
                         'journal_id': journal.id,
-                        'payment_ref': _("Opening statement: first synchronization"),
-                        'amount': online_account.balance - total,
+                        'date': lines_to_reconcile.date,
+                        'balance_start': start_balance,
+                        'balance_end_real': start_balance + lines_to_reconcile.amount,
+                        'line_ids': lines_to_reconcile,
+                        'name': _("Opening Statement: First Synchronization"),
                     })
-                    lines_to_reconcile += opening_st_line
 
                 filtered_transactions = online_account._get_filtered_transactions(sorted_transactions)
 
