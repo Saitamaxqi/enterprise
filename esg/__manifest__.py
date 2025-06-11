@@ -12,8 +12,9 @@
     'data': [
         'security/esg_security.xml',
         'security/ir.model.access.csv',
-        'data/esg_gas_data.xml',
         'data/esg_database_data.xml',
+        'data/esg_emission_source_data.xml',
+        'data/esg_gas_data.xml',
         'data/carbon_report.xml',
         'report/esg_carbon_emission_report_views.xml',
         'wizard/factors_auto_assignment_wizard_views.xml',

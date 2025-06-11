@@ -30,13 +30,13 @@
         <field name="category">hfc</field>
         <field name="code">hfc_134a</field>
     </record>
-        <record id="esg_gas_hfc_23" model="esg.gas">
+    <record id="esg_gas_hfc_23" model="esg.gas">
         <field name="name">HFC-23</field>
         <field name="global_warming_potential">14800</field>
         <field name="category">hfc</field>
         <field name="code">hfc_23</field>
     </record>
-        <record id="esg_gas_hfc_152a" model="esg.gas">
+    <record id="esg_gas_hfc_152a" model="esg.gas">
         <field name="name">HFC-152a</field>
         <field name="global_warming_potential">124</field>
         <field name="category">hfc</field>
