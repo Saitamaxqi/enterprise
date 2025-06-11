@@ -657,7 +657,7 @@ export class KnowledgeSidebar extends Component {
      */
     async moveArticle(article, currentPosition, newPosition) {
         const confirmMove = async (article, position) => {
-            if (this.props.record.resId === article.id && await this.props.record.isDirty()) {
+            if (await this.props.record.isDirty()) {
                 await this.props.record.save();
             }
             try {
