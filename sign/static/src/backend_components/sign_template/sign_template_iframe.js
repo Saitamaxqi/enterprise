@@ -356,7 +356,12 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                     onClose: () => {
                         this.closePopoverFns = {};
                     },
-                    closeOnClickAway: (target) => !target.closest(".modal"),
+                    closeOnClickAway: (target) => {
+                        if (!target.closest(".popover")) {
+                            this.closePopover();
+                        }
+                        return !target.closest(".popover");
+                    },
                     popoverClass: "sign-popover",
                 }
             );
@@ -388,6 +393,13 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         if (Object.keys(this.closePopoverFns)) {
             for (const id in this.closePopoverFns) {
                 this.closePopoverFns[id].close();
+                const signItem = this.getSignItemById(id);
+                if (signItem.data.type === 'selection' && !signItem.data.option_ids.length) {
+                    signItem.el.classList.add("o_sign_field_error");
+                    this.notification.add(_t("Selection field cannot be empty. Please add at least one option."), {
+                        type: "warning",
+                    });
+                }
             }
             this.closePopoverFns = {};
         }
@@ -568,6 +580,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             const options = signItem.option_ids.map((id) => this.selectionOptionsById[id]);
             signItem.options = options;
         }
+        const error_class = type === 'selection' && !signItem.option_ids.length && !signItem.just_dropped ? 'o_sign_field_error' : '';
         return Object.assign(signItem, {
             readonly: true,
             editMode: true,
@@ -575,7 +588,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             responsible,
             type,
             placeholder: signItem.placeholder || signItem.name || "",
-            classes: `o_color_responsible_${this.roleColors[responsible]} o_readonly_mode`,
+            classes: `o_color_responsible_${this.roleColors[responsible]} o_readonly_mode ${error_class}`,
             style: `top: ${normalizedPosY * 100}%; left: ${normalizedPosX * 100}%;
                     width: ${signItem.width * 100}%; height: ${signItem.height * 100}%;
                     text-align: ${this.getAlignmentByItem(signItem)}`,
