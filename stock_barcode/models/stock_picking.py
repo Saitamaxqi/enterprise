@@ -198,7 +198,7 @@ class StockPicking(models.Model):
 
     @api.model
     def filter_on_barcode(self, barcode):
-        """ Searches ready pickings for the scanned product/package/lot.
+        """ Searches ready pickings for the scanned product/package/lot/packaging.
         """
         barcode_type = None
         nomenclature = self.env.company.nomenclature_id
@@ -222,6 +222,9 @@ class StockPicking(models.Model):
         additional_context = {'active_id': active_id}
         if barcode_type == 'product' or not barcode_type:
             product = self.env['product.product'].search([('barcode', '=', barcode)], limit=1)
+            if not product:  # Packaging barcode is also of type 'product' (barcodes unique accross product & packaging)
+                product_packaging = self.env['product.uom'].search([('barcode', '=', barcode)], limit=1)
+                product = product_packaging.product_id  # identify product linked with a packaging barcode
             if product:
                 picking_nums = self.search_count(base_domain + [('product_id', '=', product.id)])
                 additional_context['search_default_product_id'] = product.id
@@ -254,7 +257,7 @@ class StockPicking(models.Model):
             return {
                 'warning': {
                     'title': _('No product, lot or package found for barcode %s', barcode),
-                    'message': _('Scan a product, a lot/serial number or a package to filter the transfers.'),
+                    'message': _('Scan a product, a product packaging, a lot/serial number or a package to filter the transfers.'),
                 }
             }
 

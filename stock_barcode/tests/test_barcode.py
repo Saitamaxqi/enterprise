@@ -6,6 +6,14 @@ from odoo.tests import HttpCase, tagged
 
 @tagged('-at_install', 'post_install')
 class TestBarcodeClientAction(HttpCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.base_warehouse = cls.env['stock.warehouse'].create({
+            'name': "New Warehouse",
+            'code': "WH01",
+        })
+
     def test_filter_picking_by_product_gs1(self):
         """ Checks if a product is searched with a complete GS1 barcode, the
         product data is correctly retrieved and the search operates only on the
@@ -251,7 +259,7 @@ class TestBarcodeClientAction(HttpCase):
             'name': 'lot1',
             'product_id': product.id,
         })
-        warehouse = self.env['stock.warehouse'].search([], limit=1)
+        warehouse = self.base_warehouse
         customer_loc = self.env['stock.location'].search([('usage', '=', 'customer')], limit=1)
         self.env['stock.quant']._update_available_quantity(product, warehouse.lot_stock_id, 10, lot_id=lot)
 
@@ -273,6 +281,47 @@ class TestBarcodeClientAction(HttpCase):
 
         action = self.env['stock.picking'].with_context(active_id=warehouse.out_type_id.id).filter_on_barcode(lot.name)
         self.assertEqual(action['action']['context']['search_default_lot_id'], lot.id)
+
+    def test_filter_on_packaging_barcode(self):
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
+        magic_beer = self.env['product.product'].create({
+            'name': 'White Beer',
+            'barcode': '01304510',
+            'is_storable': True,
+        })
+        pack_24 = self.env['uom.uom'].create({
+            'name': 'Pack of 24',
+            'relative_factor': 24,
+            'relative_uom_id': self.env.ref('uom.product_uom_unit').id,
+        })
+        packing_barcode = self.env['product.uom'].create({
+            'barcode': 'Delirium24',
+            'uom_id': pack_24.id,
+            'product_id': magic_beer.id,
+        })
+
+        warehouse = self.base_warehouse
+        self.env['stock.quant']._update_available_quantity(magic_beer, warehouse.lot_stock_id, 10)
+
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': warehouse.out_type_id.id,
+            'location_id': warehouse.out_type_id.default_location_src_id.id,
+            'location_dest_id': warehouse.out_type_id.default_location_dest_id.id,
+            'move_ids': [Command.create({
+                'picking_type_id': warehouse.out_type_id.id,
+                'location_id': warehouse.out_type_id.default_location_src_id.id,
+                'location_dest_id': warehouse.out_type_id.default_location_dest_id.id,
+                'product_id': magic_beer.id,
+                'product_uom_qty': 2,
+                'product_uom': pack_24.id,
+            })],
+        })
+
+        action = self.env['stock.picking'].with_context(active_id=warehouse.out_type_id.id).filter_on_barcode(packing_barcode.barcode)
+        self.assertIn('warning', action, "Packaging barcode filter should only return ready operations")
+        picking.action_confirm()
+        action = self.env['stock.picking'].with_context(active_id=warehouse.out_type_id.id).filter_on_barcode(packing_barcode.barcode)
+        self.assertEqual(action['action']['context']['search_default_product_id'], magic_beer.id)
 
     def test_add_and_remove_barcode_in_product(self):
         """
