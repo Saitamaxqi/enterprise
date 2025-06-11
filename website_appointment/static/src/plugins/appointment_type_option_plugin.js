@@ -2,6 +2,7 @@ import { Plugin } from "@html_editor/plugin";
 import { registry } from "@web/core/registry";
 import { _t } from '@web/core/l10n/translation';
 import { Cache } from "@web/core/utils/cache";
+import { BuilderAction } from "@html_builder/core/builder_action";
 
 class AppointmentTypeOptionPlugin extends Plugin {
     static id = "AppointmentTypeOption";
@@ -13,11 +14,25 @@ class AppointmentTypeOptionPlugin extends Plugin {
             title: _t("Appointment Type"),
             groups: ["website.group_website_designer"],
         },
-        builder_actions: this.getActions(),
+        builder_actions: {
+            AppointmentTypeShowAvatarsAction,
+            AppointmentTypeShowAllowGuestsAction,
+            AppointmentTypeShowDurationAction,
+            AppointmentTypeShowTimezoneAction,
+        },
     };
-    setup() {
+}
+
+class BaseAppointmentAction extends BuilderAction {
+    
+    setup(fieldName, applyValue, clearValue) {
+        this.fieldName = fieldName;
+        this.applyValue = applyValue;
+        this.clearValue = clearValue;
+        this.isReload = true;
         this.appointmentTypeId = Number(this.document.documentElement.querySelector(".o_wappointment_type_options")?.dataset.appointmentTypeId);
         this.appointmentTypeCache = new Cache(this._fetchAppointmentType.bind(this), JSON.stringify);
+        
     }
     async _fetchAppointmentType() {
         return (await this.services.orm.read(
@@ -26,35 +41,50 @@ class AppointmentTypeOptionPlugin extends Plugin {
             ["allow_guests", "avatars_display", "hide_duration", "hide_timezone"]
         ))[0];
     }
-    getActions() {
-        return {
-            appointmentTypeShowTimezone: this.buildAction("hide_timezone", false, true),
-            appointmentTypeShowDuration: this.buildAction("hide_duration", false, true),
-            appointmentTypeShowAvatars: this.buildAction("avatars_display", "show", "hide"),
-            appointmentTypeShowAllowGuests: this.buildAction("allow_guests", false, true),
-        };
+    async set(apply) {
+        await this.services.orm.write("appointment.type", [this.appointmentTypeId], {
+            [this.fieldName]: apply ? this.applyValue : this.clearValue,
+        });
+    };
+    async prepare() {
+        this.appointmentType = await this.appointmentTypeCache.read();
     }
-    buildAction(fieldName, applyValue, clearValue) {
-        const set = async (apply) => {
-            await this.services.orm.write("appointment.type", [this.appointmentTypeId], {
-                [fieldName]: apply ? applyValue : clearValue,
-            });
-        };
-        return {
-            isReload: true,
-            prepare: async () => {
-                this.appointmentType = await this.appointmentTypeCache.read();
-            },
-            isApplied: () => {
-                return this.appointmentType[fieldName] === applyValue;
-            },
-            load: async () => {
-                const wasApplied = this.appointmentType[fieldName] === applyValue;
-                await set(!wasApplied);
-            },
-            apply: () => {},
-            clear: () => {},
-        };
+    isApplied() {
+        return this.appointmentType[this.fieldName] === this.applyValue;
+    }
+    async load() {
+        const wasApplied = this.appointmentType[this.fieldName] === this.applyValue;
+        await this.set(!wasApplied);
+    }
+    apply() {}
+    clear() {}
+}
+
+class AppointmentTypeShowTimezoneAction extends BaseAppointmentAction {
+    static id = "appointmentTypeShowTimezone";
+    setup() {
+        super.setup("hide_timezone", false, true);
+    }
+}
+
+class AppointmentTypeShowDurationAction extends BaseAppointmentAction {
+    static id = "appointmentTypeShowDuration";
+    setup() {
+        super.setup("hide_duration", false, true);
+    }
+}
+
+class AppointmentTypeShowAvatarsAction extends BaseAppointmentAction {
+    static id = "appointmentTypeShowAvatars";
+    setup() {
+        super.setup("avatars_display", "show", "hide");
+    }
+}
+
+class AppointmentTypeShowAllowGuestsAction extends BaseAppointmentAction {
+    static id = "appointmentTypeShowAllowGuests";
+    setup() {
+        super.setup("allow_guests", false, true);
     }
 }
 

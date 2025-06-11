@@ -2,17 +2,21 @@ import { Plugin } from "@html_editor/plugin";
 import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { OnlineAppointmentOption } from "./online_appointment_option";
+import { BuilderAction } from "@html_builder/core/builder_action";
 
 class OnlineAppointmentOptionPlugin extends Plugin {
     static id = "OnlineAppointmentOption";
-
+    static shared = ["setDatasetProperty", "getDatasetProperty"];
     async setup() {
         this.fetchAppointmentTypesProm = null;
         this.allAppointmentTypesById = null;
     }
 
     resources = {
-        builder_actions: this.getActions(),
+        builder_actions: {
+            SetAppTypesAction,
+            SetStaffUsersAction,
+        },
         builder_options: {
             OptionComponent: OnlineAppointmentOption,
             selector: ".s_online_appointment",
@@ -20,65 +24,6 @@ class OnlineAppointmentOptionPlugin extends Plugin {
         },
         so_content_addition_selector: [".s_online_appointment"],
     };
-
-    getActions() {
-        return {
-            setAppTypes: {
-                apply: ({ editingElement, value }) => {
-                    this.setDatasetProperty(
-                        editingElement,
-                        "appointmentTypes",
-                        JSON.parse(value).map((appType) => appType.id)
-                    );
-                },
-                getValue: ({ editingElement }) => {
-                    const selectedAppointmentTypes = this.getDatasetProperty(
-                        editingElement,
-                        "appointmentTypes",
-                        true
-                    );
-                    const appointmentTypesDetails = selectedAppointmentTypes.map((id) => {
-                        const appointmentType = this.allAppointmentTypesById[id];
-                        return { id: appointmentType.id, name: appointmentType.name };
-                    });
-                    return JSON.stringify(appointmentTypesDetails);
-                },
-            },
-            setStaffUsers: {
-                apply: ({ editingElement, value }) => {
-                    this.setDatasetProperty(
-                        editingElement,
-                        "staffUsers",
-                        JSON.parse(value).map((user) => user.id)
-                    );
-                },
-                getValue: ({ editingElement }) => {
-                    const selectedAppointmentTypes = this.getDatasetProperty(
-                        editingElement,
-                        "appointmentTypes",
-                        true
-                    );
-                    if (
-                        selectedAppointmentTypes.length !== 1 ||
-                        this.getDatasetProperty(editingElement, "targetUsers") === "all"
-                    ) {
-                        return "[]";
-                    }
-                    const appointmentTypeData =
-                        this.allAppointmentTypesById[selectedAppointmentTypes[0]];
-                    const selectedUserIds = this.getDatasetProperty(
-                        editingElement,
-                        "staffUsers",
-                        true
-                    );
-                    const staffUsersDetails = appointmentTypeData.staff_users
-                        .filter((user) => selectedUserIds.includes(user.id))
-                        .map(({ id, name }) => ({ id, name, display_name: name }));
-                    return JSON.stringify(staffUsersDetails);
-                },
-            },
-        };
-    }
 
     getComponentProps() {
         return {
@@ -94,6 +39,10 @@ class OnlineAppointmentOptionPlugin extends Plugin {
             this.allAppointmentTypesById = await this.fetchAppointmentTypesProm;
         }
         return this.fetchAppointmentTypesProm;
+    }
+
+    getAllAppointmentTypesById() {
+        return this.allAppointmentTypesById;
     }
 
     /**
@@ -140,6 +89,66 @@ class OnlineAppointmentOptionPlugin extends Plugin {
     getDatasetProperty(el, property, parsed = false) {
         const value = el.dataset[property];
         return parsed ? JSON.parse(value) : value;
+    }
+}
+
+class SetAppTypesAction extends BuilderAction {
+    static id = "setAppTypes";
+    static dependencies = ["OnlineAppointmentOption"];
+    apply({ editingElement, value }) {
+        this.dependencies.OnlineAppointmentOption.setDatasetProperty(
+            editingElement,
+            "appointmentTypes",
+            JSON.parse(value).map((appType) => appType.id)
+        );
+    }
+    getValue({ editingElement }) {
+        const selectedAppointmentTypes = this.dependencies.OnlineAppointmentOption.getDatasetProperty(
+            editingElement,
+            "appointmentTypes",
+            true
+        );
+        const appointmentTypesDetails = selectedAppointmentTypes.map((id) => {
+            const appointmentType = this.dependencies.OnlineAppointmentOption.getAllAppointmentTypesById()[id];
+            return { id: appointmentType.id, name: appointmentType.name };
+        });
+        return JSON.stringify(appointmentTypesDetails);
+    }
+}
+
+class SetStaffUsersAction extends BuilderAction {
+    static id = "setStaffUsers";
+    static dependencies = ["OnlineAppointmentOption"];
+    apply({ editingElement, value }) {
+        this.dependencies.OnlineAppointmentOption.setDatasetProperty(
+            editingElement,
+            "staffUsers",
+            JSON.parse(value).map((user) => user.id)
+        );
+    }
+    getValue({ editingElement }) {
+        const selectedAppointmentTypes = this.dependencies.OnlineAppointmentOption.getDatasetProperty(
+            editingElement,
+            "appointmentTypes",
+            true
+        );
+        if (
+            selectedAppointmentTypes.length !== 1 ||
+            this.dependencies.OnlineAppointmentOption.getDatasetProperty(editingElement, "targetUsers") === "all"
+        ) {
+            return "[]";
+        }
+        const appointmentTypeData =
+            this.this.dependencies.OnlineAppointmentOption.getAllAppointmentTypesById()[selectedAppointmentTypes[0]];
+        const selectedUserIds = this.dependencies.OnlineAppointmentOption.getDatasetProperty(
+            editingElement,
+            "staffUsers",
+            true
+        );
+        const staffUsersDetails = appointmentTypeData.staff_users
+            .filter((user) => selectedUserIds.includes(user.id))
+            .map(({ id, name }) => ({ id, name, display_name: name }));
+        return JSON.stringify(staffUsersDetails);
     }
 }
 

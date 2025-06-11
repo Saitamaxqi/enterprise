@@ -6,6 +6,7 @@ import { patch } from "@web/core/utils/patch";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 import { FormOptionPlugin } from "@website/builder/plugins/form/form_option_plugin";
 import { getModelName } from "@website/builder/plugins/form/utils";
+import { BuilderAction } from "@html_builder/core/builder_action";
 
 export class ModelCache extends SyncCache {
     async preload(params) {
@@ -105,9 +106,13 @@ patch(FormOptionPlugin.prototype, {
 
 export class StudioFormOptionPlugin extends Plugin {
     static id = "studioFormOption";
-    static dependencies = ["builderActions", "builder-options", "websiteFormOption"];
+    static dependencies = ["builderActions", "builderOptions", "websiteFormOption"];
+    static shared = ["setFormAccess", "saveFormAccess"];
     resources = {
-        builder_actions: this.getActions(),
+        builder_actions: {
+            StudioMoreModelsAction,
+            StudioToggleFormAccessAction,
+        },
         save_handlers: [
             async () => {
                 for (const formEl of this.editable.querySelectorAll(".s_website_form")) {
@@ -122,63 +127,6 @@ export class StudioFormOptionPlugin extends Plugin {
             }
         ],
     };
-    getActions() {
-        return {
-            studioMoreModels: {
-                isApplied: () => false,
-                load: async (spec) => {
-                    const modelId = await this.selectModel();
-                    if (!modelId) {
-                        return;
-                    }
-                    const model = await this.dependencies.websiteFormOption.studioPreloadModel({ modelId });
-                    appliedModel = model.model;
-                    const getAction = this.dependencies.builderActions.getAction;
-                    const selectLoadResult = await getAction("selectAction").load({
-                        ...spec, value: model.id
-                    });
-                    appliedModel = undefined;
-                    return { model, selectLoadResult };
-                },
-                apply: async (spec) => {
-                    if (!spec.loadResult?.model) {
-                        return;
-                    }
-                    const getAction = this.dependencies.builderActions.getAction;
-                    appliedModel = spec.loadResult.model.model;
-                    await getAction("selectAction").apply({
-                        ...spec,
-                        value: spec.loadResult.model.id,
-                        loadResult: spec.loadResult.selectLoadResult,
-                    });
-                    appliedModel = undefined;
-                    this.setFormAccess(spec.loadResult.model, true);
-                },
-            },
-            studioToggleFormAccess: {
-                isApplied: ({ editingElement: formEl }) => {
-                    const models = this.dependencies.websiteFormOption.getModelsCache(formEl);
-                    const targetModelName = getModelName(formEl);
-                    const activeForm = models.find((m) => m.model === targetModelName);
-                    return activeForm?.website_form_access;
-                },
-                apply: async ({ editingElement: formEl, value }) => {
-                    const models = this.dependencies.websiteFormOption.getModelsCache(formEl);
-                    const targetModelName = getModelName(formEl);
-                    const activeForm = models.find((m) => m.model === targetModelName);
-                    this.setFormAccess(activeForm, true);
-                    await this.saveFormAccess(activeForm);
-                },
-                clean: async ({ editingElement: formEl }) => {
-                    const models = this.dependencies.websiteFormOption.getModelsCache(formEl);
-                    const targetModelName = getModelName(formEl);
-                    const activeForm = models.find((m) => m.model === targetModelName);
-                    this.setFormAccess(activeForm, false);
-                    await this.saveFormAccess(activeForm);
-                },
-            },
-        };
-    }
     selectModel() {
         return new Promise((resolve) => {
             this.services.dialog.add(
@@ -241,6 +189,67 @@ export class StudioFormOptionPlugin extends Plugin {
             Object.assign(model, res[0]);
             delete model._old_website_form_access;
         }
+    }
+}
+
+class StudioMoreModelsAction extends BuilderAction {
+    static id = "studioMoreModels";
+    static dependencies = ["studioFormOption", "websiteFormOption", "builderActions"];
+    isApplied() {
+        return false;
+    }
+    async load(spec) {
+        const modelId = await this.dependencies.studioFormOption.selectModel();
+        if (!modelId) {
+            return;
+        }
+        const model = await this.dependencies.websiteFormOption.studioPreloadModel({ modelId });
+        appliedModel = model.model;
+        const getAction = this.dependencies.builderActions.getAction;
+        const selectLoadResult = await getAction("selectAction").load({
+            ...spec, value: model.id
+        });
+        appliedModel = undefined;
+        return { model, selectLoadResult };
+    }
+    async apply(spec) {
+        if (!spec.loadResult?.model) {
+            return;
+        }
+        const getAction = this.dependencies.builderActions.getAction;
+        appliedModel = spec.loadResult.model.model;
+        await getAction("selectAction").apply({
+            ...spec,
+            value: spec.loadResult.model.id,
+            loadResult: spec.loadResult.selectLoadResult,
+        });
+        appliedModel = undefined;
+        this.dependencies.studioFormOption.setFormAccess(spec.loadResult.model, true);
+    }
+}
+
+class StudioToggleFormAccessAction extends BuilderAction {
+    static id = "studioToggleFormAccess";
+    static dependencies = ["websiteFormOption", "studioFormOption"]
+    isApplied({ editingElement: formEl }) {
+        const models = this.dependencies.websiteFormOption.getModelsCache(formEl);
+        const targetModelName = getModelName(formEl);
+        const activeForm = models.find((m) => m.model === targetModelName);
+        return activeForm?.website_form_access;
+    }
+    async apply({ editingElement: formEl, value }) {
+        const models = this.dependencies.websiteFormOption.getModelsCache(formEl);
+        const targetModelName = getModelName(formEl);
+        const activeForm = models.find((m) => m.model === targetModelName);
+        this.dependencies.studioFormOption.setFormAccess(activeForm, true);
+        await this.dependencies.studioFormOption.saveFormAccess(activeForm);
+    }
+    async clean({ editingElement: formEl }) {
+        const models = this.dependencies.websiteFormOption.getModelsCache(formEl);
+        const targetModelName = getModelName(formEl);
+        const activeForm = models.find((m) => m.model === targetModelName);
+        this.dependencies.studioFormOption.setFormAccess(activeForm, false);
+        await this.dependencies.studioFormOption.saveFormAccess(activeForm);
     }
 }
 
