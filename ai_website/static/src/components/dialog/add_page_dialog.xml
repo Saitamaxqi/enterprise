@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+<t t-name="ai_website.AddPageAIConfirmDialog">
+    <WebsiteDialog
+        title.translate="New Page"
+        primaryTitle="buttonTitle"
+        primaryClick="() => this.addPage()"
+        close="props.close">
+        <div class="row gy-4" t-att-class="state.loading ? 'opacity-50 pe-none' : ''">
+            <div t-if="state.loading" class="d-flex justify-content-center w-100 position-absolute" style="bottom: 160px;">
+                <div class="text-muted">
+                    <i class="fa fa-spinner fa-spin me-2"></i>
+                    Generating content...
+                </div>
+            </div>
+            <label class="col-form-label col-md-3">
+                Page Title
+            </label>
+            <div class="col-md-9">
+                <input type="text" t-model="state.name" class="form-control" required="required" t-ref="autofocus"/>
+            </div>
+            <Switch extraClasses="'offset-md-3 col-md-9 text-start'" label.translate="Add to menu" value="state.addMenu" onChange="(value) => this.onChangeAddMenu(value)"/>
+            <div t-if="!!state.sectionsArch" class="offset-md-3 col-md-9">
+                <label class="o_switch d-inline-flex align-items-center text-start">
+                    <input type="checkbox" t-att-checked="state.generateText" t-on-change="(ev) => this.onChangeGenerateText(ev.target.checked)" />
+                    <span class="switch-slider"/>
+                    <img src="/ai/static/description/icon.png" style="height: 20px; width: 20px;" class="ms-2" alt="AI"/>
+                    <span class="ms-2">Generate text</span>
+                </label>
+            </div>
+            <t t-if="state.generateText">
+                <label class="col-form-label col-md-3">
+                    Instructions
+                </label>
+                <div class="col-md-9">
+                    <textarea t-model="state.instructions"
+                            class="form-control"
+                            rows="4"
+                            placeholder="Describe the page with keywords..."></textarea>
+                </div>
+                <div class="btn-group offset-md-3 col-md-9 text-start" role="group" aria-label="Tone Selection">
+                    <t t-foreach="Object.keys(tones)" t-as="toneOption" t-key="toneOption">
+                        <button
+                            t-att-class="'btn btn-sm me-1 rounded-pill ' + (state.tone === toneOption ? 'btn-primary' : 'btn-outline-secondary')"
+                            t-att-title="tones[toneOption].title"
+                            t-on-click="() => onToneSelect(toneOption)"
+                        >
+                            <t t-esc="tones[toneOption].title" />
+                        </button>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </WebsiteDialog>
+</t>
+</templates>
+
+

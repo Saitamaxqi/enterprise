@@ -231,7 +231,7 @@ class LLMApiService:
                 headers=headers,
                 json=body,
                 data=data,
-                timeout=20,
+                timeout=30,
                 files=files
             )
             response.raise_for_status()
