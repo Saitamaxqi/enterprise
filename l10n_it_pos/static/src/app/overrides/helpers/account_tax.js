@@ -10,7 +10,7 @@ patch(accountTaxHelpers, {
     },
 
     // EXTENDS 'account'
-    add_tax_details_in_base_line(base_line, company) {
+    add_tax_details_in_base_line(base_line, company, { rounding_method = null } = {}) {
         if (
             base_line.l10n_it_epson_printer &&
             !base_line.special_mode &&
@@ -22,7 +22,9 @@ patch(accountTaxHelpers, {
                 quantity: 1.0,
                 discount: 0.0,
             });
-            super.add_tax_details_in_base_line(new_base_line, company);
+            super.add_tax_details_in_base_line(new_base_line, company, {
+                rounding_method: rounding_method,
+            });
             this.round_base_lines_tax_details([new_base_line], company);
             let tax_details = new_base_line.tax_details;
             const price_unit_included = tax_details.total_included_currency;
@@ -30,7 +32,9 @@ patch(accountTaxHelpers, {
                 price_unit: price_unit_included,
                 special_mode: "total_included",
             });
-            super.add_tax_details_in_base_line(new_base_line, company);
+            super.add_tax_details_in_base_line(new_base_line, company, {
+                rounding_method: rounding_method,
+            });
             this.round_base_lines_tax_details([new_base_line], company);
             tax_details = new_base_line.tax_details;
             base_line.manual_tax_amounts = {};
@@ -41,6 +45,8 @@ patch(accountTaxHelpers, {
                 };
             }
         }
-        super.add_tax_details_in_base_line(base_line, company);
+        super.add_tax_details_in_base_line(base_line, company, {
+            rounding_method: rounding_method,
+        });
     },
 });
