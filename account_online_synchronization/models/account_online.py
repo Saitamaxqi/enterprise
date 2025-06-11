@@ -146,7 +146,7 @@ class AccountOnlineAccount(models.Model):
                     ], limit=1)
                     if not move_lines_in_other_currency:
                         # If not set yet and there are no conflicting entries, set it.
-                        journal.currency_id = self.currency_id.id
+                        journal.sudo().currency_id = self.currency_id.id
         elif existing_journal:
             journal = existing_journal
         else:
@@ -159,14 +159,14 @@ class AccountOnlineAccount(models.Model):
                 'currency_id': self.currency_id.id != self.env.company.currency_id.id and self.currency_id.id or False,
             })
 
-        self.journal_ids = journal
+        self.sudo().journal_ids = journal
 
         journal_vals = {
             'bank_statements_source': 'online_sync',
         }
         if self.account_number and not self.journal_ids.bank_acc_number:
             journal_vals['bank_acc_number'] = self.account_number
-        self.journal_ids.write(journal_vals)
+        self.journal_ids.sudo().write(journal_vals)
         # Update connection status and get consent expiration date and create an activity on related journal
         self.account_online_link_id._update_connection_status()
 
@@ -774,7 +774,7 @@ class AccountOnlineLink(models.Model):
                 currency_id = self.env['res.currency'].with_context(active_test=False).search([('name', '=', acc.pop('currency_code', ''))], limit=1)
                 if currency_id:
                     if not currency_id.active:
-                        currency_id.active = True
+                        currency_id.sudo().active = True
                     acc['currency_id'] = currency_id.id
                 accounts[str(acc.get('online_identifier'))] = acc
             swift_code = resp_json.get('swift_code')
