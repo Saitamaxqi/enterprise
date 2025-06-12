@@ -78,16 +78,6 @@ class Website_GeneratorRequest(models.Model):
         self.env.ref("website_generator.cron_get_result").toggle(model=self._name, domain=[])
         return wg_requests
 
-    def write(self, values):
-        res = super().write(values)
-        pending_requests = self.search([
-            ('status', 'in', ['waiting', 'error_request_still_processing', 'error_maintenance']),
-        ])
-        if not pending_requests:
-            self.env.ref("website_generator.cron_get_result").active = False
-            logger.info("Webite Generator: No more pending request, disabling 'cron_get_result' cron")
-        return res
-
     @api.depends('status')
     def _compute_status_message(self):
         for record in self:
@@ -107,18 +97,24 @@ class Website_GeneratorRequest(models.Model):
 
     @api.model
     def get_result_waiting_requests(self):
-        """ This method is called by the CRON job which is started by the
-        webhook (``/result_ready``). """
+        """ This method is called by the CRON job which is toggled by the creation of a request. """
         ready_requests = self.search([
             ('status', 'in', ['waiting', 'error_request_still_processing', 'error_maintenance']),
         ])
         for request in ready_requests:
             request._call_server_get_result()
 
+        from_cron = bool(self.env.context.get('cron_id'))
+        if from_cron:
+            pending_requests = ready_requests.filtered(lambda req: req.status in ['waiting', 'error_request_still_processing', 'error_maintenance'])
+            if not pending_requests:
+                self.env['ir.cron']._commit_progress(processed=len(ready_requests), remaining=0, deactivate=True)
+                logger.info("Website Generator: No more pending request, disabling 'cron_get_result' cron")
+
     def _call_server_get_result(self):
         # Don't inline this method in `get_result_waiting_requests()`, it's
         # needed for ease of development (overridden in custom dev module)
-        logger.info("Webite Generator: Getting result for request uuid: %s", self.uuid)
+        logger.info("Website Generator: Getting result for request uuid: %s", self.uuid)
         ICP = self.env['ir.config_parameter'].sudo()
         data = {
             'uuid': self.uuid,
@@ -168,7 +164,7 @@ class Website_GeneratorRequest(models.Model):
             )
 
             # Report OK to IAP (success)
-            logger.info("Webite Generator: Reporting OK for request uuid: %s", self.uuid)
+            logger.info("Website Generator: Reporting OK for request uuid: %s", self.uuid)
             url = urljoin(ws_endpoint, f'/website_scraper/{self.version}/report_ok')
             self._report_to_iap(url, data)
 
@@ -181,7 +177,7 @@ class Website_GeneratorRequest(models.Model):
             logger.exception("Error building the website: %s", e)
 
             # Report KO to IAP (useful for spotting critical errors)
-            logger.info("Webite Generator: Reporting KO for request uuid: %s", self.uuid)
+            logger.info("Website Generator: Reporting KO for request uuid: %s", self.uuid)
             url = urljoin(ws_endpoint, f'/website_scraper/{self.version}/report_ko')
             self._report_to_iap(url, data)
 
