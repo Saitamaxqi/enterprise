@@ -1,4 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import stdnum
+
 from json import JSONDecodeError
 from pprint import pformat
 
@@ -87,7 +89,7 @@ class ResConfigSettings(models.TransientModel):
             'subscriptionName': self.company_name,
             'corporateName': self.company_name,
             'tradeName': self.company_name,
-            'cnpj': partner.vat,
+            'cnpj': stdnum.util.get_cc_module('br', 'vat').format(partner.vat or ''),
             'municipalRegistration': partner.l10n_br_im_code,
             'stateRegistration': partner.l10n_br_ie_code,
             'suframa': partner.l10n_br_isuf_code,

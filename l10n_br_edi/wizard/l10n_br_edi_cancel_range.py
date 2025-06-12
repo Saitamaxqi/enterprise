@@ -30,7 +30,7 @@ class L10n_Br_EdiCancelRange(models.Model):
             {
                 "model": self.document_type_id.doc_code_prefix,
                 "serie": self.journal_id.l10n_br_invoice_serial,
-                "companyLocation": AccountMove._l10n_br_edi_vat_for_api(self.journal_id.company_partner_id.vat),
+                "companyLocation": self.journal_id.company_partner_id.vat,
                 "init": self.start_number,
                 "end": self.end_number,
                 "message": self.reason,

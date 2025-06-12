@@ -454,10 +454,6 @@ class AccountMove(models.Model):
                 # Now that the invoice is submitted and accepted we no longer need the saved tax computation data.
                 invoice.l10n_br_edi_avatax_data = False
 
-    def _l10n_br_edi_vat_for_api(self, vat):
-        # Typically users enter the VAT as e.g. "xx.xxx.xxx/xxxx-xx", but the API errors on non-digit characters
-        return "".join(c for c in vat or "" if c.isdigit())
-
     def _l10n_br_edi_get_goods_values(self):
         """Returns the appropriate (finNFe, goal) tuple for the goods section in the header."""
         if self.debit_origin_id:
@@ -650,7 +646,7 @@ class AccountMove(models.Model):
         tax_data_to_include, tax_data_header = self._l10n_br_edi_get_tax_data()
         extra_payload = {
             "header": {
-                "companyLocation": self._l10n_br_edi_vat_for_api(company_partner.vat),
+                "companyLocation": company_partner.vat,
                 **invoice_refs,
                 **self._l10n_br_type_specific_header(tax_data_header),
                 "locations": self._l10n_br_get_locations(

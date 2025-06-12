@@ -327,11 +327,6 @@ class PosOrder(models.Model):
 
         return tax_calculation_response, tax_calculation_response.pop("header")
 
-    def _l10n_br_edi_vat_for_api(self, vat):
-        """Copy of account.move."""
-        # Typically users enter the VAT as e.g. "xx.xxx.xxx/xxxx-xx", but the API errors on non-digit characters
-        return "".join(c for c in vat or "" if c.isdigit())
-
     def _l10n_br_edi_get_goods_values(self):
         """Returns the appropriate (finNFe, goal) tuple for the goods section in the header."""
         return 1, "Normal"
@@ -469,7 +464,7 @@ class PosOrder(models.Model):
             [
                 f"{self._l10n_br_get_cuf(self.company_id.state_id):2.2}",
                 f"{self.date_order.strftime('%y%m'):4.4}",  # dhEmi
-                f"{self._l10n_br_edi_vat_for_api(self.company_id.partner_id.vat):14.14}",  # Emitter CNPJ
+                f"{self.company_id.partner_id.vat:14.14}",  # Emitter CNPJ
                 f"{self.env.ref('l10n_br.dt_65').code:>02.2}",  # mod (NFC-e)
                 f"{self.config_id.l10n_br_invoice_serial:>03.3}",  # serie
                 self.l10n_br_edi_number,  # nNF (9 characters)
@@ -589,7 +584,7 @@ class PosOrder(models.Model):
         access_key = self._l10n_br_generate_access_key()
         extra_payload = {
             "header": {
-                "companyLocation": self._l10n_br_edi_vat_for_api(company_partner.vat),
+                "companyLocation": company_partner.vat,
                 "invoiceNumber": self.l10n_br_edi_number,
                 "invoiceSerial": self.config_id.l10n_br_invoice_serial,
                 "locations": self._l10n_br_get_locations(customer, company_partner),

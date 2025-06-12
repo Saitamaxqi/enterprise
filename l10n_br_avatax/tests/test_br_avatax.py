@@ -408,7 +408,7 @@ class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
         super().setUpClass()
         cls.settings = cls.env['res.config.settings'].create({})
         cls.settings.l10n_br_avatax_portal_email = "test@example.com"
-        cls.settings.company_id.vat = "862.714.984-42"
+        cls.settings.company_id.vat = "00.623.904/0001-73"
 
     def test_01_create_account_success(self):
         return_value = {
@@ -458,6 +458,15 @@ class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
 
         for k, v in mocked_request.call_args[0][1].items():
             self.assertNotEqual(v, False, f"{k} was False instead of empty string")
+
+    def test_05_formatted_vat(self):
+        """ Properly format the VAT numbers to CNPJ even in compact form."""
+        with self._capture_request_br(return_value={}) as mocked_request:
+            self.settings.create_account()
+
+        arguments = mocked_request.call_args[0][1]
+        self.assertEqual(self.settings.company_id.vat, '00623904000173', 'CNPJ should be compacted in internal storage')
+        self.assertEqual(arguments['cnpj'], '00.623.904/0001-73', 'CNPJ must be formatted for account creation')
 
 
 @tagged('external_l10n', 'external', '-at_install', 'post_install', '-standard')
