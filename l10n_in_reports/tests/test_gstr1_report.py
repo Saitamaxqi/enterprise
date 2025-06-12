@@ -194,3 +194,12 @@ class TestReports(L10nInTestAccountReportsCommon):
         })
         gstr1_json = gstr1_report._get_l10n_in_gstr1_json()
         self.assertDictEqual(gstr1_json, self._read_mock_json('gstr1_new_hsn_schema_response.json'))
+
+    def test_taxes_with_sez_exp_lut_and_rcm(self):
+        self.invoice_with_sez_lut.invoice_date = self.test_date
+        self.invoice_with_sez_lut.action_post()
+        self.invoice_with_rcm.invoice_date = self.test_date
+        self.invoice_with_rcm.action_post()
+        gstr1_report = self._create_gstr_report()
+        gstr1_json = gstr1_report._get_l10n_in_gstr1_json()
+        self.assertDictEqual(gstr1_json, self._read_mock_json('gstr1_sez_lut_and_rcm_response.json'))
