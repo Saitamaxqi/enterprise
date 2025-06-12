@@ -605,3 +605,62 @@ class TestShopFloor(HttpCase):
             logs[1].description, 'Time Tracking: Anita Olivier',
             'The description of OP2 should mention "Anita Olivier"'
         )
+
+    def test_automatic_backorder_no_redirect(self):
+        """
+        Test that the backorder is created without redirecting to the
+        production form on shopfloor. This is the case when the backorder
+        is created automatically by the system on shopfloor.
+        Also check that the production can be closed if there is nothing to backorder.
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.manu_type_id.create_backorder = 'always'
+        final_product, component = self.env['product.product'].create([
+            {
+                'name': 'Product',
+                'type': 'consu',
+                'is_storable': True,
+            },
+            {
+                'name': 'Component1',
+                'type': 'consu',
+                'is_storable': True,
+                'tracking': 'none',
+            },
+        ])
+        self.env['stock.quant']._update_available_quantity(product_id=component, location_id=warehouse.lot_stock_id, quantity=100)
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Workcenter1',
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': final_product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                Command.create({'name': 'Operation1', 'workcenter_id': workcenter.id}),
+            ],
+            'bom_line_ids': [
+                Command.create({'product_id': component.id, 'product_qty': 1}),
+            ]
+        })
+        # Create a step to register production.
+        self.env['quality.point'].create([{
+                'picking_type_ids': [Command.link(self.warehouse.manu_type_id.id)],
+                'product_ids': [Command.link(final_product.id)],
+                'operation_id': bom.operation_ids[0].id,
+                'title': 'Register Production',
+                'test_type_id': self.test_type_register_production.id,
+        }])
+        mo = self.env['mrp.production'].create({
+                'name': "MOBACK",
+                'product_id': final_product.id,
+                'product_qty': 2,
+                'bom_id': bom.id,
+        })
+        mo.action_confirm()
+        mo.action_assign()
+        mo.button_plan()
+        self.start_tour("/odoo/shop-floor", "test_automatic_backorder_no_redirect", login='admin')
+        self.assertRecordValues(mo.procurement_group_id.mrp_production_ids.sorted('name'), [
+            {'name': 'MOBACK-001', 'state': 'done'},
+            {'name': 'MOBACK-002', 'state': 'done'},
+        ])

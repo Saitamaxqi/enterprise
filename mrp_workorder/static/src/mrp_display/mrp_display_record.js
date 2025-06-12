@@ -332,19 +332,24 @@ export class MrpDisplayRecord extends Component {
             resModel = "mrp.production";
             resId = this.props.production.resId;
         }
+        let automaticBackorderCreation;
         try {
             const action = await this.model.orm.call(resModel, methodName, [resId], kwargs);
             if (action && typeof action === "object") {
-                if (action.context) {
-                    action.context.skip_redirection = true;
+                if (action.context?.marked_as_done) {
+                    automaticBackorderCreation = true;
+                } else {
+                    if (action.context) {
+                        action.context.skip_redirection = true;
+                    }
+                    return this._doAction(action);
                 }
-                return this._doAction(action);
             }
         } catch (error) {
             this.state.underValidation = false;
             throw error;
         }
-        if (resModel === "mrp.production") {
+        if (resModel === "mrp.production" && !automaticBackorderCreation) {
             // Manually remove the parent MO from the model, to avoid a full reload.
             const productions_root = this.props.production.model.root;
             productions_root.records.splice(

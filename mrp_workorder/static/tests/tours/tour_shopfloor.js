@@ -863,3 +863,60 @@ registry.category("web_tour.tours").add("test_operator_assigned_to_all_work_orde
         { trigger: ".o_nocontent_help", run() {} },
     ],
 });
+
+registry.category("web_tour.tours").add("test_automatic_backorder_no_redirect", {
+    steps: () => [
+        ...stepUtils.openWorkcentersSelector(),
+        ...stepUtils.addWorkcenterToDisplay("Workcenter1"),
+        ...stepUtils.confirmWorkcentersSelection(),
+        // Switch to Workcenter1
+        ...stepUtils.clickOnWorkcenterButton("Workcenter1"),
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK)) .o_mrp_record_line:contains('Register Production')",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK)) .o_mrp_record_line .o_line_value:contains(2 / 2)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name=qty_done] input",
+            run: "edit 1",
+        },
+        {
+            trigger: ".modal-content button:contains(Validate)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK)) button:contains(Close Production)",
+            run: "click",
+        },
+        {
+            trigger: ".o_mrp_display_record:has(.card-title:contains(MOBACK-002))",
+            run: () => {
+                const records = [...document.querySelectorAll(".o_mrp_display_record")].filter(
+                    (rec) => rec.querySelector(".card-title").innerText.includes("MOBACK")
+                );
+                assert(records.length, 1);
+            },
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK-002)) .o_mrp_record_line:contains(Register Production)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK-002)) button:contains(Close Production)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display:not(:has(.o_mrp_display_record:has(.card-title:contains(MOBACK))))",
+            run: () => {},
+        },
+    ],
+});
