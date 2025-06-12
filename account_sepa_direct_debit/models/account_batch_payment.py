@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import ast
 import base64
 from datetime import datetime, timedelta
 
@@ -25,6 +26,18 @@ class AccountBatchPayment(models.Model):
     sdd_scheme = fields.Selection(string="SDD Scheme", selection=[('CORE', 'CORE'), ('B2B', 'B2B')],
     help='The B2B scheme is an optional scheme,\noffered exclusively to business payers.\nSome banks/businesses might not accept B2B SDD.',
     compute='_compute_sdd_scheme', store=True, readonly=False)
+
+    @api.depends('sdd_scheme')
+    def _compute_payment_ids_domain(self):
+        super()._compute_payment_ids_domain()
+        for batch in self:
+            domain = ast.literal_eval(batch.payment_ids_domain)
+            domain.extend([
+                '|',
+                    ('payment_method_id.code', 'not in', ('sdd', 'sepa_direct_debit')),
+                    ('sdd_mandate_id.sdd_scheme', '=', batch.sdd_scheme),
+            ])
+            batch.payment_ids_domain = str(domain)
 
     @api.depends('payment_ids')
     def _compute_sdd_required_collection_date(self):
