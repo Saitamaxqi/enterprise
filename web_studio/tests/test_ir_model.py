@@ -43,6 +43,10 @@ class TestStudioIrModel(TransactionCase):
             }
         )
 
+    def setUp(self):
+        self.addCleanup(self.registry.reset_changes)
+        super().setUp()
+
     def test_00_model_creation(self):
         """Test that a model gets created with the selected options."""
         model_options = ['use_partner', 'use_stages', 'use_image',
