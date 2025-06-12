@@ -42,7 +42,8 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
                 this.props.list.records.forEach((record) => {
                     record.toggleSelection(!allSelected);
                 });
-                this.setDefaultFocus();
+                const focusedRecord = this.setDefaultFocus();
+                document.querySelector(`.o_data_row[data-value-id="${focusedRecord.resId}"] .o_data_cell`).focus();
             },
             {
                 category: "smart_action",

@@ -433,3 +433,32 @@ test("Document Request Upload", async function () {
     await animationFrame();
     expect.verifySteps(["upload_done"]);
 });
+
+test("focus when selecting all - ctrl + a", async function () {
+    const serverData = getDocumentsTestServerData([
+        makeDocumentRecordData(2, "Test Document", { folder_id: 1}),
+        makeDocumentRecordData(3, "Test Document 2", { folder_id: 1}),
+    ]);
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+
+    await contains(".o_kanban_renderer").click();
+
+    await keyDown(["Control", "a"]);
+    await waitFor(".o_kanban_record[data-value-id='1']:focus");
+    await waitFor(".o_selection_box");
+    expect(queryAll(".o_record_selected").length).toBe(3);
+
+    await keyDown(["Control", "a"]);
+    await waitFor(".o_kanban_record[data-value-id='1']:focus");
+    await waitFor(".o_searchview");
+    expect(queryAll(".o_record_selected").length).toBe(0);
+
+    // Focus another document first
+    await contains(".o_kanban_record[data-value-id='3']").click();
+    await keyDown(["Control", "a"]);
+    await waitFor(".o_kanban_record[data-value-id='3']:focus");
+
+    await keyDown(["Control", "a"]);
+    await waitFor(".o_kanban_record[data-value-id='3']:focus");
+});

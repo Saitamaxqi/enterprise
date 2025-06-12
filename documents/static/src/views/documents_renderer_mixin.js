@@ -67,8 +67,13 @@ export const DocumentsRendererMixin = (component) =>
             const focusedRecord = this.documentService.focusedRecord;
             const records = this.props.list ? this.props.list.records : this.props.records;
             if (!focusedRecord || !records.find((r) => r.id === focusedRecord.id)) {
-                this.documentService.focusRecord(records[0] || this.getContainerRecord());
+                const record =
+                    this.env.config.viewType === "kanban"
+                        ? records.find((r) => r.data.type === "folder") || records[0]
+                        : records[0];
+                this.documentService.focusRecord(record || this.getContainerRecord(), true);
             }
+            return this.documentService.focusedRecord;
         }
         /**
          * Record for showing/modifying details of containing folder

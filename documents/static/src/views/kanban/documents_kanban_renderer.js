@@ -43,7 +43,8 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
                 this.props.list.records.forEach((record) => {
                     record.toggleSelection(!allSelected);
                 });
-                this.setDefaultFocus();
+                const focusedRecord = this.setDefaultFocus();
+                document.querySelector(`.o_kanban_record[data-value-id="${focusedRecord.resId}"]`).focus();
             },
             {
                 category: "smart_action",
