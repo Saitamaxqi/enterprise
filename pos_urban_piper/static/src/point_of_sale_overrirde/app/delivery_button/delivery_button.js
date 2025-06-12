@@ -10,6 +10,7 @@ export class DeliveryButton extends Component {
         Dropdown,
         DropdownItem,
     };
+    static props = {};
 
     setup() {
         this.pos = usePos();
