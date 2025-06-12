@@ -223,7 +223,7 @@ class PosConfig(models.Model):
                 or self.rounding_method.rounding_method != "HALF-UP"
             ):
                 raise ValidationError(
-                    _('The rounding method must be set to 0.5 and "Nearest"')
+                    _('The rounding method must be set to 0.05 and "Nearest"')
                 )
 
     def _check_printer_connected(self):
