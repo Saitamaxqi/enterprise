@@ -1,30 +1,28 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from collections import defaultdict
-from datetime import date, datetime, timedelta, time
-from dateutil.relativedelta import relativedelta
 import json
-import logging
-import pytz
 import uuid
+from collections import defaultdict
+from datetime import date, datetime, time, timedelta
 from math import modf
-from random import randint, shuffle
+from random import shuffle
+
+import pytz
+from dateutil.relativedelta import relativedelta
 from werkzeug.urls import url_encode
 
-from odoo import api, fields, models, _
-from odoo.exceptions import UserError, AccessError
+from odoo import api, fields, models
+from odoo.exceptions import AccessError, UserError
 from odoo.osv import expression
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_utils, format_datetime, SQL
-from odoo.tools.intervals import Intervals
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, SQL, float_utils, format_datetime
 from odoo.tools.date_utils import get_timedelta, sum_intervals
-
-_logger = logging.getLogger(__name__)
+from odoo.tools.intervals import Intervals
 
 
 def days_span(start_datetime, end_datetime):
     if not isinstance(start_datetime, datetime):
-        raise ValueError
+        raise TypeError
     if not isinstance(end_datetime, datetime):
-        raise ValueError
+        raise TypeError
     end = datetime.combine(end_datetime, datetime.min.time())
     start = datetime.combine(start_datetime, datetime.min.time())
     duration = end - start
@@ -73,7 +71,7 @@ class PlanningSlot(models.Model):
     allow_self_unassign = fields.Boolean('Let Employee Unassign Themselves', compute='_compute_allow_self_unassign')
     self_unassign_days_before = fields.Integer(
         "Days before shift for unassignment",
-        related="company_id.planning_self_unassign_days_before"
+        related="company_id.planning_self_unassign_days_before",
     )
     unassign_deadline = fields.Datetime('Deadline for unassignment', compute="_compute_unassign_deadline", export_string_translation=False)
     is_unassign_deadline_passed = fields.Boolean(compute="_compute_is_unassign_deadline_passed", export_string_translation=False)
@@ -86,7 +84,7 @@ class PlanningSlot(models.Model):
     # time allocation
     allocation_type = fields.Selection([
         ('planning', 'Planning'),
-        ('forecast', 'Forecast')
+        ('forecast', 'Forecast'),
     ], compute='_compute_allocation_type')
     allocated_hours = fields.Float("Allocated Time", compute='_compute_allocated_hours', store=True, readonly=False)
     allocated_percentage = fields.Float("Allocated Time %", default=100,
@@ -162,10 +160,10 @@ class PlanningSlot(models.Model):
 
     @api.constrains('repeat_until')
     def _check_repeat_until(self):
-        if any([slot.repeat_until and slot.repeat_until < slot.start_datetime.date() for slot in self]):
-            raise UserError(_(
+        if any(slot.repeat_until and slot.repeat_until < slot.start_datetime.date() for slot in self):
+            raise UserError(self.env._(
                 "Uh-oh! Let's keep things in the right order: the recurrence end date should always "
-                "come after the shift start date. It's like trying to eat your breakfast before waking up – not possible!"
+                "come after the shift start date. It's like trying to eat your breakfast before waking up - not possible!"
             ))
 
     @api.onchange('repeat_until')
@@ -359,7 +357,7 @@ class PlanningSlot(models.Model):
         if operator == 'in':
             return expression.OR(self._search_overlap_slot_count('=', v) for v in value)
         if operator not in ['=', '>'] or not isinstance(value, int) or value != 0:
-            raise NotImplementedError(_('Operation not supported, you should always compare overlap_slot_count to 0 value with = or > operator.'))
+            raise NotImplementedError(self.env._('Operation not supported, you should always compare overlap_slot_count to 0 value with = or > operator.'))
 
         sql = SQL("""(
             SELECT S1.id
@@ -458,7 +456,7 @@ class PlanningSlot(models.Model):
                 continue
 
             values = slot._prepare_template_values()
-            domain = [(x, '=', values[x]) for x in values.keys()]
+            domain = [(x, '=', values[x]) for x in values]
             existing_templates = self.env['planning.slot.template'].search(domain, limit=1)
             slot.allow_template_creation = not existing_templates and slot._different_than_template(check_empty=False)
 
@@ -545,7 +543,7 @@ class PlanningSlot(models.Model):
         PlanningTemplate = self.env['planning.slot.template']
         for slot in self.filtered(lambda s: s.template_creation):
             values = slot._prepare_template_values()
-            domain = [(x, '=', values[x]) for x in values.keys()]
+            domain = [(x, '=', values[x]) for x in values]
             existing_templates = PlanningTemplate.search(domain, limit=1)
             if not existing_templates:
                 template = PlanningTemplate.create(values)
@@ -556,7 +554,7 @@ class PlanningSlot(models.Model):
     def _get_non_working_days_bounds(self, start_datetime, end_datetime, resource=False):
         resource = resource or self.env.user.employee_id.resource_id
         user_tz = pytz.timezone(self.env.user.tz
-            or resource.employee_id and resource.employee_id.tz
+            or (resource.employee_id and resource.employee_id.tz)
             or resource.tz
             or self._context.get('tz')
             or self.env.user.company_id.resource_calendar_id.tz
@@ -589,7 +587,7 @@ class PlanningSlot(models.Model):
         company = self.company_id or self.env.company
         employee = resource_id.employee_id if resource_id.resource_type == 'user' else False
         user_tz = pytz.timezone(self.env.user.tz
-                                or employee and employee.tz
+                                or (employee and employee.tz)
                                 or resource_id.tz
                                 or self._context.get('tz')
                                 or self.env.user.company_id.resource_calendar_id.tz
@@ -806,7 +804,7 @@ class PlanningSlot(models.Model):
         field_list = [fname for fname in self._display_name_fields() if fname not in group_by]
 
         # Sudo as a planning manager is not able to read private project if he is not project manager.
-        self = self.sudo()
+        self = self.sudo()  # noqa: PLW0642
         for slot in self.with_context(hide_partner_ref=True):
             # label part, depending on context `groupby`
             name_values = [
@@ -1020,7 +1018,7 @@ class PlanningSlot(models.Model):
         vals_list = super().copy_data(default=default)
         active_resources = self.env['resource.resource']
         planning_split_tool = self.env.context.get('planning_split_tool')
-        check_resource_active = not((default and 'resource_id' in default) or planning_split_tool)
+        check_resource_active = not ((default and 'resource_id' in default) or planning_split_tool)
         if check_resource_active:
             active_resources = self.resource_id.filtered('active')
         for planning, vals in zip(self, vals_list):
@@ -1087,7 +1085,7 @@ class PlanningSlot(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'planning.slot',
-            'name': _('Shifts in Conflict'),
+            'name': self.env._('Shifts in Conflict'),
             'views': [[False, "gantt"], [False, "list"], [False, "form"]],
             'context': {
                 'initialDate': min(self.mapped('start_datetime')),
@@ -1101,13 +1099,13 @@ class PlanningSlot(models.Model):
         self.ensure_one()
         # user must at least 'read' the shift to self assign (Prevent any user in the system (portal, ...) to assign themselves)
         if not self.has_access('read'):
-            raise AccessError(_("You don't have the right to assign yourself to shifts."))
+            raise AccessError(self.env._("You don't have the right to assign yourself to shifts."))
         if self.resource_id and not self.request_to_switch:
-            raise UserError(_("You can not assign yourself to an already assigned shift."))
+            raise UserError(self.env._("You can not assign yourself to an already assigned shift."))
         if self.is_past:
             if self.request_to_switch:
                 self.sudo().write({'request_to_switch': False})
-            raise UserError(_("You cannot assign yourself to a shift in the past."))
+            raise UserError(self.env._("You cannot assign yourself to a shift in the past."))
         return self.sudo().write({'resource_id': self.env.user.employee_id.resource_id.id if self.env.user.employee_id else False})
 
     def action_self_unassign(self):
@@ -1116,13 +1114,13 @@ class PlanningSlot(models.Model):
         # The following condition will check the read access on planning.slot, and that user must at least 'read' the
         # shift to self unassign. Prevent any user in the system (portal, ...) to unassign any shift.
         if not self.allow_self_unassign:
-            raise UserError(_("The company does not allow you to unassign yourself from shifts."))
+            raise UserError(self.env._("The company does not allow you to unassign yourself from shifts."))
         if self.is_unassign_deadline_passed:
-            raise UserError(_("The deadline for unassignment has passed."))
+            raise UserError(self.env._("The deadline for unassignment has passed."))
         if self.employee_id != self.env.user.employee_id:
-            raise UserError(_("You can not unassign another employee than yourself."))
+            raise UserError(self.env._("You can not unassign another employee than yourself."))
         if self.is_past:
-            raise UserError(_("You cannot unassign yourself from a shift in the past."))
+            raise UserError(self.env._("You cannot unassign yourself from a shift in the past."))
         return self.sudo().write({'resource_id': False})
 
     def action_switch_shift(self):
@@ -1130,11 +1128,11 @@ class PlanningSlot(models.Model):
         self.ensure_one()
         # same as with self-assign, a user must be able to 'read' the shift in order to request a switch
         if not self.has_access('read'):
-            raise AccessError(_("You don't have the right to switch shifts."))
+            raise AccessError(self.env._("You don't have the right to switch shifts."))
         if self.employee_id != self.env.user.employee_id:
-            raise UserError(_("You cannot request to switch a shift that is assigned to another user."))
+            raise UserError(self.env._("You cannot request to switch a shift that is assigned to another user."))
         if self.is_past:
-            raise UserError(_("You cannot switch a shift that is in the past."))
+            raise UserError(self.env._("You cannot switch a shift that is in the past."))
         return self.sudo().write({'request_to_switch': True})
 
     def action_cancel_switch(self):
@@ -1142,11 +1140,11 @@ class PlanningSlot(models.Model):
         self.ensure_one()
         # same as above, the user rights are checked in order for the operation to be completed
         if not self.has_access('read'):
-            raise AccessError(_("You don't have the right to cancel a request to switch."))
+            raise AccessError(self.env._("You don't have the right to cancel a request to switch."))
         if self.employee_id != self.env.user.employee_id:
-            raise UserError(_("You cannot cancel a request to switch made by another user."))
+            raise UserError(self.env._("You cannot cancel a request to switch made by another user."))
         if self.is_past:
-            raise UserError(_("You cannot cancel a request to switch that is in the past."))
+            raise UserError(self.env._("You cannot cancel a request to switch that is in the past."))
         return self.sudo().write({'request_to_switch': False})
 
     def _get_ics_file(self, calendar, employee_tz):
@@ -1158,7 +1156,7 @@ class PlanningSlot(models.Model):
         for slot in self:
             event = calendar.add('vevent')
             if not slot.start_datetime or not slot.end_datetime:
-                raise UserError(_("First you have to specify the date of the invitation."))
+                raise UserError(self.env._("First you have to specify the date of the invitation."))
             event.add('created').value = ics_datetime(fields.Datetime.now())
             event.add('dtstart').value = ics_datetime(slot.start_datetime)
             event.add('dtend').value = ics_datetime(slot.end_datetime)
@@ -1183,7 +1181,8 @@ class PlanningSlot(models.Model):
         """
         self.ensure_one()
         if not self.with_context(planning_slot_id=self.id).auto_plan_ids([('id', '=', self.id)])['open_shift_assigned']:
-            return self._get_notification_action("danger", _("There are no resources available for this open shift."))
+            return self._get_notification_action("danger", self.env._("There are no resources available for this open shift."))
+        return None
 
     def _get_open_shifts_resources(self):
         # Get all resources that have the role set on those shifts as default role or in their roles.
@@ -1236,7 +1235,7 @@ class PlanningSlot(models.Model):
 
         resources, resources_dicts = open_shifts._get_open_shifts_resources()
         # Get the schedule of each resource in the period.
-        schedule_intervals_per_resource_id, dummy = resources._get_valid_work_intervals(min_start, max_end)
+        schedule_intervals_per_resource_id, _dummy = resources._get_valid_work_intervals(min_start, max_end)
 
         # Now let's get the assigned shifts and count the worked hours per day for each resource
         min_start = min_start.astimezone(pytz.utc).replace(tzinfo=None) + relativedelta(hour=0, minute=0, second=0, microsecond=0)
@@ -1493,7 +1492,7 @@ class PlanningSlot(models.Model):
             end_datetime = default_end_datetime
 
         # Get slots' resources and current company work intervals.
-        work_intervals_per_resource, dummy = resources._get_valid_work_intervals(start_datetime, end_datetime)
+        work_intervals_per_resource, _dummy = resources._get_valid_work_intervals(start_datetime, end_datetime)
         company_calendar = self.env.company.resource_calendar_id
         company_calendar_work_intervals = company_calendar._work_intervals_batch(start_datetime, end_datetime)
 
@@ -1634,14 +1633,14 @@ class PlanningSlot(models.Model):
         start, end = min(self.mapped('start_datetime')), max(self.mapped('end_datetime'))
         if all(shift.state == 'published' for shift in self) or not start or not end:
             notif_type = "warning"
-            message = _('There are no shifts to publish and send.')
+            message = self.env._('There are no shifts to publish and send.')
         else:
             planning = self.env['planning.planning'].create({
                 'start_datetime': start,
                 'end_datetime': end,
             })
             planning._send_planning(slots=self, employees=self.employee_id)
-            message = _('The shifts have successfully been published and sent.')
+            message = self.env._('The shifts have successfully been published and sent.')
         return self._get_notification_action(notif_type, message)
 
     def action_send(self):
@@ -1650,7 +1649,7 @@ class PlanningSlot(models.Model):
             self.state = 'published'
         employee_ids = self._get_employees_to_send_slot()
         self._send_slot(employee_ids, self.start_datetime, self.end_datetime)
-        message = _("Shift sent")
+        message = self.env._("Shift sent")
         return self._get_notification_action('success', message)
 
     def action_save_template(self):
@@ -1661,15 +1660,15 @@ class PlanningSlot(models.Model):
 
     def action_unpublish(self):
         if not self.env.user.has_group('planning.group_planning_manager'):
-            raise AccessError(_('You are not allowed to reset shifts to draft.'))
+            raise AccessError(self.env._('You are not allowed to reset shifts to draft.'))
         published_shifts = self.filtered(lambda shift: shift.state == 'published' and shift.resource_type != 'material')
         if published_shifts:
-            published_shifts.write({'state': 'draft', 'publication_warning': False,})
+            published_shifts.write({'state': 'draft', 'publication_warning': False})
             notif_type = "success"
-            message = _('Shifts reset to draft')
+            message = self.env._('Shifts reset to draft')
         else:
             notif_type = "warning"
-            message = _('There are no shifts to reset to draft.')
+            message = self.env._('There are no shifts to reset to draft.')
         return self._get_notification_action(notif_type, message)
 
     # ----------------------------------------------------
@@ -2084,7 +2083,7 @@ class PlanningSlot(models.Model):
 
     def _send_slot(self, employee_ids, start_datetime, end_datetime, include_unassigned=True, message=None):
         if not include_unassigned:
-            self = self.filtered(lambda s: s.resource_id)
+            self = self.filtered(lambda s: s.resource_id)  # noqa: PLW0642
         if not self:
             return False
         self.ensure_one()
@@ -2109,7 +2108,7 @@ class PlanningSlot(models.Model):
         view_context = dict(self._context)
         view_context.update({
             'open_shift_available': not self.employee_id,
-            'mail_subject': _('Planning: new open shift available on'),
+            'mail_subject': self.env._('Planning: new open shift available on'),
             'google_url': cal_url['google_url'],
             'iCal_url': cal_url['iCal'],
         })
@@ -2122,7 +2121,7 @@ class PlanningSlot(models.Model):
                 else:
                     unavailable_link = '/planning/%s/%s/unassign/%s?message=1' % (planning.access_token, self.employee_id.sudo().employee_token, self.id)
                 view_context.update({'unavailable_link': unavailable_link})
-            view_context.update({'mail_subject': _('Planning: new shift on')})
+            view_context.update({'mail_subject': self.env._('Planning: new shift on')})
 
         mails_to_send_ids = []
         for employee in employee_ids.filtered(lambda e: e.work_email):
@@ -2158,6 +2157,7 @@ class PlanningSlot(models.Model):
             'state': 'published',
             'publication_warning': False,
         })
+        return None
 
     def _send_shift_assigned(self, slot, human_resource):
         email_from = slot.company_id.email or ''
@@ -2343,7 +2343,7 @@ class PlanningSlot(models.Model):
             if self.resource_id._is_fully_flexible():
                 # If the resource is fully flexible hours, we return the whole slot interval
                 return round(sum_intervals(slot_interval), 2)
-            elif self.resource_id._is_flexible() and self.resource_id.calendar_id.id in calendar_intervals:
+            if self.resource_id._is_flexible() and self.resource_id.calendar_id.id in calendar_intervals:
                 # Otherwise we take into account the `hours_per_day` of the flexible calendar
                 max_hours_per_day = self.resource_id.calendar_id.hours_per_day
                 max_duration = (period.days + (1 if period.seconds else 0)) * max_hours_per_day
@@ -2371,7 +2371,7 @@ class PlanningSlot(models.Model):
         return {
             'google_url': "https://www.google.com/calendar/render?" + url_encode({
                 'action': 'TEMPLATE',
-                'text': self.display_name or _('New Shift'),  # Event title
+                'text': self.display_name or self.env._('New Shift'),  # Event title
                 'dates': f'{get_url_dt(self.start_datetime)}/{get_url_dt(self.end_datetime)}',  # Event start and end date/time
                 'ctz': self._get_tz(),
                 'details': self.env['ir.qweb']._render('planning.planning_shift_ics_description', ics_description_data),
@@ -2456,9 +2456,9 @@ class PlanningSlot(models.Model):
             start, stop = pytz.utc.localize(start), pytz.utc.localize(stop)
             return dict(
                 self._gantt_progress_bar_resource_id(res_ids, start, stop),
-                warning=_("This employee is not expected to work during this period, either because they do not have a current contract or because they are on leave.")
+                warning=self.env._("This employee is not expected to work during this period, either because they do not have a current contract or because they are on leave.")
             )
-        raise NotImplementedError(_("This Progress Bar is not implemented."))
+        raise NotImplementedError(self.env._("This Progress Bar is not implemented."))
 
     def _prepare_shift_vals(self):
         """ Generate shift vals"""
@@ -2482,7 +2482,7 @@ class PlanningSlot(models.Model):
 
     def undo_split_shift(self, start_datetime, end_datetime, resource_id):
         if len(self) != 2:
-            raise ValueError(_("This method must take two slots in argument."))
+            raise ValueError(self.env._("This method must take two slots in argument."))
         initial_shift, copied_shift = self
         if not (initial_shift.exists() and copied_shift.exists()):
             return False
@@ -2545,114 +2545,3 @@ class PlanningSlot(models.Model):
                     "end": self.env.context.get("default_end_datetime"),
                 })
         return rows
-
-
-class PlanningRole(models.Model):
-    _name = 'planning.role'
-    _description = "Planning Role"
-    _order = 'sequence'
-    _rec_name = 'name'
-
-    def _get_default_color(self):
-        return randint(1, 11)
-
-    active = fields.Boolean('Active', default=True)
-    name = fields.Char('Name', required=True, translate=True)
-    color = fields.Integer("Color", default=_get_default_color)
-    resource_ids = fields.Many2many('resource.resource', 'resource_resource_planning_role_rel',
-                                    'planning_role_id', 'resource_resource_id', 'Resources')
-    sequence = fields.Integer(export_string_translation=False)
-    slot_properties_definition = fields.PropertiesDefinition('Planning Slot Properties')
-
-    def copy_data(self, default=None):
-        vals_list = super().copy_data(default=default)
-        return [dict(vals, name=self.env._("%s (copy)", role.name)) for role, vals in zip(self, vals_list)]
-
-
-class PlanningPlanning(models.Model):
-    _name = 'planning.planning'
-    _description = 'Schedule'
-
-    @api.model
-    def _default_access_token(self):
-        return str(uuid.uuid4())
-
-    start_datetime = fields.Datetime("Start Date", required=True)
-    end_datetime = fields.Datetime("Stop Date", required=True)
-    include_unassigned = fields.Boolean("Includes Open Shifts", default=True)
-    access_token = fields.Char("Security Token", default=_default_access_token, required=True, copy=False, readonly=True)
-    company_id = fields.Many2one('res.company', string="Company", required=True, default=lambda self: self.env.company,
-        help="Company linked to the material resource. Leave empty for the resource to be available in every company.")
-    date_start = fields.Date('Date Start', compute='_compute_dates')
-    date_end = fields.Date('Date End', compute='_compute_dates')
-    allow_self_unassign = fields.Boolean('Let Employee Unassign Themselves', compute='_compute_allow_self_unassign')
-    self_unassign_days_before = fields.Integer("Days before shift for unassignment", related="company_id.planning_self_unassign_days_before", export_string_translation=False)
-
-    @api.depends('start_datetime', 'end_datetime')
-    @api.depends_context('uid')
-    def _compute_dates(self):
-        tz = pytz.timezone(self.env.user.tz or 'UTC')
-        for planning in self:
-            planning.date_start = pytz.utc.localize(planning.start_datetime).astimezone(tz).replace(tzinfo=None)
-            planning.date_end = pytz.utc.localize(planning.end_datetime).astimezone(tz).replace(tzinfo=None)
-
-    def _compute_display_name(self):
-        """ This override is need to have a human readable string in the email light layout header (`message.record_name`) """
-        self.display_name = _('Planning')
-
-    def _compute_allow_self_unassign(self):
-        self.allow_self_unassign = self.company_id.planning_employee_unavailabilities == "unassign"
-
-    # ----------------------------------------------------
-    # Business Methods
-    # ----------------------------------------------------
-
-    def _is_slot_in_planning(self, slot_sudo):
-        return (
-            self
-            and slot_sudo.start_datetime >= self.start_datetime
-            and slot_sudo.end_datetime <= self.end_datetime
-            and slot_sudo.state == "published"
-        )
-
-    def _get_ics_file(self, calendar, employee):
-        self.ensure_one()
-        slots_in_planning = self.env['planning.slot'].search([
-            ('start_datetime', '>=', self.start_datetime),
-            ('end_datetime', '<=', self.end_datetime),
-            ('state', '=', 'published'),
-            ('employee_id', '=', employee.id),
-        ])
-        slots_in_planning._get_ics_file(calendar, employee.tz)
-        return calendar
-
-    def _send_planning(self, slots, message=None, employees=False):
-        email_from = self.env.user.email or self.env.user.company_id.email or ''
-        # extract planning URLs
-        employees_sudo = employees.sudo()
-        employee_url_map = employees_sudo._planning_get_url(self.date_start, self.date_end, self.access_token)
-        ics_url_per_employee_id = {e.id: f'/planning/{self.access_token}/{e.employee_token}.ics' for e in employees_sudo}
-
-        # send planning email template with custom domain per employee
-        template = self.env.ref('planning.email_template_planning_planning', raise_if_not_found=False)
-        template_context = {
-            'slot_unassigned': self.include_unassigned,
-            'message': message,
-        }
-        if template:
-            # /!\ For security reason, we only given the public employee to render mail template
-            for employee in self.env['hr.employee.public'].browse(employees.ids):
-                if employee.work_email:
-                    template_context['employee'] = employee
-                    template_context['start_datetime'] = self.date_start
-                    template_context['end_datetime'] = self.date_end
-                    template_context['planning_url'] = employee_url_map[employee.id]
-                    template_context['planning_url_ics'] = ics_url_per_employee_id[employee.id]
-                    template_context['assigned_new_shift'] = bool(slots.filtered(lambda slot: slot.employee_id.id == employee.id))
-                    template.with_context(**template_context).send_mail(self.id, email_values={'email_to': employee.work_email, 'email_from': email_from}, email_layout_xmlid='mail.mail_notification_light')
-        # mark as sent
-        slots.write({
-            'state': 'published',
-            'publication_warning': False
-        })
-        return True
