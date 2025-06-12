@@ -29,6 +29,20 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             ],
         })
 
+    def _create_and_post_payment(self, amount=100, memo=None, **kwargs):
+        payment = self.env['account.payment'].create({
+            'payment_type': 'inbound',
+            'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'amount': amount,
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'memo': memo,
+            **kwargs,
+        })
+        payment.action_post()
+        return payment
+
     def test_set_line_bank_statement_line_multiple_move_lines(self):
         """Test setting multiple move lines on a statement line"""
         statement_line = self._create_st_line(amount=150, update_create_date=False)
@@ -219,6 +233,66 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': -1000.0, 'currency_id': self.company_data['currency'].id, 'balance': -1000.0, 'reconciled': False},
             {'account_id': self.partner_a.property_account_payable_id.id, 'amount_currency': 1000.0, 'currency_id': self.company_data['currency'].id, 'balance': 1000.0, 'reconciled': True},
         ])
+
+    def test_reconciliation_with_unique_label_memo_match(self):
+        """Test reconciliation when a unique memo fragment matches the label and amount also match."""
+        payment = self._create_and_post_payment(amount=100, memo="INV/24-25/0001 pay_AretqwwXerereE")
+        statement_line = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
+        statement_line._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+    def test_reconciliation_with_unique_label_memo_match_and_negative_amounts(self):
+        """Make sure the behaviour is the same if the statement line is encoded with negative amounts."""
+        payment = self._create_and_post_payment(amount=100, memo="INV/24-25/0001 pay_AretqwwXerereE")
+        statement_line = self._create_st_line(amount=-100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
+        statement_line._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': False},
+            {'account_id': payment.destination_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': True},
+        ])
+
+    def test_reconciliation_with_unique_label_memo_match_and_other_currency_on_payment(self):
+        """Try to create a payment with a different currency to see if it match."""
+        payment = self._create_and_post_payment(amount=200, memo="INV/24-25/0001 pay_AretqwwXerereE", currency_id=self.other_currency.id)
+        statement_line = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
+        statement_line._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id, 'amount_currency': -200.0, 'currency_id': self.other_currency.id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+    def test_reconciliation_with_unique_label_memo_match_and_other_currency_on_payment_and_st_line(self):
+        """Create a payment with foreign currency on both payment and st_line."""
+        payment = self._create_and_post_payment(amount=200, memo="INV/24-25/0001 pay_AretqwwXerereE", currency_id=self.other_currency.id)
+        statement_line = self._create_st_line(amount=100, amount_currency=200, payment_ref="pay_AretqwwXerereE", update_create_date=False, foreign_currency_id=self.other_currency.id)
+        statement_line._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id, 'amount_currency': -200.0, 'currency_id': self.other_currency.id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+    def test_multiple_reconcile_with_same_payment(self):
+        """Create a payment, then create 2 st_lines matching the payment."""
+        payment = self._create_and_post_payment(amount=200, memo="INV/24-25/0001 pay_AretqwwXerereE")
+        statement_line_1 = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
+        statement_line_1._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line_1.line_ids, [
+            {'account_id': statement_line_1.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+        ])
+        # Only 100 is paid on the payment for now, he's not fully reconciled yet
+        self.assertEqual(payment.state, 'in_process')
+        statement_line_2 = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
+        statement_line_2._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line_2.line_ids, [
+            {'account_id': statement_line_2.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+        ])
+        # Now the payment should be fully reconciled and marked as paid
+        self.assertEqual(payment.state, 'paid')
 
     def test_unreconciliation_base_case_invoice(self):
         st_line = self._create_st_line(1000.0, update_create_date=False)

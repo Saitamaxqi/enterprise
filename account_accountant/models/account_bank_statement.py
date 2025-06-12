@@ -241,22 +241,40 @@ class AccountBankStatementLine(models.Model):
             'amount_residual', 'reconciled', 'ref', 'move_name',
         ])
         self.flush_recordset(['payment_ref', 'partner_id', 'company_id'])
-        self._cr.execute(SQL("""
+        self._cr.execute(SQL(r"""
             SELECT st_line.id AS st_line_id,
                    ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS all_aml_ids,
                    SUM(aml.amount_residual) AS total_residual,
                    ARRAY_AGG(aml.id ORDER BY aml.id ASC) FILTER (
-                      WHERE (aml.ref = st_line.payment_ref OR aml.move_name = st_line.payment_ref OR move.payment_reference = st_line.payment_ref)
+                       WHERE (
+                          st_line.payment_ref ~ ('\y(' || array_to_string(regexp_split_to_array(aml.ref, '[ ]+'), '|') || ')\y')
+                          OR POSITION(aml.move_name in st_line.payment_ref) > 0
+                          OR POSITION(move.payment_reference in st_line.payment_ref) > 0)
                    ) AS ref_aml_ids
               FROM account_bank_statement_line st_line, account_move_line aml
          LEFT JOIN account_move move ON aml.move_id = move.id
          LEFT JOIN account_account acc ON aml.account_id = acc.id
-             WHERE aml.partner_id = st_line.partner_id
-               AND st_line.partner_id IS NOT NULL
+             WHERE CASE WHEN st_line.partner_id IS NOT NULL
+              THEN (
+                  aml.partner_id = st_line.partner_id
+                  AND st_line.partner_id IS NOT NULL
+              )
+              ELSE (
+                  st_line.partner_id IS NULL
+                  -- To avoid matching too blindly if we don't have a partner on the statement line, so in this case,
+                  -- if no partners sets, and no ref on aml, we want all_aml_ids to be empty
+                  AND (
+                    st_line.payment_ref ~ ('\y(' || array_to_string(regexp_split_to_array(aml.ref, '[ ]+'), '|') || ')\y')
+                    OR POSITION(aml.move_name in st_line.payment_ref) > 0
+                    OR POSITION(move.payment_reference in st_line.payment_ref) > 0)
+              )
+               END
                AND aml.company_id = st_line.company_id
                AND aml.reconciled = false
-               AND acc.account_type IN ('asset_receivable', 'liability_payable')
+               AND acc.reconcile = true
                AND acc.active
+               AND ((st_line.amount > 0 and aml.balance > 0) OR (st_line.amount < 0 and aml.balance < 0))
+               AND (aml.parent_state in ('draft', 'posted'))
                AND st_line.id IN %s
           GROUP BY st_line.id
         """, tuple(self.ids)))
@@ -269,7 +287,38 @@ class AccountBankStatementLine(models.Model):
             if total_residual == st_line.amount:
                 st_line.set_line_bank_statement_line(all_aml_ids)
             elif ref_aml_ids:
-                st_line.set_line_bank_statement_line(ref_aml_ids)
+                ref_amls = self.env['account.move.line'].browse(ref_aml_ids).with_prefetch(self._prefetch_ids)
+
+                # If multiple move lines have the same matching value, we don't want to reconcile them
+                move_refs = ref_amls.move_id.grouped('payment_reference')
+                amls_to_remove = self.env['account.move.line']
+                aml_refs_counter = {word: self.env['account.move.line'] for word in st_line.payment_ref.split(' ')}
+                for aml in ref_amls:
+                    if aml in amls_to_remove:
+                        continue
+
+                    if aml.ref:
+                        # If we have multiple amls with same matching ref, we don't want to reconcile, so we
+                        # apply the same regex as the one in the SQL query
+                        for ref_word in st_line.payment_ref.split(' '):
+                            if re.search(rf'\b{re.escape(ref_word)}\b', aml.ref):
+                                aml_refs_counter[ref_word] += aml
+                    if aml.move_id.payment_reference and len(move_refs[aml.move_id.payment_reference]) > 1:
+                        amls_to_remove += move_refs[aml.move_id.payment_reference].mapped('line_ids')
+
+                for duplicated_amls in [aml for aml in aml_refs_counter.values() if len(aml) > 1]:
+                    amls_to_remove += duplicated_amls
+                ref_amls -= amls_to_remove
+
+                invoice_matched_total_residual = sum(ref_amls.mapped('amount_residual')) or 0
+                # Exclude move lines to prevent reconciliation when the total residual exceeds the statement line amount
+                for aml in reversed(ref_amls):
+                    if abs(invoice_matched_total_residual - aml.amount_residual) >= abs(st_line.amount):
+                        invoice_matched_total_residual -= aml.amount_residual
+                        ref_amls -= aml
+                    else:
+                        break
+                st_line.set_line_bank_statement_line(ref_amls.ids)
             else:
                 # no valid candidates yet
                 continue

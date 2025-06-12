@@ -86,6 +86,20 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             'line_ids': [Command.create({'partner_id': cls.partner_agrolait.id})],
         })
 
+    def _create_and_post_payment(self, amount=100, memo=None, **kwargs):
+        payment = self.env['account.payment'].create({
+            'payment_type': 'inbound',
+            'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'amount': amount,
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'memo': memo,
+            **kwargs,
+        })
+        payment.action_post()
+        return payment
+
     @classmethod
     def _create_invoice_line(cls, amount, partner, move_type, currency=None, ref=None, name=None, inv_date='2019-09-01'):
         ''' Create an invoice on the fly.'''
@@ -331,6 +345,205 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.default_account_id.id, 'balance': 5000, 'partner_id': self.partner_2.id},
             {'account_id': self.account_rec.id, 'balance': -5000, 'partner_id': self.partner_2.id},
         ], reconciled_amls=[invoice_line_11])
+
+    def test_matching_algorithm_for_multiple_invoices(self):
+        """Test matching algorithm for multiple invoices with positive statement balance"""
+
+        invoice_line_1 = self._create_invoice_line(800, self.partner_1, 'out_invoice')
+        invoice_line_2 = self._create_invoice_line(900, self.partner_1, 'out_invoice')
+        invoice_line_3 = self._create_invoice_line(1100, self.partner_1, 'out_invoice')
+        invoice_line_4 = self._create_invoice_line(1200, self.partner_1, 'out_invoice')
+        invoice_line_5 = self._create_invoice_line(200, self.partner_1, 'out_invoice')
+        invoice_line_6 = self._create_invoice_line(200, self.partner_1, 'out_invoice')
+        invoice_line_7 = self._create_invoice_line(500, self.partner_1, 'out_invoice')
+        invoice_line_8 = self._create_invoice_line(300, self.partner_1, 'out_invoice')
+        invoice_line_9 = self._create_invoice_line(150, self.partner_1, 'out_invoice')
+        invoice_line_10 = self._create_invoice_line(160, self.partner_1, 'out_invoice')
+        invoice_line_11 = self._create_invoice_line(370, self.partner_1, 'out_invoice')
+
+        bank_line_1, bank_line_2,\
+        bank_line_3, bank_line_4,\
+        bank_line_5 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"{invoice_line_1.move_name} {invoice_line_2.move_name}",
+                'partner_id': self.partner_1.id,
+                'amount': 1700,
+                'sequence': 1,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"{invoice_line_3.move_name} and {invoice_line_4.move_name}",
+                'partner_id': self.partner_1.id,
+                'amount': 2100,
+                'sequence': 2,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"{invoice_line_5.move_name} and {invoice_line_6.move_name}",
+                'partner_id': self.partner_1.id,
+                'amount': 200,
+                'sequence': 3,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"Partner is not set {invoice_line_7.move_name} {invoice_line_8.move_name}",
+                'amount': 800,
+                'sequence': 4,
+            },
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"{invoice_line_9.move_name} {invoice_line_10.move_name} {invoice_line_11.move_name}",
+                'partner_id': self.partner_1.id,
+                'amount': 300,
+                'sequence': 5,
+            },
+        ])
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+
+        # payment reference contains invoice numbers of multiple invoices from the same partner, and the total amount matches
+        self._check_st_line_matching(bank_line_1, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 1700.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -800.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -900.0, 'partner_id': self.partner_1.id},
+        ], reconciled_amls=[invoice_line_1, invoice_line_2])
+
+        # payment reference contains invoice numbers, but the total amount does not match
+        self._check_st_line_matching(bank_line_2, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 2100.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -1100.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -1000.0, 'partner_id': self.partner_1.id},
+        ], reconciled_amls=[invoice_line_3, invoice_line_4])
+
+        # Amount is not enough to reconcile both invoices, so only the first one is reconciled
+        self._check_st_line_matching(bank_line_3, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 200.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -200.0, 'partner_id': self.partner_1.id},
+        ], reconciled_amls=[invoice_line_5])
+
+        # payment reference contains invoice number, total amount matches, but the partner is not set
+        self._check_st_line_matching(bank_line_4, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 800.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -500.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -300.0, 'partner_id': self.partner_1.id},
+        ], reconciled_amls=[invoice_line_7, invoice_line_8])
+
+        # The payment amount is not enough to fully reconcile all invoices: the first invoice is fully reconciled, the second invoice is partially reconciled, and the third invoice is not reconciled at all.
+        self._check_st_line_matching(bank_line_5, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 300.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -150.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_rec.id, 'balance': -150.0, 'partner_id': self.partner_1.id},
+        ], reconciled_amls=[invoice_line_9, invoice_line_10])
+
+    def test_matching_algorithm_for_multiple_invoices_for_multi_currency(self):
+        """Test matching algorithm for multiple invoices with multi currency"""
+
+        invoice_line_1 = self._create_invoice_line(2000, self.partner_1, 'out_invoice', currency=self.other_currency)
+        invoice_line_2 = self._create_invoice_line(3000, self.partner_1, 'out_invoice', currency=self.company_data['currency'])
+
+        # Handle when invoices have different currency
+        bank_line_1 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"{invoice_line_1.move_name} {invoice_line_2.move_name}",
+                'partner_id': self.partner_1.id,
+                'amount': 5000,
+                'currency_id': self.company_data['currency'].id,
+            }
+        ])
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+
+        # Handle when invoices have different currency
+        self._check_st_line_matching(bank_line_1, [
+            {'account_id': self.bank_journal.default_account_id.id, 'amount_currency': 5000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': 5000},
+            {'account_id': self.account_rec.id, 'amount_currency': -2000.0, 'partner_id': self.partner_1.id, 'currency_id': self.other_currency.id, 'balance': -1000},
+            {'account_id': self.account_rec.id, 'amount_currency': -3000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': -3000},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'amount_currency': -1000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': -1000},
+        ], reconciled_amls=[invoice_line_1, invoice_line_2])
+
+    def test_matching_algorithm_for_multiple_invoices_for_negative_amount(self):
+        """Test matching algorithm for multiple invoices with negative statement balance"""
+        invoice_line_1 = self._create_invoice_line(111, self.partner_1, 'in_invoice')
+        invoice_line_2 = self._create_invoice_line(300, self.partner_1, 'in_invoice')
+
+        bank_line_1 = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': f"{invoice_line_1.move_name} {invoice_line_2.move_name}",
+                'partner_id': self.partner_1.id,
+                'amount': -411,
+            }
+        ])
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+
+        # Payment reference contains invoice numbers of multiple invoices from the same partner, and the total amount matches but amount is negative
+        self._check_st_line_matching(bank_line_1, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': -411.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_pay.id, 'balance': 111.0, 'partner_id': self.partner_1.id},
+            {'account_id': self.account_pay.id, 'balance': 300.0, 'partner_id': self.partner_1.id}
+        ], reconciled_amls=[invoice_line_1, invoice_line_2])
+
+    def test_matching_rules_with_payment_memo(self):
+        """Test matching algorithm for multiple payments with memo"""
+        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin memo1")
+        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin memo2")
+        payment_3 = self._create_and_post_payment(amount=100, memo="PAY Admin memo1")
+        bank_line_1 = self._create_st_line(amount=200, payment_ref='memo1 and memo2')
+        bank_line_1._try_auto_reconcile_statement_lines()
+        # Both payment_1 and payment_3 memos match the st_line label, so only payment_2 is reconciled
+        self.assertRecordValues(bank_line_1.line_ids, [
+            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 200.0, 'reconciled': False},
+            {'account_id': payment_2.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': bank_line_1.journal_id.suspense_account_id.id, 'balance': -100.0, 'reconciled': False},
+        ])
+        payment_3.unlink()
+        bank_line_1._try_auto_reconcile_statement_lines()
+        # Now that payment_3 is no more there, payment_1 is the only one to match the rules
+        self.assertRecordValues(bank_line_1.line_ids, [
+            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 200.0, 'reconciled': False},
+            {'account_id': payment_2.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': payment_1.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+    def test_matching_rules_with_wrong_payment_memo(self):
+        """Test matching algorithm for multiple payments with wrong payment memo."""
+        # The correct payments
+        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin memo1")
+        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin memo2")
+        # The wrong payments
+        self._create_and_post_payment(amount=100, memo="INV Admin memo123")
+        self._create_and_post_payment(amount=100, memo="INVAdminmemo123")
+        self._create_and_post_payment(amount=200, memo="INV Admin memo1&memo2")
+        self._create_and_post_payment(amount=200, memo="INV Admin supermemo1")
+
+        bank_line_1 = self._create_st_line(amount=200, payment_ref='memo1 & memo2')
+        bank_line_1._try_auto_reconcile_statement_lines()
+        # Only payment 1 and 2 match the rules, others shouldn't
+        self.assertRecordValues(bank_line_1.line_ids, [
+            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 200.0, 'reconciled': False},
+            {'account_id': payment_1.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': payment_2.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+    def test_matching_rules_with_duplicate_payment_memo(self):
+        """Test that if a payment contains memo from other payments, we don't reconcile"""
+        self._create_and_post_payment(amount=100, memo="INV Admin memo1")
+        self._create_and_post_payment(amount=100, memo="INV Admin memo2")
+        self._create_and_post_payment(amount=200, memo="INV Admin memo1 & memo2")
+        bank_line_1 = self._create_st_line(amount=200, payment_ref='memo1 & memo2')
+        bank_line_1._try_auto_reconcile_statement_lines()
+        # We don't have matches, payment 3 is conflicting with payment 1 and 2
+        self.assertRecordValues(bank_line_1.line_ids, [
+            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 200.0, 'reconciled': False},
+            {'account_id': bank_line_1.journal_id.suspense_account_id.id, 'balance': -200.0, 'reconciled': False},
+        ])
 
     def test_auto_rule_creation_and_matching(self):
         account_a = self.env['account.account'].create({
