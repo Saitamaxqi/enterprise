@@ -56,7 +56,7 @@ class AccountReconcileModel(models.Model):
        LEFT JOIN LATERAL (
                    SELECT DISTINCT reco_model.id,
                           reco_model.sequence,
-                          reco_model.name -> %(lang)s as name
+                          COALESCE(reco_model.name -> %(lang)s, reco_model.name -> 'en_US') as name
                      FROM account_reconcile_model reco_model
                 LEFT JOIN matching_journal_ids ON reco_model.id = matching_journal_ids.account_reconcile_model_id
                 LEFT JOIN matching_partner_ids ON reco_model.id = matching_partner_ids.account_reconcile_model_id
