@@ -59,21 +59,13 @@ patch(TicketScreen.prototype, {
         return true;
     },
 
-    _updateScreenState(order, filterState, upState = "") {
-        const stateOverride = {
-            search: {
-                fieldName: "DELIVERYPROVIDER",
-                searchTerm: order?.delivery_provider_id?.name,
-            },
-            filter: filterState,
-        };
-        this.env.services.ui.block();
-        this.setOrder(this._getEmptyOrder(false));
-        this.closeTicketScreen();
-        setTimeout(() => {
-            this.pos.navigate("TicketScreen", { stateOverride, upState });
-            this.env.services.ui.unblock();
-        }, 300);
+    async _updateScreenState(order, filterState, upState = "") {
+        this.state.upState = upState;
+        await this.onSearch({
+            fieldName: "DELIVERYPROVIDER",
+            searchTerm: order?.delivery_provider_id?.name,
+        });
+        await this.onFilterSelected(filterState);
     },
 
     async _updateOrderStatus(order, status, code = null) {
@@ -168,6 +160,7 @@ patch(TicketScreen.prototype, {
 
         // make sure the order is identified as paid.
         order = this.pos.models["pos.order"].get(order.id);
+        this.state.selectedOrderUuid = order.uuid;
         order.setScreenData({ name: "" });
         order.uiState.locked = true;
     },
