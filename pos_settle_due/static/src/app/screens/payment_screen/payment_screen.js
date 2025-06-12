@@ -78,6 +78,14 @@ patch(PaymentScreen.prototype, {
             (payment) => payment.payment_method_id.type == "pay_later"
         );
 
+        // If the user attempts to deposit a zero amount
+        if (this.props.isDepositOrder && this.pos.currency.isZero(change) && order.isEmpty()) {
+            return this.dialog.add(AlertDialog, {
+                title: _t("The order is empty"),
+                body: _t("You can not deposit zero amount."),
+            });
+        }
+
         //If it's a deposit or settle due order
         if (
             ((!this.pos.currency.isZero(change) &&

@@ -97,6 +97,12 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
             PartnerList.clickPartnerOptions("A Partner"),
             // Deposit money should be shown (since we have no more due to settle)
             PartnerList.checkDropDownItemText("Deposit money"),
+            PartnerList.clickDropDownItemText("Deposit money"),
+            Dialog.is("Select the payment method to deposit money"),
+            Utils.selectButton("Bank"),
+            PaymentScreen.clickValidate(),
+            Dialog.bodyIs("You can not deposit zero amount."),
+            Dialog.confirm(),
             Chrome.endTour(),
         ].flat(),
 });
