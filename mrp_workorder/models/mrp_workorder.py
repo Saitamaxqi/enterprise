@@ -70,6 +70,9 @@ class MrpWorkorder(models.Model):
     # True if all employees are allowed on that workcenter
     all_employees_allowed = fields.Boolean(compute='_all_employees_allowed')
 
+    # Technical field to store the estimated hourly cost of employee at time of work order completion (i.e. to keep a consistent cost).
+    employee_costs_hour = fields.Float(string='Employee Cost per hour', default=0.0)
+
     @api.depends('operation_id')
     def _compute_quality_point_ids(self):
         for workorder in self:
@@ -246,6 +249,10 @@ class MrpWorkorder(models.Model):
     def button_finish(self):
         """ When using the Done button of the simplified view, validate directly some types of quality checks
         """
+        for workorder in self:
+            if workorder.state in ('done', 'cancel'):
+                continue
+            workorder.employee_costs_hour = workorder.workcenter_id.employee_costs_hour
         self.verify_quality_checks()
         return super().button_finish()
 
@@ -736,10 +743,15 @@ class MrpWorkorder(models.Model):
         return duration
 
     def _cal_cost(self, date=False):
-        if date:
-            return super()._cal_cost(date) + sum(self.time_ids.filtered(lambda t: t.date_end and t.date_end <= date).mapped('total_cost'))
-        else:
-            return super()._cal_cost(date) + sum(self.time_ids.mapped('total_cost'))
+        total_workcenter_cost = super()._cal_cost(date)
+        for wo in self:
+            if wo._should_estimate_cost():
+                total_workcenter_cost += (wo.duration_expected / 60) * (wo.employee_costs_hour or wo.workcenter_id.employee_costs_hour)
+            elif date:
+                total_workcenter_cost += sum(wo.time_ids.filtered(lambda t: t.date_end and t.date_end <= date).mapped('total_cost'))
+            else:
+                total_workcenter_cost += sum(wo.time_ids.mapped('total_cost'))
+        return total_workcenter_cost
 
     def button_pending(self):
         for emp in self.employee_ids:

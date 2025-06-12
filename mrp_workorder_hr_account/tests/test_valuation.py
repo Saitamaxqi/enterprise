@@ -59,7 +59,7 @@ class TestMrpWorkorderHrValuation(TestMrpValuationCommon):
                 'date_end': now + timedelta(hours=1),
                 'loss_id': self.env.ref('mrp.block_reason7').id,
             })
-            workorder.button_done()
+            workorder.button_finish()
             mo.button_mark_done()
 
             return mo, productivity

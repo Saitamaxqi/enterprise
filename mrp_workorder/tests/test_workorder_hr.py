@@ -114,3 +114,20 @@ class TestWorkorderDurationHr(common.TransactionCase):
         self.assertTrue(self.mo.workorder_ids)
         self.assertEqual(self.mo.state, 'done')
         self.assertEqual(self.mo.workorder_ids.time_ids.employee_id, self.employee_1)
+
+    def test_estimated_employee_cost_valuation(self):
+        """ Test that operations with 'estimated' cost correctly compute the employee cost.
+        The cost should be equal to workcenter.employee_costs_hour * workorder.duration_expected. """
+        self.bom.operation_ids.cost_mode = 'estimated'
+        self.workcenter.costs_hour = 33
+        self.workcenter.employee_costs_hour = 60
+        self.mo.action_confirm()
+
+        self.mo.workorder_ids.duration = 10
+        self.assertEqual(self.mo.workorder_ids._cal_cost(), 93.0)
+
+        # Cost should stay the same for a done MO if nothing else is changed
+        self.mo.button_mark_done()
+        self.bom.operation_ids.cost_mode = 'actual'
+        self.workcenter.employee_costs_hour = 99
+        self.assertEqual(self.mo.workorder_ids._cal_cost(), 93.0)
