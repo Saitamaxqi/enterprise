@@ -18,6 +18,7 @@
         'data/mail_template_data.xml',
         'data/payment_provider_data.xml',  # Depends on `inline_form`, `payment_method_sepa`.
     ],
+    'post_init_hook': 'post_init_hook',
     'uninstall_hook': 'uninstall_hook',
     'assets': {
         'web.assets_frontend': [
