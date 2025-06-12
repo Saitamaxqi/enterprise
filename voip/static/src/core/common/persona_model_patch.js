@@ -9,7 +9,7 @@ patch(Persona.prototype, {
      * @returns {string}
      */
     get voipName() {
-        return this.name;
+        return this.name || "";
     },
     get jobDescription() {
         const info = [];

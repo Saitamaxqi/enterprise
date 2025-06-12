@@ -61,3 +61,22 @@ test("Scrolling to bottom loads more contacts", async () => {
     await contains(".o-voip-TabEntry", { count: 20 });
     expect(rpcCount).toBe(2);
 });
+
+test("Contacts with are listed under the their corresponding section", async () => {
+    const pyEnv = await startServer();
+    pyEnv["res.partner"].create([
+        { name: "", phone: "+1-555-0001" }, // Contact with empty name
+        { name: false, phone: "+1-555-0002" }, // Contact with false name
+        { name: "Alice", phone: "+1-555-0003" }, // Normal contact
+    ]);
+    await start();
+    await click(".o_menu_systray button[title='Open Softphone']");
+    await click("button span:contains('Contacts')");
+    await contains(".o-voip-TabEntry", { count: 3 });
+    await contains(".o-voip-TabEntry span", { text: "Alice", parent: ["section", { contains: [["h2", { text: "A" }]] }] });
+    await contains(".o-voip-TabEntry span", {
+        text: "",
+        count: 2,
+        parent: ["section", { contains: [["h2", { text: "#" }]] }]
+    });
+});

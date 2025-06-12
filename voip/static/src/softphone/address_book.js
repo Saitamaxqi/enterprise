@@ -39,8 +39,14 @@ export class AddressBook extends Component {
     get contactsByInitial() {
         const contacts = [...this.filteredContacts];
         const compareFn = new Intl.Collator(user.lang).compare;
-        contacts.sort((a, b) => compareFn(a.voipName, b.voipName));
-        const getInitial = (contact) => [...contact.voipName][0].toUpperCase();
+        const getInitial = (contact) => [...contact.voipName][0]?.toUpperCase() || "#";
+        contacts.sort((a, b) => {
+            const initialA = getInitial(a);
+            const initialB = getInitial(b);
+            if (initialA === "#" && initialB !== "#") return 1;
+            if (initialA !== "#" && initialB === "#") return -1;
+            return compareFn(a.voipName, b.voipName);
+        });
         return Map.groupBy(contacts, getInitial);
     }
 
