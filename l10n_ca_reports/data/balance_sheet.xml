@@ -318,6 +318,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">l10n_ca_e_unallocated_current.cross_report_net_profit + l10n_ca_e_unallocated_current.account_balance</field>
                                                 <field name="date_scope">from_fiscalyear</field>
+                                                <field name="subformula" eval="False"/>
                                             </record>
                                             <record id="10n_ca_bs_equity_unallocated_current_balance_cross_report_net_profit" model="account.report.expression">
                                                 <field name="label">cross_report_net_profit</field>

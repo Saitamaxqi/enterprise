@@ -44,6 +44,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">L10N_LU_TAX_458.cross_report_values - L10N_LU_TAX_077.balance - L10N_LU_TAX_081.balance - L10N_LU_TAX_085.balance</field>
+                                        <field name="subformula" eval="False"/>
                                     </record>
                                     <record id="l10n_lu_annual_tax_report_sections_458_cross_report_values" model="account.report.expression">
                                         <field name="label">cross_report_values</field>
@@ -64,6 +65,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">L10N_LU_TAX_459.cross_report_values - L10N_LU_TAX_078.balance - L10N_LU_TAX_082.balance - L10N_LU_TAX_086.balance</field>
+                                        <field name="subformula" eval="False"/>
                                     </record>
                                     <record id="l10n_lu_annual_tax_report_sections_459_cross_report_values" model="account.report.expression">
                                         <field name="label">cross_report_values</field>
@@ -84,6 +86,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">L10N_LU_TAX_460.cross_report_values - L10N_LU_TAX_079.balance - L10N_LU_TAX_083.balance - L10N_LU_TAX_087.balance</field>
+                                        <field name="subformula" eval="False"/>
                                     </record>
                                     <record id="l10n_lu_annual_tax_report_sections_460_cross_report_values" model="account.report.expression">
                                         <field name="label">cross_report_values</field>
@@ -104,6 +107,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">L10N_LU_TAX_461.cross_report_values - L10N_LU_TAX_404.balance - L10N_LU_TAX_405.balance - L10N_LU_TAX_406.balance</field>
+                                        <field name="subformula" eval="False"/>
                                     </record>
                                     <record id="l10n_lu_annual_tax_report_sections_461_cross_report_values" model="account.report.expression">
                                         <field name="label">cross_report_values</field>
