@@ -512,7 +512,7 @@ test("Pivot cells are highlighted when hovering their menu item", async function
         getZoneOfInsertedDataSource(model, "pivot", pivotId)
     );
 
-    expect(getHighlightsFromStore(env)).toEqual([{ color: "#37A850", range, noFill: true }]);
+    expect(getHighlightsFromStore(env)).toEqual([{ color: "#017E84", range, noFill: true }]);
 
     await leave("div[data-name='item_pivot_1");
     expect(getHighlightsFromStore(env)).toEqual([]);

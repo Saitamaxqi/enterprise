@@ -100,7 +100,7 @@ test("Pivot cells are highlighted when their side panel is open", async function
         getZoneOfInsertedDataSource(model, "pivot", pivotId)
     );
 
-    expect(getHighlightsFromStore(env)).toEqual([{ color: "#37A850", range, noFill: true }]);
+    expect(getHighlightsFromStore(env)).toEqual([{ color: "#017E84", range, noFill: true }]);
     await contains(".o-sidePanelClose").click();
     expect(getHighlightsFromStore(env)).toEqual([]);
 });
