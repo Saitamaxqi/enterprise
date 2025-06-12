@@ -457,7 +457,8 @@ export class appointmentSlotSelect extends Interaction {
                 }
                 this.removeLoadingSpinner();
                 // Select previous selected date (in displayed month) if possible.
-                displayedMonthEl?.querySelector(`div[data-slot-date="${daySlotSelected}"]`)?.click();
+                const selectedDayEl = displayedMonthEl?.querySelector(`div[data-slot-date="${daySlotSelected}"]`);
+                selectedDayEl && this.onClickDaySlot({ currentTarget: selectedDayEl });
             }
         }
         this.refreshListeners();
