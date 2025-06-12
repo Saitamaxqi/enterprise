@@ -18,7 +18,7 @@ class EsgEmissionFactor(models.Model):
     source_id = fields.Many2one('esg.emission.source', required=True)
     scope = fields.Selection(related='source_id.scope')
     scope_complete_name = fields.Char(related='source_id.complete_name')
-    company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company.id)
+    company_id = fields.Many2one('res.company')
 
     valid_from = fields.Date()
     valid_to = fields.Date()
