@@ -7,6 +7,10 @@
 
 .o_content {
     margin: 20px;
+
+    // Define direction attribute here so when rtlcss preprocessor run, it converts it to rtl
+    direction: ltr;
+
     /*****************
         HEADER OF THE REPORT
     *****************/
@@ -23,9 +27,6 @@
         font-size: 0.8rem;
         margin: 0 0 24px;
         padding: 24px;
-
-        // Define direction attribute here so when rtlcss preprocessor run, it converts it to rtl
-        direction: ltr;
 
         > :not(caption) > * > * { padding: 0.5rem 0.75rem } //!\\ Override of bootstrap, keep selector
 
