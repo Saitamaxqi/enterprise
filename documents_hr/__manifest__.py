@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -18,6 +17,7 @@ Easily access your documents from your employee profile.
         'views/documents_templates_portal.xml',
         'views/res_config_settings_views.xml',
         'views/hr_employee_views.xml',
+        'views/hr_employee_public_views.xml',
         'views/res_users_views.xml',
     ],
     'assets': {

@@ -10,3 +10,8 @@ class HrEmployeePublic(models.Model):
 
     def _compute_has_slots(self):
         self._compute_from_employee('has_slots')
+
+    def action_view_planning(self):
+        self.ensure_one()
+        if self.is_user:
+            return self.employee_id.action_view_planning()

@@ -11,6 +11,7 @@
         'security/ir.model.access.csv',
         'wizard/hr_contract_sign_document_wizard_view.xml',
         'views/hr_employee_view.xml',
+        'views/hr_employee_public_views.xml',
         'views/res_users_view.xml',
         'views/sign_request_views.xml',
         'views/mail_activity_plan_views.xml',
