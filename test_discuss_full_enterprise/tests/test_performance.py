@@ -3,12 +3,20 @@
 from odoo.addons.test_discuss_full.tests.test_performance import TestDiscussFullPerformance
 
 # Queries for _query_count_init_store:
-#   1: _get_default_voip_provider when creating res.users.settings
-#   1: voipConfig: missedCalls
-#   1: voipConfig: search callActivityTypeId
-TestDiscussFullPerformance._query_count_init_store += 3
-TestDiscussFullPerformance._query_count_init_messaging += 0
-TestDiscussFullPerformance._query_count_discuss_channels += 0
+#   1: odoobot format:
+#       - search ai_agent (_compute_im_status ai override)
+#   1: fetch voip_provider (_res_users_settings_format)
+#   1: search mail_activity_type (voip_config)
+#   1: search_count voip_call (_get_number_of_missed_calls)
+TestDiscussFullPerformance._query_count_init_store += 4
+# Queries for _query_count_init_messaging:
+#   1: _process_request_for_all: channel add: member _to_store: partner _to_store:
+#       - search ai_agent (_compute_im_status ai override)
+TestDiscussFullPerformance._query_count_init_messaging += 1
+# Queries for _query_count_init_messaging:
+#   1: channel _to_store_defaults: member _to_store: partner _to_store:
+#       - search ai_agent (_compute_im_status ai override)
+TestDiscussFullPerformance._query_count_discuss_channels += 1
 
 old_get_init_store_data_result = TestDiscussFullPerformance._get_init_store_data_result
 
