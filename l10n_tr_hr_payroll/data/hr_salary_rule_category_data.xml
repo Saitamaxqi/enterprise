@@ -48,4 +48,10 @@
         <field name="code">YTDGROSSTAX</field>
         <field name="country_id" ref="base.tr"/>
     </record>
+
+    <record id="l10n_tr_category_ntg_calculation" model="hr.salary.rule.category">
+        <field name="name">NTG Calculation</field>
+        <field name="code">NTGCALC</field>
+        <field name="country_id" ref="base.tr"/>
+    </record>
 </odoo>
