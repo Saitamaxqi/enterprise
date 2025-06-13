@@ -60,7 +60,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
     )
 
     @staticmethod
-    def _fill_xml_scheme(dict, code, value, condition=False, lambda_f=lambda v: v, res_field=None, res_model=None, res_id=None):
+    def _fill_xml_scheme(dict, code, value, condition=False, lambda_f=lambda v: v, res_field=None, res_model=None, res_id=None, employee_id=None):
         if value or condition:
             computed = lambda_f(value)
             if computed:
@@ -71,6 +71,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                     "res_model": res_model,
                     "res_id": res_id,
                     "res_field": res_field,
+                    "employee_id": employee_id
                 }
 
     @staticmethod
@@ -100,28 +101,28 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                 "EmployeeValues": {},
             }
 
-            self._fill_xml_scheme(meta_data['Statistic'], "Position", version.l10n_ch_job_type, True, res_model='hr.version', res_id=version.id, res_field="l10n_ch_job_type")
+            self._fill_xml_scheme(meta_data['Statistic'], "Position", version.l10n_ch_job_type, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_job_type")
             self._fill_xml_scheme(meta_data['Statistic'], "Education", version.employee_id.certificate, True, lambda_f=lambda c: c if c in ALLOWED_EDUCATION else False, res_model='hr.employee', res_id=snapshot.employee_id.id, res_field="certificate")
-            self._fill_xml_scheme(meta_data['Statistic'], "JobTitle", version.job_id.name, True, res_model='hr.version', res_id=version.id, res_field="job_id")
+            self._fill_xml_scheme(meta_data['Statistic'], "JobTitle", version.job_id.name, True, res_model='hr.version', res_id=version.id, employee_id=snapshot.employee_id.id, res_field="job_id")
             self._fill_xml_scheme(meta_data['Statistic'], "LeaveEntitlement", version.l10n_ch_yearly_holidays, True, lambda_f=lambda l: l or "0")
 
-            self._fill_xml_scheme(meta_data['ContractValues'], "AVS", version.l10n_ch_social_insurance_id, True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', res_id=version.id, res_field="l10n_ch_social_insurance_id")
-            self._fill_xml_scheme(meta_data['ContractValues'], "CAF", version.l10n_ch_compensation_fund_id, condition=not version.l10n_ch_lpp_not_insured, lambda_f=lambda i: i.id if i else False, res_model='hr.version', res_id=version.id, res_field="l10n_ch_compensation_fund_id")
-            self._fill_xml_scheme(meta_data['ContractValues'], "LPP", version.l10n_ch_lpp_insurance_id, condition=not version.l10n_ch_lpp_not_insured, lambda_f=lambda i: i.id if i else False, res_model='hr.version', res_id=version.id, res_field="l10n_ch_lpp_insurance_id")
-            self._fill_xml_scheme(meta_data['ContractValues'], "LAA", version.l10n_ch_laa_group, condition=True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', res_id=version.id, res_field="l10n_ch_laa_group")
-            self._fill_xml_scheme(meta_data['ContractValues'], "Workplace", version.l10n_ch_location_unit_id, condition=True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', res_id=version.id, res_field="l10n_ch_location_unit_id")
-            self._fill_xml_scheme(meta_data['ContractValues'], "ContractType", version.contract_type_id, condition=True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', res_id=version.id, res_field="contract_type_id")
+            self._fill_xml_scheme(meta_data['ContractValues'], "AVS", version.l10n_ch_social_insurance_id, True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_social_insurance_id")
+            self._fill_xml_scheme(meta_data['ContractValues'], "CAF", version.l10n_ch_compensation_fund_id, condition=not version.l10n_ch_lpp_not_insured, lambda_f=lambda i: i.id if i else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_compensation_fund_id")
+            self._fill_xml_scheme(meta_data['ContractValues'], "LPP", version.l10n_ch_lpp_insurance_id, condition=not version.l10n_ch_lpp_not_insured, lambda_f=lambda i: i.id if i else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_lpp_insurance_id")
+            self._fill_xml_scheme(meta_data['ContractValues'], "LAA", version.l10n_ch_laa_group, condition=True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_laa_group")
+            self._fill_xml_scheme(meta_data['ContractValues'], "Workplace", version.l10n_ch_location_unit_id, condition=True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_location_unit_id")
+            self._fill_xml_scheme(meta_data['ContractValues'], "ContractType", version.contract_type_id, condition=True, lambda_f=lambda i: i.id if i else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="contract_type_id")
 
             if version.l10n_ch_has_withholding_tax:
-                self._fill_xml_scheme(meta_data['EmployeeValues'], "SourceTaxCanton", version.l10n_ch_source_tax_canton, condition=True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_source_tax_canton")
-                self._fill_xml_scheme(meta_data['EmployeeValues'], "SourceTaxMunicipality", version.l10n_ch_source_tax_municipality, condition=True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_source_tax_municipality")
-                self._fill_xml_scheme(meta_data['EmployeeValues'], "SourceTaxCode", version.l10n_ch_tax_code, condition=True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_tax_code")
+                self._fill_xml_scheme(meta_data['EmployeeValues'], "SourceTaxCanton", version.l10n_ch_source_tax_canton, condition=True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_source_tax_canton")
+                self._fill_xml_scheme(meta_data['EmployeeValues'], "SourceTaxMunicipality", version.l10n_ch_source_tax_municipality, condition=True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_source_tax_municipality")
+                self._fill_xml_scheme(meta_data['EmployeeValues'], "SourceTaxCode", version.l10n_ch_tax_code, condition=True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_tax_code")
 
             residence = dict()
             if version.l10n_ch_canton != "EX" and version.l10n_ch_canton:
                 self._fill_xml_scheme(residence, "CantonCH", version.l10n_ch_canton, True)
             else:
-                self._fill_xml_scheme(residence, "AbroadCountry", version.private_country_id, lambda_f=lambda c: str(c.code) if c else False, condition=True, res_model='hr.employee', res_id=version.id, res_field="private_country_id")
+                self._fill_xml_scheme(residence, "AbroadCountry", version.private_country_id, lambda_f=lambda c: str(c.code) if c else False, condition=True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="private_country_id")
                 if version.l10n_ch_residence_type == "Weekly":
                     residence["KindOfResidence"] = {
                         "Weekly": {
@@ -129,11 +130,11 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                         }
                     }
                     self._fill_xml_scheme(residence["KindOfResidence"]["Weekly"], "Street", version.l10n_ch_weekly_residence_address_street, False)
-                    self._fill_xml_scheme(residence["KindOfResidence"]["Weekly"], "ZIP-Code", version.l10n_ch_weekly_residence_address_zip, True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_weekly_residence_address_zip")
-                    self._fill_xml_scheme(residence["KindOfResidence"]["Weekly"], "City", version.l10n_ch_weekly_residence_address_city, True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_weekly_residence_address_city")
+                    self._fill_xml_scheme(residence["KindOfResidence"]["Weekly"], "ZIP-Code", version.l10n_ch_weekly_residence_address_zip, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_weekly_residence_address_zip")
+                    self._fill_xml_scheme(residence["KindOfResidence"]["Weekly"], "City", version.l10n_ch_weekly_residence_address_city, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_weekly_residence_address_city")
 
-                    self._fill_xml_scheme(meta_data['EmployeeValues'], "weekly_canton", version.l10n_ch_weekly_residence_canton, True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_weekly_residence_canton")
-                    self._fill_xml_scheme(meta_data['EmployeeValues'], "weekly_municipality", version.l10n_ch_weekly_residence_municipality, True, res_model='hr.employee', res_id=version.id, res_field="l10n_ch_weekly_residence_municipality")
+                    self._fill_xml_scheme(meta_data['EmployeeValues'], "weekly_canton", version.l10n_ch_weekly_residence_canton, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_weekly_residence_canton")
+                    self._fill_xml_scheme(meta_data['EmployeeValues'], "weekly_municipality", version.l10n_ch_weekly_residence_municipality, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_weekly_residence_municipality")
                 else:
                     residence["KindOfResidence"] = {
                         "Daily": XSD_SKIP_VALUE
@@ -160,8 +161,8 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                 "Address": {}
             }
 
-            self._fill_xml_scheme(address["Address"], "ZIP-Code", employee.private_zip, condition=True, res_model='hr.employee', res_id=employee.id, res_field="private_zip")
-            self._fill_xml_scheme(address["Address"], "City", employee.private_city, condition=True, res_model='hr.employee', res_id=employee.id, res_field="private_city")
+            self._fill_xml_scheme(address["Address"], "ZIP-Code", employee.private_zip, condition=True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="private_zip")
+            self._fill_xml_scheme(address["Address"], "City", employee.private_city, condition=True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="private_city")
             self._fill_xml_scheme(address["Address"], "Country", employee.with_context(lang='en_US').private_country_id, lambda_f=lambda c: c.name.upper())
             self._fill_xml_scheme(address["Address"], "Street", employee.private_street)
 
@@ -209,19 +210,19 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                 snapshot.person = False
                 continue
 
-            self._fill_xml_scheme(civil_status, "Status", employee._get_l10n_ch_declaration_marital(), True, res_model='hr.employee', res_id=employee.id, res_field="marital")
-            self._fill_xml_scheme(civil_status, "ValidAsOf", employee.l10n_ch_marital_from, True, lambda d: format_date(self.env, d, date_format='yyyy-MM-dd'), res_model='hr.employee', res_id=employee.id, res_field="l10n_ch_marital_from")
+            self._fill_xml_scheme(civil_status, "Status", employee._get_l10n_ch_declaration_marital(), True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="marital")
+            self._fill_xml_scheme(civil_status, "ValidAsOf", employee.l10n_ch_marital_from, True, lambda d: format_date(self.env, d, date_format='yyyy-MM-dd'), res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="l10n_ch_marital_from")
 
             self._fill_xml_scheme(particular, "EmployeeNumber", employee.employee_id.registration_number, True, res_model='hr.employee', res_id=employee.id, res_field="registration_number")
             self._fill_xml_scheme(particular, "Lastname", employee.employee_id.l10n_ch_legal_last_name, True, res_model='hr.employee', res_id=employee.id, res_field="l10n_ch_legal_last_name")
             self._fill_xml_scheme(particular, "Firstname", employee.employee_id.l10n_ch_legal_first_name, True, res_model='hr.employee', res_id=employee.id, res_field="l10n_ch_legal_first_name")
             self._fill_xml_scheme(particular, "Sex", employee.employee_id.sex, True, lambda_f=lambda g: "M" if g == "male" else "F" if g == "female" else False, res_model='hr.employee', res_id=employee.id, res_field="sex")
             self._fill_xml_scheme(particular, "DateOfBirth", employee.employee_id.birthday, True, lambda d: format_date(self.env, d, date_format='yyyy-MM-dd'), res_model='hr.employee', res_id=employee.id, res_field="birthday")
-            self._fill_xml_scheme(particular, "Nationality", employee.country_id, True, lambda_f=lambda d: d.code if d else employee.l10n_ch_no_nationality or False, res_model='hr.employee', res_id=employee.id, res_field="country_id")
-            self._fill_xml_scheme(particular, "ResidenceCanton", employee.l10n_ch_canton, True, res_model='hr.employee', res_id=employee.id, res_field="l10n_ch_canton")
+            self._fill_xml_scheme(particular, "Nationality", employee.country_id, True, lambda_f=lambda d: d.code if d else employee.l10n_ch_no_nationality or False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="country_id")
+            self._fill_xml_scheme(particular, "ResidenceCanton", employee.l10n_ch_canton, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="l10n_ch_canton")
             self._fill_xml_scheme(particular, "LanguageCode", employee.employee_id.lang, True, lambda_f=lambda l: l[:2] if l else False, res_model='hr.employee', res_id=employee.id, res_field="lang")
-            self._fill_xml_scheme(particular, "ResidenceCategory", employee.l10n_ch_residence_category, condition=employee.l10n_ch_has_withholding_tax and employee.country_id.code != "CH", res_model='hr.employee', res_id=employee.id, res_field="l10n_ch_residence_category")
-            self._fill_xml_scheme(particular, "MunicipalityID", employee.l10n_ch_municipality if employee.l10n_ch_canton != 'EX' else False, condition=employee.l10n_ch_has_withholding_tax and employee.l10n_ch_canton != 'EX', res_model='hr.employee', res_id=employee.id, res_field="l10n_ch_municipality")
+            self._fill_xml_scheme(particular, "ResidenceCategory", employee.l10n_ch_residence_category, condition=employee.l10n_ch_has_withholding_tax and employee.country_id.code != "CH", res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="l10n_ch_residence_category")
+            self._fill_xml_scheme(particular, "MunicipalityID", employee.l10n_ch_municipality if employee.l10n_ch_canton != 'EX' else False, condition=employee.l10n_ch_has_withholding_tax and employee.l10n_ch_canton != 'EX', res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=employee.id, res_field="l10n_ch_municipality")
 
             particular.update({
                 "CivilStatus": civil_status,
@@ -323,7 +324,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
             current_employee = snapshot.employee_id._get_version(date=datetime.date(year=snapshot.year, month=snapshot.month, day=1))
 
             if current_employee.l10n_ch_tax_code:
-                self._fill_xml_scheme(additional_particular, "Denomination", current_employee.l10n_ch_religious_denomination, True, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_religious_denomination")
+                self._fill_xml_scheme(additional_particular, "Denomination", current_employee.l10n_ch_religious_denomination, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_religious_denomination")
 
                 if current_employee.l10n_ch_other_employment and current_employee.l10n_ch_total_activity_type == 'percentage':
                     other_activities = {
@@ -335,7 +336,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                     if current_employee.l10n_ch_concubinage == "NoConcubinage":
                         self._fill_xml_scheme(additional_particular, "SingleParentFamily", {"NoConcubinage": XSD_SKIP_VALUE}, True)
                     else:
-                        self._fill_xml_scheme(additional_particular, "SingleParentFamily", {"Concubinage": {current_employee.l10n_ch_concubinage: XSD_SKIP_VALUE}}, True, lambda_f=lambda v: v if current_employee.l10n_ch_concubinage else False, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_concubinage")
+                        self._fill_xml_scheme(additional_particular, "SingleParentFamily", {"Concubinage": {current_employee.l10n_ch_concubinage: XSD_SKIP_VALUE}}, True, lambda_f=lambda v: v if current_employee.l10n_ch_concubinage else False, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_concubinage")
                 marriage_partner = {}
                 if current_employee._get_l10n_ch_declaration_marital() in ["married", "registeredPartnership"]:
                     social_insurance_identification = {
@@ -345,12 +346,12 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                             "unknown": XSD_SKIP_VALUE
                         }
                     }
-                    self._fill_xml_scheme(marriage_partner, "Firstname", current_employee.l10n_ch_spouse_first_name, True, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_first_name")
-                    self._fill_xml_scheme(marriage_partner, "Lastname", current_employee.l10n_ch_spouse_last_name, True, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_last_name")
-                    self._fill_xml_scheme(marriage_partner, "DateOfBirth", current_employee.l10n_ch_spouse_birthday, True, lambda_f=lambda bd: format_date(self.env, bd, date_format='yyyy-MM-dd'), res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_birthday")
+                    self._fill_xml_scheme(marriage_partner, "Firstname", current_employee.l10n_ch_spouse_first_name, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_first_name")
+                    self._fill_xml_scheme(marriage_partner, "Lastname", current_employee.l10n_ch_spouse_last_name, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_last_name")
+                    self._fill_xml_scheme(marriage_partner, "DateOfBirth", current_employee.l10n_ch_spouse_birthday, True, lambda_f=lambda bd: format_date(self.env, bd, date_format='yyyy-MM-dd'), res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_birthday")
                     marriage_partner_address = {}
-                    self._fill_xml_scheme(marriage_partner_address, "ZIP-Code", current_employee.l10n_ch_spouse_zip, True, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_zip")
-                    self._fill_xml_scheme(marriage_partner_address, "City", current_employee.l10n_ch_spouse_city, True, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_city")
+                    self._fill_xml_scheme(marriage_partner_address, "ZIP-Code", current_employee.l10n_ch_spouse_zip, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_zip")
+                    self._fill_xml_scheme(marriage_partner_address, "City", current_employee.l10n_ch_spouse_city, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_city")
                     self._fill_xml_scheme(marriage_partner_address, "Country", current_employee.with_context(lang='en_US').l10n_ch_spouse_country_id, lambda_f=lambda c: c.name.upper())
                     self._fill_xml_scheme(marriage_partner_address, "Street", current_employee.l10n_ch_spouse_street)
                     self._fill_xml_scheme(
@@ -363,15 +364,15 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                                            else {"AbroadCountry": e.l10n_ch_spouse_country_id.code}
                                            if e.l10n_ch_spouse_country_id
                                            else False,
-                        res_model="hr.employee",
+                        res_model="hr.version",
                         res_id=current_employee.id,
                         res_field="l10n_ch_spouse_residence_canton" if not current_employee.l10n_ch_spouse_residence_canton else "l10n_ch_spouse_country_id"
                     )
 
                     if current_employee.l10n_ch_spouse_revenues:
                         work_or_compensatory = {}
-                        self._fill_xml_scheme(work_or_compensatory, "Workplace", current_employee.l10n_ch_spouse_work_canton, True, res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_work_canton")
-                        self._fill_xml_scheme(work_or_compensatory, "Start", current_employee.l10n_ch_spouse_work_start_date, True, lambda_f=lambda bd: format_date(self.env, bd, date_format='yyyy-MM-dd'), res_model='hr.employee', res_id=current_employee.id, res_field="l10n_ch_spouse_work_start_date")
+                        self._fill_xml_scheme(work_or_compensatory, "Workplace", current_employee.l10n_ch_spouse_work_canton, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_work_canton")
+                        self._fill_xml_scheme(work_or_compensatory, "Start", current_employee.l10n_ch_spouse_work_start_date, True, lambda_f=lambda bd: format_date(self.env, bd, date_format='yyyy-MM-dd'), res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=current_employee.id, res_field="l10n_ch_spouse_work_start_date")
                         self._fill_xml_scheme(work_or_compensatory, "Start", current_employee.l10n_ch_spouse_work_end_date, lambda_f=lambda bd: format_date(self.env, bd, date_format='yyyy-MM-dd'))
                         marriage_partner.update({
                             "WorkOrCompensatory": work_or_compensatory
@@ -815,13 +816,23 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                 res_model = missing_dict.get("res_model")
                 res_id = missing_dict.get("res_id")
                 res_field = missing_dict.get("res_field")
+                employee_id = missing_dict.get("employee_id")
                 if res_model and res_id:
-                    record = self.env[res_model].browse(res_id)
                     field_description = self.env[res_model]._fields[res_field].string
+                    if res_model == 'hr.version' and employee_id:
+                        record = self.env['hr.employee'].browse(employee_id)
+                        action = record._get_records_action()
+                        action['context'].update({
+                            'version_id': res_id
+                        })
+                    else:
+                        record = self.env[res_model].browse(res_id)
+                        action = record._get_records_action()
+
                     snapshot_warnings[missing_index] = {
                         "message": _("Missing"),
                         "level": "warning",
-                        "action": record._get_records_action(),
+                        "action": action,
                         "action_text": field_description,
                     }
 

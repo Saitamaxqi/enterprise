@@ -45,3 +45,4 @@ from . import l10n_ch_swissdec_declaration
 from . import l10n_ch_swissdec_declaration_dialog
 from . import l10n_ch_swissdec_declaration_result
 from . import l10n_ch_worked_days
+from . import ir_ui_menu

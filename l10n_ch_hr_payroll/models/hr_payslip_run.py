@@ -9,3 +9,56 @@ class HrPayslipRun(models.Model):
 
     l10n_ch_pay_13th_month = fields.Boolean(
         string="Pay Thirteen Month")
+
+    def _get_employees_domain(self, date_start=None, date_end=None, structure_id=None, company_id=None):
+        date_start = date_start or self.date_start
+        date_end = date_end or self.date_end
+        structure = self.env["hr.payroll.structure"].browse(structure_id) if structure_id else self.structure_id
+        company = company_id or self.company_id.id
+
+        if structure.code == "CHMONTHLYELM":
+            all_contracts = self.env['l10n.ch.occupation'].search([])
+            valid_contracts = all_contracts.filtered(lambda c:
+                 c.date_start and
+                 c.employee_id.company_id.id == company and
+                 c.date_start <= date_end
+                 and (not c.date_end or c.date_end >= date_start)
+             )
+            return [('id', 'in', valid_contracts.employee_id.ids)]
+        else:
+            return super()._get_employees_domain(date_start, date_end, structure_id, company_id)
+
+    def generate_payslips(self, employee_ids):
+        self.ensure_one()
+        if self.structure_id.code != "CHMONTHLYELM":
+            return super().generate_payslips(employee_ids)
+        else:
+            all_contracts = self.env['l10n.ch.occupation'].search([('employee_id', 'in', employee_ids)])
+            valid_contracts = all_contracts.filtered(lambda c:
+                 c.date_start and
+                 c.date_start <= self.date_end
+                 and (not c.date_end or c.date_end >= self.date_start)
+             )
+            Payslip = self.env['hr.payslip']
+            default_values = Payslip.default_get(Payslip.fields_get())
+            payslips_vals = []
+
+            for contract in valid_contracts:
+                values = {
+                    **default_values,
+                    'name': self.env._('New Payslip'),
+                    'employee_id': contract.employee_id.id,
+                    'payslip_run_id': self.id,
+                    'company_id': self.company_id.id,
+                    'date_from': self.date_start,
+                    'date_to': self.date_end,
+                    'version_id': contract.employee_id._get_version(max(contract.date_start, self.date_start)).id,
+                    'struct_id': self.structure_id.id,
+                }
+                payslips_vals.append(values)
+            self.slip_ids |= Payslip.with_context(tracking_disable=True).create(payslips_vals)
+            self.slip_ids.compute_sheet()
+            self.slip_ids.write({'state': 'verify'})
+            self.state = '02_verify'
+
+            return 1

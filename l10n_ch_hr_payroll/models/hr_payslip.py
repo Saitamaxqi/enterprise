@@ -199,6 +199,9 @@ class HrPayslip(models.Model):
         for which the employee is under contract.
         """
         self.ensure_one()
+        if not date_start:
+            return 0
+
         if self.company_id.l10n_ch_30_day_method:
             return self._l10n_ch_get_occupation_days(date_start, date_end)
 
@@ -946,8 +949,11 @@ class HrPayslip(models.Model):
         # Note: file order should be maintained
         return super()._get_data_files_to_update() + [(
             'l10n_ch_hr_payroll', [
-                'data/hr_payroll_rule_parameters.xml',
-                'data/hr_payroll_input_types.xml',
+                'data/hr_contract_type_data.xml',
+                'data/hr_payroll_structure_type_data.xml',
+                'data/hr_payroll_structure_data.xml',
+                'data/hr_payslip_input_type_data.xml',
+                'data/hr_rule_parameters_data.xml',
                 'data/hr_salary_rule_category_data.xml',
                 'data/hr_salary_rule_data.xml',
                 'data/hr_swiss_leave_types.xml',
@@ -964,58 +970,39 @@ class HrPayslip(models.Model):
         if not swiss_payslips:
             return
 
-        employee_ids = swiss_payslips.mapped('employee_id')
-        date_from_min = min(swiss_payslips.mapped('date_from'))
-        date_to_max = max(swiss_payslips.mapped('date_to'))
-
-        occupations = self.env['l10n.ch.occupation'].search([
-            ('employee_id', 'in', employee_ids.ids),
-            ('date_start', '<=', date_to_max),
-            '|',
-            ('date_end', '>=', date_from_min),
-            ('date_end', '=', False),
-        ])
-
-        occupation_by_employee = {}
-        for occ in occupations:
-            emp_id = occ.employee_id.id
-            if emp_id not in occupation_by_employee:
-                occupation_by_employee[emp_id] = []
-            occupation_by_employee[emp_id].append(occ)
+        occupation_by_employee = dict(self.env['l10n.ch.occupation']._read_group(
+            domain=[],
+            groupby=['employee_id'],
+            aggregates=['id:recordset'],
+        ))
 
         for payslip in swiss_payslips:
-            emp_id = payslip.employee_id.id
             payslip_date_from = payslip.date_from
             payslip_date_to = payslip.date_to
-            matching_occupation = False
+            employee_occupations = occupation_by_employee.get(payslip.employee_id, self.env['l10n.ch.occupation'])
+            matching_occupation = self.env['l10n.ch.occupation']
+            if employee_occupations:
+                potential_occupations = employee_occupations.filtered(
+                    lambda occ: occ.date_start <= payslip_date_to and (occ.date_end is False or occ.date_end >= payslip_date_from)
+                )
+                # Shortcut computation for simple cases
+                if len(potential_occupations) == 1:
+                    matching_occupation = potential_occupations
+                elif potential_occupations:
+                    # Pick the occupation with start date closest to the current version date
+                    current_version_validity = payslip.version_id.date_version
+                    matching_occupation = min(
+                        potential_occupations,
+                        key=lambda occ: abs((occ.date_start - current_version_validity).days)
+                    )
+                else:
+                    # If no overlap, pick the most recent occupation before the payslip period
+                    previous_occupations = employee_occupations.filtered(lambda occ: occ.date_start <= payslip_date_to)
+                    if previous_occupations:
+                        matching_occupation = max(previous_occupations, key=lambda occ: occ.date_start)
 
-            # Check for overlapping occupations
-            for occ in occupation_by_employee.get(emp_id, []):
-                occ_date_start = occ.date_start or date_utils.start_of(payslip_date_from, 'year')
-                occ_date_end = occ.date_end or date_utils.end_of(payslip_date_to, 'year')
-
-                # Check if payslip date range overlaps with occupation date range
-                if (occ_date_start <= payslip_date_to and
-                        (occ_date_end >= payslip_date_from or occ_date_end is False) and payslip.version_id.date_version <= occ_date_start):
-                    matching_occupation = occ
-                    break
-
-            # If no overlapping occupation is found, find the closest past occupation
-            if not matching_occupation:  # todo : optimize this
-                past_occupations = self.env['l10n.ch.occupation'].search([
-                    ('employee_id', '=', emp_id),
-                    ('date_end', '<', payslip_date_from),
-                ], order='date_end desc', limit=1)
-                if past_occupations:
-                    matching_occupation = past_occupations[0]
-
-            # Set fields based on the found occupation, or False if none exists
-            if matching_occupation:
-                payslip.l10n_ch_entry = matching_occupation.date_start
-                payslip.l10n_ch_withdrawal = matching_occupation.date_end
-            else:
-                payslip.l10n_ch_entry = False
-                payslip.l10n_ch_withdrawal = False
+            payslip.l10n_ch_entry = matching_occupation.date_start
+            payslip.l10n_ch_withdrawal = matching_occupation.date_end
 
     def _l10n_ch_get_occupation_days(self, date_from=None, date_to=None):
         self.ensure_one()

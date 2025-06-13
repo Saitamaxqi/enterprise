@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Switzerland - Payroll',
+    'name': 'Switzerland - Swissdec Certified ELM 5.0 - Payroll',
     'icon': '/account/static/description/l10n.png',
     'countries': ['ch'],
     'category': 'Human Resources/Payroll',
@@ -71,8 +71,8 @@ Switzerland Payroll Rules.
         'views/l10n_ch_swissdec_job_views.xml',
         'views/l10n_ch_yearly_values_views.xml',
         'views/l10n_ch_hr_payroll_interoperability_views.xml',
+        'views/l10n_ch_occupation_views.xml',
         'wizard/l10n_ch_tax_rate_import_views.xml',
-        'wizard/l10n_ch_payslip_batch_wizard_views.xml',
         'wizard/l10n_ch_hr_payroll_employee_lang_views.xml',
         'report/l10n_ch_monthly_summary_template.xml',
         'report/l10n_ch_individual_account_template.xml',

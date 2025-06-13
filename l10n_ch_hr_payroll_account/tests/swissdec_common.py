@@ -2,6 +2,8 @@
 
 import logging
 
+from dateutil.relativedelta import relativedelta
+
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests.common import tagged
 from odoo.tools import file_open
@@ -2565,13 +2567,7 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
     def _l10n_ch_generate_swissdec_demo_payslip(cls, contract, date_from, date_to, company, after_payment=False):
         batch = cls.env['hr.payslip.run'].search(
             [('date_start', '=', date_from), ('company_id', '=', company)])
-        if not batch:
-            batch = cls.env['hr.payslip.run'].create({
-                'name': f"Monthly Pay Batch - {date_from.year}-{date_from.month}",
-                'date_start': date_from,
-                'contract_date_end': date_to,
-                'company_id': company,
-            })
+
         vals = {
             'name': f"Monthly Pay Batch - {date_from.year}-{date_from.month}",
             'employee_id': contract.employee_id.id,
@@ -2599,15 +2595,18 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
     @classmethod
     def _l10n_ch_create_batch(cls, company, month, pay_13th=False):
         cls.env.flush_all()
-        batch_wizard = cls.env['l10n.ch.hr.payslip.montlhy.wizard'].create({
+        first_of_month = date.today().replace(day=1)
+        end_of_month = first_of_month + relativedelta(months=1, days=-1)
+        batch = cls.env['hr.payslip.run'].create({
             "company_id": company.id,
-            "year": datetime.now().year,
-            "month": str(month),
-            "pay_13th": pay_13th
+            "structure_id": cls.env.ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm').id,
+            "l10n_ch_pay_13th_month": pay_13th,
+            "date_start": str(first_of_month),
+            "date_end": str(end_of_month)
         })
-        batch_action = batch_wizard.action_create()
-        batch = cls.env['hr.payslip.run'].browse(batch_action['res_id'])
-        batch.action_validate()
+        employee_domain = batch.sudo()._get_employees_domain()
+        batch.sudo().generate_payslips(cls.env['hr.employee'].search(employee_domain).ids)
+        batch.sudo().action_validate()
         cls.env.flush_all()
         return batch
 

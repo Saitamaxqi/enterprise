@@ -10,8 +10,8 @@ class L10nCHOccupation(models.Model):
     _auto = False
 
     employee_id = fields.Many2one('hr.employee', readonly=True)
-    date_start = fields.Date('Date Start', readonly=True)
-    date_end = fields.Date('Date End', readonly=True)
+    date_start = fields.Date('Entry in Company', readonly=True)
+    date_end = fields.Date('Withdrawal from Company', readonly=True)
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
@@ -26,6 +26,7 @@ class L10nCHOccupation(models.Model):
                     LAG(contract_date_end) OVER (PARTITION BY employee_id ORDER BY contract_date_start) AS prev_end_date
                 FROM hr_version
                 WHERE contract_date_start IS NOT NULL
+                      AND employee_id IS NOT NULL
             ),
             groups AS (
                 SELECT

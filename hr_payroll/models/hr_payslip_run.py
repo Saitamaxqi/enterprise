@@ -208,8 +208,8 @@ class HrPayslipRun(models.Model):
     def action_payroll_hr_employee_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
         action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_employee_list_view_payrun')
         action['domain'] = self._get_employees_domain(
-            fields.Datetime.from_string(date_start),
-            fields.Datetime.from_string(date_end),
+            fields.Date.from_string(date_start),
+            fields.Date.from_string(date_end),
             structure_id,
             company_id,
         )

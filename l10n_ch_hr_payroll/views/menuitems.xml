@@ -8,14 +8,6 @@
         parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"/>
 
     <menuitem
-        id="menu_hr_payroll_employees_swissdec_root"
-        name="Employees"
-        parent="hr_work_entry_enterprise.menu_hr_payroll_root"
-        sequence="45"
-        action="hr.open_view_employee_list_my"
-        groups="hr_payroll.group_hr_payroll_user"/>
-
-    <menuitem
         id="l10n_ch_menu_swissdec_transmission"
         name="Transmission"
         parent="hr_work_entry_enterprise.menu_hr_payroll_root"
@@ -210,14 +202,6 @@
         />
 
     <menuitem
-        id="menu_l10n_ch_hr_payslip_monthly_wizard"
-        name="New Batch"
-        parent="hr_payroll.menu_hr_payroll_payslips"
-        action="action_l10n_ch_hr_payslip_monthly_wizard"
-        sequence="0"
-    />
-
-    <menuitem
         id="menu_reporting_l10n_ch"
         name="Company Data"
         sequence="31"
@@ -235,6 +219,12 @@
               groups="base.group_no_one"
               sequence="999"
               action="action_l10n_ch_employee_yearly_values"
+    />
+    <menuitem id="menu_l10n_ch_occupation"
+              name="Occupations"
+              parent="menu_reporting_l10n_ch"
+              groups="hr_payroll.group_hr_payroll_user"
+              action="action_l10n_ch_occupation"
     />
 
     <menuitem
