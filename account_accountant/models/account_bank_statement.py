@@ -45,6 +45,17 @@ class AccountBankStatement(models.Model):
             })
         return statement_report_action.report_action(docids=self)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        statements = super().create(vals_list)
+        if not self._context.get('skip_pdf_attachment_generation'):
+            statements.filtered(lambda statement: statement.is_complete and (
+                not statement.attachment_ids
+                or not any(attachment.mimetype == 'application/pdf' for attachment in statement.attachment_ids)
+            )).action_generate_attachment()
+
+        return statements
+
 
 class AccountBankStatementLine(models.Model):
     _name = 'account.bank.statement.line'
