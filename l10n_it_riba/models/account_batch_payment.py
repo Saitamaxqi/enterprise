@@ -2,6 +2,7 @@ import base64
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_round
 from odoo.addons.l10n_it_riba.tools.riba import file_export
 from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 
@@ -45,6 +46,7 @@ class AccountBatchPayment(models.Model):
 
     def _l10n_it_riba_get_values(self):
         amount = self.amount * 100
+        abs_rounded_amount = int(float_round(abs(amount), 0))
         creditor = self.journal_id.company_id
         creditor_bank_account = self.journal_id.bank_account_id
         creditor_bank = self.journal_id.bank_id
@@ -62,8 +64,8 @@ class AccountBatchPayment(models.Model):
                 'record_type': 'EF',
                 **common,
                 'n_sections': len(self.payment_ids),
-                'negative_total': int(abs(amount)) if amount > 0.0 else 0,
-                'positive_total': int(abs(amount)) if amount < 0.0 else 0,
+                'negative_total': abs_rounded_amount if amount > 0.0 else 0,
+                'positive_total': abs_rounded_amount if amount < 0.0 else 0,
             }]
         )
         records[-1]['n_records'] = len(records)

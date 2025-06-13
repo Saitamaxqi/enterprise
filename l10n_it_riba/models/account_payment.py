@@ -1,6 +1,7 @@
 import re
 
 from odoo import _, api, models
+from odoo.tools.float_utils import float_round
 from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 
 
@@ -69,7 +70,7 @@ class AccountPayment(models.Model):
                     'record_type': '14',  # Disposition
                     'section_number': section_number,
                     'payment_date': payment.date,
-                    'amount': int(rounded_amount * 100),
+                    'amount': int(float_round(rounded_amount * 100, 0)),
                     'creditor_abi': get_iban_part(creditor_bank_account.acc_number, "bank"),
                     'creditor_cab': get_iban_part(creditor_bank_account.acc_number, "branch"),
                     'creditor_ccn': get_iban_part(creditor_bank_account.acc_number, "account"),
