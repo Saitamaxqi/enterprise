@@ -3,7 +3,7 @@
 import base64
 import calendar
 import io
-from datetime import datetime
+from datetime import date, datetime
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
@@ -53,12 +53,14 @@ class HrESICReport(models.Model):
             ('version_id.l10n_in_esic_amount', '>', 0),
             ('company_id', '=', self.company_id.id)
         ]).filtered(lambda e: e.company_country_code == 'IN')
-        end_date = calendar.monthrange(int(self.year), int(self.month))[1]
+        year = int(self.year)
+        month = int(self.month)
+        end_date = calendar.monthrange(year, month)[1]
 
         payslips = self.env['hr.payslip'].search([
             ('employee_id', 'in', indian_employees.ids),
-            ('date_from', '>=', f'{self.year}-{self.month}-1'),
-            ('date_to', '<=', f'{self.year}-{self.month}-{end_date}'),
+            ('date_from', '>=', date(year, month, 1)),
+            ('date_to', '<=', date(year, month, end_date)),
             ('state', 'in', ('done', 'paid'))
         ])
         return indian_employees, payslips

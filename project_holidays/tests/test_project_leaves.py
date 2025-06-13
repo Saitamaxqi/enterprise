@@ -35,8 +35,8 @@ class TestProjectLeaves(common.TransactionCase):
         leave = self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
-            'request_date_from': '2020-1-1',
-            'request_date_to': '2020-1-1',
+            'request_date_from': '2020-01-01',
+            'request_date_to': '2020-01-01',
         })
 
         task_1 = self.env['project.task'].create({
@@ -71,15 +71,15 @@ class TestProjectLeaves(common.TransactionCase):
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
-            'request_date_from': '2020-1-6',
-            'request_date_to': '2020-1-7',
+            'request_date_from': '2020-01-06',
+            'request_date_to': '2020-01-07',
         }).action_approve()
 
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
-            'request_date_from': '2020-1-8',
-            'request_date_to': '2020-1-10',
+            'request_date_from': '2020-01-08',
+            'request_date_to': '2020-01-10',
         }).action_approve()
 
         task_1 = self.env['project.task'].create({
@@ -176,8 +176,8 @@ class TestProjectLeaves(common.TransactionCase):
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
-            'request_date_from': '2020-1-1',
-            'request_date_to': '2020-1-1',
+            'request_date_from': '2020-01-01',
+            'request_date_to': '2020-01-01',
         }).action_approve()
 
         with Form(self.env['project.task']) as task_form:
@@ -209,8 +209,8 @@ class TestProjectLeaves(common.TransactionCase):
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
-            'request_date_from': '2020-1-6',
-            'request_date_to': '2020-1-7',
+            'request_date_from': '2020-01-06',
+            'request_date_to': '2020-01-07',
         }).action_approve()
 
         task = self.env['project.task'].create({

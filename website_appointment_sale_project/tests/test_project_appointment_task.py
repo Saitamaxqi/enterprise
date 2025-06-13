@@ -120,7 +120,7 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
             }
         ])
 
-    @freeze_time('2022-2-13 20:00:00')
+    @freeze_time('2022-02-13 20:00:00')
     @users('apt_manager')
     def test_project_user_appointment_type_task_population_on_confirmed_so(self):
         """
@@ -231,7 +231,7 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
             else:
                 self.assertEqual(task_answer_value, answer_value, "The answer value should be equal to the value provided by the user")
 
-    @freeze_time('2022-2-13 20:00:00')
+    @freeze_time('2022-02-13 20:00:00')
     def test_project_resource_appointment_type_task_population_on_confirmed_so(self):
         """
         Verify that when the SO of a appointment booking of RESOURCE type is confirmed,

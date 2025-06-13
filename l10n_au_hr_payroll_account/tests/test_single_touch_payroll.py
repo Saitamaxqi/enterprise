@@ -371,7 +371,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         self.contract_1.write({
             "wage": 2000,
             "schedule_pay": "weekly",
-            "date_start": "2011-9-01",
+            "date_start": "2011-09-01",
             "date_end": "2024-11-01",
         })
         self.allocate_leaves(
@@ -412,7 +412,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                 "IncomeTaxFreeA": 93956.0,
             },
         )
-        self.assertEqual(rendering_data[1][0]["EmploymentEndD"], fields.Date.from_string("2024-11-1"))
+        self.assertEqual(rendering_data[1][0]["EmploymentEndD"], fields.Date.from_string("2024-11-01"))
         lumpsum_tuple = rendering_data[1][0]["Remuneration"][0]["LumpSumCollection"]
         # ETP Tax free under tax free cap (Genuine) are reported as Lump Sum D
         self.assertListEqual(

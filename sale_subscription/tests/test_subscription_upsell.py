@@ -418,7 +418,7 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             # We don't invoice renewal_so_2 yet to see what happens.
             self.assertEqual(renewal_so_2.start_date, datetime.date(2023, 1, 1))
             self.assertEqual(renewal_so_2.next_invoice_date, datetime.date(2023, 1, 1))
-        with freeze_time("2022-10-2"):
+        with freeze_time("2022-10-02"):
             self.env['sale.order']._cron_recurring_create_invoice()
             action = renewal_so.prepare_upsell_order()
             upsell_so = self.env['sale.order'].browse(action['res_id'])

@@ -14,8 +14,8 @@ class TestPlanningLeaves(TestCommon):
         leave = self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
-            'request_date_from': '2020-1-1',
-            'request_date_to': '2020-1-1',
+            'request_date_from': '2020-01-01',
+            'request_date_to': '2020-01-01',
         })
 
         slot_1 = self.env['planning.slot'].create({
@@ -47,15 +47,15 @@ class TestPlanningLeaves(TestCommon):
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
-            'request_date_from': '2020-1-6',
-            'request_date_to': '2020-1-7',
+            'request_date_from': '2020-01-06',
+            'request_date_to': '2020-01-07',
         }).action_approve()
 
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
-            'request_date_from': '2020-1-8',
-            'request_date_to': '2020-1-10',
+            'request_date_from': '2020-01-08',
+            'request_date_to': '2020-01-10',
         }).action_approve()
 
         slot_1 = self.env['planning.slot'].create({
@@ -195,8 +195,8 @@ class TestPlanningLeaves(TestCommon):
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
-            'request_date_from': '2020-1-9',
-            'request_date_to': '2020-1-9',
+            'request_date_from': '2020-01-09',
+            'request_date_to': '2020-01-09',
         }).action_approve()
 
         self.env['planning.slot'].sudo().create({
@@ -287,14 +287,14 @@ class TestPlanningLeaves(TestCommon):
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
-            'request_date_from': '2020-1-6',
-            'request_date_to': '2020-1-7',
+            'request_date_from': '2020-01-06',
+            'request_date_to': '2020-01-07',
         }).action_refuse()
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
-            'request_date_from': '2020-1-6',
-            'request_date_to': '2020-1-7',
+            'request_date_from': '2020-01-06',
+            'request_date_to': '2020-01-07',
         }).action_approve()
 
         slot_1 = self.env['planning.slot'].create({

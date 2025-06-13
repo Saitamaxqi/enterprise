@@ -89,7 +89,7 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
         self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], 0)
 
-    @freeze_time('2022-2-13 20:00:00')
+    @freeze_time('2022-02-13 20:00:00')
     @mute_logger('odoo.sql_db')
     @users('apt_manager')
     def test_booking_to_event_collisions_users(self):
@@ -240,7 +240,7 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         self.assertEqual(booking_line.event_start, calendar_booking.start)
         self.assertEqual(booking_line.event_stop, calendar_booking.stop)
 
-    @freeze_time('2022-2-13 20:00:00')
+    @freeze_time('2022-02-13 20:00:00')
     @mute_logger('odoo.sql_db')
     @users('apt_manager')
     def test_booking_to_event_on_so_confirmation_users(self):

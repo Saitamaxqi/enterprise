@@ -82,8 +82,8 @@
     <!-- Payslip batch -->
     <record id="hr_payslip_batch" model="hr.payslip.run">
         <field name="name" eval="time.strftime('June %Y')"/>
-        <field name="date_start" eval="time.strftime('%Y-6-1')"/>
-        <field name="date_end" eval="time.strftime('%Y-6-30')"/>
+        <field name="date_start" eval="time.strftime('%Y-06-01')"/>
+        <field name="date_end" eval="time.strftime('%Y-06-30')"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
 
@@ -101,8 +101,8 @@
     <!-- Payslip Demo  -->
     <record id="hr_payslip_demo" model="hr.payslip">
         <field name="name" eval="'Marc Demo ' + time.strftime('June %Y')"/>
-        <field name="date_from" eval="time.strftime('%Y-6-1')"/>
-        <field name="date_to" eval="time.strftime('%Y-6-30')"/>
+        <field name="date_from" eval="time.strftime('%Y-06-01')"/>
+        <field name="date_to" eval="time.strftime('%Y-06-30')"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
         <field name="struct_id" ref="hr_payroll.structure_002"/>
         <field name="payslip_run_id" ref="hr_payslip_batch"/>
@@ -114,8 +114,8 @@
     <!-- Payslip batch -->
     <record id="hr_payslip_batch_may" model="hr.payslip.run">
         <field name="name" eval="time.strftime('May %Y')"/>
-        <field name="date_start" eval="time.strftime('%Y-5-1')"/>
-        <field name="date_end" eval="time.strftime('%Y-5-31')"/>
+        <field name="date_start" eval="time.strftime('%Y-05-01')"/>
+        <field name="date_end" eval="time.strftime('%Y-05-31')"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
 
@@ -133,8 +133,8 @@
     <!-- Payslip Demo  -->
     <record id="hr_payslip_demo_may" model="hr.payslip">
         <field name="name" eval="'Marc Demo ' + time.strftime('May %Y')"/>
-        <field name="date_from" eval="time.strftime('%Y-5-1')"/>
-        <field name="date_to" eval="time.strftime('%Y-5-31')"/>
+        <field name="date_from" eval="time.strftime('%Y-05-01')"/>
+        <field name="date_to" eval="time.strftime('%Y-05-31')"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
         <field name="struct_id" ref="hr_payroll.structure_002"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_may"/>
@@ -1127,8 +1127,8 @@
         <field name="sdworx_code">0000008</field>
         <field name="ucm_code">10</field>
         <field name="partena_code">000010</field>
-        <field name="date_version" eval="'2015-1-1'"/>
-        <field name="contract_date_start" eval="'2015-1-1'"/>
+        <field name="date_version" eval="'2015-01-01'"/>
+        <field name="contract_date_start" eval="'2015-01-01'"/>
         <field name="contract_date_end" eval="time.strftime('%Y-%m-%d')"/>
         <field eval="3650.0" name="wage"/>
         <field eval="3650.0" name="wage_on_signature"/>
@@ -1183,9 +1183,9 @@
         <field name="sdworx_code">0000009</field>
         <field name="ucm_code">11</field>
         <field name="partena_code">000011</field>
-        <field name="date_version" eval="'2015-1-1'"/>
-        <field name="contract_date_start" eval="'2015-1-1'"/>
-        <field name="contract_date_end" eval="'2017-12-1'"/>
+        <field name="date_version" eval="'2015-01-01'"/>
+        <field name="contract_date_start" eval="'2015-01-01'"/>
+        <field name="contract_date_end" eval="'2017-12-01'"/>
         <field eval="3750.0" name="wage"/>
         <field eval="3750.0" name="wage_on_signature"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -1337,9 +1337,9 @@
         <field name="sdworx_code">0000012</field>
         <field name="ucm_code">14</field>
         <field name="partena_code">000014</field>
-        <field name="date_version" eval="'2015-1-1'"/>
-        <field name="contract_date_start" eval="'2015-1-1'"/>
-        <field name="contract_date_end" eval="'2018-2-1'"/>
+        <field name="date_version" eval="'2015-01-01'"/>
+        <field name="contract_date_start" eval="'2015-01-01'"/>
+        <field name="contract_date_end" eval="'2018-02-01'"/>
         <field eval="3750.0" name="wage"/>
         <field eval="3750.0" name="wage_on_signature"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -1731,7 +1731,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_admin"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1740,7 +1740,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_compensatory_days"/>
         <field name="number_of_days">7</field>
         <field name="employee_id" ref="employee_admin"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1749,7 +1749,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">7</field>
         <field name="employee_id" ref="employee_admin"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1758,7 +1758,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_compensatory_days"/>
         <field name="number_of_days">12</field>
         <field name="employee_id" ref="employee_admin"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1767,7 +1767,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_al"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1776,7 +1776,7 @@
         <field name="holiday_status_id" ref="hr_holidays.hr_holiday_status_dv"/>
         <field name="number_of_days">10</field>
         <field name="employee_id" ref="employee_al"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1785,7 +1785,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">12</field>
         <field name="employee_id" ref="employee_al"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1794,7 +1794,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_mit"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1803,7 +1803,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">7</field>
         <field name="employee_id" ref="employee_mit"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1812,7 +1812,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_qdp"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1821,7 +1821,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">7</field>
         <field name="employee_id" ref="employee_qdp"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1830,7 +1830,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_fpi"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1839,7 +1839,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">7</field>
         <field name="employee_id" ref="employee_fpi"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1848,7 +1848,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_niv"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1857,7 +1857,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">5</field>
         <field name="employee_id" ref="employee_niv"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1866,7 +1866,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="employee_jve"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -1875,7 +1875,7 @@
         <field name="holiday_status_id" ref="hr_holidays.leave_type_unpaid"/>
         <field name="number_of_days">5</field>
         <field name="employee_id" ref="employee_jve"/>
-        <field name="date_from" eval="time.strftime('%Y-1-1')"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
     </record>
 
@@ -2080,7 +2080,7 @@
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="create_date" eval="time.strftime('2019-01-01')"/>
-        <field name="date_from" eval="time.strftime('2019-1-1')"/>
+        <field name="date_from" eval="time.strftime('2019-01-01')"/>
         <field name="date_to" eval="time.strftime('2019-12-31')"/>
     </record>
 
@@ -2090,7 +2090,7 @@
         <field name="number_of_days">20</field>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="create_date" eval="time.strftime('2020-01-01')"/>
-        <field name="date_from" eval="time.strftime('2020-1-1')"/>
+        <field name="date_from" eval="time.strftime('2020-01-01')"/>
         <field name="date_to" eval="time.strftime('2020-12-31')"/>
     </record>
 

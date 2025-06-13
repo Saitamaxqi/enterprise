@@ -25,8 +25,8 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
             'name': 'Test Payslip',
             'employee_id': cls.employee.id,
             'struct_id': cls.struct.id,
-            'date_from': '2022-1-1',
-            'date_to': '2022-1-31',
+            'date_from': '2022-01-01',
+            'date_to': '2022-01-31',
         })
         cls.contract.structure_type_id = cls.struct_type
         cls.contract.hourly_wage = 100

@@ -244,9 +244,9 @@ class AccountTestSIE4Import(AccountTestInvoicingCommon):
             'journal_id': self.journal_misc_id,
         }
         self.assertRecordValues(sorted_moves, [
-            {'name': "MISC/2024/01/0001", 'ref': "Imported from SIE4 - 2nd item", 'date': fields.Date.from_string('2024-01-5'), **common_values},
-            {'name': "MISC/2024/01/0002", 'ref': "Imported from SIE4", 'date': fields.Date.from_string('2024-01-6'), **common_values},
-            {'name': "MISC/2024/01/0003", 'ref': "Imported from SIE4 - 1st item", 'date': fields.Date.from_string('2024-01-7'), **common_values},
+            {'name': "MISC/2024/01/0001", 'ref': "Imported from SIE4 - 2nd item", 'date': fields.Date.from_string('2024-01-05'), **common_values},
+            {'name': "MISC/2024/01/0002", 'ref': "Imported from SIE4", 'date': fields.Date.from_string('2024-01-06'), **common_values},
+            {'name': "MISC/2024/01/0003", 'ref': "Imported from SIE4 - 1st item", 'date': fields.Date.from_string('2024-01-07'), **common_values},
         ])
         self.assertSequenceEqual(sorted_moves.line_ids.mapped('balance'), (100.0, -100.0, 200.0, -200.0, 300.0, -300.0))
 

@@ -143,7 +143,7 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
         i = 1
         for res in results:
             country_dest_code = res['country_dest_code'] or ''
-            country_origin_code = res['country_code'] if res['system'] == 6 and date_to > '2022-1-1' else ''
+            country_origin_code = res['country_code'] if res['system'] == 6 and fields.Date.to_date(date_to) > date(2022, 1, 1) else ''
             country = res['country_code'] if res['system'] == 6 else country_dest_code
 
             # From the Manual for Statistical Declarations International Trade in Goods:

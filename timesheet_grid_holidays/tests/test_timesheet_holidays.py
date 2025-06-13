@@ -59,7 +59,7 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
         # working hours for employee after Timesheet creations
         self.assertEqual(result[self.empl_employee.id]['units_to_work'], 32, "Employee's one week units of work after the Timesheet creation should be 32.")
 
-    @freeze_time('2018-2-6')
+    @freeze_time('2018-02-06')
     def test_grid_update_holiday(self):
         Requests = self.env['hr.leave'].with_context(mail_create_nolog=True, mail_notrack=True)
         hr_leave_type_with_ts = self.env['hr.leave.type'].create({

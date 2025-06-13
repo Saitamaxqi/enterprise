@@ -26,8 +26,8 @@ class TestLuPayrollCommon(TransactionCase):
             'company_id': cls.lux_company.id,
             'identification_id': 111111111,
             'structure_type_id': cls.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
-            'contract_date_start': '2021-1-1',
-            'date_version': '2021-1-1',
+            'contract_date_start': '2021-01-01',
+            'date_version': '2021-01-01',
             'wage': 6000.0,
         })
         cls.employee_david.resource_calendar_id.tz = "Europe/Brussels"

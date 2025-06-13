@@ -17,7 +17,7 @@ class TestPlanning(TestCommonPlanning, MockEmail):
     def setUpClass(cls):
         super().setUpClass()
         cls.classPatch(cls.env.cr, 'now', datetime.now)
-        with freeze_time('2019-5-1'):
+        with freeze_time('2019-05-01'):
             cls.setUpCalendars()
             cls.setUpEmployees()
         calendar_joseph = cls.env['resource.calendar'].create({

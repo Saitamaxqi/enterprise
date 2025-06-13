@@ -136,7 +136,7 @@ class TestLibroGiornaleReport(TestAccountReportsCommon):
 
     def test_line_numbering_is_sequential(self):
         for i in range(3):
-            self._create_move(f'2024-01-0{i+1}')
+            self._create_move(date(2024, 1, i + 1))
         lines = self._get_libro_giornale_lines('2024-01-01', '2024-01-31')
 
         numbers = [line['line_number']['data'] for line in lines if 'line_number' in line]

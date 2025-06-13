@@ -14,7 +14,7 @@ class TestForecastCreationAndEditing(TestCommonForecast):
     def setUpClass(cls):
         super().setUpClass()
         cls.classPatch(cls.env.cr, 'now', fields.Datetime.now)
-        with freeze_time('2019-1-1'):
+        with freeze_time('2019-01-01'):
             cls.setUpEmployees()
             cls.setUpProjects()
 

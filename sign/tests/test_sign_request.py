@@ -391,7 +391,7 @@ class TestSignRequest(SignRequestCommon, MockEmail):
             archived_request.action_archive()
 
             # Jump to the future and run the cron
-            with self.mock_datetime_and_now("2024-05-6"):
+            with self.mock_datetime_and_now("2024-05-06"):
                 self.env['sign.request']._cron_reminder()
                 self.assertTrue(archived_request.state == 'canceled')
 

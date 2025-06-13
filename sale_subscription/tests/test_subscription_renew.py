@@ -518,7 +518,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
         """ When a renewal quote is negotiated for more than a month, we need to update the start date of the
         renewal quote if the parent is prolonged.
         """
-        with freeze_time("2023-01-1"):
+        with freeze_time("2023-01-01"):
             # We reset the renew alert to make sure it will run with freezetime
             self.subscription.write({'start_date': False, 'next_invoice_date': False})
             self.subscription._onchange_sale_order_template_id()

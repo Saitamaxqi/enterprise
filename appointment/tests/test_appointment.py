@@ -101,7 +101,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
                 self.assertEqual(nb_available_slots, len(available_slots))
                 event.unlink()
 
-    @freeze_time('2023-01-6')
+    @freeze_time('2023-01-06')
     @users('apt_manager')
     def test_appointment_availability_with_show_as(self):
         """ Checks that if a normal event and custom event both set at the same time but
@@ -470,7 +470,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         meeting_2.write({'appointment_status': 'no_show'})
         self.assertEqual(apt_type.appointment_count_upcoming, 2)
 
-    @freeze_time('2023-01-9')
+    @freeze_time('2023-01-09')
     def test_booking_validity(self):
         """
         When confirming an appointment, we must recheck that it is indeed a valid slot,

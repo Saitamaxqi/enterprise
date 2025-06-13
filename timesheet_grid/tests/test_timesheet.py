@@ -425,10 +425,10 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
             ]
         })
         self.user_employee.tz = 'Etc/GMT+12'
-        working_hours_gmt_plus_12 = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-3-22', '2021-3-26')
+        working_hours_gmt_plus_12 = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-03-22', '2021-03-26')
 
         self.user_employee.tz = employee.resource_calendar_id.tz = 'Etc/GMT-12'
-        working_hours_gmt_minus_12 = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-3-22', '2021-3-26')
+        working_hours_gmt_minus_12 = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-03-22', '2021-03-26')
 
         expected_hours = {
             '2021-03-22': 4.0,
@@ -452,7 +452,7 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
             '2021-03-26': 2.0,
             'full_time_required_hours': 28.57,
         }
-        flexible_daily_hours = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-3-22', '2021-3-26')
+        flexible_daily_hours = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-03-22', '2021-03-26')
         self.assertEqual(flexible_expected_hours, flexible_daily_hours)
 
     def test_action_start_timer_on_old_timesheet(self):

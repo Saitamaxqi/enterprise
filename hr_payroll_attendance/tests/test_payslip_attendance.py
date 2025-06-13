@@ -24,8 +24,8 @@ class TestPayslipAttendance(HrWorkEntryAttendanceCommon):
             'name': 'Test Payslip',
             'employee_id': cls.employee.id,
             'struct_id': cls.struct.id,
-            'date_from': '2024-1-1',
-            'date_to': '2024-1-30',
+            'date_from': '2024-01-01',
+            'date_to': '2024-01-30',
         })
 
     def test_get_attendance_from_payslip(self):
@@ -63,7 +63,7 @@ class TestPayslipAttendance(HrWorkEntryAttendanceCommon):
             },
             {
                 'employee_id': self.employee.id,
-                'check_in': datetime(2024, 1, 30, 23, 30, 0), # 2024-1-31 00-30-00 in UTC+1
+                'check_in': datetime(2024, 1, 30, 23, 30, 0),  # 2024-01-31 00-30-00 in UTC+1
                 'check_out': datetime(2024, 1, 31, 7, 30, 0),
             },
         ])

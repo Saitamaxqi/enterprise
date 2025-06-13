@@ -293,7 +293,7 @@ class TestUserAccess(HttpCase):
         unpublished_count = self.env['planning.slot'].with_user(self.planning_user).search_count([('state', '=', 'draft')])
         self.assertEqual(unpublished_count, 0, "A planning user shouldn't see unpublished slots")
 
-    @freeze_time("2019-5-28 08:00:00")
+    @freeze_time("2019-05-28 08:00:00")
     def test_planning_user_can_take_unassigned_slots(self):
         """ Planning user can take unassigned slots. """
         test_slot = self.env['planning.slot'].create({

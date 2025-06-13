@@ -54,8 +54,8 @@ class TestPayslipComputation(TestPayslipContractBase):
         self._reset_work_entries(self.richard_payslip.version_id)
         self.env['resource.calendar.leaves'].create({
             'name': 'Doctor Appointment',
-            'date_from': datetime.strptime('2016-1-11 07:00:00', '%Y-%m-%d %H:%M:%S'),
-            'date_to': datetime.strptime('2016-1-11 18:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_from': datetime.strptime('2016-01-11 07:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_to': datetime.strptime('2016-01-11 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'resource_id': self.richard_emp.resource_id.id,
             'calendar_id': self.richard_emp.resource_calendar_id.id,
             'work_entry_type_id': self.work_entry_type_unpaid.id,
@@ -71,8 +71,8 @@ class TestPayslipComputation(TestPayslipContractBase):
     def test_worked_days_amount_with_unpaid(self):
         self.env['resource.calendar.leaves'].create({
             'name': 'Doctor Appointment',
-            'date_from': datetime.strptime('2016-1-11 07:00:00', '%Y-%m-%d %H:%M:%S'),
-            'date_to': datetime.strptime('2016-1-11 18:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_from': datetime.strptime('2016-01-11 07:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_to': datetime.strptime('2016-01-11 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'resource_id': self.richard_emp.resource_id.id,
             'calendar_id': self.richard_emp.resource_calendar_id.id,
             'work_entry_type_id': self.work_entry_type_leave.id,
@@ -81,8 +81,8 @@ class TestPayslipComputation(TestPayslipContractBase):
 
         self.env['resource.calendar.leaves'].create({
             'name': 'Unpaid Doctor Appointment',
-            'date_from': datetime.strptime('2016-1-21 07:00:00', '%Y-%m-%d %H:%M:%S'),
-            'date_to': datetime.strptime('2016-1-21 18:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_from': datetime.strptime('2016-01-21 07:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_to': datetime.strptime('2016-01-21 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'resource_id': self.richard_emp.resource_id.id,
             'calendar_id': self.richard_emp.resource_calendar_id.id,
             'work_entry_type_id': self.work_entry_type_unpaid.id,

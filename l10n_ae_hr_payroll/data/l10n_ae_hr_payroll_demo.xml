@@ -224,8 +224,8 @@
     <record id="hr_payslip_saeed_june" model="hr.payslip">
         <field name="name" eval="'Mitchell Admin ' + time.strftime('June %Y')"/>
         <field name="version_id" model="hr.employee" eval="obj(ref('l10n_ae_hr_payroll.hr_employee_saeed')).version_id.id"/>
-        <field name="date_from" eval="time.strftime('%Y-6-1')"/>
-        <field name="date_to" eval="time.strftime('%Y-6-30')"/>
+        <field name="date_from" eval="time.strftime('%Y-06-01')"/>
+        <field name="date_to" eval="time.strftime('%Y-06-30')"/>
         <field name="employee_id" ref="l10n_ae_hr_payroll.hr_employee_saeed"/>
         <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         <field name="company_id" ref="base.demo_company_ae"/>

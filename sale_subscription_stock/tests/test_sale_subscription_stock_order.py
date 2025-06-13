@@ -512,7 +512,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             self.assertEqual(sub.order_line.qty_delivered, 1)
             self.assertEqual(sub.order_line.qty_to_deliver, 0)
 
-        invoice, picking = self.simulate_period(sub, "2022-05-2")
+        invoice, picking = self.simulate_period(sub, "2022-05-02")
         self.assertTrue(picking)
         self.assertTrue(invoice)
         self.assertEqual(len(invoice.invoice_line_ids), 1, 'We should invoice the recurring line lines')
@@ -599,7 +599,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
 
         # --------- Start Case 2 --------- #
 
-        with freeze_time("2023-01-1"):
+        with freeze_time("2023-01-01"):
             sub = sub_temp.copy()
             sub.action_confirm()
             self.env['sale.order']._create_recurring_invoice()

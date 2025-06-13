@@ -16,7 +16,7 @@ class TestControllersRoute(HttpCase, TestCommonPlanning):
     def setUpClass(cls):
         super().setUpClass()
         cls.classPatch(cls.env.cr, 'now', datetime.now)
-        with freeze_time('2023-6-1'):
+        with freeze_time('2023-06-01'):
             cls.setUpEmployees()
 
         calendar_bert = cls.env['resource.calendar'].create({

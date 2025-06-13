@@ -205,7 +205,7 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         """
         Test that the deferred entries are deleted when the invoice is reset to draft.
         """
-        invoice = self.create_invoice('out_invoice', [(self.revenue_accounts[0], 1680, '2023-03-1', '2023-04-30')], date='2023-03-15')
+        invoice = self.create_invoice('out_invoice', [(self.revenue_accounts[0], 1680, '2023-03-01', '2023-04-30')], date='2023-03-15')
         draft_deferred_move_ids = invoice.deferred_move_ids.filtered(lambda move: move.state =="draft")
         self.assertEqual(len(draft_deferred_move_ids), 2)
 

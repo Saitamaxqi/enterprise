@@ -53,8 +53,8 @@ class TestPayrollWorkedDays(TestPayslipBase):
         self.assertEqual(amount_to_be_paid, 5000)
         self.env['resource.calendar.leaves'].create({
             'name': 'Doctor Appointment',
-            'date_from': datetime.strptime('2030-1-1 07:00:00', '%Y-%m-%d %H:%M:%S'),
-            'date_to': datetime.strptime('2030-1-16 18:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_from': datetime.strptime('2030-01-01 07:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_to': datetime.strptime('2030-01-16 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'resource_id': self.richard_emp.resource_id.id,
             'calendar_id': self.richard_emp.resource_calendar_id.id,
             'work_entry_type_id': self.work_entry_type_unpaid.id,
@@ -73,8 +73,8 @@ class TestPayrollWorkedDays(TestPayslipBase):
         self.assertEqual(amount_to_be_paid, 3840)
         self.env['resource.calendar.leaves'].create({
             'name': 'Doctor Appointment',
-            'date_from': datetime.strptime('2030-1-1 07:00:00', '%Y-%m-%d %H:%M:%S'),
-            'date_to': datetime.strptime('2030-1-16 18:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_from': datetime.strptime('2030-01-01 07:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_to': datetime.strptime('2030-01-16 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'resource_id': self.richard_emp.resource_id.id,
             'calendar_id': self.richard_emp.resource_calendar_id.id,
             'work_entry_type_id': self.work_entry_type_unpaid.id,

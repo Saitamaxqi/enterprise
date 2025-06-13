@@ -54,8 +54,8 @@ ORDER_MOCK = {
     'actual_shipping_fee_confirmed': True,
     'buyer_user_id': 444444,
     'buyer_username': 'Gederic Frilson',
-    'update_time': 1579050000,  # 2020-1-15
-    'create_time': 1579050000,  # 2020-1-15
+    'update_time': 1579050000,  # 2020-01-15
+    'create_time': 1579050000,  # 2020-01-15
     'currency': 'VND',
     'actual_shipping_fee': 10,
     'estimated_shipping_fee': 10,

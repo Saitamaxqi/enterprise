@@ -2201,8 +2201,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_fpi')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 4000.00
         }"/>
@@ -2211,8 +2211,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_vad')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 4250.00
         }"/>
@@ -2221,8 +2221,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_jep')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 4500.00
         }"/>
@@ -2231,8 +2231,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_jod')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 3550.00
         }"/>
@@ -2241,8 +2241,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_jog')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 4350.00
         }"/>
@@ -2251,8 +2251,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_jgo')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 4350.00
         }"/>
@@ -2261,8 +2261,8 @@
     <function name="create_version" model="hr.employee">
         <value eval="[ref('hr.employee_lur')]"/>
         <value eval="{
-            'date_version': time.strftime('%Y')+'-1-1',
-            'contract_date_start': time.strftime('%Y')+'-1-1',
+            'date_version': time.strftime('%Y')+'-01-01',
+            'contract_date_start': time.strftime('%Y')+'-01-01',
             'contract_date_end': False,
             'wage': 4350.00
         }"/>

@@ -98,7 +98,7 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
             self.assertEqual(booking_line.event_stop, calendar_booking.stop)
 
     @mute_logger('odoo.sql_db')
-    @freeze_time('2022-2-13 20:00:00')
+    @freeze_time('2022-02-13 20:00:00')
     @users('apt_manager')
     def test_booking_to_event_on_invoice_paid_users(self):
         """ Replace booking with Event when invoice is paid - staff user appointment """

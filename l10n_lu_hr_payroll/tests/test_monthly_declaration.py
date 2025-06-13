@@ -19,8 +19,8 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
         self.contract_david.generate_work_entries(date(2022, 3, 1), date(2020, 3, 31))
         self.payslip_run = self.env['hr.payslip.run'].create({
             'name': 'March 2022',
-            'date_start': '2022-3-1',
-            'date_end': '2022-3-31',
+            'date_start': '2022-03-01',
+            'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
             'state': 'verify',
         })
@@ -74,16 +74,16 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'company_id': self.lux_company.id,
             'identification_id': 987654321,
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
-            'date_version': '2022-1-1',
-            'contract_date_start': '2022-1-1',
-            'contract_date_end': '2022-3-11',
+            'date_version': '2022-01-01',
+            'contract_date_start': '2022-01-01',
+            'contract_date_end': '2022-03-11',
             'wage': 4000.0,
         })
         madison_contract1 = madison_employee.version_id
 
         madison_contract2 = madison_contract1.copy({
-            'date_version': '2022-3-21',
-            'contract_date_start': '2022-3-21',
+            'date_version': '2022-03-21',
+            'contract_date_start': '2022-03-21',
             'contract_date_end': False,
             'wage': 4400.0,
         })
@@ -92,9 +92,9 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'company_id': self.lux_company.id,
             'identification_id': 143111140,
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
-            'date_version': '2022-3-4',
-            'contract_date_start': '2022-3-4',
-            'contract_date_end': '2022-3-15',
+            'date_version': '2022-03-04',
+            'contract_date_start': '2022-03-04',
+            'contract_date_end': '2022-03-15',
             'wage': 4000.0,
         })
         laura_contract1 = laura_employee.version_id
@@ -111,8 +111,8 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
 
         batch = self.env['hr.payslip.run'].create({
             'name': 'March 2022',
-            'date_start': '2022-3-1',
-            'date_end': '2022-3-31',
+            'date_start': '2022-03-01',
+            'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
             'state': 'verify',
         })
@@ -198,16 +198,16 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'company_id': self.lux_company.id,
             'identification_id': 987654321,
             'structure_type_id': structure_type.id,
-            'date_version': '2022-1-1',
-            'contract_date_start': '2022-1-1',
-            'contract_date_end': '2022-3-11',
+            'date_version': '2022-01-01',
+            'contract_date_start': '2022-01-01',
+            'contract_date_end': '2022-03-11',
             'wage': 3000.0,
         })
         jade_contract1 = jade_employee.version_id
         jade_contract2 = jade_contract1.copy({
             'name': 'Jade Contract 2',
-            'date_version': '2022-3-21',
-            'contract_date_start': '2022-3-21',
+            'date_version': '2022-03-21',
+            'contract_date_start': '2022-03-21',
             'contract_date_end': False,
             'wage': 4400.0,
             'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
@@ -217,8 +217,8 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
 
         batch = self.env['hr.payslip.run'].create({
             'name': 'March 2022',
-            'date_start': '2022-3-1',
-            'date_end': '2022-3-31',
+            'date_start': '2022-03-01',
+            'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
             'state': 'verify',
         })

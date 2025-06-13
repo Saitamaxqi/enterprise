@@ -285,7 +285,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         with freeze_time("2022-02-01"):
             # Nothing should be invoiced
             self.subscription._cron_recurring_create_invoice()
-            # next_invoice_date : 2022-02-5 but the previous invoice deferred_end_date was set on the 2022-02-01
+            # next_invoice_date : 2022-02-05 but the previous invoice deferred_end_date was set on the 2022-02-01
             # We can't prevent it to be re-invoiced.
             inv = self.subscription.invoice_ids.sorted('date')
             # Nothing was invoiced

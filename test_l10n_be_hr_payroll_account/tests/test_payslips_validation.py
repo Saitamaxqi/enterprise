@@ -4485,8 +4485,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         maternity = self.env['hr.leave'].create({
             'name': 'Legal Time Off 2020',
             'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
-            'request_date_from': '2021-5-1',
-            'request_date_to': '2021-5-31',
+            'request_date_from': '2021-05-01',
+            'request_date_to': '2021-05-31',
             'employee_id': self.employee.id,
         })
 
@@ -5477,8 +5477,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         european_time_off = self.env['hr.leave'].create({
             'name': 'European Time Off',
             'holiday_status_id': self.european_time_off_type.id,
-            'request_date_from': '2022-5-9',
-            'request_date_to': '2022-5-12',
+            'request_date_from': '2022-05-09',
+            'request_date_to': '2022-05-12',
             'employee_id': self.employee.id,
         })
         european_time_off.action_approve()

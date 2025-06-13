@@ -1713,7 +1713,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         wo = mo.workorder_ids
         self.assertEqual(wo.duration_expected, 60)
 
-    @freeze_time('2022-8-08')
+    @freeze_time('2022-08-08')
     def test_planning_8(self):
         """ Plan a workorder and move it on the planning, the workorder duration
         should always be consistent with the planned start and finish date"""

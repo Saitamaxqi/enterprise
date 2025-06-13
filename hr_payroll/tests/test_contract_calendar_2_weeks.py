@@ -23,7 +23,7 @@ class TestPayslipContractCalendar2Weeks(TestPayslipContractBase):
         # Leave during small week (just 2 days of work)
         leave = self.env['resource.calendar.leaves'].create({
             'name': 'leave name',
-            'date_from': datetime.strptime('2015-11-8 07:00:00', '%Y-%m-%d %H:%M:%S'),
+            'date_from': datetime.strptime('2015-11-08 07:00:00', '%Y-%m-%d %H:%M:%S'),
             'date_to': datetime.strptime('2015-11-14 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'resource_id': self.jules_emp.resource_id.id,
             'calendar_id': self.calendar_2_weeks.id,
