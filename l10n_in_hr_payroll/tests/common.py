@@ -24,7 +24,6 @@ class TestPayrollCommon(TransactionCase):
             'name': 'Research and Development',
         })
         cls.employee_fp = cls.env.ref('hr.employee_admin')
-        cls.employee_al = cls.env.ref('hr.employee_al')
 
         cls.company_in = cls.Company.create({
             'name': 'Company IN',
