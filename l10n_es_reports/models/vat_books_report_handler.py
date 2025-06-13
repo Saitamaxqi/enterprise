@@ -3,7 +3,7 @@ from collections import defaultdict
 
 from odoo import models, _, api
 from odoo.exceptions import RedirectWarning, UserError
-from odoo.tools import format_date
+from odoo.tools import format_date, SQL
 from odoo.tools.date_utils import get_quarter_number
 
 INCOME_FIELDS = (
@@ -44,19 +44,197 @@ SURCHARGE_TAX_EQUIVALENT = {
 }
 
 
-class AccountGenericTaxReportHandler(models.AbstractModel):
-    _inherit = 'account.generic.tax.report.handler'
+class L10n_EsVATBooksReportHandler(models.AbstractModel):
+    _name = 'l10n_es.vat.books.report.handler'
+    _inherit = ['account.generic.tax.report.handler']
+    _description = 'Spanish Libros Registro de IVA'
+
+    def _get_custom_display_config(self):
+        config = super()._get_custom_display_config()
+        config['templates']['AccountReportLineName'] = 'l10n_es_reports.VatBooksLineName'
+        return config
+
+    def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
+        """Generate dynamic lines for VAT books report."""
+        invoice_results = self._query_invoices(report, options)
+        return [(0, self._get_report_line_section(options, journal_type))
+                for journal_type, invoice_data_list in invoice_results if invoice_data_list]
+
+    def _caret_options_initializer(self):
+        """Initialize caret options for the report lines."""
+        caret_options = super()._caret_options_initializer()
+        caret_options['invoice_tax_report'] = [
+            {'name': _("View Invoice"), 'action': 'caret_option_view_invoice'},
+        ]
+        return caret_options
+
+    def _query_invoices(self, report, options):
+        """Query invoices and group them by journal type."""
+        query = report._get_report_query(options, 'strict_range')
+
+        self.env.cr.execute(SQL("""
+            SELECT
+                account_move.id AS move_id,
+                account_move.name AS move_name,
+                account_move.move_type,
+                account_move.invoice_date,
+                journal.type AS journal_type,
+                partner.name AS partner_name,
+                SUM(CASE WHEN account_move_line.tax_line_id IS NOT NULL
+                    THEN %(balance_select)s ELSE 0 END) AS tax_amount,
+                SUM(CASE WHEN account_move_line.tax_line_id IS NULL
+                    AND EXISTS(SELECT 1 FROM account_move_line_account_tax_rel
+                               WHERE account_move_line_id = account_move_line.id)
+                    THEN %(balance_select)s ELSE 0 END) AS invoice_amount
+            FROM %(table_references)s
+            JOIN account_move ON account_move.id = account_move_line.move_id
+            JOIN account_journal journal ON journal.id = account_move.journal_id
+            LEFT JOIN res_partner partner ON partner.id = account_move.partner_id
+            WHERE %(search_condition)s
+                AND account_move.move_type != 'entry'
+            GROUP BY account_move.id, account_move.name, account_move.move_type,
+                    account_move.invoice_date, partner.name, journal.type
+            ORDER BY account_move.name, journal.type, account_move.invoice_date DESC
+        """,
+            balance_select=SQL("account_move_line.balance"),
+            table_references=query.from_clause,
+            search_condition=query.where_clause,
+        ))
+
+        results = self.env.cr.dictfetchall()
+        invoice_data = {'sale': [], 'purchase': []}
+
+        for row in results:
+            if row['journal_type'] in invoice_data:
+                sign = -1 if row['journal_type'] == 'sale' else 1
+                invoice_data[row['journal_type']].append({
+                    'move_id': row['move_id'],
+                    'move_name': row['move_name'],
+                    'move_type': row['move_type'],
+                    'partner_name': row['partner_name'] or _('Unknown Partner'),
+                    'invoice_date': row['invoice_date'],
+                    'invoice_amount': (row['invoice_amount'] or 0.0) * sign,
+                    'tax_amount': (row['tax_amount'] or 0.0) * sign,
+                })
+
+        return [(journal_type, data_list) for journal_type, data_list in invoice_data.items() if data_list]
+
+    def _get_invoice_type_category(self, journal_type):
+        """Categorize invoice type as income or expense."""
+        return _('income') if journal_type == 'sale' else _('expense') if journal_type == 'purchase' else None
+
+    def _get_report_line_section(self, options, journal_type):
+        """Create a section line (Income/Expense)."""
+        report = self.env['account.report'].browse(options['report_id'])
+        return {
+            'id': report._get_generic_line_id(None, None, markup=f'{journal_type}_section'),
+            'name': self._get_invoice_type_category(journal_type).title(),
+            'columns': [report._build_column_dict('', column, options=options) for column in options['columns']],
+            'level': 0,
+            'unfoldable': True,
+            'unfolded': True,
+            'expand_function': '_report_expand_unfoldable_line_vat_books_section'
+        }
+
+    def _get_report_line_invoice(self, options, invoice_data, parent_line_id):
+        """Create an invoice line with optimized column handling."""
+        report = self.env['account.report'].browse(options['report_id'])
+
+        def build_column(column):
+            expr_label = column.get('expression_label')
+            col_value = self._get_column_value(expr_label, invoice_data)
+
+            if expr_label in ['invoice_total', 'vat_total']:
+                return report._build_column_dict(col_value, column, options=options)
+            elif expr_label == 'invoice_date':
+                return report._build_column_dict(
+                    format_date(self.env, col_value) if col_value else '',
+                    {**column, 'figure_type': 'string'},
+                    options=options
+                )
+            else:
+                return report._build_column_dict(
+                    str(col_value) if col_value else '',
+                    {**column, 'figure_type': 'string'},
+                    options=options
+                )
+
+        return {
+            'id': report._get_generic_line_id('account.move', invoice_data['move_id'], parent_line_id=parent_line_id),
+            'parent_id': parent_line_id,
+            'name': invoice_data['move_name'],
+            'columns': [build_column(column) for column in options['columns']],
+            'level': 1,
+            'unfoldable': False,
+            'caret_options': 'invoice_tax_report',
+        }
+
+    def _get_column_value(self, expr_label, invoice_data):
+        """Get column value based on expression label."""
+        return {
+            'invoice_date': invoice_data.get('invoice_date'),
+            'partner': invoice_data.get('partner_name', ''),
+            'invoice_total': invoice_data.get('invoice_amount', 0.0),
+            'vat_total': invoice_data.get('tax_amount', 0.0),
+            'tax_names': invoice_data.get('tax_names', ''),
+            'move_name': invoice_data.get('move_name', ''),
+        }.get(expr_label, '')
+
+    def _report_expand_unfoldable_line_vat_books_section(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
+        """Handle section expansion for VAT books sections."""
+        report = self.env['account.report'].browse(options['report_id'])
+        markup = report._parse_line_id(line_dict_id)[-1][0]
+        section_type = markup.replace('_section', '') if markup.endswith('_section') else markup
+
+        if section_type not in ['sale', 'purchase']:
+            return {'lines': [], 'offset_increment': 0, 'has_more': False}
+
+        # Find matching invoice data for this section type
+        for result_journal_type, invoice_data_list in self._query_invoices(report, options):
+            if result_journal_type == section_type:
+                lines = [self._get_report_line_invoice(options, invoice_data, line_dict_id)
+                        for invoice_data in invoice_data_list]
+                return {
+                    'lines': lines,
+                    'offset_increment': len(lines),
+                    'has_more': False,
+                }
+
+        return {'lines': [], 'offset_increment': 0, 'has_more': False}
+
+    def caret_option_view_invoice(self, options, params):
+        """Open the invoice form view using parent class helper."""
+        report = self.env['account.report'].browse(options['report_id'])
+        model, invoice_id = report._get_model_info_from_id(params['line_id'])
+
+        if model != 'account.move':
+            return {}
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Invoice'),
+            'res_model': 'account.move',
+            'res_id': invoice_id,
+            'view_mode': 'form',
+            'views': [(False, 'form')],
+            'target': 'current',
+        }
+
+    # -------------------------------------------------------------------------
+    # Libros de IVA Export
+    # -------------------------------------------------------------------------
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
-        if self.env.company.account_fiscal_country_id.code == 'ES':
-            options['buttons'].append({
-                'name': _('VAT Record Books (XLSX)'),
-                'sequence': 0,
-                'action': 'export_file',
-                'action_param': 'export_libros_de_iva',
-                'file_export_type': _('XLSX'),
-            })
+        # Find and replace the XLSX button
+        for button in options['buttons']:
+            if button.get('action_param') == 'export_to_xlsx':
+                button.update({
+                    'name': _('VAT Books XLSX'),
+                    'sequence': 120,
+                    'action_param': 'export_libros_de_iva',
+                })
+                break
 
     def _l10n_es_libros_fill_header(self, sheet_income, sheet_expense):
         def fill_header(sheet_val, header_title, subheaders=None):
@@ -255,7 +433,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         for move_idx in sheet_line_vals:
             for line_vals in sheet_line_vals[move_idx].values():
                 for field, value in line_vals.items():
-                    if field in FORMAT_NEEDED_FIELDS and value != '':
+                    if field in FORMAT_NEEDED_FIELDS and value:
                         line_vals[field] = round(value, 2)
 
     def _l10n_es_libros_get_sheet_line_vals(self, lines):
@@ -383,9 +561,3 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             'file_content': generated_file,
             'file_type': 'xlsx',
         }
-
-
-class L10n_EsLibrosRegistroExportHandler(models.AbstractModel):  # TODO: Remove in master
-    _name = 'l10n_es.libros.registro.export.handler'
-    _inherit = ['account.generic.tax.report.handler']
-    _description = 'Spanish Libros Registro de IVA'

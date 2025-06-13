@@ -11,7 +11,7 @@ class TestLibroDiarioXLSX(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.report = cls.env.ref('account_reports.general_ledger_report')
+        cls.report = cls.env.ref('account_reports.journal_report')
 
         tax_repartition_line = cls.company_data['default_tax_sale'].refund_repartition_line_ids\
             .filtered(lambda line: line.repartition_type == 'tax')

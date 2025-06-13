@@ -40,9 +40,16 @@ Accounting reports for Spain
         'data/mod349.xml',
         'data/mod390.xml',
         'data/trial_balance.xml',
+        'data/vat_books_report.xml',
+        'data/menuitem_data.xml',
         'wizard/aeat_boe_export_wizards.xml',
     ],
     'installable': True,
     'auto_install': ['l10n_es', 'account_reports'],
     'license': 'OEEL-1',
+    'assets': {
+        'web.assets_backend': [
+            'l10n_es_reports/static/src/**/*',
+        ],
+    },
 }

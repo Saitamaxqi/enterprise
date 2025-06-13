@@ -196,7 +196,7 @@ class TestAccountInvoice(TestAccountReportsCommon):
             report, "2019-12-31", "2019-12-31", default_options={"unfold_all": True}
         )
 
-        vat_record_books = self.env['l10n_es.libros.registro.export.handler'].export_libros_de_iva(options)['file_content']
+        vat_record_books = self.env['l10n_es.vat.books.report.handler'].export_libros_de_iva(options)['file_content']
 
         self._test_xlsx_file(vat_record_books, {
             0: ('Autoliquidación', '', 'Actividad', '', '', 'Tipo de Factura', 'Concepto de Ingreso', 'Ingreso Computable', 'Fecha Expedición', 'Fecha Operación', 'Identificación de la Factura', '', '', 'NIF Destinario', '', '', 'Nombre Destinario', 'Clave de Operación', 'Calificación de la Operación', 'Operación Exenta', 'Total Factura', 'Base Imponible', 'Tipo de IVA', 'Cuota IVA Repercutida', 'Tipo de Recargo eq.', 'Cuota Recargo eq.', 'Cobro (Operación Criterio de Caja de IVA y/o artículo 7.2.1º de Reglamento del IRPF)', '', '', '', 'Tipo Retención del IRPF', 'Importe Retenido del IRPF', 'Registro Acuerdo Facturación', 'Inmueble', '', 'Referencia Externa'),

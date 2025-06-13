@@ -4,8 +4,8 @@ from odoo import _, api, models
 from odoo.exceptions import UserError
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class JournalReportCustomHandler(models.AbstractModel):
+    _inherit = 'account.journal.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
@@ -21,6 +21,7 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
             'action_param': 'es_libro_diario_export_to_xlsx',
             'file_export_type': 'XLSX',
             'branch_allowed': True,
+            'always_show': True,
         })
 
     def es_libro_diario_export_to_xlsx(self, options):
@@ -100,7 +101,9 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         # Add the column names
         data = [list(custom_libro_diario_columns.values())]
 
-        engine_result = self._report_custom_engine_general_ledger(None, options, None, 'id_with_accumulated_balance', None)
+        # Get General Ledger report handler and use its engine
+        gl_handler = self.env['account.general.ledger.report.handler']
+        engine_result = gl_handler._report_custom_engine_general_ledger(None, options, None, 'id_with_accumulated_balance', None)
         # Add lines data
         current_move = ''
         entry_index = 0

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 12:42+0000\n"
-"PO-Revision-Date: 2025-06-04 12:42+0000\n"
+"POT-Creation-Date: 2025-08-28 05:46+0000\n"
+"PO-Revision-Date: 2025-08-28 05:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -57,19 +57,12 @@ msgid "Accounting Return"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:ir.model,name:l10n_es_reports.model_account_return_type
-msgid "Accounting Return Type"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_key__a
-#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_key__a
 msgid "Adquisiciones de bienes y servicios"
 msgstr ""
 
 #. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_class__local_negocio
-#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_class__local_negocio
 msgid "Arrendamiento Local Negocio"
 msgstr ""
 
@@ -355,15 +348,12 @@ msgid "Direct Debit Account"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_general_ledger_report_handler__display_name
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_generic_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_es_reports.field_account_journal_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_report__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_reports_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_reports_export_wizard_format__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_return__display_name
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_return_type__display_name
-#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_libros_registro_export_handler__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_mod111_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_mod115_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_mod130_tax_report_handler__display_name
@@ -383,6 +373,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod390_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_vat_books_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_res_company__display_name
 msgid "Display Name"
 msgstr ""
@@ -401,7 +392,6 @@ msgstr ""
 
 #. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_key__b
-#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_key__b
 msgid "Entregas de bienes y prestaciones de servicios"
 msgstr ""
 
@@ -451,11 +441,6 @@ msgid "General Ledger - %(date_from)s_%(date_to)s"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:ir.model,name:l10n_es_reports.model_account_general_ledger_report_handler
-msgid "General Ledger Custom Handler"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod111_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod115_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod130_boe_wizard
@@ -467,14 +452,8 @@ msgid "Generate BOE"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:ir.model,name:l10n_es_reports.model_account_generic_tax_report_handler
-msgid "Generic Tax Report Custom Handler"
-msgstr ""
-
-#. module: l10n_es_reports
 #. odoo-python
-#: code:addons/l10n_es_reports/models/libros_export.py:0
-#, python-format
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
 msgid "Go to Company"
 msgstr ""
 
@@ -510,15 +489,12 @@ msgid "IAE Group or Heading"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_general_ledger_report_handler__id
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_generic_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_account_journal_report_handler__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_report__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_reports_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_reports_export_wizard_format__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_return__id
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_return_type__id
-#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_libros_registro_export_handler__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_mod111_tax_report_handler__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_mod115_tax_report_handler__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_mod130_tax_report_handler__id
@@ -538,6 +514,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod390_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_vat_books_report_handler__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_res_company__id
 msgid "ID"
 msgstr ""
@@ -553,8 +530,29 @@ msgid "Insurance operation"
 msgstr ""
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
+msgid "Invoice"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.column,name:l10n_es_reports.l10n_es_vat_books_report_column_invoice_date
+msgid "Invoice Date"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.column,name:l10n_es_reports.l10n_es_vat_books_report_column_net
+msgid "Invoice total"
+msgstr ""
+
+#. module: l10n_es_reports
 #: model:ir.model,name:l10n_es_reports.model_account_move
 msgid "Journal Entry"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:ir.model,name:l10n_es_reports.model_account_journal_report_handler
+msgid "Journal Report Custom Handler"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -600,6 +598,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod390_export_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:ir.ui.menu,name:l10n_es_reports.menu_action_account_report_l10n_es_journal_report
+msgid "Libro Diario"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -688,7 +691,6 @@ msgstr ""
 
 #. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_class__seguros
-#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_class__seguros
 msgid "Operaciones de Seguros"
 msgstr ""
 
@@ -720,7 +722,6 @@ msgstr ""
 
 #. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_class__otras
-#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_class__otras
 msgid "Otras operaciones"
 msgstr ""
 
@@ -735,6 +736,7 @@ msgid "Part of a tax unit"
 msgstr ""
 
 #. module: l10n_es_reports
+#: model:account.report.column,name:l10n_es_reports.l10n_es_vat_books_report_column_partner
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__partner_id
 msgid "Partner"
 msgstr ""
@@ -769,8 +771,7 @@ msgstr ""
 
 #. module: l10n_es_reports
 #. odoo-python
-#: code:addons/l10n_es_reports/models/libros_export.py:0
-#, python-format
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
 msgid "Please configure the \"IAE Group or Heading\" of your company."
 msgstr ""
 
@@ -903,7 +904,12 @@ msgid "S - Services sale"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:ir.model,name:l10n_es_reports.model_l10n_es_libros_registro_export_handler
+#: model:ir.ui.menu,name:l10n_es_reports.account_reports_es_statements_menu
+msgid "Spain"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:ir.model,name:l10n_es_reports.model_l10n_es_vat_books_report_handler
 msgid "Spanish Libros Registro de IVA"
 msgstr ""
 
@@ -1082,8 +1088,14 @@ msgstr ""
 
 #. module: l10n_es_reports
 #. odoo-python
-#: code:addons/l10n_es_reports/models/libros_export.py:0
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
 msgid "Unable to find matching surcharge tax in %s"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
+msgid "Unknown Partner"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1097,9 +1109,27 @@ msgid "V - Tributaria Current Account - Return"
 msgstr ""
 
 #. module: l10n_es_reports
+#: model:account.report,name:l10n_es_reports.l10n_es_vat_books_report
+#: model:ir.actions.client,name:l10n_es_reports.action_report_l10n_es_vat_books
+#: model:ir.ui.menu,name:l10n_es_reports.menu_action_action_report_l10n_es_vat_books
+msgid "VAT Books"
+msgstr ""
+
+#. module: l10n_es_reports
 #. odoo-python
-#: code:addons/l10n_es_reports/models/libros_export.py:0
-msgid "VAT Record Books (XLSX)"
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
+msgid "VAT Books XLSX"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.column,name:l10n_es_reports.l10n_es_vat_books_report_column_tax
+msgid "Vat Total"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
+msgid "View Invoice"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1160,12 +1190,6 @@ msgstr ""
 
 #. module: l10n_es_reports
 #. odoo-python
-#: code:addons/l10n_es_reports/models/libros_export.py:0
-msgid "XLSX"
-msgstr ""
-
-#. module: l10n_es_reports
-#. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
 msgid ""
 "You cannot generate a BOE file for the first two months of a trimester if "
@@ -1178,4 +1202,16 @@ msgstr ""
 msgid ""
 "Your date range does not cover entire months, please use a start and end "
 "date matching respectively the first and last day of a month."
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
+msgid "expense"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/vat_books_report_handler.py:0
+msgid "income"
 msgstr ""

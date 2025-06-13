@@ -42,11 +42,11 @@ class TestLibrosExport(TestAccountReportsCommon):
         cls.tax_dua_rentencion = cls.env.ref(f'account.{company_id}_account_tax_template_p_irpf20')
 
     def get_libros_sheet_line_vals(self):
-        report = self.env.ref('account.generic_tax_report')
+        report = self.env.ref('l10n_es_reports.l10n_es_vat_books_report')
         options = self._generate_options(report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))
         domain = report._get_options_domain(options, 'strict_range') + [('move_type', '!=', 'entry')]
         lines = self.env['account.move.line'].search(domain)
-        return self.env['account.generic.tax.report.handler']._l10n_es_libros_get_sheet_line_vals(lines)
+        return self.env['l10n_es.vat.books.report.handler']._l10n_es_libros_get_sheet_line_vals(lines)
 
     def get_amount_vals(self, line_vals):
         amount_fields = ('total_amount', 'base_amount', 'tax_rate', 'taxed_amount', 'surcharge_type', 'surcharge_fee',
@@ -391,4 +391,4 @@ class TestLibrosExport(TestAccountReportsCommon):
         options = self._generate_options(report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))
 
         with self.assertRaisesRegex(RedirectWarning, "Please configure the \"IAE Group or Heading\" of your company."):
-            self.env['account.generic.tax.report.handler'].export_libros_de_iva(options)
+            self.env['l10n_es.vat.books.report.handler'].export_libros_de_iva(options)
