@@ -275,7 +275,7 @@ invisible="l10n_ch_canton == 'EX'"/>
                                 <field name="l10n_ch_interim_worker"/>
                         </group>
                         </page>
-                        <page string="Insurances" invisible="country_code != 'CH'">
+                        <page string="Insurances" invisible="country_code != 'CH'" groups="hr.group_hr_user">
                             <group>
                                 <group string="Social Insurance">
                                     <field name="l10n_ch_social_insurance_id" options="{'no_create': True, 'no_open': True}"/>

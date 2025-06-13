@@ -17,9 +17,9 @@ class ResCompany(models.Model):
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    qualif = fields.Char(string='Qualification')
-    niveau = fields.Char()
-    coef = fields.Char(string='Coefficient')
+    qualif = fields.Char(string='Qualification', groups="hr.group_hr_user")
+    niveau = fields.Char(groups="hr.group_hr_user")
+    coef = fields.Char(string='Coefficient', groups="hr.group_hr_user")
 
 
 class HrPayslip(models.Model):

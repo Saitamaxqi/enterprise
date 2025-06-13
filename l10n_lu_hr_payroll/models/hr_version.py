@@ -7,29 +7,30 @@ class HrVersion(models.Model):
     _inherit = 'hr.version'
 
     l10n_lu_index_on_contract_signature = fields.Float(
-        string='Index on Contract Signature (LU)', readonly=True, compute='_compute_indexed_wage')
-    l10n_lu_indexed_wage = fields.Monetary(string='Indexed Wage (LU)', compute='_compute_indexed_wage')
-    l10n_lu_current_index = fields.Float(string='Current Index (LU)', compute='_compute_indexed_wage')
-    l10n_lu_meal_voucher_amount = fields.Monetary(string='Meal Vouchers (LU)')
+        string='Index on Contract Signature (LU)', readonly=True, compute='_compute_indexed_wage', groups="hr.group_hr_user")
+    l10n_lu_indexed_wage = fields.Monetary(string='Indexed Wage (LU)', compute='_compute_indexed_wage', groups="hr.group_hr_user")
+    l10n_lu_current_index = fields.Float(string='Current Index (LU)', compute='_compute_indexed_wage', groups="hr.group_hr_user")
+    l10n_lu_meal_voucher_amount = fields.Monetary(string='Meal Vouchers (LU)', groups="hr.group_hr_user")
     l10n_lu_meal_voucher_employer_cost = fields.Monetary(
-        string='Meal Voucher Employer Cost (LU)', compute='_compute_l10n_lu_meal_voucher_employer_cost')
+        string='Meal Voucher Employer Cost (LU)', compute='_compute_l10n_lu_meal_voucher_employer_cost', groups="hr.group_hr_user")
     l10n_lu_meal_voucher_employee_computation = fields.Selection(
         selection=[('removed_from_net', 'Removed From Net'),
         ('consider_as_bik', 'Consider as Benefit in Kind')],
         string="Employee Computation (LU)",
         required=True,
+        groups="hr.group_hr_user",
         default='removed_from_net'
     )
     l10n_lu_bik_meal_voucher_exceeding_amount = fields.Monetary(
-        string='BIK Meal Voucher Exceeding Amount (LU)',
+        string='BIK Meal Voucher Exceeding Amount (LU)', groups="hr.group_hr_user",
         compute="_compute_l10n_lu_meal_voucher_employer_cost")
-    l10n_lu_bik_vehicle = fields.Monetary(string='BIK Vehicle (LU)')
-    l10n_lu_bik_vehicle_vat_included = fields.Boolean(string='BIK Vehicle VAT Included (LU)', default=True)
-    l10n_lu_bik_other_benefits = fields.Monetary(string='Others')
-    l10n_lu_alw_vehicle = fields.Monetary(string='Allowance Vehicle (LU)')
+    l10n_lu_bik_vehicle = fields.Monetary(string='BIK Vehicle (LU)', groups="hr.group_hr_user")
+    l10n_lu_bik_vehicle_vat_included = fields.Boolean(string='BIK Vehicle VAT Included (LU)', default=True, groups="hr.group_hr_user")
+    l10n_lu_bik_other_benefits = fields.Monetary(string='Others', groups="hr.group_hr_user")
+    l10n_lu_alw_vehicle = fields.Monetary(string='Allowance Vehicle (LU)', groups="hr.group_hr_user")
     l10n_lu_tax_id_number = fields.Char(
         string="Tax Identification Number",
-        groups="hr_payroll.group_hr_payroll_user",
+        groups="hr.group_hr_user",
         tracking=True)
     l10n_lu_tax_classification = fields.Selection([
         ('1', '1'),
@@ -38,102 +39,102 @@ class HrVersion(models.Model):
         ('without', 'Without')],
         string="Tax Classification",
         default='1', required=True,
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_tax_rate_no_classification = fields.Float(
         string="Tax Rate",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_fd_daily = fields.Monetary(
         string="FD",
         help="Travel Expenses",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_fd_monthly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_fd",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_fd_yearly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_fd",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ac_ae_daily = fields.Monetary(
         string="AC/AE",
         help="Spousal Deduction / Extra-professional Deduction",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ac_ae_monthly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_ac_ae",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ac_ae_yearly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_ac_ae",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ce_daily = fields.Monetary(
         string="CE",
         help="Extraordinary Charges",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ce_monthly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_ce",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ce_yearly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_ce",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ds_daily = fields.Monetary(
         string="DS",
         help="Special Expenses",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ds_monthly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_ds",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_ds_yearly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_ds",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_fo_daily = fields.Monetary(
         string="FO",
         help="Obtaining Fees",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_fo_monthly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_fo",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_fo_yearly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_fo",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_amd_daily = fields.Monetary(
         string="AMD",
         help="Sustainable Mobility Deduction",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_amd_monthly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_amd",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_deduction_amd_yearly = fields.Monetary(
         compute="_compute_l10n_lu_deduction_amd",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_package_ffo_daily = fields.Monetary(
         string="FFO",
         help="Obtaining Fees Package",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_package_ffo_monthly = fields.Monetary(
         compute="_compute_l10n_lu_package_ffo",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_package_ffo_yearly = fields.Monetary(
         compute="_compute_l10n_lu_package_ffo",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_package_fds_daily = fields.Monetary(
         string="FDS",
         help="Special Expenses Package",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_package_fds_monthly = fields.Monetary(
         compute="_compute_l10n_lu_package_fds",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_package_fds_yearly = fields.Monetary(
         compute="_compute_l10n_lu_package_fds",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_tax_credit_cis = fields.Boolean(
         string="CIS",
         help="Employee Tax Credit",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_tax_credit_cip = fields.Boolean(
         string="CIP",
         help="Retiree Tax Credit",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
     l10n_lu_tax_credit_cim = fields.Boolean(
         string="CIM",
         help="Single-parent Tax Credit",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr.group_hr_user")
 
     _check_meal_voucher_amount = models.Constraint(
         'check(l10n_lu_meal_voucher_amount = 0 OR l10n_lu_meal_voucher_amount >= 2.8)',

@@ -9,7 +9,7 @@ class HrVersion(models.Model):
 
     l10n_hk_internet = fields.Monetary(
         string="HK: Internet Subscription",
-        tracking=True,
+        tracking=True, groups="hr.group_hr_user",
         help="A benefit in kind is paid for the employee's internet subcription.")
     l10n_hk_mpf_vc_option = fields.Selection(
         selection=[

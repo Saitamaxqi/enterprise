@@ -5,7 +5,7 @@ class HrVersion(models.Model):
     _inherit = 'hr.version'
 
     l10n_lt_benefits_in_kind = fields.Monetary(
-        string="Benefits in Kind",
+        string="Benefits in Kind", groups="hr.group_hr_user",
         help="""The following payments are not considered as benefits in kind:
 
 - small value (not exceeding EUR 200) prizes, non-monetary presents received from employer;
@@ -17,9 +17,9 @@ class HrVersion(models.Model):
 
 Benefit in kind is taxed as employment income.""")
     l10n_lt_time_limited = fields.Boolean(
-        string="Signed time-limited work agreement")
+        string="Signed time-limited work agreement", groups="hr.group_hr_user")
     l10n_lt_pension = fields.Boolean(
-        string="Participate to pension accumulation system",
+        string="Participate to pension accumulation system", groups="hr.group_hr_user",
         help="""Employees can participate in an additional pension accumulation system. Inclusion into the accumulation system is used as one of the most effective methods to induce people to accumulate for additional pension if they have not started yet. However, it is not a coercive mechanism because any employed person may refuse accumulation if she/he does not want or has some other priorities.""")
     l10n_lt_working_capacity = fields.Selection([
         ('0_25', 'Between 0-25%'),

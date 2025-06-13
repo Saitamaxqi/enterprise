@@ -15,26 +15,24 @@ class HrVersion(models.Model):
         ('monthly', 'Monthly'),
         ('bi_monthly', 'Bi-monthly'),
     ], compute='_compute_l10n_mx_schedule_pay', store=True, readonly=False, required=True,
-        string="MX: Schedule Pay", default="monthly", index=True)
-    l10n_mx_holiday_bonus_rate = fields.Float(string="MX: Holiday Bonus Rate")
+        string="MX: Schedule Pay", default="monthly", index=True, groups="hr.group_hr_user")
+    l10n_mx_holiday_bonus_rate = fields.Float(string="MX: Holiday Bonus Rate", groups="hr.group_hr_user")
 
     l10n_mx_payment_period_vouchers = fields.Selection([
         ('last_day_of_month', 'Last Day of the Month'),
         ('in_period', 'In the period'),
-    ], default="last_day_of_month", required=True)
-    l10n_mx_meal_voucher_amount = fields.Monetary(string="MX: Meal Vouchers")
-    l10n_mx_transport_amount = fields.Monetary(string="MX: Transport Amount")
-    l10n_mx_gasoline_amount = fields.Monetary(string="MX: Gasoline Amount")
+    ], default="last_day_of_month", required=True, groups="hr.group_hr_user")
+    l10n_mx_meal_voucher_amount = fields.Monetary(string="MX: Meal Vouchers", groups="hr.group_hr_user")
+    l10n_mx_transport_amount = fields.Monetary(string="MX: Transport Amount", groups="hr.group_hr_user")
+    l10n_mx_gasoline_amount = fields.Monetary(string="MX: Gasoline Amount", groups="hr.group_hr_user")
 
-    l10n_mx_savings_fund = fields.Monetary(string="MX: Savings Fund")
+    l10n_mx_savings_fund = fields.Monetary(string="MX: Savings Fund", groups="hr.group_hr_user")
     l10n_mx_infonavit = fields.One2many(
-        'l10n.mx.hr.infonavit', 'version_id', string="MX: Infonavit",
-        groups="hr_payroll.group_hr_payroll_user")
+        'l10n.mx.hr.infonavit', 'version_id', string="MX: Infonavit", groups="hr.group_hr_user")
     l10n_mx_fonacot = fields.One2many(
-        'l10n.mx.hr.fonacot', 'version_id', string="MX: Fonacot",
-        groups="hr_payroll.group_hr_payroll_user")
+        'l10n.mx.hr.fonacot', 'version_id', string="MX: Fonacot", groups="hr.group_hr_user")
     l10n_mx_external_annual_declaration = fields.Boolean(
-        string="MX: External Annual Declaration",
+        string="MX: External Annual Declaration", groups="hr.group_hr_user",
         help="Activate this box if the employee will make the annual tax return on their own. "
              "By activating it, the annual ISR adjustment will not be applied.")
 

@@ -148,7 +148,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         string="Hospital Insurance: Additional Info", groups="hr.group_hr_user")
 
     wage_with_holidays = fields.Monetary(
-        string="Wage With Sacrifices",
+        string="Wage With Sacrifices", groups="hr.group_hr_user",
         help="Adapted salary, according to the sacrifices defined on the contract (Example: Extra-legal time off, a percentage of the salary invested in a group insurance, etc...)")
     # Group Insurance
     l10n_be_group_insurance_rate = fields.Float(

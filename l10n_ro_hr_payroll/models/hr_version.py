@@ -8,4 +8,4 @@ class HrVersion(models.Model):
         ('1', 'Normal Conditions'),
         ('2', 'Particular Conditions'),
         ('3', 'Special Conditions')
-    ], string='Work type', default="1")
+    ], string='Work type', default="1", groups="hr.group_hr_user")

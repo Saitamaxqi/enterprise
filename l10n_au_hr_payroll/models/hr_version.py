@@ -202,7 +202,7 @@ class HrVersion(models.Model):
         string="Additional Withholding Amount",
         groups="hr.group_hr_user",
         help="Additional amount will be withheld from the employee's salary after PAYG withholding. (Schedule 14)")
-    l10n_au_casual_loading = fields.Float(string="Casual Loading")
+    l10n_au_casual_loading = fields.Float(string="Casual Loading", groups="hr.group_hr_user")
     l10n_au_pay_day = fields.Selection(
         selection=[
             ("0", "Monday"),
@@ -212,22 +212,22 @@ class HrVersion(models.Model):
             ("4", "Friday"),
             ("5", "Saturday"),
             ("6", "Sunday")],
-        string="Regular Pay Day")
-    l10n_au_eligible_for_leave_loading = fields.Boolean(string="Eligible for Leave Loading")
+        string="Regular Pay Day", groups="hr.group_hr_user")
+    l10n_au_eligible_for_leave_loading = fields.Boolean(string="Eligible for Leave Loading", groups="hr.group_hr_user")
     l10n_au_leave_loading = fields.Selection(
         selection=[
             ("regular", "Regular"),
             ("once", "Lump Sum")],
-        string="Leave Loading",
+        string="Leave Loading", groups="hr.group_hr_user",
         help="How leave loading, if any, is to be paid. If Lump Sum is selected, leave loading will not be added to regular payslips automatically")
     l10n_au_leave_loading_leave_types = fields.Many2many(
         "hr.leave.type",
-        string="Leave Types for Leave Loading",
+        string="Leave Types for Leave Loading", groups="hr.group_hr_user",
         help="Leave Types that should be taken into account for leave loading, both regular and lump sum.")
-    l10n_au_leave_loading_rate = fields.Float(string="Leave Loading Rate (%)")
+    l10n_au_leave_loading_rate = fields.Float(string="Leave Loading Rate (%)", groups="hr.group_hr_user")
     l10n_au_cessation_type_code = fields.Selection(
         CESSATION_TYPE_CODE,
-        string="Cessation Type",
+        string="Cessation Type", groups="hr.group_hr_user",
         help="""
             "V": an employee resignation, retirement, domestic or pressing necessity or abandonment of employment.
             "I": an employee resignation due to medical condition that prevents the continuation of employment, such as for illness, ill-health, medical unfitness or total permanent disability.
@@ -237,18 +237,18 @@ class HrVersion(models.Model):
             "C": the natural conclusion of a limited employment relationship due to contract/engagement duration or task completion, seasonal work completion, or to cease casuals that are no longer required.
             "T": the administrative arrangements performed to transfer employees across payroll systems, move them temporarily to another employer (machinery of government for public servants), transfer of business, move them to outsourcing arrangements or other such technical activities.
         """)
-    l10n_au_performances_per_week = fields.Integer(string="Performances per week")
-    l10n_au_workplace_giving = fields.Float(string="Workplace Giving Employee")
-    l10n_au_workplace_giving_employer = fields.Float(string="Salary Sacrificed Workplace Giving")
-    l10n_au_salary_sacrifice_superannuation = fields.Float(string="Salary Sacrifice Superannuation")
-    l10n_au_salary_sacrifice_other = fields.Float(string="Salary Sacrifice Other Benefits")
-    l10n_au_extra_negotiated_super = fields.Float(string="Extra Negotiated Super %",
+    l10n_au_performances_per_week = fields.Integer(string="Performances per week", groups="hr.group_hr_user")
+    l10n_au_workplace_giving = fields.Float(string="Workplace Giving Employee", groups="hr.group_hr_user")
+    l10n_au_workplace_giving_employer = fields.Float(string="Salary Sacrificed Workplace Giving", groups="hr.group_hr_user")
+    l10n_au_salary_sacrifice_superannuation = fields.Float(string="Salary Sacrifice Superannuation", groups="hr.group_hr_user")
+    l10n_au_salary_sacrifice_other = fields.Float(string="Salary Sacrifice Other Benefits", groups="hr.group_hr_user")
+    l10n_au_extra_negotiated_super = fields.Float(string="Extra Negotiated Super %", groups="hr.group_hr_user",
         help="This is an additional Super Contribution negotiated by the employee. Paid by employer. (RESC)")
-    l10n_au_extra_compulsory_super = fields.Float(string="Extra Compulsory Super %",
+    l10n_au_extra_compulsory_super = fields.Float(string="Extra Compulsory Super %", groups="hr.group_hr_user",
         help="This is an additional Compulsory Super Contribution required by the fund or territory law. (Not RESC)")
-    l10n_au_yearly_wage = fields.Monetary(string="Yearly Wage", compute="_compute_yearly_wage", inverse="_inverse_yearly_wages", readonly=False, store=True)
-    wage = fields.Monetary(compute="_compute_wage", readonly=False, store=True)
-    hourly_wage = fields.Monetary(compute="_compute_hourly_wage", readonly=False, store=True)
+    l10n_au_yearly_wage = fields.Monetary(string="Yearly Wage", compute="_compute_yearly_wage", inverse="_inverse_yearly_wages", readonly=False, store=True, groups="hr.group_hr_user")
+    wage = fields.Monetary(compute="_compute_wage", readonly=False, store=True, groups="hr.group_hr_user")
+    hourly_wage = fields.Monetary(compute="_compute_hourly_wage", readonly=False, store=True, groups="hr.group_hr_user")
 
     _l10n_au_casual_loading_span = models.Constraint(
         'CHECK(l10n_au_casual_loading >= 0 AND l10n_au_casual_loading <= 1)',
