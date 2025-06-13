@@ -25,7 +25,7 @@
     <menuitem
         id="hr_contract_salary.menu_salary_package_offer"
         name="Offers"
-        parent="hr_work_entry_enterprise.menu_hr_payroll_root"
+        parent="hr_payroll.menu_hr_payroll_employees"
         sequence="50"/>
 
     <record id="hr_contract_salary.salary_package_menu" model="ir.ui.menu">

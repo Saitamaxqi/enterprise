@@ -78,7 +78,7 @@
 
     <menuitem
         id="menu_work_entry_leave_to_approve"
-        name="Time Off to Report"
+        name="Time Offs"
         action="hr_leave_work_entry_action"
         parent="hr_work_entry_enterprise.menu_hr_payroll_work_entries_root"
         sequence="75"

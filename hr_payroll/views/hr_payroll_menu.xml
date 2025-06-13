@@ -10,6 +10,13 @@
         groups="hr_payroll.group_hr_payroll_user"/>
 
     <menuitem
+        id="menu_hr_payroll_employees"
+        name="Employees"
+        parent="hr_work_entry_enterprise.menu_hr_payroll_root"
+        sequence="50"
+        groups="hr_payroll.group_hr_payroll_user"/>
+
+    <menuitem
         id="menu_hr_payroll_work_entries_root"
         name="Work Entries"
         parent="hr_work_entry_enterprise.menu_hr_payroll_root"
@@ -30,13 +37,30 @@
         sequence="70"
         groups="hr_payroll.group_hr_payroll_manager"/>
 
+    <!-- **** Employees **** -->
+    <menuitem
+        id="hr_menu_employees"
+        name="Employees"
+        action="hr.open_view_employee_list_my"
+        parent="menu_hr_payroll_employees"
+        groups="hr_payroll.group_hr_payroll_user"
+        sequence="10"/>
+
+    <menuitem
+        id="hr_menu_versions"
+        name="Versions"
+        action="hr.action_hr_version"
+        parent="menu_hr_payroll_employees"
+        groups="base.group_no_one"
+        sequence="20"/>
+
     <menuitem
         id="hr_menu_salary_attachments"
         name="Salary Attachments"
         action="hr_payroll.hr_salary_attachment_action"
-        parent="hr_work_entry_enterprise.menu_hr_payroll_root"
+        parent="menu_hr_payroll_employees"
         groups="hr_payroll.group_hr_payroll_user"
-        sequence="80"/>
+        sequence="30"/>
 
     <!-- **** Payslips **** -->
     <menuitem
@@ -55,7 +79,7 @@
         action="hr_payslip_action_view_to_pay"
         groups="hr_payroll.group_hr_payroll_user"/>
 
-      <menuitem
+    <menuitem
         id="menu_hr_payslip_run"
         action="action_hr_payslip_run_tree"
         name="Batches"
@@ -64,9 +88,16 @@
 
     <!-- **** Reporting **** -->
     <menuitem id="menu_report_payroll"
-        name="Payroll"
+        name="Payroll Analysis"
         action="ir_actions_server_action_open_reporting"
-        sequence="10"
+        sequence="1"
+        parent="menu_hr_payroll_report"/>
+
+    <menuitem
+        id="menu_hr_work_entry_report"
+        name="Work Entries Analysis"
+        action="hr_work_entry_report_action"
+        sequence="2"
         parent="menu_hr_payroll_report"/>
 
     <menuitem
@@ -75,26 +106,19 @@
         action="hr_payroll_headcount_action"
         sequence="11"
         parent="menu_hr_payroll_report"/>
-    
+
     <menuitem
         id="menu_hr_payslip_line_action_report"
         name="Payslip Lines"
         action="hr_payslip_line_action_report"
         sequence="12"
         parent="menu_hr_payroll_report"/>
-    
+
     <menuitem
         id="menu_hr_payslip_work_days_action_report"
         name="Payslip Work Days Lines"
         action="hr_payslip_work_days_action_report"
         sequence="13"
-        parent="menu_hr_payroll_report"/>
-
-    <menuitem
-        id="menu_hr_work_entry_report"
-        name="Work Entry Analysis"
-        action="hr_work_entry_report_action"
-        sequence="20"
         parent="menu_hr_payroll_report"/>
 
     <menuitem
@@ -120,8 +144,7 @@
         name="Salary"
         parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
         sequence="80"
-        groups="hr_payroll.group_hr_payroll_manager"
-    />
+        groups="hr_payroll.group_hr_payroll_manager"/>
 
     <menuitem
         id="menu_action_hr_salary_rule_form"
@@ -142,16 +165,14 @@
         action="action_hr_salary_rule_category"
         name="Rule Categories"
         parent="menu_hr_salary_configuration"
-        sequence="35"
-    />
+        sequence="35"/>
 
     <menuitem
         id="menu_hr_payroll_structure_view"
         action="action_view_hr_payroll_structure_list_form"
         name="Structures"
         parent="menu_hr_salary_configuration"
-        sequence="20"
-    />
+        sequence="20"/>
 
     <menuitem
         id="menu_hr_payroll_structure_type"
@@ -173,14 +194,13 @@
         name="Dashboard"
         parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
         sequence="100"
-        groups="hr_payroll.group_hr_payroll_manager"
-    />
+        groups="hr_payroll.group_hr_payroll_manager"/>
 
     <menuitem
         id="menu_hr_payroll_dashboard_warning"
         action="action_hr_payroll_dashboard_warning"
         parent="menu_hr_payroll_dashboard_configuration"
-        name="Warning Type"
+        name="Warnings"
         sequence="10"/>
 
 </odoo>
