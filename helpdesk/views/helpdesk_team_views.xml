@@ -245,6 +245,9 @@
                         <setting help="Issue credits notes">
                             <field name="use_credit_notes"/>
                         </setting>
+                        <setting help="Reimburse customers with a voucher code for future purchases">
+                            <field name="use_giftcards"/>
+                        </setting>
                         <setting help="Grant discounts, free products or free shipping">
                             <field name="use_coupons"/>
                         </setting>

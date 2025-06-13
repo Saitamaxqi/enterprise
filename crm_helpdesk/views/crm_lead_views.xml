@@ -18,6 +18,7 @@
     <record id="helpdesk_ticket_view_form_inherited" model="ir.ui.view">
         <field name="name">helpdesk.ticket.form.inherited</field>
         <field name="model">helpdesk.ticket</field>
+        <field name="priority">100</field>
         <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
         <field name="arch" type="xml">
             <xpath expr="header" position="inside">

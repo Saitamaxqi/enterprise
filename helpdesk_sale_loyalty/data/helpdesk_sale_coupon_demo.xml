@@ -3,6 +3,7 @@
 
     <record id="helpdesk.helpdesk_team3" model="helpdesk.team">
         <field name="use_coupons" eval="True"/>
+        <field name="use_giftcards" eval="True"/>
     </record>
 
     <record id="coupon_demo_1" model="loyalty.card">

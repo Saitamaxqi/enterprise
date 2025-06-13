@@ -129,6 +129,7 @@ class HelpdeskTicket(models.Model):
 
     use_credit_notes = fields.Boolean(related='team_id.use_credit_notes', export_string_translation=False)
     use_coupons = fields.Boolean(related='team_id.use_coupons', string='Use Coupons')
+    use_giftcards = fields.Boolean(related='team_id.use_giftcards', string='Use Gift Cards')
     use_product_returns = fields.Boolean(related='team_id.use_product_returns', export_string_translation=False)
     use_product_replacements = fields.Boolean(related='team_id.use_product_replacements', export_string_translation=False)
     use_product_repairs = fields.Boolean(related='team_id.use_product_repairs', export_string_translation=False)

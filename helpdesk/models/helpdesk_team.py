@@ -95,6 +95,7 @@ class HelpdeskTeam(models.Model):
         readonly=False)
     use_credit_notes = fields.Boolean('Refunds')
     use_coupons = fields.Boolean('Coupons')
+    use_giftcards = fields.Boolean('Gift Cards')
     use_fsm = fields.Boolean('Field Service')
     use_product_returns = fields.Boolean('Returns')
     use_product_replacements = fields.Boolean('Replacements')
@@ -499,6 +500,7 @@ class HelpdeskTeam(models.Model):
             'use_product_replacements': 'helpdesk_stock',
             'use_product_repairs': 'helpdesk_repair',
             'use_coupons': 'helpdesk_sale_loyalty',
+            'use_giftcards': 'helpdesk_sale_loyalty',
             'use_fsm': 'helpdesk_fsm',
         }
 
@@ -890,7 +892,7 @@ class HelpdeskTeam(models.Model):
 
         :param count_per_team: a dict (key=helpdesk.team, value=count) of teams, with the count of users to get to assign to new tickets
         :returns a mapping of team identifier with the "to assign" users ids.
-        :rtype: dict(int, List[int]) 
+        :rtype: dict(int, List[int])
         """
         team_without_manually = self.env['helpdesk.team'].browse({
             team.id
@@ -993,6 +995,6 @@ class HelpdeskTeam(models.Model):
                 ticket.write({'stage_id': teams_dict[ticket.team_id.id]['to_stage_id'][0]})
 
     def _local_midnight_as_utc(self):
-        """ local 12am expressed in UTC (naive datetime) """ 
+        """ local 12am expressed in UTC (naive datetime) """
         now = fields.Datetime.context_timestamp(self, fields.Datetime.now())
         return datetime.datetime.combine(now.date(), datetime.time.min, now.tzinfo).astimezone(pytz.utc).replace(tzinfo=None)

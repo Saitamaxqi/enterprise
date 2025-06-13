@@ -15,5 +15,12 @@
                 </footer>
             </form>
         </field>
-    </record>    
+    </record>
+
+    <record id="loyalty_open_card_action" model="ir.actions.act_window">
+        <field name="name">Coupons</field>
+        <field name="res_model">loyalty.card</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'create': False, 'edit': True}</field>
+    </record>
 </odoo>
