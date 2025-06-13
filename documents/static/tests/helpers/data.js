@@ -407,7 +407,7 @@ export function getDocumentsTestServerModelsData(additionalRecords = []) {
             },
         ],
         "documents.document": [
-            makeDocumentRecordData(1, "Folder 1", { type: "folder" }),
+            makeDocumentRecordData(1, "Folder 1", { type: "folder", user_permission: "edit" }),
             ...additionalRecords,
         ],
         "documents.tag": [
