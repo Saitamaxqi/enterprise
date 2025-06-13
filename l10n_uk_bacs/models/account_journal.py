@@ -224,7 +224,7 @@ class AccountJournal(models.Model):
                     raise UserError(_("The BACS Direct Debit Instruction associated to the payment has been revoked and cannot be used anymore."))
                 partner_bank_iban = ddi.partner_bank_id.sanitized_acc_number
 
-                partner_sort_code = get_iban_part(partner_bank_iban, 'bank')
+                partner_sort_code = get_iban_part(partner_bank_iban, 'branch')
                 partner_account_number = get_iban_part(partner_bank_iban, 'account')
                 partner_name = format_communication(partner_name)[:18].ljust(18)
 
