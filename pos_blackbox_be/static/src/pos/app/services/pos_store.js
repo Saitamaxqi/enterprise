@@ -486,7 +486,7 @@ patch(PosStore.prototype, {
 
         return new Promise((resolve, reject) => {
             const callback = (result) => {
-                if (result?.status?.status !== "connected") {
+                if (result?.status !== "connected") {
                     reject(result);
                 } else {
                     resolve(result);

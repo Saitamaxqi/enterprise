@@ -1,8 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
-import serial
 import requests
+import serial
+import time
 
 from odoo.addons.hw_drivers.tools import helpers
 from odoo.addons.hw_drivers.iot_handlers.drivers.serial_base_driver import SerialDriver, SerialProtocol, serial_connection
@@ -77,17 +78,24 @@ class BlackBoxDriver(SerialDriver):
     @classmethod
     def supported(cls, device):
         """Checks whether the device at path `device` is supported by the driver.
-        :param device: path to the device
-        :type device: str
+
+        :param dict device: path to the device
         :return: whether the device is supported by the driver
         :rtype: bool
         """
-
         try:
             protocol = cls._protocol
             probe_message = cls._wrap_low_level_message_around("S000")
             with serial_connection(device['identifier'], protocol) as connection:
-                return cls._send_and_wait_for_ack(probe_message, connection)
+                connection.reset_output_buffer()
+                connection.reset_input_buffer()
+
+                # ask for status then acknowledge the response
+                connection.write(probe_message)
+                buffer = connection.read_until(ETX)
+                connection.write(ACK)
+                connection.reset_input_buffer()  # flush in case bb sends status again (ACK too late)
+                return len(buffer) > 0 and buffer[0:1] == ACK
         except serial.serialutil.SerialTimeoutException:
             pass
         except Exception:
@@ -116,36 +124,19 @@ class BlackBoxDriver(SerialDriver):
 
     @staticmethod
     def _lrc(msg):
-        """"Compute a message's longitudinal redundancy check value.
-        :param msg: the message the LRC is computed for
-        :type msg: byte
+        """Compute a message's longitudinal redundancy check value.
+
+        :param byte msg: the message the LRC is computed for
         :return: the message LRC
         :rtype: int
         """
         lrc = 0
-
         for character in msg:
             byte = ord(character)
             lrc = (lrc + byte) & 0xFF
 
         lrc = ((lrc ^ 0xFF) + 1) & 0xFF
-
         return lrc
-
-    @staticmethod
-    def _send_and_wait_for_ack(packet, connection):
-        """Sends a message to and wait for acknoledgement from the blackbox.
-        :param packet: the message sent to the blackbox
-        :type packet: bytearray
-        :param connection: serial connection to the blackbox
-        :type connection: serial.Serial
-        :return: wether the blackbox acknowledged the message it received
-        :rtype: bool
-        """
-
-        connection.write(packet)
-        ack = connection.read(1)
-        return ack == ACK
 
     def _box_id(self):
         return 'BODO001' + helpers.get_identifier().upper()[-7:]
@@ -203,43 +194,37 @@ class BlackBoxDriver(SerialDriver):
 
     def _send_to_blackbox(self, packet, response_size, connection):
         """Sends a message to and wait for a response from the blackbox.
-        :param packet: the message to be sent to the blackbox
-        :type packet: bytearray
-        :param response_size: number of bytes of the expected response
-        :type response_size: int
-        :param connection: serial connection to the blackbox
-        :type connection: serial.Serial
-        :return: the response to the sent message
+
+        :param bytearray packet: the message to be sent to the blackbox
+        :param int response_size: number of bytes of the expected response
+        :param serial.Serial connection: serial connection to the blackbox
+        :return: the response to the message, or None if no valid response was received
         :rtype: bytearray
         """
-
-        got_response = False
         connection.reset_output_buffer()
         connection.reset_input_buffer()
 
-        if self._send_and_wait_for_ack(packet, connection):
-            stx = connection.read(1)
-            response = connection.read(response_size).decode()
-            etx = connection.read(1)
-            bcc = connection.read(1)
+        connection.write(packet)
+        buffer = connection.read_until(ETX)
+        bcc = connection.read(1)
 
-            if stx == STX and etx == ETX and bcc and self._lrc(response) == ord(bcc):
-                got_response = True
+        if len(buffer) and buffer[0:1] == ACK:
+            response = buffer[2:-1].decode()  # remove ACK, STX and ETX
+            if buffer[1:2] == STX and buffer[-1:] == ETX and self._lrc(response) == ord(bcc):
                 connection.write(ACK)
-            else:
-                _logger.warning("received ACK but not a valid response, sending NACK...")
-                connection.write(NACK)
+                return response
 
-        if not got_response:
-            _logger.error("sent 1 NACKS without receiving response, giving up.")
-            self.data['value'] = {'error': {
-                    'errorCode': '208000',
-                    'errorMessage': errors.get('208000'),
-                }
+            _logger.error("received ACK but not a valid response, sending NACK... (response: %s)", buffer)
+            connection.write(NACK)
+
+        # no ACK or not a valid response
+        self.data['value'] = {
+            'error': {
+                'errorCode': '208000',
+                'errorMessage': errors.get('208000'),
             }
-        else:
-            _logger.info("Blackbox Response: %s", response)
-            return response
+        }
+        return None
 
     def _wrap_high_level_message_around(self, request_type, data):
         self.sequence_number += 1
@@ -271,3 +256,12 @@ class BlackBoxDriver(SerialDriver):
         except Exception:  # noqa: BLE001
             name = 'Unknown Serial Device'
         self.device_name = name
+
+    def run(self):
+        with serial_connection(self.device_identifier, self._protocol) as connection:
+            self._connection = connection
+            self.data['status'] = self.STATUS_CONNECTED
+            while not self._stopped.is_set():
+                time.sleep(self._protocol.newMeasureDelay)
+
+            self.data['status'] = self.STATUS_DISCONNECTED
