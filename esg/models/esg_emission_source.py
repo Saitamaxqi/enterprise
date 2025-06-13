@@ -13,7 +13,7 @@ class EsgEmissionSource(models.Model):
 
     sequence = fields.Integer(default=10)
     name = fields.Char(translate=True, required=True)
-    parent_id = fields.Many2one('esg.emission.source', domain="['!', ('id', 'child_of', id)]")
+    parent_id = fields.Many2one('esg.emission.source', domain="['!', ('id', 'child_of', id)]", index='btree_not_null')
     child_ids = fields.One2many('esg.emission.source', 'parent_id')
     parent_path = fields.Char(index=True)
     complete_name = fields.Char(compute='_compute_complete_name', search='_search_complete_name', recursive=True)
