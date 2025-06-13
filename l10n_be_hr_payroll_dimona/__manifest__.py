@@ -7,7 +7,10 @@
     'category': 'Human Resources',
     'depends': ['l10n_be_hr_payroll'],
     'external_dependencies': {
-        'python': ['pyjwt']
+        'python': ['pyjwt'],
+        'apt': {
+            'pyjwt': 'python3-jwt',
+        },
     },
     'description': """
 Automatic DIMONA declarations

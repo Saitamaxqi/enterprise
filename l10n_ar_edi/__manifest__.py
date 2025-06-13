@@ -79,7 +79,10 @@ For Development information go to http://www.afip.gob.ar/fe/documentos/WSBFEv1%2
         'certificate',
     ],
     'external_dependencies': {
-        'python': ['zeep']
+        'python': ['zeep'],
+        'apt': {
+            'zeep': 'python3-zeep',
+        },
     },
     'data': [
         'wizards/l10n_ar_afip_ws_consult_view.xml',

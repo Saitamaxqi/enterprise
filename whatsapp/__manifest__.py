@@ -34,6 +34,9 @@
     ],
     'external_dependencies': {
         'python': ['phonenumbers'],
+        'apt': {
+            'phonenumbers': 'python3-phonenumbers',
+        },
     },
     'assets': {
         'web.assets_backend': [

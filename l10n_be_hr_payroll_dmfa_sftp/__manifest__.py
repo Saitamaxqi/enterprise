@@ -6,7 +6,10 @@
     'category': 'Human Resources',
     'depends': ['l10n_be_hr_payroll', 'certificate'],
     'external_dependencies': {
-        'python': ['paramiko']
+        'python': ['paramiko'],
+        'apt': {
+            'pyjwt': 'python3-paramiko',
+        },
     },
     'description': """
 synchronize DmfA to ONSS portal

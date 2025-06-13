@@ -77,6 +77,9 @@ Submit your Tax Reports to the Dutch tax authorities
     'depends': ['l10n_nl', 'account_reports', 'certificate'],
     'external_dependencies': {
         'python': ['xmlsec'],
+        'apt': {
+            'xmlsec': 'python3-xmlsec',
+        },
     },
     'data': [
         'data/cron.xml',

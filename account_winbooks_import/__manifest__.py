@@ -9,7 +9,12 @@ Import Data From Winbooks
     """,
     'category': 'Accounting/Accounting',
     'depends': ['account_accountant', 'base_vat', 'account_base_import'],
-    'external_dependencies': {'python': ['dbfread']},
+    'external_dependencies': {
+        'python': ['dbfread'],
+        'apt': {
+            'dbfread': 'python3-dbfread',
+        },
+    },
     'data': [
         'security/ir.model.access.csv',
         'wizard/account_import_summary_views.xml',

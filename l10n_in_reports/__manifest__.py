@@ -47,6 +47,9 @@ Accounting reports for India
         ],
     },
     'external_dependencies': {
-        'python': ['pyjwt']
+        'python': ['pyjwt'],
+        'apt': {
+            'pyjwt': 'python3-jwt',
+        },
     },
 }
