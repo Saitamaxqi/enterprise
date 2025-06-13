@@ -200,11 +200,16 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
     express_mention_reason = fields.Text()
     report_async_document_ids = fields.Many2many(comodel_name='account.report.async.document', relation='report_document_fr_send_vat_report_rel')
 
+    @api.depends('report_id', 'date_from', 'date_to')
     def _compute_vat_amount(self):
         vat_carried_forward_line = self.env.ref('l10n_fr_account.tax_report_27')
         vat_payable_line = self.env.ref('l10n_fr_account.tax_report_32')
         result_vat_lines = (vat_carried_forward_line + vat_payable_line)
         for wizard in self:
+            wizard.vat_amount = 0
+            wizard.is_vat_due = False
+            if not wizard.date_from or not wizard.date_to or not wizard.report_id:
+                continue
             options = wizard.report_id.get_options({'no_format': True, 'date': {'date_from': wizard.date_from, 'date_to': wizard.date_to}, 'unfold_all': True})
             lines = wizard.report_id._get_lines(options)
             column_value = 0
