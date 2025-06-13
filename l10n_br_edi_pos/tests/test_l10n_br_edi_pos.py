@@ -375,3 +375,22 @@ class TestUi(TestL10nBREDIPOSCommon, TestPointOfSaleHttpCommon):
             self.start_tour(
                 "/pos/ui/%d" % self.main_pos_config.id, "l10n_br_edi_pos.tour_customer_order", login=self.env.user.login
             )
+
+            order = self.env['pos.order'].search([], limit=1, order='id desc')
+            self.assertEqual(order.is_invoiced, False)
+
+    def test_03_company_order(self):
+        self.partner_customer.company_type = 'company'
+
+        with self._with_mocked_l10n_br_iap_request(
+            [
+                ("calculate_tax", "company_tax_request", "company_tax_response"),
+                ("submit_invoice_goods", "company_edi_request", "company_edi_response"),
+            ]
+        ):
+            self.start_tour(
+                "/pos/ui?config_id=%d" % self.main_pos_config.id, "l10n_br_edi_pos.tour_customer_order", login=self.env.user.login
+            )
+
+            order = self.env['pos.order'].search([], limit=1, order='id desc')
+            self.assertEqual(order.is_invoiced, False)

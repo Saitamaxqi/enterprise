@@ -27,4 +27,13 @@ patch(PosOrder.prototype, {
             return qrCodeSrc(this.l10n_br_edi_avatax_data["header"]["goods"]["nfceQrCode"]);
         }
     },
+
+    // @override
+    setToInvoice(to_invoice) {
+        if (this.company.account_fiscal_country_id?.code === "BR") {
+            super.setToInvoice(false);
+        } else {
+            super.setToInvoice(to_invoice);
+        }
+    },
 });
