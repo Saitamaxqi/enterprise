@@ -2,6 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
+from collections import defaultdict
+from contextlib import contextmanager, ExitStack
 from datetime import datetime, timedelta
 from unittest import skip
 from unittest.mock import patch
@@ -439,15 +441,36 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertFalse(self.document_txt.exists(), 'the document should not exist')
 
     def test_copy_document(self):
-        with patch.object(
-            self.registry['documents.document'],
-            '_compute_is_multipage',
-            autospec=True,
-            side_effect=self.failureException(
-                "The compute stored field `is_multipage` must not be triggered "
-                "after a copy upon flushing, its value should be just copied."
-            ),
-        ):
+        @contextmanager
+        def patched_compute_methods():
+            fields_to_recompute = self.env['documents.document']._get_fields_to_recompute(depends=['attachment_id'])
+            self.assertSetEqual({f.name for f in fields_to_recompute}, {
+                'name',
+                'is_multipage',
+                'thumbnail',
+                'thumbnail_status',
+                'url_preview_image',
+                'file_extension',
+            })
+            # A compute method might be used by multiple fields,
+            # and we can't doubly mock the same compute
+            computes_to_mock = defaultdict(list)
+            for field in fields_to_recompute:
+                computes_to_mock[field.compute].append(field)
+            with ExitStack() as stack:
+                for compute, fields in computes_to_mock.items():
+                    stack.enter_context(patch.object(
+                        self.registry['documents.document'],
+                        compute,
+                        autospec=True,
+                        side_effect=self.failureException(
+                            f"The compute stored field `{'|'.join(f.name for f in fields)}` must not be triggered "
+                            "after a copy upon flushing, its value should be just copied or explicitly set."
+                        ),
+                    ))
+                yield
+
+        with patched_compute_methods():
             with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
                 copy = self.document_txt.copy()
             self.assertEqual(copy.name, "file.txt (copy)")

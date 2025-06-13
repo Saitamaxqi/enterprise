@@ -1655,18 +1655,16 @@ class DocumentsDocument(models.Model):
 
             if to_copy_attachment_sudo := documents_sudo._copy_attachment_filter(default):
                 new_attachments_iterator = iter(to_copy_attachment_sudo.attachment_id.with_context(no_document=True).copy())
-                for old_document_sudo, new_binary_sudo in zip(documents_sudo, new_binaries_sudo):
-                    if old_document_sudo._copy_attachment_filter(default):
-                        new_attachment = next(new_attachments_iterator)
-                        new_binary_sudo.write({
-                            'attachment_id': new_attachment.id,
-                            # Avoid recompute based on attachment_id
-                            'name': new_binary_sudo.name,
-                            'is_multipage': new_binary_sudo.is_multipage,
-                            'url_preview_image': False,
-                            'res_id': False,
-                            'res_model': False,
-                        })
+                # Avoid recompute based on attachment_id
+                with self.env.protecting(self._get_fields_to_recompute(depends=['attachment_id']), new_binaries_sudo):
+                    for old_document_sudo, new_binary_sudo in zip(documents_sudo, new_binaries_sudo):
+                        if old_document_sudo._copy_attachment_filter(default):
+                            new_attachment = next(new_attachments_iterator)
+                            new_binary_sudo.write({
+                                'attachment_id': new_attachment.id,
+                                'res_id': False,
+                                'res_model': False,
+                            })
 
         return self.browse([new_document.id for new_document in new_documents])
 
@@ -1689,6 +1687,27 @@ class DocumentsDocument(models.Model):
         if default and 'attachment_id' in default:
             return self.env['documents.document']
         return self.filtered('attachment_id')
+
+    @api.model
+    def _get_fields_to_recompute(self, depends):
+        """
+        Get copyable `compute stored` fields that need recomputation
+        based on the provided dependencies.
+        """
+        if not depends:
+            return []
+
+        fields_to_recompute = set()
+        fields_compute_stored = {
+            field
+            for field in self._fields.values()
+            if field.copy and field.store and field.compute
+        }
+        for field_dependence in (self._fields[depend] for depend in depends):
+            fields_dependent = set(self.pool.get_dependent_fields(field_dependence))
+            fields_to_recompute |= fields_compute_stored & fields_dependent
+
+        return fields_to_recompute
 
     def _copy_with_access(self, default):
         """Copy documents with their access. !Assumes that access rights were checked before! """
