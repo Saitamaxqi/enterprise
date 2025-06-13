@@ -176,7 +176,7 @@ class L10n_InReportHandler(models.AbstractModel):
             ('date', '>=', options['date']['date_from']),
             ('date', '<=', options['date']['date_to']),
             ('state', '=', 'posted'),
-            ('commercial_partner_id.l10n_in_pan', '=', False),
+            ('commercial_partner_id.l10n_in_pan_entity_id', '=', False),
         ]
         invalid_move_ids = []
         if report.id == self.env.ref("l10n_in.tds_report").id:

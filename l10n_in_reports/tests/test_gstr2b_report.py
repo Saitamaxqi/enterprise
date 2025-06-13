@@ -166,7 +166,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         invoices found in the GSTR-2B data but not present in Odoo.
         """
         bill_with_partner_b = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=self.partner_b, invoice_date=self.test_date, line_vals={'price_unit': 800})
-        partner_c = self.partner_b.copy({'name': 'Partner_c', 'vat': '24WXYZM1234E1ZE'})
+        partner_c = self.partner_b.copy({'name': 'Partner_c', 'vat': '24WXYCM1234E1ZE'})
         bill_with_partner_c = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=partner_c, invoice_date=self.test_date, line_vals={'price_unit': 800})
         gstr2b_reconciliation_different_partner = self._read_mock_json('gstr2b_reconciliation_different_partner.json')
         self.report.gstr2b_json_from_portal_ids = self.env['ir.attachment'].create({

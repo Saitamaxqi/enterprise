@@ -16,10 +16,10 @@
             <field name="name">IN Company</field>
             <field name="partner_id" ref="base.partner_demo_company_in"/>
             <field name="currency_id" ref="base.INR"/>
-            <field name="vat">24DUMMY1234AAZA</field>
             <field name="l10n_in_provident_fund" eval="True"/>
             <field name="l10n_in_esic" eval="True"/>
             <field name="l10n_in_pt" eval="True"/>
+            <field name="vat">24FANCY1234AAZA</field>
         </record>
 
         <record id="base.partner_demo_company_in" model="res.partner">
