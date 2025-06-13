@@ -49,4 +49,19 @@ patch(TicketScreen.prototype, {
         }
         return super._onUpdateSelectedOrderline(...arguments);
     },
+    async _doneOrder(order) {
+        await super._doneOrder(...arguments);
+        if (this.pos.useBlackBoxBe()) {
+            order = this.pos.models["pos.order"].get(order.id);
+            if (order?.state === "paid" && order.delivery_status === "food_ready") {
+                const result = await this.pos.pushOrderToBlackbox(order);
+                if (result) {
+                    this.pos.models["pos.order"]
+                        .get(order.id)
+                        .setDataForPushOrderFromBlackbox(result);
+                    await this.pos.createLog(order);
+                }
+            }
+        }
+    },
 });

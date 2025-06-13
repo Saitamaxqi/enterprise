@@ -12,7 +12,7 @@ class PosMakePayment(models.TransientModel):
     def check(self):
         order = self.env["pos.order"].browse(self.env.context.get("active_id"))
 
-        if order.config_id.certified_blackbox_identifier:
+        if order.config_id.certified_blackbox_identifier and not order.delivery_provider_id:
             raise UserError(
                 _("Adding additional payments to registered orders is not allowed.")
             )

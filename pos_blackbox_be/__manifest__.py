@@ -22,7 +22,7 @@ Contact Odoo SA before installing pos_blackbox_be module.
 
 No modified version is certified and supported by Odoo SA.
     """,
-    'depends': ['pos_iot', 'l10n_be', 'web_enterprise', 'pos_hr', 'pos_restaurant', 'pos_discount', 'pos_self_order'],
+    'depends': ['pos_iot', 'l10n_be', 'web_enterprise', 'pos_hr', 'pos_restaurant', 'pos_discount', 'pos_self_order', 'pos_urban_piper'],
     'data': [
         'data/data.xml',
         'security/ir.model.access.csv',
