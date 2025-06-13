@@ -4419,13 +4419,25 @@ class AccountReport(models.Model):
         if 'sections_source_id' not in options:
             return _('report.%(file_extension)s', file_extension=extension)
 
+        def _transform_period(period=""):
+            if dates := re.findall(r'\d{2}/\d{2}/\d{4}', period):
+                return f"{'_'.join(dates).replace('/', '')}"
+            # We replace _-_ to handle periods with type 'quarter'
+            return f"{period.replace(' ', '_').replace('_-_', '_').lower()}"
+
+        def _get_company_name(companies):
+            if companies and len(companies) == 1:
+                return f"_{companies[0]['name'].replace(' ', '_').lower()}"
+            return ""
+
+        period = options.get('date', {}).get('string')
         sections_source_id = options['sections_source_id']
         if sections_source_id != self.id:
             sections_source = self.env['account.report'].browse(sections_source_id)
         else:
             sections_source = self
 
-        return f"{sections_source.name.lower().replace(' ', '_')}.{extension}"
+        return f"{sections_source.name.lower().replace(' ', '_')}_{_transform_period(period)}{_get_company_name(options['companies'])}.{extension}"
 
     def execute_action(self, options, params=None):
         action_id = int(params.get('actionId'))
