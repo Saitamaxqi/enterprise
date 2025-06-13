@@ -37,6 +37,10 @@ registry.category("web_tour.tours").add("FiskalyTour", {
             PaymentScreen.clickPaymentMethod("Cash"),
             PaymentScreen.clickInvoiceButton(),
             PaymentScreen.clickValidate(),
+            ReceiptScreen.isShown(),
+            {
+                trigger: ".tss-info:contains('TSE-Transaktion')",
+            },
             {
                 content: "Check that the receipt contains all tss info",
                 trigger: ".pos-receipt",

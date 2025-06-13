@@ -33,16 +33,40 @@ patch(PosOrder.prototype, {
         if (this.isCountryGermanyAndFiskaly()) {
             if (this.isTransactionFinished()) {
                 return {
-                    transaction_number: this.l10n_de_fiskaly_transaction_number,
-                    time_start: this.l10n_de_fiskaly_time_start,
-                    time_end: this.l10n_de_fiskaly_time_end,
-                    certificate_serial: this.l10n_de_fiskaly_certificate_serial,
-                    timestamp_format: this.l10n_de_fiskaly_timestamp_format,
-                    signature_value: this.l10n_de_fiskaly_signature_value,
-                    signature_algorithm: this.l10n_de_fiskaly_signature_algorithm,
-                    signature_public_key: this.l10n_de_fiskaly_signature_public_key,
-                    client_serial_number: this.l10n_de_fiskaly_client_serial_number,
-                    erstBestellung: this.getOrderlines()[0].getProduct().display_name,
+                    transaction_number: {
+                        name: "TSE-Transaktion",
+                        value: this.l10n_de_fiskaly_transaction_number,
+                    },
+                    time_start: { name: "TSE-Start", value: this.l10n_de_fiskaly_time_start },
+                    time_end: { name: "TSE-Stop", value: this.l10n_de_fiskaly_time_end },
+                    certificate_serial: {
+                        name: "TSE-Seriennummer",
+                        value: this.l10n_de_fiskaly_certificate_serial,
+                    },
+                    timestamp_format: {
+                        name: "TSE-Zeitformat",
+                        value: this.l10n_de_fiskaly_timestamp_format,
+                    },
+                    signature_value: {
+                        name: "TSE-Signatur",
+                        value: this.l10n_de_fiskaly_signature_value,
+                    },
+                    signature_algorithm: {
+                        name: "TSE-Hashalgorithmus",
+                        value: this.l10n_de_fiskaly_signature_algorithm,
+                    },
+                    signature_public_key: {
+                        name: "TSE-PublicKey",
+                        value: this.l10n_de_fiskaly_signature_public_key,
+                    },
+                    client_serial_number: {
+                        name: "ClientID / KassenID",
+                        value: this.l10n_de_fiskaly_client_serial_number,
+                    },
+                    erstBestellung: {
+                        name: "TSE-Erstbestellung",
+                        value: this.getOrderlines()[0].getProduct().display_name,
+                    },
                 };
             } else {
                 return {
