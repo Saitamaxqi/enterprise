@@ -2861,7 +2861,7 @@ export class GanttRenderer extends Component {
         }
     }
 
-    onCreate(rowId, startCol, stopCol) {
+    onCreate(rowId, startCol, stopCol, additionalContext = {}) {
         let { start } = this.getSubColumnFromColNumber(startCol);
         let { stop } = this.getSubColumnFromColNumber(stopCol);
         ({ start, stop } = this.normalizeTimeRange(start, stop));
@@ -2871,7 +2871,10 @@ export class GanttRenderer extends Component {
             stop,
             withDefault: true,
         });
-        this.props.create(context);
+        this.props.create({
+            ...context,
+            ...additionalContext,
+        });
     }
 
     normalizeTimeRange(start, stop) {
