@@ -100,6 +100,7 @@
                 <field name="work_email" invisible="1" />
                 <field name="previous_template_id" invisible="1" />
                 <field name="template_reset" invisible="1" />
+                <field name="template_duration_days" invisible="1" />
                 <field name="employee_id" invisible="1"/>
                 <field name="user_id" invisible="1"/>
                 <field name="resource_type" invisible="1"/>
@@ -144,8 +145,8 @@
                         </group>
                         <!-- slot_info_right group is used in another module -->
                         <group name="slot_info_right">
-                            <label for="start_datetime"/>
-                            <div class="d-inline-flex">
+                            <label for="start_datetime" invisible="context.get('shifts_multi_day') and template_id and template_duration_days == 1"/>
+                            <div class="d-inline-flex" invisible="context.get('shifts_multi_day') and template_id and template_duration_days == 1">
                                 <field name="start_datetime" string="Date" widget="daterange" options="{'end_date_field': 'end_datetime'}" />
                                 <field name="end_datetime" invisible="1" />
                                 <field name="repeat" nolabel="1" style="width: fit-content;font-size:10px;"
