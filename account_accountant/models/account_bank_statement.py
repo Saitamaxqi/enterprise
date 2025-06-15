@@ -334,7 +334,7 @@ class AccountBankStatementLine(models.Model):
         for st_line_id, all_aml_ids, total_residual, ref_aml_ids in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             if total_residual == st_line.amount:
-                st_line.with_company(st_line.company_id).set_line_bank_statement_line(all_aml_ids)
+                st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(all_aml_ids)
             elif ref_aml_ids:
                 ref_amls = self.env['account.move.line'].browse(ref_aml_ids).with_prefetch(self._prefetch_ids)
 
@@ -367,7 +367,7 @@ class AccountBankStatementLine(models.Model):
                         ref_amls -= aml
                     else:
                         break
-                st_line.with_company(st_line.company_id).set_line_bank_statement_line(ref_amls.ids)
+                st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(ref_amls.ids)
             else:
                 # no valid candidates yet
                 continue
@@ -481,7 +481,7 @@ class AccountBankStatementLine(models.Model):
         # process then remove matched statement lines
         for st_line_id, aml_id in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
-            st_line.with_company(st_line.company_id).set_line_bank_statement_line(aml_id)
+            st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
             if st_line.currency_id.is_zero(st_line.amount_residual):
                 processed_st_line_ids.add(st_line_id)
         remaining_st_line_ids = list(set(remaining_st_line_ids) - processed_st_line_ids)
@@ -650,9 +650,11 @@ class AccountBankStatementLine(models.Model):
             :param partner_id: The ID of the partner to set on the bank statement line.
         """
         if self.partner_name:
-            st_lines = self.search([('journal_id', '=', self.journal_id), ('partner_name', '=', self.partner_name), ('is_reconciled', '=', False), ('partner_id', '=', False)])
+            st_lines = self.search([('journal_id', '=', self.journal_id.id), ('partner_name', '=', self.partner_name), ('is_reconciled', '=', False), ('partner_id', '=', False)])
         else:
             st_lines = self
+
+        (st_lines - self).move_id._track_set_author(self.env.ref('base.partner_root'))
         st_lines.with_context(force_delete=True, skip_readonly_check=True).partner_id = partner_id
         st_lines._try_auto_reconcile_statement_lines()
 

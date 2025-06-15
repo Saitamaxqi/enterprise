@@ -1551,3 +1551,95 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             reco_model,
             "The test reco model should be assigned on the new suspense line",
         )
+
+    def test_author_of_the_messages_when_auto_reconciliation(self):
+        """ Test that the author of the messages in the chatter is set correctly when reconciling a statement lines automatically. """
+
+        invoice = self._create_invoice_line('out_invoice', partner_id=self.partner_a.id, invoice_line_ids=[{'price_unit': 1000.0}])
+        statement_line = self._create_st_line(1000.0, payment_ref=invoice.move_id.name, update_create_date=False)
+        self.env.cr.flush()  # force tracking message
+
+        statement_line.with_context(tracking_disable=False, mail_notrack=False)._try_auto_reconcile_statement_lines()
+        self.env.cr.flush()  # force tracking message
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', statement_line.move_id.id),
+        ])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(messages.author_id, self.env.ref('base.partner_root'), "The author of the messages should be OdooBot.")
+
+    def test_author_of_the_messages_when_manual_reconciliation(self):
+        """ Test that the author of the messages in the chatter is set correctly when reconciling a statement lines manually. """
+
+        invoice = self._create_invoice_line('out_invoice', partner_id=self.partner_a.id, invoice_line_ids=[{'price_unit': 1000.0}])
+        statement_line = self._create_st_line(1000.0, payment_ref=invoice.move_id.name, update_create_date=False)
+        self.env.cr.flush()  # force tracking message
+
+        statement_line.with_context(tracking_disable=False, mail_notrack=False).set_line_bank_statement_line(invoice.id)
+        self.env.cr.flush()  # force tracking message
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', statement_line.move_id.id),
+        ])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(messages.author_id, self.env.user.partner_id, "The author of the messages should be the current user.")
+
+    def test_author_of_the_messages_when_partner_set(self):
+        """ Test that the author of the messages in the chatter is set correctly when a partner is set manually or automatically on a statement line. """
+
+        invoice_1 = self._create_invoice_line('out_invoice', partner_id=self.partner_a.id, invoice_line_ids=[{'price_unit': 1000.0}])
+        invoice_2 = self._create_invoice_line('out_invoice', partner_id=self.partner_a.id, invoice_line_ids=[{'price_unit': 1500.0}])
+        statement_line_1 = self._create_st_line(1000.0, partner_name='xyz', payment_ref=invoice_1.move_id.name, update_create_date=False)
+        statement_line_2 = self._create_st_line(1500.0, partner_name='xyz', payment_ref=invoice_2.move_id.name, update_create_date=False)
+        self.env.cr.flush()  # force tracking message
+
+        statement_line_1.with_context(tracking_disable=False, mail_notrack=False).set_partner_bank_statement_line(self.partner_a.id)
+        self.env.cr.flush()  # force tracking message
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', statement_line_1.move_id.id),
+        ])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(messages[0].author_id, self.env.user.partner_id, "The author of the messages should be the current user.")
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', statement_line_2.move_id.id),
+        ])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(messages.author_id, self.env.ref('base.partner_root'), "The author of the messages should be the OdooBot.")
+
+    def test_author_of_the_messages_when_reco_model_set(self):
+        """ Test that the author of the messages in the chatter is set correctly when a reconciliation model is set manually or automatically on a statement line. """
+
+        reco_model = self.env['account.reconcile.model'].create({
+            'name': 'Test',
+            'match_label': 'contains',
+            'match_label_param': 'TEST',
+        })
+        statement_line_1 = self._create_st_line(1000.0, payment_ref="Testing 1", update_create_date=False)
+        statement_line_2 = self._create_st_line(1500.0, payment_ref="Testing 2", update_create_date=False)
+
+        # 1. Manual reco model set should be done by user
+        reco_model.with_context(tracking_disable=False, mail_notrack=False).trigger_reconciliation_model(statement_line_1.id)
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', statement_line_1.move_id.id),
+        ])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(messages[0].author_id, self.env.user.partner_id, "The author of the messages should be the current user.")
+
+        # 2. Automatic reco model set should be done by OdooBot
+        # We simulate the automatic reconciliation by setting the trigger to auto_reconcile on the reco model
+        reco_model.with_context(tracking_disable=False, mail_notrack=False).write({'trigger': 'auto_reconcile'})
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', statement_line_2.move_id.id),
+        ])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(messages.author_id, self.env.ref('base.partner_root'), "Automatic reco model set should be done by OdooBot.")

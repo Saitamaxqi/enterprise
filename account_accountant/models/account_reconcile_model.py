@@ -1,4 +1,4 @@
-from odoo import api, fields, models, _
+from odoo import SUPERUSER_ID, _, api, fields, models
 from odoo.tools import SQL
 
 
@@ -217,7 +217,7 @@ class AccountReconcileModel(models.Model):
             if reco_model_trigger == 'manual':
                 st_line._action_manual_reco_model(reco_model_id)
             else:
-                reco_model._trigger_reconciliation_model(st_line)
+                reco_model.with_user(SUPERUSER_ID)._trigger_reconciliation_model(st_line)
             processed_st_line_ids.add(st_line_id)
 
     def _trigger_reconciliation_model(self, statement_line):
@@ -229,11 +229,11 @@ class AccountReconcileModel(models.Model):
             for line in
             self._apply_lines_for_bank_widget(sum(suspense_line.mapped('balance')), statement_line.partner_id, statement_line)
         ]
-
-        statement_line._set_move_line_to_statement_line_move(liquidity_line + other_lines, amls_to_create)
+        statement_line.with_user(SUPERUSER_ID)._set_move_line_to_statement_line_move(liquidity_line + other_lines, amls_to_create)
         if any(aml.get('tax_ids') for aml in amls_to_create):
             statement_line._recompute_tax_lines()
-        statement_line.move_id._message_log(body=_("Reconciliation model %s applied", self.name))
+        statement_line.move_id._message_log(author_id=self.env.user.partner_id.id,
+            body=_("Reconciliation model %s applied", self.name))
 
     def trigger_reconciliation_model(self, statement_line_id):
         self.ensure_one()
