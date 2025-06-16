@@ -1,6 +1,5 @@
 import { AbstractSpreadsheetAction } from "@spreadsheet_edition/bundle/actions/abstract_spreadsheet_action";
 import { registry } from "@web/core/registry";
-import { _t } from "@web/core/l10n/translation";
 
 import { useSubEnv } from "@odoo/owl";
 
@@ -9,7 +8,6 @@ export class DashboardEditAction extends AbstractSpreadsheetAction {
 
     resModel = "spreadsheet.dashboard";
     threadField = "dashboard_id";
-    notificationMessage = _t("New dashboard created");
 
     setup() {
         super.setup();

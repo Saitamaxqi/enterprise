@@ -380,10 +380,6 @@ class SpreadsheetMixin(models.AbstractModel):
     def _get_spreadsheet_selector(self):
         return None
 
-    @api.model
-    def _creation_msg(self):
-        return self.env._("New spreadsheet created")
-
     @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
@@ -449,15 +445,7 @@ class SpreadsheetMixin(models.AbstractModel):
         new_spreadsheet.spreadsheet_snapshot = base64.b64encode(json.dumps(spreadsheet_snapshot).encode())
         new_spreadsheet.spreadsheet_revision_ids.active = False
         new_spreadsheet._delete_comments_from_data()
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'type': 'info',
-                'message': self._creation_msg(),
-                'next': new_spreadsheet.action_open_spreadsheet(),
-            }
-        }
+        return new_spreadsheet.action_open_spreadsheet()
 
     def restore_spreadsheet_version(self, revision_id: int, spreadsheet_snapshot: dict):
         self.ensure_one()

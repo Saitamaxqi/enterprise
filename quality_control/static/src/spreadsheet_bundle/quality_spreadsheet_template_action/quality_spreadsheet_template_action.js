@@ -1,5 +1,4 @@
 import { registry } from "@web/core/registry";
-import { _t } from "@web/core/l10n/translation";
 
 import { AbstractSpreadsheetAction } from "@spreadsheet_edition/bundle/actions/abstract_spreadsheet_action";
 
@@ -14,7 +13,6 @@ export class QualitySpreadsheetTemplateAction extends AbstractSpreadsheetAction 
 
     setup() {
         super.setup();
-        this.notificationMessage = _t("New quality spreadsheet template created");
         useSubEnv({
             makeCopy: this.makeCopy.bind(this),
         });

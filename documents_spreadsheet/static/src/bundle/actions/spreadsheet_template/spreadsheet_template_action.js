@@ -11,7 +11,6 @@ export class SpreadsheetTemplateAction extends AbstractSpreadsheetAction {
 
     setup() {
         super.setup();
-        this.notificationMessage = _t("New spreadsheet template created");
         useSubEnv({
             newSpreadsheet: this.createNewSpreadsheet.bind(this),
             makeCopy: this.makeCopy.bind(this),

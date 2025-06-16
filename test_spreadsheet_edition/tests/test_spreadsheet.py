@@ -113,7 +113,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         spreadsheet._dispatch_command(add_thread_command(3))
 
         action = spreadsheet.fork_history(spreadsheet.spreadsheet_revision_ids[-1].id, snapshot_data)
-        fork_id = action["params"]["next"]["params"]["spreadsheet_id"]
+        fork_id = action["params"]["spreadsheet_id"]
         fork = self.env["spreadsheet.test"].browse(fork_id).with_context(active_test=False)  # get all the archived revisions
 
         copied_data = json.loads(fork.spreadsheet_data)
@@ -191,14 +191,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         action = spreadsheet.fork_history(rev1.id, {"test": "snapshot"})
         self.assertTrue(isinstance(action, dict))
 
-        self.assertEqual(action["params"]["message"], "New spreadsheet created")
-        self.assertEqual(action["tag"], "display_notification")
-        self.assertEqual(action["type"], "ir.actions.client")
-
-        next_action = action["params"]["next"]
-
-        self.assertTrue(isinstance(next_action, dict))
-        copy_id = next_action["params"]["spreadsheet_id"]
+        copy_id = action["params"]["spreadsheet_id"]
         spreadsheet_copy = self.env["spreadsheet.test"].browse(copy_id)
         self.assertTrue(spreadsheet_copy.exists())
         fork_revision = spreadsheet_copy.with_context(active_test=False).spreadsheet_revision_ids
@@ -219,7 +212,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         rev1 = spreadsheet.with_context(active_test=False).spreadsheet_revision_ids[0]
         fork_snapshot = {"test": "snapshot"}
         action = spreadsheet.fork_history(rev1.id, fork_snapshot)
-        fork_id = action["params"]["next"]["params"]["spreadsheet_id"]
+        fork_id = action["params"]["spreadsheet_id"]
         spreadsheet_fork = self.env["spreadsheet.test"].browse(fork_id)
         self.assertEqual(json.loads(spreadsheet_fork._get_spreadsheet_serialized_snapshot()), fork_snapshot)
         self.assertEqual(

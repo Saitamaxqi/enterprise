@@ -349,21 +349,10 @@ export class AbstractSpreadsheetAction extends Component {
     }
 
     /**
-     * @protected
-     */
-    _notifyCreation() {
-        this.notifications.add(this.notificationMessage, {
-            type: "info",
-            sticky: false,
-        });
-    }
-
-    /**
      * Open a spreadsheet
      * @private
      */
     _openSpreadsheet(spreadsheetId) {
-        this._notifyCreation();
         this.actionService.doAction(
             {
                 type: "ir.actions.client",

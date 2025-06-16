@@ -17,7 +17,6 @@ export class SpreadsheetFieldSyncAction extends AbstractSpreadsheetAction {
 
     setup() {
         super.setup();
-        this.notificationMessage = _t("New quote calculator created");
         useSubEnv({
             makeCopy: this.makeCopy.bind(this),
         });

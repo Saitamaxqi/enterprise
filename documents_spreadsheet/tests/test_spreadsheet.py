@@ -22,8 +22,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
 
     def test_action_open_new_spreadsheet(self):
         action = self.env["documents.document"].action_open_new_spreadsheet()
-        action_notification = action
-        action_open = action["params"]["next"]
+        action_open = action
         spreadsheet_id = action_open["params"]["spreadsheet_id"]
         document = self.env["documents.document"].browse(spreadsheet_id)
         self.assertTrue(document.exists())
@@ -33,8 +32,6 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         self.assertEqual(document.datas, document._empty_spreadsheet_data_base64())
         self.assertEqual(action_open["type"], "ir.actions.client")
         self.assertEqual(action_open["tag"], "action_open_spreadsheet")
-        self.assertEqual(action_notification["type"], "ir.actions.client")
-        self.assertEqual(action_notification["tag"], "display_notification")
 
     def test_action_open_new_spreadsheet_with_locale(self):
         self.env["res.lang"].create(
@@ -56,7 +53,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         })
 
         action = self.env["documents.document"].with_user(user).action_open_new_spreadsheet()
-        spreadsheet_id = action["params"]["next"]["params"]["spreadsheet_id"]
+        spreadsheet_id = action["params"]["spreadsheet_id"]
         document = self.env["documents.document"].browse(spreadsheet_id)
         self.assertTrue(document.exists())
 
@@ -76,7 +73,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         action = self.env["documents.document"].action_open_new_spreadsheet({
             "folder_id": self.folder.id
         })
-        spreadsheet_id = action["params"]["next"]["params"]["spreadsheet_id"]
+        spreadsheet_id = action["params"]["spreadsheet_id"]
         document = self.env["documents.document"].browse(spreadsheet_id)
         self.assertEqual(document.folder_id, self.folder)
 

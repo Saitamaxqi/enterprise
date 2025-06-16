@@ -1,4 +1,3 @@
-import { _t } from "@web/core/l10n/translation";
 import { browser } from "@web/core/browser/browser";
 import { KeepLast } from "@web/core/utils/concurrency";
 import { useService } from "@web/core/utils/hooks";
@@ -128,12 +127,8 @@ export class SpreadsheetSelectorPanel extends Component {
         const spreadsheet =
             this.state.selectedSpreadsheetId &&
             this.state.spreadsheets.find((s) => s.id === this.state.selectedSpreadsheetId);
-        const notificationMessage = spreadsheet
-            ? _t("New sheet inserted in '%s'", spreadsheet.display_name)
-            : "";
         this.props.onSpreadsheetSelected({
             spreadsheet,
-            notificationMessage,
             getOpenSpreadsheetAction: spreadsheet
                 ? this._getOpenSpreadsheetAction.bind(this)
                 : this._getCreateAndOpenSpreadsheetAction.bind(this),

@@ -125,12 +125,6 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
             },
         });
     }
-
-    get notificationMessage() {
-        return this.data.copy_in_my_drive
-            ? _t("New spreadsheet created in My Drive")
-            : _t("New spreadsheet created in Documents");
-    }
 }
 
 registry.category("actions").add("action_open_spreadsheet", SpreadsheetAction, { force: true });

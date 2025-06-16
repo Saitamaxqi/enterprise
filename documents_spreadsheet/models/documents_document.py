@@ -290,15 +290,7 @@ class DocumentsDocument(models.Model):
         })
         action_open = spreadsheet.action_open_spreadsheet()
         action_open['params']['is_new_spreadsheet'] = True
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'type': 'info',
-                'message': self._creation_msg(),
-                'next': action_open
-            }
-        }
+        return action_open
 
     @api.model
     def _get_spreadsheets_to_display(self, domain, offset=0, limit=None):
@@ -515,13 +507,6 @@ class DocumentsDocument(models.Model):
             "records": self._get_spreadsheets_to_display(domain, offset, limit),
             "total": self.search_count(domain),
         }
-
-    def _creation_msg(self):
-        return (
-            _("New spreadsheet created in My Drive")
-            if not self.folder_id and self.owner_id == self.env.user
-            else  _("New spreadsheet created in Documents")
-        )
 
     @api.model
     def _get_spreadsheet_selector(self):
