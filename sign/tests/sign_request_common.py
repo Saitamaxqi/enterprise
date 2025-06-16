@@ -37,6 +37,10 @@ class SignRequestCommon(TransactionCase):
         cls.role_company = cls.env.ref('sign.sign_item_role_user')
         cls.role_company.change_authorized = True
 
+        cls.role_1 = cls.env['sign.item.role'].create({
+            'name': 'Customer'
+        })
+
         cls.template_no_item = cls.env['sign.template'].create({
             'name': 'template_no_item',
         })
@@ -110,6 +114,28 @@ class SignRequestCommon(TransactionCase):
                 'height': 0.015,
             },
         ])
+
+        cls.template_constant = cls.env['sign.template'].create({
+            'name': 'template_constant',
+        })
+
+        cls.document_constant = cls.env['sign.document'].create({
+            'attachment_id': cls.attachment.id,
+            'template_id': cls.template_constant.id
+        })
+
+        cls.env['sign.item'].create({
+                'type_id': cls.env.ref('sign.sign_item_type_text').id,
+                'required': False,
+                'constant': True,
+                'responsible_id': cls.role_1.id,
+                'page': 1,
+                'posX': 0.273,
+                'posY': 0.158,
+                'document_id': cls.document_constant.id,
+                'width': 0.150,
+                'height': 0.015,
+        })
 
         cls.signature_fake = base64.b64encode(b"fake_signature")
         cls.customer_sign_values = cls.create_sign_values(cls, cls.template_3_roles.sign_item_ids, cls.role_customer.id)
@@ -225,6 +251,18 @@ class SignRequestCommon(TransactionCase):
             }), Command.create({
                 'partner_id': company.id,
                 'role_id': self.env.ref('sign.sign_item_role_user').id,
+            })],
+        })
+        sign_request.message_subscribe(partner_ids=cc_partners.ids)
+        return sign_request
+
+    def create_sign_request_with_constant_field(self, customer, cc_partners):
+        sign_request = self.env['sign.request'].create({
+            'template_id': self.template_constant.id,
+            'reference': self.template_constant.display_name,
+            'request_item_ids': [Command.create({
+                'partner_id': customer.id,
+                'role_id': self.role_1.id
             })],
         })
         sign_request.message_subscribe(partner_ids=cc_partners.ids)

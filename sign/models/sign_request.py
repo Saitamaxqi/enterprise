@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from collections import defaultdict
 import time
 import uuid
 
@@ -165,10 +166,41 @@ class SignRequest(models.Model):
             sign_request.template_tags = [Command.set(sign_request.template_id.tag_ids.ids)]
             sign_request.attachment_ids.write({'res_model': sign_request._name, 'res_id': sign_request.id})
             sign_request.message_subscribe(partner_ids=sign_request.request_item_ids.partner_id.ids)
+            sign_request._populate_constant_items()
             self.env['sign.log'].sudo().create({'sign_request_id': sign_request.id, 'action': 'create'})
+
         if not self._context.get('no_sign_mail'):
             sign_requests.send_signature_accesses()
         return sign_requests
+
+    def _populate_constant_items(self):
+        self.ensure_one()
+        sign_values_by_role = defaultdict(
+            lambda: defaultdict(lambda: self.env['sign.item']))
+        for item in self.template_id.sign_item_ids:
+            if item.constant:
+                sign_values_by_role[item.responsible_id][str(item.id)] = {
+                    "name": item.name,
+                    "type_id": item.type_id.id,
+                    "auto_field": item.type_id.auto_field
+                }
+
+        if not sign_values_by_role:
+            return
+
+        for sign_request_item in self.sudo().request_item_ids:
+            if sign_request_item.role_id in sign_values_by_role:
+                sign_items = sign_values_by_role[sign_request_item.role_id]
+                corrected_dict = sign_items.copy()
+                for key, value in sign_items.items():
+                    corrected_dict[key] = value["name"]
+                    if value.get("auto_field"):
+                        corrected_dict[key] = sign_request_item._get_auto_field_value({
+                            "id": value.get("type_id"),
+                            "auto_field": value.get("auto_field")
+                        })
+
+                sign_request_item._fill(corrected_dict)
 
     def write(self, vals):
         today = fields.Date.today()

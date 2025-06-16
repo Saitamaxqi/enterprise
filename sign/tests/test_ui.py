@@ -59,6 +59,23 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             'height': 0.050,
         }])
         self.env['sign.template'].search([('id', '!=', self.template_1_role.id)]).write({'active': False})
+        type_id = self.env['sign.item.type'].create({
+            'name': "Issuer",
+            'item_type': "text",
+            'placeholder': "Issued by Mitchell Admin",
+        })
+        self.env['sign.item'].create([{
+            'type_id': type_id.id,
+            'required': False,
+            'constant': True,
+            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'page': 1,
+            'posX': 0.144,
+            'posY': 0.716,
+            'document_id': self.document_2.id,
+            'width': 0.200,
+            'height': 0.050,
+        }])
         with file_open('sign/static/demo/signature.png', "rb") as f:
             img_content = base64.b64encode(f.read())
 

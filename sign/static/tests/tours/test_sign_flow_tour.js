@@ -88,6 +88,9 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
             trigger: ".o_sign_validate_banner",
         },
         {
+            trigger: ":iframe input.o_sign_sign_item_constant[disabled]"
+        },
+        {
             content: "Validate & Send Completed Document",
             trigger: "button:contains('Validate & Send Completed Document')",
             run: "click",

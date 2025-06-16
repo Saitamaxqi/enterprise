@@ -2,7 +2,7 @@
 
 import base64
 
-from odoo import Command
+from odoo.exceptions import ValidationError
 from odoo.tools import file_open
 from odoo.tests.common import TransactionCase, new_test_user
 
@@ -197,3 +197,33 @@ class TestSignTemplate(TransactionCase):
         self.assertEqual(set(sign_template.sign_item_ids.ids), set(list(result3.values()) + [item1_id]), 'An id mapping should be returned')
         self.assertEqual(self.env['sign.item'].browse(item1_id).posY, 0.158, 'The poxY of item1 should be 0.158')
         self.assertEqual(self.env['sign.item'].browse(item2_id).posY, 0.298, 'The poxY of item2 should be 0.298')
+
+    def test_sign_item_has_proper_type(self):
+        """Tests that a sign item can only be set as read-only if it has certain types."""
+        res = self.env['sign.template'].with_user(self.test_user).create_from_attachment_data(
+            attachment_data_list=[{'name': 'sample_contract.pdf', 'datas': self.pdf_data}])
+        sign_template_id = res.get('id', 0)
+        sign_template = self.env['sign.template'].with_user(self.test_user).browse(sign_template_id)
+        document_id = sign_template.document_ids[0].id
+        for item_type in ('signature', 'initial', 'radio', 'checkbox', 'selection'):
+            with self.subTest(f'Create sign item of type {item_type}'):
+                with self.assertRaisesRegex(ValidationError, "Read-only can only be applied to items of the following types: 'Text', 'Name', 'Email', 'Phone', 'Company', 'Multiline', 'Date', 'Strikethrough'"):
+                    type_id = self.env["sign.item.type"].create({
+                        'name': item_type,
+                        'item_type': item_type
+                    })
+                    self.env["sign.item"].create({
+                        'template_id': sign_template_id,
+                        'document_id': document_id,
+                        'type_id': type_id.id,
+                        'name': 'employee_id.name',
+                        'required': False,
+                        'constant': True,
+                        'responsible_id': self.env.ref('sign.sign_item_role_employee').id,
+                        'page': 1,
+                        'posX': 0.273,
+                        'posY': 0.458,
+                        'width': 0.150,
+                        'height': 0.015,
+                        'transaction_id': -4,
+                    })

@@ -199,6 +199,7 @@ export class PDFIframe {
             (this.readonly && `${signItem.name}\n${signItem.responsible_name}`) ||
             "";
         return Object.assign(signItem, {
+            constant: signItem.constant ?? false,
             readonly: signItem.readonly ?? readonly,
             editMode: signItem.editMode ?? false,
             required: Boolean(signItem.required),
@@ -207,6 +208,7 @@ export class PDFIframe {
             placeholder: placeholder,
             classes: `
                 ${isCurrentRole ? "o_sign_sign_item_default" : ""}
+                ${signItem.constant ? "o_sign_sign_item_constant": ""}
                 ${signItem.required && isCurrentRole ? "o_sign_sign_item_required" : ""}
                 ${readonly && isCurrentRole ? "o_readonly_mode" : ""}
                 ${this.readonly ? "o_sign_sign_item_pdfview" : ""}`,
@@ -312,6 +314,7 @@ export class PDFIframe {
         const type = this.signItemTypesById[itemTypeId];
         const alignment = this.getAlignmentByItemType(type.item_type);
         return {
+            constant: false,
             required: true,
             editMode: true,
             readonly: true,

@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class SignItem(models.Model):
@@ -28,6 +29,7 @@ class SignItem(models.Model):
     width = fields.Float(digits=(4, 3), required=True)
     height = fields.Float(digits=(4, 3), required=True)
     alignment = fields.Char(default="left", required=True)
+    constant = fields.Boolean(string="Read-only")
 
     transaction_id = fields.Integer(copy=False)
 
@@ -42,6 +44,12 @@ class SignItem(models.Model):
         for item in vals_list:
             item['radio_set_id'] = radio_set_map.get(item['radio_set_id'])
         return vals_list
+
+    @api.constrains('required', 'constant')
+    def _check_constant(self):
+        for record in self:
+            if record.constant and record.type_id.item_type in ['signature', 'initial', 'selection', 'checkbox', 'radio']:
+                raise ValidationError(self.env._("Read-only can only be applied to items of the following types: 'Text', 'Name', 'Email', 'Phone', 'Company', 'Multiline', 'Date', 'Strikethrough'"))
 
 
     @api.autovacuum

@@ -319,7 +319,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             if (signItem.data.id in this.negativeIds) {
                 await this.negativeIds[signItem.data.id];
             }
-            const header_title = signItem.data.type == "radio" ? "Radio Button" : signItem.data.placeholder;
+            const header_title = signItem.data.type == "radio" ? "Radio Button" : signItem.data.name;
             const closeFn = this.popover.add(
                 signItem.el,
                 SignItemCustomPopover,
@@ -327,6 +327,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                     debug: this.env.debug,
                     alignment: signItem.data.alignment,
                     required: signItem.data.required,
+                    constant: signItem.data.constant,
                     header_title: header_title,
                     placeholder: signItem.data.placeholder,
                     id: signItem.data.id,
@@ -581,6 +582,8 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             signItem.options = options;
         }
         const error_class = type === 'selection' && !signItem.option_ids.length && !signItem.just_dropped ? 'o_sign_field_error' : '';
+        const colorClass = signItem.constant ? "o_color_constant" : `o_color_responsible_${this.roleColors[responsible]}`;
+
         return Object.assign(signItem, {
             readonly: true,
             editMode: true,
@@ -588,7 +591,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             responsible,
             type,
             placeholder: signItem.placeholder || signItem.name || "",
-            classes: `o_color_responsible_${this.roleColors[responsible]} o_readonly_mode ${error_class}`,
+            classes: `${colorClass} o_readonly_mode ${error_class}`,
             style: `top: ${normalizedPosY * 100}%; left: ${normalizedPosX * 100}%;
                     width: ${signItem.width * 100}%; height: ${signItem.height * 100}%;
                     text-align: ${this.getAlignmentByItem(signItem)}`,

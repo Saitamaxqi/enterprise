@@ -76,7 +76,7 @@
     margin: 0;
     padding: 0;
     resize: none;
-    font-family: Helvetica;
+    font-family: Helvetica, sans-serif;
     z-index: 100;
     cursor: pointer;
     border-radius: 3px;
@@ -469,3 +469,17 @@ select:focus {
 .textLayer {
     z-index: 2 !important; /* allow for text selection after adding canvas_layer_0 */
 }
+
+.o_sign_sign_item.o_sign_sign_item_constant {
+    background: none;
+    border: 2px solid rgb(var(--bs-dark-rgb));
+    box-shadow: none;
+}
+
+.o_sign_sign_item.o_sign_sign_item_constant::placeholder {
+    color: rgb(var(--bs-dark-rgb));
+} 
+
+.o_sign_sign_item.o_sign_sign_item_constant:hover {
+    cursor: default;
+} 

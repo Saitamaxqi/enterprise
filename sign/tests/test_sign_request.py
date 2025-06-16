@@ -594,3 +594,20 @@ class TestSignRequest(SignRequestCommon, MockEmail):
                 if autovacuum_job:
                     autovacuum_job.method_direct_trigger()
                     self.assertFalse(shared_request.exists(), "The template is not shared anymore.")
+
+    def test_sign_request_item_value_cannot_be_changed_after_create(self):
+        """ Tests that a constant sign item can be created but its value cannot be not modified """
+        constant_sign_request = self.create_sign_request_with_constant_field(
+            customer=self.partner_1,
+            cc_partners=self.partner_4
+        )
+
+        role2sign_request_item = {
+            sign_request_item.role_id: sign_request_item
+            for sign_request_item in constant_sign_request.request_item_ids
+        }
+
+        sign_request_item_customer = role2sign_request_item[self.role_1]
+
+        with self.assertRaisesRegex(UserError, "Cannot update the value of a read-only sign item"):
+            sign_request_item_customer.sign(self.create_sign_values(constant_sign_request.template_id.sign_item_ids, sign_request_item_customer.role_id.id))

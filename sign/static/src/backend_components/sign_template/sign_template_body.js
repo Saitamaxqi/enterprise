@@ -236,6 +236,7 @@ export class SignTemplateBody extends Component {
                     updatedSignItems[id] = {
                         type_id: signItem.type_id[0],
                         required: signItem.required,
+                        constant: signItem.constant,
                         name: signItem.placeholder || signItem.name,
                         alignment: signItem.alignment,
                         option_ids: signItem.option_ids,

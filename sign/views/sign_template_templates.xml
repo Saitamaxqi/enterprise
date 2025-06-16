@@ -32,6 +32,7 @@
                     t-att-data-id="item.id"
                     t-att-data-type_id="item.type_id.id"
                     t-att-data-required="item.required"
+                    t-att-data-constant="item.constant"
                     t-att-data-name="item.name"
                     t-att-data-responsible="item.responsible_id.id"
                     t-att-data-responsible_name="item.responsible_id.name"

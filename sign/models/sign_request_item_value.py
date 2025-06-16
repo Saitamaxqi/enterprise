@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import fields, models, _
+from odoo.exceptions import UserError
 
 
 class SignRequestItemValue(models.Model):
@@ -16,3 +17,11 @@ class SignRequestItemValue(models.Model):
     value = fields.Text()
     frame_value = fields.Text()
     frame_has_hash = fields.Boolean()
+
+    def write(self, vals):
+        for request_item in self:
+            if updated_value := vals.get("value"):
+                if request_item.sign_item_id.constant and updated_value != request_item.value:
+                    raise UserError(_("Cannot update the value of a read-only sign item"))
+
+        return super().write(vals)

@@ -11,6 +11,7 @@ export class SignItemCustomPopover extends Component {
         header_title: {type: String },
         placeholder: { type: String },
         required: { type: Boolean },
+        constant: { type: Boolean },
         option_ids: { type: Array },
         onValidate: { type: Function },
         type: { type: String },
@@ -33,6 +34,7 @@ export class SignItemCustomPopover extends Component {
         this.state = useState({
             alignment: this.props.alignment,
             placeholder: this.props.placeholder,
+            constant: this.props.constant,
             required: this.props.required,
             option_ids: this.props.option_ids,
             num_options: this.props.num_options,
@@ -83,6 +85,15 @@ export class SignItemCustomPopover extends Component {
 
     onChange(key, value) {
         this.state[key] = value;
+
+        // Focuses the placeholder input if the item is set as read-only
+        if (key === "constant") {
+            if (value) {
+                document.querySelector("#o_sign_name")?.focus();
+            } else {
+                this.state.placeholder = this.props.placeholder;
+            }
+        }
     }
 
     async onValidate() {

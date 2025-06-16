@@ -134,15 +134,17 @@ export class SignablePDFIframe extends PDFIframe {
             if (signItemElement.value) {
                 this.handleInput();
             }
-            signItemElement.addEventListener("click", (e) => {
-                if (signItemElement.firstChild.classList.contains("o_sign_strikethrough_line_striked")) {
-                    signItemElement.firstChild.classList.remove("o_sign_strikethrough_line_striked");
-                    signItemElement.value = "non-striked";
-                } else {
-                    signItemElement.firstChild.classList.add("o_sign_strikethrough_line_striked");
-                    signItemElement.value = "striked";
-                }
-            });
+            if(!signItemData.constant) {
+                signItemElement.addEventListener("click", (event) => {
+                    if (signItemElement.firstChild.classList.contains("o_sign_strikethrough_line_striked")) {
+                        signItemElement.firstChild.classList.remove("o_sign_strikethrough_line_striked");
+                        signItemElement.value = "non-striked";
+                    } else {
+                        signItemElement.firstChild.classList.add("o_sign_strikethrough_line_striked");
+                        signItemElement.value = "striked";
+                    }
+                });
+            }
         }
 
         signItemElement.addEventListener("input", this.handleInput.bind(this));
@@ -323,6 +325,7 @@ export class SignablePDFIframe extends PDFIframe {
         for (const page in this.signItems) {
             Object.values(this.signItems[page]).forEach((signItem) => {
                 if (
+                    !signItem.data.constant &&
                     signItem.data.required &&
                     signItem.data.responsible === this.currentRole &&
                     !signItem.data.value
@@ -433,6 +436,7 @@ export class SignablePDFIframe extends PDFIframe {
     getSignatureValuesFromConfiguration() {
         const signatureValues = {};
         const frameValues = {};
+        const newSignItems = {};
         for (const page in this.signItems) {
             for (const item of Object.values(this.signItems[page])) {
                 const responsible = item.data.responsible || 0;
@@ -454,6 +458,21 @@ export class SignablePDFIframe extends PDFIframe {
 
                 signatureValues[item.data.id] = value;
                 frameValues[item.data.id] = { frameValue, frameHash };
+                if (item.data.isSignItemEditable) {
+                    newSignItems[item.data.id] = {
+                        type_id: item.data.type_id,
+                        required: item.data.required,
+                        constant: item.data.constant,
+                        name: item.data.name || false,
+                        option_ids: item.data.option_ids,
+                        responsible_id: responsible,
+                        page: page,
+                        posX: item.data.posX,
+                        posY: item.data.posY,
+                        width: item.data.width,
+                        height: item.data.height,
+                    };
+                }
             }
         }
 

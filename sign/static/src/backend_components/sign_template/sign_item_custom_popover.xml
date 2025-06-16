@@ -3,13 +3,16 @@
     <t t-name="sign.SignItemCustomPopover">
         <div class="popover" style="max-width: 25rem;">
             <div class="popover-header d-flex align-items-center justify-content-between">
-                <span class="fw-bold" t-esc="props.header_title"/>
+                <span class="fw-bold text-capitalize" t-esc="props.header_title"/>
                 <button type="button" title="Close" class="btn btn-default oi oi-close p-0" t-on-click="props.onClose"/>
             </div>
             <div class="popover-body">
                 <div t-if="!['strikethrough', 'radio', 'checkbox'].includes(props.type)" class="clearfix o_popover_placeholder mb-3">
-                    <label for="o_sign_name" class="form-label">Placeholder</label>
-                    <input type="text" class="form-control o_input rounded-0" id="o_sign_name" t-att-value="state.placeholder" t-on-change="(e) => this.onChange('placeholder', e.target.value)"/>
+                    <label for="o_sign_name" class="form-label">
+                        <t t-if="state.constant">Value</t>
+                        <t t-else="">Placeholder</t>
+                    </label>
+                    <textarea type="text" class="form-control o_input rounded-0" id="o_sign_name" t-att-value="state.placeholder" t-on-change="(e) => this.onChange('placeholder', e.target.value)" />
                 </div>
                 <div t-if="props.type === 'selection'" class="mb-3">
                     <label for="o_sign_select_options_input" class="label">Options</label>
@@ -40,10 +43,20 @@
                     </div>
                 </div>
                 <div class="mb-3">
+                    <!-- 
+                        This variable is used to determine if the read-only option should be shown.
+                    -->
+                    <t t-set="canBeReadonly" t-value="!['signature', 'initial', 'selection', 'checkbox', 'radio'].includes(props.type)"/>
                     <div class="form-check">
-                        <input type="checkbox" id="o_sign_required_field" t-att-checked="state.required" t-on-change="(e) => this.onChange('required', e.target.checked)" class="form-check-input"/>
+                        <input type="checkbox" id="o_sign_required_field" t-att-checked="state.required" t-on-change="(e) => this.onChange('required', e.target.checked)" class="form-check-input" />
                         <label class="form-check-label" for="o_sign_required_field">
                             Mandatory field
+                        </label>
+                    </div>
+                    <div t-if="canBeReadonly" class="form-check">
+                        <input id="o_sign_constant_field" type="checkbox" name="constraint" class="form-check-input" t-att-checked="state.constant" t-on-change="(e) => this.onChange('constant', e.target.checked)" />
+                        <label class="form-check-label" for="o_sign_constant_field">
+                            Read-only
                         </label>
                     </div>
                 </div>
