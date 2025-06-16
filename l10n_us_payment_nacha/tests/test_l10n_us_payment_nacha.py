@@ -31,6 +31,7 @@ class TestNacha(AccountTestInvoicingCommon):
             "partner_id": cls.partner_a.id,
             "acc_number": "987654321",
             "clearing_number": "123456780",
+            "l10n_us_bank_account_type": "savings",
         })
 
         cls.bank_partner_b = cls.env["res.partner.bank"].create({
@@ -94,7 +95,7 @@ class TestNacha(AccountTestInvoicingCommon):
             # batch header for payments today "BATCH 0"
             "5220company_1_data  BATCH/OUT/2020/0001 COMPANY_IDCCDBATCH 0   201130201130   1ORIGINAT0000000",
             # entry detail for payment "partner_a_1"
-            "622123456780987654321        0000012345               partner_a               0ORIGINAT0000000",
+            "632123456780987654321        0000012345               partner_a               0ORIGINAT0000000",
             # entry detail for payment "partner_b_2"
             "622123456780987654321        0000056789               partner_b               0ORIGINAT0000001",
             # batch control record for "BATCH 0"
@@ -102,7 +103,7 @@ class TestNacha(AccountTestInvoicingCommon):
             # batch header for payments tomorrow "BATCH 1"
             "5220company_1_data  BATCH/OUT/2020/0001 COMPANY_IDCCDBATCH 1   201201201201   1ORIGINAT0000001",
             # entry detail for payment "partner_a_2"
-            "622123456780987654321        0000054321               partner_a               0ORIGINAT0000000",
+            "632123456780987654321        0000054321               partner_a               0ORIGINAT0000000",
             # entry detail for payment "partner_b_1"
             "622123456780987654321        0000045678               partner_b               0ORIGINAT0000001",
             # batch control record for "BATCH 1"
@@ -122,7 +123,7 @@ class TestNacha(AccountTestInvoicingCommon):
             # batch header for payments today "BATCH 0"
             "5200company_1_data  00000000000123456789COMPANY_IDCCDBATCH 0   201130201130   1ORIGINAT0000000",
             # entry detail for payment "partner_a_1"
-            "622123456780987654321        0000012345               partner_a               0ORIGINAT0000000",
+            "632123456780987654321        0000012345               partner_a               0ORIGINAT0000000",
             # entry detail for payment "partner_b_2"
             "622123456780987654321        0000056789               partner_b               0ORIGINAT0000001",
             # offset entry for "BATCH 0"
@@ -132,7 +133,7 @@ class TestNacha(AccountTestInvoicingCommon):
             # batch header for payments tomorrow "BATCH 1"
             "5200company_1_data  00000000000123456789COMPANY_IDCCDBATCH 1   201201201201   1ORIGINAT0000001",
             # entry detail for payment "partner_a_2"
-            "622123456780987654321        0000054321               partner_a               0ORIGINAT0000000",
+            "632123456780987654321        0000054321               partner_a               0ORIGINAT0000000",
             # entry detail for payment "partner_b_1"
             "622123456780987654321        0000045678               partner_b               0ORIGINAT0000001",
             # offset entry for "BATCH 1"

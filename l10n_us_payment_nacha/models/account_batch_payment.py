@@ -98,7 +98,7 @@ class AccountBatchPayment(models.Model):
         bank = payment.partner_bank_id
         return "".join((
             "6",  # Record Type Code
-            "27" if is_offset else "22",  # Transaction Code
+            ("37" if is_offset else "32") if bank.l10n_us_bank_account_type == 'savings' else ("27" if is_offset else "22"),  # Transaction Code
             f"{bank.clearing_number[:-1]:8.8}",  # RDFI Routing Transit Number
             f"{bank.clearing_number[-1]:1.1}",  # Check Digit
             f"{bank.acc_number:17.17}",  # DFI Account Number
