@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+import re
 from markupsafe import Markup
 
 from odoo import api, fields, models, _
@@ -87,7 +87,7 @@ class BudgetAnalytic(models.Model):
     def create_revised_budget(self):
         revised = self.browse()
         for budget in self:
-            revised_budget = budget.copy(default={'name': _('REV %s', budget.name), 'parent_id': budget.id, 'budget_type': budget.budget_type})
+            revised_budget = budget.copy(default={'name': budget._get_revised_budget_name(), 'parent_id': budget.id, 'budget_type': budget.budget_type})
             revised += revised_budget
             budget.message_post(
                 body=Markup("%s: <a href='#' data-oe-model='budget.analytic' data-oe-id='%s'>%s</a>") % (
@@ -96,6 +96,21 @@ class BudgetAnalytic(models.Model):
                     revised_budget.name,
                 ))
         return revised._get_records_action()
+
+    def _get_revised_budget_name(self):
+        """
+        Generate revised budget name with "REV(datetime)" format
+
+        :return: Updated budget name.
+        """
+        self.ensure_one()
+        current_time = fields.Datetime.context_timestamp(self, fields.Datetime.now())
+        datetime_str = current_time.strftime("%Y-%m-%d %H:%M")
+
+        # Extract existing revision pattern and base name
+        match = re.search(r'(.*) - REV\([^)]+\)$', self.name.strip())
+        base_name = match.group(1).strip() if match else self.name.strip()
+        return f"{base_name} - REV({datetime_str})"
 
     def action_open_budget_lines(self):
         context = dict(self.env.context)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from freezegun import freeze_time
 
 from .common import TestAccountBudgetCommon
 from odoo.tests import tagged
@@ -66,3 +67,15 @@ class TestAccountBudget(TestAccountBudgetCommon):
         for line, combination in zip(budget_lines, account_combinations):
             for column in combination:
                 self.assertEqual(line[column].id, combination[column], "The budget line should have the correct accounts set")
+
+    @freeze_time('2024-01-15 14:30:00')
+    def test_revised_budget_name_generation(self):
+        """Test that revised budget names are generated correctly."""
+        budget = self.budget_analytic_revenue  # Use existing budget from setup
+        budget.action_budget_confirm()
+
+        revised_budget = budget.create_revised_budget()
+        revised_budget = self.env['budget.analytic'].browse(revised_budget['res_id'])
+
+        expected_name = f"{budget.name} - REV(2024-01-15 14:30)"
+        self.assertEqual(revised_budget.name, expected_name)
