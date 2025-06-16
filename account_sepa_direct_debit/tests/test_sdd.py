@@ -38,6 +38,7 @@ class SDDTest(SDDTestCommon):
         # Test when cancelling a payment
         payment_agrolait = self.invoice_agrolait._get_reconciled_payments()
         payment_agrolait.action_draft()
+        payment_agrolait.move_id.line_ids.remove_move_reconcile()
         self.assertEqual(self.invoice_agrolait.payment_state, 'not_paid')
 
     def test_xml_pain_008_001_08_generation(self):
