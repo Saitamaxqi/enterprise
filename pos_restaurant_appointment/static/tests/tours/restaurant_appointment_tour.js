@@ -1,4 +1,5 @@
 import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
+import { refresh } from "@point_of_sale/../tests/generic_helpers/utils";
 import { registry } from "@web/core/registry";
 import * as RestaurantAppointment from "@pos_restaurant_appointment/../tests/tours/utils/restaurant_appointment_util";
 import * as Chrome from "@point_of_sale/../tests/pos/tours/utils/chrome_util";
@@ -33,10 +34,17 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
                 trigger: ".pos-leftheader button:contains('Booking')",
                 run: "click",
             },
-            {
-                content: "Check that the booking kanban view is shown",
-                trigger: ".pos-content .o_action_manager .o_kanban_view",
-            },
+            RestaurantAppointment.isKanbanViewShown(),
+            refresh(),
+            RestaurantAppointment.isKanbanViewShown(),
+            Chrome.clickMenuButton(),
+            Chrome.clickMenuDropdownOption("Reload Data"),
+            Chrome.clickBtn("Limited", { expectUnloadPage: true }),
+            RestaurantAppointment.isKanbanViewShown(),
+            Chrome.clickMenuButton(),
+            Chrome.clickMenuDropdownOption("Reload Data"),
+            Chrome.clickBtn("Full", { expectUnloadPage: true }),
+            RestaurantAppointment.isKanbanViewShown(),
             Chrome.clickPlanButton(),
             RestaurantAppointment.appointmentLabel(5, "Test Lunch"),
             RestaurantAppointment.checkAppointmentLabelNotPresent(4, "Tomorrow Appointment"),
