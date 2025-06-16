@@ -509,6 +509,7 @@ class SaleOrder(models.Model):
     @api.depends('sale_order_template_id')
     def _compute_plan_id(self):
         for order in self:
+            order.plan_id = None
             if order.sale_order_template_id and order.sale_order_template_id.plan_id:
                 order.plan_id = order.sale_order_template_id.plan_id
 
