@@ -4,3 +4,7 @@
 from . import models
 from . import controllers
 from . import wizard
+
+
+def _account_reports_post_init(env):
+    env.ref('account_reports.ir_cron_generate_account_return')._trigger()

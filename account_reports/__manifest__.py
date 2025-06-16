@@ -56,6 +56,7 @@ Accounting Reports
         'views/account_tax_views.xml',
         'data/account_return_data.xml',
     ],
+    'post_init_hook': '_account_reports_post_init',
     'auto_install': True,
     'installable': True,
     'author': 'Odoo S.A.',
