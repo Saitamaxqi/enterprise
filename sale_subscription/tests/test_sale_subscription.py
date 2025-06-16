@@ -2576,3 +2576,57 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertTrue(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'TestRecurringLine')]))
         self.assertTrue(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'Some note')]))
         self.assertFalse(renewal_so.order_line.search([('order_id', '=', renewal_so.id), ('name', '=', 'Section 2')]))
+
+    def test_subscription_product_update_on_parent_line_in_upsell(self):
+        """
+        Check recurring product quantity on subscription after updating product
+        on parent line in upsell and confirm.
+        """
+        # Non-recurring product
+        nr_product = self.env['product.product'].create({
+            'name': 'Non recurring product',
+            'type': 'service',
+            'uom_id': self.product.uom_id.id,
+            'list_price': 25,
+        })
+        # Subscription
+        subscription = self.env['sale.order'].create({
+            'partner_id': self.partner_a.id,
+            'company_id': self.company_data['company'].id,
+            'plan_id': self.plan_month.id,
+            'order_line': [
+                Command.create({
+                    'product_id': self.product.id,
+                    'product_uom_qty': 2.0,
+                    'price_unit': 12,
+                })
+            ],
+        })
+        subscription.action_confirm()
+        sub_line = subscription.order_line
+        self.assertEqual(len(sub_line), 1)
+        self.assertEqual(sub_line.product_uom_qty, 2.0)
+        self.env['sale.order']._cron_recurring_create_invoice()
+
+        # Upsell
+        action = subscription.prepare_upsell_order()
+        upsell_so = self.env['sale.order'].browse(action['res_id'])
+        self.assertEqual(subscription.order_line, upsell_so.order_line.parent_line_id,
+                         "The parent line is the one from the subscription")
+        upsell_order_line = upsell_so.order_line.filtered(lambda line: not line.display_type)
+        self.assertEqual(upsell_order_line.product_uom_qty, 0.0, 'The upsell order has 0 quantity')
+
+        # Update the existing line with non-recurring product and quantity
+        upsell_order_line.product_id = nr_product
+        upsell_order_line.product_uom_qty = 11.0
+
+        # Confirm upsell
+        upsell_so._confirm_upsell()
+        upsell_line = upsell_so.order_line.filtered(lambda line: not line.display_type)
+        self.assertEqual(len(upsell_line), 1)
+        self.assertFalse(upsell_line.parent_line_id)
+        self.assertEqual(upsell_line.product_uom_qty, 11.0)
+        # Check recurring product quantity after upsell
+        self.assertEqual(len(subscription.order_line), 1)
+        self.assertEqual(subscription.order_line.product_uom_qty, 2.0,
+                         "The recurring product's quantity should not be changed in subscription")

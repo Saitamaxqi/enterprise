@@ -312,6 +312,7 @@ class SaleOrderLine(models.Model):
             parent_line_ids = self.order_id.subscription_id.order_line
             for line in lines:
                 if not line.order_id.subscription_id or not line.product_id.recurring_invoice:
+                    line.parent_line_id = False
                     continue
                 # We use a rounding to avoid -326.40000000000003 != -326.4 for new records.
                 matching_line_ids = parent_line_ids.filtered(
