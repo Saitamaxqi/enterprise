@@ -216,6 +216,21 @@ class MrpWorkorder(models.Model):
         self.ensure_one()
         return self.production_id.action_add_byproduct()
 
+    def action_add_workorder(self):
+        self.ensure_one()
+        default_blocking_wo_id = self.id
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'mrp_production.additional.workorder',
+            'views': [[self.env.ref('mrp_workorder.view_mrp_production_additional_workorder_wizard').id, 'form']],
+            'name': _('Add Work Order'),
+            'target': 'new',
+            'context': {
+                'default_production_id': self.production_id.id,
+                'default_blocked_by_workorder_id': default_blocking_wo_id,
+            }
+        }
+
     def button_start(self, raise_on_invalid_state=False, bypass=False):
         skip_employee_check = bypass or (not request and not self.env.user.employee_id)
         main_employee = False

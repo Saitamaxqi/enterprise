@@ -162,6 +162,10 @@ export class MrpMenuDialog extends Component {
         this.state.menu = "improvement";
     }
 
+    displayModifyRoutingMenu(){
+        this.state.menu = "routing"
+    }
+
     updateStep() {
         this.proposeChange("update_step");
     }
