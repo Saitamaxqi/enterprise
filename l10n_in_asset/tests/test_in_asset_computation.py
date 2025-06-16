@@ -35,9 +35,9 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
         self.assertEqual(in_asset.state, 'open')
         self.assertEqual(in_asset.l10n_in_value_residual, 31840.0)
         self.assertRecordValues(in_asset.depreciation_move_ids, [
-            self._get_depreciation_move_values(date='2024-03-31', depreciation_value=33160, remaining_value=36840, depreciated_value=33160, state='posted'),
-            self._get_depreciation_move_values(date='2025-03-31', depreciation_value=23268.14, remaining_value=13571.86, depreciated_value=56428.14, state='draft'),
-            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=8571.86, remaining_value=5000, depreciated_value=65000, state='draft'),
+            self._get_depreciation_move_values(date='2024-03-31', depreciation_value=33160, remaining_value=36840, depreciated_value=63160, state='posted'),
+            self._get_depreciation_move_values(date='2025-03-31', depreciation_value=23268.14, remaining_value=13571.86, depreciated_value=86428.14, state='draft'),
+            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=8571.86, remaining_value=5000, depreciated_value=95000, state='draft'),
         ])
 
     @freeze_time("2024-12-01")
@@ -48,9 +48,9 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
         self.assertEqual(in_asset.state, 'open')
         self.assertEqual(in_asset.l10n_in_value_residual, -31840.0)
         self.assertRecordValues(in_asset.depreciation_move_ids, [
-            self._get_depreciation_move_values(date='2024-03-31', depreciation_value=-33160, remaining_value=-36840, depreciated_value=-33160, state='posted'),
-            self._get_depreciation_move_values(date='2025-03-31', depreciation_value=-23268.14, remaining_value=-13571.86, depreciated_value=-56428.14, state='draft'),
-            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=-8571.86, remaining_value=-5000, depreciated_value=-65000, state='draft'),
+            self._get_depreciation_move_values(date='2024-03-31', depreciation_value=-33160, remaining_value=-36840, depreciated_value=-63160, state='posted'),
+            self._get_depreciation_move_values(date='2025-03-31', depreciation_value=-23268.14, remaining_value=-13571.86, depreciated_value=-86428.14, state='draft'),
+            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=-8571.86, remaining_value=-5000, depreciated_value=-95000, state='draft'),
         ])
 
     @freeze_time("2024-12-01")
@@ -67,10 +67,10 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
         }).modify()
 
         self.assertRecordValues(in_asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
-            self._get_depreciation_move_values(date='2025-03-31', depreciation_value=24756.95, depreciated_value=24756.95, remaining_value=30173.05, state='draft'),
-            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=13598.99, depreciated_value=38355.94, remaining_value=16574.06, state='draft'),
-            self._get_depreciation_move_values(date='2027-03-31', depreciation_value=7469.93, depreciated_value=45825.87, remaining_value=9104.13, state='draft'),
-            self._get_depreciation_move_values(date='2028-03-31', depreciation_value=4104.13, depreciated_value=49930.00, remaining_value=5000.00, state='draft'),
+            self._get_depreciation_move_values(date='2025-03-31', depreciation_value=24756.95, depreciated_value=69826.95, remaining_value=30173.05, state='draft'),
+            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=13598.99, depreciated_value=83425.94, remaining_value=16574.06, state='draft'),
+            self._get_depreciation_move_values(date='2027-03-31', depreciation_value=7469.93, depreciated_value=90895.87, remaining_value=9104.13, state='draft'),
+            self._get_depreciation_move_values(date='2028-03-31', depreciation_value=4104.13, depreciated_value=95000.00, remaining_value=5000.00, state='draft'),
         ])
         self.assertEqual(in_asset.children_ids[0].original_value, 54930.00)
         self.assertEqual(in_asset.children_ids[0].salvage_value, 5000.00)
@@ -97,8 +97,8 @@ class TestIndianAccountAsset(TestAccountAssetCommon):
         self.assertEqual(in_asset.salvage_value, 4500.00)
         self.assertEqual(in_asset.l10n_in_value_residual, 49430.00)
         self.assertRecordValues(in_asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
-            self._get_depreciation_move_values(date='2024-03-31', depreciation_value=1000.00, depreciated_value=1000.00, remaining_value=53930.00, state='posted'),
-            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=24058.68, depreciated_value=25058.68, remaining_value=29871.32, state='draft'),
-            self._get_depreciation_move_values(date='2027-03-31', depreciation_value=13463.00, depreciated_value=38521.68, remaining_value=16408.32, state='draft'),
-            self._get_depreciation_move_values(date='2028-03-31', depreciation_value=11908.32, depreciated_value=50430.00, remaining_value=4500.00, state='draft'),
+            self._get_depreciation_move_values(date='2024-03-31', depreciation_value=1000.00, depreciated_value=46070.00, remaining_value=53930.00, state='posted'),
+            self._get_depreciation_move_values(date='2026-03-31', depreciation_value=24058.68, depreciated_value=70128.68, remaining_value=29871.32, state='draft'),
+            self._get_depreciation_move_values(date='2027-03-31', depreciation_value=13463.00, depreciated_value=83591.68, remaining_value=16408.32, state='draft'),
+            self._get_depreciation_move_values(date='2028-03-31', depreciation_value=11908.32, depreciated_value=95500.00, remaining_value=4500.00, state='draft'),
         ])

@@ -389,6 +389,7 @@ class AccountAssetReportHandler(models.AbstractModel):
                    asset.name AS asset_name,
                    asset.asset_group_id AS asset_group_id,
                    asset.original_value AS asset_original_value,
+                   asset.already_depreciated_amount_import AS asset_already_depreciated_amount_import,
                    asset.currency_id AS asset_currency_id,
                    COALESCE(asset.salvage_value, 0) as asset_salvage_value,
                    MIN(move.date) AS asset_date,
@@ -397,6 +398,8 @@ class AccountAssetReportHandler(models.AbstractModel):
                    asset.method AS asset_method,
                    asset.method_number AS asset_method_number,
                    asset.method_period AS asset_method_period,
+                   asset.prorata_computation_type AS asset_prorata_computation_type,
+                   asset.prorata_date AS asset_prorata_date,
                    asset.method_progress_factor AS asset_method_progress_factor,
                    asset.state AS asset_state,
                    asset.company_id AS company_id,
@@ -429,7 +432,51 @@ class AccountAssetReportHandler(models.AbstractModel):
 
         self.env.cr.execute(sql)
         results = self.env.cr.dictfetchall()
+        self._simulate_imported_depreciation(options, results)
         return results
+
+    def _simulate_imported_depreciation(self, options, results):
+        date_from = fields.Date.to_date(options['date']['date_from'])
+        date_to = fields.Date.to_date(options['date']['date_to'])
+        for al in results:
+            if al['asset_already_depreciated_amount_import']:
+                asset_values = {
+                    'acquisition_date': al['asset_acquisition_date'],
+                    'original_value': al['asset_original_value'],
+                    'salvage_value': al['asset_salvage_value'],
+                    'account_depreciation_id': al['account_id'],
+                    'method': al['asset_method'],
+                    'method_number': al['asset_method_number'],
+                    'method_period': al['asset_method_period'],
+                    'method_progress_factor': al['asset_method_progress_factor'],
+                    'prorata_computation_type': al['asset_prorata_computation_type'],
+                    'prorata_date': al['asset_prorata_date'],
+                }
+                dummy = self.env['account.asset'].new(asset_values)
+                dummy_already_depreciated = self.env['account.asset'].new({
+                    'already_depreciated_amount_import': al['asset_already_depreciated_amount_import'],
+                    'original_value': -al['asset_original_value'],
+                    **asset_values,
+                })
+                amount_before = al['asset_already_depreciated_amount_import']
+                amount_during = 0
+                for sign, dummy_board in [
+                    (1, dummy._recompute_board()),
+                    (-1, dummy_already_depreciated._recompute_board()),
+                ]:
+                    for move_vals in dummy_board:
+                        line_vals = next(
+                            line[2]
+                            for line in move_vals['line_ids']
+                            if line[2]['account_id'] == al['account_id']
+                        )
+                        balance = line_vals['debit'] - line_vals['credit']
+                        if move_vals['date'] < date_from:
+                            amount_before += sign * balance
+                        if date_from <= move_vals['date'] <= date_to:
+                            amount_during += sign * balance
+                al['depreciated_before'] -= amount_before
+                al['depreciated_during'] -= amount_during
 
     def _report_expand_unfoldable_line_assets_report_prefix_group(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
         matched_prefix = self.env['account.report']._get_prefix_groups_matched_prefix_from_line_id(line_dict_id)

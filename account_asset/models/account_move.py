@@ -57,7 +57,7 @@ class AccountMove(models.Model):
         fields = [self._fields['asset_remaining_value'], self._fields['asset_depreciated_value']]
         with self.env.protecting(fields, self.asset_id.depreciation_move_ids):
             for asset in self.asset_id:
-                depreciated = 0
+                depreciated = asset.already_depreciated_amount_import
                 remaining = asset.total_depreciable_value - asset.already_depreciated_amount_import
                 for move in asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv._origin.id)):
                     if move.state != 'cancel':
