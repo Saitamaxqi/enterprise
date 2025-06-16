@@ -579,19 +579,16 @@ class ResPartner(models.Model):
         return invoice_online_payment and payment_method_available
 
     def _compute_has_moves(self):
-        query = self.env['res.partner']._search([('id', 'in', self.ids)])
-        result = dict(self.env.execute_query(query.select(
-            'id',
-            SQL("EXISTS (%s) AS has_moves", self.env['account.move']._search([
-                ('company_id', 'in', self.env.companies.ids),
-                '|', ('partner_id', '=', SQL.identifier(query.table, 'id')),
-                '|', ('partner_shipping_id', '=', SQL.identifier(query.table, 'id')),
-                     ('commercial_partner_id', '=', SQL.identifier(query.table, 'id')),
-            ]).subselect('id')),
-        )))
+        field_names = ['partner_id', 'partner_shipping_id', 'commercial_partner_id']
+        partner_ids = {row[0] for row in self.env.execute_query(SQL("\nUNION ").join(
+            self.env['account.move']._search(
+                [('company_id', 'in', self.env.companies.ids), (name, 'in', self.ids)]
+            ).subselect(name)
+            for name in field_names
+        ))}
 
         for partner in self:
-            partner.has_moves = result.get(partner.id, False)
+            partner.has_moves = partner.id in partner_ids
 
     def _get_followup_report_attachment(self, options):
         """
