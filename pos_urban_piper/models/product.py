@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
         'pos.delivery.provider',
         string='Available on',
         help='Check this if the product is available for following platform.',
-        compute='_compute_urbanpiper_pos_config_ids',
+        compute='_compute_urbanpiper_pos_platform_ids',
         store=True,
         readonly=False,
     )
@@ -35,9 +35,9 @@ class ProductTemplate(models.Model):
     is_alcoholic_on_urbanpiper = fields.Boolean(string='Is Alcoholic', help='Indicates if the product contains alcohol.')
 
     @api.depends('urbanpiper_pos_config_ids')
-    def _compute_urbanpiper_pos_config_ids(self):
+    def _compute_urbanpiper_pos_platform_ids(self):
         for record in self:
-            record.urbanpiper_pos_platform_ids = [Command.set(record.urbanpiper_pos_config_ids.urbanpiper_delivery_provider_ids.ids)]
+            record.urbanpiper_pos_platform_ids = [Command.set(record.sudo().urbanpiper_pos_config_ids.urbanpiper_delivery_provider_ids.ids)]
 
     def write(self, vals):
         field_list = ['name', 'description', 'list_price', 'weight', 'urbanpiper_meal_type', 'pos_categ_ids', 'image_1920',
@@ -46,9 +46,9 @@ class ProductTemplate(models.Model):
             urban_piper_statuses = self.urban_piper_status_ids.filtered(lambda s: s.is_product_linked)
             urban_piper_statuses.write({'is_product_linked': False})
         # Enable/Disable product on Urban Piper based on pos_config_ids changes.
-        products_has_config_before_write = {p.id: p.urbanpiper_pos_config_ids for p in self}
+        products_has_config_before_write = {p.id: p.urbanpiper_pos_config_ids for p in self.sudo()}
         res = super().write(vals)
-        products_has_config_after_write = {p.id: p.urbanpiper_pos_config_ids for p in self}
+        products_has_config_after_write = {p.id: p.urbanpiper_pos_config_ids for p in self.sudo()}
         configs_to_enable = defaultdict(list)
         configs_to_disable = defaultdict(list)
         for p in self:
