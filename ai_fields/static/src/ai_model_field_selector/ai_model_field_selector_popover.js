@@ -1,7 +1,6 @@
 import { ModelFieldSelectorPopover } from "@web/core/model_field_selector/model_field_selector_popover";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { allowedQwebExpressions } from "@web/views/fields/dynamic_placeholder_popover";
 
 import { useState, onWillStart } from "@odoo/owl";
 
@@ -98,11 +97,9 @@ export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
 
     async beforeFilter() {
         if (this.isTemplateEditor === null) {
+            const getAllowedQwebExpressions = this.env.services["allowed_qweb_expressions"];
             this.isTemplateEditor = await user.hasGroup("mail.group_mail_template_editor");
-            this.allowedQwebExpressions = await allowedQwebExpressions(
-                this.props.resModel,
-                this.orm,
-            );
+            this.allowedQwebExpressions = await getAllowedQwebExpressions(this.props.resModel);
         }
     }
 
