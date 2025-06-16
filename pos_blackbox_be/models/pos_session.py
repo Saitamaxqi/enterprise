@@ -93,11 +93,9 @@ class PosSession(models.Model):
 
         for k, g in groupby(orders, lambda order: order.employee_id or order.user_id):
             insz = k.sudo().insz_or_bis_number
-            in_order = False
             for order in g:
                 if order.is_clock:
-                    in_order = not in_order
-                    if in_order:
+                    if order.lines[0].product_id.id == self.env.ref('pos_blackbox_be.product_product_work_in').id:
                         data.append({
                             'login': k.name,
                             'insz_or_bis_number': insz,
