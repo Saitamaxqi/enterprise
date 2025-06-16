@@ -179,6 +179,7 @@ AMAZON_CARRIER_NAMES_MAPPING = {
     'dotzot': 'Dotzot',
     'dpb': 'DPB',
     'dpd': 'DPD',
+    'dpdgb': 'DPD',  # Sendcloud separates it, but Amazon doesn't make the difference
     'dpdlocal': 'DPD Local',
     'dsv': 'DSV',
     'dtdc': 'DTDC',
@@ -233,6 +234,7 @@ AMAZON_CARRIER_NAMES_MAPPING = {
     'hermeseinrichtungsservice': 'Hermes Einrichtungsservice',
     'hermeslogistikgruppe': 'Hermes Logistik Gruppe',
     'hermesuk': 'Hermes UK',
+    'hermesgb': 'Hermes UK',  # Sendcloud separates it, but Amazon doesn't make the difference
     'hlog': 'Hlog',
     'homelogistics': 'Home Logistics',
     'honesteye': 'honesteye',
@@ -336,7 +338,7 @@ AMAZON_CARRIER_NAMES_MAPPING = {
     'rl': 'R+L',
     'rmlgb': 'RMLGB',
     'roadrunner': 'Roadrunner',
-    'royalmail': 'ROYAL_MAIL',
+    'royalmail': 'Royal Mail',
     'rrdonnelley': 'RR Donnelley',
     'safexpress': 'Safexpress',
     'sagawa': 'SAGAWA',
