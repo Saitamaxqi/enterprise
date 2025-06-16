@@ -412,7 +412,7 @@ class Sign(http.Controller):
             })],
             'state': 'sent',
         })
-        return {"requestID": new_sign_request.id, "requestToken": new_sign_request.access_token, "accessToken": new_sign_request.request_item_ids[0].access_token}
+        return {"requestID": new_sign_request.id, "requestToken": new_sign_request.access_token, "accessToken": new_sign_request.request_item_ids[0].sudo().access_token}
 
     @http.route([
         '/sign/send-sms/<int:request_id>/<token>/<phone_number>',
