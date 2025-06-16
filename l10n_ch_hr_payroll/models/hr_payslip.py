@@ -77,13 +77,6 @@ class HrPayslip(models.Model):
         swiss_employees._create_or_update_snapshot()
         return super().create(vals_list)
 
-    def _get_schedule_period_start(self):
-        if self.struct_id.code == "CHMONTHLYELM":
-            today = date.today()
-            return today.replace(day=1)
-        else:
-            return super()._get_schedule_period_start()
-
     def _get_schedule_timedelta(self):
         self.ensure_one()
         if self.struct_id.code == "CHMONTHLYELM":

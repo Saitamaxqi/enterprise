@@ -59,7 +59,7 @@ class HrPayslip(models.Model):
     job_id = fields.Many2one('hr.job', string='Job Position', related='employee_id.job_id', readonly=True, store=True)
     date_from = fields.Date(
         string='From', readonly=False, required=True, tracking=True,
-        compute="_compute_date_from", store=True, precompute=True)
+        default=lambda self: date.today().replace(day=1))
     date_to = fields.Date(
         string='To', readonly=False, required=True, tracking=True,
         compute="_compute_date_to", store=True, precompute=True)
@@ -183,6 +183,7 @@ class HrPayslip(models.Model):
     def _get_salary_advance_balances(self):
         return defaultdict(float)
 
+    @api.model
     def _schedule_period_start(self, schedule, today, country_code=False):
         week_start = self.env["res.lang"]._get_data(code=self.env.user.lang).week_start
         if schedule == 'quarterly':
@@ -212,11 +213,6 @@ class HrPayslip(models.Model):
             date_from = today.replace(day=1)
         return date_from
 
-    def _get_schedule_period_start(self):
-        self.ensure_one()
-        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
-        return self._schedule_period_start(schedule, date.today())
-
     @api.model_create_multi
     def create(self, vals_list):
         payslips = super().create(vals_list)
@@ -240,14 +236,6 @@ class HrPayslip(models.Model):
                 'payslip_properties': payslip_properties
             })
 
-    @api.depends('version_id', 'struct_id')
-    def _compute_date_from(self):
-        for payslip in self:
-            if self.env.context.get('default_date_from'):
-                payslip.date_from = self.env.context.get('default_date_from')
-            else:
-                payslip.date_from = payslip._get_schedule_period_start()
-
     @api.depends('error_count', 'warning_count', 'state')
     def _compute_state_display(self):
         for payslip in self:
@@ -258,6 +246,7 @@ class HrPayslip(models.Model):
             else:
                 payslip.state_display = payslip.state
 
+    @api.model
     def _schedule_timedelta(self, schedule, date_from, country_code=False):
         if schedule == 'quarterly':
             timedelta = relativedelta(months=3, days=-1)
@@ -1211,10 +1200,10 @@ class HrPayslip(models.Model):
         for slip in self.filtered(lambda p: p.employee_id):
             slip.company_id = slip.employee_id.company_id
 
-    @api.depends('employee_id')
+    @api.depends('employee_id', 'date_from')
     def _compute_version_id(self):
         for slip in self:
-            slip.version_id = slip.employee_id.current_version_id if slip.employee_id else False
+            slip.version_id = slip.employee_id._get_version(slip.date_from) if slip.employee_id else False
 
     @api.depends('version_id')
     def _compute_struct_id(self):
