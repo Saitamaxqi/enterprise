@@ -363,14 +363,22 @@ class DocumentsDocument(models.Model):
                  'company_id', 'folder_id.access_ids', 'folder_id.access_internal', 'folder_id.access_via_link',
                  'folder_id.owner_id', 'folder_id.company_id', 'shortcut_document_id', 'shortcut_document_owner_id')
     def _compute_user_permission(self):
+        if self.env.user.has_group('documents.group_documents_system'):
+            for document in self:
+                if (
+                    not (company := document.company_id)
+                    or company in self.env.companies
+                    or company not in self.env.user.company_ids
+                ):
+                    document.user_permission = 'edit'
+                else:
+                    document.user_permission = 'none'
+            return
+
+        permission_by_document = self._get_permission_without_token_multi()
+
         for document in self:
-            if self.env.user.has_group('documents.group_documents_system'):
-                document.user_permission = (
-                    'edit' if not (company := document.company_id)
-                    or company in self.env.companies or company not in self.env.user.company_ids
-                    else 'none')
-                continue
-            document.user_permission = document._get_permission_without_token()
+            document.user_permission = permission_by_document[document]
             if document.user_permission == 'view' and document.access_via_link == 'edit':
                 document.user_permission = 'edit'
 
@@ -393,32 +401,63 @@ class DocumentsDocument(models.Model):
 
     def _get_permission_without_token(self):
         self.ensure_one()
-        exclude_ownership = bool(self.shortcut_document_id)
-        is_user_company = self.company_id and self.company_id in self.env.user.company_ids
-        is_disabled_company = is_user_company and self.company_id not in self.env.companies
-        if is_disabled_company:
-            return 'none'
+        return self._get_permission_without_token_multi()[self]
 
-        if self.owner_id == self.env.user and not exclude_ownership:
-            return 'edit'
+    def _get_permission_without_token_multi(self):
+        permission_by_document = {}
+        documents_to_process = self
+        for document in self:
+            exclude_ownership = bool(document.shortcut_document_id)
+            is_user_company = document.company_id and document.company_id in self.env.user.company_ids
+            is_disabled_company = is_user_company and document.company_id not in self.env.companies
+            if is_disabled_company:
+                permission_by_document[document] = 'none'
+                documents_to_process -= document
+                continue
 
-        user_permission = 'none'
+            if document.owner_id == self.env.user and not exclude_ownership:
+                permission_by_document[document] = 'edit'
+                documents_to_process -= document
+                continue
+
+            permission_by_document[document] = 'none'
+
+        if not documents_to_process:
+            return permission_by_document
+
         # access with <documents.access>
-        if access := self.access_ids.filtered(
-            lambda a: a.partner_id == self.env.user.partner_id
-            and (not a.expiration_date or a.expiration_date > fields.Datetime.now())
-        ):
-            user_permission = access.role or self.access_via_link
+        access_by_document = self.env['documents.access']._read_group(
+            domain=[
+                ('partner_id', '=', self.env.user.partner_id.id),
+                ('document_id', 'in', documents_to_process.ids),
+                '|',
+                ('expiration_date', '=', False),
+                ('expiration_date', '>', fields.Datetime.now()),
+            ],
+            groupby=['document_id'],
+            aggregates=['id:recordset'],
+        )
+
+        # `access` is a singleton, since there can be only 1 access per (document_id, partner_id)
+        for document, access in access_by_document:
+            if access:
+                permission_by_document[document] = access.role or document.access_via_link
 
         # access as internal
-        if not self.env.user.share and user_permission != "edit" and self.access_internal != 'none':
-            if not self.company_id or self.company_id in self.env.companies:
-                user_permission = (
-                    'edit' if self.env.user.has_group('documents.group_documents_manager')
-                    else self.access_internal
+        for document in documents_to_process:
+            if (
+                not self.env.user.share
+                and permission_by_document[document] != "edit"
+                and document.access_internal != 'none'
+                and (not document.company_id or document.company_id in self.env.companies)
+            ):
+                permission_by_document[document] = (
+                    'edit'
+                    if self.env.user.has_group('documents.group_documents_manager')
+                    else document.access_internal
                 )
 
-        return user_permission
+        return permission_by_document
 
     def _search_user_permission(self, operator, value, exclude_ownership=False):
         if self.env.user._is_public():
