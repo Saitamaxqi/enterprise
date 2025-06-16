@@ -8,8 +8,8 @@
             <div class="d-flex gap-2 align-items-center">
                 <button class="btn btn-link p-0" t-esc="lineData.partner_id.display_name" t-on-click.stop="openPartner"/>
             </div>
-            <span t-if="!!moveData.display_name" class="hide-mobile">
-                <a t-att-class="this.moveData.id !== this.statementLineData.move_id.id ? 'btn btn-link p-0': 'text-muted'" class="text-start" t-on-click.stop="openMove">
+            <span t-if="!!moveData.display_name and moveData.id !== statementLineData.move_id.id" class="hide-mobile">
+                <a class="btn btn-link p-0 text-start" t-on-click.stop="openMove">
                     <t t-esc="moveData.display_name"/>
                 </a>
             </span>

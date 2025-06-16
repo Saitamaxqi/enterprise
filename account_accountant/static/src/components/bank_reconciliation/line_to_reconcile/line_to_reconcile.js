@@ -96,15 +96,13 @@ export class BankRecLineToReconcile extends Component {
     // ACTION
     // -----------------------------------------------------------------------------
     openMove() {
-        if (this.moveData.id !== this.statementLineData.move_id.id) {
-            this.action.doAction({
-                type: "ir.actions.act_window",
-                res_model: "account.move",
-                res_id: this.moveData.id,
-                views: [[false, "form"]],
-                target: "current",
-            });
-        }
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "account.move",
+            res_id: this.moveData.id,
+            views: [[false, "form"]],
+            target: "current",
+        });
     }
 
     openPartner() {
