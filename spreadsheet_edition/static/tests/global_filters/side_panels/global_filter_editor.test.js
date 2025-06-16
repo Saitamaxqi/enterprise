@@ -601,7 +601,7 @@ test("Create a new relational global filter with a domain", async function () {
     await contains(".modal-footer .btn-primary").click();
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.domainOfAllowedValues).toEqual([["id", "=", 1]]);
+    expect(globalFilter.domainOfAllowedValues).toEqual([["id", "in", []]]);
 });
 
 test("Create a new relational global filter of users will shows the checkbox", async function () {

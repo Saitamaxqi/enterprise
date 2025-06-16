@@ -921,7 +921,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 <field name="display_name"/>
                 <field name="color" invisible="{color_modifiers}"/>
              </list>
-        '''.format(color_modifiers="display_name == &quot;Robert&quot;")
+        '''.format(color_modifiers="display_name in [&quot;Robert&quot;]")
 
         assertViewArchEqual(self, arch, expected)
 

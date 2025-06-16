@@ -772,8 +772,8 @@ test("Update the list domain from the side panel", async function () {
     await contains(".o_edit_domain").click();
     await dsHelpers.addNewRule();
     await contains(".modal-footer .btn-primary").click();
-    expect(model.getters.getListDefinition(listId).domain).toEqual([["id", "=", 1]]);
-    expect(dsHelpers.getConditionText(fixture)).toBe("Id = 1");
+    expect(model.getters.getListDefinition(listId).domain).toEqual([["id", "in", []]]);
+    expect(dsHelpers.getConditionText(fixture)).toBe("Id = ( )");
 });
 
 test("Update the list sorting from the side panel", async function () {

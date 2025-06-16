@@ -33,8 +33,8 @@ test("Update the pivot domain from the side panel", async function () {
         message: "update is deferred",
     });
     await contains(".pivot-defer-update .o-button-link").click();
-    expect(model.getters.getPivotCoreDefinition(pivotId).domain).toEqual([["id", "=", 1]]);
-    expect(dsHelpers.getConditionText()).toBe("Id = 1");
+    expect(model.getters.getPivotCoreDefinition(pivotId).domain).toEqual([["id", "in", []]]);
+    expect(dsHelpers.getConditionText()).toBe("Id = ( )");
 });
 
 test("Opening the sidepanel of a pivot while the panel of another pivot is open updates the side panel", async function () {
