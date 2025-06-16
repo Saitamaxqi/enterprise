@@ -240,8 +240,8 @@ class HrAppraisal(models.Model):
 
     def subscribe_employees(self):
         for appraisal in self:
-            partners = appraisal.manager_ids.mapped('related_partner_id') | appraisal.employee_id.related_partner_id
-            appraisal.message_subscribe(partner_ids=partners.ids)
+            partners_ids = (appraisal.manager_ids.sudo().related_partner_id + appraisal.employee_id.sudo().related_partner_id).ids
+            appraisal.message_subscribe(partner_ids=partners_ids)
 
     def send_appraisal(self):
         # TDE FIXME: probably some cleanup to do here
