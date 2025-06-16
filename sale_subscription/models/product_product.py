@@ -6,20 +6,20 @@ from odoo import api, fields, models
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    product_subscription_pricing_ids = fields.One2many(
+    subscription_rule_ids = fields.One2many(
         string="Custom Subscription Pricings",
         comodel_name='product.pricelist.item',
         inverse_name='product_id',
-        compute='_compute_product_subscription_pricing_ids',
+        compute='_compute_subscription_rule_ids',
         readonly=False,
     )
 
     @api.depends('product_tmpl_id')
-    def _compute_product_subscription_pricing_ids(self):
+    def _compute_subscription_rule_ids(self):
         for product in self:
             if not product.id:
-                product.product_subscription_pricing_ids = False
+                product.subscription_rule_ids = False
                 continue
-            product.product_subscription_pricing_ids = product.product_tmpl_id.product_subscription_pricing_ids.filtered(
+            product.subscription_rule_ids = product.product_tmpl_id.subscription_rule_ids.filtered(
                 lambda rule: not rule.product_id or rule.product_id == product.id
             )

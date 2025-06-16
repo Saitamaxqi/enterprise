@@ -45,7 +45,7 @@
             <page name="sales" position="after">
                 <page string="Pricing" name="subscription_pricing" invisible="not recurring_invoice">
                     <field
-                        name="product_subscription_pricing_ids"
+                        name="subscription_rule_ids"
                         context="{
                             'form_view_ref': 'sale_subscription.product_pricelist_item_sale_subscription_view',
                         }"

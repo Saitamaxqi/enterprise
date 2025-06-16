@@ -15,7 +15,7 @@ from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSub
 @tagged('post_install', '-at_install')
 class TestSubscriptionUpsell(TestSubscriptionCommon):
     def test_upsell_no_start_date(self):
-        self.sub_product_tmpl.product_subscription_pricing_ids = [(5, 0, 0)]
+        self.sub_product_tmpl.subscription_rule_ids = [(5, 0, 0)]
         self.subscription_tmpl.sale_order_template_option_ids = [Command.create({
             'name': "Option 1",
             'product_id': self.product5.id,
@@ -50,14 +50,14 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
 
     def test_upsell_via_so(self):
         # Test the upsell flow using an intermediary upsell quote.
-        self.sub_product_tmpl.product_subscription_pricing_ids = [(5, 0, 0)]
+        self.sub_product_tmpl.subscription_rule_ids = [(5, 0, 0)]
         self.subscription_tmpl.sale_order_template_option_ids = [Command.create({
             'name': "Option 1",
             'product_id': self.product5.id,
             'quantity': 1,
             'uom_id': self.product5.uom_id.id,
         })]
-        self.product_tmpl_2.product_subscription_pricing_ids = [(5, 0, 0)]
+        self.product_tmpl_2.subscription_rule_ids = [(5, 0, 0)]
         self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'product_tmpl_id': self.sub_product_tmpl.id, 'fixed_price': 42})
         self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'product_tmpl_id': self.product_tmpl_2.id, 'fixed_price': 420})
         with freeze_time("2021-01-01"):
@@ -217,13 +217,13 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
 
     def test_upsell_date_check(self):
         """ Test what happens when the upsell invoice is not generated before the next invoice cron call """
-        self.sub_product_tmpl.product_subscription_pricing_ids = [
+        self.sub_product_tmpl.subscription_rule_ids = [
             Command.create({'plan_id': self.plan_year.id, 'fixed_price': 100}),
         ]
-        self.product_tmpl_2.product_subscription_pricing_ids = [
+        self.product_tmpl_2.subscription_rule_ids = [
             Command.create({'plan_id': self.plan_year.id, 'fixed_price': 200}),
         ]
-        self.product_tmpl_3.product_subscription_pricing_ids = [
+        self.product_tmpl_3.subscription_rule_ids = [
             Command.create({'plan_id': self.plan_year.id, 'fixed_price': 300}),
         ]
         with freeze_time("2022-01-01"):

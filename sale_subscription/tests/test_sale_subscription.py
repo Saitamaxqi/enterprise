@@ -139,7 +139,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertAlmostEqual(self.subscription.amount_untaxed, 1400, msg="unexpected price after setup")
         self.assertAlmostEqual(self.subscription.recurring_monthly, 700, msg="Half because invoice every two months")
         # Change periodicity
-        self.subscription.order_line.product_id.product_subscription_pricing_ids = [(6, 0, 0)]  # remove all pricings to fallback on list price
+        self.subscription.order_line.product_id.subscription_rule_ids = [(6, 0, 0)]  # remove all pricings to fallback on list price
         self.subscription.plan_id = self.plan_year
         self.assertAlmostEqual(self.subscription.amount_untaxed, 70, msg='Recompute price_unit : 50 (product) + 20 (product2)')
         # 1200 over 4 year = 25/year + 100 per month
@@ -303,7 +303,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_product_change(self):
         """Check behaviour of the product onchange (taxes mostly)."""
         # check default tax
-        self.sub_product_tmpl.product_subscription_pricing_ids = [
+        self.sub_product_tmpl.subscription_rule_ids = [
             Command.clear(),
             Command.create({'plan_id': self.plan_month.id, 'fixed_price': 50})
         ]
@@ -333,7 +333,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
     def test_log_change_pricing(self):
         """ Test subscription log generation when template_id is changed """
-        self.sub_product_tmpl.product_subscription_pricing_ids.fixed_price = 120  # 120 for monthly and yearly
+        self.sub_product_tmpl.subscription_rule_ids.fixed_price = 120  # 120 for monthly and yearly
         # Create a subscription and add a line, should have logs with MMR 120
         subscription = self.env['sale.order'].create({
             'name': 'TestSubscription',
@@ -352,7 +352,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         })
         self.assertEqual(
             subscription.order_line.pricelist_item_id,
-            self.product.product_subscription_pricing_ids.filtered(
+            self.product.subscription_rule_ids.filtered(
                 lambda rule: rule.plan_id == self.plan_month,
             )
         )
@@ -506,7 +506,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                          "deliver product should not be included in the upsell")
 
     def test_option_template(self):
-        self.product.product_tmpl_id.product_subscription_pricing_ids = [
+        self.product.product_tmpl_id.subscription_rule_ids = [
             Command.clear(),
             Command.create({
                 'fixed_price': 10,
@@ -866,7 +866,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'invoice_policy': 'order',
             })
             # nr_product.taxes_id = False # we avoid using taxes in this example
-            self.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+            self.sub_product_tmpl.subscription_rule_ids.filtered(
                 lambda rule: rule.plan_id == self.plan_month
             ).fixed_price = 25
             self.product2.list_price = -25.0
@@ -1376,7 +1376,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         for Optional Products with time-based pricing linked to the subscription template.
         """
         # Define a subscription template with a optional product having time-based pricing.
-        self.product.product_tmpl_id.product_subscription_pricing_ids = [
+        self.product.product_tmpl_id.subscription_rule_ids = [
             Command.clear(),
             Command.create({
                 'fixed_price': 150,
@@ -1428,7 +1428,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'invoice_policy': 'order',
         })
         self.product2.list_price = -25.0
-        self.product.product_subscription_pricing_ids.unlink()
+        self.product.subscription_rule_ids.unlink()
         self.sub_product_tmpl.list_price = -30
         self.product_tmpl_2.list_price = -10
         sub_negative_recurring = self.env['sale.order'].create({
@@ -1532,13 +1532,13 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         Test that when an optional recurring product is added to a subscription sale order that its price unit is
         correctly recalculated after subsequent edits to the order's recurring plan
         """
-        self.sub_product_tmpl.write({'product_subscription_pricing_ids': [
+        self.sub_product_tmpl.write({'subscription_rule_ids': [
             Command.set([]), Command.create({'plan_id': self.plan_year.id, 'fixed_price': 100})
         ]})
         product_a = self.sub_product_tmpl.product_variant_id
         product_a.list_price = 1.0
 
-        self.product_tmpl_2.write({'product_subscription_pricing_ids': [
+        self.product_tmpl_2.write({'subscription_rule_ids': [
             Command.set([]), Command.create({'plan_id': self.plan_year.id, 'fixed_price': 200})
         ]})
         product_b = self.product_tmpl_2.product_variant_id
@@ -2462,8 +2462,8 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'plan_id': self.plan_month.id,
                 'fixed_price': 25.0 * i,
            }])
-        pricings_1 = product.product_subscription_pricing_ids
-        pricings_2 = product.copy().product_subscription_pricing_ids
+        pricings_1 = product.subscription_rule_ids
+        pricings_2 = product.copy().subscription_rule_ids
         self.assertEqual(
             len(pricings_2),
             8,  # 2 attributes * 2 values * 2 plans = 8 pricings

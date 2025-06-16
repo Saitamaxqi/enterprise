@@ -77,7 +77,7 @@ class TestWebsiteSaleSubscriptionUi(HttpCase, WebsiteSaleSubscriptionCommon):
                     ],
                 }),
             ],
-            'product_subscription_pricing_ids': [
+            'subscription_rule_ids': [
                 Command.create({'plan_id': self.plan_month.id, 'fixed_price': 1}),
                 Command.create({'plan_id': self.plan_year.id, 'fixed_price': 100}),
             ],

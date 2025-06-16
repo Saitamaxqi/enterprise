@@ -63,7 +63,7 @@ class SaleSubscriptionPlan(models.Model):
                                                help="Email template used to send invoicing email automatically.\n"
                                                     "Leave it empty if you don't want to send email automatically.")
 
-    product_subscription_pricing_ids = fields.One2many(
+    subscription_rule_ids = fields.One2many(
         comodel_name='product.pricelist.item',
         inverse_name='plan_id',
         string="Recurring Pricing",

@@ -28,10 +28,10 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.pricing_month = cls.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+        cls.pricing_month = cls.sub_product_tmpl.subscription_rule_ids.filtered(
             lambda rule: rule.plan_id == cls.plan_month
         )
-        cls.pricing_year = cls.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+        cls.pricing_year = cls.sub_product_tmpl.subscription_rule_ids.filtered(
             lambda rule: rule.plan_id == cls.plan_year
         )
 

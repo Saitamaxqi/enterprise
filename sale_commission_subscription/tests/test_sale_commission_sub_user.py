@@ -284,7 +284,7 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             'name': 'Rupee',
             'currency_id': currency_inr.id
         })
-        (self.product | self.product2).product_subscription_pricing_ids = False
+        (self.product | self.product2).subscription_rule_ids = False
         self.product.lst_price = 50
         self.product2.lst_price = 100
         context_mail = {'tracking_disable': False, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, 'mail_notrack': False}

@@ -18,7 +18,7 @@ class ProductTemplate(models.Model):
         help="Define if the subscription product can also be bought as a one-time.",
     )
 
-    product_subscription_pricing_ids = fields.One2many(
+    subscription_rule_ids = fields.One2many(
         comodel_name='product.pricelist.item',
         inverse_name='product_tmpl_id',
         string="Custom Subscription Pricings",
@@ -62,7 +62,7 @@ class ProductTemplate(models.Model):
                     "You can not change the recurring property of this product because it has been sold already.")
             }}
 
-    @api.depends('product_subscription_pricing_ids')
+    @api.depends('subscription_rule_ids')
     def _compute_display_subscription_pricing(self):
         self.display_subscription_pricing = False
         for template in self:
@@ -98,7 +98,7 @@ class ProductTemplate(models.Model):
             template_sudo = template.sudo()
 
             if not template_sudo.product_variant_count > 1:
-                template_sudo.product_subscription_pricing_ids.copy({
+                template_sudo.subscription_rule_ids.copy({
                     'product_tmpl_id': template_copy.id
                 })
                 continue
@@ -106,7 +106,7 @@ class ProductTemplate(models.Model):
             # Force the order to be on id, since the others keys will have the same value/order
             # This guarantees the order of the copied pricings is the same as the original ones
             # regardless of the 'id desc' in the _order of product.pricelist.item model.
-            template_pricings = template_sudo.product_subscription_pricing_ids.sorted('id')
+            template_pricings = template_sudo.subscription_rule_ids.sorted('id')
 
             # Duplicate template rules
             variant_specific_pricings = template_pricings.filtered('product_id')

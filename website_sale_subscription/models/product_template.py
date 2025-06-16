@@ -16,11 +16,11 @@ class ProductTemplate(models.Model):
         for template in self:
             if not template.recurring_invoice:
                 continue
-            plan_ids = set(template.product_subscription_pricing_ids.plan_id.ids)
+            plan_ids = set(template.subscription_rule_ids.plan_id.ids)
             for optional_template in template.optional_product_ids:
                 if not optional_template.recurring_invoice:
                     continue
-                optional_plan_ids = optional_template.product_subscription_pricing_ids.plan_id.ids
+                optional_plan_ids = optional_template.subscription_rule_ids.plan_id.ids
                 if not plan_ids.intersection(optional_plan_ids):
                     raise UserError(_('You cannot have an optional product that has a no common pricing\'s plan.'))
 

@@ -12,7 +12,7 @@ class TestWebsiteSaleSubscriptionConfigurators(HttpCase, WebsiteSaleSubscription
     def test_website_sale_subscription_product_configurator(self):
         optional_product = self._create_product(
             name="Optional product",
-            product_subscription_pricing_ids=[
+            subscription_rule_ids=[
                 Command.create({'plan_id': self.plan_week.id, 'fixed_price': 6}),
                 Command.create({'plan_id': self.plan_month.id, 'fixed_price': 16}),
             ],
@@ -20,7 +20,7 @@ class TestWebsiteSaleSubscriptionConfigurators(HttpCase, WebsiteSaleSubscription
         self._create_product(
             name="Main product",
             optional_product_ids=[Command.set(optional_product.product_tmpl_id.ids)],
-            product_subscription_pricing_ids=[
+            subscription_rule_ids=[
                 Command.create({'plan_id': self.plan_week.id, 'fixed_price': 5}),
                 Command.create({'plan_id': self.plan_month.id, 'fixed_price': 15}),
             ],
@@ -39,7 +39,7 @@ class TestWebsiteSaleSubscriptionConfigurators(HttpCase, WebsiteSaleSubscription
             name="Combo product",
             type='combo',
             combo_ids=[Command.link(combo.id)],
-            product_subscription_pricing_ids=[
+            subscription_rule_ids=[
                 Command.create({'plan_id': self.plan_week.id, 'fixed_price': 5}),
                 Command.create({'plan_id': self.plan_month.id, 'fixed_price': 15}),
             ],

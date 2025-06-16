@@ -61,7 +61,7 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'uom_id': cls.uom_unit.id,
             'invoice_policy': 'order',
             'recurring_invoice': True,
-            'product_subscription_pricing_ids': pricing_commands,
+            'subscription_rule_ids': pricing_commands,
         })
 
         cls.sub_product_order_2 = Product.create({
@@ -71,7 +71,7 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'uom_id': cls.uom_unit.id,
             'invoice_policy': 'order',
             'recurring_invoice': True,
-            'product_subscription_pricing_ids': pricing_commands,
+            'subscription_rule_ids': pricing_commands,
         })
 
         cls.sub_product_delivery = Product.create({
@@ -81,7 +81,7 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'uom_id': cls.uom_unit.id,
             'invoice_policy': 'delivery',
             'recurring_invoice': True,
-            'product_subscription_pricing_ids': pricing_commands,
+            'subscription_rule_ids': pricing_commands,
         })
 
         cls.product_non_recurring = Product.create({

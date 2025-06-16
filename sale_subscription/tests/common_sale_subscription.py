@@ -109,7 +109,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'type': 'service',
             'recurring_invoice': True,
             'uom_id': cls.uom_unit.id,
-            'product_subscription_pricing_ids': [
+            'subscription_rule_ids': [
                 Command.create({'plan_id': cls.plan_month.id, 'fixed_price': 1}),
                 Command.create({'plan_id': cls.plan_year.id, 'fixed_price': 100}),
             ],

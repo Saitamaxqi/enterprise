@@ -31,7 +31,7 @@
     </record>
 
     <record id="product_fire_insurance" model="product.product">
-            <field name="product_subscription_pricing_ids"
+            <field name="subscription_rule_ids"
                    eval="[(6,0,[ref('product_pricing_insurance1'), ref('product_pricing_insurance2'), ref('product_pricing_insurance3')])]"/>
     </record>
 

@@ -60,7 +60,7 @@
                     <notebook name="main_book">
                         <page string="Pricing" name="pricing">
                             <field
-                                name="product_subscription_pricing_ids"
+                                name="subscription_rule_ids"
                                 context="{'form_view_ref': 'sale_subscription.product_pricelist_item_form_view_recurring'}"
                             >
                                 <list string="Subscription Pricelist Rules">

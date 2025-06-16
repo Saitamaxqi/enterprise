@@ -328,7 +328,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
 
     def test_renew_different_currency(self):
         with freeze_time("2023-03-28"):
-            self.product.product_subscription_pricing_ids.unlink()
+            self.product.subscription_rule_ids.unlink()
             default_pricelist = self.pricelist
             other_currency = self._enable_currency('EUR')
             other_pricelist = self.env['product.pricelist'].create({
@@ -355,7 +355,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'type': 'service',
                 'recurring_invoice': True,
                 'uom_id': self.env.ref('uom.product_uom_unit').id,
-                'product_subscription_pricing_ids': [(6, 0, (pricing_month_1 | pricing_month_2).ids)]
+                'subscription_rule_ids': [(6, 0, (pricing_month_1 | pricing_month_2).ids)]
             })
             subscription_tmpl = self.env['sale.order.template'].create({
                 'name': 'Subscription template without discount',
@@ -549,7 +549,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
             'name': 'Euro pricelist',
             'currency_id': self.env.ref('base.EUR').id,
         })
-        self.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+        self.sub_product_tmpl.subscription_rule_ids.filtered(
             lambda rule: rule.plan_id == self.plan_month
         ).fixed_price = 42
         pricing_month_eur = self.env['product.pricelist.item'].create({
@@ -558,7 +558,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
             'fixed_price': 420,
             'product_tmpl_id': self.sub_product_tmpl.id,
         })
-        self.sub_product_tmpl.product_subscription_pricing_ids = [Command.link(pricing_month_eur.id)]
+        self.sub_product_tmpl.subscription_rule_ids = [Command.link(pricing_month_eur.id)]
 
         self.subscription_tmpl.sale_order_template_line_ids[1].unlink()
         self.subscription.order_line.product_id.taxes_id = [Command.clear()]
@@ -601,7 +601,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'type': 'service',
                 'recurring_invoice': True,
                 'uom_id': self.env.ref('uom.product_uom_unit').id,
-                'product_subscription_pricing_ids': [Command.set((pricing_month_1_usd | pricing_month_2_eur).ids)]
+                'subscription_rule_ids': [Command.set((pricing_month_1_usd | pricing_month_2_eur).ids)]
             })
             sub = self.subscription.create({
                 'name': 'Company1 - Currency1',
