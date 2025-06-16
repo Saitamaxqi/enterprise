@@ -5,7 +5,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <page name="salary_information" position="after">
+            <page name="payroll_information" position="after">
                 <page name="l10n_lu_tax_withholding_form" string="Tax Withholding Form"
                       invisible="company_country_code != 'LU'" groups="hr_payroll.group_hr_payroll_user">
                     <group>
@@ -100,7 +100,7 @@
                     </group>
                 </page>
             </page>
-            <group name="salary" position="inside">
+            <group name="contract" position="inside">
                 <label for="l10n_lu_indexed_wage" invisible="country_code != 'LU'"/>
                 <div class="o_row mw-50" name="wage" invisible="country_code != 'LU'">
                     <field name="l10n_lu_indexed_wage" string="Indexed Wage"/>
@@ -108,14 +108,13 @@
                     <div invisible="wage_type != 'hourly'">/ hour</div>
                 </div>
             </group>
-            <group name="salary" position="after">
+            <group name="contract" position="after">
                 <group>
                     <field name="l10n_lu_index_on_contract_signature" string="Index on Contract Signature" class="w-50"/>
                     <field name="l10n_lu_current_index" string="Current Index"/>
                 </group>
             </group>
-            <group name="salary" position="inside">
-                <group/>
+            <group name="payroll_localization" position="inside">
                 <group name="l10n_lu_bik" string="Benefits in Kind" invisible="country_code != 'LU'">
                     <label for="l10n_lu_bik_vehicle"/>
                     <div class="o_row mw-75">

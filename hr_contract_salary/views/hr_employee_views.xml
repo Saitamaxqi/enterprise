@@ -18,7 +18,7 @@
                     <span class="mb-3">/ month</span>
                 </div>
             </xpath>
-            <div name="button_box" position="inside">
+            <button name="action_open_versions" position="before">
                 <button name="action_show_contract_reviews" class="oe_stat_button" icon="fa-book" type="object" help="Contracts Reviews" invisible="not employee_id or contract_reviews_count == 0">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value"><field name="contract_reviews_count"/></span>
@@ -31,22 +31,15 @@
                         <span class="o_stat_text">Offers</span>
                     </div>
                 </button>
-            </div>
+            </button>
             <header position="inside">
                 <field name="current_date_version" invisible="1"/>
                 <button name="action_generate_offer" type="object" string="Generate Offer" invisible="current_date_version &gt; date_version" groups="hr.group_hr_manager" class="btn-secondary"/>
             </header>
-            <group name="wage" position="inside">
-                <label for="wage_on_signature"/>
-                <div class="o_row" name="wage">
-                    <field class="oe_inline o_hr_narrow_field" name="wage_on_signature" nolabel="1"/>
-                    <span>/ month</span>
-                </div>
-            </group>
             <group name="contract" position="inside">
                 <field name="originated_offer_id" readonly="1" invisible="not originated_offer_id"/>
             </group>
-            <page name="salary_information" position="after">
+            <page name="hr_settings" position="before">
                 <page string="Signatories" groups="hr.group_hr_manager">
                     <div class="d-flex align-items-center">
                         <field name="template_warning" class="mb-0" readonly="1" invisible="not template_warning"/>
@@ -81,7 +74,7 @@
                 </page>
             </page>
 
-            <group name="wage" position="after">
+            <group name="contract" position="after">
                 <group name="employer_costs" string="Employer Cost">
                     <label for="final_yearly_costs"/>
                     <div class="o_row">
@@ -93,17 +86,22 @@
                         <field name="monthly_yearly_costs" class="oe_inline o_hr_narrow_field text-muted" nolabel="1"/>
                         <span class="mb-3 text-muted">/ month</span>
                     </div>
-                </group>
-            </group>
-
-            <group name="salary" position="inside">
-                <group name="yearly_benefits" string="Yearly Benefits">
-                    <label for="holidays" invisible="country_code != 'BE'"/>
-                    <div class="o_row" invisible="country_code != 'BE'">
-                        <field name="holidays" class="oe_inline o_hr_narrow_field" nolabel="1"/>
-                        <span class="mb-3">days / year</span>
+                    <label for="wage_on_signature"/>
+                    <div class="o_row" name="wage_on_signature">
+                        <field class="oe_inline o_hr_narrow_field" name="wage_on_signature" nolabel="1"/>
+                        <div name="wage_on_signature_period_label">/ month</div>
                     </div>
                 </group>
+            </group>
+            <group name="yearly_benefits" position="attributes">
+                <attribute name="invisible">country_code != 'BE'</attribute>
+            </group>
+            <group name="yearly_benefits" position="inside">
+                <label for="holidays" invisible="country_code != 'BE'"/>
+                <div class="o_row" invisible="country_code != 'BE'">
+                    <field name="holidays" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                    <span class="mb-3">days / year</span>
+                </div>
             </group>
         </field>
     </record>

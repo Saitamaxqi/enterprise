@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="priority">41</field>
         <field name="arch" type="xml">
-            <group name="contract_details" position="after">
+            <group name="payroll_localization" position="inside">
                 <group string="prisma" invisible="company_country_code != 'BE'">
                     <group>
                         <field name="prisma_code"/>

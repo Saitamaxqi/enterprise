@@ -6,9 +6,8 @@
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="priority">60</field>
         <field name="arch" type="xml">
-            <group name="contract_details" position="inside">
-                <group>
-                    <separator string="Accounting"/>
+            <group name="part_time" position="after">
+                <group string="Accounting">
                     <field name="analytic_account_id" domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]" groups="analytic.group_analytic_accounting"/>
                 </group>
             </group>

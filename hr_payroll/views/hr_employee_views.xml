@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="priority" eval="10"/>
         <field name="arch" type="xml">
-            <div name="button_box" position="inside">
+            <button name="action_open_versions" position="before">
                 <button class="oe_stat_button" name="action_open_payslips"
                         type="object" icon="fa-dollar" groups="hr_payroll.group_hr_payroll_user"
                         invisible="payslips_count == 0 or date_version &gt; current_date_version">
@@ -36,14 +36,15 @@
                             <span class="o_stat_value">New</span>
                         </div>
                 </button>
-            </div>
-            <group name="contract" position="inside">
+            </button>
+            <xpath expr="//div[@name='contract_type']" position="after">
+                <field name="registration_number" string="Reference"/>
                 <field name="lang" string="Payslip Language" placeholder="User Language"/>
-            </group>
-            <group name="citizenship" position="inside">
-                <field name="registration_number"/>
+            </xpath>
+            <field name="marital" position="before">
                 <field name="disabled"/>
-            </group>
+            </field>
+
             <xpath expr="//field[@name='country_id']" position="after">
                 <field name="is_non_resident" eval="False"/>
             </xpath>
@@ -72,15 +73,19 @@
                 <div class="mb-3" invisible="schedule_pay != 'weekly'">/ week</div>
                 <div class="mb-3" invisible="schedule_pay != 'daily'">/ day</div>
             </xpath>
-            <xpath expr="//group[@name='organization']" position="after">
-                <group name="contract_details" string="Part time">
-                    <label for="time_credit"/>
-                    <div class="o_row" style="width: 5rem !important;">
-                        <field name="time_credit" class="oe_inline"/>
-                        <field name="work_time_rate" invisible="not time_credit" widget="percentage"/>
-                    </div>
-                    <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
-                    <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
+            <xpath expr="//page[@name='payroll_information']" position="inside">
+                <group>
+                    <group name="part_time" string="Part time">
+                        <group colspan="2">
+                            <label for="time_credit"/>
+                            <div class="o_row">
+                                <field name="time_credit"/>
+                                <field name="work_time_rate" invisible="not time_credit" widget="percentage"/>
+                            </div>
+                            <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
+                            <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
+                        </group>
+                    </group>
                 </group>
             </xpath>
         </field>

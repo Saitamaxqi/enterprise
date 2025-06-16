@@ -23,7 +23,7 @@ registry.category("web_tour.tours").add('payroll_dashboard_ui_tour', {
     },
     {
         content: "Open contract tab",
-        trigger: 'a[name="contract_information"]',
+        trigger: 'a[name="payroll_information"]',
         run: "click",
     },
     {

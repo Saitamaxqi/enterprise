@@ -36,7 +36,7 @@
             <xpath expr="//page[@name='personal_information']//field[@name='passport_id']" position="after">
                 <field name="l10n_hk_passport_place_of_issue" invisible="company_country_code != 'HK'" />
             </xpath>
-            <group name="salary" position="inside">
+            <group name="contract" position="inside">
                 <label for="l10n_hk_internet" string="Internet Subscription" invisible="country_code != 'HK'"/>
                 <div class="o_row" invisible="country_code != 'HK'">
                     <field name="l10n_hk_internet" nolabel="1"/>

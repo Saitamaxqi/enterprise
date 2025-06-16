@@ -5,7 +5,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside">
+            <group name="contract" position="inside">
                 <field name="l10n_mx_schedule_pay" invisible="country_code != 'MX'" string="Schedule Pay"/>
                 <label for="l10n_mx_holiday_bonus_rate" invisible="country_code != 'MX'" string="Holiday Bonus Rate"/>
                 <div class="o_row" invisible="country_code != 'MX'">
@@ -17,7 +17,7 @@
             </group>
 
             <!--Vouchers-->
-            <group name="salary" position="after">
+            <group name="contract" position="after">
                 <group string="Vouchers" invisible="country_code != 'MX'">
                     <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
                     <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers"/>
@@ -26,7 +26,7 @@
                 </group>
             </group>
 
-            <page name="salary_information" position="after">
+            <page name="payroll_information" position="after">
                 <page string="Infonavit / Fonacot" name="other" invisible="country_code != 'MX'">
                     <separator string="Infonavit"/>
                     <field name="l10n_mx_infonavit" nolabel="1" force_save="1" string="an Infonavit Credit">

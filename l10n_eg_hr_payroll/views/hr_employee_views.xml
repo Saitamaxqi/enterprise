@@ -5,7 +5,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside">
+            <group name="contract" position="inside">
                 <field name="country_code" invisible="1"/>
                 <label for="l10n_eg_housing_allowance" invisible="country_code != 'EG'" string="Housing Allowance"/>
                 <div class="o_row mw-50" name="l10n_eg_housing_allowance" invisible="country_code != 'EG'" >
@@ -23,7 +23,7 @@
                     <span>/ month</span>
                 </div>
             </group>
-            <group name="salary" position="after">
+            <group name="contract" position="after">
                 <group name="annual_leave_provision" string="Annual Leave Provision" invisible="country_code != 'EG'">
                     <field name="l10n_eg_total_leave_days"/>
                 </group>

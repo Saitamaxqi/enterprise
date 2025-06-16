@@ -14,7 +14,7 @@
                 <field name="l10n_ke_nhif_number" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_shif_number" invisible="company_country_code != 'KE'"/>
             </xpath>
-            <group name="salary" position="inside">
+            <group name="payroll_localization" position="inside">
                 <group string="Tax Deduction" name="l10n_ke_tax_deduction" class="o_form_fw_labels">
                     <label for="l10n_ke_pension_contribution" invisible="country_code != 'KE' or wage_type == 'hourly'"/>
                     <div class="o_row" invisible="country_code != 'KE' or wage_type == 'hourly'">

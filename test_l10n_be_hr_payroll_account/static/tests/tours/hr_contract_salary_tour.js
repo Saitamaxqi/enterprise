@@ -951,7 +951,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         },
         {
             content: "Add Manager",
-            trigger: ".nav-link:contains('Contract Information')",
+            trigger: ".nav-link:contains('Settings')",
             run: "click",
         },
         {
@@ -963,11 +963,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             isActive: ["auto"],
             trigger: ".ui-autocomplete > li > a:contains(Mitchell)",
-            run: "click",
-        },
-        {
-            content: "Add Manager",
-            trigger: ".nav-link:contains('Global Information')",
             run: "click",
         },
         {
@@ -987,8 +982,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             trigger: ".o_form_saved",
         },
         {
-            content: "Add Manager",
-            trigger: ".nav-link:contains('Contract Information')",
+            content: "Add Salary Structure",
+            trigger: ".nav-link:contains('Payroll')",
             run: "click",
         },
         {
@@ -999,6 +994,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             isActive: ["auto"],
             trigger: ".ui-autocomplete > li > a:contains('CP200 BE')",
+            run: "click",
+        },
+        {
+            content: "Add HR Responsible",
+            trigger: ".nav-link:contains('Settings')",
             run: "click",
         },
         {
@@ -1038,8 +1038,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             run: "click",
         },
         {
-            content: "Select Salary Information Tab",
-            trigger: ".o_notebook ul > li > a:contains(Salary)",
+            content: "Select Payroll Tab",
+            trigger: ".o_notebook ul > li > a:contains(Payroll)",
             run: "click",
         },
         {

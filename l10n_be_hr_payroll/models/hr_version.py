@@ -842,7 +842,8 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     def write(self, vals):
         res = super().write(vals)
         # TODO: not sure about this one
-        self._trigger_l10n_be_next_activities()
+        if set(vals.keys()) != {'is_custom_job_title'}:
+            self._trigger_l10n_be_next_activities()
         return res
 
     @api.model_create_multi

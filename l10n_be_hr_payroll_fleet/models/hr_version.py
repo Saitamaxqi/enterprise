@@ -59,7 +59,7 @@ class HrVersion(models.Model):
     car_id = fields.Many2one(
         'fleet.vehicle', string='Company Car',
         tracking=True, compute="_compute_car_id", store=True, readonly=False,
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('vehicle_type', '=', 'car')]",
+        domain=lambda self: [('company_id', 'in', (False, self.env.company.id)), ('vehicle_type', '=', 'car')],
         groups='fleet.fleet_group_manager')
     car_atn = fields.Float(compute='_compute_car_atn_and_costs', string='Car BIK', help='Benefit in Kind (Company Car)',
                            store=True, compute_sudo=True, groups="hr.group_hr_user")
@@ -99,7 +99,7 @@ class HrVersion(models.Model):
         'fleet.vehicle', string="Company Bike",
         tracking=True,
         compute='_compute_bike_id', store=True, readonly=False,
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('vehicle_type', '=', 'bike')]",
+        domain=lambda self: [('company_id', 'in', (False, self.env.company.id)), ('vehicle_type', '=', 'bike')],
         groups='fleet.fleet_group_manager')
     company_bike_depreciated_cost = fields.Float(
         compute='_compute_company_bike_depreciated_cost', store=True, compute_sudo=True,

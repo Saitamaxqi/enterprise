@@ -5,7 +5,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside" >
+            <group name="contract" position="inside" >
                 <label for="l10n_ae_housing_allowance" invisible="country_code != 'AE'"/>
                 <div class="o_row" name="l10n_ae_housing_allowance" invisible="country_code != 'AE'">
                     <field name="l10n_ae_housing_allowance" nolabel="1"/>

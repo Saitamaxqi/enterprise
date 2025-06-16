@@ -20,7 +20,7 @@
             <xpath expr="//field[@name='children']" position="after">
                 <field name="l10n_in_residing_child_hostel" invisible="company_country_code != 'IN'"/>
             </xpath>
-            <group name="salary" position="inside">
+            <group name="payroll_group" position="inside">
                 <group string="Allowance" invisible="country_code != 'IN'">
                     <field name="l10n_in_driver_salay"/>
                     <field name="l10n_in_house_rent_allowance_metro_nonmetro"/>

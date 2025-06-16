@@ -16,7 +16,7 @@
                 <field name="l10n_ma_mut_number"
                     invisible="company_country_code != 'MA'"/>
             </group>
-            <group name="salary" position="inside">
+            <group name="payroll_localization" position="inside">
                 <group name="untaxed" string="Moroccan Localization"
                     invisible="country_code != 'MA'">
                     <field name="l10n_ma_hra"
