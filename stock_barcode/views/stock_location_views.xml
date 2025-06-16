@@ -8,6 +8,14 @@
             <xpath expr="//field[@name='scrap_location']" position="after">
                 <field name="barcode"/>
             </xpath>
+            <xpath expr="//div[hasclass('oe_location_header')]" position="attributes">
+                <attribute name="class" add="d-flex justify-content-between" separator=" "/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_location_header')]" position="inside">
+                <div class="position-relative m-2 p-2 pt-4 border border-2 border-dark" style='background-color: white' invisible="not barcode">
+                    <field name="barcode_img" widget="image"/>
+                </div>
+            </xpath>
         </field>
     </record>
 </odoo>
