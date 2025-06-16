@@ -70,10 +70,10 @@
             name="attribute.name"
             type="'selection'"
             value="getSelectValue(attribute.value)"
-            childProps="{choices:attribute.choices, required: false}"
+            childProps="{choices:attribute.choices, required: 'isRequired' in attribute ? attribute.isRequired : false }"
             onChange.bind="onChangeProperty"
             tooltip="attribute.help"
-            isReadonly="attribute.isReadonly"
+            isReadonly="isAttributeReadonly(attribute)"
         >
             <t t-esc="attribute.label"/>
         </Property>

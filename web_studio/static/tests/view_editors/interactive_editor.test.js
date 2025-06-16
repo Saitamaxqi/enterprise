@@ -1,6 +1,6 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
-import { edit, press } from "@odoo/hoot-dom";
+import { edit, press, waitFor } from "@odoo/hoot-dom";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import { onMounted } from "@odoo/owl";
 import {
@@ -147,6 +147,7 @@ test("edit the currency of a monetary field", async () => {
     });
     Partner._fields.monetary_field = fields.Monetary({
         currency_field: "x_currency_id",
+        manual: true,
     });
 
     onRpc("/web_studio/edit_view", async (request) => {
@@ -178,6 +179,32 @@ test("edit the currency of a monetary field", async () => {
     await contains(".o_web_studio_sidebar .o_web_studio_property_currency_field button").click();
     await contains(".o-dropdown-item:contains(Currency2)").click();
     expect.verifySteps(["set_currency", "edit_view"]);
+});
+
+test("field monetary not manual (base field) currency_field is readonly", async (assert) => {
+    Partner._fields.x_currency_id = fields.Many2one({
+        string: "Currency",
+        relation: "res.currency",
+    });
+
+    Partner._fields.monetary_field = fields.Monetary({
+        currency_field: "x_currency_id",
+        manual: false,
+    });
+    await mountViewEditor({
+        type: "list",
+        resModel: "partner",
+        arch: "<list><field name='display_name'/><field name='monetary_field'/><field name='x_currency_id'/></list>",
+    });
+
+    await contains("th[data-name='monetary_field']").click();
+    await waitFor(".o_web_studio_sidebar div[name='currency_field']");
+    expect(
+        ".o_web_studio_sidebar div[name='currency_field'] .o_select_menu_toggler:disabled"
+    ).toHaveCount(1);
+    expect(
+        ".o_web_studio_sidebar div[name='currency_field'] .o_select_menu_toggler_clear"
+    ).toHaveCount(0);
 });
 
 test("add a related field", async () => {

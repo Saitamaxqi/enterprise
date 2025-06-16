@@ -70,6 +70,12 @@ export class TypeWidgetProperties extends Component {
             await Promise.all(
                 fieldAttributes.map(async (attribute) => {
                     const choices = await this.getFieldChoices(attribute, fields);
+                    if (
+                        this.props.node.field?.type === "monetary" &&
+                        attribute.name === "currency_field"
+                    ) {
+                        attribute.isRequired = true;
+                    }
                     attribute.choices = choices;
                     this.getOptionObj(attribute.name).choices = choices;
                 })
@@ -167,6 +173,15 @@ export class TypeWidgetProperties extends Component {
 
     getOptionObj(optionName) {
         return this.attributesForCurrentTypeAndWidget.find((o) => o.name === optionName);
+    }
+
+    isAttributeReadonly(attribute) {
+        if ("isReadonly" in attribute) {
+            return attribute.isReadonly;
+        }
+        if (this.props.node.field?.type === "monetary" && attribute.name === "currency_field") {
+            return !this.props.node.field.manual;
+        }
     }
 
     /**
@@ -279,31 +294,34 @@ export class TypeWidgetProperties extends Component {
 
     async onChangeCurrency(value) {
         const proms = [];
-        proms.push(
-            rpc("/web_studio/set_currency", {
-                model_name: this.env.viewEditorModel.resModel,
-                field_name: this.props.node.field.name,
-                value,
-            })
-        );
-        this.env.viewEditorModel.fields[this.props.node.field.name]["currency_field"] = value;
+        if (this.props.node.field.manual) {
+            proms.push(
+                rpc("/web_studio/set_currency", {
+                    model_name: this.env.viewEditorModel.resModel,
+                    field_name: this.props.node.field.name,
+                    value,
+                })
+            );
+        } else {
+            proms.push(Promise.resolve(false));
+        }
 
         if (this.env.viewEditorModel.fieldsInArch.includes(value)) {
-            // is the new currency in the view ?
-            await Promise.all(proms).then((results) => {
-                if (results[0] === true) {
-                    this.env.viewEditorModel.fields[this.props.node.field.name]["currency_field"] =
-                        value;
-                }
-            });
-            // alter the value of the currently selected currency manually to trigger a re-render of the SelectMenu
-            // with the correct value since we don't pass through doOperations from the ViewEditorModel
-            this.attributes.field = this.attributes.field.map((e) => {
-                if (e.name === "currency_field") {
-                    e.value = value;
-                }
-                return e;
-            });
+            // If the currency field is in the view, just alter the
+            // reactives and return.
+            const [currencyChanged] = await Promise.all(proms);
+            if (currencyChanged) {
+                this.env.viewEditorModel.fields[this.props.node.field.name]["currency_field"] =
+                    value;
+                // alter the value of the currently selected currency manually to trigger a re-render of the SelectMenu
+                // with the correct value since we don't pass through doOperations from the ViewEditorModel
+                this.attributes.field = this.attributes.field.map((e) => {
+                    if (e.name === "currency_field") {
+                        e.value = value;
+                    }
+                    return e;
+                });
+            }
             return;
         }
 
@@ -322,12 +340,10 @@ export class TypeWidgetProperties extends Component {
         };
 
         proms.push(this.env.viewEditorModel.doOperation(operation));
-        await Promise.all(proms).then((results) => {
-            if (results[0] === true) {
-                this.env.viewEditorModel.fields[this.props.node.field.name]["currency_field"] =
-                    value;
-            }
-        });
+        const [currencyChanged] = await Promise.all(proms);
+        if (currencyChanged) {
+            this.env.viewEditorModel.fields[this.props.node.field.name]["currency_field"] = value;
+        }
     }
 
     onChangeWidget(value) {
