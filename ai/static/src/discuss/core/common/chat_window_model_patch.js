@@ -5,13 +5,13 @@ import { ChatWindow } from "@mail/core/common/chat_window_model";
 patch(ChatWindow.prototype, {
     computeCanShow() {
         if (this.store.aiInsertButtonTarget && this.store.discuss.isActive) {
-            return this.thread?.channel_type === "ai_composer";
+            return this.thread?.channel_type === "ai_chat";
         }
         return super.computeCanShow();
     },
     async _onClose() {
         const thread = this.thread;
-        if (["ai_composer", "ai_chat"].includes(thread?.channel_type)) {
+        if (thread?.channel_type === "ai_chat") {
             await rpc(
                 "/ai/close_ai_chat", {channel_id: thread.id}
             );

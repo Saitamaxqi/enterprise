@@ -35,10 +35,7 @@ messageActionsRegistry
     .add("send-message-direct", {
         condition: (component) =>
             !!component.props.thread.aiSpecialActions?.sendMessage &&
-            !component.message.isSelfAuthored && // don't show the buttons for the user's messages
-            component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
-            (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
-                component.env.isSmall),
+            !component.message.isSelfAuthored, // don't show the buttons for the user's messages,
         name: _t("Send as Message"),
         onSelected: (component) => {
             component.props.thread.aiSpecialActions.sendMessage(component.props.message.body);
@@ -48,10 +45,7 @@ messageActionsRegistry
     .add("log-note-direct", {
         condition: (component) =>
             !!component.props.thread.aiSpecialActions?.logNote &&
-            !component.message.isSelfAuthored && // don't show the buttons for the user's messages
-            component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
-            (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
-                component.env.isSmall),
+            !component.message.isSelfAuthored, // don't show the buttons for the user's messages
         name: _t("Log as Note"),
         onSelected: (component) =>
             component.props.thread.aiSpecialActions.logNote(component.props.message.body),
@@ -67,23 +61,18 @@ patch(messageActionsInternal, {
             "log-note-direct",
         ];
         if (
-            component.props.thread?.channel_type === "ai_composer" &&
+            component.props.thread?.channel_type === "ai_chat" && 
             !requiredActions.includes(id)
         ) {
-            return false;
-        } else if (component.message?.author_id?.im_status === "agent") {
-            return false;
+            return false
         }
         if (id === "copy-message") {
-            return (
-                super.condition(component, id, action) ||
-                component.props.thread?.channel_type === "ai_composer"
-            );
+            return super.condition(component, id, action) || component.props.thread?.channel_type === "ai_chat";
         }
         return super.condition(component, id, action);
     },
     sequence(component, id, action) {
-        if (id === "copy-message" && component.props.thread?.channel_type === "ai_composer") {
+        if (id === "copy-message" && component.props.thread?.channel_type === "ai_chat") {
             return 50;
         }
         return super.sequence(component, id, action);

@@ -28,8 +28,8 @@
         'views/mail_template_views.xml',
         'views/templates.xml',
         'data/ir_cron.xml',
-        'data/ai_composer_data.xml',
         'data/ai_agent_data.xml',
+        'data/ai_composer_data.xml',
         'wizard/mail_compose_message_views.xml',
     ],
     'demo': [
@@ -37,6 +37,8 @@
     ],
     'assets': {
         'web.assets_backend': [
+            ('after', 'web/static/src/views/form/form_controller.xml', 'ai/static/src/web/form_controller.xml'),
+            ('after', 'web/static/src/views/form/form_controller.js', 'ai/static/src/web/form_controller_patch.js'),
             'ai/static/src/**/*',
             ('remove', 'ai/static/src/worklets/**/*'),
         ],

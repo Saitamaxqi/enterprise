@@ -10,11 +10,11 @@ patch(WysiwygArticleHelper.prototype, {
         this.aiChatLauncher = useService("aiChatLauncher");
     },
     async onGenerateArticleClick() {
-        await this.aiChatLauncher.openAIChatFromContextV2({
+        await this.aiChatLauncher.launchAIChat({
             callerComponentName: "html_field_knowledge",
-            originalRecordModel: "knowledge.article",
-            originalRecordId: this.props.record.resId,
-            specialActionCallbacks: {
+            recordModel: "knowledge.article",
+            recordId: this.props.record.resId,
+            aiSpecialActions: {
                 insert: (fragment) => {
                     const generatedContentTitle = fragment.querySelector("h1,h2");
                     const articleTitle = this.props.editor.document.createElement("h1");
@@ -32,7 +32,7 @@ patch(WysiwygArticleHelper.prototype, {
                 },
             },
             aiChatSourceId: this.props.record.resId,
-            placeholderPrompt: _t("Write a knowledge article about"),
+            channelTitle: _t("Knowledge Article Editor"),
         });
     }
 });

@@ -1,1 +1,1 @@
-from . import discuss_channel
+from . import ai_composer

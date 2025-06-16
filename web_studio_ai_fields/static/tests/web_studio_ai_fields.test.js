@@ -8,13 +8,25 @@ import {
     models,
     onRpc,
     patchWithCleanup,
+    makeMockEnv,
 } from "@web/../tests/web_test_helpers";
 import { mountViewEditor } from "@web_studio/../tests/view_editor_tests_utils";
 
 import { before, describe, expect, test } from "@odoo/hoot";
 import { queryOne, waitFor } from "@odoo/hoot-dom";
+import { registry } from "@web/core/registry";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 
 describe.current.tags("desktop");
+
+const serviceRegistry = registry.category("services");
+const fakeAIChatLauncherService = {
+    name: "aiChatLauncher",
+    start() {
+        return {};
+    },
+};
+serviceRegistry.add("aiChatLauncher", fakeAIChatLauncherService, { force: true });
 
 class Dummy extends models.Model {
     _name = "dummy";
@@ -38,6 +50,7 @@ class IrModel extends models.Model {
     ];
 }
 
+defineMailModels();
 defineModels([Dummy, IrModel]);
 
 test("ai and system prompt are readonly for base fields", async () => {
@@ -50,6 +63,7 @@ test("ai and system prompt are readonly for base fields", async () => {
         });
     });
     onRpc("/web_studio/get_studio_view_arch", () => ({ studio_view_arch: "" }));
+    const env = await makeMockEnv();
     await mountViewEditor({
         type: "form",
         resModel: "dummy",
@@ -60,6 +74,7 @@ test("ai and system prompt are readonly for base fields", async () => {
             </sheet>
         </form>
         `,
+        env,
     });
     await contains(".o_field_char[name='char']").click();
     await waitFor(".o_web_studio_sidebar .o_web_studio_sidebar_checkbox input[name='AI']");
@@ -120,6 +135,7 @@ test("make custom field use ai", async () => {
         }
         return;
     });
+    const env = await makeMockEnv();
     await mountViewEditor({
         type: "form",
         resModel: "dummy",
@@ -129,6 +145,7 @@ test("make custom field use ai", async () => {
             </sheet>
         </form>
         `,
+        env,
     });
     await contains(".o_field_char[name='manual_char']").click();
     await waitFor(".o_web_studio_sidebar .o_web_studio_sidebar_checkbox input[name='AI']");
@@ -172,6 +189,7 @@ test("insert ai field", async () => {
         );
         expect(params.operations[0].node.attrs.widget).toBe("ai_char");
     });
+    const env = await makeMockEnv();
     await mountViewEditor({
         type: "form",
         resModel: "dummy",
@@ -181,6 +199,7 @@ test("insert ai field", async () => {
             </group>
         </form>
         `,
+        env,
     });
     await contains(".o_web_studio_new_fields .o_web_studio_field_ai").dragAndDrop(
         ".o_inner_group .o_web_studio_hook:first-child",
@@ -216,6 +235,7 @@ test("insert selection ai field", async () => {
         );
         expect(params.operations[0].node.attrs.widget).toBe("ai_selection");
     });
+    const env = await makeMockEnv();
     await mountViewEditor({
         type: "form",
         resModel: "dummy",
@@ -225,6 +245,7 @@ test("insert selection ai field", async () => {
             </group>
         </form>
         `,
+        env,
     });
     await contains(".o_web_studio_new_fields .o_web_studio_field_ai").dragAndDrop(
         ".o_inner_group .o_web_studio_hook:first-child",
@@ -269,6 +290,7 @@ test("insert relational ai field", async () => {
         );
         expect(params.operations[0].node.attrs.widget).toBe("ai_many2one");
     });
+    const env = await makeMockEnv();
     await mountViewEditor({
         type: "form",
         resModel: "dummy",
@@ -278,6 +300,7 @@ test("insert relational ai field", async () => {
             </group>
         </form>
         `,
+        env,
     });
     await contains(".o_web_studio_new_fields .o_web_studio_field_ai").dragAndDrop(
         ".o_inner_group .o_web_studio_hook:first-child",

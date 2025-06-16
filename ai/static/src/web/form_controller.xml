@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="AIControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_cp_pager')]" position="before">
+            <t t-slot="control-panel-ai-button"/>
+        </xpath>
+    </t>
+    <t t-name="ai.FormView" t-inherit="web.FormView" t-inherit-mode="extension">
+        <Layout position="inside">
+            <t t-if="show_AI_control_panel_button" t-set-slot="control-panel-ai-button">
+                <button class="btn" t-on-click="onClickLaunchAIChat" title="Ask AI">
+                    <img class="ai-chatter-icon" src="/ai/static/description/icon.png" alt="AI"/>
+                </button>
+            </t>
+        </Layout>
+    </t>
+</templates>

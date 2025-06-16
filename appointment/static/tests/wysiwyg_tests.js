@@ -30,6 +30,12 @@ function assertHistorySteps(assert, editable, originalContent) {
     assert.strictEqual(editable.innerHTML, currentContent);
 }
 
+function makeFakeAILauncherService() {
+    return {
+        start: (env) => ({}),
+    };
+}
+
 QUnit.module('appointment.wysiwyg', {
     before: function () {
         serverData = {
@@ -64,6 +70,10 @@ QUnit.module('appointment.wysiwyg', {
             'dialog',
             makeFakeDialogService((dialogClass, props) => props.insertLink(linkUrl)),
             { force: true },
+        );
+        serviceRegistry.add(
+            'aiChatLauncher',
+            makeFakeAILauncherService(),
         );
         patchWithCleanup(Wysiwyg.prototype, {
             init() {

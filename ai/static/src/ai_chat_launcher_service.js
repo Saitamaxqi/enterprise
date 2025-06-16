@@ -1,28 +1,37 @@
 import { registry } from "@web/core/registry";
-import { _t } from "@web/core/l10n/translation";
 import { formatDate, formatDateTime } from "@web/core/l10n/dates";
+import { browser } from "@web/core/browser/browser";
+
 
 export const aiChatLauncherService = {
     dependencies: ["mail.store", "orm"],
     start(env, services) {
         return {
             async launchAIChat({
-                callerComp,
-                recordName,
+                callerComponentName,
                 recordModel,
                 recordId,
+                channelTitle,
                 aiSpecialActions,
                 aiChatSourceId,
-                placeholderPrompt = "",
-                frontEndRecordInfo = null,
+                originalRecordData = null,
+                originalRecordFields = null,
                 textSelection = null,
             }) {
-                const { ai_channel_id, data } = await services.orm.call(
+                let frontEndRecordInfo;
+                // if the component calling the AI has access to record info, we pass it straight to the AI
+                if (['html_field_record', 'html_field_text_select', 'chatter_ai_button'].includes(callerComponentName)) {
+                    frontEndRecordInfo = this.recordDataToContextJSON(originalRecordData, originalRecordFields);
+                }
+                // make the insert button target the component that called the AI
+                services['mail.store'].aiInsertButtonTarget = aiChatSourceId;
+                
+                const { ai_channel_id, data, prompts } = await services.orm.call(
                     'discuss.channel',
-                    'create_ai_composer_channel',
+                    'create_ai_draft_channel',
                     [
-                        callerComp,
-                        recordName,
+                        callerComponentName,
+                        channelTitle,
                         recordModel,
                         recordId,
                         frontEndRecordInfo,
@@ -31,13 +40,12 @@ export const aiChatLauncherService = {
                 );
 
                 services['mail.store'].insert(data);
-
                 const thread = await services['mail.store'].Thread.getOrFetch({
                     model: "discuss.channel",
                     id: Number(ai_channel_id),
                 });
-
-                thread.composer.text = placeholderPrompt;
+                browser.localStorage.setItem("ai.thread.prompt_buttons.".concat(thread.id), JSON.stringify(prompts));
+                thread.ai_prompt_buttons = prompts;
                 thread.aiSpecialActions = aiSpecialActions;
                 thread.aiChatSource = aiChatSourceId;
                 thread.openChatWindow({ focus: true });
@@ -90,48 +98,6 @@ export const aiChatLauncherService = {
                 }
                 return result;
             },
-            async openAIChatFromContextV2({
-                callerComponentName,
-                originalRecordModel,
-                originalRecordId,
-                specialActionCallbacks,
-                aiChatSourceId,
-                placeholderPrompt = "",
-                originalRecordData = null,
-                originalRecordFields = null,
-                textSelection = null,
-            }) {
-                let aiChatWindowName, frontEndRecordInfo;
-                if (['html_field_record', 'html_field_text_select', 'chatter_ai_button'].includes(callerComponentName)) {
-                    frontEndRecordInfo = this.recordDataToContextJSON(originalRecordData, originalRecordFields);
-                }
-                aiChatWindowName = originalRecordData?.record_name || frontEndRecordInfo?.name 
-                if (!aiChatWindowName) {
-                    switch (callerComponentName) {
-                        case "html_field_text_select":
-                            aiChatWindowName = _t("Text Refine");
-                            break;
-                        case "html_field_knowledge":
-                            aiChatWindowName = _t("Knowledge Article");
-                            break;
-                        default:
-                            aiChatWindowName = _t("Editor");
-                    }
-                };
-                services['mail.store'].aiInsertButtonTarget = aiChatSourceId;
-
-                await this.launchAIChat({
-                    callerComp: callerComponentName,
-                    recordName: aiChatWindowName,
-                    recordModel: originalRecordModel,
-                    recordId: originalRecordId,
-                    aiChatSourceId: aiChatSourceId,
-                    placeholderPrompt: placeholderPrompt,
-                    frontEndRecordInfo: frontEndRecordInfo ? JSON.stringify(frontEndRecordInfo) : null,
-                    textSelection: textSelection,
-                    aiSpecialActions: specialActionCallbacks,
-                });
-            }
         };
     },
 };

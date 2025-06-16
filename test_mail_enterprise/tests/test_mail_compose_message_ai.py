@@ -110,7 +110,8 @@ class TestMailComposeMessageAI(MailCommonAI):
     @mute_logger("odoo.addons.ai.models.mail_render_mixin")
     @users("employee")
     def test_composer_missing_composer_should_remove_prompts(self):
-        self.env.ref("ai.ai_mail_template_prompt_evaluator").sudo().unlink()
+        with patch.object(self.env.registry["ai.composer"], "_unlink_except_default_rules", lambda self: True):
+            self.env.ref("ai.ai_mail_template_prompt_evaluator").sudo().unlink()
         with self._patch_template_eval_prompts():
             with self._patch_agent_generate_response(body_html=f"""<div>Test{self._wrap_prompt('Bla')}</div>"""):
                 composer_form = Form(self.env['mail.compose.message'].with_context(self._get_web_context(

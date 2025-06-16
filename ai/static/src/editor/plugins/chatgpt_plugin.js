@@ -22,7 +22,7 @@ export class ChatGPTPlugin extends Plugin {
         user_commands: [
             {
                 id: "openChatGPTDialog",
-                title: _t("ChatGPT"),
+                title: _t("AI"),
                 description: _t("Generate or transform content with AI"),
                 run: this.openDialog.bind(this),
                 isAvailable: () => user.isInternalUser,
@@ -33,8 +33,8 @@ export class ChatGPTPlugin extends Plugin {
                 id: "chatgpt",
                 groupId: "ai",
                 commandId: "openChatGPTDialog",
-                text: "AI",
                 namespaces: ["compact", "expanded"],
+                icon: "ai-logo-icon",
                 isDisabled: this.isNotReplaceableByAI.bind(this),
             },
         ],
@@ -49,7 +49,7 @@ export class ChatGPTPlugin extends Plugin {
 
         power_buttons: withSequence(20, {
             commandId: "openChatGPTDialog",
-            text: "AI",
+            icon: "ai-logo-icon",
         }),
     };
 
@@ -114,7 +114,7 @@ export class ChatGPTPlugin extends Plugin {
             recordData,
             recordFields,
             callerId,
-            placeholderPrompt,
+            channelTitle,
             textSelection;
         const { resModel, resId, data, fields, id } = this.config.getRecordInfo();
         if (selection.isCollapsed) {
@@ -123,14 +123,15 @@ export class ChatGPTPlugin extends Plugin {
                 recordModel = data.model;
                 recordId = Number(data.res_ids.slice(1, -1)); // resIds should look like so `[id]`, the slice and cast allows to extract the id
                 recordData = data;
+                channelTitle = data.subject;
                 callerId = id;
-                placeholderPrompt = _t("Write a followup answer");
             } else {
                 callerComp = "html_field_record";
                 recordModel = resModel;
                 recordId = resId;
                 recordData = data;
                 recordFields = fields;
+                channelTitle = data?.display_name || _t("Editor");
                 callerId = resId || id;
             }
         } else {
@@ -139,21 +140,21 @@ export class ChatGPTPlugin extends Plugin {
             recordId = resId;
             recordData = data;
             recordFields = fields;
+            channelTitle = _t("Text Selection");
             callerId = resId || id;
-            placeholderPrompt = _t("Rewrite");
             textSelection = selection.textContent();
         }
-        await this.services.aiChatLauncher.openAIChatFromContextV2({
+        await this.services.aiChatLauncher.launchAIChat({
             callerComponentName: callerComp,
-            originalRecordModel: recordModel,
-            originalRecordId: recordId,
+            recordModel: recordModel,
+            recordId: recordId,
             originalRecordData: recordData,
             originalRecordFields: recordFields,
-            specialActionCallbacks: {
+            aiSpecialActions: {
                 insert: dialogParams.insert,
             },
+            channelTitle: channelTitle,
             aiChatSourceId: callerId,
-            placeholderPrompt: placeholderPrompt,
             textSelection: textSelection,
         });
         if (this.services.ui.isSmall) {

@@ -1,3 +1,18 @@
 .o_ai_topic_form .o_form_sheet{
     width: 70%;
 }
+
+.ai-chatter-icon {
+    filter: grayscale(1);
+    &:hover {
+        filter: grayscale(0);
+    }
+}
+
+.ai-logo-icon {
+    background: url('/ai/static/description/icon.png');
+    background-size: 18px 20px;
+    filter: grayscale(1) contrast(0.5);
+    width: 18px;
+    height: 18px;
+}

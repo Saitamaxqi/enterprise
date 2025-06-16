@@ -25,14 +25,14 @@ class AIController(ThreadController):
         agent_id = request.env['ai.agent']._retrieve_agent_if_access_allowed(agent_partner_id=agent_partner_id)
         message = self._get_message_with_access(mail_message_id)
         if agent_id and message:
-            agent_id.generate_response(channel_id, message)
+            agent_id.generate_response(message, channel_id)
 
     # auth=public to allow visitors to interact with ai agents through livechat
     @http.route(["/ai/post_error_message"], type="jsonrpc", auth="public")
     def post_error_message(self, error_message, agent_partner_id, channel_id):
         agent_id = request.env['ai.agent']._retrieve_agent_if_access_allowed(agent_partner_id=agent_partner_id)
         if agent_id:
-            agent_id.post_error_message(channel_id, error_message)
+            agent_id.post_error_message(error_message, channel_id)
 
     @http.route('/ai/close_ai_chat', methods=["POST"], type="jsonrpc", auth='public')
     @add_guest_to_context

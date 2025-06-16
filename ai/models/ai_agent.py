@@ -493,29 +493,26 @@ class AIAgent(models.Model):
                 response[i] = html_sanitize(raw_html)
         return response
 
-    def generate_response(self, discuss_channel_id: int, mail_message):
+    def generate_response(self, mail_message_id: int, discuss_channel_id: int | None = None):
         self.ensure_one()
 
-        channel = self.env['discuss.channel'].search([('id', '=', discuss_channel_id)])
+        prompt = self._parse_user_message(mail_message_id)
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id, discuss_channel_id)
         if not channel.exists():
             raise UserError(_("The discussion channel does not exist or has been deleted."))
-
-        prompt = self._parse_user_message(mail_message)
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
         response = self.with_context(discuss_channel=channel)._generate_response(
             prompt=prompt,
             chat_history=self._retrieve_chat_history(channel),
-            extra_system_context=self._build_extra_system_context(),
+            extra_system_context=self._build_extra_system_context(channel),
         )
         for message in response or []:
             self._post_ai_response(channel, message)
 
-    def post_error_message(self, discuss_channel_id: int, error_message: str):
+    def post_error_message(self, error_message: str, discuss_channel_id: int | None = None):
         self.ensure_one()
-        channel = self.env['discuss.channel'].search([('id', '=', discuss_channel_id)])
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id, discuss_channel_id)
         if not channel.exists():
             raise UserError(_("The discussion channel does not exist or has been deleted."))
-
         response = self._generate_response(
             prompt="Generate a message for the user stating that we are unable to process the request because of the following error: " + error_message,
             chat_history=self._retrieve_chat_history(channel),
@@ -637,8 +634,10 @@ class AIAgent(models.Model):
         if self.restrict_to_sources:
             messages.append(PREPROMPTS['restrict_to_sources'])
 
-        if extra_system_context:
+        if isinstance(extra_system_context, str):
             messages.append(extra_system_context)
+        elif isinstance(extra_system_context, list):
+            messages += extra_system_context
 
         return messages
 
@@ -785,7 +784,7 @@ class AIAgent(models.Model):
             return final_prompt
         return html_to_inner_content(mail_message.body)
 
-    def _build_extra_system_context(self):
+    def _build_extra_system_context(self, discuss_channel):
         """Build extra system context based on the agent's configuration."""
         self.ensure_one()
         extra_context = []
@@ -793,6 +792,8 @@ class AIAgent(models.Model):
             extra_context.append(self._get_available_menus())
             extra_context.append(self._get_available_models())
             extra_context.append(self._get_date_calculation_reference())
+        elif env_context := discuss_channel.ai_env_context:  # if channel has ai related context (e.g. draft flow) pass it to the agent's extra context
+            extra_context += env_context
 
         return "\n".join(extra_context) if extra_context else ""
 

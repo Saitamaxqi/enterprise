@@ -6,7 +6,7 @@ patch(ChatWindow.prototype, {
     get attClass() {
         return {
             ...super.attClass,
-            "o-isAiComposer": this.thread?.channel_type === "ai_composer",
+            "o-isAiComposer": this.thread?.channel_type === "ai_chat",
         };
     },
 });

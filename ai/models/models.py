@@ -77,64 +77,23 @@ class Model(models.AbstractModel):
         return json.dumps(result, default=str)
 
     def _ai_initialise_context(
-        self, caller_component, composer_default_prompt, text_selection=None, front_end_info=None
+        self, caller_component, text_selection=None, front_end_info=None
     ):
-        context = [
-            {
-                "role": "system",
-                "content": f"You are a helpful AI assistant to {self.env.user.display_name}. Your job is to assist with text drafting inside the ERP software Odoo.",
-            }
-        ]
+        context = []
 
         # If we have record info available from the front-end, pass it to the model's context
         if caller_component in ["html_field_record", "chatter_ai_button"]:
-            context.append(
-                {
-                    "role": "system",
-                    "content": f"This conversation is applying on an Odoo {self._name} record. The following JSON contains all of the records details: {front_end_info}",
-                }
-            )
+            context.append(f"You were called within an Odoo {self._name} record. Your answers should take the record's details into account. The following JSON contains all of the record's details: {front_end_info}")
 
         # If we don't have record info from the front-end and it's required, fetch the record information and pass it to the model's context
         if caller_component in ["html_field_composer", "composer_ai_button"]:
-            context.append(
-                {
-                    "role": "system",
-                    "content": f"This conversation is applying on an Odoo {self._name} record. The following JSON contains all of the records details: {self._ai_serialize_fields_data()}",
-                }
-            )
-
-        # Apply the pre-prompt linked the the different ai "composers"
-        context.append(
-            {
-                "role": "system",
-                "content": composer_default_prompt,
-            }
-        )
+            context.append(f"You were called within an Odoo {self._name} record. Your answers should take the record's details into account. The following JSON contains all of the records details: {self._ai_serialize_fields_data()}")
 
         # Add some additional details for some special cases and finish the context by the "first" message sent by the assistant
         if caller_component in ["html_field_text_select"]:
-            context += [
-                {
-                    "role": "system",
-                    "content": f"The text that you will be rewritting is the following: {text_selection}",
-                },
-                {
-                    "role": "assistant",
-                    "content": self.env._("Hello, how can I rewrite your text?"),
-                }
-            ]
+            context.append(f"The text that you will be rewritting is the following: {text_selection}")
         else:
-            context += [
-                {
-                    "role": "system",
-                    "content": "ALWAYS FORMAT YOUR ANSWERS USING MARKDOWN, AVOID USING HTML. Don't use unecessary formatting like code blocks if not needed.",
-                },
-                {
-                    "role": "assistant",
-                    "content": self.env._("Hello, what can I help you with?"),
-                },
-            ]
+            context.append("ALWAYS FORMAT YOUR ANSWERS USING MARKDOWN, AVOID USING HTML. Don't use unecessary formatting like code blocks if not needed.")
 
         return context
 

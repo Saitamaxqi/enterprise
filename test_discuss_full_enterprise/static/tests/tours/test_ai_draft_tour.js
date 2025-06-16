@@ -15,11 +15,14 @@ registry.category("web_tour.tours").add('test_ai_draft_chatter_button', {
         run: "click",
     }, {
         content: "Click on the chatter's AI button",
-        trigger: "button.btn-ai-chatter",
+        trigger: "button img.ai-chatter-icon",
         run: "click",
     }, {
-        content: "Click on the send button to send the AI the default message",
-        trigger: "button[name='send-message']",
+        content: "Check that the second prompt button is correct",
+        trigger: "div.o-mail-Thread button:contains('Write a followup answer')",
+    }, {
+        content: "Click on the first prompt button to send the AI one of the default messages",
+        trigger: "div.o-mail-Thread button:contains('Summarize the chatter conversation')",
         run: "click",
     }, {
         content: "Check that the default message is shown",
@@ -62,8 +65,15 @@ registry.category("web_tour.tours").add('test_ai_draft_chatter_button', {
         trigger: "button[name='send-message-direct']",
         run: "click",
     }, {
-        content: "The send message chatter button should be activated",
-        trigger: ".o-mail-Chatter-sendMessage.active",
+        content: "The message composer dialog should open",
+        trigger: ".o_mail_composer_form_view",
+    }, {
+        content: "The AI message should be posted in the composer dialog",
+        trigger: ".odoo-editor-editable:eq(1):has(p:contains('This is dummy ai response'))",
+    }, {
+        content: "Close the composer dialog",
+        trigger: ".btn-close",
+        run: "click",
     }, {
         content: "Hover over the AI message so the action buttons appear",
         trigger: ".o-mail-Message:eq(2)",
@@ -73,11 +83,14 @@ registry.category("web_tour.tours").add('test_ai_draft_chatter_button', {
         trigger: "button[name='log-note-direct']",
         run: "click",
     }, {
-        content: "The log note chatter button should be activated",
-        trigger: ".o-mail-Chatter-logNote.active",
+        content: "The note composer dialog should open",
+        trigger: ".o_mail_composer_form_view",
+    }, {
+        content: "The AI message should be posted in the composer dialog",
+        trigger: ".odoo-editor-editable:eq(1):has(p:contains('This is dummy ai response'))",
     }, {
         content: "Click on the 'log' chatter button",
-        trigger: ".o-mail-Composer-send",
+        trigger: "button:has(span:contains('Log'))",
         run: "click",
     }, {
         content: "Check the the AI response was actually posted as a note",
@@ -103,7 +116,7 @@ registry.category("web_tour.tours").add('test_ai_draft_html_field', {
         run: "click",
     }, {
         content: "Click on the ai powerbutton item",
-        trigger: ".power_button:has(span:contains('AI'))",
+        trigger: ".power_button.ai-logo-icon",
         run: "click",
     }, {
         content: "Check that the chat window appears",

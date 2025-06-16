@@ -42,7 +42,7 @@
 
     <menuitem
         id="menu_ai_composer"
-        name="AI Composer Prompts"
+        name="Default Prompts"
         action="ai_composer_action"
         parent="ai.ai_config_menu"
         groups="base.group_system"

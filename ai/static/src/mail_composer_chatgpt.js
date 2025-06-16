@@ -1,4 +1,3 @@
-import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
@@ -16,7 +15,6 @@ export class MailComposerChatGPT extends Component {
         this.aiChatLauncher = useService("aiChatLauncher");
         let currentDialog, previousZIndex;
         onMounted(() => {
-            this.store.aiInsertButtonTarget = this.props.record.id;
             currentDialog = document.querySelector(".o-overlay-item:has(.o_dialog");
             if (currentDialog) {
                 previousZIndex = currentDialog.style.zIndex;
@@ -35,12 +33,12 @@ export class MailComposerChatGPT extends Component {
     }
 
     async onOpenChatGPTPromptDialogBtnClick() {
-        await this.aiChatLauncher.openAIChatFromContextV2({
+        await this.aiChatLauncher.launchAIChat({
             callerComponentName: "composer_ai_button",
-            originalRecordModel: this.props.record.data.model,
-            originalRecordId: Number(this.props.record.data.res_ids.slice(1, -1)),
+            recordModel: this.props.record.data.model,
+            recordId: Number(this.props.record.data.res_ids.slice(1, -1)),
             originalRecordData: this.props.record.data,
-            specialActionCallbacks: {
+            aiSpecialActions: {
                 insert: (content) => {
                     const root = document.createElement("div");
                     root.appendChild(content);
@@ -51,8 +49,8 @@ export class MailComposerChatGPT extends Component {
                     });
                 },
             },
+            channelTitle: this.props.record.data.subject,
             aiChatSourceId: this.props.record.id,
-            placeholderPrompt: _t("Write a followup answer"),
         });
     }
 }

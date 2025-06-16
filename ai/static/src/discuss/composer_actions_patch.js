@@ -5,9 +5,7 @@ patch(composerActionsInternal, {
     condition(component, id, action) {
         const requiredActions = ["send-message"];
         if (
-            (component.thread?.channel_type === "ai_composer" ||
-                component.thread?.correspondent?.im_status === "agent") &&
-            !requiredActions.includes(id)
+            component.thread?.correspondent?.persona.im_status === "agent" && !requiredActions.includes(id)
         ) {
             return false;
         }

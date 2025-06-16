@@ -8,6 +8,7 @@ from . import mail_render_mixin
 from . import mail_template
 from . import res_config_settings
 from . import res_partner
+from . import ai_prompt_button
 from . import ai_composer
 from . import discuss_channel
 from . import mail_thread

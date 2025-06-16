@@ -4,7 +4,7 @@ import { patch } from "@web/core/utils/patch";
 
 patch(Message.prototype, {
     get quickActionCount() {
-        if (this.props.thread.channel_type !== "ai_composer") {
+        if (this.props.thread.channel_type !== "ai_chat") {
             return super.quickActionCount;
         }
         return 3;

@@ -1,43 +1,29 @@
 import { Thread } from "@mail/core/common/thread_model";
-
 import { patch } from "@web/core/utils/patch";
-import { rpc } from "@web/core/network/rpc";
-import { url } from "@web/core/utils/urls";
+import { fields } from "@mail/core/common/record";
+import { browser } from "@web/core/browser/browser";
+
+const AI_PROMPT_BUTTONS = "ai.thread.prompt_buttons.";
 
 patch(Thread.prototype, {
-    async generate(prompt, channel_id) {
-        await rpc(
-            "/ai/generate_w_composer",
-            {
-                prompt,
-                channel_id,
+    setup() {
+        super.setup();
+        this.ai_prompt_buttons = fields.Many("ai.prompt.button", {
+            inverse: "thread_id",
+            compute() {
+                return JSON.parse(browser.localStorage.getItem(AI_PROMPT_BUTTONS.concat(this.id)));
             },
-            { silent: true }
-        );
+        });
     },
-    async post() {
-        const message = await super.post(...arguments);
-        if (this.channel_type === "ai_composer" && message?.body) {
-            await this.generate(message.body, this.id);
-        }
-        return message;
+    async closeChatWindow(options = {}) {
+        await super.closeChatWindow(options);
+        browser.localStorage.removeItem(AI_PROMPT_BUTTONS.concat(this.id));
     },
-    get avatarUrl() {
-        if (this.channel_type === "ai_composer") {
-            return url("/ai/static/description/icon.png");
-        }
+    get avatarUrl() { 
         if (this.channel_type === "ai_chat" && this.correspondent) {
             return this.correspondent.avatarUrl;
         }
 
         return super.avatarUrl;
-    },
-    computeCorrespondent() {
-        const correspondent = super.computeCorrespondent();
-        // remove any correspondent from ai composer chats (should remove related alerts)
-        if (this.channel_type === "ai_composer") {
-            return;
-        }
-        return correspondent;
     },
 });
