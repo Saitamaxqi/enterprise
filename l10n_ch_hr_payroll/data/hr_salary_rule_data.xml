@@ -6341,7 +6341,7 @@ result_name = inputs['WT_6510'].name
     <record id="l10n_ch_elm_rule_6600" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.NET"/>
         <field name="name">Net Paid</field>
-        <field name="code">Net_Paid</field>
+        <field name="code">NET</field>
         <field name="l10n_ch_code">6600</field>
         <field name="sequence">1200</field>
         <field name="condition_select">none</field>
