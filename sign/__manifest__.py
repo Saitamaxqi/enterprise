@@ -162,6 +162,9 @@ Let your customers follow the signature process easily.
             'web_tour/static/src/tour_pointer/**/*',
             'web_tour/static/src/tour_service/**/*',
             'web/static/lib/hoot-dom/**/*',
-        ]
+        ],
+        'web.assets_web_dark': [
+            'sign/static/src/scss/sign.dark.scss',
+        ],
     }
 }
