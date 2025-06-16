@@ -121,7 +121,7 @@ class UrbanPiperClient:
         full_sync_required_providers = ['justeat', 'grubhub', 'doordash', 'ubereats']
         products = self.config.env['product.template'].search(product_domain)
         pos_products = products
-        if any(provider.technical_name not in full_sync_required_providers for provider in self.config.urbanpiper_delivery_provider_ids):
+        if not any(provider.technical_name in full_sync_required_providers for provider in self.config.urbanpiper_delivery_provider_ids):
             pos_products = products.filtered(lambda product: (
                 not product.urban_piper_status_ids or
                 self.config.id not in product.urban_piper_status_ids.config_id.ids or
