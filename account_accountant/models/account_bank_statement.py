@@ -241,15 +241,28 @@ class AccountBankStatementLine(models.Model):
             'amount_residual', 'reconciled', 'ref', 'move_name',
         ])
         self.flush_recordset(['payment_ref', 'partner_id', 'company_id'])
-        self._cr.execute(SQL(r"""
+        self._cr.execute(SQL("""
             SELECT st_line.id AS st_line_id,
                    ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS all_aml_ids,
                    SUM(aml.amount_residual) AS total_residual,
                    ARRAY_AGG(aml.id ORDER BY aml.id ASC) FILTER (
                        WHERE (
-                          st_line.payment_ref ~ ('\y(' || array_to_string(regexp_split_to_array(aml.ref, '[ ]+'), '|') || ')\y')
-                          OR POSITION(aml.move_name in st_line.payment_ref) > 0
-                          OR POSITION(move.payment_reference in st_line.payment_ref) > 0)
+                          -- First Rule, check if there is payment ref like SO|INV|BILL|...xxxx/xxx-yy in aml.ref
+                          aml.ref ~ ('\\m(' || array_to_string((
+                            SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
+                            FROM regexp_matches(st_line.payment_ref, '\\w{2,5}/?\\d{4}/\\d+(?:/\\d+)?(?:-\\d+)?', 'g') AS match
+                          ), '|') || ')\\M')
+                          -- Second Rule, check for full match between aml ref and st_line label
+                          OR (LENGTH(aml.ref) >= 5 AND POSITION(aml.ref in st_line.payment_ref) > 0)
+                          -- Third Rule, check if there is a word longer than 16 characters matching both fields
+                          OR aml.ref ~ ('\\m(' || array_to_string((
+                            SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
+                            FROM regexp_matches(st_line.payment_ref, '\\S{16,}', 'g') AS match
+                          ), '|') || ')\\M')
+                          -- Fourth Rule, full match with move_name
+                          OR (LENGTH(aml.move_name) >= 5 AND POSITION(aml.move_name in st_line.payment_ref) > 0)
+                          -- Fifth Rule, full match with payment_ref on move
+                          OR (LENGTH(move.payment_reference) >= 5 AND POSITION(move.payment_reference in st_line.payment_ref) > 0))
                    ) AS ref_aml_ids
               FROM account_bank_statement_line st_line, account_move_line aml
          LEFT JOIN account_move move ON aml.move_id = move.id
@@ -262,13 +275,22 @@ class AccountBankStatementLine(models.Model):
               ELSE (
                   st_line.partner_id IS NULL
                   -- To avoid matching too blindly if we don't have a partner on the statement line, so in this case,
-                  -- if no partners sets, and no ref on aml, we want all_aml_ids to be empty
+                  -- we want to apply the conditions on all_aml_ids as well
                   AND (
-                    st_line.payment_ref ~ ('\y(' || array_to_string(regexp_split_to_array(aml.ref, '[ ]+'), '|') || ')\y')
-                    OR POSITION(aml.move_name in st_line.payment_ref) > 0
-                    OR POSITION(move.payment_reference in st_line.payment_ref) > 0)
+                    aml.ref ~ ('\\m(' || array_to_string((
+                      SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
+                      FROM regexp_matches(st_line.payment_ref, '\\w{2,5}/?\\d{4}/\\d+(?:/\\d+)?(?:-\\d+)?', 'g') AS match
+                    ), '|') || ')\\M')
+                    OR (LENGTH(aml.ref) >= 5 AND POSITION(aml.ref in st_line.payment_ref) > 0)
+                    OR aml.ref ~ ('\\m(' || array_to_string((
+                      SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
+                      FROM regexp_matches(st_line.payment_ref, '\\S{16,}', 'g') AS match
+                    ), '|') || ')\\M')
+                    OR (LENGTH(aml.move_name) >= 5 AND POSITION(aml.move_name in st_line.payment_ref) > 0)
+                    OR (LENGTH(move.payment_reference) >= 5 AND POSITION(move.payment_reference in st_line.payment_ref) > 0))
               )
                END
+               AND st_line.move_id != aml.move_id
                AND aml.company_id = st_line.company_id
                AND aml.reconciled = false
                AND acc.reconcile = true
@@ -301,7 +323,7 @@ class AccountBankStatementLine(models.Model):
                         # If we have multiple amls with same matching ref, we don't want to reconcile, so we
                         # apply the same regex as the one in the SQL query
                         for ref_word in st_line.payment_ref.split(' '):
-                            if re.search(rf'\b{re.escape(ref_word)}\b', aml.ref):
+                            if ref_word and re.search(rf'(^{re.escape(ref_word)}$|\b{re.escape(ref_word)}\b)', aml.ref):
                                 aml_refs_counter[ref_word] += aml
                     if aml.move_id.payment_reference and len(move_refs[aml.move_id.payment_reference]) > 1:
                         amls_to_remove += move_refs[aml.move_id.payment_reference].mapped('line_ids')
@@ -358,6 +380,7 @@ class AccountBankStatementLine(models.Model):
           LEFT JOIN account_account acc ON aml.account_id = acc.id
           LEFT JOIN account_move move ON aml.move_id = move.id
               WHERE aml.partner_id = st_line.partner_id
+                AND aml.move_id != st_line.move_id
                 AND st_line.partner_id IS NOT NULL
                 AND aml.company_id = st_line.company_id
                 AND aml.reconciled = false
@@ -409,6 +432,7 @@ class AccountBankStatementLine(models.Model):
           LEFT JOIN account_account acc ON aml.account_id = acc.id
           LEFT JOIN account_move move ON aml.move_id = move.id
               WHERE st_line.partner_id IS NULL
+                AND aml.move_id != st_line.move_id
                 AND aml.company_id = st_line.company_id
                 AND aml.reconciled = false
                 AND acc.account_type IN ('asset_receivable', 'liability_payable')

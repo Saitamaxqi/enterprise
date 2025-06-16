@@ -29,7 +29,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             ],
         })
 
-    def _create_and_post_payment(self, amount=100, memo=None, **kwargs):
+    def _create_and_post_payment(self, amount=100, memo=None, post=True, **kwargs):
         payment = self.env['account.payment'].create({
             'payment_type': 'inbound',
             'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
@@ -40,7 +40,8 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             'memo': memo,
             **kwargs,
         })
-        payment.action_post()
+        if post:
+            payment.action_post()
         return payment
 
     def test_set_line_bank_statement_line_multiple_move_lines(self):
