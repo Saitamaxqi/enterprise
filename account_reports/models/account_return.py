@@ -59,7 +59,7 @@ class AccountReturnType(models.Model):
         is_not_tax_unit_main_comp = tax_unit and tax_unit.main_company_id != company
         all_branch_companies_with_same_vat = company._get_branches_with_same_vat()
         sorted_branch_companies_with_same_vat = sorted(all_branch_companies_with_same_vat, key=lambda comp: len(comp.parent_path.split('/')))
-        is_not_main_branch = company.parent_id and sorted_branch_companies_with_same_vat[0].vat == company.vat
+        is_not_main_branch = company.parent_id and company != sorted_branch_companies_with_same_vat[0]
         return not (is_not_multivat and (is_not_tax_unit_main_comp or is_not_main_branch))
 
     @api.model

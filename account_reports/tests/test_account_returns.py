@@ -374,6 +374,11 @@ class TestAccountReturn(TestAccountReportsCommon):
         with self._patch_returns_generation():
             branch_1_data = self.setup_other_company(name='Branch 1', parent_id=self.company_data['company'].id)
             branch_2_data = self.setup_other_company(name='Branch 2', vat='23434344', parent_id=self.company_data['company'].id, account_return_periodicity='semester', account_opening_date="2014-01-01")
+
+            branch_2_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('company_id', '=', branch_2_data['company'].id)])
+            self.assert_return_dates_equal(branch_2_return, [("2024-01-01", "2024-06-30")])
+            self.assertEqual(branch_2_return.company_id, branch_2_data['company'])
+
             branch_1_1_data = self.setup_other_company(name='Branch 1-1', parent_id=branch_1_data['company'].id)
             branch_2_1_data = self.setup_other_company(name='Branch 2-1', parent_id=branch_2_data['company'].id)
 
