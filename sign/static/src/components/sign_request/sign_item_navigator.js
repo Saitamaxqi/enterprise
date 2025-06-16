@@ -129,7 +129,7 @@ export function startSignItemNavigator(parent, target, types, env) {
 
         const duration = Math.max(
             Math.min(
-                500,
+                1000,
                 5 *
                     (Math.abs(target.scrollTop - scrollTop) +
                         Math.abs(navigator.getBoundingClientRect().top) -
