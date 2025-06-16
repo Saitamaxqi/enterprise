@@ -349,7 +349,7 @@ test("concurrent pill resizes and open, dialog show updated number", async () =>
 
     def.resolve();
     await animationFrame();
-    expect(`.modal [name=stop] input`).toHaveValue("12/24/2018 07:29");
+    expect(`.modal [name=stop] button`).toHaveValue("12/24/2018 07:29:59");
 });
 
 test("concurrent display mode change and fetch", async () => {

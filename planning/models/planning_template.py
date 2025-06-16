@@ -74,7 +74,7 @@ class PlanningSlotTemplate(models.Model):
             time_str = format_time(
                 self.env,
                 time(hour=int(float_time), minute=min(59, round(math.modf(float_time)[0] / (1 / 60.0)))),
-                time_format='short'
+                time_format='HH:mm'
             )
             match = re.match(r'0?(\d{1,2}):(\d{2})', time_str)
             if match:

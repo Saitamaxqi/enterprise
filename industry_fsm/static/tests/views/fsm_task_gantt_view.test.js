@@ -59,7 +59,7 @@ test("fsm task gantt view", async () => {
     await animationFrame();
     expect(".modal").toHaveCount(1);
     expect(".modal .o_field_widget[name=planned_date_begin] .o_input").toHaveValue(
-        now.toFormat("MM/dd/yyyy 00:00"),
+        now.toFormat("MM/dd/yyyy 00:00:00"),
         {
             message:
                 "The fsm_mode present in the view context should set the start_datetime to the current day instead of the first day of the gantt view",

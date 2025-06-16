@@ -62,7 +62,7 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         },
         {
             content: "Verify order line rental period start time",
-            trigger: 'div.text-muted.small span:contains("08:00")',
+            trigger: 'div.text-muted.small span:contains("8:00")',
         },
         {
             content: "Verify order line rental period return time",

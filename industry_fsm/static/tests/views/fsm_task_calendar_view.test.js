@@ -40,7 +40,7 @@ test("Fsm task calendar view", async () => {
 
     await clickDate("2024-01-09");
 
-    expect("div[name='planned_date_begin'] input").toHaveValue("01/09/2024 00:00", {
+    expect("div[name='planned_date_begin'] button").toHaveValue("01/09/2024 00:00:00", {
         message:
             "The planned_date_begin field should hold the planned_date_start value in the record thanks to the fsmCalendarModel makeContextDefault inheritance",
     });

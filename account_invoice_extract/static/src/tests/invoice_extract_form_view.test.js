@@ -204,7 +204,7 @@ test("basic", async () => {
     await contains(".o_field_widget[name=quick_edit_total_amount] input", { value: "123.00" });
     // ---------- Date ----------
     // Focus the field
-    await focus(".o_field_widget[name=invoice_date] input");
+    await focus(".o_field_widget[name=invoice_date] button");
     // Check boxes presence for date
     await contains(".o_extract_mixin_box", { count: 3 });
     await contains(".o_extract_mixin_box[data-field-name=date]", { count: 3 });
@@ -213,7 +213,7 @@ test("basic", async () => {
     await contains(".o_field_widget[name=invoice_date] input", { value: "01/01/2022" });
     // ---------- Due date ----------
     // Focus the field
-    await focus(".o_field_widget[name=invoice_date_due] input");
+    await focus(".o_field_widget[name=invoice_date_due] button");
     // Check boxes presence for due date
     await contains(".o_extract_mixin_box", { count: 2 });
     await contains(".o_extract_mixin_box[data-field-name=due_date]", { count: 2 });

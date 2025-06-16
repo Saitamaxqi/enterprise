@@ -21,7 +21,7 @@ class DocumentSpreadsheetSurveyResults(TestSurveyCommon, SpreadsheetTestCommon):
         self.assertEqual(len(spreadsheet_survey_results_table[0]), 2)
         self.assertEqual(spreadsheet_survey_results_table[0][0]["value"], "Timestamp")
         self.assertEqual(spreadsheet_survey_results_table[0][1]["value"], datetime_to_spreadsheet_date_number(answer_0.create_date, tz_name))
-        self.assertEqual(spreadsheet_survey_results_table[0][1]["format"], "mm/dd/yyyy hh:mm:ss")
+        self.assertEqual(spreadsheet_survey_results_table[0][1]["format"], "mm/dd/yyyy hh:mm:ss a")
         self.assertEqual(spreadsheet_survey_results_table[1][0]["value"], "What is your age")
         self.assertEqual(spreadsheet_survey_results_table[1][1]["value"], 25)
 

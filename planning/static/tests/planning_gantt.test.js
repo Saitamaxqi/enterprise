@@ -265,10 +265,10 @@ test("open a dialog to add a new shift", async function () {
 
     expect(".modal").toHaveCount(1);
     expect(".o_field_widget[name=start_datetime] .o_input").toHaveValue(
-        now.toFormat("MM/dd/yyyy 00:00")
+        now.toFormat("MM/dd/yyyy 00:00:00")
     );
     expect(".o_field_widget[name=end_datetime] .o_input").toHaveValue(
-        now.plus({ day: 1 }).toFormat("MM/dd/yyyy 00:00")
+        now.plus({ day: 1 }).toFormat("MM/dd/yyyy 00:00:00")
     );
 });
 
@@ -544,8 +544,8 @@ test("Gantt Planning : pill name should not display allocated hours if allocated
         groupBy: ["resource_id"],
     });
     expect(queryAllTexts(".o_gantt_pill")).toEqual([
-        "9:30 - 18:30 (4h) Shift 1",
-        "9:30 - 18:30 Shift 2",
+        "9:30 AM - 6:30 PM (4h) Shift 1",
+        "9:30 AM - 6:30 PM Shift 2",
     ]);
 });
 
@@ -801,10 +801,10 @@ test("Verify Hours in Planning Dialog When Clicking on cell for Off Days and Wor
     await hoverGridCell("14", "October 2022", "Open Shifts");
     await clickCell("14", "October 2022", "Open Shifts");
     await waitFor(".o_dialog .o_form_view");
-    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("10/14/2022 00:00", {
+    expect(`.o_field_widget[name="start_datetime"] button`).toHaveValue("10/14/2022 00:00:00", {
         message: "The start date should be the minimum time for the selected date.",
     });
-    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("10/15/2022 00:00", {
+    expect(`.o_field_widget[name="end_datetime"] button`).toHaveValue("10/15/2022 00:00:00", {
         message: "The end date should be the maximum time for the selected date.",
     });
     await contains(`.modal-dialog .o_form_button_save`).click();
@@ -844,10 +844,10 @@ test("Verify Hours in Planning Dialog When Clicking 'New' Button for Off Days in
     click(".o_gantt_button_add.btn-primary");
     await animationFrame();
     await waitFor(".o_dialog .o_form_view");
-    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("10/19/2024 00:00", {
+    expect(`.o_field_widget[name="start_datetime"] button`).toHaveValue("10/19/2024 00:00:00", {
         message: "The start date should be the minimum time for the selected date",
     });
-    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("10/19/2024 23:59", {
+    expect(`.o_field_widget[name="end_datetime"] button`).toHaveValue("10/19/2024 23:59:59", {
         message: "The end date should be the maximum time for the selected date.",
     });
     await contains(`.modal-dialog .o_form_button_save`).click();

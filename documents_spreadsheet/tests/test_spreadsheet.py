@@ -41,7 +41,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
                 "thousands_sep": " ",
                 "decimal_point": ",",
                 "date_format": "%d-%m-%Y",
-                "time_format": "%H %M %S",
+                "time_format": "%H:%M:%S",
                 "active": True,
                 "week_start": "1",
             }
@@ -63,7 +63,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             "thousandsSeparator": " ",
             "decimalSeparator": ",",
             "dateFormat": "dd-mm-yyyy",
-            "timeFormat": "hh mm ss",
+            "timeFormat": "hh:mm:ss",
             "formulaArgSeparator": ";",
             "weekStart": 1,
         }

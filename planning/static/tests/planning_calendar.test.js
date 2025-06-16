@@ -237,10 +237,10 @@ test("Verify Hours in Planning Dialog When Clicking on Off Days and Working Days
     // click on dayoff day
     await clickDate("2019-03-09");
     await waitFor(".o_dialog .o_form_view");
-    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("03/09/2019 00:00", {
+    expect(`.o_field_widget[name="start_datetime"] button`).toHaveValue("03/09/2019 00:00:00", {
         message: "The start date should be the minimum time for the selected date.",
     });
-    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("03/09/2019 23:59", {
+    expect(`.o_field_widget[name="end_datetime"] button`).toHaveValue("03/09/2019 23:59:59", {
         message: "The end date should be the maximum time for the selected date.",
     });
     await click(".modal-dialog .o_form_button_save");
@@ -248,10 +248,10 @@ test("Verify Hours in Planning Dialog When Clicking on Off Days and Working Days
     // click on working day
     await clickDate("2019-03-21");
     await waitFor(".o_dialog .o_form_view");
-    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("03/21/2019 00:00", {
+    expect(`.o_field_widget[name="start_datetime"] button`).toHaveValue("03/21/2019 00:00:00", {
         message: "The start date should be the minimum time for the selected date.",
     });
-    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("03/21/2019 23:59", {
+    expect(`.o_field_widget[name="end_datetime"] button`).toHaveValue("03/21/2019 23:59:59", {
         message: "The end date should be the maximum time for the selected date.",
     });
     await click(".modal-dialog .o_form_button_save");
@@ -289,8 +289,8 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
     expect(
         queryText(
             ".o_cw_popover .o_cw_popover_fields_secondary .list-group-item .o_field_datetime"
-        ).split(" ")[1]
-    ).toBe("14:30", {
+        ).split(", ")[1]
+    ).toBe("2:30 PM", {
         message: "should have correct start date",
     });
 
@@ -300,8 +300,8 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
     expect(
         queryText(
             ".o_cw_popover .o_cw_popover_fields_secondary .list-group-item .o_field_datetime"
-        ).split(" ")[1]
-    ).toBe("14:30", {
+        ).split(", ")[1]
+    ).toBe("2:30 PM", {
         message: "should have correct start date",
     });
 });

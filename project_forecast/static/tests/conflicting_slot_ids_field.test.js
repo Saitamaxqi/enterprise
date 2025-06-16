@@ -1,5 +1,6 @@
 import { expect, test } from "@odoo/hoot";
 import { queryText } from "@odoo/hoot-dom";
+import { mockTimeZone } from "@odoo/hoot-mock";
 
 import { mountView } from "@web/../tests/web_test_helpers";
 import { planningModels } from "@planning/../tests/planning_mock_models";
@@ -40,6 +41,7 @@ projectModels.ProjectProject = ProjectProject;
 defineProjectForecastModels();
 
 test("Test the conflict slot message content", async () => {
+    mockTimeZone(+1);
     await mountView({
         resId: 1,
         resModel: "planning.slot",
@@ -48,6 +50,6 @@ test("Test the conflict slot message content", async () => {
 
     expect(".o_conflicting_slot").toHaveCount(1);
     expect(queryText(".o_conflicting_slot")).toBe(
-        "09/01/2021 09:00:0009/01/2021 13:00:00\n(4h) (100.00%) - Project 1"
+        "Sep 1, 2021, 9:00 AMSep 1, 2021, 1:00 PM\n(4h) (100.00%) - Project 1"
     );
 });

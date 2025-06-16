@@ -192,11 +192,11 @@ test("AI Fields - Datetime Field", async () => {
     await click(".o_field_ai_datetime .btn[title='Refresh value']");
     await waitForSteps(["datetime computed"]);
     await animationFrame();
-    expect(".o_field_ai_datetime input").toHaveValue("03/26/2024 13:00");
+    expect(".o_field_ai_datetime button[data-field=datetime]").toHaveValue("03/26/2024 13:00:00");
     await click(".o_form_button_save");
     await waitForSteps(["save"]);
     await animationFrame();
-    expect(".o_field_ai_datetime input").toHaveValue("03/26/2024 13:00");
+    expect(".o_field_ai_datetime button[data-field=datetime]").toHaveValue("03/26/2024 13:00:00");
 });
 
 test("AI Fields - Float Field", async () => {

@@ -275,7 +275,9 @@ test("Open a dialog to schedule a plan using Open Shift", async function () {
 
     await selectFieldDropdownItem("resource_id", "Jarvo");
     await contains(`[name='name'] input`).edit("Shift-2");
+    await contains(`[name='start_datetime'] button`).click();
     await contains(`[name='start_datetime'] input`).edit("2021-10-12 09:00:00");
+    await contains(`[name='end_datetime'] button`).click();
     await contains(`[name='end_datetime'] input`).edit("2021-10-12 12:00:00");
 
     await click(".o_form_button_save");

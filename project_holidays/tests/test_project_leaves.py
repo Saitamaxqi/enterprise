@@ -164,11 +164,11 @@ class TestProjectLeaves(common.TransactionCase):
         self.assertNotEqual(task_1.leave_warning, False,
                             "employee is on leave, should have a warning")
         self.assertEqual(task_1.leave_warning,
-            "Test HrUser is on time off on 01/01/2020 from 09:00 to 13:00. \n")
+            "Test HrUser is on time off on 01/01/2020 from 9:00 AM to 1:00 PM. \n")
         self.assertNotEqual(task_2.leave_warning, False,
                             "employee is on leave, should have a warning")
         self.assertEqual(task_2.leave_warning,
-            "Test HrUser is on time off on 01/02/2020 from 14:00 to 18:00. \n")
+            "Test HrUser is on time off on 01/02/2020 from 2:00 PM to 6:00 PM. \n")
         self.assertEqual(task_3.leave_warning, False,
                          "employee is not on leave, no warning")
 

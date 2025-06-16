@@ -37,9 +37,9 @@ test("planned_date_range_with_allocated_hours widget in list view", async () => 
     expect(".o_list_view").toHaveCount(1);
     expect(".o_field_planned_date_range_with_allocated_hours").toHaveCount(2);
     expect(".o_field_planned_date_range_with_allocated_hours:first").toHaveText(
-        "11/09/2023 00:00\n22:00"
+        "Nov 9, 12:00 AM\n10:00 PM"
     );
     expect(".o_field_planned_date_range_with_allocated_hours:last").toHaveText(
-        "11/09/2023 00:00\n22:00\n(10:00)"
+        "Nov 9, 12:00 AM\n10:00 PM\n(10:00)"
     );
 });

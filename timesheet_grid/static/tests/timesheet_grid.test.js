@@ -355,7 +355,7 @@ test("hr.timesheet (grid): when in Next week date should be first working day", 
     await click(".o_control_panel_main_buttons .o_grid_button_add");
     await animationFrame();
     expect(".modal").toHaveCount(1);
-    expect(".modal .o_field_widget[name=date] input").toHaveValue("01/30/2017");
+    expect(".modal .o_field_widget[name=date] button").toHaveValue("01/30/2017")
 });
 
 test("hr.timesheet (grid): when in Previous week date should be first working day", async () => {
@@ -370,7 +370,7 @@ test("hr.timesheet (grid): when in Previous week date should be first working da
     await click(".o_control_panel_main_buttons .o_grid_button_add");
     await animationFrame();
     expect(".modal").toHaveCount(1);
-    expect(".modal .o_field_widget[name=date] input").toHaveValue("01/16/2017");
+    expect(".modal .o_field_widget[name=date] button").toHaveValue("01/16/2017");
 });
 
 test("hr.timesheet (grid): display sample data and then data + fetch last validate timesheet date", async () => {

@@ -142,12 +142,12 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
         test_record_with_datetime_false = test_record_with_tz.copy({'datetime': False})
 
         for test_record, user_tz, tmpl_model, expected_formatted_date in [
-            (self.test_base_records[0], 'Asia/Kolkata', wa_base_model_id, '01/19/2024 05:30:00 Asia/Kolkata'),
-            (self.test_base_records[0], False, wa_base_model_id, '01/19/2024 00:00:00 UTC'),
-            (test_record_with_tz, 'Asia/Kolkata', wa_tz_model_id, '01/19/2024 01:00:00 Europe/Brussels'),
-            (test_record_with_tz, False, wa_tz_model_id, '01/19/2024 01:00:00 Europe/Brussels'),
-            (test_record_with_tz_false, 'Asia/Kolkata', wa_tz_model_id, '01/19/2024 05:30:00 Asia/Kolkata'),
-            (test_record_with_tz_false, False, wa_tz_model_id, '01/19/2024 00:00:00 UTC'),
+            (self.test_base_records[0], 'Asia/Kolkata', wa_base_model_id, '01/19/2024 05:30:00 AM Asia/Kolkata'),
+            (self.test_base_records[0], False, wa_base_model_id, '01/19/2024 12:00:00 AM UTC'),
+            (test_record_with_tz, 'Asia/Kolkata', wa_tz_model_id, '01/19/2024 01:00:00 AM Europe/Brussels'),
+            (test_record_with_tz, False, wa_tz_model_id, '01/19/2024 01:00:00 AM Europe/Brussels'),
+            (test_record_with_tz_false, 'Asia/Kolkata', wa_tz_model_id, '01/19/2024 05:30:00 AM Asia/Kolkata'),
+            (test_record_with_tz_false, False, wa_tz_model_id, '01/19/2024 12:00:00 AM UTC'),
             (test_record_with_datetime_false, 'Asia/Kolkata', wa_tz_model_id, ''),
         ]:
             with self.subTest(test_record=test_record, user_tz=user_tz, tmpl_model=tmpl_model):

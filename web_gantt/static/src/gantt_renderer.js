@@ -13,7 +13,7 @@ import {
 } from "@odoo/owl";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
-import { getCondensedFormat, serializeDate, serializeDateTime } from "@web/core/l10n/dates";
+import { serializeDate, serializeDateTime, toLocaleDateTimeString } from "@web/core/l10n/dates";
 import { is24HourFormat } from "@web/core/l10n/time";
 import { localization } from "@web/core/l10n/localization";
 import { _t } from "@web/core/l10n/translation";
@@ -1638,10 +1638,9 @@ export class GanttRenderer extends Component {
         // Start & End Times
         if (record.allocated_hours && !spanAccrossDays && ["week", "month"].includes(scaleId)) {
             const durationStr = this.getDurationStr(record);
-            const timeFormat = getCondensedFormat(localization.shortTimeFormat);
             labels.push(
-                startDate.toFormat(timeFormat),
-                `${stopDate.toFormat(timeFormat)}${durationStr}`
+                toLocaleDateTimeString(startDate, { showDate: false }),
+                `${toLocaleDateTimeString(stopDate, { showDate: false })}${durationStr}`
             );
         }
 

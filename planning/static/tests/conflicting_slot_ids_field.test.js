@@ -1,5 +1,6 @@
 import { expect, test } from "@odoo/hoot";
 import { queryAllTexts } from "@odoo/hoot-dom";
+import { mockTimeZone } from "@odoo/hoot-mock";
 
 import { mountView } from "@web/../tests/web_test_helpers";
 import { definePlanningModels, planningModels } from "./planning_mock_models";
@@ -86,6 +87,7 @@ planningModels.PlanningRole = PlanningRole;
 definePlanningModels();
 
 test("display conflicting slot ids field in the form view", async () => {
+    mockTimeZone(+1);
     await mountView({
         resId: 1,
         resModel: "planning.slot",
@@ -98,12 +100,13 @@ test("display conflicting slot ids field in the form view", async () => {
     );
     expect(".o_conflicting_slot").toHaveCount(2);
     expect(queryAllTexts(".o_conflicting_slot")).toEqual([
-        "09/01/2021 09:00:0009/01/2021 13:00:00\n(4h) (100.00%) - Developer",
-        "09/01/2021 11:00:0009/01/2021 14:00:00\n(2h) (66.67%)",
+        "Sep 1, 2021, 9:00 AMSep 1, 2021, 1:00 PM\n(4h) (100.00%) - Developer",
+        "Sep 1, 2021, 11:00 AMSep 1, 2021, 2:00 PM\n(2h) (66.67%)",
     ]);
 });
 
 test("display 5 shifts in conflict", async () => {
+    mockTimeZone(+1);
     await mountView({
         resId: 3,
         resModel: "planning.slot",
@@ -116,10 +119,10 @@ test("display 5 shifts in conflict", async () => {
     );
     expect(".o_conflicting_slot").toHaveCount(5);
     expect(queryAllTexts(".o_conflicting_slot")).toEqual([
-        "09/01/2021 09:00:0009/01/2021 13:00:00\n(4h) (100.00%) - Developer",
-        "09/01/2021 09:00:0009/01/2021 13:00:00\n(4h) (100.00%) - Developer",
-        "09/01/2021 13:30:0009/01/2021 18:30:00\n(5h) (100.00%) - Developer",
-        "09/01/2021 13:30:0009/01/2021 18:30:00\n(5h) (100.00%)",
-        "09/01/2021 13:30:0009/01/2021 19:00:00\n(5h30) (100.00%)",
+        "Sep 1, 2021, 9:00 AMSep 1, 2021, 1:00 PM\n(4h) (100.00%) - Developer",
+        "Sep 1, 2021, 9:00 AMSep 1, 2021, 1:00 PM\n(4h) (100.00%) - Developer",
+        "Sep 1, 2021, 1:30 PMSep 1, 2021, 6:30 PM\n(5h) (100.00%) - Developer",
+        "Sep 1, 2021, 1:30 PMSep 1, 2021, 6:30 PM\n(5h) (100.00%)",
+        "Sep 1, 2021, 1:30 PMSep 1, 2021, 7:00 PM\n(5h30) (100.00%)",
     ]);
 });
