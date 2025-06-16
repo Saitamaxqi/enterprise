@@ -132,6 +132,45 @@ class TestDianMoves(TestCoDianCommon):
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_alcohol.xml")
 
+    def test_invoice_service_aiu(self):
+        product_service = self.env['product.product'].create({
+            'name': 'Limpieza Instrumento',
+            'type': 'service',
+            'default_code': 'LU0000001'
+        })
+        exempt_tax = self.env['account.chart.template'].ref('l10n_co_tax_10')
+        invoice = self._create_move(
+            invoice_line_ids=[
+            Command.create({
+                'product_id': product_service.id,
+                'quantity': 1,
+                'price_unit': 1500.00,
+                'tax_ids': [Command.set([exempt_tax.id])],
+            }),
+            Command.create({
+                'product_id': self.env.ref('l10n_co_dian.product_product_administracion').id,
+                'quantity': 1,
+                'price_unit': 450.00,
+                'tax_ids': [Command.set([exempt_tax.id])],
+            }),
+            Command.create({
+                'product_id': self.env.ref('l10n_co_dian.product_product_imprevistos').id,
+                'quantity': 1,
+                'price_unit': 300.00,
+                'tax_ids': [Command.set([exempt_tax.id])],
+            }),
+            Command.create({
+                'product_id': self.env.ref('l10n_co_dian.product_product_utilidad').id,
+                'quantity': 1,
+                'price_unit': 750.00,
+                'tax_ids': [Command.set([self.tax_iva_19.id])],
+            }),
+        ])
+        invoice.l10n_co_edi_operation_type = '09'  # "AIU"
+
+        xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
+        self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_aiu.xml")
+
     def test_multicurrency(self):
         """
         In the xml, all labels should be expressed in COP, not in the document's currency.

@@ -59,7 +59,7 @@ class AccountMove(models.Model):
                                                   ('32', 'Nota Débito sin referencia a facturas'),
                                                   ('23', 'Inactivo: Nota Crédito para facturación electrónica V1 (Decreto 2242)'),
                                                   ('33', 'Inactivo: Nota Débito para facturación electrónica V1 (Decreto 2242)')],
-                                                  string="Operation Type (CO)", compute='_compute_operation_type', default="10", required=True)
+                                                  string="Operation Type (CO)", compute='_compute_operation_type', store=True)
 
     # field used to track the status of a submission
     l10n_co_edi_transaction = fields.Char('Transaction ID (CO)', copy=False)
@@ -87,9 +87,10 @@ class AccountMove(models.Model):
             elif not move.l10n_co_edi_type:
                 move.l10n_co_edi_type = L10N_CO_EDI_TYPE['Sales Invoice']
 
-    @api.depends('move_type', 'reversed_entry_id', 'edi_document_ids.state', 'l10n_co_edi_cufe_cude_ref')
+    @api.depends('move_type', 'reversed_entry_id', 'debit_origin_id', 'l10n_co_edi_debit_note')
     def _compute_operation_type(self):
-        for move in self:
+        CO_moves = self.filtered(lambda move: move.country_code == 'CO')
+        for move in CO_moves:
             operation_type = '10'
             if move.move_type == 'out_refund':
                 operation_type = '20' if move.reversed_entry_id else '22'

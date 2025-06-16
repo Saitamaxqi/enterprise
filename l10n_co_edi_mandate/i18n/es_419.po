@@ -19,24 +19,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_co_edi_mandate.field_account_bank_statement_line__l10n_co_dian_is_mandate
 #: model:ir.model.fields,field_description:l10n_co_edi_mandate.field_account_move__l10n_co_dian_is_mandate
 msgid "Is Mandate Invoice"
-msgstr ""
+msgstr "Es una Factura de Mandato"
 
 #. module: l10n_co_edi_mandate
 #: model:ir.model,name:l10n_co_edi_mandate.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Asiento Contable"
 
 #. module: l10n_co_edi_mandate
 #: model:ir.model.fields,field_description:l10n_co_edi_mandate.field_product_product__l10n_co_dian_mandate_contract
 #: model:ir.model.fields,field_description:l10n_co_edi_mandate.field_product_template__l10n_co_dian_mandate_contract
 msgid "Mandate Contract"
-msgstr ""
+msgstr "Contrato de Mandato"
 
 #. module: l10n_co_edi_mandate
 #: model:ir.model.fields,field_description:l10n_co_edi_mandate.field_account_bank_statement_line__l10n_co_dian_mandate_principal
 #: model:ir.model.fields,field_description:l10n_co_edi_mandate.field_account_move__l10n_co_dian_mandate_principal
 msgid "Mandate Principal"
-msgstr ""
+msgstr "Mandante"
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -45,11 +45,13 @@ msgid ""
 "One or more products in the invoice are marked as Mandate Contracts. "
 "Please select 'Mandatos' as the Operation Type (CO), or remove those products from the invoice."
 msgstr ""
+"La factura contiene uno o más productos clasificados como Contratos de Mandato. "
+"Selecciona 'Mandatos' como Tipo de Operación o elimina dichos productos antes de continuar."
 
 #. module: l10n_co_edi_mandate
 #: model:ir.model,name:l10n_co_edi_mandate.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Producto"
 
 #. module: l10n_co_edi_mandate
 #. odoo-python
@@ -57,6 +59,7 @@ msgstr ""
 msgid ""
 "Product %s is a mandate product and cannot be used on non-mandate invoices."
 msgstr ""
+"El producto %s es un producto con Contrato de Mandato, no puede ser utilizado en una factura que no sea por mandato."
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -65,3 +68,5 @@ msgid ""
 "The 'Mandatos' option was selected as the Operation Type (CO), but the invoice "
 "does not contain any products marked as Mandate Contracts. Adjust the invoice type or check the listed products."
 msgstr ""
+"La opción 'Mandatos' fue seleccionada como Tipo de Operación, pero la factura no "
+"contiene productos marcados como Contratos de Mandato. Ajusta el tipo de factura o verifica los productos."

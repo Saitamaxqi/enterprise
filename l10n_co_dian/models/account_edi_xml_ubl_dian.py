@@ -506,6 +506,9 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
                 'description': "Por operación",
             }]
         vals['price_vals']['base_quantity_attrs']['unitCode'] = uom_code
+
+        if line.move_id.l10n_co_edi_operation_type == '09' and line.product_id:
+            vals['note'] = f"Contrato de servicios AIU por Concepto de: {line.product_id.name}"
         return vals
 
     def _get_delivery_vals_list(self, invoice):
@@ -763,6 +766,9 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         if move.l10n_co_edi_debit_note:
             constraints['dian_concepto_debit_note'] = self._check_required_fields(move, 'l10n_co_edi_description_code_debit')
 
+        if move.l10n_co_edi_operation_type == '09':
+            if set(move.line_ids.mapped('product_id.type')) != {'service'}:
+                constraints['dian_aiu_products'] = _("All products in an AIU invoice should be a service.")
         return constraints
 
     # -------------------------------------------------------------------------

@@ -303,6 +303,12 @@ msgstr "Agregue sus certificados para firmar sus documentos."
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid "All products in an AIU invoice should be a service."
+msgstr "Todos los productos de una factura AIU debem de ser de tipo servicio."
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/xml_utils.py:0
 msgid "Ambiguous reference URI %(uri)s resolved to %(count)d nodes"
 msgstr "La referencia URI %(uri)s ambigua se resolvió en %(count)d nodos"
