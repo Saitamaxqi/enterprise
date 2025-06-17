@@ -26,7 +26,7 @@ export class HrAttendanceGanttController extends GanttController {
 
     get showNoContentHelp() {
         // Show if first row is empty (means no records)
-        return this.model.data.rows.length < 2 && this.model.data.rows[0].name === "";
+        return this.model.data.rows.length < 2 && this.model.data.rows[0].recordIds.length === 0;
     }
 }
 const viewRegistry = registry.category("views");
