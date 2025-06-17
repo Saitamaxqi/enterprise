@@ -224,17 +224,35 @@ class Sign(http.Controller):
 
         # If there are multiple documents and no specific ID was provided, create a ZIP
         if len(sign_request.template_id.document_ids) > 1:
-            return self._create_zip_response([sign_request], document_type='origin')
+            return self._create_zip_response([sign_request])
 
         return request.not_found()
 
+    def _generate_certificate_pdf(self, sign_request):
+        """Generates a certificate PDF for a sign request.
+        Args:
+            sign_request: The sign request record.
+        Returns:
+            bytes: The generated certificate PDF.
+        """
+        report_action = request.env['ir.actions.report'].sudo()
+        certificate_pdf, _ = report_action._render_qweb_pdf(
+            'sign.action_sign_request_print_logs',
+            sign_request.id,
+            data={
+                'format_date': tools.format_date,
+                'company_id': sign_request.communication_company_id
+            }
+        )
+        return certificate_pdf
+
     def _add_certificate_to_document(self, document_file, certificate_pdf):
-        """Merges a base64-encoded document with a raw certificate PDF.
+        """Merges a sign document with its certificate in one PDF file.
         Args:
             document_file (str): Base64-encoded PDF document
             certificate_pdf (bytes): Raw certificate PDF
         Returns:
-            str: Base64-encoded merged PDF
+            str: Base64-encoded merged PDF of the document and the certificate
         """
         # Create PDF readers
         pdf1 = PdfFileReader(io.BytesIO(base64.b64decode(document_file)))
@@ -270,16 +288,8 @@ class Sign(http.Controller):
         if not sign_request.completed_document_ids and sign_request.state == 'signed':
             sign_request.sudo()._generate_completed_documents()
 
-        # Generate certificate PDF
-        report_action = request.env['ir.actions.report'].sudo()
-        certificate_pdf, _ = report_action._render_qweb_pdf(
-            'sign.action_sign_request_print_logs',
-            sign_request.id,
-            data={
-                'format_date': tools.format_date,
-                'company_id': sign_request.communication_company_id
-            }
-        )
+        # Generate the certificate PDF
+        certificate_pdf = self._generate_certificate_pdf(sign_request)
 
         if sign_document_id:
             completed_document = sign_request.completed_document_ids.filtered(lambda d: d.id == sign_document_id)
@@ -292,9 +302,9 @@ class Sign(http.Controller):
             document_with_certificate = self._add_certificate_to_document(sign_request.completed_document_ids[0].file, certificate_pdf)
             return self._create_document_response(sign_request, document_with_certificate, document_name=sign_request.completed_document_ids[0].document_id.name)
 
-        return self._create_zip_response([sign_request], document_type='completed', certificate_pdf=certificate_pdf)
+        return self._create_zip_response([sign_request], certificate_pdf=certificate_pdf)
 
-    def _create_zip_response(self, sign_requests, document_type='completed', certificate_pdf=None):
+    def _create_zip_response(self, sign_requests, certificate_pdf=None):
         """Creates a ZIP file containing multiple documents for sign requests.
         Args:
             sign_requests (odoo.models.Model): The sign request record(s).
@@ -306,16 +316,14 @@ class Sign(http.Controller):
         buffer = io.BytesIO()
         with zipfile.ZipFile(buffer, 'w', compression=zipfile.ZIP_DEFLATED) as zipfile_obj:
             for sign_request in sign_requests:
+                if sign_request.state == 'signed' and not certificate_pdf:
+                    certificate_pdf = self._generate_certificate_pdf(sign_request)
+                document_type = 'completed' if sign_request.state == 'signed' else 'origin'
+                existing_document_names = set()
                 if document_type == 'completed':
                     documents = sign_request.completed_document_ids
                     for doc in documents:
-                        subject = sign_request.subject or request.env._("Documents of Request %s", str(sign_request.id))
-                        if subject.endswith('.pdf'):
-                            subject = subject[:-4]
-                        doc_name = doc.document_id.name
-                        if not doc_name.endswith('.pdf'):
-                            doc_name += '.pdf'
-                        download_name = f'{subject}/{doc_name}'
+                        download_name = self._format_document_name(sign_request, doc.document_id.name, existing_document_names)
                         if certificate_pdf:
                             document_with_certificate = self._add_certificate_to_document(doc.file, certificate_pdf)
                             zipfile_obj.writestr(download_name, base64.b64decode(document_with_certificate))
@@ -324,22 +332,39 @@ class Sign(http.Controller):
                 elif document_type == 'origin':
                     documents = sign_request.template_id.document_ids
                     for doc in documents:
-                        subject = sign_request.subject or request.env._("Documents of Request %s", str(sign_request.id))
-                        if subject.endswith('.pdf'):
-                            subject = subject[:-4]
-                        doc_name = doc.name
-                        if not doc_name.endswith('.pdf'):
-                            doc_name += '.pdf'
-                        download_name = f'{subject}/{doc_name}'
+                        download_name = self._format_document_name(sign_request, doc.name, existing_document_names)
                         zipfile_obj.writestr(download_name, base64.b64decode(doc.attachment_id.datas))
 
         content = buffer.getvalue()
-        filename = f'{document_type}_documents.zip'
+        filename = 'sign_request_documents.zip'
         return request.make_response(content, headers=[
             ('Content-Disposition', content_disposition(filename)),
             ('Content-Type', 'application/zip'),
             ('Content-Length', len(content))
         ])
+
+    def _format_document_name(self, sign_request, doc_name, existing_document_names):
+        """Formats a document name for download, handling PDF extensions and duplicates.
+        Args:
+            sign_request (odoo.models.Model): The sign request record.
+            doc_name (str): The original document name.
+            existing_document_names (set): Set of existing document names to check for duplicates.
+        Returns:
+            str: The formatted document name.
+        """
+        subject = sign_request.subject or request.env._("Documents of Request %s", str(sign_request.id))
+        if subject.endswith('.pdf'):
+            subject = subject[:-4]
+        if not doc_name.endswith('.pdf'):
+            doc_name += '.pdf'
+        download_name = f'{subject}/{doc_name}'
+        counter = 1
+        while download_name in existing_document_names:
+            name, ext = download_name.rsplit('.', 1)
+            download_name = f'{name} ({counter}).{ext}'
+            counter += 1
+        existing_document_names.add(download_name)
+        return download_name
 
     def _create_document_response(self, sign_request, attachment_data, document_name=None):
         """Creates an HTTP response for a single document download.
@@ -388,7 +413,7 @@ class Sign(http.Controller):
                 'status_message': _('You do not have access to these documents, please contact a Sign Administrator.')})
 
         sign_requests = http.request.env['sign.request'].browse(int(i) for i in ids.split(',')).exists()
-        return self._create_zip_response(sign_requests, document_type='completed')
+        return self._create_zip_response(sign_requests)
 
     @http.route(['/sign/resend_expired_link/<int:request_id>/<token>'], type='http', auth='public', website=True)
     def resend_expired_link(self, request_id, token):

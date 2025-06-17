@@ -279,19 +279,26 @@ class SignRequest(models.Model):
             },
         }
 
-    def get_completed_document(self):
+    def get_sign_request_documents(self):
         if not self:
             raise UserError(_('You should select at least one document to download.'))
 
-        if len(self) < 2:
-            return {
-                'name': 'Signed Document',
-                'type': 'ir.actions.act_url',
-                'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
-            }
+        if len(self) == 1:
+            if self.state == 'signed':
+                return {
+                    'name': 'Signed Document',
+                    'type': 'ir.actions.act_url',
+                    'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
+                }
+            else:
+                return {
+                    'name': 'Template Document',
+                    'type': 'ir.actions.act_url',
+                    'url': '/sign/download/%(request_id)s/%(access_token)s/origin' % {'request_id': self.id, 'access_token': self.access_token},
+                }
         else:
             return {
-                'name': 'Signed Documents',
+                'name': 'Sign Request Documents',
                 'type': 'ir.actions.act_url',
                 'url': f'/sign/download/zip/{",".join(map(str, self.ids))}',
             }

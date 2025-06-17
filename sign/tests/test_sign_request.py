@@ -561,7 +561,7 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(sign_request_item_customer.state, 'completed', 'The sign.request.item should be completed')
         self.assertEqual(sign_request_item_employee.state, 'completed', 'The sign.request.item should be completed')
         self.assertEqual(sign_request_item_company.state, 'sent', 'The sign.request.item should be sent')
-        completed_document = sign_request_3_roles.get_completed_document()
+        completed_document = sign_request_3_roles.get_sign_request_documents()
         self.assertIsNotNone(completed_document, 'The completed document should be available for download.')
 
     def test_remove_validity_date_of_sign_request(self):
