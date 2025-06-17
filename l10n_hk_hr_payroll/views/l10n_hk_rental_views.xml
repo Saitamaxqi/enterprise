@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <form string="Rental">
                 <header invisible="not id">
-                    <field name="state" groups="!hr.group_hr_manager" widget="statusbar"/>
-                    <field name="state" groups="hr.group_hr_manager" widget="statusbar" options="{'clickable': '1'}"/>
+                    <field name="state" groups="!hr_payroll.group_hr_payroll_manager" widget="statusbar"/>
+                    <field name="state" groups="hr_payroll.group_hr_payroll_manager" widget="statusbar" options="{'clickable': '1'}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
