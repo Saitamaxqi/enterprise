@@ -409,7 +409,8 @@ class ResPartner(models.Model):
                    AND line.balance > 0
                    AND line.company_id = ANY(%(company_ids)s)
                    AND COALESCE(ful.delay, %(min_delay)s - 1) <= partner.followup_delay
-                   AND COALESCE(line.date_maturity, line.date) + COALESCE(ful.delay, %(min_delay)s - 1) < %(current_date)s
+                   AND line.date_maturity IS NOT NULL
+                   AND line.date_maturity + COALESCE(ful.delay, %(min_delay)s - 1) < %(current_date)s
                  LIMIT 1
             ) in_need_of_action_aml ON true
             LEFT OUTER JOIN LATERAL (
@@ -423,7 +424,8 @@ class ResPartner(models.Model):
                    AND line.reconciled IS NOT TRUE
                    AND line.balance > 0
                    AND line.company_id = ANY(%(company_ids)s)
-                   AND COALESCE(line.date_maturity, line.date) < %(current_date)s
+                   AND line.date_maturity IS NOT NULL
+                   AND line.date_maturity < %(current_date)s
                  LIMIT 1
             ) exceeded_unreconciled_aml ON true
         """, {

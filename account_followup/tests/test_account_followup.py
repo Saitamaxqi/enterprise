@@ -36,6 +36,7 @@ class TestAccountFollowupReports(TestAccountFollowupCommon, MailCommon):
         invoice = self.env['account.move'].create({
             'move_type': 'out_invoice',
             'invoice_date': date,
+            'invoice_date_due': date,
             'partner_id': partner.id if partner else self.partner_a.id,
             'invoice_line_ids': [Command.create({
                 'quantity': 1,
@@ -288,6 +289,37 @@ class TestAccountFollowupReports(TestAccountFollowupCommon, MailCommon):
             self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_15)
             self.partner_a._execute_followup_partner(options={'snailmail': False})
             self.assertPartnerFollowup(self.partner_a, 'with_overdue_invoices', followup_30)
+
+    def test_followup_status_entry_lines(self):
+        """
+            Creating an entry should not affect the followups as there is no concept of due date with this flow.
+        """
+        self.followup_line = self.create_followup(delay=10)
+
+        with freeze_time('2022-01-02'):
+            invoice = self.env['account.move'].create({
+                'move_type': 'entry',
+                'date': fields.Date.from_string('2022-01-02'),
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'line1',
+                        'account_id': self.company_data['default_account_revenue'].id,
+                        'debit': 500.0,
+                        'credit': 0.0,
+                    }),
+                    Command.create({
+                        'name': 'counterpart line',
+                        'account_id': self.company_data['default_account_receivable'].id,
+                        'debit': 0.0,
+                        'credit': 500.0,
+                    })
+                ]
+            })
+            invoice.action_post()
+
+        with freeze_time('2022-01-13'):
+            self.assertPartnerFollowup(self.partner_a, 'no_action_needed', self.followup_line)
 
     def test_followup_contacts(self):
         followup_contacts = self.partner_a._get_all_followup_contacts()

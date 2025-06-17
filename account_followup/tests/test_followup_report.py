@@ -935,3 +935,64 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
 
         sent_attachments = self.env['mail.message'].search([('partner_ids', '=', self.partner_a.id)]).attachment_ids
         self.assertEqual(sent_attachments.mapped('name'), [f'{self.partner_a.name} - fake_partner_ledger.pdf'])
+
+    def test_followup_report_with_entries(self):
+        """
+            Entries shouldn't have a due date or be added to total_overdue on the followup report and on the partner.
+        """
+        report = self.env['account.followup.report']
+        options = {
+            'partner_id': self.partner_a.id,
+        }
+        with freeze_time('2016-01-02'):
+            invoice = self.env['account.move'].create({
+                'move_type': 'out_invoice',
+                'invoice_date': '2016-01-01',
+                'invoice_date_due': '2016-01-01',
+                'invoice_payment_term_id': False,
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [Command.create({
+                    'quantity': 1,
+                    'price_unit': 300,
+                    'tax_ids': [],
+                })]
+            })
+            invoice.action_post()
+
+            entry = self.env['account.move'].create({
+                'move_type': 'entry',
+                'date': fields.Date.from_string('2016-01-02'),
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'line1',
+                        'account_id': self.company_data['default_account_receivable'].id,
+                        'debit': 500.0,
+                        'credit': 0.0,
+                    }),
+                    Command.create({
+                        'name': 'counterpart line',
+                        'account_id': self.company_data['default_account_revenue'].id,
+                        'debit': 0.0,
+                        'credit': 500.0,
+                    })
+                ]
+            })
+            entry.action_post()
+
+        with freeze_time('2016-01-15'):
+            self.assertLinesValues(
+                # pylint: disable=C0326
+                report._get_followup_report_lines(options),
+                #   Name                                    Date,           Due Date,       Doc.      Total Due
+                [   0,                                      1,              2,              3,        5],
+                [
+                    ('MISC/2016/01/0001',                   '01/02/2016',   '',             '',       '$\xa0500.00'),
+                    ('INV/2016/00001',                      '01/01/2016',   '01/01/2016',   '',       '$\xa0300.00'),
+                    ('',                                    '',             '',             '',       '$\xa0800.00'),
+                    ('',                                    '',             '',             '',       '$\xa0300.00'),
+                ],
+                options,
+            )
+            self.assertEqual(self.partner_a.total_due, 800)
+            self.assertEqual(self.partner_a.total_overdue, 300)

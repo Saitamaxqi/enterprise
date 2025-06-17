@@ -75,9 +75,9 @@ class AccountFollowupReport(models.AbstractModel):
                     'style': 'white-space:nowrap;text-align:left;',
                     'template': 'account_followup.line_template',
                 }
-                date_due = format_date(self.env, aml.date_maturity or aml.move_id.invoice_date or aml.date, lang_code=lang_code)
+                date_due = format_date(self.env, aml.date_maturity, lang_code=lang_code)
                 total += amount or 0
-                is_overdue = today > aml.date_maturity if aml.date_maturity else today > aml.date
+                is_overdue = today > aml.date_maturity if aml.date_maturity else False
                 is_payment = aml.payment_id
                 if is_overdue or is_payment:
                     total_issued += amount or 0
