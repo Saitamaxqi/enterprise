@@ -26,5 +26,5 @@ class AccountMove(models.Model):
     def _load_pos_data_fields(self, config_id):
         result = super()._load_pos_data_fields(config_id)
         if self.env.company.country_id.code == 'CL':
-            return ['l10n_latam_document_type_id', 'l10n_latam_document_number', 'l10n_cl_sii_barcode_image']
+            result += ['l10n_latam_document_type_id', 'l10n_latam_document_number', 'l10n_cl_sii_barcode_image']
         return result

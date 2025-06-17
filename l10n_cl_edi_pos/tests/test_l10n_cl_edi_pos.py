@@ -24,3 +24,11 @@ class TestL10nClEdiPos(TestL10nClEdiCommon, TestPointOfSaleHttpCommon):
         })
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_receipt_header_content', login="accountman")
+
+    def test_settle_invoice_good_price_cl(self):
+        if not self.env["ir.module.module"].search([("name", "=", "pos_settle_due"), ("state", "=", "installed")]):
+            self.skipTest("pos_settle_due module is required for this test")
+        self.partner_sii.name = "AA Partner SII"
+        self.init_invoice('out_invoice', partner=self.partner_sii, invoice_date='2024-03-01', amounts=[20], currency=self.env.ref('base.USD'), post=True)
+        self.main_pos_config.open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_settle_invoice_good_price_cl', login="accountman")
