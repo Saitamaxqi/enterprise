@@ -14,9 +14,10 @@
     <cbc:CustomizationID>2.0</cbc:CustomizationID>
     <cbc:ID>___ignore___</cbc:ID>
     <cbc:IssueDate>2017-01-01</cbc:IssueDate>
-    <cbc:DueDate>2017-01-01</cbc:DueDate>
-    <cbc:InvoiceTypeCode listID="0101" listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">01</cbc:InvoiceTypeCode>
-    <cbc:Note languageLocaleID="1000">NUEVE MIL DOSCIENTOS CUATRO Y 00/100 DOLLARS</cbc:Note>
+    <cbc:DueDate>2017-03-02</cbc:DueDate>
+    <cbc:InvoiceTypeCode listID="1001" listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">01</cbc:InvoiceTypeCode>
+    <cbc:Note languageLocaleID="1000">NUEVE MIL CUATROCIENTOS CUARENTA Y 00/100 DOLLARS</cbc:Note>
+    <cbc:Note languageLocaleID="2006">Leyenda: Operacion sujeta a detraccion</cbc:Note>
     <cbc:DocumentCurrencyCode>USD</cbc:DocumentCurrencyCode>
     <cac:OrderReference>
         <cbc:ID>___ignore___</cbc:ID>
@@ -136,22 +137,41 @@
             </cac:Address>
         </cac:DeliveryLocation>
     </cac:Delivery>
+    <cac:PaymentMeans>
+        <cbc:ID>Detraccion</cbc:ID>
+        <cbc:PaymentMeansCode>999</cbc:PaymentMeansCode>
+        <cac:PayeeFinancialAccount>
+            <cbc:ID>CUENTAPRUEBA</cbc:ID>
+        </cac:PayeeFinancialAccount>
+    </cac:PaymentMeans>
+    <cac:PaymentTerms>
+        <cbc:ID>Detraccion</cbc:ID>
+        <cbc:PaymentMeansID>001</cbc:PaymentMeansID>
+        <cbc:PaymentPercent>10.0</cbc:PaymentPercent>
+        <cbc:Amount currencyID="PEN">472.00</cbc:Amount>
+    </cac:PaymentTerms>
     <cac:PaymentTerms>
         <cbc:ID>FormaPago</cbc:ID>
-        <cbc:PaymentMeansID>Contado</cbc:PaymentMeansID>
+        <cbc:PaymentMeansID>Credito</cbc:PaymentMeansID>
+        <cbc:Amount currencyID="USD">8496.00</cbc:Amount>
     </cac:PaymentTerms>
-    <cac:AllowanceCharge>
-        <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
-        <cbc:AllowanceChargeReasonCode>02</cbc:AllowanceChargeReasonCode>
-        <cbc:MultiplierFactorNumeric>0.02500</cbc:MultiplierFactorNumeric>
-        <cbc:Amount currencyID="USD">200.00</cbc:Amount>
-        <cbc:BaseAmount currencyID="USD">8000.00</cbc:BaseAmount>
-    </cac:AllowanceCharge>
+    <cac:PaymentTerms>
+        <cbc:ID>FormaPago</cbc:ID>
+        <cbc:PaymentMeansID>Cuota001</cbc:PaymentMeansID>
+        <cbc:Amount currencyID="USD">1888.00</cbc:Amount>
+        <cbc:PaymentDueDate>2017-01-01</cbc:PaymentDueDate>
+    </cac:PaymentTerms>
+    <cac:PaymentTerms>
+        <cbc:ID>FormaPago</cbc:ID>
+        <cbc:PaymentMeansID>Cuota002</cbc:PaymentMeansID>
+        <cbc:Amount currencyID="USD">6608.00</cbc:Amount>
+        <cbc:PaymentDueDate>2017-03-02</cbc:PaymentDueDate>
+    </cac:PaymentTerms>
     <cac:TaxTotal>
-        <cbc:TaxAmount currencyID="USD">1404.00</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="USD">1440.00</cbc:TaxAmount>
         <cac:TaxSubtotal>
-            <cbc:TaxableAmount currencyID="USD">7800.00</cbc:TaxableAmount>
-            <cbc:TaxAmount currencyID="USD">1404.00</cbc:TaxAmount>
+            <cbc:TaxableAmount currencyID="USD">8000.00</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">1440.00</cbc:TaxAmount>
             <cac:TaxCategory>
                 <cac:TaxScheme>
                     <cbc:ID>1000</cbc:ID>
@@ -162,11 +182,11 @@
         </cac:TaxSubtotal>
     </cac:TaxTotal>
     <cac:LegalMonetaryTotal>
-        <cbc:LineExtensionAmount currencyID="USD">7800.00</cbc:LineExtensionAmount>
-        <cbc:TaxExclusiveAmount currencyID="USD">7800.00</cbc:TaxExclusiveAmount>
-        <cbc:TaxInclusiveAmount currencyID="USD">9204.00</cbc:TaxInclusiveAmount>
+        <cbc:LineExtensionAmount currencyID="USD">8000.00</cbc:LineExtensionAmount>
+        <cbc:TaxExclusiveAmount currencyID="USD">8000.00</cbc:TaxExclusiveAmount>
+        <cbc:TaxInclusiveAmount currencyID="USD">9440.00</cbc:TaxInclusiveAmount>
         <cbc:PrepaidAmount currencyID="USD">0.00</cbc:PrepaidAmount>
-        <cbc:PayableAmount currencyID="USD">9204.00</cbc:PayableAmount>
+        <cbc:PayableAmount currencyID="USD">9440.00</cbc:PayableAmount>
     </cac:LegalMonetaryTotal>
     <cac:InvoiceLine>
         <cbc:ID>___ignore___</cbc:ID>

@@ -68,12 +68,12 @@ class TestNlICPSBR(AccountSalesReportCommon):
         expected_xbrl = self.get_xml_tree_from_string('''
             <xbrli:xbrl xmlns:link="http://www.xbrl.org/2003/linkbase"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:bd-t="http://www.nltaxonomie.nl/nt16/bd/20211208/dictionary/bd-tuples"
-                xmlns:bd-i="http://www.nltaxonomie.nl/nt16/bd/20211208/dictionary/bd-data"
+                xmlns:bd-t="http://www.nltaxonomie.nl/nt19/bd/20241211/dictionary/bd-tuples"
+                xmlns:bd-i="http://www.nltaxonomie.nl/nt19/bd/20241211/dictionary/bd-data"
                 xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
                 xml:lang="nl">
                 <link:schemaRef xlink:type="simple"
-                    xlink:href="http://www.nltaxonomie.nl/nt16/bd/20211208/entrypoints/bd-rpt-icp-opgaaf-2022.xsd" />
+                    xlink:href="http://www.nltaxonomie.nl/nt19/bd/20241211/entrypoints/bd-rpt-icp-opgaaf-2025.xsd" />
                 <xbrli:context id="CD_Opgaaf">
                     <xbrli:entity>
                         <xbrli:identifier scheme="www.belastingdienst.nl/omzetbelastingnummer">987654321B09</xbrli:identifier>

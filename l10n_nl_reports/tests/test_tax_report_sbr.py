@@ -56,8 +56,8 @@ class TestNlTaxReportSBR(TestAccountReportsCommon):
         wizard.action_download_xbrl_file()
         generated_xbrl = self.get_xml_tree_from_string(self.env['l10n_nl_reports.tax.report.handler'].export_tax_report_to_xbrl(options).get('file_content'))
         expected_xbrl = self.get_xml_tree_from_string('''
-            <xbrli:xbrl xmlns:bd-i="http://www.nltaxonomie.nl/nt16/bd/20211208/dictionary/bd-data" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:bd-t="http://www.nltaxonomie.nl/nt16/bd/20211208/dictionary/bd-tuples" xml:lang="nl">
-                <link:schemaRef xlink:type="simple" xlink:href="http://www.nltaxonomie.nl/nt16/bd/20211208/entrypoints/bd-rpt-ob-aangifte-2022.xsd"/>
+            <xbrli:xbrl xmlns:bd-i="http://www.nltaxonomie.nl/nt19/bd/20241211/dictionary/bd-data" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:bd-t="http://www.nltaxonomie.nl/nt19/bd/20241211/dictionary/bd-tuples" xml:lang="nl">
+                <link:schemaRef xlink:type="simple" xlink:href="http://www.nltaxonomie.nl/nt19/bd/20241211/entrypoints/bd-rpt-ob-aangifte-2025.xsd"/>
                 <xbrli:context id="Msg">
                     <xbrli:entity>
                         <xbrli:identifier scheme="www.belastingdienst.nl/omzetbelastingnummer">987654321B09</xbrli:identifier>

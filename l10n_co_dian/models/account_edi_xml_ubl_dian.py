@@ -517,9 +517,9 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
             'xsi:schemaLocation': {
                 'invoice': "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2     "
                     "http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd",
-                'credit_note': "urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2     "
+                'credit_note': "urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2    "
                     "http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-CreditNote-2.1.xsd",
-                'debit_note': "urn:oasis:names:specification:ubl:schema:xsd:DebitNote-2     "
+                'debit_note': "urn:oasis:names:specification:ubl:schema:xsd:DebitNote-2    "
                     "http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-DebitNote-2.1.xsd"
             }[vals['document_type']],
             'cbc:UBLVersionID': {'_text': 'UBL 2.1'},

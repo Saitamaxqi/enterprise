@@ -180,7 +180,7 @@ class TestSwedishIsoCreditTransfer(TestISO20022CommonCreditTransfer):
     def test_swedish_iso_xml(self):
         batch = self.generate_iso20022_batch_payment(self.swedish_partner)
         sct_doc = self.get_sct_doc_from_batch(batch)
-        xml_file_path = file_path('account_iso20022/tests/xml_files/pain.001.001.03.se.xml')
+        xml_file_path = file_path('account_iso20022/tests/xml_files/pain.001.001.09.se.xml')
         expected_tree = etree.parse(xml_file_path)
 
         self.assertXmlTreeEqual(sct_doc, expected_tree.getroot())

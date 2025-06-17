@@ -1,11 +1,12 @@
-<Invoice xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+    xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
-    xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
-    <ext:UBLExtensions
-        xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+    <ext:UBLExtensions>
         <ext:UBLExtension>
             <ext:ExtensionContent>
-                <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="placeholder" />
+                <ds:Signature Id="placeholder"/>
             </ext:ExtensionContent>
         </ext:UBLExtension>
     </ext:UBLExtensions>
@@ -14,8 +15,7 @@
     <cbc:ID>___ignore___</cbc:ID>
     <cbc:IssueDate>2017-01-01</cbc:IssueDate>
     <cbc:DueDate>2017-01-01</cbc:DueDate>
-    <cbc:InvoiceTypeCode listID="0101" listAgencyName="PE:SUNAT" listName="Tipo de Documento"
-        listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">01</cbc:InvoiceTypeCode>
+    <cbc:InvoiceTypeCode listID="0101" listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">01</cbc:InvoiceTypeCode>
     <cbc:Note languageLocaleID="1002">TRANSFERENCIA GRATUITA DE UN BIEN Y/O SERVICIO PRESTADO GRATUITAMENTE</cbc:Note>
     <cbc:Note languageLocaleID="1000">CERO Y 00/100 DOLLARS</cbc:Note>
     <cbc:DocumentCurrencyCode>USD</cbc:DocumentCurrencyCode>

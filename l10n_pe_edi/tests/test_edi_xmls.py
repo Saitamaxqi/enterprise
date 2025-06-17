@@ -98,53 +98,9 @@ class TestEdiXmls(TestPeEdiCommon):
         zip_edi_str = generated_files[0]
         edi_xml = self.edi_format._l10n_pe_edi_unzip_edi_document(zip_edi_str)
         current_etree = self.get_xml_tree_from_string(edi_xml)
-        expected_etree = self.get_xml_tree_from_string(self.expected_invoice_xml_values)
-        expected_etree = self.with_applied_xpath(
-            expected_etree,
-            '''
-                <xpath expr="//InvoiceTypeCode" position="attributes">
-                    <attribute name="listID">1001</attribute>
-                </xpath>
-                <xpath expr="//Note[1]" position="after">
-                    <Note languageLocaleID="2006">Leyenda: Operacion sujeta a detraccion</Note>
-                </xpath>
-                <xpath expr="//DueDate" position="replace">
-                    <DueDate>2017-03-02</DueDate>
-                </xpath>
-                <xpath expr="//PaymentTerms" position="replace"/>
-                <xpath expr="//Delivery" position="after">
-                    <PaymentMeans>
-                        <ID>Detraccion</ID>
-                        <PaymentMeansCode>999</PaymentMeansCode>
-                        <PayeeFinancialAccount>
-                            <ID>CUENTAPRUEBA</ID>
-                        </PayeeFinancialAccount>
-                    </PaymentMeans>
-                    <PaymentTerms>
-                        <ID>Detraccion</ID>
-                        <PaymentMeansID>001</PaymentMeansID>
-                        <PaymentPercent>10.0</PaymentPercent>
-                        <Amount currencyID="PEN">472.00</Amount>
-                    </PaymentTerms>
-                    <PaymentTerms>
-                        <ID>FormaPago</ID>
-                        <PaymentMeansID>Credito</PaymentMeansID>
-                        <Amount currencyID="USD">8496.00</Amount>
-                    </PaymentTerms>
-                    <PaymentTerms>
-                        <ID>FormaPago</ID>
-                        <PaymentMeansID>Cuota001</PaymentMeansID>
-                        <Amount currencyID="USD">1888.00</Amount>
-                        <PaymentDueDate>2017-01-01</PaymentDueDate>
-                    </PaymentTerms>
-                    <PaymentTerms>
-                        <ID>FormaPago</ID>
-                        <PaymentMeansID>Cuota002</PaymentMeansID>
-                        <Amount currencyID="USD">6608.00</Amount>
-                        <PaymentDueDate>2017-03-02</PaymentDueDate>
-                    </PaymentTerms>
-                </xpath>
-            ''')
+
+        with file_open('l10n_pe_edi/tests/test_files/invoice_detraction_payment_terms.xml', 'rb') as expected_file:
+            expected_etree = self.get_xml_tree_from_string(expected_file.read())
         self.assertXmlTreeEqual(current_etree, expected_etree)
 
     def test_invoice_detraction_with_decimal(self):
