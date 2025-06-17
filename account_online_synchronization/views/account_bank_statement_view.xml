@@ -23,5 +23,22 @@
                 <xpath expr="//footer" position="replace"/>
             </field>
         </record>
+
+        <record id="view_bank_statement_line_search_bank_rec_widget_inherit" model="ir.ui.view">
+            <field name="name">account.bank.statement.line.search.bank_rec_widget</field>
+            <field name="model">account.bank.statement.line</field>
+            <field name="inherit_id" ref="account_accountant.view_bank_statement_line_search_bank_rec_widget"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='date']" position="before">
+                    <filter
+                        name="fetched_lines"
+                        string="Fetched Transactions"
+                        domain="[('id', 'in', context.get('fetched_stmt_line_ids', []))]"
+                        invisible="not context.get('fetched_stmt_line_ids')"
+                    />
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

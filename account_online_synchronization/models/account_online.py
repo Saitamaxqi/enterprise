@@ -461,11 +461,17 @@ class AccountOnlineLink(models.Model):
         }
 
     @api.model
-    def _show_fetched_transactions_action(self, stmt_line_ids, duplicates_from_date):
+    def _show_fetched_transactions_action(self, stmt_lines, duplicates_from_date, journal):
+        default_context = {
+            'duplicates_from_date': duplicates_from_date if duplicates_from_date else {},
+            'search_default_fetched_lines': True,
+            'search_default_journal_id': journal.id,
+            'fetched_stmt_line_ids': stmt_lines.ids,
+        }
+
         return self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
-            extra_domain=[('id', 'in', stmt_line_ids.ids)],
             name=_('Fetched Transactions'),
-            **({'default_context': {'duplicates_from_date': duplicates_from_date}} if duplicates_from_date else {}),
+            default_context=default_context,
         )
 
     def _get_connection_state_details(self, journal):
@@ -876,13 +882,9 @@ class AccountOnlineLink(models.Model):
                     total = sum([transaction['amount'] for transaction in transactions])
                     statement_lines = self.env['account.bank.statement.line'].with_context(transactions_total=total)._online_sync_bank_statement(sorted_transactions[:100], online_account)
                     online_account.fetching_status = 'planned' if len(transactions) > 100 else 'done'
-                    domain = None
-                    if statement_lines:
-                        domain = [('id', 'in', statement_lines.ids)]
 
                     duplicates_from_date = get_duplicates_from_date(statement_lines, journal)
                     return self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
-                        extra_domain=domain,
                         name=_('Fetched Transactions'),
                         default_context={
                             **self.env.context,
@@ -890,6 +892,8 @@ class AccountOnlineLink(models.Model):
                             'default_journal_id': journal.id,
                             'duplicates_from_date': duplicates_from_date,
                             'search_default_journal_id': journal.id,
+                            'search_default_fetched_lines': True,
+                            'fetched_stmt_line_ids': statement_lines.ids if statement_lines else [],
                         },
                     )
                 else:
@@ -901,7 +905,7 @@ class AccountOnlineLink(models.Model):
                         connection_state_details={
                             'status': 'success',
                             'nb_fetched_transactions': len(statement_lines),
-                            'action': self._show_fetched_transactions_action(statement_lines, duplicates_from_date),
+                            'action': self._show_fetched_transactions_action(statement_lines, duplicates_from_date, journal),
                         },
                     )
             return
