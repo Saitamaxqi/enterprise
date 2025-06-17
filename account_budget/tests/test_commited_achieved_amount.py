@@ -511,8 +511,8 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         line = budget.budget_line_ids[0]
 
         # === Setup: Two companies ===
-        company_a = self.env.ref('base.main_company')
-        company_b = self.env['res.company'].search([('id', '!=', company_a.id)])[0]
+        company_a = self.company
+        company_b = self.setup_other_company(name="other_company")['company']
 
         # Ensure test user has access to both companies
         self.env.user.write({
