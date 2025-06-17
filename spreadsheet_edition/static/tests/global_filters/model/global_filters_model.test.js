@@ -19,6 +19,7 @@ const { cellMenuRegistry } = registries;
 
 const testGlobalFilter = {
     id: "42",
+    label: "Relation",
     type: "relation",
     defaultValue: [41],
 };
@@ -41,6 +42,7 @@ test("Can set a value from a pivot header context menu", async function () {
         model,
         {
             id: "42",
+            label: "Relation",
             type: "relation",
             defaultValue: [41],
         },
@@ -103,6 +105,7 @@ test("Can open context menu with positional argument", async function () {
         model,
         {
             id: "42",
+            label: "Relation",
             type: "relation",
         },
         { pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } } }
@@ -126,6 +129,7 @@ test("Can open context menu without argument", async function () {
         model,
         {
             id: "42",
+            label: "Relation",
             type: "relation",
         },
         { pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } } }
@@ -150,6 +154,7 @@ test("Can open context menu when there is a filter with no field defined", async
     });
     await addGlobalFilter(model, {
         id: "42",
+        label: "Relation",
         type: "relation",
     });
     selectCell(model, "B3");
@@ -187,6 +192,7 @@ test("menu to set filter value is not visible if no filter matches", async funct
         model,
         {
             id: "42",
+            label: "Relation",
             type: "relation",
             defaultValue: [41],
         },
@@ -247,6 +253,7 @@ test("UNDO/REDO filter creation with multiple field matchings", async function (
     expect(getCellValue(model, "B4")).toBe(11);
     const filter = {
         id: "42",
+        label: "Relation",
         type: "relation",
         defaultValue: [2],
     };
@@ -264,6 +271,7 @@ test("UNDO/REDO filter creation reloads the related field matchings", async func
     expect(getCellValue(model, "B4")).toBe(11);
     const filter = {
         id: "42",
+        label: "Relation",
         type: "relation",
         defaultValue: [2],
     };
