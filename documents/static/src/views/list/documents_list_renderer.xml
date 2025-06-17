@@ -14,11 +14,11 @@
             <DocumentsFileViewer parentRoot="root" t-props="getDocumentsAttachmentViewerProps()"/>
             <FileUploadProgressContainer fileUploads="this.documentUploads" Component="constructor.components.FileUploadProgressDataRow" shouldDisplay="(upload) => !upload.data.get('document_id')"/>
         </table>
-        <t t-call="web.ActionHelper" position="replace">
+        <ActionHelper position="replace">
             <t t-if="showNoContentHelper">
                 <DocumentsActionHelper noContentHelp="props.noContentHelp"/>
             </t>
-        </t>
+        </ActionHelper>
     </t>
 
     <t t-name="documents.DocumentsListRenderer.RecordRow" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">

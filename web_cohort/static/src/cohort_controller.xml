@@ -22,8 +22,8 @@
                     )"
                 />
                 <t t-if="displayNoContent">
-                    <t t-if="props.info.noContentHelp" t-call="web.ActionHelper">
-                        <t t-set="noContentHelp" t-value="props.info.noContentHelp"/>
+					<t t-if="props.info.noContentHelp">
+						<ActionHelper noContentHelp="props.info.noContentHelp" showRibbon="model.useSampleModel"/>
                     </t>
                     <t t-else="" t-call="web.NoContentHelper"/>
                 </t>

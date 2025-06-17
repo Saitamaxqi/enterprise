@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="appointment.AppointmentBookingGanttController" t-inherit="web_gantt.GanttController" t-inherit-mode="primary">
-        <xpath expr="//t[@t-if='props.info.noContentHelp']" position="replace">
-            <t t-if="props.info.noContentHelp">
+        <xpath expr="//t[@t-if='showNoContentHelp']" position="replace">
+            <t t-if="showNoContentHelp">
                 <t t-if="props.context.active_model == 'appointment.type'">
                     <AppointmentBookingActionHelper context="props.context" onAddClicked="this.onAddClicked.bind(this)"/>
                 </t>

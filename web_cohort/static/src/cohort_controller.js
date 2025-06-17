@@ -5,12 +5,14 @@ import { standardViewProps } from "@web/views/standard_view_props";
 import { useSetupAction } from "@web/search/action_hook";
 import { SearchBar } from "@web/search/search_bar/search_bar";
 import { CogMenu } from "@web/search/cog_menu/cog_menu";
+import { Widget } from "@web/views/widgets/widget";
+import { ActionHelper } from "@web/views/action_helper";
 
 import { Component, toRaw, useRef } from "@odoo/owl";
 
 export class CohortController extends Component {
     static template = "web_cohort.CohortView";
-    static components = { Layout, SearchBar, CogMenu };
+    static components = { Layout, SearchBar, CogMenu, Widget, ActionHelper };
     static props = {
         ...standardViewProps,
         Model: Function,

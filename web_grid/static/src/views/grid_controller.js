@@ -14,6 +14,7 @@ import { CogMenu } from "@web/search/cog_menu/cog_menu";
 import { SearchBar } from "@web/search/search_bar/search_bar";
 import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { browser } from "@web/core/browser/browser";
+import { ActionHelper } from "@web/views/action_helper";
 
 import { Component, useState, onWillUnmount, useRef } from "@odoo/owl";
 
@@ -27,6 +28,7 @@ export class GridController extends Component {
         ViewButton,
         CogMenu,
         SearchBar,
+        ActionHelper,
     };
 
     static props = {

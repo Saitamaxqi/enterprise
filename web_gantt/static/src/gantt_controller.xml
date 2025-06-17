@@ -23,10 +23,7 @@
                 </t>
                 <t t-set-slot="default" t-slot-scope="layout">
                     <t t-if="showNoContentHelp">
-                        <t t-if="props.info.noContentHelp" t-call="web.ActionHelper">
-                            <t t-set="noContentHelp" t-value="props.info.noContentHelp"/>
-                        </t>
-                        <t t-else="" t-call="web.NoContentHelper"/>
+						<ActionHelper noContentHelp="props.info.noContentHelp"/>
                     </t>
                     <t t-component="props.Renderer"
                         class="model.useSampleModel ? 'o_sample_data_disabled' : ''"

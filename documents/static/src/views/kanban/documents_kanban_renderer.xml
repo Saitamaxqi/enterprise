@@ -69,10 +69,10 @@
             </t>
             <FileUploadProgressContainer fileUploads="this.documentUploads" Component="constructor.components.FileUploadProgressKanbanRecord" shouldDisplay="(upload) => !upload.data.get('document_id')"/>
         </t>
-        <t t-call="web.ActionHelper" position="replace">
+        <ActionHelper position="replace">
             <t t-if="props.noContentHelp">
                 <DocumentsActionHelper noContentHelp="props.noContentHelp"/>
             </t>
-        </t>
+        </ActionHelper>
     </t>
 </templates>

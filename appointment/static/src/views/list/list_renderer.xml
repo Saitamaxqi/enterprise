@@ -10,10 +10,10 @@
     </t>
 
     <t t-name="appointment.AppointmentTypeListRenderer" t-inherit="web.ListRenderer" t-inherit-mode="primary">
-        <t t-call="web.ActionHelper" position="replace">
+        <ActionHelper position="replace">
             <t t-if="showNoContentHelper">
                 <AppointmentTypeActionHelper/>
             </t>
-        </t>
+        </ActionHelper>
     </t>
 </templates>

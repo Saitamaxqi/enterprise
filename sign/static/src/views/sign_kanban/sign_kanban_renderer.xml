@@ -9,10 +9,10 @@
                 <i class="fa fa-upload fa-10x"/>
             </div>
         </xpath>
-        <t t-call="web.ActionHelper" position="replace">
+        <ActionHelper position="replace">
             <t t-if="showNoContentHelper">
                 <SignActionHelper resModel="props.list.resModel"/>
             </t>
-        </t>
+        </ActionHelper>
     </t>
 </templates>

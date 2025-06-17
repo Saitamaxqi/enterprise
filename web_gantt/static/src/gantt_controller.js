@@ -14,12 +14,14 @@ import { SearchBar } from "@web/search/search_bar/search_bar";
 import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { CogMenu } from "@web/search/cog_menu/cog_menu";
 import { CallbackRecorder, useSetupAction } from "@web/search/action_hook";
+import { ActionHelper } from "@web/views/action_helper";
 
 export class GanttController extends Component {
     static components = {
         CogMenu,
         Layout,
         SearchBar,
+        ActionHelper,
     };
     static props = {
         ...standardViewProps,
