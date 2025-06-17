@@ -38,7 +38,7 @@
                     <div id="dashboard_return_left" class="col mb-3 mb-sm-0">
                         <div class="row">
                             <div>
-                                <button type="action" name="account_reports.action_open_view_account_return" groups="account.group_account_user"
+                                <button type="action" name="account_reports.action_server_open_view_account_return" groups="account.group_account_user"
                                         t-att-class="'me-1 btn ' + (dashboard['tax_return_button_primary'] ? 'btn-primary' : 'btn-secondary')">
                                     Tax Returns
                                 </button>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import api, models, fields
+from odoo import models, fields
 import json
 
 
@@ -10,13 +10,6 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
     _description = "Belgian Periodic VAT Report Export Wizard"
 
     ask_restitution = fields.Boolean()
-    need_ec_sales_list = fields.Boolean(compute='_compute_need_ec_sales_list', compute_sudo=True)
-
-    @api.depends('return_id')
-    def _compute_need_ec_sales_list(self):
-        # TODO lost: remove in master
-        for record in self:
-            record.need_ec_sales_list = False
 
     def _get_submission_options_to_inject(self):
         report = self.return_id.type_id.report_id

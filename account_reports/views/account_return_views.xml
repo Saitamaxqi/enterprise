@@ -161,13 +161,6 @@
             </field>
         </record>
 
-        <!-- Will open a wizard if tax return config is not setup otherwise it will return action_view_account_return-->
-        <!-- TODO lost: to remove in master -->
-        <record id="action_open_view_account_return" model="ir.actions.client">
-            <field name="name">Open Tax Return</field>
-            <field name="tag">action_open_view_account_return</field>
-        </record>
-
         <record id="action_server_open_view_account_return" model="ir.actions.server">
             <field name="name">Open Tax Return</field>
             <field name="model_id" ref="model_account_return"/>
