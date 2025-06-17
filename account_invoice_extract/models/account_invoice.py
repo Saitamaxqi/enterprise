@@ -394,10 +394,11 @@ class AccountMove(models.Model):
         if not partner_name:
             return 0
 
+        rank_field = 'supplier_rank' if self.is_purchase_document() else 'customer_rank'
         partner = self.env["res.partner"].search([
             *self.env['res.partner']._check_company_domain(self.company_id),
             ("name", "=", partner_name),
-        ], order='supplier_rank desc', limit=1)
+        ], order=f'{rank_field} desc', limit=1)
         if partner:
             return partner.id if partner.id != self.company_id.partner_id.id else 0
 
@@ -405,7 +406,7 @@ class AccountMove(models.Model):
             *self.env['res.partner']._check_company_domain(self.company_id),
             ('active', '=', True),
             ('name', '!=', False),
-            ('supplier_rank', '>', 0),
+            (rank_field, '>', 0),
         ]).select('res_partner.id', 'res_partner.name'))
 
         partners_dict = {name.lower().replace('-', ' '): partner_id for partner_id, name in self.env.cr.fetchall()}
