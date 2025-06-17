@@ -586,11 +586,12 @@
                 <sheet>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <group>
-                        <field name="active" invisible="1" />
-                        <field name="name"/>
-                        <field name="resource_ids" widget="many2many_avatar_resource" context="{'show_job_title': True, 'from_planning': True}"/>
-                        <field name="color" widget="color_picker"/>
-                        <field name="sequence" groups="base.group_no_one"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="resource_ids" widget="many2many_avatar_resource" context="{'show_job_title': True, 'from_planning': True}"/>
+                            <field name="color" widget="color_picker"/>
+                            <field name="sequence" groups="base.group_no_one"/>
+                        </group>
                     </group>
                 </sheet>
             </form>

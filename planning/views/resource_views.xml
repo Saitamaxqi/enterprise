@@ -64,6 +64,7 @@
                 <attribute name="js_class">resource_list_view</attribute>
                 <attribute name="editable">bottom</attribute>
                 <attribute name="sample">1</attribute>
+                <attribute name="open_form_view">1</attribute>
             </xpath>
             <xpath expr="//field[@name='time_efficiency']" position="attributes">
                 <attribute name="column_invisible">1</attribute>

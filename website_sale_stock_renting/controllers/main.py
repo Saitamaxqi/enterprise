@@ -8,19 +8,20 @@ from odoo.addons.website_sale_renting.controllers.main import WebsiteSaleRenting
 
 class WebsiteSaleStockRenting(WebsiteSaleRenting):
 
-    @route(
-        '/rental/product/availabilities', type='jsonrpc', auth='public', methods=['POST'], website=True
-    )
+    @route()
     def renting_product_availabilities(self, product_id, min_date, max_date):
         """ Return rental product availabilities.
 
         Availabilities are the available quantities of a product for a given period. This is
         expressed by an ordered list of dict {'start': ..., 'end': ..., 'available_quantity': ...).
 
-        :rtype: list(dict)
+        :rtype: dict
         """
         product_sudo = request.env['product.product'].sudo().browse(product_id).exists()
-        result = {'preparation_time': product_sudo.preparation_time}
+        result = {
+            **super().renting_product_availabilities(product_id, min_date, max_date),
+            'preparation_time': product_sudo.preparation_time
+        }
         if not product_sudo.allow_out_of_stock_order:
             result['renting_availabilities'] = product_sudo._get_availabilities(
                 fields.Datetime.to_datetime(min_date),

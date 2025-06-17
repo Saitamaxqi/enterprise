@@ -4,6 +4,7 @@ from pytz import utc
 from random import shuffle
 
 from odoo import models
+from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -24,6 +25,26 @@ class SaleOrderLine(models.Model):
                 days_per_week = line.order_id.duration_days + (1 if line.order_id.remaining_hours else 0)
             line.planning_hours_to_plan = line.company_id.resource_calendar_id.hours_per_day * days_per_week
         super(SaleOrderLine, self - planning_rental_sols)._compute_planning_hours_to_plan()
+
+    def _planning_slot_vals_list(self):
+        vals_list = super()._planning_slot_vals_list()
+        rental_sol_per_id = {
+            sol.id: sol
+            for sol in self
+            if sol.is_rental and sol.product_id.planning_role_id.filtered('sync_shift_rental')
+        }
+        problematic_services = []
+        for vals in vals_list:
+            if (sol := rental_sol_per_id.get(vals.get('sale_line_id'))) and not vals.get('resource_id'):
+                problematic_services.append(sol.product_id.name)
+        if problematic_services:
+            raise ValidationError(
+                self.env._(
+                    "This Sales Order can't be confirmed. No resources are available for the shifts in: %s.",
+                    ", ".join(problematic_services)
+                )
+            )
+        return vals_list
 
     def _planning_slot_values(self):
         planning_slot_values = super()._planning_slot_values()
@@ -76,3 +97,15 @@ class SaleOrderLine(models.Model):
             **planning_slot_values,
             'resource_id': free_resource_ids[0] if free_resource_ids else False,
         }
+
+    def write(self, vals):
+        if 'product_uom_qty' in vals and vals['product_uom_qty'] == 0 and (rental_sols := self.filtered('is_rental')):
+            if slots := self.env['planning.slot'].search([('sale_line_id', 'in', rental_sols.ids)]):
+                slots.unlink()
+        return super().write(vals)
+
+    def unlink(self):
+        rental_order_lines = self.filtered('is_rental')
+        if slots := self.env['planning.slot'].search([('sale_line_id', 'in', rental_order_lines.ids)]):
+            slots.unlink()
+        return super().unlink()

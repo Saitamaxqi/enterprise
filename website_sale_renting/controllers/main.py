@@ -53,6 +53,23 @@ class WebsiteSaleRenting(WebsiteSale):
             'website_tz': request.website.tz,
         }
 
+    @route(
+        '/rental/product/availabilities',
+        type='jsonrpc',
+        auth='public',
+        methods=['POST'],
+        website=True,
+    )
+    def renting_product_availabilities(self, product_id, min_date, max_date):
+        """ Return rental product availabilities.
+
+        Availabilities are the available quantities of a product for a given period. This is
+        expressed by a dict {'start': ..., 'end': ..., 'available_quantity': ...).
+
+        :rtype: dict
+        """
+        return {}
+
     def _prepare_product_values(self, product, category, start_date=None, end_date=None, **kwargs):
         result = super()._prepare_product_values(
             product, category, start_date=start_date, end_date=end_date, **kwargs

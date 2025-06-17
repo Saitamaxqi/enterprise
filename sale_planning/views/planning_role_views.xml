@@ -17,6 +17,9 @@
         <field name="model">planning.role</field>
         <field name="inherit_id" ref="planning.planning_role_view_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="open_form_view">1</attribute>
+            </xpath>
             <field name="resource_ids" position="after">
                 <field name="product_ids" widget="many2many_tags" optional="hide" placeholder="e.g. Cleaning Services"
                     context="{
@@ -47,16 +50,18 @@
         <field name="model">planning.role</field>
         <field name="inherit_id" ref="planning.planning_role_view_form"/>
         <field name="arch" type="xml">
-            <field name="resource_ids" position="after">
-                <field name="product_ids" widget="many2many_tags"
-                    context="{
-                        'default_type': 'service',
-                        'default_planning_enabled': True,
-                        'default_planning_role_id': id,
-                        'default_uom_id': %(uom.product_uom_hour)d,
-                    }"
-                />
-            </field>
+            <xpath expr="//sheet/group/group" position="after">
+                <group>
+                    <field name="product_ids" widget="many2many_tags"
+                        context="{
+                            'default_type': 'service',
+                            'default_planning_enabled': True,
+                            'default_planning_role_id': id,
+                            'default_uom_id': %(uom.product_uom_hour)d,
+                        }"
+                    />
+                </group>
+            </xpath>
         </field>
     </record>
 
