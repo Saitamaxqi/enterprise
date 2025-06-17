@@ -5,6 +5,7 @@
     .o_sign_sidebar_document_name, .o_sign_sidebar_signer {
         background-color: $o-gray-200;
         color: white;
+        border-color: $o-gray-300;
         &:hover {
             background-color: $o-gray-300;
         }

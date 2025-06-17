@@ -67,9 +67,9 @@
                     <button type="action" name="%(action_view_sign_requests)d" class="btn btn-secondary" string="Download"/>
                 </header>
                 <field name="create_date" string="Date" readonly="1"/>
-                <field name="reference" readonly="1" string="Template"/>
+                <field name="reference" readonly="1" string="Name"/>
                 <field name="create_uid" widget="many2one_avatar_user" readonly="1" string="Sent by"/>
-                <field name="template_document_ids" widget="many2many_tags" readonly="1"/>
+                <field name="template_document_ids" widget="many2many_tags" readonly="1" optional="hide"/>
                 <field name="request_item_ids" string="Signers" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}"/>
                 <field name="template_tags" string="Tags" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
                 <field name="reference_doc" readonly="1" optional="hide"/>
@@ -127,7 +127,7 @@
                     </div>
                     <field name="state" widget="statusbar" statusbar_visible="sent,signed"/>
                 </header>
-                <sheet style="overflow: visible;">
+                <sheet>
                     <field name="active" invisible="1"/>
                     <field name="template_id" invisible="1" kanban_view_ref="1484"/>
                     <field name="favorited_ids" widget="many2many_tags" options="{'color_field': 'color'}" invisible="1"/>

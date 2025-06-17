@@ -10,6 +10,7 @@ import mimetypes
 from odoo import http, tools, Command, _, fields
 from odoo.http import request, content_disposition
 from odoo.tools import consteq, format_date, posix_to_ldml
+from odoo.tools.pdf import PdfFileWriter, PdfFileReader
 from odoo.tools.misc import babel_locale_parse
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError
@@ -175,7 +176,7 @@ class Sign(http.Controller):
         Args:
             request_id (int): The ID of the sign request.
             token (str): The access token for the sign request.
-            download_type (str): Type of document to download ('log', 'origin', or 'completed').
+            download_type (str): Type of document to download ('origin', or 'completed').
             sign_document_id (int, optional): Specific document ID for 'origin' download type.
             **post: Additional POST parameters (not used in this method).
         Returns:
@@ -185,9 +186,7 @@ class Sign(http.Controller):
         if not sign_request:
             return request.not_found()
 
-        if download_type == "log":
-            return self._handle_log_download(sign_request)
-        elif download_type == "origin":
+        if download_type == "origin":
             return self._handle_origin_download(sign_request, sign_document_id)
         elif download_type == "completed":
             return self._handle_completed_download(sign_request, sign_document_id)
@@ -197,29 +196,6 @@ class Sign(http.Controller):
     def _get_sign_request(self, request_id, token):
         sign_request = request.env['sign.request'].sudo().browse(request_id).exists()
         return sign_request if sign_request and consteq(sign_request.access_token, token) else None
-
-    def _handle_log_download(self, sign_request):
-        """Generates and returns a PDF log (certificate) for the sign request.
-        Renders a QWeb report as a PDF containing the sign request's log details.
-        Args:
-            sign_request (odoo.models.Model): The sign request record.
-        Returns:
-            http.Response: Response containing the PDF content with appropriate headers.
-        """
-        report_action = request.env['ir.actions.report'].sudo()
-        pdf_content, _ = report_action._render_qweb_pdf(
-            'sign.action_sign_request_print_logs',
-            sign_request.id,
-            data={
-                'format_date': tools.format_date,
-                'company_id': sign_request.communication_company_id
-            }
-        )
-        return request.make_response(pdf_content, headers=[
-            ('Content-Type', 'application/pdf'),
-            ('Content-Length', len(pdf_content)),
-            ('Content-Disposition', 'attachment; filename=Certificate.pdf;')
-        ])
 
     def _handle_origin_download(self, sign_request, sign_document_id):
         """Handles the download of the original (unsigned) document for a sign request.
@@ -252,6 +228,33 @@ class Sign(http.Controller):
 
         return request.not_found()
 
+    def _add_certificate_to_document(self, document_file, certificate_pdf):
+        """Merges a base64-encoded document with a raw certificate PDF.
+        Args:
+            document_file (str): Base64-encoded PDF document
+            certificate_pdf (bytes): Raw certificate PDF
+        Returns:
+            str: Base64-encoded merged PDF
+        """
+        # Create PDF readers
+        pdf1 = PdfFileReader(io.BytesIO(base64.b64decode(document_file)))
+        pdf2 = PdfFileReader(io.BytesIO(certificate_pdf))
+        writer = PdfFileWriter()
+
+        # Add all pages from the document
+        for page in pdf1.pages:
+            writer.add_page(page)
+
+        # Add all pages from the certificate
+        for page in pdf2.pages:
+            writer.add_page(page)
+
+        output = io.BytesIO()
+        writer.write(output)
+        merged_pdf = base64.b64encode(output.getvalue())
+        output.close()
+        return merged_pdf
+
     def _handle_completed_download(self, sign_request, sign_document_id=None):
         """Handles the download of completed (signed) documents for a sign request.
 
@@ -267,22 +270,36 @@ class Sign(http.Controller):
         if not sign_request.completed_document_ids and sign_request.state == 'signed':
             sign_request.sudo()._generate_completed_documents()
 
+        # Generate certificate PDF
+        report_action = request.env['ir.actions.report'].sudo()
+        certificate_pdf, _ = report_action._render_qweb_pdf(
+            'sign.action_sign_request_print_logs',
+            sign_request.id,
+            data={
+                'format_date': tools.format_date,
+                'company_id': sign_request.communication_company_id
+            }
+        )
+
         if sign_document_id:
             completed_document = sign_request.completed_document_ids.filtered(lambda d: d.id == sign_document_id)
             if completed_document:
-                return self._create_document_response(sign_request, completed_document.file, document_name=completed_document.document_id.name)
+                document_with_certificate = self._add_certificate_to_document(completed_document.file, certificate_pdf)
+                return self._create_document_response(sign_request, document_with_certificate, document_name=completed_document.document_id.name)
             return request.not_found()
 
         if len(sign_request.completed_document_ids) == 1:
-            return self._create_document_response(sign_request, sign_request.completed_document_ids[0].file, document_name=sign_request.completed_document_ids[0].document_id.name)
+            document_with_certificate = self._add_certificate_to_document(sign_request.completed_document_ids[0].file, certificate_pdf)
+            return self._create_document_response(sign_request, document_with_certificate, document_name=sign_request.completed_document_ids[0].document_id.name)
 
-        return self._create_zip_response([sign_request], document_type='completed')
+        return self._create_zip_response([sign_request], document_type='completed', certificate_pdf=certificate_pdf)
 
-    def _create_zip_response(self, sign_requests, document_type='completed'):
+    def _create_zip_response(self, sign_requests, document_type='completed', certificate_pdf=None):
         """Creates a ZIP file containing multiple documents for sign requests.
         Args:
             sign_requests (odoo.models.Model): The sign request record(s).
             document_type (str): Type of documents to include ('completed' or 'origin').
+            certificate_pdf (bytes, optional): Certificate PDF to merge with completed documents.
         Returns:
             http.Response: Response containing the ZIP file with appropriate headers.
         """
@@ -299,7 +316,11 @@ class Sign(http.Controller):
                         if not doc_name.endswith('.pdf'):
                             doc_name += '.pdf'
                         download_name = f'{subject}/{doc_name}'
-                        zipfile_obj.writestr(download_name, base64.b64decode(doc.file))
+                        if certificate_pdf:
+                            document_with_certificate = self._add_certificate_to_document(doc.file, certificate_pdf)
+                            zipfile_obj.writestr(download_name, base64.b64decode(document_with_certificate))
+                        else:
+                            zipfile_obj.writestr(download_name, base64.b64decode(doc.file))
                 elif document_type == 'origin':
                     documents = sign_request.template_id.document_ids
                     for doc in documents:

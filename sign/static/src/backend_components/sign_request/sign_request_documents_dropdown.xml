@@ -22,12 +22,6 @@
                                     </a>
                                 </li>
                             </t>
-                            <li class="dropdown-divider"/>
-                            <li>
-                                <a class="dropdown-item o_sign_download_certificate_dropdown_item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/log">
-                                    Certificate
-                                </a>
-                            </li>
                         </t>
                         <t t-if="signInfo.get('needToSign')">
                             <li t-if="(signInfo.get('original_documents')||[]).length > 1">

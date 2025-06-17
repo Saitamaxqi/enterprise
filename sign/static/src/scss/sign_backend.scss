@@ -35,7 +35,7 @@
         justify-content: space-between;
         align-items: center;
         height: 33px;
-        border-bottom: 1px solid #d8dadd;
+        border-bottom: 1px solid $o-gray-300;
     }
 
     .o_sign_sidebar_signer .fa-pencil {
@@ -54,7 +54,7 @@
         display: flex;
         &:hover {
             cursor: pointer;
-            background-color: #e9ecef;
+            background-color: #F8F8F8;
         }
         border-bottom: 1px solid #d8dadd;
         overflow: hidden;
@@ -73,7 +73,7 @@
     }
 
     .o_sign_sidebar_document_name_selected {
-        background-color: #e9ecef;
+        background-color: #F8F8F8;
     }
     /* Module pages */
     .o_sign_template, .o_sign_document {
@@ -196,12 +196,12 @@
         padding: 5px;
         &:hover {
             cursor: pointer;
-            background-color: #e9ecef;
+            background-color: #F8F8F8;
         }
     }
 
     .o_sign_sidebar_signer_selected {
-        background-color: #e9ecef;
+        background-color: #F8F8F8;
     }
 
     .o_sign_sidebar_signer_header {
