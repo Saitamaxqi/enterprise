@@ -1069,6 +1069,26 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': new_rule.id},
         ], reconciled_amls=False)
 
+    def test_get_common_substring_of_labels(self):
+        """
+        Test the _get_common_substring helper method.
+        It should return the longest common substring if len>10,
+        or if all normalised labels are identical, the normalised label.
+        Else, return None.
+        """
+        # Long (>=10) common substring
+        long_common_refs = [x + ' is Gamora.' for x in ('Where', 'Who', 'Why')]
+        long_common_bl = [self._create_st_line(payment_ref=x) for x in long_common_refs]
+        self.assertEqual(long_common_bl[0]._get_common_substring([x.payment_ref for x in long_common_bl]), ' IS GAMORA.')
+        # Short (<10) but identical normalised string
+        short_normalised_refs = ['Odoo ' + str(x) for x in (18, 19, 9000)]
+        short_normalised_bl = [self._create_st_line(payment_ref=x) for x in short_normalised_refs]
+        self.assertEqual(short_normalised_bl[0]._get_common_substring([x.payment_ref for x in short_normalised_bl]), r'ODOO \d+')
+        # Short (<10) non-identical normalised string
+        short_common_refs = ['Great ' + x for x in ('power', 'responsibility')]
+        short_common_bl = [self._create_st_line(payment_ref=x) for x in short_common_refs]
+        self.assertEqual(short_common_bl[0]._get_common_substring([x.payment_ref for x in short_common_bl]), None)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

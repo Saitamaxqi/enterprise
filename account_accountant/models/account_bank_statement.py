@@ -734,11 +734,11 @@ class AccountBankStatementLine(models.Model):
     def _get_common_substring(self, labels):
         """
         Returns the normalised longest common substring that is at least 10 characters long from a list
-        of labels. For shorter substrings, returns the first label if all labels are identical after
+        of labels. For shorter substrings, returns the normalised label if all labels are identical after
         normalisation, otherwise returns None.
 
         :param labels: List of string labels to process
-        :return: Longest common substring if 10+ chars, first label if all identical, otherwise None
+        :return: Longest common substring if 10+ chars, normalised label if all identical post-normalisation, otherwise None
         """
         def normalise_label(label):
             # Keep structured references.
@@ -803,9 +803,9 @@ class AccountBankStatementLine(models.Model):
         for i in range(2, len(normalised)):
             substring = get_longest_common_substring(substring, normalised[i])
             if len(substring) < 10:
-                return None
+                break
 
-        return substring
+        return substring if len(substring) >= 10 else None
 
     def _create_account_model_fee(self, account_id):
         """
