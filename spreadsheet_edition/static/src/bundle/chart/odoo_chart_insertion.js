@@ -21,6 +21,7 @@ export function insertChart(chartData) {
             domain: new Domain(chartData.searchParams.domain).toJson(),
         },
         stacked: chartData.metaData.stacked,
+        axisType: chartData.metaData.axisType,
         fillArea: chartType === "odoo_line",
         cumulative: chartData.metaData.cumulated,
         cumulatedStart: chartData.metaData.cumulatedStart,

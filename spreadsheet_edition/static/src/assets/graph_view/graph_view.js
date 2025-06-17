@@ -23,7 +23,10 @@ export const patchGraphSpreadsheet = () => ({
         const actionOptions = {
             preProcessingAsyncAction: "insertChart",
             preProcessingAsyncActionData: {
-                metaData: this.model.metaData,
+                metaData: {
+                    ...this.model.metaData,
+                    axisType: this.chart.scales.x?.type,
+                },
                 searchParams: {
                     ...this.model.searchParams,
                     domain: this.env.searchModel.domainString,

@@ -507,6 +507,20 @@ describe("trend line", () => {
         expect(runtime.chartJsConfig.data.datasets.length).toBe(2);
     });
 
+    test("Axistype for odoo line chart trendlines must be defined", async function () {
+        const { model, env } = await createSpreadsheetFromGraphView();
+        const sheetId = model.getters.getActiveSheetId();
+        const chartId = model.getters.getChartIds(sheetId)[0];
+        await openChartSidePanel(model, env);
+        await changeChartType("odoo_line");
+        await contains(".o-panel-design").click();
+        const collapsible = document.querySelectorAll(".collapsor");
+        await collapsible[1].click();
+        await contains("input[name='showTrendLine']").click();
+        const runtime = model.getters.getChartRuntime(chartId);
+        expect(runtime.chartJsConfig.options.scales.x1.type).toBe("category");
+    });
+
     test("Can change trend type", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();
         const sheetId = model.getters.getActiveSheetId();
