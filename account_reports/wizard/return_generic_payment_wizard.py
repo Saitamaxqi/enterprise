@@ -38,3 +38,8 @@ class AccountReturnGenericPaymentWizard(models.TransientModel):
     def action_mark_as_paid(self):
         self.ensure_one()
         return self.return_id._action_finalize_payment()
+
+    def action_send_email_instructions(self):
+        self.ensure_one()
+        template = self.env.ref('account_reports.email_template_generic_tax_instructions', raise_if_not_found=False)
+        return self.return_id.action_send_email_instructions(self, template)

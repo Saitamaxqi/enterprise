@@ -90,6 +90,7 @@ Submit your Tax Reports to the Dutch tax authorities
         'data/account_report_ec_sales_list_report.xml',
         'data/account_return_data.xml',
         'data/xml_audit_file_3_2.xml',
+        'data/mail_templates.xml',
         'report/sbr_tax_report_templates.xml',
         'report/l10n_nl_sbr_icp_template.xml',
         'security/ir.model.access.csv',

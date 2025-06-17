@@ -37,6 +37,7 @@ Accounting reports for Belgium
         'data/tax_report.xml',
         'data/partner_vat_listing.xml',
         'data/account_return_data.xml',
+        'data/mail_templates.xml',
         'security/ir.model.access.csv',
         'security/account_325_security_rules.xml',
         'report/l10n_be_281_50_pdf_templates.xml',

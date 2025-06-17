@@ -10,3 +10,4 @@ from . import return_generic_payment_wizard
 from . import return_creation_wizard
 from . import return_submission_wizard
 from . import qr_code_payment_wizard
+from . import mail_compose_message

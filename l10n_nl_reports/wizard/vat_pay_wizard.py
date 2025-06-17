@@ -70,3 +70,8 @@ class VATPayWizard(models.TransientModel):
             return str(remainder)
 
         return str(11 - remainder)
+
+    def action_send_email_instructions(self):
+        self.ensure_one()
+        template = self.env.ref('l10n_nl_reports.email_template_vat_payment_instructions', raise_if_not_found=False)
+        return self.return_id.action_send_email_instructions(self, template)

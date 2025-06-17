@@ -24,4 +24,40 @@
         <field name="lang">{{ object.lang }}</field>
         <field name="auto_delete" eval="False"/>
     </record>
+
+    <record id="email_template_generic_tax_instructions" model="mail.template">
+        <field name="name">Tax payment</field>
+        <field name="model_id" ref="account_reports.model_account_return"/>
+        <field name="email_from">{{ (user.email_formatted or object.company_id.email_formatted) }}</field>
+        <field name="use_default_to" eval="True"/>
+        <field name="subject">Tax return payment instructions</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>
+                    Dear <t t-out="object.company_id.name">YourCompany</t>,
+                </p>
+                <p>
+                    Based on the documents and information received, the VAT return of <t t-out="object.company_id.name">YourCompany</t>
+                    for period <t t-out="object.type_id._get_period_name(object.company_id, object.date_from, object.date_to)"/> has been submitted.
+                </p>
+                <p>
+                    It has been determined that an amount of <t t-out="format_amount(object.total_amount_to_pay, object.amount_to_pay_currency_id)"/> remains payable.
+                </p>
+                <table style="border:1px solid black; padding:20px; text-align:left; border-spacing: 16px;">
+                    <tr>
+                        <td>Amount to Pay</td>
+                        <td><t t-out="format_amount(object.total_amount_to_pay, object.amount_to_pay_currency_id)"/></td>
+                    </tr>
+                    <tr>
+                        <td>Due By</td>
+                        <td><t t-out="format_date(object.date_deadline)"/></td>
+                    </tr>
+                </table>
+                <p>Kind regards,</p>
+                <p><t t-out="user.name">Mitchell Admin</t></p>
+            </div>
+        </field>
+        <field name="lang">{{ user.lang }}</field>
+        <field name="auto_delete" eval="False"/>
+    </record>
 </odoo>

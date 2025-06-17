@@ -52,7 +52,8 @@
                 </sheet>
                 <footer>
                     <button name="action_mark_as_paid" string="Mark Paid" type="object" class="btn-primary" data-hotkey="q"/>
-                    <button name="action_pay_later" string="Pay Later" type="object" class="btn-secondary" data-hotkey="x"/>
+                    <button name="action_send_email_instructions" string="Send" type="object" class="btn-secondary" data-hotkey="s"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>
         </field>

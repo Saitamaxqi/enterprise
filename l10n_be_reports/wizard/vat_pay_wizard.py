@@ -18,3 +18,8 @@ class L10n_Be_ReportsVatPayWizard(models.TransientModel):
             suffix = f"{number % 97 or 97:02}"
             communication = f"+++{vat[:3]}/{vat[3:7]}/{vat[7:]}{suffix}+++"
         return communication
+
+    def action_send_email_instructions(self):
+        self.ensure_one()
+        template = self.env.ref('l10n_be_reports.email_template_vat_payment_instructions', raise_if_not_found=False)
+        return self.return_id.action_send_email_instructions(self, template)

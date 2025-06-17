@@ -22,9 +22,9 @@
                 </group>
                 <footer>
                     <button name="action_mark_as_paid" string="Mark as Recovered" type="object" class="btn-primary" data-hotkey="q" invisible="not is_recoverable"/>
-                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="x" invisible="not is_recoverable"/>
                     <button name="action_mark_as_paid" string="Mark Paid" type="object" class="btn-primary" data-hotkey="q" invisible="is_recoverable"/>
-                    <button string="Pay Later" class="btn-secondary" special="cancel" data-hotkey="x" invisible="is_recoverable"/>
+                    <button name="action_send_email_instructions" string="Send" type="object" class="btn-secondary" data-hotkey="s" invisible="is_recoverable"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>
         </field>

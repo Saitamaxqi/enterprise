@@ -26,6 +26,7 @@ class L10n_Be_ReportsISOCPrepaymentPayWizard(models.TransientModel):
     def _compute_amount_to_pay(self):
         for wizard in self:
             wizard.amount_to_pay = wizard.profit_estimate * int(wizard.corporate_tax_rate) * 0.01 * 0.25
+            wizard.return_id.total_amount_to_pay = wizard.amount_to_pay
 
     def action_pay_later(self):
         self.return_id.total_amount_to_pay = self.amount_to_pay
@@ -53,3 +54,8 @@ class L10n_Be_ReportsISOCPrepaymentPayWizard(models.TransientModel):
             suffix = f"{number % 97 or 97:02}"
             communication = f"+++{vat[:3]}/{vat[3:7]}/{vat[7:]}{suffix}+++"
         return communication
+
+    def action_send_email_instructions(self):
+        self.ensure_one()
+        template = self.env.ref('l10n_be_reports.email_template_vai_payment_instructions', raise_if_not_found=False)
+        return self.return_id.action_send_email_instructions(self, template)

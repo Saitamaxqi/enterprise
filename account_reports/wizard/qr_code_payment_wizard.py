@@ -1,4 +1,6 @@
 from markupsafe import Markup
+from lxml import html
+
 from odoo import api, models, fields, _
 
 
@@ -30,3 +32,12 @@ class QRCodePaymentWizard(models.TransientModel):
                         </div>
                     """).format(b64_qr=b64_qr, txt=txt)
             wizard.qr_code = qr_html
+
+    def _get_b64_qr_data(self):
+        self.ensure_one()
+        b64_qr = False
+        if self.qr_code:
+            tree = html.fromstring(self.qr_code)
+            if src_list := tree.xpath('//img/@src'):
+                b64_qr = src_list[0]
+        return b64_qr

@@ -370,6 +370,21 @@ class AccountReturnType(models.Model):
             }])
 
     def _get_return_name(self, main_company, period_from=None, period_to=None, minimal=False):
+        period_suffix = self._get_period_name(main_company, period_from, period_to, minimal)
+        country_code = ""
+        if self.report_id and self.report_id.country_id and main_company.account_fiscal_country_id != self.report_id.country_id:
+            if self.report_id and self.report_id.country_id:
+                country_code = f"({self.report_id.country_id.code})"
+            else:
+                country_code = f"({main_company.account_fiscal_country_id.code})"
+        return _(
+            "%(return_type_name)s %(period_suffix)s %(country_code)s",
+            return_type_name=self.name,
+            country_code=country_code,
+            period_suffix=period_suffix
+        )
+
+    def _get_period_name(self, main_company, period_from=None, period_to=None, minimal=False):
         periodicity = self._get_periodicity(main_company)
         start_day, start_month = self._get_start_date_elements(main_company)
         period_suffix = ""
@@ -386,20 +401,7 @@ class AccountReturnType(models.Model):
                 period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
             else:
                 period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
-
-        country_code = ""
-        if self.report_id and self.report_id.country_id and main_company.account_fiscal_country_id != self.report_id.country_id:
-            if self.report_id and self.report_id.country_id:
-                country_code = f"({self.report_id.country_id.code})"
-            else:
-                country_code = f"({main_company.account_fiscal_country_id.code})"
-
-        return _(
-            "%(return_type_name)s %(period_suffix)s %(country_code)s",
-            return_type_name=self.name,
-            country_code=country_code,
-            period_suffix=period_suffix
-        )
+        return period_suffix
 
     def _get_periodicity(self, company):
         self.ensure_one()
@@ -1330,6 +1332,46 @@ class AccountReturn(models.Model):
         company_ids = self.company_ids.ids
         current_company = self.env.company
         return report.with_context(allowed_company_ids=company_ids).with_company(current_company).get_options(previous_options=options)
+
+    def action_send_email_instructions(self, wizard, template):
+        self.ensure_one()
+
+        compose_form = self.env.ref('mail.email_compose_message_wizard_form')
+
+        ctx = {
+            'default_model': 'account.return',
+            'default_res_ids': self.ids,
+            'default_template_id': template.id if template else False,
+            'default_composition_mode': 'comment',
+            'default_partner_ids': self._get_return_mail_recipients(),
+            'mail_notify_author': True,
+            'reply_to_force_new': False,
+            'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
+        }
+
+        if (wizard and 'qr_code' in wizard):
+            ctx.update({
+                'qr_data': wizard._get_b64_qr_data(),
+                'communication': wizard.communication
+            })
+
+        return {
+            'name': template.name if template else 'Tax payment',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form.id, 'form')],
+            'view_id': compose_form.id,
+            'target': 'new',
+            'context': ctx,
+        }
+
+    def _get_return_mail_recipients(self):
+        mail = self.env['mail.mail'].search([
+            ('model', '=', 'account.return'),
+            ('record_company_id', '=', self.company_id.id),
+        ], order='create_date desc', limit=1)
+        return mail.partner_ids.ids or self.env.user.partner_id.ids
 
     ####################################################################################################
     ####  Tax Closing
