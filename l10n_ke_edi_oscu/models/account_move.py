@@ -81,7 +81,10 @@ class AccountMove(models.Model):
         self.filtered(lambda m: m.l10n_ke_oscu_invoice_number).show_reset_to_draft_button = False
 
     @api.depends('invoice_line_ids.product_id',
-                 'invoice_line_ids.product_uom_id')
+                 'invoice_line_ids.product_uom_id',
+                 'reversed_entry_id',
+                 'l10n_ke_reason_code_id',
+                 'l10n_ke_payment_method_id')
     def _compute_l10n_ke_validation_message(self):
         """ Compute the series of messages to be displayed in the banner at the header of the invoice. """
         for move in self:
@@ -94,6 +97,11 @@ class AccountMove(models.Model):
                 **product_lines.product_id._l10n_ke_get_validation_messages(for_invoice=True),
                 **product_lines.product_uom_id._l10n_ke_get_validation_messages(),
             }
+            if move.l10n_ke_oscu_invoice_number and not move.l10n_ke_oscu_receipt_number and not move.l10n_ke_oscu_signature:
+                messages['timeout_warning'] = {
+                    'message': _("The eTIMS connection timed out while sending the invoice, please try again later.")
+                }
+
             if move.is_purchase_document(include_receipts=True) and not move.l10n_ke_payment_method_id:
                 messages['no_payment_method_warning'] = {
                     'message': _("An eTIMS payment method is required when confirming a purchase. "),
@@ -102,6 +110,11 @@ class AccountMove(models.Model):
             if move.move_type == 'out_refund' and not move.l10n_ke_reason_code_id:
                 messages['no_reason_code_warning'] = {
                     'message': _("A KRA reason code is required when creating credit notes. "),
+                    'blocking': True,
+                }
+            if move.move_type == 'out_refund' and not move.reversed_entry_id:
+                messages['no_reversed_entry_warning'] = {
+                    'message': _("A credit note must be linked to a valid invoice. "),
                     'blocking': True,
                 }
             if product_lines.filtered(lambda line: not line.product_id):
@@ -453,12 +466,29 @@ class AccountMove(models.Model):
         return fields_list
 
     def _l10n_ke_oscu_send_customer_invoice(self):
+        self.env['res.company']._with_locked_records(self)
         company = self.company_id
+
+        if self.l10n_ke_oscu_invoice_number:
+            error, data = self._l10n_ke_oscu_fetch_invoice_details()
+            if not error:
+                date_str = data['sdcDateTime'].split('.')[0]  # Remove microseconds
+                signing_date = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=ZoneInfo('Africa/Nairobi')).astimezone(ZoneInfo('UTC')).replace(tzinfo=None)
+                self.write({
+                    'l10n_ke_oscu_receipt_number': data['curRcptNo'],
+                    'l10n_ke_oscu_signature': data['rcptSign'],
+                    'l10n_ke_oscu_datetime': signing_date,
+                    'l10n_ke_oscu_internal_data': data['intrlData'],
+                    'l10n_ke_control_unit': company.l10n_ke_control_unit,
+                })
+                return data, error
+            elif error['code'] == 'TIM':
+                return data, error
 
         content = self._l10n_ke_oscu_json_from_move()
 
         try:
-            content['invcNo'] = self._l10n_ke_get_invoice_sequence().next_by_id()
+            self.l10n_ke_oscu_invoice_number = content['invcNo'] = self.l10n_ke_oscu_invoice_number or self._l10n_ke_get_invoice_sequence().next_by_id()
         except LockNotAvailable:
             raise UserError(_("Another user is already sending this invoice.")) from None
 
@@ -466,15 +496,15 @@ class AccountMove(models.Model):
         if not error:
             self.write({
                 'l10n_ke_oscu_receipt_number': data['curRcptNo'],
-                'l10n_ke_oscu_invoice_number': content['invcNo'],
                 'l10n_ke_oscu_signature': data['rcptSign'],
                 'l10n_ke_oscu_datetime': parse_etims_datetime(data['sdcDateTime']),
                 'l10n_ke_oscu_internal_data': data['intrlData'],
                 'l10n_ke_control_unit': company.l10n_ke_control_unit,
             })
-        else:
+        elif error['code'] != 'TIM':
             # In order not to rollback, but just to avoid consuming the invoice number
             self._l10n_ke_get_invoice_sequence().number_next -= 1
+            self.l10n_ke_oscu_invoice_number = False
         return content, error
 
     # === Sending to eTIMS: vendor bills === #
@@ -516,6 +546,27 @@ class AccountMove(models.Model):
 
             move.l10n_ke_oscu_invoice_number = content['invcNo']
             move.message_post(body=_("Purchase confirmed on eTIMS."))
+
+    # === Fetching from eTIMS: Invoice Details === #
+    def _l10n_ke_oscu_fetch_invoice_details(self):
+        """
+        Fetch invoice details from the KRA eTIMS system by its invoice number.
+
+        :param int invoice_number: the invoice number to fetch from the KRA.
+        """
+        self.ensure_one()
+        company = self.company_id
+        error, data, _date = company._l10n_ke_call_etims(
+            'selectInvoiceDetails',
+            {'invcNo': self.l10n_ke_oscu_invoice_number}
+        )
+        if error:
+            if error['code'] == '001':
+                _logger.warning("There is no invoice with number %s on the OSCU for %s.", self.l10n_ke_oscu_invoice_number, company.name)
+            else:
+                _logger.error("Error retrieving invoice details from the OSCU: %s: %s", error['code'], error['message'])
+            return error, None
+        return [], data['salesList'][0]['receipt'] if data['salesList'] else None
 
     # === Fetching from eTIMS: vendor bills === #
 
