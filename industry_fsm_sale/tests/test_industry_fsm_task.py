@@ -134,3 +134,40 @@ class TestIndustryFsmTask(TestFsmFlowSaleCommon):
 
         project_id = fsm_project.action_create_from_template()
         self.assertTrue(project_id.task_ids.under_warranty, "The 'under_warranty' is not copied from the template task.")
+
+    def test_fsm_task_timesheet_uses_customer_pricelist(self):
+        """Test that the timesheet service line uses the fixed price from the customer's assigned pricelist.
+
+            Steps to reproduce:
+            - Create a fixed-price pricelist that applies to all products.
+            - Assign the pricelist to the customer.
+            - Create a task linked to that customer.
+            - Add a timesheet entry to the task.
+            - Mark the task as done.
+            - Verify that the price of the timesheet service line in the sale order matches the fixed price from the pricelist.
+        """
+        pricelist = self.env['product.pricelist'].create({
+            'name': 'Price List',
+            'currency_id': self.env.company.currency_id.id,
+            'item_ids': [Command.create({
+                'applied_on': '3_global',
+                'compute_price': 'fixed',
+                'fixed_price': 0.0,
+            })],
+        })
+
+        self.partner.property_product_pricelist = pricelist
+        self.task.partner_id = self.partner
+        self.env['account.analytic.line'].create({
+            'employee_id': self.employee_user2.id,
+            'task_id': self.task.id,
+            'unit_amount': 2.0,
+            'date': '2025-06-17',
+        })
+
+        self.task.action_fsm_validate()
+        self.assertEqual(
+            self.task.sale_line_id.price_unit,
+            pricelist.item_ids[0].fixed_price,
+            "The service price does not match the fixed price defined in the customer's pricelist."
+        )
