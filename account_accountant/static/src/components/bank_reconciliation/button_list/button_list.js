@@ -146,6 +146,8 @@ export class BankRecButtonList extends Component {
             ]);
         }
         await this._setAccountOnReconcileLine(this.lastAccountMoveLine.data.id, accountId);
+        this.props.statementLine.load();
+        this.bankReconciliation.reloadChatter();
     }
 
     /**
@@ -161,6 +163,8 @@ export class BankRecButtonList extends Component {
             ]);
         }
         await this._setAccountOnReconcileLine(this.lastAccountMoveLine.data.id, accountId);
+        this.props.statementLine.load();
+        this.bankReconciliation.reloadChatter();
     }
 
     /**
