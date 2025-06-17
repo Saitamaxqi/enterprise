@@ -17,7 +17,7 @@ class PurchaseOrder(models.Model):
         for order in self:
             uncommitted_amount = sum(
                 line.price_unit * (line.product_qty - line.qty_invoiced)
-                for line in order.order_line
+                for line in order.order_line if line.budget_line_ids
             ) if order.state not in ('purchase', 'done') else 0
             order.is_above_budget = any(
                 budget.committed_amount + uncommitted_amount > budget.budget_amount

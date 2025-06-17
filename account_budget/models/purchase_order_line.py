@@ -25,22 +25,32 @@ class PurchaseOrderLine(models.Model):
     def _compute_budget_line_ids(self):
         def get_domain(line):
             if line.analytic_json and line.product_qty - line.qty_received > 0:
+                project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
+                domain_to_add = set()
+                for plan in project_plan + other_plans:
+                    domain_to_add.add(plan._column_name())
+
                 for json in line.analytic_json:
-                    return tuple([
+                    domain = [
                         ('budget_analytic_id', 'any', (
                             ('budget_type', '!=', 'revenue'),
                             ('state', '=', 'confirmed'),
                         )),
                         ('date_from', '<=', line.order_id.date_order),
                         ('date_to', '>=', line.order_id.date_order),
-                    ] + [
-                        (key, '=', value)
-                        for key, value in json.items()
-                        if key in self.env['budget.line']._fields
-                    ])
+                    ]
+                    for key, value in json.items():
+                        if key in self.env['budget.line']._fields:
+                            domain += [(key, '=', value)]
+                            domain_to_add.discard(key)
+                    for key in domain_to_add:
+                        domain += [(key, '=', False)]
+                    return tuple(domain)
 
         for domain, lines in self.grouped(get_domain).items():
-            lines.budget_line_ids = bool(domain) and self.sudo().env['budget.line'].search(list(domain))
+            budget_lines = bool(domain) and self.sudo().env['budget.line'].search(list(domain))
+            for line in lines:
+                line.budget_line_ids = budget_lines
 
     @api.depends('budget_line_ids', 'price_unit', 'product_qty', 'qty_invoiced')
     def _compute_above_budget(self):
