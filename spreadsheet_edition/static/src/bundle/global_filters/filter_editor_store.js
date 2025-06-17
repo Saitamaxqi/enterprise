@@ -21,7 +21,7 @@ export class FilterEditorStore extends SpreadsheetStore {
         "updateRelationModelLabel",
     ];
 
-    constructor(get, initialProps, type, orm, fieldService) {
+    constructor(get, initialProps, type) {
         super(get);
         this.isNew = !initialProps.id;
         this.filterId = initialProps.id || new UuidGenerator().smallUuid();
@@ -223,6 +223,14 @@ export class FilterEditorStore extends SpreadsheetStore {
             return;
         }
         let filter = this.draft;
+        if (!this.filter.label) {
+            this.notificationStore.notifyUser({
+                text: _t("Label is missing."),
+                type: "danger",
+                sticky: false,
+            });
+            return;
+        }
         if (filter.rangesOfAllowedValues) {
             // rangesOfAllowedValues is an array of RangeData in the command
             filter = {

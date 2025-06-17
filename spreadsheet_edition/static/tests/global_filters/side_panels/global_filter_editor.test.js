@@ -1091,3 +1091,23 @@ test("Create a new relational global filter with a list snapshot", async functio
         type: "many2one",
     });
 });
+
+test("Cannot save filter with empty label", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    addGlobalFilterWithoutReload(model, {
+        id: "42",
+        type: "text",
+        label: "Text Filter",
+    });
+    await openSidePanel(model, env, "42", {
+        notifyUser: (notif) => {
+            expect.step("notifyUser");
+            expect(notif.type).toBe("danger");
+            expect(notif.text).toBe("Label is missing.");
+            expect(notif.sticky).toBe(false);
+        },
+    });
+    await contains(".o_global_filter_label").edit("");
+    await contains(".o_global_filter_save").click();
+    expect.verifySteps(["notifyUser"]);
+});
