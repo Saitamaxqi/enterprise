@@ -59,4 +59,15 @@ patch(PosOrder.prototype, {
         this.blackbox_time = data.time.replace(/(\d{2})(\d{2})(\d{2})/g, "$1:$2:$3");
         this.blackbox_date = data.date.replace(/(\d{4})(\d{2})(\d{2})/g, "$3-$2-$1");
     },
+    getBlackboxData() {
+        return {
+            blackbox_signature: this.blackbox_signature,
+            plu_hash: this.plu_hash,
+            blackbox_vsc_identification_number: this.blackbox_vsc_identification_number,
+            blackbox_unique_fdm_production_number: this.blackbox_unique_fdm_production_number,
+            blackbox_ticket_counters: this.blackbox_ticket_counters,
+            blackbox_time: this.blackbox_time,
+            blackbox_date: this.blackbox_date,
+        };
+    },
 });
