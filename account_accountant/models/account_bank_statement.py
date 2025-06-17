@@ -674,12 +674,12 @@ class AccountBankStatementLine(models.Model):
     def _prepare_reconciliation_rule_data(self, statement_lines, account_id):
         """Prepares data for reconciliation rule creation."""
         payment_refs = [line.payment_ref for line in statement_lines]
-        common_substring = self._get_common_substring(payment_refs).strip()
+        common_substring = self._get_common_substring(payment_refs)
         account = self.env['account.account'].browse(account_id)
 
         return {
             'name': account.name,
-            'common_substring': common_substring,
+            'common_substring': common_substring and common_substring.strip(),
             'account': account,
             'partner_ids': statement_lines.partner_id.ids if len(statement_lines.partner_id.ids) == 1 else [],
         }

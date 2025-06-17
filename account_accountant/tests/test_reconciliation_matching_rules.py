@@ -644,6 +644,42 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         lines_to_reload = line_to_match_2.set_account_bank_statement_line(line_to_match_2.line_ids[-1].id, account_a.id)
         self.assertEqual(lines_to_reload, unreconciled_line)
 
+    def test_common_substring_handles_none_safely(self):
+        """Test that the common_substring function handles None values safely."""
+        account_a, account_b = self.env['account.account'].create([{
+            'name': "Edge Case Account A",
+            'code': "040404",
+            'account_type': "asset_current",
+        }, {
+            'name': "Temporary Account B",
+            'code': "050505",
+            'account_type': "asset_current",
+        }])
+
+        payment_refs = [
+            'Hello',
+            'Test',
+            'Demo',
+        ]
+
+        lines = []
+        for ref in payment_refs:
+            line = self._create_st_line(amount=1.0, payment_ref=ref)
+            lines.append(line)
+
+        for i in range(2):
+            lines[i].set_account_bank_statement_line(lines[i].line_ids[-1].id, account_a.id)
+
+        lines[2].set_account_bank_statement_line(lines[2].line_ids[-1].id, account_b.id)
+        lines[2].delete_reconciled_line(lines[2].line_ids[-1].id)
+        lines[2].set_account_bank_statement_line(lines[2].line_ids[-1].id, account_a.id)
+        # Assert that the reconciliation model has not been created and no crash occurs.
+        reco_model = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', '=', ''),
+        ])
+        self.assertFalse(reco_model.exists())
+
     def test_auto_rule_creation_and_matching_for_lines_without_payment_ref(self):
         """ Assert bank statement lines without a payment reference will not affect the matching algorithm """
         account_a = self.env['account.account'].create({
