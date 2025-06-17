@@ -19,6 +19,7 @@ export class GanttEmployeeAvatar extends Avatar {
         if (!this.avatarCard.isOpen) {
             this.avatarCard.open(target, {
                 id: this.props.resId,
+                recordModel: this.props.resModel,
             });
         }
     }
