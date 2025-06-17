@@ -619,7 +619,7 @@ class AccountBankStatementLine(models.Model):
             return self.env['account.bank.statement.line'].search([
                 ('journal_id', '=', self.journal_id.id),
                 ('is_reconciled', '=', False),
-                ('move_id.line_ids.reconcile_model_id', '=', new_rule.id)
+                ('move_id.line_ids.reconcile_model_id', '=', new_rule.id),
             ])
         return self.env['account.bank.statement.line']
 
@@ -648,8 +648,9 @@ class AccountBankStatementLine(models.Model):
         bank_stmt_line_domain = [
             ('company_id', '=', company_id),
             ('journal_id', '=', self.journal_id.id),
+            ('payment_ref', '!=', False),
             ('move_id.line_ids.account_id', '=', account_id),
-            ('move_id.line_ids.reconcile_model_id', '=', False)
+            ('move_id.line_ids.reconcile_model_id', '=', False),
         ]
         previous_statement_lines = self.env['account.bank.statement.line'].search(
             bank_stmt_line_domain, limit=5, order='internal_index desc'

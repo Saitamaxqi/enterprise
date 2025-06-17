@@ -644,6 +644,30 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         lines_to_reload = line_to_match_2.set_account_bank_statement_line(line_to_match_2.line_ids[-1].id, account_a.id)
         self.assertEqual(lines_to_reload, unreconciled_line)
 
+    def test_auto_rule_creation_and_matching_for_lines_without_payment_ref(self):
+        """ Assert bank statement lines without a payment reference will not affect the matching algorithm """
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        bank_stmt_line_1 = self._create_st_line(amount=100, payment_ref=None)
+        bank_stmt_line_2 = self._create_st_line(amount=200, payment_ref=None)
+        bank_stmt_line_3 = self._create_st_line(amount=300, payment_ref='VISA PAYMENT 300 EUR')
+        bank_stmt_line_4 = self._create_st_line(amount=400, payment_ref='VISA PAYMENT 400 EUR')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
+        bank_stmt_line_3.set_account_bank_statement_line(bank_stmt_line_3.line_ids[-1].id, account_a.id)
+        bank_stmt_line_4.set_account_bank_statement_line(bank_stmt_line_4.line_ids[-1].id, account_a.id)
+        # Assert that the reconciliation model has been created even when not all the recent bank statement lines have
+        # a payment reference.
+        reco_model = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', '=', 'VISA PAYMENT \\d+ EUR'),
+        ])
+        self.assertTrue(reco_model.exists())
+
     def test_discount_amount(self):
         _invoice_line_1 = self._create_invoice_line(100, self.partner_1, 'out_invoice')
         invoice_line_2 = self._create_invoice_line(100, self.partner_1, 'out_invoice')
