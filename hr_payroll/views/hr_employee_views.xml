@@ -10,13 +10,13 @@
             <button name="action_open_versions" position="before">
                 <button class="oe_stat_button" name="action_open_payslips"
                         type="object" icon="fa-dollar" groups="hr_payroll.group_hr_payroll_user"
-                        invisible="payslips_count == 0 or date_version &gt; current_date_version">
-                    <field name="payslips_count" string="Payslips" widget="statinfo"/>
+                        invisible="payslip_count == 0">
+                    <field name="payslip_count" string="Payslips" widget="statinfo"/>
                 </button>
                 <button class="oe_stat_button" name="%(action_hr_payslip_new)d"
                         type="action" icon="fa-dollar" groups="hr_payroll.group_hr_payroll_user"
                         context="{'default_employee_id': id, 'default_version_id': version_id}"
-                        invisible="not employee_id or payslips_count or date_version &gt; current_date_version">
+                        invisible="not employee_id or payslip_count">
                         <div class="o_stat_info">
                             <span class="o_stat_text">Payslips</span>
                             <span class="o_stat_value">New</span>

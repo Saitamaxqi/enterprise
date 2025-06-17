@@ -44,8 +44,8 @@ class HrEmployee(models.Model):
         action.update({
             'domain': [('employee_id', '=', self.id)],
             'context': {
-                'search_default_version_id': self.version_id.id,
-                'default_version_id': self.version_id.id,
+                'search_default_group_by_version_id': 1,
+                'default_employee_id': self.id,
             },
         })
         return action

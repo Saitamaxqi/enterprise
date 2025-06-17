@@ -292,6 +292,7 @@
                 <separator/>
                 <group expand="0" string="Group By">
                     <filter string="Employee" name="group_by_employee_id" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Version" name="group_by_version_id" context="{'group_by': 'version_id'}"/>
                     <filter string="Department" name="group_by_department_id" context="{'group_by':'department_id'}"/>
                     <filter string="Job Position" name="group_by_job_id" context="{'group_by':'job_id'}"/>
                     <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
@@ -331,6 +332,7 @@
         <field name="search_view_id" ref="view_hr_payslip_filter"/>
         <field name="context">{'search_default_group_by_batch': 1}</field>
     </record>
+
     <record id="action_view_hr_payslip_month_form" model="ir.actions.act_window">
         <field name="name">Employee Payslips</field>
         <field name="res_model">hr.payslip</field>
