@@ -160,15 +160,13 @@ class TestCFDIInvoice(TestMxEdiCommon):
     def test_invoice_taxes_cuota(self):
         self.env['decimal.precision'].search([('name', '=', 'Product Price')]).digits = 6
         self.partner_mx.l10n_mx_edi_ieps_breakdown = True
-        tax_cuota = self.env['account.tax'].create({
-            'name': "Cuota 14.0163",
-            'amount_type': 'fixed',
-            'amount': 14.0163,
-            'l10n_mx_factor_type': 'Cuota',
-            'l10n_mx_tax_type': 'ieps',
-            'include_base_amount': True,
-            'sequence': 10,
-        })
+        tax_cuota = self.fixed_tax(
+            name="Cuota 14.0163",
+            amount=14.0163,
+            l10n_mx_factor_type='Cuota',
+            l10n_mx_tax_type='ieps',
+            sequence=10.0,
+        )
 
         with self.mx_external_setup(self.frozen_today):
             # Test the first invoice CFDI.
@@ -214,6 +212,47 @@ class TestCFDIInvoice(TestMxEdiCommon):
             with self.with_mocked_pac_sign_success():
                 payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
             self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_cuota_2_payment')
+
+    def test_invoice_taxes_cuota_with_custom_tax(self):
+        account_tax_python = self.env['ir.module.module']._get('account_tax_python')
+        if account_tax_python.state != 'installed':
+            return
+
+        tax_cuota = self.python_tax(
+            formula="6.4555 * quantity",
+            l10n_mx_factor_type='Cuota',
+            l10n_mx_tax_type='ieps',
+            price_include_override='tax_included',
+            include_base_amount=True,
+            sequence=1,
+        )
+        self.tax_16.price_include_override = 'tax_included'
+        self.tax_16.sequence = 2
+
+        def create_invoice():
+            return self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'quantity': 43775.0,
+                        'price_unit': 18.33,
+                        'tax_ids': [Command.set((tax_cuota + self.tax_16).ids)],
+                    })
+                ],
+            )
+
+        with self.mx_external_setup(self.frozen_today):
+            # Test the invoice CFDI.
+            invoice = create_invoice()
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_invoice_taxes_cuota_with_custom_tax_invoice')
+
+            # Test the payment CFDI.
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_cuota_with_custom_tax_payment')
 
     def test_tax_objected_01(self):
         with self.mx_external_setup(self.frozen_today):

@@ -16,7 +16,7 @@
 						</pago20:RetencionesDR>
 						<pago20:TrasladosDR>
 							<pago20:TrasladoDR BaseDR="4000.00" ImporteDR="320.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.080000"/>
-							<pago20:TrasladoDR BaseDR="4320.00" ImporteDR="14.02" ImpuestoDR="003" TipoFactorDR="Cuota" TasaOCuotaDR="0.003245"/>
+							<pago20:TrasladoDR BaseDR="1.00" ImporteDR="14.02" ImpuestoDR="003" TipoFactorDR="Cuota" TasaOCuotaDR="14.016300"/>
 						</pago20:TrasladosDR>
 					</pago20:ImpuestosDR>
 				</pago20:DoctoRelacionado>
@@ -26,7 +26,7 @@
 					</pago20:RetencionesP>
 					<pago20:TrasladosP>
 						<pago20:TrasladoP BaseP="4000.000000" ImporteP="320.000000" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.080000"/>
-						<pago20:TrasladoP BaseP="4320.000000" ImporteP="14.020000" ImpuestoP="003" TipoFactorP="Cuota" TasaOCuotaP="0.003245"/>
+						<pago20:TrasladoP BaseP="1.000000" ImporteP="14.020000" ImpuestoP="003" TipoFactorP="Cuota" TasaOCuotaP="14.016300"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>

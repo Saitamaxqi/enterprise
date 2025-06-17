@@ -6,14 +6,14 @@
 		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="523.448276" Importe="523.448276" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
-					<cfdi:Traslado Base="523.448276" Importe="14.016374" Impuesto="003" TipoFactor="Cuota" TasaOCuota="0.026777"/>
+					<cfdi:Traslado Base="1.000000" Importe="14.016300" Impuesto="003" TipoFactor="Cuota" TasaOCuota="14.016300"/>
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
 	</cfdi:Conceptos>
 	<cfdi:Impuestos TotalImpuestosTrasladados="14.02">
 		<cfdi:Traslados>
-			<cfdi:Traslado Base="523.45" Importe="14.02" Impuesto="003" TipoFactor="Cuota" TasaOCuota="0.026777"/>
+			<cfdi:Traslado Base="1.00" Importe="14.02" Impuesto="003" TipoFactor="Cuota" TasaOCuota="14.016300"/>
 		</cfdi:Traslados>
 	</cfdi:Impuestos>
 	<cfdi:Complemento>

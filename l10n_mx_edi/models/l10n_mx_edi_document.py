@@ -847,7 +847,8 @@ class L10n_Mx_EdiDocument(models.Model):
             discount = base_line['discount']
             price_unit = base_line['price_unit']
             quantity = base_line['quantity']
-            price_subtotal = base_line['price_subtotal'] = base_line['tax_details']['raw_total_excluded_currency']
+            tax_details = base_line['tax_details']
+            price_subtotal = base_line['price_subtotal'] = tax_details['raw_total_excluded_currency']
 
             if discount == 100.0:
                 gross_price_subtotal_before_discount = price_unit * quantity
@@ -856,6 +857,42 @@ class L10n_Mx_EdiDocument(models.Model):
 
             base_line['gross_price_subtotal'] = gross_price_subtotal_before_discount
             base_line['discount_amount_before_dispatching'] = gross_price_subtotal_before_discount - price_subtotal
+
+            for tax_data in tax_details['taxes_data']:
+                tax = tax_data['tax']
+                l10n_mx_tax_data_values = tax_data['l10n_mx'] = {
+                    'tipo_factor': tax.l10n_mx_factor_type,
+                    'impuesto': TAX_TYPE_TO_CFDI_CODE.get(tax.l10n_mx_tax_type),
+                    'is_withholding': tax.amount < 0.0,
+                }
+
+                if l10n_mx_tax_data_values['tipo_factor'] == 'Cuota':
+                    if tax.amount_type == 'fixed':
+                        # The user is managing IEPS with fixed tax like 4.6555 * quantity.
+                        # In that case, the tax amount will be the quota and the quantity will be the base.
+                        l10n_mx_tax_data_values['tasa_o_cuota'] = tax.amount
+                        l10n_mx_tax_data_values['scale_from_quantity'] = True
+                        l10n_mx_tax_data_values['product_field'] = None
+                    elif tax.amount_type == 'code':
+                        # The user is managing IEPS with custom tax like 4.6555 * product.l10n_mx_quantity_in_ml.
+                        # In that case, the tax amount will be retrieved from the formula as an arbitrary value, here 4.6555.
+                        # The base amount will be retrieved from the product using the 'l10n_mx_quantity_in_ml' field.
+                        pattern = r'-?(?:\d*\.\d+|\d+)'
+                        candidates_amounts = re.findall(pattern, tax.formula)
+                        l10n_mx_tax_data_values['tasa_o_cuota'] = abs(float(candidates_amounts[0])) if candidates_amounts else 0.0
+                        pattern = r'\bquantity\b'
+                        l10n_mx_tax_data_values['scale_from_quantity'] = bool(re.findall(pattern, tax.formula))
+                        product_fields = tax.formula_decoded_info['product_fields']
+                        l10n_mx_tax_data_values['product_field'] = product_fields[0] if product_fields else None
+                    else:
+                        # Wrong config.
+                        l10n_mx_tax_data_values['tasa_o_cuota'] = 0.0
+                        l10n_mx_tax_data_values['scale_from_quantity'] = False
+                        l10n_mx_tax_data_values['product_field'] = None
+                elif l10n_mx_tax_data_values['tipo_factor'] == 'Tasa':
+                    l10n_mx_tax_data_values['tasa_o_cuota'] = abs(tax.amount / 100.0)
+                else:
+                    l10n_mx_tax_data_values['tasa_o_cuota'] = None
 
     @api.model
     def _add_base_lines_cfdi_values(self, cfdi_values, base_lines):
@@ -872,10 +909,7 @@ class L10n_Mx_EdiDocument(models.Model):
                 return None
             tax = tax_data['tax']
             return {
-                'tipo_factor': tax.l10n_mx_factor_type,
-                'impuesto': TAX_TYPE_TO_CFDI_CODE.get(tax.l10n_mx_tax_type),
-                'tax_amount_field': tax.amount,
-                'is_withholding': tax.amount < 0.0,
+                **tax_data['l10n_mx'],
                 'skip': tax.l10n_mx_tax_type == 'local',
             }
 
@@ -928,23 +962,22 @@ class L10n_Mx_EdiDocument(models.Model):
                 is_withholding = grouping_key['is_withholding']
 
                 tax_values = {
-                    'base': values['raw_base_amount_currency'],
                     'raw_importe': values['raw_tax_amount_currency'] * (-1 if is_withholding else 1),
                     'importe': values['tax_amount_currency'] * (-1 if is_withholding else 1),
                     'impuesto': grouping_key['impuesto'],
                     'tipo_factor': grouping_key['tipo_factor'],
+                    'tasa_o_cuota': grouping_key['tasa_o_cuota'],
                 }
 
-                if grouping_key['tipo_factor'] == 'Tasa':
-                    tax_values['tasa_o_cuota'] = abs(grouping_key['tax_amount_field'] / 100.0)
-                elif grouping_key['tipo_factor'] == 'Cuota':
-                    if tax_values['base']:
-                        tax_values['tasa_o_cuota'] = round(tax_values['raw_importe'] / tax_values['base'], 6)
-                        tax_values['raw_importe'] = round(tax_values['base'] * tax_values['tasa_o_cuota'], 6)
+                if grouping_key['tipo_factor'] == 'Cuota':
+                    if grouping_key['scale_from_quantity']:
+                        tax_values['base'] = line['quantity']
+                    elif product[grouping_key['product_field']]:
+                        tax_values['base'] = product[grouping_key['product_field']]
                     else:
-                        tax_values['tasa_o_cuota'] = 0.0
+                        tax_values['base'] = 0.0
                 else:
-                    tax_values['tasa_o_cuota'] = None
+                    tax_values['base'] = values['raw_base_amount_currency']
 
                 if is_withholding:
                     cfdi_line_values['retenciones_list'].append(tax_values)
@@ -1010,10 +1043,7 @@ class L10n_Mx_EdiDocument(models.Model):
             tax = tax_data['tax']
             local_tax_name = tax.tax_group_id.name if tax.l10n_mx_tax_type == 'local' else None
             return {
-                'tipo_factor': tax.l10n_mx_factor_type,
-                'impuesto': TAX_TYPE_TO_CFDI_CODE.get(tax.l10n_mx_tax_type),
-                'tax_amount_field': tax.amount,
-                'is_withholding': tax.amount < 0.0,
+                **tax_data['l10n_mx'],
                 'local_tax_name': local_tax_name,
                 'skip': (
                     (
@@ -1034,41 +1064,38 @@ class L10n_Mx_EdiDocument(models.Model):
             if not grouping_key or grouping_key['skip']:
                 continue
 
-            if grouping_key['tipo_factor'] == 'Tasa':
-                tasa_o_cuota = abs(grouping_key['tax_amount_field'] / 100.0)
-            elif grouping_key['tipo_factor'] == 'Cuota':
-                if values['raw_base_amount_currency']:
-                    tasa_o_cuota = values['raw_tax_amount_currency'] / values['raw_base_amount_currency']
-                else:
-                    tasa_o_cuota = 0.0
-            else:
-                tasa_o_cuota = None
+            tax_values = {
+                'impuesto': grouping_key['impuesto'],
+                'tipo_factor': grouping_key['tipo_factor'],
+                'tasa_o_cuota': grouping_key['tasa_o_cuota'],
+                'local_tax_name': grouping_key['local_tax_name'],
+            }
 
-            is_withholding = grouping_key['is_withholding']
-            if is_withholding:
-                tax_values = {
-                    **grouping_key,
-                    'tasa_o_cuota': tasa_o_cuota,
-                    'base': values['base_amount_currency'],
-                    'importe': -values['tax_amount_currency'],
-                }
-                if grouping_key['local_tax_name']:
-                    tax_values['tasade'] = tasa_o_cuota * 100.0
-                    cfdi_values['local_retenciones_list'].append(tax_values)
-                else:
-                    cfdi_values['retenciones_list'].append(tax_values)
+            # Add the base amount.
+            if grouping_key['tipo_factor'] == 'Cuota':
+                tax_values['base'] = sum(
+                    base_line['quantity']
+                    if grouping_key['scale_from_quantity']
+                    else base_line['product_id'][grouping_key['product_field']]
+                    if grouping_key['product_field']
+                    else 0.0
+                    for base_line, _taxes_data in values['base_line_x_taxes_data']
+                )
             else:
-                tax_values = {
-                    **grouping_key,
-                    'tasa_o_cuota': tasa_o_cuota,
-                    'base': values['base_amount_currency'],
-                    'importe': values['tax_amount_currency'],
-                }
-                if grouping_key['local_tax_name']:
-                    tax_values['tasade'] = tasa_o_cuota * 100.0
-                    cfdi_values['local_traslados_list'].append(tax_values)
-                else:
-                    cfdi_values['traslados_list'].append(tax_values)
+                tax_values['base'] = values['base_amount_currency']
+
+            # Add the tax amount.
+            if grouping_key['is_withholding']:
+                tax_values['importe'] = -values['tax_amount_currency']
+            else:
+                tax_values['importe'] = values['tax_amount_currency']
+
+            target_list = 'retenciones_list' if grouping_key['is_withholding'] else 'traslados_list'
+            if grouping_key['local_tax_name']:
+                tax_values['tasade'] = tax_values['tasa_o_cuota'] * 100.0
+                cfdi_values[f'local_{target_list}'].append(tax_values)
+            else:
+                cfdi_values[target_list].append(tax_values)
 
         # Tax details, reduced list.
         def grouping_function_global_reduced_tax_details(base_line, tax_data):
