@@ -31,9 +31,10 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
     def _get_exporting_dict_data(self, result_dict, query_res):
         super()._get_exporting_dict_data(result_dict, query_res)
-        result_dict.update({
-            'name': query_res['name'],
-        })
+        if self.env.company.partner_id.country_id.code == 'DK':
+            result_dict.update({
+                'name': query_res['name'],
+            })
         return result_dict
 
     def dk_export_to_xlsx(self, options):

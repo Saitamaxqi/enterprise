@@ -39,10 +39,11 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
     def _get_exporting_dict_data(self, result_dict, query_res):
         super()._get_exporting_dict_data(result_dict, query_res)
-        result_dict.update({
-            'goods_description': query_res['goods_description'],
-            'system': result_dict['system'][0:2],
-        })
+        if self.env.company.partner_id.country_id.code == 'LT':
+            result_dict.update({
+                'goods_description': query_res['goods_description'],
+                'system': result_dict['system'][0:2],
+            })
         return result_dict
 
     @api.model

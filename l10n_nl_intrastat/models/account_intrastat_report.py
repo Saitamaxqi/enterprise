@@ -48,17 +48,18 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
     def _get_exporting_dict_data(self, result_dict, query_res):
         super()._get_exporting_dict_data(result_dict, query_res)
-        result_dict.update({
-            'system': result_dict['system'][0:2],
-            'product_id': query_res['product_id'],
-            'quantity': query_res['quantity'],
-            'price_subtotal': query_res['price_subtotal'],
-            'lst_price': query_res['lst_price'],
-            'country_dest_code': query_res['country_dest_code'],
-            'name': query_res['name'],
-            'invoice_date': query_res['invoice_date'],
-            'move_type': query_res['move_type'],
-        })
+        if self.env.company.partner_id.country_id.code == 'NL':
+            result_dict.update({
+                'system': result_dict['system'][0:2],
+                'product_id': query_res['product_id'],
+                'quantity': query_res['quantity'],
+                'price_subtotal': query_res['price_subtotal'],
+                'lst_price': query_res['lst_price'],
+                'country_dest_code': query_res['country_dest_code'],
+                'name': query_res['name'],
+                'invoice_date': query_res['invoice_date'],
+                'move_type': query_res['move_type'],
+            })
         return result_dict
 
     @api.model

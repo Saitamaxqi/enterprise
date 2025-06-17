@@ -64,14 +64,15 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
     def _get_exporting_dict_data(self, result_dict, query_res):
         super()._get_exporting_dict_data(result_dict, query_res)
-        result_dict.update({
-            'system': result_dict['system'][0:2],
-            'supplementary_units_code': query_res['supplementary_units_code'],
-            'product_id': query_res['product_id'],
-            'move_id': query_res['move_id'],
-            'partner_id': query_res['partner_id'],
-            'grouping_key': query_res['grouping_key'],
-        })
+        if self.env.company.account_fiscal_country_id.code == 'FR':
+            result_dict.update({
+                'system': result_dict['system'][0:2],
+                'supplementary_units_code': query_res['supplementary_units_code'],
+                'product_id': query_res['product_id'],
+                'move_id': query_res['move_id'],
+                'partner_id': query_res['partner_id'],
+                'grouping_key': query_res['grouping_key'],
+            })
         return result_dict
 
     @api.model

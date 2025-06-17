@@ -34,12 +34,13 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
     def _get_exporting_dict_data(self, result_dict, query_res):
         super()._get_exporting_dict_data(result_dict, query_res)
-        result_dict.update({
-            'goods_description': query_res['goods_description'],
-            'system': result_dict['system'][0:2],
-            'quantity': query_res['quantity'],
-            'supplementary_units_code': query_res['supplementary_units_code'],
-        })
+        if self.env.company.partner_id.country_id.code == 'DE':
+            result_dict.update({
+                'goods_description': query_res['goods_description'],
+                'system': result_dict['system'][0:2],
+                'quantity': query_res['quantity'],
+                'supplementary_units_code': query_res['supplementary_units_code'],
+            })
         return result_dict
 
     def de_intrastat_export_to_xml(self, options):
