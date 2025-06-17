@@ -15,6 +15,7 @@
                         type="scope.isSmall ? 'outline-success' : 'success'"
                         onClick="() => this.transfer(scope.contact)"
                         isSmall="scope.isSmall"
+                        hideLabel="scope.isSmall"
                     />
                 </t>
             </Keypad>
@@ -28,6 +29,7 @@
                         type="scope.isSmall ? 'outline-success' : 'success'"
                         onClick="() => this.transfer(scope.contact)"
                         isSmall="scope.isSmall"
+                        hideLabel="scope.isSmall"
                     />
                 </t>
             </AddressBook>
