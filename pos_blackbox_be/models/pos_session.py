@@ -5,7 +5,6 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from itertools import groupby
 from collections import Counter
-from odoo.service.common import exp_version
 
 
 class PosSession(models.Model):
@@ -39,24 +38,6 @@ class PosSession(models.Model):
         help="Sum of the amount of the corrections during the session"
     )
 
-    def _post_read_pos_data(self, data):
-        if self.config_id.certified_blackbox_identifier or \
-            (self.env.context.get("config_id") and self.env['pos.config'].browse(self.env.context.get("config_id")).certified_blackbox_identifier):
-            data[0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
-            data[0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
-            data[0]["_users_clocked_ids"] = self.users_clocked_ids.ids
-            data[0]["_employees_clocked_ids"] = self.employees_clocked_ids.ids
-        return super()._post_read_pos_data(data)
-
-    def _post_read_pos_self_data(self, data):
-        if (self.config_id.certified_blackbox_identifier or
-            (self.env.context.get("config_id") and self.env['pos.config'].browse(self.env.context.get("config_id")).certified_blackbox_identifier)) and \
-                len(data) > 0:
-            data[0]['_server_version'] = exp_version()
-            data[0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
-            data[0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
-        return super()._post_read_pos_self_data(data)
-
     def load_data(self, models_to_load):
         response = super().load_data(models_to_load)
         if self.config_id.iface_fiscal_data_module and self.config_id.module_pos_hr:
@@ -66,6 +47,14 @@ class PosSession(models.Model):
             insz_or_bis_number_per_employee_id = {employee['id']: employee['insz_or_bis_number'] for employee in employees_insz_or_bis_number}
             response['pos.session'][0]['_employee_insz_or_bis_number'] = insz_or_bis_number_per_employee_id
         return response
+
+    def _load_pos_data_read(self, records, config):
+        read_records = super()._load_pos_data_read(records, config)
+        record = read_records[0]
+        if config.certified_blackbox_identifier:
+            record["_users_clocked_ids"] = self.users_clocked_ids.ids
+            record["_employees_clocked_ids"] = self.employees_clocked_ids.ids
+        return read_records
 
     @api.depends("order_ids")
     def _compute_amount_of_vat_tickets(self):
@@ -98,7 +87,7 @@ class PosSession(models.Model):
         self.config_id._notify("CLOCKING", {
             'session_id': self.id,
             'data': {
-                'pos.session': self._read_pos_record(self.id, self.config_id.id),
+                'pos.session': self._load_pos_data_read(self, self.config_id),
             }
         })
 

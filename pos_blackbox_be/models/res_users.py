@@ -18,10 +18,9 @@ class ResUsers(models.Model):
     )
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        result = super()._load_pos_data_fields(config_id)
-        config_id = self.env["pos.config"].browse(config_id)
-        if config_id.iface_fiscal_data_module:
+    def _load_pos_data_fields(self, config):
+        result = super()._load_pos_data_fields(config)
+        if config.iface_fiscal_data_module:
             result += ['insz_or_bis_number']
         return result
 

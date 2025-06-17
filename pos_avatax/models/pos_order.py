@@ -63,10 +63,10 @@ class PosOrder(models.Model):
 
         for order in order_ids:
             order.button_external_tax_calculation()
-            config_id = order.config_id
-            results['account.tax'] += order.lines.tax_ids.read(self.env['account.tax']._load_pos_data_fields(config_id), load=False)
-            results['account.tax.group'] += order.lines.tax_ids.tax_group_id.read(self.env['account.tax.group']._load_pos_data_fields(config_id), load=False)
-            results['pos.order'] += order.read(order._load_pos_data_fields(config_id), load=False)
-            results['pos.order.line'] += order.lines.read(order.lines._load_pos_data_fields(config_id), load=False) if config_id else []
+            config = order.config_id
+            results['account.tax'] += self.env['account.tax']._load_pos_data_read(order.lines.tax_ids, config)
+            results['account.tax.group'] += self.env['account.tax.group']._load_pos_data_read(order.lines.tax_ids.tax_group_id, config)
+            results['pos.order'] += self.env['pos.order']._load_pos_data_read(order, config)
+            results['pos.order.line'] += self.env['pos.order.line']._load_pos_data_read(order.lines, config) if config else []
 
         return results

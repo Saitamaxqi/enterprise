@@ -1,12 +1,12 @@
-from odoo import models
+from odoo import models, api
 
 
-class PosSession(models.Model):
-    _inherit = 'pos.session'
+class PosConfig(models.Model):
+    _inherit = 'pos.config'
 
-    def _load_pos_data(self, response):
-        # EXTENDS 'point_of_sale'
-        data = super()._load_pos_data(response)
+    @api.model
+    def _load_pos_data_read(self, records, config):
+        data = super()._load_pos_data_read(records, config)
         l10n_pe_edi_refund_reason = self.env['ir.model.fields']._get('account.move', 'l10n_pe_edi_refund_reason')
         data[0]['_l10n_pe_edi_refund_reason'] = [
             {'value': s.value, 'name': s.name}

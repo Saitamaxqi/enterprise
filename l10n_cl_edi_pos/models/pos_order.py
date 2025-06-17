@@ -70,8 +70,8 @@ class PosOrder(models.Model):
                 })
         return move
 
-    def read_pos_data(self, data, config_id):
-        result = super().read_pos_data(data, config_id)
+    def read_pos_data(self, data, config):
+        result = super().read_pos_data(data, config)
         if not len(self):
             return result
 
@@ -80,8 +80,6 @@ class PosOrder(models.Model):
             return result
 
         if len(self.filtered(lambda order: order.state in ['paid', 'invoiced'])) > 0:
-            account_move_fields = self.env['account.move']._load_pos_data_fields(config_id)
-            l10n_latam_document_type_fields = self.env['l10n_latam.document.type']._load_pos_data_fields(config_id)
-            result['account_move'] = self.account_move.read(account_move_fields, load=False)
-            result['l10n_latam.document.type'] = self.account_move.l10n_latam_document_type_id.read(l10n_latam_document_type_fields, load=False)
+            result['account_move'] = self.env['account.move']._load_pos_data_read(self.account_move, config)
+            result['l10n_latam.document.type'] = self.env['l10n_latam.document.type']._load_pos_data_read(self.account_move.l10n_latam_document_type_id, config)
         return result

@@ -89,7 +89,7 @@ class PosPrepDisplay(models.Model):
         return pdis_orderlines
 
     @api.model
-    def _load_pos_data_domain(self, data):
+    def _load_pos_data_domain(self, data, config):
         return [
             (
                 "id",
@@ -100,7 +100,7 @@ class PosPrepDisplay(models.Model):
                     .search([])
                     .filtered(
                         lambda d: not d.pos_config_ids
-                        or data["pos.config"][0]["id"] in d.pos_config_ids.ids
+                        or config.id in d.pos_config_ids.ids
                     )
                 ],
             )

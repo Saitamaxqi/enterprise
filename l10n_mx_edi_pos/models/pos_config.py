@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import _, models, api
 from odoo.exceptions import UserError
 
 
@@ -31,3 +31,13 @@ class PosConfig(models.Model):
             payment_method_ids.append(credit_card_pm.id)
 
         return journal, payment_method_ids
+
+    @api.model
+    def _load_pos_data_read(self, records, config):
+        read_records = super()._load_pos_data_read(records, config)
+        l10n_mx_edi_fiscal_regime = self.env['ir.model.fields']._get('res.partner', 'l10n_mx_edi_fiscal_regime')
+        l10n_mx_edi_usage = self.env['ir.model.fields']._get('account.move', 'l10n_mx_edi_usage')
+        read_records[0]['_l10n_mx_edi_fiscal_regime'] = [{'value': s.value, 'name': s.name} for s in l10n_mx_edi_fiscal_regime.selection_ids]
+        read_records[0]['_l10n_mx_edi_usage'] = [{'value': s.value, 'name': s.name} for s in l10n_mx_edi_usage.selection_ids]
+        read_records[0]['_l10n_mx_country_id'] = self.env['res.country'].search([('code', '=', 'MX')], limit=1).id
+        return read_records

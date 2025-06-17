@@ -42,7 +42,7 @@
                     <div>FDM ID: <t t-esc="order.blackbox_unique_fdm_production_number"/></div>
                     <div>Terminal ID: <t t-esc="order.config.id"/></div>
                     <div>D/H Terminal: <span><t t-esc="order.blackbox_date"/> <t t-esc="order.blackbox_time"/></span></div>
-                    <div>POS version: <t t-esc="order.session._server_version.server_version"/></div>
+                    <div>POS version: <t t-esc="order.config._server_version.server_version"/></div>
 
                     <div>Control data</div>
                     <div>FDM ticket counters:<t t-esc="order.blackbox_ticket_counters"/></div>

@@ -24,12 +24,12 @@ class PosConfig(models.Model):
     def _get_url_to_cache(self, debug):
         return super()._get_url_to_cache(debug) + self.env["ir.qweb"]._get_asset_links("web._assets_jquery", debug=debug)
 
-    def _load_pos_data(self, data):
-        response = super()._load_pos_data(data)
-
+    @api.model
+    def _load_pos_data_read(self, records, config):
+        read_records = super()._load_pos_data_read(records, config)
         is_eu_country = self.env.company.country_id in self.env.ref('base.europe').country_ids
-        response[0]["_is_eu_country"] = is_eu_country
-        return response
+        read_records[0]["_is_eu_country"] = is_eu_country
+        return read_records
 
     @api.depends('iface_printer_id')
     def _compute_print_via_proxy(self):

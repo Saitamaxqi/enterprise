@@ -18,7 +18,7 @@ patch(PosStore.prototype, {
     createNewOrder() {
         const order = super.createNewOrder(...arguments);
         if (!order.partner_id && this.isEcuadorianCompany()) {
-            order.partner_id = this.session._final_consumer_id;
+            order.partner_id = this.config._final_consumer_id;
         }
         return order;
     },
@@ -33,7 +33,7 @@ patch(PosStore.prototype, {
             return;
         }
         const currentPartner = currentOrder.getPartner();
-        if (currentPartner && currentPartner.id === this.session._final_consumer_id) {
+        if (currentPartner && currentPartner.id === this.config._final_consumer_id) {
             this.dialog.add(PartnerList, {
                 partner: currentPartner,
                 getPayload: (newPartner) => currentOrder.setPartner(newPartner),

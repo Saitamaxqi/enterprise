@@ -24,8 +24,8 @@ class ResCompany(models.Model):
     l10n_at_pos_company_scuid = fields.Char(string="Fiskaly SCU id (uuid)", readonly=True, copy=False)
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        fields = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        fields = super()._load_pos_data_fields(config)
         fields += ["l10n_at_is_fon_authenticated"]
         return fields
 

@@ -17,9 +17,9 @@ class ProductProduct(models.Model):
             'target': 'new',
         }
 
-    def _load_pos_data_fields(self, config_id):
+    def _load_pos_data_fields(self, config):
         """ This function add new fields on the product model in pos app. """
-        result = super()._load_pos_data_fields(config_id)
+        result = super()._load_pos_data_fields(config)
         if self.env.company.country_id.code == 'KE':
             result += [
                 'standard_price',
@@ -63,21 +63,8 @@ class ProductTemplate(models.Model):
 
 class ProductCode(models.Model):
     _name = 'product.unspsc.code'
-    _inherit = 'product.unspsc.code'
-
-    def _load_pos_data(self, data):
-        domain = []
-        fields = self._load_pos_data_fields(data['pos.config'][0]['id'])
-        data = self.search_read(domain, fields, load=False)
-        return data
+    _inherit = ['pos.load.mixin', 'product.unspsc.code']
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
+    def _load_pos_data_fields(self, config):
         return ['code']
-
-    def _post_read_pos_data(self, data):
-        return data
-
-    def _read_pos_record(self, ids, config_id):
-        fields = self._load_pos_data_fields(self.id)
-        return self.browse(ids).read(fields, load=False)

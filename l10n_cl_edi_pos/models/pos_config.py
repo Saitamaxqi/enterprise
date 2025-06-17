@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
 
@@ -27,3 +27,13 @@ class PosConfig(models.Model):
         if (self.env.ref('l10n_cl.par_cfa').id,) not in partner_ids:
             partner_ids.append((self.env.ref('l10n_cl.par_cfa').id,))
         return partner_ids
+
+    @api.model
+    def _load_pos_data_read(self, records, config):
+        read_records = super()._load_pos_data_read(records, config)
+
+        if self.env.company.country_id.code == 'CL':
+            read_records[0]['_consumidor_final_anonimo_id'] = self.env.ref('l10n_cl.par_cfa').id
+            read_records[0]['_l10n_cl_sii_regional_office_selection'] = dict(self.env.company._fields['l10n_cl_sii_regional_office'].selection)
+
+        return read_records

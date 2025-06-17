@@ -22,8 +22,8 @@ class PosOrder(models.Model):
             config = self.browse(order_id).config_id
         return bool(config and config.company_id.l10n_de_is_germany_and_fiskaly() and config.floor_ids)
 
-    def read_pos_data(self, data, config_id):
-        result = super().read_pos_data(data, config_id)
+    def read_pos_data(self, data, config):
+        result = super().read_pos_data(data, config)
         if not len(self):
             return result
 

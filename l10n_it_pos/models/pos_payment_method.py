@@ -19,6 +19,6 @@ class PosPaymentMethod(models.Model):
     it_payment_index = fields.Integer(string='Payment Index', default=0)
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        result = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        result = super()._load_pos_data_fields(config)
         return result + ['it_payment_code', 'it_payment_index']

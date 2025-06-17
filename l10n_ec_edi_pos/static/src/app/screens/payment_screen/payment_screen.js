@@ -8,7 +8,7 @@ patch(PaymentScreen.prototype, {
         if (this.pos.isEcuadorianCompany()) {
             if (
                 this.currentOrder.isRefund &&
-                this.currentOrder.getPartner().id === this.pos.session._final_consumer_id
+                this.currentOrder.getPartner().id === this.pos.config._final_consumer_id
             ) {
                 this.dialog.add(AlertDialog, {
                     title: _t("Refund not possible"),

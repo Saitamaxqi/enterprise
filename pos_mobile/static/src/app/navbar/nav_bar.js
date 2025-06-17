@@ -87,7 +87,7 @@ patch(Navbar.prototype, {
     _showDisplayAndGoToUrl({ displayId }) {
         mobile.methods
             .showDisplayAndGoToUrl({
-                url: `${this.pos.session._base_url}/pos_customer_display/${this.pos.config.id}/${this.pos.config.access_token}`,
+                url: `${this.pos.config._base_url}/pos_customer_display/${this.pos.config.id}/${this.pos.config.access_token}`,
                 displayId: displayId,
             })
             .catch((error) => {

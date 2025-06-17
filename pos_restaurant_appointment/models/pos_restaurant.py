@@ -8,8 +8,8 @@ class RestaurantTable(models.Model):
     appointment_resource_id = fields.Many2one('appointment.resource', string='Appointment resource', index='btree_not_null')
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        data = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        data = super()._load_pos_data_fields(config)
         data += ['appointment_resource_id']
         return data
 

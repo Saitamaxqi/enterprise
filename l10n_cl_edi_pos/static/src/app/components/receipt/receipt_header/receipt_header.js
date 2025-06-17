@@ -3,7 +3,7 @@ import { patch } from "@web/core/utils/patch";
 
 patch(ReceiptHeader.prototype, {
     get officeSelection() {
-        return this.order.session._l10n_cl_sii_regional_office_selection[
+        return this.order.config._l10n_cl_sii_regional_office_selection[
             this.order.company_id.l10n_cl_sii_regional_office
         ];
     },

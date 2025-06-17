@@ -15,8 +15,8 @@ class PosSelfOrderControllerIot(PosSelfOrderController):
         order.config_id._notify("PAYMENT_STATUS", {
             "payment_result": "fail",
             "data": {
-                "pos.order": order.read(order._load_pos_self_data_fields(order.config_id.id), load=False),
-                "pos.order.line": order.lines.read(order._load_pos_self_data_fields(order.config_id.id), load=False),
+                "pos.order": self.env['pos.order']._load_pos_self_data_read(order, pos_config),
+                "pos.order.line": self.env['pos.order.line']._load_pos_self_data_read(order.lines, pos_config),
             }
         })
 
@@ -42,7 +42,7 @@ class PosSelfOrderControllerIot(PosSelfOrderController):
             order.config_id._notify("PAYMENT_STATUS", {
                 "payment_result": "Success",
                 "data": {
-                    "pos.order": order.read(order._load_pos_self_data_fields(order.config_id.id), load=False),
-                    "pos.order.line": order.lines.read(order._load_pos_self_data_fields(order.config_id.id), load=False)
+                    "pos.order": self.env['pos.order']._load_pos_self_data_read(order, pos_config),
+                    "pos.order.line": self.env['pos.order.line']._load_pos_self_data_read(order.lines, pos_config),
                 }
             })

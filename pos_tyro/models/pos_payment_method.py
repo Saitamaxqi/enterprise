@@ -18,8 +18,8 @@ class PosPaymentMethod(models.Model):
     tyro_surcharge_product_id = fields.Many2one("product.product", string="Surcharge Product", default=lambda self: self._get_default_tyro_surcharge_product())
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        params = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        params = super()._load_pos_data_fields(config)
         params += ["tyro_merchant_id", "tyro_terminal_id", "tyro_integration_key", "tyro_mode", "tyro_integrated_receipts", "tyro_always_print_merchant_receipt", "tyro_surcharge_product_id"]
         return params
 

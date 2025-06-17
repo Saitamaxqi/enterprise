@@ -16,12 +16,11 @@ class ProductTemplate(models.Model):
                 product.l10n_br_pos_warning = _("Products with price-excluded taxes will not be loaded in NFC-e Point of Sales.")
 
     @api.model
-    def _load_pos_data_domain(self, data):
+    def _load_pos_data_domain(self, data, config):
         """Override."""
-        domain = super()._load_pos_data_domain(data)
-        config = data['pos.config'][0]
-        if config['l10n_br_is_nfce']:
-            taxes_domain = [*self.env["account.tax"]._check_company_domain(config['company_id']), ("price_include", "=", False)]
+        domain = super()._load_pos_data_domain(data, config)
+        if config.l10n_br_is_nfce:
+            taxes_domain = [*self.env["account.tax"]._check_company_domain(config.company_id.id), ("price_include", "=", False)]
             domain = Domain.AND(
                 [
                     domain,

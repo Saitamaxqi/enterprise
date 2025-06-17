@@ -58,7 +58,7 @@ class ResPartner(models.Model):
         if self.env.company.currency_id.id != config.currency_id.id:
             pos_currency = config.currency_id
             total_due = self.env.company.currency_id._convert(total_due, pos_currency, self.env.company, fields.Date.today())
-        partner = self.read(self._load_pos_data_fields(config_id), load=False)[0]
+        partner = self.env['res.partner']._load_pos_data_read(self, config)[0]
         partner['total_due'] = total_due
         return {
             'res.partner': [partner],
@@ -71,19 +71,20 @@ class ResPartner(models.Model):
         return due_amounts
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        params = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        params = super()._load_pos_data_fields(config)
         if self.env.user.has_group('account.group_account_readonly') or self.env.user.has_group('account.group_account_invoice'):
             params += ['credit_limit', 'total_due', 'use_partner_credit_limit', 'pos_orders_amount_due', 'invoices_amount_due', 'commercial_partner_id']
         return params
 
-    def _post_read_pos_data(self, data):
-        config_id = self.env['pos.config'].browse(self.env.context.get('config_id'))
+    @api.model
+    def _load_pos_data_read(self, records, config):
+        read_records = super()._load_pos_data_read(records, config)
 
-        if config_id.currency_id != self.env.company.currency_id and (self.env.user.has_group('account.group_account_readonly') or self.env.user.has_group('account.group_account_invoice')):
-            for partner in data:
-                partner['total_due'] = self.env.company.currency_id._convert(partner['total_due'], config_id.currency_id, self.env.company, fields.Date.today())
-        return super()._post_read_pos_data(data)
+        if config.currency_id != self.env.company.currency_id and (self.env.user.has_group('account.group_account_readonly') or self.env.user.has_group('account.group_account_invoice')):
+            for record in read_records:
+                record['total_due'] = self.env.company.currency_id._convert(record['total_due'], config.currency_id, self.env.company, fields.Date.today())
+        return read_records
 
     def _compute_has_moves(self):
         super()._compute_has_moves()

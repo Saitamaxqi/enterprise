@@ -11,12 +11,12 @@ class AppointmentResource(models.Model):
     pos_table_ids = fields.One2many('restaurant.table', 'appointment_resource_id', string='POS Table')
 
     @api.model
-    def _load_pos_data_domain(self, data):
-        if not data['pos.config'][0]['module_pos_restaurant']:
+    def _load_pos_data_domain(self, data, config):
+        if not config.module_pos_restaurant:
             return False
 
         return [('pos_table_ids', 'in', [table['id'] for table in data['restaurant.table']])]
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
+    def _load_pos_data_fields(self, config):
         return ['pos_table_ids']

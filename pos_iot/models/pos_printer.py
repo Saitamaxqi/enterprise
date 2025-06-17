@@ -19,7 +19,7 @@ class PosPrinter(models.Model):
                 raise ValidationError(_("Proxy IP cannot be empty."))
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        result = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        result = super()._load_pos_data_fields(config)
         result += ['device_identifier']
         return result

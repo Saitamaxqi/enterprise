@@ -7,7 +7,7 @@
                     <table style="display: inline-table;margin-left: 5px;">
                         <tr>
                             <td>
-                                POS version: <t t-esc="env.pos.session._server_version.server_serie"/>
+                                POS version: <t t-esc="env.pos.config._server_version.server_serie"/>
                             </td>
                         </tr>
                         <tr>

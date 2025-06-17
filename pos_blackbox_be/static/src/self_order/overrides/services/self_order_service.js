@@ -58,14 +58,14 @@ patch(SelfOrder.prototype, {
         super.initData(...arguments);
         if (
             this.config.iface_fiscal_data_module &&
-            this.session._product_product_work_in &&
-            this.session._product_product_work_out
+            this.config._product_product_work_in &&
+            this.config._product_product_work_out
         ) {
             this.config.work_in_product = this.models["product.product"].get(
-                this.session._product_product_work_in
+                this.config._product_product_work_in
             );
             this.config.work_out_product = this.models["product.product"].get(
-                this.session._product_product_work_out
+                this.config._product_product_work_out
             );
             const fiscal_data_category = this.config.work_in_product.pos_categ_ids[0];
             this.productCategories = this.productCategories.filter(

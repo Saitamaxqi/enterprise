@@ -32,7 +32,7 @@ patch(PosStore.prototype, {
     createNewOrder() {
         const order = super.createNewOrder(...arguments);
         if (!order.partner_id && this.isChileanCompany()) {
-            order.partner_id = this.session._consumidor_final_anonimo_id;
+            order.partner_id = this.config._consumidor_final_anonimo_id;
         }
         return order;
     },

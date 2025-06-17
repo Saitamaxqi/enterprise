@@ -11,8 +11,8 @@ class PosOrderLine(models.Model):
     settled_invoice_id = fields.Many2one('account.move', string='Settled Invoice')
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        params = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        params = super()._load_pos_data_fields(config)
         params += ['settled_order_id', 'settled_invoice_id']
         return params
 

@@ -24,8 +24,8 @@ class ResCompany(models.Model):
     )
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        params = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        params = super()._load_pos_data_fields(config)
         if self.env.company.account_fiscal_country_id.code == "BR":
             params += ["l10n_br_avalara_environment"]
         return params

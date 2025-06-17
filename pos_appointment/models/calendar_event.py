@@ -23,18 +23,17 @@ class CalendarEvent(models.Model):
             record.answers = (', ').join([answer.value_text_box or answer.value_answer_id.name for answer in record.appointment_answer_input_ids.sorted('id')])
 
     @api.model
-    def _load_pos_data_domain(self, data):
+    def _load_pos_data_domain(self, data, config):
         now = fields.Datetime.now()
-        dayAfter = fields.Date.today() + timedelta(days=1)
-        appointment_type_id = [config['appointment_type_id'] for config in data['pos.config']]
+        day_after = fields.Date.today() + timedelta(days=1)
         return [
             ('booking_line_ids.appointment_resource_id', '=', False),
-            ('appointment_type_id', 'in', appointment_type_id),
-            '|', '&', ('start', '>=', now), ('start', '<=', dayAfter), '&', ('stop', '>=', now), ('stop', '<=', dayAfter),
+            ('appointment_type_id', '=', config.appointment_type_id.id),
+            '|', '&', ('start', '>=', now), ('start', '<=', day_after), '&', ('stop', '>=', now), ('stop', '<=', day_after),
         ]
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
+    def _load_pos_data_fields(self, config):
         return ['id', 'start', 'duration', 'stop', 'name', 'appointment_type_id', 'appointment_status', 'appointment_resource_ids', 'total_capacity_reserved']
 
     def action_open_booking_gantt_view(self):

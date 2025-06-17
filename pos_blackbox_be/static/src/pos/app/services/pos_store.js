@@ -163,10 +163,10 @@ patch(PosStore.prototype, {
         await super.processServerData(loadedData);
 
         this.config.work_in_product = this.models["product.product"].get(
-            this.session._product_product_work_in
+            this.config._product_product_work_in
         );
         this.config.work_out_product = this.models["product.product"].get(
-            this.session._product_product_work_out
+            this.config._product_product_work_out
         );
     },
     disallowLineQuantityChange() {
@@ -257,7 +257,7 @@ patch(PosStore.prototype, {
                 serializedOrder.lines = [];
                 //add bb fields too);
                 serializedOrder.blackbox_order_sequence = await this.getBlackboxSequence(order);
-                serializedOrder.pos_version = this.session._server_version.server_version;
+                serializedOrder.pos_version = this.config._server_version.server_version;
                 const dataToSend = this.createOrderDataForBlackbox({
                     ...serializedOrder,
                     receipt_total: 0,
@@ -357,7 +357,7 @@ patch(PosStore.prototype, {
             lines: [],
             blackbox_order_sequence: order.blackbox_order_sequence,
             plu_hash: order.plu_hash,
-            pos_version: this.session._server_version.server_version,
+            pos_version: this.config._server_version.server_version,
             blackbox_ticket_counters: order.blackbox_ticket_counters,
             blackbox_unique_fdm_production_number: order.blackbox_unique_fdm_production_number,
             certified_blackbox_identifier: this.config.certified_blackbox_identifier,
@@ -397,7 +397,7 @@ patch(PosStore.prototype, {
             lines: this.getLineLogFields(order, receiptType, lines),
             blackbox_order_sequence: blackboxOrderSequence || order.blackbox_order_sequence,
             plu_hash: order.plu_hash,
-            pos_version: this.session._server_version.server_version,
+            pos_version: this.config._server_version.server_version,
             blackbox_ticket_counters: order.blackbox_ticket_counters,
             blackbox_unique_fdm_production_number: order.blackbox_unique_fdm_production_number,
             certified_blackbox_identifier: this.config.certified_blackbox_identifier,
@@ -555,7 +555,7 @@ patch(PosStore.prototype, {
             blackbox_tax_category_c: order.getTaxAmountByPercent(6),
             blackbox_tax_category_d: order.getTaxAmountByPercent(0),
             blackbox_order_sequence: await this.getBlackboxSequence(order, receiptType),
-            pos_version: this.session._server_version.server_version,
+            pos_version: this.config._server_version.server_version,
         };
     },
     async updateBlackboxFields(order) {

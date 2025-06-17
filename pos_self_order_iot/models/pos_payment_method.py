@@ -11,8 +11,8 @@ class PosPaymentMethod(models.Model):
         return "success"
 
     @api.model
-    def _load_pos_self_data_domain(self, data):
-        domain = super()._load_pos_self_data_domain(data)
-        if data['pos.config'][0]['self_ordering_mode'] == 'kiosk':
+    def _load_pos_self_data_domain(self, data, config):
+        domain = super()._load_pos_self_data_domain(data, config)
+        if config.self_ordering_mode == 'kiosk':
             domain = Domain.OR([[('iot_device_id', '!=', False)], domain])
         return domain

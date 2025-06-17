@@ -14,7 +14,7 @@ class PosPaymentMethod(models.Model):
         self.iot_device_id = False
 
     @api.model
-    def _load_pos_data_fields(self, config_id):
-        result = super()._load_pos_data_fields(config_id)
+    def _load_pos_data_fields(self, config):
+        result = super()._load_pos_data_fields(config)
         result += ['iot_device_id']
         return result

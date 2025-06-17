@@ -27,6 +27,15 @@ class PosConfig(models.Model):
     def _compute_odoo_version(self):
         self.pos_version = exp_version()['server_serie']
 
+    @api.model
+    def _load_pos_data_read(self, records, config):
+        read_records = super()._load_pos_data_read(records, config)
+        record = read_records[0]
+        if config.certified_blackbox_identifier:
+            record["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
+            record["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
+        return read_records
+
     @api.depends("iface_fiscal_data_module")
     def _compute_certified_pos(self):
         for config in self:

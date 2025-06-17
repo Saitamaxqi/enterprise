@@ -32,7 +32,7 @@ patch(PaymentScreen.prototype, {
             }
             if (
                 this.currentOrder.isRefund &&
-                this.currentOrder.getPartner().id === this.pos.session._consumidor_final_anonimo_id
+                this.currentOrder.getPartner().id === this.pos.config._consumidor_final_anonimo_id
             ) {
                 this.dialog.add(AlertDialog, {
                     title: _t("Refund not possible"),
