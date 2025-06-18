@@ -155,10 +155,6 @@ class ProjectTask(models.Model):
         action['context']['industry_fsm_has_same_worksheet_template'] = self.worksheet_template_id == self.project_id.sudo().worksheet_template_id
         return action
 
-    def _get_report_base_filename(self):
-        self.ensure_one()
-        return 'Worksheet %s - %s' % (self.name, self.partner_id.name)
-
     def _is_fsm_report_available(self):
         self.ensure_one()
         return super()._is_fsm_report_available() or self.worksheet_count

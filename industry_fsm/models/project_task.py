@@ -505,3 +505,7 @@ class ProjectTask(models.Model):
                 [('project_id.is_fsm', '=', True)]
             ])
         return domain
+
+    def _get_report_base_filename(self):
+        self.ensure_one()
+        return 'Field Service Report %s - %s' % (self.name, self.partner_id.name)
