@@ -71,8 +71,10 @@ class SignContract(Sign):
             current_employee_version = version.employee_id.version_id
             if current_employee_version.date_version >= version.date_version:
                 # then remplace the current version with the new one signed
-                current_employee_version.active = False
-            version.active = True
+                current_employee_version.write({'active': False})
+                request.env.flush_all()
+            version.write({'active': True})
+            request.env.flush_all()
             if version.employee_id:
                 version.employee_id.active = True
                 if version.applicant_id:
