@@ -37,9 +37,9 @@
                     <div role="dialog" id="hr_cs_modal" class="modal fade" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <header class="modal-header">
+                                <header class="modal-header justify-content-between">
                                     <h3 class="modal-title">Net calculation</h3>
-                                    <a role="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="close"><span t-translation="off">&amp;times</span></a>
+                                    <a role="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="close"><span t-translation="off" class="fw-bold h3">&amp;times</span></a>
                                 </header>
                                 <main class="modal-body"/>
                             </div>

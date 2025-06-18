@@ -115,9 +115,9 @@ class HrContractSalary(main.HrContractSalary):
 
         result['payslip_lines'] = [(
             line.name,
-            abs(round(line.total, 2)),
+            f'{line.total:.2f}',
             line.code,
-            'no_sign' if line.code in ['BASIC', 'SALARY', 'GROSS', 'NET'] else float_compare(line.total, 0, precision_digits=2),
+            'total' if line.code in ['BASIC', 'SALARY', 'GROSS', 'NET', 'GROSSIP'] else float_compare(line.total, 0, precision_digits=2),
             new_version.company_id.currency_id.position,
             new_version.company_id.currency_id.symbol
         ) for line in payslip.line_ids.filtered(lambda l: l.appears_on_payslip)]
