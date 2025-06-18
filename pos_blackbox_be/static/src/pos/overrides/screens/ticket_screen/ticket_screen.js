@@ -58,7 +58,7 @@ patch(TicketScreen.prototype, {
                 if (result) {
                     const updatedOrder = this.pos.models["pos.order"].get(order.id);
                     updatedOrder.setDataForPushOrderFromBlackbox(result);
-                    if (typeof updatedOrder.id === "number" && result) {
+                    if (typeof updatedOrder.id === "number") {
                         await this.pos.data.write(
                             "pos.order",
                             [updatedOrder.id],

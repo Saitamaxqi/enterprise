@@ -163,6 +163,7 @@ patch(TicketScreen.prototype, {
         this.state.selectedOrderUuid = order.uuid;
         order.setScreenData({ name: "" });
         order.uiState.locked = true;
+        await super._doneOrder(...arguments);
     },
 
     async _dispatchOrder(order) {
