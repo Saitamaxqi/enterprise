@@ -1112,8 +1112,9 @@ class HrPayslip(models.Model):
             if not slip.date_from or not slip.date_to:
                 continue
             warnings = []
-            if slip.version_id and (slip.date_from < slip.version_id.date_start
-                    or (slip.version_id.date_end and slip.date_to > slip.version_id.date_end)):
+
+            if slip.version_id and slip.version_id.contract_date_start and ((slip.version_id.contract_date_start > slip.date_to)
+                    or (slip.version_id.contract_date_end and slip.date_from > slip.version_id.contract_date_end)):
                 warnings.append(_("The period selected does not match the contract validity period."))
 
             if slip.date_to > date_utils.end_of(fields.Date.today(), 'month'):
