@@ -1,35 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* documents_product
-#
+# 
 # Translators:
-# Martin Trigaux, 2022
-# Benson <Benson.Dr@Gmail.com>, 2023
-# Tony Ng, 2023
-#
+# Wil Odoo, 2025
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.5alpha1+e\n"
+"Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-17 10:16+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Tony Ng, 2023\n"
+"POT-Creation-Date: 2025-05-06 09:46+0000\n"
+"PO-Revision-Date: 2025-05-06 11:00+0000\n"
+"Last-Translator: Wil Odoo, 2025\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
-"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. module: documents_product
-#: model:ir.model,name:documents_product.model_documents_workflow_rule
-msgid "A set of condition and actions which will be available to all attachments matching the conditions"
-msgstr "一組條件和操作，可用於與條件匹配的所有附件"
 
 #. module: documents_product
 #: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
 msgid "Centralize files attached to products"
-msgstr ""
+msgstr "集中附加到產品的文件"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_res_company
@@ -39,91 +32,111 @@ msgstr "公司"
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_res_config_settings
 msgid "Config Settings"
-msgstr "設定"
+msgstr "配置設定"
 
 #. module: documents_product
-#: model:ir.model.fields,field_description:documents_product.field_documents_workflow_rule__create_model
-msgid "Create"
-msgstr "建立"
+#: model:ir.model.fields,field_description:documents_product.field_documents_document__display_name
+#: model:ir.model.fields,field_description:documents_product.field_product_product__display_name
+#: model:ir.model.fields,field_description:documents_product.field_product_template__display_name
+#: model:ir.model.fields,field_description:documents_product.field_res_company__display_name
+#: model:ir.model.fields,field_description:documents_product.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "顯示名稱"
 
 #. module: documents_product
-#: model:documents.tag,name:documents_product.documents_product_sheet_tag
-msgid "DataSheets"
-msgstr ""
-
-#. module: documents_product
-#: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
-msgid "Default Tags"
-msgstr "默認標籤"
-
-#. module: documents_product
-#: model:documents.facet,name:documents_product.documents_product_documents_facet
-msgid "Documents"
+#: model:ir.model,name:documents_product.model_documents_document
+msgid "Document"
 msgstr "文件"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_res_company__documents_product_settings
 msgid "Documents Product Settings"
-msgstr ""
+msgstr "文件產品設置"
 
 #. module: documents_product
-#: model:documents.tag,name:documents_product.documents_product_msds_tag
-msgid "MSDS"
-msgstr ""
+#: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
+msgid "Folder"
+msgstr "資料夾"
 
 #. module: documents_product
-#: model:documents.tag,name:documents_product.documents_product_new_tag
-msgid "New"
-msgstr "新增"
-
-#. module: documents_product
-#: model:documents.tag,name:documents_product.documents_product_plans_tag
-msgid "Plans"
-msgstr "計劃"
+#: model:ir.model.fields,field_description:documents_product.field_documents_document__id
+#: model:ir.model.fields,field_description:documents_product.field_product_product__id
+#: model:ir.model.fields,field_description:documents_product.field_product_template__id
+#: model:ir.model.fields,field_description:documents_product.field_res_company__id
+#: model:ir.model.fields,field_description:documents_product.field_res_config_settings__id
+msgid "ID"
+msgstr "識別號"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_product_template
+#: model:ir.model.fields,field_description:documents_product.field_documents_document__product_template_id
 #: model:ir.model.fields,field_description:documents_product.field_res_config_settings__documents_product_settings
 msgid "Product"
 msgstr "商品"
 
 #. module: documents_product
-#: model:ir.model.fields,field_description:documents_product.field_res_company__product_tags
-#: model:ir.model.fields,field_description:documents_product.field_res_config_settings__product_tags
+#: model:documents.tag,name:documents_product.documents_product_sheet_tag
+msgid "Product > DataSheets"
+msgstr "產品 > 數據表"
+
+#. module: documents_product
+#: model:documents.tag,name:documents_product.documents_product_msds_tag
+msgid "Product > MSDS"
+msgstr "產品 > 物料安全資料表"
+
+#. module: documents_product
+#: model:documents.tag,name:documents_product.documents_product_new_tag
+msgid "Product > New"
+msgstr "產品 > 新增"
+
+#. module: documents_product
+#: model:documents.tag,name:documents_product.documents_product_plans_tag
+msgid "Product > Plans"
+msgstr "產品 > 計劃"
+
+#. module: documents_product
+#: model:documents.tag,name:documents_product.documents_product_specs_tag
+msgid "Product > Specs"
+msgstr "產品 > 規格"
+
+#. module: documents_product
+#: model:ir.model.fields,field_description:documents_product.field_res_company__product_folder_id
+msgid "Product Folder"
+msgstr "產品資料夾"
+
+#. module: documents_product
+#: model:ir.model.fields,field_description:documents_product.field_res_company__product_tag_ids
+msgid "Product Tag"
+msgstr "產品標籤"
+
+#. module: documents_product
+#: model:ir.model.fields,field_description:documents_product.field_res_config_settings__product_tag_ids
 msgid "Product Tags"
 msgstr "產品標籤"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_product_product
+#: model:ir.model.fields,field_description:documents_product.field_documents_document__product_id
 msgid "Product Variant"
-msgstr "產品變體"
+msgstr "產品款式"
 
 #. module: documents_product
-#: model:ir.model.fields,field_description:documents_product.field_res_company__product_folder
-msgid "Product Workspace"
-msgstr ""
+#. odoo-python
+#: code:addons/documents_product/models/document.py:0
+msgid "Product created from Documents"
+msgstr "已從文件建立產品"
 
 #. module: documents_product
-#: model:ir.model.fields.selection,name:documents_product.selection__documents_workflow_rule__create_model__product_template
-msgid "Product template"
-msgstr "產品模板"
-
-#. module: documents_product
-#: model:documents.folder,name:documents_product.documents_product_folder
+#: model:documents.document,name:documents_product.document_product_folder
 msgid "Products"
 msgstr "產品"
 
 #. module: documents_product
-#: model:documents.tag,name:documents_product.documents_product_specs_tag
-msgid "Specs"
-msgstr ""
-
-#. module: documents_product
 #: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
-msgid "Workspace"
-msgstr "工作空間"
+msgid "Tags"
+msgstr "標籤"
 
 #. module: documents_product
-#: model:ir.model.fields,field_description:documents_product.field_res_config_settings__product_folder
+#: model:ir.model.fields,field_description:documents_product.field_res_config_settings__product_folder_id
 msgid "product default workspace"
-msgstr ""
+msgstr "產品預設工作區"

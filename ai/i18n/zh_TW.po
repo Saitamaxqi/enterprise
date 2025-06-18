@@ -1,0 +1,863 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ai
+# 
+# Translators:
+# Tony Ng, 2025
+# Wil Odoo, 2025
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~18.3+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-06 18:42+0000\n"
+"PO-Revision-Date: 2025-05-17 15:51+0000\n"
+"Last-Translator: Wil Odoo, 2025\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_tool__input_schema
+msgid ""
+"\n"
+"            Defines the parameters required to use the tool, their type, a description for each parameter and whether the parameter is required.\n"
+"            You can also define the format of the parameter which is a regex pattern that the parameter must match.\n"
+"            For example the input schema of the feature that schedules a meeting with a salesperson:\n"
+"            {\n"
+"                \"type\": \"object\",\n"
+"                \"properties\": {\n"
+"                    \"user_name\": {\n"
+"                        \"type\": \"string\",\n"
+"                        \"description\": \"The name of person to schedule the meeting with\"\n"
+"                        \"required\": true,\n"
+"                    },\n"
+"                    \"meeting_date\": {\n"
+"                        \"type\": \"string\",\n"
+"                        \"description\": \"The date on which the meeting will occur in format YYYY-mm-dd\"\n"
+"                        \"required\": true,\n"
+"                        \"format\": \"regex pattern to match the date format\",\n"
+"                    }\n"
+"                }\n"
+"            }\n"
+"        "
+msgstr ""
+"\n"
+"            用作定義使用此工具時需要輸入的參數、每項參數的類型、描述，以及該參數是否必須提供。\n"
+"            你也可定義參數格式，即參數必須符合的資料格式，以正規表達式（regex）表示。\n"
+"            以預約與銷售人員會面的功能為例，其輸入資料架構如下：\n"
+"            {\n"
+"                \"type\": \"object\",\n"
+"                \"properties\": {\n"
+"                    \"user_name\": {\n"
+"                        \"type\": \"string\",\n"
+"                        \"description\": \"預約會見誰人\"\n"
+"                        \"required\": true,\n"
+"                    },\n"
+"                    \"meeting_date\": {\n"
+"                        \"type\": \"string\",\n"
+"                        \"description\": \"會議舉行日期，格式為：年年年年-月月-日日\"\n"
+"                        \"required\": true,\n"
+"                        \"format\": \"（此處輸入日期格式要求的 regex 正規表達式）\",\n"
+"                    }\n"
+"                }\n"
+"            }\n"
+"        "
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid ""
+"%s cannot be processed to train the AI Agent. Try with different file "
+"format!"
+msgstr "未能處理 %s 去訓練 AI 代理。請嘗試使用其他檔案格式。"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid ""
+"<i class=\"fa fa-clock-o me-2\"/>\n"
+"                            <span>Processing your sources, it might take a few minutes...</span>"
+msgstr ""
+"<i class=\"fa fa-clock-o me-2\"/>\n"
+"                            <span>正在理解你的資料來源，可能需要幾分鐘⋯</span>"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid ""
+"<span class=\"me-1\">Refresh</span>\n"
+"                            <i class=\"fa fa-refresh me-1\"/>"
+msgstr ""
+"<span class=\"me-1\">更新</span>\n"
+"                            <i class=\"fa fa-refresh me-1\"/>"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_tool__description
+msgid "A brief description of the tool and its purpose."
+msgstr "簡要描述該工具及其用途。"
+
+#. module: ai
+#: model:ir.model,name:ai.model_ai_tool
+msgid "A function that can be called by the AI"
+msgstr "可由 AI 召用的函數或功能"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "A single agent can only have up to 300 URLs."
+msgstr "單一代理程式最多只可有 300 個網址。"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_agent__topic_ids
+msgid ""
+"A topic includes instructions and tools that guide Odoo AI in helping the "
+"user complete their tasks."
+msgstr "「主題」會包括能夠引導 Odoo AI 幫助使用者完成任務的指示及工具。"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/chatgpt_plugin.js:0
+#: code:addons/ai/static/src/discuss/chatter_patch.xml:0
+#: model:ir.ui.menu,name:ai.ai_menu_root
+#: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
+msgid "AI"
+msgstr "AI 人工智能"
+
+#. module: ai
+#: model:ir.model,name:ai.model_ai_agent
+msgid "AI Agent"
+msgstr "AI 代理"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_composer__name
+msgid "AI Composer Name"
+msgstr "AI 撰寫器名稱"
+
+#. module: ai
+#: model:ir.actions.act_window,name:ai.open_view_ai_composer_kanban
+#: model:ir.ui.menu,name:ai.menu_ai_composer
+#: model_terms:ir.ui.view,arch_db:ai.ai_composer_tree
+msgid "AI Composer Prompts"
+msgstr "AI 撰寫器提示"
+
+#. module: ai
+#: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
+msgid "AI Embedding: Generate Embeddings"
+msgstr "AI 嵌入：產生嵌入"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/chatgpt_plugin.js:0
+#: model:ir.model.fields,field_description:ai.field_ai_topic__tool_ids
+msgid "AI Tools"
+msgstr "人工智能工具"
+
+#. module: ai
+#: model:ir.model,name:ai.model_mail_thread
+msgid "AI features for mail thread"
+msgstr "郵件對話串 AI 功能"
+
+#. module: ai
+#: model:ir.model,name:ai.model_ai_composer
+msgid "AI model configurations (system prompts) for text drafting."
+msgstr "用作編寫文字草稿的 AI 模型配置（系統提示）。"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/discuss_channel.py:0
+msgid "AI not reachable, composer ID not found"
+msgstr "未能連線至 AI，找不到撰寫器識別碼"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/discuss_channel.py:0
+msgid "AI: %(name)s"
+msgstr "AI：%(name)s"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_res_partner__agent_ids
+#: model:ir.model.fields,field_description:ai.field_res_users__agent_ids
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_kanban
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_search
+msgid "Agent"
+msgstr "代理"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__name
+msgid "Agent Name"
+msgstr "代理名稱"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/core/web/command_palette.js:0
+#: model:ir.actions.act_window,name:ai.ai_agent_action
+#: model:ir.ui.menu,name:ai.ai_agent_menu_action
+#: model:ir.ui.menu,name:ai.ai_menu
+msgid "Agents"
+msgstr "代理"
+
+#. module: ai
+#: model_terms:ir.actions.act_window,help:ai.ai_agent_action
+msgid "Agents help you manage and organize your AI operations."
+msgstr "代理可協助你管理及組織各項 AI 操作。"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_composer
+msgid "Ai Composer"
+msgstr "Ai 撰寫器"
+
+#. module: ai
+#: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
+msgid "Analytical"
+msgstr "分析性"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/chatter_patch.xml:0
+#: code:addons/ai/static/src/mail_composer_chatgpt.xml:0
+msgid "Ask AI"
+msgstr "詢問 AI"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "Attach Sources"
+msgstr "附上資料來源"
+
+#. module: ai
+#: model:ir.model,name:ai.model_ir_attachment
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__attachment_id
+msgid "Attachment"
+msgstr "附件"
+
+#. module: ai
+#: model:ir.model,name:ai.model_ai_embedding
+msgid "Attachment Chunks Embedding"
+msgstr "附件區塊嵌入"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__attachment_processing_percentage
+msgid "Attachment Processing Percentage"
+msgstr "附件處理百分比"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__attachment_ids
+msgid "Attachment Sources"
+msgstr "附件來源"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "Attachments"
+msgstr "附件"
+
+#. module: ai
+#: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__balanced
+msgid "Balanced"
+msgstr "平衡"
+
+#. module: ai
+#: model:ir.model,name:ai.model_base
+msgid "Base"
+msgstr "計稅基數"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_discuss_channel__channel_type
+msgid "Channel Type"
+msgstr "群組類型"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_discuss_channel__channel_type
+msgid ""
+"Chat is private and unique between 2 persons. Group is private among invited"
+" persons. Channel can be freely joined (depending on its configuration)."
+msgstr "2 人之間的聊天是私密且獨特的。群組在受邀者之間是私人的。頻道可以自由加入（取決於其配置）。"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/chatgpt_plugin.js:0
+msgid "ChatGPT"
+msgstr "ChatGPT"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__content
+msgid "Chunk Content"
+msgstr "區塊內容"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_composer_form
+msgid "Composer"
+msgstr "撰寫器"
+
+#. module: ai
+#: model:ir.model,name:ai.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置設定"
+
+#. module: ai
+#: model:ir.ui.menu,name:ai.ai_config_menu
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_kanban
+msgid "Configuration"
+msgstr "配置"
+
+#. module: ai
+#: model:ir.model,name:ai.model_res_partner
+msgid "Contact"
+msgstr "聯絡人"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_context
+msgid "Context for AI agent"
+msgstr "給 AI 代理的背景資訊"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_actions_patch.js:0
+msgid "Copy to Clipboard"
+msgstr "複製到剪貼簿"
+
+#. module: ai
+#: model:ir.model,website_form_label:ai.model_res_partner
+msgid "Create a Customer"
+msgstr "建立客戶"
+
+#. module: ai
+#: model:ir.model,name:ai.model_ai_topic
+msgid ""
+"Create a topic that leverages instructions and tools to direct Odoo AI in "
+"assisting the user with their tasks."
+msgstr "建立一個主題，讓它利用指令及工具，引導 Odoo AI 協助使用者完成任務。"
+
+#. module: ai
+#: model_terms:ir.actions.act_window,help:ai.ai_agent_action
+msgid "Create your first Agent!"
+msgstr "建立你的第一個代理程式！"
+
+#. module: ai
+#: model_terms:ir.actions.act_window,help:ai.ai_topic_action
+msgid "Create your first topic!"
+msgstr "建立你的第一個主題！"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__create_uid
+#: model:ir.model.fields,field_description:ai.field_ai_composer__create_uid
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__create_uid
+#: model:ir.model.fields,field_description:ai.field_ai_tool__create_uid
+#: model:ir.model.fields,field_description:ai.field_ai_topic__create_uid
+msgid "Created by"
+msgstr "建立人員"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__create_date
+#: model:ir.model.fields,field_description:ai.field_ai_composer__create_date
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__create_date
+#: model:ir.model.fields,field_description:ai.field_ai_tool__create_date
+#: model:ir.model.fields,field_description:ai.field_ai_topic__create_date
+msgid "Created on"
+msgstr "建立於"
+
+#. module: ai
+#: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__creative
+msgid "Creative"
+msgstr "創造力"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_agent__system_prompt
+msgid "Customize to control relevance and formatting."
+msgstr "自訂設定，以控制相關程度及格式。"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_composer__default_prompt
+#: model_terms:ir.ui.view,arch_db:ai.ai_composer_kanban
+msgid "Default Prompt"
+msgstr "預設提示"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_tool__description
+#: model:ir.model.fields,field_description:ai.field_ai_topic__description
+msgid "Description"
+msgstr "說明"
+
+#. module: ai
+#: model:ir.model,name:ai.model_discuss_channel
+msgid "Discussion Channel"
+msgstr "討論群組"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__display_name
+#: model:ir.model.fields,field_description:ai.field_ai_composer__display_name
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__display_name
+#: model:ir.model.fields,field_description:ai.field_ai_tool__display_name
+#: model:ir.model.fields,field_description:ai.field_ai_topic__display_name
+#: model:ir.model.fields,field_description:ai.field_discuss_channel__display_name
+#: model:ir.model.fields,field_description:ai.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:ai.field_mail_thread__display_name
+#: model:ir.model.fields,field_description:ai.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:ai.field_res_partner__display_name
+msgid "Display Name"
+msgstr "顯示名稱"
+
+#. module: ai
+#: model:ir.model.fields.selection,name:ai.selection__discuss_channel__channel_type__ai_composer
+msgid "Draft with AI"
+msgstr "用 AI 撰寫草稿"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
+msgid "Editor"
+msgstr "編輯器"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key_enabled
+msgid "Enable custom Google API key"
+msgstr "啟用自訂 Google API 密鑰"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key_enabled
+msgid "Enable custom OpenAI API key"
+msgstr "啟用自訂 OpenAI API 密鑰"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "Enter URLs, one per line..."
+msgstr "請輸入網址，每行一個⋯"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_topic_view_form
+msgid "Explain to the Agent what they need to do..."
+msgstr "向代理解釋，它需要做甚麼工作⋯"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_tool__formatted_name
+msgid "Formatted Name"
+msgstr "格式化名稱"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/chatgpt_plugin.js:0
+msgid "Generate or transform content with AI"
+msgstr "利用人工智能生成或轉換內容"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
+msgid "Google"
+msgstr "Google"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key
+msgid "Google AI API key"
+msgstr "Google AI API 密鑰"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_search
+msgid "Group By..."
+msgstr "分組依據⋯"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/models.py:0
+msgid "Hello, how can I rewrite your text?"
+msgstr "你好，我可以如何重寫你的文字？"
+
+#. module: ai
+#. odoo-javascript
+#. odoo-python
+#: code:addons/ai/models/models.py:0
+#: code:addons/ai/static/src/discuss/thread_patch.js:0
+msgid "Hello, what can I help you with?"
+msgstr "你好，有甚麼需要幫忙？"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__id
+#: model:ir.model.fields,field_description:ai.field_ai_composer__id
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__id
+#: model:ir.model.fields,field_description:ai.field_ai_tool__id
+#: model:ir.model.fields,field_description:ai.field_ai_topic__id
+#: model:ir.model.fields,field_description:ai.field_discuss_channel__id
+#: model:ir.model.fields,field_description:ai.field_ir_attachment__id
+#: model:ir.model.fields,field_description:ai.field_mail_thread__id
+#: model:ir.model.fields,field_description:ai.field_res_config_settings__id
+#: model:ir.model.fields,field_description:ai.field_res_partner__id
+msgid "ID"
+msgstr "識別碼"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_agent__restrict_to_sources
+msgid "If checked, the agent will only respond based on the provided sources."
+msgstr "若勾選，代理程式只會根據所提供的資料來源去作回應。"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__image_128
+msgid "Image"
+msgstr "圖片"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_tool__input_schema
+msgid "Input Schema"
+msgstr "輸入資料架構"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_topic__instructions
+msgid "Instructions"
+msgstr "指示"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "Invalid Attachment"
+msgstr "附件無效"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
+msgid "Knowledge Article"
+msgstr "知識庫文章"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__llm_model
+msgid "LLM Model"
+msgstr "大型語言模型（LLM）"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__write_uid
+#: model:ir.model.fields,field_description:ai.field_ai_composer__write_uid
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__write_uid
+#: model:ir.model.fields,field_description:ai.field_ai_tool__write_uid
+#: model:ir.model.fields,field_description:ai.field_ai_topic__write_uid
+msgid "Last Updated by"
+msgstr "最後更新者"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__write_date
+#: model:ir.model.fields,field_description:ai.field_ai_composer__write_date
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__write_date
+#: model:ir.model.fields,field_description:ai.field_ai_tool__write_date
+#: model:ir.model.fields,field_description:ai.field_ai_topic__write_date
+msgid "Last Updated on"
+msgstr "最後更新於"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_patch.xml:0
+msgid "Log Note"
+msgstr "記錄備註"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_actions_patch.js:0
+msgid "Log as Note"
+msgstr "記錄為備註"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_tool__formatted_name
+msgid ""
+"Lower case name in which spaces are replaced with underscores.This is used "
+"as the name of the function to call which is used with the tools API of the "
+"LLM."
+msgstr "以小寫輸入的名稱，並以底線代替空格。用作要召用函數的名稱，並與 LLM 工具的 API 一同使用。"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_model_patch.js:0
+msgid "Message Copied!"
+msgstr "訊息已複製。"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_model_patch.js:0
+msgid "Message Copy Failed (Permission denied?)!"
+msgstr "未能複製訊息。（是否存取被拒？）"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_search
+msgid "Model"
+msgstr "模型"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_tool__name
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_tree
+#: model_terms:ir.ui.view,arch_db:ai.ai_composer_kanban
+msgid "Name"
+msgstr "名稱"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/utils/llm_api_service.py:0
+msgid "No API key set for provider '%s'"
+msgstr "未為提供者「%s」設定 API 密鑰"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "No provider found for the selected model"
+msgstr "所選模型找不到服務提供者"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/im_status_patch.xml:0
+msgid "Online"
+msgstr "網上進行"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
+msgid "OpenAI"
+msgstr "OpenAI"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key
+msgid "OpenAI API key"
+msgstr "OpenAI API 密鑰"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__partner_id
+msgid "Partner"
+msgstr "業務夥伴"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_tree
+msgid "Properties"
+msgstr "屬性"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
+msgid "Provide your Google API keys"
+msgstr "請提供你的 Google API 密鑰"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
+msgid "Provide your OpenAI API key"
+msgstr "請提供你的 OpenAI API 密鑰"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
+msgid "Providers"
+msgstr "服務商"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__response_style
+msgid "Response Style"
+msgstr "回應風格"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__restrict_to_sources
+msgid "Restrict to Sources"
+msgstr "限制來源"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_tool__result_prompt
+msgid "Result Prompt"
+msgstr "結果提示"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/chatgpt_plugin.js:0
+msgid "Rewrite"
+msgstr "改寫"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_topic_view_form
+msgid "Select the tools linked to this topic"
+msgstr "選擇要連結至此主題的工具"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_patch.xml:0
+msgid "Send Message"
+msgstr "傳送訊息"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_actions_patch.js:0
+msgid "Send as Message"
+msgstr "化為訊息傳送"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_embedding__sequence
+msgid "Sequence"
+msgstr "序列號"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_tool__server_action
+msgid "Server Action"
+msgstr "伺服器動作"
+
+#. module: ai
+#: model:ir.actions.act_window,name:ai.ai_settings_action
+#: model:ir.ui.menu,name:ai.ai_general_settings_menu
+msgid "Settings"
+msgstr "設定"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_search
+msgid "Sources"
+msgstr "來源"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__subtitle
+msgid "Subtitle"
+msgstr "小標題"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/chatter_patch.js:0
+msgid "Summarize the chatter conversation"
+msgstr "總結聊天視窗對話內容"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_topic_view_form
+msgid "Summarize what this topic does"
+msgstr "簡述這個主題的作用"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__system_prompt
+msgid "System Prompt"
+msgstr "系統提示"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_composer_form
+msgid "System Prompt for Composer"
+msgstr "撰寫器系統提示"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "Test"
+msgstr "測試"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
+msgid "Text Refine"
+msgstr "文字優化"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_composer__default_prompt
+msgid "The default prompt passed to this mail assistant"
+msgstr "傳給此郵件助手的預設提示"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "The following URLs cannot not be accessed or used for the agent: %s"
+msgstr "代理程式未能存取或使用以下網址：%s"
+
+#. module: ai
+#: model:ir.model.constraint,message:ai.constraint_ai_tool_unique_formatted_name
+msgid ""
+"The formatted name must be unique as it is required by the LLM to identify "
+"the tool"
+msgstr "格式化名稱必須獨一無二，因為 LLM 需要用它去識別工具"
+
+#. module: ai
+#: model:ir.model.fields,help:ai.field_ai_composer__name
+msgid "The identifier of the mail assistant"
+msgstr "郵件助手識別碼"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_topic__name
+msgid "Title"
+msgstr "稱謂"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_topic_view_search
+msgid "Topic"
+msgstr "主題"
+
+#. module: ai
+#: model:ir.actions.act_window,name:ai.ai_topic_action
+#: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
+#: model:ir.ui.menu,name:ai.ai_topic_menu_action
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_search
+msgid "Topics"
+msgstr "主題"
+
+#. module: ai
+#: model_terms:ir.actions.act_window,help:ai.ai_topic_action
+msgid "Topics help you manage and organize your AI operations."
+msgstr "主題可協助你管理及組織各項 AI 操作。"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid ""
+"URL %s does not seem complete, as it does not begin with http(s):// or "
+"ftp://"
+msgstr "網址 %s 似乎不完整，因它不是以 http(s):// 或 ftp:// 開頭"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__url_attachment_ids
+msgid "URL Sources"
+msgstr "網址來源"
+
+#. module: ai
+#: model:ir.model.fields,field_description:ai.field_ai_agent__urls
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "URLs"
+msgstr "網址"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/discuss/message_actions_patch.js:0
+#: code:addons/ai/static/src/discuss/message_patch.xml:0
+msgid "Use this"
+msgstr "使用這個"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/im_status_patch.xml:0
+msgid "User is online"
+msgstr "使用者上線"
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/chatgpt_plugin.js:0
+#: code:addons/ai/static/src/mail_composer_chatgpt.js:0
+msgid "Write a followup answer"
+msgstr "撰寫一個跟進答案"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_topic_view_form
+msgid "e.g. Chat with customers"
+msgstr "例：與客戶聊天"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "e.g. Get tips to close more sales"
+msgstr "例：獲取達成更多銷售的訣竅"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid "e.g. SDR Advisor"
+msgstr "例：SDR 顧問"
+
+#. module: ai
+#: model_terms:ir.ui.view,arch_db:ai.ai_agent_view_form
+msgid ""
+"e.g. You are a support operator, you can answer questions related to ..."
+msgstr "例：你是技術支援操作員，你能夠回答有關下列事項的問題⋯"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/discuss_channel.py:0
+msgid "⚠️ Oops, it looks like our AI is unreachable!"
+msgstr "⚠️ 哎唷，我們的 AI 似乎暫時無法使用。"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/discuss_channel.py:0
+msgid "⚠️ Sorry, we could not generate a response. Please try again later."
+msgstr "⚠️ 抱歉，我們未能生成回覆。請稍後再試。"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/discuss_channel.py:0
+msgid "⚠️ Sorry, your prompt is too long. Try to say it in fewer words."
+msgstr "⚠️ 對不起，你的提示太長了。請嘗試用較少字數表達。"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/discuss_channel.py:0
+msgid ""
+"⚠️ You have reached the maximum number of requests for this service. Try "
+"again later."
+msgstr "⚠️ 你已達到此服務的最大請求數量。請稍後再試。"

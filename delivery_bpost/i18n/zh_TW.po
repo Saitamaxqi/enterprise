@@ -1,22 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* delivery_bpost
-#
+# 
 # Translators:
-# Martin Trigaux, 2022
-#
+# Wil Odoo, 2025
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
+"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"PO-Revision-Date: 2025-05-06 11:00+0000\n"
+"Last-Translator: Wil Odoo, 2025\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
-"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: delivery_bpost
@@ -32,7 +32,7 @@ msgstr "A6"
 #. module: delivery_bpost
 #: model:ir.model.fields,help:delivery_bpost.field_delivery_carrier__bpost_saturday
 msgid "Allow deliveries on Saturday (extra charges apply)"
-msgstr "Allow deliveries on Saturday (extra charges apply)"
+msgstr "允許週六送貨（有額外費用）"
 
 #. module: delivery_bpost
 #. odoo-python
@@ -47,7 +47,7 @@ msgstr ""
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_account_number
 msgid "Bpost Account Number"
-msgstr "Bpost Account Number"
+msgstr "Bpost 帳戶號碼"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_delivery_nature
@@ -73,7 +73,7 @@ msgstr "Bpost International Deliver Type"
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_label_format
 msgid "Bpost Label Format"
-msgstr "Bpost Label Format"
+msgstr "Bpost 標籤格式"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_label_stock_type
@@ -88,7 +88,7 @@ msgstr "Bpost Package Type"
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_parcel_return_instructions
 msgid "Bpost Parcel Return Instructions"
-msgstr "Bpost Parcel Return Instructions"
+msgstr "Bpost 退回貨件指示"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_shipment_type
@@ -109,17 +109,23 @@ msgstr "承運商"
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_shipment_type__documents
 msgid "DOCUMENTS"
-msgstr "DOCUMENTS"
+msgstr "文件管理"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_saturday
 msgid "Delivery on Saturday"
-msgstr "Delivery on Saturday"
+msgstr "週六送貨"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_parcel_return_instructions__abandoned
 msgid "Destroy"
 msgstr "Destroy"
+
+#. module: delivery_bpost
+#: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_bpost.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr "顯示名稱"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__domestic
@@ -137,6 +143,12 @@ msgid "GOODS"
 msgstr "GOODS"
 
 #. module: delivery_bpost
+#: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_bpost.field_stock_package_type__id
+msgid "ID"
+msgstr "識別號"
+
+#. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__international
 msgid "International"
 msgstr "International"
@@ -144,7 +156,7 @@ msgstr "International"
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.view_delivery_carrier_form_with_provider_bpost
 msgid "Label Format"
-msgstr "Label Format"
+msgstr "標籤格式"
 
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.view_delivery_carrier_form_with_provider_bpost
@@ -197,23 +209,23 @@ msgstr "服務商"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Return labels created into bpost"
-msgstr ""
+msgstr "退貨標籤已在 bpost 建立"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Return shipment created into bpost"
-msgstr ""
+msgstr "退貨送件已在 bpost 建立"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_parcel_return_instructions__rta
 msgid "Return to sender by air"
-msgstr "Return to sender by air"
+msgstr "以空郵退回寄件人"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_parcel_return_instructions__rts
 msgid "Return to sender by road"
-msgstr "Return to sender by road"
+msgstr "以陸路平郵退回寄件人"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_shipment_type__sample
@@ -230,12 +242,12 @@ msgstr "Shipment #%s has been cancelled"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Shipment created into bpost"
-msgstr ""
+msgstr "送件已在 bpost 建立"
 
 #. module: delivery_bpost
 #: model:ir.model,name:delivery_bpost.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr "寄送方式"
+msgstr "運送方式"
 
 #. module: delivery_bpost
 #: model:ir.model,name:delivery_bpost.model_stock_package_type
@@ -246,7 +258,7 @@ msgstr "庫存包裝類型"
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid "The BPost shipping service is unresponsive, please retry later."
-msgstr "The BPost shipping service is unresponsive, please retry later."
+msgstr "BPost 貨運服務無回應，請稍後再試。"
 
 #. module: delivery_bpost
 #. odoo-python
@@ -255,14 +267,16 @@ msgid ""
 "The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
 " %s)"
 msgstr ""
-"The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
-" %s)"
+"你公司/倉庫的地址不完整或錯誤（缺漏欄位：\n"
+"%s）"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "The estimated shipping price cannot be computed because all your products are service."
-msgstr "The estimated shipping price cannot be computed because all your products are service."
+msgid ""
+"The estimated shipping price cannot be computed because all your products "
+"are service."
+msgstr "由於你所有的產品都是服務，因此無法估算預計運費。"
 
 #. module: delivery_bpost
 #. odoo-python
@@ -271,7 +285,7 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"由於以下產品缺漏重量資料，因此未能估算預計運費：\n"
 " %s"
 
 #. module: delivery_bpost
@@ -281,26 +295,26 @@ msgid ""
 "The recipient address is incomplete or wrong (Missing field(s):  \n"
 " %s)"
 msgstr ""
-"The recipient address is incomplete or wrong (Missing field(s):  \n"
-" %s)"
+"收件人地址不完整或錯誤（缺漏欄位：\n"
+"%s）"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Links"
-msgstr ""
+msgstr "追蹤連結"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Number:"
-msgstr ""
+msgstr "追蹤編號："
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "追蹤編號："
 
 #. module: delivery_bpost
 #. odoo-python
@@ -353,24 +367,32 @@ msgstr "bpost"
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.view_delivery_carrier_form_with_provider_bpost
 msgid "bpost Configuration"
-msgstr "bpost Configuration"
+msgstr "bpost 配置"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_default_package_type_id
 msgid "bpost Default Package Type"
-msgstr "bpost Default Package Type"
+msgstr "bpost 預設包裝類型"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International."
-msgstr "bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International."
+msgid ""
+"bpost Domestic is used only to ship inside Belgium. Please change the "
+"delivery method into bpost International."
+msgstr ""
+"bpost Domestic is used only to ship inside Belgium. Please change the "
+"delivery method into bpost International."
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic."
-msgstr "bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic."
+msgid ""
+"bpost International is used only to ship outside Belgium. Please change the "
+"delivery method into bpost Domestic."
+msgstr ""
+"bpost International is used only to ship outside Belgium. Please change the "
+"delivery method into bpost Domestic."
 
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.res_config_settings_view_form_sale
@@ -382,4 +404,4 @@ msgstr "bpost "
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid "bpost did not return prices for this destination country."
-msgstr "bpost did not return prices for this destination country."
+msgstr "bpost 未有傳回此目的地國家/地區的價格。"

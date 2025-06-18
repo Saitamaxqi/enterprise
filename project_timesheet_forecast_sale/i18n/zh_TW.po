@@ -1,110 +1,122 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* project_timesheet_forecast_sale
-#
+# 
 # Translators:
-# Martin Trigaux, 2022
-# 敬雲 林 <chingyun@yuanchih-consult.com>, 2022
-#
+# Wil Odoo, 2025
+# Tony Ng, 2025
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0beta+e\n"
+"Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: 敬雲 林 <chingyun@yuanchih-consult.com>, 2022\n"
+"POT-Creation-Date: 2025-05-06 09:47+0000\n"
+"PO-Revision-Date: 2025-05-06 11:01+0000\n"
+"Last-Translator: Tony Ng, 2025\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
-"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: project_timesheet_forecast_sale
 #. odoo-python
-#: code:addons/project_timesheet_forecast_sale/models/project.py:0
+#: code:addons/project_timesheet_forecast_sale/models/project_project.py:0
 msgid "%(name)s's Timesheets and Planning Analysis"
-msgstr ""
+msgstr "%(name)s 的工時表及規劃分析"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_account_analytic_line
-msgid "Analytic Account"
-msgstr "分析帳戶"
+msgid "Analytic Line"
+msgstr "分析資料行"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_analysis_report__billable_allocated_hours
-msgid "Billable Hours Allocated"
-msgstr ""
+msgid "Billable Time Allocated"
+msgstr "已分配的收費時間"
 
 #. module: project_timesheet_forecast_sale
-#: model:planning.role,name:project_timesheet_forecast_sale.planning_role_consultant
-msgid "Consultant"
-msgstr "主辦會計"
-
-#. module: project_timesheet_forecast_sale
-#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_project__display_planning_timesheet_analysis
-msgid "Display Planning Timesheet Analysis"
-msgstr ""
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_analysis_report__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_slot__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_project__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_update__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "顯示名稱"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_billable_hours
-msgid "Effective Billable Hours"
-msgstr ""
+msgid "Effective Billable Time"
+msgstr "有效收費時間"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_margin
 msgid "Effective Margin"
-msgstr ""
+msgstr "有效毛利率"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_non_billable_hours
-msgid "Effective Non-Billable Hours"
-msgstr ""
+msgid "Effective Non-Billable Time"
+msgstr "有效不收費時間"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_revenues
 msgid "Effective Revenues"
-msgstr ""
+msgstr "有效收入"
 
 #. module: project_timesheet_forecast_sale
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast_sale.project_update_default_description
-msgid "N/A"
-msgstr ""
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_analysis_report__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_slot__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_project__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_update__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_sale_order_line__id
+msgid "ID"
+msgstr "識別號"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_analysis_report__non_billable_allocated_hours
-msgid "Non-billable Hours Allocated"
-msgstr ""
-
-#. module: project_timesheet_forecast_sale
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast_sale.project_update_default_description
-msgid "Planned"
-msgstr "已安排"
+msgid "Non-billable Time Allocated"
+msgstr "已分配的不收費時間"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_billable_hours
-msgid "Planned Billable Hours"
-msgstr ""
+msgid "Planned Billable Time"
+msgstr "已計劃的收費時數"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_margin
 msgid "Planned Margin"
-msgstr ""
+msgstr "規劃毛利率"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_non_billable_hours
-msgid "Planned Non-Billable Hours"
-msgstr ""
+msgid "Planned Non-Billable Time"
+msgstr "已計劃的不收費時數"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_revenues
 msgid "Planned Revenues"
-msgstr ""
+msgstr "規劃收入"
+
+#. module: project_timesheet_forecast_sale
+#: model:ir.model,name:project_timesheet_forecast_sale.model_project_timesheet_forecast_report_analysis
+msgid "Planning / Timesheets Analysis"
+msgstr "工作規劃 / 工時表分析"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_planning_analysis_report
 msgid "Planning Analysis Report"
-msgstr ""
+msgstr "規劃分析報表"
+
+#. module: project_timesheet_forecast_sale
+#: model:ir.model,name:project_timesheet_forecast_sale.model_planning_slot
+msgid "Planning Shift"
+msgstr "規劃排班"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_project_project
@@ -119,45 +131,25 @@ msgstr "專案更新"
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "銷售訂單明細"
-
-#. module: project_timesheet_forecast_sale
-#: model:ir.model.fields,help:project_timesheet_forecast_sale.field_project_project__display_planning_timesheet_analysis
-msgid "Should we display the planning and timesheet analysis button?"
-msgstr ""
-
-#. module: project_timesheet_forecast_sale
-#: model:planning.role,name:project_timesheet_forecast_sale.planning_role_junior_architect
-msgid "Software Junior Architect"
-msgstr ""
-
-#. module: project_timesheet_forecast_sale
-#: model:planning.role,name:project_timesheet_forecast_sale.planning_role_senior_architect
-msgid "Software Senior Architect"
-msgstr ""
+msgstr "銷售訂單資料行"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,help:project_timesheet_forecast_sale.field_planning_analysis_report__billable_allocated_hours
 msgid "Sum of hours allocated to shifts linked to a SOL."
-msgstr ""
+msgstr "分配給連結至 SOL 班次的時數總和。"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,help:project_timesheet_forecast_sale.field_planning_analysis_report__non_billable_allocated_hours
 msgid "Sum of hours allocated to shifts not linked to a SOL."
-msgstr ""
-
-#. module: project_timesheet_forecast_sale
-#: model:ir.model,name:project_timesheet_forecast_sale.model_project_timesheet_forecast_report_analysis
-msgid "Timesheet & Planning Statistics"
-msgstr ""
+msgstr "分配給沒有連結至 SOL 班次的時數總和。"
 
 #. module: project_timesheet_forecast_sale
 #. odoo-python
-#: code:addons/project_timesheet_forecast_sale/models/project.py:0
+#: code:addons/project_timesheet_forecast_sale/models/project_project.py:0
 msgid "Timesheets and Planning"
-msgstr "時間表和計劃"
+msgstr "工時表及規劃"
 
 #. module: project_timesheet_forecast_sale
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast_sale.project_timesheet_forecast_view_kanban_inherit_sale_timesheet
 msgid "Timesheets and Planning Analysis"
-msgstr ""
+msgstr "工時表及規劃分析"
