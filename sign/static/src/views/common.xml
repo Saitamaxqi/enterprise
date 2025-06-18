@@ -19,13 +19,13 @@
 
     <t t-name="sign.SignViews.sign_request.buttons">
         <button class="btn btn-primary" title="Upload a pdf that you want to sign directly" t-on-click="() => this.requestFile('sign_send_request')">
-            Upload a PDF &amp; Sign
+            Upload a PDF
         </button>
     </t>
 
     <t t-name="sign.SignViews.sign_bundle.buttons">
-        <button class="btn btn-link" title="Upload documents" t-on-click="() => this.requestFile('sign_send_request')">
-            Add document
+        <button class="btn btn-link fs-5" title="Upload documents" t-on-click="() => this.requestFile('sign_send_request')">
+            Add
         </button>
     </t>
 </templates>

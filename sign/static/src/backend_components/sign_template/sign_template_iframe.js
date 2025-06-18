@@ -342,6 +342,10 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                         this.closePopover();
                         this.deleteSignItem(signItem);
                     },
+                    onDuplicate: () => {
+                        this.closePopover();
+                        this.duplicateSignItem(signItem);
+                    },
                     onClose: () => {
                         this.closePopover();
                     },
@@ -352,7 +356,12 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                     onClose: () => {
                         this.closePopoverFns = {};
                     },
-                    closeOnClickAway: (target) => !target.closest(".modal"),
+                    closeOnClickAway: (target) => {
+                        if (!target.closest(".popover")) {
+                            this.closePopover();
+                        }
+                        return !target.closest(".popover");
+                    },
                     popoverClass: "sign-popover",
                 }
             );
@@ -384,6 +393,13 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         if (Object.keys(this.closePopoverFns)) {
             for (const id in this.closePopoverFns) {
                 this.closePopoverFns[id].close();
+                const signItem = this.getSignItemById(id);
+                if (signItem.data.type === 'selection' && !signItem.data.option_ids.length) {
+                    signItem.el.classList.add("o_sign_field_error");
+                    this.notification.add(_t("Selection field cannot be empty. Please add at least one option."), {
+                        type: "warning",
+                    });
+                }
             }
             this.closePopoverFns = {};
         }
@@ -428,6 +444,8 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 } else if (signItem.data[key] !== data[key]) {
                     changes[key] = data[key];
                 }
+            } else {
+                changes[key] = data[key];
             }
             return changes;
         }, {});
@@ -464,6 +482,62 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         delete this.radioSets[radio_set_id];
         this.renderAllConnectingLines();
         this.orm.unlink('sign.item.radio.set', [radio_set_id]);
+    }
+
+    /**
+     * Duplicates a sign item in the document.
+     * @param {SignItem} signItem
+     */
+    duplicateSignItem(signItem) {
+        if (signItem.data.type == "radio"){
+            return this.duplicateRadioSet(signItem.data.radio_set_id);
+        }
+        const page = this.getPageContainer(signItem.data.page);
+        const newId = generateRandomId();
+        const newData = Object.assign({}, signItem.data, {
+            id: newId,
+            updated: true,
+            posX: signItem.data.posX + 0.005,
+            posY: signItem.data.posY + 0.005,
+        });
+        this.signItems[newData.page][newId] = {
+            data: newData,
+            el: this.renderSignItem(newData, page),
+        };
+        this.refreshSignItems();
+        this.setTemplateChanged();
+    }
+
+    /**
+     * Duplicates a radio set in the document.
+     * @param {Number} radio_set_id
+     */
+    async duplicateRadioSet(radio_set_id) {
+        const radioSet = this.radioSets[radio_set_id];
+        const newRadioSet = {
+            num_options: 0,
+            radio_item_ids: [],
+        };
+        const [newRadioSetId] = await this.orm.create('sign.item.radio.set', [{}]);
+        for (const id of radioSet.radio_item_ids) {
+            const signItem = this.getSignItemById(id);
+            const newId = generateRandomId();
+            const newData = Object.assign({}, signItem.data, {
+                id: newId,
+                updated: true,
+                posX: signItem.data.posX + 0.025,
+                posY: signItem.data.posY + 0.025,
+                radio_set_id: newRadioSetId,
+            });
+            this.signItems[newData.page][newId] = {
+                data: newData,
+                el: this.renderSignItem(newData, this.getPageContainer(newData.page)),
+            };
+            newRadioSet.radio_item_ids.push(newId);
+        }
+        this.radioSets[newRadioSet.id] = newRadioSet;
+        this.refreshSignItems();
+        this.setTemplateChanged();
     }
 
     /**
@@ -506,6 +580,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             const options = signItem.option_ids.map((id) => this.selectionOptionsById[id]);
             signItem.options = options;
         }
+        const error_class = type === 'selection' && !signItem.option_ids.length && !signItem.just_dropped ? 'o_sign_field_error' : '';
         return Object.assign(signItem, {
             readonly: true,
             editMode: true,
@@ -513,7 +588,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             responsible,
             type,
             placeholder: signItem.placeholder || signItem.name || "",
-            classes: `o_color_responsible_${this.roleColors[responsible]} o_readonly_mode`,
+            classes: `o_color_responsible_${this.roleColors[responsible]} o_readonly_mode ${error_class}`,
             style: `top: ${normalizedPosY * 100}%; left: ${normalizedPosX * 100}%;
                     width: ${signItem.width * 100}%; height: ${signItem.height * 100}%;
                     text-align: ${this.getAlignmentByItem(signItem)}`,
@@ -694,7 +769,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             const new_id = generateRandomId();
             const new_data = { ...tail.data };
             new_data['id'] = new_id;
-            new_data['posY'] += 0.04;
+            new_data['posY'] += 0.02;
             this.signItems[new_data.page][new_id] = {
                 data: new_data,
                 el: this.renderSignItem(new_data, this.getPageContainer(new_data.page)),

@@ -35,6 +35,7 @@
                         </div>
                         <div class="col-6">
                             <div><b>Document ID:</b> <span t-out="o.id">1001</span></div>
+                            <div><b>Documents:</b> <span t-out="', '.join(o.completed_document_ids.document_id.mapped('name'))">document1.pdf, document2.pdf</span></div>
                             <div><b>Signature:</b> <small t-out="(last_sign_log and last_sign_log[0].log_hash) or (creation_log and creation_log[0].log_hash)">ABCD1234</small></div>
                         </div>
                     </div>

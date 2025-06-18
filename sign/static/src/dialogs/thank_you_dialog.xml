@@ -14,7 +14,9 @@
                 <div id="thank-you-message" class="o_thankyou_message">
                     <t t-esc="message"/>
                 </div>
-                <button class="btn btn-link" t-if="signRequestState === 'signed'" t-on-click="() => this.downloadDocument()">Download signed document</button>
+                <button type="button" t-if="signRequestState === 'signed'" class="btn btn-primary o_next_document_button" t-on-click="() => this.downloadDocument()">
+                    Download
+                </button>
             </div>
             <t t-if="state.nextDocuments.filter((doc) => !doc.canceled).length > 0">
                 <hr/>
@@ -45,7 +47,7 @@
                     </tbody>
                 </table>
             </t>
-            <div t-if="suggestSignUp" class="alert alert-info o_thankyou_message d-flex gap-2 mb-0 mt-2 rounded border-0 align-items-center">
+            <div t-if="suggestSignUp" class="alert alert-info o_thankyou_message d-flex gap-2 mb-0 mt-3 rounded border-0 align-items-center">
                 <img class="img" height="48" width="48" src="/base/static/img/icons/sign.png"></img>
                 <div>
                     <h6 class="mb-1">Need to sign documents?</h6>

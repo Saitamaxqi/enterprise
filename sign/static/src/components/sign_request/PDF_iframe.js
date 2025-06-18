@@ -334,7 +334,8 @@ export class PDFIframe {
             `,
             type_id: [type.id],
             icon: type.icon || "",
-            documentId: this.documentId,
+            document_id: this.documentId,
+            just_dropped: true,
         };
     }
 

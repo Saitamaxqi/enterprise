@@ -15,6 +15,7 @@ export class SignItemCustomPopover extends Component {
         onValidate: { type: Function },
         type: { type: String },
         onDelete: { type: Function },
+        onDuplicate: { type: Function },
         onClose: { type: Function },
         debug: { type: String },
         close: { type: Function },

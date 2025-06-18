@@ -40,11 +40,12 @@ class SignRequest(models.Model):
     state = fields.Selection([
         ("shared", "Shared"),
         ("sent", "To Sign"),
-        ("signed", "Fully Signed"),
+        ("signed", "Signed"),
         ("canceled", "Cancelled"),
         ("expired", "Expired"),
     ], default='sent', tracking=True, group_expand=True, copy=False, index=True)
 
+    template_document_ids = fields.Many2many('sign.document', string="Documents", compute='_compute_template_document_ids')
     completed_document_ids = fields.One2many('sign.completed.document', 'sign_request_id', string="Completed Documents Binaries", copy=False)
     nb_wait = fields.Integer(string="Sent Requests", compute="_compute_stats", store=True)
     nb_closed = fields.Integer(string="Completed Signatures", compute="_compute_stats", store=True)
@@ -59,7 +60,7 @@ class SignRequest(models.Model):
     color = fields.Integer()
     request_item_infos = fields.Binary(compute="_compute_request_item_infos")
     last_action_date = fields.Datetime(related="message_ids.create_date", readonly=True, string="Last Action Date")
-    completion_date = fields.Date(string="Completion Date", compute="_compute_progress", compute_sudo=True)
+    completion_date = fields.Date(string="Completion Date", compute="_compute_completion_date", compute_sudo=True, store=True)
     communication_company_id = fields.Many2one('res.company', string="Company used for communication", default=lambda self: self.env.company)
 
     sign_log_ids = fields.One2many('sign.log', 'sign_request_id', string="Logs", help="Activity logs linked to this request")
@@ -77,6 +78,11 @@ class SignRequest(models.Model):
     reminder = fields.Integer(string='Reminder', default=7)
     last_reminder = fields.Date(string='Last reminder', default=lambda self: fields.Date.today())
     certificate_reference = fields.Boolean(string="Certificate Reference", default=False)
+
+    @api.depends('template_id')
+    def _compute_template_document_ids(self):
+        for sign_request in self:
+            sign_request.template_document_ids = sign_request.template_id.document_ids
 
     @api.constrains('reminder_enabled', 'reminder')
     def _check_reminder(self):
@@ -122,6 +128,10 @@ class SignRequest(models.Model):
         for rec in self:
             rec.start_sign = bool(rec.nb_closed)
             rec.progress = "{} / {}".format(rec.nb_closed, rec.nb_total)
+
+    @api.depends('request_item_ids.state')
+    def _compute_completion_date(self):
+        for rec in self:
             rec.completion_date = rec.request_item_ids.sorted(key="signing_date", reverse=True)[:1].signing_date if not rec.nb_wait else None
 
     @api.depends('request_item_ids.state', 'request_item_ids.partner_id.name')
@@ -269,19 +279,26 @@ class SignRequest(models.Model):
             },
         }
 
-    def get_completed_document(self):
+    def get_sign_request_documents(self):
         if not self:
             raise UserError(_('You should select at least one document to download.'))
 
-        if len(self) < 2:
-            return {
-                'name': 'Signed Document',
-                'type': 'ir.actions.act_url',
-                'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
-            }
+        if len(self) == 1:
+            if self.state == 'signed':
+                return {
+                    'name': 'Signed Document',
+                    'type': 'ir.actions.act_url',
+                    'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
+                }
+            else:
+                return {
+                    'name': 'Template Document',
+                    'type': 'ir.actions.act_url',
+                    'url': '/sign/download/%(request_id)s/%(access_token)s/origin' % {'request_id': self.id, 'access_token': self.access_token},
+                }
         else:
             return {
-                'name': 'Signed Documents',
+                'name': 'Sign Request Documents',
                 'type': 'ir.actions.act_url',
                 'url': f'/sign/download/zip/{",".join(map(str, self.ids))}',
             }

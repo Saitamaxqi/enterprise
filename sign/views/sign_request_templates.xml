@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="sign._doc_sign" name="Document Sign">
+        <div t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']" class="o_sign_next_document_banner bg-odoo">
+            <button type="button" class="btn btn-primary o_next_document_button">
+                Next Document
+            </button>
+        </div>
         <div t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']" class="o_sign_validate_banner bg-odoo">
             <button type="button" class="btn btn-primary o_validate_button">
                 Validate <span class="o_sign_validate_text"> &amp; Send Completed Document</span>
@@ -120,27 +125,6 @@
 
     <template id="sign.signer_status_wrapper" name="">
         <div class="o_sign_signer_status_wrapper justify-content-end d-flex">
-            <div t-attf-class="o_sign_document_navigator {{'d-none' if len(sign_request.template_id.document_ids) == 1 else ''}}">
-                <span class="o_sign_document_navigator_text"></span>
-                <div class="d-flex gap-1">
-                    <t t-if="portal">
-                        <button class="o_sign_document_navigator_left_arrow o_sign_portal_navigator rounded-start">
-                            &lt;
-                        </button>
-                        <button class="o_sign_document_navigator_right_arrow o_sign_portal_navigator rounded-end">
-                            &gt;
-                        </button>
-                    </t>
-                    <t t-else="">
-                        <button class="o_sign_document_navigator_left_arrow btn btn-secondary px-2 rounded-start">
-                            <i class="oi oi-chevron-left"/>
-                        </button>
-                        <button class="o_sign_document_navigator_right_arrow btn btn-secondary px-2 rounded-end">
-                            <i class="oi oi-chevron-right"></i>
-                        </button>
-                    </t>
-                </div>
-            </div>
             <div t-if="current_request_item" t-attf-class="o_sign_signer_status ps-4 {{'o_sign_signer_completed' if current_request_item.state == 'completed' else ''}}" t-att-data-id="current_request_item.id">
                 <img t-if="current_request_item.state == 'completed' and current_request_item.signature" class="mobile-hide" t-attf-src="data:image/png;base64,{{current_request_item.signature}}" alt="Signature"/>
                 <div class="o_sign_signer_status_info flex-column">
@@ -178,6 +162,27 @@
                         </div>
                     </div>
                 </t>
+                <div t-attf-class="o_sign_document_navigator {{'d-none' if len(sign_request.template_id.document_ids) == 1 else ''}}">
+                    <span class="o_sign_document_navigator_text"></span>
+                    <div class="d-flex gap-1">
+                        <t t-if="portal">
+                            <button class="o_sign_document_navigator_left_arrow o_sign_portal_navigator rounded-start">
+                                &lt;
+                            </button>
+                            <button class="o_sign_document_navigator_right_arrow o_sign_portal_navigator rounded-end">
+                                &gt;
+                            </button>
+                        </t>
+                        <t t-else="">
+                            <button class="o_sign_document_navigator_left_arrow btn btn-secondary px-2 rounded-start">
+                                <i class="oi oi-chevron-left"/>
+                            </button>
+                            <button class="o_sign_document_navigator_right_arrow btn btn-secondary px-2 rounded-end">
+                                <i class="oi oi-chevron-right"></i>
+                            </button>
+                        </t>
+                    </div>
+                </div>
             </div>
         </div>
     </template>

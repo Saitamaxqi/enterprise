@@ -92,7 +92,7 @@ test("do not crash when leaving the action", async () => {
     expect.verifySteps(["/sign/get_document/5/abc", "/sign/get_document/5/abc"]);
 });
 
-test("show download buttons when state is signed", async () => {
+test("show completed documents download dropdown when state is signed", async () => {
     const config = {
         tag: tag,
         actionContext: { state: "signed" },
@@ -102,16 +102,13 @@ test("show download buttons when state is signed", async () => {
 
     await getService("action").doAction(9);
 
-    expect(".o_sign_download_document_button").toHaveCount(1);
-    expect(".o_sign_download_log_button").toHaveCount(1);
-    expect(".o_sign_download_document_button").toHaveAttribute(
+    expect(".o_sign_download_documents_dropdown").toHaveCount(1);
+
+    expect(".o_sign_download_single_document_dropdown_item").toHaveAttribute(
         "href",
-        "/sign/download/5/abc/completed",
+        "/sign/download/5/abc/completed/1",
         {
-            message: "should have correct download URL",
+            message: "should have correct download URL for a single document",
         }
     );
-    expect(".o_sign_download_log_button").toHaveAttribute("href", "/sign/download/5/abc/log", {
-        message: "should have correct download URL",
-    });
 });

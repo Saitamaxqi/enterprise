@@ -211,6 +211,11 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             trigger: ":iframe .o_sign_sign_item.multi_selected",
         },
         {
+            content: "Click on document name text to make it editable",
+            trigger: ".o_sign_sidebar_document_name_text",
+            run: "click",
+        },
+        {
             content: "Change document name",
             trigger: ".o_sign_document_name_input",
             run: "edit new-document-name && click body",

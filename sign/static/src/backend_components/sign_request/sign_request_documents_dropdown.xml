@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sign.SignRequestDocumentsDropdown">
+        <t t-set-slot="control-panel-always-buttons">
+            <div class="d-flex gap-1 o_sign_download_documents_dropdown">
+                <div class="btn-group me-1">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-hotkey="c">
+                        Download
+                    </button>
+                    <ul class="dropdown-menu" style="z-index: 1055; position: absolute;">
+                        <t t-if="signInfo.get('signRequestState') == 'signed'">
+                            <li t-if="(signInfo.get('completed_documents')||[]).length > 1">
+                                <a class="dropdown-item o_sign_download_all_completed_documents_dropdown_item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/completed">
+                                    All Documents (zip)
+                                </a>
+                            </li>
+                            <li t-if="(signInfo.get('completed_documents')||[]).length > 1" class="dropdown-divider"/>
+                            <t t-foreach="signInfo.get('completed_documents') || []" t-as="doc" t-key="doc.id">
+                                <li>
+                                    <a class="dropdown-item o_sign_download_single_document_dropdown_item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/completed/{{doc.id}}">
+                                        <t t-esc="doc.name"/>
+                                    </a>
+                                </li>
+                            </t>
+                        </t>
+                        <t t-if="signInfo.get('needToSign')">
+                            <li t-if="(signInfo.get('original_documents')||[]).length > 1">
+                                <a class="dropdown-item o_sign_download_all_original_documents_dropdown_item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/origin">
+                                    All Documents (zip)
+                                </a>
+                            </li>
+                            <li t-if="(signInfo.get('original_documents')||[]).length > 1" class="dropdown-divider"/>
+                            <t t-foreach="signInfo.get('original_documents') || []" t-as="doc" t-key="doc.id">
+                                <li>
+                                    <a class="dropdown-item o_sign_download_original_documents_dropdown_item" t-attf-href="/sign/download/{{signInfo.get('documentId')}}/{{signInfo.get('signRequestToken')}}/origin/{{doc.id}}">
+                                        <t t-esc="doc.name"/>
+                                    </a>
+                                </li>
+                            </t>
+                        </t>
+                    </ul>
+                </div>
+            </div>
+        </t>
+    </t>
+</templates>

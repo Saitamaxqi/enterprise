@@ -49,6 +49,8 @@ export class Document extends Component {
 
         this.state = useState({
             documentsWithUnsignedItems: new Set(),
+            viewedDocuments: new Set(),
+            openedDocumentIndex: 0,
         });
 
         useEffect(
@@ -69,15 +71,37 @@ export class Document extends Component {
 
         useEffect(
             () => {
-                if (this.state.documentsWithUnsignedItems) {
-                    if (this.state.documentsWithUnsignedItems.size === 0) {
-                        this.showBanner();
-                    } else {
-                        this.hideBanner();
-                    }
+                if (
+                    !this.state.documentsWithUnsignedItems ||
+                    !this.state.viewedDocuments ||
+                    !this.documents ||
+                    this.documents.length === 0
+                ) {
+                    return;
+                }
+
+                const hasUnsignedDocs = this.state.documentsWithUnsignedItems.size > 0;
+                const currentDocUnsigned = this.isDocumentUnsigned();
+                const allDocsViewed = this.state.viewedDocuments.size === this.documents.length;
+
+                if (!hasUnsignedDocs && allDocsViewed) {
+                    // If all documents are signed and viewed, show validation banner
+                    this.showBanner(this.validateBanner);
+                    return;
+                }
+
+                // Hide validation banner since there are unsigned/un-viewed documents
+                this.hideBanner(this.validateBanner);
+
+                if (currentDocUnsigned) {
+                    // If current document needs signing, hide "next document" banner
+                    this.hideBanner(this.nextDocumentBanner);
+                } else {
+                    // If current document is signed or have nothing to sign, show "next document" banner
+                    this.showBanner(this.nextDocumentBanner);
                 }
             },
-            () => [this.state.documentsWithUnsignedItems]
+            () => [this.state.documentsWithUnsignedItems, this.state.openedDocumentIndex]
         );
     }
 
@@ -87,6 +111,16 @@ export class Document extends Component {
      */
     getDocumentsWithUnsignedItems() {
         return this.state.documentsWithUnsignedItems;
+    }
+
+    /**
+     * Checks if the current document has unsigned items
+     * @returns {boolean}
+     */
+    isDocumentUnsigned(){
+        if(!this.documents) return false;
+        const documentId = this.documents[this.state.openedDocumentIndex].id;
+        return this.state.documentsWithUnsignedItems.has(documentId);
     }
 
     /**
@@ -102,13 +136,14 @@ export class Document extends Component {
             newSet.delete(documentId);
         }
         this.state.documentsWithUnsignedItems = newSet;
-        this.controlNavigatorVisibility();
+        this.controlNavigatorVisibility(hasUnsignedItems);
     }
 
     documentNavigate(shift) {
-        this.openedDocumentIndex = (this.openedDocumentIndex + shift + this.documents.length) % this.documents.length;
+        this.state.openedDocumentIndex = (this.state.openedDocumentIndex + shift + this.documents.length) % this.documents.length;
+        this.state.viewedDocuments.add(this.documents[this.state.openedDocumentIndex].id);
         this.documents.forEach((doc, index) => {
-            if (index === this.openedDocumentIndex) {
+            if (index === this.state.openedDocumentIndex) {
                 doc.iframe.classList.remove("d-none");
             } else {
                 doc.iframe.classList.add("d-none");
@@ -116,32 +151,20 @@ export class Document extends Component {
         });
         document.querySelectorAll(".o_sign_document_navigator_text").forEach((text) => {
             if (text)
-                text.textContent = (this.openedDocumentIndex + 1) + " / " + this.documents.length;
+                text.textContent = (this.state.openedDocumentIndex + 1) + " / " + this.documents.length;
         });
     }
 
-    /**
-     * Navigates to a document by its ID
-     * @param {string} documentId
-     */
-    documentNavigateByID(documentId) {
-        const index = this.documents.findIndex(document => document.id === documentId);
-        if (index !== -1) {
-            this.openedDocumentIndex = index;
-            this.documentNavigate(0);
-        }
-    }
-
-    showBanner() {
-        if (this.validateBanner) {
-            this.validateBanner.style.display = "block";
-            const an = this.validateBanner.animate(
+    showBanner(banner) {
+        if (banner) {
+            banner.style.display = "block";
+            const an = banner.animate(
                 { opacity: 1 },
                 { duration: 500, fill: "forwards" }
             );
             an.finished.then(() => {
                 if (this.env.isSmall) {
-                    this.validateBanner.scrollIntoView({
+                    banner.scrollIntoView({
                         behavior: "smooth",
                         block: "center",
                         inline: "center",
@@ -151,34 +174,28 @@ export class Document extends Component {
         }
     }
 
-    hideBanner() {
-        if (this.validateBanner) {
-            this.validateBanner.style.display = "none";
-            this.validateBanner.style.opacity = 0;
+    hideBanner(banner) {
+        if (banner) {
+            banner.style.display = "none";
+            banner.style.opacity = 0;
         }
     }
 
     /**
-     * Controls the visibility of the navigator to be invisible if all documents are signed
+     * Controls the visibility of the navigator to be invisible if current document is signed
      */
-    controlNavigatorVisibility() {
-        const documentsWithUnsignedItems = this.state.documentsWithUnsignedItems;
+    controlNavigatorVisibility(hasUnsignedItems) {
         if (this.documents) {
-            for (let i = 0; i < this.documents.length; i++) {
-                const document = this.documents[i];
-                const showNavigator = documentsWithUnsignedItems.size > 0;
-                if (document.iframeManager && document.iframeManager.navigator) {
-                    document.iframeManager.navigator.toggle(showNavigator);
-                }
+            const currentDoc = this.documents[this.state.openedDocumentIndex];
+            if (currentDoc.iframeManager && currentDoc.iframeManager.navigator) {
+                currentDoc.iframeManager.navigator.toggle(hasUnsignedItems);
             }
         }
     }
 
     getDataFromHTML() {
         const { el: parentEl } = this.props.parent;
-        this.openedDocumentIndex = 0;
         this.documents = datasetFromElements(parentEl.querySelectorAll(".o_sign_document_input_info"));
-        this.state.documentsWithUnsignedItems = new Set(this.documents.map(doc => doc.id));
         const iframes = parentEl.querySelectorAll(".o_sign_pdf_iframe");
         for (let i = 0; i < this.documents.length; i++) {
             if (i > 0) {
@@ -243,11 +260,19 @@ export class Document extends Component {
         );
         const items = datasetFromElements(parentEl.querySelectorAll(".o_sign_item_input_info"));
         this.documents.forEach((document) => document.items = items.filter(item => item.document_id === document.id));
+        this.state.documentsWithUnsignedItems = new Set(
+            this.documents
+                .filter(doc => doc.items?.length > 0)
+                .map(doc => doc.id)
+        );
+        this.state.viewedDocuments = new Set([this.documents[0].id]);
         this.selectOptions = datasetFromElements(
             parentEl.querySelectorAll(".o_sign_select_options_input_info")
         );
         this.validateBanner = parentEl.querySelector(".o_sign_validate_banner");
         this.validateButton = parentEl.querySelector(".o_validate_button");
+        this.nextDocumentBanner = parentEl.querySelector(".o_sign_next_document_banner");
+        this.nextDocumentButton = parentEl.querySelector(".o_next_document_button");
         this.currentRole = parseInt(parentEl.querySelector("#o_sign_input_current_role")?.value);
         this.currentName = parentEl.querySelector("#o_sign_input_current_role_name")?.value;
 
@@ -256,7 +281,11 @@ export class Document extends Component {
         this.validateButton?.addEventListener("click", () => {
             this.signDocuments();
         });
+        this.nextDocumentButton?.addEventListener("click", () => {
+            this.documentNavigate(1);
+        });
     }
+
     initializeIframe(iframe, sign_document_id) {
         if (!iframe.contentDocument.querySelector('link[href*="pdfjs_overrides.css"]')) {
             injectPDFCustomStyles(iframe.contentDocument);
@@ -516,8 +545,6 @@ export class Document extends Component {
             frameHash: this.frameHash,
             signerName: this.signerName,
             signerPhone: this.signerPhone,
-            validateBanner: this.validateBanner,
-            validateButton: this.validateButton,
             isUnknownPublicUser: this.isUnknownPublicUser,
             authMethod: this.authMethod,
             redirectURL: this.redirectURL,
@@ -526,8 +553,8 @@ export class Document extends Component {
             documentId: sign_document_id,
             updateDocumentsWithUnsignedItems: (documentId, hasUnsignedItems) =>
                 this.updateDocumentsWithUnsignedItems(documentId, hasUnsignedItems),
-            documentNavigateByID: (documentId) => this.documentNavigateByID(documentId),
-            documentsWithUnsignedItems: () => this.getDocumentsWithUnsignedItems(),
+            isDocumentUnsigned: () => this.isDocumentUnsigned(),
+            getDocumentsWithUnsignedItems: () => this.getDocumentsWithUnsignedItems(),
             signDocuments: () => this.signDocuments(),
             updateSignerName: (name) => this.updateSignerName(name),
         };

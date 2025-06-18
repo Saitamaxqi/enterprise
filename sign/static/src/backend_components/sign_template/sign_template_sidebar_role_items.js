@@ -23,21 +23,20 @@ export class SignTemplateSidebarRoleItems extends Component {
         roleId: { type: Number, optional: true },
         colorId: { type: Number },
         isInputFocused: { type: Boolean, optional: true },
-        updateInputFocused: { type: Function },
         isCollapsed: { type: Boolean },
         updateCollapse: { type: Function },
         onDelete: { type: Function },
         itemsCount: { type: Number },
         hasSignRequests: { type: Boolean },
+        onFieldNameInputKeyUp: { type: Function },
     };
 
     async setup() {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
         this.state = useState({
-            roleId: this.props.roleId,
             roleName: "",
-            showEditLabelIcon: false,
+            canEditSignerName: false,
         });
         this.icon_type = {
             signature: "fa-pencil-square-o",
@@ -52,15 +51,6 @@ export class SignTemplateSidebarRoleItems extends Component {
         this.orm.call("sign.item.role", "read", [this.props.roleId]).then((role) => {
             this.state.roleName = role[0].name;
         });
-        this.canEditSignerName = !this.props.hasSignRequests && !this.props.isCollapsed;
-    }
-
-    updateShowEditLabelIcon(ev, value) {
-        /* Save signer name when unfocusing input for avoiding save conflicts.*/
-        if (ev.target.value && !value && ev.target.value !== this.state.roleName) {
-            this.onChangeRoleName(ev.target.value);
-        }
-        this.state.showEditLabelIcon = value;
     }
 
     async onDeleteDialog() {
@@ -80,29 +70,39 @@ export class SignTemplateSidebarRoleItems extends Component {
         }
     }
 
-    onFocusRoleInput(id) {
-        /* Focus the role input when it is clicked (if the dropdown is not collapsed). */
-        if (!this.props.isCollapsed) {
-            this.props.updateInputFocused(id, true);
+    onSignerNameTextClick() {
+        /* If the input is not focused, focus it. */
+        if (!this.props.hasSignRequests && !this.props.isCollapsed) {
+            this.state.canEditSignerName = true;    
+            const input = document.querySelector(`input[data-role-id="${this.props.roleId}"]`);
+            setTimeout(() => {
+                input.focus();
+            }, 100);
         }
+    }
+
+    onSignerNameInputBlur () {
+        this.state.canEditSignerName = false;
     }
 
     onChangeRoleName(name) {
         // Check if the new role name is different from the current one
-        if (name && this.state.roleId && name !== this.state.roleName) {
-            this.orm.write("sign.item.role", [this.state.roleId], { name: name });
+        if (name && this.props.roleId && name !== this.state.roleName) {
+            this.orm.write("sign.item.role", [this.props.roleId], { name: name });
             this.state.roleName = name;
-            this.props.updateRoleName(this.state.roleId, this.state.roleName);
+            this.props.updateRoleName(this.props.roleId, this.state.roleName);
         }
     }
 
     onExpandSigner(id) {
-        this.props.updateCollapse(id, false);
+        if (this.props.isCollapsed) {
+            this.props.updateCollapse(id, false);
+        }
     }
 
     async openSignRoleRecord() {
         this.dialog.add(FormViewDialog, {
-            resId: this.state.roleId,
+            resId: this.props.roleId,
             resModel: "sign.item.role",
             size: "md",
             title: _t("Signer Edition"),

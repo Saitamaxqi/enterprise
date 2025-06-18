@@ -4,7 +4,7 @@
     'version': '1.0',
     'category': 'Sales/Sign',
     'sequence': 105,
-    'summary': "Send documents to sign online and handle filled copies",
+    'summary': "Send and request electronic signatures.",
     'description': """
 Sign and complete your documents easily. Customize your documents with text and signature fields and send them to your recipients.\n
 Let your customers follow the signature process easily.
@@ -19,8 +19,6 @@ Let your customers follow the signature process easily.
         'data/sign_data.xml',
         'data/sign_tour.xml',
         'views/sign_template_views_mobile.xml',
-        'wizard/sign_download_wizard.xml',
-        'wizard/sign_duplicate_template_with_pdf_views.xml',
         'wizard/sign_template_preview_views.xml',
         'wizard/sign_send_request_views.xml',
         'views/sign_request_templates.xml',
@@ -163,6 +161,9 @@ Let your customers follow the signature process easily.
             'web_tour/static/src/tour_pointer/**/*',
             'web_tour/static/src/tour_service/**/*',
             'web/static/lib/hoot-dom/**/*',
-        ]
+        ],
+        'web.assets_web_dark': [
+            'sign/static/src/scss/sign.dark.scss',
+        ],
     }
 }

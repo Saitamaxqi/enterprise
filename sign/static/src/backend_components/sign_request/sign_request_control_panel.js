@@ -1,7 +1,11 @@
 import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 import { Component, useEffect, useComponent, markup } from "@odoo/owl";
-import { useService } from "@web/core/utils/hooks";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { SignRequestDocumentsDropdown } from "@sign/backend_components/sign_request/sign_request_documents_dropdown";
+import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import multiFileUpload from "@sign/backend_components/multi_file_upload";
 
@@ -28,16 +32,17 @@ function useResendButtons() {
                 ".o_sign_signer_status.o_sign_signer_waiting"
             );
             Array.from(signerNames).forEach((signerNameEl) => {
-                const stateSet =
-                    component.signInfo.get("requestItemStates")[signerNameEl.dataset.id];
+                signerNameEl.style.display = "flex";
+                signerNameEl.style.alignItems = "flex-end";
+                const requestItemStates = component.signInfo.get("requestItemStates") || {};
+                const stateSet = requestItemStates[signerNameEl.dataset.id];
                 const title = stateSet ? _t("Resend the invitation") : _t("Send the invitation");
                 const text = stateSet ? _t("Resend") : _t("Send");
                 const button = document.createElement("button");
                 button.title = title;
                 button.innerText = text;
                 button.className = "o_sign_resend_access_button btn btn-link ms-2 me-2";
-                button.style = "vertical-align: baseline;";
-                signerNameEl.insertBefore(button, signerNameEl.firstChild);
+                signerNameEl.appendChild(button);
                 button.addEventListener("click", onClickResend);
             });
         },
@@ -49,6 +54,9 @@ export class SignRequestControlPanel extends Component {
     static template = "sign.SignRequestControlPanel";
     static components = {
         ControlPanel,
+        Dropdown,
+        DropdownItem,
+        SignRequestDocumentsDropdown,
     };
     static props = {
         signerStatus: {
@@ -65,6 +73,7 @@ export class SignRequestControlPanel extends Component {
         this.signInfo = useService("signInfo");
         this.nextTemplate = multiFileUpload.getNext();
         useResendButtons();
+        this.addDialog = useOwnedDialogs();
     }
 
     get markupSignerStatus() {
@@ -92,14 +101,20 @@ export class SignRequestControlPanel extends Component {
     }
 
     async cancelDocument() {
-        await this.orm.call("sign.request", "cancel", [this.signInfo.get("documentId")]);
-        const result = await this.orm.call(
-            "sign.request",
-            "get_close_values",
-            [[this.signInfo.get("documentId")]],
-        );
-        const context = result.custom_action ? {} : {clearBreadcrumbs: true};
-        this.env.services.action.doAction(result.action, context);
+        this.addDialog(ConfirmationDialog, {
+            body: _t("Are you sure you want to cancel this sign request?"),
+            confirm: async () => {
+                await this.orm.call("sign.request", "cancel", [this.signInfo.get("documentId")]);
+                const result = await this.orm.call(
+                    "sign.request",
+                    "get_close_values",
+                    [[this.signInfo.get("documentId")]],
+                );
+                const context = result.custom_action ? {} : { clearBreadcrumbs: true };
+                this.env.services.action.doAction(result.action, context);
+            },
+            cancel: () => {},
+        });
     }
 
     async goToNextDocument() {

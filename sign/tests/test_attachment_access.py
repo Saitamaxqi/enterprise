@@ -114,57 +114,6 @@ class testAttachmentAccess(TransactionCase):
             document.write({'attachment_id': attachment_forbidden.id})
             document.datas
 
-    def test_user_template_duplicate_created_by_admin(self):
-        """Test an employee can read the content of a duplicated template created by another user, the admin"""
-
-        # As admin, create an attachment without res_model/res_id
-        attachment = self.env['ir.attachment'].create({'name': 'foo', 'datas': self.pdf})
-        # Create template
-        template = self.env['sign.template'].create({
-            'name': 'Test Template'
-        })
-        # As admin, create a sign.document linked to that attachment
-        document = self.env['sign.document'].create({
-            'attachment_id': attachment.id,
-            'template_id': template.id,
-        })
-
-        # As user, ensure the attachment itself cannot be read
-        self.env.invalidate_all()
-        with self.assertRaises(AccessError):
-            attachment.with_user(self.user).datas
-        # But, as user, the content of the attachment can be read through the template
-        self.assertEqual(document.with_user(self.user).datas, self.pdf)
-
-        # Duplicate template
-        template_dup = self.env['sign.duplicate.template.pdf'].create({
-            'original_template_id': template.id,
-            'new_pdf': self.pdf,
-            'new_template': 'dup template',
-        })
-
-        # Current user is not part of authorized users -> duplicate should fail
-        with self.assertRaises(AccessError):
-            template_dup.with_user(self.user).duplicate_template_with_pdf()
-
-        # Add user to authorized users
-        template.write({'authorized_ids': [(4, self.user.id)]})
-        template_dup.with_user(self.user).duplicate_template_with_pdf()
-
-        # Modify access rules as admin
-        new_template = self.env['sign.template'].search([('name', '=', 'dup template')])
-        new_template.write({
-            'group_ids': [(6, 0, [self.env.ref('sign.group_sign_user').id])],
-        })
-
-        # As user, ensure duplicated template is visible
-        new_template = self.env['sign.template'].with_user(self.user).search([('name', '=', 'dup template')])
-        self.assertEqual(len(new_template), 1)
-
-        # As user, ensure that both the attachment and the template can be read
-        self.env.invalidate_all()
-        self.assertEqual(new_template.document_ids[0].with_user(self.user).datas, self.pdf)
-
     @users('foo')
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule', 'odoo.models')
     def test_access_sign_user_fields(self):

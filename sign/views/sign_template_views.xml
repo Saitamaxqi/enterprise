@@ -16,11 +16,10 @@
                     <div t-name="menu">
                         <a role="menuitem" type="object" name="go_to_custom_template" class="d-none d-md-block dropdown-item" context="{'sign_edit_call': 'sign_template_edit'}">Edit</a>
                         <a role="menuitem" type="object" name="stop_sharing" class="dropdown-item" invisible="not is_sharing">Stop Sharing</a>
-                        <a role="menuitem" type="action" name="%(sign.action_sign_duplicate_template_with_pdf)d" class="dropdown-item">Use Layout</a>
+                        <a role="menuitem" type="object" name="action_duplicate" class="dropdown-item">Duplicate</a>
                         <a role="menuitem" type="object" name="action_archive" class="dropdown-item" t-if="record.active.raw_value">Archive</a>
                         <a role="menuitem" type="object" name="action_unarchive" class="dropdown-item" t-if="!record.active.raw_value">Restore</a>
-                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
-
+                        <a role="menuitem" type="object" name="action_template_configuration" class="dropdown-item">Configuration</a>
                         <div role="separator" class="dropdown-divider"/>
                         <div role="separator" class="dropdown-item-text">Color</div>
                         <field name="color" widget="kanban_color_picker"/>
@@ -30,11 +29,11 @@
                             <div class="col-lg-4 col-sm-12 py-0 my-2 my-lg-0">
                                 <div class="d-flex flex-row mt-2">
                                     <t t-if="record.favorited_ids.raw_value.indexOf(context.uid) &lt; 0">
-                                        <a type="object" name="toggle_favorited" aria-label="Not in favorites, set it" title="Not in favorites, add it"
+                                        <a type="object" name="toggle_favorited" aria-label="Set as favorite" title="Set as favorite"
                                             class="fa fa-lg fa-star-o favorite_sign_button"/>
                                     </t>
                                     <t t-else="">
-                                        <a type="object" name="toggle_favorited" aria-label="In favorites, remove it" title="In favorites, remove it"
+                                        <a type="object" name="toggle_favorited" aria-label="Remove from favorites" title="Remove from favorites"
                                             class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button"/>
                                     </t>
                                     <field name="display_name" class="ms-4 fw-bold text-truncate"/>
@@ -55,22 +54,22 @@
                             </div>
                             <div t-attf-class="col-lg-1 col-sm-8 col-6 py-0 my-2">
                                 <div class="d-flex flex-column">
-                                    <a type="object" name="get_action_in_progress_requests" class="fw-bold fs-4">
-                                        <field name="in_progress_count"/>
+                                    <a type="object" name="get_action_in_progress_requests">
+                                        <field name="in_progress_count" class="fw-bold fs-4"/>
+                                        <div class="me-2 text-dark" title="Number of documents in progress for this template.">
+                                            <span>In Progress</span>
+                                        </div>
                                     </a>
-                                    <span class="me-2" title="Number of documents in progress for this template.">
-                                        <span>In Progress</span>
-                                    </span>
                                 </div>
                             </div>
                             <div t-attf-class="col-lg-1 col-sm-4 col-6 py-0 my-2 me-auto">
                                 <div class="d-flex flex-column">
-                                    <a type="object" name="get_action_signed_requests" class="fw-bold fs-4">
-                                        <field name="signed_count"/>
+                                    <a type="object" name="get_action_signed_requests">
+                                        <field name="signed_count" class="fw-bold fs-4"/>
+                                        <div class="me-2 text-dark" title="Number of documents signed for this template.">
+                                            <span>Signed</span>
+                                        </div>
                                     </a>
-                                    <span class="me-2" title="Number of documents signed for this template.">
-                                        <span>Signed</span>
-                                    </span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12 my-3 py-0 o_kanban_record_bottom">
@@ -371,13 +370,10 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <div class="oe_title">
-                        <label for="name"/>
-                        <h1><field name="name" placeholder="e.g. Employee"/></h1>
-                    </div>
                     <group>
-                        <field name="auth_method" string="Authentication method"/>
-                        <field name="change_authorized" string="Editable"/>
+                        <field name="name" placeholder="e.g. Employee"/>
+                        <field name="auth_method" string="Authentication" placeholder="By Email"/>
+                        <field name="change_authorized" string="Can delegate"/>
                     </group>
                 </sheet>
             </form>

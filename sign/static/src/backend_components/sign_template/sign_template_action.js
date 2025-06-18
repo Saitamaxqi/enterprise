@@ -105,14 +105,12 @@ export class SignTemplate extends Component {
             hasSignRequests: this.hasSignRequests,
             documents: this.state.documents,
             selectedDocumentId: this.state.selectedDocumentId,
-            selectedDocumentName: this.getSelectedDocumentName(),
             /* Update callbacks binding for parent. */
             onEditTemplate: () => this.onEditTemplate(),
             updateCollapse: (id, value) => this.updateCollapse(id, value),
-            updateInputFocused: (id, value) => this.updateInputFocused(id, value),
             updateSigners: this.updateSigners.bind(this),
             pushNewSigner: this.pushNewSigner.bind(this),
-            updateSelectedDocumentName: (newName) => this.updateSelectedDocumentName(newName),
+            updateDocumentName: (documentId, newName) => this.updateDocumentName(documentId, newName),
             updateSelectedDocument: (id) => this.updateSelectedDocument(id),
             updateDocuments: () => this.updateDocuments(),
             deleteDocument: (documentId) => this.deleteDocument(documentId),
@@ -134,11 +132,6 @@ export class SignTemplate extends Component {
                 id: duplicatedTemplateIds[0],
             },
         });
-    }
-
-    getSelectedDocumentName() {
-        // Get the selected document name across the documents.
-        return this.state.documents.find((doc) => doc.id === this.state.selectedDocumentId).display_name;
     }
 
     updateRoleName(roleId, roleName) {
@@ -239,18 +232,6 @@ export class SignTemplate extends Component {
             setTimeout(() => document.iframe.setupDragAndDrop(), 50);
         });
         this.state.nextId++;
-    }
-
-    updateInputFocused(id, value) {
-        /* Make the signer with the matching id receive the new value,
-        and force all other signers to have its input unfocused. */
-        this.state.signers.forEach(signer => {
-            if (signer.id === id) {
-                signer.isInputFocused = value;
-            } else {
-                signer.isInputFocused = false;
-            }
-        });
     }
 
     updateCollapse(id, value) {
@@ -411,17 +392,15 @@ export class SignTemplate extends Component {
         this.state.documents.find((doc) => doc.id === this.state.selectedDocumentId).iframe?.setIsActive(true);
     }
 
-    async updateSelectedDocumentName(newName) {
-        if (this.state.selectedDocumentId) {
-            let selectedDocument = this.state.documents.filter((doc) => doc.id === this.state.selectedDocumentId)[0];
-            if (selectedDocument && newName !== selectedDocument.display_name) {
-                this.state.documents.find((doc) => doc.id === selectedDocument.id).display_name = newName;
-                await this.orm.write(
-                    "sign.document",
-                    [selectedDocument.id],
-                    { name: newName }
-                );
-            }
+    async updateDocumentName(documentId, newName) {
+        let document = this.state.documents.find((doc) => doc.id === documentId);
+        if (document && newName !== document.display_name) {
+            document.display_name = newName;
+            await this.orm.write(
+                "sign.document",
+                [documentId],
+                { name: newName }
+            );
         }
     }
 
