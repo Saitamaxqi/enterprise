@@ -408,7 +408,41 @@ class AccountReturn(models.Model):
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     type_id = fields.Many2one(comodel_name='account.return.type', string="Return Type", required=True)
-    state = fields.Char(string="State", required=True, default='new', tracking=True)
+    state = fields.Char(string="State", compute="_compute_state", inverse="_inverse_state")
+    generic_state_tax_report = fields.Selection(
+        string="Generic State",
+        selection=[
+            ('new', 'New'),
+            ('reviewed', 'Reviewed'),
+            ('locked', 'Locked'),
+            ('submitted', 'Submitted'),
+            ('paid', 'Paid'),
+        ],
+        default='new',
+        help="The state of the return for generic tax report flows",
+        tracking=True,
+    )
+    generic_state_only_pay = fields.Selection(
+        string="Generic State Only Pay",
+        selection=[
+            ('new', 'New'),
+            ('paid', 'Paid'),
+        ],
+        default='new',
+        help="The state of the return for report flows when only payment is needed",
+        tracking=True,
+    )
+    generic_state_review_submit = fields.Selection(
+        string="Generic State Review Submit",
+        selection=[
+            ('new', 'New'),
+            ('reviewed', 'Reviewed'),
+            ('submitted', 'Submitted'),
+        ],
+        default='new',
+        help="The state of the return for report flows when review and submission are needed",
+        tracking=True,
+    )
     is_completed = fields.Boolean(string="Is Completed", default=False, tracking=True)  # Set to true when all steps are done
     company_id = fields.Many2one(comodel_name='res.company', string="Company", required=True)
     tax_unit_id = fields.Many2one(comodel_name='account.tax.unit', string="Tax Unit")
@@ -441,9 +475,10 @@ class AccountReturn(models.Model):
 
     def write(self, vals):
         result = super().write(vals)
-        if 'state' in vals:
-            if self.date_from <= fields.Date.end_of(fields.Date.context_today(self), "month"):
-                self.refresh_checks(force_bypassed=True)
+        for record in self:
+            if record._get_state_field() in vals:
+                if record.date_from <= fields.Date.end_of(fields.Date.context_today(record), "month"):
+                    record.refresh_checks(force_bypassed=True)
         return result
 
     @api.model
@@ -501,6 +536,15 @@ class AccountReturn(models.Model):
         for record in self:
             record.show_amount_to_pay = record.is_tax_return and record.closing_move_ids
 
+    @api.depends('type_id', 'generic_state_tax_report', 'generic_state_only_pay', 'generic_state_review_submit')
+    def _compute_state(self):
+        for record in self:
+            record.state = record[record._get_state_field()]
+
+    def _inverse_state(self):
+        for record in self:
+            record[record._get_state_field()] = record.state
+
     @api.depends('tax_unit_id', 'company_id')
     def _compute_amount_to_pay_currency_id(self):
         for record in self:
@@ -515,7 +559,7 @@ class AccountReturn(models.Model):
 
             record.unresolved_check_count = failed_count
 
-    @api.depends('check_ids', 'unresolved_check_count')
+    @api.depends('check_ids', 'unresolved_check_count', 'state')
     def _compute_resolved_check_count(self):
         for record in self:
             record.resolved_check_count = len(record.check_ids.filtered(lambda check: check.state == record.state)) - record.unresolved_check_count
@@ -655,9 +699,21 @@ class AccountReturn(models.Model):
     ####  State Actions
     ####################################################################################################
 
+    def _get_state_field(self):
+        """
+        Returns the field name that is used to store the state of the return.
+        """
+        self.ensure_one()
+        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
+            return 'generic_state_review_submit'
+        return 'generic_state_tax_report'
+
     def try_auto_review(self):
-        for account_return in self.filtered(lambda r: r.state == 'new'):
-            if account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
+        for account_return in self:
+            state_keys = [s[0] for s in account_return._fields[account_return._get_state_field()].selection]
+            next_state_index = state_keys.index(account_return.state) + 1
+            is_next_state_review = next_state_index < len(state_keys) and state_keys[next_state_index] == 'reviewed'
+            if is_next_state_review and account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
                 account_return.action_review()
 
     def action_review(self, bypass_failing_tests=False):
@@ -896,8 +952,14 @@ class AccountReturn(models.Model):
             raise UserError(_("Only an Accounting Administrator can reset an annual closing"))
 
         if self.state == 'submitted':
+            self._reset_checks_for_states([self.state, 'reviewed'])
+            self.state = 'reviewed'
+            self.date_submission = False
+
+        if self.state == 'reviewed':
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
+
         self.is_completed = False
         return True
 

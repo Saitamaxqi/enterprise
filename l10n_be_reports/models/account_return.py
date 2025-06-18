@@ -45,6 +45,13 @@ class AccountReturnType(models.Model):
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
+    def _get_state_field(self):
+        if self.type_external_id in ['l10n_be_reports.be_vat_listing_return_type', 'l10n_be_reports.be_ec_sales_list_return_type']:
+            return 'generic_state_review_submit'
+        elif self.type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
+            return 'generic_state_only_pay'
+        return super()._get_state_field()
+
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
         months_per_period = return_type._get_periodicity_months_delay(company)
@@ -90,7 +97,7 @@ class AccountReturn(models.Model):
                 ('type_id', '=', self.type_id.id),
                 ('date_to', '<', self.date_from),
                 ('company_id', '=', self.company_id.id),
-                ('state', '=', 'paid'),
+                (self._get_state_field(), '=', 'paid'),
             ], order="date_to desc", limit=1)
 
             create_vals = {

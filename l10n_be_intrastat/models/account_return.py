@@ -50,6 +50,11 @@ class AccountReturnType(models.Model):
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
+    def _get_state_field(self):
+        if self.type_external_id == 'l10n_be_intrastat.be_intrastat_goods_return_type':
+            return 'generic_state_review_submit'
+        return super()._get_state_field()
+
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
         if return_type_external_id == 'l10n_be_intrastat.be_intrastat_goods_return_type':

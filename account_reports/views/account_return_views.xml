@@ -113,7 +113,7 @@
                                             <a invisible="not (manually_created and state == 'new')" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
 
                                             <!-- Reset should be last-->
-                                            <a invisible="state == 'new' and not is_completed or not is_tax_return" class="dropdown-item" type="object" name="action_reset_tax_return_common" string="Reset"/>  
+                                            <a invisible="state == 'new' and not is_completed or not is_tax_return" class="dropdown-item" type="object" name="action_reset_tax_return_common" string="Reset"/>
                                             <a invisible="state == 'new' and not is_completed or type_external_id != 'account_reports.annual_corporate_tax_return_type'" class="dropdown-item" type="object" name="action_reset_annual_closing" string="Reset"/>
                                         </div>
                                     </div>
