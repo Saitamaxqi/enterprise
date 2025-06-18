@@ -125,7 +125,7 @@ class ResUsers(models.Model):
             return
         provider = self.env.user.voip_provider_id
         voip_config = {
-            "callActivityTypeId": self.env["mail.activity.type"].search([("category", "=", "phonecall")])[0].id,
+            "callActivityTypeId": self.env["mail.activity.type"].search([("category", "=", "phonecall")], limit=1).id,
             "mode": provider.mode or "demo",
             "missedCalls": self.env["voip.call"]._get_number_of_missed_calls(),
             "pbxAddress": provider.pbx_ip or "localhost",
