@@ -5,6 +5,7 @@ from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.addons.point_of_sale.tests.common import archive_products
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo.addons.pos_urban_piper.models.pos_urban_piper_request import UrbanPiperClient
+from unittest.mock import patch
 
 
 @odoo.tests.tagged('post_install', '-at_install')
@@ -159,3 +160,11 @@ class TestFrontend(TestPosUrbanPiperCommon):
             },
         ]
         self.assertEqual(result, expected)
+
+    def test_payment_method_close_session(self):
+        def _mock_make_api_request(self, endpoint, method='POST', data=None, timeout=10):
+            return []
+        self.urban_piper_config.payment_method_ids = self.env['pos.payment.method'].search([]).filtered(lambda pm: pm.type == 'bank')
+        with patch.object(UrbanPiperClient, "_make_api_request", _mock_make_api_request):
+            self.urban_piper_config.with_user(self.pos_admin).open_ui()
+            self.start_pos_tour('test_payment_method_close_session', pos_config=self.urban_piper_config, login="pos_admin")
