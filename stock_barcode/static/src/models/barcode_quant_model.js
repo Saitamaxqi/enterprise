@@ -763,4 +763,8 @@ export default class BarcodeQuantModel extends BarcodeModel {
     _getCompanyId() {
         return this.companyIds[0];
     }
+
+    _shouldBeExpressedInPackagingUom() {
+        return false;
+    }
 }

@@ -827,6 +827,10 @@ export default class BarcodeModel extends EventBus {
         return true;
     }
 
+    _shouldBeExpressedInPackagingUom() {
+        return true;
+    }
+
     _defaultLocation() {
         const lastScannedLocation = this.lastScanned.sourceLocation;
         return lastScannedLocation || Object.values(this.cache.dbIdCache["stock.location"])[0];
@@ -1627,8 +1631,15 @@ export default class BarcodeModel extends EventBus {
     _retrievePackagingData(barcodeData) {
         const { packaging } = barcodeData;
         const product = this.cache.getRecord("product.product", packaging.product_id);
-        const uom = this.cache.getRecord("uom.uom", packaging.uom_id || product.uom_id);
-        const quantity = "quantity" in barcodeData ? barcodeData.quantity : 1;
+        const packagingUom = this.cache.getRecord("uom.uom", packaging.uom_id);
+        const uom = this._shouldBeExpressedInPackagingUom()
+            ? packagingUom
+            : this.cache.getRecord("uom.uom", product.uom_id);
+        let quantity = "quantity" in barcodeData ? barcodeData.quantity : 1;
+        if (!this._shouldBeExpressedInPackagingUom() && packagingUom !== uom) {
+            const factor = packagingUom.factor / uom.factor;
+            quantity *= factor;
+        }
         return { product, quantity, uom };
     }
 

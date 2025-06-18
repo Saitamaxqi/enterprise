@@ -922,7 +922,18 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
             trigger: ".o_barcode_line",
             run: function () {
                 const line = helper.getLine({ barcode: "product1" });
-                helper.assertLineQty(line, "1 Pack of 15");
+                helper.assertLineQty(line, "15 Units");
+            },
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan product1",
+        },
+        {
+            trigger: ".o_barcode_line:contains(16)",
+            run: function () {
+                const line = helper.getLine({ barcode: "product1" });
+                helper.assertLineQty(line, "16 Units");
             },
         },
         {
@@ -947,7 +958,7 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
             trigger: ".o_barcode_line",
             run: function () {
                 const line = helper.getLine({ barcode: "product1" });
-                helper.assertLineQty(line, "1/1 Pack of 15");
+                helper.assertLineQty(line, "15/16 Units");
             },
         },
         {

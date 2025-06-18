@@ -368,6 +368,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             'barcode': 'pack007',
         })
         self.start_tour("/odoo/barcode", 'test_inventory_packaging', login='admin', timeout=180)
+        self.assertEqual(self.product1.qty_available, 15.0)
 
     def test_inventory_serial_product_packaging(self):
         """ This test ensures that correct packaging lines generated
