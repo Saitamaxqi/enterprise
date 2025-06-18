@@ -1069,10 +1069,14 @@ class StudioApprovalRule(models.Model):
                     return False
 
         record = self.env[self.model_name].browse(res_id)
-        activity_type_id = self._get_or_create_activity_type()
+        activity_type_id = self.env.ref("mail.mail_activity_data_todo").id
         activity_ids = []
         for user in users:
-            activity = record.activity_schedule(activity_type_id=activity_type_id, user_id=user.id)
+            # Free floating context for translation
+            # ruff: noqa: F841
+            context = {"lang": user.lang}
+            summary = _("Grant Approval")
+            activity = record.activity_schedule(activity_type_id=activity_type_id, user_id=user.id, summary=summary)
             activity_ids.append(activity.id)
 
         self.env['studio.approval.request'].sudo().create([
@@ -1086,26 +1090,10 @@ class StudioApprovalRule(models.Model):
 
         return True
 
-    @api.model
-    def _get_or_create_activity_type(self):
-        approval_activity = self.env.ref('web_studio.mail_activity_data_approve', raise_if_not_found=False)
-        if not approval_activity:
-            # built-in activity type has been deleted, try to fallback
-            approval_activity = self.env['mail.activity.type'].search([('category', '=', 'grant_approval'), ('res_model', '=', False)], limit=1)
-            if not approval_activity:
-                # not 'approval' activity type at all, create it on the fly
-                approval_activity = self.env['mail.activity.type'].sudo().create({
-                    'name': _('Grant Approval'),
-                    'icon': 'fa-check',
-                    'category': 'grant_approval',
-                    'sequence': 999,
-                })
-        return approval_activity.id
-
     def _unlink_request(self, res_id):
         self.ensure_one()
-        requests = self.env['studio.approval.request'].search([('rule_id', '=', self.id), ('res_id', '=', res_id)])
-        requests.mail_activity_id.unlink()
+        sar = self.env['studio.approval.request'].search([('rule_id', '=', self.id), ('res_id', '=', res_id)])
+        sar.unlink()
         return True
 
     def open_delegate_action(self):
@@ -1261,10 +1249,14 @@ class StudioApprovalRequest(models.Model):
     _description = 'Studio Approval Request'
 
     mail_activity_id = fields.Many2one('mail.activity', string='Linked Activity', ondelete='cascade',
-                                        required=True)
+                                        required=True, index=True, inverse="_inverse_mail_activity_id")
     rule_id = fields.Many2one('studio.approval.rule', string='Approval Rule', ondelete='cascade',
                               required=True, index=True)
     res_id = fields.Many2oneReference(string='Record ID', model_field='model', required=True)
+
+    def _inverse_mail_activity_id(self):
+        for rec in self:
+            rec.mail_activity_id.studio_approval_request_id = rec.id
 
 
 class StudioApprovalRuleDelegate(models.TransientModel):

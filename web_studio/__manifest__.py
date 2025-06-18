@@ -43,7 +43,6 @@ Note: Only the admin user is allowed to make those customizations.
         'views/studio_export_wizard_views.xml',
         'views/studio_export_model_views.xml',
         'data/mail_templates.xml',
-        'data/mail_activity_type_data.xml',
         'data/web_tour_tour.xml',
         'wizard/base_module_uninstall_view.xml',
         'security/ir.model.access.csv',

@@ -4,8 +4,8 @@ from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase, HttpCase, tagged
 from odoo.addons.web_studio.tests.test_ui import setup_view_editor_data
 
-@tagged("-at_install", "post_install")
-class TestStudioApprovals(TransactionCase):
+
+class TestStudioApprovalsCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,6 +36,9 @@ class TestStudioApprovals(TransactionCase):
             "group_ids": [Command.link(cls.env.ref("base.group_user").id)]
         })
 
+
+@tagged("-at_install", "post_install")
+class TestStudioApprovals(TestStudioApprovalsCommon):
     def test_approval_method_two_models(self):
         IrModel = self.env["ir.model"]
 
@@ -91,6 +94,7 @@ class TestStudioApprovals(TransactionCase):
         self.assertTrue('title="Rule 1"' in model_action.message_ids[0].body)
         self.assertEqual(model_action.message_ids[0].author_id, self.demo_user.partner_id)
         self.assertEqual(len(model_action.activity_ids), 1)
+        self.assertEqual(model_action.activity_ids.summary, "Grant Approval")
 
         with self.with_user("admin"):
             self.env["test.studio.model_action"].browse(model_action.id).action_confirm()

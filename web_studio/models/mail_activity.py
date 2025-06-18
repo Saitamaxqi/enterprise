@@ -1,6 +1,6 @@
 import contextlib
 
-from odoo import models
+from odoo import models, fields
 from odoo.exceptions import UserError
 from odoo.fields import Domain
 
@@ -8,10 +8,13 @@ from odoo.fields import Domain
 class MailActivity(models.Model):
     _inherit = "mail.activity"
 
+    studio_approval_request_id = fields.Many2one("studio.approval.request", index=True, ondelete='cascade')
+
     def _action_done(self, feedback=False, attachment_ids=False):
-        approval_activities = self.filtered(lambda a: a.activity_category == 'grant_approval')
+        activities = self
+        approval_activities = self.filtered("studio_approval_request_id")
         if approval_activities:
-            approval_requests = self.env["studio.approval.request"].sudo().search([("mail_activity_id", "in", approval_activities.ids)])
+            approval_requests = approval_activities.sudo().studio_approval_request_id
             domains = []
             pairs = set()
             for request in approval_requests:
@@ -40,4 +43,5 @@ class MailActivity(models.Model):
             # since 18.3 activities are not unlinked, but archived -> old ondelete cascade
             # behavior of requests should be done manually
             (approval_requests | extra_requests).unlink()
-        return super()._action_done(feedback=feedback, attachment_ids=attachment_ids)
+            activities = self.exists()
+        return super(MailActivity, activities)._action_done(feedback=feedback, attachment_ids=attachment_ids)
