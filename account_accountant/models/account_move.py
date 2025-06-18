@@ -1014,7 +1014,7 @@ class AccountMoveLine(models.Model):
             self.env['res.currency']._field_to_sql(currency_alias, 'decimal_places', query),
         )
 
-    def _read_group_groupby(self, groupby_spec, query):
+    def _read_group_groupby(self, alias, groupby_spec, query):
         # enable grouping by :abs_rounded on fields, which is useful when trying
         # to match positive and negative amounts
         if ':' in groupby_spec:
@@ -1034,4 +1034,4 @@ class AccountMoveLine(models.Model):
                     self.env['res.currency']._field_to_sql(currency_alias, 'decimal_places', query),
                 )
 
-        return super()._read_group_groupby(groupby_spec, query)
+        return super()._read_group_groupby(alias, groupby_spec, query)
