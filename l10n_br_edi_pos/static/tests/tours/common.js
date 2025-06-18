@@ -1,6 +1,5 @@
 import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
 import * as Chrome from "@point_of_sale/../tests/pos/tours/utils/chrome_util";
-import * as Notification from "@point_of_sale/../tests/generic_helpers/notification_util";
 import * as ProductScreen from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 import * as PaymentScreen from "@point_of_sale/../tests/pos/tours/utils/payment_screen_util";
 import * as TicketScreen from "@point_of_sale/../tests/pos/tours/utils/ticket_screen_util";
@@ -35,7 +34,11 @@ function checkNoExcludedTaxesProducts() {
             trigger: ".search-more-button > button",
             run: "click",
         },
-        Notification.has("No other products found"),
+        Chrome.isSynced(), // wait for async search to complete
+        {
+            content: "Should still find no products",
+            trigger: ".product-screen:contains('No products found for')",
+        },
     ].flat();
 }
 
