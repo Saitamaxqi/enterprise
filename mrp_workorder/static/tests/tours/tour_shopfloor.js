@@ -447,15 +447,15 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         { trigger: 'button:contains("Winter\'s Workshop").active' },
         {
             content: "Start the first WO with the second employee",
-            trigger: ".o_mrp_display_record:first-child .card-title",
+            trigger: ".o_mrp_display_record:contains(TEST/00001) .card-title",
             run: "click",
         },
-        { trigger: ".o_mrp_display_record.o_active" },
+        { trigger: ".o_mrp_display_record:contains(TEST/00001).o_active" },
         { trigger: ".o_mrp_employees_panel li:contains(John Snow)", run: "click" },
         { trigger: ".o_admin_user:contains(John Snow)" },
         {
             content: "Start the second WO with the first employee",
-            trigger: ".o_mrp_display_record:last-child .card-title",
+            trigger: ".o_mrp_display_record:contains(TEST/00002) .card-title",
             run: "click",
         },
 
@@ -471,7 +471,9 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div.fw-bold");
                 assert(currentEmployeeEl.innerText, "John Snow");
-                const records = document.querySelectorAll(".o_mrp_display_record");
+                const records = [...document.querySelectorAll(".o_mrp_display_record")].filter(
+                    (rec) => rec.querySelector(".card-title").innerText.includes("TEST")
+                );
                 assert(records.length, 1);
                 const recordTitle = records[0].querySelector(".card-title>span").innerText;
                 assert(recordTitle, "TEST/00002 - Build the Snowman");
@@ -485,7 +487,9 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div.fw-bold");
                 assert(currentEmployeeEl.innerText, "Queen Elsa");
-                const records = document.querySelectorAll(".o_mrp_display_record");
+                const records = [...document.querySelectorAll(".o_mrp_display_record")].filter(
+                    (rec) => rec.querySelector(".card-title").innerText.includes("TEST")
+                );
                 assert(records.length, 1);
                 const recordTitle = records[0].querySelector(".card-title>span").innerText;
                 assert(recordTitle, "TEST/00001 - Build the Snowman");
@@ -498,7 +502,9 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div.fw-bold");
                 assert(currentEmployeeEl.innerText, "John Snow");
-                const records = document.querySelectorAll(".o_mrp_display_record");
+                const records = [...document.querySelectorAll(".o_mrp_display_record")].filter(
+                    (rec) => rec.querySelector(".card-title").innerText.includes("TEST")
+                );
                 assert(records.length, 1);
                 const recordTitle = records[0].querySelector(".card-title>span").innerText;
                 assert(recordTitle, "TEST/00002 - Build the Snowman");
