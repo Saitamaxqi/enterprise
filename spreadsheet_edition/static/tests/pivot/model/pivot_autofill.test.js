@@ -14,8 +14,8 @@ import {
 import { getCellFormula, getCell } from "@spreadsheet/../tests/helpers/getters";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
 import { createModelFromGrid } from "@spreadsheet/../tests/helpers/model";
-import { patchTranslations } from "@web/../tests/web_test_helpers";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
+import { allowTranslations } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("headless");
 defineSpreadsheetModels();
@@ -158,7 +158,7 @@ test("Autofill with references works like any regular function (no custom autofi
 });
 
 test("Autofill non-odoo pivot should copy the formula", function () {
-    patchTranslations();
+    allowTranslations();
     // prettier-ignore
     const grid = {
         A1: "Customer",
@@ -644,7 +644,7 @@ test("Autofill content which contains pivots but which is not a pivot", async fu
 });
 
 test("Autofill pivot formula with missing pivotId", async function () {
-    patchTranslations();
+    allowTranslations();
     const model = new spreadsheet.Model({
         sheets: [
             {

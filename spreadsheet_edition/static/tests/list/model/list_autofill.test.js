@@ -12,7 +12,7 @@ import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { getCell, getCellFormula, getCellValue } from "@spreadsheet/../tests/helpers/getters";
 import { createSpreadsheetWithList } from "@spreadsheet/../tests/helpers/list";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
-import { patchTranslations } from "@web/../tests/web_test_helpers";
+import { allowTranslations } from "@web/../tests/web_test_helpers";
 const { toCartesian } = spreadsheet.helpers;
 
 describe.current.tags("headless");
@@ -139,7 +139,7 @@ test("Tooltip of list formulas", async function () {
 });
 
 test("Autofill list formula with missing listId", async function () {
-    patchTranslations();
+    allowTranslations();
     const model = new spreadsheet.Model({
         sheets: [
             {

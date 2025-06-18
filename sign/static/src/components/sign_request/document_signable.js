@@ -5,7 +5,7 @@ import { getTemplate } from "@web/core/templates";
 import { makeEnv, startServices } from "@web/env";
 import { SignablePDFIframe } from "./signable_PDF_iframe";
 import { buildPDFViewerURL, injectPDFCustomStyles } from "@sign/components/sign_request/utils";
-import { _t } from "@web/core/l10n/translation";
+import { _t, appTranslateFn } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
 import {
@@ -651,7 +651,7 @@ export async function initDocumentToSign(parent) {
         getTemplate,
         dev: env.debug,
         translatableAttributes: ["data-tooltip"],
-        translateFn: _t,
+        translateFn: appTranslateFn,
     });
     await app.mount(parent.body);
 }

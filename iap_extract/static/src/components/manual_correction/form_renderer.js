@@ -1,4 +1,4 @@
-import { _t } from "@web/core/l10n/translation";
+import { appTranslateFn } from "@web/core/l10n/translation";
 import { getTemplate } from "@web/core/templates";
 import { useService } from "@web/core/utils/hooks";
 import { App, onWillUnmount, reactive, useExternalListener, useState } from "@odoo/owl";
@@ -76,7 +76,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
             getTemplate,
             props,
             translatableAttributes: ["data-tooltip"],
-            translateFn: _t,
+            translateFn: appTranslateFn,
         });
     }
 

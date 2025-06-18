@@ -13,7 +13,7 @@ import {
     getService,
     mockService,
     mountWithCleanup,
-    patchTranslations,
+    allowTranslations,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
@@ -80,7 +80,7 @@ async function createSpreadsheetAction(actionTag, params) {
  * @param {SpreadsheetTestParams} params
  */
 export async function createSpreadsheet(params = {}) {
-    patchTranslations();
+    allowTranslations();
     if (!params.serverData) {
         params.serverData = getBasicServerData();
     }
