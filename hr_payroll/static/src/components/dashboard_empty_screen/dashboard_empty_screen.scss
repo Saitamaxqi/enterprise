@@ -58,11 +58,13 @@
     align-items: center;
     justify-content: center;
 }
-.fa-clock-o {
-    font-size: 1em;
-}
-.fa-file-text {
-    font-size: 2.9em;
+.dashboard-work-entry-icon {
+    .fa-clock-o {
+        font-size: 1em;
+    }
+    .fa-file-text {
+        font-size: 2.9em;
+    }
 }
 .underline-asset {
     position: absolute;
