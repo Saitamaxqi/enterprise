@@ -34,6 +34,7 @@
         <field name="country_id" ref="base.be"/>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="image_1920" type="base64" file="hr_contract_salary/static/img/hr_employee_max_durand.jpg"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sex">male</field>
     </record>
 
@@ -167,6 +168,7 @@
         <field name="bike_id" ref="fleet_vehicle_bike_laurie_poiret"/>
         <field name="ip_wage_rate">25</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
         <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
         <field name="contract_update_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
