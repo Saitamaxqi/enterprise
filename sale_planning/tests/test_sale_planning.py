@@ -474,3 +474,37 @@ class TestSalePlanning(TestCommonSalePlanning):
             "The shift to plan of SO3 should be linked to the resource of SO2's shift because their SOL have "
             "the same product, their customer is the same, and the shift's deadline is the closest from the current date."
         )
+
+    def test_recurrent_shift_date_change(self):
+        """
+        Test Steps:
+        1. Define the base date for the first shift.
+        2. Create a recurring shift that repeats 3 times.
+        3. Access the second slot from the generated recurrence.
+        4. Modify the second slot's start and end datetime, and set 'recurrence_update': 'all'.
+        5. Assert that all shifts in the recurrence have updated with new date.
+        """
+        first_slot_dt = datetime(2020, 11, 22, 8)
+        first_slot_end = first_slot_dt + timedelta(hours=1)
+        first_slot = self.env['planning.slot'].create({
+            'start_datetime': first_slot_dt,
+            'end_datetime': first_slot_end,
+            'repeat': True,
+            'repeat_type': 'x_times',
+            'repeat_number': 3,
+            'repeat_interval': 1,
+            'repeat_unit': 'day',
+        })
+        recurrence = first_slot.recurrency_id
+        slots = recurrence.slot_ids
+        slots[1].write({
+            'start_datetime': first_slot_dt,
+            'end_datetime': first_slot_end,
+            'recurrence_update': 'all',
+        })
+        slots = recurrence.slot_ids.sorted('start_datetime')
+        self.assertTrue(all(
+            slot.start_datetime == first_slot_dt + timedelta(days=i - 1) and
+            slot.end_datetime == slot.start_datetime + timedelta(hours=1)
+            for i, slot in enumerate(slots)
+        ), "The date should be updated for all the slots.")
