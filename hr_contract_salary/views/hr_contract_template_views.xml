@@ -13,7 +13,7 @@
                         <widget name="upload_pdf_button" invisible="not template_warning"/>
                     </div>
                     <group string="New Contract" invisible="template_warning">
-                        <field string="PDF Template" name="sign_template_id" options="{'no_create': True}" context="{'kanban_view_ref': 'sign.sign_template_view_kanban_mobile'}"/>
+                        <field string="PDF Template" name="sign_template_id" options="{'no_create': True}" context="{'kanban_view_ref': 'sign.sign_template_view_kanban_mobile', 'list_view_ref': 'hr_contract_salary.view_sign_template_tree_custom'}"/>
                         <field name="sign_template_signatories_ids" nolabel="1" colspan="2" invisible="not sign_template_id">
                             <list editable="bottom" create="false" delete="false">
                                 <field name="sign_role_id" readonly="1" force_save="1" options="{'no_open': True}"/>
@@ -26,7 +26,7 @@
                         </field>
                     </group>
                     <group string="Contract Update" invisible="template_warning">
-                        <field string="PDF Template" name="contract_update_template_id" options="{'no_create': True}"/>
+                        <field string="PDF Template" name="contract_update_template_id" options="{'no_create': True}" context="{'list_view_ref': 'hr_contract_salary.view_sign_template_tree_custom'}"/>
                         <field name="contract_update_signatories_ids" nolabel="1" colspan="2" invisible="not contract_update_template_id">
                             <list editable="bottom" create="false" delete="false">
                                 <field name="sign_role_id" readonly="1" force_save="1" options="{'no_open': True}"/>
