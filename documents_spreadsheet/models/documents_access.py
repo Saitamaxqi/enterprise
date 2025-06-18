@@ -11,9 +11,12 @@ class DocumentsAccess(models.Model):
     def _check_spreadsheet(self):
         """Check that only internal user can edit a spreadsheet."""
         for access in self:
-            if (access.document_id.handler == 'spreadsheet'
-                and (not access.partner_id.user_ids or access.partner_id.user_ids.share)
-                and access.role == 'edit'):
+            user_ids = access.partner_id.with_context(active_test=False).user_ids
+            if (
+                access.document_id.handler == 'spreadsheet'
+                and (not user_ids or user_ids.share)
+                and access.role == 'edit'
+            ):
                 raise ValidationError(_('Spreadsheets can not be shared in edit mode to non-internal users.'))
 
             if access.document_id.handler == 'frozen_spreadsheet' and access.role == 'edit':

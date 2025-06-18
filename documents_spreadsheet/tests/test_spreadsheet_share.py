@@ -176,11 +176,19 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         spreadsheet = self.create_spreadsheet()
         user_portal = new_test_user(self.env, login='alice', groups='base.group_portal')
         user_internal = new_test_user(self.env, login='eve')
+        user_internal_archived = new_test_user(self.env, login='john')
+        user_internal_archived.active = False
         partner = self.env['res.partner'].create({'name': 'Bob'})
 
         self.env['documents.access'].create({
             'document_id': spreadsheet.id,
             'partner_id': user_internal.partner_id.id,
+            'role': 'edit',
+        })
+
+        self.env['documents.access'].create({
+            'document_id': spreadsheet.id,
+            'partner_id': user_internal_archived.partner_id.id,
             'role': 'edit',
         })
 
