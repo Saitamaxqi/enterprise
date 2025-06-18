@@ -366,7 +366,7 @@ export const youtubeUploadField = {
     ...charField,
     component: YoutubeUploadField,
     fieldDependencies: [
-        { name: "youtube_video_category_id", type: "char" },
+        { name: "youtube_video_category_id", type: "char", readonly: false },
     ],
 };
 
