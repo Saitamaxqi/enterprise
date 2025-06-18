@@ -119,7 +119,7 @@ test("folds/unfolds the existing fields into sidebar", async () => {
 
     expect(".o_web_studio_field_type_container").toHaveCount(2);
     expect(".o_web_studio_existing_fields_header i").toHaveClass(["fa-caret-right"]);
-    expect(".o_web_studio_existing_fields_section").not.toBeVisible();
+    expect(".o_web_studio_existing_fields_section").not.toHaveCount();
 
     await contains(".o_web_studio_existing_fields_header").click();
 
@@ -135,7 +135,7 @@ test("folds/unfolds the existing fields into sidebar", async () => {
     await contains(".o_web_studio_existing_fields_header").click();
     expect(".o_web_studio_field_type_container").toHaveCount(2);
     expect(".o_web_studio_existing_fields_header i").toHaveClass(["fa-caret-right"]);
-    expect(".o_web_studio_existing_fields_section").not.toBeVisible();
+    expect(".o_web_studio_existing_fields_section").not.toHaveCount();
 });
 
 test("change widget binary to image", async () => {

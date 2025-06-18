@@ -52,7 +52,7 @@ test("ungrouped gantt rendering", async () => {
     expect(columnHeaders).toHaveLength(8);
     expect(columnHeaders.at(0).title).toBe("01");
     expect(columnHeaders.at(-1).title).toBe("08");
-    expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
+    expect(SELECTORS.expandCollapseButtons).not.toHaveCount();
     expect(rows).toEqual([
         {
             pills: [
@@ -155,7 +155,7 @@ test("single-level grouped gantt rendering", async () => {
         groupBy: ["project_id"],
     });
     await contains(".o_content").scroll({ left: 850 });
-    expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
+    expect(SELECTORS.expandCollapseButtons).not.toHaveCount();
 
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");

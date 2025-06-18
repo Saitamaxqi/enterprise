@@ -285,7 +285,7 @@ describe("basic flow with home menu", () => {
         expect.verifySteps([]);
         expect(".o_menu_toggle").toHaveClass("o_menu_toggle_back");
         expect(".o_home_menu").toHaveCount(1);
-        expect(".o_form_view").not.toBeVisible();
+        expect(".o_form_view").not.toHaveCount();
     });
 
     test.tags("desktop");
@@ -348,7 +348,7 @@ test("restore the newly created record in form view", async () => {
     await contains(".o_form_button_save").click();
     expect(".o_breadcrumb .active").toHaveText("red right hand");
     await goToHomeMenu();
-    expect(".o_form_view").not.toBeVisible();
+    expect(".o_form_view").not.toHaveCount();
 
     // can't click again too soon because of the mutex in home_menu
     // service (waiting for the url to be updated)
@@ -387,7 +387,7 @@ test("fast clicking on restore (implementation detail)", async () => {
     await animationFrame();
     await contains(".o_menu_toggle").click(); // go to home menu
     expect(".o_home_menu").toBeVisible();
-    expect(".delayed_client_action").not.toBeVisible();
+    expect(".delayed_client_action").not.toHaveCount();
 
     doVeryFastClick = true;
     await contains(".o_menu_toggle").click(); // back
@@ -395,7 +395,7 @@ test("fast clicking on restore (implementation detail)", async () => {
     expect(".delayed_client_action").toHaveCount(1);
     await animationFrame(); // waiting for DelayedClientAction
     expect(".o_home_menu").toBeVisible();
-    expect(".delayed_client_action").not.toBeVisible();
+    expect(".delayed_client_action").not.toHaveCount();
 
     await contains(".o_menu_toggle").click(); // back
     await animationFrame();
@@ -780,9 +780,11 @@ test("display studio icon when studio module is not installed", async () => {
 });
 
 test("studio icon should not be visible for non-admin users", async () => {
-    user.isSystem = false;
+    patchWithCleanup(user, {
+        isSystem: false,
+    });
     await mountWebClient({ WebClient: WebClientEnterprise });
-    expect(".o_menu_systray .o_nav_entry i").not.toBeVisible();
+    expect(".o_menu_systray .o_nav_entry i").not.toHaveCount();
 });
 
 test.tags("desktop");

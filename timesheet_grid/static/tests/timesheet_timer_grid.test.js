@@ -656,11 +656,11 @@ test("hr.timesheet (grid)(timer): check that individual and total overtime are p
     await hover(columnTotalEl);
     await animationFrame();
     await advanceTime(10); // debounce on mouse over event.
-    expect(
-        ".o_grid_bar_chart_container.o_grid_highlighted .o_grid_bar_chart_overtime"
-    ).toBeDisplayed({
-        message: "The overtime of the total column hovered should be visible",
-    });
+    expect(".o_grid_bar_chart_container.o_grid_highlighted .o_grid_bar_chart_overtime").toBeVisible(
+        {
+            message: "The overtime of the total column hovered should be visible",
+        }
+    );
 
     const overtimeClasses = ["text-danger", "text-warning", "text-danger", "text-danger"];
     queryAll(".o_grid_bar_chart_container .o_grid_bar_chart_overtime").forEach((node, i) =>
@@ -1017,7 +1017,7 @@ test("hr.timesheet (grid)(timer): switch view with GroupBy and start the timer",
     await animationFrame();
     await click(".btn_start_timer");
     await animationFrame();
-    expect("button.btn_start_timer").not.toBeDisplayed({
+    expect("button.btn_start_timer").not.toHaveCount(null, {
         message: "Timer should be running",
     });
 });

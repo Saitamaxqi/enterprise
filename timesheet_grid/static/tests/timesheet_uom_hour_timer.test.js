@@ -3,8 +3,8 @@ import { click } from "@odoo/hoot-dom";
 import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
 import { fields, mountView, onRpc } from "@web/../tests/web_test_helpers";
 
-import { defineTimesheetModels, HRTimesheet } from "./hr_timesheet_models";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
+import { defineTimesheetModels, HRTimesheet } from "./hr_timesheet_models";
 
 defineTimesheetModels();
 beforeEach(() => {
@@ -61,30 +61,30 @@ function getNthRowPath(n) {
 
 test("hr.timesheet (list)(timer): button is displayed when display_timer is true", async () => {
     await mountView(mountViewArgs);
-    expect(`${getNthRowPath(2)} ${iconPath}`).toBeDisplayed();
+    expect(`${getNthRowPath(2)} ${iconPath}`).toBeVisible();
 });
 
 test("hr.timesheet (list)(timer): button is not displayed when in edition", async () => {
     await mountView(mountViewArgs);
     const secondRowPath = getNthRowPath(2);
-    expect(`${secondRowPath} ${iconPath}`).toBeDisplayed();
+    expect(`${secondRowPath} ${iconPath}`).toBeVisible();
     await click(`${secondRowPath} span`);
     await runAllTimers();
-    expect(`${secondRowPath} ${iconPath}`).not.toBeDisplayed();
+    expect(`${secondRowPath} ${iconPath}`).not.toHaveCount();
 });
 
 test("hr.timesheet (list)(timer): button is displayed when timer is running", async () => {
     await mountView(mountViewArgs);
     const thirdRowPath = getNthRowPath(3);
-    expect(`${thirdRowPath} ${iconPath}`).toBeDisplayed();
+    expect(`${thirdRowPath} ${iconPath}`).toBeVisible();
     await click(`${thirdRowPath} span`);
     await animationFrame();
-    expect(`${thirdRowPath} ${iconPath}`).toBeDisplayed();
+    expect(`${thirdRowPath} ${iconPath}`).toBeVisible();
 });
 
 test("hr.timesheet (list)(timer): button is not displayed when display_timer is false", async () => {
     await mountView(mountViewArgs);
-    expect(`${getNthRowPath(1)} ${iconPath}`).not.toBeDisplayed();
+    expect(`${getNthRowPath(1)} ${iconPath}`).not.toHaveCount();
 });
 
 test("hr.timesheet (list)(timer): icon is corresponding to is_timer_running", async () => {

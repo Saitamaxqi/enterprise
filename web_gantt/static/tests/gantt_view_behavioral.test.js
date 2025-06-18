@@ -2648,7 +2648,7 @@ test("focus today with scroll (in range & outside)", async () => {
     await scroll(".o_content", { left: 2000 });
     await animationFrame();
 
-    expect(".o_gantt_cell.o_gantt_today").not.toBeVisible();
+    expect(".o_gantt_cell.o_gantt_today").not.toHaveCount();
     columnHeaders = getGridContent().columnHeaders;
     expect(columnHeaders).toHaveLength(33);
     expect(columnHeaders[0].title).toBe("05"); // January
@@ -2701,7 +2701,7 @@ test("focus today with range change (in range & outside)", async () => {
     await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
     expect(getGridContent().range).toBe("From: 01/01/2019 to: 02/28/2019");
     expect.verifySteps(["get_gantt_data"]);
-    expect(".o_gantt_cell.o_gantt_today").not.toBeVisible();
+    expect(".o_gantt_cell.o_gantt_today").not.toHaveCount();
 
     await focusToday();
     await ganttControlsChanges();

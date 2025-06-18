@@ -355,32 +355,32 @@ test("Toggle Properties Panel (desktop)", async () => {
     await waitFor(".o_knowledge_form_view");
     // properties panel and toggle button are not shown for root articles
     expect(".o_knowledge_header .btn-properties").toHaveCount(0);
-    expect(".o_widget_knowledge_properties_panel").not.toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
     // when opening an article with article properties, panel should be open
     await click(".o_article_name:contains('child1')");
     await waitFor(".o_article_active .o_article_name:contains('child1')");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").toBeVisible();
     expect(".o_field_properties").toHaveCount(1);
     expect(".o_knowledge_header .btn-properties").toHaveClass("active");
     // close the properties panel
     await click(".o_knowledge_header .btn-properties");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").not.toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
     expect(".o_knowledge_header .btn-properties").not.toHaveClass("active");
     // reopen the properties panel
     await click(".o_knowledge_header .btn-properties");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").toBeVisible();
     expect(".o_property_field").toHaveCount(1);
     expect(".o_knowledge_header .btn-properties").toHaveClass("active");
     // when opening an article whose parent has properties definitions, panel should remain open
     await click(".o_article_name:contains('child2')");
     await waitFor(".o_article_active .o_article_name:contains('child2')");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").toBeVisible();
     expect(".o_field_properties").toHaveCount(1);
     expect(".o_knowledge_header .btn-properties").toHaveClass("active");
     // remove parent's properties definition
@@ -391,7 +391,7 @@ test("Toggle Properties Panel (desktop)", async () => {
     await click(".o_article_name:contains('child1')");
     await waitFor(".o_article_active .o_article_name:contains('child1')");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").not.toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
     expect(".o_knowledge_header .btn-properties").toHaveCount(0);
 });
@@ -427,20 +427,20 @@ test("Toggle Properties Panel (Mobile)", async () => {
     await click(".o_article_name:contains('child1')");
     await waitFor(".o_article_active .o_article_name:contains('child1')");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").not.toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
     expect(".o_knowledge_header .btn-properties").not.toHaveClass("active");
     // open the properties panel
     await click(".o_knowledge_header .btn-properties");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").toBeVisible();
     expect(".o_field_properties").toHaveCount(1);
     expect(".o_knowledge_header .btn-properties").toHaveClass("active");
     // panel should remain open when opening an article with properties while the panel is opened
     await click(".o_article_name:contains('child2')");
     await waitFor(".o_article_active .o_article_name:contains('child2')");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").toBeVisible();
     expect(".o_field_properties").toHaveCount(1);
     expect(".o_knowledge_header .btn-properties").toHaveClass("active");
     // remove parent's properties definition
@@ -451,7 +451,7 @@ test("Toggle Properties Panel (Mobile)", async () => {
     await click(".o_article_name:contains('child1')");
     await waitFor(".o_article_active .o_article_name:contains('child1')");
     await animationFrame();
-    expect(".o_widget_knowledge_properties_panel").not.toBeDisplayed();
+    expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
     expect(".o_knowledge_header .btn-properties").toHaveCount(0);
 });

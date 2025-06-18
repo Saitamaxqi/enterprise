@@ -737,14 +737,14 @@ test("grouped kanban fold_field can be change for custom model", async () => {
     await contains(".o_web_studio_property_default_group_by button").click();
     await contains(".o-dropdown-item:contains('Stage')").click();
 
-    expect("input[name='group_expand']").not.toBeVisible();
-    expect(".o_web_studio_property_fold_name").not.toBeVisible();
+    expect("input[name='group_expand']").not.toHaveCount();
+    expect(".o_web_studio_property_fold_name").not.toHaveCount();
 
     await contains(".o_web_studio_property_default_group_by button").click();
     await contains(".o-dropdown-item:contains('Custom stage')").click();
 
     expect("input[name='group_expand']").toBeVisible();
-    expect(".o_web_studio_property_fold_name").not.toBeVisible();
+    expect(".o_web_studio_property_fold_name").not.toHaveCount();
 
     const kanbanEditor = findComponent(parentComponent, (c) => c instanceof KanbanEditorSidebar);
     kanbanEditor.state.groupByField = {

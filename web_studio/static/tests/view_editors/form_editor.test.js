@@ -1908,7 +1908,7 @@ test("invisible notebook page in form", async () => {
     await contains(".o_web_studio_sidebar input#invisible").click();
     await animationFrame();
     expect(".o_web_studio_view_renderer .o_notebook li").toHaveCount(2);
-    expect(".o_notebook li .kikou").not.toBeVisible();
+    expect(".o_notebook li .kikou").not.toHaveCount();
 
     expect(".o-web-studio-editor--element-clicked").toHaveCount(0);
     expect(".o_web_studio_new").toHaveClass("active");
