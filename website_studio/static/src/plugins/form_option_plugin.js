@@ -107,7 +107,7 @@ patch(FormOptionPlugin.prototype, {
 export class StudioFormOptionPlugin extends Plugin {
     static id = "studioFormOption";
     static dependencies = ["builderActions", "builderOptions", "websiteFormOption"];
-    static shared = ["setFormAccess", "saveFormAccess"];
+    static shared = ["setFormAccess", "saveFormAccess", "selectModel"];
     resources = {
         builder_actions: {
             StudioMoreModelsAction,
