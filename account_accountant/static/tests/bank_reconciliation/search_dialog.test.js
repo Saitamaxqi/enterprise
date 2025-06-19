@@ -205,7 +205,7 @@ test("BankRecSelectCreateDialog list view single currency", async () => {
     await contains(`.o_select_domain`).click();
     await animationFrame();
 
-    expect("div[name='remaining_amount']").toHaveText("Balance: $ -935.00");
+    expect("div[name='remaining_amount']").toHaveText("Balance: $ -555.00");
 });
 
 test("BankRecSelectCreateDialog list view multi currencies", async () => {

@@ -64,7 +64,7 @@ export class BankRecSelectCreateDialog extends SelectCreateDialog {
                 return sum + line.amount_residual;
             }, 0);
         }
-        this.state.remainingAmount += selectedLinesSum;
+        this.state.remainingAmount = this.suspenseAccountLine.amount_currency + selectedLinesSum;
     }
 
     get suspenseAccountLine() {
