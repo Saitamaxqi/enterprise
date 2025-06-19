@@ -323,6 +323,7 @@ class MrpWorkorder(models.Model):
             'search_default_name': self.production_id.name,
             'shouldHideNewWorkcenterButton': True,
         }
+        del action['context']['search_default_filter_ready']  # Remove MO Ready
         return action
 
     def action_log_note(self):

@@ -46,7 +46,7 @@
             <field name="name">mrp.production.gantt</field>
             <field name="model">mrp.production</field>
             <field name="arch" type="xml">
-                <gantt 
+                <gantt
                 kanban_view_id="%(mrp_workorder.mrp_production_kanban_view_inherit)d"
                 date_start="date_start"
                 date_stop="date_finished"

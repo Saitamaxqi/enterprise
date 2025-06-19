@@ -62,18 +62,12 @@ export class MrpDisplay extends Component {
         ) {
             this.pickingTypeId = this.props.context.active_id;
         }
-        useSubEnv({
-            localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}.picking_type_${this.pickingTypeId}`,
-        });
+        useSubEnv({ localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}`});
 
         const localStoredWC = JSON.parse(localStorage.getItem(this.env.localStorageName));
         const firstLoad = !localStoredWC;
         const workcenters = [...defaultWorkcenterButtons, ...(firstLoad ? [] : localStoredWC)];
-        let activeWorkcenter = this.props.context.workcenter_id || false;
-        // If no workcenter by default but some WC were already selected, selects the first one.
-        if (!activeWorkcenter && workcenters.length) {
-            activeWorkcenter = workcenters[0].id;
-        }
+        const activeWorkcenter = this._loadActiveWorkcenter(this.env.localStorageName, workcenters);
 
         this.state = useState({
             activeResModel: activeWorkcenter ? "mrp.workorder" : this.props.resModel,
@@ -396,6 +390,7 @@ export class MrpDisplay extends Component {
             this.recordCacheIds.push(showcaseId);
         }
         this.state.activeWorkcenter = Number(workcenterId);
+        localStorage.setItem(this.env.localStorageName + `.activeWC`, Number(workcenterId));
         this.state.activeResModel = this.state.activeWorkcenter
             ? "mrp.workorder"
             : "mrp.production";
@@ -465,10 +460,11 @@ export class MrpDisplay extends Component {
             activeFields: lotFields,
         };
         params.config.activeFields.lot_producing_ids.onChange = true;
-        params.config.activeFields.workorder_ids.related.activeFields.check_ids.related.activeFields.lot_ids.related = {
-            fields: lotFields,
-            activeFields: lotFields,
-        };
+        params.config.activeFields.workorder_ids.related.activeFields.check_ids.related.activeFields.lot_ids.related =
+            {
+                fields: lotFields,
+                activeFields: lotFields,
+            };
         params.config.activeFields.check_ids.related.activeFields.production_id.related = {
             fields: fields,
             activeFields: fields,
@@ -524,6 +520,25 @@ export class MrpDisplay extends Component {
         this.state.limit = this.model.root.count;
         this.invalidateRecordIdsCache();
         return this.env.reload();
+    }
+
+    /**
+     * Resolve the active WC id, giving priority to context, then local storage, finally default or false.
+     * If the passed workcenter to activate in context is "Overview" (id:0), also save it to local storage.
+     * @returns {Number | false} id of the active Workcenter or false if no workcenters
+     */
+    _loadActiveWorkcenter(localStorageName, workcenters) {
+        if (this.props.context.workcenter_id != null) {
+            if (this.props.context.workcenter_id == 0) {
+                localStorage.setItem(this.env.localStorageName + `.activeWC`, Number(0));
+            }
+            return this.props.context.workcenter_id;
+        } else if (localStorage.getItem(`${localStorageName}.activeWC`) !== null) {
+            return Number(JSON.parse(localStorage.getItem(`${localStorageName}.activeWC`)));
+        } else if (workcenters && workcenters.length) {
+            return workcenters[0].id; // Defaults to the first WC (often All MO).
+        }
+        return false;
     }
 
     demoMORecords = [

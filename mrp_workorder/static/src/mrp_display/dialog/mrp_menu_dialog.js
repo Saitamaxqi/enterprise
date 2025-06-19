@@ -102,19 +102,10 @@ export class MrpMenuDialog extends Component {
     }
 
     async openMO() {
-        // remove a potentially previously set "workcenter_id" key in the action context
-        delete this.action.currentController.action.context["workcenter_id"];
-
         const id =
             this.props.record.resModel === "mrp.production"
                 ? this.props.record.resId
                 : this.props.record.data.production_id.id;
-
-        if (this.props.record.resModel === "mrp.workorder") {
-            this.action.currentController.action.context.workcenter_id = this.props.params.isMyWO
-                ? -1
-                : this.props.record.data.workcenter_id.id;
-        }
 
         await this.action.doAction({
             type: "ir.actions.act_window",

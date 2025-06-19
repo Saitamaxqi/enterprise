@@ -284,6 +284,20 @@ registry.category("web_tour.tours").add("test_shop_floor", {
                 });
             },
         },
+        ...stepUtils.closeShopFloor(),
+        // After using to Shopfloor smart button on MO, should ave active WC as overview
+        { trigger: ".o_menuitem[href='/odoo/shop-floor']", run: "click" },
+        {
+            trigger: ".o_work_centers",
+            run: () => {
+                helper.assertWorkcenterButtons([
+                    { name: "Overview", count: 1, active: true },
+                    { name: "My WO", count: 0 },
+                    { name: "Jungle", count: 0 },
+                    { name: "Savannah", count: 0 },
+                ]);
+            },
+        },
         // Leave Shop Floor before to end the tour.
         ...stepUtils.closeShopFloor(),
         { trigger: ".o_apps" },
@@ -325,7 +339,23 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 ]);
             },
         },
-
+        // Finally check selectedWorkCenter preserved when coming back to Shop Floor via breadcrumbs
+        ...stepUtils.clickOnWorkcenterButton("Furnace"),
+        { trigger: ".o_mrp_display_record .card-footer button.o_btn_icon", run: "click" },
+        { trigger: 'button[name="openMO"]', run: "click" },
+        { trigger: ".o_breadcrumb a:contains('Shop Floor')", run: "click" },
+        {
+            trigger: ".o_work_centers",
+            run: () => {
+                helper.assertWorkcenterButtons([
+                    { name: "Overview", count: 2 },
+                    { name: "My WO", count: 0 },
+                    { name: "Preparation Table 1", count: 1 },
+                    { name: "Preparation Table 2", count: 0 },
+                    { name: "Furnace", count: 1, active: true },
+                ]);
+            },
+        },
         // Exit the Shop Floor and open it from a WO form view.
         ...stepUtils.closeShopFloor(),
         { trigger: ".o_menuitem[href='/odoo/work-centers']", run: "click" },
@@ -866,7 +896,7 @@ registry.category("web_tour.tours").add("test_shop_floor_access", {
     steps: () => [
         {
             trigger: ".o_app:contains(Shop Floor)",
-            run: 'click',
+            run: "click",
         },
         ...stepUtils.openWorkcentersSelector(),
         ...stepUtils.addWorkcenterToDisplay("Workcenter1"),

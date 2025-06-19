@@ -82,10 +82,12 @@ class MrpProduction(models.Model):
         }
 
     def action_open_shop_floor(self):
+        """ Opens shop floor on Overview workcenter with a filter for current MO """
         self.ensure_one()
         action = self.env['ir.actions.actions']._for_xml_id('mrp_workorder.action_mrp_display')
         action['context'] = literal_eval(action['context']) | {
             'search_default_name': self.name,
+            'workcenter_id': 0,  # Sets active WC to Overview
             'search_default_blocked': True,
             'shouldHideNewWorkcenterButton': True,
         }
