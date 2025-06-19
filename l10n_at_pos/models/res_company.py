@@ -47,6 +47,7 @@ class ResCompany(models.Model):
             'town': self.city,
             'state': self.state_id.name,
             'zip': self.zip,
+            'email': self.email,
             'country_code': 'AUT',
         }
         return {'data': data, **self._l10n_at_create_db_payload(db_uuid)}
@@ -88,8 +89,8 @@ class ResCompany(models.Model):
 
         companies = super().write(vals)
         for company in self:
-            if company.country_code == 'AT' and company.l10n_at_fiskaly_access_token and company.l10n_at_is_odoo_managed_org:
-                on_change_fields = ['name', 'street', 'street2', 'zip', 'city', 'vat', 'state_id']
+            if company.country_code == 'AT' and company.l10n_at_fiskaly_organization_id and company.l10n_at_is_odoo_managed_org:
+                on_change_fields = ['name', 'street', 'street2', 'zip', 'city', 'vat', 'state_id', 'email']
                 if set(on_change_fields) & set(vals):
                     params = company._l10n_at_create_organization_payload()
                     fiskaly_iap_rpc(self, '/update', params)
