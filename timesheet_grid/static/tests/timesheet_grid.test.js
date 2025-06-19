@@ -445,7 +445,7 @@ test("test timesheet grid when grouped by employees shows color code on timeshee
     expect(".o_grid_row .o_grid_cell_readonly span:contains(4:00)").toHaveClass("text-900", {
         message: "The cell text should be normal as that employee has no working period but has timesheet of 4 hours",
     });
-    expect(".o_grid_row .o_grid_cell_readonly span:contains(5:30)").toHaveClass("text-900", {
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(5:30)").toHaveClass("text-success", {
         message: "The cell text should be normal as that employee has working period of 5.5 and has timesheet of 5.5 hours",
     });
     expect(queryFirst(".o_grid_row.o_grid_row_total span:contains(-1:00)").closest(".o_grid_row")).toHaveClass("text-bg-danger", {

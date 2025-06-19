@@ -109,6 +109,8 @@ export class TimesheetGridRenderer extends GridRenderer {
             return "text-warning";
         } else if (cellValue < value) {
             return "text-danger";
+        } else if (cellValue === value) {
+            return "text-success";
         }
 
         return res;
