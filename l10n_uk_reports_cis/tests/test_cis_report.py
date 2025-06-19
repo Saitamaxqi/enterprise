@@ -307,7 +307,7 @@ class TestCisReport(TestAccountReportsCommon):
             'l10n_uk_hmrc_company_registration_number': 'NI839475',
             'l10n_uk_hmrc_unique_taxpayer_reference': '2983286482',
         })
-        self.create_invoice_and_post(partner, '2009-04-18', [(1029.33, True), (5489.43, False)])
+        self.create_invoice_and_post(partner, '2009-04-18', [(1029.33, True), (5489.99, False)])
         options = self._generate_options(self.report, '2009-04-06', '2009-05-05')
 
         self.assertLinesValues(

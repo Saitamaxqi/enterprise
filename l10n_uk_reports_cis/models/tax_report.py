@@ -48,7 +48,7 @@ class BritishCISTaxReportCustomHandler(models.AbstractModel):
             if column['expression_label'] in ('payment', 'materials'):
                 for line in lines:
                     column_dict = line['columns'][column_index]
-                    value = float_round(column_dict['no_format'], precision_digits=0)
+                    value = float_round(column_dict['no_format'], precision_digits=0, rounding_method='DOWN')
                     line['columns'][column_index] = report._build_column_dict(value, column)
 
         return lines
