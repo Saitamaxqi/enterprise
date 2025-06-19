@@ -47,6 +47,11 @@
                                     </em>
                                 </span>
                             </div>
+                            <div class="col-lg-1 col-sm-6 my-3 py-0">
+                                <span class="badge rounded-pill text-bg-success" title="Shared" invisible="not is_sharing">
+                                    Shared
+                                </span>
+                            </div>
                             <div class="col-lg-2 col-sm-8 d-sm-block col-12 my-3 py-0">
                                 <div class="d-flex flex-column">
                                     <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
@@ -111,11 +116,13 @@
             <list sample="1" js_class="sign_list" action="go_to_custom_template" type="object">
                 <field name="name"/>
                 <field name="tag_ids" string="Tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
                 <field name="create_date" optional="hide"/>
                 <field name="responsible_count" string="Signees" optional="hide"/>
                 <field name="document_ids"/>
+                <field name="sign_item_ids" string="Signature fields" optional="hide"/>
                 <field name="active" column_invisible="True"/>
-                <field name="is_sharing" string="Link enabled?"/>
+                <field name="signed_count" string="Signed documents" optional="hide" width="125px"/>
                 <button name="%(sign.action_sign_send_request)d" string="Send" type="action" context="{'sign_directly_without_mail': 0, 'show_email': 1}"/>
                 <button name="%(sign.action_sign_send_request)d" string="Sign Now" type="action" context="{'sign_directly_without_mail': 1}"/>
                 <button name="open_shared_sign_request" string="Share" type="object" invisible="is_sharing or not active or responsible_count &gt; 1"/>

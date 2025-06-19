@@ -29,7 +29,7 @@ class SignRequestShare(models.TransientModel):
                     vals["sign_request_id"] = self.env["sign.request"].create({
                             'template_id': template_id.id,
                             'request_item_ids': [Command.create({'role_id': template_id.sign_item_ids.responsible_id.id or self.env.ref('sign.sign_item_role_default').id})],
-                            'reference': "%s-%s" % (template_id.name, _("Shared")),
+                            'reference': "%s" % (template_id.name),
                             'state': 'shared',
                             'validity': fields.Date.today() + relativedelta(months=2)
                         }).id
