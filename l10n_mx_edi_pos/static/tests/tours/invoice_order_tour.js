@@ -18,8 +18,13 @@ registry.category("web_tour.tours").add("l10n_mx_edi_pos.test_mx_pos_invoice_ord
                 content: "Open POS session from backend",
                 trigger: "button[name='open_ui']",
                 run: "click",
+                expectUnloadPage: true,
             },
-            Dialog.confirm("Open Register"),
+            {
+                content: "Open Register",
+                trigger: ".modal .modal-footer .btn-primary:contains(open register)",
+                run: "click",
+            },
             ProductScreen.clickPartnerButton(),
             ProductScreen.clickCustomer("Arturo Garcia"),
             {
@@ -78,8 +83,13 @@ registry.category("web_tour.tours").add("l10n_mx_edi_pos.tour_invoice_order_defa
             content: "Open POS session from backend",
             trigger: "button[name='open_ui']",
             run: "click",
+            expectUnloadPage: true,
         },
-        Dialog.confirm("Open Register"),
+        {
+            content: "Open Register",
+            trigger: ".modal .modal-footer .btn-primary:contains(open register)",
+            run: "click",
+        },
         {
             content: "Select a product",
             trigger: "div.product-content:contains('product_mx')",

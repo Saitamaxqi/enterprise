@@ -15,7 +15,11 @@ function assertState(expectedState) {
 registry.category("web_tour.tours").add("test_brazilian_address", {
     url: "/shop?search=Brazilian test product",
     steps: () => [
-        ...tourUtils.addToCart({ productName: "Brazilian test product", search: false }),
+        ...tourUtils.addToCart({
+            productName: "Brazilian test product",
+            search: false,
+            expectUnloadPage: true,
+        }),
         tourUtils.goToCart({ quantity: 1 }),
         tourUtils.goToCheckout(),
         {

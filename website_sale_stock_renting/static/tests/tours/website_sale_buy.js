@@ -4,21 +4,7 @@ import * as tourUtils from '@website_sale/js/tours/tour_utils';
 registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
     url: '/shop',
     steps: () => [
-        {
-            content: "Search computer write text",
-            trigger: 'form input[name="search"]',
-            run: "edit computer",
-        },
-        {
-            content: "Search computer click",
-            trigger: 'form:has(input[name="search"]) .oe_search_button',
-            run: "click",
-        },
-        {
-            content: "Select computer",
-            trigger: '.oe_product_cart:first a:contains("Computer")',
-            run: "click",
-        },
+        ...tourUtils.searchProduct("computer", { select: true }),
         {
             content: "Check if the default data is in the date picker input",
             trigger: '.o_daterange_picker[data-has-default-dates=true]',
@@ -76,6 +62,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
             content: "Go back on the Computer",
             trigger: '#cart_products div h6:contains("Computer")',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Verify there is a warning message",
@@ -92,7 +79,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
         },
         tourUtils.goToCheckout(),
         tourUtils.confirmOrder(),
-        ...tourUtils.payWithTransfer(true),
+        ...tourUtils.payWithTransfer({ redirect: true }),
     ]
 });
 
@@ -100,22 +87,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
 registry.category("web_tour.tours").add("website_availability_update", {
     url: "/shop",
     steps: () => [
-        {
-            trigger: 'form input[name="search"]',
-            run: "edit Test Product with Variants",
-        },
-        {
-            trigger: 'form:has(input[name="search"]) .oe_search_button',
-        },
-        {
-            trigger: ".oe_search_button",
-            run: "click",
-        },
-        {
-            content: "Select Product",
-            trigger: '.oe_product:first a:contains("Test Product with Variants")',
-            run: "click",
-        },
+        ...tourUtils.searchProduct("Test Product with Variants", { select: true }),
         {
             trigger:
                 '#threshold_message_renting:contains("Only 1 Units still available during the selected period.")',

@@ -8,6 +8,7 @@ registry.category("web_tour.tours").add("sale_external_optional_products", {
             content: "open the test SO",
             trigger: 'a:contains("test")',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_portal_sidebar_content h2:contains($):contains(10.00)",
@@ -20,6 +21,7 @@ registry.category("web_tour.tours").add("sale_external_optional_products", {
             content: "add the optional product",
             trigger: ".js_add_optional_products:contains(add to order)",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_portal_sidebar_content h2:contains($):contains(11.)",
@@ -37,6 +39,7 @@ registry.category("web_tour.tours").add("sale_external_optional_products", {
             trigger:
                 "tr:contains(optional product) .js_quantity_container .js_update_line_json[title='Add one']",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_portal_sidebar_content h2:contains($):contains(12.)",
@@ -53,6 +56,7 @@ registry.category("web_tour.tours").add("sale_external_optional_products", {
             content: "delete the optional line",
             trigger: "table#sales_order_table tbody tr:eq(1) a[title=Remove]",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_portal_sidebar_content h2:contains($):contains(10.)",

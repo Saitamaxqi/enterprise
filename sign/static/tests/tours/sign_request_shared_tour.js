@@ -54,6 +54,7 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
                 const url = share_link.match(regex)[0];
                 window.location.href = window.location.origin + url;
             },
+            expectUnloadPage: true,
         },
         {
             content: "Fill the sign item",
@@ -98,6 +99,7 @@ registry.category("web_tour.tours").add("sign_resend_expired_link_tour", {
             trigger: ".btn.btn-primary",
             content: "Click to resend the url",
             run: "click",
+            expectUnloadPage: true,
         },
     ],
 });

@@ -14,11 +14,13 @@ registry
                 content: "Search computer click",
                 trigger: 'form:has(input[name="search"]) .oe_search_button',
                 run: "click",
+                expectUnloadPage: true,
             },
             {
                 content: "Select computer",
                 trigger: '.oe_product_cart:first a:contains("Computer")',
                 run: "click",
+                expectUnloadPage: true,
             },
             {
                 content: "Check that the duration is correct",

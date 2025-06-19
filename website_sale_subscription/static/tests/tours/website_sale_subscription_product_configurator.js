@@ -7,7 +7,7 @@ registry
     .add('website_sale_subscription_product_configurator', {
         url: '/shop?search=Main product',
         steps: () => [
-            ...wsTourUtils.addToCart({ productName: "Main product", search: false }),
+            ...wsTourUtils.addToCart({ productName: "Main product", search: false, expectUnloadPage: true }),
             // Assert that the subscription prices and plans are correct.
             configuratorTourUtils.assertProductPrice("Main product", '5.00'),
             configuratorTourUtils.assertProductPriceInfo("Main product", "per week"),
@@ -17,6 +17,7 @@ registry
                 content: "Proceed to checkout",
                 trigger: 'button:contains(Proceed to Checkout)',
                 run: 'click',
+                expectUnloadPage: true,
             },
             {
                 content: "Verify the subscription price in the cart",

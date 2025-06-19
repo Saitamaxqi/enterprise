@@ -27,6 +27,7 @@ registry.category("web_tour.tours").add("helpdesk_search_ticket_on_portal_tour",
             trigger: "table > tbody > tr a:has(span:contains(lamp stand))",
             content: "click on ticket.",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: "#chatterRoot:shadow div.o-mail-Thread-empty",

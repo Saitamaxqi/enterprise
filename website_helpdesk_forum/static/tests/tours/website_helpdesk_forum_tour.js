@@ -8,6 +8,7 @@ registry.category("web_tour.tours").add("website_helpdesk_forum_tour", {
             content: "Ask the question in this forum by clicking on the button.",
             trigger: ".o_wforum_ask_btn",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: "input[name=post_name]",
@@ -40,6 +41,7 @@ registry.category("web_tour.tours").add("website_helpdesk_forum_tour", {
             trigger: "button:contains(/^Post/)",
             content: _t("Click to post your question."),
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_wforum_question:contains(test user)",

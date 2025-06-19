@@ -4,21 +4,7 @@ import * as tourUtils from '@website_sale/js/tours/tour_utils';
 registry.category("web_tour.tours").add('shop_buy_rental_product', {
     url: '/shop',
     steps: () => [
-        {
-            content: "Search computer write text",
-            trigger: 'form input[name="search"]',
-            run: "edit computer",
-        },
-        {
-            content: "Search computer click",
-            trigger: 'form:has(input[name="search"]) .oe_search_button',
-            run: "click",
-        },
-        {
-            content: "Select computer",
-            trigger: '.oe_product_cart:first a:contains("Computer")',
-            run: "click",
-        },
+        ...tourUtils.searchProduct("computer", { select: true }),
         {
             content: "Check if the default data is in the date picker input",
             trigger: '.o_daterange_picker[data-has-default-dates=true]',

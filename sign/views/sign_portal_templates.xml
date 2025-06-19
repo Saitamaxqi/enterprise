@@ -177,6 +177,7 @@
                        class="btn btn-light ms-1"
                        t-attf-href="/sign/download/{{my_sign_item.sign_request_id.id}}/{{my_sign_item.sign_request_id.access_token}}/completed"
                        title="Download"
+                       target="_blank"
                        role="button">
                         <i class="fa fa-download"/>
                     </a>

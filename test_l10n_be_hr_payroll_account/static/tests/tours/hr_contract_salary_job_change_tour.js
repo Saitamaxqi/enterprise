@@ -18,6 +18,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             content: "Log into Belgian Company",
             trigger: ".dropdown-menu .dropdown-item div span:contains('My Belgian Company - TEST')",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger:
@@ -74,6 +75,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
                 localStorage.setItem("url", url);
                 redirect("/web/session/logout");
             },
+            expectUnloadPage: true,
         },
         {
             content: "Log as employee - input login",
@@ -97,6 +99,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
                 const url = localStorage.getItem("url");
                 window.location.href = url;
             },
+            expectUnloadPage: true,
         },
         /*
          * We only modify the IP to check if the change is correctly made

@@ -1388,6 +1388,7 @@ registry.category("web_tour.tours").add("web_studio_local_storage_tour", {
                 localStorage.setItem("openStudioOnReload", "main");
                 window.location.reload();
             },
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_web_client.o_in_studio",
@@ -1414,6 +1415,7 @@ registry.category("web_tour.tours").add("web_studio_local_storage_tour", {
             run: function () {
                 window.location.reload();
             },
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_web_client:not(.o_in_studio)",
@@ -1453,6 +1455,7 @@ registry.category("web_tour.tours").add("web_studio_custom_background_tour", {
             content: "validate the reset of the background",
             trigger: ".modal-dialog .btn-primary",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "class for custom background must be disabled (inside studio)",

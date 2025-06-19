@@ -16,6 +16,7 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_wishlist", {
             content: "go to wishlist",
             trigger: 'a[href="/shop/wishlist"]',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "click on add to cart",
@@ -38,6 +39,7 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_wishlist", {
             content: "go to checkout",
             trigger: 'a[href*="/shop/checkout"]',
             run: "click",
+            expectUnloadPage: true,
         },
         tourUtils.confirmOrder(),
         {

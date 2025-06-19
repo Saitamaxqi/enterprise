@@ -33,6 +33,7 @@ const confirmPayment = [
         content: "click Pay button",
         trigger: "button[name=o_payment_submit_button]",
         run: "click",
+        expectUnloadPage: true,
     },
     {
         content: "wait for payment processing confirmation",

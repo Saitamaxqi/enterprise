@@ -4,7 +4,7 @@ import * as tourUtils from '@website_sale/js/tours/tour_utils';
 registry.category("web_tour.tours").add('shop_buy_accessory_rental_product', {
     url: '/shop',
     steps: () => [
-        ...tourUtils.addToCart({productName: "Parent product"}),
+        ...tourUtils.addToCart({ productName: "Parent product", expectUnloadPage: true }),
         tourUtils.goToCart({quantity: 1}),
         {
             content: "Verify there are 1 quantity of Parent product",
@@ -14,6 +14,7 @@ registry.category("web_tour.tours").add('shop_buy_accessory_rental_product', {
             content: "Add Accessory product to cart via the quick add button",
             trigger: 'button:contains("Add to cart")',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Check product added to the cart",

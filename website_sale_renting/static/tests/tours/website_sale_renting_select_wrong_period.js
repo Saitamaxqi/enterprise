@@ -31,6 +31,7 @@ registry
                 content: 'Select Computer',
                 trigger: '.oe_product_cart:first a:contains("Computer")',
                 run: 'click',
+                expectUnloadPage: true,
             },
             {
                 trigger: "#product_detail_main #product_details:contains(computer)",

@@ -4,21 +4,7 @@ import * as tourUtils from "@website_sale/js/tours/tour_utils";
 registry.category("web_tour.tours").add('shop_checkout_address', {
     url: '/shop',
     steps: () => [
-        {
-            content: "search Storage Box",
-            trigger: 'form input[name="search"]',
-            run: "edit Storage Box",
-        },
-        {
-            content: "search Storage Box",
-            trigger: 'form:has(input[name="search"]) .oe_search_button',
-            run: "click",
-        },
-        {
-            content: "select Storage Box",
-            trigger: '.oe_product_cart:first a:contains("Storage Box")',
-            run: "click",
-        },
+        ...tourUtils.searchProduct("Storage Box", { select: true }),
         {
             id: 'add_cart_step',
             content: "click on add to cart",
@@ -30,6 +16,7 @@ registry.category("web_tour.tours").add('shop_checkout_address', {
             content: "go to address form",
             trigger: 'a[href="/shop/checkout?try_skip_step=true"]',
             run: "click",
+            expectUnloadPage: true,
         },
         // check if the fields Codice Fiscale and PA index are present
         {

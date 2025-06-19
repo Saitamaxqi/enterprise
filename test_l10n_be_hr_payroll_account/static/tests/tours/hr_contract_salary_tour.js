@@ -13,6 +13,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: function () {
                 redirect("/odoo");
             },
+            expectUnloadPage: true,
         },
         {
             content: "Log into Belgian Company",
@@ -24,6 +25,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             trigger:
                 ".o-dropdown--menu .dropdown-item div span:contains('My Belgian Company - TEST')",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger:
@@ -133,6 +135,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
                 await fetch("/web/session/logout", { method: "GET" });
                     window.location.href = window.location.origin + url;
             },
+            expectUnloadPage: true,
         },
         {
             trigger: 'input[name="Gross"][value="3000"]',
@@ -743,6 +746,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             content: "submit",
             trigger: "button#hr_cs_submit",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Next 1",
@@ -811,6 +815,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_hr_sign", {
             trigger:
                 ".o-dropdown--menu .dropdown-item div span:contains('My Belgian Company - TEST')",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger:
@@ -880,6 +885,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             trigger:
                 ".o-dropdown--menu .dropdown-item div span:contains('My Belgian Company - TEST')",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger:
@@ -1141,6 +1147,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
                 var url = offer_link.match(regex)[0];
                 window.location.href = window.location.origin + url;
             },
+            expectUnloadPage: true,
         },
         {
             content: "Unchoose default car",
@@ -1331,6 +1338,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             content: "submit",
             trigger: "button#hr_cs_submit",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Next 6",
@@ -1389,6 +1397,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             run: function () {
                 redirect("/odoo");
             },
+            expectUnloadPage: true,
         },
         {
             content: "Check home page is loaded",
@@ -1411,6 +1420,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_counter_sign", 
             trigger:
                 ".o-dropdown--menu .dropdown-item div span:contains('My Belgian Company - TEST')",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: `.oe_topbar_name:contains(My Belgian Company - TEST)`,

@@ -12,6 +12,7 @@ registry.category("web_tour.tours").add("appointment_crm_forced_staff_user_tour"
         content: "Select a time slot.",
         trigger: ".o_slots_list .o_slot_hours:first-child",
         run: "click",
+        expectUnloadPage: true,
     },
     {
         content: "Fill the full name field in the appointment form.",
@@ -44,6 +45,7 @@ registry.category("web_tour.tours").add("appointment_crm_forced_staff_user_tour"
         content: "Submit the appointment form.",
         trigger: ".o_appointment_form_confirm_btn",
         run: "click",
+        expectUnloadPage: true,
     },
     stepUtils.goToUrl("/appointment"),
     ...appointmentCrmSteps._goToAppointment("Create"),
@@ -55,10 +57,12 @@ registry.category("web_tour.tours").add("appointment_crm_forced_staff_user_tour"
         content: "Select a time slot.",
         trigger: ".o_slots_list .o_slot_hours:first-child",
         run: "click",
+        expectUnloadPage: true,
     },
     {
         content: "Submit the appointment form.",
         trigger: ".o_appointment_form_confirm_btn",
         run: "click",
+        expectUnloadPage: true,
     },
 ]});

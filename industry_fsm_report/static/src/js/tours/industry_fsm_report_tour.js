@@ -97,6 +97,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             content: markup(_t('Validate the <b>signature</b>.')),
             tooltipPosition: 'left',
                 run: "click",
+                expectUnloadPage: true,
             },
             {
                 trigger: "body:not(:has(a[data-bs-target='#modalaccept']:contains(sign report))",

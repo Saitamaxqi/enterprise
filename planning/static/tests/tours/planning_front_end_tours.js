@@ -24,6 +24,7 @@ registry.category("web_tour.tours").add('planning_front_end_tour', {
         trigger: "form[id='modal_action_switch_shift'] button[type='submit']",
         content: "Click on the 'Ask to Switch' button in the popover",
         run: "click",
+        expectUnloadPage: true,
     }, {
         trigger: "div.o_planning_toast.bg-success",
         content: "A success planning toast notification should appear",
@@ -37,6 +38,7 @@ registry.category("web_tour.tours").add('planning_front_end_tour', {
         trigger: "div.o_planning_calendar_unwanted_shifts td[name='buttons'] div button[type='submit']",
         content: "Click on the 'Cancel Switch' button to cancel the switch shift request",
         run: "click",
+        expectUnloadPage: true,
     }, {
         trigger: "div.o_planning_calendar_open_shifts",
         content: "Since we have an open shift available, the open shifts section be rendered",
@@ -56,6 +58,7 @@ registry.category("web_tour.tours").add('planning_front_end_allow_unassign_tour'
         trigger: "form[id='modal_action_dismiss_shift'] button[type='submit']",
         content: "Click on the 'I am Unavailable' button in the popover",
         run: "click",
+        expectUnloadPage: true,
     }, {
         trigger: "div.o_planning_toast.bg-success",
         content: "A success planning toast notification should appear",

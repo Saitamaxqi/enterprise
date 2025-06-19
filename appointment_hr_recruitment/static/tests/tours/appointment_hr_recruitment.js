@@ -27,9 +27,11 @@ registry.category("web_tour.tours").add('appointment_hr_recruitment_tour', {
             navigator.clipboard.writeText = (text) => {window.location.href = text};
             await helpers.click();
         },
+        expectUnloadPage: true,
     }, {
         trigger: '.o_slot_hours:contains("4")',
         run: 'click',
+        expectUnloadPage: true,
     }, {
         trigger: 'input[name="name"]',
         run: 'edit Ana Tourelle',
@@ -42,6 +44,7 @@ registry.category("web_tour.tours").add('appointment_hr_recruitment_tour', {
     }, {
         trigger: '.o_appointment_form_confirm_btn',
         run: 'click',
+        expectUnloadPage: true,
     }, {
         trigger: '.fa-check-circle',
         async run(helpers) {

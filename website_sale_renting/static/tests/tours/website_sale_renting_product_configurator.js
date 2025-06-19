@@ -7,7 +7,7 @@ registry
     .add('website_sale_renting_product_configurator', {
         url: '/shop?search=Main product',
         steps: () => [
-            ...wsTourUtils.addToCart({ productName: "Main product", search: false }),
+            ...wsTourUtils.addToCart({ productName: "Main product", search: false, expectUnloadPage: true }),
             // Assert that the rental prices and durations are correct.
             configuratorTourUtils.assertProductPrice("Main product", '5.00'),
             configuratorTourUtils.assertProductPriceInfo("Main product", "1 Hour"),
@@ -17,6 +17,7 @@ registry
                 content: "Proceed to checkout",
                 trigger: 'button:contains(Proceed to Checkout)',
                 run: 'click',
+                expectUnloadPage: true,
             },
             {
                 content: "Verify the rental price and duration in the cart",

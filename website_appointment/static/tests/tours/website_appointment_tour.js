@@ -37,10 +37,12 @@ registry.category("web_tour.tours").add('website_appointment_tour', {
         content: 'Go to the front end',
         trigger: "button[name=action_customer_preview]:enabled",
         run: "click",
+        expectUnloadPage: true,
     }, {
         content: 'Click on first date available',
         trigger: '.o_slots_list > div > button',
         run: "click",
+        expectUnloadPage: true,
     }, {
         content: 'Fill tel field',
         trigger: 'input[name="phone"]',
@@ -73,6 +75,7 @@ registry.category("web_tour.tours").add('website_appointment_tour', {
         content: 'Confirm the appointment',
         trigger: '.o_appointment_form_confirm_btn',
         run: "click",
+        expectUnloadPage: true,
     }, {
         trigger: 'div:contains("test1@gmail.com")',
     }, {
@@ -108,6 +111,7 @@ registry.category("web_tour.tours").add('website_appointment_tour', {
         content: 'Click on the add guest button',
         trigger: '.o_appointment_guest_add',
         run: "click",
+        expectUnloadPage: true,
     }, {
         trigger: 'div:contains("test2@gmail.com")',
     }, {

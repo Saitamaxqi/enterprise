@@ -2,7 +2,6 @@
 
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
-import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
 import * as Order from "@point_of_sale/../tests/generic_helpers/order_widget_util";
 import * as PaymentScreen from "@point_of_sale/../tests/pos/tours/utils/payment_screen_util";
 import { inLeftSide } from "@point_of_sale/../tests/pos/tours/utils/common";
@@ -69,9 +68,14 @@ registry.category("web_tour.tours").add("payment_terminals_tour", {
                 content: "Start session",
                 trigger: ".o_pos_kanban button.oe_kanban_action",
                 run: "click",
+                expectUnloadPage: true,
             },
             // PART 1: Pay exactly the price of order. Should automatically go to receipt screen.
-            Dialog.confirm("Open Register"),
+            {
+                content: "confirm dialog",
+                trigger: ".modal .modal-footer .btn-primary:contains(Open Register)",
+                run: "click",
+            },
             {
                 content: "Waiting for loading to finish",
                 trigger: ".pos .pos-content",

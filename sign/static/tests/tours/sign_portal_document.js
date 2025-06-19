@@ -7,12 +7,14 @@ registry.category("web_tour.tours").add("portal_sign_document", {
             content: "Click on signature requests.",
             trigger: "a[title='Signature requests']",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Click on sign button for request.",
             trigger:
                 "tr:has(td a:contains('template_1_role')) a.btn.btn-sm.btn-primary:contains('sign')",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Follow the guide to sign the document.",
@@ -33,6 +35,7 @@ registry.category("web_tour.tours").add("portal_sign_document", {
             content: "Close the dialog.",
             trigger: `h4:contains("It's Signed!") + button.btn-close`,
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Wait reload is finised",

@@ -4,12 +4,13 @@ import * as tourUtils from "@website_sale/js/tours/tour_utils";
 registry.category("web_tour.tours").add("test_checkout_id_nit", {
     url: "/shop",
     steps: () => [
-        ...tourUtils.addToCart({ productName: "Test Product" }),
+        ...tourUtils.addToCart({ productName: "Test Product", expectUnloadPage: true }),
         tourUtils.goToCart({ quantity: 1 }),
         {
             content: "Go to checkout",
             trigger: "a[name='website_sale_main_button']",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: "select[name=country_id]",
@@ -63,6 +64,7 @@ registry.category("web_tour.tours").add("test_checkout_id_nit", {
             content: "Continue Checkout",
             trigger: '.btn-primary:contains("Confirm")',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: "h4:contains(delivery address)",
@@ -73,12 +75,13 @@ registry.category("web_tour.tours").add("test_checkout_id_nit", {
 registry.category("web_tour.tours").add("test_checkout_other_id", {
     url: "/shop",
     steps: () => [
-        ...tourUtils.addToCart({ productName: "Test Product" }),
+        ...tourUtils.addToCart({ productName: "Test Product", expectUnloadPage: true }),
         tourUtils.goToCart({ quantity: 1 }),
         {
             content: "Go to checkout",
             trigger: "a[name='website_sale_main_button']",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: "select[name=country_id]",
@@ -128,6 +131,7 @@ registry.category("web_tour.tours").add("test_checkout_other_id", {
             content: "Validate address",
             trigger: '.btn-primary:contains("Confirm")',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             trigger: "h4:contains(delivery address)",
