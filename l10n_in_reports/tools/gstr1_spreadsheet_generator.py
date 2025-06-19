@@ -7,11 +7,7 @@ class GSTR1SpreadsheetGenerator:
     def __init__(self, gstr1_json):
         self.gstr1_json = gstr1_json
 
-    def generate(self):
-        output = io.BytesIO()
-        import xlsxwriter  # noqa: PLC0415
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        cell_formats = self._get_gstr1_cell_formats(workbook)
+    def _prepare_sheet_values(self, workbook, cell_formats):
         self._prepare_b2b_sheet(self.gstr1_json.get('b2b', {}), workbook, cell_formats)
         self._prepare_b2cl_sheet(self.gstr1_json.get('b2cl', {}), workbook, cell_formats)
         self._prepare_b2cs_sheet(self.gstr1_json.get('b2cs', {}), workbook, cell_formats)
@@ -27,6 +23,13 @@ class GSTR1SpreadsheetGenerator:
             self._prepare_hsn_sheet(hsn_json, workbook, cell_formats, 'hsn_b2c')
         # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'clttx', workbook, cell_formats) # Table 14(a) u/s 52(TCS)
         # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'paytx', workbook, cell_formats) # Table 14 (b) u/s 9(5)
+
+    def generate(self):
+        output = io.BytesIO()
+        import xlsxwriter  # noqa: PLC0415
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        cell_formats = self._get_gstr1_cell_formats(workbook)
+        self._prepare_sheet_values(workbook, cell_formats)
         workbook.close()
         return output.getvalue()
 

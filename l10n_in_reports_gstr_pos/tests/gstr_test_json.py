@@ -46,5 +46,8 @@ expected_gstr1_pos_response = {
             'num': 2
         }
         ]
+    },
+    "doc_issue": {
+        "doc_det": []
     }
 }
