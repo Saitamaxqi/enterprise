@@ -333,7 +333,7 @@
         <div class="o_appointment_details_type d-flex align-items-center mb-3">
             <div t-if="appointment_type.image_1920" t-field="appointment_type.image_1920" role="img"
                 class="o_appointment_avatar_container d-none d-md-block w-25 me-2 overflow-hidden border rounded ratio ratio-1x1"
-                t-options="{'widget': 'image', 'class': 'o_appointment_avatar_background o_object_fit_cover', 'preview_image': 'image_512'}"/>
+                t-options="{'widget': 'image', 'class': 'o_appointment_avatar_background object-fit-cover', 'preview_image': 'image_512'}"/>
             <h5 class="mb-1" t-out="appointment_type.name"/>
         </div>
         <small t-if="appointment_type.schedule_based_on == 'users'" class="text-uppercase text-muted">Meeting details</small>

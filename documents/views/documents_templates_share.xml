@@ -42,7 +42,7 @@
                     <ul t-if="not is_files_shared" class="list-inline mb-0">
                         <li class="dropdown hidden-sm hidden-xs" t-ignore="true" t-if="not user_id._is_public()">
                             <a href="#" class="dropdown-toggle o_docs_btn btn btn-secondary d-flex align-items-center gap-1" data-bs-toggle="dropdown">
-                                <img class="o_object_fit_cover rounded" width="13" height="13" t-attf-src="/web/image?model=res.users&amp;field=avatar_128&amp;id=#{request.env.user.id}" t-att-title="user_id.name"/>
+                                <img class="object-fit-cover rounded" width="13" height="13" t-attf-src="/web/image?model=res.users&amp;field=avatar_128&amp;id=#{request.env.user.id}" t-att-title="user_id.name"/>
                                 <span t-esc="user_id.name"/><span class="caret"/>
                             </a>
                             <ul class="dropdown-menu js_usermenu" role="menu">
@@ -64,7 +64,7 @@
                 </main>
                 <footer class="flex-grow-0 flex-shrink-0 mb16 mt32 ">
                     <div class="text-center col-sm-12">
-                        <br/>Powered by <a target="_blank" title="Odoo Website" href="http://www.odoo.com/app/documents" class="text-reset"><span class="bg-primary p-1 rounded"><img class="o_object_fit_cover align-text-top" height="15" src="/web/static/img/logo_inverse_white_206px.png" alt="Odoo Logo"/></span><span>&amp;nbsp;Documents.</span></a>
+                        <br/>Powered by <a target="_blank" title="Odoo Website" href="http://www.odoo.com/app/documents" class="text-reset"><span class="bg-primary p-1 rounded"><img class="object-fit-cover align-text-top" height="15" src="/web/static/img/logo_inverse_white_206px.png" alt="Odoo Logo"/></span><span>&amp;nbsp;Documents.</span></a>
                     </div>
                 </footer>
             </div>
@@ -90,7 +90,7 @@
                     </h2>
                     <span class="align-middle">
                         shared by
-                        <img class="o_author rounded align-middle o_object_fit_cover"
+                        <img class="o_author rounded align-middle object-fit-cover"
                              t-attf-src="/documents/avatar/#{quote(folder.access_token)}"
                              t-att-alt="author"
                              t-att-title="author"/>
@@ -150,7 +150,7 @@
                             <div class="o_card_right d-flex flex-column flex-nowrap justify-content-between text-end">
                                 <img t-attf-title="Owner: #{subfolder.owner_id.name}"
                                      t-att-alt="subfolder.owner_id.name"
-                                     class="o_object_fit_cover rounded"
+                                     class="object-fit-cover rounded"
                                      width="15"
                                      height="15"
                                      t-attf-src="/documents/avatar/#{quote(subfolder.access_token)}"/>
@@ -216,7 +216,7 @@
                             <div class="o_card_right d-flex flex-column flex-nowrap justify-content-between text-end">
                                 <img t-attf-title="Owner: #{document.owner_id.name}"
                                      t-att-alt="document.owner_id.name"
-                                     class="o_object_fit_cover rounded"
+                                     class="object-fit-cover rounded"
                                      width="15"
                                      height="15"
                                      t-attf-src="/documents/avatar/#{quote(document.access_token)}"/>
@@ -259,7 +259,7 @@
                             <div class="o_card_right d-flex flex-column flex-nowrap justify-content-between text-end">
                                 <img t-attf-title="Owner: #{document_url.owner_id.name}"
                                      t-att-alt="document_url.owner_id.name"
-                                     class="o_object_fit_cover rounded"
+                                     class="object-fit-cover rounded"
                                      width="15"
                                      height="15"
                                      t-attf-src="/documents/avatar/#{quote(document_url.access_token)}"/>

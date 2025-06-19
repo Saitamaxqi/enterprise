@@ -224,7 +224,7 @@
                     data-bs-html="true"
                     data-bs-title="Contact Details"
                     t-att-data-bs-content="popover_content" style="padding: 0px">
-                    <img t-att-src="image_data_uri(shift.employee_id.avatar_256)" t-attf-class="rounded o_object_fit_cover #{_avatar_class}" width="24" height="24" alt="" loading="eager"/>
+                    <img t-att-src="image_data_uri(shift.employee_id.avatar_256)" t-attf-class="rounded object-fit-cover #{_avatar_class}" width="24" height="24" alt="" loading="eager"/>
                     <t t-esc="shift.employee_id.name"/>
                 </a>
             </td>

@@ -21,7 +21,7 @@
         <div class="o_knowledge_comment_small_ui o_knowledge_comment_background"
              t-if="smallUI"
              t-on-click="onClick">
-            <img class="rounded p-0 o_object_fit_cover cursor-pointer"
+            <img class="rounded p-0 object-fit-cover cursor-pointer"
                 t-att-src="authorUrl"/>
         </div>
         <div t-elif="editorThread or commentsState.displayMode === 'panel'"

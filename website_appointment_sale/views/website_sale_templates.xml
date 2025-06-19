@@ -33,7 +33,7 @@
                 <div class="col-5 p-0">
                     <div class="position-relative w-100 h-100 o_cc o_cc3 rounded-start overflow-hidden">
                         <div t-field="object.appointment_type_id.image_1920" class="d-block h-100 w-100 overflow-hidden ratio ratio-4x3" role="img"
-                            t-options="{'widget': 'image', 'class': 'o_object_fit_cover', 'preview_image': 'image_512'}"/>
+                            t-options="{'widget': 'image', 'class': 'object-fit-cover', 'preview_image': 'image_512'}"/>
                         <!-- Status Badge -->
                         <small
                             t-if="event.appointment_status == 'request'"
