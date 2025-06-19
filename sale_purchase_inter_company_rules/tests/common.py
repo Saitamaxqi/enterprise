@@ -18,6 +18,8 @@ class TestInterCompanyRulesCommonSOPO(TestInterCompanyRulesCommon):
 
         # Required for `discount` to be visible on the form view
         cls.env.user.group_ids += cls.env.ref('sale.group_discount_per_so_line')
+        # Required for `product_uom_id` to be visible on the form view
+        cls.env.user.group_ids += cls.env.ref('uom.group_uom')
 
         cls.res_users_company_a.group_ids += (
             cls.env.ref('sales_team.group_sale_salesman')
