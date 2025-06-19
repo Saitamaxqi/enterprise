@@ -132,9 +132,3 @@ class ProjectProject(models.Model):
             "is_fsm",
             "allow_material",
         ]
-
-    def _get_template_field_blacklist(self):
-        res = super()._get_template_field_blacklist()
-        if self._context.get("default_is_fsm"):
-            res.remove("partner_id")
-        return res
