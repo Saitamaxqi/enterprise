@@ -212,7 +212,7 @@ class L10n_Uy_EdiDocument(models.Model):
     @api.model
     def _get_doc_parts(self, record):
         """ return list [serie, number] """
-        return re.findall(r"([A-Z])[-]*([0-9]*)", record.l10n_latam_document_number)[-1]
+        return re.findall(r"([A-Z]{1,2})[-]*([0-9]{1,8})", record.l10n_latam_document_number)[-1]
 
     @api.model
     def _get_legends(self, addenda_type, move_id):

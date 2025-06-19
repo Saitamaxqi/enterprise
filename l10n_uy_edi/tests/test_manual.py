@@ -391,7 +391,7 @@ class TestManual(common.TestUyEdi):
             journal=self.company_data['default_journal_purchase'],
             filename='vendor_bill_with_global_fixed_discount',
         )
-        self.assertEqual(new_bill.name, "e-FC A4002353")
+        self.assertEqual(new_bill.name, "e-FC AF4002353")
         self.assertEqual(new_bill.invoice_date.strftime('%Y-%m-%d'), "2024-06-06")
         self.assertEqual(new_bill.invoice_date_due.strftime('%Y-%m-%d'), "2024-06-07")
         self.assertEqual(new_bill.invoice_partner_display_name, "FIERRO VIGNOLI S.A.")
