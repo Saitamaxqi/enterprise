@@ -118,9 +118,16 @@ class AccountReport(models.Model):
 
     def write(self, vals):
         if 'active' in vals:
-            for report in self:
-                dummy, menuitem = report._get_existing_menuitem()
-                menuitem.active = vals['active']
+            reports = {r.id: r.name for r in self}
+            actions = self.env['ir.actions.client'] \
+                .search([('name', 'in', list(reports.values())), ('tag', '=', 'account_report')]) \
+                .filtered(lambda act: (ast.literal_eval(act.context).get('report_id'), act.name) in reports.items())
+            self.env['ir.ui.menu'] \
+                .search([
+                    ('active', '=', not vals['active']),
+                    ('action', 'in', [f'ir.actions.client,{action.id}' for action in actions]),
+                ])\
+                .active = vals['active']
         return super().write(vals)
 
     @api.model_create_multi
