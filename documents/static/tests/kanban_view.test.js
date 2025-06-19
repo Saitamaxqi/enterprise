@@ -22,6 +22,7 @@ import { makeDocumentsMockEnv } from "./helpers/model";
 import { embeddedActionsServerData } from "./helpers/test_server_data";
 import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/views/kanban";
 
+import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { documentsClientThumbnailService } from "@documents/views/helper/documents_client_thumbnail_service";
 import { Deferred } from "@web/core/utils/concurrency";
 
@@ -33,10 +34,17 @@ defineModels({
     ...DocumentsModels,
 });
 
-test("Open share with view user_permission", async function () {
+test("Open share with edit user_permission", async function () {
     onRpc("/documents/touch/accessTokenFolder1", () => true);
     const serverData = getDocumentsTestServerData();
     const { id: folder1Id, name: folder1Name } = serverData.models["documents.document"].records[0];
+    patchWithCleanup(DocumentsPermissionPanel.prototype, {
+        async onInviteMembersSelected(selectedPartners) {
+            expect(selectedPartners.length).toEqual(1);
+            expect(selectedPartners[0].display_name).toEqual("Hermit");
+            expect.step("Select invite member");
+        },
+    });
     patchWithCleanup(browser.navigator.clipboard, {
         writeText: async (url) => {
             expect.step("Document url copied");
@@ -51,6 +59,8 @@ test("Open share with view user_permission", async function () {
                 expect.step("permission_panel_data");
                 return getBasicPermissionPanelData({
                     access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
+                    access_internal: "edit",
+                    user_permission: "edit",
                 });
             }
             if (args.method === "can_upload_traceback") {
@@ -64,8 +74,12 @@ test("Open share with view user_permission", async function () {
     });
     await contains("button:contains(Share)").click();
 
+    // Check that selecting a partner calls onInviteMembersSelected with the partner (to open the access invite wizard)
+    await contains("input.o-autocomplete--input").click();
+    await contains(".dropdown-item", { text: "Hermit" }).click();
+
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["permission_panel_data", "Document url copied"]);
+    expect.verifySteps(["permission_panel_data", "Select invite member", "Document url copied"]);
 });
 
 test("Colorless-tags are also visible on cards", async function () {

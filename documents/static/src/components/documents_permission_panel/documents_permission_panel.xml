@@ -26,10 +26,6 @@
                         </button>
                         <div t-if="!state.mainPage" id="o_document_member_invite_discard_btn"/>
                     </div>
-                    <button t-if="state.access.user_permission === 'edit' and state.access.active"
-                            t-on-click="inviteMembers" class="btn btn-primary">
-                        <i class="fa fa-user-plus fs-3" title="Invite People"/> Invite people
-                    </button>
                 </div>
             </t>
             <div t-if="state.mainPage and warningMessage"
@@ -37,6 +33,21 @@
                 role="alert"
                 t-out="warningMessage"/>
             <t t-if="state.mainPage">
+                <div t-if="state.access.user_permission === 'edit' and state.access.active"
+                    class="d-flex align-items-center px-3 py-1 position-relative mb-3">
+                    <i class="fa fa-w fa-user-plus col-form-label ps-1 pe-4 fs-4"/>
+                    <div class="w-auto rounded-2 overflow-hidden flex-grow-1">
+                        <Many2XAutocomplete
+                            activeActions="{ create: true, createEdit: true, link: true, quickCreate: true }"
+                            context="{ force_email: true, form_view_ref: 'base.view_partner_simple_form', show_email: true }"
+                            fieldString.translate="Invite People"
+                            getDomain.bind="getInviteMembersDomain"
+                            placeholder.translate="Add people or email addresses..."
+                            quickCreate.bind="onInviteMemberQuickCreate"
+                            resModel="'res.partner'"
+                            update.bind="onInviteMembersSelected"/>
+                    </div>
+                </div>
                 <section class="o_documents_permission_panel_access_partners">
                     <DocumentsPartnerAccess
                         access="state.access"

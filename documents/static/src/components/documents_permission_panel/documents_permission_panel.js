@@ -1,3 +1,4 @@
+import { parseEmail } from "@mail/utils/common/format";
 import { CopyButton } from "@web/core/copy_button/copy_button";
 import { Dialog } from "@web/core/dialog/dialog";
 import { DocumentsAccessSettings } from "./documents_access_settings";
@@ -7,6 +8,7 @@ import { _t } from "@web/core/l10n/translation";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { rpcBus } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
+import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 import { Component, onWillStart, useState } from "@odoo/owl";
 
 export class DocumentsPermissionPanel extends Component {
@@ -15,6 +17,7 @@ export class DocumentsPermissionPanel extends Component {
         Dialog,
         DocumentsAccessSettings,
         DocumentsPartnerAccess,
+        Many2XAutocomplete,
     };
     static props = {
         document: {
@@ -192,7 +195,23 @@ export class DocumentsPermissionPanel extends Component {
         return userPermission;
     }
 
-    async inviteMembers() {
+    getInviteMembersDomain() {
+        return [["id", "not in", this.state.access.access_ids.map((a) => a.partner_id.id)]];
+    }
+
+    async onInviteMemberQuickCreate(request) {
+        const [name, email] = parseEmail(request);
+        const [partnerId] = await this.orm.create("res.partner", [{ name, email }]);
+        await this.onInviteMembersSelected([{ id: partnerId }]);
+    }
+
+    /**
+     * Open the "access invite" wizard initialized with the selected partners.
+     */
+    async onInviteMembersSelected(selectedPartners) {
+        if (!selectedPartners) {
+            return;
+        }
         this.state.hidden = true;
         return this.actionService.doAction(
             {
@@ -205,6 +224,7 @@ export class DocumentsPermissionPanel extends Component {
             {
                 additionalContext: {
                     default_document_id: this.props.document.id,
+                    default_partner_ids: selectedPartners.map((p) => p.id),
                     dialog_size: "medium",
                 },
                 onClose: async (closeInfo) => {

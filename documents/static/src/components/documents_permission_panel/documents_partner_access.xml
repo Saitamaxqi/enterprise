@@ -2,7 +2,6 @@
 <templates>
     <t t-name="documents.PartnerAccess">
         <h4 t-if="props.ownerUser or props.accessPartners.length">People with access</h4>
-        <div t-else="" class="mb-3"/>
         <div t-if="props.ownerUser" class="d-flex m-0 px-3 py-1 pt-2">
             <t t-call="documents.PartnerAccess.info">
                 <t t-set="partner" t-value="props.ownerUser"/>

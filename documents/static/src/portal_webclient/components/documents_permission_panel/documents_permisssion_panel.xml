@@ -5,7 +5,6 @@
         <xpath expr="//CopyButton" position="attributes">
             <attribute name="disabled" add="(state.access.user_permission === 'view' and state.access.access_via_link === 'none')" separator=" or"/>
         </xpath>
-        <xpath expr="//button[@t-on-click='inviteMembers']" position="replace"/>
         <xpath expr="//section[hasclass('o_documents_permission_panel_access_partners')]" position="replace"/>
         <xpath expr="//DocumentsAccessSettings" position="attributes">
             <attribute name="disabled">state.loading || state.access.user_permission !== 'edit'</attribute>
