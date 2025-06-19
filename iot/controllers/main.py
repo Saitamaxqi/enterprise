@@ -148,14 +148,17 @@ class IoTController(http.Controller):
         """
         # Update or create box
         iot_identifier = iot_box['identifier']  # IoT Mac Address
+        new_iot_ip = iot_box['ip']
+        new_iot_version = iot_box['version']
         box = self._search_box(iot_identifier)
         create_update_value = {
-            'ip': iot_box['ip'],
-            'version': iot_box['version'],
+            'ip': new_iot_ip,
+            'version': new_iot_version,
         }
         if box:
-            _logger.info('Updating IoT %s with data: %s', box, create_update_value)
-            box.write(create_update_value)
+            if (box.ip, box.version) != (new_iot_ip, new_iot_version):
+                _logger.info('Updating IoT %s with data: %s', box, create_update_value)
+                box.write(create_update_value)
         else:
             create_update_value['name'] = ensure_unique_name(iot_box['name'])
             icp_sudo = request.env['ir.config_parameter'].sudo()
