@@ -11,7 +11,7 @@
                     <field name="property_stock_account_production_cost_id"/>
                 </div>
             </xpath>
-            <xpath expr="//setting[@id='general_accounts']" position="after">
+            <xpath expr="//setting[@id='default_stock_valuation_accounts']" position="before">
                 <setting string="WIP Account Properties">
                         <div class="content-group">
                             <div class="row mt8">

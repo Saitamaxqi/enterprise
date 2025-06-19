@@ -13,16 +13,6 @@ class ResConfigSettings(models.TransientModel):
         check_company=True,
         compute='_compute_property_stock_account',
         inverse='_set_property_stock_journal')
-    property_account_income_categ_id = fields.Many2one(
-        'account.account', "Income Account",
-        related="company_id.income_account_id",
-        readonly=False,
-    )
-    property_account_expense_categ_id = fields.Many2one(
-        'account.account', "Expense Account",
-        related="company_id.expense_account_id",
-        readonly=False,
-    )
     property_stock_valuation_account_id = fields.Many2one(
         'account.account', "Stock Valuation Account",
         check_company=True,
