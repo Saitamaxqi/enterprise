@@ -191,6 +191,7 @@ class AddIotBox(models.TransientModel):
         token = self.env['iot.box']._default_token()
         url = self.get_base_url()
         db_uuid = icp_sudo.get_param('database.uuid', default='')
+        db_name = self.env.cr.dbname
         enterprise_code = icp_sudo.get_param('database.enterprise_code', default='')
 
-        return f"{url}?token={token}&db_uuid={db_uuid}&enterprise_code={enterprise_code}"
+        return f"{url}?token={token}&db_uuid={db_uuid}&enterprise_code={enterprise_code}&db_name={db_name}"
