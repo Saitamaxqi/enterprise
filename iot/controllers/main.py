@@ -58,7 +58,7 @@ class IoTController(http.Controller):
         module_ids = request.env['ir.module.module'].sudo().search([('state', '=', 'installed')])
         fobj = io.BytesIO()
         with zipfile.ZipFile(fobj, 'w', zipfile.ZIP_DEFLATED) as zf:
-            for module in module_ids.mapped('name') + ['hw_drivers']:
+            for module in module_ids.mapped('name') + ['hw_drivers', 'pos_blackbox_be']:  # add pos_blackbox_be to detect blackbox devices without the module installed
                 module_path = get_module_path(module)
                 if module_path:
                     iot_handlers = pathlib.Path(module_path) / 'iot_handlers'
