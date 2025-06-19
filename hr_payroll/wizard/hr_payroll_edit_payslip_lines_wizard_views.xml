@@ -10,6 +10,7 @@
                 <span><strong>Tip:</strong> Each time you edit the quantity or the amount on a line, we recompute the following lines. We recommend that you edit from top to bottom to prevent your edition from being overwritten by the automatic recalculation. Be careful that reordering the lines doesn't recompute them.</span>
                 <field name="worked_days_line_ids" widget="worked_days_line_one2many" nolabel="1" context="{'default_slip_id': payslip_id}">
                     <list string="Worked Days" editable="bottom" delete="0">
+                        <field name="edit_payslip_lines_wizard_id" column_invisible="1"/>
                         <field name="work_entry_type_id"/>
                         <field name="name" required="1"/>
                         <field name="number_of_days"/>
@@ -22,6 +23,7 @@
                 </field>
                 <field name="line_ids" widget="payslip_line_one2many" nolabel="1" context="{'default_slip_id': payslip_id}">
                     <list string="Salary Structure" editable="bottom" decoration-info="total == 0" delete="0">
+                        <field name="edit_payslip_lines_wizard_id" column_invisible="1"/>
                         <field name="sequence" widget="handle"/>
                         <field name="slip_id" column_invisible="True"/>
                         <field name="struct_id" column_invisible="True"/>
