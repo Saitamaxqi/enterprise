@@ -175,17 +175,17 @@ export class BankRecStatementLine extends KanbanRecord {
             this.recordData.move_id.attachment_ids.length +
             this.linesToReconcile
                 .flatMap((line) => line.reconciled_lines_ids.records)
-                .filter((line) => line.data.move_attachment_ids?.length)
+                .filter((line) => line.data.move_attachment_ids?.count)
                 .reduce(
                     (accumulator, line) =>
-                        parseInt(accumulator) + parseInt(line.data.move_attachment_ids.length),
+                        parseInt(accumulator) + parseInt(line.data.move_attachment_ids.count),
                     0
                 ) +
             this.linesToReconcile
-                .filter((line) => line.move_attachment_ids?.length)
+                .filter((line) => line.move_attachment_ids?.count)
                 .reduce(
                     (accumulator, line) =>
-                        parseInt(accumulator) + parseInt(line.move_attachment_ids.length),
+                        parseInt(accumulator) + parseInt(line.move_attachment_ids.count),
                     0
                 )
         );

@@ -76,7 +76,7 @@ export class BankRecKanbanController extends KanbanController {
                 account_id: { name: "account_id", type: "many2one" },
                 partner_id: { name: "partner_id", type: "many2one" },
                 move_id: { name: "move_id", type: "many2one" },
-                move_attachment_ids: { name: "move_attachment_ids", type: "move_attachment_ids" },
+                move_attachment_ids: { name: "move_attachment_ids", type: "one2many" },
                 reconciled_lines_ids: { name: "reconciled_lines_ids", type: "many2many" },
                 reconciled_lines_excluding_exchange_diff_ids: {
                     name: "reconciled_lines_excluding_exchange_diff_ids",
@@ -192,6 +192,7 @@ export class BankRecKanbanController extends KanbanController {
                 amount_currency: { name: "amount_currency", type: "monetary" },
                 full_reconcile_id: { name: "full_reconcile_id", type: "many2one" },
                 currency_id: { name: "currency_id", type: "many2one" },
+                move_attachment_ids: { name: "move_attachment_ids", type: "one2many" },
             },
             activeFields: {
                 id: makeActiveField(),
@@ -201,6 +202,7 @@ export class BankRecKanbanController extends KanbanController {
                 amount_currency: makeActiveField(),
                 full_reconcile_id: makeActiveField(),
                 currency_id: makeActiveField(),
+                move_attachment_ids: makeActiveField(),
             },
         };
         params.config.activeFields.line_ids.related.activeFields.reconciled_lines_excluding_exchange_diff_ids.related =
