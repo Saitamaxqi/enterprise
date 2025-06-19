@@ -189,7 +189,7 @@
     <template id="website_calendar_index_topbar" name="Topbar">
         <div class="container">
             <section class="d-flex d-print-none align-items-center justify-content-lg-end flex-wrap gap-2 mt-4 mb-3" t-if="appointment_types">
-                <h2 class="me-auto mb-0 h4">Choose your appointment</h2>
+                <h1 class="me-auto mb-0 h4">Choose your appointment</h1>
                 <div class="d-flex w-100 w-lg-25">
                     <t t-call="website.website_search_box_input">
                         <t t-set="_form_classes" t-valuef="flex-grow-1"/>

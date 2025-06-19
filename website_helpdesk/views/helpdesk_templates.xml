@@ -10,7 +10,7 @@
                 <div class="row mb16">
                     <div class="oe_structure oe_empty w-100 mb-2" id="oe_structure_website_helpdesk_team_1" t-att-data-editor-message="editor_message"/>
                     <div class="col-md-9">
-                        <h2 class="o_page_header mt0 d-none" id="team-page"/>
+                        <h1 class="o_page_header mt0 d-none h2-fs" id="team-page"/>
                     </div>
                     <div class="col-md-8 ps-4">
                         <div t-if="team.use_website_helpdesk_form">
