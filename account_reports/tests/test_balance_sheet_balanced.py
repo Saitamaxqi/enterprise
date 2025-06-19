@@ -451,6 +451,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
             with contextlib.closing(self.env.cr.savepoint(flush=False)), self.subTest(CoA=coa):
                 # === 1. Set-up localization === #
                 available_reports, aml_pairs, accounts_by_aml = self._set_up_localization(coa)
+                self.env.cr.execute("ANALYZE account_account, account_move, account_move_line")
 
                 # Test each of the Balance Sheet reports available for the CoA.
                 for report in available_reports:
