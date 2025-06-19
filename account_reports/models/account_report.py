@@ -2,9 +2,11 @@
 
 import ast
 import base64
+import bisect
 import contextlib
 import datetime
 import io
+import itertools
 import json
 import logging
 import re
@@ -3945,74 +3947,56 @@ class AccountReport(models.Model):
         Example 2: '123D\C' will return the balance of accounts starting with '123D' if it's negative, 0 otherwise.
         """
         self._check_groupby_fields((next_groupby.split(',') if next_groupby else []) + ([current_groupby] if current_groupby else []))
+        prefilter = self.env['account.account']._check_company_domain(self.get_report_company_ids(options))
 
+        accounts = self.env['account.account'].search_read([*prefilter, ('code', '!=', False)], ['code', 'tag_ids'])
+        accounts.sort(key=lambda acc: acc['code'])
+        tags_map = defaultdict(list)
+        for acc in accounts:
+            # If an account has no tags, map it to the pseudo-tag `False` such
+            # that a ref which does not exist matches it, otherwise DK balance
+            # fails in `test_generate_all_export_files`
+            for tag in (acc['tag_ids'] or [False]):
+                tags_map[tag].append(acc)
+
+        accounts_prefix_map = defaultdict(set)
         # Gather the account code prefixes to compute the total from
         prefix_details_by_formula = {}  # in the form {formula: [(1, prefix1), (-1, prefix2)]}
-        prefixes_to_compute = set()
         for formula in formulas_dict:
             prefix_details_by_formula[formula] = []
-            for token in ACCOUNT_CODES_ENGINE_SPLIT_REGEX.split(formula.replace(' ', '')):
-                if token:
-                    token_match = ACCOUNT_CODES_ENGINE_TERM_REGEX.match(token)
+            for token in filter(None, ACCOUNT_CODES_ENGINE_SPLIT_REGEX.split(formula.replace(' ', ''))):
+                token_match = ACCOUNT_CODES_ENGINE_TERM_REGEX.match(token)
 
-                    if not token_match:
-                        raise UserError(_("Invalid token '%(token)s' in account_codes formula '%(formula)s'", token=token, formula=formula))
+                if not token_match:
+                    raise UserError(_("Invalid token '%(token)s' in account_codes formula '%(formula)s'", token=token, formula=formula))
 
-                    parsed_token = token_match.groupdict()
+                multiplicator = -1 if token_match['sign'] == '-' else 1
+                excluded_prefixes_match = token_match['excluded_prefixes']
+                excluded_prefixes = tuple(excluded_prefixes_match.split(',')) if excluded_prefixes_match else ()
+                prefix = token_match['prefix']
 
-                    if not parsed_token:
-                        raise UserError(_("Could not parse account_code formula from token '%s'", token))
+                # We group using both prefix and excluded_prefixes as keys, for the case where two expressions would
+                # include the same prefix, but exlcude different prefixes (example 104\(1041) and 104\(1042))
+                prefix_key = (prefix, *excluded_prefixes)
+                prefix_details_by_formula[formula].append((multiplicator, prefix_key, token_match['balance_character']))
 
-                    multiplicator = -1 if parsed_token['sign'] == '-' else 1
-                    excluded_prefixes_match = token_match['excluded_prefixes']
-                    excluded_prefixes = excluded_prefixes_match.split(',') if excluded_prefixes_match else []
-                    prefix = token_match['prefix']
-
-                    # We group using both prefix and excluded_prefixes as keys, for the case where two expressions would
-                    # include the same prefix, but exlcude different prefixes (example 104\(1041) and 104\(1042))
-                    prefix_key = (prefix, *excluded_prefixes)
-                    prefix_details_by_formula[formula].append((multiplicator, prefix_key, token_match['balance_character']))
-                    prefixes_to_compute.add((prefix, tuple(excluded_prefixes)))
-
-        # Create the subquery for the WITH linking our prefixes with account.account entries
-        all_prefixes_queries: list[SQL] = []
-        prefilter = self.env['account.account']._check_company_domain(self.get_report_company_ids(options))
-        for prefix, excluded_prefixes in prefixes_to_compute:
-            account_domain = [
-                *prefilter,
-            ]
-
-            tag_match = ACCOUNT_CODES_ENGINE_TAG_ID_PREFIX_REGEX.match(prefix)
-
-            if tag_match:
-                if tag_match['ref']:
-                    tag_id = self.env['ir.model.data']._xmlid_to_res_id(tag_match['ref'])
+                if tag := ACCOUNT_CODES_ENGINE_TAG_ID_PREFIX_REGEX.match(prefix):
+                    if tag['ref']:
+                        tag_id = self.env['ir.model.data']._xmlid_to_res_id(tag['ref'])
+                    else:
+                        tag_id = int(tag['id'])
+                    accs = tags_map[tag_id]
                 else:
-                    tag_id = int(tag_match['id'])
+                    idx = bisect.bisect_left(accounts, prefix, key=lambda acc: acc['code'])
+                    accs = itertools.takewhile(
+                        lambda acc: acc['code'].startswith(prefix),
+                        itertools.islice(accounts, idx, None),
+                    )
 
-                account_domain.append(('tag_ids', 'in', [tag_id]))
-            else:
-                account_domain.append(('code', '=like', f'{prefix}%'))
-
-            excluded_prefixes_domains = []
-
-            for excluded_prefix in excluded_prefixes:
-                excluded_prefixes_domains.append([('code', '=like', f'{excluded_prefix}%')])
-
-            if excluded_prefixes_domains:
-                account_domain.append('!')
-                account_domain += osv.expression.OR(excluded_prefixes_domains)
-
-            prefix_query = self.env['account.account']._where_calc(account_domain)
-            all_prefixes_queries.append(prefix_query.select(
-                SQL("%s AS prefix", [prefix, *excluded_prefixes]),
-                SQL("account_account.id AS account_id"),
-            ))
-
-        # Build a map to associate each account with the prefixes it matches
-        accounts_prefix_map = defaultdict(list)
-        for prefix, account_id in self.env.execute_query(SQL(' UNION ALL ').join(all_prefixes_queries)):
-            accounts_prefix_map[account_id].append(tuple(prefix))
+                for account in accs:
+                    if excluded_prefixes and account['code'].startswith(excluded_prefixes):
+                        continue
+                    accounts_prefix_map[account['id']].add(prefix_key)
 
         # Run main query
         query = self._get_report_query(options, date_scope)
