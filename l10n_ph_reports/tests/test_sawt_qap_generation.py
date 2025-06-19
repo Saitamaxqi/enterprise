@@ -24,6 +24,11 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
         vat_purchase_wc140 = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_wc140')
         vat_purchase_12 = cls.env.ref(f'account.{cls.company_data["company"].id}_l10n_ph_tax_purchase_vat_12')
 
+        cls.partner_a.write({
+            'first_name': 'John',
+            'middle_name': 'Doe',
+            'last_name': 'Smith',
+        })
         invoice_data = [
             # Sales
             ('out_invoice', cls.partner_a, '2024-07-15', [
@@ -70,12 +75,12 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
         # 2: Build the expected values
         expected_row_values = {
             # Header
-            0: ['Reporting_Month', 'Vendor_TIN', 'branchCode', 'companyName',          'surName', 'firstName', 'middleName', 'address',                                  'nature',    'ATC',   'income_payment', 'ewt_rate', 'tax_amount'],  # noqa: E241
+            0: ['Reporting_Month', 'Vendor_TIN', 'branchCode', 'companyName',          'surName', 'firstName', 'middleName', 'address',                                  'zip_code', 'nature',                                  'ATC',   'income_payment', 'ewt_rate', 'tax_amount'],  # noqa: E241
             # Row
-            1: ['07/15/2024',      '789456123',  '789',        'Test Partner',         '',        '',          '',           '9 Super Street, Super City, Philippines',  'Test line', 'WC139', 250.0,            10.0,       25.0],         # noqa: E241
-            2: ['07/15/2024',      '789456123',  '789',        'Test Partner',         '',        '',          '',           '9 Super Street, Super City, Philippines',  'Test line', 'WI157', 200.0,            2.0,        4.0],         # noqa: E241
-            3: ['07/15/2024',      '789456123',  '456',        'Test Partner Company', '',        '',          '',           '10 Super Street, Super City, Philippines', 'Test line', 'WI100', 500.0,            5.0,        25.0],         # noqa: E241
-            4: ['07/16/2024',      '789456123',  '456',        'Test Partner Company', 'Smith',   'John',      'Doe',        '10 Super Street, Super City, Philippines', 'Test line', 'WC140', 300.0,            15.0,       45.0],         # noqa: E241
+            1: ['07/15/2024',      '789456123',  '789',        '',                     'Smith',   'John',      'Doe',        '9 Super Street, Super City, Philippines',  '8888',     '10% WC139 - Commission of service fees',  'WC139',  250.0,            10.0,       25.0],         # noqa: E241
+            2: ['07/15/2024',      '789456123',  '789',        '',                     'Smith',   'John',      'Doe',        '9 Super Street, Super City, Philippines',  '8888',     '2% WI157 - Supplier of services',         'WI157',  200.0,            2.0,        4.0],         # noqa: E241
+            3: ['07/15/2024',      '789456123',  '456',        'Test Partner Company', '',        '',          '',           '10 Super Street, Super City, Philippines', '8888',     '5% WI100 - Gross rental of property',     'WI100',  500.0,            5.0,        25.0],         # noqa: E241
+            4: ['07/16/2024',      '789456123',  '456',        'Test Partner Company', '',        '',          '',           '10 Super Street, Super City, Philippines', '8888',     '15% WC140 - Commission of service fees',  'WC140',  300.0,            15.0,       45.0],         # noqa: E241
         }
 
         self._test_xlsx_file(sawt, expected_row_values)
@@ -89,12 +94,12 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
         # 2: Build the expected values
         expected_row_values = {
             # Header
-            0: ['Reporting_Month', 'Vendor_TIN', 'branchCode', 'companyName',          'surName', 'firstName', 'middleName', 'address',                                  'nature',    'ATC',   'income_payment', 'ewt_rate', 'tax_amount'],  # noqa: E241
+            0: ['Reporting_Month', 'Vendor_TIN', 'branchCode', 'companyName',          'surName', 'firstName', 'middleName', 'address',                                  'zip_code', 'nature',                                  'ATC',   'income_payment', 'ewt_rate', 'tax_amount'],  # noqa: E241
             # Row
-            1: ['07/15/2024',      '789456123',  '789',        'Test Partner',         '',        '',          '',           '9 Super Street, Super City, Philippines',  'Test line', 'WC139', 250.0,            10.0,       25.0],         # noqa: E241
-            2: ['07/15/2024',      '789456123',  '789',        'Test Partner',         '',        '',          '',           '9 Super Street, Super City, Philippines',  'Test line', 'WI157', 200.0,            2.0,        4.0],         # noqa: E241
-            3: ['07/15/2024',      '789456123',  '456',        'Test Partner Company', '',        '',          '',           '10 Super Street, Super City, Philippines', 'Test line', 'WI100', 500.0,            5.0,        25.0],         # noqa: E241
-            4: ['07/16/2024',      '789456123',  '456',        'Test Partner Company', 'Smith',   'John',      'Doe',        '10 Super Street, Super City, Philippines', 'Test line', 'WC140', 300.0,            15.0,       45.0],         # noqa: E241
+            1: ['07/15/2024',      '789456123',  '789',        '',                     'Smith',   'John',      'Doe',        '9 Super Street, Super City, Philippines',  '8888',     '10% WC139 - Commission of service fees',  'WC139',  250.0,            10.0,       25.0],         # noqa: E241
+            2: ['07/15/2024',      '789456123',  '789',        '',                     'Smith',   'John',      'Doe',        '9 Super Street, Super City, Philippines',  '8888',     '2% WI157 - Supplier of services',         'WI157',  200.0,            2.0,        4.0],         # noqa: E241
+            3: ['07/15/2024',      '789456123',  '456',        'Test Partner Company', '',        '',          '',           '10 Super Street, Super City, Philippines', '8888',     '5% WI100 - Gross rental of property',     'WI100',  500.0,            5.0,        25.0],         # noqa: E241
+            4: ['07/16/2024',      '789456123',  '456',        'Test Partner Company', '',        '',          '',           '10 Super Street, Super City, Philippines', '8888',     '15% WC140 - Commission of service fees',  'WC140',  300.0,            15.0,       45.0],         # noqa: E241
         }
 
         self._test_xlsx_file(qap, expected_row_values)
