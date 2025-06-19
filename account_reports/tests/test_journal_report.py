@@ -291,8 +291,8 @@ class TestJournalReport(TestAccountReportsCommon):
                 ('400000',         0,       7150,      -7150),
                 ('BNK1',         570,        570,         ''),
                 ('101401',       200,          0,        200),
+                ('101403',       370,          0,        370),
                 ('400000',         0,        570,       -570),
-                ('OSTR00',       370,          0,        370),
             ],
             options_show_payment,
         )

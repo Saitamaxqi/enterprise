@@ -441,7 +441,7 @@ class AccountXmlPolizasWizard(TestMxEdiCommon, TestAccountReportsCommon):
                       </PLZ:Transaccion>
                 </PLZ:Poliza>
                 <PLZ:Poliza Fecha="2017-01-02" Concepto="Bank" NumUnIdenPol="PBNK1/2017/00001">
-                    <PLZ:Transaccion Concepto="Bank - Manual Payment: INV/2017/00001" DesCta="___ignore___" NumCta="OSTR00" Haber="0.00" Debe="1820.00">
+                    <PLZ:Transaccion Concepto="Bank - Manual Payment: INV/2017/00001" DesCta="___ignore___" NumCta="102.01.04" Haber="0.00" Debe="1820.00">
                         <PLZ:CompNal UUID_CFDI="AAAAAAAA-ABCD-ABCD-ABCD-AAAAAAAAAAAA" RFC="XEXX010101000" MontoTotal="1820.00"/>
                       </PLZ:Transaccion>
                     <PLZ:Transaccion Concepto="Bank - Manual Payment: INV/2017/00001" DesCta="___ignore___" NumCta="105.01.01" Haber="1820.00" Debe="0.00">
