@@ -10,7 +10,7 @@
                 </span>
             </t>
             <t t-if="order.delivery_identifier">
-                <span class="fs-3 text-muted">UrbanPiper: <t t-esc="order.delivery_identifier" /></span>
+                <span class="fs-3">UrbanPiper: <t t-esc="order.delivery_identifier" /></span>
             </t>
         </xpath>
     </t>
