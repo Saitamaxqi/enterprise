@@ -63,7 +63,7 @@ patch(PosStore.prototype, {
     showScreen(name, props, newOrder = false) {
         if (
             this.router.state.current === "PaymentScreen" &&
-            this.getOrder().payment_ids.some(
+            this.getOrder()?.payment_ids.some(
                 (pl) =>
                     pl.payment_method_id.use_payment_terminal === "worldline" &&
                     ["waiting", "waitingCard", "waitingCancel"].includes(pl.payment_status)
