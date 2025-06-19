@@ -4,7 +4,7 @@
     'name': 'ESG',
     'version': '1.0',
     'category': 'ESG',
-    'summary': "Calculate and report on your company's Environmental, Social, and Governance (ESG) impacts.",
+    'summary': "Calculate and report your company's Environmental, Social, and Governance impact.",
     'depends': [
         'account_reports',
         'web_hierarchy',
