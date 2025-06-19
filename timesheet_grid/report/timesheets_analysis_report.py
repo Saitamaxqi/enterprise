@@ -8,7 +8,6 @@ class TimesheetsAnalysisReport(models.Model):
 
     validated = fields.Boolean("Validated line", aggregator="bool_and", readonly=True)
     validated_status = fields.Selection([('draft', 'Draft'), ('validated', 'Validated')], readonly=True)
-    is_timesheet = fields.Boolean(string="Timesheet Line", readonly=True)
     is_timer_running = fields.Boolean(compute='_compute_is_timer_running', search='_search_is_timer_running', export_string_translation=False)
 
     def _compute_is_timer_running(self):
@@ -23,6 +22,5 @@ class TimesheetsAnalysisReport(models.Model):
     def _select(self):
         return super()._select() + """,
             A.validated AS validated,
-            CASE WHEN A.validated THEN 'validated' ELSE 'draft' END AS validated_status,
-            A.project_id IS NOT NULL AS is_timesheet
+            CASE WHEN A.validated THEN 'validated' ELSE 'draft' END AS validated_status
         """

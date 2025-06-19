@@ -9,7 +9,7 @@ class Hr_TimesheetMergeWizard(models.TransientModel):
     _description = 'Merge Timesheets'
 
     name = fields.Char('Description', compute='_compute_name', readonly=False, store=True)
-    timesheet_ids = fields.Many2many('account.analytic.line', string='Timesheets', domain="[('is_timesheet', '=', True), ('validated', '=', False)]", export_string_translation=False)
+    timesheet_ids = fields.Many2many('account.analytic.line', string='Timesheets', domain="[('project_id', '!=', False), ('validated', '=', False)]", export_string_translation=False)
 
     date = fields.Date('Date')
     unit_amount = fields.Float('Quantity', compute='_compute_unit_amount', readonly=False, store=True)
@@ -32,7 +32,7 @@ class Hr_TimesheetMergeWizard(models.TransientModel):
 
         if 'timesheet_ids' in fields_list and active_ids:
             timesheets = self.env['account.analytic.line'].browse(active_ids)
-            timesheets = timesheets.filtered(lambda l: l.is_timesheet and not l.validated and not l.is_timer_running)
+            timesheets = timesheets.filtered(lambda l: l.project_id and not l.validated and not l.is_timer_running)
             if timesheets:
                 res['timesheet_ids'] = timesheets.ids
 

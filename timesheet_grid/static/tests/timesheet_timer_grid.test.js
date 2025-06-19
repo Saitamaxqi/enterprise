@@ -1065,7 +1065,6 @@ test("hr.timesheet (grid)(timer): start button is always in focus", async () => 
         {
             id: 1,
             display_timer: true,
-            is_timesheet: true,
             timer_start: "2017-01-25 00:00:00",
             company_id: 1,
             date: "2017-01-25",
@@ -1103,7 +1102,6 @@ test("hr.timesheet (grid)(timer): stop button is always in focus", async () => {
         {
             id: 1,
             display_timer: true,
-            is_timesheet: true,
             timer_start: "2017-01-25 00:00:00",
             company_id: 1,
             date: "2017-01-25",

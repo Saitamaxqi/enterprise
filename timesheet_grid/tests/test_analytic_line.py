@@ -18,7 +18,6 @@ class TestAnalyticLine(TestCommonTimesheet):
                 'unit_amount': 1000000,
             },
         ])
-        self.assertTrue(timesheet.is_timesheet, "The analytic line created should be a timesheet.")
         with self.assertRaisesRegex(UserError, "You can't encode numbers with more than six digits."):
             AccountAnalyticLine.create({
                 'project_id': self.project_customer.id,
@@ -28,7 +27,6 @@ class TestAnalyticLine(TestCommonTimesheet):
         with self.assertRaisesRegex(UserError, "You can't encode numbers with more than six digits."):
             timesheet.unit_amount = 1000000
 
-        self.assertFalse(analytic_line.is_timesheet, "The analytic line created should not be a timesheet since no project is set.")
         self.assertEqual(analytic_line.unit_amount, 1000000, "The user can enter a number with more than 6 digits for the analytic line which is not a timesheet.")
         analytic_line.unit_amount = 1000005
         self.assertEqual(analytic_line.unit_amount, 1000005, "The user can always alter the analytic to put the number he wants since it is not a timesheet.")

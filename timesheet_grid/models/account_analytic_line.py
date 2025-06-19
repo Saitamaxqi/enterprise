@@ -27,10 +27,6 @@ class AccountAnalyticLine(models.Model):
         compute='_compute_validated_status')
     user_can_validate = fields.Boolean(compute='_compute_can_validate',
         help="Whether or not the current user can validate/reset to draft the record.")
-    is_timesheet = fields.Boolean(
-        string="Timesheet Line", compute_sudo=True,
-        compute='_compute_is_timesheet', search='_search_is_timesheet',
-        help="Set if this analytic line represents a line of timesheet.")
 
     display_timer = fields.Boolean(
         "Technical field used to display the timer if the encoding unit is 'Hours'.",
@@ -39,7 +35,7 @@ class AccountAnalyticLine(models.Model):
 
     @api.constrains('unit_amount')
     def _check_timesheet_unit_amount(self):
-        if any(t.unit_amount > 999999 for t in self if t.is_timesheet):
+        if any(t.unit_amount > 999999 for t in self if t.project_id):
             raise UserError(_("You can't encode numbers with more than six digits."))
 
     def _is_readonly(self):
@@ -110,16 +106,6 @@ class AccountAnalyticLine(models.Model):
         # override hr_timesheet to allow the check on field validated to only update the project_id on non validated timesheets.
         non_validated_timesheets = self.filtered(lambda t: not t.validated and t.task_id.project_id.allow_timesheets)
         super(AccountAnalyticLine, non_validated_timesheets)._compute_project_id()
-
-    @api.depends('project_id')
-    def _compute_is_timesheet(self):
-        for line in self:
-            line.is_timesheet = bool(line.project_id)
-
-    def _search_is_timesheet(self, operator, value):
-        if operator != 'in':
-            return NotImplemented
-        return [('project_id', '!=', False)]
 
     @api.depends('validated')
     def _compute_validated_status(self):
@@ -287,7 +273,7 @@ class AccountAnalyticLine(models.Model):
 
                 # When an user having this group tries to modify the timesheets of another user in his own team, we shouldn't raise any validation error
                 if not is_timesheet_approver or employee not in employees:
-                    if line.is_timesheet and last_validated_timesheet_date:
+                    if line.project_id and last_validated_timesheet_date:
                         if action == "modify" and is_wrong_date(fields.Date.to_date(str(vals['date']))):
                             show_access_error = True
                         elif is_wrong_date(line.date):
@@ -305,7 +291,7 @@ class AccountAnalyticLine(models.Model):
         # Check if the user has the correct access to create timesheets
         if (
             not (self.env.user.has_group('hr_timesheet.group_hr_timesheet_approver') or self.env.su)
-            and any(line.is_timesheet and line.user_id != self.env.user for line in self)
+            and any(line.project_id and line.user_id != self.env.user for line in self)
         ):
             raise AccessError(_("You cannot access timesheets that are not yours."))
         self.check_if_allowed()
@@ -316,7 +302,7 @@ class AccountAnalyticLine(models.Model):
         if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_approver'):
             if 'validated' in vals:
                 raise AccessError(_('You can only validate the timesheets of employees of whom you are the manager or the timesheet approver.'))
-            elif self.filtered(lambda r: r.is_timesheet and r.validated):
+            elif self.filtered(lambda r: r.project_id and r.validated):
                 raise AccessError(_('Only a Timesheets Approver or Manager is allowed to modify a validated entry.'))
 
         self.check_if_allowed(vals)
@@ -394,7 +380,7 @@ class AccountAnalyticLine(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_if_manager(self):
         if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_approver') and self.filtered(
-                lambda r: r.is_timesheet and r.validated):
+                lambda r: r.project_id and r.validated):
             raise AccessError(_('You cannot delete a validated entry. Please contact your manager or your timesheet approver.'))
 
         self.check_if_allowed(delete=True)
@@ -656,7 +642,7 @@ class AccountAnalyticLine(models.Model):
 
             2. Manager (Administrator): with this access right, the user can validate all timesheets.
         """
-        domain = [('is_timesheet', '=', True), ('validated', '=', validated)]
+        domain = [('project_id', '!=', False), ('validated', '=', validated)]
         if not validated:
             domain = expression.AND([
                 domain,
@@ -677,7 +663,7 @@ class AccountAnalyticLine(models.Model):
         return domain
 
     def _get_timesheets_to_merge(self):
-        return self.filtered(lambda l: l.is_timesheet and not l.validated)
+        return self.filtered(lambda l: l.project_id and not l.validated)
 
     def action_merge_timesheets(self):
         to_merge = self._get_timesheets_to_merge()
