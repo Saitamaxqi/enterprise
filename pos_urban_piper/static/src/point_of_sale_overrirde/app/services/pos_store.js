@@ -27,19 +27,6 @@ patch(PosStore.prototype, {
         };
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {
             await this._fetchUrbanpiperOrderCount(false);
-            const storageKey = "toggle_state_" + this.config.id;
-            const storedToggleState = JSON.parse(localStorage.getItem(storageKey)) || {};
-            this.config.urbanpiper_delivery_provider_ids.forEach(async (provider) => {
-                const isEnabled = storedToggleState[provider.technical_name] ?? true; // default to true
-
-                const data = {
-                    status: true,
-                    platform: provider.technical_name,
-                    action: isEnabled ? "enable" : "disable",
-                };
-
-                await this._fetchStoreAction(data);
-            });
         }
     },
 
