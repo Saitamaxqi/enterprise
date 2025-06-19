@@ -1121,7 +1121,7 @@ class AccountAsset(models.Model):
             These lines are used to generate the disposal move
         :param disposal_date: the date of the disposal
         """
-        def get_line(name, asset, amount, account):
+        def get_line(name, asset, amount, account, is_sale):
             return (0, 0, {
                 'name': name,
                 'account_id': account.id,
@@ -1133,6 +1133,9 @@ class AccountAsset(models.Model):
                     to_currency=asset.currency_id,
                     company=asset.company_id,
                     date=disposal_date,
+                ),
+                'is_storno': asset.company_id.account_storno and is_sale and (
+                    account not in (asset.company_id.gain_account_id, asset.company_id.loss_account_id)
                 )
             })
 
@@ -1171,7 +1174,7 @@ class AccountAsset(models.Model):
                 'journal_id': asset.journal_id.id,
                 'move_type': 'entry',
                 'asset_move_type': 'disposal' if not invoice_line_ids else 'sale',
-                'line_ids': [get_line(name, asset, amount, account) for amount, account in line_datas if account],
+                'line_ids': [get_line(name, asset, amount, account, invoice_line_ids) for amount, account in line_datas if account],
             }
             asset.write({'depreciation_move_ids': [(0, 0, vals)]})
             move_ids += self.env['account.move'].search([('asset_id', '=', asset.id), ('state', '=', 'draft')]).ids

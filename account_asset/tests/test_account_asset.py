@@ -3161,3 +3161,130 @@ class TestAccountAsset(TestAccountReportsCommon):
 
         self.assertEqual(len(vendor_bill.asset_ids), 1, "Only one asset should have been created.")
         self.assertEqual(vendor_bill.asset_ids.company_id, branch_a['company'], f"The asset should have been created on company: {branch_a['company'].name}")
+
+    def test_account_asset_lock_cancel_storno(self):
+        """Test the cancellation of a locked asset while storno is enabled."""
+        self.env.company.account_storno = True
+        today = fields.Date.today()
+
+        # Asset acquired 3 years ago, so 3 depreciation moves have been posted. Each move is for (14000 - 2000) / 3 = 4000
+        locked_car = self.env['account.asset'].create({
+            'salvage_value': 2000.0,
+            'state': 'open',
+            'method_period': '12',
+            'method_number': 10,
+            'name': "Locked Car",
+            'original_value': 14000.0,
+            'model_id': self.account_asset_model_fixedassets.id,
+            'acquisition_date': today + relativedelta(years=-3, month=1, day=1),
+        })
+        locked_car._onchange_model_id()
+        locked_car.validate()
+
+        # When a lock date is applied, only the moves before the date are reversed, others are deleted
+        locked_car.company_id.fiscalyear_lock_date = today + relativedelta(years=-1)
+
+        # Before cancellation, there were 3 moves, 2 before the lock date and 1 after
+        self.assertEqual(len(locked_car.depreciation_move_ids), 3)
+        locked_car.set_to_cancelled()
+        self.assertRecordValues(locked_car, [{
+            'state': 'cancelled',
+            'book_value': 14000.0,
+            'value_residual': 12000,
+            'salvage_value': 2000,
+        }])
+
+        # After cancellation, there are 4 moves: 2 moves before the lock date and their reversals. The move after the lock date is deleted.
+        self.assertEqual(len(locked_car.depreciation_move_ids), 4)
+        self.assertEqual(len(locked_car.depreciation_move_ids.filtered(lambda m: m.date >= locked_car.company_id.fiscalyear_lock_date)), 2, "Two moves after the lock date")
+
+        for depreciation in locked_car.depreciation_move_ids:
+            self.assertTrue(depreciation.reversal_move_ids or depreciation.reversed_entry_id)
+            if depreciation.date >= locked_car.company_id.fiscalyear_lock_date:
+                self.assertEqual(len(depreciation.line_ids), 2, "Reversal move should have 2 lines")
+                self.assertRecordValues(depreciation.line_ids, [{
+                        'debit': 0.0,
+                        'credit': -4000.00,
+                        'account_id': locked_car.account_depreciation_id.id,
+                    }, {
+                        'debit': -4000.00,
+                        'credit': 0.0,
+                        'account_id': locked_car.account_depreciation_expense_id.id,
+                    }
+                ])
+
+    def test_asset_modify_sell_profit_storno(self):
+        """Test the sale of an asset with profit with storno enabled."""
+        self.env.company.account_storno = True
+
+        closing_invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_line_ids': [Command.create({'price_unit': self.truck.book_value + 100})]
+        })
+        self.env['asset.modify'].create({
+            'asset_id': self.truck.id,
+            'invoice_line_ids': closing_invoice.invoice_line_ids,
+            'date': fields.Date.today() + relativedelta(months=-6, days=-1),
+            'modify_action': 'sell',
+        }).sell_dispose()
+        closing_move = self.truck.depreciation_move_ids.filtered(lambda l: l.state == 'draft')
+
+        self.assertRecordValues(closing_move.line_ids, [{
+            'ref': 'truck: Sale',
+            'debit': -10000.0,
+            'credit': 0.0,
+            'account_id': self.truck.account_asset_id.id,
+        }, {
+            'ref': 'truck: Sale',
+            'debit': 0.0,
+            'credit': -4500.0,
+            'account_id': self.truck.account_depreciation_id.id,
+        }, {
+            'ref': 'truck: Sale',
+            'debit': 0.0,
+            'credit': -5600.0,
+            'account_id': closing_invoice.invoice_line_ids.account_id.id,
+        }, {
+            'ref': 'truck: Sale',
+            'debit': 0.0,
+            'credit': 100.0,
+            'account_id': self.env.company.gain_account_id.id,
+        }])
+
+    def test_asset_modify_sell_loss_storno(self):
+        """Test the sale of an asset with loss with storno enabled."""
+        self.env.company.account_storno = True
+
+        closing_invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_line_ids': [Command.create({'price_unit': self.truck.book_value - 100})]
+        })
+        self.env['asset.modify'].create({
+            'asset_id': self.truck.id,
+            'invoice_line_ids': closing_invoice.invoice_line_ids,
+            'date': fields.Date.today() + relativedelta(months=-6, days=-1),
+            'modify_action': 'sell',
+        }).sell_dispose()
+        closing_move = self.truck.depreciation_move_ids.filtered(lambda l: l.state == 'draft')
+
+        self.assertRecordValues(closing_move.line_ids, [{
+            'ref': 'truck: Sale',
+            'debit': -10000.0,
+            'credit': 0.0,
+            'account_id': self.truck.account_asset_id.id,
+        }, {
+            'ref': 'truck: Sale',
+            'debit': 0.0,
+            'credit': -4500.0,
+            'account_id': self.truck.account_depreciation_id.id,
+        }, {
+            'ref': 'truck: Sale',
+            'debit': 0.0,
+            'credit': -5400.0,
+            'account_id': closing_invoice.invoice_line_ids.account_id.id,
+        }, {
+            'ref': 'truck: Sale',
+            'debit': 100.0,
+            'credit': 0.0,
+            'account_id': self.env.company.loss_account_id.id,
+        }])

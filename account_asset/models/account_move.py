@@ -85,7 +85,7 @@ class AccountMove(models.Model):
                         asset.original_value
                         - asset.salvage_value
                         - (
-                            move.line_ids[1].debit if asset.original_value > 0 else move.line_ids[1].credit
+                            abs(move.line_ids[1].balance)
                         ) * (-1 if asset.original_value < 0 else 1)
                     )
             else:
