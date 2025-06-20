@@ -149,4 +149,15 @@
         <field name="image_128" type="base64" file="pos_urban_piper/static/img/Rappi.svg"/>
         <field name="available_country_ids" eval="[Command.set([ref('base.ar'), ref('base.br'), ref('base.cl'), ref('base.co'), ref('base.cr'), ref('base.ec'),ref('base.mx'), ref('base.pe'), ref('base.uy')])]"/>
     </record>
+    <record id="pos_delivery_provider_wolt" model="pos.delivery.provider">
+        <field name="name">Wolt</field>
+        <field name="technical_name">wolt</field>
+        <field name="journal_code">WOL</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/Wolt.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.al'), ref('base.at'), ref('base.az'), ref('base.bg'), ref('base.hr'),
+                ref('base.cy'), ref('base.cz'), ref('base.dk'), ref('base.ee'), ref('base.fi'), ref('base.ge'), ref('base.de'), ref('base.gr'),
+                ref('base.hu'), ref('base.is'), ref('base.il'), ref('base.jp'), ref('base.kz'), ref('base.lv'), ref('base.lt'), ref('base.lu'),
+                ref('base.mt'), ref('base.mk'), ref('base.no'), ref('base.pl'), ref('base.ro'), ref('base.rs'), ref('base.sk'), ref('base.si'),
+                ref('base.se'), ref('base.uz')])]"/>
+    </record>
 </odoo>
