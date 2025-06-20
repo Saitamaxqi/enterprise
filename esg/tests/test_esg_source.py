@@ -1,6 +1,7 @@
 from odoo.exceptions import UserError
 
 from odoo.addons.esg.tests.esg_common import TestEsgCommon
+from odoo.tests import Form
 
 
 class TestEsgSource(TestEsgCommon):
@@ -40,3 +41,21 @@ class TestEsgSource(TestEsgCommon):
         self.assertEqual(source_4.activity_flow, 'company_reporting')
         # Test complete name
         self.assertEqual(source_4.complete_name, 'Scope 1: Direct > Source 1 > Source 2 > Source 3 > Source 4')
+
+    def test_remove_parent_emission_source(self):
+        EmissionSource = self.env['esg.emission.source']
+
+        parent_source = EmissionSource.create({
+            'name': 'Source 1',
+            'scope': 'direct',
+        })
+        child_source = EmissionSource.create({
+            'name': 'Source 2',
+            'parent_id': parent_source.id,
+        })
+
+        with Form(child_source) as child_source_form:
+            child_source_form.parent_id = EmissionSource
+
+        self.assertFalse(child_source.parent_id)
+        self.assertEqual(child_source.scope, 'direct', "Scope should remain 'direct' even after unsetting the parent.")

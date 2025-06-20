@@ -72,6 +72,8 @@ class EsgEmissionSource(models.Model):
     @api.depends('parent_id.scope')
     def _compute_scope(self):
         for source in self:
+            if not source.parent_id:
+                continue
             source.scope = source.parent_id.scope
 
     @api.depends('scope', 'activity_flow_indirect_others')
