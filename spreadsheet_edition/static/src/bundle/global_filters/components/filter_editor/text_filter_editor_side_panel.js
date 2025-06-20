@@ -32,6 +32,13 @@ export class TextFilterEditorSidePanel extends AbstractFilterEditorSidePanel {
         return "text";
     }
 
+    /**
+     * @param {string[]} strings
+     */
+    updateTextDefaultValue(strings) {
+        super.updateDefaultValue({ strings, operator: "ilike" });
+    }
+
     toggleRangeRestriction(isChecked) {
         if (!isChecked) {
             this.onRangeChanged([]);

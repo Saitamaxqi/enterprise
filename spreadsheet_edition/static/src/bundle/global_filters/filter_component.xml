@@ -26,6 +26,7 @@
                 <div class="position-relative d-flex flex-wrap align-items-center px-2 bg-200 rounded-end-2 text-wrap overflow-hidden">
                     <span t-foreach="facet.values" t-as="value" t-key="value_index">
                         <em t-if="!value_first" class="small fw-bold mx-1 opacity-50" t-esc="facet.separator"/>
+                        <small t-elif="facet.operator" class="small me-1 opacity-50 text-nowrap" t-esc="facet.operator"/>
                         <small class="text-truncate" t-esc="value" t-att-title="value"/>
                     </span>
                 </div>

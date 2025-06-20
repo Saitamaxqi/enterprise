@@ -71,7 +71,7 @@ describe("field sync action", () => {
     test("global filter initialized with orderId", async () => {
         const { model } = await mountSaleOrderSpreadsheetAction();
         const [filter] = model.getters.getGlobalFilters();
-        expect(model.getters.getGlobalFilterValue(filter.id)).toEqual([1]);
+        expect(model.getters.getGlobalFilterValue(filter.id)).toEqual({ operator: "in", ids: [1] });
     });
 
     test("auto resize list columns", async () => {

@@ -71,7 +71,10 @@ export class SpreadsheetFieldSyncAction extends AbstractSpreadsheetAction {
             (filter) => filter.modelName === "sale.order"
         );
         if (orderFilter && this.orderId) {
-            orderFilter.defaultValue = [this.orderId];
+            orderFilter.defaultValue = {
+                operator: "in",
+                ids: [this.orderId],
+            };
         }
     }
 }

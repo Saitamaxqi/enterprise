@@ -59,7 +59,7 @@ test("preserve global filters when navigating through breadcrumb", async functio
     });
     await setGlobalFilterValue(model, {
         id: "42",
-        value: [37],
+        value: { operator: "in", ids: [37]},
     });
     await doMenuAction(cellMenuRegistry, ["pivot_see_records"], env);
     expect(".o_list_renderer").toHaveCount(1);

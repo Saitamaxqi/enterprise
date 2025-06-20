@@ -57,11 +57,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
     }
 
     async onWillStart() {
-        const promises = [this.fetchRelationModelLabel()];
-        if (!this.store.canUseChildOf) {
-            promises.push(this.computeCanUseChildOf());
-        }
-        await Promise.all(promises);
+        await this.fetchRelationModelLabel();
     }
 
     get invalidModel() {
@@ -72,8 +68,6 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
 
     async onModelSelected({ technical, label }) {
         this.store.selectRelatedModel(technical, label);
-        await this.computeCanUseChildOf();
-        this.store.update({ includeChildren: this.store.canUseChildOf });
     }
 
     async fetchRelationModelLabel() {
@@ -90,31 +84,31 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         }
     }
 
-    async computeCanUseChildOf() {
-        if (!this.store.filter.modelName) {
-            this.store.updateCanUseChildOf(false);
-            return;
-        }
-        const hasParentRelation = await this.orm.call(
-            "ir.model",
-            "has_searchable_parent_relation",
-            [this.store.filter.modelName]
-        );
-        this.store.updateCanUseChildOf(hasParentRelation);
-    }
-
     /**
      * @param {Number[]} resIds
      */
-    onValuesSelected(resIds) {
-        this.store.update({
-            defaultValue: resIds.length ? resIds : undefined,
-        });
+    async onValuesSelected(resIds) {
+        const displayNames = await this.nameService.loadDisplayNames(
+            this.store.filter.modelName,
+            resIds
+        );
+        if (!resIds.length) {
+            // force clear, even automatic default values
+            this.store.update({ defaultValue: undefined });
+        } else {
+            this.store.update({
+                defaultValue: {
+                    operator: this.store.filter.defaultValue?.operator ?? "in",
+                    ids: resIds,
+                },
+                displayNames: Object.values(displayNames),
+            });
+        }
     }
 
     toggleDefaultsToCurrentUser(checked) {
         if (checked) {
-            this.store.update({ defaultValue: "current_user" });
+            this.store.update({ defaultValue: { operator: "in", ids: "current_user" } });
         } else {
             this.store.update({ defaultValue: undefined });
         }

@@ -8,10 +8,14 @@ class IrModel(models.Model):
 
     @api.readonly
     @api.model
-    def has_searchable_parent_relation(self, model_name):
-        model = self.env.get(model_name)
-        if model is None or not model.has_access("read"):
-            return False
-        # we consider only stored parent relationships were meant to
-        # be used to be searched
-        return model._parent_store and model._parent_name in model._fields
+    def has_searchable_parent_relation(self, model_names):
+        result = {}
+        for model_name in model_names:
+            model = self.env.get(model_name)
+            if model is None or not model.has_access("read"):
+                result[model_name] = False
+            else:
+                # we consider only stored parent relationships were meant to
+                # be searched
+                result[model_name] = model._parent_store and model._parent_name in model._fields
+        return result

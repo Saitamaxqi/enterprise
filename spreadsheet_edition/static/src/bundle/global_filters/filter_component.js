@@ -32,7 +32,7 @@ class FiltersTooltip extends Component {
 
     async getFacetFor(filter) {
         const filterValues = this.props.model.getters.getGlobalFilterValue(filter.id);
-        return getFacetInfo(filter, filterValues, this.nameService);
+        return getFacetInfo(this.env, filter, filterValues);
     }
 }
 

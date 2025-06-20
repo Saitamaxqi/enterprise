@@ -36,7 +36,7 @@ test("Add a filter with a default value", async () => {
         id: "41",
         type: "relation",
         label: "41",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
         modelName: undefined,
     };
     await waitForDataLoaded(alice);
@@ -51,7 +51,7 @@ test("Add a filter with a default value", async () => {
     await waitForDataLoaded(charlie);
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue(
         (user) => user.getters.getGlobalFilterValue(filter.id),
-        [41]
+        { operator: "in", ids: [41] }
     );
     // the default value should be applied immediately
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue((user) => getCellValue(user, "D4"), "");
@@ -63,7 +63,7 @@ test("Edit a filter", async () => {
         id: "41",
         type: "relation",
         label: "41",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
         modelID: undefined,
         modelName: undefined,
     };
@@ -77,7 +77,7 @@ test("Edit a filter", async () => {
     await waitForDataLoaded(bob);
     await waitForDataLoaded(charlie);
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue((user) => getCellValue(user, "B4"), 11);
-    await editGlobalFilter(alice, { ...filter, defaultValue: [37] });
+    await editGlobalFilter(alice, { ...filter, defaultValue: { operator: "in", ids: [37] } });
     await waitForDataLoaded(alice);
     await waitForDataLoaded(bob);
     await waitForDataLoaded(charlie);
@@ -89,14 +89,14 @@ test("Edit a filter and remove it concurrently", async () => {
         id: "41",
         type: "relation",
         label: "41",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
         modelID: undefined,
         modelName: undefined,
     };
     await addGlobalFilter(alice, filter);
     await animationFrame();
     await network.concurrent(() => {
-        editGlobalFilter(charlie, { ...filter, defaultValue: [37] });
+        editGlobalFilter(charlie, { ...filter, defaultValue: { operator: "in", ids: [37] } });
         bob.dispatch("REMOVE_GLOBAL_FILTER", { id: "41" });
     });
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue(
@@ -110,7 +110,7 @@ test("Remove a filter and edit it concurrently", async () => {
         id: "41",
         type: "relation",
         label: "41",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
         modelID: undefined,
         modelName: undefined,
     };
@@ -118,7 +118,7 @@ test("Remove a filter and edit it concurrently", async () => {
     await animationFrame();
     await network.concurrent(() => {
         bob.dispatch("REMOVE_GLOBAL_FILTER", { id: "41" });
-        editGlobalFilter(charlie, { ...filter, defaultValue: [37] });
+        editGlobalFilter(charlie, { ...filter, defaultValue: { operator: "in", ids: [37] } });
     });
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue(
         (user) => user.getters.getGlobalFilters(),
@@ -131,7 +131,7 @@ test("Remove a filter and edit another concurrently", async () => {
         id: "41",
         type: "relation",
         label: "41",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
         modelID: undefined,
         modelName: undefined,
     };
@@ -139,7 +139,7 @@ test("Remove a filter and edit another concurrently", async () => {
         id: "37",
         type: "relation",
         label: "37",
-        defaultValue: [37],
+        defaultValue: { operator: "in", ids: [37] },
         modelID: undefined,
         modelName: undefined,
     };
@@ -148,7 +148,7 @@ test("Remove a filter and edit another concurrently", async () => {
     await animationFrame();
     await network.concurrent(() => {
         bob.dispatch("REMOVE_GLOBAL_FILTER", { id: "41" });
-        editGlobalFilter(charlie, { ...filter2, defaultValue: [74] });
+        editGlobalFilter(charlie, { ...filter2, defaultValue: { operator: "in", ids: [74] } });
     });
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue(
         (user) => user.getters.getGlobalFilters().map((filter) => filter.id),
@@ -166,7 +166,7 @@ test("Setting a filter value is only applied locally", async () => {
     await addGlobalFilter(alice, filter);
     await setGlobalFilterValue(bob, {
         id: filter.id,
-        value: [1],
+        value: { operator: "in", ids: [1] },
     });
     await animationFrame();
     expect(alice.getters.getActiveFilterCount()).toBe(0);

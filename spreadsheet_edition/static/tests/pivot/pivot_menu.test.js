@@ -26,7 +26,7 @@ test("Re-insert a pivot with a global filter should re-insert the full pivot", a
         id: "41",
         type: "relation",
         label: "41",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
     });
     selectCell(model, "A6");
     const reinsertPivotPath = ["data", "reinsert_static_pivot", "reinsert_static_pivot_1"];

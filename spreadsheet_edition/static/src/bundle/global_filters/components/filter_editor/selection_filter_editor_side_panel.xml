@@ -34,8 +34,8 @@
             <SelectionFilterValue
                 resModel="store.filter.resModel"
                 field="store.filter.selectionField"
-                value="store.filter.defaultValue ?? []"
-                onValueChanged.bind="updateDefaultValue"
+                value="store.filter.defaultValue?.selectionValues ?? []"
+                onValueChanged.bind="updateSelectionDefaultValue"
             />
         </Section>
         <t t-if="store.shouldDisplayFieldMatching or true">

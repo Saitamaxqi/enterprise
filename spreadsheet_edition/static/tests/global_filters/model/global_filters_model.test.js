@@ -21,7 +21,7 @@ const testGlobalFilter = {
     id: "42",
     label: "Relation",
     type: "relation",
-    defaultValue: [41],
+    defaultValue: { operator: "in", ids: [41] },
 };
 const testFieldMatching = {
     pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } },
@@ -44,7 +44,7 @@ test("Can set a value from a pivot header context menu", async function () {
             id: "42",
             label: "Relation",
             type: "relation",
-            defaultValue: [41],
+            defaultValue: { operator: "in", ids: [41] },
         },
         {
             pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } },
@@ -194,7 +194,7 @@ test("menu to set filter value is not visible if no filter matches", async funct
             id: "42",
             label: "Relation",
             type: "relation",
-            defaultValue: [41],
+            defaultValue: { operator: "in", ids: [41] },
         },
         {
             pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } },
@@ -255,7 +255,7 @@ test("UNDO/REDO filter creation with multiple field matchings", async function (
         id: "42",
         label: "Relation",
         type: "relation",
-        defaultValue: [2],
+        defaultValue: { operator: "in", ids: [2] },
     };
     await addGlobalFilter(model, filter, {
         pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } },
@@ -273,7 +273,7 @@ test("UNDO/REDO filter creation reloads the related field matchings", async func
         id: "42",
         label: "Relation",
         type: "relation",
-        defaultValue: [2],
+        defaultValue: { operator: "in", ids: [2] },
     };
     await addGlobalFilter(model, filter, {
         pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } },

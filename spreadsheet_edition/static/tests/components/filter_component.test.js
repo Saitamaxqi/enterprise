@@ -36,7 +36,7 @@ test("Filter component is rendered with the badge if there is an active filter",
         id: "1",
         type: "text",
         label: "My filter",
-        defaultValue: ["foo"],
+        defaultValue: { operator: "ilike", strings: ["foo"] },
     });
     await mountFilterComponent(env);
     expect(".o_topbar_filter_icon").toHaveCount(1);
@@ -50,7 +50,7 @@ test("Badge displays the number of active filters", async function () {
         id: "1",
         type: "text",
         label: "My filter",
-        defaultValue: ["foo"],
+        defaultValue: { operator: "ilike", strings: ["foo"] },
     });
     addGlobalFilterWithoutReload(model, {
         id: "2",

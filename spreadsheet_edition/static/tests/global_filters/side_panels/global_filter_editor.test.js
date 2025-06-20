@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
-import { queryAllTexts, queryFirst } from "@odoo/hoot-dom";
+import { queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { helpers, stores } from "@odoo/o-spreadsheet";
 import {
@@ -254,6 +254,18 @@ test("Selecting a model-field for selection does not reset label", async functio
     expect(".o_global_filter_label").toHaveValue("My Label");
 });
 
+test("can select a default value for selection filter", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "selection");
+    await selectModelForSelection("res.users");
+    await selectFieldForSelection("state");
+    await contains(".o-global-filter-selection-value input").click();
+    await contains(".o-autocomplete .dropdown-item").click();
+    await saveGlobalFilter();
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(globalFilter.defaultValue).toEqual({ operator: "in", selectionValues: ["new"] });
+});
+
 test("Selecting another model resets the default value", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
     addGlobalFilterWithoutReload(model, {
@@ -262,7 +274,7 @@ test("Selecting another model resets the default value", async function () {
         label: "Status",
         resModel: "res.users",
         selectionField: "state",
-        defaultValue: ["new"],
+        defaultValue: { operator: "in", selectionValues: ["new"] },
     });
     await openSidePanel(model, env, "42");
     await openSidePanelForCreation(model, env, "selection");
@@ -279,7 +291,7 @@ test("Selecting another field resets the default value", async function () {
         label: "Status",
         resModel: "res.users",
         selectionField: "state",
-        defaultValue: ["new"],
+        defaultValue: { operator: "in", selectionValues: ["new"] },
     });
     await openSidePanel(model, env, "42");
     await openSidePanelForCreation(model, env, "selection");
@@ -300,7 +312,7 @@ test("Create a new text global filter", async function () {
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
-    expect(globalFilter.defaultValue).toEqual(["Default Value"]);
+    expect(globalFilter.defaultValue).toEqual({ operator: "ilike", strings: ["Default Value"] });
     expect(globalFilter.rangesOfAllowedValues).toBe(undefined);
 });
 
@@ -335,7 +347,7 @@ test("Create a new text global filter with a default value from a range", async 
     await contains(".dropdown-item:first").click();
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.defaultValue).toEqual(["hello"]);
+    expect(globalFilter.defaultValue).toEqual({ operator: "ilike", strings: ["hello"] });
 });
 
 test("Create a new text global filter, set a default value ,then restrict values to range", async function () {
@@ -354,7 +366,7 @@ test("Create a new text global filter, set a default value ,then restrict values
     expect(queryAllTexts(".dropdown-item")).toEqual(["hello"]);
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.defaultValue).toEqual(["hi"]);
+    expect(globalFilter.defaultValue).toEqual({ operator: "ilike", strings: ["hi"] });
 });
 
 test("edit a text global filter with a default value not from the range", async function () {
@@ -364,7 +376,7 @@ test("edit a text global filter with a default value not from the range", async 
         id: "42",
         type: "text",
         label: "a filter",
-        defaultValue: ["Hi"],
+        defaultValue: { operator: "ilike", strings: ["Hi"] },
         rangesOfAllowedValues: [toRangeData(sheetId, "B2")],
     });
     setCellContent(model, "B2", "hello"); // the range does not contain the default value
@@ -376,7 +388,7 @@ test("edit a text global filter with a default value not from the range", async 
     expect(queryAllTexts(".dropdown-item")).toEqual(["hello"]);
     await saveGlobalFilter(); // save without changing anything
     const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.defaultValue).toEqual(["Hi"]);
+    expect(globalFilter.defaultValue).toEqual({ operator: "ilike", strings: ["Hi"] });
 });
 
 test("check range text filter but don't select any range", async function () {
@@ -616,7 +628,7 @@ test("Fields are ordered by global filter type then relation", async function ()
 test("Edit an existing global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
     const label = "This year";
-    const defaultValue = ["value"];
+    const defaultValue = { operator: "ilike", strings: ["value"] };
     addGlobalFilterWithoutReload(model, { id: "42", type: "text", label, defaultValue });
     await openSidePanel(model, env, "42");
     expect(".o_global_filter_label").toHaveValue(label);
@@ -705,79 +717,10 @@ test("Create a new relational global filter of users will shows the checkbox", a
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     const id = globalFilter.id;
-    const userId = model.getters.getGlobalFilterValue(id);
-    expect([user.userId]).toEqual(userId);
-    expect(globalFilter.defaultValue).toBe("current_user");
+    const { ids } = model.getters.getGlobalFilterValue(id);
+    expect([user.userId]).toEqual(ids);
+    expect(globalFilter.defaultValue).toEqual({ operator: "in", ids: "current_user" });
     expect(globalFilter.label).toBe("Users");
-});
-
-test("Create a new relational global filter with a parent/child model", async function () {
-    const { model, env } = await createSpreadsheetWithPivot({
-        mockRPC: async function (route, args) {
-            if (args.method === "has_searchable_parent_relation" && args.args[0] === "product") {
-                return true;
-            }
-        },
-    });
-    await openSidePanelForCreation(model, env, "relation");
-    await animationFrame();
-    await selectModelForRelation("product");
-    const checkbox = queryFirst(".o-checkbox:contains(Include children)");
-    expect(checkbox).toHaveText("Include children");
-    expect(checkbox.querySelector("input").checked).toBe(true);
-    await saveGlobalFilter();
-    const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.includeChildren).toBe(true);
-});
-
-test("edit a relational global filter to uncheck a parent/child model", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
-    addGlobalFilterWithoutReload(model, {
-        id: "42",
-        type: "relation",
-        modelName: "product",
-        label: "Relation Filter",
-        includeChildren: true,
-    });
-    await openSidePanel(model, env, "42");
-    const checkbox = queryFirst(".o-checkbox:contains(Include children)");
-    expect(checkbox.querySelector("input").checked).toBe(true);
-    await contains(checkbox).click();
-    await saveGlobalFilter();
-    const [globalFilter] = model.getters.getGlobalFilters();
-    expect(globalFilter.includeChildren).toBe(false);
-});
-
-test("switching relational model displays the children checkbox or not", async function () {
-    const serverData = getBasicServerData();
-    serverData.models["ir.model"].records = [
-        ...IrModel._records,
-        {
-            id: 999,
-            name: "Currency",
-            model: "res.currency",
-        },
-    ];
-    const { model, env } = await createSpreadsheetWithPivot({
-        serverData,
-        mockRPC: async function (route, args) {
-            if (args.method === "has_searchable_parent_relation" && args.args[0] === "product") {
-                return true;
-            }
-        },
-    });
-    await openSidePanelForCreation(model, env, "relation");
-    expect(".o-checkbox:contains(Include children)").toHaveCount(0);
-
-    await selectModelForRelation("res.currency");
-    expect(".o-checkbox:contains(Include children)").toHaveCount(0);
-
-    await selectModelForRelation("product");
-    expect(".o-checkbox:contains(Include children)").toHaveCount(1);
-    expect(queryFirst(".o-checkbox:contains(Include children) input").checked).toBe(true);
-
-    await selectModelForRelation("res.currency");
-    expect(".o-checkbox:contains(Include children)").toHaveCount(0);
 });
 
 test("Create a new date filter", async function () {

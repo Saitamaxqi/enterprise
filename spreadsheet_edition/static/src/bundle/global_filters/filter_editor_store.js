@@ -17,7 +17,6 @@ export class FilterEditorStore extends SpreadsheetStore {
         "onSelectionFieldSelected",
         "onSelectionModelSelected",
         "update",
-        "updateCanUseChildOf",
         "updateFieldMatching",
         "updateFieldMatchingOffset",
         "updateRelationModelLabel",
@@ -40,7 +39,6 @@ export class FilterEditorStore extends SpreadsheetStore {
         this.notificationStore = this.get(NotificationStore);
         this.sidePanelStore = this.get(SidePanelStore);
         this.loadDataPromise = this._loadData(initialProps);
-        this._canUseChildOf = this.filter.includeChildren;
         this._fieldsMatching = [];
         this._relationModelLabel = "";
         this._selectionModelLabel = "";
@@ -72,10 +70,6 @@ export class FilterEditorStore extends SpreadsheetStore {
             (this.filter.type !== "relation" || this.filter.modelName) &&
             this.fieldsMatching.every((fm) => fm.isValid)
         );
-    }
-
-    get canUseChildOf() {
-        return this.filter.type === "relation" && this._canUseChildOf;
     }
 
     get evaluatedDomain() {
@@ -158,7 +152,7 @@ export class FilterEditorStore extends SpreadsheetStore {
         }
         return this.getters.getTextFilterOptionsFromRanges(
             this.filter.rangesOfAllowedValues,
-            this.filter.defaultValue
+            this.filter.defaultValue?.strings
         );
     }
 
@@ -207,7 +201,7 @@ export class FilterEditorStore extends SpreadsheetStore {
         if (!this.filter.label) {
             this.update({ label });
         }
-        if (this.filter.modelName !== technical) {
+        if (this.filter.modelName !== technical && this.filter.defaultValue) {
             this.update({ defaultValue: undefined });
         }
         this.update({ modelName: technical, domainOfAllowedValues: [] });
@@ -224,10 +218,6 @@ export class FilterEditorStore extends SpreadsheetStore {
         if (!this.draft.label) {
             this.missingLabelError = true;
         }
-    }
-
-    updateCanUseChildOf(canUseChildOf) {
-        this._canUseChildOf = canUseChildOf;
     }
 
     updateRelationModelLabel(label) {

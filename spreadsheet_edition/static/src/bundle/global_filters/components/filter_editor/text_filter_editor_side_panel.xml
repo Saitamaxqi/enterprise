@@ -13,9 +13,9 @@
         <Section title.translate="Filter value">
             <div class="o-section-subtitle">Default value</div>
             <TextFilterValue
-                value="store.filter.defaultValue ?? []"
+                value="store.filter.defaultValue?.strings"
                 options="store.textOptions"
-                onValueChanged.bind="updateDefaultValue"
+                onValueChanged.bind="updateTextDefaultValue"
             />
             <div class="o-section-subtitle mt-4">Possible values</div>
             <Checkbox

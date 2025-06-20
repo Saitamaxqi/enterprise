@@ -249,7 +249,7 @@ test("Keep applying filter when pivot is re-inserted", async function () {
     await animationFrame();
     await setGlobalFilterValue(model, {
         id: "42",
-        value: [41],
+        value: { operator: "in", ids: [41] },
     });
     await animationFrame();
     expect(getCellValue(model, "B3")).toBe("", {

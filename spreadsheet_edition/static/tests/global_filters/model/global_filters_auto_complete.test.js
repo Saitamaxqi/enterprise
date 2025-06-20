@@ -17,13 +17,13 @@ test("ODOO.FILTER.VALUE", async function () {
         label: "filter 1",
         id: "42",
         type: "relation",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
     });
     await addGlobalFilter(model, {
         label: "filter 2",
         id: "43",
         type: "relation",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
     });
     for (const formula of [
         "=ODOO.FILTER.VALUE(",
@@ -61,7 +61,7 @@ test("escape double quotes in filter name", async function () {
         label: 'my "special" filter',
         id: "42",
         type: "relation",
-        defaultValue: [41],
+        defaultValue: { operator: "in", ids: [41] },
     });
     composer.startEdition("=ODOO.FILTER.VALUE(");
     await animationFrame();

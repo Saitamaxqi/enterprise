@@ -218,7 +218,6 @@ describe("integration", () => {
             type: "many2one",
         });
         expect(globalFilter).toEqual({
-            defaultValue: undefined,
             id: filterId,
             domainOfAllowedValues: [],
             label: "My product filter",

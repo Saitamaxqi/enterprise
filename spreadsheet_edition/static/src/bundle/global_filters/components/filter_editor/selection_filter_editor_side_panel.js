@@ -48,6 +48,10 @@ export class SelectionFilterEditorSidePanel extends AbstractFilterEditorSidePane
         return "selection";
     }
 
+    updateSelectionDefaultValue(selectionValues) {
+        super.updateDefaultValue({ selectionValues, operator: "in" });
+    }
+
     filterSelectionsFields(field) {
         if (!field.searchable || field.type !== "selection") {
             return false;
