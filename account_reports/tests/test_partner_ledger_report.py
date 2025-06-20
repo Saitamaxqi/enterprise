@@ -573,6 +573,39 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
         lines = self.report._get_lines(options)
         self.assertFalse(partner.name in [line['name'] for line in lines])
 
+    def test_partner_ledger_search_with_unknown_partner(self):
+        ''' Test that the lines with no partners are included in the report when searching for "Unknown Partner" '''
+        options = self._generate_options(self.report, fields.Date.from_string('2017-01-01'), fields.Date.from_string('2017-12-31'), default_options={
+                'filter_search_bar': 'un',
+                'export_mode': 'print',
+            })
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #   Name                                    Debit           Credit          Balance
+            [   0,                                      6,              7,              9],
+            [
+                ('Unknown Partner',                     200.0,          200.0,          0.0),
+                ('Total',                               200.0,          200.0,          0.0),
+            ],
+            options,
+        )
+
+        partner = self.env['res.partner'].create({'name': 'Unexpected Customer'})
+        self.init_invoice('out_invoice', partner=partner, invoice_date='2017-02-14', amounts=[1000.0], taxes=[], post=True)
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #   Name                                    Debit           Credit          Balance
+            [   0,                                      6,              7,              9],
+            [
+                ('Unexpected Customer',                 1000.0,         0.0,            1000.0),
+                ('Unknown Partner',                     200.0,          200.0,          0.0),
+                ('Total',                               1200.0,         200.0,          1000.0),
+            ],
+            options,
+        )
+
     def test_no_amount_currency_col_in_single_currency(self):
         # In multi-currency, we get the amount_currency column
         self.assertGreater(len(self.env['res.currency'].search([])), 1)

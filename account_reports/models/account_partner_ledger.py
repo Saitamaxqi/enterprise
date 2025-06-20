@@ -123,7 +123,8 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             domain += [
                 '|', ('matched_debit_ids.debit_move_id.partner_id.name', 'ilike', options['filter_search_bar']),
                 '|', ('matched_credit_ids.credit_move_id.partner_id.name', 'ilike', options['filter_search_bar']),
-                ('partner_id.name', 'ilike', options['filter_search_bar']),
+                '|', ('partner_id.name', 'ilike', options['filter_search_bar']),
+                ('partner_id', '=', False),
             ]
 
         options['forced_domain'] = options.get('forced_domain', []) + domain
