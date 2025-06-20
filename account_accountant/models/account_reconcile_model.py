@@ -95,6 +95,7 @@ class AccountReconcileModel(models.Model):
                       AND reco_model_line.account_id IS NOT NULL
                  ) AS reco_model ON TRUE
            WHERE st_line.id IN %(statement_lines)s
+             AND reco_model.id IS NOT NULL
            GROUP BY st_line.id
             """,
             lang=self.env.lang,
