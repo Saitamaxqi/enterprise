@@ -631,7 +631,7 @@ registry
                 run: "scan LOC-01-02-00",
             },
             {
-                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 2'].text-bg-800",
+                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 2'].text-bg-400",
                 run: "scan compo01",
             },
             // Scans the final product a first time.
@@ -668,18 +668,18 @@ registry
             // Scans each locations and their remaining components.
             { trigger: ".o_barcode_client_action", run: "scan LOC-01-02-00" },
             {
-                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 2'].text-bg-800",
+                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 2'].text-bg-400",
                 run: "scan compo01",
             },
             { trigger: ".o_barcode_line.o_selected.o_line_completed", run: "scan shelf3" },
             {
-                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 3'].text-bg-800",
+                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 3'].text-bg-400",
                 run: "scan compo01",
             },
             { trigger: ".o_barcode_line.o_selected:not(.o_line_completed)", run: "scan compo01" },
             { trigger: ".o_barcode_line.o_selected.o_line_completed", run: "scan shelf4" },
             {
-                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 4'].text-bg-800",
+                trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 4'].text-bg-400",
                 run: "scan compo01",
             },
 

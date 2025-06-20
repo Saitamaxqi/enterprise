@@ -18,7 +18,6 @@ class TestBarcodeClientAction(HttpCase):
             Command.unlink(self.env.ref('stock.group_production_lot').id),
             Command.unlink(self.env.ref('stock.group_stock_multi_locations').id),
             Command.unlink(self.env.ref('stock.group_tracking_lot').id),
-            Command.unlink(self.env.ref('stock_barcode.group_barcode_count_entire_location').id),
         ]})
         # Explicitly remove the UoM group.
         grp_uom = self.env.ref('uom.group_uom')

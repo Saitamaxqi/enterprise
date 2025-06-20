@@ -440,7 +440,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_delivery_1", {
         // Scans the source (Section 1) then scans product1 x2, product4 x1
         { trigger: ".o_barcode_client_action", run: "scan LOC-01-01-00" },
         {
-            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 1").text-bg-800',
+            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 1").text-bg-400',
         },
         {
             trigger: ".o_scan_message.o_scan_product",
@@ -471,12 +471,12 @@ registry.category("web_tour.tours").add("test_barcode_batch_delivery_1", {
         },
         // Scan product2 x2
         {
-            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 2").text-bg-800',
+            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 2").text-bg-400',
             run: "scan product2", // Must complete the line from Section 2.
         },
         {
             trigger:
-                ".o_barcode_location_line.text-bg-800+.o_barcode_line.o_selected.o_line_completed",
+                ".o_barcode_location_line.text-bg-400+.o_barcode_line.o_selected.o_line_completed",
             run: function () {
                 const lines = helper.getLines();
                 helper.assertLinesBelongTo([lines[4], lines[5]], "picking_delivery_1");
@@ -514,7 +514,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_delivery_1", {
 
         // Scan product3 x2
         {
-            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 3").text-bg-800',
+            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 3").text-bg-400',
             run: "scan product3",
         },
         { trigger: ".o_barcode_line[data-barcode='product3'].o_selected", run: "scan product3" },
@@ -527,7 +527,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_delivery_1", {
 
         // Scan product4 x1
         {
-            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 4").text-bg-800',
+            trigger: '.o_barcode_location_line:contains("WH/Stock/Section 4").text-bg-400',
             run: "scan product4",
         },
 
@@ -540,7 +540,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_delivery_1", {
 
         // Scan p5pack01 which is attended.
         {
-            trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 5'].text-bg-800",
+            trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 5'].text-bg-400",
             run: "scan p5pack01",
         },
         // Scan p5pack02 which isn't attended.
@@ -1054,7 +1054,7 @@ registry.category("web_tour.tours").add("test_put_in_pack_scan_suggested_package
         },
         // Scans the delivery 1 line's product and put it in pack.
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-400',
             run: "scan product2",
         },
         {

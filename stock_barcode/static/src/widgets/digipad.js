@@ -112,14 +112,16 @@ export class Digipad extends Component {
      */
     async _fetchPackagingButtons() {
         const record = this.props.record.data;
-        this.productUom = (await this.orm.searchRead("uom.uom", [["id", "=", record.product_uom_id?.id]], ["factor"]))?.[0];
+        this.productUom = (
+            await this.orm.searchRead(
+                "uom.uom",
+                [["id", "=", record.product_uom_id?.id]],
+                ["factor"]
+            )
+        )?.[0];
         if (record.product_id.id) {
             let domain = [["id", "=", record.product_id.id]];
-            const product_uoms = await this.orm.searchRead(
-                "product.product",
-                domain,
-                ["uom_ids"]
-            );
+            const product_uoms = await this.orm.searchRead("product.product", domain, ["uom_ids"]);
             if (product_uoms.length === 0) {
                 return;
             }
@@ -177,11 +179,9 @@ export class Digipad extends Component {
 
 export const digipad = {
     component: Digipad,
-    extractProps: ({ attrs }) => {
-        return {
-            fieldToEdit: attrs.field_to_edit,
-            fulfilledAt: attrs.fulfilled_at,
-        };
-    },
+    extractProps: ({ attrs }) => ({
+        fieldToEdit: attrs.field_to_edit,
+        fulfilledAt: attrs.fulfilled_at,
+    }),
 };
 registry.category("view_widgets").add("digipad", digipad);

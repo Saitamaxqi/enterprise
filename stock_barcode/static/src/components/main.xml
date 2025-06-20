@@ -74,7 +74,7 @@
                     <!-- Source location separator -->
                     <div t-if="env.model.displaySourceLocation"
                         class="o_barcode_location_line p-1 px-3 border d-flex align-items-center"
-                        t-att-class="currentLocation ? 'text-bg-800' : 'text-muted bg-secondary'"
+                        t-att-class="currentLocation ? 'text-bg-400' : 'text-muted bg-secondary'"
                         t-att-data-location-id="group.location.id"
                         t-att-data-location="group.location.display_name">
                         <i class="fa fa-map-marker me-2"/>
@@ -115,6 +115,15 @@
         <div t-elif="state.view === 'actionsView'"
              class="o_barcode_settings d-flex flex-grow-1 flex-column p-2">
             <BarcodeInput onSubmit.bind="onBarcodeSubmitted"/>
+            <div class="my-2">
+                <button class="w-100 fs-4 btn btn-secondary mb-2 py-2"
+                    t-attf-class="{{`o_count_entire_locations ${env.model.countEntireLocation ? 'active' : ''}`}}"
+                    t-on-click="() => { env.model.countEntireLocation = !env.model.countEntireLocation; env.model.trigger('update'); }"
+                >
+                    <input type="checkbox" class="me-2" t-att-checked="env.model.countEntireLocation"/>
+                    Count Entire Locations
+                </button>
+            </div>
             <div t-if="env.model.printButtons">
                 <div class="w-100 my-2 d-flex justify-contents-center">
                     <hr class="flex-grow-1"/>
@@ -174,7 +183,7 @@
                 class="o_apply_page btn"
                 t-att-disabled="env.model.applyOn === 0"
                 t-attf-class="{{highlightValidateButton ? 'btn-primary' : 'btn-secondary'}}">
-                Apply
+                Confirm
                 <span t-attf-class="{{highlightValidateButton ? '' : 'text-muted'}}">
                     (<t t-esc="env.model.applyOn"/>)
                 </span>

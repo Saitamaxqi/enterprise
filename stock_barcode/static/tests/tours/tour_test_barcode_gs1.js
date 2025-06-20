@@ -393,7 +393,7 @@ registry.category("web_tour.tours").add("test_gs1_inventory_package", {
         // Validates the inventory.
         {
             trigger: ".o_apply_page",
-            run: "click",
+            run: "scan OBTVALI",
         },
         {
             trigger: ".o_notification_bar.bg-success",

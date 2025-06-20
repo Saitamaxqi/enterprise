@@ -48,6 +48,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
     def test_inventory_adjustment_dont_update_location(self):
         """ Ensures the existing quants location cannot be update."""
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         # Adds some quants and request a count.
         # Adds quants for the same product in two locations.
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 5)
@@ -144,6 +145,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         - Validate
         """
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         self.start_tour("/odoo/barcode", 'test_inventory_adjustment_tracked_product', login='admin', timeout=180)
 
         inventory_moves = self.env['stock.move'].search([('product_id', 'in', [self.productlot1.id, self.productserial1.id]),
@@ -177,6 +179,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
                 Command.link(self.env.ref('stock.group_tracking_lot').id),
             ],
         })
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         # Adds some quants for the product tracked by lots in two locations.
         lot_1 = self.env['stock.lot'].create({'product_id': self.productlot1.id, 'name': "lot1"})
         self.env['stock.quant']._update_available_quantity(self.productlot1, self.shelf1, 3, lot_id=lot_1)
@@ -205,6 +208,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             - Validate
         """
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
 
         lot1 = self.env["stock.lot"].create({
             'name': 'lot1',
@@ -230,6 +234,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         """ Creates a quant and checks it will not be deleted until the inventory was validated.
         """
         Quant = self.env['stock.quant']
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         self.start_tour("/odoo/barcode", 'test_inventory_create_quant', login='admin', timeout=180)
 
         Quant._unlink_zero_quants()
@@ -277,10 +282,10 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         wizard_request_count = self.env['stock.request.count'].create({
             'user_id': self.env.user.id,
             'quant_ids': quants.ids,
-            'set_count': 'empty',
+            'show_expected_quantity': True,
         })
         wizard_request_count.action_request_count()
-        self.start_tour("/odoo/barcode?debug=assets", 'test_inventory_dialog_not_counted_serial_numbers', login='admin')
+        self.start_tour("/odoo/barcode?debug=assets", 'test_inventory_dialog_not_counted_serial_numbers', login='admin', timeout=180)
         self.assertRecordValues(quants, [
             {'product_id': self.productserial1.id, 'lot_id': serial1_sns[0].id, 'quantity': 1, 'location_id': self.shelf1.id},
             {'product_id': self.productserial1.id, 'lot_id': serial1_sns[1].id, 'quantity': 1, 'location_id': self.shelf1.id},
@@ -306,7 +311,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         wizard_request_count = self.env['stock.request.count'].create({
             'user_id': self.env.user.id,
             'quant_ids': quants.ids,
-            'set_count': 'empty',
+            'show_expected_quantity': False,
         })
         wizard_request_count.action_request_count()
         self.start_tour("/odoo/barcode/", 'test_inventory_image_visible_for_quant', login='admin', timeout=180)
@@ -355,6 +360,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         counted regardless if there is already products in stock or not.
         """
         self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
 
         pack_15 = self.env['uom.uom'].create({
             'name': 'Pack of 15',
@@ -405,6 +411,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             'relative_factor': 15,
             'relative_uom_id': self.env.ref('uom.product_uom_unit').id,
         })
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         self.start_tour("/odoo/barcode", "test_inventory_packaging_button", login="admin", timeout=180)
         quant = self.env['stock.quant'].search([("product_id", "=", self.product1.id)], limit=1)
         self.assertEqual(quant.inventory_quantity, 15.0)
@@ -478,13 +485,9 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         wizard_request_count = self.env['stock.request.count'].create({
             'user_id': self.env.user.id,
             'quant_ids': quants.ids,
-            'set_count': 'set',
+            'show_expected_quantity': True,
         })
         wizard_request_count.action_request_count()
-        # Set "Count Entire Locations" setting on after the count request, otherwise all quants for
-        # this quant's location will be already marked as to count.
-        grp_barcode_count_entire_location = self.env.ref('stock_barcode.group_barcode_count_entire_location')
-        self.env.user.write({'group_ids': [(4, grp_barcode_count_entire_location.id, 0)]})
         self.start_tour("/odoo/barcode", 'test_inventory_setting_count_entire_locations_on', login='admin', timeout=180)
 
     def test_inventory_setting_count_entire_locations_off(self):
@@ -506,7 +509,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         wizard_request_count = self.env['stock.request.count'].create({
             'user_id': self.env.user.id,
             'quant_ids': quants.ids,
-            'set_count': 'set',
+            'show_expected_quantity': True,
         })
         wizard_request_count.action_request_count()
         self.start_tour('/odoo/barcode', 'test_inventory_setting_count_entire_locations_off', login='admin', timeout=180)
@@ -544,22 +547,20 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         wizard_request_count = self.env['stock.request.count'].create({
             'user_id': self.env.user.id,
             'quant_ids': quants.ids,
-            'set_count': 'empty',
+            'show_expected_quantity': True,
         })
         wizard_request_count.action_request_count()
 
         self.start_tour("/odoo/barcode", 'test_inventory_setting_show_quantity_to_count_on', login='admin', timeout=180)
         # Disable the "Show Quantity to Count" setting and launch second tour.
-        grp_show_quantity_count = self.env.ref('stock_barcode.group_barcode_show_quantity_count')
-        group_user = self.env.ref('base.group_user')
-        group_user.write({'implied_ids': [(3, grp_show_quantity_count.id)]})
-        self.env.user.write({'group_ids': [(3, grp_show_quantity_count.id)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'False')
         self.start_tour("/odoo/barcode", 'test_inventory_setting_show_quantity_to_count_off', login='admin', timeout=180)
 
     def test_inventory_using_buttons(self):
         """ Creates an inventory from scratch, then scans products and verifies
         the buttons behavior is right.
         """
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         # Adds some quantities for product2.
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 10)
 
@@ -619,6 +620,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         """ Checks multiple products can be scanned at once for an Inventory
         Adjustment using RFID."""
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         # Create a bunch of products with EAN13.
@@ -697,6 +699,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         """
         # Put 5 units of prodcut1 in stock and start an inventory count
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 5)
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         self.start_tour("/odoo/barcode", 'test_inventory_count_with_line_deletion', login='admin')
 
     # === GS1 TESTS ===#
@@ -754,6 +757,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
                 Command.link(self.env.ref('stock.group_tracking_lot').id)
             ]
         })
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
 
         product = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
@@ -862,8 +866,8 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        grp_barcode_count_entire_location = self.env.ref('stock_barcode.group_barcode_count_entire_location')
-        self.env.user.write({'group_ids': [(4, grp_barcode_count_entire_location.id, 0), (4, grp_pack.id, 0), (4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0), (4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        self.env['ir.config_parameter'].set_param('stock.show_expected_quantity_count', 'True')
         shelf1 = self.env['stock.location'].create({
             'name': 'Shelf 11',
             'barcode': 'Shelf11',

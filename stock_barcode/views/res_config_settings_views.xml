@@ -44,12 +44,6 @@
                 </div>
             </xpath>
             <xpath expr="//block[@name='barcode_setting_container']" position="inside">
-                <setting id="show_qty_to_count" help="Allow users to see the expected quantity of a product to count in a location">
-                    <field name="group_barcode_show_quantity_count"/>
-                </setting>
-                <setting id="count_entire_location" help="When scanning a location in inventory adjustments, you will be assigned to count all products from this location" invisible="group_stock_multi_locations == False">
-                    <field name="group_barcode_count_entire_location"/>
-                </setting>
                 <setting id="mute_sound_notifications" groups="base.group_no_one"
                          help="Disable sound effect while scanning a barcode.">
                     <field name="stock_barcode_mute_sound_notifications"/>

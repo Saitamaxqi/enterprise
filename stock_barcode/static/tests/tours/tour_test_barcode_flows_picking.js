@@ -203,7 +203,7 @@ registry.category("web_tour.tours").add("test_internal_picking_from_scratch", {
         // On this page, scans product1 which will create a new line and then opens its edit form view.
 
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-400',
             run: "scan product1",
         },
 
@@ -450,12 +450,12 @@ registry.category("web_tour.tours").add("test_internal_picking_reserved_1", {
         },
 
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 3"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 3"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(3);
                 helper.assertScanMessage("scan_product");
                 const locationInBold = document.querySelector(
-                    ".o_barcode_location_line.text-bg-800"
+                    ".o_barcode_location_line.text-bg-400"
                 );
                 const lineInSection3 =
                     locationInBold.parentElement.querySelector(".o_barcode_line");
@@ -503,7 +503,7 @@ registry.category("web_tour.tours").add("test_internal_picking_reserved_1", {
         { trigger: ".o_barcode_client_action", run: "scan LOC-01-01-00" },
 
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(3);
                 helper.assertScanMessage("scan_product");
@@ -3475,7 +3475,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
             run: "scan LOC-01-02-00",
         },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(7);
                 helper.assertScanMessage("scan_product");
@@ -3510,7 +3510,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
         { trigger: ".o_barcode_line.o_line_completed", run: "scan cluster-pack-01" },
         { trigger: ".o_barcode_line.o_selected .result-package", run: "scan LOC-01-01-00" },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(7);
                 helper.assertScanMessage("scan_product");
@@ -3525,7 +3525,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
         // Do the same from Section 3
         { trigger: ".o_barcode_line.o_line_completed .result-package", run: "scan shelf3" },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 3"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 3"].text-bg-400',
             run: "scan product1",
         },
         {
@@ -3660,7 +3660,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
             run: "scan LOC-01-01-00",
         },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-400',
         },
         {
             trigger: ".o_barcode_line:not([data-barcode]) .btn.o_add_remaining_quantity",
@@ -3681,7 +3681,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
             trigger: ".o_scan_message.o_scan_product",
         },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 4"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 4"].text-bg-400',
             run: "scan lot-003",
         },
         {
@@ -4282,7 +4282,7 @@ registry.category("web_tour.tours").add("test_put_in_pack_before_dest", {
         },
 
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-400',
             run: "scan product1",
         },
         { trigger: ".o_scan_message.o_scan_product_or_dest", run: "scan LOC-01-02-00" },
@@ -4293,7 +4293,7 @@ registry.category("web_tour.tours").add("test_put_in_pack_before_dest", {
         },
 
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 3"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 3"].text-bg-400',
             run: "scan product2",
         },
 
@@ -4400,7 +4400,7 @@ registry.category("web_tour.tours").add("test_put_in_pack_scan_package", {
             run: "scan LOC-01-02-00",
         },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-400',
             run: "scan product1",
         },
         {
@@ -4970,7 +4970,7 @@ registry.category("web_tour.tours").add("stock_barcode_package_with_lot", {
         },
         {
             trigger: ".o_apply_page",
-            run: "click",
+            run: "scan OBTVALI",
         },
         {
             trigger: ".o_notification_bar.bg-success",
@@ -5093,7 +5093,7 @@ registry.category("web_tour.tours").add("test_split_line_reservation", {
             run: "scan LOC-01-01-00",
         },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 1"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(4);
                 let line = helper.getLine({ barcode: "productlot1", completed: true });
@@ -5121,7 +5121,7 @@ registry.category("web_tour.tours").add("test_split_line_reservation", {
             run: "scan LOC-01-02-00",
         },
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(5);
             },
@@ -5147,7 +5147,7 @@ registry.category("web_tour.tours").add("test_split_line_reservation", {
             run: "scan LOC-01-00-00",
         },
         {
-            trigger: '.o_barcode_location_line.text-bg-800[data-location="WH/Stock"]',
+            trigger: '.o_barcode_location_line.text-bg-400[data-location="WH/Stock"]',
             run: "scan product1",
         },
         {
@@ -5181,7 +5181,7 @@ registry.category("web_tour.tours").add("test_split_line_reservation", {
         },
         // scan product2 x2 from WH/Stock
         {
-            trigger: '.o_barcode_location_line.text-bg-800[data-location="WH/Stock"]',
+            trigger: '.o_barcode_location_line.text-bg-400[data-location="WH/Stock"]',
             run: "scan product2",
         },
         {

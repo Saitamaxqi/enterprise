@@ -1,4 +1,5 @@
 import { ApplyQuantDialog } from "@stock_barcode/components/apply_quant_dialog";
+import { ConfirmQuantDialog } from "@stock_barcode/components/confirm_quant_dialog";
 import BarcodeModel from "@stock_barcode/models/barcode_model";
 import { _t } from "@web/core/l10n/translation";
 
@@ -12,16 +13,36 @@ export default class BarcodeQuantModel extends BarcodeModel {
     }
 
     async validate() {
-        return this.apply();
+        return this.apply({ shouldConfirm: true });
+    }
+
+    async waitReview() {
+        return this.apply({ shouldWaitReview: true });
     }
 
     /**
      * Check if the Inventory Adjustment can be applied and apply it only if it can be.
      * @returns {Promise}
      */
-    apply() {
+    apply(options = {}) {
         if (this.checkBeforeApply()) {
-            return this._apply();
+            const { shouldConfirm = false, shouldWaitReview = false } = options;
+            const confirm = (context) => this._apply(context);
+            const waitReview = () => {
+                this.save();
+                this.trigger("history-back");
+                this.trigger("update");
+            };
+            if (shouldConfirm) {
+                return confirm();
+            } else if (shouldWaitReview) {
+                return waitReview();
+            } else {
+                this.dialogService.add(ConfirmQuantDialog, {
+                    onConfirm: confirm,
+                    onWaitReview: waitReview,
+                });
+            }
         }
     }
 
@@ -69,10 +90,9 @@ export default class BarcodeQuantModel extends BarcodeModel {
      * Apply quantity set on counted quants.
      * @returns {Promise}
      */
-    async _apply() {
+    async _apply(context = {}) {
         await this.save();
-        const linesToApply = this.pageLines.filter((line) => line.inventory_quantity_set);
-        const quantIds = linesToApply.map((quant) => quant.id);
+        const quantIds = this.pageLines.map((quant) => quant.id);
         const action = await this.orm.call("stock.quant", "action_validate", [quantIds]);
         const notifyAndGoAhead = (res) => {
             if (res && res.special) {
@@ -190,7 +210,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
     setData(data) {
         this.userId = data.data.user_id;
         this.showQuantityCount = data.data.show_quantity_count;
-        this.countEntireLocation = data.data.count_entire_location;
+        this.countEntireLocation = false;
         super.setData(...arguments);
         const companies = data.data.records["res.company"];
         this.companyIds = companies.map((company) => company.id);
@@ -290,6 +310,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
     _getCommands() {
         return Object.assign(super._getCommands(), {
             OBTAPPLY: this.apply.bind(this),
+            OBTWREV: this.waitReview.bind(this),
         });
     }
 
@@ -712,7 +733,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
         const lines = [];
         for (const id of Object.keys(this.cache.dbIdCache["stock.quant"]).map((id) => Number(id))) {
             const quant = this.cache.getRecord("stock.quant", id);
-            if (quant.user_id !== this.userId || quant.inventory_date > today) {
+            if ((quant.user_id && quant.user_id !== this.userId) || quant.inventory_date > today) {
                 // Doesn't take quants who must be counted by another user or in the future.
                 continue;
             }

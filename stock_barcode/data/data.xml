@@ -23,10 +23,6 @@
         <field name="value">1000</field>
     </record>
 
-    <record id="base.group_user" model="res.groups">
-        <field name="implied_ids" eval="[(4, ref('stock_barcode.group_barcode_show_quantity_count'))]"/>
-    </record>
-
     <data noupdate="1">
         <!-- Set `restrict_scan_source_location` on True for outgoing picking types. -->
         <function model="stock.picking.type" name="write">

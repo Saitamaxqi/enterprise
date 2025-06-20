@@ -40,7 +40,7 @@
                             t-on-click="() => this.actionService.doAction('stock_barcode.stock_picking_type_action_kanban')">
                         Operations
                     </button>
-                    <button class="o_button_inventory btn btn-block btn-info mb-3 p-3 w-100"
+                    <button t-attf-class="o_button_inventory btn btn-block btn-{{this.quantCount ? 'info' : 'secondary'}} mb-3 p-3 w-100"
                             t-on-click="() => this.actionService.doAction('stock_barcode.stock_barcode_inventory_client_action')">
                         Count Inventory
                         <span t-if="this.quantCount" class="ms-2 p-1 px-2 bg-light rounded-circle text-primary" t-out="this.quantCount"/>

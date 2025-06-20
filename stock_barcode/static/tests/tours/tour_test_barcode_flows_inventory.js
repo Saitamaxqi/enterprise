@@ -219,7 +219,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_multi_company
         // Validate the Inventory Adjustment.
         {
             trigger: ".o_apply_page.btn-primary",
-            run: "click",
+            run: "scan OBTVALI",
         },
 
         // Go back on the App Switcher and change the company.
@@ -509,7 +509,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_tracked_produ
             run: "scan LOC-01-01-00",
         },
         {
-            trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 1'].text-bg-800",
+            trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 1'].text-bg-400",
             run: "scan lot1",
         },
         {
@@ -554,7 +554,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_tracked_produ
             run: "scan LOC-01-02-00",
         },
         {
-            trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 2'].text-bg-800",
+            trigger: ".o_barcode_location_line[data-location='WH/Stock/Section 2'].text-bg-400",
             run: "scan lot1",
         },
         {
@@ -793,7 +793,7 @@ registry.category("web_tour.tours").add("test_inventory_dialog_not_counted_seria
         { trigger: ".o_scan_message.o_scan_product_or_src", run: "scan productserial1" },
         { trigger: ".o_barcode_line.o_selected", run: "scan sn4,sn5,sn6" },
         { trigger: ".o_barcode_line.o_selected.o_line_completed" },
-        { trigger: ".o_apply_page", run: "click" },
+        { trigger: ".o_apply_page", run: "scan OBTVALI" },
         // Reopen the Inventory Adjustment and scan remaining SN for productserial2.
         { trigger: ".o_button_inventory", run: "click" },
         {
@@ -891,7 +891,7 @@ registry.category("web_tour.tours").add("test_inventory_package", {
         },
         {
             trigger: ".o_apply_page",
-            run: "click",
+            run: "scan OBTVALI",
         },
 
         {
@@ -938,10 +938,14 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
         },
         {
             trigger: ".o_apply_page",
-            run: "click",
+            run: "scan OBTVALI",
         },
         {
             trigger: ".o_notification_bar.bg-success",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification button.o_notification_close",
             run: "click",
         },
         {
@@ -966,7 +970,7 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
         },
         {
             trigger: ".o_apply_page",
-            run: "click",
+            run: "scan OBTVALI",
         },
         {
             trigger: ".o_notification_bar.bg-success",
@@ -1402,6 +1406,10 @@ registry.category("web_tour.tours").add("test_inventory_using_buttons", {
             run: "click",
         },
         {
+            trigger: ".o_confirm:contains('Apply Now')",
+            run: "click",
+        },
+        {
             trigger: ".o_notification_bar.bg-success",
         },
     ],
@@ -1650,9 +1658,26 @@ registry.category("web_tour.tours").add("test_inventory_setting_count_entire_loc
                 helper.assertLinesCount(1);
                 const line = helper.getLine();
                 helper.assertLineProduct(line, "product1");
-                helper.assertLineQty(line, "10/10");
+                helper.assertLineQty(line, "?/10");
                 helper.assertLineSourceLocation(line, "WH/Stock/Section 1");
             },
+        },
+        {
+            trigger: ".o_barcode_line .o_add_remaining_quantity",
+            run: "click",
+        },
+        // Activate Count entire locations.
+        {
+            trigger: ".o_barcode_actions",
+            run: "click",
+        },
+        {
+            trigger: ".o_count_entire_locations",
+            run: "click",
+        },
+        {
+            trigger: "button.o_close",
+            run: "click",
         },
         // Scan WH/Stock/Section 1 => Should fetch all quants in this location.
         {
@@ -1687,7 +1712,7 @@ registry.category("web_tour.tours").add("test_inventory_setting_count_entire_loc
         },
         // Check that all quants of WH/Stock/Section 2 are loaded with their respective information.
         {
-            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-800',
+            trigger: '.o_barcode_location_line[data-location="WH/Stock/Section 2"].text-bg-400',
             run: function () {
                 helper.assertLinesCount(7);
                 helper.assertLineProduct(4, "[TEST] product1");
@@ -1716,9 +1741,13 @@ registry.category("web_tour.tours").add("test_inventory_setting_count_entire_loc
             run: function () {
                 helper.assertLinesCount(1);
                 helper.assertLineProduct(0, "product1");
-                helper.assertLineQty(0, "10/10");
+                helper.assertLineQty(0, "?/10");
                 helper.assertLineSourceLocation(0, "WH/Stock/Section 1");
             },
+        },
+        {
+            trigger: ".o_barcode_line .o_add_remaining_quantity",
+            run: "click",
         },
         // Scan WH/Stock/Section 1 => Should not fetch other quants.
         {
@@ -1726,7 +1755,7 @@ registry.category("web_tour.tours").add("test_inventory_setting_count_entire_loc
             run: "scan LOC-01-01-00",
         },
         {
-            trigger: ".o_barcode_location_line.text-bg-800",
+            trigger: ".o_barcode_location_line.text-bg-400",
             run: function () {
                 helper.assertLinesCount(1);
                 helper.assertLineProduct(0, "product1");
@@ -1759,7 +1788,7 @@ registry
             },
             {
                 trigger: ".o_apply_page.btn-primary",
-                run: "click",
+                run: "scan OBTVALI",
             },
             {
                 trigger: ".o_notification_bar.bg-success",
@@ -1774,6 +1803,18 @@ registry.category("web_tour.tours").add("test_correct_inventory_with_packages", 
     steps: () => [
         {
             trigger: ".o_button_inventory",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_actions",
+            run: "click",
+        },
+        {
+            trigger: ".o_count_entire_locations",
+            run: "click",
+        },
+        {
+            trigger: "button.o_close",
             run: "click",
         },
         {

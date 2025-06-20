@@ -72,16 +72,17 @@ class StockQuant(models.Model):
         locations = self.env['stock.location']
         company_id = self.env.company.id
         package_types = self.env['stock.package.type']
+        valid_quants = self
         if not self:  # `self` is an empty recordset when we open the inventory adjustment.
             if self.env.user.has_group('stock.group_stock_multi_locations'):
                 locations = self.env['stock.location'].search([('usage', 'in', ['internal', 'transit']), ('company_id', '=', company_id)], order='id')
             else:
                 locations = self.env['stock.warehouse'].search([('company_id', '=', company_id)], limit=1).lot_stock_id
-            self = self.env['stock.quant'].search([('user_id', '=?', self.env.user.id), ('location_id', 'in', locations.ids), ('inventory_date', '<=', fields.Date.today())])
+            valid_quants = self.env['stock.quant'].search(['|', ('user_id', '=?', self.env.user.id), ('user_id', '=', False), ('location_id', 'in', locations.ids), ('inventory_date', '<=', fields.Date.today())])
             if self.env.user.has_group('stock.group_tracking_lot'):
                 package_types = package_types.search([])
 
-        data = self.with_context(display_default_code=False, barcode_view=True).get_stock_barcode_data_records()
+        data = valid_quants.with_context(display_default_code=False, barcode_view=True).get_stock_barcode_data_records()
         if locations:
             data["records"]["stock.location"] = locations.read(locations._get_fields_stock_barcode(), load=False)
         if package_types:
@@ -111,8 +112,7 @@ class StockQuant(models.Model):
                 "uom.uom": uoms.read(uoms._get_fields_stock_barcode(), load=False),
             },
             "nomenclature_id": [self.env.company.nomenclature_id.id],
-            "show_quantity_count": self.env.user.has_group('stock_barcode.group_barcode_show_quantity_count'),
-            "count_entire_location": self.env.user.has_group('stock_barcode.group_barcode_count_entire_location'),
+            "show_quantity_count": self.env['ir.config_parameter'].sudo().get_param('stock.show_expected_quantity_count', default='False') == 'True',
             "user_id": self.env.user.id,
         }
         return data

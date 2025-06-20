@@ -116,9 +116,10 @@ class StockBarcodeController(http.Controller):
             'tracking': user.has_group('stock.group_production_lot'),
         }
         quant_count = request.env['stock.quant'].search_count([
-            ("user_id", "=?", user.id),
+            '|', ('user_id', '=', user.id), ('user_id', '=', False),
             ("location_id.usage", "in", ["internal", "transit"]),
             ("inventory_date", "<=", fields.Date.context_today(user)),
+            ("inventory_quantity_set", "=", False),
         ])
         mute_sound = request.env['ir.config_parameter'].sudo().get_param('stock_barcode.mute_sound_notifications')
         play_sound = bool(not mute_sound or mute_sound == "False")
