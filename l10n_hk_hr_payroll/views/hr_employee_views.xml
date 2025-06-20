@@ -41,18 +41,26 @@
                 <div class="o_row" invisible="country_code != 'HK'">
                     <field name="l10n_hk_internet" nolabel="1"/>
                 </div>
-                <label for="l10n_hk_rental_id"/>
-                <div class="o_row">
-                    <field name="l10n_hk_rental_id" readonly="1" invisible="company_country_code != 'HK'"/>
+                <label for="l10n_hk_rental_id" invisible="country_code != 'HK'"/>
+                <div class="o_row" invisible="country_code != 'HK'">
+                    <field name="l10n_hk_rental_id" readonly="1"/>
                     <button class="btn btn-link" type="object" name="action_open_rentals">
                         <span class="fa fa-arrow-right"></span><span> History</span>
                     </button>
                 </div>
-                <group name="mpf" string="MPF" invisible="company_country_code != 'HK'">
-                    <field name="l10n_hk_mpf_vc_option" />
-                    <field name="l10n_hk_mpf_vc_percentage" widget="percentage" invisible="l10n_hk_mpf_vc_option != 'custom'" />
-                    <field name="l10n_hk_mpf_manulife_account" />
-                </group>
+                <separator string="MPF" invisible="company_country_code != 'HK'"/>
+                <label for="l10n_hk_mpf_vc_option" invisible="country_code != 'HK'"/>
+                <div class="o_row" invisible="country_code != 'HK'">
+                    <field name="l10n_hk_mpf_vc_option"/>
+                </div>
+                <label for="l10n_hk_mpf_vc_percentage" invisible="company_country_code != 'HK' or l10n_hk_mpf_vc_option != 'custom'"/>
+                <div class="o_row" invisible="company_country_code != 'HK' or l10n_hk_mpf_vc_option != 'custom'">
+                    <field name="l10n_hk_mpf_vc_percentage" widget="percentage"/>
+                </div>
+                <label for="l10n_hk_mpf_manulife_account" invisible="country_code != 'HK'"/>
+                <div class="o_row" invisible="country_code != 'HK'">
+                    <field name="l10n_hk_mpf_manulife_account"/>
+                </div>
             </group>
         </field>
     </record>
