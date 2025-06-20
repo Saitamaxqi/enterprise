@@ -94,7 +94,7 @@ class L10n_InGstReturnPeriod(models.Model):
         ('being_processed', 'Being Processed'),
         ('partially_matched', 'Partially Matched'),
         ('fully_matched', 'Matched'),
-    ], default="not_received", string="Status", readonly=True, tracking=True)
+    ], default="not_received", string="GSTR-2B Status", readonly=True, tracking=True)
     # if there is big data then it's give in multi-json
     gstr2b_json_from_portal_ids = fields.Many2many('ir.attachment', string='GSTR2B JSON from portal')
     gstr2b_base_value = fields.Monetary("GSTR-2B Base Value")

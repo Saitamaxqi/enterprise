@@ -52,8 +52,8 @@ class AccountMove(models.Model):
     l10n_in_fetch_vendor_edi_feature_enabled = fields.Boolean(related='company_id.l10n_in_fetch_vendor_edi_feature')
 
     # gstr related fields
-    l10n_in_exception = fields.Html("Exception")
-    l10n_in_gst_return_period_id = fields.Many2one("l10n_in.gst.return.period", "GST Return Period")
+    l10n_in_exception = fields.Html("Exception", copy=False)
+    l10n_in_gst_return_period_id = fields.Many2one("l10n_in.gst.return.period", "GST Return Period", copy=False)
     l10n_in_gstr2b_reconciliation_status = fields.Selection(selection=[
         ("pending", "Pending"),
         ("matched", "Fully Matched"),
@@ -66,6 +66,7 @@ class AccountMove(models.Model):
         readonly=True,
         default="pending",
         tracking=True,
+        copy=False
     )
     l10n_in_reversed_entry_warning = fields.Boolean(
         string="Display reversed entry warning",
