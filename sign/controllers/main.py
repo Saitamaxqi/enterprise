@@ -255,22 +255,22 @@ class Sign(http.Controller):
             str: Base64-encoded merged PDF of the document and the certificate
         """
         # Create PDF readers
-        pdf1 = PdfFileReader(io.BytesIO(base64.b64decode(document_file)))
-        pdf2 = PdfFileReader(io.BytesIO(certificate_pdf))
-        writer = PdfFileWriter()
+        document_pdf_reader = PdfFileReader(io.BytesIO(base64.b64decode(document_file)))
+        certificate_pdf_reader = PdfFileReader(io.BytesIO(certificate_pdf))
+        pdf_writer = PdfFileWriter()
 
         # Add all pages from the document
-        for page in pdf1.pages:
-            writer.add_page(page)
+        for page_num in range(document_pdf_reader.getNumPages()):
+            pdf_writer.addPage(document_pdf_reader.getPage(page_num))
 
         # Add all pages from the certificate
-        for page in pdf2.pages:
-            writer.add_page(page)
+        for page_num in range(certificate_pdf_reader.getNumPages()):
+            pdf_writer.addPage(certificate_pdf_reader.getPage(page_num))
 
-        output = io.BytesIO()
-        writer.write(output)
-        merged_pdf = base64.b64encode(output.getvalue())
-        output.close()
+        merged_pdf_buffer = io.BytesIO()
+        pdf_writer.write(merged_pdf_buffer)
+        merged_pdf = base64.b64encode(merged_pdf_buffer.getvalue())
+        merged_pdf_buffer.close()
         return merged_pdf
 
     def _handle_completed_download(self, sign_request, sign_document_id=None):
